@@ -108,15 +108,13 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       }
 
     case article: ArticlePage =>
-      val htmlResponse = () => if (request.isAmp && !article.article.isImmersive) {
-        views.html.articleAMP(article)
-      } else {
-          if (article.article.isImmersive) {
-            views.html.articleImmersive(article)
-          } else {
-            views.html.article(article)
-          }
+      val htmlResponse = () => {
+        if (article.article.isImmersive) views.html.articleImmersive(article)
+        else if (request.isAmp)          views.html.articleAMP(article)
+        else if (request.isEmail)        views.html.articleEmail(article)
+        else                             views.html.article(article)
       }
+
       val jsonResponse = () => views.html.fragments.articleBody(article)
       renderFormat(htmlResponse, jsonResponse, article, Switches.all)
   }

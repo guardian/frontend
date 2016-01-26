@@ -1,0 +1,20 @@
+
+@(page: ArticlePage)(implicit request: RequestHeader)
+
+@import common.LinkTo
+@import views.BodyCleaner
+@import views.support.TrailCssClasses.toneClass
+@import conf.switches.Switches._
+
+@defining(page.article) { article =>
+    @fragments.headTonal(article, article.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn, showMeta = false)
+
+    @fragments.emailMainMedia(article)
+
+    @fragments.contentMeta(article, showExtras = false)
+
+    <div class="content__article-body from-content-api" itemprop="@if(article.tags.isReview){reviewBody} else {articleBody}"
+    data-test-id="article-review-body">
+        @BodyCleaner(article, article.fields.body, false)
+    </div>
+}
