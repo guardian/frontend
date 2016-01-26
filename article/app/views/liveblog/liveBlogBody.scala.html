@@ -77,10 +77,10 @@
                                 itemprop="@if(article.tags.isReview) {reviewBody} else {articleBody}">
                                 <div class="toast__space-reserver">
                                     <div id="toast__tofix" class="toast__container">
-                                        <a class="toast__button toast__button--closed button button--large">
+                                        <button class="toast__button toast__button--closed button button--large">
                                             <span class="toast__text"></span>
                                             @fragments.inlineSvg("refresh", "icon", List(""))
-                                        </a>
+                                        </button>
                                     </div>
                                 </div>
                                 @views.html.liveblog.liveBlogBlocks(blocks.blocks, article, timezone)
