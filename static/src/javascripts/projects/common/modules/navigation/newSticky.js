@@ -59,9 +59,11 @@ define([
                         var data;
 
                         // other DFP events get caught by this listener, but if they're not json we don't want to parse them or use them
+                        /* eslint-disable no-empty */
                         try {
                             data = JSON.parse(event.data);
                         } catch (e) {}
+                        /* eslint-enable no-empty */
 
                         if (data) {
                             var $iframe = getAdIframe();
