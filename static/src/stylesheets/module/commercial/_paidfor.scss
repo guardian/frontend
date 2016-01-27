@@ -22,6 +22,9 @@
 
     .commercial__body {
         padding-top: $gs-gutter / 2;
+        max-width: none;
+        padding-left: $gs-gutter / 2;
+        padding-right: $gs-gutter / 2;
     }
 
     .rich-link__standfirst {
@@ -29,14 +32,6 @@
         font-size: get-font-size(textSans, 2);
         line-height: get-line-height(textSans, 1);
         padding: $gs-baseline/3 $gs-gutter/2 $gs-baseline/3 $gs-gutter/4;
-    }
-
-    .fc-slice__item:first-child > .fc-item {
-        margin-left: 0;
-    }
-
-    .fc-slice__item:last-child > .fc-item {
-        margin-right: 0;
     }
 
     .fc-item__image-container {
@@ -163,6 +158,13 @@
 
 /* Badges
    ========================================================================== */
+
+.commercial--paidfor {
+    .ad-slot--paid-for-badge {
+        padding-left: $gs-gutter / 2;
+        padding-right: $gs-gutter / 2;
+    }
+}
 
 .commercial--paidfor,
 .commercial--dfp-single {
