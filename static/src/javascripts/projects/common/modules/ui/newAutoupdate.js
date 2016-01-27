@@ -54,7 +54,7 @@ define([
         };
 
         var scrolledPastTopBlock = function () {
-            return $liveblogBody.offset().top < window.scrollY;
+            return $liveblogBody.offset().top < window.pageYOffset;
         };
         var isLivePage = !(window.location.href.search('[?&]page=') !== -1);
 
