@@ -6,11 +6,13 @@ import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
 import org.joda.time.{DateTime, DateTimeZone}
 import play.api.data.Forms._
 import play.api.data.format.Formatter
+import play.api.data.validation.{Invalid, Valid, Constraint}
 import play.api.data.{Form, FormError}
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Json._
 import play.api.libs.json._
 import services.S3
+import java.net.{MalformedURLException, URL}
 
 case class TakeoverWithEmptyMPUs(url: String,
                                  editions: Seq[Edition],
@@ -34,6 +36,19 @@ object TakeoverWithEmptyMPUs {
     }
   }
 
+  val mustBeAtLeastOneDirectoryDeep = Constraint[String] { s: String =>
+    try {
+      val uri = new URL(s)
+      uri.getPath.trim match {
+        case "" => Invalid("Must be at least one directory deep. eg: http://www.theguardian.com/us")
+        case "/" => Invalid("Must be at least one directory deep. eg: http://www.theguardian.com/us")
+        case _ => Valid
+      }
+    } catch {
+      case use: MalformedURLException => Invalid("Must be a valid URL. eg: http://www.theguardian.com/us")
+    }
+  }
+
   implicit val reads: Reads[TakeoverWithEmptyMPUs] = (
     (JsPath \ "url").read[String] and
       (JsPath \ "editions").read[Seq[Edition]] and
@@ -54,7 +69,7 @@ object TakeoverWithEmptyMPUs {
 
   val form = Form(
     mapping(
-      "url" -> nonEmptyText,
+      "url" -> nonEmptyText.verifying(mustBeAtLeastOneDirectoryDeep),
       "editions" -> seq(of[Edition]),
       "startTime" -> jodaDate("yyyy-MM-dd'T'HH:mm", DateTimeZone.UTC),
       "endTime" -> jodaDate("yyyy-MM-dd'T'HH:mm", DateTimeZone.UTC)
