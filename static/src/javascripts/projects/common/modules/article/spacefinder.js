@@ -175,7 +175,7 @@ define([
         var body;
 
         rules = rules || defaultRules;
-        body = (rules.bodySelector && document.querySelector(rules.bodySelector)) || document;
+        body = rules.bodySelector ? document.querySelector(rules.bodySelector) : document;
 
         // get all immediate children
         return getReady(body).then(function () {
