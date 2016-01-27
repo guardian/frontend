@@ -65,9 +65,9 @@ define([
                 linkHref: 'https://s.userzoom.com/p/MSBDMTBTMjYy/' + browserId,
                 linkText: 'Open Survey',
                 linkName: 'survey sign-up button',
-                messageTextHeadline: 'Tell us about your experience using the Guardian site',
-                messageTextWide: 'Complete a quick survey (5 minutes max) and get involved in the development of the site',
-                messageTextNarrow: 'Complete a quick survey (5 minutes max) and get involved in the development of the site',
+                messageTextHeadline: 'Tell us about what you love (or don\'t) about the Guardian',
+                messageTextWide: 'Complete a quick survey (5 minutes max) and help us make the site better',
+                messageTextNarrow: 'Complete a quick survey (5 minutes max) and help us make the site better',
                 arrowWhiteRight: svgs('arrowWhiteRight')
             },
             createMessage = function () {
