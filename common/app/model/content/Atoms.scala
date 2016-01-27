@@ -15,7 +15,7 @@ object Quiz {
       val answers = question.answers.map { answer =>
         Answer(
           text = answer.answerText,
-          reveal = answer.revealText,
+          revealText = answer.revealText.flatMap(revealText => if (revealText != "") Some(revealText) else None),
           weight = answer.weight.toInt)
       }
       Question(
@@ -38,9 +38,9 @@ final case class Question(
 
 final case class Answer(
   text: String,
-  reveal: Option[String],
-  weight: Int
-)
+  revealText: Option[String],
+  weight: Int)
+
 final case class Quiz(
   override val id: String,
   title: String,

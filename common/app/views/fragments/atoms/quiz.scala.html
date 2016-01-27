@@ -81,7 +81,12 @@
                     value="Q@{questionIndex}##A@{answerIndex}##@{answer.text}"
                     class="quiz__answer__input">
             }
-            @{answer.text}
+            <span class="quiz__answer-text">@{answer.text}</span>
+            @maybeInputAnswer.map { inputAnswer =>
+                @if(answer.revealText.isDefined && isAnswerCorrect && inputAnswer.equals(answer)) {
+                    <span class="quiz__answer-aggregate">@answer.revealText</span>
+                }
+            }
         </label>
     </div>
 }
