@@ -1,9 +1,28 @@
 $us-minute-highlight-colour: #eb1e25;
 $us-minute-main-colour: #104f75;
 $us-minute-contrast-color: #ffffff;
+$minute-headline-colour: #ffffff;
 
 .content--minute-article {
     border-top: 0 none;
+
+    .content__headline {
+        color: #ffffff;
+        @include f-headline;
+        font-size: 70px;
+        line-height: 74px;
+        font-weight: 200;
+    }
+
+    .content__dateline {
+        @include fs-header(2);
+        color: $us-minute-highlight-colour;
+    }
+
+    .content__standfirst {
+        @include fs-header(2);
+        color: $minute-headline-colour;
+    }
 }
 
 .content__main-column--minute-article {
