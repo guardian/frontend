@@ -61,27 +61,28 @@ case class BodyBlock(
     case UnclassifiedEvent => ""
   }
 
-  def republishedDate(implicit request: RequestHeader): Option[LiveBlogDate] = {
+  def republishedDate(timezone: DateTimeZone): Option[LiveBlogDate] = {
     firstPublishedDate.flatMap { firstPublishedDate =>
       publishedDate.filter(_ != firstPublishedDate)
     }
-  }.map(LiveBlogDate.apply)
+  }.map(LiveBlogDate.apply(_, timezone))
 
-  def publishedCreatedDate(implicit request: RequestHeader) = firstPublishedDate.orElse(createdDate).map(LiveBlogDate.apply)
+  def publishedCreatedDate(timezone: DateTimeZone) = firstPublishedDate.orElse(createdDate).map(LiveBlogDate.apply(_, timezone))
 
 }
 
 object LiveBlogDate {
-  def apply(dateTime: DateTime)(implicit request: RequestHeader): LiveBlogDate = {
+  def apply(dateTime: DateTime, timezone: DateTimeZone): LiveBlogDate = {
     val fullDate = ISODateTimeFormat.dateTime().withZone(DateTimeZone.UTC).print(dateTime)
+    val useFormat = useFormatZone(timezone)_
     val hhmm = useFormat("HH:mm", dateTime)
     val ampm = useFormat("h.mma", dateTime).toLowerCase(Locale.ENGLISH)
     val gmt = useFormat("z", dateTime)
     LiveBlogDate(fullDate, hhmm, ampm, gmt)
   }
 
-  private def useFormat(format: String, dateTime: DateTime)(implicit request: RequestHeader) =
-    dateTime.toString(DateTimeFormat.forPattern(format).withZone(Edition(request).timezone))
+  private def useFormatZone(timezone: DateTimeZone)(format: String, dateTime: DateTime) =
+    dateTime.toString(DateTimeFormat.forPattern(format).withZone(timezone))
 
 }
 case class LiveBlogDate(fullDate: String, hhmm: String, ampm: String, gmt: String)

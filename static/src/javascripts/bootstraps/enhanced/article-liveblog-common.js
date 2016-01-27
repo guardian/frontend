@@ -42,7 +42,6 @@ define([
     }
 
     function initTwitter() {
-        // Ensure that truncation occurs before the tweet upgrading.
         twitter.init();
         twitter.enhanceTweets();
     }

@@ -407,7 +407,7 @@
     }
 
     @include mq(leftCol) {
-        min-height: gs-height(1) $gs-baseline;
+        min-height: gs-height(1) + $gs-baseline;
         padding-top: $gs-baseline/6;
         padding-bottom: $gs-baseline;
         margin-bottom: 0;
@@ -690,9 +690,13 @@
     }
 
     .tonal__standfirst {
-        background-color: colour(paid-article-subheader);
+        background-color: transparent;
         padding: $gs-baseline 0 $gs-baseline*2;
         min-height: $gs-baseline*8;
+
+        .content__standfirst {
+            color: colour(neutral-1);
+        }
     }
 
     .ad-slot__label,
@@ -740,7 +744,7 @@
 
         &.content--media--audio,
         &.content--media--video {
-            .tonal__standfirst {
+            .content__head .tonal__standfirst {
                 display: none;
             }
         }
@@ -1095,14 +1099,23 @@
 
 
 .old-article-message {
+    @include fs-textSans(1);
+    display: inline-block;
     color: colour(neutral-2);
+    margin-bottom: $gs-baseline;
+
+    .old-article-message--clock svg {
+        fill: colour(neutral-2);
+        margin-bottom: -1px;
+    }
 }
 
-.meta__extras {
+.tonal--tone-media {
     .old-article-message {
+        color: colour(neutral-3);
+
         .old-article-message--clock svg {
-            fill: #ffffff;
-            stroke: colour(neutral-2);
+            fill: colour(neutral-3);
         }
     }
 }

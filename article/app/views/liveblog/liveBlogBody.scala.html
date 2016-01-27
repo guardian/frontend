@@ -1,14 +1,15 @@
-@import _root_.liveblog.BodyBlocks
-@import model.liveblog.{LiveBlogDate, BodyBlock}
-@(model: LiveBlogPage, blocks: BodyBlocks[BodyBlock])(implicit request: RequestHeader)
+@import _root_.liveblog.LiveBlogPageModel
+@import model.liveblog.BodyBlock
+@import model.liveblog.KeyEventData
+@(model: LiveBlogPage, blocks: LiveBlogPageModel[BodyBlock])(implicit request: RequestHeader)
 
 @import common.LinkTo
 @import layout.{FaciaCardAndIndex, ItemClasses}
-@import views.BodyCleaner
 @import views.html.fragments.items.facia_cards.item
 @import views.support.TrailCssClasses.toneClass
+@import common.Edition
 
-@defining(model.article) {  article =>
+@defining((model.article, Edition(request).timezone)) { case (article, timezone) =>
 <div class="l-side-margins">
     <article id="live-blog" data-test-id="live-blog"
         class="content content--liveblog tonal tonal--@toneClass(article) blog @if(article.fields.isLive){is-live} section-@article.trail.sectionName.toLowerCase"
@@ -39,7 +40,6 @@
                 </div>
             </div>
         </header>
-
         <div class="content__main tonal__main tonal__main--@toneClass(article)">
             <div class="gs-container">
                 <div class="content__main-column content__main-column--liveblog">
@@ -56,10 +56,12 @@
 
                         <div class="js-top-marker"></div>
                         @if(article.hasKeyEvents) {
-                            <div class="blog__timeline blog__dropdown js-live-blog__key-events modern-visible">
+                            <div class="blog__timeline blog__dropdown js-live-blog__key-events modern-visible js-updates-desktop">
                                 <div class="blog__timeline-container js-live-blog__timeline-container" data-component="timeline">
-                                    @fragments.dropdown("Key events", Some("key-events"), false) {
-                                        <ul class="timeline js-live-blog__timeline u-unstyled"></ul>
+                                    @fragments.dropdown("Key events", Some("key-events"), true) {
+                                        <ul class="timeline js-live-blog__timeline u-unstyled">
+                                            @views.html.liveblog.keyEvents("/" + article.metadata.id, KeyEventData(blocks.main, timezone))
+                                        </ul>
                                     }
                                 </div>
                             </div>
@@ -69,44 +71,24 @@
 
                     @fragments.dropdown("Live feed", Some("live-feed"), true) {
                         <div class="js-article__container" data-component="body">
+                            @* Remove LiveFilter and the fragment once Toast comes out of AB test status *@
                             @fragments.liveFilter(article.fields.isLive)
-
-                            <div class="js-liveblog-body u-cf from-content-api js-blog-blocks @if(article.fields.isLive) {live-blog}" data-test-id="live-blog-blocks"
+                            <div class="js-liveblog-body u-cf from-content-api js-blog-blocks @if(article.fields.isLive) {live-blog}" data-most-recent-block="@article.mostRecentBlock" data-test-id="live-blog-blocks"
                                 itemprop="@if(article.tags.isReview) {reviewBody} else {articleBody}">
-                                @blocks.blocks.map { block =>
-                                    <div id="block-@block.id" class="block@block.eventClass" data-block-contributor="@block.contributors.map { /*TODO separator?? needed?*/cont =>profile/@cont}.mkString(",")" itemprop="liveBlogUpdate" itemscope="" itemtype="http://schema.org/BlogPosting">
-                                        <p class="block-time published-time">
-                                            <a href="#block-@block.id" itemprop="url" class="block-time__link">
-                                                @block.publishedCreatedDate.map { case LiveBlogDate(createdDate, hhmm, ampm, gmt) =>
-                                                    <time datetime="@createdDate" data-relativeformat="med" class=" js-timestamp" itemprop="datePublished">@ampm <span class="timezone">@gmt</span></time>
-                                                    <span class="block-time__absolute">@hhmm</span>
-                                                }
-                                            </a>
-                                        </p>
-                                        @block.title.map { title =>
-                                            <h2 class="block-title" itemprop="headline">@title</h2>
-                                        }
-                                        @block.contributors.map { contributorId =>
-                                            @article.tags.tags.find(_.id == s"profile/$contributorId").map{ contributorTag =>
-                                                @views.html.fragments.meta.bylineLiveBlockImage(contributorTag)
-                                            }
-                                        }
-                                        <div class="block-elements@if(block.contributors.isEmpty){ block-elements--no-byline}" itemprop="articleBody">
-                                            @BodyCleaner(article, block.bodyHtml, amp = false)
-                                        </div>
-                                        @block.republishedDate.map { case LiveBlogDate(republishedDate, _, ampm, gmt) =>
-                                            <p class="block-time updated-time">Updated
-                                                <time datetime="@republishedDate">at @ampm @gmt</time>
-                                            </p>
-                                        }
-                                        @views.html.fragments.share.blockLevelSharing(s"block-${block.id}", article.sharelinks.elementShares(Some(s"block-${block.id}")), article.metadata.contentType)
+                                <div class="toast__space-reserver">
+                                    <div id="toast__tofix" class="toast__container">
+                                        <button class="toast__button toast__button--closed button button--large">
+                                            <span class="toast__text"></span>
+                                            @fragments.inlineSvg("refresh", "icon", List(""))
+                                        </button>
                                     </div>
-                                }
+                                </div>
+                                @views.html.liveblog.liveBlogBlocks(blocks.blocks, article, timezone)
                             </div>
 
                             <div class="live-navigation">
-                                @blocks.earlier.map { earlierBlock =>
-                                    <a href="/@{article.content.metadata.id}?page=@earlierBlock"
+                                @blocks.earlier.suffix.map { suffix =>
+                                    <a href="/@{article.content.metadata.id}@suffix"
                                         class="u-button-reset button button--large button--show-more liveblog__show-more"
                                         data-link-name="next page">
                                         Go to older updates

@@ -3,19 +3,33 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
+    'common/utils/mediator',
     'common/modules/article/space-filler',
+    'common/modules/commercial/dfp-api',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/commercial/commercial-features',
-    'lodash/objects/cloneDeep'
+    'common/modules/commercial/commercial-features'
 ], function (
     Promise,
     $,
     config,
     detect,
+    mediator,
     spaceFiller,
+    dfp,
     createAdSlot,
-    commercialFeatures,
-    cloneDeep) {
+    commercialFeatures
+) {
+
+    /* bodyAds is a counter that keeps track of the number of inline MPUs
+     * inserted dynamically. It is used to give each MPU its own ID. */
+    var bodyAds;
+    var inlineMerchRules;
+    var longArticleRules;
+
+    function boot() {
+        bodyAds = 0;
+    }
+
     function getRules() {
         return {
             bodySelector: '.js-article__body',
@@ -31,97 +45,119 @@ define([
     }
 
     function getInlineMerchRules() {
-        var newRules = cloneDeep(getRules());
-        newRules.minAbove = 300;
-        newRules.selectors[' > h2'].minAbove = 20;
-        return newRules;
+        if (!inlineMerchRules) {
+            inlineMerchRules = getRules();
+            inlineMerchRules.minAbove = 300;
+            inlineMerchRules.selectors[' > h2'].minAbove = 20;
+        }
+        return inlineMerchRules;
     }
 
     function getLongArticleRules() {
-        var newRules = cloneDeep(getRules());
+        if (!longArticleRules) {
+            longArticleRules = getRules();
+            longArticleRules.selectors[' .ad-slot'].minAbove =
+            longArticleRules.selectors[' .ad-slot'].minBelow = 1300;
+        }
+        return longArticleRules;
+    }
 
-        newRules.selectors[' .ad-slot'] = {
-            minAbove: 1300,
-            minBelow: 1300
-        };
-
-        return newRules;
+    function addInlineMerchAd(rules) {
+        spaceFiller.fillSpace(rules, function (paras) {
+            insertAdAtPara(paras[0], 'im', 'im');
+        });
     }
 
     // Add new ads while there is still space
-    function addLongArticleAds(count) {
-        if (count < 1) {
-            return Promise.resolve(null);
-        } else {
-            return tryAddingAdvert().then(function (trySuccessful) {
+    function addArticleAds(count, rules) {
+        return addArticleAdsRec(count, 0);
+
+        /*
+         * count:Integer is the number of adverts that should optimally inserted
+         * countAdded:Integer is the number of adverts effectively added. It is
+         * an accumulator (although no JS engine optimizes tail calls so far).
+         */
+        function addArticleAdsRec(count, countAdded) {
+            return count === 0 ?
+                Promise.resolve(countAdded) :
+                tryAddingAdvert(rules).then(onArticleAdAdded);
+
+            function onArticleAdAdded(trySuccessful) {
                 // If last attempt worked, recurse another
-                if (trySuccessful) {
-                    return addLongArticleAds(count - 1);
+                return trySuccessful ?
+                    addArticleAdsRec(count - 1, countAdded + 1) :
+                    countAdded;
+            }
+        }
+    }
+
+    function tryAddingAdvert(rules) {
+        return spaceFiller.fillSpace(rules, insertInlineAd);
+
+        function insertInlineAd(paras) {
+            bodyAds += 1;
+            insertAdAtPara(paras[0], 'inline' + bodyAds, 'inline');
+        }
+    }
+
+    function insertAdAtPara(para, name, type) {
+        var $ad = $.create(createAdSlot(name, type));
+        $ad.insertBefore(para);
+    }
+
+    // If a merchandizing component has been rendered but is empty,
+    // we allow a second pass for regular inline ads. This is because of
+    // the decoupling between the spacefinder algorightm and the targeting
+    // in DFP: we can only know if a slot can be removed after we have
+    // received a response from DFP
+    function onAdRendered(event) {
+        if (event.slot.getSlotElementId() === 'dfp-ad--im' && event.isEmpty) {
+            mediator.off('modules:commercial:dfp:rendered', onAdRendered);
+            return addArticleAds(2, getRules()).then(function (countAdded) {
+                return countAdded === 2 ?
+                    addArticleAds(8, getLongArticleRules()) :
+                    countAdded;
+            }).then(function () {
+                $('.ad-slot--inline').each(dfp.addSlot);
+            });
+        }
+    }
+
+    function init() {
+        if (!commercialFeatures.articleBodyAdverts) {
+            return false;
+        }
+
+        var rules = getRules();
+
+        boot();
+
+        if (config.page.hasInlineMerchandise) {
+            addInlineMerchAd(getInlineMerchRules());
+        }
+
+        if (config.switches.viewability && detect.getBreakpoint() !== 'mobile') {
+            return addArticleAds(2, rules).then(function (countAdded) {
+                if (config.page.hasInlineMerchandise && countAdded === 0) {
+                    mediator.on('modules:commercial:dfp:rendered', onAdRendered);
+                }
+
+                return countAdded === 2 ?
+                    addArticleAds(8, getLongArticleRules()) :
+                    countAdded;
+            });
+        } else {
+            return tryAddingAdvert(rules).then(function (trySuccessful) {
+                if (trySuccessful && detect.isBreakpoint({max: 'tablet'})) {
+                    return tryAddingAdvert(rules);
                 } else {
-                    return Promise.resolve(null);
+                    return null;
                 }
             });
         }
-
-        function tryAddingAdvert() {
-            return spaceFiller.fillSpace(getLongArticleRules(), function (paras) {
-                adNames.push(['inline' + (ads.length + 1), 'inline']);
-                insertAdAtPara(paras);
-            });
-        }
     }
-
-    function insertAdAtPara(paras) {
-        var adName = adNames[ads.length],
-            $ad    = $.create(createAdSlot(adName[0], adName[1]));
-
-        ads.push($ad);
-        $ad.insertBefore(paras[0]);
-    }
-
-    var ads = [],
-        adNames = [['inline1', 'inline'], ['inline2', 'inline']],
-        init = function () {
-            if (!commercialFeatures.articleBodyAdverts) {
-                return false;
-            }
-
-            var rules = getRules();
-
-            if (config.page.hasInlineMerchandise) {
-                spaceFiller.fillSpace(getInlineMerchRules(), function (paras) {
-                    adNames.unshift(['im', 'im']);
-                    insertAdAtPara(paras);
-                });
-            }
-
-            if (config.switches.viewability && detect.getBreakpoint() !== 'mobile') {
-                return tryAddingAdvert().then(tryAddingAdvert).then(function () {
-                    return addLongArticleAds(8);
-                });
-            } else {
-                return tryAddingAdvert().then(function () {
-                    if (detect.isBreakpoint({max: 'tablet'})) {
-                        return tryAddingAdvert();
-                    } else {
-                        return Promise.resolve(null);
-                    }
-                });
-            }
-
-            function tryAddingAdvert() {
-                return spaceFiller.fillSpace(rules, insertAdAtPara);
-            }
-        };
 
     return {
-        init: init,
-        // rules exposed for spacefinder debugging
-        getRules: getRules,
-        getInlineMerchRules: getInlineMerchRules,
-
-        reset: function () {
-            ads = [];
-        }
+        init: init
     };
 });

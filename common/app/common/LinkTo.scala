@@ -1,6 +1,6 @@
 package common
 
-import common.editions.{Au, Us, Uk}
+import common.editions.{Au, Us, International}
 import conf.Configuration
 import conf.switches.Switches
 import implicits.Requests
@@ -28,7 +28,7 @@ trait LinkTo extends Logging {
   /**
     * email is here to allow secure POSTs from the footer signup form
     */
-  val httpsEnabledSections: Seq[String] = Seq("info", "email")
+  val httpsEnabledSections: Seq[String] = Seq("info", "email", "science")
 
   def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request))
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request))
@@ -137,7 +137,8 @@ object AnalyticsHost extends implicits.Requests {
 object SubscribeLink {
   private val subscribeEditions = Map(
     Us -> "us",
-    Au -> "au"
+    Au -> "au",
+    International -> "int"
   )
 
   private def subscribeLink(edition: Edition) = subscribeEditions.getOrDefault(edition, "")

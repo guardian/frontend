@@ -11,7 +11,8 @@ import conf.Configuration
 import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch}
 import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
-import model.liveblog.BodyBlock
+import model.liveblog.{LiveBlogDate, BodyBlock}
+import model.liveblog.BodyBlock.{SummaryEvent, KeyEvent}
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
@@ -432,14 +433,14 @@ final case class Article (
 
   lazy val hasSupporting: Boolean = {
     val supportingClasses = Set("element--showcase", "element--supporting", "element--thumbnail")
-    val leftColElements = soupedBody.body().select("body > *").find(_.classNames.intersect(supportingClasses).size > 0)
+    val leftColElements = soupedBody.body().select("body > *").find(_.classNames.intersect(supportingClasses).nonEmpty)
     leftColElements.isDefined
   }
 
   lazy val chapterHeadings: Map[String, String] = {
     val jsoupChapterCleaner = ChaptersLinksCleaner.clean(soupedBody)
     val chapterElements = jsoupChapterCleaner.getElementsByClass("auto-chapter")
-    chapterElements.map { el =>
+    chapterElements.flatMap { el =>
       val headingElOpt = el.getElementsByTag("h2").headOption
       headingElOpt.flatMap { headingEl =>
         val attributes = headingEl.attributes()
@@ -447,14 +448,16 @@ final case class Article (
           Some((attributes.get("id"), headingEl.text()))
         } else None
       }
-    }.flatten.toMap
+    }.toMap
   }
 
   private lazy val soupedBody = Jsoup.parseBodyFragment(fields.body)
   lazy val hasKeyEvents: Boolean = soupedBody.body().select(".is-key-event").nonEmpty
+
   lazy val isSport: Boolean = tags.tags.exists(_.id == "sport/sport")
   //@deprecated("use content.fields.blocks", "")
   lazy val blocks = LiveBlogParser.parse(fields.body)
+  lazy val mostRecentBlock: Option[String] = blocks.headOption.map(_.id)
 }
 
 object Audio {

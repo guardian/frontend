@@ -114,19 +114,19 @@
 .top-banner-ad-container--small {
     min-height: ($gs-row-height * 3) + 18;
 }
-.top-banner-ad-container--large {
-    min-height: ($gs-row-height * 7) + 34;
-}
 .top-banner-ad-container--responsive {
     min-height: ($gs-row-height * 7) + 16;
 }
 .top-banner-ad-container--reveal iframe {
     transform: translateZ(0);
     transition: height 1s cubic-bezier(0, 0, 0, .985);
+    min-height: 90px;
 
+    // overwrite if in the new sticky ad AB test
     .new-sticky-ad & {
-        // overwrite if in the new sticky ad AB test
         transition: none;
+        transform: none;
+        min-height: auto;
     }
 }
 .top-banner-ad-container--above-nav {
@@ -210,6 +210,9 @@
         @include mq(wide) {
             text-align: left;
         }
+    }
+    .top-banner-ad-container--large & {
+        min-height: 250px;
     }
     .has-page-skin & {
         @include mq(wide) {
@@ -440,6 +443,10 @@
     .ad-slot--paid-for-badge__link,
     .ad-slot--paid-for-badge__logo {
         display: block;
+    }
+    .ad-slot--paid-for-badge__logo {
+        max-width: 100%;
+        max-height: $gs-baseline * 6;
     }
     .ad-slot--paid-for-badge__link,
     .ad-slot--paid-for-badge__help {

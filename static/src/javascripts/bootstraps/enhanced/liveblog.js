@@ -15,15 +15,16 @@ define([
     'common/modules/commercial/liveblog-adverts',
     'common/modules/commercial/liveblog-dynamic-adverts',
     'common/modules/experiments/affix',
-    'common/modules/live/filter',
     'common/modules/ui/autoupdate',
+    'common/modules/ui/newAutoupdate',
     'common/modules/ui/dropdowns',
     'common/modules/ui/last-modified',
     'common/modules/ui/notification-counter',
     'common/modules/ui/relativedates',
     'bootstraps/enhanced/article-liveblog-common',
     'bootstraps/enhanced/trail',
-    'common/utils/robust'
+    'common/utils/robust',
+    'common/modules/experiments/ab'
 ], function (
     bean,
     bonzo,
@@ -41,37 +42,20 @@ define([
     liveblogAdverts,
     liveblogDynamicAdverts,
     Affix,
-    LiveFilter,
     AutoUpdate,
+    AutoUpdateNew,
     dropdowns,
     lastModified,
     NotificationCounter,
     RelativeDates,
     articleLiveblogCommon,
     trail,
-    robust) {
+    robust,
+    ab) {
     'use strict';
 
     var modules,
-        autoUpdate = null;
-
-    function getTimelineEvents() {
-        var keyEvents = qwery('.is-key-event').slice(0, 7),
-            newestSummary = qwery('.is-summary')[0];
-
-        $('.js-timeline-event').removeClass('js-timeline-event');
-
-        if (newestSummary) {
-            bonzo(newestSummary).addClass('js-timeline-event');
-            if (keyEvents.length === 7) {
-                keyEvents.pop();
-            }
-        }
-
-        bonzo(keyEvents).addClass('js-timeline-event');
-
-        return qwery('.js-timeline-event');
-    }
+        autoUpdate;
 
     function createScrollTransitions() {
 
@@ -123,52 +107,17 @@ define([
         }
     }
 
-    function createKeyEventHTML(el) {
-        var keyEventTemplate = '<li class="timeline__item" data-event-id="<%=id%>">' +
-                '<a class="timeline__link" href="#<%=id%>" data-event-id="<%=id%>">' +
-                '<span class="timeline__date"><%=time%></span><span class="timeline__title u-underline"><%=title%></span></a></li>',
-            data = {
-                id: el.getAttribute('id'),
-                title: $('.block-title', el).text(),
-                time: $('.block-time__link', el).html()
-            };
-
-        return template(keyEventTemplate, data);
-    }
-
-    function getTimelineHTML(events) {
-        var remaining;
-        function recursiveRender(events, html) {
-            if (events.length) { // key event at 0 index
-                html += createKeyEventHTML(events[0]);
-                remaining = events.slice(1);
-            } else { // no events left
-                return html;
-            }
-            return recursiveRender(remaining, html);
-        }
-
-        return recursiveRender(events, '');
-    }
-
     function getUpdatePath() {
         var id,
             blocks = qwery('.js-liveblog-body .block'),
-            newestBlock = null;
-
-        if (autoUpdate.getManipulationType() === 'append') {
-            newestBlock = blocks.pop();
-        } else {
             newestBlock = blocks.shift();
-        }
 
         // There may be no blocks at all. 'block-0' will return any new blocks found.
         id = newestBlock ? newestBlock.id : 'block-0';
-        return window.location.pathname + '.json?lastUpdate=' + id;
+        return window.location.pathname + '.json?isLivePage=true&lastUpdate=' + id;
     }
 
     modules = {
-
         initAdverts: function () {
             if (config.switches.liveblogDynamicAdverts) {
                 liveblogDynamicAdverts.init();
@@ -177,72 +126,49 @@ define([
             }
         },
 
+        // once Toast is shipped this can be removed completely, the notification counter is initialised within Toast
         createFilter: function () {
-            new LiveFilter($('.js-blog-blocks')[0]).ready();
-            new NotificationCounter().init();
-        },
-
-        createTimeline: function () {
-            var timelineHTML, dropdown, topMarker,
-                allEvents = getTimelineEvents();
-            if (allEvents.length > 0) {
-                timelineHTML = getTimelineHTML(allEvents);
-
-                $('.js-live-blog__timeline')
-                    .empty()
-                    .append(timelineHTML);
-                dropdown = $('.js-live-blog__timeline-container .dropdown');
-                dropdown.addClass('dropdown--active');
-                dropdowns.updateAria(dropdown);
-
-                if (detect.isBreakpoint({ min: 'desktop' }) && config.page.keywordIds.indexOf('football/football') < 0 && config.page.keywordIds.indexOf('sport/rugby-union') < 0) {
-                    topMarker = qwery('.js-top-marker')[0];
-                    /*eslint-disable no-new*/
-                    new Affix({
-                        element: qwery('.js-live-blog__timeline-container')[0],
-                        topMarker: topMarker,
-                        bottomMarker: qwery('.js-bottom-marker')[0],
-                        containerElement: qwery('.js-live-blog__key-events')[0]
-                    });
-                    /*eslint-enable no-new*/
-                }
-                createScrollTransitions();
+            if (!ab.isInVariant('LiveblogToast', 'toast')) {
+                new NotificationCounter().init();
             }
         },
 
-        handleUpdates: function () {
-            mediator.on('modules:autoupdate:updates', function () {
-                modules.createTimeline();
-            });
+        affixTimeline: function () {
+            var topMarker;
+            if (detect.isBreakpoint({ min: 'desktop' }) && config.page.keywordIds.indexOf('football/football') < 0 && config.page.keywordIds.indexOf('sport/rugby-union') < 0) {
+                topMarker = qwery('.js-top-marker')[0];
+                /*eslint-disable no-new*/
+                new Affix({
+                    element: qwery('.js-live-blog__timeline-container')[0],
+                    topMarker: topMarker,
+                    bottomMarker: qwery('.js-bottom-marker')[0],
+                    containerElement: qwery('.js-live-blog__key-events')[0]
+                });
+                /*eslint-enable no-new*/
+            }
+            createScrollTransitions();
         },
 
         createAutoUpdate: function () {
-
-            if (config.page.isLive && window.location.search === '') {
-
-                var timerDelay = detect.isBreakpoint({ min: 'desktop' }) ? 5000 : 60000;
-                autoUpdate = new AutoUpdate({
-                    path: getUpdatePath,
-                    delay: timerDelay,
-                    backoff: 2,
-                    backoffMax: 1000 * 60 * 20,
-                    attachTo: $('.js-liveblog-body')[0],
-                    switches: config.switches,
-                    manipulationType: 'prepend'
-                });
-                autoUpdate.init();
+            if (config.page.isLive) {
+                if (ab.isInVariant('LiveblogToast', 'toast')) {
+                    AutoUpdateNew();
+                } else if (window.location.search.indexOf('?page=') !== 0/*TODO proper guardian.config val*/) {
+                    var timerDelay = detect.isBreakpoint({ min: 'desktop' }) ? 5000 : 60000;
+                    autoUpdate = new AutoUpdate({
+                        path: getUpdatePath,
+                        delay: timerDelay,
+                        backoff: 2,
+                        backoffMax: 1000 * 60 * 20,
+                        attachTo: [$('.js-liveblog-body')[0], $('.js-live-blog__timeline')[0]],
+                        switches: config.switches,
+                        manipulationType: 'prepend',
+                        responseField: ['html', 'timeline']
+                    });
+                    autoUpdate.init();
+                }
             }
 
-            mediator.on('module:filter:toggle', function (orderedByOldest) {
-                if (!autoUpdate) {
-                    return;
-                }
-                if (orderedByOldest) {
-                    autoUpdate.setManipulationType('append');
-                } else {
-                    autoUpdate.setManipulationType('prepend');
-                }
-            });
         },
 
         keepTimestampsCurrent: function () {
@@ -253,7 +179,6 @@ define([
                 },
                 60000
             );
-
         },
 
         accessibility: function () {
@@ -265,11 +190,10 @@ define([
         robust.catchErrorsAndLogAll([
             ['lb-a11y',       modules.accessibility],
             ['lb-adverts',    modules.initAdverts],
-            ['lb-filter',     modules.createFilter],
-            ['lb-timeline',   modules.createTimeline],
             ['lb-autoupdate', modules.createAutoUpdate],
+            ['lb-timeline',   modules.affixTimeline],
+            ['lb-filter',     modules.createFilter],
             ['lb-timestamp',  modules.keepTimestampsCurrent],
-            ['lb-updates',    modules.handleUpdates],
             ['lb-richlinks',  richLinks.upgradeRichLinks]
         ]);
 

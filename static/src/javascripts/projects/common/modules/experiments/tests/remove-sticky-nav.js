@@ -7,8 +7,8 @@ define([
         this.expiry = '2016-3-1';
         this.author = 'Josh Holder';
         this.description = '0% AB test for removing the sticky nav';
-        this.audience = 0.0;
-        this.audienceOffset = 0.0;
+        this.audience = 0.5;
+        this.audienceOffset = 0.5;
         this.successMeasure = '';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';

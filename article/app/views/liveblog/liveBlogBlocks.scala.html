@@ -1,0 +1,35 @@
+@import model.liveblog.BodyBlock
+@import model.Article
+@import org.joda.time.DateTimeZone
+
+@(blocks: Seq[BodyBlock], article: Article, timezone: DateTimeZone)(implicit request: RequestHeader)
+
+@import views.BodyCleaner
+@import model.liveblog.{LiveBlogDate}
+
+@blocks.map { block =>
+    <div id="block-@block.id" class="block@block.eventClass" itemprop="liveBlogUpdate" itemscope="" itemtype="http://schema.org/BlogPosting">
+        <p class="block-time published-time">
+            <a href="/@article.metadata.id?page=with:block-@block.id#block-@block.id" itemprop="url" class="block-time__link">
+            @views.html.liveblog.dateBlock(block.publishedCreatedDate(timezone))
+            </a>
+        </p>
+        @block.title.map { title =>
+            <h2 class="block-title" itemprop="headline">@title</h2>
+        }
+        @block.contributors.map { contributorId =>
+            @article.tags.tags.find(_.id == s"profile/$contributorId").map{ contributorTag =>
+                @views.html.fragments.meta.bylineLiveBlockImage(contributorTag)
+            }
+        }
+        <div class="block-elements@if(block.contributors.isEmpty){ block-elements--no-byline}" itemprop="articleBody">
+        @BodyCleaner(article, block.bodyHtml, amp = false)
+        </div>
+        @block.republishedDate(timezone).map { case LiveBlogDate(republishedDate, _, ampm, gmt) =>
+        <p class="block-time updated-time">Updated
+            <time datetime="@republishedDate">at @ampm @gmt</time>
+        </p>
+        }
+        @views.html.fragments.share.blockLevelSharing(s"block-${block.id}", article.sharelinks.elementShares(Some(s"block-${block.id}")), article.metadata.contentType)
+    </div>
+}

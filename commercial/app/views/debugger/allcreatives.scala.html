@@ -185,26 +185,29 @@
                                 <a href="<%=clickMacro%><%=articleUrl%>">
                                     <img class="responsive-img paidfor-image" alt="" srcset="https://i.guim.co.uk/img/media/ff0066cea8e1d1f77cd252c688defa1c0086f8a2/0_33_4256_2553/master/4256.jpg?w=220&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=3dde5d6f9ca8e5af876c9506ec74a5c4 220w, https://i.guim.co.uk/img/media/ff0066cea8e1d1f77cd252c688defa1c0086f8a2/0_33_4256_2553/master/4256.jpg?w=160&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=011992f9058136dace20307cc6c43093 160w, https://i.guim.co.uk/img/media/ff0066cea8e1d1f77cd252c688defa1c0086f8a2/0_33_4256_2553/master/4256.jpg?w=127&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=f24d14aa5bb58685a616994d0616eff2 127w" sizes="(min-width: 980px) 220px, (min-width: 740px) 160px, 127px">
                                 </a>
+                                <a href="http://www.theguardian.com/guardian-labs" class="paidfor-content__glabs-logo" title="glabs" data-link-name="glabs logo">
+                                    @fragments.inlineSvg("glabs-logo-small", "logo")
+                                </a>
                             </div>
                             <div class="paidfor-meta">
-                                <span class="paidfor-meta__label">Paid Content</span>
+                                <span class="paidfor-meta__label">Paid content</span>
                                 <div class="paidfor-label paidfor-meta__more has-popup">
                                     <button class="u-button-reset paidfor-label__btn popup__toggle" data-toggle="paidfor-popup--test1">
                                         About
                                         @fragments.inlineSvg("arrow-down", "icon")
                                     </button>
                                     <div class="popup is-off paidfor-popup paidfor-popup--test1">
-                                        <h3 class="paidfor-popup__title">Paid stories are paid for and controlled by an advertiser</h3>
+                                        <h3 class="paidfor-popup__title">Paid content is paid for and controlled by an advertiser and created by the Guardian Labs team</h3>
                                         <a class="paidfor-popup__link" href="#">
-                                            Learn more about the Guardian’s funding from outside parties
+                                            Learn more about Guardian Labs content
                                             @fragments.inlineSvg("arrow-right", "icon")
                                         </a>
                                     </div>
                                 </div>
                             </div>
                             <a href="<%=clickMacro%><%=articleUrl%>" class="paidfor-box">
-                                <h2 class="paidfor-title">Discover the beauty and culture of Mauritius</h2>
-                                <p class="paidfor-text">From sandy beaches and tropical forests to colourful festivals and super-fresh seafood.</p>
+                                <h2 class="gu-title">Discover the beauty and culture of Mauritius</h2>
+                                <p class="gu-text">From sandy beaches and tropical forests to colourful festivals and super-fresh seafood.</p>
                                 <div class="paidfor-brand">
                                     <span class="paidfor-note">Paid for by:</span>
                                     <img class="paidfor-logo" src="<%=brandLogo%>" alt="<%=brand%>">
@@ -219,38 +222,6 @@
             <div class="ad-slot ad-slot--merchandising ad-slot--commercial-component fc-container__inner js-secondary-column content__secondary-column">
             </div>
         </div>
-
-        <script>
-            function showRHColumn(component) {
-                loadCommercial(function () {
-                    require('bootstraps/standard/main')
-                        .next(['bootstraps/commercial'])
-                        .next([
-                            'common/utils/$'
-                        ])
-                        .then(function (
-                            $
-                        ) {
-                        $('.content__secondary-column').empty();
-
-                        require(['common/modules/commercial/creatives/branded-component'])
-                            .then(function(
-                                BrandedComponent
-                            ) {
-                                new BrandedComponent($('.branded-component-' + component), {
-                                    type: component,
-                                    clickMacro: '%%CLICK_URL_ESC%%',
-                                    omnitureId: '[%OmnitureID%]'
-                                }, {
-                                    force: true
-                                }).create();
-                            });
-                        });
-                });
-            }
-
-            showRHColumn('soulmates');
-        </script>
 
         <script>
             loadCommercial(function () {
@@ -268,6 +239,7 @@
                             offer_url: 'http://www.guardianbookshop.co.uk/',
                             offer_image: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKCToPeYcRABGAEyCL27FJtXKuKj',
                             offer_meta: 'Meta',
+                            offer_button: 'yes',
                             clickMacro: '%%CLICK_URL_ESC%%'
                         }).create();
                       });
@@ -287,7 +259,7 @@
                 });
         </script>
     </article>
-    
+
     <div class="fc-container__inner">
         <h2 class="test-page-head">
             <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10024887">
@@ -673,7 +645,10 @@
                                 omnitureId: '[%OmnitureID%]'
                             });
 
-                            commercialComponent.postLoadEvents['capi@if(component("type") == "single"){Single}'] = function () {
+                            var callbackName = 'capi@if(component("type") == "single"){Single}';
+                            var originalPostLoadEvents = commercialComponent.postLoadEvents[callbackName];
+                            commercialComponent.postLoadEvents[callbackName] = function (el) {
+                                originalPostLoadEvents && originalPostLoadEvents.call(commercialComponent, el);
                                 $capiType.removeClass('lazyloaded');
                             };
                             commercialComponent.create();
@@ -700,7 +675,6 @@
                 ("offerTitle", "Scientists climb to bottom of Siberian sinkhole - in pictures"),
                 ("offerImage", "http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjk-jQkgEQARgBMghE750kQXQwJg"),
                 ("offerText", "A Russian research team including scientists, a medic and a professional climber has descended a giant sinkhole on the Yamal Peninsula in northern Siberia. Photographs by Vladimir Pushkarev/Siberian Times"),
-                ("offerLinkText", "link text"),
                 ("offerUrl", "http://www.theguardian.com/technology/2014/nov/20/apple-beats-music-iphone-ipad-spotify"),
                 ("seeMoreUrl", "http://www.theguardian.com/technology/2014/nov/20/apple-beats-music-iphone-ipad-spotify"),
                 ("showCtaLink", "show-cta-link"),

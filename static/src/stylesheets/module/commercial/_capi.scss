@@ -38,7 +38,8 @@
     .fc-item__standfirst,
     .fc-item--list-compact,
     .item__title,
-    .linkslist__action {
+    .linkslist__action,
+    .fc-sublink__title {
         @include f-headlineSans;
     }
 
@@ -89,7 +90,13 @@
     background-color: colour(paid-article);
 
     .ad-slot--paid-for-badge--front {
-        border-top-color: colour(paid-article-bg);
+        border-top-color: colour(neutral-2);
+
+        .ad-slot--paid-for-badge__link {
+            &:after {
+                border-bottom-color: colour(neutral-2);
+            }
+        }
     }
 
     .fc-container--first .fc-container__header__title,
@@ -161,4 +168,14 @@
     .fc-item__kicker:after {
         color: #a0a1a2;
     }
+
+    .fc-item__meta {
+        color: colour(neutral-2);
+    }
+
+    &.fc-container--sponsored,
+    &.fc-container--foundation-supported {
+        background-color: unset;
+    }
+
 }

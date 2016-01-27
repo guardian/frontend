@@ -14,7 +14,9 @@ object SupportedUrl {
   def fromFaciaContent(fc: PressedContent): String = fc match {
     case curatedContent: CuratedContent => s"/${curatedContent.properties.href.getOrElse(fc.card.id)}"
     case supportingCuratedContent: SupportingCuratedContent => s"/${supportingCuratedContent.properties.href.getOrElse(fc.card.id)}"
-    case linkSnap: LinkSnap => linkSnap.properties.href.orElse(linkSnap.snapUri).getOrElse(linkSnap.card.id)
-    case latestSnap: LatestSnap => s"/${latestSnap.properties.maybeContent.map(_.metadata.id).orElse(latestSnap.snapUri).getOrElse(latestSnap.card.id)}"
+    case linkSnap: LinkSnap => linkSnap.properties.href.getOrElse(linkSnap.card.id)
+    case latestSnap: LatestSnap => latestSnap.properties.maybeContent.map(content => s"/${content.metadata.id}")
+                                    .orElse(latestSnap.properties.href)
+                                    .getOrElse(s"/${latestSnap.card.id}")
   }
 }

@@ -55,6 +55,21 @@ object Commercial {
   def make(metadata: MetaData, tags: Tags): model.Commercial = {
     make(metadata, tags, None)
   }
+
+  def make(section: Section): model.Commercial = {
+    val keywordSponsorship = section.keywordSponsorship
+    model.Commercial(
+      tags = Tags(Nil),
+      metadata = section.metadata,
+      isInappropriateForSponsorship = false,
+      sponsorshipTag = None,
+      isFoundationSupported = keywordSponsorship.isFoundationSupported,
+      isAdvertisementFeature = keywordSponsorship.isAdvertisementFeature,
+      hasMultipleSponsors = keywordSponsorship.hasMultipleSponsors,
+      hasMultipleFeatureAdvertisers = keywordSponsorship.hasMultipleFeatureAdvertisers,
+      hasInlineMerchandise = false
+    )
+  }
 }
 
 final case class Commercial(

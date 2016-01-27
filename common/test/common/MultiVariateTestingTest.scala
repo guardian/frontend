@@ -3,6 +3,7 @@ package common
 import conf.switches.{Expiry, Switches}
 import mvt.MultiVariateTesting._
 import mvt.{TestDefinition, MultiVariateTesting, Tests}
+import org.joda.time.LocalDate
 import org.scalatest.{Matchers, FlatSpec}
 import test.TestRequest
 
@@ -46,13 +47,14 @@ class MultiVariateTestingTest extends FlatSpec with Matchers {
       List(Variant0),
       "test0",
       "an experiment test",
-      Expiry.never
+      new LocalDate(2100, 1, 1)
+
     )
     object test1 extends TestDefinition(
       List(Variant1, Variant2),
       "test1",
       "an experiment test",
-      Expiry.never
+      new LocalDate(2100, 1, 1)
     )
 
     val tests = List(test0, test1)

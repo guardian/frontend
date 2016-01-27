@@ -1,26 +1,25 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.{Content => ApiContent}
+import _root_.liveblog.LiveBlogPageModel
 import com.gu.contentapi.client.model.ItemResponse
+import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import com.gu.util.liveblogs.{Block, BlockToText}
 import common._
 import conf.LiveContentApi.getResponse
 import conf._
 import conf.switches.Switches
 import conf.switches.Switches.LongCacheSwitch
-import liveblog.BodyBlocks
 import model._
+import model.liveblog.{BodyBlock, KeyEventData}
 import org.joda.time.DateTime
-import org.jsoup.nodes.Document
 import performance.MemcachedAction
 import play.api.libs.functional.syntax._
 import play.api.libs.json.{Json, _}
 import play.api.mvc._
-import views.BodyCleaner
 import views.support._
 
-import scala.collection.JavaConversions._
 import scala.concurrent.Future
+import scala.util.parsing.combinator.RegexParsers
 
 trait PageWithStoryPackage extends ContentPage {
   def article: Article
@@ -37,23 +36,15 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, blocks = true)(render(path, _, None))
 
-  private def renderLatestFrom(page: PageWithStoryPackage, lastUpdateBlockId: String)(implicit request: RequestHeader) = {
-      val html = withJsoup(BodyCleaner(page.article, page.article.fields.body, amp = false)) {
-        new HtmlCleaner {
-          def clean(d: Document): Document = {
-            val blocksToKeep = d.getElementsByTag("div") takeWhile {
-              _.attr("id") != lastUpdateBlockId
-            }
-            val blocksToDrop = d.getElementsByTag("div") drop blocksToKeep.size
-
-            blocksToDrop foreach {
-              _.remove()
-            }
-            d
-          }
-        }
-      }
-      Cached(page)(JsonComponent(html))
+  private def renderNewerUpdates(page: PageWithStoryPackage, lastUpdateBlockId: String, isLivePage: Option[Boolean])(implicit request: RequestHeader) = {
+    val newBlocks = page.article.fields.blocks.takeWhile(block => s"block-${block.id}" != lastUpdateBlockId)
+    val blocksHtml = views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone)
+    val timelineHtml = views.html.liveblog.keyEvents("", KeyEventData(newBlocks, Edition(request).timezone))
+    val allPagesJson = Seq("timeline" -> timelineHtml, "numNewBlocks" -> newBlocks.size)
+    val livePageJson = isLivePage.filter(_ == true).map { _ =>
+      "html" -> blocksHtml
+    }
+    Cached(page)(JsonComponent((allPagesJson ++ livePageJson): _*))
   }
 
   case class TextBlock(
@@ -77,53 +68,69 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       val blocks = liveBlog.blocks.collect {
         case Block(id, title, publishedAt, updatedAt, BlockToText(text), _) if text.trim.nonEmpty => TextBlock(id, title, publishedAt, updatedAt, text)
       }.take(number)
-      Cached(page)(JsonComponent(("blocks" -> Json.toJson(blocks))))
+      Cached(page)(JsonComponent("blocks" -> Json.toJson(blocks)))
     case _ => Cached(600)(NotFound("Can only return block text for a live blog"))
 
   }
 
-  private def render(path: String, page: PageWithStoryPackage, pageNo: Option[Int])(implicit request: RequestHeader) = page match {
+  private def renderPageWithBlock(
+    maybeRequiredBlockId: Option[String],
+    blog: LiveBlogPage,
+    modelGen: (Option[(BodyBlock) => Boolean], (BodyBlock) => String) => Option[LiveBlogPageModel[BodyBlock]]
+  )(implicit request: RequestHeader) =
+    modelGen(
+      maybeRequiredBlockId.map(blockId => block => blockId == block.id),
+      _.id
+    ) match {
+      case Some(blocks) =>
+        val htmlResponse = () => views.html.liveBlog (blog, blocks)
+        val jsonResponse = () => views.html.liveblog.liveBlogBody (blog, blocks)
+        renderFormat(htmlResponse, jsonResponse, blog, Switches.all)
+      case None => NotFound
+    }
+
+  private def render(path: String, page: PageWithStoryPackage, pageParam: Option[String])(implicit request: RequestHeader) = page match {
     case blog: LiveBlogPage =>
       if (request.isAmp) {
         NotFound
       } else {
         val pageSize = if (blog.article.content.tags.tags.map(_.id).contains("sport/sport")) 50 else 10
-        val blocks = BodyBlocks(pageSize = pageSize, extrasOnFirstPage = 10)(blog.article.content.fields.blocks, pageNo)
-        blocks match {
-          case Some(blocks) =>
-            val htmlResponse = () => views.html.liveBlog (blog, blocks)
-            val jsonResponse = () => views.html.fragments.liveBlogBody (blog, blocks)
-            renderFormat(htmlResponse, jsonResponse, blog, Switches.all)
-          case None => NotFound
+        val modelGen = LiveBlogPageModel(
+          pageSize = pageSize,
+          extrasOnFirstPage = 10,
+          blog.article.content.fields.blocks
+        )_
+        pageParam.map(new PageParser().blockId) match {
+          case Some(None) => NotFound
+          case Some(Some(requiredBlockId)) => renderPageWithBlock(Some(requiredBlockId), blog, modelGen)
+          case None => renderPageWithBlock(None, blog, modelGen)
         }
       }
 
     case article: ArticlePage =>
-      val htmlResponse = () => if (request.isAmp && !article.article.isImmersive) {
-        views.html.articleAMP(article)
-      } else {
-          if (article.article.isImmersive) {
-            views.html.articleImmersive(article)
-          } else {
-            views.html.article(article)
-          }
+      val htmlResponse = () => {
+        if (article.article.isImmersive) views.html.articleImmersive(article)
+        else if (request.isAmp)          views.html.articleAMP(article)
+        else if (request.isEmail)        views.html.articleEmail(article)
+        else                             views.html.article(article)
       }
+
       val jsonResponse = () => views.html.fragments.articleBody(article)
       renderFormat(htmlResponse, jsonResponse, article, Switches.all)
   }
 
-  def renderLiveBlog(path: String, page: Option[Int] = None) =
+  def renderLiveBlog(path: String, page: Option[String] = None) =
     LongCacheAction { implicit request =>
       mapModel(path, blocks = true) {// temporarily only ask for blocks too for things we know are new live blogs until until the migration is done and we can always use blocks
         render(path, _, page)
       }
     }
 
-  def renderLiveBlogJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean]) = {
+  def renderLiveBlogJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean]) = {
     LongCacheAction { implicit request =>
       mapModel(path, blocks = true) { model =>
         (lastUpdate, rendered) match {
-          case (Some(lastUpdate), _) => renderLatestFrom(model, lastUpdate)
+          case (Some(lastUpdate), _) => renderNewerUpdates(model, lastUpdate, isLivePage)
           case (None, Some(false)) => blockText(model, 6)
           case (_, _) => render(path, model, None)
         }
@@ -193,6 +200,20 @@ object LongCacheAction {
       block(request)
     } else MemcachedAction { implicit request =>
       block(request)
+    }
+  }
+}
+
+class PageParser extends RegexParsers {
+  def blockId(input: String): Option[String] = {
+    def withParser: Parser[Unit] = "with:" ^^ { _ => () }
+    def block: Parser[Unit] = "block-" ^^ { _ => () }
+    def id: Parser[String] = "[a-zA-Z0-9]+".r
+    def expr: Parser[String] = withParser ~> block ~> id
+
+    parse(expr, input) match {
+      case Success(matched, _) => Some(matched)
+      case _ => None
     }
   }
 }
