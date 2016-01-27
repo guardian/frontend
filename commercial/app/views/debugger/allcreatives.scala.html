@@ -645,7 +645,10 @@
                                 omnitureId: '[%OmnitureID%]'
                             });
 
-                            commercialComponent.postLoadEvents['capi@if(component("type") == "single"){Single}'] = function () {
+                            var callbackName = 'capi@if(component("type") == "single"){Single}';
+                            var originalPostLoadEvents = commercialComponent.postLoadEvents[callbackName];
+                            commercialComponent.postLoadEvents[callbackName] = function (el) {
+                                originalPostLoadEvents && originalPostLoadEvents.call(commercialComponent, el);
                                 $capiType.removeClass('lazyloaded');
                             };
                             commercialComponent.create();

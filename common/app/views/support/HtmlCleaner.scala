@@ -12,7 +12,6 @@ import model.content.{Atom, Atoms}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
-
 import scala.collection.JavaConversions._
 
 trait HtmlCleaner {
