@@ -80,7 +80,7 @@ object TakeoverWithEmptyMPUs {
     val takeovers = S3.get(takeoversWithEmptyMPUsKey) map {
       Json.parse(_).as[Seq[TakeoverWithEmptyMPUs]]
     } getOrElse Nil
-    takeovers
+    takeovers filter {t => mustBeAtLeastOneDirectoryDeep(t.url) == Valid}
   }
 
   def fetchSorted(): Seq[TakeoverWithEmptyMPUs] = {
