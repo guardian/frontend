@@ -38,7 +38,8 @@
     .fc-item__standfirst,
     .fc-item--list-compact,
     .item__title,
-    .linkslist__action {
+    .linkslist__action,
+    .fc-sublink__title {
         @include f-headlineSans;
     }
 
