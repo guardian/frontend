@@ -34,6 +34,21 @@ define([
         }
     };
 
+    policies.minuteArticle = function () {
+        // Describe the policy for minute articles
+        if (config.page.isMinuteArticle) {
+            return {
+                topBannerAd : false,
+                articleBodyAdverts : false,
+                articleAsideAdverts : false,
+                sliceAdverts : false,
+                popularContentMPU : false,
+                videoPreRolls : false,
+                frontCommercialComponents : false
+            };
+        }
+    };
+
     policies.sslContent = function () {
         if (config.page.isSSL && config.page.section !== 'admin') {
             return new CommercialFeatureSwitches(false);
@@ -87,15 +102,14 @@ define([
 
     policies.nonArticlePages = function () {
         var isArticle = config.page.contentType === 'Article',
-            isLiveBlog = config.page.isLiveBlog,
-            isMinuteArticle = config.page.isUSMinuteSeries;
+            isLiveBlog = config.page.isLiveBlog;
 
-        if (!isArticle && !isLiveBlog && !isMinuteArticle) {
+        if (!isArticle && !isLiveBlog) {
             return {
                 articleBodyAdverts : false,
                 articleAsideAdverts : false
             };
-        } else if (isLiveBlog || isMinuteArticle) {
+        } else if (isLiveBlog) {
             return {
                 articleBodyAdverts : false
             };
