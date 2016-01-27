@@ -53,12 +53,15 @@ case class BreakingNewsCollection(displayName: String, href: String, content: Se
 case class BreakingNews(alerts: Set[NewsAlertNotification]) {
 
   val collections = List(
-    BreakingNewsCollection("UK alerts", "uk", alerts.filter(_.isOfType(NewsAlertTypes.Uk))),
-    BreakingNewsCollection("US alerts", "us", alerts.filter(_.isOfType(NewsAlertTypes.Us))),
-    BreakingNewsCollection("AU alerts", "au", alerts.filter(_.isOfType(NewsAlertTypes.Au))),
-    BreakingNewsCollection("Sport alerts", "sport", alerts.filter(_.isOfType(NewsAlertTypes.Sport))),
-    BreakingNewsCollection("International alerts", "international", alerts.filter(_.isOfType(NewsAlertTypes.International)))
+    BreakingNewsCollection("UK alerts", "uk", alertsOfType(NewsAlertTypes.Uk)),
+    BreakingNewsCollection("US alerts", "us", alertsOfType(NewsAlertTypes.Us)),
+    BreakingNewsCollection("AU alerts", "au", alertsOfType(NewsAlertTypes.Au)),
+    BreakingNewsCollection("Sport alerts", "sport", alertsOfType(NewsAlertTypes.Sport)),
+    BreakingNewsCollection("International alerts", "international", alertsOfType(NewsAlertTypes.International))
   )
+
+  private def alertsOfType(newsAlertType: NewsAlertType) =
+    alerts.filter(_.isOfType(newsAlertType)).toList.sortWith(_.publicationDate isAfter  _.publicationDate).take(1).toSet //We are only interested by the most recent alert
 }
 
 object BreakingNews {

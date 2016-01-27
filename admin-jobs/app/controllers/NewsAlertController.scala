@@ -1,13 +1,15 @@
 package controllers
 
-import common.ExecutionContexts
+import common.{ExecutionContexts, Logging}
 import model.Cached
-import models.{BreakingNews, NewsAlertNotification}
-import play.api.libs.json._
+import models.NewsAlertNotification
+import play.api.libs.json.{Json, _}
 import play.api.mvc.BodyParsers.parse.{json => BodyJson}
 import play.api.mvc._
 
-trait NewsAlertController extends Controller with ExecutionContexts
+import scala.concurrent.Future
+
+trait NewsAlertController extends Controller with Logging with ExecutionContexts
 {
 
   case class NewsAlertError(error: String)
@@ -26,15 +28,27 @@ trait NewsAlertController extends Controller with ExecutionContexts
 
   def create() : Action[NewsAlertNotification] = Action.async(BodyJson[NewsAlertNotification]) { request =>
     val receivedNotification : NewsAlertNotification = request.body
-    // Generating json output
-    import models.BreakingNewsFormats._
-    val breakingNewsJson : JsValue = Json.toJson(BreakingNews(Set(receivedNotification)))
-    // Writing to S3
-    breakingNewsApi.putBreakingNews(breakingNewsJson) map {
-      case true => Created(Json.toJson(receivedNotification)) // mirroring back the received notification
-      case false => InternalServerError(Json.toJson(NewsAlertError("Error while creating new notification")))
-    }
+    val receivedNotificationJson = Json.toJson(receivedNotification)
 
+    import models.BreakingNews
+    import models.BreakingNewsFormats._
+    def fetch = breakingNewsApi.getBreakingNews
+    def parse(json : JsValue) = Future(json.as[BreakingNews])
+    def save(b: BreakingNews) = breakingNewsApi.putBreakingNews(Json.toJson(b))
+
+    val result = for {
+      currentBreakingNewsJson <- fetch
+      currentBreakingNews <- parse(currentBreakingNewsJson.get)
+      didSave <- save(BreakingNews(currentBreakingNews.alerts + receivedNotification))
+    } yield didSave
+
+    result.map{
+      case _ => Created(receivedNotificationJson) // mirroring back the received notification
+    }.recover{
+      case e: Throwable =>
+        log.error(s"Cannot create a new alert (${e.getMessage})")
+        InternalServerError(Json.toJson(NewsAlertError("Error while creating new notification")))
+    }
   }
 }
 
