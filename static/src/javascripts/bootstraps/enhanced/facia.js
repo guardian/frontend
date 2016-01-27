@@ -43,7 +43,8 @@ define([
     sponsorship,
     weather,
     partial,
-    forEach) {
+    forEach
+) {
 
     var modules = {
             showSnaps: function () {

@@ -7,7 +7,8 @@ define([
     $,
     bonzo,
     bean,
-    debounce) {
+    debounce
+) {
     function initialise() {
         $('.browser-table').each(function () {
             var node  = $(this),

@@ -35,7 +35,8 @@ define([
     assign,
     forEach,
     filter,
-    some) {
+    some
+) {
 
     function SaveForLater() {
         this.classes = {

@@ -13,7 +13,8 @@ define([
     mediator,
     config,
     ab,
-    find) {
+    find
+) {
     var tests = [
             {variant: 'curated', containerId: '1ce8-6c50-425f-9d32'},
             {variant: 'news',    containerId: 'b073-c5d7-c8a9-1e32'}

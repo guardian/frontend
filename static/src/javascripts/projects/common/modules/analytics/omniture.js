@@ -36,7 +36,8 @@ define([
     forEach,
     uniq,
     map,
-    robust) {
+    robust
+) {
     var R2_STORAGE_KEY = 's_ni', // DO NOT CHANGE THIS, ITS IS SHARED WITH R2. BAD THINGS WILL HAPPEN!
         NG_STORAGE_KEY = 'gu.analytics.referrerVars',
         standardProps = 'channel,prop1,prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop37,prop38,prop47,' +

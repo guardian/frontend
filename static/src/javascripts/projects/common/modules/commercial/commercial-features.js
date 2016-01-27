@@ -3,7 +3,8 @@ define([
     'lodash/objects/forOwn'
 ], function (
     commercialFeaturePolicies,
-    forOwn) {
+    forOwn
+) {
     function init() {
         var commercialFeatures = getFeatureSwitches();
         commercialFeatures.reset = init; // Exposed for testing

@@ -1,7 +1,8 @@
 define([
     'lodash/utilities/template'
 ], function (
-    template) {
+    template
+) {
 
     return template;
 

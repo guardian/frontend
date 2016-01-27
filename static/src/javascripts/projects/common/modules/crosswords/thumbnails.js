@@ -19,7 +19,8 @@ define([
     flatten,
     map,
     range,
-    forEach) {
+    forEach
+) {
     var textXOffset = 10;
     var textYOffset = 21;
 

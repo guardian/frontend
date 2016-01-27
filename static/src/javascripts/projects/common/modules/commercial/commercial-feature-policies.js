@@ -11,7 +11,8 @@ define([
     detect,
     userFeatures,
     userPrefs,
-    mapValues) {
+    mapValues
+) {
     var policies = {};
 
     policies.defaultAds = function () {

@@ -30,7 +30,8 @@ define([
     contains,
     pluck,
     initial,
-    rest) {
+    rest
+) {
 
     var supportsPushState,
         getUserAgent,

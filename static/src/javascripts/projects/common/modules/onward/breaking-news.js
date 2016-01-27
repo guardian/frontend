@@ -37,7 +37,8 @@ define([
     filter,
     flatten,
     chain,
-    first) {
+    first
+) {
     var alertWithinSeconds = 1200, // 20 minutes
         supportedSections = {
             'sport': 'sport',

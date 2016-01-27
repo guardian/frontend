@@ -5,7 +5,8 @@ define([
 ], function (
     $,
     bonzo,
-    filter) {
+    filter
+) {
     var $rhc = $('.js-components-container');
 
     /**

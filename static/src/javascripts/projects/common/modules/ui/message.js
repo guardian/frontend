@@ -15,7 +15,8 @@ define([
     mediator,
     detect,
     debounce,
-    uniq) {
+    uniq
+) {
 
     /**
      * Message provides a common means of flash messaging a user in the UI.
