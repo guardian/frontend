@@ -92,7 +92,6 @@ object Us extends Edition(
     NavItem(fashion),
     NavItem(business, Seq(markets, companies)),
     NavItem(travel, Seq(usaTravel, europetravel, uktravel)),
-    NavItem(environment, environmentLocalNav),
-    NavItem(science)
+    NavItem(environment, environmentLocalNav)
   )
 }
