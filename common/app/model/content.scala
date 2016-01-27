@@ -460,6 +460,7 @@ final case class Article (
   lazy val isSport: Boolean = tags.tags.exists(_.id == "sport/sport")
   //@deprecated("use content.fields.blocks", "")
   lazy val blocks = LiveBlogParser.parse(fields.body)
+  lazy val mostRecentBlock: Option[String] = blocks.headOption.map(_.id)
 }
 
 object Audio {

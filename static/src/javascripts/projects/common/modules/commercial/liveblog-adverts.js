@@ -82,8 +82,8 @@ define([
             }
             adCriteria = adCriterias[criteriaType];
             reset();
-            mediator.on('modules:autoupdate:updates', function (updates) {
-                postsCount += updates.length;
+            mediator.on('modules:autoupdate:updates', function (numberOfUpdates) {
+                postsCount += Number(numberOfUpdates);
                 if (
                     postsCount >= adCriteria[state].posts &&
                     timedOut &&
@@ -98,7 +98,7 @@ define([
                                 .last()
                                 .detach();
                     // put the ad slot after the latest post
-                    $('.js-liveblog-body .block:first-child').after($adSlot);
+                    $('.js-liveblog-body .block').first().after($adSlot);
                     if (displaySlot) {
                         dfp.addSlot($adSlot);
                     } else {

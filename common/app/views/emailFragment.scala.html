@@ -1,5 +1,5 @@
 @(page: model.Page, emailType: String, listId: Int)(implicit request: RequestHeader)
 
-@mainEmail(page){ }{
-    @fragments.email.emailSignUp(emailType, listId, "Sign up to our daily email")
+@emailEmbed(page){
+    @fragments.email.signup.emailSignUp(emailType, listId, "Sign up to our daily email")
 }
