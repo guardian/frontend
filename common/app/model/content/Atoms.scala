@@ -28,8 +28,17 @@ object Quiz {
       path = path,
       title = quiz.data.title,
       quizType = quiz.data.quizType,
-      questions = questions
-      )
+      questions = questions,
+      resultGroups = quiz.data.content.resultGroups.map(resultGroups => {
+        resultGroups.groups.map(resultGroup => {
+          ResultGroup(
+            title = resultGroup.title,
+            shareText = resultGroup.share,
+            minScore = resultGroup.minScore
+          )
+        })
+      })
+    )
   }
 }
 final case class Question(
@@ -41,12 +50,18 @@ final case class Answer(
   revealText: Option[String],
   weight: Int)
 
+final case class ResultGroup(
+  title: String,
+  shareText: String,
+  minScore: Int)
+
 final case class Quiz(
   override val id: String,
   title: String,
   path: String,
   quizType: String,
-  questions: Seq[Question]
+  questions: Seq[Question],
+  resultGroups: Option[Seq[ResultGroup]]
 ) extends Atom {
 
   val postUrl = s"/atom/quiz/$id/$path"
@@ -71,7 +86,7 @@ final case class Quiz(
 
   def submitAnswers(userAnswers: QuizForm.UserAnswers): QuizSubmissionResult = {
     val validAnswers = userAnswers.parsed.flatMap(findQuizDataFor)
-    QuizSubmissionResult(validAnswers)
+    QuizSubmissionResult(quiz = this, entries = validAnswers)
   }
 
   private def getCorrectAnswer(question: Question): Option[Answer] = {
@@ -83,13 +98,36 @@ final case class Quiz(
   }
 
   def isCorrectAnswer(inputQuestion: Question, inputAnswer: Answer): Boolean = {
-    getCorrectAnswer(inputQuestion).map(inputAnswer.equals(_)).getOrElse(false)
+    getCorrectAnswer(inputQuestion).map(inputAnswer.equals(_)).exists(boolean => boolean)
   }
 }
 
 final case class QuizSubmissionResult(
+  quiz: Quiz,
   entries: Seq[(Question, Answer)]
-)
+) {
+  def getAnswerFor(question: Question): Option[Answer] = {
+    entries
+      .find { case (inputQuestion, _) => inputQuestion.equals(question) }
+      .map(_._2)
+  }
+
+  val correctAnswers: Seq[Answer] =
+    entries
+      .filter { case (question, answer) => quiz.isCorrectAnswer(question, answer) }
+      .map(_._2)
+
+  val score: Int = correctAnswers.size
+
+  val resultGroup: Option[ResultGroup] = {
+    quiz.resultGroups.flatMap(resultGroups => {
+      resultGroups
+        .filter(score >= _.minScore)
+        .sortBy(_.minScore)
+        .lastOption
+    })
+  }
+}
 
 object QuizForm {
 

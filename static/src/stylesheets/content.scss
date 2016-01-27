@@ -149,10 +149,6 @@
     color: #767676;
 }
 
-.quiz__title {
-    color: #333333; /* neutral-1 */
-}
-
 .quiz__question {
     margin-bottom: 36px;
     // Unset
@@ -165,26 +161,20 @@
     padding: 0;
 }
 
-.quiz__question-legend {
+.quiz__question__legend {
     margin-bottom: 10px;
 }
 
-.quiz__question-legend__header {
+.quiz__question__legend__header {
     color: #333333; /* neutral-1 */
     display: table;
 }
 
-.quiz__question-text {
+.quiz__question__legend__header__text {
     display: table-cell;
 }
 
-.quiz__answer-aggregate {
-    display: block;
-    font-size: 12px;
-    padding: .5em 0em;
-}
-
-.quiz__question-number {
+.quiz__question__legend__header__number {
     display: table-cell;
     font-size: 18px;
     min-width: 24px;
@@ -222,6 +212,37 @@
     outline: 3px solid #ffbf47;
 }
 
+.quiz__answer--question-has-submission {
+    cursor: default;
+    opacity: .5;
+}
+
+.quiz__answer--correct {
+    background: #aedfb8;
+    color: #505050;
+}
+
+.quiz__answer--incorrect {
+    color: #bdbdbd; /* neutral-3 */
+}
+
+.quiz__answer--correct--not-answered,
+.quiz__answer--correct--is-chosen,
+.quiz__answer--incorrect--is-chosen {
+    opacity: 1;
+    color: #ffffff;
+}
+
+// TODO: Highlight unchosen but correct differently
+.quiz__answer--correct--is-chosen,
+.quiz__answer--correct--not-answered {
+    background-color: #43b347; /* ??? */
+}
+
+.quiz__answer--incorrect--is-chosen {
+    background-color: #bb001a; /* ??? */
+}
+
 .quiz__answer__input {
     // Unset
     float: none;
@@ -231,83 +252,30 @@
     margin-right: 1rem;
 }
 
-.quiz__answer__content {
-    vertical-align: top;
+.quiz__answer__reveal-text {
+    display: block;
+    font-size: 12px;
+    padding: .5em 0em;
 }
 
-.quiz__answer__image {
-    width: 100%;
-}
-
-.quiz__answer__image > img {
-    width: 100%;
-}
-
-.quiz__answer--submission {
-    cursor: default;
-    opacity: .5;
-}
-
-.quiz__answer--correct, .quiz__question__more {
-    background: #aedfb8;
-    color: #505050;
-}
-
-.quiz__question__more {
-    padding: 12px;
-}
-
-.quiz__answer--is-chosen,
-.quiz__answer--correct--is-chosen,
-.quiz__answer--correct--not-answered {
-    background-color: #43b347; /* ??? */
-    color: #ffffff;
-    opacity: 1;
-}
-
-.quiz__answer--incorrect {
-    color: #bdbdbd; /* neutral-3 */
-}
-
-.quiz__answer--incorrect--is-chosen {
-    background-color: #bb001a; /* ??? */
-    color: #ffffff;
-    opacity: 1;
-}
-
-.quiz__answer-icon {
+.quiz__answer__icon {
     position: absolute;
     left: 10px;
     top: 5px;
     font-size: 26px;
     color: #ffffff;
-}
 
-.quiz__answer__more {
-    margin-top: 6px;
-    font-size: 15px;
-    opacity: .8;
-}
-
-.quiz__answer__more a {
-    color: #ffffff;
-    text-decoration: underline;
-}
-
-.quiz__answer--correct .quiz__answer__more a {
-    color: #333333;
-    text-decoration: underline;
-}
-
-.quiz__answer--correct--is-chosen .quiz__answer__more a {
-    color: #ffffff;
-    text-decoration: underline;
+    svg {
+        width: 12px;
+        height: 12px;
+        vertical-align: middle;
+    }
 }
 
 .quiz__end-message {
     border-top: 1px solid #aad8f1; /* news-support-1 */
     background-color: #f6f6f6; /* neutral-8 */
-    padding: 30px 12px 10px;
+    padding: 10px 12px;
 }
 
 .quiz__score-message {
@@ -319,12 +287,7 @@
     color: #005689;
     font-size: 48px;
     margin-left: 4px;
-}
-
-.quiz__end-message__beat {
-    color: #005689;
-    font-size: 48px;
-    margin-left: 4px;
+    vertical-align: middle;
 }
 
 .quiz__bucket-message {
@@ -332,24 +295,46 @@
     margin-bottom: 10px;
 }
 
-.quiz__answer-icon-svg svg {
-    width: 12px;
-    height: 12px;
-    vertical-align: middle;
-}
-
-.quiz__share__outline {
-    text-align: center;
-}
-
-.quiz__question__img {
+.quiz__share {
     width: 100%;
+    // Clearfix floated children
+    overflow: hidden;
 }
 
-.quiz__image-caption {
-    padding-bottom: 0;
+.quiz__share__cta {
+    padding-top: $gs-baseline;
+    padding-bottom: $gs-baseline;
+    font-weight: 500;
+    font-size: 24px;
 }
 
-.quiz__image-caption::before {
-    margin-right: 3px;
+.quiz__share__action {
+    float: left;
+    margin-right: $gs-gutter / 4;
+    border-radius: 25px;
+    display: block;
+}
+
+.quiz__share__action--twitter {
+    background-color: #03b3ee;
+}
+
+.quiz__share__action--facebook {
+    background-color: #3067a3;
+}
+
+.quiz__share__action__svg {
+    background-size: 96%;
+    background-position: center;
+    display: block;
+    width: 50px;
+    height: 50px;
+}
+
+.quiz__share__action__svg--twitter {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iLTIgLTIgMzIgMzIiPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0yMS4zIDEwLjV2LjVjMCA0LjctMy41IDEwLjEtOS45IDEwLjEtMiAwLTMuOC0uNi01LjMtMS42LjMgMCAuNi4xLjguMSAxLjYgMCAzLjEtLjYgNC4zLTEuNS0xLjUgMC0yLjgtMS0zLjMtMi40LjIgMCAuNC4xLjcuMWwuOS0uMWMtMS42LS4zLTIuOC0xLjgtMi44LTMuNS41LjMgMSAuNCAxLjYuNC0uOS0uNi0xLjYtMS43LTEuNi0yLjkgMC0uNi4yLTEuMy41LTEuOCAxLjcgMi4xIDQuMyAzLjYgNy4yIDMuNy0uMS0uMy0uMS0uNS0uMS0uOCAwLTIgMS42LTMuNSAzLjUtMy41IDEgMCAxLjkuNCAyLjUgMS4xLjgtLjEgMS41LS40IDIuMi0uOC0uMy44LS44IDEuNS0xLjUgMS45LjctLjEgMS40LS4zIDItLjUtLjQuNC0xIDEtMS43IDEuNXoiLz48L3N2Zz4=);
+}
+
+.quiz__share__action__svg--facebook {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iLTIgLTIgMzIgMzIiPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0xNy45IDE0aC0zdjhIMTJ2LThoLTJ2LTIuOWgyVjguN0MxMiA2LjggMTMuMSA1IDE2IDVjMS4yIDAgMiAuMSAyIC4xdjNoLTEuOGMtMSAwLTEuMi41LTEuMiAxLjN2MS44aDNsLS4xIDIuOHoiLz48L3N2Zz4=);
 }

@@ -11,27 +11,54 @@
     @quiz.questions.zipWithIndex.map { case (question, questionIndex) =>
         @renderQuestion(question, questionIndex, QuizForm.form(s"answers[$questionIndex]"))
     }
-    @maybeResults match {
-        case None => { <button class="button" type="submit">Submit answers</button> }
-        case _ => {}
+    @maybeResults.map { results =>
+        @renderEndMessage(results)
+    }.getOrElse {
+        <button class="button" type="submit">Submit answers</button>
     }
 </form>
 
+@renderEndMessage(results: QuizSubmissionResult) = {
+    <div class="quiz__end-message">
+        <div class="quiz__score-message">
+            You got
+            <span class="quiz__score">@results.score/@quiz.questions.size</span>
+        </div>
+        @results.resultGroup.map { resultGroup =>
+            <div class="quiz__bucket-message">@resultGroup.title</div>
+        }
+        <div class="quiz__share">
+            <div class="quiz__share__cta">Challenge your friends</div>
+            <a class="quiz__share__action quiz__share__action--facebook"
+                data-link-name="social results : facebook"
+                href=""
+                target="_blank"
+                title="facebook">
+                <i class="quiz__share__action__svg--facebook quiz__share__action__svg"></i>
+            </a>
+            <div class="quiz__share__gap"></div>
+            <a class="quiz__share__action quiz__share__action--twitter"
+                data-link-name="social results : twitter"
+                href=""
+                target="_blank"
+                title="twitter">
+                <i class="quiz__share__action__svg--twitter quiz__share__action__svg"></i>
+            </a>
+        </div>
+    </div>
+}
+
 @renderQuestion(question: _root_.model.content.Question, questionIndex: Int, field: play.api.data.Field) = {
     <fieldset class="quiz__question">
-        <legend class="quiz__question-legend">
-            <h4 class="quiz__question-legend__header">
-                <span class="quiz__question-number">@{questionIndex+1}</span>
-                <span class="quiz__question-text">@question.text</span>
+        <legend class="quiz__question__legend">
+            <h4 class="quiz__question__legend__header">
+                <span class="quiz__question__legend__header__number">@{questionIndex+1}</span>
+                <span class="quiz__question__legend__header__text">@question.text</span>
             </h4>
         </legend>
         @question.answers.zipWithIndex.map { case (answer, answerIndex) =>
             @{
-                val maybeInputAnswer = maybeResults.flatMap { results => {
-                    results.entries
-                        .find { case (inputQuestion, _) => inputQuestion.equals(question) }
-                        .map(_._2)
-                } }
+                val maybeInputAnswer = maybeResults.flatMap(_.getAnswerFor(question))
                 val isAnswerCorrect = quiz.isCorrectAnswer(question, answer)
                 renderAnswer(question, answer, questionIndex, answerIndex, isAnswerCorrect, maybeInputAnswer)
             }
@@ -48,7 +75,7 @@
                     maybeResults
                         .map(x => {
                             Seq(
-                                "quiz__answer--submission",
+                                "quiz__answer--question-has-submission",
                                 s"quiz__answer--${if(isAnswerCorrect) { "correct" } else { "incorrect" }}",
                                 maybeInputAnswer
                                     .map { inputAnswer => {
@@ -63,13 +90,13 @@
                 ).mkString(" ")
             }">
             @maybeResults.map { x =>
-                <span class="quiz__answer-icon">
+                <span class="quiz__answer__icon">
                     @if(isAnswerCorrect) {
-                        @inlineSvg("tick", "icon", List("quiz__answer-icon-svg"))
+                        @inlineSvg("tick", "icon")
                     } else {
                         @maybeInputAnswer.map { inputAnswer =>
                             @if(inputAnswer.equals(answer)) {
-                                @inlineSvg("cross", "icon", List("quiz__answer-icon-svg"))
+                                @inlineSvg("cross", "icon")
                             }
                         }
                     }
@@ -81,10 +108,10 @@
                     value="Q@{questionIndex}##A@{answerIndex}##@{answer.text}"
                     class="quiz__answer__input">
             }
-            <span class="quiz__answer-text">@{answer.text}</span>
+            <span class="quiz__answer__text">@{answer.text}</span>
             @maybeInputAnswer.map { inputAnswer =>
                 @if(answer.revealText.isDefined && isAnswerCorrect && inputAnswer.equals(answer)) {
-                    <span class="quiz__answer-aggregate">@answer.revealText</span>
+                    <span class="quiz__answer__reveal-text">@answer.revealText</span>
                 }
             }
         </label>
