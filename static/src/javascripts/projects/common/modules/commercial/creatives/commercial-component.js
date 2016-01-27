@@ -78,7 +78,7 @@ define([
             this.type   = this.params.type;
             // remove type from params
             delete this.params.type;
-            this.adSlot    = adSlot;
+            this.adSlot    = adSlot.length ? adSlot[0] : adSlot;
             this.components = {
                 bestbuy:        buildComponentUrl('money/bestbuys', this.params),
                 book:           buildComponentUrl('books/book', merge({}, this.params, { t: config.page.isbn || this.params.isbn })),
