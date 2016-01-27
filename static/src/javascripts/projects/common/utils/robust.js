@@ -9,7 +9,8 @@ define([
 ], function (
     reportError,
     forEach,
-    map) {
+    map
+) {
     var catchErrors = function (fn) {
         var error;
         try {

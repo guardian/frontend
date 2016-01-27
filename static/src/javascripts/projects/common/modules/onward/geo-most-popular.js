@@ -13,7 +13,8 @@ define([
     qwery,
     Component,
     mediator,
-    once) {
+    once
+) {
 
     var promise = new Promise(function (resolve, reject) {
         mediator.on('modules:onward:geo-most-popular:ready', resolve);

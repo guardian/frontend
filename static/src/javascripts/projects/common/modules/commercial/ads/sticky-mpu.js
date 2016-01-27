@@ -7,7 +7,8 @@ define([
     config,
     Sticky,
     fastdom,
-    defaults) {
+    defaults
+) {
 
     var mpuHeight = 275,
         StickyMpu = function ($adSlot, options) {

@@ -23,7 +23,8 @@ define([
     commercialFeatures,
     dfp,
     badgeTpl,
-    map) {
+    map
+) {
     var badgesConfig = {
             sponsoredfeatures: {
                 count:      0,

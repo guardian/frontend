@@ -9,7 +9,8 @@ define([
 ], function (
     Component,
     ParticipationItem,
-    assign) {
+    assign
+) {
 
     function Participation(config) {
         this.config = assign(this.config, config);

@@ -14,7 +14,8 @@ define([
     flatMap,
     Grid,
     range,
-    map) {
+    map
+) {
     return function () {
         $('.js-sudoku').each(function (element) {
             var $element = bonzo(element),

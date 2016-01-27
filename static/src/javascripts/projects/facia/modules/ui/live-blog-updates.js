@@ -35,7 +35,8 @@ define([
     filter,
     isEmpty,
     map,
-    chain) {
+    chain
+) {
     var animateDelayMs = 2000,
         animateAfterScrollDelayMs = 500,
         refreshSecs = 30,

@@ -45,7 +45,8 @@ define([
     map,
     find,
     pick,
-    chain) {
+    chain
+) {
 
     var TESTS = flatten([
         new FrontsOnArticles2(),

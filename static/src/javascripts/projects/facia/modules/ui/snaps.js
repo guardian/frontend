@@ -29,7 +29,8 @@ define([
     FootballSnaps,
     once,
     find,
-    debounce) {
+    debounce
+) {
     var clientProcessedTypes = ['document', 'fragment', 'json.html'],
         snapIframes = [],
         bindIframeMsgReceiverOnce = once(function () {

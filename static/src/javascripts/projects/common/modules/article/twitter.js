@@ -19,7 +19,8 @@ define([
     config,
     detect,
     mediator,
-    debounce) {
+    debounce
+) {
     var body = qwery('.js-liveblog-body, .js-article__body');
 
     function bootstrap() {

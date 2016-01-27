@@ -11,7 +11,8 @@ define([
     qwery,
     detect,
     mediator,
-    throttle) {
+    throttle
+) {
     var distanceBeforeLoad = detect.getViewport().height;
 
     return function () {

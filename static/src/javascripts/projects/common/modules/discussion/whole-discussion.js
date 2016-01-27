@@ -15,7 +15,8 @@ define([
     $,
     ajaxPromise,
     forEach,
-    range) {
+    range
+) {
     // This size effectively determines how many calls this module needs to make.
     // Number of ajax calls = number of comments / comments per page
     var commentsPerPage = 50,
