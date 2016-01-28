@@ -31,7 +31,8 @@ define([
     svgs,
     sample,
     filter,
-    find) {
+    find
+) {
     function showAdblockMessage() {
         var adblockLink = 'https://membership.theguardian.com/supporter',
             message = sample([

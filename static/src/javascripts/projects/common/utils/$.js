@@ -5,7 +5,8 @@ define([
 ], function (
     bonzo,
     qwery,
-    forEach) {
+    forEach
+) {
 
     // Warning: side effect. This patches the bonzo module for use everywhere
     bonzo.aug({

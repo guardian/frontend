@@ -18,7 +18,16 @@ trait ABTestSwitches {
     "ab-fronts-on-articles2",
     "Injects fronts on articles for the test",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 1),
+    sellByDate = new LocalDate(2016, 4, 1),
+    exposeClientSide = true
+  )
+
+  val ABIdentityRegisterV2 = Switch(
+    "A/B Tests",
+    "ab-identity-register-v2",
+    "New user registration page variant for Identity",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 3, 1),
     exposeClientSide = true
   )
 
@@ -49,6 +58,15 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABLiveblogToast = Switch(
+    "A/B Tests",
+    "ab-liveblog-toast",
+    "Enables Liveblog toast (0% test)",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 3, 1),
+    exposeClientSide = true
+  )
+
   val ABPrebidPerformance = Switch(
     "A/B Tests",
     "ab-prebid-performance",
@@ -58,12 +76,12 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val UserzoomSurveyMessageV2 = Switch(
+  val UserzoomSurveyMessageV3 = Switch(
     "A/B Tests",
-    "ab-userzoom-survey-message-v2",
+    "ab-userzoom-survey-message-v3",
     "Segment the userzoom data-team survey",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 4),
+    sellByDate = new LocalDate(2016, 2, 11),
     exposeClientSide = true
   )
 }

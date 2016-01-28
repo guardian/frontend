@@ -14,7 +14,8 @@ define([
     $,
     ajax,
     urlUtils,
-    where) {
+    where
+) {
 
     function getHours() {
         var hours =  /[?&]hours=([^&]*)/.exec(window.location.search);

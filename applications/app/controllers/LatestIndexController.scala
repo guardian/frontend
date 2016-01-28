@@ -15,7 +15,11 @@ object LatestIndexController extends Controller with ExecutionContexts with impl
   def latest(path: String) = Action.async { implicit request =>
     loadLatest(path).map { _.map { index =>
       index.page match {
-        case tag: Tag if tag.isSeries || tag.isBlog => index.trails.headOption.map(latest => Found(latest.metadata.url)).getOrElse(NotFound)
+        case tag: Tag if tag.isSeries || tag.isBlog => index.trails.headOption.map(latest => {
+          if (request.isEmail) Found(latest.metadata.url + "/email")
+          else                 Found(latest.metadata.url)
+        }).getOrElse(NotFound)
+
         case tag: Tag => MovedPermanently(s"${tag.metadata.url}/all")
         case section: Section =>
           val url = if (section.isEditionalised) Paths.stripEditionIfPresent(section.metadata.url) else section.metadata.url

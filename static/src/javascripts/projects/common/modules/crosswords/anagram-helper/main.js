@@ -27,7 +27,8 @@ define([
     map,
     compact,
     filter,
-    chain) {
+    chain
+) {
     var AnagramHelper = React.createClass({
         getInitialState: function () {
             return {

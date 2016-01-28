@@ -11,7 +11,8 @@ define([
     config,
     history,
     reduce,
-    isEmpty) {
+    isEmpty
+) {
     return function () {
         var placeholder = document.getElementById('preferences-history-tags'),
 

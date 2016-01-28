@@ -12,7 +12,8 @@ define([
     mediator,
     omniture,
     Id,
-    debounce) {
+    debounce
+) {
 
     /**
      * event51: Comment

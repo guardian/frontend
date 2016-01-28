@@ -14,7 +14,7 @@ object Us extends Edition(
   displayName = "US edition",
   timezone = DateTimeZone.forID("America/New_York"),
   locale = Locale.forLanguageTag("en-us"),
-  homePagePath = "/us"
+  networkFrontId = "us"
 ) with QueryDefaults {
 
   implicit val US = Us
@@ -58,6 +58,7 @@ object Us extends Edition(
   override val navigation: Seq[NavItem] = {
     Seq(
       NavItem(home),
+      NavItem(usElection2016),
       NavItem(us),
       NavItem(world, worldLocalNav),
       NavItem(opinion),
@@ -79,6 +80,7 @@ object Us extends Edition(
 
   override def briefNav: Seq[NavItem] = Seq(
     NavItem(home),
+    NavItem(usElection2016),
     NavItem(us),
     NavItem(world, worldLocalNav),
     NavItem(opinion),
@@ -90,7 +92,6 @@ object Us extends Edition(
     NavItem(fashion),
     NavItem(business, Seq(markets, companies)),
     NavItem(travel, Seq(usaTravel, europetravel, uktravel)),
-    NavItem(environment, environmentLocalNav),
-    NavItem(science)
+    NavItem(environment, environmentLocalNav)
   )
 }

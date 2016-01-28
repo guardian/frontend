@@ -7,7 +7,8 @@ define([
     'lodash/objects/assign'
 ], function (
     Component,
-    assign) {
+    assign
+) {
 
     function ParticipationItem(config) {
         this.config = assign(this.config, config);

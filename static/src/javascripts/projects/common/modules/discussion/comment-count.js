@@ -35,7 +35,8 @@ define([
     sortBy,
     uniq,
     keys,
-    chain) {
+    chain
+) {
     var attributeName = 'data-discussion-id',
         countUrl = '/discussion/comment-counts.json?shortUrls=',
         templates = {

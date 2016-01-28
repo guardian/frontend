@@ -37,7 +37,8 @@ define([
     Comments,
     Id,
     userPrefs,
-    isNumber) {
+    isNumber
+) {
 
 var Loader = function() {
     register.begin('discussion');

@@ -1,4 +1,4 @@
-@(item: model.ContentType, showBadge: Boolean = false)(implicit request: RequestHeader)
+@(item: model.ContentType, showBadge: Boolean = false, showMeta: Boolean = true)(implicit request: RequestHeader)
 
 @import views.support.TrailCssClasses.toneClass
 @import views.support.ContributorLinks
@@ -11,7 +11,9 @@
         <div class="gs-container">
             <div class="content__main-column">
 
-                @fragments.meta.metaInline(item)
+                @if(showMeta) {
+                    @fragments.meta.metaInline(item)
+                }
 
                 <h1 class="content__headline js-score" itemprop="headline">
                     @item match {

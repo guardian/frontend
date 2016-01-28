@@ -38,7 +38,8 @@
     .fc-item__standfirst,
     .fc-item--list-compact,
     .item__title,
-    .linkslist__action {
+    .linkslist__action,
+    .fc-sublink__title {
         @include f-headlineSans;
     }
 
@@ -114,6 +115,11 @@
     .ad-slot--container-inline .ad-slot__label {
         background-color: colour(paid-article-subheader);
         border-top: 0;
+    }
+
+    .fc-container--story-package .tone-news--item.fc-item {
+        // This is to override an !important background colour in story-package items
+        background-color: colour(paid-article-subheader) !important;
     }
 
     .tone-media--item {

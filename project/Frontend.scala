@@ -51,7 +51,9 @@ object Frontend extends Build with Prototypes {
       dispatchTest,
       closureCompiler,
       jerseyCore,
-      jerseyClient
+      jerseyClient,
+      cssParser,
+      w3cSac
     )
   ).settings(
       mappings in TestAssets ~= filterAssets
