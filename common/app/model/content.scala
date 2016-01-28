@@ -79,6 +79,7 @@ final case class Content(
   lazy val shortUrlId = fields.shortUrl.replace("http://gu.com", "")
   lazy val shortUrlPath = shortUrlId
   lazy val discussionId = Some(shortUrlPath)
+  lazy val isImmersive = fields.displayHint.contains("immersive")
 
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {
@@ -195,10 +196,15 @@ final case class Content(
       (Some("series", JsString(series.name)), Some("seriesId", JsString(series.id)))
     } getOrElse (None,None)
 
+    val articleMeta = if (tags.isUSMinuteSeries) {
+      Some("isMinuteArticle", JsBoolean(tags.isUSMinuteSeries))
+    } else None
+
     val meta = List[Option[(String, JsValue)]](
       rugbyMeta,
       seriesMeta,
-      seriesIdMeta
+      seriesIdMeta,
+      articleMeta
     ) ++ cricketMeta
     meta.flatten.toMap
   }
@@ -334,14 +340,13 @@ object Article {
     val javascriptConfig: Map[String, JsValue] = Map(
       ("contentType", JsString(contentType)),
       ("isLiveBlog", JsBoolean(content.tags.isLiveBlog)),
-      ("isMinuteArticle", JsBoolean(content.tags.isUSMinuteSeries)),
       ("inBodyInternalLinkCount", JsNumber(content.linkCounts.internal)),
       ("inBodyExternalLinkCount", JsNumber(content.linkCounts.external)),
       ("shouldHideAdverts", JsBoolean(content.shouldHideAdverts)),
       ("hasInlineMerchandise", JsBoolean(commercial.hasInlineMerchandise)),
       ("lightboxImages", lightbox.javascriptConfig),
       ("hasMultipleVideosInPage", JsBoolean(content.hasMultipleVideosInPage)),
-      ("isImmersive", JsBoolean(content.metadata.isImmersive))
+      ("isImmersive", JsBoolean(content.isImmersive))
     ) ++ bookReviewIsbn
 
     val opengraphProperties: Map[String, String] = Map(
@@ -364,7 +369,6 @@ object Article {
       contentType = contentType,
       analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
-      isImmersive = content.fields.displayHint.contains("immersive"),
       schemaType = Some(ArticleSchemas(content.tags)),
       cacheSeconds = if (LongCacheSwitch.isSwitchedOn) {
           if (fields.isLive) 5
@@ -378,7 +382,7 @@ object Article {
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       twitterPropertiesOverrides = twitterProperties,
-      isMinute = content.tags.isUSMinuteSeries
+      hasHeader = content.tags.isUSMinuteSeries || content.isImmersive
     )
   }
 
@@ -428,8 +432,8 @@ final case class Article (
   val lightbox = GenericLightbox(content.elements, content.fields, content.trail, lightboxProperties)
 
   val isLiveBlog: Boolean = content.tags.isLiveBlog && content.fields.blocks.nonEmpty
-  val isImmersive: Boolean = content.metadata.isImmersive
   val isUSMinute: Boolean = content.tags.isUSMinuteSeries
+  val isImmersive: Boolean = content.isImmersive
 
   lazy val hasVideoAtTop: Boolean = soupedBody.body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
@@ -781,7 +785,7 @@ object Interactive {
       contentType = contentType,
       analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
-      isImmersive = fields.displayHint.contains("immersive"),
+      hasHeader = content.isImmersive,
       javascriptConfigOverrides = Map("contentType" -> JsString(contentType)),
       twitterPropertiesOverrides = twitterProperties
     )
@@ -816,7 +820,6 @@ object ImageContent {
       contentType = contentType,
       analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
-      isImmersive = fields.displayHint.contains("immersive"),
       javascriptConfigOverrides = javascriptConfig,
       twitterPropertiesOverrides = Map("twitter:card" -> "photo")
     )

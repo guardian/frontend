@@ -224,7 +224,7 @@ final case class MetaData (
   description: Option[String] = None,
   rssPath: Option[String] = None,
   contentType: String = "",
-  isImmersive: Boolean = false,
+  hasHeader: Boolean = true,
   schemaType: Option[String] = None, // Must be one of... http://schema.org/docs/schemas.html
   cacheSeconds: Int = 60,
   openGraphImages: Seq[String] = Seq(),
@@ -238,8 +238,7 @@ final case class MetaData (
   customSignPosting: Option[NavItem] = None,
   javascriptConfigOverrides: Map[String, JsValue] = Map(),
   opengraphPropertiesOverrides: Map[String, String] = Map(),
-  twitterPropertiesOverrides: Map[String, String] = Map(),
-  isMinute: Boolean = false
+  twitterPropertiesOverrides: Map[String, String] = Map()
 ){
 
   def hasPageSkin(edition: Edition) = if (isPressedPage){
@@ -262,8 +261,6 @@ final case class MetaData (
   }
 
   val hasSlimHeader: Boolean = contentType == "Interactive" || section == "identity"
-
-  val hasNoHeader: Boolean = (isImmersive || isMinute)
 
   // Special means "Next Gen platform only".
   private val special = id.contains("-sp-")

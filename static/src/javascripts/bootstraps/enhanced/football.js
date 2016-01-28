@@ -31,7 +31,8 @@ define([
     tagPageStats,
     ScoreBoard,
     rhc,
-    debounce) {
+    debounce
+) {
 
     function renderNav(match, callback) {
         var matchInfo = new MatchInfo(match, config.page.pageId);

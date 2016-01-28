@@ -12,7 +12,8 @@ define([
     config,
     storage,
     identity,
-    noop) {
+    noop
+) {
     var userFeatures, PERSISTENCE_KEYS;
 
     userFeatures = {

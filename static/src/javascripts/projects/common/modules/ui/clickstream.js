@@ -9,7 +9,8 @@ define([
     mediator,
     ab,
     merge,
-    map) {
+    map
+) {
 
     var Clickstream = function (opts) {
 

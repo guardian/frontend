@@ -19,7 +19,8 @@ define([
     dfp,
     contains,
     debounce,
-    once) {
+    once
+) {
 
     var postsCount,
         timedOut,

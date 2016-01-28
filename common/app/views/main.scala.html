@@ -37,15 +37,15 @@ http://developers.theguardian.com/join-the-team.html
             ("has-membership-access-requirement", page.metadata.requiresMembershipAccess),
             ("childrens-books-site", page.metadata.section == "childrens-books-site"),
             ("ad-below-nav", adBelowNav),
-            ("is-immersive", page.metadata.isImmersive),
-            ("is-immersive-interactive", page.metadata.isImmersive && getContent(page).exists(_.tags.isInteractive))))"
+            ("is-immersive", getContent(page).exists(_.content.isImmersive)),
+            ("is-immersive-interactive", getContent(page).exists(content => content.tags.isInteractive && content.content.isImmersive))))"
         itemscope itemtype="http://schema.org/WebPage">
 
         @fragments.message(page.metadata)
 
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
-        @if(!(page.metadata.hasNoHeader && getContent(page).exists(_.tags.isArticle))) {
+        @if(!(page.metadata.hasHeader && getContent(page).exists(_.tags.isArticle))) {
             @if(!mvt.CMTopBannerPosition.isParticipating) {
                 @if(showAdverts) {
                     @fragments.commercial.topBanner(page.metadata, edition)

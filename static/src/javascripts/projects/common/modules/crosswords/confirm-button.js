@@ -5,7 +5,8 @@ define([
 ], function (
     React,
     classNames,
-    assign) {
+    assign
+) {
     var ConfirmButton = React.createClass({
         getInitialState: function () {
             this.timeout = this.props.timeout || 2000;

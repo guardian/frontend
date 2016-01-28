@@ -25,7 +25,8 @@ define([
     adblockMsg,
     commercialFeatures,
     contains,
-    bindAll) {
+    bindAll
+) {
     function StickyHeader() {
         this.breakpoint = detect.getBreakpoint();
 

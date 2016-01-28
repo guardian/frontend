@@ -3,7 +3,8 @@ define([
     'lodash/collections/map'
 ], function (
     React,
-    map) {
+    map
+) {
     var round = function (x) {
         return Math.round(x * 100) / 100;
     };
