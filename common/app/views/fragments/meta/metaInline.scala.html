@@ -2,7 +2,16 @@
 
 @import common.{LinkTo, Localisation}
 
-    <div class="content__labels">
+@defining(
+    item.content.tags.tags.exists(_.id == "business/debt-crisis")
+){ isUSElection =>
+    <div class="content__labels @if(isUSElection) {content__labels--us-election}">
+
+        @if(isUSElection) {
+            <div class="badge-slot badge-slot--us-election">
+                <img class="badge-slot__img" src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2016/1/28/1453981123556/uselectionlogo.png"/>
+            </div>
+        }
 
         <div class="content__section-label">
             <a class="content__section-label__link" data-link-name="article section" href="@LinkTo {/@item.content.sectionLabelLink}">@Html(Localisation(item.content.sectionLabelName))</a>
@@ -20,3 +29,4 @@
             }
         }
     </div>
+}
