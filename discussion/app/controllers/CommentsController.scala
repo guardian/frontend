@@ -14,6 +14,7 @@ import model.NoCache
 import play.api.Play.current
 import play.api.data.validation._
 
+
 import scala.util.control.NonFatal
 
 object CommentsController extends DiscussionController with ExecutionContexts {
@@ -78,9 +79,12 @@ object CommentsController extends DiscussionController with ExecutionContexts {
   val reportAbuseThankYouPage = SimplePage(MetaData.make("/reportAbuseThankYou", "Discussion", "Report Abuse Thank You", "GFE: Report Abuse Thank You"))
 
 
-  def reportAbuseThankYou(commentId: Int) = Action { implicit request =>
-
-    Cached(60) { Ok(views.html.discussionComments.reportCommentThankYou(commentId, reportAbuseThankYouPage)) }
+  def reportAbuseThankYou(commentId: Int) = Action.async { implicit request =>
+    discussionApi.commentFor(commentId).map { comment =>
+      Cached(60) {
+        Ok(views.html.discussionComments.reportCommentThankYou(comment.webUrl, reportAbuseThankYouPage))
+      }
+    }
   }
 
   def abuseReportToMap(abuseReport: DiscussionAbuseReport): Map[String, Seq[String]] = {
