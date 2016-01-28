@@ -3,28 +3,36 @@ define([
     'qwery',
     'bean',
     'common/utils/$',
+    'common/utils/config',
+    'common/utils/storage',
     'lodash/collections/some',
-    'lodash/arrays/uniq',
     'common/modules/user-prefs',
-    'common/utils/storage'
+    'lodash/arrays/uniq',
+    'lodash/arrays/without'
 ], function(
     bonzo,
     qwery,
     bean,
     $,
+    config,
+    storage,
     some,
-    userPrefs
+    userPrefs,
+    uniq,
+    without
 ) {
     var modules, reg, sub,
         isSubscribed = false,
-        subscribeButton = $('.js-follow-live-blog');
+        subscribeButton = $('.js-follow-live-blog'),
+        debug = true;
 
     function ready() {
 
-        console.log('++ Notifications ready!');
+        modules.log('++ Notifications ready!' + " pageId: *** /" + config.page.pageId);
 
         if ('serviceWorker' in navigator) {
-            console.log("++ Notifications bootstrap init ready");
+            modules.log("++ Notifications bootstrap init ready");
+            var path = '/' + config.page.pageId;
 
             navigator.serviceWorker.register('/notifications-service-worker.js')
                 .then(modules.subscription)
@@ -38,61 +46,44 @@ define([
 
     modules = {
        log: function(message) {
-           console.log(message);
+           if(debug)
+                console.log(message);
        },
 
        subscription: function() {
-           console.log('++ Function subscribe');
+           modules.log('++ Function subscribe');
            var self = this;
 
-
-
-           navigator.serviceWorker.ready.then(function(serviceWorkerRegistration){
+           navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
+               modules.log('++ READY');
                reg = serviceWorkerRegistration;
+               subscribeButton.removeClass('js-hide-follow-button');
+               subscribeButton[0].disabled = false;
+               bean.on(subscribeButton[0], 'click', modules.buttonHandler);
+               if(modules.isSubscribedTo()) {
+                   modules.log("Subscribed to this");
+                   modules.setSubscriptionStatus(true);
+               }
                serviceWorkerRegistration.pushManager.getSubscription().then(function(pushSubscription){
-                   console.log('Might have a subscription');
-                   subscribeButton.removeClass('js-hide-follow-button');
-                   subscribeButton[0].disabled = false;
-                   bean.on(subscribeButton[0], 'click', modules.buttonHandler);
-                   console.log('Might have a subscription');
+                   modules.log('Might have a subscription');
 
                    if(pushSubscription) {
                         modules.log("got subscription");
                         sub = pushSubscription;
                         modules.log("Subscribed: " + sub.endpoint);
-                        modules.setSubscriptionStatus(true);
                         return;
                    } else {
                        modules.setSubscriptionStatus(false);
                    }
-                    console.log("++ No subscription")
+                    modules.log("++ No subscription")
                });
            });
-           console.log("After: Subscribed");
+           modules.log("After: Subscribed");
        },
 
        setSubscriptionStatus: function(subscribed) {
             isSubscribed = subscribed;
             subscribeButton[0].textContent = subscribed ?  'Unsubscribe': 'Subscribe'
-       },
-
-
-       doThis: function() {
-           modules.log("+++++++++++++++++ HIYA");
-           subscribeButton.removeClass('js-hide-follow-button');
-           subscribeButton[0].disabled = false;
-           var self = this;
-           bean.on(subscribeButton[0], 'click', modules.buttonHandler ).bind(self);
-
-       },
-
-       register: function(serviceWorkerRegistration){
-           reg = serviceWorkerRegistration;
-           subscribeButton.removeClass('js-hide-follow-button');
-           subscribeButton[0].disabled = false;
-           bean.on(subscribeButton[0], 'click', modules.buttonHandler ).bind(this);
-
-           modules.log('Notifications service worker is ready: ^)', reg);
        },
 
        buttonHandler: function(){
@@ -104,31 +95,61 @@ define([
             }
        },
 
-       setButtonText: function(text) {
-           subscribeButton[0].textContent = text;
-       },
-
        subscribe: function() {
            modules.log("++ Subscribe");
-           reg.pushManager.subscribe({userVisibleOnly: true}).then(function(pushSubscription){
-               sub = pushSubscription;
-               modules.log("Subscribed: " + sub.endpoint);
-               subscribeButton[0].textContent = 'Unsubscribe';
-               isSubscribed = true;
-
-           });
+           if(modules.subscriptionsEmpty()) {
+               modules.log("++ First sub. Subscribing");
+               reg.pushManager.subscribe({userVisibleOnly: true}).then(function (pushSubscription) {
+                   sub = pushSubscription;
+                   modules.log("Subscribed: " + sub.endpoint);
+                   modules.followThis()
+               });
+           }
+           else {
+               modules.followThis();
+           }
        },
+
 
        unSubscribe: function() {
            modules.log("++ Unsubscribe");
-           sub.unsubscribe().then( function(event) {
-               console.log('Unsubscribed', event);
-               subscribeButton[0].textContent = 'Subscribe';
-               isSubscribed = false;
-           }).catch( function(error){
-              console.log('Error unsubscribing', error);
-              subscribeButton[0].textContent = 'Unsubscribe';
+           modules.stopFollowingThis();
+           if(modules.subscriptionsEmpty()) {
+               modules.log("++ Last subscription");
+               sub.unsubscribe().then(function (event) {
+                   modules.log('Unsubscribed', event);
+                   modules.setSubscriptionStatus(false);
+               }).catch(function (error) {
+                   modules.log('Error unsubscribing', error);
+               });
+           }
+       },
+
+       subscriptionsEmpty: function() {
+           var subscriptions = userPrefs.get('subscriptions') || [];
+           return subscriptions.length == 0;
+       },
+
+       isSubscribedTo: function() {
+           var subscriptions = userPrefs.get('subscriptions') || [];
+           return some(subscriptions, function (sub) {
+                return sub == config.page.pageId;
            });
+       },
+
+       //TODO AJAX the subscription to RDS
+       followThis: function() {
+           var subscriptions = userPrefs.get('subscriptions') || [];
+           subscriptions.push(config.page.pageId);
+           userPrefs.set('subscriptions', uniq(subscriptions));
+           modules.setSubscriptionStatus(true);
+       },
+
+       stopFollowingThis: function() {
+           var subscriptions = userPrefs.get('subscriptions') || [];
+           var newSubscriptions = without(subscriptions, config.page.pageId);
+           userPrefs.set('subscriptions', uniq(newSubscriptions));
+           modules.setSubscriptionStatus(false);
        }
     };
 
