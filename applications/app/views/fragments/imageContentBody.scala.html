@@ -1,12 +1,29 @@
 @(page: ImageContentPage)(implicit request: RequestHeader)
+@import common.Edition
+@import conf.switches.Switches.NewCommercialContent
 @import layout.ContentWidths.ImageContentMedia
+@import views.support.RenderClasses
 
 @defining(page.image) { image =>
 
 <div class="l-side-margins l-side-margins--media">
-    <article class="content content--media content--image tonal tonal--tone-media" itemprop="mainContentOfPage" itemscope itemtype="@image.metadata.schemaType" role="main">
+    <article
+        class="@RenderClasses(Map(
+            "content--advertisement-feature" -> image.commercial.isAdvertisementFeature,
+            "content--sponsored" -> image.commercial.isSponsored(Some(Edition(request))),
+            "content--foundation-supported" -> image.commercial.isFoundationSupported,
+            "paid-content--advertisement-feature" -> (image.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn)
+        ), "content content--media content--image tonal tonal--tone-media")"
+        itemprop="mainContentOfPage"
+        itemscope
+        itemtype="@image.metadata.schemaType"
+        role="main">
 
-        @fragments.headTonal(image)
+        @if(image.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn) {
+            @fragments.guBand()
+        }
+
+        @fragments.headTonal(image, showBadge = true)
 
         <div class="content__main tonal__main tonal__main--tone-media">
             <div class="gs-container">
