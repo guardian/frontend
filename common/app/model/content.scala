@@ -2,7 +2,7 @@ package model
 
 import java.net.URL
 
-import com.gu.facia.api.{utils => fapiutils}
+import com.gu.facia.api.{utils => fapiutils, utils}
 import com.gu.facia.client.models.TrailMetaData
 import com.gu.util.liveblogs.{Parser => LiveBlogParser}
 import common.dfp.DfpAgent
@@ -242,6 +242,7 @@ object Content {
     val sharelinks = ShareLinks(tags, fields, metadata)
     val apifields = apiContent.fields
     val references: Map[String,String] = apiContent.references.map(ref => (ref.`type`, Reference.split(ref.id)._2)).toMap
+    val cardStyle: utils.CardStyle = fapiutils.CardStyle(apiContent, TrailMetaData.empty)
 
     Content(
       trail = trail,
@@ -263,7 +264,7 @@ object Content {
         Tweet(tweet.id, images)
       },
       showInRelated = apifields.flatMap(_.showInRelatedContent).getOrElse(false),
-      cardStyle = CardStyle.make(fapiutils.CardStyle(apiContent, TrailMetaData.empty)),
+      cardStyle = CardStyle.make(cardStyle),
       shouldHideAdverts = apifields.flatMap(_.shouldHideAdverts).getOrElse(false),
       witnessAssignment = references.get("witness-assignment"),
       isbn = references.get("isbn"),
@@ -273,10 +274,7 @@ object Content {
         Jsoup.clean(fields.body, Whitelist.none()).split("\\s+").size
       },
       hasStoryPackage = apifields.flatMap(_.hasStoryPackage).getOrElse(false),
-      showByline = {
-        val cardStyle = fapiutils.CardStyle(apiContent, TrailMetaData.empty)
-        fapiutils.ResolvedMetaData.fromContentAndTrailMetaData(apiContent, TrailMetaData.empty, cardStyle).showByline
-      },
+      showByline = fapiutils.ResolvedMetaData.fromContentAndTrailMetaData(apiContent, TrailMetaData.empty, cardStyle).showByline,
       rawOpenGraphImage = {
         val bestOpenGraphImage = if (FacebookShareUseTrailPicFirstSwitch.isSwitchedOn) {
           trail.trailPicture.flatMap(_.largestImageUrl)
