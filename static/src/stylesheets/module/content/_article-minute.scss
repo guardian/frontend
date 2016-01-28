@@ -40,8 +40,57 @@ $minute-headline-colour: #ffffff;
     background-color: $us-minute-main-colour;
     border-top: 4px solid $us-minute-highlight-colour;
     color: $us-minute-contrast-color;
-    padding: $gs-baseline/2 $gs-gutter/2;
     margin-bottom: $gs-baseline/2;
+    overflow: hidden;
+    position: relative;
+
+    @include mq($from: tablet) {
+        border-top: 0 none;
+        padding-top: $gs-baseline*1.5;
+
+        &:after {
+            background-color: $us-minute-highlight-colour;
+            content: '';
+            height: $gs-baseline*3;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: gs-span(10);
+        }
+    }
+
+    /* ==========================================================================
+       Layout
+       ========================================================================== */
+
+    @include mq($from: wide) {
+        margin: $gs-baseline/2 auto;
+        max-width: gs-span(12) - $gs-gutter*2;
+
+        .block-elements {
+            box-sizing: border-box;
+            float: right;
+            padding: $gs-baseline*4 gs-span(1) 0 $gs-gutter;
+            width: gs-span(5);
+        }
+
+        .article__img-container {
+            display: block;
+            width: gs-span(7) - $gs-gutter;
+        }
+
+        figure.element-image {
+            margin-top: 0;
+        }
+
+        .caption--img {
+            position: absolute;
+            padding-right: gs-span(1);
+            bottom: 0;
+            right: 0;
+            width: gs-span(4);
+        }
+    }
 
     /* ==========================================================================
        Content Overrides

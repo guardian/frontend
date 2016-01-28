@@ -33,9 +33,19 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
     if (article.isUSMinute) {
       document.getElementsByClass("block").foreach { block =>
         val allElements = block.getAllElements
+        val elementImage = block.getElementsByClass("element-image")
+        val elementTitle = block.getElementsByClass("block-title")
+        val blockElementDiv = block.getElementsByClass("block-elements")
+
         block.addClass("block--minute-article")
         block.removeClass("block")
         block.getElementsByClass("block-share").remove()
+
+        // Re-order Elements
+        elementImage.remove()
+        elementTitle.remove()
+        blockElementDiv.after(elementImage.toString)
+        blockElementDiv.prepend(elementTitle.toString)
 
         ParentClasses.foldLeft(Set(): Set[String]) { case (classes, (childClass, parentClass)) =>
           if (allElements.exists(_.hasClass(childClass))) classes + parentClass
