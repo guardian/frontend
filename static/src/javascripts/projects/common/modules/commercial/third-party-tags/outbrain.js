@@ -3,7 +3,6 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
-    'common/utils/mediator',
     'common/utils/template',
     'common/modules/identity/api',
     'text!common/views/commercial/outbrain.html',
@@ -13,7 +12,6 @@ define([
     $,
     config,
     detect,
-    mediator,
     template,
     identity,
     outbrainTpl,
@@ -21,13 +19,29 @@ define([
 ) {
     var outbrainUrl = '//widgets.outbrain.com/outbrain.js';
 
+    function tracking(widgetCode) {
+        // Ophan
+        require(['ophan/ng'], function (ophan) {
+            ophan.record({
+                outbrain: {
+                    widgetId: widgetCode
+                }
+            });
+        });
+    }
+
+    function getSection() {
+        return config.page.section.toLowerCase().match('news')
+        || contains(['politics', 'world', 'business', 'commentisfree'], config.page.section.toLowerCase()) ? 'sections' : 'all';
+    }
+
     return {
         load: function () {
             var $outbrain    = $('.js-outbrain'),
                 $container   = $('.js-outbrain-container'),
                 widgetConfig = {},
                 breakpoint   = detect.getBreakpoint(),
-                section      = this.getSection(),
+                section      = getSection(),
                 widgetCode,
                 widgetCodeImage,
                 widgetCodeText;
@@ -74,51 +88,9 @@ define([
                     $container.append($.create(template(outbrainTpl, { widgetCode: widgetCodeText })));
                 }
 
-                this.tracking(widgetCode);
+                tracking(widgetCode);
                 require(['js!' + outbrainUrl]);
-            }.bind(this));
-        },
-
-        tracking: function (widgetCode) {
-            // Ophan
-            require(['ophan/ng'], function (ophan) {
-                ophan.record({
-                    outbrain: {
-                        widgetId: widgetCode
-                    }
-                });
             });
-        },
-
-        getSection: function () {
-            return config.page.section.toLowerCase().match('news')
-                || contains(['politics', 'world', 'business', 'commentisfree'], config.page.section.toLowerCase()) ? 'sections' : 'all';
-        },
-
-        identityPolicy: function () {
-            return (!(identity.isUserLoggedIn() && config.page.commentable));
-        },
-
-        hasHighRelevanceComponent: function () {
-            return detect.adblockInUse() || config.page.edition.toLowerCase() === 'int';
-        },
-
-        init: function () {
-            if (config.switches.outbrain
-                && !config.page.isFront
-                && !config.page.isPreview
-                && this.identityPolicy()
-                && config.page.section !== 'childrens-books-site') {
-                if (this.hasHighRelevanceComponent()) {
-                    this.load();
-                } else {
-                    mediator.on('modules:commercial:dfp:rendered', function (event) {
-                        if (event.slot.getSlotId().getDomId() === 'dfp-ad--merchandising-high' && event.isEmpty) {
-                            this.load();
-                        }
-                    }.bind(this));
-                }
-            }
         }
     };
 });
