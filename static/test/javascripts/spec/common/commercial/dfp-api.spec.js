@@ -290,11 +290,15 @@ define([
         });
 
         describe('labelling', function () {
-
             var slotId = 'dfp-ad-html-slot';
+
+            afterEach(function () {
+                dfp.checkForBreakout.restore();
+            });
 
             it('should be added', function (done) {
                 var $slot = $('#' + slotId);
+                sinon.stub(dfp, 'checkForBreakout').returns(Promise.resolve(''));
                 dfp.init();
 
                 fastdom.defer(function () {
@@ -309,6 +313,7 @@ define([
 
             it('should not be added if data-label attribute is false', function () {
                 var $slot = $('#' + slotId).attr('data-label', false);
+                sinon.stub(dfp, 'checkForBreakout').returns(Promise.resolve('#' + slotId));
                 dfp.init();
                 window.googletag.cmd.forEach(function (func) { func(); });
                 window.googletag.pubads().listener(makeFakeEvent(slotId));
@@ -318,6 +323,7 @@ define([
             it('should be added only once', function (done) {
                 var fakeEvent = makeFakeEvent(slotId),
                     $slot = $('#' + slotId);
+                sinon.stub(dfp, 'checkForBreakout').returns(Promise.resolve('#' + slotId));
                 dfp.init();
 
                 fastdom.defer(function () {
@@ -343,7 +349,6 @@ define([
                     fastdom.defer(10, function () {
                         expect($('.ad-slot__label', $slot[0]).length).toBe(0);
                         done();
-                        dfp.checkForBreakout.restore();
                     });
                 });
             });
