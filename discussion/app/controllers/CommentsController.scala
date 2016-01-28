@@ -14,7 +14,6 @@ import model.NoCache
 import play.api.Play.current
 import play.api.data.validation._
 
-
 import scala.util.control.NonFatal
 
 object CommentsController extends DiscussionController with ExecutionContexts {
