@@ -10,14 +10,16 @@ define([
     'bonzo',
     'common/utils/url',
     'common/utils/config',
-    'common/utils/cookies'
+    'common/utils/ajax',
+    'common/modules/avatar/api'
 ], function (
     $,
     bean,
     bonzo,
     url,
     config,
-    cookies
+    ajax,
+    avatarApi
 ) {
 
     var accountProfile = function () {
@@ -39,14 +41,9 @@ define([
         };
 
         self.messages = {
-            noCorsError: 'Cross-origin resource sharing is not supported by this browser. Please upgrade your browser to use this feature.',
             noServerError: 'Sorry, the Avatar upload service is currently unavailable. Please try again shortly.',
             avatarUploadSuccess: 'Thank you for uploading your avatar. It will be checked by Guardian moderators shortly.',
             avatarUploadFailure: 'Sorry, something went wrong. Please try again.'
-        };
-
-        self.urls = {
-            avatarApiUrl: config.page.avatarApiUrl + '/v1/avatars'
         };
 
         self.unsavedFields = [];
@@ -107,35 +104,24 @@ define([
     accountProfile.prototype.avatarUploadByApi = function (avatarForm) {
         var self = this;
         var formData = new FormData(document.querySelector('form' + self.classes.avatarUploadForm));
-        var xhr = self.createCORSRequest('POST', self.urls.avatarApiUrl);
 
         // disable form while submitting to prevent overlapping submissions
         document.querySelector(self.classes.avatarUploadButton).disabled = true;
 
-        if (!xhr) {
-            self.prependErrorMessage(self.messages.noCorsError, avatarForm);
-        }
-
-        xhr.onload = function () {
-            var status = xhr.status;
-            if (status >= 200 && status < 300) {
+        avatarApi.updateAvatar(formData)
+            .then(function () {
                 self.prependSuccessMessage(self.messages.avatarUploadSuccess, avatarForm);
-            } else if (status >= 400 && status < 500) {
-                self.prependErrorMessage(
-                    JSON.parse(xhr.responseText).message || self.messages.avatarUploadFailure,
-                    avatarForm);
-            } else {
-                self.prependErrorMessage(self.messages.noServerError, avatarForm);
-            }
-        };
+            }, function (err) {
+                if (err.status >= 400 && err.status < 500) {
+                    self.prependErrorMessage(
+                        JSON.parse(err.responseText).message || self.messages.avatarUploadFailure,
+                        avatarForm);
+                } else {
+                    self.prependErrorMessage(self.messages.noServerError, avatarForm);
+                }
 
-        xhr.onerror = function () {
-            self.prependErrorMessage(self.messages.noServerError, avatarForm);
-            document.querySelector(self.classes.avatarUploadButton).disabled = false;
-        };
-
-        xhr.setRequestHeader('Authorization', 'Bearer cookie=' + cookies.get('GU_U'));
-        xhr.send(formData);
+                document.querySelector(self.classes.avatarUploadButton).disabled = false;
+            });
     };
 
     /*
@@ -149,6 +135,7 @@ define([
         if (avatarForm) {
             bean.on(avatarForm, 'submit', function (event) {
                 event.preventDefault();
+
                 self.avatarUploadByApi(avatarForm);
             });
         }
@@ -170,22 +157,6 @@ define([
     accountProfile.prototype.prependSuccessMessage = function (message, location) {
         var errorClass = this.classes.formSuccess.replace('.', '');
         this.prependMessage(message, location, errorClass);
-    };
-
-    /*
-    *   Create a cross-origin resource sharing XHR request
-    */
-    accountProfile.prototype.createCORSRequest = function (method, url) {
-        var xhr = new XMLHttpRequest();
-        if ('withCredentials' in xhr) {
-            xhr.open(method, url, true);
-        } else if (typeof XDomainRequest !== 'undefined') {
-            xhr = new XDomainRequest();
-            xhr.open(method, url);
-        } else {
-            xhr = null; // CORS not supported
-        }
-        return xhr;
     };
 
     /*
