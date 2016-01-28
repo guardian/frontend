@@ -197,7 +197,7 @@ final case class Content(
     } getOrElse (None,None)
 
     val articleMeta = if (tags.isUSMinuteSeries) {
-      Some("isMinute", JsBoolean(tags.isUSMinuteSeries))
+      Some("isMinuteArticle", JsBoolean(tags.isUSMinuteSeries))
     } else None
 
     val meta = List[Option[(String, JsValue)]](
