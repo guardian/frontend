@@ -148,7 +148,7 @@ define([
         });
     }
 
-    function initPlayer() {
+    function initPlayer(withPreroll) {
 
         // When possible, use our CDN instead of a third party (zencoder).
         if (config.page.videoJsFlashSwf) {
@@ -242,28 +242,20 @@ define([
 
                     player.fullscreener();
 
-                    //The `hasMultipleVideosInPage` flag is temporary until the #10034 will be fixed
-                    if (commercialFeatures.videoPreRolls && !blockVideoAds && !config.page.hasMultipleVideosInPage) {
+                    if (withPreroll && !blockVideoAds) {
                         raven.wrap(
                             { tags: { feature: 'media' } },
                             function () {
                                 events.bindPrerollEvents(player);
                                 player.adSkipCountdown(15);
 
-                                require(['js!http://imasdk.googleapis.com/js/sdkloader/ima3.js'], function () {
-                                    player.ima({
-                                        id: mediaId,
-                                        adTagUrl: getAdUrl()
-                                    });
-                                    // Video analytics event.
-                                    player.trigger(events.constructEventName('preroll:request', player));
-                                    player.ima.requestAds();
-                                }, function (e) {
-                                    raven.captureException(e, { tags: { feature: 'media', action: 'ads' } });
-                                    // ad blocker, so just carry on without
-                                    events.bindContentEvents(player);
-                                    throw e;
+                                player.ima({
+                                    id: mediaId,
+                                    adTagUrl: getAdUrl()
                                 });
+                                // Video analytics event.
+                                player.trigger(events.constructEventName('preroll:request', player));
+                                player.ima.requestAds();
                             }
                         )();
                     } else {
@@ -358,12 +350,29 @@ define([
         });
     }
 
+    function initWithRaven(withPreroll) {
+        raven.wrap(
+            { tags: { feature: 'media' } },
+            initPlayer,
+            [withPreroll]
+        )();
+    }
+
     function init() {
+        // The `hasMultipleVideosInPage` flag is temporary until the #10034 will be fixed
+        var shouldPreroll = commercialFeatures.videoPreRolls && !config.page.hasMultipleVideosInPage;
+
         if (config.switches.enhancedMediaPlayer) {
-            raven.wrap(
-                { tags: { feature: 'media' } },
-                initPlayer
-            )();
+            if (shouldPreroll) {
+                require(['js!http://imasdk.googleapis.com/js/sdkloader/ima3.js']).then(function () {
+                    initWithRaven(true);
+                }, function (e) {
+                    raven.captureException(e, { tags: { feature: 'media', action: 'ads' } });
+                    initWithRaven();
+                });
+            } else {
+                initWithRaven();
+            }
         }
         initMoreInSection();
         initMostViewedMedia();
