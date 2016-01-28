@@ -22,25 +22,30 @@ trait BreakingNewsApi extends Logging with ExecutionContexts {
   val s3: S3BreakingNews
   val breakingNewskey = s3.getKeyForPath("breaking-news")
 
-  def getBreakingNews: Future[Option[JsValue]] = {
-    Future {
-      s3.get(breakingNewskey)
-    }.map {
-      case Some(s) => Some(Json.parse(s))
-      case _ =>
-        val e = new Exception("No Breaking News content")
-        log.error(e.getMessage)
-        throw e
-    }.recover {
+  @throws[Exception]
+  def getBreakingNews: Option[JsValue] = {
+    try {
+      s3.get(breakingNewskey) match {
+        case Some(s) =>
+          Some(Json.parse(s))
+        case _ =>
+          val e = new Exception("No Breaking News content")
+          log.error(e.getMessage)
+          throw e
+      }
+    } catch {
       case e: Exception =>
         log.error(s"Cannot fetch Breaking News json (${e.getMessage})")
         throw e
     }
   }
-  def putBreakingNews(json: JsValue): Future[Unit] = {
-    Future {
+
+  @throws[Exception]
+  def putBreakingNews(json: JsValue): Boolean = {
+    try {
       s3.putPublic(breakingNewskey, json.toString, "application/json")
-    }.recover {
+      true
+    } catch {
       case e: Exception =>
         log.error(s"Cannot write Breaking News json (${e.getMessage})")
         throw e

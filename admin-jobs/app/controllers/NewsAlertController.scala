@@ -1,57 +1,48 @@
 package controllers
 
-import common.{ExecutionContexts, Logging}
+import akka.actor.{ActorRef, Props}
+import akka.pattern.ask
+import akka.util.Timeout
+import common.ExecutionContexts
 import model.Cached
 import models.NewsAlertNotification
-import play.api.libs.json.{Json, _}
+import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.BodyParsers.parse.{json => BodyJson}
 import play.api.mvc._
+import scala.concurrent.duration._
 
-import scala.concurrent.Future
+trait NewsAlertController extends Controller with ExecutionContexts {
 
-trait NewsAlertController extends Controller with Logging with ExecutionContexts
-{
+  // Actor is useful here to prevent race condition
+  // when accessing or updating the content of Breaking News
+  // since actor's mailbox acts as a queue
+  val breakingNewsUpdater: ActorRef
+  implicit val actorTimeout = Timeout(30.seconds)
 
   case class NewsAlertError(error: String)
   implicit private val ew = Json.writes[NewsAlertError]
 
-  val breakingNewsApi: BreakingNewsApi
-
   def alerts() = Action.async {
-    breakingNewsApi.getBreakingNews map {
-      case Some(jsonValue) =>
-        Cached(30)(Ok(jsonValue))
-      case None =>
-        NoContent
+    (breakingNewsUpdater ? GetAlertsRequest).mapTo[Option[JsValue]].map {
+      case Some(json) => Cached(30)(Ok(json))
+      case None => NoContent
+    }.recover{
+      case _ => InternalServerError(Json.toJson(NewsAlertError("Error while accessing alerts")))
     }
   }
 
   def create() : Action[NewsAlertNotification] = Action.async(BodyJson[NewsAlertNotification]) { request =>
     val receivedNotification : NewsAlertNotification = request.body
-    val receivedNotificationJson = Json.toJson(receivedNotification)
-
-    import models.BreakingNews
-    import models.BreakingNewsFormats._
-    def fetch = breakingNewsApi.getBreakingNews
-    def parse(json : JsValue) = Future(json.as[BreakingNews])
-    def save(b: BreakingNews) = breakingNewsApi.putBreakingNews(Json.toJson(b))
-
-    val result = for {
-      currentBreakingNewsJson <- fetch
-      currentBreakingNews <- parse(currentBreakingNewsJson.get)
-      didSave <- save(BreakingNews(currentBreakingNews.alerts + receivedNotification))
-    } yield didSave
-
-    result.map{
-      case _ => Created(receivedNotificationJson) // mirroring back the received notification
+    val result = breakingNewsUpdater ? NewNotificationRequest(receivedNotification)
+    result.mapTo[NewsAlertNotification].map {
+      case createdNotification => Created(Json.toJson(createdNotification))
     }.recover{
-      case e: Throwable =>
-        log.error(s"Cannot create a new alert (${e.getMessage})")
-        InternalServerError(Json.toJson(NewsAlertError("Error while creating new notification")))
+      case _ => InternalServerError(Json.toJson(NewsAlertError("Error while creating new notification")))
     }
   }
 }
 
 object NewsAlertController extends NewsAlertController {
-  lazy val breakingNewsApi: BreakingNewsApi = BreakingNewsApi
+  lazy val breakingNewsUpdater = actorSystem.actorOf(BreakingNewsUpdater.props())
 }
+

@@ -36,18 +36,12 @@ import scala.io.Codec
   "Fetching Breaking News json file" when {
     "an exception is thrown while accessing S3" should {
       "throw the exception" in {
-        val f = breakingNewsApiWith(MockS3ThrowException).getBreakingNews
-        ScalaFutures.whenReady(f.failed) { e =>
-          e shouldBe a [FakeS3Exception]
-        }
+        an [Exception] should be thrownBy(breakingNewsApiWith(MockS3ThrowException).getBreakingNews)
       }
     }
     "empty content is fetched from S3" should {
       "throw an exception" in {
-        val f = breakingNewsApiWith(MockS3DoNothing).getBreakingNews
-        ScalaFutures.whenReady(f.failed) { e =>
-          e shouldBe a [Exception]
-        }
+        an [Exception] should be thrownBy(breakingNewsApiWith(MockS3DoNothing).getBreakingNews)
       }
     }
     "non json content is fetched from S3" should {
@@ -55,10 +49,7 @@ import scala.io.Codec
         override def get(key: String)(implicit codec: Codec): Option[String] = { Some("This is not some json content!") }
       }
       "throw a JsonParseException" in {
-        val f = breakingNewsApiWith(MockS3GetNonJsonContent).getBreakingNews
-        ScalaFutures.whenReady(f.failed) { e =>
-          e shouldBe a [JsonParseException]
-        }
+        an [Exception] should be thrownBy(breakingNewsApiWith(MockS3GetNonJsonContent).getBreakingNews)
       }
     }
     "json content is fetched from S3" should {
@@ -66,9 +57,10 @@ import scala.io.Codec
         override def get(key: String)(implicit codec: Codec): Option[String] = { Some("""{"field": "value"}""") }
       }
       "return json" in {
-        val f = breakingNewsApiWith(MockS3GetJsonContent).getBreakingNews
-        ScalaFutures.whenReady(f) { result =>
-          result.isInstanceOf[Option[JsValue]] should be (true)
+        val result = breakingNewsApiWith(MockS3GetJsonContent).getBreakingNews
+        result match {
+          case Some(json) => json shouldBe an [JsValue]
+          case _ => fail("A json value should have been returned")
         }
       }
     }
@@ -78,19 +70,13 @@ import scala.io.Codec
     val validJson = Json.toJson("{}")
     "an exception is thrown while accessing S3" should {
       "throw the excpetion" in {
-        val f = breakingNewsApiWith(MockS3ThrowException).putBreakingNews(validJson)
-        ScalaFutures.whenReady(f.failed) { e =>
-          e shouldBe a[FakeS3Exception]
-        }
+        an [Exception] should be thrownBy(breakingNewsApiWith(MockS3ThrowException).putBreakingNews(validJson))
       }
     }
 
     "S3 put was successful" should {
       "have not failed" in {
-        val f = breakingNewsApiWith(MockS3DoNothing).putBreakingNews(validJson)
-        ScalaFutures.whenReady(f) { result =>
-          result should be
-        }
+        noException should be thrownBy(breakingNewsApiWith(MockS3DoNothing).putBreakingNews(validJson))
       }
     }
 
