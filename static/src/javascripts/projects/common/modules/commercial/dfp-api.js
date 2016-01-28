@@ -673,9 +673,9 @@ define([
                     resolve(breakoutIFrame(iFrame, $slot));
                 }
             }).then(function (items) {
-                return new Promise.resolve(find(items, function (item) {
+                return find(items, function (item) {
                     return item.adType !== '';
-                }));
+                });
             });
         },
         breakpointNameToAttribute = function (breakpointName) {
