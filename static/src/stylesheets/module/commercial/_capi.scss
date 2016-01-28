@@ -117,6 +117,11 @@
         border-top: 0;
     }
 
+    .fc-container--story-package .tone-news--item.fc-item {
+        // This is to override an !important background colour in story-package items
+        background-color: colour(paid-article-subheader) !important;
+    }
+
     .tone-media--item {
         .u-faux-block-link--hover {
             background-color: colour(neutral-6);
