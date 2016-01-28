@@ -15,12 +15,23 @@
         @include f-headlineSans;
     }
 
+    .rich-link__header {
+        font-size: get-font-size(header, 2);
+        line-height: get-line-height(header, 1);
+    }
+
     .commercial__body {
         padding-top: $gs-gutter / 2;
+        max-width: none;
+        padding-left: $gs-gutter / 2;
+        padding-right: $gs-gutter / 2;
     }
 
     .rich-link__standfirst {
-        @include fs-textSans(4);
+        @include f-textSans;
+        font-size: get-font-size(textSans, 2);
+        line-height: get-line-height(textSans, 1);
+        padding: $gs-baseline/3 $gs-gutter/2 $gs-baseline/3 $gs-gutter/4;
     }
 
     .fc-item__image-container {
@@ -29,6 +40,21 @@
 
     .commercial__header {
         overflow: visible;
+    }
+
+    .paidfor-meta__more > .popup__toggle {
+        @include mq(leftCol, wide) {
+            padding: 0 0 ($gs-baseline * 3 / 4);
+        }
+    }
+
+    .paidfor-meta__more > .popup {
+        @include mq(leftCol, wide) {
+            left: 0;
+            transform: translate(0, 0);
+
+            &:before { left: 10%; }
+        }
     }
 
     .commercial__title {
@@ -134,6 +160,14 @@
    ========================================================================== */
 
 .commercial--paidfor {
+    .ad-slot--paid-for-badge {
+        padding-left: $gs-gutter / 2;
+        padding-right: $gs-gutter / 2;
+    }
+}
+
+.commercial--paidfor,
+.commercial--dfp-single {
 
     /* Resets for new design. When (and if) the new design is committed to, the old code
        will be torn down and these resets should no longer be necessary
@@ -204,7 +238,9 @@
 
     .tone-paidfor--item {
         position: relative;
-        padding-bottom: $gs-baseline * 4; // reserve space in-flow for absolutely positioned badge
+        // reserve space in-flow for absolutely positioned badge
+        // baseline * 3 from the height of the element, plus baseline / 2 for its bottom margin
+        padding-bottom: $gs-baseline * 3.5;
     }
 
     .ad-slot--paid-for-badge {

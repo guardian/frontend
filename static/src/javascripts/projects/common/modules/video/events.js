@@ -24,7 +24,8 @@ define([
     history,
     adsSkipOverlayTmpl,
     indexOf,
-    throttle) {
+    throttle
+) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
         isEmbed = !!guardian.isEmbed,
         QUARTILES = [25, 50, 75],

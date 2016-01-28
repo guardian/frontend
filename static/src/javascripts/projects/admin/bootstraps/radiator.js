@@ -20,7 +20,8 @@ define([
     last,
     forEach,
     reduce,
-    values) {
+    values
+) {
     function initialise() {
         var pingdom = document.getElementById('pingdom');
         ajax({

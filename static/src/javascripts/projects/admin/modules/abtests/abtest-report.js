@@ -18,7 +18,8 @@ define([
     qwery,
     bean,
     assign,
-    clone) {
+    clone
+) {
 
     function ABTestReport(config) {
         this.config = assign(clone(this.config), config);

@@ -106,7 +106,8 @@ define([
     find,
     last,
     intersection,
-    initial) {
+    initial
+) {
     /**
      * Right, so an explanation as to how this works...
      *

@@ -25,7 +25,8 @@ define([
     twitter,
     NotificationBar,
     assign,
-    toArray) {
+    toArray
+) {
     /*
      @param {Object} options hash of configuration options:
      path             : {String}              Endpoint path to ajax request,
@@ -79,12 +80,11 @@ define([
                 this.unreadBlocks += resultHtml[0].children.length;
 
                 bonzo(resultHtml[0].children).addClass('autoupdate--hidden');
-
                 $attachTo[0].prepend(elementsToAdd);
                 $attachTo[1].prepend(toArray(resultHtml[1].children));
 
                 if (elementsToAdd.length) {
-                    mediator.emit('modules:autoupdate:updates', elementsToAdd);
+                    mediator.emit('modules:autoupdate:updates', elementsToAdd.length);
                 }
                 // add a timestamp to the attacher
                 $attachTo[0].attr('data-last-updated', date);

@@ -21,11 +21,11 @@
                     <div class="commercial__inner">
                         <div class="commercial__header">
                             <div class="paidfor-meta">
-                                <span class="paidfor-meta__label">Paid Content</span>
+                                <span class="paidfor-meta__label">Paid content</span>
                                 <div class="paidfor-label paidfor-meta__more has-popup">
                                     <button class="u-button-reset paidfor-label__btn popup__toggle" data-toggle="paidfor-popup--@container.dataId">About @inlineSvg("arrow-down", "icon")</button>
                                     <div class="popup is-off paidfor-popup paidfor-popup--@container.dataId">
-                                        <h3 class="paidfor-popup__title">Paid stories are paid for and controlled by an advertiser and created by the Guardian Labs team</h3>
+                                        <h3 class="paidfor-popup__title">Paid content is paid for and controlled by an advertiser and created by the Guardian Labs team</h3>
                                         <a class="paidfor-popup__link" href="@LinkTo("/content-funding")">Learn more about Guardian Labs content @inlineSvg("arrow-right", "icon")</a>
                                     </div>
                                 </div>
@@ -94,17 +94,26 @@
                     <div class="commercial__inner">
                         <div class="commercial__header">
                             <div class="paidfor-meta">
-                                <span class="paidfor-meta__label">Paid Content</span>
+                                <span class="paidfor-meta__label">Paid content</span>
                                 <div class="paidfor-label paidfor-meta__more has-popup">
                                     <button class="u-button-reset paidfor-label__btn popup__toggle" data-toggle="paidfor-popup--@container.dataId">About @inlineSvg("arrow-down", "icon")</button>
                                     <div class="popup is-off paidfor-popup paidfor-popup--@container.dataId">
-                                        <h3 class="paidfor-popup__title">Paid stories are paid for and controlled by an advertiser and created by the Guardian Labs team</h3>
+                                        <h3 class="paidfor-popup__title">Paid content is paid for and controlled by an advertiser and created by the Guardian Labs team</h3>
                                         <a class="paidfor-popup__link" href="@LinkTo("/content-funding")">Learn more about Guardian Labs content @inlineSvg("arrow-right", "icon")</a>
                                     </div>
                                 </div>
                             </div>
                             <h3 class="commercial__title">@container.displayName</h3>
-                            <a class="commercial__cta" href="@LinkTo("/guardian-labs")">@inlineSvg("glabs-logo", "logo")</a>
+                            <a class="commercial__cta"
+                                @if(Edition(request).id == "AU") {
+                                    href="@LinkTo("/guardian-labs-australia")"
+                                } else {
+                                    href="@LinkTo("/guardian-labs")"
+                                    }
+                            >
+                                @inlineSvg("glabs-logo", "logo")
+                                <span class='u-h'>Guardian Labs</span>
+                            </a>
                         </div>
                         <div class="commercial__body">
                             <ul class="lineitems l-row l-row--cols-4">

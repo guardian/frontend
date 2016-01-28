@@ -12,7 +12,8 @@ define([
 ], function (
     mediator,
     ab,
-    where) {
+    where
+) {
     var register = [],
         startTime = Date.now();
 

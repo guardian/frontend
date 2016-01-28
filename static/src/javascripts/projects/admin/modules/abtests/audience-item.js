@@ -11,7 +11,8 @@ define([
     Component,
     bonzo,
     assign,
-    clone) {
+    clone
+) {
 
     function AudienceItem(config) {
         this.config = assign(clone(this.config), config);

@@ -23,7 +23,8 @@ define([
     createAdSlot,
     dfp,
     userFeatures,
-    defaults) {
+    defaults
+) {
     return function (options) {
         var adType,
             opts = defaults(

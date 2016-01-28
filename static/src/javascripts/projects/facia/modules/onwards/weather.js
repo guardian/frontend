@@ -39,7 +39,8 @@ define([
     omniture,
     userPrefs,
     SearchTool,
-    contains) {
+    contains
+) {
 
     var $holder        = null,
         searchTool     = null,

@@ -17,7 +17,8 @@ define([
     mediator,
     Component,
     trail,
-    debounce) {
+    debounce
+) {
     var verticallyResponsiveImages = function () {
             var setHeight = function () {
                 if (!bonzo(document.body).hasClass('has-overlay')) {

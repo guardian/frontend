@@ -114,7 +114,7 @@ define([
 
         // There may be no blocks at all. 'block-0' will return any new blocks found.
         id = newestBlock ? newestBlock.id : 'block-0';
-        return window.location.pathname + '.json?lastUpdate=' + id;
+        return window.location.pathname + '.json?isLivePage=true&lastUpdate=' + id;
     }
 
     modules = {
@@ -153,14 +153,14 @@ define([
             if (config.page.isLive) {
                 if (ab.isInVariant('LiveblogToast', 'toast')) {
                     AutoUpdateNew();
-                } else {
+                } else if (window.location.search.indexOf('?page=') !== 0/*TODO proper guardian.config val*/) {
                     var timerDelay = detect.isBreakpoint({ min: 'desktop' }) ? 5000 : 60000;
                     autoUpdate = new AutoUpdate({
                         path: getUpdatePath,
                         delay: timerDelay,
                         backoff: 2,
                         backoffMax: 1000 * 60 * 20,
-                        attachTo: $('.js-liveblog-body')[0],
+                        attachTo: [$('.js-liveblog-body')[0], $('.js-live-blog__timeline')[0]],
                         switches: config.switches,
                         manipulationType: 'prepend',
                         responseField: ['html', 'timeline']

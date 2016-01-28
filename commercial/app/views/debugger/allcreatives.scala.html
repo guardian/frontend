@@ -190,14 +190,14 @@
                                 </a>
                             </div>
                             <div class="paidfor-meta">
-                                <span class="paidfor-meta__label">Paid Content</span>
+                                <span class="paidfor-meta__label">Paid content</span>
                                 <div class="paidfor-label paidfor-meta__more has-popup">
                                     <button class="u-button-reset paidfor-label__btn popup__toggle" data-toggle="paidfor-popup--test1">
                                         About
                                         @fragments.inlineSvg("arrow-down", "icon")
                                     </button>
                                     <div class="popup is-off paidfor-popup paidfor-popup--test1">
-                                        <h3 class="paidfor-popup__title">Paid stories are paid for and controlled by an advertiser and created by the Guardian Labs team</h3>
+                                        <h3 class="paidfor-popup__title">Paid content is paid for and controlled by an advertiser and created by the Guardian Labs team</h3>
                                         <a class="paidfor-popup__link" href="#">
                                             Learn more about Guardian Labs content
                                             @fragments.inlineSvg("arrow-right", "icon")
@@ -239,6 +239,7 @@
                             offer_url: 'http://www.guardianbookshop.co.uk/',
                             offer_image: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKCToPeYcRABGAEyCL27FJtXKuKj',
                             offer_meta: 'Meta',
+                            offer_button: 'yes',
                             clickMacro: '%%CLICK_URL_ESC%%'
                         }).create();
                       });
@@ -644,7 +645,10 @@
                                 omnitureId: '[%OmnitureID%]'
                             });
 
-                            commercialComponent.postLoadEvents['capi@if(component("type") == "single"){Single}'] = function () {
+                            var callbackName = 'capi@if(component("type") == "single"){Single}';
+                            var originalPostLoadEvents = commercialComponent.postLoadEvents[callbackName];
+                            commercialComponent.postLoadEvents[callbackName] = function (el) {
+                                originalPostLoadEvents && originalPostLoadEvents.call(commercialComponent, el);
                                 $capiType.removeClass('lazyloaded');
                             };
                             commercialComponent.create();
@@ -671,7 +675,6 @@
                 ("offerTitle", "Scientists climb to bottom of Siberian sinkhole - in pictures"),
                 ("offerImage", "http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjk-jQkgEQARgBMghE750kQXQwJg"),
                 ("offerText", "A Russian research team including scientists, a medic and a professional climber has descended a giant sinkhole on the Yamal Peninsula in northern Siberia. Photographs by Vladimir Pushkarev/Siberian Times"),
-                ("offerLinkText", "link text"),
                 ("offerUrl", "http://www.theguardian.com/technology/2014/nov/20/apple-beats-music-iphone-ipad-spotify"),
                 ("seeMoreUrl", "http://www.theguardian.com/technology/2014/nov/20/apple-beats-music-iphone-ipad-spotify"),
                 ("showCtaLink", "show-cta-link"),

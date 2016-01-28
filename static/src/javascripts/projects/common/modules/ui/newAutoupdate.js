@@ -39,7 +39,8 @@ define([
     toArray,
     bindAll,
     RelativeDates,
-    NotificationCounter) {
+    NotificationCounter
+) {
 
     return function (opts) {
         var updateDelay = function (delay) {
@@ -156,6 +157,10 @@ define([
                         revealInjectedElements();
                     }
 
+                    toastButtonRefresh(0);
+
+                    mediator.emit('modules:autoupdate:updates', elementsToAdd.length);
+
                     latestBlockId = $('.block').first().attr('id');
 
                     newBlocks = '';
@@ -164,9 +169,6 @@ define([
                     twitter.enhanceTweets();
                 }).then(function () {
                     updating = false;
-                    setTimeout(function () {
-                        toastButtonRefresh(0);
-                    }, 600);
                 });
             }
         };
@@ -190,7 +192,7 @@ define([
         }, opts);
 
         var newBlocks;
-        var currentUpdateDelay;
+        var currentUpdateDelay = options.minUpdateDelay;
         var latestBlockId;
         var updating = false;
 

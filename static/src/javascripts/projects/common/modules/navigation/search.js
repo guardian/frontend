@@ -13,7 +13,8 @@ define([
     config,
     detect,
     mediator,
-    throttle) {
+    throttle
+) {
     var Search = function () {
 
         var searchLoader,
