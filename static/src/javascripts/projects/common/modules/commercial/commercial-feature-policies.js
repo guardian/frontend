@@ -35,6 +35,21 @@ define([
         }
     };
 
+    policies.minuteArticle = function () {
+        // Describe the policy for minute articles
+        if (config.page.isMinuteArticle) {
+            return {
+                topBannerAd : false,
+                articleBodyAdverts : false,
+                articleAsideAdverts : false,
+                sliceAdverts : false,
+                popularContentMPU : false,
+                videoPreRolls : false,
+                frontCommercialComponents : false
+            };
+        }
+    };
+
     policies.sslContent = function () {
         if (config.page.isSSL && config.page.section !== 'admin') {
             return new CommercialFeatureSwitches(false);
