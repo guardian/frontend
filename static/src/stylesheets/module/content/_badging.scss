@@ -1,9 +1,9 @@
 .badge-slot--us-election {
-    width: $gs-gutter * 1.8;
+    width: 33px;
+    margin-top: 2px;
 
     @include mq($until: desktop) {
         float: left;
-        margin-top: 1px;
         margin-right: $gs-gutter / 4;
     }
 
