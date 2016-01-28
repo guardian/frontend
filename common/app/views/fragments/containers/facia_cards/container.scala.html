@@ -1,4 +1,4 @@
-@(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties = model.FrontProperties.empty)(implicit request: RequestHeader)
+@(containerDefinition: layout.FaciaContainer, faciaPageMaybe: Option[model.PressedPage] = None)(implicit request: RequestHeader)
 
 @import common.dfp.{Keyword, Series}
 @import conf.switches.Switches
@@ -6,61 +6,72 @@
 @import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList}
 @import views.html.fragments.containers.facia_cards.{commercialContainer, containerMetaData, mostPopularContainer, navListContainer, navMediaListContainer, standardContainer}
 @import views.support.{GetClasses, RenderClasses}
+@import conf.switches.Switches.NewCommercialContent
 
-@defining((containerDefinition.displayName, containerDefinition.faciaComponentName)) { case (title, componentName) =>
+
+    @val frontProperties = faciaPageMaybe match {
+        case Some(faciaPage) => return faciaPage.FrontProperties
+        case None => return model.FrontProperties.empty
+    }
+
+
+    @defining((containerDefinition.displayName, containerDefinition.faciaComponentName)) { case (title, componentName) =>
     @containerDefinition.customHeader.map {
         case header: MetaDataHeader => {
             @containerMetaData(header)
         }
         case _ => {}
     }
-    <section id="@componentName"
-             class="@GetClasses.forContainerDefinition(containerDefinition)"
-             data-link-name="container-@{containerDefinition.index + 1} | @componentName"
-             data-id="@containerDefinition.dataId"
-             @for(sponsor <- containerDefinition.commercialOptions.sponsor) { data-sponsor="@sponsor" }
-             @for(tag <- containerDefinition.commercialOptions.sponsorshipTag) {
-                 @tag.tagType match {
-                     case Series => { data-series="@{tag.tagId}" }
-                     case Keyword => { data-keywords="@{tag.tagId}" }
-                 }
-             }
-             @containerDefinition.commercialOptions.sponsorshipType.map { sponsorshipType =>
-                 data-sponsorship="@sponsorshipType"
-             }
-             data-component="@componentName"
-             aria-expanded="true">
+    @if(faciaPage.isFoundationSupported && NewCommercialContent.isSwitchedOn && containerDefinition.container == "MostPopular") {
+        <section id="@componentName"
+        class="@GetClasses.forContainerDefinition(containerDefinition)"
+        data-link-name="container-@{containerDefinition.index + 1} | @componentName"
+        data-id="@containerDefinition.dataId"
+            @for(sponsor <- containerDefinition.commercialOptions.sponsor) { data-sponsor="@sponsor" }
+            @for(tag <- containerDefinition.commercialOptions.sponsorshipTag) {
+                @tag.tagType match {
+                    case Series => { data-series="@{tag.tagId}" }
+                    case Keyword => { data-keywords="@{tag.tagId}" }
+                }
+            }
+            @containerDefinition.commercialOptions.sponsorshipType.map { sponsorshipType =>
+            data-sponsorship="@sponsorshipType"
+            }
+        data-component="@componentName"
+        aria-expanded="true">
 
-             @if(containerDefinition.isStoryPackage){
+            @println(containerDefinition.commercialOptions)
+
+            @if(containerDefinition.isStoryPackage){
                 @conf.Static.css.inline("story-package").map { css =>
                     <style>
                         @Html(css)
                     </style>
                 }
-             }
+            }
 
             @containerDefinition.container match {
                 case _: Dynamic | _: Fixed => {
                     <div class="fc-container__inner">
-                        @standardContainer(containerDefinition, frontProperties)
+                    @standardContainer(containerDefinition, frontProperties)
                     </div>
                 }
 
                 case NavList => {
                     <div class="fc-container__inner">
-                        @navListContainer(containerDefinition, frontProperties)
+                    @navListContainer(containerDefinition, frontProperties)
                     </div>
                 }
 
                 case NavMediaList => {
                     <div class="fc-container__inner">
-                        @navMediaListContainer(containerDefinition, frontProperties)
+                    @navMediaListContainer(containerDefinition, frontProperties)
                     </div>
                 }
 
                 case MostPopular => {
                     <div class="fc-container__inner">
-                        @mostPopularContainer(containerDefinition, frontProperties)
+                    @mostPopularContainer(containerDefinition, frontProperties)
                     </div>
                 }
 
@@ -69,9 +80,10 @@
                         Map("fc-container__inner--full-span fc-container__inner--paidfor" -> Switches.NewCommercialContent.isSwitchedOn),
                         "fc-container__inner"
                     )">
-                        @commercialContainer(container, containerDefinition, frontProperties)
+                    @commercialContainer(container, containerDefinition, frontProperties)
                     </div>
                 }
             }
-    </section>
+        </section>
+    }
 }
