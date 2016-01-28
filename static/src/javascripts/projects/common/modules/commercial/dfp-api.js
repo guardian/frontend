@@ -673,7 +673,6 @@ define([
                     resolve(breakoutIFrame(iFrame, $slot));
                 }
             }).then(function (items) {
-                console.log('whatever');
                 return find(items, function (item) {
                     return item.adType !== '';
                 });
