@@ -71,7 +71,7 @@ object MetaDataFormat {
 
   private case class MetaDataPart2(
     contentType: String,
-    isImmersive: Boolean,
+    hasHeader: Boolean,
     schemaType: Option[String],
     cacheSeconds: Int,
     openGraphImages: Seq[String],
