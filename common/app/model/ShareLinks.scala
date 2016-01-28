@@ -2,6 +2,7 @@ package model
 
 import java.net.URLEncoder
 
+import campaigns.ShortCampaignCodes
 import common.`package`._
 import conf.Configuration.facebook.{ appId => facbookAppId }
 
@@ -22,7 +23,9 @@ final case class ShareLinks(
   private def shareLink(shareType: String, elementId: Option[String] = None, mediaPath: Option[String] = None, shortLinkUrl: String, webLinkUrl: String, title: String): Option[ShareLink] = {
 
     def shareCampaignUrl(campaign: String, elementId: Option[String]) = {
-      elementId.map { block => s"$shortLinkUrl/$campaign#$block" } getOrElse s"$shortLinkUrl/$campaign"
+      // TODO this code should be tidied a bit to avoid using string concatenation in such a flaky way
+      val campaignParam = ShortCampaignCodes.getFullCampaign(campaign).map(code => s"CMP=$code").getOrElse("")
+      elementId.map { block => s"$webLinkUrl?page=with:$block&$campaignParam#$block" } getOrElse s"$webLinkUrl?$campaignParam"
     }
 
     lazy val facebook = shareCampaignUrl("sfb", elementId).urlEncoded
