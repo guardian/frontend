@@ -19,7 +19,10 @@
     .fc-item__link:visited,
     .fc-item__standfirst,
     .item__link:visited,
-    .item__link:visited .item__title {
+    .item__link:visited .item__title,
+    // Story-package overrides
+    .fc-container--story-package .fc-item__standfirst,
+    .fc-container--story-package .fc-item__link:visited {
         color: colour(neutral-2-contrasted);
     }
 
@@ -117,6 +120,11 @@
         border-top: 0;
     }
 
+    .fc-container--story-package .tone-news--item.fc-item {
+        // This is to override an !important background colour in story-package items
+        background-color: colour(paid-article-subheader) !important;
+    }
+
     .tone-media--item {
         .u-faux-block-link--hover {
             background-color: colour(neutral-6);
@@ -130,6 +138,11 @@
         .fc-item__link:visited {
             color: colour(neutral-1);
         }
+    }
+
+    // Override story-package hover colours
+    .fc-container--story-package .fc-item .u-faux-block-link--hover {
+        background-color: colour(neutral-6);
     }
 
     .headline-list__item:before {

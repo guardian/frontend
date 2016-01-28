@@ -243,7 +243,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val apiTimeout = configuration.getMandatoryStringProperty("discussion.apiTimeout")
     lazy val apiClientHeader = configuration.getMandatoryStringProperty("discussion.apiClientHeader")
     lazy val d2Uid = configuration.getMandatoryStringProperty("discussion.d2Uid")
-    lazy val url = configuration.getMandatoryStringProperty("discussion.url")
   }
 
   object witness {
