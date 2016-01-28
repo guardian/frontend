@@ -196,10 +196,15 @@ final case class Content(
       (Some("series", JsString(series.name)), Some("seriesId", JsString(series.id)))
     } getOrElse (None,None)
 
+    val articleMeta = if (tags.isUSMinuteSeries) {
+      Some("isMinute", JsBoolean(tags.isUSMinuteSeries))
+    } else None
+
     val meta = List[Option[(String, JsValue)]](
       rugbyMeta,
       seriesMeta,
-      seriesIdMeta
+      seriesIdMeta,
+      articleMeta
     ) ++ cricketMeta
     meta.flatten.toMap
   }
@@ -335,7 +340,6 @@ object Article {
     val javascriptConfig: Map[String, JsValue] = Map(
       ("contentType", JsString(contentType)),
       ("isLiveBlog", JsBoolean(content.tags.isLiveBlog)),
-      ("isMinuteArticle", JsBoolean(content.tags.isUSMinuteSeries)),
       ("inBodyInternalLinkCount", JsNumber(content.linkCounts.internal)),
       ("inBodyExternalLinkCount", JsNumber(content.linkCounts.external)),
       ("shouldHideAdverts", JsBoolean(content.shouldHideAdverts)),
