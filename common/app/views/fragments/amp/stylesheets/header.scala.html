@@ -1,0 +1,68 @@
+.main-header {
+    background: #005689;
+    position: relative;
+    min-height: 74px;
+}
+
+.logo-wrapper svg {
+    height: 40px;
+    width: inherit;
+}
+
+.main-navigation {
+    position: absolute;
+    top: 7px;
+    left: 20px;
+}
+
+.main-navigation_link {
+    font-size: 20px;
+    font-family: "Guardian Egyptian Web",Georgia,serif;
+    font-weight: 500;
+    color: #aad8f1;
+    float: left;
+}
+
+.main-navigation_link:first-of-type {
+    color: #fff;
+}
+
+.main-navigation_link::after {
+    content: "/";
+    color: #1e83ab;
+    margin: 0 5px;
+}
+
+.main-navigation_link:nth-child(2)::after,
+.main-navigation_link:last-of-type::after {
+    content:none;
+}
+
+.logo-wrapper {
+    float: right;
+    margin: 6px 20px 0;
+}
+
+@@media (max-width: 480px) {
+    .main-navigation {
+        left: 10px;
+    }
+    .logo-wrapper {
+        margin-right: 10px;
+    }
+}
+
+@@media (max-width: 430px) {
+    .main-navigation {
+        top: 3px;
+    }
+    .logo-wrapper svg {
+        height: 30px;
+    }
+    .main-navigation_link {
+        font-size: 16px;
+    }
+    .main-header {
+        min-height: 60px;
+    }
+}

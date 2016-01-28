@@ -176,16 +176,6 @@
         color: #005689;
     }
 
-    .main-header {
-        background: #005689;
-        min-height: 45px;
-    }
-
-    .logo-wrapper {
-        float: right;
-        margin: 0.1875rem 0.625rem 0.34rem 0;
-    }
-
     .from-content-api h2, .from-content-api .block-elements h2, .from-content-api p strong {
         letter-spacing: -0.02em;
     }
@@ -251,6 +241,7 @@
     @fragments.amp.stylesheets.onward()
     @fragments.amp.stylesheets.fonts()
     @fragments.amp.stylesheets.buttons()
+    @fragments.amp.stylesheets.header()
 
     @* temporarily hiding these for demo *@
     .inline-expand-image, .content__dateline-lm , .block-share, .witness-cta-wrapper {
