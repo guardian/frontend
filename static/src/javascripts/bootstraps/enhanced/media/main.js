@@ -253,9 +253,10 @@ define([
                                     id: mediaId,
                                     adTagUrl: getAdUrl()
                                 });
+                                player.ima.requestAds();
+
                                 // Video analytics event.
                                 player.trigger(events.constructEventName('preroll:request', player));
-                                player.ima.requestAds();
                             }
                         )();
                     } else {
