@@ -10,7 +10,11 @@
     <head>
         @* "utf-8" meta tag needs to be first according to AMP spec *@
         <meta charset="utf-8">
-        <meta name="amp-3p-iframe-src" content="https://static.theguardian.com/amp/remote.html">
+        @if(page.metadata.id == "books/booksblog/2016/jan/20/the-best-music-to-listen-to-while-reading-or-is-it-sacrilege") {
+            <meta name="amp-3p-iframe-src" content="https://static.theguardian.com/amp/remote-3.html">
+        } else {
+            <meta name="amp-3p-iframe-src" content="https://static.theguardian.com/amp/remote.html">
+        }
 
         @fragments.metaData(page, amp = true)
         <title>@views.support.Title(page)</title>

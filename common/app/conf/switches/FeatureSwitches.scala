@@ -10,7 +10,7 @@ trait FeatureSwitches {
     "aws-credentials-switchover",
     "Switch to remind us to remove the 'nextgen' profile from the default AWS credentials provider chain",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 2), //Tuesday
+    sellByDate = new LocalDate(2016, 2, 5), //Friday
     exposeClientSide = false
   )
 
@@ -56,6 +56,15 @@ trait FeatureSwitches {
     "Enable Foresee surveys for a sample of our audience",
     safeState = Off,
     sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val LiveBlogTransitionSwitch = Switch(
+    "Feature",
+    "liveblog-transition",
+    "Fix up liveblog scroll transitions in liveblog.js to work with pagination",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 3, 2),
     exposeClientSide = true
   )
 
