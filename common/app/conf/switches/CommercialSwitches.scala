@@ -265,4 +265,13 @@ trait CommercialSwitches {
     sellByDate = new LocalDate(2016, 3, 1),
     exposeClientSide = true
   )
+
+  val OutbrainReplacesMerch = Switch(
+    "Commercial",
+    "outbrain-replaces-merch",
+    "In case the low-priority merchandising component is empty, an Outbrain widget is loaded in its place",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 2, 12),
+    exposeClientSide = true
+  )
 }
