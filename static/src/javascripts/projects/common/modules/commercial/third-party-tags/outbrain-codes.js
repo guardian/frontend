@@ -38,7 +38,7 @@ define(function () {
     };
 
     function getCode(data) {
-        if (!data.slot in outbrainCodes || data.slot === 'outbrain') {
+        if (!(data.slot in outbrainCodes) || data.slot === 'outbrain') {
             return outbrainCodes.outbrain[data.section][data.breakpoint === 'wide' ? 'desktop' : data.breakpoint];
         } else {
             return outbrainCodes.merchandising[data.edition][data.breakpoint === 'wide' ? 'desktop' : data.breakpoint];
@@ -46,4 +46,4 @@ define(function () {
     }
 
     return getCode;
-})
+});

@@ -1,6 +1,6 @@
-define('ophan/ng', [], function() { return { record: function() {} }});
-define('js', [], function() { return function() {} });
-define('js!//widgets.outbrain.com/outbrain.js', [], function() { return function() {} });
+define('ophan/ng', [], function () { return { record: function () {} }; });
+define('js', [], function () { return function () {}; });
+define('js!//widgets.outbrain.com/outbrain.js', [], function () { return function () {}; });
 define([
     'fastdom',
     'helpers/injector',
@@ -172,12 +172,12 @@ define([
                 eventStubLo.isEmpty = true;
 
                 var oldEmit = mediator.emit;
-                mediator.emit = function(eventName, data) {
-                    return new Promise(function(resolve) {
+                mediator.emit = function (eventName, data) {
+                    return new Promise(function (resolve) {
                         oldEmit.call(mediator, eventName, data);
                         resolve();
                     });
-                }
+                };
 
                 sut.init().then(function () {
                     expect(sut.load).toHaveBeenCalledWith('merchandising');

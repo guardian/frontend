@@ -1,4 +1,4 @@
-define(function() {
+define(function () {
     var sections = ['politics', 'world', 'business', 'commentisfree'];
 
     function getSection(section) {

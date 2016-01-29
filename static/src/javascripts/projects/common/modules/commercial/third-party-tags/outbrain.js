@@ -9,8 +9,7 @@ define([
     'common/modules/identity/api',
     'common/modules/commercial/third-party-tags/outbrain-codes',
     'common/modules/commercial/third-party-tags/outbrain-sections',
-    'text!common/views/commercial/outbrain.html',
-    'lodash/collections/map'
+    'text!common/views/commercial/outbrain.html'
 ], function (
     Promise,
     fastdom,
@@ -22,8 +21,7 @@ define([
     identity,
     getCode,
     getSection,
-    outbrainStr,
-    map
+    outbrainStr
 ) {
     var outbrainUrl = '//widgets.outbrain.com/outbrain.js';
     var outbrainTpl = template(outbrainStr);
@@ -35,7 +33,7 @@ define([
 
     function build(codes, breakpoint) {
         var html = outbrainTpl({ widgetCode: codes.code || codes.image });
-        if (breakpoint !== "mobile") {
+        if (breakpoint !== 'mobile') {
             html += outbrainTpl({ widgetCode: codes.code || codes.text });
         }
         return html;
