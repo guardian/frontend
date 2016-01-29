@@ -291,6 +291,7 @@ class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
           }
         } else {
           val el = element.clone()
+
           if (el.children.size > 1) {
             val body = el.child(0).attr("class", "tweet-body")
             val date = el.child(1).attr("class", "tweet-date")
@@ -298,7 +299,7 @@ class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
             val userEl = document.createElement("span").attr("class", "tweet-user").text(user)
             val link = document.createElement("a").attr("href", date.attr("href")).attr("style", "display: none;")
 
-            element.empty().attr("class", "js-tweet tweet")
+            element.empty().removeClass("twitter-tweet").addClass("js-tweet tweet")
 
             tweetImage.foreach { image =>
               val img = document.createElement("img")
