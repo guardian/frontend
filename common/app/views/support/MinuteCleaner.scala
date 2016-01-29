@@ -17,7 +17,7 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
     */
   val ParentClasses = Map(
     "element-video" -> "block--embed block--video",
-    "element-twitter" -> "block--embed block--tweet",
+    "element-tweet" -> "block--embed block--tweet",
     "block-title" -> "has-title",
     "quoted" -> "block--quote",
     "element--inline" -> "background-image",
