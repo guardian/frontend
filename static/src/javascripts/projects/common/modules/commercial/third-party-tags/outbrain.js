@@ -39,7 +39,7 @@ define([
 
     function build(codes, breakpoint) {
         var html = outbrainTpl({ widgetCode: codes.code || codes.image });
-        if (breakpoint !== 'mobile' ) {
+        if (breakpoint !== 'mobile') {
             html += outbrainTpl({ widgetCode: codes.code || codes.text });
         }
         return html;
