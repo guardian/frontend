@@ -42,7 +42,7 @@ define([
     }
 
     function load(target) {
-        var slot          = target || 'outbrain',
+        var slot          = target in selectors ? target : 'outbrain',
             $outbrain     = $(selectors[slot].widget),
             $container    = $(selectors[slot].container),
             breakpoint    = detect.getBreakpoint(),
