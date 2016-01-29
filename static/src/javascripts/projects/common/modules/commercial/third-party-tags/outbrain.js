@@ -57,7 +57,7 @@ define([
         });
         widgetHtml = build(widgetCodes, breakpoint);
         $container.append(widgetHtml);
-        tracking(widgetCodes.code || widgetCodes.image);
+        module.tracking(widgetCodes.code || widgetCodes.image);
         require(['js!' + outbrainUrl], function () {
             fastdom.write(function () {
                 $outbrain.css('display', 'block');
@@ -104,46 +104,61 @@ define([
         return !(identity.isUserLoggedIn() && config.page.commentable);
     }
 
-    return {
+    /*
+        Loading Outbrain is dependent on successful return of high relevance component
+        from DFP. AdBlock is blocking DFP calls so we are not getting any response and thus
+        not loading Outbrain. As Outbrain is being partially loaded behind the adblock we can
+        make the call instantly when we detect adBlock in use.
+     */
+    function loadInstantly() {
+        return !document.getElementById('dfp-ad--merchandising-high') ||
+            detect.adblockInUse();
+    }
+
+    function init() {
+        if (config.switches.outbrain
+            && !config.page.isFront
+            && !config.page.isPreview
+            && config.page.section !== 'childrens-books-site'
+            && identityPolicy()
+        ) {
+            // if there is no merch component, load the outbrain widget right away
+            if (loadInstantly()) {
+                module.load();
+                return Promise.resolve(true);
+            }
+
+            return trackAd('dfp-ad--merchandising-high').then(function (isHiResLoaded) {
+                // if the high-priority merch component has loaded, we wait until
+                // the low-priority one has loaded to decide if an outbrain widget is loaded
+                // if it hasn't loaded, the outbrain widget is loaded at its default
+                // location right away
+                return Promise.all([
+                    isHiResLoaded,
+                    isHiResLoaded ? trackAd('dfp-ad--merchandising') : false
+                ]);
+            }).then(function (args) {
+                var isHiResLoaded = args[0];
+                var isLoResLoaded = args[1];
+
+                if (isHiResLoaded) {
+                    if (!isLoResLoaded) {
+                        module.load('merchandising');
+                    }
+                } else {
+                    module.load();
+                }
+            });
+        }
+
+        return Promise.resolve(true);
+    }
+
+    var module = {
         load: load,
         tracking: tracking,
-        getSection: getSection,
-
-        init: function () {
-            if (config.switches.outbrain
-                && !config.page.isFront
-                && !config.page.isPreview
-                && config.page.section !== 'childrens-books-site'
-                && identityPolicy()
-            ) {
-                // if there is no merch component, load the outbrain widget right away
-                if (!document.getElementById('dfp-ad--merchandising-high')) {
-                    load();
-                    return;
-                }
-
-                trackAd('dfp-ad--merchandising-high').then(function (isHiResLoaded) {
-                    // if the high-priority merch component has loaded, we wait until
-                    // the low-priority one has loaded to decide if an outbrain widget is loaded
-                    // if it hasn't loaded, the outbrain widget is loaded at its default
-                    // location right away
-                    return Promise.all([
-                        isHiResLoaded,
-                        isHiResLoaded ? trackAd('dfp-ad--merchandising') : false
-                    ]);
-                }).then(function (args) {
-                    var isHiResLoaded = args[0];
-                    var isLoResLoaded = args[1];
-
-                    if (isHiResLoaded) {
-                        if (!isLoResLoaded) {
-                            load('merchandising');
-                        }
-                    } else {
-                        load();
-                    }
-                });
-            }
-        }
+        init: init
     };
+
+    return module;
 });
