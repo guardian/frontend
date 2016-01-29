@@ -32,7 +32,7 @@
                     @fragments.basher(faciaPage.id)
 
                     @collections.map { containerDefinition =>
-                        @fragments.containers.facia_cards.container(containerDefinition, Some(faciaPage))
+                        @fragments.containers.facia_cards.container(containerDefinition, faciaPage.frontProperties, faciaPage.isAdvertisementFeature)
                     }
 
                     @defining(layout.Front.makeLinkedData(faciaPage.metadata.url, collections)) { linkedData =>

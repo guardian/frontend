@@ -1,4 +1,4 @@
-@(containerDefinition: layout.FaciaContainer, faciaPageMaybe: Option[model.PressedPage] = None)(implicit request: RequestHeader)
+@(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties = model.FrontProperties.empty, isPaidContent:Boolean = false)(implicit request: RequestHeader)
 
 @import common.dfp.{Keyword, Series}
 @import conf.switches.Switches
@@ -8,13 +8,6 @@
 @import views.support.{GetClasses, RenderClasses}
 @import conf.switches.Switches.NewCommercialContent
 
-
-    @val frontProperties = faciaPageMaybe match {
-        case Some(faciaPage) => return faciaPage.FrontProperties
-        case None => return model.FrontProperties.empty
-    }
-
-
     @defining((containerDefinition.displayName, containerDefinition.faciaComponentName)) { case (title, componentName) =>
     @containerDefinition.customHeader.map {
         case header: MetaDataHeader => {
@@ -22,7 +15,10 @@
         }
         case _ => {}
     }
-    @if(faciaPage.isFoundationSupported && NewCommercialContent.isSwitchedOn && containerDefinition.container == "MostPopular") {
+ 
+    @(containerDefinition.container, isPaidContent, NewCommercialContent.isSwitchedOn) match {
+        case (MostPopular, true, true) => {}
+        case _ => {
         <section id="@componentName"
         class="@GetClasses.forContainerDefinition(containerDefinition)"
         data-link-name="container-@{containerDefinition.index + 1} | @componentName"
@@ -39,8 +35,6 @@
             }
         data-component="@componentName"
         aria-expanded="true">
-
-            @println(containerDefinition.commercialOptions)
 
             @if(containerDefinition.isStoryPackage){
                 @conf.Static.css.inline("story-package").map { css =>
@@ -85,5 +79,6 @@
                 }
             }
         </section>
+        }
     }
 }
