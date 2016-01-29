@@ -141,12 +141,6 @@ define([
         saveSummary(summary);
     }
 
-    function isRevisit(pageId) {
-        return (find(getHistory(), function (page) {
-            return (page[0] === pageId);
-        }) || [])[1] > 1;
-    }
-
     function pruneSummary(summary, mockToday) {
         var newToday = mockToday || today,
             updateBy = newToday - summary.periodEnd;
@@ -411,7 +405,6 @@ define([
         getPopularFiltered: getPopularFiltered,
         getContributors: getContributors,
         deleteFromSummary: deleteFromSummary,
-        isRevisit: isRevisit,
         reset: reset,
 
         test: {
