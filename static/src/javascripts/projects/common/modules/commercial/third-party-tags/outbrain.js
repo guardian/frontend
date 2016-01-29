@@ -27,13 +27,19 @@ define([
     var outbrainTpl = template(outbrainStr);
 
     var selectors = {
-        outbrain: { widget: '.js-outbrain', container: '.js-outbrain-container' },
-        merchandising: { widget: '#dfp-ad--merchandising', container: '#dfp-ad--merchandising' }
+        outbrain: {
+            widget: '.js-outbrain',
+            container: '.js-outbrain-container'
+        },
+        merchandising: {
+            widget: '.fc-container--commercial',
+            container: '.js-outbrain-container'
+        }
     };
 
     function build(codes, breakpoint) {
         var html = outbrainTpl({ widgetCode: codes.code || codes.image });
-        if (breakpoint !== 'mobile') {
+        if (breakpoint !== 'mobile' ) {
             html += outbrainTpl({ widgetCode: codes.code || codes.text });
         }
         return html;
@@ -41,8 +47,8 @@ define([
 
     function load(target) {
         var slot          = target in selectors ? target : 'outbrain',
-            $outbrain     = $(selectors[slot].widget),
-            $container    = $(selectors[slot].container),
+            $outbrain     = $(selectors.outbrain.widget),
+            $container    = $(selectors.outbrain.container, $outbrain[0]),
             breakpoint    = detect.getBreakpoint(),
             widgetCodes,
             widgetHtml;
@@ -54,12 +60,15 @@ define([
             breakpoint: breakpoint
         });
         widgetHtml = build(widgetCodes, breakpoint);
-        $container.append(widgetHtml);
-        module.tracking(widgetCodes.code || widgetCodes.image);
-        require(['js!' + outbrainUrl], function () {
-            fastdom.write(function () {
-                $outbrain.css('display', 'block');
-            });
+        return fastdom.write(function () {
+            if (slot !== 'outbrain') {
+                $(selectors[slot].widget).replaceWith($outbrain[0]);
+            }
+            $container.append(widgetHtml);
+            $outbrain.css('display', 'block');
+        }).then(function () {
+            module.tracking(widgetCodes.code || widgetCodes.image);
+            require(['js!' + outbrainUrl]);
         });
     }
 
