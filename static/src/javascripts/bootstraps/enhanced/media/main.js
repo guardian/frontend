@@ -354,7 +354,7 @@ define([
     function initWithRaven(withPreroll) {
         raven.wrap(
             { tags: { feature: 'media' } },
-            function () { initPlayer(withPreroll) }
+            function () { initPlayer(withPreroll); }
         )();
     }
 
