@@ -53,8 +53,14 @@ $minute-headline-colour: #ffffff;
             content: '';
             height: $gs-baseline*3;
             position: absolute;
-            right: 0;
+            right: $gs-gutter;
             top: 0;
+            width: gs-span(7);
+        }
+    }
+
+    @include mq($from: wide) {
+        &:after {
             width: gs-span(10);
         }
     }
@@ -62,33 +68,76 @@ $minute-headline-colour: #ffffff;
     /* ==========================================================================
        Layout
        ========================================================================== */
+    $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
 
-    @include mq($from: wide) {
-        margin: $gs-baseline/2 auto;
-        max-width: gs-span(12) - $gs-gutter*2;
+    @include mq($from: tablet) {
+        margin: $gs-baseline/2 0 0 $minute-layout-margin-nudge;
+        max-width: gs-span(11);
 
         .block-elements {
             box-sizing: border-box;
             float: right;
-            padding: $gs-baseline*4 gs-span(1) 0 $gs-gutter;
-            width: gs-span(5);
+            padding: $gs-baseline*2.5 $gs-gutter 0;
+            width: gs-span(6);
         }
 
         .article__img-container {
             display: block;
-            width: gs-span(7) - $gs-gutter;
+            width: gs-span(5);
         }
 
         figure.element-image {
             margin-top: 0;
         }
 
+        figure.element.element--thumbnail {
+            margin: 0;
+            width: 100%;
+            float: none;
+            clear: none;
+        }
+
         .caption--img {
+            padding: 0 $gs-gutter;
             position: absolute;
-            padding-right: gs-span(1);
             bottom: 0;
             right: 0;
+            width: gs-span(6)-$gs-gutter;
+        }
+    }
+
+    @include mq($from: leftCol) {
+        max-width: gs-span(12);
+
+        .block-elements {
+            width: gs-span(6);
+            padding-right: gs-span(1) + $gs-gutter;
+        }
+
+        .article__img-container {
+            width: gs-span(6);
+        }
+
+        .caption--img {
+            width: gs-span(5);
+            padding-right: gs-span(1);
+        }
+    }
+
+    @include mq($from: wide) {
+        margin-left: $minute-layout-margin-nudge + gs-span(1);
+
+        .block-elements {
+            width: gs-span(5);
+        }
+
+        .article__img-container {
+            width: gs-span(7);
+        }
+
+        .caption--img {
             width: gs-span(4);
+            padding-left: $gs-gutter;
         }
     }
 
