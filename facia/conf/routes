@@ -20,6 +20,7 @@ GET        /external/eyeblaster/addineyeV2.html                                 
 GET        /collection/*id/rss                                                      controllers.FaciaController.renderCollectionRss(id)
 GET        /container/use-layout/*id.json                                           controllers.FaciaController.renderContainerJsonWithFrontsLayout(id)
 GET        /container/*path/some/:num/:offset/:containerNameToFilter/:edition.json  controllers.FaciaController.renderSomeFrontContainers(path, num, offset, containerNameToFilter, edition)
+GET        /container-mf2/:num/:offset/*path.json                                   controllers.FaciaController.renderSomeFrontContainersMf2(num, offset, path)
 GET        /container/*id.json                                                      controllers.FaciaController.renderContainerJson(id)
 GET        /most-relevant-container/*path.json                                      controllers.FaciaController.renderMostRelevantContainerJson(path)
 
@@ -32,6 +33,3 @@ GET        /*path/deduped.json                                                  
 GET        /*path.json                                                              controllers.FaciaController.renderFrontJson(path)
 GET        /                                                                        controllers.FaciaController.rootEditionRedirect()
 GET        /*path                                                                   controllers.FaciaController.renderFront(path)
-
-# AMP
-GET        /container-mf2/:num/:offset/:section.json                                controllers.FaciaController.renderSomeFrontContainersMf2(num, offset, section)
