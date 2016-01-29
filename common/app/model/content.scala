@@ -2,26 +2,26 @@ package model
 
 import java.net.URL
 
+import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.facia.api.{utils => fapiutils}
 import com.gu.facia.client.models.TrailMetaData
 import com.gu.util.liveblogs.{Parser => LiveBlogParser}
-import common.dfp.DfpAgent
 import common._
+import common.dfp.DfpAgent
 import conf.Configuration
 import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch}
 import cricketPa.CricketTeams
 import layout.ContentWidths.{ImmersiveMedia, BodyMedia, LiveBlogMedia, GalleryMedia}
 import model.liveblog.{LiveBlogDate, BodyBlock}
 import model.liveblog.BodyBlock.{SummaryEvent, KeyEvent}
+import model.pressed._
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
 import play.api.libs.json._
-import com.gu.contentapi.client.model.{v1 => contentapi}
-import model.pressed._
-import views.support.{ChaptersLinksCleaner, StripHtmlTagsAndUnescapeEntities, FacebookOpenGraphImage, ImgSrc, Item700}
+import views.support.{ChaptersLinksCleaner, FacebookOpenGraphImage, ImgSrc, Item700, StripHtmlTagsAndUnescapeEntities}
 
 import scala.collection.JavaConversions._
 import scala.language.postfixOps
@@ -248,6 +248,7 @@ object Content {
     val sharelinks = ShareLinks(tags, fields, metadata)
     val apifields = apiContent.fields
     val references: Map[String,String] = apiContent.references.map(ref => (ref.`type`, Reference.split(ref.id)._2)).toMap
+    val cardStyle: fapiutils.CardStyle = fapiutils.CardStyle(apiContent, TrailMetaData.empty)
 
     Content(
       trail = trail,
@@ -269,7 +270,7 @@ object Content {
         Tweet(tweet.id, images)
       },
       showInRelated = apifields.flatMap(_.showInRelatedContent).getOrElse(false),
-      cardStyle = CardStyle.make(fapiutils.CardStyle(apiContent, TrailMetaData.empty)),
+      cardStyle = CardStyle.make(cardStyle),
       shouldHideAdverts = apifields.flatMap(_.shouldHideAdverts).getOrElse(false),
       witnessAssignment = references.get("witness-assignment"),
       isbn = references.get("isbn"),
@@ -279,10 +280,7 @@ object Content {
         Jsoup.clean(fields.body, Whitelist.none()).split("\\s+").size
       },
       hasStoryPackage = apifields.flatMap(_.hasStoryPackage).getOrElse(false),
-      showByline = {
-        val cardStyle = fapiutils.CardStyle(apiContent, TrailMetaData.empty)
-        fapiutils.ResolvedMetaData.fromContentAndTrailMetaData(apiContent, TrailMetaData.empty, cardStyle).showByline
-      },
+      showByline = fapiutils.ResolvedMetaData.fromContentAndTrailMetaData(apiContent, TrailMetaData.empty, cardStyle).showByline,
       rawOpenGraphImage = {
         val bestOpenGraphImage = if (FacebookShareUseTrailPicFirstSwitch.isSwitchedOn) {
           trail.trailPicture.flatMap(_.largestImageUrl)
