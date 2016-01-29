@@ -68,22 +68,6 @@ $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
     @include mq($from: tablet) {
         border-top: 0 none;
         padding-left: $gs-baseline*1.5;
-
-        &:after {
-            background-color: $us-minute-highlight-colour;
-            content: '';
-            height: $gs-baseline*3;
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: gs-span(7);
-        }
-    }
-
-    @include mq($from: wide) {
-        &:after {
-            width: gs-span(10);
-        }
     }
 
     /* ==========================================================================
@@ -97,6 +81,16 @@ $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
     @include mq($from: tablet) {
         margin: $gs-baseline/2 0 0 $minute-layout-margin-nudge;
         max-width: gs-span(8);
+
+        &:after {
+            background-color: $us-minute-highlight-colour;
+            content: '';
+            height: $gs-baseline*3;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: gs-span(7);
+        }
 
         .block-elements {
             box-sizing: border-box;
@@ -142,6 +136,10 @@ $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
 
     @include mq($from: wide) {
         margin-left: $minute-layout-margin-nudge + gs-span(1);
+
+        &:after {
+            width: gs-span(10);
+        }
 
         .block-elements {
             width: gs-span(5);
