@@ -3,7 +3,7 @@ package controllers
 import actions.AuthenticatedActions
 import client.Auth
 import com.gu.identity.cookie.GuUCookieData
-import com.gu.identity.model.{PrivateFields, PublicFields, StatusFields, User}
+import com.gu.identity.model._
 import idapiclient.{TrackingData, _}
 import model.Countries
 import org.mockito.Mockito._
@@ -149,11 +149,35 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
       val billingAddress4 = ""
       val billingPostcode = "SW1A 1AA"
       val billingCountry = Countries.UK
+      val telephoneNumberCountryCode = "44"
+      val telephoneNumberLocalNumber = "2033532000"
     }
 
     import FakeRequestAccountData._
 
     def createFakeRequestWithoutBillingAddress = {
+
+      import FakeRequestAccountData._
+
+      FakeCSRFRequest ()
+        .withFormUrlEncodedBody (
+        ("primaryEmailAddress", primaryEmailAddress),
+        ("firstName", firstName),
+        ("secondName", secondName),
+        ("gender", gender),
+        ("address.line1", address1),
+        ("address.line2", address2),
+        ("address.line3", address3),
+        ("address.line4", address4),
+        ("address.postcode", postcode),
+        ("address.country", country),
+        ("telephoneNumber.countryCode", telephoneNumberCountryCode),
+        ("telephoneNumber.localNumber", telephoneNumberLocalNumber)
+      )
+
+    }
+
+    def createFakeRequestWithoutTelephoneNumber = {
 
       import FakeRequestAccountData._
 
@@ -194,7 +218,9 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
         ("billingAddress.line3", billingAddress3),
         ("billingAddress.line4", billingAddress4),
         ("billingAddress.postcode", billingPostcode),
-        ("billingAddress.country", billingCountry)
+        ("billingAddress.country", billingCountry),
+        ("telephoneNumber.countryCode", telephoneNumberCountryCode),
+        ("telephoneNumber.localNumber", telephoneNumberLocalNumber)
       )
 
     }
@@ -216,6 +242,51 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
     "without billing address request" - Fake{
 
       val fakeRequest = createFakeRequestWithoutBillingAddress
+
+      val updatedUser = user.copy(
+        primaryEmailAddress = primaryEmailAddress,
+        privateFields = PrivateFields(
+          firstName = Some(firstName),
+          secondName = Some(secondName),
+          gender = Some(gender),
+          address1 = Some(address1),
+          address2 = Some(address2),
+          address3 = Some(address3),
+          address4 = Some(address4),
+          postcode = Some(postcode),
+          country = Some(country),
+          telephoneNumber = Some(TelephoneNumber(Some(telephoneNumberCountryCode), Some(telephoneNumberLocalNumber)))
+        )
+      )
+
+      when(api.saveUser(Matchers.any[String], Matchers.any[UserUpdate], Matchers.any[Auth]))
+        .thenReturn(Future.successful(Right(updatedUser)))
+
+      val result = controller.submitAccountForm().apply(fakeRequest)
+      Await.result(result, 2.second)
+
+      "then the user should be saved on the ID API" in {
+        val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])
+        verify(api).saveUser(Matchers.eq(userId), userUpdateCapture.capture(), Matchers.eq(testAuth))
+        val userUpdate = userUpdateCapture.getValue
+
+        userUpdate.primaryEmailAddress.value should equal(primaryEmailAddress)
+        userUpdate.privateFields.value.firstName.value should equal(firstName)
+        userUpdate.privateFields.value.secondName.value should equal(secondName)
+        userUpdate.privateFields.value.gender.value should equal(gender)
+        userUpdate.privateFields.value.address1.value should equal(address1)
+        userUpdate.privateFields.value.address2.value should equal(address2)
+        userUpdate.privateFields.value.address3 should equal(None)
+        userUpdate.privateFields.value.address4 should equal(None)
+        userUpdate.privateFields.value.postcode.value should equal(postcode)
+        userUpdate.privateFields.value.country.value should equal(country)
+        userUpdate.privateFields.value.telephoneNumber.value should equal(TelephoneNumber(Some(telephoneNumberCountryCode), Some(telephoneNumberLocalNumber)))
+      }
+    }
+
+    "without telephone number request" - Fake{
+
+      val fakeRequest = createFakeRequestWithoutTelephoneNumber
 
       val updatedUser = user.copy(
         primaryEmailAddress = primaryEmailAddress,
@@ -255,6 +326,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
         userUpdate.privateFields.value.country.value should equal(country)
       }
     }
+
     "with billing address request" - Fake{
 
       val fakeRequest = createFakeRequestWithBillingAddress
@@ -276,7 +348,8 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
           billingAddress3 = Some(billingAddress3),
           billingAddress4 = Some(billingAddress4),
           billingPostcode = Some(billingPostcode),
-          billingCountry  = Some(billingCountry)
+          billingCountry  = Some(billingCountry),
+          telephoneNumber = Some(TelephoneNumber(Some(telephoneNumberCountryCode), Some(telephoneNumberLocalNumber)))
         )
       )
 
@@ -307,6 +380,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
         userUpdate.privateFields.value.billingAddress4 should equal(None)
         userUpdate.privateFields.value.billingPostcode.value should equal(billingPostcode)
         userUpdate.privateFields.value.billingCountry.value should equal(billingCountry)
+        userUpdate.privateFields.value.telephoneNumber.value should equal(TelephoneNumber(Some(telephoneNumberCountryCode), Some(telephoneNumberLocalNumber)))
       }
     }
   }

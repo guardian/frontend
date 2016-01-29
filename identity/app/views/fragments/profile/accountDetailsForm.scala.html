@@ -42,6 +42,30 @@
                         </p>
                     }
                 </li>
+
+                <li class="form-field form-fields__inline form-fields--date-of-birth">
+                    <span class="form-fields__heading">Phone</span>
+                    <ul class="u-unstyled">
+                        @if(accountDetailsForm("telephoneNumber").hasErrors) {
+                            <div class="form__error">@accountDetailsForm("telephoneNumber").errors.map(_.message).mkString(", ")</div>
+                        }
+                        @select(
+                            accountDetailsForm("telephoneNumber.countryCode"),
+                            options(List(1, 44) map {_.toString}),
+                            ('_label, ""),
+                            ('_showConstraints, false),
+                            ('_default, ""),
+                            Symbol("data-test-id") -> "telephone-number-country-code"
+                        )
+                        @inputField(
+                            Input(
+                                accountDetailsForm("telephoneNumber.localNumber"),
+                                ('_label, ""),
+                                Symbol("data-test-id") -> "telephone-number-local-number"
+                            )
+                        )
+                    </ul>
+                </li>
             </ul>
         </div>
 
