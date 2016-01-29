@@ -112,7 +112,11 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
 
     case minute: MinutePage =>
       noAMP {
-        val htmlResponse = () => views.html.minute(minute)
+        val htmlResponse = () => {
+          if (request.isEmail) views.html.articleEmail(minute)
+          else                 views.html.minute(minute)
+        }
+
         val jsonResponse = () => views.html.fragments.minuteBody(minute)
         renderFormat(htmlResponse, jsonResponse, minute, Switches.all)
       }

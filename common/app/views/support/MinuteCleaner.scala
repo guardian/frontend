@@ -49,6 +49,8 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
         // Remove Classes
         block.removeClass("block")
 
+        block.select("h2.block-title").foreach(e => if (e.text() == "Summary" || e.text() == "Key event") e.remove())
+
         ParentClasses.foldLeft(Set(): Set[String]) { case (classes, (childClass, parentClass)) =>
           if (allElements.exists(_.hasClass(childClass))) classes + parentClass
           else classes
