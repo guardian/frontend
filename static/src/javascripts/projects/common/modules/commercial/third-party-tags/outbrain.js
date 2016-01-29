@@ -8,7 +8,6 @@ define([
     'common/utils/template',
     'common/modules/identity/api',
     'common/modules/commercial/third-party-tags/outbrain-codes',
-    'common/modules/commercial/third-party-tags/outbrain-sections',
     'text!common/views/commercial/outbrain.html'
 ], function (
     Promise,
@@ -20,7 +19,6 @@ define([
     template,
     identity,
     getCode,
-    getSection,
     outbrainStr
 ) {
     var outbrainUrl = '//widgets.outbrain.com/outbrain.js';
@@ -55,7 +53,7 @@ define([
 
         widgetCodes = getCode({
             slot: slot,
-            section: getSection(config.page.section),
+            section: config.page.section,
             edition: config.page.edition,
             breakpoint: breakpoint
         });
