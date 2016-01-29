@@ -242,6 +242,9 @@ GET            /css-reports                                                     
 GET            /css-reports.json                                                                                                 controllers.admin.CssReportController.index
 GET            /css-reports/:date.json                                                                                           controllers.admin.CssReportController.report(date: org.joda.time.LocalDate)
 
+#Notifications Store
+POST           /notification/store                                                                                               controllers.admin.NotificationsController.saveSubscription()
+POST           /notification/delete                                                                                              controllers.admin.NotificationsController.deleteSubscription()
 
 # Football admin
 

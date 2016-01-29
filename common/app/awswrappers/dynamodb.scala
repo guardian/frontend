@@ -19,5 +19,8 @@ object dynamodb {
 
     def putItemFuture(putItemRequest: PutItemRequest) =
       asFuture[PutItemRequest, PutItemResult](dynamoDbClient.putItemAsync(putItemRequest, _))
+
+    def deleteItemFuture(deleteItemRequest: DeleteItemRequest)  =
+      asFuture[DeleteItemRequest, DeleteItemResult](dynamoDbClient.deleteItemAsync(deleteItemRequest, _))
   }
 }

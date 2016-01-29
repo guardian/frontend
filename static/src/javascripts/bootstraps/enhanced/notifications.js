@@ -32,8 +32,6 @@ define([
 
         if ('serviceWorker' in navigator) {
             modules.log("++ Notifications bootstrap init ready");
-            var path = '/' + config.page.pageId;
-
             navigator.serviceWorker.register('/notifications-service-worker.js')
                 .then(modules.subscription)
                 .catch(function(error){
@@ -52,7 +50,6 @@ define([
 
        subscription: function() {
            modules.log('++ Function subscribe');
-           var self = this;
 
            navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
                modules.log('++ READY');
@@ -102,12 +99,9 @@ define([
                reg.pushManager.subscribe({userVisibleOnly: true}).then(function (pushSubscription) {
                    sub = pushSubscription;
                    modules.log("Subscribed: " + sub.endpoint);
-                   modules.followThis()
                });
            }
-           else {
-               modules.followThis();
-           }
+           modules.followThis();
        },
 
 
@@ -118,7 +112,6 @@ define([
                modules.log("++ Last subscription");
                sub.unsubscribe().then(function (event) {
                    modules.log('Unsubscribed', event);
-                   modules.setSubscriptionStatus(false);
                }).catch(function (error) {
                    modules.log('Error unsubscribing', error);
                });
