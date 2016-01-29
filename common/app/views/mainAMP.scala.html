@@ -75,9 +75,9 @@
             @fragments.amp.outbrain(page)
 
             @fragments.amp.onwardTemplateAmp("most-read-mf2.json")
-            @fragments.amp.onwardTemplateAmp("container-mf2/1/0/international.json")
-            @fragments.amp.onwardTemplateAmp("container-mf2/1/1/international.json")
-            @fragments.amp.onwardTemplateAmp("container-mf2/1/2/international.json")
+            @fragments.amp.onwardTemplateAmp(s"container-mf2/1/0/${page.metadata.section}.json")
+            @fragments.amp.onwardTemplateAmp(s"container-mf2/1/1/${page.metadata.section}.json")
+            @fragments.amp.onwardTemplateAmp(s"container-mf2/1/2/${page.metadata.section}.json")
 
             <amp-font
                 layout="nodisplay"
