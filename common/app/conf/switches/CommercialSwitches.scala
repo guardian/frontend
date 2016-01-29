@@ -253,7 +253,7 @@ trait CommercialSwitches {
     "advert-opt-out",
     "Enable adfree experience. See with cookie 'gu_adfree_user' = true",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 1),
+    sellByDate = new LocalDate(2016, 2, 8),
     exposeClientSide = true
   )
 
