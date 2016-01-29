@@ -1,14 +1,18 @@
 define([
-    'fastdom',
+    'Promise',
+    'common/utils/fastdom-promise',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
     'common/modules/identity/api',
+    'common/modules/commercial/third-party-tags/outbrain-codes',
+    'common/modules/commercial/third-party-tags/outbrain-sections',
     'text!common/views/commercial/outbrain.html',
-    'lodash/collections/contains'
+    'lodash/collections/map'
 ], function (
+    Promise,
     fastdom,
     $,
     config,
@@ -16,108 +20,129 @@ define([
     mediator,
     template,
     identity,
-    outbrainTpl,
-    contains
+    getCode,
+    getSection,
+    outbrainStr,
+    map
 ) {
     var outbrainUrl = '//widgets.outbrain.com/outbrain.js';
+    var outbrainTpl = template(outbrainStr);
 
-    return {
-        load: function () {
-            var $outbrain    = $('.js-outbrain'),
-                $container   = $('.js-outbrain-container'),
-                widgetConfig = {},
-                breakpoint   = detect.getBreakpoint(),
-                section      = this.getSection(),
-                widgetCode,
-                widgetCodeImage,
-                widgetCodeText;
+    var selectors = {
+        outbrain: { widget: '.js-outbrain', container: '.js-outbrain-container' },
+        merchandising: { widget: '#dfp-ad--merchandising', container: '#dfp-ad--merchandising' }
+    };
 
-            breakpoint = (contains(['wide', 'desktop'], breakpoint)) ? 'desktop' : breakpoint;
-            widgetConfig = {
-                desktop: {
-                    image: {
-                        sections: 'AR_12',
-                        all     : 'AR_13'
-                    },
-                    text: {
-                        sections: 'AR_14',
-                        all     : 'AR_15'
-                    }
-                },
-                tablet: {
-                    image: {
-                        sections: 'MB_6',
-                        all     : 'MB_7'
-                    },
-                    text: {
-                        sections: 'MB_8',
-                        all     : 'MB_9'
-                    }
-                },
-                mobile: {
-                    image: {
-                        sections: 'MB_4',
-                        all     : 'MB_5'
-                    }
+    function build(codes, breakpoint) {
+        var html = outbrainTpl({ widgetCode: codes.code || codes.image });
+        if (breakpoint !== "mobile") {
+            html += outbrainTpl({ widgetCode: codes.code || codes.text });
+        }
+        return html;
+    }
+
+    function load(target) {
+        var slot          = target || 'outbrain',
+            $outbrain     = $(selectors[slot].widget),
+            $container    = $(selectors[slot].container),
+            breakpoint    = detect.getBreakpoint(),
+            widgetCodes,
+            widgetHtml;
+
+        widgetCodes = getCode({
+            slot: slot,
+            section: getSection(config.page.section),
+            edition: config.page.edition,
+            breakpoint: breakpoint
+        });
+        widgetHtml = build(widgetCodes, breakpoint);
+        $container.append(widgetHtml);
+        tracking(widgetCodes.code || widgetCodes.image);
+        require(['js!' + outbrainUrl], function () {
+            fastdom.write(function () {
+                $outbrain.css('display', 'block');
+            });
+        });
+    }
+
+    function tracking(widgetCode) {
+        // Ophan
+        require(['ophan/ng'], function (ophan) {
+            ophan.record({
+                outbrain: {
+                    widgetId: widgetCode
+                }
+            });
+        });
+    }
+
+    function trackAd(id) {
+        return new Promise(function (resolve, reject) {
+            var onAdLoaded = function (event) {
+                if (event.slot.getSlotElementId() === id) {
+                    off();
+                    resolve(!event.isEmpty);
                 }
             };
 
-            widgetCodeImage = widgetConfig[breakpoint].image[section];
-            widgetCode = widgetCodeImage;
+            var onAllAdsLoaded = function () {
+                off();
+                reject(new Error('Unable to load Outbrain widget: slot ' + id + ' was never loaded'));
+            };
 
-            fastdom.write(function () {
-                $outbrain.css('display', 'block');
-                $container.append($.create(template(outbrainTpl, { widgetCode: widgetCode })));
+            function off() {
+                mediator.off('modules:commercial:dfp:rendered', onAdLoaded);
+                mediator.off('modules:commercial:dfp:alladsrendered', onAllAdsLoaded);
+            }
 
-                if (breakpoint !== 'mobile') {
-                    widgetCodeText  = widgetConfig[breakpoint].text[section];
-                    $container.append($.create(template(outbrainTpl, { widgetCode: widgetCodeText })));
-                }
+            mediator.on('modules:commercial:dfp:rendered', onAdLoaded);
+            mediator.on('modules:commercial:dfp:alladsrendered', onAllAdsLoaded);
+        });
+    }
 
-                this.tracking(widgetCode);
-                require(['js!' + outbrainUrl]);
-            }.bind(this));
-        },
+    function identityPolicy() {
+        return !(identity.isUserLoggedIn() && config.page.commentable);
+    }
 
-        tracking: function (widgetCode) {
-            // Ophan
-            require(['ophan/ng'], function (ophan) {
-                ophan.record({
-                    outbrain: {
-                        widgetId: widgetCode
-                    }
-                });
-            });
-        },
-
-        getSection: function () {
-            return config.page.section.toLowerCase().match('news')
-                || contains(['politics', 'world', 'business', 'commentisfree'], config.page.section.toLowerCase()) ? 'sections' : 'all';
-        },
-
-        identityPolicy: function () {
-            return (!identity.isUserLoggedIn() || !(identity.isUserLoggedIn() && config.page.commentable));
-        },
-
-        hasHighRelevanceComponent: function () {
-            return detect.adblockInUse() || config.page.edition.toLowerCase() === 'int';
-        },
+    return {
+        load: load,
+        tracking: tracking,
+        getSection: getSection,
 
         init: function () {
             if (config.switches.outbrain
                 && !config.page.isFront
                 && !config.page.isPreview
-                && this.identityPolicy()
-                && config.page.section !== 'childrens-books-site') {
-                if (this.hasHighRelevanceComponent()) {
-                    this.load();
-                } else {
-                    mediator.on('modules:commercial:dfp:rendered', function (event) {
-                        if (event.slot.getSlotId().getDomId() === 'dfp-ad--merchandising-high' && event.isEmpty) {
-                            this.load();
-                        }
-                    }.bind(this));
+                && config.page.section !== 'childrens-books-site'
+                && identityPolicy()
+            ) {
+                // if there is no merch component, load the outbrain widget right away
+                if (!document.getElementById('dfp-ad--merchandising-high')) {
+                    load();
+                    return;
                 }
+
+                trackAd('dfp-ad--merchandising-high').then(function (isHiResLoaded) {
+                    // if the high-priority merch component has loaded, we wait until
+                    // the low-priority one has loaded to decide if an outbrain widget is loaded
+                    // if it hasn't loaded, the outbrain widget is loaded at its default
+                    // location right away
+                    return Promise.all([
+                        isHiResLoaded,
+                        isHiResLoaded ? trackAd('dfp-ad--merchandising') : false
+                    ]);
+                }).then(function (args) {
+                    var isHiResLoaded = args[0];
+                    var isLoResLoaded = args[1];
+
+                    if (isHiResLoaded) {
+                        if (!isLoResLoaded) {
+                            load('merchandising');
+                        }
+                    } else {
+                        load();
+                    }
+                });
             }
         }
     };
