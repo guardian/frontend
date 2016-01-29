@@ -32,15 +32,6 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val Hmtl5MediaCompatibilityCheck = Switch(
-    "Feature",
-    "html-5-media-compatibility-check",
-    "If switched on then will will infer the video player tech priority based on the video source codec",
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val OutbrainSwitch = Switch(
     "Feature",
     "outbrain",
