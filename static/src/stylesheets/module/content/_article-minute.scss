@@ -72,18 +72,18 @@ $minute-headline-colour: #ffffff;
 
     @include mq($from: tablet) {
         margin: $gs-baseline/2 0 0 $minute-layout-margin-nudge;
-        max-width: gs-span(11);
+        max-width: gs-span(8);
 
         .block-elements {
             box-sizing: border-box;
             float: right;
-            padding: $gs-baseline*2.5 $gs-gutter 0;
-            width: gs-span(6);
+            padding: $gs-baseline*2.5 0 0 $gs-gutter;
+            width: gs-span(4);
         }
 
         .article__img-container {
             display: block;
-            width: gs-span(5);
+            width: gs-span(4);
         }
 
         figure.element-image {
@@ -102,6 +102,24 @@ $minute-headline-colour: #ffffff;
             position: absolute;
             bottom: 0;
             right: 0;
+            width: gs-span(4)-$gs-gutter*2;
+        }
+    }
+
+    @include mq($from: desktop) {
+        max-width: gs-span(11);
+
+        .block-elements {
+            width: gs-span(6);
+            padding-left: 0;
+            padding-right: $gs-gutter;
+        }
+
+        .article__img-container {
+            width: gs-span(5);
+        }
+
+        .caption--img {
             width: gs-span(6)-$gs-gutter;
         }
     }
