@@ -1,27 +1,40 @@
-    @@font-face {
-        font-family: "Guardian Egyptian Web";
-        src: url("https://pasteup.guim.co.uk/fonts/1.0.0/hinting-cleartype/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.eot");
-        src: url("https://pasteup.guim.co.uk/fonts/1.0.0/hinting-cleartype/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.eot?#iefix") format("embedded-opentype"), url("https://pasteup.guim.co.uk/fonts/1.0.0/hinting-cleartype/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.woff2") format("woff2"), url("https://pasteup.guim.co.uk/fonts/1.0.0/hinting-cleartype/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.woff") format("woff"), url("https://pasteup.guim.co.uk/fonts/1.0.0/hinting-cleartype/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.ttf") format("truetype"), url("https://pasteup.guim.co.uk/fonts/1.0.0/hinting-cleartype/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.svg#GuardianEgyptianWeb-Regular") format("svg");
-        font-weight: 400;
-        font-style: normal;
-        font-stretch: normal
-    }
-    .guardian-egyptian-loaded .content__headline,
-    .guardian-egyptian-loaded .element-rich-link--not-upgraded a,
-    .guardian-egyptian-loaded .content__labels,
-    .guardian-egyptian-loaded .element-pullquote,
-    .guardian-egyptian-loaded .tonal__standfirst,
-    .guardian-egyptian-loaded .drop-cap__inner,
-    .guardian-egyptian-loaded .headline-list__count,
-    .guardian-egyptian-loaded .byline,
-    .guardian-egyptian-loaded .fc-item__header {
-        font-family: "Guardian Egyptian Web","Guardian Text Egyptian Web",Georgia,serif;
-    }
+@@font-face {
+    font-family: "Guardian Egyptian Web";
+    src: url("https://pasteup.guim.co.uk/fonts/1.0.0/hinting-cleartype/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.eot");
+    src: url("https://pasteup.guim.co.uk/fonts/1.0.0/hinting-cleartype/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.eot?#iefix") format("embedded-opentype"), url("https://pasteup.guim.co.uk/fonts/1.0.0/hinting-cleartype/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.woff2") format("woff2"), url("https://pasteup.guim.co.uk/fonts/1.0.0/hinting-cleartype/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.woff") format("woff"), url("https://pasteup.guim.co.uk/fonts/1.0.0/hinting-cleartype/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.ttf") format("truetype"), url("https://pasteup.guim.co.uk/fonts/1.0.0/hinting-cleartype/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.svg#GuardianEgyptianWeb-Regular") format("svg");
+    font-weight: 400;
+    font-style: normal;
+    font-stretch: normal
+}
+@@font-face {
+    font-family: "Guardian Egyptian Web";
+    src: url('http://interactive.guim.co.uk/fonts/pasteup.guim.co.uk/fonts/latin1/Guardian-Egyp-Web-Medium.eot');
+    src: url('http://interactive.guim.co.uk/fonts/pasteup.guim.co.uk/fonts/latin1/Guardian-Egyp-Web-Medium.eot?#iefix') format('embedded-opentype'),url('http://interactive.guim.co.uk/fonts/pasteup.guim.co.uk/fonts/latin1/Guardian-Egyp-Web-Medium.woff') format('woff'),url('http://interactive.guim.co.uk/fonts/pasteup.guim.co.uk/fonts/latin1/Guardian-Egyp-Web-Medium.ttf') format('truetype'),url('http://interactive.guim.co.uk/fonts/pasteup.guim.co.uk/fonts/latin1/Guardian-Egyp-Web-Medium.svg#Guardian-Egyp-Web-Medium') format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+}
+.guardian-egyptian-loaded .content__headline,
+.guardian-egyptian-loaded .element-rich-link--not-upgraded a,
+.guardian-egyptian-loaded .content__labels,
+.guardian-egyptian-loaded .element-pullquote,
+.guardian-egyptian-loaded .tonal__standfirst,
+.guardian-egyptian-loaded .drop-cap__inner,
+.guardian-egyptian-loaded .headline-list__count,
+.guardian-egyptian-loaded .signposting__item {
+    font-family: "Guardian Egyptian Web", Georgia, serif;
+}
 
-    .drop-cap {
-        padding-top: 0.17rem;
-    }
+.drop-cap {
+    padding-top: 0.17rem;
+}
 
-    .byline, .content__section-label__link {
-        font-weight: 400;
-    }
+.guardian-egyptian-loaded .byline,
+.guardian-egyptian-loaded .content__section-label__link,
+.guardian-egyptian-loaded .fc-item__header,
+.guardian-egyptian-loaded .fc-container__header__title,
+.guardian-egyptian-loaded .control__info,
+.guardian-egyptian-loaded .element-pullquote footer {
+    font-family: "Guardian Egyptian Web", Georgia, serif;
+    font-weight: 500;
+}
