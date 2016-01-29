@@ -675,6 +675,10 @@
     &.content--interactive,
     &.tonal--tone-media {
         background-color: colour(paid-article);
+
+        .caption {
+            color: colour(neutral-1);
+        }
     }
 
     &.content {

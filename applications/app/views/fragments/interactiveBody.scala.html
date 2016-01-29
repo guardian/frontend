@@ -3,7 +3,7 @@
 @import views.support.TrailCssClasses.toneClass
 @import conf.switches.Switches.NewCommercialContent
 
-@body(page.interactive, page.interactive.metadata.isImmersive)
+@body(page.interactive, page.item.content.isImmersive)
 
 @bodyRaw(interactive: model.Interactive) = {
     @page.interactive.maybeBody.map { body =>
