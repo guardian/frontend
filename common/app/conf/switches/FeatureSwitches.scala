@@ -241,15 +241,6 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val SplitOlderIPadsSwitch = Switch(
-    "Feature",
-    "ipad-split-capabilities",
-    "If switched on then this gives older ipads the stripped down front but full articles",
-    safeState = On,
-    sellByDate = new LocalDate(2016, 2, 1),
-    exposeClientSide = false
-  )
-
   val FootballFeedRecorderSwitch = Switch(
     "Feature",
     "football-feed-recorder",
