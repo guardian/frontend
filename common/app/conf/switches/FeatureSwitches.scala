@@ -59,6 +59,15 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  val LiveBlogTransitionSwitch = Switch(
+    "Feature",
+    "liveblog-transition",
+    "Fix up liveblog scroll transitions in liveblog.js to work with pagination",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 3, 2),
+    exposeClientSide = true
+  )
+
   val GeoMostPopular = Switch(
     "Feature",
     "geo-most-popular",
