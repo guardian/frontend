@@ -170,6 +170,7 @@ define([
             it('should load in the low-priority merch component', function (done) {
                 eventStub.isEmpty = false;
                 eventStubLo.isEmpty = true;
+                config.switches.outbrainReplacesMerch = true;
 
                 var oldEmit = mediator.emit;
                 mediator.emit = function (eventName, data) {
@@ -227,9 +228,7 @@ define([
                 };
                 config.page.section = 'uk-news';
 
-                sut.load();
-
-                fastdom.defer(function () {
+                sut.load().then(function () {
                     expect($('.OUTBRAIN', $fixtureContainer).first().data('widgetId')).toEqual('AR_12');
                     expect($('.OUTBRAIN', $fixtureContainer).last().data('widgetId')).toEqual('AR_14');
                     done();
@@ -242,9 +241,7 @@ define([
                 };
                 config.page.section = 'football';
 
-                sut.load();
-
-                fastdom.defer(function () {
+                sut.load().then(function () {
                     expect($('.OUTBRAIN', $fixtureContainer).first().data('widgetId')).toEqual('AR_13');
                     expect($('.OUTBRAIN', $fixtureContainer).last().data('widgetId')).toEqual('AR_15');
                     done();
@@ -257,9 +254,7 @@ define([
                 };
                 config.page.section = 'football';
 
-                sut.load();
-
-                fastdom.defer(function () {
+                sut.load().then(function () {
                     expect($('.OUTBRAIN', $fixtureContainer).first().data('widgetId')).toEqual('AR_13');
                     expect($('.OUTBRAIN', $fixtureContainer).last().data('widgetId')).toEqual('AR_15');
                     done();
@@ -272,9 +267,7 @@ define([
                 };
                 config.page.section = 'uk-news';
 
-                sut.load();
-
-                fastdom.defer(function () {
+                sut.load().then(function () {
                     expect($('.OUTBRAIN', $fixtureContainer).first().data('widgetId')).toEqual('MB_6');
                     expect($('.OUTBRAIN', $fixtureContainer).last().data('widgetId')).toEqual('MB_8');
                     done();
@@ -287,9 +280,7 @@ define([
                 };
                 config.page.section = 'football';
 
-                sut.load();
-
-                fastdom.defer(function () {
+                sut.load().then(function () {
                     expect($('.OUTBRAIN', $fixtureContainer).first().data('widgetId')).toEqual('MB_7');
                     expect($('.OUTBRAIN', $fixtureContainer).last().data('widgetId')).toEqual('MB_9');
                     done();
@@ -302,9 +293,7 @@ define([
                 };
                 config.page.section = 'uk-news';
 
-                sut.load();
-
-                fastdom.defer(function () {
+                sut.load().then(function () {
                     expect($('.OUTBRAIN', $fixtureContainer).first().data('widgetId')).toEqual('MB_4');
                     done();
                 });
@@ -316,9 +305,7 @@ define([
                 };
                 config.page.section = 'football';
 
-                sut.load();
-
-                fastdom.defer(function () {
+                sut.load().then(function () {
                     expect($('.OUTBRAIN', $fixtureContainer).first().data('widgetId')).toEqual('MB_5');
                     done();
                 });
@@ -330,9 +317,7 @@ define([
                 };
                 config.page.edition = 'AU';
 
-                sut.load('merchandising');
-
-                fastdom.defer(function () {
+                sut.load('merchandising').then(function () {
                     expect($('.OUTBRAIN', $fixtureContainer).first().data('widgetId')).toEqual('CR_14');
                     expect($('.OUTBRAIN', $fixtureContainer).last().data('widgetId')).toEqual('CR_14');
                     done();
@@ -344,9 +329,7 @@ define([
                     return 'tablet';
                 };
 
-                sut.load('merchandising');
-
-                fastdom.defer(function () {
+                sut.load('merchandising').then(function () {
                     expect($('.OUTBRAIN', $fixtureContainer).first().data('widgetId')).toEqual('MB_11');
                     expect($('.OUTBRAIN', $fixtureContainer).last().data('widgetId')).toEqual('MB_11');
                     done();
@@ -358,18 +341,14 @@ define([
                     return 'mobile';
                 };
 
-                sut.load('merchandising');
-
-                fastdom.defer(function () {
+                sut.load('merchandising').then(function () {
                     expect($('.OUTBRAIN', $fixtureContainer).first().data('widgetId')).toEqual('MB_10');
                     done();
                 });
             });
 
             it('should require outbrain javascript', function (done) {
-                sut.load();
-
-                fastdom.defer(function () {
+                sut.load().then(function () {
                     var url = requireStub.args[1][0][0];
                     expect(url).toBe('js!//widgets.outbrain.com/outbrain.js');
                     done();
@@ -389,9 +368,7 @@ define([
 
                 spyOn(sut, 'tracking');
 
-                sut.load();
-
-                fastdom.defer(function () {
+                sut.load().then(function () {
                     expect(sut.tracking).toHaveBeenCalledWith('AR_13');
                     done();
                 });
