@@ -20,16 +20,7 @@
                 <div class="commercial commercial--paidfor commercial--tone-paidfor commercial--paidfor-single">
                     <div class="commercial__inner">
                         <div class="commercial__header">
-                            <div class="paidfor-meta">
-                                <span class="paidfor-meta__label">Paid content</span>
-                                <div class="paidfor-label paidfor-meta__more has-popup">
-                                    <button class="u-button-reset paidfor-label__btn popup__toggle" data-toggle="paidfor-popup--@container.dataId">About @inlineSvg("arrow-down", "icon")</button>
-                                    <div class="popup is-off paidfor-popup paidfor-popup--@container.dataId">
-                                        <h3 class="paidfor-popup__title">Paid content is paid for and controlled by an advertiser and created by the Guardian Labs team</h3>
-                                        <a class="paidfor-popup__link" href="@LinkTo("/content-funding")">Learn more about Guardian Labs content @inlineSvg("arrow-right", "icon")</a>
-                                    </div>
-                                </div>
-                            </div>
+                            @fragments.commercial.paidForMeta()
                             <h3 class="commercial__title">@container.displayName</h3>
                             <a class="commercial__cta"
                                 @if(Edition(request).id == "AU") {
@@ -93,16 +84,7 @@
                 <div class="commercial commercial--paidfor commercial--tone-paidfor commercial--paidfor-multi">
                     <div class="commercial__inner">
                         <div class="commercial__header">
-                            <div class="paidfor-meta">
-                                <span class="paidfor-meta__label">Paid content</span>
-                                <div class="paidfor-label paidfor-meta__more has-popup">
-                                    <button class="u-button-reset paidfor-label__btn popup__toggle" data-toggle="paidfor-popup--@container.dataId">About @inlineSvg("arrow-down", "icon")</button>
-                                    <div class="popup is-off paidfor-popup paidfor-popup--@container.dataId">
-                                        <h3 class="paidfor-popup__title">Paid content is paid for and controlled by an advertiser and created by the Guardian Labs team</h3>
-                                        <a class="paidfor-popup__link" href="@LinkTo("/content-funding")">Learn more about Guardian Labs content @inlineSvg("arrow-right", "icon")</a>
-                                    </div>
-                                </div>
-                            </div>
+                            @fragments.commercial.paidForMeta()
                             <h3 class="commercial__title">@container.displayName</h3>
                             <a class="commercial__cta"
                                 @if(Edition(request).id == "AU") {

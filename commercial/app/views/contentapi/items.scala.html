@@ -8,16 +8,7 @@
         <div class="commercial commercial--paidfor commercial-dfp-multi commercial--tone-paidfor fc-container--advertisement-feature paid-content--advertisement-feature" data-link-name="merchandising | capi | multiple @optOmnitureId">
             <div class="commercial__inner">
                 <div class="commercial__header">
-                    <div class="paidfor-meta">
-                        <span class="paidfor-meta__label">Paid content</span>
-                        <div class="paidfor-label paidfor-meta__more has-popup">
-                            <button class="u-button-reset paidfor-label__btn popup__toggle" data-toggle="paidfor-popup--capi-component">About @inlineSvg("arrow-down", "icon")</button>
-                            <div class="popup is-off paidfor-popup paidfor-popup--capi-component">
-                                <h3 class="paidfor-popup__title">Paid content is paid for and controlled by an advertiser and created by the Guardian Labs team</h3>
-                                <a class="paidfor-popup__link" href="@LinkTo("/content-funding")">Learn more about Guardian Labs content @inlineSvg("arrow-right", "icon")</a>
-                            </div>
-                        </div>
-                    </div>
+                    @fragments.commercial.paidForMeta()
                     <h3 class="commercial__title">
                         @optCapiLink.map { linkUrl =>
                             <a href="@optClickMacro@linkUrl" class="fc-container__header__link" data-link-name="header link"><span class="u-text-hyphenate">@for(titleText <- optCapiTitle) {@titleText}</span></a>
