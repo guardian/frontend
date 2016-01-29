@@ -1,9 +1,11 @@
 @(item: model.ContentType)(implicit request: RequestHeader)
 
 @import common.{LinkTo, Localisation}
+@import conf.switches.Switches._
 
 @defining(
-    item.content.tags.tags.exists(_.id == "us-news/us-elections-2016")
+    USElectionSwitch.isSwitchedOn &&
+    item.content.tags.tags.exists(_.id == "football/transfer-window")
 ){ isUSElection =>
     <div class="content__labels @if(isUSElection) {content__labels--us-election}">
 
