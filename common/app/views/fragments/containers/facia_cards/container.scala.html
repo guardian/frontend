@@ -1,4 +1,4 @@
-@(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties = model.FrontProperties.empty)(implicit request: RequestHeader)
+@(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties = model.FrontProperties.empty, isPaidContent: Boolean = false)(implicit request: RequestHeader)
 
 @import common.dfp.{Keyword, Series}
 @import conf.switches.Switches
@@ -6,6 +6,7 @@
 @import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList}
 @import views.html.fragments.containers.facia_cards.{commercialContainer, containerMetaData, mostPopularContainer, navListContainer, navMediaListContainer, standardContainer}
 @import views.support.{GetClasses, RenderClasses}
+@import conf.switches.Switches.NewCommercialContent
 
 @defining((containerDefinition.displayName, containerDefinition.faciaComponentName)) { case (title, componentName) =>
     @containerDefinition.customHeader.map {
@@ -14,30 +15,34 @@
         }
         case _ => {}
     }
-    <section id="@componentName"
-             class="@GetClasses.forContainerDefinition(containerDefinition)"
-             data-link-name="container-@{containerDefinition.index + 1} | @componentName"
-             data-id="@containerDefinition.dataId"
-             @for(sponsor <- containerDefinition.commercialOptions.sponsor) { data-sponsor="@sponsor" }
-             @for(tag <- containerDefinition.commercialOptions.sponsorshipTag) {
-                 @tag.tagType match {
-                     case Series => { data-series="@{tag.tagId}" }
-                     case Keyword => { data-keywords="@{tag.tagId}" }
-                 }
-             }
-             @containerDefinition.commercialOptions.sponsorshipType.map { sponsorshipType =>
-                 data-sponsorship="@sponsorshipType"
-             }
-             data-component="@componentName"
-             aria-expanded="true">
 
-             @if(containerDefinition.isStoryPackage){
+    @(containerDefinition.container, isPaidContent, NewCommercialContent.isSwitchedOn) match {
+        case (MostPopular, true, true) => {}
+        case _ => {
+        <section id="@componentName"
+        class="@GetClasses.forContainerDefinition(containerDefinition)"
+        data-link-name="container-@{containerDefinition.index + 1} | @componentName"
+        data-id="@containerDefinition.dataId"
+            @for(sponsor <- containerDefinition.commercialOptions.sponsor) { data-sponsor="@sponsor" }
+            @for(tag <- containerDefinition.commercialOptions.sponsorshipTag) {
+                @tag.tagType match {
+                    case Series => { data-series="@{tag.tagId}" }
+                    case Keyword => { data-keywords="@{tag.tagId}" }
+                }
+            }
+            @containerDefinition.commercialOptions.sponsorshipType.map { sponsorshipType =>
+            data-sponsorship="@sponsorshipType"
+            }
+        data-component="@componentName"
+        aria-expanded="true">
+
+            @if(containerDefinition.isStoryPackage){
                 @conf.Static.css.inline("story-package").map { css =>
                     <style>
                         @Html(css)
                     </style>
                 }
-             }
+            }
 
             @containerDefinition.container match {
                 case _: Dynamic | _: Fixed => {
@@ -73,5 +78,7 @@
                     </div>
                 }
             }
-    </section>
+        </section>
+        }
+    }
 }
