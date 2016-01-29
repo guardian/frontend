@@ -5,7 +5,6 @@ $minute-headline-colour: #ffffff;
 
 .content--minute-article {
     border-top: 0 none;
-    background-color: $us-minute-main-colour;
 
     .content__headline {
         color: #ffffff;
@@ -26,14 +25,12 @@ $minute-headline-colour: #ffffff;
     }
 }
 
-.content__main--minute-article {
-
-}
-
 .content__main-column--minute-article {
     margin: 0 auto;
     max-width: none;
     width: 100%;
+.article__container--minute-article {
+    background-color: $us-minute-main-colour;
 }
 
 .block--minute-article {
