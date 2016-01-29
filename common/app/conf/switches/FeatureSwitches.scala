@@ -372,7 +372,7 @@ trait FeatureSwitches {
     "us-election",
     "When ON, items tagged with us-news/us-elections-2016 will have visual elements added",
     safeState = On,
-    sellByDate = never,
+    sellByDate = new LocalDate(2017, 1, 5),
     exposeClientSide = false
   )
 }
