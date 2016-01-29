@@ -1,17 +1,26 @@
 package controllers
 
-import akka.actor.{ActorRef, Props}
+import akka.actor.ActorRef
 import akka.pattern.ask
 import akka.util.Timeout
+import authentication.AuthenticationSupport
 import common.ExecutionContexts
+import conf.Configuration
 import model.Cached
 import models.NewsAlertNotification
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.BodyParsers.parse.{json => BodyJson}
 import play.api.mvc._
+
 import scala.concurrent.duration._
 
-trait NewsAlertController extends Controller with ExecutionContexts {
+trait NewsAlertController extends Controller with AuthenticationSupport with ExecutionContexts {
+
+  val apiKey: String
+
+  override def validApiKey(key: String): Boolean = {
+    key == apiKey
+  }
 
   // Actor is useful here to prevent race condition
   // when accessing or updating the content of Breaking News
@@ -31,7 +40,7 @@ trait NewsAlertController extends Controller with ExecutionContexts {
     }
   }
 
-  def create() : Action[NewsAlertNotification] = Action.async(BodyJson[NewsAlertNotification]) { request =>
+  def create() : Action[NewsAlertNotification] = AuthenticatedAction.async(BodyJson[NewsAlertNotification]) { request =>
     val receivedNotification : NewsAlertNotification = request.body
     val result = breakingNewsUpdater ? NewNotificationRequest(receivedNotification)
     result.mapTo[NewsAlertNotification].map {
@@ -44,5 +53,8 @@ trait NewsAlertController extends Controller with ExecutionContexts {
 
 object NewsAlertController extends NewsAlertController {
   lazy val breakingNewsUpdater = actorSystem.actorOf(BreakingNewsUpdater.props())
+  lazy val apiKey = Configuration.NewsAlert.apiKey.getOrElse(
+    throw new RuntimeException("News Alert API Key not set")
+  )
 }
 

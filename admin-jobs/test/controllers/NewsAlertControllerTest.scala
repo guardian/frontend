@@ -6,7 +6,7 @@ import java.util.UUID
 import akka.actor.Status.{Failure => ActorFailure}
 import akka.actor.{Actor, Props}
 import common.ExecutionContexts
-import models.{NewsAlertTypes, NewsAlertNotification}
+import models.{NewsAlertNotification, NewsAlertTypes}
 import org.joda.time.DateTime
 import org.scalatest.{DoNotDiscover, Matchers, WordSpec}
 import play.api.libs.json.Json
@@ -14,7 +14,9 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import test.ConfiguredTestSuite
 
-@DoNotDiscover class NewsAlertControllerTest extends WordSpec with Matchers with ConfiguredTestSuite with ExecutionContexts{
+@DoNotDiscover class NewsAlertControllerTest extends WordSpec with Matchers with ConfiguredTestSuite with ExecutionContexts {
+
+  val testApiKey = "test-api-key"
 
   class MockUpdaterActor(mockResponse: Any) extends Actor {
     override def receive = { case _ => sender ! mockResponse }
@@ -25,7 +27,10 @@ import test.ConfiguredTestSuite
 
   def controllerWithActorReponse(mockResponse: Any) = {
     val updaterActor = actorSystem.actorOf(MockUpdaterActor.props(mockResponse))
-    new NewsAlertController { override val breakingNewsUpdater = updaterActor }
+    new NewsAlertController {
+      override val breakingNewsUpdater = updaterActor
+      override val apiKey = testApiKey
+    }
   }
 
   "GET /news-alert/alerts" when {
@@ -61,7 +66,11 @@ import test.ConfiguredTestSuite
   }
 
   "POST /news-alert/alert" when {
-    val postAlertRequest = FakeRequest(method = "POST", path = "/news-alert/alert").withHeaders(("Content-Type", "application/json"))
+    val postAlertRequest = FakeRequest(method = "POST", path = "/news-alert/alert")
+      .withHeaders(
+        ("Content-Type", "application/json"),
+          ("X-Gu-Api-Key", testApiKey)
+      )
     "request body is empty" should {
       "400" in {
         val controller = controllerWithActorReponse("Doesn't matter")
