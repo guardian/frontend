@@ -1,68 +1,82 @@
 .main-header {
     background: #005689;
     position: relative;
-    min-height: 74px;
+    height: 52px;
 }
 
-.logo-wrapper svg {
-    height: 40px;
+.main-header .logo-wrapper {
+    float: right;
+    margin: 3px 20px 0;
+}
+
+.main-header .logo-wrapper svg {
+    height: 30px;
     width: inherit;
 }
 
-.main-navigation {
-    position: absolute;
-    top: 7px;
-    left: 20px;
-}
-
-.main-navigation_link {
-    font-size: 20px;
-    font-family: "Guardian Egyptian Web",Georgia,serif;
-    font-weight: 500;
-    color: #aad8f1;
-    float: left;
-}
-
-.main-navigation_link:first-of-type {
-    color: #fff;
-}
-
-.main-navigation_link::after {
-    content: "/";
-    color: #1e83ab;
-    margin: 0 5px;
-}
-
-.main-navigation_link:nth-child(2)::after,
-.main-navigation_link:last-of-type::after {
-    content:none;
-}
-
-.logo-wrapper {
-    float: right;
-    margin: 6px 20px 0;
-}
-
 @@media (max-width: 480px) {
-    .main-navigation {
-        left: 10px;
-    }
-    .logo-wrapper {
+    .main-header .logo-wrapper {
         margin-right: 10px;
     }
 }
 
-@@media (max-width: 430px) {
-    .main-navigation {
-        top: 3px;
+@* Kicker style nav *@
+.main-header.variant-kicker {
+    height: 68px;
+}
+
+.main-navigation.variant-kicker {
+    position: absolute;
+    top: 3px;
+    left: 20px;
+    line-height: 1.1;
+}
+
+.main-navigation.variant-kicker .main-navigation_link {
+    display: inline;
+    font-family: "Guardian Egyptian Web",Georgia,serif;
+    font-size: 22px;
+}
+
+.main-navigation.variant-kicker .main-navigation_link a {
+    font-weight: 500;
+    color: #aad8f1;
+    display: inline-block;
+}
+
+.main-navigation.variant-kicker .main-navigation_link:first-of-type a {
+    color: #fff;
+}
+
+.main-navigation.variant-kicker .main-navigation_link::after {
+    content: "/";
+    color: rgba(255,255,255,0.3);
+    font-weight: 400;
+}
+
+.main-navigation.variant-kicker .main-navigation_link:last-of-type::after {
+    content:none;
+}
+
+.main-navigation.variant-kicker .main-navigation_link:nth-child(2)::after {
+    content: "\A";
+    white-space: pre;
+}
+
+@@media (max-width: 480px) {
+    .main-navigation.variant-kicker {
+        left: 10px;
     }
-    .logo-wrapper svg {
-        height: 30px;
+}
+
+@@media (max-width: 380px) {
+    .main-navigation.variant-kicker .main-navigation_link{
+        font-size: 18px;
     }
-    .main-navigation_link {
-        font-size: 16px;
+    .main-header.variant-kicker {
+        height: 60px;
     }
-    .main-header {
-        min-height: 60px;
+    .main-header.variant-kicker .logo-wrapper svg {
+        height: 24px;
     }
 }
