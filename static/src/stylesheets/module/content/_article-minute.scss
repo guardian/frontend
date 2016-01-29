@@ -115,7 +115,6 @@ $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
         &.block--quote {
 
             &:after {
-                left: gs-span(7);
                 right: auto;
             }
 
@@ -131,6 +130,10 @@ $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
 
     @include mq($from: desktop) {
         max-width: gs-span(11);
+
+        &:after {
+            width: gs-span(9);
+        }
 
         .block-elements {
             width: gs-span(6);
@@ -163,6 +166,10 @@ $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
     @include mq($from: leftCol) {
         max-width: gs-span(12);
 
+        &:after {
+            width: gs-span(9);
+        }
+
         .block-elements {
             width: gs-span(6);
             padding-right: gs-span(1) + $gs-gutter;
@@ -175,10 +182,6 @@ $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
 
     @include mq($from: wide) {
         margin-left: $minute-layout-margin-nudge + gs-span(1);
-
-        &:after {
-            width: gs-span(10);
-        }
 
         .block-elements {
             width: gs-span(5);
