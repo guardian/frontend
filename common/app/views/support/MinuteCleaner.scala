@@ -27,7 +27,12 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
   /**
     * Classes to strip from block children.
     */
-  val strippable = Seq("element--thumbnail")
+  val strippable = Seq(
+    "element--thumbnail",
+    "caption--img",
+    "fig--narrow-caption",
+    "fig--has-shares"
+  )
 
   override def clean(document: Document): Document = {
     if (article.isUSMinute) {
@@ -37,15 +42,12 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
         val elementTitle = block.getElementsByClass("block-title")
         val blockElementDiv = block.getElementsByClass("block-elements")
 
+        // Add classes
         block.addClass("block--minute-article")
-        block.removeClass("block")
-        block.getElementsByClass("block-share").remove()
+        block.getElementsByClass("caption--img").addClass("caption--image__minute-article")
 
-        // Re-order Elements
-        elementImage.remove()
-        elementTitle.remove()
-        blockElementDiv.after(elementImage.toString)
-        blockElementDiv.prepend(elementTitle.toString)
+        // Remove Classes
+        block.removeClass("block")
 
         ParentClasses.foldLeft(Set(): Set[String]) { case (classes, (childClass, parentClass)) =>
           if (allElements.exists(_.hasClass(childClass))) classes + parentClass
@@ -53,6 +55,15 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
         } foreach(block.addClass)
 
         allElements.foreach(el => strippable.foreach(el.removeClass))
+
+        // Re-order Elements
+        elementImage.remove()
+        elementTitle.remove()
+        blockElementDiv.after(elementImage.toString)
+        blockElementDiv.prepend(elementTitle.toString)
+
+        // Remove Elements
+        block.getElementsByClass("block-share").remove()
       }
     }
 
