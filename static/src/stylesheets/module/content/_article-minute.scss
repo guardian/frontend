@@ -78,6 +78,11 @@ $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
         padding: 0 $gs-gutter;
     }
 
+    .quoted__contents {
+        @include fs-headline(1);
+        font-style: normal;
+    }
+
     @include mq($from: tablet) {
         margin: $gs-baseline/2 0 0 $minute-layout-margin-nudge;
         max-width: gs-span(8);
@@ -105,6 +110,23 @@ $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
             position: relative;
             width: gs-span(4);
         }
+
+        // Quote Template
+        &.block--quote {
+
+            &:after {
+                left: gs-span(7);
+                right: auto;
+            }
+
+            .block-elements {
+                width: gs-span(7);
+            }
+
+            .quoted__contents {
+                @include fs-headline(6, true);
+            }
+        }
     }
 
     @include mq($from: desktop) {
@@ -118,6 +140,23 @@ $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
 
         figure.element-image {
             width: gs-span(5);
+        }
+
+        // Quote Template
+        &.block--quote {
+
+            &:after {
+                left: gs-span(2);
+                right: auto;
+            }
+
+            .block-elements {
+                width: gs-span(10);
+            }
+
+            .quoted__contents {
+                @include fs-headline(6, true);
+            }
         }
     }
 
