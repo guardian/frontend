@@ -6,6 +6,7 @@ import akka.util.Timeout
 import authentication.AuthenticationSupport
 import common.ExecutionContexts
 import conf.Configuration
+import controllers.BreakingNews.{BreakingNewsUpdater, GetAlertsRequest, NewNotificationRequest}
 import model.Cached
 import models.NewsAlertNotification
 import play.api.libs.json.{JsValue, Json}

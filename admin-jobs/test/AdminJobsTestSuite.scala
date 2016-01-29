@@ -1,9 +1,10 @@
+import controllers.BreakingNews.{BreakingNewsUpdaterTest, BreakingNewsApiTest}
 import org.scalatest.Suites
 import test.SingleServerSuite
 
 class AdminJobsTestSuite extends Suites (
-  new controllers.BreakingNewsApiTest,
-  new controllers.BreakingNewsUpdaterTest,
+  new BreakingNewsApiTest,
+  new BreakingNewsUpdaterTest,
   new controllers.NewsAlertControllerTest
 )
 with SingleServerSuite {

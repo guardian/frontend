@@ -1,13 +1,11 @@
-package controllers
+package controllers.BreakingNews
 
-import akka.actor.{Props, Actor}
 import akka.actor.Status.{Failure => ActorFailure}
+import akka.actor.{Actor, Props}
 import common.{ExecutionContexts, Logging}
-import models.{BreakingNews, NewsAlertNotification}
 import models.BreakingNewsFormats._
+import models.{BreakingNews, NewsAlertNotification}
 import play.api.libs.json.{JsValue, Json}
-import scala.concurrent.Future
-import scala.util.Try
 
 sealed trait BreakingNewsUpdaterMessage
 case class NewNotificationRequest(notification: NewsAlertNotification) extends BreakingNewsUpdaterMessage

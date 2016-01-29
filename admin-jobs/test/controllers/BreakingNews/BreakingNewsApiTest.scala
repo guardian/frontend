@@ -1,9 +1,7 @@
-package controllers
+package controllers.BreakingNews
 
-import com.fasterxml.jackson.core.JsonParseException
 import common.ExecutionContexts
 import org.joda.time.DateTime
-import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{DoNotDiscover, Matchers, WordSpec}
 import play.api.libs.json.{JsValue, Json}
 import test.ConfiguredTestSuite

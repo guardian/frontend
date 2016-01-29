@@ -1,12 +1,10 @@
-package controllers
+package controllers.BreakingNews
 
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import play.Play
 import play.api.libs.json._
 import services.S3
-
-import scala.concurrent.Future
 
 trait S3BreakingNews extends S3 {
   override lazy val bucket = Configuration.aws.bucket
