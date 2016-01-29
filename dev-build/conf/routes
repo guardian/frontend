@@ -34,7 +34,7 @@ GET            /crosswords/lookup                                               
 
 # Email paths
 GET            /email                                                                                                            controllers.EmailSignupController.renderPage()
-GET            /email/form/$emailType<article|footer|plain>/:listId                                                                    controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
+GET            /email/form/$emailType<article|footer|plain>/:listId                                                              controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
 GET            /email/:result                                                                                                    controllers.EmailSignupController.subscriptionResult(result: String)
 POST           /email                                                                                                            controllers.EmailSignupController.submit()
 OPTIONS        /email                                                                                                            controllers.EmailSignupController.options()
@@ -69,7 +69,7 @@ GET            /analytics/commercial/templates                                  
 GET            /analytics/commercial/sponsored-containers                                                                        controllers.admin.CommercialController.sponsoredContainers()
 GET            /analytics/commercial/adtests                                                                                     controllers.admin.CommercialController.renderAdTests()
 GET            /analytics/headlines-test                                                                                         controllers.admin.MetricsController.renderHeadlinesTest()
-GET         /analytics/quality                                                                      controllers.admin.AnalyticsController.renderQuality()
+GET            /analytics/quality                                                                                                controllers.admin.AnalyticsController.renderQuality()
 
 # Discussion
 GET            /discussion/comment-counts                                                                                        controllers.CommentCountController.commentCount(shortUrls: String)
@@ -297,6 +297,8 @@ GET            /commercial/capi-single.json                                     
 GET            /commercial/capi-single                                                                                           controllers.commercial.ContentApiOffersController.itemHtml
 GET            /commercial/capi-single-merch.json                                                                                controllers.commercial.ContentApiOffersController.itemJson
 GET            /commercial/capi-single-merch                                                                                     controllers.commercial.ContentApiOffersController.itemHtml
+GET            /commercial/paid.json                                                                                             controllers.commercial.ContentApiOffersController.itemsJson
+GET            /commercial/paid                                                                                                  controllers.commercial.ContentApiOffersController.itemsHtml
 
 # Commercial Admin
 GET            /admin/commercial                                                                                                 controllers.admin.CommercialController.renderCommercialMenu()
@@ -362,7 +364,7 @@ GET            /$path<.+>/all                                                   
 # GET         /$publication<(theguardian|theobserver)>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/$tagHead<.+>/$tagTail<.+>    controllers.PublicationController.publishedOn(publication, day, month, year, tagHead, tagTail)
 # single-part tag
 # e.g. /theguardian/2015/nov/03/mainsection
-GET         /$publication<(theguardian|theobserver)>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/$tail<.+>                     controllers.PublicationController.publishedOn(publication, year, month, day, tail)
+GET            /$publication<(theguardian|theobserver)>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/$tail<.+>                      controllers.PublicationController.publishedOn(publication, year, month, day, tail)
 
 # Facia
 GET            /                                                                                                                 controllers.FaciaController.rootEditionRedirect()
@@ -407,10 +409,10 @@ GET            /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                         
 GET            /$leftSide<[^+]+>+*rightSide                                                                                      controllers.IndexController.renderCombiner(leftSide, rightSide)
 
 # Articles
-GET     /$path<[^/]+/([^/]+/)?live/.*>.json controllers.ArticleController.renderLiveBlogJson(path, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean])
-GET     /*path.json                 controllers.ArticleController.renderJson(path)
-GET     /*path/amp                  controllers.ArticleController.renderArticle(path)
-GET     /*path/email                controllers.ArticleController.renderArticle(path)
+GET            /$path<[^/]+/([^/]+/)?live/.*>.json                                                                               controllers.ArticleController.renderLiveBlogJson(path, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean])
+GET            /*path.json                                                                                                       controllers.ArticleController.renderJson(path)
+GET            /*path/amp                                                                                                        controllers.ArticleController.renderArticle(path)
+GET            /*path/email                                                                                                      controllers.ArticleController.renderArticle(path)
 # temp route for live blogs so we can paginate without getting the blocks for all articles
-GET     /$path<[^/]+/([^/]+/)?live/.*> controllers.ArticleController.renderLiveBlog(path, page: Option[String])
-GET     /*path                      controllers.ArticleController.renderArticle(path)
+GET            /$path<[^/]+/([^/]+/)?live/.*>                                                                                    controllers.ArticleController.renderLiveBlog(path, page: Option[String])
+GET            /*path                                                                                                            controllers.ArticleController.renderArticle(path)
