@@ -64,6 +64,7 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
 
         // Remove Elements
         block.getElementsByClass("block-share").remove()
+        block.getElementsByClass("inline-expand-image").remove()
       }
     }
 

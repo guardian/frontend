@@ -151,7 +151,7 @@ $minute-headline-colour: #ffffff;
     }
 
     .caption--image__minute-article {
-        background-color: rgba(0,0,0,0.4);
+        background-color: rgba(0, 0, 0, .4);
         box-sizing: border-box;
         bottom: 0;
         color: $us-minute-contrast-colour;
@@ -160,7 +160,7 @@ $minute-headline-colour: #ffffff;
         width: 100%;
     }
 
-    figcaption.caption--image__minute-article{
+    figcaption.caption--image__minute-article {
         max-width: none;
     }
 
