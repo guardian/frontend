@@ -1,3 +1,5 @@
+/* US Elections Tag Badge
+   ========================================================================== */
 .badge-slot--us-election {
     width: 33px;
     margin-top: 2px;
@@ -20,5 +22,35 @@
     .content__section-label,
     .content__series-label {
         float: none;
+    }
+}
+
+/* US Election Liveblog Image
+   ========================================================================== */
+.content__head--us-election {
+    .content__header .gs-container {
+        background-image: url("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2016/1/29/1454085451546/uselectionliveblogon.jpg");
+        background-position: right bottom;
+        background-repeat: no-repeat;
+        background-size: gs-span(4);
+        padding-bottom: gs-height(2) + $gs-baseline * 2;
+
+        @include mq(tablet) {
+            padding-bottom: gs-height(3);
+            background-size: gs-span(5);
+        }
+
+        @include mq(desktop) {
+            padding-bottom: gs-height(4);
+        }
+
+        @include mq(leftCol) {
+            padding-bottom: gs-height(3);
+        }
+
+        @include mq(wide) {
+            padding-bottom: gs-height(2) + $gs-baseline * 2;
+            background-size: gs-span(6);
+        }
     }
 }
