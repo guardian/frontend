@@ -3,6 +3,8 @@ $us-minute-main-colour: #104f75;
 $us-minute-contrast-colour: #ffffff;
 $minute-headline-colour: #ffffff;
 
+$minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
+
 .content--minute-article {
     border-top: 0 none;
 
@@ -29,6 +31,28 @@ $minute-headline-colour: #ffffff;
     margin: 0 auto;
     max-width: none;
     width: 100%;
+
+    .submeta {
+        @include mq($from: tablet) {
+            margin-left: $minute-layout-margin-nudge;
+            width: gs-span(8);
+        }
+
+        @include mq($from: desktop) {
+            width: gs-span(11);
+        }
+
+        @include mq($from: leftCol) {
+            width: gs-span(12);
+        }
+
+        @include mq($from: wide) {
+            margin-left: $minute-layout-margin-nudge + gs-span(1);
+        }
+
+    }
+}
+
 .article__container--minute-article {
     background-color: $us-minute-main-colour;
 }
@@ -37,13 +61,13 @@ $minute-headline-colour: #ffffff;
     background-color: $us-minute-main-colour;
     border-top: 4px solid $us-minute-highlight-colour;
     color: $us-minute-contrast-colour;
-    margin-bottom: $gs-baseline/2;
     overflow: hidden;
+    padding: $gs-baseline 0;
     position: relative;
 
     @include mq($from: tablet) {
         border-top: 0 none;
-        padding-top: $gs-baseline*1.5;
+        padding-left: $gs-baseline*1.5;
 
         &:after {
             background-color: $us-minute-highlight-colour;
@@ -65,7 +89,10 @@ $minute-headline-colour: #ffffff;
     /* ==========================================================================
        Layout
        ========================================================================== */
-    $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
+
+    .block-elements {
+        padding: 0 $gs-gutter;
+    }
 
     @include mq($from: tablet) {
         margin: $gs-baseline/2 0 0 $minute-layout-margin-nudge;
