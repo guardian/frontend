@@ -43,6 +43,9 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
         block.addClass("block--minute-article")
         block.getElementsByClass("caption--img").addClass("caption--image__minute-article")
 
+        // Add alternative layout on alternate rows
+        if (block.elementSiblingIndex() % 2 == 1) block.addClass("block--minute-article--alt-layout")
+
         // Remove Classes
         block.removeClass("block")
 

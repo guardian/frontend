@@ -57,6 +57,10 @@ $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
     background-color: $us-minute-main-colour;
 }
 
+/* ==========================================================================
+   Layout
+   ========================================================================== */
+
 .block--minute-article {
     background-color: $us-minute-main-colour;
     border-top: 4px solid $us-minute-highlight-colour;
@@ -67,12 +71,8 @@ $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
 
     @include mq($from: tablet) {
         border-top: 0 none;
-        padding-left: $gs-baseline*1.5;
+        padding-left: $gs-gutter*1.5;
     }
-
-    /* ==========================================================================
-       Layout
-       ========================================================================== */
 
     .block-elements {
         padding: 0 $gs-gutter;
@@ -84,7 +84,7 @@ $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
     }
 
     @include mq($from: tablet) {
-        margin: $gs-baseline/2 0 0 $minute-layout-margin-nudge;
+        margin: 0 auto;
         max-width: gs-span(8);
 
         &:after {
@@ -130,6 +130,8 @@ $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
 
     @include mq($from: desktop) {
         max-width: gs-span(11);
+        margin: $gs-baseline/2 0 0 $minute-layout-margin-nudge;
+        padding-left: 0;
 
         &:after {
             width: gs-span(9);
@@ -191,10 +193,37 @@ $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
             width: gs-span(7);
         }
     }
+}
 
-    /* ==========================================================================
-       Content Overrides
-       ========================================================================== */
+// Alternative Layout
+.block--minute-article--alt-layout {
+
+    @include mq($from: leftCol) {
+        margin-left: $minute-layout-margin-nudge + gs-span(1);
+    }
+
+    @include mq($from: wide) {
+        margin-left: $minute-layout-margin-nudge + gs-span(2);
+    }
+
+    &:after {
+        left: 0;
+        right: auto;
+    }
+
+    .block-elements {
+        float: left;
+    }
+
+    figure.element-image {
+        float: right;
+    }
+}
+
+/* ==========================================================================
+   Content Overrides
+   ========================================================================== */
+.block--minute-article {
 
     // Standard elements
 
