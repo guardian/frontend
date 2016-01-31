@@ -18,6 +18,7 @@ $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
 
     .content__dateline {
         @include fs-header(2);
+        border-top: 0 none;
         color: $us-minute-highlight-colour;
     }
 
