@@ -7,6 +7,17 @@ $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
 
 .content--minute-article {
     border-top: 0 none;
+}
+
+.content__head--minute-article {
+
+    &:after {
+        content: '';
+        display: block;
+        background-color: rgba(0, 0, 0, .4);
+        height: 100%;
+        width: 100%;
+    }
 
     .content__headline {
         color: #ffffff;

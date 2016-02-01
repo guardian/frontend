@@ -6,7 +6,8 @@
 @import layout._
 
 <header class="content__head content__head--immersive content__head--desktop tonal__head tonal__head--@toneClass(article)
-               @if(article.fields.main.nonEmpty) { is-fixed-height }">
+@if(article.fields.main.nonEmpty) { is-fixed-height }
+@if(article.isUSMinute) { content__head--minute-article}">
     <div class="content__logo-container">
         <a class="gs-container" href="@LinkTo{/}">
             @fragments.inlineSvg("guardian-logo-160", "logo", Seq("content__logo"))
