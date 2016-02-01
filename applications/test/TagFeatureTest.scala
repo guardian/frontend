@@ -47,7 +47,7 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
     }
   }
 
-  feature("Tag Pages Football Nav") {
+  feature("Tag Pages") {
 
     scenario("Pagination") {
 
@@ -74,7 +74,7 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
         dataIdsOnFirstPage intersect dataIdsOnNextPage.toSet should be(Set.empty)
 
         And("The title should reflect the page number")
-        findFirst("title").getText should include ("| Page 2 of")
+        browser.title should include ("| Page 2 of")
 
         And("I should be able to navigate to the 'previous' page")
         findFirst(".pagination").findFirst("[rel=prev]").click()
