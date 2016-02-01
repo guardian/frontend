@@ -11,20 +11,41 @@ $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
 
 .content__head--minute-article {
 
-    &:after {
-        content: '';
-        display: block;
-        background-color: rgba(0, 0, 0, .4);
-        height: 100%;
-        width: 100%;
+    .content__head--mobile, 
+    .content__head--desktop {
+
+        &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, .4);
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #000000 100%);
+            width: 100%;
+        }
+
+    }
+
+    .content__wrapper {
+        
+        max-width: gs-span(8);
+        @include mq(leftCol) {
+            margin-left: gs-span(1) + $gs-gutter;
+        }
     }
 
     .content__headline {
+        @include fs-headline(9);
         color: #ffffff;
-        @include f-headline;
-        font-size: 70px;
-        line-height: 74px;
         font-weight: 200;
+        line-height: 1;
+        padding-top: $gs-baseline / 2;
+        padding-bottom: 1.5rem;
+
+        @include mq(desktop) {
+            font-size: 4rem;
+        }
     }
 
     .content__dateline {
@@ -36,6 +57,7 @@ $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
     .content__standfirst {
         @include fs-header(2);
         color: $minute-headline-colour;
+        padding-bottom: gs-span(2);
     }
 }
 
