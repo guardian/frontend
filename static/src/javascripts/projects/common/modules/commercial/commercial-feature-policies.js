@@ -30,7 +30,8 @@ define([
                 sliceAdverts : false,
                 popularContentMPU : false,
                 videoPreRolls : false,
-                frontCommercialComponents : false
+                frontCommercialComponents : false,
+                outbrain: false
             };
         }
     };
@@ -161,6 +162,7 @@ define([
         this.frontCommercialComponents = enabled;
         this.thirdPartyTags = enabled;
         this.badges = enabled;
+        this.outbrain = true;
     }
 
     function getPolicySwitches() {

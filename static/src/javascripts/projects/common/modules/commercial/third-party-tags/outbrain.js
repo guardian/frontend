@@ -7,6 +7,7 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'common/modules/identity/api',
+    'common/modules/commercial/commercial-features',
     'common/modules/commercial/third-party-tags/outbrain-codes',
     'text!common/views/commercial/outbrain.html'
 ], function (
@@ -18,6 +19,7 @@ define([
     mediator,
     template,
     identity,
+    commercialFeatures,
     getCode,
     outbrainStr
 ) {
@@ -121,11 +123,11 @@ define([
     }
 
     function init() {
-        if (config.switches.outbrain
-            && !config.page.isFront
-            && !config.page.isPreview
-            && config.page.section !== 'childrens-books-site'
-            && identityPolicy()
+        if (config.switches.outbrain &&
+            !config.page.isFront &&
+            !config.page.isPreview &&
+            commercialFeatures.outbrain &&
+            identityPolicy()
         ) {
             // if there is no merch component, load the outbrain widget right away
             if (loadInstantly()) {
