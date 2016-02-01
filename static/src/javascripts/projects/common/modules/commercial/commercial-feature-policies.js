@@ -11,7 +11,8 @@ define([
     detect,
     userFeatures,
     userPrefs,
-    mapValues) {
+    mapValues
+) {
     var policies = {};
 
     policies.defaultAds = function () {
@@ -23,6 +24,21 @@ define([
         if (config.page.shouldHideAdverts || config.page.section === 'childrens-books-site') {
             return {
                 dfpAdvertising : false,
+                topBannerAd : false,
+                articleBodyAdverts : false,
+                articleAsideAdverts : false,
+                sliceAdverts : false,
+                popularContentMPU : false,
+                videoPreRolls : false,
+                frontCommercialComponents : false
+            };
+        }
+    };
+
+    policies.minuteArticle = function () {
+        // Describe the policy for minute articles
+        if (config.page.isMinuteArticle) {
+            return {
                 topBannerAd : false,
                 articleBodyAdverts : false,
                 articleAsideAdverts : false,

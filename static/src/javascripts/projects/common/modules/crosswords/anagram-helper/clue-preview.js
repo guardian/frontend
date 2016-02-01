@@ -5,7 +5,8 @@ define([
 ], function (
     React,
     some,
-    map) {
+    map
+) {
     var CluePreview = React.createClass({
 
         letterHasBoundary: function (separators, letterIndex) {

@@ -51,7 +51,8 @@ define([
     throttle,
     forEach,
     chain,
-    loadCssPromise) {
+    loadCssPromise
+) {
 
     function GalleryLightbox() {
 

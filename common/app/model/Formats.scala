@@ -144,7 +144,7 @@ object MetaDataFormat {
           meta.rssPath),
         MetaDataPart2(
           meta.contentType,
-          meta.isImmersive,
+          meta.hasHeader,
           meta.schemaType,
           meta.cacheSeconds,
           meta.openGraphImages,

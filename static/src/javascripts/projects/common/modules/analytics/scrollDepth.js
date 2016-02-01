@@ -7,7 +7,8 @@ define([
     mediator,
     assign,
     bindAll,
-    debounce) {
+    debounce
+) {
 
     function ScrollDepth(options) {
         this.opts = assign(this.opts, options);

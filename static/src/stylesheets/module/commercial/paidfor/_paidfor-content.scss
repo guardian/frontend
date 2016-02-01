@@ -111,7 +111,7 @@
     }
 
     .paidfor-branding {
-        padding: $gs-baseline / 2 $gs-gutter / 2;
+        padding: ($gs-baseline / 2) 0 ($gs-baseline / 2) ($gs-gutter / 2);
 
         svg {
             height: 24px;
@@ -123,4 +123,6 @@
 .paidfor-band__inner {
     display: flex;
     justify-content: space-between;
+    box-sizing: border-box;
+    @include content-gutter();
 }

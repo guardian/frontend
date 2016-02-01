@@ -5,7 +5,7 @@ import org.scalatest._
 import org.scalatest.concurrent.Eventually
 import test.SingleServerSuite
 
-class WidthsByBreakpointTest extends FreeSpec with ShouldMatchers with Eventually with SingleServerSuite {
+class WidthsByBreakpointTest extends FreeSpec with ShouldMatchers {
   "ContentWidths" - {
     "getWidthsFromContentElement" - {
       "inline" - {

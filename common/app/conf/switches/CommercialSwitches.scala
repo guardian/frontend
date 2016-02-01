@@ -253,7 +253,7 @@ trait CommercialSwitches {
     "advert-opt-out",
     "Enable adfree experience. See with cookie 'gu_adfree_user' = true",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 1),
+    sellByDate = new LocalDate(2016, 2, 8),
     exposeClientSide = true
   )
 
@@ -264,5 +264,14 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = new LocalDate(2016, 3, 1),
     exposeClientSide = true
+  )
+
+  val OutbrainOnAmp = Switch(
+    "Commercial",
+    "outbrain-on-amp",
+    "Show an Outbrain component on amp pages",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 3, 2),
+    exposeClientSide = false
   )
 }

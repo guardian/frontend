@@ -11,7 +11,8 @@ define([
     Component,
     AudienceItem,
     assign,
-    clone) {
+    clone
+) {
 
     function Audience(config) {
         this.config = assign(clone(this.config), config);

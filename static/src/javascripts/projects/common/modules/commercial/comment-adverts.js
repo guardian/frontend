@@ -23,7 +23,8 @@ define([
     createAdSlot,
     dfp,
     userFeatures,
-    defaults) {
+    defaults
+) {
     return function (options) {
         var adType,
             opts = defaults(
@@ -48,7 +49,8 @@ define([
             (config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts) || /* Sensitive pages */
             userFeatures.isAdfree() ||
             (config.page.isLiveBlog && detect.getBreakpoint() !== 'wide') ||
-            !config.page.commentable) {
+            !config.page.commentable ||
+            config.page.isMinuteArticle) {
             return false;
         }
 
@@ -62,7 +64,7 @@ define([
                 idleFastdom.write(function () {
                     $commentMainColumn.addClass('discussion__ad-wrapper');
 
-                    if (!config.page.isLiveBlog) {
+                    if (!config.page.isLiveBlog || !config.page.isMinuteArticle) {
                         $commentMainColumn.addClass('discussion__ad-wrapper-wider');
                     }
 

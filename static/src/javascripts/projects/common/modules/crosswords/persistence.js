@@ -3,7 +3,8 @@ define([
     'lodash/collections/map'
 ], function (
     storage,
-    map) {
+    map
+) {
     var localStorage = storage.local;
 
     var localStorageKey = function (id) {

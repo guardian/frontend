@@ -9,7 +9,8 @@ define([
     mediator,
     fastdom,
     filter,
-    debounce) {
+    debounce
+) {
 
     var items = [],
         scroll = {top: 0, bottom: 0},

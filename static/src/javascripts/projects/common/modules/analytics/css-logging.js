@@ -41,7 +41,8 @@ define([
     chain,
     filter,
     forEach,
-    reduce) {
+    reduce
+) {
     var sample = 500,
         rxPsuedoClass = new RegExp(/:+[^\s\,]+/g),
         rxSeparator = new RegExp(/\s*,\s*/g),

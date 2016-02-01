@@ -11,7 +11,8 @@ define([
     detect,
     mediator,
     ab,
-    memoize) {
+    memoize
+) {
 
     var selectorTopEl = '.social--top',
         selectorBottomEl = '.social--bottom',

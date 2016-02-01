@@ -33,7 +33,8 @@ define([
     merge,
     uniq,
     pick,
-    isArray) {
+    isArray
+) {
 
     var format = function (keyword) {
             return keyword.replace(/[+\s]+/g, '-').toLowerCase();

@@ -43,7 +43,8 @@ define([
     techOrder,
     videojs,
     loadingTmpl,
-    debounce) {
+    debounce
+) {
 
     function getAdUrl() {
         // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
