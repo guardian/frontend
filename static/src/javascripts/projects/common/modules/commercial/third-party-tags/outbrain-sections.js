@@ -3,7 +3,7 @@ define(function () {
 
     function getSection(section) {
         section = section.toLowerCase();
-        return /news/.test(section) || sections.indexOf(section) !== -1 ? 1 : 2;
+        return /news/.test(section) || sections.indexOf(section) !== -1 ? 'news' : 'defaults';
     }
 
     return getSection;
