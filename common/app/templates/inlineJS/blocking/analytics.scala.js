@@ -12,11 +12,6 @@ try {
             tpA     = s.getTimeParting('n', '+0'),
             now     = new Date(),
             webPublicationDate = config.page.webPublicationDate,
-            Storage = function (type) {
-                this.type = type;
-            },
-            storage.local = new Storage('localStorage'),
-            storage.session = new Storage('sessionStorage')
             isAvailable;
 
         var R2_STORAGE_KEY = 's_ni', // DO NOT CHANGE THIS, ITS IS SHARED WITH R2. BAD THINGS WILL HAPPEN!
@@ -203,7 +198,7 @@ try {
         s.prop47    = config.page.edition || '';
 
         /* Retrieve navigation interaction data */
-        var ni   = storage.session.get(NG_STORAGE_KEY),
+        var ni   = window.sessionStorage.getItem(NG_STORAGE_KEY),
             d;
 
         if (getUserFromCookie()) {
@@ -223,8 +218,8 @@ try {
                 this.s.eVar24 = ni.pageName;
                 this.s.eVar37 = ni.tag;
             }
-            storage.session.remove(R2_STORAGE_KEY);
-            storage.session.remove(NG_STORAGE_KEY);
+            window.sessionStorage.removeItem(R2_STORAGE_KEY);
+            window.sessionStorage.removeItem(NG_STORAGE_KEY);
         }
 
         // Sponsored content
@@ -244,64 +239,6 @@ try {
         */
 
         s.t();
-
-        Storage.prototype.isAvailable = function (data) {
-            var testKey = 'local-storage-module-test',
-                d = data || 'test';
-            try {
-                // to fully test, need to set item
-                // http://stackoverflow.com/questions/9077101/iphone-localstorage-quota-exceeded-err-issue#answer-12976988
-                w[this.type].setItem(testKey, d);
-                w[this.type].removeItem(testKey);
-                return true;
-            } catch (e) {
-                return false;
-            }
-        };
-
-        Storage.prototype.isStorageAvailable = function (refresh) {
-            if (isAvailable === void 0 || refresh) {
-                isAvailable = this.isAvailable();
-            }
-            return isAvailable;
-        };
-
-        Storage.prototype.get = function (key) {
-            if (this.isStorageAvailable()) {
-                var data,
-                    dataParsed;
-                if (!w[this.type]) {
-                    return;
-                }
-                data = w[this.type].getItem(key);
-                if (data === null) {
-                    return null;
-                }
-
-                // try and parse the data
-                try {
-                    dataParsed = JSON.parse(data);
-                } catch (e) {
-                    // remove the key
-                    this.remove(key);
-                    return null;
-                }
-
-                // has it expired?
-                if (dataParsed.expires && new Date() > new Date(dataParsed.expires)) {
-                    this.remove(key);
-                    return null;
-                }
-
-                return dataParsed.value;
-            }
-        };
-
-        Storage.prototype.getKey = function (i) {
-            if (this.isStorageAvailable()) {
-                return w[this.type].key(i);
-            }
-        };
 
         // Production steps of ECMA-262, Edition 5, 15.4.4.14
         // Reference: http://es5.github.io/#x15.4.4.14
