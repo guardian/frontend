@@ -1,11 +1,20 @@
-@(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties = model.FrontProperties.empty)(implicit request: RequestHeader)
+@(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties = model.FrontProperties.empty, isPaidContent: Boolean = false)(implicit request: RequestHeader)
 
 @import common.dfp.{Keyword, Series}
 @import conf.switches.Switches
 @import layout.MetaDataHeader
-@import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList}
+@import slices.{CommercialContainerType, Dynamic, Fixed, MostPopular, NavList, NavMediaList, SingleCampaign}
 @import views.html.fragments.containers.facia_cards.{commercialContainer, containerMetaData, mostPopularContainer, navListContainer, navMediaListContainer, standardContainer}
 @import views.support.{GetClasses, RenderClasses}
+
+@renderCommercialContainer(containerType: CommercialContainerType) = {
+    <div class="@RenderClasses(
+        Map("fc-container__inner--full-span fc-container__inner--paidfor" -> Switches.NewCommercialContent.isSwitchedOn),
+        "fc-container__inner"
+    )">
+    @commercialContainer(containerType, containerDefinition, frontProperties)
+    </div>
+}
 
 @defining((containerDefinition.displayName, containerDefinition.faciaComponentName)) { case (title, componentName) =>
     @containerDefinition.customHeader.map {
@@ -14,32 +23,45 @@
         }
         case _ => {}
     }
-    <section id="@componentName"
-             class="@GetClasses.forContainerDefinition(containerDefinition)"
-             data-link-name="container-@{containerDefinition.index + 1} | @componentName"
-             data-id="@containerDefinition.dataId"
-             @for(sponsor <- containerDefinition.commercialOptions.sponsor) { data-sponsor="@sponsor" }
-             @for(tag <- containerDefinition.commercialOptions.sponsorshipTag) {
-                 @tag.tagType match {
-                     case Series => { data-series="@{tag.tagId}" }
-                     case Keyword => { data-keywords="@{tag.tagId}" }
-                 }
-             }
-             @containerDefinition.commercialOptions.sponsorshipType.map { sponsorshipType =>
-                 data-sponsorship="@sponsorshipType"
-             }
-             data-component="@componentName"
-             aria-expanded="true">
 
-             @if(containerDefinition.isStoryPackage){
+    @(containerDefinition.container, isPaidContent, Switches.NewCommercialContent.isSwitchedOn) match {
+        case (MostPopular, true, true) => {}
+        case _ => {
+        <section id="@componentName"
+        class="@GetClasses.forContainerDefinition(containerDefinition)"
+        data-link-name="container-@{containerDefinition.index + 1} | @componentName"
+        data-id="@containerDefinition.dataId"
+            @for(sponsor <- containerDefinition.commercialOptions.sponsor) { data-sponsor="@sponsor" }
+            @for(tag <- containerDefinition.commercialOptions.sponsorshipTag) {
+                @tag.tagType match {
+                    case Series => { data-series="@{tag.tagId}" }
+                    case Keyword => { data-keywords="@{tag.tagId}" }
+                }
+            }
+            @containerDefinition.commercialOptions.sponsorshipType.map { sponsorshipType =>
+            data-sponsorship="@sponsorshipType"
+            }
+        data-component="@componentName"
+        aria-expanded="true">
+
+            @if(containerDefinition.isStoryPackage){
                 @conf.Static.css.inline("story-package").map { css =>
                     <style>
                         @Html(css)
                     </style>
                 }
-             }
+            }
 
             @containerDefinition.container match {
+
+                case Fixed(definition) if containerDefinition.commercialOptions.isAdvertisementFeature => {
+                    @*
+                    This is a workaround until existing paid content containers
+                    are converted to commercial/single-campaign container types.
+                    *@
+                    @renderCommercialContainer(SingleCampaign(definition))
+                }
+
                 case _: Dynamic | _: Fixed => {
                     <div class="fc-container__inner">
                         @standardContainer(containerDefinition, frontProperties)
@@ -65,13 +87,10 @@
                 }
 
                 case slices.Commercial(container) => {
-                    <div class="@RenderClasses(
-                        Map("fc-container__inner--full-span fc-container__inner--paidfor" -> Switches.NewCommercialContent.isSwitchedOn),
-                        "fc-container__inner"
-                    )">
-                        @commercialContainer(container, containerDefinition, frontProperties)
-                    </div>
+                    @renderCommercialContainer(container)
                 }
             }
-    </section>
+        </section>
+        }
+    }
 }

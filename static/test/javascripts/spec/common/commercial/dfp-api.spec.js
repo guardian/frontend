@@ -3,6 +3,7 @@ define([
     'bonzo',
     'fastdom',
     'qwery',
+    'Promise',
     'common/utils/$',
     'helpers/fixtures',
     'helpers/injector'
@@ -11,6 +12,7 @@ define([
     bonzo,
     fastdom,
     qwery,
+    Promise,
     $,
     fixtures,
     Injector
@@ -26,7 +28,8 @@ define([
                     '<div id="dfp-ad-html-slot" class="js-ad-slot" data-name="html-slot" data-mobile="300,50"></div>\
                     <div id="dfp-ad-script-slot" class="js-ad-slot" data-name="script-slot" data-mobile="300,50|320,50" data-refresh="false"></div>\
                     <div id="dfp-ad-already-labelled" class="js-ad-slot ad-label--showing" data-name="already-labelled" data-mobile="300,50|320,50"  data-tablet="728,90"></div>\
-                    <div id="dfp-ad-dont-label" class="js-ad-slot" data-label="false" data-name="dont-label" data-mobile="300,50|320,50"  data-tablet="728,90" data-desktop="728,90|900,250|970,250"></div>'
+                    <div id="dfp-ad-dont-label" class="js-ad-slot" data-label="false" data-name="dont-label" data-mobile="300,50|320,50"  data-tablet="728,90" data-desktop="728,90|900,250|970,250"></div>\
+                    <div id="dfp-ad-gu-style" data-name="gu-style" data-mobile="300,250" data-desktop="300,250"></div>'
                     // jscs:enable disallowMultipleLineStrings
                 ]
             },
@@ -287,11 +290,15 @@ define([
         });
 
         describe('labelling', function () {
-
             var slotId = 'dfp-ad-html-slot';
+
+            afterEach(function () {
+                dfp.checkForBreakout.restore();
+            });
 
             it('should be added', function (done) {
                 var $slot = $('#' + slotId);
+                sinon.stub(dfp, 'checkForBreakout').returns(Promise.resolve(''));
                 dfp.init();
 
                 fastdom.defer(function () {
@@ -306,6 +313,7 @@ define([
 
             it('should not be added if data-label attribute is false', function () {
                 var $slot = $('#' + slotId).attr('data-label', false);
+                sinon.stub(dfp, 'checkForBreakout').returns(Promise.resolve('#' + slotId));
                 dfp.init();
                 window.googletag.cmd.forEach(function (func) { func(); });
                 window.googletag.pubads().listener(makeFakeEvent(slotId));
@@ -315,6 +323,7 @@ define([
             it('should be added only once', function (done) {
                 var fakeEvent = makeFakeEvent(slotId),
                     $slot = $('#' + slotId);
+                sinon.stub(dfp, 'checkForBreakout').returns(Promise.resolve('#' + slotId));
                 dfp.init();
 
                 fastdom.defer(function () {
@@ -324,6 +333,21 @@ define([
 
                     fastdom.defer(10, function () {
                         expect($('.ad-slot__label', $slot[0]).length).toBe(1);
+                        done();
+                    });
+                });
+            });
+
+            it('should not be added when ad is gu style type', function (done) {
+                var $slot = $('#dfp-ad-gu-style');
+                sinon.stub(dfp, 'checkForBreakout').returns(Promise.resolve('gu-style'));
+                dfp.init();
+
+                fastdom.defer(function () {
+                    window.googletag.cmd.forEach(function (func) { func(); });
+                    window.googletag.pubads().listener(makeFakeEvent('dfp-ad-gu-style'));
+                    fastdom.defer(10, function () {
+                        expect($('.ad-slot__label', $slot[0]).length).toBe(0);
                         done();
                     });
                 });

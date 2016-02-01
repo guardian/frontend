@@ -189,22 +189,7 @@
                                     @fragments.inlineSvg("glabs-logo-small", "logo")
                                 </a>
                             </div>
-                            <div class="paidfor-meta">
-                                <span class="paidfor-meta__label">Paid content</span>
-                                <div class="paidfor-label paidfor-meta__more has-popup">
-                                    <button class="u-button-reset paidfor-label__btn popup__toggle" data-toggle="paidfor-popup--test1">
-                                        About
-                                        @fragments.inlineSvg("arrow-down", "icon")
-                                    </button>
-                                    <div class="popup is-off paidfor-popup paidfor-popup--test1">
-                                        <h3 class="paidfor-popup__title">Paid content is paid for and controlled by an advertiser and created by the Guardian Labs team</h3>
-                                        <a class="paidfor-popup__link" href="#">
-                                            Learn more about Guardian Labs content
-                                            @fragments.inlineSvg("arrow-right", "icon")
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+                            @fragments.commercial.paidForMeta()
                             <a href="<%=clickMacro%><%=articleUrl%>" class="paidfor-box">
                                 <h2 class="gu-title">Discover the beauty and culture of Mauritius</h2>
                                 <p class="gu-text">From sandy beaches and tropical forests to colourful festivals and super-fresh seafood.</p>

@@ -100,6 +100,7 @@ trait Competitions extends LiveMatches with Logging with implicits.Collections w
   val competitionDefinitions = Seq(
     Competition("500", "/football/championsleague", "Champions League", "Champions League", "European", tableDividers = List(2, 6, 21)),
     Competition("100", "/football/premierleague", "Premier League", "Premier League", "English", showInTeamsList = true, tableDividers = List(4, 5, 17)),
+    Competition("300", "/football/fa-cup", "FA Cup", "FA Cup", "English"),
     Competition("650", "/football/laligafootball", "La Liga", "La Liga", "European", showInTeamsList = true, tableDividers = List(4, 6, 17)),
     Competition("625", "/football/bundesligafootball", "Bundesliga", "Bundesliga", "European", showInTeamsList = true, tableDividers = List(3, 4, 6, 15, 16)),
     Competition("635", "/football/serieafootball", "Serie A", "Serie A", "European", showInTeamsList = true, tableDividers = List(3, 5, 17)),
@@ -114,7 +115,6 @@ trait Competitions extends LiveMatches with Logging with implicits.Collections w
     Competition("751", "/football/euro-2016-qualifiers", "Euro 2016 qualifying", "Euro 2016 qual.", "Internationals"),
     Competition("501", "/football/champions-league-qualifying", "Champions League qualifying", "Champions League qual.", "European"),
     Competition("510", "/football/uefa-europa-league", "Europa League", "Europa League", "European", tableDividers = List(2)),
-    Competition("300", "/football/fa-cup", "FA Cup", "FA Cup", "English"),
     Competition("301", "/football/capital-one-cup", "Capital One Cup", "Capital One Cup", "English"),
     Competition("400", "/football/community-shield", "Community Shield", "Community Shield", "English", showInTeamsList = true),
     Competition("320", "/football/scottishcup", "Scottish Cup", "Scottish Cup", "Scottish"),
