@@ -54,7 +54,13 @@
                         </h3>
                     }
                 }
-                    <h1 class="content__headline">@Html(article.trail.headline)</h1>
+                    <h1 class="content__headline">
+                        @if(article.isUSMinute) {
+                            <a class="logo--minute--article" href="@LinkTo{/us-news/us-elections-2016}">
+                                @fragments.inlineSvg("minute_lock_up", "logo")
+                            </a> 
+                        }
+                        @Html(article.trail.headline)</h1>
 
                     @if(article.isUSMinute) {
 

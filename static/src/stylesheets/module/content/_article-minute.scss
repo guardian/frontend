@@ -32,6 +32,25 @@ $minute-layout-margin-nudge: gs-span(1);
 
     }
 
+    .logo--minute--article {
+        display: block;
+        float: left;
+        // width: gs-span(3) + $gs-gutter;
+        height: gs-height(4);
+        position: absolute;
+        top: -#{gs-height(5)};
+
+        svg {
+            width: auto;
+            height: 100%;
+        }
+
+        @include mq(desktop) {
+            height: gs-height(5);
+            top: -#{gs-height(6)};
+        }
+    }
+
     .content__wrapper {
         
         margin: 0 auto;
@@ -63,6 +82,7 @@ $minute-layout-margin-nudge: gs-span(1);
         line-height: 1;
         padding-top: $gs-baseline / 2;
         padding-bottom: 1.5rem;
+        position: relative;
 
         &:after {
             background-color: $us-minute-highlight-colour;
