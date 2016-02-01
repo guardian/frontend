@@ -257,7 +257,12 @@ $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
 /* ==========================================================================
    Content Overrides
    ========================================================================== */
+
 .block--minute-article {
+
+    .updated-time {
+        display: none;
+    }
 
     // Standard elements
 
