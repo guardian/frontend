@@ -5,8 +5,9 @@
 @import views.support.ImgSrc
 @import layout._
 
-<header class="content__head content__head--desktop tonal__head tonal__head--@toneClass(article)
-               @if(article.fields.main.nonEmpty) { is-fixed-height }">
+<header class="content__head content__head--immersive content__head--desktop tonal__head tonal__head--@toneClass(article)
+@if(article.fields.main.nonEmpty) { is-fixed-height }
+@if(article.isUSMinute) { content__head--minute-article}">
     <div class="content__logo-container">
         <a class="gs-container" href="@LinkTo{/}">
             @fragments.inlineSvg("guardian-logo-160", "logo", Seq("content__logo"))
@@ -46,22 +47,37 @@
         <div class="content__head--mobile">
             <div class="content__wrapper content__wrapper--headline">
                 <div class="gs-container">
+                @if(!article.isUSMinute) {
                     @article.content.blogOrSeriesTag.map { series =>
-                    <h3 class="content__series-label">
-                        <a class="content__series-label__link" href="@LinkTo {/@series.id}">@series.name</a>
-                    </h3>
+                        <h3 class="content__series-label">
+                            <a class="content__series-label__link" href="@LinkTo {/@series.id}">@series.name</a>
+                        </h3>
                     }
+                }
                     <h1 class="content__headline">@Html(article.trail.headline)</h1>
+
+                    @if(article.isUSMinute) {
+
+                        @if(!article.trail.shouldHidePublicationDate) {
+                            @fragments.meta.dateline(article.trail.webPublicationDate, article.fields.lastModified, article.content.hasBeenModified, article.tags.isLiveBlog, article.fields.isLive, article.tags.isUSMinuteSeries)
+                        }
+
+                        @if(article.fields.standfirst.isDefined) {
+                            @fragments.standfirst(article)
+                        }
+                    }
                 </div>
             </div>
         </div>
 
-        <div class="content__wrapper content__wrapper--standfirst">
-            <div class="gs-container">
+        @if(!article.isUSMinute) {
+            <div class="content__wrapper content__wrapper--standfirst">
+                <div class="gs-container">
                 @if(article.fields.standfirst.isDefined) {
                     @fragments.standfirst(article)
                 }
+                </div>
             </div>
-        </div>
+        }
     </div>
 </header>
