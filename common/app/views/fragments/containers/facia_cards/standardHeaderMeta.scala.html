@@ -3,6 +3,7 @@
 @import common.{LinkTo, Localisation}
 @import views.html.fragments.containers.facia_cards.{date, latestUpdate}
 @import views.support.{ImgSrc, Item140, RenderClasses}
+@import conf.switches.Switches._
 
 
 @defining((containerDefinition.displayName, containerDefinition.href)) { case (title, href) =>
@@ -15,6 +16,17 @@
                     "tone-colour" -> isContributor))">
                     @href.map { href =>
                     <a data-link-name="section heading" href="@LinkTo {/@href}">
+                        @defining(
+                            USElectionSwitch.isSwitchedOn &&
+                                href == "us-news/us-elections-2016"
+                        ) { isUSElection =>
+                            @if(isUSElection) {
+                                <div class="badge-slot badge-slot--us-election">
+                                    <img class="badge-slot__img" src="@Configuration.static.path/sys-images/Guardian/Pix/pictures/2016/1/28/1453981123556/uselectionlogo.png"/>
+                                </div>
+                            }
+                        }
+
                         @Localisation(title)
                     </a>
                     }.getOrElse {
