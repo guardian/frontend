@@ -6,8 +6,7 @@ try {
 
     (function (window, document) {
 
-        var navigator = window.navigator,
-            config  = guardian.config,
+        var config  = guardian.config,
             isEmbed = !!guardian.isEmbed,
             tpA     = s.getTimeParting('n', '+0'),
             now     = new Date(),
@@ -152,7 +151,7 @@ try {
         s.eVar50 = s.getValOnce(s.eVar50, 's_intcampaign', 0);
 
         // the operating system
-        s.eVar58 = navigator.platform || 'unknown';
+        s.eVar58 = window.navigator.platform || 'unknown';
 
         // the number of Guardian links inside the body
         if (config.page.inBodyInternalLinkCount) {
