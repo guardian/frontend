@@ -131,9 +131,8 @@ define([
             });
         }
 
-        var isDev = window.location.hostname === 'localhost';
-        if ((window.location.protocol === 'https:' || isDev)
-            && config.page.section !== 'identity') {
+        // use a #force-sw hash fragment to force service worker registration for local dev
+        if ((window.location.protocol === 'https:' && config.page.section !== 'identity') || window.location.hash === '#force-sw') {
             var navigator = window.navigator;
             if (navigator && navigator.serviceWorker) {
                 navigator.serviceWorker.register('/service-worker.js');
