@@ -30,8 +30,8 @@ try {
         };
 
         function forEach(array, callback, scope) {
-            var data = [];
-            for (var i = 0; i < array.length; i++) {
+            var data = [], dataLength = data.length;
+            for (var i = 0; i < dataLength; i++) {
                 data.push(callback.call(scope, i, array[i]));
             }
             return data;
@@ -39,8 +39,8 @@ try {
 
         @* This only works for string arrays *@
         function uniq(array) {
-            var data = [];
-            for (var i = 0; i < array.length; i++) {
+            var data = [], dataLength = data.length;
+            for (var i = 0; i < dataLength; i++) {
                 if(data.indexOf(array[i]) == -1) {
                     data.push(array[i]);
                 }
