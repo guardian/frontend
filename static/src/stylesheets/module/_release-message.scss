@@ -466,6 +466,81 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     background: colour(membership-default);
 }
 
+
+
+/*
+ * Coin based adblock message
+ */
+.adblock-sticky__message.adblock-sticky__coin {
+
+    .gs-container {
+        color: #ffffff;
+        background-color: #ff5b3a;
+        height: 180px;
+    }
+
+    .adblock-sticky__membership-bar {
+        background-color: transparent;
+    }
+
+    .adblock-sticky__quote-text {
+        @include fs-headline(6);
+        padding-left: 0;
+        padding-top: 0;
+        color: #ffffff;
+    }
+
+    .adblock-sticky__logo {
+        position: absolute;
+        float: none;
+        right: 0;
+        top: 0;
+    }
+
+    .inline-marque-54 {
+        fill: #ffffff;
+    }
+
+    .adblock-sticky__info {
+        text-align: center;
+        padding-left: 0;
+        float: none;
+
+        @include mq(desktop) {
+            max-width: none;
+        }
+    }
+
+    .site-message__actions {
+        display: inline-block;
+        margin: 0;
+    }
+
+    .site-message__actions__sticky-item {
+        padding-left: 1.25rem;
+    }
+
+    .adblock-sticky__membership-bar-text {
+        max-width: none;
+    }
+
+    .adblock-sticky__membership-logo {
+        position: absolute;
+        bottom: -4px;
+        right: 0;
+
+        @include mq($from: mobile, $until: tablet) {
+            display: none;
+        }
+    }
+
+    .adblock-sticky__membership-coins {
+        text-align: center;
+        padding-top: 5px;
+        display: block;
+    }
+}
+
 /**
  * Adblock banner in sticky nav
  */
