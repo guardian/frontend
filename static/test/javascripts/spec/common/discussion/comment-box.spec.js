@@ -182,7 +182,7 @@ define([
             it('should send a success message to the user when comment is valid', function (done) {
                 var callback = jasmine.createSpy();
                 commentBox.on('post:success', callback);
-                server.respondWith([200, {}, apiPostValidCommentResp]);
+                server.respondWith('POST', /.*/, apiPostValidCommentResp);
                 commentBox.getElem('body').value = validCommentText;
                 bean.fire(commentBox.elem, 'submit');
 
