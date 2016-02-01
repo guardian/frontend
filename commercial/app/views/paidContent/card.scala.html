@@ -1,0 +1,43 @@
+@(item: model.ContentType, optClickMacro: Option[String], optOmnitureId: Option[String])(implicit request: RequestHeader)
+
+@import views.html.fragments.inlineSvg
+
+@defining(("1_0", "2014-08-14")) { case (version, date) =>
+    <div class="paidfor-content" data-link-name="creative | gu style commercial content">
+        <div class="u-responsive-ratio inlined-image">
+            <a href="@optClickMacro@item.metadata.webUrl" data-link-name="article image">
+                @item.trail.trailPicture.map { trailPictureContainer =>
+                    @Item300.bestFor(trailPictureContainer).map{ url => <img src="@url" alt="" class="lineitem__image" /> }
+                }
+            </a>
+            <a href="<%=glabsLink%>" class="paidfor-content__glabs-logo" title="glabs" data-link-name="glabs logo">
+                @fragments.inlineSvg("glabsLogoSmall", "logo")>
+            </a>
+        </div>
+        <div class="paidfor-meta">
+            <span class="paidfor-meta__label">Paid content</span>
+            <div class="paidfor-label paidfor-meta__more has-popup">
+                <button class="u-button-reset paidfor-label__btn popup__toggle" data-toggle="paidfor-popup--<%=dataAttr%>">
+                    About <%=icon%>
+                </button>
+                <div class="popup is-off paidfor-popup paidfor-popup--<%=dataAttr%>">
+                    <h3 class="paidfor-popup__title">Paid content is paid for and controlled by an advertiser and produced by the Guardian Labs team</h3>
+                    <a class="paidfor-popup__link" href="https://www.theguardian.com/info/2014/sep/23/paid-for-content" data-link-name="popup link">
+                        Learn more about Guardian Labs content
+                        <%=infoLinkIcon%>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <a href="<%=clickMacro%><%=articleUrl%>" class="paidfor-box" data-link-name="advertisers logo">
+            <h2 class="gu-title">@item.metadata.webTitle</h2>
+            @item.fields.trailText.map { trailText =>
+                <p class="gu-text">@Html(trailText)</p>
+            }
+            <div class="paidfor-brand">
+                <span class="paidfor-note">Paid for by:</span>
+                <img class="paidfor-logo" src="<%=brandLogo%>" alt="<%=brand%>">
+            </div>
+        </a>
+    </div>
+}
