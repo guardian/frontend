@@ -23,6 +23,9 @@ GET        /container/*path/some/:num/:offset/:containerNameToFilter/:edition.js
 GET        /container/*id.json                                                      controllers.FaciaController.renderContainerJson(id)
 GET        /most-relevant-container/*path.json                                      controllers.FaciaController.renderMostRelevantContainerJson(path)
 
+# AMP
+GET        /container-mf2/:num/:offset/:section.json                                controllers.FaciaController.renderSomeFrontContainersMf2(num, offset, section)
+
 # Editionalised pages
 GET        /*path/show-more/*id.json                                                controllers.FaciaController.renderShowMore(path, id)
 GET        /rss                                                                     controllers.FaciaController.renderRootFrontRss()
@@ -32,6 +35,3 @@ GET        /*path/deduped.json                                                  
 GET        /*path.json                                                              controllers.FaciaController.renderFrontJson(path)
 GET        /                                                                        controllers.FaciaController.rootEditionRedirect()
 GET        /*path                                                                   controllers.FaciaController.renderFront(path)
-
-# AMP
-GET        /container-mf2/:num/:offset/:section.json                                controllers.FaciaController.renderSomeFrontContainersMf2(num, offset, section)
