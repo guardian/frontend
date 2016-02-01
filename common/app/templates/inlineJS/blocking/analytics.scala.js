@@ -198,8 +198,12 @@ try {
         s.prop47    = config.page.edition || '';
 
         /* Retrieve navigation interaction data */
-        var ni   = window.sessionStorage.getItem(NG_STORAGE_KEY),
-            d;
+        var ni;
+        try {
+            ni = window.sessionStorage.getItem(NG_STORAGE_KEY);
+        } catch (e) {
+            ni = null;
+        }
 
         if (getUserFromCookie()) {
             s.prop2 = 'GUID:' + getUserFromCookie().id;
@@ -213,13 +217,15 @@ try {
         //s.prop40    = detect.adblockInUse() || detect.getFirefoxAdblockPlusInstalled();
 
         if (ni) {
-            d = new Date().getTime();
+            var d = new Date().getTime();
             if (d - ni.time < 60 * 1000) { // One minute
                 this.s.eVar24 = ni.pageName;
                 this.s.eVar37 = ni.tag;
             }
-            window.sessionStorage.removeItem(R2_STORAGE_KEY);
-            window.sessionStorage.removeItem(NG_STORAGE_KEY);
+            try {
+                window.sessionStorage.removeItem(R2_STORAGE_KEY);
+                window.sessionStorage.removeItem(NG_STORAGE_KEY);
+            } catch (e) {}
         }
 
         // Sponsored content
