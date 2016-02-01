@@ -53,8 +53,11 @@
             background-size: gs-span(6);
         }
     }
+
+    &.tonal__head--tone-dead {
+        .content__header .gs-container {
+            background-image: url('http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2016/2/1/1454325390553/uselectionliveblogoff.jpg');
+        }
+    }
 }
 
-.tonal__head--tone-dead .content__header .gs-container {
-    background-image: url('http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2016/2/1/1454325390553/uselectionliveblogoff.jpg');
-}
