@@ -16,7 +16,7 @@ $minute-layout-margin-nudge: gs-span(1);
 
 .content__head--minute-article {
 
-    .content__head--mobile, 
+    .content__head--mobile,
     .content__head--desktop {
 
         &:before {
@@ -32,8 +32,27 @@ $minute-layout-margin-nudge: gs-span(1);
 
     }
 
+    .logo--minute--article {
+        display: block;
+        float: left;
+        // width: gs-span(3) + $gs-gutter;
+        height: gs-height(4);
+        position: absolute;
+        top: -#{gs-height(5)};
+
+        svg {
+            width: auto;
+            height: 100%;
+        }
+
+        @include mq(desktop) {
+            height: gs-height(5);
+            top: -#{gs-height(6)};
+        }
+    }
+
     .content__wrapper {
-        
+
         margin: 0 auto;
         width: 100%;
     }
@@ -63,6 +82,7 @@ $minute-layout-margin-nudge: gs-span(1);
         line-height: 1;
         padding-top: $gs-baseline / 2;
         padding-bottom: 1.5rem;
+        position: relative;
 
         &:after {
             background-color: $us-minute-highlight-colour;
@@ -77,7 +97,7 @@ $minute-layout-margin-nudge: gs-span(1);
 
             @include mq($from: mobileLandscape) {
                 width: gs-span(4) + $gs-gutter * 2;
-            }   
+            }
             @include mq(desktop) {
                 width: gs-span(7);
             }
@@ -115,8 +135,14 @@ $minute-layout-margin-nudge: gs-span(1);
     width: 100%;
 
     .submeta {
+        margin: 0 auto;
+        padding: 0 $gs-gutter/2;
+
+        @include mq($from: mobileLandscape) {
+            padding: 0 $gs-gutter;
+        }
+
         @include mq($from: tablet) {
-            margin-left: $minute-layout-margin-nudge;
             width: gs-span(8);
         }
 
@@ -127,11 +153,6 @@ $minute-layout-margin-nudge: gs-span(1);
         @include mq($from: leftCol) {
             width: gs-span(12);
         }
-
-        @include mq($from: wide) {
-            margin-left: $minute-layout-margin-nudge + gs-span(1);
-        }
-
     }
 }
 
@@ -354,13 +375,9 @@ $minute-layout-margin-nudge: gs-span(1);
         box-sizing: border-box;
         bottom: 0;
         color: $us-minute-contrast-colour;
-        padding: $gs-baseline/2 $gs-gutter/2;
+        padding: $gs-baseline/2 $gs-gutter $gs-baseline $gs-gutter/2;
         position: absolute;
         width: 100%;
-
-        @include mq($from: leftCol) {
-            padding: $gs-baseline $gs-gutter;
-        }
     }
 
     figcaption.caption--image__minute-article {
