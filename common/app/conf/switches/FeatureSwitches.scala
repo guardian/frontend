@@ -366,4 +366,13 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
+
+  val USElectionSwitch = Switch(
+    "Feature",
+    "us-election",
+    "When ON, items tagged with us-news/us-elections-2016 will have visual elements added",
+    safeState = On,
+    sellByDate = new LocalDate(2017, 1, 5),
+    exposeClientSide = false
+  )
 }
