@@ -3,10 +3,15 @@ $us-minute-main-colour: #104f75;
 $us-minute-contrast-colour: #ffffff;
 $minute-headline-colour: #ffffff;
 
-$minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
+$minute-layout-margin-nudge: gs-span(1);
 
 .content--minute-article {
     border-top: 0 none;
+}
+
+
+.content .gs-container--minute-article {
+    padding: 0;
 }
 
 .content__head--minute-article {
@@ -31,15 +36,24 @@ $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
         
         margin: 0 auto;
         width: 100%;
+    }
 
+    .content__headline,
+    .content__dateline,
+    .content__standfirst {
+        max-width: gs-span(4);
+
+        @include mq(tablet) {
+            margin-left: $gs-gutter;
+        }
         @include mq(desktop) {
             max-width: gs-span(6);
-            margin-left: $minute-layout-margin-nudge - $gs-gutter;
+            margin-left: gs-span(1) - $gs-gutter;
+        }
+        @include mq(wide) {
+            margin-left: gs-span(2) - $gs-gutter * 2;
         }
 
-        @include mq(wide) {
-            margin-left: $minute-layout-margin-nudge + gs-span(1) - $gs-gutter;
-        }
     }
 
     .content__headline {
@@ -50,6 +64,29 @@ $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
         padding-top: $gs-baseline / 2;
         padding-bottom: 1.5rem;
 
+        &:after {
+            background-color: $us-minute-highlight-colour;
+            content: '';
+            height: $gs-baseline*3;
+            position: absolute;
+            left: 0;
+            top: -$gs-baseline*3;
+            width: gs-span(4) + $gs-gutter;
+            margin-left: 0;
+            margin-right: $gs-gutter;
+
+            @include mq($from: mobileLandscape) {
+                width: gs-span(4) + $gs-gutter * 2;
+            }   
+            @include mq(desktop) {
+                width: gs-span(7);
+            }
+            @include mq(wide) {
+                width: gs-span(8);
+            }
+
+        }
+
         @include mq(desktop) {
             font-size: 4rem;
         }
@@ -59,6 +96,9 @@ $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
         @include fs-header(2);
         border-top: 0 none;
         color: $us-minute-highlight-colour;
+        min-height: 0;
+        padding-bottom: 0;
+        margin-bottom: 0;
     }
 
     .content__standfirst {
