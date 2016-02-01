@@ -299,13 +299,9 @@ $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
         box-sizing: border-box;
         bottom: 0;
         color: $us-minute-contrast-colour;
-        padding: $gs-baseline/2 $gs-gutter/2;
+        padding: $gs-baseline/2 $gs-gutter $gs-baseline $gs-gutter/2;
         position: absolute;
         width: 100%;
-
-        @include mq($from: leftCol) {
-            padding: $gs-baseline $gs-gutter;
-        }
     }
 
     figcaption.caption--image__minute-article {
