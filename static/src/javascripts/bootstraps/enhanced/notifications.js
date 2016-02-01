@@ -5,6 +5,7 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/storage',
+    'common/utils/ajax',
     'lodash/collections/some',
     'common/modules/user-prefs',
     'lodash/arrays/uniq',
@@ -16,6 +17,7 @@ define([
     $,
     config,
     storage,
+    ajax,
     some,
     userPrefs,
     uniq,
@@ -98,7 +100,7 @@ define([
                modules.log("++ First sub. Subscribing");
                reg.pushManager.subscribe({userVisibleOnly: true}).then(function (pushSubscription) {
                    sub = pushSubscription;
-                   modules.log("Subscribed: " + sub.endpoint);
+                   modules.log("Subscribed: " + sub.endpoint + "Id: - " + sub.subscriptionId);
                });
            }
            modules.followThis();
@@ -132,17 +134,44 @@ define([
 
        //TODO AJAX the subscription to RDS
        followThis: function() {
-           var subscriptions = userPrefs.get('subscriptions') || [];
-           subscriptions.push(config.page.pageId);
-           userPrefs.set('subscriptions', uniq(subscriptions));
-           modules.setSubscriptionStatus(true);
+           modules.log("++ Subscribe");
+           var endpoint = '/notification/store';
+           modules.updateSubscription(endpoint).then(
+               function (rsp) {
+                   modules.log("++ Done: " + JSON.stringify(rsp));
+                   var subscriptions = userPrefs.get('subscriptions') || [];
+                   subscriptions.push(config.page.pageId);
+                   userPrefs.set('subscriptions', uniq(subscriptions));
+                   modules.setSubscriptionStatus(true);
+               }
+           );
        },
 
        stopFollowingThis: function() {
-           var subscriptions = userPrefs.get('subscriptions') || [];
-           var newSubscriptions = without(subscriptions, config.page.pageId);
-           userPrefs.set('subscriptions', uniq(newSubscriptions));
-           modules.setSubscriptionStatus(false);
+
+           modules.log("++ Stop");
+           var endpoint = '/notification/delete';
+           modules.updateSubscription(endpoint).then(
+               function(rsp) {
+                   modules.log("++ Done: " + JSON.stringify(rsp));
+                   ++CHECK is empty!
+                   var subscriptions = userPrefs.get('subscriptions') || [],
+                       newSubscriptions = without(subscriptions, config.page.pageId);
+                   userPrefs.set('subscriptions', uniq(newSubscriptions));
+                   modules.setSubscriptionStatus(false);
+               }
+           );
+       },
+
+       updateSubscription: function(endpoint) {
+           var registrationId = sub.endpoint.substring(sub.endpoint.lastIndexOf('/') + 1),
+               request =  ajax({
+               url: endpoint,
+               method: 'POST',
+               contentType: 'application/x-www-form-urlencoded',
+               data: {registration_id: registrationId, content_id: config.page.pageId }
+           });
+           return request;
        }
     };
 
