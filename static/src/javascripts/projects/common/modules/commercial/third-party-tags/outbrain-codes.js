@@ -1,14 +1,24 @@
 define([
     'common/modules/commercial/third-party-tags/outbrain-sections'
 ], function (getSection) {
+    /* These codes are given to us directly by Outbrain. They will eventually
+       be sent back to them via a data- attribute, in order for them to return
+       contextually-relevant links. The codes differ whether on a smartphone,
+       tablet or desktop. Also, except on mobile, we will request two sets of
+       links from Outbrain, hence the two codes in some contexts.
+       Currently, there are two categories of codes:
+       1. defaults: these are the codes used by default for the Outbrain widget
+       2. merchandising: these are the codes when the widget replaces the low-
+        priority merchandising component
+    */
     var outbrainCodes = {
-        outbrain: {
-            1: {
+        defaults: {
+            news: {
                 mobile:  { code: 'MB_4' },
                 desktop: { image: 'AR_12', text: 'AR_14' },
                 tablet:  { image: 'MB_6', text: 'MB_8' }
             },
-            2: {
+            defaults: {
                 mobile:  { code: 'MB_5' },
                 desktop: { image: 'AR_13', text: 'AR_15' },
                 tablet:  { image: 'MB_7', text: 'MB_9' }
@@ -40,8 +50,8 @@ define([
     };
 
     function getCode(data) {
-        if (!(data.slot in outbrainCodes) || data.slot === 'outbrain') {
-            return outbrainCodes.outbrain[getSection(data.section)][data.breakpoint === 'wide' ? 'desktop' : data.breakpoint];
+        if (!(data.slot in outbrainCodes) || data.slot === 'defaults') {
+            return outbrainCodes.defaults[getSection(data.section)][data.breakpoint === 'wide' ? 'desktop' : data.breakpoint];
         } else {
             return outbrainCodes.merchandising[data.edition][data.breakpoint === 'wide' ? 'desktop' : data.breakpoint];
         }

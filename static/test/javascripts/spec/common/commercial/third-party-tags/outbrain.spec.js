@@ -27,6 +27,7 @@ define([
         detect,
         sut, // System under test
         getSection,
+        commercialFeatures,
         injector = new Injector();
 
     describe('Outbrain', function () {
@@ -38,7 +39,8 @@ define([
                 'common/utils/mediator',
                 'common/utils/config',
                 'common/modules/identity/api',
-                'common/utils/detect'
+                'common/utils/detect',
+                'common/modules/commercial/commercial-features'
             ], function () {
                 sut      = arguments[0];
                 getSection = arguments[1];
@@ -46,6 +48,7 @@ define([
                 config   = arguments[3];
                 identity = arguments[4];
                 detect   = arguments[5];
+                commercialFeatures = arguments[6];
 
                 config.switches.outbrain = true;
                 config.page = {
@@ -55,10 +58,13 @@ define([
                     commentable: true,
                     edition: 'UK'
                 };
+
                 identity.isUserLoggedIn = function () {
                     return false;
                 };
                 detect.adblockInUse = function () { return false; };
+
+                commercialFeatures.outbrain = true;
 
                 $fixtureContainer = fixtures.render(fixturesConfig);
                 done();
@@ -106,8 +112,8 @@ define([
                 mediator.emit('modules:commercial:dfp:rendered', eventStubLo);
             });
 
-            it('should not load when children books site', function (done) {
-                config.page.section = 'childrens-books-site';
+            it('should not load when sensitive content', function (done) {
+                commercialFeatures.outbrain = false;
                 sut.init().then(function () {
                     expect(sut.load).not.toHaveBeenCalled();
                     done();
@@ -190,25 +196,49 @@ define([
 
                 mediator.emit = oldEmit;
             });
+
+            it('should not load if both merch components are loaded', function (done) {
+                eventStub.isEmpty = false;
+                eventStubLo.isEmpty = false;
+                config.switches.outbrainReplacesMerch = true;
+
+                var oldEmit = mediator.emit;
+                mediator.emit = function (eventName, data) {
+                    return new Promise(function (resolve) {
+                        oldEmit.call(mediator, eventName, data);
+                        resolve();
+                    });
+                };
+
+                sut.init().then(function () {
+                    expect(sut.load).not.toHaveBeenCalledWith('merchandising');
+                    done();
+                });
+                mediator.emit('modules:commercial:dfp:rendered', eventStub).then(function () {
+                    mediator.emit('modules:commercial:dfp:rendered', eventStubLo);
+                });
+
+                mediator.emit = oldEmit;
+            });
         });
 
         describe('Sections', function () {
-            it('should return 1 for news sections', function () {
-                expect(getSection('uk-news')).toEqual(1);
-                expect(getSection('us-news')).toEqual(1);
-                expect(getSection('au-news')).toEqual(1);
+            it('should return "news" for news sections', function () {
+                expect(getSection('uk-news')).toEqual('news');
+                expect(getSection('us-news')).toEqual('news');
+                expect(getSection('au-news')).toEqual('news');
             });
 
-            it('should return 1 for selected sections', function () {
-                expect(getSection('politics')).toEqual(1);
-                expect(getSection('world')).toEqual(1);
-                expect(getSection('business')).toEqual(1);
-                expect(getSection('commentisfree')).toEqual(1);
+            it('should return "news" for selected sections', function () {
+                expect(getSection('politics')).toEqual('news');
+                expect(getSection('world')).toEqual('news');
+                expect(getSection('business')).toEqual('news');
+                expect(getSection('commentisfree')).toEqual('news');
             });
 
-            it('should return 2 for all other sections', function () {
-                expect(getSection('culture')).toEqual(2);
-                expect(getSection('football')).toEqual(2);
+            it('should return "defaults" for all other sections', function () {
+                expect(getSection('culture')).toEqual('defaults');
+                expect(getSection('football')).toEqual('defaults');
             });
         });
 

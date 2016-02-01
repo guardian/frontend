@@ -46,12 +46,11 @@ define([
     }
 
     function load(target) {
-        var slot          = target in selectors ? target : 'outbrain',
-            $outbrain     = $(selectors.outbrain.widget),
-            $container    = $(selectors.outbrain.container, $outbrain[0]),
-            breakpoint    = detect.getBreakpoint(),
-            widgetCodes,
-            widgetHtml;
+        var slot          = target in selectors ? target : 'defaults';
+        var $outbrain     = $(selectors.outbrain.widget);
+        var $container    = $(selectors.outbrain.container, $outbrain[0]);
+        var breakpoint    = detect.getBreakpoint();
+        var widgetCodes, widgetHtml;
 
         widgetCodes = getCode({
             slot: slot,
@@ -61,7 +60,7 @@ define([
         });
         widgetHtml = build(widgetCodes, breakpoint);
         return fastdom.write(function () {
-            if (slot !== 'outbrain') {
+            if (slot !== 'defaults') {
                 $(selectors[slot].widget).replaceWith($outbrain[0]);
             }
             $container.append(widgetHtml);
@@ -87,17 +86,17 @@ define([
         return new Promise(function (resolve, reject) {
             var onAdLoaded = function (event) {
                 if (event.slot.getSlotElementId() === id) {
-                    off();
+                    unlisten();
                     resolve(!event.isEmpty);
                 }
             };
 
             var onAllAdsLoaded = function () {
-                off();
+                unlisten();
                 reject(new Error('Unable to load Outbrain widget: slot ' + id + ' was never loaded'));
             };
 
-            function off() {
+            function unlisten() {
                 mediator.off('modules:commercial:dfp:rendered', onAdLoaded);
                 mediator.off('modules:commercial:dfp:alladsrendered', onAllAdsLoaded);
             }
@@ -123,10 +122,9 @@ define([
     }
 
     function init() {
-        if (config.switches.outbrain &&
+        if (commercialFeatures.outbrain &&
             !config.page.isFront &&
             !config.page.isPreview &&
-            commercialFeatures.outbrain &&
             identityPolicy()
         ) {
             // if there is no merch component, load the outbrain widget right away
