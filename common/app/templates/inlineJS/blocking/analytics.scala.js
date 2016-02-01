@@ -228,7 +228,7 @@ try {
         }
 
         // Sponsored content
-        s.prop38 = uniq(forEach(document.querySelectorAll('[data-sponsorship]'), function (index, node) {
+        s.prop38 = uniq(forEach([].slice.call(document.querySelectorAll('[data-sponsorship]')), function (index, node) {
             var sponsorshipType = node.getAttribute('data-sponsorship');
             var maybeSponsor = node.getAttribute('data-sponsor');
             var sponsor = maybeSponsor ? maybeSponsor : 'unknown';
