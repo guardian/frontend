@@ -72,7 +72,7 @@ trait ABTestSwitches {
     "ab-prebid-performance",
     "Measure performance impact of running prebid auctions before showing display advertising",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 1),
+    sellByDate = new LocalDate(2016, 2, 8),
     exposeClientSide = true
   )
 

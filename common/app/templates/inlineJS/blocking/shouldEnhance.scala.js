@@ -1,5 +1,4 @@
 @(item: model.MetaData)(implicit request: RequestHeader)
-@import conf.switches.Switches._
 
 // Determine whether we want to run the enhanced app or not.
 // It can come either from a preference in localStorage (see `enhancedKey`)

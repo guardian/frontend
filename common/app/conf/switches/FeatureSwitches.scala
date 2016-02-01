@@ -32,15 +32,6 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val Hmtl5MediaCompatibilityCheck = Switch(
-    "Feature",
-    "html-5-media-compatibility-check",
-    "If switched on then will will infer the video player tech priority based on the video source codec",
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val OutbrainSwitch = Switch(
     "Feature",
     "outbrain",
@@ -241,15 +232,6 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val SplitOlderIPadsSwitch = Switch(
-    "Feature",
-    "ipad-split-capabilities",
-    "If switched on then this gives older ipads the stripped down front but full articles",
-    safeState = On,
-    sellByDate = new LocalDate(2016, 2, 1),
-    exposeClientSide = false
-  )
-
   val FootballFeedRecorderSwitch = Switch(
     "Feature",
     "football-feed-recorder",
@@ -374,5 +356,14 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
+  )
+
+  val USElectionSwitch = Switch(
+    "Feature",
+    "us-election",
+    "When ON, items tagged with us-news/us-elections-2016 will have visual elements added",
+    safeState = On,
+    sellByDate = new LocalDate(2017, 1, 5),
+    exposeClientSide = false
   )
 }
