@@ -35,6 +35,46 @@ try {
             return config.page.section || '';
         };
 
+        function forEach(array, callback, scope) {
+            var data = [];
+            for (var i = 0; i < array.length; i++) {
+                data.push(callback.call(scope, i, array[i]));
+            }
+            return data;
+        }
+
+        @* This only works for string arrays *@
+        function uniq(array) {
+            var data = [];
+            for (var i = 0; i < array.length; i++) {
+                if(data.indexOf(array[i]) == -1) {
+                    data.push(array[i]);
+                }
+            }
+            return data;
+        }
+
+        function getUserFromCookie() {
+            var cookieName = 'GU_U';
+            var cookieData = cookies.get(cookieName),
+            userData = cookieData ? JSON.parse(Util.decodeBase64(cookieData.split('.')[0])) : null;
+            if (userData) {
+                userFromCookieCache = {
+                    id: userData[0],
+                    primaryEmailAddress: userData[1], // not sure where this is stored now - not in the cookie any more
+                    displayName: userData[2],
+                    accountCreatedDate: userData[6],
+                    emailVerified: userData[7],
+                    rawResponse: cookieData
+                };
+            }
+            return userFromCookieCache
+        }
+
+        function decodeBase64(str) {
+            return decodeURIComponent(escape(utilAtob(str.replace(/-/g, '+').replace(/_/g, '/').replace(/,/g, '='))));
+        }
+
         @* http://www.electrictoolbox.com/pad-number-zeroes-javascript/ *@
         var pad = function (number, length) {
             var str = '' + number;
@@ -164,7 +204,6 @@ try {
 
         /* Retrieve navigation interaction data */
         var ni   = storage.session.get(NG_STORAGE_KEY)
-        //var mvt      = makeOmnitureTag(document);
 
         if (getUserFromCookie()) {
             s.prop2 = 'GUID:' + getUserFromCookie().id;
@@ -173,11 +212,9 @@ try {
 
         s.prop31    = getUserFromCookie() ? 'registered user' : 'guest user';
         s.eVar31    = getUserFromCookie() ? 'registered user' : 'guest user';
+
         /* can this go ?? */
         //s.prop40    = detect.adblockInUse() || detect.getFirefoxAdblockPlusInstalled();
-        /* ok this is going to be a pain */
-        //s.eVar51    = mvt;
-        //s.list1     = mvt; // allows us to 'unstack' the AB test names (allows longer names)
 
         if (ni) {
             d = new Date().getTime();
@@ -190,12 +227,12 @@ try {
         }
 
         // Sponsored content
-        s.prop38 = forEach(document.querySelectorAll('[data-sponsorship]')){function (n) {
-            var sponsorshipType = n.getAttribute('data-sponsorship');
-            var maybeSponsor = n.getAttribute('data-sponsor');
+        s.prop38 = uniq(forEach(document.querySelectorAll('[data-sponsorship]'), function (index, node) {
+            var sponsorshipType = node.getAttribute('data-sponsorship');
+            var maybeSponsor = node.getAttribute('data-sponsor');
             var sponsor = maybeSponsor ? maybeSponsor : 'unknown';
             return sponsorshipType + ':' + sponsor;
-        }).toString();
+        })).toString();
 
         s.linkTrackVars = standardProps;
         s.linkTrackEvents = 'None';
@@ -206,69 +243,6 @@ try {
         */
 
         s.t();
-
-        // function makeOmnitureTag() {
-
-        //     function getParticipations() {
-        //        return getLocalStorageItem(participationsKey) || {};
-        //     }
-
-        //     function getTest(id) {
-        //         var test = filter(TESTS, function (test) {
-        //             return (test.id === id);
-        //         });
-        //         return (test) ? test[0] : '';
-        //     }
-
-        //     function testCanBeRun(test) {
-        //         var expired = (new Date() - new Date(test.expiry)) > 0,
-        //             isSensitive = config.page.shouldHideAdverts;
-        //         return ((isSensitive ? test.showForSensitive : true)
-        //                 && test.canRun() && !expired && isTestSwitchedOn(test));
-        //     }
-
-        //     var participations = getParticipations(),
-        //         tag = [];
-
-        //     forEach(keys(participations), function (k) {
-        //         if (testCanBeRun(getTest(k))) {
-        //             tag.push(['AB', k, participations[k].variant].join(' | '));
-        //         }
-        //     });
-
-        //     forEach(keys(config.tests), function (k) {
-        //         if (k.toLowerCase().match(/^cm/)) {
-        //             tag.push(['AB', k, 'variant'].join(' | '));
-        //         }
-        //     });
-
-        //     forEach(getServerSideTests(), function (testName) {
-        //         tag.push('AB | ' + testName + ' | inTest');
-        //     });
-
-        //     return tag.join(',');
-        // }
-
-        var getUserFromCookie = function() {
-            var cookieName = 'GU_U';
-            var cookieData = cookies.get(cookieName),
-            userData = cookieData ? JSON.parse(decodeBase64(cookieData.split('.')[0])) : null;
-            if (userData) {
-                userFromCookieCache = {
-                    id: userData[0],
-                    primaryEmailAddress: userData[1], // not sure where this is stored now - not in the cookie any more
-                    displayName: userData[2],
-                    accountCreatedDate: userData[6],
-                    emailVerified: userData[7],
-                    rawResponse: cookieData
-                };
-            }
-            return userFromCookieCache
-        }
-
-        var decodeBase64 = function (str) {
-            return decodeURIComponent(escape(utilAtob(str.replace(/-/g, '+').replace(/_/g, '/').replace(/,/g, '='))));
-        };
 
         Storage.prototype.isAvailable = function (data) {
             var testKey = 'local-storage-module-test',
@@ -328,6 +302,36 @@ try {
             }
         };
 
+        // Production steps of ECMA-262, Edition 5, 15.4.4.14
+        // Reference: http://es5.github.io/#x15.4.4.14
+        if (!Array.prototype.indexOf) {
+          Array.prototype.indexOf = function(searchElement, fromIndex) {
+            var k;
+            if (this == null) {
+              throw new TypeError('"this" is null or not defined');
+            }
+            var o = Object(this);
+            var len = o.length >>> 0;
+            if (len === 0) {
+              return -1;
+            }
+            var n = +fromIndex || 0;
+            if (Math.abs(n) === Infinity) {
+              n = 0;
+            }
+            if (n >= len) {
+              return -1;
+            }
+            k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
+            while (k < len) {
+              if (k in o && o[k] === searchElement) {
+                return k;
+              }
+              k++;
+            }
+            return -1;
+          };
+        }
 
         var checkForPageViewInterval = setInterval(function () {
             @*
