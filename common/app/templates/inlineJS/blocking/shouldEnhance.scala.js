@@ -14,47 +14,8 @@
     var isFront = @item.isFront;
     var enhancedKey = 'gu.prefs.enhanced';
 
-    // This has been called core, featuresoff, universal etc, and a few previous ways of
-    // opting in and out existed.
-    // Now we have settled on standard and enhanced, the previous methods are handled
-    // here, temporarily. This can go after a while.
-    (function () {
-        var coreKey = 'gu.prefs.force-core', settingCorePref, corePref;
-
-        // update any `force-core` stored pref
-        try {
-            var localStorage = window.localStorage,
-                corePref = localStorage.getItem(coreKey);
-            if (corePref) {
-                localStorage.setItem(enhancedKey, JSON.stringify({value: /off/.test(corePref)}));
-                localStorage.removeItem(coreKey);
-            }
-            // previous version set the pref to a boolean, but
-            // prefs use the {value: 'x'} format – correct that
-            var enhancedPref = JSON.parse(localStorage.getItem(enhancedKey));
-            if (typeof enhancedPref === "boolean") {
-                localStorage.setItem(enhancedKey, JSON.stringify({value: enhancedPref}));
-            }
-        } catch (e) {};
-
-        // hijack any attempt to use the old hash-fragments
-        if (hash.length) {
-            // if we're trying to set an old pref, set the new one
-            settingCorePref = new RegExp(`^#${coreKey.replace('.', '\.')}=(on|off)$`).exec(hash);
-            if (settingCorePref && (corePref = settingCorePref[1])) {
-                hash = location.hash = `#${enhancedKey}=${corePref === 'off'}`;
-            }
-            // swap out the old temporary opt-in/out methods for the finalised ones
-            else if (/^#(featuresoff|core)$/.test(hash)) {
-                hash = location.hash = '#standard';
-            } else if (/^#(featureson|nocore)$/.test(hash)) {
-                hash = location.hash = '#enhanced';
-            }
-        }
-    })();
-    // now we should be ready for standard/enhanced
-
     var preferEnhanced;
+
     try {
         preferEnhanced = JSON.parse(localStorage.getItem(enhancedKey)).value;
     } catch (e) {
