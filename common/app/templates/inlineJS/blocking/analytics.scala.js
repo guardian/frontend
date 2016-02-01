@@ -9,8 +9,22 @@ try {
         var config  = guardian.config,
             isEmbed = !!guardian.isEmbed,
             tpA     = s.getTimeParting('n', '+0'),
-            now      = new Date(),
-            webPublicationDate = config.page.webPublicationDate;
+            now     = new Date(),
+            webPublicationDate = config.page.webPublicationDate,
+            w       = window,
+            Storage = function (type) {
+                this.type = type;
+            },
+            storage.local = new Storage('localStorage'),
+            storage.session = new Storage('sessionStorage')
+            isAvailable;
+
+        var R2_STORAGE_KEY = 's_ni', // DO NOT CHANGE THIS, ITS IS SHARED WITH R2. BAD THINGS WILL HAPPEN!
+            NG_STORAGE_KEY = 'gu.analytics.referrerVars',
+            standardProps = 'channel,prop1,prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop37,prop38,prop47,' +
+            'prop51,prop61,prop64,prop65,prop74,prop40,prop63,eVar7,eVar37,eVar38,eVar39,eVar50,eVar24,eVar60,eVar51,' +
+            'eVar31,eVar18,eVar32,eVar40,list1,list2,list3,events';
+
 
         var getChannel = function () {
             if (config.page.contentType === 'Network Front') {
@@ -130,12 +144,12 @@ try {
         s.prop20    = tpA[2] + ':' + tpA[1];
         s.eVar20    = 'D=c20';
 
-        @*
+        /*
           eVar1 contains today's date
           in the Omniture backend it only ever holds the first
           value a user gets, so in effect it is the first time
           we saw this user
-        *@
+        */
         s.eVar1 = now.getFullYear() + '/' + pad(now.getMonth() + 1, 2) + '/' + pad(now.getDate(), 2);
 
         s.prop7     = webPublicationDate ? new Date(webPublicationDate).toISOString().substr(0, 10).replace(/-/g, '/') : '';
@@ -148,12 +162,171 @@ try {
 
         s.prop47    = config.page.edition || '';
 
-        @*
+        /* Retrieve navigation interaction data */
+        var ni   = storage.session.get(NG_STORAGE_KEY)
+        //var mvt      = makeOmnitureTag(document);
+
+        if (getUserFromCookie()) {
+            s.prop2 = 'GUID:' + getUserFromCookie().id;
+            s.eVar2 = 'GUID:' + getUserFromCookie().id;
+        }
+
+        s.prop31    = getUserFromCookie() ? 'registered user' : 'guest user';
+        s.eVar31    = getUserFromCookie() ? 'registered user' : 'guest user';
+        /* can this go ?? */
+        //s.prop40    = detect.adblockInUse() || detect.getFirefoxAdblockPlusInstalled();
+        /* ok this is going to be a pain */
+        //s.eVar51    = mvt;
+        //s.list1     = mvt; // allows us to 'unstack' the AB test names (allows longer names)
+
+        if (ni) {
+            d = new Date().getTime();
+            if (d - ni.time < 60 * 1000) { // One minute
+                this.s.eVar24 = ni.pageName;
+                this.s.eVar37 = ni.tag;
+            }
+            storage.session.remove(R2_STORAGE_KEY);
+            storage.session.remove(NG_STORAGE_KEY);
+        }
+
+        // Sponsored content
+        s.prop38 = forEach(document.querySelectorAll('[data-sponsorship]')){function (n) {
+            var sponsorshipType = n.getAttribute('data-sponsorship');
+            var maybeSponsor = n.getAttribute('data-sponsor');
+            var sponsor = maybeSponsor ? maybeSponsor : 'unknown';
+            return sponsorshipType + ':' + sponsor;
+        }).toString();
+
+        s.linkTrackVars = standardProps;
+        s.linkTrackEvents = 'None';
+
+        /*
             this makes the call to Omniture.
             `s.t()` records a page view so should only be called once
-        *@
+        */
 
         s.t();
+
+        // function makeOmnitureTag() {
+
+        //     function getParticipations() {
+        //        return getLocalStorageItem(participationsKey) || {};
+        //     }
+
+        //     function getTest(id) {
+        //         var test = filter(TESTS, function (test) {
+        //             return (test.id === id);
+        //         });
+        //         return (test) ? test[0] : '';
+        //     }
+
+        //     function testCanBeRun(test) {
+        //         var expired = (new Date() - new Date(test.expiry)) > 0,
+        //             isSensitive = config.page.shouldHideAdverts;
+        //         return ((isSensitive ? test.showForSensitive : true)
+        //                 && test.canRun() && !expired && isTestSwitchedOn(test));
+        //     }
+
+        //     var participations = getParticipations(),
+        //         tag = [];
+
+        //     forEach(keys(participations), function (k) {
+        //         if (testCanBeRun(getTest(k))) {
+        //             tag.push(['AB', k, participations[k].variant].join(' | '));
+        //         }
+        //     });
+
+        //     forEach(keys(config.tests), function (k) {
+        //         if (k.toLowerCase().match(/^cm/)) {
+        //             tag.push(['AB', k, 'variant'].join(' | '));
+        //         }
+        //     });
+
+        //     forEach(getServerSideTests(), function (testName) {
+        //         tag.push('AB | ' + testName + ' | inTest');
+        //     });
+
+        //     return tag.join(',');
+        // }
+
+        var getUserFromCookie = function() {
+            var cookieName = 'GU_U';
+            var cookieData = cookies.get(cookieName),
+            userData = cookieData ? JSON.parse(decodeBase64(cookieData.split('.')[0])) : null;
+            if (userData) {
+                userFromCookieCache = {
+                    id: userData[0],
+                    primaryEmailAddress: userData[1], // not sure where this is stored now - not in the cookie any more
+                    displayName: userData[2],
+                    accountCreatedDate: userData[6],
+                    emailVerified: userData[7],
+                    rawResponse: cookieData
+                };
+            }
+            return userFromCookieCache
+        }
+
+        var decodeBase64 = function (str) {
+            return decodeURIComponent(escape(utilAtob(str.replace(/-/g, '+').replace(/_/g, '/').replace(/,/g, '='))));
+        };
+
+        Storage.prototype.isAvailable = function (data) {
+            var testKey = 'local-storage-module-test',
+                d = data || 'test';
+            try {
+                // to fully test, need to set item
+                // http://stackoverflow.com/questions/9077101/iphone-localstorage-quota-exceeded-err-issue#answer-12976988
+                w[this.type].setItem(testKey, d);
+                w[this.type].removeItem(testKey);
+                return true;
+            } catch (e) {
+                return false;
+            }
+        };
+
+        Storage.prototype.isStorageAvailable = function (refresh) {
+            if (isAvailable === void 0 || refresh) {
+                isAvailable = this.isAvailable();
+            }
+            return isAvailable;
+        };
+
+        Storage.prototype.get = function (key) {
+            if (this.isStorageAvailable()) {
+                var data,
+                    dataParsed;
+                if (!w[this.type]) {
+                    return;
+                }
+                data = w[this.type].getItem(key);
+                if (data === null) {
+                    return null;
+                }
+
+                // try and parse the data
+                try {
+                    dataParsed = JSON.parse(data);
+                } catch (e) {
+                    // remove the key
+                    this.remove(key);
+                    return null;
+                }
+
+                // has it expired?
+                if (dataParsed.expires && new Date() > new Date(dataParsed.expires)) {
+                    this.remove(key);
+                    return null;
+                }
+
+                return dataParsed.value;
+            }
+        };
+
+        Storage.prototype.getKey = function (i) {
+            if (this.isStorageAvailable()) {
+                return w[this.type].key(i);
+            }
+        };
 
 
         var checkForPageViewInterval = setInterval(function () {

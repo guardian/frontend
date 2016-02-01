@@ -14,10 +14,10 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
-  val NonBlockingOmniture = Switch(
+  val SingleCallOmniture = Switch(
     "Performance",
-    "non-blocking-omniture",
-    "If this switch is on, omniture will be inlined in the footer. If it is off, it will be inlined in the head",
+    "single-call-omniture",
+    "If this switch is on, omniture will be called with a single call. If it is off, it will use a topup call",
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false

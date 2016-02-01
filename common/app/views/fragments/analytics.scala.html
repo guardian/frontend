@@ -3,17 +3,15 @@
 @import common.AnalyticsHost
 @import views.support.{OmnitureAnalyticsData, OmnitureAnalyticsAccount}
 @import conf.Static
-@import conf.switches.Switches.NonBlockingOmniture
+@import conf.switches.Switches.SingleCallOmniture
 @import common.InlineJs
 
-@if(NonBlockingOmniture.isSwitchedOn) {
-    @fragments.omnitureScript(Some(page.metadata))
+@fragments.omnitureScript(Some(page.metadata))
 
-    <script>
-        // analytics code
-        @InlineJs(templates.inlineJS.blocking.js.analytics().body, "analytics.js")
-    </script>
-}
+<script>
+    // analytics code
+    @InlineJs(templates.inlineJS.blocking.js.analytics().body, "analytics.js")
+</script>
 
 @defining(s"${request.host}${request.path}") { path =>
 
