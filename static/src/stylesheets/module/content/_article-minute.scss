@@ -16,7 +16,7 @@ $minute-layout-margin-nudge: gs-span(1);
 
 .content__head--minute-article {
 
-    .content__head--mobile, 
+    .content__head--mobile,
     .content__head--desktop {
 
         &:before {
@@ -52,7 +52,7 @@ $minute-layout-margin-nudge: gs-span(1);
     }
 
     .content__wrapper {
-        
+
         margin: 0 auto;
         width: 100%;
     }
@@ -97,7 +97,7 @@ $minute-layout-margin-nudge: gs-span(1);
 
             @include mq($from: mobileLandscape) {
                 width: gs-span(4) + $gs-gutter * 2;
-            }   
+            }
             @include mq(desktop) {
                 width: gs-span(7);
             }
@@ -135,8 +135,14 @@ $minute-layout-margin-nudge: gs-span(1);
     width: 100%;
 
     .submeta {
+        margin: 0 auto;
+        padding: 0 $gs-gutter/2;
+
+        @include mq($from: mobileLandscape) {
+            padding: 0 $gs-gutter;
+        }
+
         @include mq($from: tablet) {
-            margin-left: $minute-layout-margin-nudge;
             width: gs-span(8);
         }
 
@@ -147,11 +153,6 @@ $minute-layout-margin-nudge: gs-span(1);
         @include mq($from: leftCol) {
             width: gs-span(12);
         }
-
-        @include mq($from: wide) {
-            margin-left: $minute-layout-margin-nudge + gs-span(1);
-        }
-
     }
 }
 
