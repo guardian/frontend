@@ -60,6 +60,7 @@ window.curlConfig = {
             'bootstraps/enhanced/media/main':    '@Static("javascripts/bootstraps/enhanced/media/main.js")',
             'bootstraps/enhanced/article':       '@Static("javascripts/bootstraps/enhanced/article.js")',
             'bootstraps/enhanced/liveblog':      '@Static("javascripts/bootstraps/enhanced/liveblog.js")',
+            'bootstraps/enhanced/article-minute':'@Static("javascripts/bootstraps/enhanced/article-minute.js")',
             'bootstraps/enhanced/trail':         '@Static("javascripts/bootstraps/enhanced/trail.js")',
             'bootstraps/enhanced/gallery':       '@Static("javascripts/bootstraps/enhanced/gallery.js")',
             'bootstraps/enhanced/profile':       '@Static("javascripts/bootstraps/enhanced/profile.js")',
