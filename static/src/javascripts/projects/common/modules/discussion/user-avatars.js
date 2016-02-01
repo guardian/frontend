@@ -11,7 +11,8 @@ define([
     function avatarify(el) {
         var container = bonzo(el),
             updating = bonzo(bonzo.create('<div class="is-updating"></div>')),
-            avatar = bonzo(bonzo.create('<img class="user-avatar__image" alt="" />'));
+            avatar = bonzo(bonzo.create('<img class="user-avatar__image" alt="" />')),
+            userId = container.data('userid');
 
         container
             .removeClass('is-hidden');
@@ -23,6 +24,10 @@ define([
         avatarApi.getActive()
             .then(function (response) {
                 avatar.attr('src', response.data.avatarUrl);
+                updating.remove();
+                avatar.appendTo(container);
+            }, function () {
+                avatar.attr('src', avatarApi.deterministicUrl(userId));
                 updating.remove();
                 avatar.appendTo(container);
             });
