@@ -30,7 +30,7 @@ define([
             container: '.js-outbrain-container'
         },
         merchandising: {
-            widget: '.fc-container--commercial',
+            widget: '.js-container--commercial',
             container: '.js-outbrain-container'
         }
     };
