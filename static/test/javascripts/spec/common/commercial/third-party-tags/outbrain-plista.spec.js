@@ -13,42 +13,42 @@ define([
     // dependencies
     var $fixtureContainer,
         tagsContainer,
+        plista,
+        outbrain,
         sut, // system under test
         mediator,
         config,
         identity,
         detect,
         eventStub,
+        fixturesConfig,
+        commercialFeatures,
         injector = new Injector();
 
-    // the container to hold the widget
-    var fixturesConfig = {
-        id: 'outbrain',
-        fixtures: [
-            '<div class="js-outbrain"><div class="js-outbrain-container"></div></div>'
-        ]
-    };
-
-    fdescribe('External content widget', function() {
+    describe('External content widget', function () {
         beforeEach (function (done) {
+
             // ophan is built in a separate project - mock the record function
             injector.mock('ophan/ng', {record: function () {}});
             injector.require([
                 'common/modules/commercial/third-party-tags',
-                'common/modules/commercial/third-party-tags/outbrain',
                 'common/utils/mediator',
                 'common/utils/config',
                 'common/modules/identity/api',
-                'common/utils/detect'
+                'common/utils/detect',
+                'common/modules/commercial/third-party-tags/outbrain',
+                'common/modules/commercial/third-party-tags/plista',
+                'common/modules/commercial/commercial-features'
 
             ], function () {
                 tagsContainer = arguments[0];
-                sut = arguments[1];
-                mediator = arguments[2];
-                config = arguments[3];
-                identity = arguments[4];
-                detect = arguments[5];
-
+                mediator = arguments[1];
+                config = arguments[2];
+                identity = arguments[3];
+                detect = arguments[4];
+                outbrain = arguments[5];
+                plista = arguments[6];
+                commercialFeatures = arguments[7];
 
                 // establish the happy path
                 config.switches.outbrain = true;
@@ -61,6 +61,8 @@ define([
                     edition: 'UK'
                 };
 
+                commercialFeatures.thirdPartyTags = true;
+
                 identity.isUserLoggedIn = function () {
                     return false;
                 };
@@ -68,8 +70,6 @@ define([
                 detect.adblockInUse = function () {
                     return false;
                 };
-
-                $fixtureContainer = fixtures.render(fixturesConfig);
 
                 eventStub = {
                     slot: {
@@ -87,42 +87,42 @@ define([
             });
         });
 
-        afterEach(function() {
+        afterEach(function () {
             fixtures.clean(fixturesConfig.id);
             mediator.removeEvent('modules:commercial:dfp:rendered');
         });
 
-        describe('Plista', function(){
-           beforeEach(function(done){
-               injector.require([
-                   'common/modules/commercial/third-party-tags/plista'
-               ], function () {
-                   sut = arguments[0];
-
-                   // establish the happy path
-                   config.switches.outbrain = true;
-                   config.switches.plistaForOutbrainAu = true;
-                   config.page = {
-                       section: 'uk-news',
-                       isPreview: false,
-                       isFront: false,
-                       commentable: true,
-                       edition: 'AU'
-                   };
-
-                   done();
-               });
-            });
-
-            it('should exist', function(){
-               expect(sut).toBeDefined();
-            });
-
-            it('should load plista component when render completes', function() {
-                hasHighRelevanceComponent = function () {
-                    return false;
+        describe('Plista', function () {
+            beforeEach(function (done) {
+                sut = plista;
+                fixturesConfig = {
+                    id: 'plista',
+                    fixtures: [
+                        '<div class="js-plista"><div class="js-plista-container"></div></div>'
+                    ]
                 };
 
+                $fixtureContainer = fixtures.render(fixturesConfig);
+
+                // establish the happy path
+                config.switches.outbrain = true;
+                config.switches.plistaForOutbrainAu = true;
+                config.page = {
+                    section: 'uk-news',
+                    isPreview: false,
+                    isFront: false,
+                    commentable: true,
+                    edition: 'AU'
+                };
+                done();
+            });
+
+            it('should exist', function () {
+                expect(sut).toBeDefined();
+            });
+
+
+            it('should load plista component when render completes', function () {
                 spyOn(sut, 'load');
                 tagsContainer.init();
                 expect(sut.load).not.toHaveBeenCalled();
@@ -130,33 +130,45 @@ define([
                 expect(sut.load).toHaveBeenCalled();
             });
 
-            it('should not load plista component when not AU edition', function() {
-                hasHighRelevanceComponent = function () {
-                    return true;
-                };
 
+            it('should not load plista component when not AU edition', function () {
                 config.page.edition = 'UK';
 
                 spyOn(sut, 'load');
                 tagsContainer.init();
+                mediator.emit('modules:commercial:dfp:rendered', eventStub);
                 expect(sut.load).not.toHaveBeenCalled();
             });
 
-            it('should not load plista component when switch not enabled', function() {
-                hasHighRelevanceComponent = function () {
-                    return true;
-                };
 
+
+            it('should not load plista component when switch not enabled', function () {
                 config.switches.plistaForOutbrainAu = false;
 
                 spyOn(sut, 'load');
                 tagsContainer.init();
+                mediator.emit('modules:commercial:dfp:rendered', eventStub);
                 expect(sut.load).not.toHaveBeenCalled();
             });
+
         });
 
 
-        describe('Outbrain', function(){
+        describe('Outbrain', function () {
+
+            beforeEach(function () {
+                sut = outbrain;
+
+                fixturesConfig = {
+                    id: 'outbrain',
+                    fixtures: [
+                        '<div class="js-outbrain"><div class="js-outbrain-container"></div></div>'
+                    ]
+                };
+
+                $fixtureContainer = fixtures.render(fixturesConfig);
+            });
+
             describe('Initialisation', function () {
 
                 it('should exist', function () {
@@ -165,11 +177,6 @@ define([
                 });
 
                 it('should load outbrain component when render completes', function () {
-
-                    hasHighRelevanceComponent = function () {
-                        return false;
-                    };
-
                     spyOn(sut, 'load');
                     tagsContainer.init();
                     expect(sut.load).not.toHaveBeenCalled();
@@ -178,7 +185,6 @@ define([
                 });
 
                 it('should load outbrain component when plista switch enabled but not AU', function () {
-
                     config.switches.plistaForOutbrainAu = true;
                     spyOn(sut, 'load');
                     tagsContainer.init();
@@ -189,7 +195,6 @@ define([
 
 
                 it('should not load when children books site', function () {
-
                     config.page.section = 'childrens-books-site';
                     spyOn(sut, 'load');
                     tagsContainer.init();
@@ -250,7 +255,6 @@ define([
                  make the call instantly when we detect adBlock in use.
                  */
                 it('should load instantly when ad block is in use', function () {
-
                     detect.adblockInUse = function () {
                         return true;
                     };
@@ -260,7 +264,6 @@ define([
                 });
 
                 it('should load instantly when international edition', function () {
-
                     config.page.edition = 'INT';
                     spyOn(sut, 'load');
                     tagsContainer.init();
