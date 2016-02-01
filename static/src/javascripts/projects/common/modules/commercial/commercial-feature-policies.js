@@ -120,7 +120,10 @@ define([
 
     policies.nonFrontPages = function () {
         if (!config.page.isFront) {
-            return {frontCommercialComponents : false};
+            return {
+                frontCommercialComponents : false,
+                outbrain: false
+            };
         }
     };
 

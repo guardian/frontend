@@ -54,7 +54,6 @@ define([
                 config.page = {
                     section: 'uk-news',
                     isPreview: false,
-                    isFront: false,
                     commentable: true,
                     edition: 'UK'
                 };
@@ -122,15 +121,6 @@ define([
 
             it('should not load when isPreview', function (done) {
                 config.page.isPreview = true;
-
-                sut.init().then(function () {
-                    expect(sut.load).not.toHaveBeenCalled();
-                    done();
-                });
-            });
-
-            it('should not load when on network front', function (done) {
-                config.page.isFront = true;
 
                 sut.init().then(function () {
                     expect(sut.load).not.toHaveBeenCalled();
