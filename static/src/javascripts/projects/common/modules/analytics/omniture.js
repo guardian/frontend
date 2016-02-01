@@ -133,8 +133,7 @@ define([
     };
 
     Omniture.prototype.populatePageProperties = function () {
-        var d,
-            mvt      = ab.makeOmnitureTag(document);
+        var mvt = ab.makeOmnitureTag(document);
 
         this.s.prop40    = detect.adblockInUse() || detect.getFirefoxAdblockPlusInstalled();
         this.s.eVar51    = mvt;

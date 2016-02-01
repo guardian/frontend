@@ -203,7 +203,8 @@ try {
         s.prop47    = config.page.edition || '';
 
         /* Retrieve navigation interaction data */
-        var ni   = storage.session.get(NG_STORAGE_KEY)
+        var ni   = storage.session.get(NG_STORAGE_KEY),
+            d;
 
         if (getUserFromCookie()) {
             s.prop2 = 'GUID:' + getUserFromCookie().id;
