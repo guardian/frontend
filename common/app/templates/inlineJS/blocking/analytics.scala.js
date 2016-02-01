@@ -28,6 +28,7 @@ try {
             return config.page.section || '';
         };
 
+        // helper
         function forEach(array, callback, scope) {
             var data = [], dataLength = data.length;
             for (var i = 0; i < dataLength; i++) {
@@ -36,7 +37,7 @@ try {
             return data;
         }
 
-        @* This only works for string arrays *@
+        // helper - this only works for string arrays
         function uniq(array) {
             var data = [], dataLength = data.length;
             for (var i = 0; i < dataLength; i++) {
