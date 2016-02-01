@@ -10,8 +10,7 @@ try {
             isEmbed = !!guardian.isEmbed,
             tpA     = s.getTimeParting('n', '+0'),
             now     = new Date(),
-            webPublicationDate = config.page.webPublicationDate,
-            isAvailable;
+            webPublicationDate = config.page.webPublicationDate;
 
         var R2_STORAGE_KEY = 's_ni', // DO NOT CHANGE THIS, ITS IS SHARED WITH R2. BAD THINGS WILL HAPPEN!
             NG_STORAGE_KEY = 'gu.analytics.referrerVars',
