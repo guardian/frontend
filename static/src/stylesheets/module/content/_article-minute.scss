@@ -120,10 +120,6 @@ $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
         padding: 0 $gs-gutter/2;
     }
 
-    .quoted__contents {
-        @include fs-headline(1);
-        font-style: normal;
-    }
     @include mq($from: mobileLandscape) {
         .block-elements {
             padding-left: $gs-gutter;
@@ -158,22 +154,6 @@ $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
             position: relative;
             width: gs-span(4);
         }
-
-        // Quote Template
-        &.block--quote {
-
-            &:after {
-                right: auto;
-            }
-
-            .block-elements {
-                width: gs-span(7);
-            }
-
-            .quoted__contents {
-                @include fs-headline(6, true);
-            }
-        }
     }
 
     @include mq($from: desktop) {
@@ -193,23 +173,6 @@ $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
 
         figure.element-image {
             width: gs-span(5);
-        }
-
-        // Quote Template
-        &.block--quote {
-
-            &:after {
-                left: gs-span(2);
-                right: auto;
-            }
-
-            .block-elements {
-                width: gs-span(10);
-            }
-
-            .quoted__contents {
-                @include fs-headline(6, true);
-            }
         }
     }
 
@@ -269,9 +232,64 @@ $minute-layout-margin-nudge: gs-span(2)-$gs-gutter;
 }
 
 /* ==========================================================================
+   Block Content Styles & Layout
+   ========================================================================== */
+
+// Quote Layout
+
+.block--minute-article.block--quote {
+
+    .quoted__contents {
+        @include fs-headline(1);
+        font-style: normal;
+    }
+
+    @include mq($from: tablet) {
+        &:after {
+            right: auto;
+        }
+
+        .block-elements {
+            width: gs-span(7);
+        }
+
+        .quoted__contents {
+            @include fs-headline(6, true);
+        }
+    }
+
+    @include mq($from: desktop) {
+        &:after {
+            left: gs-span(2);
+        }
+
+        .block-elements {
+            width: gs-span(10);
+        }
+
+        .quoted__contents {
+            @include fs-headline(6, true);
+        }
+    }
+}
+
+.block--minute-article--alt-layout.block--quote {
+    @include mq($from: tablet) {
+        &:after {
+            left: 0;
+        }
+    }
+}
+
+/* ==========================================================================
    Content Overrides
    ========================================================================== */
+
 .block--minute-article {
+
+    .updated-time {
+        display: none;
+    }
 
     // Standard elements
 
