@@ -17,7 +17,8 @@ object BreakingNewsFormats {
   }
 
   implicit val breakingNewsEntryReads: Reads[NewsAlertNotification] = (
-    (__ \ "id").read[UUID] and
+    (__ \ "uid").read[UUID] and
+    (__ \ "id").read[URI] and
       (__ \ "headline").read[String] and
       (__ \ "message").read[String] and
       (__ \ "thumbnail").readNullable[URI] and
@@ -29,11 +30,12 @@ object BreakingNewsFormats {
   implicit val breakingNewsEntryWrites = new Writes[NewsAlertNotification] {
     def writes(notification: NewsAlertNotification): JsValue = {
       Json.obj(
+        "uid" -> notification.uid,
         "headline" -> notification.title,
         "message" -> notification.message,
         "thumbnail" -> notification.thumbnailUrl,
         "shortUrl" -> notification.link,
-        "id" -> notification.id,
+        "id" -> notification.urlId,
         "frontPublicationDate" -> notification.publicationDate
       )
     }
@@ -71,19 +73,19 @@ object BreakingNews {
     val notifications = collections.flatMap { collection =>
       // Create copy of notifications with topic based on the collection they belonged to
       collection.content.map { n =>
-        NewsAlertNotification(n.id, n.title, n.message, n.thumbnailUrl, n.link, n.imageUrl, n.publicationDate, Set(NewsAlertType.fromShortString(collection.href).get.toString))
+        NewsAlertNotification(n.uid, n.urlId, n.title, n.message, n.thumbnailUrl, n.link, n.imageUrl, n.publicationDate, Set(NewsAlertType.fromShortString(collection.href).get.toString))
       }
     }
-      .toList.sortBy(_.id) // sort by id so notifications with same id are next to each other
+      .toList.sortBy(_.uid) // sort by id so notifications with same uid are next to each other
       .foldLeft(Set.empty[NewsAlertNotification]) { (notifications: Set[NewsAlertNotification], notifB: NewsAlertNotification) =>
-        // Merge together notifications which have the same id but have different topics (concatenating their topics)
+        // Merge together notifications which have the same uid but have different topics (concatenating their topics)
         if (notifications.isEmpty) {
           Set(notifB)
         }
         else {
           val notifA = notifications.head
-          if (notifA.id == notifB.id) {
-            Set(NewsAlertNotification(notifB.id, notifB.title, notifB.message, notifB.thumbnailUrl, notifB.link, notifB.imageUrl, notifB.publicationDate, notifA.topics ++ notifB.topics))
+          if (notifA.uid == notifB.uid) {
+            Set(NewsAlertNotification(notifB.uid, notifB.urlId, notifB.title, notifB.message, notifB.thumbnailUrl, notifB.link, notifB.imageUrl, notifB.publicationDate, notifA.topics ++ notifB.topics))
           }
           else {
             Set(notifA, notifB)

@@ -7,67 +7,73 @@ import play.api.libs.json.Json
 
 class NewsAlertNotificationTest extends FlatSpec with Matchers {
 
-  private val randomUuid = UUID.randomUUID()
+  private val uid = UUID.randomUUID()
   private val title = "This is a breaking news title"
   private val message = "This is a breaking news message"
   private val thumbnailUrl = "http://i.guimcode.co.uk.global.prod.fastly.net/img/media/54c2dc737fc82bf793dd919694e3ea7111cf2d82/0_169_3936_2363/140.jpg"
   private val link = "http://gu.com/p/4fgcd"
   private val imageUrl = "http://i.guimcode.co.uk.global.prod.fastly.net/img/media/54c2dc737fc82bf793dd919694e3ea7111cf2d82/0_169_3936_2363/140.jpg"
   private val publicationDate = "2016-01-18T12:21:01.000Z"
+  private val urlId = "/category/2016/01/30/slug"
   private val topics = Set("breaking/sport", "breaking/uk")
   private val topicsString = Json.toJson(topics).toString()
 
   "Creating NewsAlertNotification" should "succeed when json contains all fields" in {
     val json = Json.parse(
-      s"""{"id":"$randomUuid",
+      s"""{"uid":"$uid",
           |"title":"$title",
           |"message":"$message",
           |"thumbnailUrl":"$thumbnailUrl",
           |"link":"$link",
           |"imageUrl":"$imageUrl",
           |"publicationDate":"$publicationDate",
+          |"urlId":"$urlId",
           |"topics":$topicsString}""".stripMargin)
     json.validate[NewsAlertNotification].asOpt shouldBe Some(NewsAlertNotification(
-      id = randomUuid,
-      title = title,
-      message = message,
-      thumbnailUrl = Some(URI.create(thumbnailUrl)),
-      link = URI.create(link),
-      imageUrl = Some(URI.create(imageUrl)),
-      publicationDate = DateTime.parse(publicationDate),
-      topics = topics
+      uid,
+      URI.create(urlId),
+      title,
+      message,
+      Some(URI.create(thumbnailUrl)),
+      URI.create(link),
+      Some(URI.create(imageUrl)),
+      DateTime.parse(publicationDate),
+      topics
     ))
   }
 
 
    it should "succeed when json contains no optional field" in {
      val jsonWithoutOptionalFields = Json.parse(
-       s"""{"id":"$randomUuid",
+       s"""{"uid":"$uid",
            |"title":"$title",
            |"message":"$message",
            |"link":"$link",
            |"publicationDate":"$publicationDate",
+           |"urlId":"$urlId",
            |"topics":$topicsString}""".stripMargin)
     jsonWithoutOptionalFields.validate[NewsAlertNotification].asOpt shouldBe Some(NewsAlertNotification(
-      id = randomUuid,
-      title = title,
-      message = message,
-      thumbnailUrl = None,
-      link = URI.create(link),
-      imageUrl = None,
-      publicationDate = DateTime.parse(publicationDate),
-      topics = topics
+      uid,
+      URI.create(urlId),
+      title,
+      message,
+      None,
+      URI.create(link),
+      None,
+      DateTime.parse(publicationDate),
+      topics
     ))
   }
 
 
   it should "fail when json contains invalid url" in {
     val jsonWithInvalidUrl = Json.parse(
-      s"""{"id":"$randomUuid",
+      s"""{"uid":"$uid",
           |"title":"$title",
           |"message":"$message",
           |"link":"this is not a valid link",
           |"publicationDate":"$publicationDate",
+          |"urlId":"$urlId",
           |"topics":$topicsString}""".stripMargin)
     jsonWithInvalidUrl.validate[NewsAlertNotification].asOpt shouldBe None
   }
@@ -75,18 +81,20 @@ class NewsAlertNotificationTest extends FlatSpec with Matchers {
 
   it should "fail when json contains invalid publication date" in {
     val jsonWithInvalidDate = Json.parse(
-      s"""{"id":"$randomUuid",
+      s"""{"uid":"$uid",
           |"title":"$title",
           |"message":"$message",
           |"link":"$link",
           |"publicationDate":"11-22-3333",
+          |"urlId":"$urlId",
           |"topics":$topicsString}""".stripMargin)
     jsonWithInvalidDate.validate[NewsAlertNotification].asOpt shouldBe None
   }
 
   "Notification with UK and Sport topics" should "be both of type UK and Sport" in {
     val n = NewsAlertNotification(
-      randomUuid,
+      uid,
+      URI.create(urlId),
       title,
       message,
       None,

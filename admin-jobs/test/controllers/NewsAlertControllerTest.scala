@@ -81,7 +81,8 @@ import test.ConfiguredTestSuite
 
     "mandatory fields in request body are empty" should {
       val jsonBody = Json.parse(
-        """{"id":"c3def817-ab16-4d1d-9eae-c090a5c753f9",
+        """{"uid":"c3def817-ab16-4d1d-9eae-c090a5c753f9",
+          |"urlId":"category/2016/feb/01/slug",
           |"title":"This is a breaking news title",
           |"publicationDate":"2016-01-18T12:21:01.000Z"}""".stripMargin)
       val request = postAlertRequest.withJsonBody(jsonBody)
@@ -94,7 +95,8 @@ import test.ConfiguredTestSuite
 
     "request body is valid" when {
       val jsonBody = Json.parse(
-        """{"id":"c3def817-ab16-4d1d-9eae-c090a5c753f9",
+        """{"uid":"c3def817-ab16-4d1d-9eae-c090a5c753f9",
+          |"urlId":"category/2016/feb/01/slug",
           |"title":"This is a breaking news title",
           |"message":"This is a breaking news message",
           |"thumbnailUrl":"http://i.guimcode.co.uk.global.prod.fastly.net/img/media/54c2dc737fc82bf793dd919694e3ea7111cf2d82/0_169_3936_2363/140.jpg",
@@ -114,6 +116,7 @@ import test.ConfiguredTestSuite
         "204" in {
           val notification = NewsAlertNotification(
             UUID.randomUUID(),
+            URI.create("category/2016/feb/01/slug"),
             "Title",
             "message",
             Some(URI.create("http://i.guimcode.co.uk.global.prod.fastly.net/img/media/54c2dc737fc82bf793dd919694e3ea7111cf2d82/0_169_3936_2363/140.jpg")),

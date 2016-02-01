@@ -9,7 +9,8 @@ import play.api.libs.json._
 
 import scala.util.{Failure, Success, Try}
 
-case class NewsAlertNotification(id: UUID,
+case class NewsAlertNotification(uid: UUID,
+                                 urlId: URI, //ex: technology/2016/feb/01/uninstalling-facebook-app-saves-up-to-20-of-android-battery-life
                                  title: String,
                                  message: String,
                                  thumbnailUrl: Option[URI] = None,

@@ -10,7 +10,8 @@ import play.api.libs.json.Json
 
 class BreakingNewsTest extends WordSpec with Matchers {
 
-    val randomUuid = UUID.randomUUID()
+    val randomUid = UUID.randomUUID()
+    val id = "/category/2016/01/30/slug"
     val title = "This is a breaking news title"
     val message = "This is a breaking news message"
     val thumbnailUrl = "http://i.guimcode.co.uk.global.prod.fastly.net/img/media/54c2dc737fc82bf793dd919694e3ea7111cf2d82/0_169_3936_2363/140.jpg"
@@ -18,7 +19,8 @@ class BreakingNewsTest extends WordSpec with Matchers {
     val publicationDate = DateTime.now
     val topics = Set(NewsAlertTypes.Uk, NewsAlertTypes.Sport)
     val n = NewsAlertNotification(
-      randomUuid,
+      randomUid,
+      URI.create(id),
       title,
       message,
       Some(URI.create(thumbnailUrl)),
@@ -36,11 +38,12 @@ class BreakingNewsTest extends WordSpec with Matchers {
           |"href": "uk",
           |"content": [
           |{
+          |"uid": "$randomUid",
           |"headline": "$title",
           |"message": "$message",
           |"thumbnail": "$thumbnailUrl",
           |"shortUrl": "$link",
-          |"id": "$randomUuid",
+          |"id": "$id",
           |"frontPublicationDate": ${Json.toJson(publicationDate)}
           |}
           |]
@@ -60,11 +63,12 @@ class BreakingNewsTest extends WordSpec with Matchers {
           |"href": "sport",
           |"content": [
           |{
+          |"uid": "$randomUid",
           |"headline": "$title",
           |"message": "$message",
           |"thumbnail": "$thumbnailUrl",
           |"shortUrl": "$link",
-          |"id": "$randomUuid",
+          |"id": "$id",
           |"frontPublicationDate": ${Json.toJson(publicationDate)}
           |}
           |]
@@ -97,6 +101,7 @@ class BreakingNewsTest extends WordSpec with Matchers {
     val commonTopics = Set(NewsAlertType.fromShortString(commonTopicShortString).get.toString)
     val notifA = NewsAlertNotification(
       UUID.randomUUID(),
+      URI.create(id),
       title,
       message,
       Some(URI.create(thumbnailUrl)),
@@ -106,6 +111,7 @@ class BreakingNewsTest extends WordSpec with Matchers {
       commonTopics ++ Set(NewsAlertTypes.Sport.toString))
     val notifB = NewsAlertNotification(
       UUID.randomUUID(),
+      URI.create(id),
       title,
       message,
       Some(URI.create(thumbnailUrl)),
@@ -129,6 +135,7 @@ class BreakingNewsTest extends WordSpec with Matchers {
   "Passing non supported topic when creating Breaking News" should {
     val notif = NewsAlertNotification(
       UUID.randomUUID(),
+      URI.create(id),
       title,
       message,
       Some(URI.create(thumbnailUrl)),
