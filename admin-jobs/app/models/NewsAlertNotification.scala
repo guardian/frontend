@@ -6,9 +6,6 @@ import java.util.UUID
 import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
 import play.api.libs.json._
-import play.api.libs.functional.syntax._
-import play.api.libs.json.Reads._
-import play.api.data.validation._
 
 import scala.util.{Failure, Success, Try}
 
@@ -19,16 +16,13 @@ case class NewsAlertNotification(id: UUID,
                                  link: URI,
                                  imageUrl: Option[URI] = None,
                                  publicationDate: DateTime,
-                                 topics: Set[NewsAlertType] = Set.empty[NewsAlertType]) {
+                                 topics: Set[String] = Set.empty[String]) {
 
-
-  def isOfType(alertType: NewsAlertType) : Boolean = topics.contains(alertType)
+  def isOfType(alertType: NewsAlertType) : Boolean = topics.contains(alertType.toString)
 
 }
 
 object NewsAlertNotification {
-
-  import URIFormats._
 
   // publicationDate (DateTime)
   implicit val dtf = new Format[DateTime] {
@@ -48,15 +42,6 @@ object NewsAlertNotification {
   }
 
   // NewsAlertNotification serializer/deserializer
-  implicit val jWrites = Json.writes[NewsAlertNotification]
-  implicit val jReads: Reads[NewsAlertNotification] = (
-    (__ \ "id").read[UUID] and
-      (__ \ "title").read[String] and
-      (__ \ "message").read[String] and
-      (__ \ "thumbnailUrl").readNullable[URI] and
-      (__ \ "link").read[URI] and
-      (__ \ "imageUrl").readNullable[URI] and
-      (__ \ "publicationDate").read[DateTime] and
-      (__ \ "topics").read[Set[NewsAlertType]].filter(ValidationError("Notification should have at least one topic"))(_.nonEmpty)
-    )(NewsAlertNotification.apply _)
+  implicit val uRIFormats = models.URIFormats.uf
+  implicit val jFormat = Json.format[NewsAlertNotification]
 }

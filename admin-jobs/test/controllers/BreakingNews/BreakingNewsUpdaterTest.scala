@@ -63,7 +63,7 @@ import scala.concurrent.duration._
       URI.create("http://gu.com/p/4fgcd"),
       None,
       DateTime.now(),
-      Set(NewsAlertTypes.Uk, NewsAlertTypes.Sport))
+      Set(NewsAlertTypes.Uk, NewsAlertTypes.Sport).map(_.toString))
 
     "fetching previous Breaking News fails" which {
       "fails" should {

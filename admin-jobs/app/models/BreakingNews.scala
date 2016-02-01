@@ -24,7 +24,7 @@ object BreakingNewsFormats {
       (__ \ "shortUrl").read[URI] and
       Reads.pure(None) and //imageUrl
       (__ \ "frontPublicationDate").read[DateTime] and
-      Reads.pure(Set.empty[NewsAlertType]) //topics
+      Reads.pure(Set.empty[String]) //topics
     )(NewsAlertNotification.apply _)
   implicit val breakingNewsEntryWrites = new Writes[NewsAlertNotification] {
     def writes(notification: NewsAlertNotification): JsValue = {
@@ -71,7 +71,7 @@ object BreakingNews {
     val notifications = collections.flatMap { collection =>
       // Create copy of notifications with topic based on the collection they belonged to
       collection.content.map { n =>
-        NewsAlertNotification(n.id, n.title, n.message, n.thumbnailUrl, n.link, n.imageUrl, n.publicationDate, Set(NewsAlertType.fromShortString(collection.href).get))
+        NewsAlertNotification(n.id, n.title, n.message, n.thumbnailUrl, n.link, n.imageUrl, n.publicationDate, Set(NewsAlertType.fromShortString(collection.href).get.toString))
       }
     }
       .toList.sortBy(_.id) // sort by id so notifications with same id are next to each other

@@ -120,7 +120,7 @@ import test.ConfiguredTestSuite
             URI.create("http://gu.com/p/4fgcd"),
             None,
             DateTime.now(),
-            Set(NewsAlertTypes.Uk, NewsAlertTypes.Sport))
+            Set(NewsAlertTypes.Uk, NewsAlertTypes.Sport).map(_.toString))
           val controller = controllerWithActorReponse(notification)
           val response = call(controller.create, request)
           status(response) should be(CREATED)

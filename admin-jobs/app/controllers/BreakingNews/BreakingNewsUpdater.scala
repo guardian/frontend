@@ -29,7 +29,7 @@ class BreakingNewsUpdater(breakingNewsApi: BreakingNewsApi) extends Actor with L
 
     val origin = sender
 
-    //TODO: improvement
+    //TODO: improvement: cache BreakingNews content to avoid calling S3 every single time
     def fetch = breakingNewsApi.getBreakingNews
     def parse(json : JsValue) = Some(json.as[BreakingNews])
     def save(b: BreakingNews) = Some(breakingNewsApi.putBreakingNews(Json.toJson(b)))

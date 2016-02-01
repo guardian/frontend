@@ -16,6 +16,7 @@ class BreakingNewsTest extends WordSpec with Matchers {
     val thumbnailUrl = "http://i.guimcode.co.uk.global.prod.fastly.net/img/media/54c2dc737fc82bf793dd919694e3ea7111cf2d82/0_169_3936_2363/140.jpg"
     val link = "http://gu.com/p/4fgcd"
     val publicationDate = DateTime.now
+    val topics = Set(NewsAlertTypes.Uk, NewsAlertTypes.Sport)
     val n = NewsAlertNotification(
       randomUuid,
       title,
@@ -24,7 +25,7 @@ class BreakingNewsTest extends WordSpec with Matchers {
       URI.create(link),
       None,
       publicationDate,
-      Set(NewsAlertTypes.Uk, NewsAlertTypes.Sport))
+      topics.map(_.toString))
     val expectedBreakingNews = BreakingNews(Set(n))
 
     val json = Json.parse(
@@ -93,7 +94,7 @@ class BreakingNewsTest extends WordSpec with Matchers {
 
   "Once created, Breaking news collections" should {
     val commonTopicShortString = "uk"
-    val commonTopics = Set(NewsAlertType.fromShortString(commonTopicShortString).get)
+    val commonTopics = Set(NewsAlertType.fromShortString(commonTopicShortString).get.toString)
     val notifA = NewsAlertNotification(
       UUID.randomUUID(),
       title,
@@ -102,7 +103,7 @@ class BreakingNewsTest extends WordSpec with Matchers {
       URI.create(link),
       None,
       DateTime.now,
-      commonTopics ++ Set(NewsAlertTypes.Sport))
+      commonTopics ++ Set(NewsAlertTypes.Sport.toString))
     val notifB = NewsAlertNotification(
       UUID.randomUUID(),
       title,
@@ -111,7 +112,7 @@ class BreakingNewsTest extends WordSpec with Matchers {
       URI.create(link),
       None,
       notifA.publicationDate.plus(1),
-      Set.empty[NewsAlertType] ++ commonTopics)
+      Set.empty[String] ++ commonTopics)
     val breakingNews = BreakingNews(Set(notifA, notifB))
     "contain no more than one notifications" in {
       breakingNews.collections.foreach {
@@ -125,4 +126,21 @@ class BreakingNewsTest extends WordSpec with Matchers {
     }
   }
 
+  "Passing non supported topic when creating Breaking News" should {
+    val notif = NewsAlertNotification(
+      UUID.randomUUID(),
+      title,
+      message,
+      Some(URI.create(thumbnailUrl)),
+      URI.create(link),
+      None,
+      DateTime.now,
+      Set("non breaking news topic", "doesn't exist"))
+    val breakingNews = BreakingNews(Set(notif))
+    "result in empty collections" in {
+      breakingNews.collections.foreach {
+        _.content.size should equal(0)
+      }
+    }
+  }
 }
