@@ -4,14 +4,14 @@
 
 try {
 
-    (function(){
+    (function (window, document) {
 
-        var config  = guardian.config,
+        var navigator = window.navigator,
+            config  = guardian.config,
             isEmbed = !!guardian.isEmbed,
             tpA     = s.getTimeParting('n', '+0'),
             now     = new Date(),
             webPublicationDate = config.page.webPublicationDate,
-            w       = window,
             Storage = function (type) {
                 this.type = type;
             },
@@ -355,7 +355,7 @@ try {
         }, 10000);
 
 
-    })();
+    })(window, document);
 
 } catch(e) {
     (new Image()).src = '@{Configuration.debug.beaconUrl}/count/omniture-pageview-error.gif';
