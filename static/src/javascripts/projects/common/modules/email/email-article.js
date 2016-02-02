@@ -37,6 +37,18 @@ define([
                 description: 'Sign up to email updates related to the Guardian\'s coverage of the NHS, including daily updates as the project develops',
                 successHeadline: 'Thank you for signing up to our NHS email updates',
                 successDescription: 'You\'ll receive daily updates in your inbox'
+            },
+            theCampaignMinute: {
+                listId: '3599',
+                canRun: 'theCampaignMinute',
+                campaignCode: 'the_minute_footer',
+                headline: 'Enjoying The Minute?',
+                description: 'Sign up and we\'ll send you the Guardian US Campaign Minute, once per day.',
+                successHeadline: 'Thank you for signing up to the Guardian US Campaign minute',
+                successDescription: 'We will send you the biggest political story lines of the day',
+                modClass: 'post-article',
+                insertMethod: 'insertAfter',
+                insertSelector: '.js-article__container'
             }
         },
         $articleBody,
@@ -52,14 +64,15 @@ define([
         addListToPage = function (listConfig) {
             if (listConfig) {
                 var iframe = bonzo.create(template(iframeTemplate, listConfig))[0],
-                    $iframeEl = $(iframe);
+                    $iframeEl = $(iframe),
+                    $insertEl = $(listConfig.insertSelector);
 
                 bean.on(iframe, 'load', function () {
                     email.init(iframe);
                 });
 
                 fastdom.write(function () {
-                    $iframeEl.appendTo($articleBody);
+                    $iframeEl[listConfig.insertMethod || 'appendTo']($insertEl.length > 0 ? $insertEl : $articleBody);
                 });
 
                 emailInserted = true;
@@ -78,18 +91,24 @@ define([
                 } else {
                     return false;
                 }
+            },
+            keywordExists: function (keyword) {
+                var keywords = config.page.keywords ? config.page.keywords.split(',') : '';
+                return contains(keywords, keyword)
             }
         },
         canRunList = {
             nhs: function () {
-                var keywords = config.page.keywords ? config.page.keywords.split(',') : '';
-                return contains(keywords, 'NHS');
+                return canRunHelpers.allowedArticleStructure() && canRunHelpers.keywordExists('NHS');
+            },
+            theCampaignMinute: function () {
+                return config.page.isMinuteArticle && canRunHelpers.keywordExists('US elections 2016')
             }
         };
 
     return {
         init: function () {
-            if (!emailInserted && canRunHelpers.allowedArticleStructure()) {
+            if (!emailInserted) {
                 // Get the first list that is allowed on this page
                 addListToPage(find(listConfigs, listCanRun));
             }
