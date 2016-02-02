@@ -21,12 +21,12 @@ import org.scalatest.concurrent.{Futures, ScalaFutures}
 
         pageShares.map(_.text) should be (List("Facebook", "Twitter", "Email", "Pinterest", "Google plus", "WhatsApp"))
         pageShares.map(_.href) should be (List(
-          "https://www.facebook.com/dialog/share?app_id=202314643182694&href=http%3A%2F%2Fwww.theguardian.com%2Fp%2F42jcb%2Fsfb&redirect_uri=http%3A%2F%2Fwww.theguardian.com%2Fp%2F42jcb",
-          "https://twitter.com/intent/tweet?text=2014%20Wildlife%20photographer%20of%20the%20Year&url=http%3A%2F%2Fwww.theguardian.com%2Fp%2F42jcb%2Fstw",
-          "mailto:?subject=2014%20Wildlife%20photographer%20of%20the%20Year&body=http%3A%2F%2Fwww.theguardian.com%2Fp%2F42jcb%2Fsbl",
+          "https://www.facebook.com/dialog/share?app_id=202314643182694&href=http%3A%2F%2Fwww.theguardian.com%2Fenvironment%2Fgallery%2F2014%2Foct%2F22%2F2014-wildlife-photographer-of-the-year%3FCMP%3Dshare_btn_fb&redirect_uri=http%3A%2F%2Fgu.com%2Fp%2F42jcb",
+          "https://twitter.com/intent/tweet?text=2014%20Wildlife%20photographer%20of%20the%20Year&url=http%3A%2F%2Fwww.theguardian.com%2Fenvironment%2Fgallery%2F2014%2Foct%2F22%2F2014-wildlife-photographer-of-the-year%3FCMP%3Dshare_btn_tw",
+          "mailto:?subject=2014%20Wildlife%20photographer%20of%20the%20Year&body=http%3A%2F%2Fwww.theguardian.com%2Fenvironment%2Fgallery%2F2014%2Foct%2F22%2F2014-wildlife-photographer-of-the-year%3FCMP%3Dshare_btn_link",
           "http://www.pinterest.com/pin/find/?url=http%3A%2F%2Fwww.theguardian.com%2Fenvironment%2Fgallery%2F2014%2Foct%2F22%2F2014-wildlife-photographer-of-the-year",
-          "https://plus.google.com/share?url=http%3A%2F%2Fwww.theguardian.com%2Fp%2F42jcb%2Fsgp&amp;hl=en-GB&amp;wwc=1",
-          "whatsapp://send?text=%222014%20Wildlife%20photographer%20of%20the%20Year%22%20http%3A%2F%2Fwww.theguardian.com%2Fp%2F42jcb%2Fswa"))
+          "https://plus.google.com/share?url=http%3A%2F%2Fwww.theguardian.com%2Fenvironment%2Fgallery%2F2014%2Foct%2F22%2F2014-wildlife-photographer-of-the-year%3FCMP%3Dshare_btn_gp&amp;hl=en-GB&amp;wwc=1",
+          "whatsapp://send?text=%222014%20Wildlife%20photographer%20of%20the%20Year%22%20http%3A%2F%2Fwww.theguardian.com%2Fenvironment%2Fgallery%2F2014%2Foct%2F22%2F2014-wildlife-photographer-of-the-year%3FCMP%3Dshare_btn_wa"))
       }
     }
   }
