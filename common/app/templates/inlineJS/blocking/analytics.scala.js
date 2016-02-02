@@ -4,20 +4,13 @@
 
 try {
 
-    (function(){
+    (function (window, document) {
 
         var config  = guardian.config,
             isEmbed = !!guardian.isEmbed,
             tpA     = s.getTimeParting('n', '+0'),
             now     = new Date(),
-            webPublicationDate = config.page.webPublicationDate,
-            w       = window,
-            Storage = function (type) {
-                this.type = type;
-            },
-            storage.local = new Storage('localStorage'),
-            storage.session = new Storage('sessionStorage')
-            isAvailable;
+            webPublicationDate = config.page.webPublicationDate;
 
         var R2_STORAGE_KEY = 's_ni', // DO NOT CHANGE THIS, ITS IS SHARED WITH R2. BAD THINGS WILL HAPPEN!
             NG_STORAGE_KEY = 'gu.analytics.referrerVars',
@@ -35,18 +28,19 @@ try {
             return config.page.section || '';
         };
 
+        // helper
         function forEach(array, callback, scope) {
-            var data = [];
-            for (var i = 0; i < array.length; i++) {
+            var data = [], dataLength = data.length;
+            for (var i = 0; i < dataLength; i++) {
                 data.push(callback.call(scope, i, array[i]));
             }
             return data;
         }
 
-        @* This only works for string arrays *@
+        // helper - this only works for string arrays
         function uniq(array) {
-            var data = [];
-            for (var i = 0; i < array.length; i++) {
+            var data = [], dataLength = data.length;
+            for (var i = 0; i < dataLength; i++) {
                 if(data.indexOf(array[i]) == -1) {
                     data.push(array[i]);
                 }
@@ -157,7 +151,7 @@ try {
         s.eVar50 = s.getValOnce(s.eVar50, 's_intcampaign', 0);
 
         // the operating system
-        s.eVar58 = navigator.platform || 'unknown';
+        s.eVar58 = window.navigator.platform || 'unknown';
 
         // the number of Guardian links inside the body
         if (config.page.inBodyInternalLinkCount) {
@@ -203,8 +197,12 @@ try {
         s.prop47    = config.page.edition || '';
 
         /* Retrieve navigation interaction data */
-        var ni   = storage.session.get(NG_STORAGE_KEY),
-            d;
+        var ni;
+        try {
+            ni = window.sessionStorage.getItem(NG_STORAGE_KEY);
+        } catch (e) {
+            ni = null;
+        }
 
         if (getUserFromCookie()) {
             s.prop2 = 'GUID:' + getUserFromCookie().id;
@@ -218,17 +216,19 @@ try {
         //s.prop40    = detect.adblockInUse() || detect.getFirefoxAdblockPlusInstalled();
 
         if (ni) {
-            d = new Date().getTime();
+            var d = new Date().getTime();
             if (d - ni.time < 60 * 1000) { // One minute
                 this.s.eVar24 = ni.pageName;
                 this.s.eVar37 = ni.tag;
             }
-            storage.session.remove(R2_STORAGE_KEY);
-            storage.session.remove(NG_STORAGE_KEY);
+            try {
+                window.sessionStorage.removeItem(R2_STORAGE_KEY);
+                window.sessionStorage.removeItem(NG_STORAGE_KEY);
+            } catch (e) {}
         }
 
         // Sponsored content
-        s.prop38 = uniq(forEach(document.querySelectorAll('[data-sponsorship]'), function (index, node) {
+        s.prop38 = uniq(forEach([].slice.call(document.querySelectorAll('[data-sponsorship]')), function (index, node) {
             var sponsorshipType = node.getAttribute('data-sponsorship');
             var maybeSponsor = node.getAttribute('data-sponsor');
             var sponsor = maybeSponsor ? maybeSponsor : 'unknown';
@@ -244,95 +244,6 @@ try {
         */
 
         s.t();
-
-        Storage.prototype.isAvailable = function (data) {
-            var testKey = 'local-storage-module-test',
-                d = data || 'test';
-            try {
-                // to fully test, need to set item
-                // http://stackoverflow.com/questions/9077101/iphone-localstorage-quota-exceeded-err-issue#answer-12976988
-                w[this.type].setItem(testKey, d);
-                w[this.type].removeItem(testKey);
-                return true;
-            } catch (e) {
-                return false;
-            }
-        };
-
-        Storage.prototype.isStorageAvailable = function (refresh) {
-            if (isAvailable === void 0 || refresh) {
-                isAvailable = this.isAvailable();
-            }
-            return isAvailable;
-        };
-
-        Storage.prototype.get = function (key) {
-            if (this.isStorageAvailable()) {
-                var data,
-                    dataParsed;
-                if (!w[this.type]) {
-                    return;
-                }
-                data = w[this.type].getItem(key);
-                if (data === null) {
-                    return null;
-                }
-
-                // try and parse the data
-                try {
-                    dataParsed = JSON.parse(data);
-                } catch (e) {
-                    // remove the key
-                    this.remove(key);
-                    return null;
-                }
-
-                // has it expired?
-                if (dataParsed.expires && new Date() > new Date(dataParsed.expires)) {
-                    this.remove(key);
-                    return null;
-                }
-
-                return dataParsed.value;
-            }
-        };
-
-        Storage.prototype.getKey = function (i) {
-            if (this.isStorageAvailable()) {
-                return w[this.type].key(i);
-            }
-        };
-
-        // Production steps of ECMA-262, Edition 5, 15.4.4.14
-        // Reference: http://es5.github.io/#x15.4.4.14
-        if (!Array.prototype.indexOf) {
-          Array.prototype.indexOf = function(searchElement, fromIndex) {
-            var k;
-            if (this == null) {
-              throw new TypeError('"this" is null or not defined');
-            }
-            var o = Object(this);
-            var len = o.length >>> 0;
-            if (len === 0) {
-              return -1;
-            }
-            var n = +fromIndex || 0;
-            if (Math.abs(n) === Infinity) {
-              n = 0;
-            }
-            if (n >= len) {
-              return -1;
-            }
-            k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
-            while (k < len) {
-              if (k in o && o[k] === searchElement) {
-                return k;
-              }
-              k++;
-            }
-            return -1;
-          };
-        }
 
         var checkForPageViewInterval = setInterval(function () {
             @*
@@ -355,7 +266,7 @@ try {
         }, 10000);
 
 
-    })();
+    })(window, document);
 
 } catch(e) {
     (new Image()).src = '@{Configuration.debug.beaconUrl}/count/omniture-pageview-error.gif';
