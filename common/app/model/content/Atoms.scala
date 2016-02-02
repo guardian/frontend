@@ -1,6 +1,7 @@
 package model.content
 
 import com.gu.contentapi.client.model.{v1 => contentapi}
+import com.gu.contentatom.thrift.{atom => atomapi, AtomData}
 import model.content.QuizForm.UserAnswer
 import play.api.data._
 import play.api.data.Forms._
@@ -10,8 +11,8 @@ sealed trait Atom {
 }
 
 object Quiz {
-  def make(path: String, quiz: contentapi.QuizAtom): Quiz = {
-    val questions = quiz.data.content.questions.map { question =>
+  def make(path: String, quiz: atomapi.quiz.QuizAtom): Quiz = {
+    val questions = quiz.content.questions.map { question =>
       val answers = question.answers.map { answer =>
         Answer(
           text = answer.answerText,
@@ -26,10 +27,10 @@ object Quiz {
     Quiz(
       id = quiz.id,
       path = path,
-      title = quiz.data.title,
-      quizType = quiz.data.quizType,
+      title = quiz.title,
+      quizType = quiz.quizType,
       questions = questions,
-      resultGroups = quiz.data.content.resultGroups.map(resultGroups => {
+      resultGroups = quiz.content.resultGroups.map(resultGroups => {
         resultGroups.groups.map(resultGroup => {
           ResultGroup(
             title = resultGroup.title,
@@ -37,7 +38,7 @@ object Quiz {
             minScore = resultGroup.minScore
           )
         })
-      })
+      }).getOrElse(Nil)
     )
   }
 }
@@ -61,7 +62,7 @@ final case class Quiz(
   path: String,
   quizType: String,
   questions: Seq[Question],
-  resultGroups: Option[Seq[ResultGroup]]
+  resultGroups: Seq[ResultGroup]
 ) extends Atom {
 
   val postUrl = s"/atom/quiz/$id/$path"
@@ -120,12 +121,10 @@ final case class QuizSubmissionResult(
   val score: Int = correctAnswers.size
 
   val resultGroup: Option[ResultGroup] = {
-    quiz.resultGroups.flatMap(resultGroups => {
-      resultGroups
-        .filter(score >= _.minScore)
-        .sortBy(_.minScore)
-        .lastOption
-    })
+    quiz.resultGroups
+      .filter(score >= _.minScore)
+      .sortBy(_.minScore)
+      .lastOption
   }
 }
 
@@ -160,10 +159,19 @@ object QuizForm {
   )
 }
 
-object Atoms {
+object Atoms extends common.Logging {
   def make(content: contentapi.Content): Option[Atoms] = {
     content.atoms.map { atoms =>
-      Atoms(quizzes = atoms.quiz.map(Quiz.make(content.id, _)).toList)
+      val quizzes: Seq[atomapi.quiz.QuizAtom] = try {
+        atoms.quizzes.getOrElse(Nil).map(atom => {
+          atom.data.asInstanceOf[AtomData.Quiz].quiz
+        })
+      } catch {
+        case e: Exception =>
+          logException(e)
+          Nil
+      }
+      Atoms(quizzes = quizzes.map(Quiz.make(content.id, _)))
     }
   }
 }
