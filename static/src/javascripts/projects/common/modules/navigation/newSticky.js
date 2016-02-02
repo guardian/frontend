@@ -133,8 +133,8 @@ define([
         // TODO: move into stylesheets when productionised
         $document.addClass('new-sticky-ad');
         $header.css({ 'margin-top': state.adHeight });
-
         $adBanner.css({ 'max-height': state.adHeight });
+
         var userHasScrolledPastHeader = state.pageYOffset > state.headerHeight;
         if (userHasScrolledPastHeader) {
             $adBanner.css({
