@@ -342,6 +342,36 @@ $minute-layout-margin-nudge: gs-span(1);
     }
 }
 
+// Video Layout
+.block--minute-article.block--video {
+    @include mq($from: tablet) {
+        .block-elements {
+            width: gs-span(7);
+        }
+    }
+
+    @include mq($from: desktop) {
+        .block-elements {
+            width: gs-span(9);
+        }
+    }
+}
+
+// Tweet Layout
+.block--minute-article.block--tweet {
+    @include mq($from: tablet) {
+        .block-elements {
+            width: gs-span(4);
+        }
+    }
+
+    @include mq($from: desktop) {
+        .block-elements {
+            width: gs-span(7);
+        }
+    }
+}
+
 /* ==========================================================================
    Content Overrides
    ========================================================================== */
