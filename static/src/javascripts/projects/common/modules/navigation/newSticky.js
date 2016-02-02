@@ -177,41 +177,38 @@ define([
         });
     };
 
+    var reducer = function (previousState, action) {
+        switch (action.type) {
+            case 'SCROLL':
+                return assign({}, previousState, {
+                    firstRender: false,
+                    previousAdHeight: previousState.adHeight,
+                    pageXOffset: action.scrollCoords[0],
+                    pageYOffset: action.scrollCoords[1]
+                });
+            case 'NEW_AD_HEIGHT':
+                return assign({}, previousState, {
+                    firstRender: false,
+                    adHeight: action.adHeight,
+                    previousAdHeight: previousState.adHeight
+                });
+            case 'NEW_RUBICON_AD_HEIGHT':
+                return assign({}, previousState, {
+                    firstRender: false,
+                    adHeight: action.adHeight,
+                    previousAdHeight: previousState.adHeight
+                });
+            default:
+                return previousState;
+        }
+    };
+
     return function () {
         getInitialState().then(function (initialState) {
-            var reducer = function (previousState, action) {
-                // Default param value
-                if (!previousState) {
-                    previousState = initialState;
-                }
-                switch (action.type) {
-                    case 'SCROLL':
-                        return assign({}, previousState, {
-                            firstRender: false,
-                            previousAdHeight: previousState.adHeight,
-                            pageXOffset: action.scrollCoords[0],
-                            pageYOffset: action.scrollCoords[1]
-                        });
-                    case 'NEW_AD_HEIGHT':
-                        return assign({}, previousState, {
-                            firstRender: false,
-                            adHeight: action.adHeight,
-                            previousAdHeight: previousState.adHeight
-                        });
-                    case 'NEW_RUBICON_AD_HEIGHT':
-                        return assign({}, previousState, {
-                            firstRender: false,
-                            adHeight: action.adHeight,
-                            previousAdHeight: previousState.adHeight
-                        });
-                    default:
-                        return previousState;
-                }
-            };
-
             mountComponent({
-                render: render,
+                initialState: initialState,
                 reducer: reducer,
+                render: render,
                 attachListeners: attachListeners
             });
         });

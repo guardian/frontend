@@ -1,8 +1,8 @@
 define(['common/utils/fastdom-promise'], function (fastdom) {
     // Mini Redux
-    var createStore = function (reducer) {
+    var createStore = function (reducer, initialState) {
         // We re-assign this over time
-        var state;
+        var state = initialState;
         var subscribers = [];
 
         var notify = function () { subscribers.forEach(function (fn) { fn(); }); };
@@ -13,9 +13,6 @@ define(['common/utils/fastdom-promise'], function (fastdom) {
         var subscribe = function (fn) { subscribers.push(fn); };
         var getState = function () { return state; };
 
-        // Set initial state
-        dispatch({ type: 'INIT' });
-
         return {
             dispatch: dispatch,
             subscribe: subscribe,
@@ -24,7 +21,7 @@ define(['common/utils/fastdom-promise'], function (fastdom) {
     };
 
     var mountComponent = function (props) {
-        var store = createStore(props.reducer);
+        var store = createStore(props.reducer, props.initialState);
         var update = function () {
             return fastdom.write(function () {
                 props.render(store.getState());
