@@ -22,17 +22,33 @@ final case class ShareLinks(
 ) {
   private def shareLink(shareType: String, elementId: Option[String] = None, mediaPath: Option[String] = None, shortLinkUrl: String, webLinkUrl: String, title: String): Option[ShareLink] = {
 
-    def shareCampaignUrl(campaign: String, elementId: Option[String]) = {
-      // TODO this code should be tidied a bit to avoid using string concatenation in such a flaky way
-      val campaignParam = ShortCampaignCodes.getFullCampaign(campaign).map(code => s"CMP=$code").getOrElse("")
-      elementId.map { block => s"$webLinkUrl?page=with:$block&$campaignParam#$block" } getOrElse s"$webLinkUrl?$campaignParam"
+    def createShareLinkUrl(campaign: Option[String], elementId: Option[String]): String = {
+      val campaignParam = campaign.flatMap(ShortCampaignCodes.getFullCampaign(_))
+      val queryParams: Map[String, String] = Map(
+        "page" -> elementId.map(id => s"with:$id"),
+        "CMP" -> campaignParam
+      )
+        .filter(_._2.isDefined)
+        .map { case (k, v) => (k, v.getOrElse("")) }
+
+      appendQueryParams(webLinkUrl, queryParams) + elementId.map(id => s"#${id}").getOrElse("")
     }
 
-    lazy val facebook = shareCampaignUrl("sfb", elementId).urlEncoded
-    lazy val googlePlus = shareCampaignUrl("sgp", elementId).urlEncoded
-    lazy val link = shareCampaignUrl("sbl", elementId).urlEncoded
-    lazy val twitter = shareCampaignUrl("stw", elementId).urlEncoded
-    lazy val whatsapp = shareCampaignUrl("swa", elementId)
+    def appendQueryParams(uri: String, queryParams: Map[String, String]): String = {
+      queryParams.foldLeft(uri)((currentUri, queryParam) => {
+        javax.ws.rs.core.UriBuilder.fromUri(currentUri)
+          .queryParam(queryParam._1, queryParam._2)
+          .build()
+          .toString()
+      })
+    }
+
+    lazy val facebook = createShareLinkUrl(Some("sfb"), elementId).urlEncoded
+    lazy val googlePlus = createShareLinkUrl(Some("sgp"), elementId).urlEncoded
+    lazy val link = createShareLinkUrl(Some("sbl"), elementId).urlEncoded
+    lazy val twitter = createShareLinkUrl(Some("stw"), elementId).urlEncoded
+    lazy val whatsapp = createShareLinkUrl(Some("swa"), elementId)
+    lazy val pinterest = createShareLinkUrl(None, elementId).urlEncoded
     lazy val webTitleAsciiEncoding = metadata.webTitle.encodeURIComponent
 
     lazy val fullMediaPath: Option[String] = {
@@ -60,8 +76,8 @@ final case class ShareLinks(
       case "whatsapp" => Some(ShareLink("WhatsApp", "whatsapp", "Share on WhatsApp", s"""whatsapp://send?text=${("\"" + title + "\" " + whatsapp).encodeURIComponent}"""))
       case "email"    => Some(ShareLink("Email", "email", "Share via Email", s"mailto:?subject=$webTitleAsciiEncoding&body=$link"))
       case "linkedin"  => Some(ShareLink("LinkedIn", "linkedin", "Share on LinkedIn", s"http://www.linkedin.com/shareArticle?mini=true&title=${title.urlEncoded}&url=${shortLinkUrl.urlEncoded}"))
-      case "pinterestPage"  => Some(ShareLink("Pinterest", "pinterest", "Share on Pinterest", s"http://www.pinterest.com/pin/find/?url=${webLinkUrl.urlEncoded}"))
-      case "pinterestBlock"  => Some(ShareLink("Pinterest", "pinterest", "Share on Pinterest", s"http://www.pinterest.com/pin/create/button/?description=${title.urlEncoded}&url=${webLinkUrl.urlEncoded}&media=${fullMediaPath.getOrElse("").urlEncoded}"))
+      case "pinterestPage"  => Some(ShareLink("Pinterest", "pinterest", "Share on Pinterest", s"http://www.pinterest.com/pin/find/?url=$pinterest"))
+      case "pinterestBlock"  => Some(ShareLink("Pinterest", "pinterest", "Share on Pinterest", s"http://www.pinterest.com/pin/create/button/?description=${title.urlEncoded}&url=$pinterest&media=${fullMediaPath.getOrElse("").urlEncoded}"))
       case _ => None
     }
   }

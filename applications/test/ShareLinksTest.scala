@@ -44,9 +44,9 @@ import org.scalatest.concurrent.{Futures, ScalaFutures}
 
         elementShares.map(_.text) should be (List("Facebook", "Twitter", "Pinterest"))
         elementShares.map(_.href) should be (List(
-          "https://www.facebook.com/dialog/share?app_id=202314643182694&href=http%3A%2F%2Fwww.theguardian.com%2Fp%2F42jcb%2Fsfb%232&redirect_uri=http%3A%2F%2Fwww.theguardian.com%2Fp%2F42jcb",
-          "https://twitter.com/intent/tweet?text=2014%20Wildlife%20photographer%20of%20the%20Year&url=http%3A%2F%2Fwww.theguardian.com%2Fp%2F42jcb%2Fstw%232",
-          "http://www.pinterest.com/pin/create/button/?description=2014+Wildlife+photographer+of+the+Year&url=http%3A%2F%2Fwww.theguardian.com%2Fenvironment%2Fgallery%2F2014%2Foct%2F22%2F2014-wildlife-photographer-of-the-year&media="))
+          "https://www.facebook.com/dialog/share?app_id=202314643182694&href=http%3A%2F%2Fwww.theguardian.com%2Fenvironment%2Fgallery%2F2014%2Foct%2F22%2F2014-wildlife-photographer-of-the-year%3Fpage%3Dwith%3A2%26CMP%3Dshare_btn_fb%232&redirect_uri=http%3A%2F%2Fgu.com%2Fp%2F42jcb",
+          "https://twitter.com/intent/tweet?text=2014%20Wildlife%20photographer%20of%20the%20Year&url=http%3A%2F%2Fwww.theguardian.com%2Fenvironment%2Fgallery%2F2014%2Foct%2F22%2F2014-wildlife-photographer-of-the-year%3Fpage%3Dwith%3A2%26CMP%3Dshare_btn_tw%232",
+          "http://www.pinterest.com/pin/create/button/?description=2014+Wildlife+photographer+of+the+Year&url=http%3A%2F%2Fwww.theguardian.com%2Fenvironment%2Fgallery%2F2014%2Foct%2F22%2F2014-wildlife-photographer-of-the-year%3Fpage%3Dwith%3A2%232&media="))
       }
     }
   }
