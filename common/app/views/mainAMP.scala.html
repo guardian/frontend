@@ -50,10 +50,31 @@
 
         <div class="main-body">
 
-            <header class="main-header">
+            <header class="main-header @if(page.metadata.id == "film/2016/feb/02/alan-rickman-david-bowie-tributes-2016-berlin-film-festival") {variant-kicker}">
                 <a href="@LinkTo{/}" class="logo-wrapper" name="top">
                     @fragments.inlineSvg("guardian-logo-160", "logo")
                 </a>
+
+                @* this is for testing only *@
+                @if(page.metadata.id == "film/2016/feb/02/alan-rickman-david-bowie-tributes-2016-berlin-film-festival") {
+                    <div class="main-navigation variant-kicker">
+                        <div class="main-navigation_link">
+                            <a href="http://www.theguardian.com">news</a>
+                        </div>
+                        <div class="main-navigation_link">
+                            <a href="http://www.theguardian.com/commentisfree">opinion</a>
+                        </div>
+                        <div class="main-navigation_link">
+                            <a href="http://www.theguardian.com/sport">sports</a>
+                        </div>
+                        <div class="main-navigation_link">
+                            <a href="http://www.theguardian.com/culture">arts</a>
+                        </div>
+                        <div class="main-navigation_link">
+                            <a href="http://www.theguardian.com/lifeandstyle">life</a>
+                        </div>
+                    </div>
+                }
             </header>
 
             @body
