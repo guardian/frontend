@@ -15,6 +15,6 @@
 
 @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
     // Insert username in top bar on page load
-    @InlineJs(getUserData().body, "showUserName.js")
+    @InlineJs(showUserName().body, "showUserName.js")
 }
 </script>
