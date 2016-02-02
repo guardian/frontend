@@ -45,7 +45,7 @@ trait ABTestSwitches {
     "ab-rtrt-email-form-article-promo-v2",
     "Testing the email sign up from the bottom of articles of user referred from fronts",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 3),
+    sellByDate = new LocalDate(2016, 2, 10),
     exposeClientSide = true
   )
 
