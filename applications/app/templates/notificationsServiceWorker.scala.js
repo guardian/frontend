@@ -6,7 +6,8 @@
 /*global clients*/
 
 self.addEventListener('install', function (event) {
-    event.waitUntil(updateCache());
+    self.skipWaiting();
+    console.log("++ Installed: ", event);
 });
 
 //TODO cib self for this
