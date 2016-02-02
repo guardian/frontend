@@ -8,7 +8,6 @@ define([
     'common/utils/detect',
     'common/utils/template',
     'common/modules/analytics/omnitureMedia',
-    'common/modules/onward/history',
     'text!common/views/ui/video-ads-skip-overlay.html',
     'lodash/arrays/indexOf',
     'lodash/functions/throttle'
@@ -21,7 +20,6 @@ define([
     detect,
     template,
     OmnitureMedia,
-    history,
     adsSkipOverlayTmpl,
     indexOf,
     throttle
@@ -45,7 +43,7 @@ define([
     }
 
     function shouldAutoPlay(player) {
-        return isDesktop && !history.isRevisit(config.page.pageId) && player.guAutoplay;
+        return isDesktop && player.guAutoplay;
     }
 
     function constructEventName(eventName, player) {

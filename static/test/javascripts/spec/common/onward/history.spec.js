@@ -62,14 +62,6 @@ define([
             expect(hist.test.getHistory()[0][1]).toEqual(2);
         });
 
-        it('should be able to check a page revisit', function () {
-            hist.logHistory(pageConfig);
-            expect(hist.isRevisit(pageConfig.pageId)).toBeFalsy();
-
-            hist.logHistory(pageConfig);
-            expect(hist.isRevisit(pageConfig.pageId)).toBeTruthy();
-        });
-
         it('should only store 50 latest entries', function () {
             storage.local.set('gu.history', max);
             hist.logHistory(pageConfig);
