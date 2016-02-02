@@ -44,7 +44,11 @@
         .lineitem--high__feature {
             float: left;
             padding-left: 0;
-            width: 34%;
+            width: 50%;
+
+            @include mq(desktop) {
+                width: 34%;
+            }
 
             .lineitem__image {
                 max-width: 100%;
@@ -55,7 +59,7 @@
             padding-left: $gs-gutter;
         }
         .commercial__relevance--high {
-            @include mq($until: tablet) {
+            @include mq(desktop) {
                 .lineitem__title {
                     padding-right: $gs-gutter*5;
                 }
