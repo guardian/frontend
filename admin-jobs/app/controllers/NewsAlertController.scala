@@ -7,7 +7,7 @@ import authentication.AuthenticationSupport
 import common.ExecutionContexts
 import conf.Configuration
 import controllers.BreakingNews.{BreakingNewsUpdater, GetAlertsRequest, NewNotificationRequest}
-import model.Cached
+import model.{Cors, Cached}
 import models.NewsAlertNotification
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.BodyParsers.parse.{json => BodyJson}
@@ -32,9 +32,9 @@ trait NewsAlertController extends Controller with AuthenticationSupport with Exe
   case class NewsAlertError(error: String)
   implicit private val ew = Json.writes[NewsAlertError]
 
-  def alerts() = Action.async {
+  def alerts() = Action.async { implicit request =>
     (breakingNewsUpdater ? GetAlertsRequest).mapTo[Option[JsValue]].map {
-      case Some(json) => Cached(30)(Ok(json))
+      case Some(json) => Cached(30)(Cors(Ok(json)))
       case None => NoContent
     }.recover{
       case _ => InternalServerError(Json.toJson(NewsAlertError("Error while accessing alerts")))
