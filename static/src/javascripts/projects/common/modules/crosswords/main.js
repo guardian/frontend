@@ -49,7 +49,8 @@ define([
     some,
     zip,
     forEach,
-    find) {
+    find
+) {
     var Crossword = React.createClass({
         getInitialState: function () {
             var dimensions = this.props.data.dimensions;

@@ -43,9 +43,10 @@ class SignoutController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
       DiscardingCookie("gu_paying_member", "/", Some(conf.id.domain), secure = false)
       )
 
-    val cookiesToDiscard = 
+    val cookiesToDiscard =
       DiscardingCookie("GU_U", "/", Some(conf.id.domain), secure = false) ::
       DiscardingCookie("SC_GU_U", "/", Some(conf.id.domain), secure = true) ::
+      DiscardingCookie("GU_ID_CSRF", "/", Some(conf.id.domain), secure = true) ::
       adfreeCookies
 
     NoCache(Found(

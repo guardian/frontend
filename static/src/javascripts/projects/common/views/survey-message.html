@@ -1,7 +1,8 @@
-<p class="site-message__message js-site-message__message site-message__message--survey" id="site-message__message"
-   data-site-message-wide="<%=messageTextWide%>"
-   data-site-message-narrow="<%=messageTextNarrow%>">
-    <%=messageTextNarrow%>
+<p class="site-message__message site-message__message--survey site-message__message--has-headline" id="site-message__message">
+    <span class="site-message__headline"><%=messageTextHeadline%></span>
+    <span class="js-site-message__message site-message__desc"
+          data-site-message-wide="<%=messageTextWide%>"
+          data-site-message-narrow="<%=messageTextNarrow%>"><%=messageTextNarrow%></span>
 </p>
 <ul class="site-message__actions u-unstyled">
     <li class="site-message__actions__item">

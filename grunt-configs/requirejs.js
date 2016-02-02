@@ -39,7 +39,7 @@ module.exports = function (grunt, options) {
             optimize: options.isDev ? 'none' : 'uglify2',
             generateSourceMaps: true,
             preserveLicenseComments: false,
-            fileExclusionRegExp: /^bower_components|test$/i
+            fileExclusionRegExp: /^bower_components/i
         },
         common: {
             options: {
@@ -93,6 +93,21 @@ module.exports = function (grunt, options) {
             options: {
                 name: 'bootstraps/enhanced/article',
                 out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/article.js',
+                exclude: [
+                    'boot',
+                    'bootstraps/standard/main',
+                    'bootstraps/commercial',
+                    'enhanced-vendor',
+                    'bootstraps/enhanced/main',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
+        minute: {
+            options: {
+                name: 'bootstraps/enhanced/article-minute',
+                out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/article-minute.js',
                 exclude: [
                     'boot',
                     'bootstraps/standard/main',

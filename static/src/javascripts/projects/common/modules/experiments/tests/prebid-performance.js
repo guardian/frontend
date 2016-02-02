@@ -6,7 +6,7 @@ define([
     return function () {
         this.id = 'PrebidPerformance';
         this.start = '2016-01-15';
-        this.expiry = '2016-01-31';
+        this.expiry = '2016-02-08';
         this.author = 'Jimmy Breck-McKye';
         this.description = 'run prebid.js header-bidding auctions before displaying DFP advertising';
 

@@ -6,11 +6,11 @@ import common.{Edition, ExecutionContexts, Logging}
 import conf.{LiveContentApi, Static}
 import crosswords.{AccessibleCrosswordRows, CrosswordPage, CrosswordSearchPage, CrosswordSvg}
 import model._
-import org.joda.time.LocalDate
+import org.joda.time.{DateTime, LocalDate}
 import play.api.data.Forms._
 import play.api.data._
 import play.api.mvc.{Action, Controller, RequestHeader, Result, _}
-import services.{IndexPageItem, IndexPage}
+import services.{IndexPage, IndexPageItem}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -126,7 +126,13 @@ object CrosswordSearchController extends CrosswordController {
 
             case results =>
               val section = Section.make(ApiSection("crosswords", "Crosswords search results", "http://www.theguardian.com/crosswords/search", "", Nil))
-              val page = IndexPage(section, results.map(IndexPageItem(_)))
+              val page = IndexPage(
+                page = section,
+                contents = results.map(IndexPageItem(_)),
+                tags = Tags(Nil),
+                date = DateTime.now,
+                tzOverride = None
+              )
 
               Cached(15.minutes)(Ok(views.html.index(page)))
           }

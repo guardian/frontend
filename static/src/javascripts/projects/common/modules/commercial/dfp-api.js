@@ -47,7 +47,6 @@ define([
     'lodash/arrays/intersection',
     'lodash/arrays/initial',
 
-    'common/modules/commercial/creatives/branded-component',
     'common/modules/commercial/creatives/commercial-component',
     'common/modules/commercial/creatives/gu-style-comcontent',
     'common/modules/commercial/creatives/paidfor-content',
@@ -107,7 +106,8 @@ define([
     find,
     last,
     intersection,
-    initial) {
+    initial
+) {
     /**
      * Right, so an explanation as to how this works...
      *
@@ -363,7 +363,7 @@ define([
         },
         instantLoad = function () {
             chain(slots).and(keys).and(forEach, function (slot) {
-                if (contains(['dfp-ad--pageskin-inread', 'dfp-ad--merchandising-high'], slot)) {
+                if (contains(['dfp-ad--pageskin-inread', 'dfp-ad--merchandising-high', 'dfp-ad--im'], slot)) {
                     loadSlot(slot);
                 }
             });
@@ -403,8 +403,9 @@ define([
                 displayed = true;
             });
         },
-        addSlot = function ($adSlot) {
-            var slotId = $adSlot.attr('id'),
+        addSlot = function (adSlot) {
+            var $adSlot = bonzo(adSlot),
+                slotId = $adSlot.attr('id'),
                 displayAd = function ($adSlot) {
                     slots[slotId] = {
                         isRendered: false,
@@ -429,6 +430,12 @@ define([
             if (slot) {
                 googletag.pubads().refresh([slot]);
             }
+        },
+        removeSlot = function (slotId) {
+            delete slots[slotId];
+            idleFastdom.write(function () {
+                $('#' + slotId).remove();
+            });
         },
         getSlots = function () {
             return slots;
@@ -492,29 +499,29 @@ define([
         parseAd = function (event) {
             var size,
                 slotId = event.slot.getSlotElementId(),
-                $slot = $('#' + slotId),
+                $slot,
                 $placeholder,
                 $adSlotContent;
 
-            allAdsRendered(slotId);
-
             if (event.isEmpty) {
-                removeLabel($slot);
+                removeSlot(slotId);
             } else {
+                $slot = $('#' + slotId),
+
                 // Store ads IDs for technical feedback
                 creativeIDs.push(event.creativeId);
 
                 // remove any placeholder ad content
                 $placeholder = $('.ad-slot__content--placeholder', $slot);
-                $adSlotContent = $('#' + slotId + ' div');
+                $adSlotContent = $('div', $slot);
                 idleFastdom.write(function () {
                     $placeholder.remove();
                     $adSlotContent.addClass('ad-slot__content');
                 });
 
                 // Check if creative is a new gu style creative and place labels accordingly
-                checkForBreakout($slot).then(function (adType) {
-                    if (!adType || adType.type !== 'gu-style') {
+                dfp.checkForBreakout($slot).then(function (adType) {
+                    if (adType !== 'gu-style') {
                         addLabel($slot);
                     }
 
@@ -542,6 +549,8 @@ define([
                     }
                 });
             }
+
+            allAdsRendered(slotId);
         },
         allAdsRendered = function (slotId) {
             if (slots[slotId] && !slots[slotId].isRendered) {
@@ -556,16 +565,9 @@ define([
         },
         addLabel = function ($slot) {
             idleFastdom.write(function () {
-                var adSlotClass = 'ad-slot__label';
-
                 if (shouldRenderLabel($slot)) {
-                    $slot.prepend('<div class="' + adSlotClass + '" data-test-id="ad-slot-label">Advertisement</div>');
+                    $slot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
                 }
-            });
-        },
-        removeLabel = function ($slot) {
-            idleFastdom.write(function () {
-                $('.ad-slot__label', $slot).remove();
             });
         },
         shouldRenderLabel = function ($slot) {
@@ -642,32 +644,38 @@ define([
          * can inherit fonts.
          */
         checkForBreakout = function ($slot) {
-            return Promise.all(map($('iframe', $slot), function (iFrame) {
-                return new Promise(function (resolve) {
-                    // IE needs the iFrame to have loaded before we can interact with it
-                    if (iFrame.readyState && iFrame.readyState !== 'complete') {
-                        bean.on(iFrame, 'readystatechange', function (e) {
-                            var updatedIFrame = e.srcElement;
+            return new Promise(function (resolve, reject) {
+                // DFP sometimes sends back two iframes, one with actual ad and one with 0,0 sizes and __hidden__ 'paramter'
+                // The later one will never go to 'complete' state on IE so lets avoid it.
+                var iFrame = find($('iframe', $slot), function (iframe) { return iframe.id.match('__hidden__') === null; });
 
-                            if (
-                                /*eslint-disable valid-typeof*/
-                                updatedIFrame &&
-                                    typeof updatedIFrame.readyState !== 'unknown' &&
-                                    updatedIFrame.readyState === 'complete'
-                                /*eslint-enable valid-typeof*/
-                            ) {
-                                bean.off(updatedIFrame, 'readystatechange');
-                                resolve(breakoutIFrame(updatedIFrame, $slot));
-                            }
-                        });
-                    } else {
-                        resolve(breakoutIFrame(iFrame, $slot));
-                    }
+                // No iFrame, no work to do
+                if (typeof iFrame === 'undefined') {
+                    reject();
+                }
+                // IE needs the iFrame to have loaded before we can interact with it
+                else if (iFrame.readyState && iFrame.readyState !== 'complete') {
+                    bean.on(iFrame, 'readystatechange', function (e) {
+                        var updatedIFrame = e.srcElement;
+
+                        if (
+                            /*eslint-disable valid-typeof*/
+                            updatedIFrame &&
+                                typeof updatedIFrame.readyState !== 'unknown' &&
+                                updatedIFrame.readyState === 'complete'
+                            /*eslint-enable valid-typeof*/
+                        ) {
+                            bean.off(updatedIFrame, 'readystatechange');
+                            resolve(breakoutIFrame(updatedIFrame, $slot));
+                        }
+                    });
+                } else {
+                    resolve(breakoutIFrame(iFrame, $slot));
+                }
+            }).then(function (items) {
+                return find(items, function (item) {
+                    return item.adType !== '';
                 });
-            })).then(function (items) {
-                return chain(items).and(find, function (item) {
-                        return item.adType !== '';
-                    }).value();
             });
         },
         breakpointNameToAttribute = function (breakpointName) {
@@ -758,6 +766,7 @@ define([
             // Used privately but exposed only for unit testing
             shouldLazyLoad: shouldLazyLoad,
             getCreativeIDs: getCreativeIDs,
+            checkForBreakout: checkForBreakout,
 
             // testing
             reset: function () {

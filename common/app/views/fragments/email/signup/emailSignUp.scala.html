@@ -17,7 +17,7 @@
 
 <div class="@wrapperClass">
     @if(formHeading) {
-        @fragments.email.emailSignUpHeader(componentClass, formHeading, formDescription, formImage)
+        @fragments.email.signup.emailSignUpHeader(componentClass, formHeading, formDescription, formImage)
     }
 
     <form action="@LinkTo("/email")" method="post" id="@formId" class="@formClass" data-email-form-type="@componentClass" data-email-list-id="@listId">

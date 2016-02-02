@@ -2,7 +2,7 @@ package model
 
 import com.gu.contentapi.client.model.v1.{Section => ApiSection}
 import common.Pagination
-import play.api.libs.json.{JsString, JsValue}
+import play.api.libs.json.{JsBoolean, JsString, JsValue}
 
 object Section {
   def make(section: ApiSection, pagination: Option[Pagination] = None): Section = {
@@ -18,7 +18,8 @@ object Section {
     val javascriptConfigOverrides: Map[String, JsValue] = Map(
         "keywords" -> JsString(webTitle),
         "keywordIds" -> JsString(keywordIds.mkString(",")),
-        "contentType" -> JsString("Section")
+        "contentType" -> JsString("Section"),
+        "isAdvertisementFeature" -> JsBoolean(keywordSponsorship.isAdvertisementFeature)
       )
 
     val metadata = MetaData (

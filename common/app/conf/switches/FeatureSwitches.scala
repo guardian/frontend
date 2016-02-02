@@ -5,6 +5,15 @@ import org.joda.time.LocalDate
 
 trait FeatureSwitches {
 
+  val AWSCredentialsProfileSwitchOver = Switch(
+    "Feature",
+    "aws-credentials-switchover",
+    "Switch to remind us to remove the 'nextgen' profile from the default AWS credentials provider chain",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 2, 5), //Friday
+    exposeClientSide = false
+  )
+
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
     "fixtures-and-results-container",
@@ -23,15 +32,6 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val Hmtl5MediaCompatibilityCheck = Switch(
-    "Feature",
-    "html-5-media-compatibility-check",
-    "If switched on then will will infer the video player tech priority based on the video source codec",
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val OutbrainSwitch = Switch(
     "Feature",
     "outbrain",
@@ -47,6 +47,15 @@ trait FeatureSwitches {
     "Enable Foresee surveys for a sample of our audience",
     safeState = Off,
     sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val LiveBlogTransitionSwitch = Switch(
+    "Feature",
+    "liveblog-transition",
+    "Fix up liveblog scroll transitions in liveblog.js to work with pagination",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 3, 2),
     exposeClientSide = true
   )
 
@@ -223,15 +232,6 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val SplitOlderIPadsSwitch = Switch(
-    "Feature",
-    "ipad-split-capabilities",
-    "If switched on then this gives older ipads the stripped down front but full articles",
-    safeState = On,
-    sellByDate = new LocalDate(2016, 2, 1),
-    exposeClientSide = false
-  )
-
   val FootballFeedRecorderSwitch = Switch(
     "Feature",
     "football-feed-recorder",
@@ -346,6 +346,24 @@ trait FeatureSwitches {
     "When ON, the R2 page press service will monitor the queue and press pages to S3",
     safeState = On,
     sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val EmailInArticleSwitch = Switch(
+    "Feature",
+    "email-in-article",
+    "When ON, the email sign-up form will show on articles matching the email lists utilising the email module",
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val USElectionSwitch = Switch(
+    "Feature",
+    "us-election",
+    "When ON, items tagged with us-news/us-elections-2016 will have visual elements added",
+    safeState = On,
+    sellByDate = new LocalDate(2017, 1, 5),
     exposeClientSide = false
   )
 }

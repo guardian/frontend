@@ -21,7 +21,8 @@ define([
     template,
     svgs,
     ExpandableVideoTpl,
-    merge) {
+    merge
+) {
 
     /**
      * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10028247

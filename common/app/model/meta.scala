@@ -6,8 +6,7 @@ import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
 import cricketPa.CricketTeams
-import model.liveblog.BodyBlock.{KeyEvent, SummaryEvent}
-import model.liveblog.{LiveBlogDate, BodyBlock}
+import model.liveblog.BodyBlock
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
@@ -45,7 +44,7 @@ object Commercial {
       isAdvertisementFeature = false,
       hasMultipleSponsors = false,
       hasMultipleFeatureAdvertisers = false,
-      hasInlineMerchandise = false
+      hasInlineMerchandise = DfpAgent.hasInlineMerchandise(tags.tags)
     )
   }
 
@@ -55,6 +54,21 @@ object Commercial {
 
   def make(metadata: MetaData, tags: Tags): model.Commercial = {
     make(metadata, tags, None)
+  }
+
+  def make(section: Section): model.Commercial = {
+    val keywordSponsorship = section.keywordSponsorship
+    model.Commercial(
+      tags = Tags(Nil),
+      metadata = section.metadata,
+      isInappropriateForSponsorship = false,
+      sponsorshipTag = None,
+      isFoundationSupported = keywordSponsorship.isFoundationSupported,
+      isAdvertisementFeature = keywordSponsorship.isAdvertisementFeature,
+      hasMultipleSponsors = keywordSponsorship.hasMultipleSponsors,
+      hasMultipleFeatureAdvertisers = keywordSponsorship.hasMultipleFeatureAdvertisers,
+      hasInlineMerchandise = false
+    )
   }
 }
 
@@ -210,7 +224,7 @@ final case class MetaData (
   description: Option[String] = None,
   rssPath: Option[String] = None,
   contentType: String = "",
-  isImmersive: Boolean = false,
+  hasHeader: Boolean = true,
   schemaType: Option[String] = None, // Must be one of... http://schema.org/docs/schemas.html
   cacheSeconds: Int = 60,
   openGraphImages: Seq[String] = Seq(),
@@ -578,6 +592,7 @@ final case class Tags(
     tags.exists(t => t.id == "sport/rugby-union")
 
   lazy val isClimateChangeSeries = tags.exists(t => t.id =="environment/series/keep-it-in-the-ground")
+  lazy val isUSMinuteSeries = tags.exists(t => t.id == "us-news/series/the-campaign-minute-2016")
 
   def javascriptConfig: Map[String, JsValue] = Map(
     ("keywords", JsString(keywords.map { _.name }.mkString(","))),

@@ -37,7 +37,7 @@ define([
             data: {
                 messageText: [
                     'Thank you for reading the Guardian.',
-                    'Help keep our journalism free and independent by becoming a Supporter for just £5 a month.'
+                    'Help keep our journalism fearless and independent by becoming a Supporter for just £5 a month.'
                 ].join(' '),
                 linkText: 'Join'
             }

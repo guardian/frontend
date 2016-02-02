@@ -18,7 +18,16 @@ trait ABTestSwitches {
     "ab-fronts-on-articles2",
     "Injects fronts on articles for the test",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 1),
+    sellByDate = new LocalDate(2016, 4, 1),
+    exposeClientSide = true
+  )
+
+  val ABIdentityRegisterV2 = Switch(
+    "A/B Tests",
+    "ab-identity-register-v2",
+    "New user registration page variant for Identity",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 3, 1),
     exposeClientSide = true
   )
 
@@ -36,7 +45,7 @@ trait ABTestSwitches {
     "ab-rtrt-email-form-article-promo-v2",
     "Testing the email sign up from the bottom of articles of user referred from fronts",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 3),
+    sellByDate = new LocalDate(2016, 2, 10),
     exposeClientSide = true
   )
 
@@ -49,21 +58,39 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABLiveblogToast = Switch(
+    "A/B Tests",
+    "ab-liveblog-toast",
+    "Enables Liveblog toast (0% test)",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 3, 1),
+    exposeClientSide = true
+  )
+
   val ABPrebidPerformance = Switch(
     "A/B Tests",
     "ab-prebid-performance",
     "Measure performance impact of running prebid auctions before showing display advertising",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 1),
+    sellByDate = new LocalDate(2016, 2, 8),
     exposeClientSide = true
   )
 
-  val UserzoomSurveyMessage = Switch(
+  val UserzoomSurveyMessageV3 = Switch(
     "A/B Tests",
-    "ab-userzoom-survey-message",
-    "(Initial 0%) Segment the userzoom data-team survey",
+    "ab-userzoom-survey-message-v3",
+    "Segment the userzoom data-team survey",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 1, 28),
+    sellByDate = new LocalDate(2016, 2, 11),
+    exposeClientSide = true
+  )
+
+  val UserzoomSurveyMessageMobileV3 = Switch(
+    "A/B Tests",
+    "ab-userzoom-survey-message--mobile-v3",
+    "Segment the userzoom data-team survey",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 2, 8),
     exposeClientSide = true
   )
 }

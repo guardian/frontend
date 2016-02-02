@@ -14,6 +14,15 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
+  val NonBlockingOmniture = Switch(
+    "Performance",
+    "non-blocking-omniture",
+    "If this switch is on, omniture will be inlined in the footer. If it is off, it will be inlined in the head",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
   // Performance
   val LazyLoadContainersSwitch = Switch(
     "Performance",

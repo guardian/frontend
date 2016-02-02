@@ -67,7 +67,8 @@ define([
     externalLink,
     tick,
     glabsLogoSmall,
-    isArray) {
+    isArray
+) {
     var svgs = {
         commentCount16icon: commentCount16icon,
         marque36icon: marque36icon,

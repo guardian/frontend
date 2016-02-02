@@ -19,15 +19,22 @@ object PressedPage {
     def optionalMapEntry(key:String, o: Option[String]): Map[String, String] =
       o.map(value => Map(key -> value)).getOrElse(Map())
 
-    val isNetworkFront: Boolean = Edition.all.exists(_.id.toLowerCase == id)
+    val isNetworkFront: Boolean = Edition.all.exists(_.networkFrontId == id)
     val showMpuInAllContainers: Boolean = showMpuInAllContainersPageId contains id
     val keywordIds: Seq[String] = frontKeywordIds(id)
     val contentType = if (isNetworkFront) GuardianContentTypes.NetworkFront else GuardianContentTypes.Section
 
+    val isAdvertisementFeature: Boolean = {
+      val adUnitSuffix = AdSuffixHandlingForFronts.extractAdUnitSuffixFrom(id, id)
+      val keywordSponsorship = KeywordSponsorshipHandling(id, adUnitSuffix, keywordIds)
+      keywordSponsorship.isAdvertisementFeature
+    }
+
     val faciaPageMetaData: Map[String, JsValue] = Map(
       "keywords" -> JsString(seoData.webTitle.capitalize),
       "keywordIds" -> JsString(keywordIds.mkString(",")),
-      "contentType" -> JsString(contentType)
+      "contentType" -> JsString(contentType),
+      "isAdvertisementFeature" -> JsBoolean(isAdvertisementFeature)
     ) ++ (if (showMpuInAllContainers) Map("showMpuInAllContainers" -> JsBoolean(true)) else Nil)
 
     val openGraph: Map[String, String] = Map(

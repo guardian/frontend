@@ -1,6 +1,6 @@
 @import model.SubscriptionResult
 @(page: model.Page, result: SubscriptionResult)(implicit request: RequestHeader)
 
-@mainEmail(page){ }{
-    @fragments.email.subscriptionResult(result)
+@emailEmbed(page){
+    @fragments.email.signup.subscriptionResult(result)
 }

@@ -251,6 +251,17 @@ final case class PressedCard(
   isLive: Boolean
 )
 
+// EnrichedContent is an optionally-present field of the PressedContent class.
+// It contains additional content that has been pre-fetched by facia-press, to
+// enable facia-server-side rendering of FAPI content, such as embeds.
+final case class EnrichedContent(
+  embedHtml: Option[String]
+)
+
+object EnrichedContent {
+  val empty = EnrichedContent(None)
+}
+
 object PressedContent {
   def make(content: fapi.FaciaContent): PressedContent = content match {
     case curatedContent: fapi.CuratedContent => CuratedContent.make(curatedContent)
@@ -278,7 +289,8 @@ object CuratedContent {
       discussion = PressedDiscussionSettings.make(content),
       display = PressedDisplaySettings.make(content),
       supportingContent = content.supportingContent.map(PressedContent.make),
-      cardStyle = CardStyle.make(content.cardStyle)
+      cardStyle = CardStyle.make(content.cardStyle),
+      enriched = Some(EnrichedContent.empty)
     )
   }
 }
@@ -288,6 +300,7 @@ final case class CuratedContent(
   override val card: PressedCard,
   override val discussion: PressedDiscussionSettings,
   override val display: PressedDisplaySettings,
+  enriched: Option[EnrichedContent], // This is currently an option, as we introduce the new field. It can then become a value type.
   supportingContent: List[PressedContent],
   cardStyle: CardStyle ) extends PressedContent
 
@@ -318,8 +331,7 @@ object LinkSnap {
       header = PressedCardHeader.make(content),
       card = PressedCard.make(content),
       discussion = PressedDiscussionSettings.make(content),
-      display = PressedDisplaySettings.make(content),
-      snapUri = content.snapUri
+      display = PressedDisplaySettings.make(content)
     )
   }
 }
@@ -328,8 +340,7 @@ final case class LinkSnap(
   override val header: PressedCardHeader,
   override val card: PressedCard,
   override val discussion: PressedDiscussionSettings,
-  override val display: PressedDisplaySettings,
-  snapUri: Option[String]) extends Snap
+  override val display: PressedDisplaySettings) extends Snap
 
 object LatestSnap {
   def make(content: fapi.LatestSnap): LatestSnap = {
@@ -338,9 +349,7 @@ object LatestSnap {
       header = PressedCardHeader.make(content),
       card = PressedCard.make(content),
       discussion = PressedDiscussionSettings.make(content),
-      display = PressedDisplaySettings.make(content),
-      cardStyle = CardStyle.make(content.cardStyle),
-      snapUri = content.snapUri
+      display = PressedDisplaySettings.make(content)
     )
   }
 }
@@ -349,9 +358,7 @@ final case class LatestSnap(
   override val header: PressedCardHeader,
   override val card: PressedCard,
   override val discussion: PressedDiscussionSettings,
-  override val display: PressedDisplaySettings,
-  cardStyle: CardStyle,
-  snapUri: Option[String]) extends Snap
+  override val display: PressedDisplaySettings) extends Snap
 
 object KickerProperties {
   def make(kicker: fapiutils.ItemKicker): KickerProperties = KickerProperties(fapiutils.ItemKicker.kickerText(kicker))

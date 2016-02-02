@@ -68,7 +68,7 @@ import scala.collection.JavaConversions._
     val fakeRequest = FakeRequest(GET, "/environment/blog/2013/jun/26/barack-obama-climate-action-plan.json?lastUpdate=block-51cae3aee4b02dad15c7494e")
       .withHeaders("host" -> "localhost:9000")
 
-    val result = controllers.ArticleController.renderLiveBlogJson("environment/blog/2013/jun/26/barack-obama-climate-action-plan", Some("block-51cae3aee4b02dad15c7494e"), None)(fakeRequest)
+    val result = controllers.ArticleController.renderLiveBlogJson("environment/blog/2013/jun/26/barack-obama-climate-action-plan", Some("block-51cae3aee4b02dad15c7494e"), None, Some(true))(fakeRequest)
     status(result) should be(200)
 
     val content = contentAsString(result)

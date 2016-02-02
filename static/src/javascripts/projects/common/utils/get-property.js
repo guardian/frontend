@@ -3,7 +3,8 @@ define([
     'lodash/objects/has'
 ], function (
     reduce,
-    has) {
+    has
+) {
 
     return function (object, property, defaultValue) {
         var value = reduce(property.split('.'), function (object, property) {

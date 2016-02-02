@@ -10,7 +10,7 @@
 @blocks.map { block =>
     <div id="block-@block.id" class="block@block.eventClass" itemprop="liveBlogUpdate" itemscope="" itemtype="http://schema.org/BlogPosting">
         <p class="block-time published-time">
-            <a href="#block-@block.id" itemprop="url" class="block-time__link">
+            <a href="/@article.metadata.id?page=with:block-@block.id#block-@block.id" itemprop="url" class="block-time__link">
             @views.html.liveblog.dateBlock(block.publishedCreatedDate(timezone))
             </a>
         </p>

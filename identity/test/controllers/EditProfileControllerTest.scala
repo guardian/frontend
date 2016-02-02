@@ -91,12 +91,14 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
   "Given the submitPrivacyForm method is called" - {
     val receive3rdPartyMarketing = false
     val receiveGnmMarketing = true
+    val allowThirdPartyProfiling = false
 
     "with a valid CSRF request" - Fake{
       val fakeRequest = FakeCSRFRequest()
         .withFormUrlEncodedBody(
           "receiveGnmMarketing" -> receiveGnmMarketing.toString,
-          "receive3rdPartyMarketing" -> receive3rdPartyMarketing.toString
+          "receive3rdPartyMarketing" -> receive3rdPartyMarketing.toString,
+          "allowThirdPartyProfiling" -> allowThirdPartyProfiling.toString
         )
 
       val updatedUser = user.copy(
@@ -119,6 +121,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
 
         userUpdate.statusFields.value.receive3rdPartyMarketing.value should equal(receive3rdPartyMarketing)
         userUpdate.statusFields.value.receiveGnmMarketing.value should equal(receiveGnmMarketing)
+        userUpdate.statusFields.value.allowThirdPartyProfiling.value should equal(allowThirdPartyProfiling)
       }
 
       "then a status 200 should be returned" in {

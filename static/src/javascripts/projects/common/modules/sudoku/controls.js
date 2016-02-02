@@ -8,7 +8,8 @@ define([
     React,
     constants,
     map,
-    range) {
+    range
+) {
     var Button = React.createClass({
         render: function () {
             return React.DOM.g({

@@ -21,7 +21,8 @@ define([
     map,
     reduce,
     assign,
-    keys) {
+    keys
+) {
 
     function objToString(obj) {
         return reduce(obj, function (str, value, key) {

@@ -9,12 +9,13 @@ define([
 
     var CARD_DETAILS = '.js-mem-card-details',
         CARD_CHANGE_SUCCESS_MSG = '.js-mem-card-change-success-msg',
+        CHANGE_TIER_CARD_LAST4 = '.js-mem-card-last4',
         PACKAGE_COST = '.js-mem-package-cost',
         PACKAGE_CURRENT_RENEWAL_DATE = '.js-mem-current-renewal-date',
         PACKAGE_CURRENT_PERIOD_END = '.js-mem-current-period-end',
         PACKAGE_CURRENT_PERIOD_START = '.js-mem-current-period-start',
         PACKAGE_NEXT_PAYMENT_CONTAINER = '.js-mem-next-payment-container',
-        PACKAGE_RENEWAL_CONTAINER = '.js-mem-renewal-date-container',
+        TRIAL_INFO_CONTAINER = '.js-mem-only-for-trials',
         PACKAGE_NEXT_PAYMENT_DATE = '.js-mem-next-payment-date',
         PACKAGE_NEXT_PAYMENT_PRICE = '.js-mem-next-payment-price',
         PACKAGE_INTERVAL = '.js-mem-plan-interval',
@@ -55,7 +56,8 @@ define([
 
 
     function populateUserDetails(userDetails) {
-        var intervalText = userDetails.subscription.plan.interval === 'Month' ? 'Monthly' : 'Annual',
+        var isMonthly = userDetails.subscription.plan.interval === 'month',
+            intervalText = isMonthly ? 'Monthly' : 'Annual',
             glyph = userDetails.subscription.plan.currency,
             notificationTypeSelector;
 
@@ -63,6 +65,11 @@ define([
         $(PACKAGE_COST).text(formatters.formatAmount(userDetails.subscription.plan.amount, glyph));
         $(DETAILS_JOIN_DATE).text(formatters.formatDate(userDetails.joinDate));
         $(PACKAGE_INTERVAL).text(intervalText);
+
+        if (userDetails.subscription.card) {
+            $(CHANGE_TIER_CARD_LAST4).text(userDetails.subscription.card.last4);
+        }
+
         $(PACKAGE_CURRENT_PERIOD_START).text(formatters.formatDate(userDetails.subscription.start));
         $(PACKAGE_CURRENT_PERIOD_END).text(formatters.formatDate(userDetails.subscription.end));
         $(PACKAGE_CURRENT_RENEWAL_DATE).text(formatters.formatDate(userDetails.subscription.renewalDate));
@@ -74,9 +81,8 @@ define([
 
         $(PACKAGE_NEXT_PAYMENT_PRICE).text(formatters.formatAmount(userDetails.subscription.nextPaymentPrice, glyph));
 
-        var isMonthly = userDetails.subscription.plan.interval === 'Month';
-        if (userDetails.subscription.nextPaymentDate == userDetails.subscription.renewalDate || isMonthly) {
-            $(PACKAGE_RENEWAL_CONTAINER).addClass(IS_HIDDEN_CLASSNAME);
+        if (userDetails.subscription.trialLength > 0) {
+            $(TRIAL_INFO_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
         }
 
         // display membership number

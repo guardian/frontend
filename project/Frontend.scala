@@ -42,7 +42,6 @@ object Frontend extends Build with Prototypes {
       romeModules,
       scalaCheck,
       scalajTime,
-      scalaTestPlus,
       scalaz,
       shadeMemcached,
       snappyJava,
@@ -51,7 +50,9 @@ object Frontend extends Build with Prototypes {
       dispatchTest,
       closureCompiler,
       jerseyCore,
-      jerseyClient
+      jerseyClient,
+      cssParser,
+      w3cSac
     )
   ).settings(
       mappings in TestAssets ~= filterAssets

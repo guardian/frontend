@@ -1,7 +1,7 @@
 /*
-    Module: autoupdate.js
-    Description: Used to load update fragments of the DOM from specfied endpoint
-*/
+ Module: autoupdate.js
+ Description: Used to load update fragments of the DOM from specfied endpoint
+ */
 define([
     'bean',
     'bonzo',
@@ -25,21 +25,22 @@ define([
     twitter,
     NotificationBar,
     assign,
-    toArray) {
+    toArray
+) {
     /*
-        @param {Object} options hash of configuration options:
-            path             : {String}              Endpoint path to ajax request,
-            delay            : {Number}              Timeout in milliseconds to query endpoint,
-            attachTo         : {DOMElement|Object}   DOMElement or list of elements insert response into
-            switches         : {Object}              Global switches object
-            manipulationType : {String}              Which manipulation method used to insert content into DOM
-    */
+     @param {Object} options hash of configuration options:
+     path             : {String}              Endpoint path to ajax request,
+     delay            : {Number}              Timeout in milliseconds to query endpoint,
+     attachTo         : {DOMElement|Object}   DOMElement or list of elements insert response into
+     switches         : {Object}              Global switches object
+     manipulationType : {String}              Which manipulation method used to insert content into DOM
+     */
     function Autoupdate(opts) {
 
         var options = assign({
             'activeClass':      'is-active',
-            'btnClass':         '.js-auto-update',
             'manipulationType': 'html',
+            'btnClass':         '.js-auto-update',
             'backoff':          1, // 1 = no backoff
             'backoffMax':       1000 * 60 * 20 // 20 mins
         }, opts);
@@ -77,12 +78,11 @@ define([
                 this.unreadBlocks += resultHtml[0].children.length;
 
                 bonzo(resultHtml[0].children).addClass('autoupdate--hidden');
-
                 $attachTo[0].prepend(elementsToAdd);
                 $attachTo[1].prepend(toArray(resultHtml[1].children));
 
                 if (elementsToAdd.length) {
-                    mediator.emit('modules:autoupdate:updates', elementsToAdd);
+                    mediator.emit('modules:autoupdate:updates', elementsToAdd.length);
                 }
                 // add a timestamp to the attacher
                 $attachTo[0].attr('data-last-updated', date);
