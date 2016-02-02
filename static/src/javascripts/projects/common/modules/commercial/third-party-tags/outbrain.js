@@ -123,6 +123,7 @@ define([
 
     function init() {
         if (commercialFeatures.outbrain &&
+            !config.page.isFront &&
             !config.page.isPreview &&
             identityPolicy()
         ) {
