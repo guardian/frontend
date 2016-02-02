@@ -1,6 +1,6 @@
 try {
     ((isVeryModern, document, window) => {
-        var user = window.guardian.user;
+        var user = window.guardian.config.user;
 
         if (isVeryModern && user) {
             window.requestAnimationFrame(() => {

@@ -26,7 +26,7 @@ try {
             var userData = cookieData ? JSON.parse(decodeBase64(cookieData.split('.')[0])) : null;
 
             if (userData) {
-                window.guardian.user = {
+                window.guardian.config.user = {
                     id: userData[0],
                     displayName: userData[2],
                     accountCreatedDate: userData[6],
