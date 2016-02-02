@@ -30,8 +30,7 @@ define([
                 sliceAdverts : false,
                 popularContentMPU : false,
                 videoPreRolls : false,
-                frontCommercialComponents : false,
-                outbrain: false
+                frontCommercialComponents : false
             };
         }
     };
@@ -120,10 +119,7 @@ define([
 
     policies.nonFrontPages = function () {
         if (!config.page.isFront) {
-            return {
-                frontCommercialComponents : false,
-                outbrain: false
-            };
+            return {frontCommercialComponents : false};
         }
     };
 
@@ -150,9 +146,6 @@ define([
         if (!config.switches.sponsored) {
             switches.badges = false;
         }
-        if (!config.switches.outbrain) {
-            switches.outbrain = false;
-        }
 
         return switches;
     };
@@ -168,7 +161,6 @@ define([
         this.frontCommercialComponents = enabled;
         this.thirdPartyTags = enabled;
         this.badges = enabled;
-        this.outbrain = enabled;
     }
 
     function getPolicySwitches() {
