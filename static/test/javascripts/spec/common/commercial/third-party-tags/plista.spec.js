@@ -67,13 +67,9 @@ define([
 
                 eventStub = {
                     slot: {
-                        getSlotId: function () {
-                            return {
-                                getDomId: function () {
-                                    return 'dfp-ad--merchandising-high';
-                                }
-                            };
-                        }
+                        getSlotElementId: function () {
+                                return 'dfp-ad--merchandising-high';
+                            }
                     },
                     isEmpty: true
                 };
@@ -123,26 +119,6 @@ define([
                 fixtures.clean(fixturesMerch.id);
             });
 
-
-            it('should not load plista component when not AU edition', function () {
-                config.page.edition = 'UK';
-
-                spyOn(sut, 'load');
-                sut.init();
-                mediator.emit('modules:commercial:dfp:rendered', eventStub);
-                expect(sut.load).not.toHaveBeenCalled();
-            });
-
-
-            it('should not load plista component when switch not enabled', function () {
-                config.switches.plistaForOutbrainAu = false;
-
-                spyOn(sut, 'load');
-                sut.init();
-                mediator.emit('modules:commercial:dfp:rendered', eventStub);
-                expect(sut.load).not.toHaveBeenCalled();
-            });
-
             it('should not load when sensitive content', function () {
                 commercialFeatures.outbrain = false;
                 spyOn(sut, 'load');
@@ -189,4 +165,3 @@ define([
         });
     });
 });
-
