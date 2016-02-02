@@ -98,7 +98,10 @@ object Commercial {
 
   object containerCard {
 
-    def mkCardsWithSponsorDataAttributes(container: FaciaContainer): Seq[CardWithSponsorDataAttributes] = {
+    def mkCardsWithSponsorDataAttributes(
+      container: FaciaContainer,
+      maxCardCount: Int
+    ): Seq[CardWithSponsorDataAttributes] = {
 
       def sponsorDataAttributes(item: PressedContent): Option[SponsorDataAttributes] = {
 
@@ -140,7 +143,7 @@ object Commercial {
         }
       } getOrElse Nil
 
-      contentCards zip container.collectionEssentials.items flatMap {
+      contentCards.take(maxCardCount) zip container.collectionEssentials.items flatMap {
         case (card, content) =>
           card map (CardWithSponsorDataAttributes(_, sponsorDataAttributes(content)))
       }

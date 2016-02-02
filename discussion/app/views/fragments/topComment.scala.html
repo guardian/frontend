@@ -22,7 +22,7 @@ itemscope itemtype="http://schema.org/Comment">
             )
         </div>
 
-        <a class="d-top-comment__link js-jump-to-comment" href="@Configuration.discussion.url/comment-permalink/@comment.id" data-comment-id="@comment.id">
+        <a class="d-top-comment__link js-jump-to-comment" href="@comment.webUrl" data-comment-id="@comment.id">
             Jump to comment
         </a>
     </div>
@@ -49,7 +49,7 @@ itemscope itemtype="http://schema.org/Comment">
             </span>
 
             <div class="d-comment__timestamp">
-                <a href="@Configuration.discussion.url/comment-permalink/@comment.id" class="d-comment__timestamp">
+                <a href="@comment.webUrl" class="d-comment__timestamp">
                     <time class="js-timestamp" itemprop="dateCreated" datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")"
                     data-timestamp="@comment.date.getMillis" data-relativeformat="med" title="Permalink to this comment">
                     @Format(comment.date, "d MMM y HH:mm")

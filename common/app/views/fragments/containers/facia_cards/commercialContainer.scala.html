@@ -1,14 +1,13 @@
 @(containerType: slices.CommercialContainerType, container: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit request: RequestHeader)
 
+@import common.{Edition, LinkTo}
 @import conf.switches.Switches
-@import layout.{ColumnAndCards, ContentCard}
 @import model.InlineImage
 @import slices.{MultiCampaign, SingleCampaign}
 @import views.html.fragments.containers.facia_cards.standardContainer
 @import views.html.fragments.inlineSvg
 @import views.html.fragments.items.elements.facia_cards.{itemImage, title}
 @import views.support.{Commercial, RemoveOuterParaHtml}
-@import common.{Edition, LinkTo}
 
     @containerType match {
 
@@ -20,16 +19,7 @@
                 <div class="commercial commercial--paidfor commercial--tone-paidfor commercial--paidfor-single">
                     <div class="commercial__inner">
                         <div class="commercial__header">
-                            <div class="paidfor-meta">
-                                <span class="paidfor-meta__label">Paid content</span>
-                                <div class="paidfor-label paidfor-meta__more has-popup">
-                                    <button class="u-button-reset paidfor-label__btn popup__toggle" data-toggle="paidfor-popup--@container.dataId">About @inlineSvg("arrow-down", "icon")</button>
-                                    <div class="popup is-off paidfor-popup paidfor-popup--@container.dataId">
-                                        <h3 class="paidfor-popup__title">Paid content is paid for and controlled by an advertiser and created by the Guardian Labs team</h3>
-                                        <a class="paidfor-popup__link" href="@LinkTo("/content-funding")">Learn more about Guardian Labs content @inlineSvg("arrow-right", "icon")</a>
-                                    </div>
-                                </div>
-                            </div>
+                            @fragments.commercial.paidForMeta()
                             <h3 class="commercial__title">@container.displayName</h3>
                             <a class="commercial__cta"
                                 @if(Edition(request).id == "AU") {
@@ -44,33 +34,25 @@
                         </div>
                         <div class="commercial__body">
                             <ul class="lineitems l-row l-row--cols-4 js-container__header">
-                                @for(layout <- container.containerLayout) {
-                                    @for( slice <- layout.slices) {
-                                        @for(ColumnAndCards(_, cards) <- slice.columns) {
-                                            @for(card <- cards) {
-                                                @card.item match {
-                                                    case content: ContentCard => {
-                                                        <li class="lineitem l-row__item l-row__item--span-1">
-                                                            <div class="rich-link tone-paidfor--item">
-                                                                 <div class="rich-link__container">
-                                                                     @for(InlineImage(imageContainer) <- content.displayElement) {
-                                                                         @itemImage(imageContainer.images)
-                                                                     }
-                                                                     <div class="rich-link__header">
-                                                                         @title(content.header, card.index, container.index)
-                                                                     </div>
-                                                                     <div class="rich-link__standfirst u-cf">@for(text <- content.trailText) {@Html(text)}</div>
-                                                                     <a class="rich-link__link u-faux-block-link__overlay" @Html(content.header.url.hrefWithRel)>@RemoveOuterParaHtml(content.header.headline)</a>
-                                                                 </div>
-                                                            </div>
-                                                        </li>
-                                                    }
-                                                    case _ => {}
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
+                            @*
+                            Taking first 4 cards as a temporary fix until container can show a 'more' CTA
+                            *@
+                            @for(cardWithSponsorData <- Commercial.containerCard.mkCardsWithSponsorDataAttributes(container, 4)) {
+                                <li class="lineitem l-row__item l-row__item--span-1">
+                                    <div class="rich-link tone-paidfor--item">
+                                         <div class="rich-link__container">
+                                             @for(InlineImage(imageContainer) <- cardWithSponsorData.card.displayElement) {
+                                                 @itemImage(imageContainer.images)
+                                             }
+                                             <div class="rich-link__header">
+                                                 @title(cardWithSponsorData.card.header, 0, container.index)
+                                             </div>
+                                             <div class="rich-link__standfirst u-cf">@for(text <- cardWithSponsorData.card.trailText) {@Html(text)}</div>
+                                             <a class="rich-link__link u-faux-block-link__overlay" @Html(cardWithSponsorData.card.header.url.hrefWithRel)>@RemoveOuterParaHtml(cardWithSponsorData.card.header.headline)</a>
+                                         </div>
+                                    </div>
+                                </li>
+                            }
                             </ul>
                         </div>
                     </div>
@@ -93,16 +75,7 @@
                 <div class="commercial commercial--paidfor commercial--tone-paidfor commercial--paidfor-multi">
                     <div class="commercial__inner">
                         <div class="commercial__header">
-                            <div class="paidfor-meta">
-                                <span class="paidfor-meta__label">Paid content</span>
-                                <div class="paidfor-label paidfor-meta__more has-popup">
-                                    <button class="u-button-reset paidfor-label__btn popup__toggle" data-toggle="paidfor-popup--@container.dataId">About @inlineSvg("arrow-down", "icon")</button>
-                                    <div class="popup is-off paidfor-popup paidfor-popup--@container.dataId">
-                                        <h3 class="paidfor-popup__title">Paid content is paid for and controlled by an advertiser and created by the Guardian Labs team</h3>
-                                        <a class="paidfor-popup__link" href="@LinkTo("/content-funding")">Learn more about Guardian Labs content @inlineSvg("arrow-right", "icon")</a>
-                                    </div>
-                                </div>
-                            </div>
+                            @fragments.commercial.paidForMeta()
                             <h3 class="commercial__title">@container.displayName</h3>
                             <a class="commercial__cta"
                                 @if(Edition(request).id == "AU") {
@@ -117,7 +90,10 @@
                         </div>
                         <div class="commercial__body">
                             <ul class="lineitems l-row l-row--cols-4">
-                                @for(cardWithSponsorData <- Commercial.containerCard.mkCardsWithSponsorDataAttributes(container)) {
+                                @*
+                                Taking first 4 cards as a temporary fix until container can show a 'more' CTA
+                                *@
+                                @for(cardWithSponsorData <- Commercial.containerCard.mkCardsWithSponsorDataAttributes(container, 4)) {
                                     <li class="lineitem l-row__item l-row__item--span-1 js-sponsored-container"
                                         @for(sponsorData <- cardWithSponsorData.sponsorData) {
                                             @for(sponsor <- sponsorData.sponsor) { data-sponsor="@sponsor" }
