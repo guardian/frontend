@@ -3,7 +3,7 @@
     <a href="<%=clickMacro%><%=logoUrl%>" class="ad-slot--paid-for-badge__link">
         <img class="ad-slot--paid-for-badge__logo" src="<%=logoImage%>" />
     </a>
-    <% if (isNewCommercialContent) { %>
+    <% if (!guardian.config.switches.newCommercialContent) { %>
         <a href="<%=clickMacro%><%=infoUrl%>" class="ad-slot--paid-for-badge__help u-h">About this content</a>
         <a href="<%=clickMacro%>http://theguardian.com/paid-for-content" class="ad-slot--paid-for-badge__help">About this content</a>
     <% } %>
