@@ -7,7 +7,7 @@
 @defining(model.article) {  article =>
     <div class="l-side-margins">
         <article id="article" data-test-id="article-root"
-        class="content content--article content--immersive tonal tonal--@toneClass(article) section-@article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")
+        class="content content--article content--minute-article tonal tonal--@toneClass(article) section-@article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")
             @if(article.commercial.isAdvertisementFeature){content--advertisement-feature}
             @if(article.tags.isFeature && article.elements.hasShowcaseMainElement){has-feature-showcase-element}"
         itemscope itemtype="@article.metadata.schemaType" role="main">
@@ -19,24 +19,24 @@
 
             @fragments.headerImmersive(article)
 
-            <div class="content__main tonal__main tonal__main--@toneClass(article)">
-                <div class="gs-container">
-                    <div class="content__main-column content__main-column--minutearticle">
+            <div class="content__main content__main--minute-article tonal__main tonal__main--@toneClass(article)">
+                <div class="content__main-column content__main-column--minute-article">
 
-                        <div class="js-article__container" data-component="body">
+                    <div class="js-article__container article__container--minute-article" data-component="body">
 
-                            <div class="u-cf from-content-api" itemprop="{articleBody}">
-                            @BodyCleaner(article, article.fields.body, amp = false)
-                            </div>
+                        <div class="u-cf from-content-api" itemprop="{articleBody}">
+                        <div class="gs-container gs-container--minute-article">
+                        @BodyCleaner(article, article.fields.body, amp = false)
                         </div>
-
-                        @fragments.submeta(article)
-
-                        <div class="after-article js-after-article"></div>
-
-                        <div class="js-bottom-marker"></div>
-
+                        </div>
                     </div>
+
+                    @fragments.submeta(article)
+
+                    <div class="after-article js-after-article"></div>
+
+                    <div class="js-bottom-marker"></div>
+
                 </div>
             </div>
         </article>

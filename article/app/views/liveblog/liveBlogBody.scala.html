@@ -8,6 +8,7 @@
 @import views.html.fragments.items.facia_cards.item
 @import views.support.TrailCssClasses.toneClass
 @import common.Edition
+@import conf.switches.Switches._
 
 @defining((model.article, Edition(request).timezone)) { case (article, timezone) =>
 <div class="l-side-margins">
@@ -17,7 +18,8 @@
 
         <meta itemprop="url" content="@LinkTo(article.metadata.url)">
 
-        <header class="content__head tonal__head tonal__head--@toneClass(article)">
+        <header class="content__head tonal__head tonal__head--@toneClass(article)
+                        @if(USElectionSwitch.isSwitchedOn && article.content.tags.tags.exists(_.id == "us-news/us-elections-2016")) { content__head--us-election }">
             @* UPPER HEADER *@
             <div class="content__header tonal__header u-cf">
                 <div class="gs-container">

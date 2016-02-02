@@ -8,22 +8,21 @@ define([
     Promise
 ) {
     return function wrappedAjax(params) {
-        var promise = new Promise(function (resolve, reject) {
+        return new Promise(function (resolve, reject) {
             ajax(params)
-            .then(function (value) {
-                resolve(value);
-            })
-            .fail(function (request, text, err) {
-                var statusText = (err && err.statusText) || '';
-                var statusCode = (err && err.status) || '';
-                var errorText = 'Error retrieving data (' + text + ') (Status: ' + statusCode + ') (StatusText: ' + statusText + ')';
+                .then(resolve)
+                .fail(function (res, msg, err) {
+                    if (err) {
+                        return reject(err);
+                    }
 
-                var error = err ? err : new Error(errorText);
+                    if (res && res.status) {
+                        var message = 'AJAX error (' + params.url + '): ' + res.statusText || '' + ' (' + res.status + ')';
+                        return reject(new Error(message));
+                    }
 
-                error.request = request;
-                reject(error);
-            });
+                    reject(new Error('Unknown AJAX error (' + params.url + ')'));
+                });
         });
-        return promise;
     };
 });

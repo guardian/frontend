@@ -1,9 +1,10 @@
 package tools
 
 import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
+import org.openqa.selenium.interactions.Actions
+import play.api.test.TestBrowser
 import collection.JavaConversions._
 import org.scalatest.ShouldMatchers
-
 
 trait MatchListFeatureTools extends ShouldMatchers {
   protected def assertTeamWithScore(matches: FluentList[FluentWebElement], team: String, score: String): Unit = {
@@ -46,5 +47,13 @@ trait MatchListFeatureTools extends ShouldMatchers {
       },
       s"$matchesStr did erroneously contained $team1 v $team2"
     )
+  }
+  protected def scrollToElementAndClick(selector: String, browser: TestBrowser): Unit = {
+    val element = browser.findFirst(selector)
+    val builder = new Actions(browser.webDriver)
+
+    builder.moveToElement(element.getElement)
+    builder.click()
+    builder.build().perform()
   }
 }

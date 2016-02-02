@@ -27,7 +27,10 @@ import scala.collection.JavaConversions._
     import browser._
     $("link[rel='alternate']").toList
       .filterNot(_.getAttribute("type") == "application/rss+xml")
-      .filter(element => Option(element.getAttribute("href")).isDefined) // ios-app: urls return null for some bizarre reason
+      .filter(element => {
+        val href: Option[String] = Option(element.getAttribute("href"))
+        href.isDefined && !href.exists(_.contains("ios-app"))
+      })
   }
 
   it should "add alternate pages to editionalised sections for /au/culture" in goTo("/au/culture") { browser =>

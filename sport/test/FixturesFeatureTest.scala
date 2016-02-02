@@ -33,7 +33,7 @@ import tools.MatchListFeatureTools
 
         When("I click the 'Next' fixtures link")
 
-        findFirst("[data-link-name=next]").click()
+        scrollToElementAndClick("[data-link-name=next]", browser)
 
         Then("I should see the next set of upcoming matches")
         val matches = $(".football-teams")
