@@ -46,7 +46,8 @@ define([
                 sliceAdverts : false,
                 popularContentMPU : false,
                 videoPreRolls : false,
-                frontCommercialComponents : false
+                frontCommercialComponents : false,
+                outbrain : false
             };
 
             it('hides features on a sensitive page', function () {
