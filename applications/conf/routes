@@ -36,6 +36,10 @@ GET        /index/contributors/*contributor                                     
 
 GET        /embed/video/*path                                                   controllers.EmbedController.render(path)
 
+#Notifications Store
+POST           /notification/store                    controllers.NotificationsController.saveSubscription()
+POST           /notification/delete                   controllers.NotificationsController.deleteSubscription()
+
 # Preferences
 GET        /preferences                                                         controllers.PreferencesController.indexPrefs()
 

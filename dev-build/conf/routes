@@ -237,18 +237,14 @@ POST           /redirect-post                                                   
 
 # css reports
 GET            /css-reports                                                                                                      controllers.admin.CssReportController.entry
-GET            /css-reports.json                                                                                                 controllers.admin.CssReportController.index
-GET            /css-reports/:date.json                                                                                           controllers.admin.CssReportController.report(date: org.joda.time.LocalDate)
-
-#Notifications Store
-POST           /notification/store                                                                                               controllers.admin.NotificationsController.saveSubscription()
-POST           /notification/delete                                                                                              controllers.admin.NotificationsController.deleteSubscription()
+GET            /css-reports.json                      controllers.admin.CssReportController.index
+GET            /css-reports/:date.json                controllers.admin.CssReportController.report(date: org.joda.time.LocalDate)
 
 # Football admin
 
-GET            /admin/football                                                                                                   controllers.admin.SiteController.index
-GET            /admin/football/browse                                                                                            controllers.admin.PaBrowserController.browse
-POST           /admin/football/browserRedirect                                                                                   controllers.admin.PaBrowserController.browserSubstitution
+GET            /admin/football                        controllers.admin.SiteController.index
+GET            /admin/football/browse                 controllers.admin.PaBrowserController.browse
+POST           /admin/football/browserRedirect        controllers.admin.PaBrowserController.browserSubstitution
 GET            /admin/football/browser/*query                                                                                    controllers.admin.PaBrowserController.browser(query)
 GET            /admin/football/player                                                                                            controllers.admin.PlayerController.playerIndex
 POST           /admin/football/player/card                                                                                       controllers.admin.PlayerController.redirectToCard
@@ -334,6 +330,11 @@ GET            /sitemaps/video.xml                                              
 GET            /offline-page.json                                                                                                controllers.WebAppController.offlinePage()
 GET            /notifications-service-worker.js                                                                                   controllers.WebAppController.notificationsServiceWorker()
 GET            /service-worker.js                                                                                                controllers.WebAppController.serviceWorker()
+
+#Notifications Store
+POST           /notification/store                                                                                               controllers.NotificationsController.saveSubscription()
+POST           /notification/delete                                                                                              controllers.NotificationsController.deleteSubscription()
+
 
 GET            /2015-06-24-manifest.json                                                                                         controllers.WebAppController.manifest()
 GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()

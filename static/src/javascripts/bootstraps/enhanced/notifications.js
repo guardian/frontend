@@ -132,7 +132,6 @@ define([
            });
        },
 
-       //TODO AJAX the subscription to RDS
        followThis: function() {
            modules.log("++ Subscribe");
            var endpoint = '/notification/store';
@@ -154,7 +153,6 @@ define([
            modules.updateSubscription(endpoint).then(
                function(rsp) {
                    modules.log("++ Done: " + JSON.stringify(rsp));
-                   ++CHECK is empty!
                    var subscriptions = userPrefs.get('subscriptions') || [],
                        newSubscriptions = without(subscriptions, config.page.pageId);
                    userPrefs.set('subscriptions', uniq(newSubscriptions));
@@ -164,12 +162,12 @@ define([
        },
 
        updateSubscription: function(endpoint) {
-           var registrationId = sub.endpoint.substring(sub.endpoint.lastIndexOf('/') + 1),
+           var gcmBrowserId = sub.endpoint.substring(sub.endpoint.lastIndexOf('/') + 1),
                request =  ajax({
                url: endpoint,
                method: 'POST',
                contentType: 'application/x-www-form-urlencoded',
-               data: {registration_id: registrationId, content_id: config.page.pageId }
+               data: {gcmBrowserId: gcmBrowserId, notificationTopicId: config.page.pageId }
            });
            return request;
        }
