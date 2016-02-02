@@ -1,6 +1,6 @@
 @import _root_.model.SimplePage
 @import conf.Configuration
-@(commentId: Int, page: SimplePage)(implicit request: RequestHeader)
+@(webUrl: String, page: SimplePage)(implicit request: RequestHeader)
 @main(page) { } {
 
 
@@ -22,7 +22,7 @@
         <div class="content__main tonal__main tonal__main--tone-news">
             <div class="gs-container">
                 <div class="content__main-column">
-                 Thank you for your report. <a href="@Configuration.discussion.url/comment-permalink/@commentId">Return to comment</a>
+                 Thank you for your report. <a href="@webUrl">Return to comment</a>
                 </div>
             </div>
         </div>

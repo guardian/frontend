@@ -27,7 +27,8 @@ define([
     defaults,
     contains,
     map,
-    chain) {
+    chain
+) {
     var maxAdsToShow = config.page.showMpuInAllContainers ? 999 : 3,
         init = function (options) {
             if (!commercialFeatures.sliceAdverts) {

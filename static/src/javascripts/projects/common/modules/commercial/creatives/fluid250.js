@@ -15,7 +15,8 @@ define([
     storage,
     template,
     fluid250Tpl,
-    merge) {
+    merge
+) {
     var Fluid250 = function ($adSlot, params) {
         this.$adSlot = $adSlot;
         this.params = params;

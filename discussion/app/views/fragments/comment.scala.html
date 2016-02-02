@@ -43,7 +43,7 @@
                     </a>
                 }
                 <div class="d-comment__timestamp">
-                    <a href="@Configuration.discussion.url/comment-permalink/@comment.id" class="d-comment__timestamp block-time">
+                    <a href="@comment.webUrl" class="d-comment__timestamp block-time">
                         <time class="js-timestamp" itemprop="dateCreated"
                             datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")"
                             data-timestamp="@comment.date.getMillis" data-relativeformat="med"
@@ -100,7 +100,7 @@
                 </div>
                 @if(!comment.isBlocked){
                     <div class="d-comment__actions d-comment__actions--left modern-visible">
-                        <a class="d-comment__action d-comment__action--reply" href="https://profile.theguardian.com/signin?returnUrl=@Configuration.discussion.url/comment-permalink/@comment.id"
+                        <a class="d-comment__action d-comment__action--reply" href="https://profile.theguardian.com/signin?returnUrl=@comment.webUrl"
                                 data-link-name="reply to comment" data-comment-id="@comment.id" role="button">
                             @fragments.inlineSvg("reply", "icon", List("blue"))
                             Reply

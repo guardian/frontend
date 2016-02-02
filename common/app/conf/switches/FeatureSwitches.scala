@@ -10,7 +10,7 @@ trait FeatureSwitches {
     "aws-credentials-switchover",
     "Switch to remind us to remove the 'nextgen' profile from the default AWS credentials provider chain",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 2), //Tuesday
+    sellByDate = new LocalDate(2016, 2, 5), //Friday
     exposeClientSide = false
   )
 
@@ -30,15 +30,6 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = new LocalDate(2016, 11, 7),
     exposeClientSide = false
-  )
-
-  val Hmtl5MediaCompatibilityCheck = Switch(
-    "Feature",
-    "html-5-media-compatibility-check",
-    "If switched on then will will infer the video player tech priority based on the video source codec",
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true
   )
 
   val OutbrainSwitch = Switch(
@@ -65,6 +56,15 @@ trait FeatureSwitches {
     "Enable Foresee surveys for a sample of our audience",
     safeState = Off,
     sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val LiveBlogTransitionSwitch = Switch(
+    "Feature",
+    "liveblog-transition",
+    "Fix up liveblog scroll transitions in liveblog.js to work with pagination",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 3, 2),
     exposeClientSide = true
   )
 
@@ -241,15 +241,6 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val SplitOlderIPadsSwitch = Switch(
-    "Feature",
-    "ipad-split-capabilities",
-    "If switched on then this gives older ipads the stripped down front but full articles",
-    safeState = On,
-    sellByDate = new LocalDate(2016, 2, 1),
-    exposeClientSide = false
-  )
-
   val FootballFeedRecorderSwitch = Switch(
     "Feature",
     "football-feed-recorder",
@@ -374,5 +365,14 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
+  )
+
+  val USElectionSwitch = Switch(
+    "Feature",
+    "us-election",
+    "When ON, items tagged with us-news/us-elections-2016 will have visual elements added",
+    safeState = On,
+    sellByDate = new LocalDate(2017, 1, 5),
+    exposeClientSide = false
   )
 }

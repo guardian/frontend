@@ -113,7 +113,8 @@ define([
     emailArticle,
     internationalMessage,
     identity,
-    forEach) {
+    forEach
+) {
     var modules = {
             initialiseTopNavItems: function () {
                 var profile,

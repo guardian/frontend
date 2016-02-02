@@ -30,27 +30,11 @@ define([
     outbrain,
     plista) {
 
-    function identityPolicy() {
-        return (!(identity.isUserLoggedIn() && config.page.commentable));
-    }
-
-    function hasHighRelevanceComponent() {
-        return detect.adblockInUse() || config.page.edition.toLowerCase() === 'int';
-    }
-
-    function shouldServeExternalContent() {
-        return config.switches.outbrain
-            && !config.page.isFront
-            && !config.page.isPreview
-            && identityPolicy()
-            && config.page.section !== 'childrens-books-site';
-    }
-
-    function chooseExternalContentWidget() {
+    function loadExternalContentWidget() {
         if (config.switches.plistaForOutbrainAu && config.page.edition.toLowerCase() == 'au') {
-            return plista;
+            plista.init();
         } else {
-            return outbrain;
+            outbrain.init();
         }
     }
 
@@ -68,19 +52,7 @@ define([
         }
 
         // Outbrain/Plista needs to be loaded before first ad as it is checking for presence of high relevance component on page
-        if (shouldServeExternalContent()) {
-            var widget = chooseExternalContentWidget();
-
-            if (hasHighRelevanceComponent()) {
-                widget.load();
-            } else {
-                mediator.on('modules:commercial:dfp:rendered', function (event) {
-                    if (event.slot.getSlotId().getDomId() === 'dfp-ad--merchandising-high' && event.isEmpty) {
-                        widget.load();
-                    }
-                });
-            }
-        }
+        loadExternalContentWidget();
 
         loadOther();
         return Promise.resolve(null);

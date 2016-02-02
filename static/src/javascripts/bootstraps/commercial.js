@@ -27,7 +27,8 @@ define([
     sliceAdverts,
     thirdPartyTags,
     paidforBand,
-    forEach) {
+    forEach
+) {
     var modules = [
         ['cm-articleAsideAdverts', articleAsideAdverts.init],
         ['cm-articleBodyAdverts', articleBodyAdverts.init],

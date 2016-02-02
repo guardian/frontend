@@ -53,7 +53,8 @@ define([
     pluck,
     last,
     sortBy,
-    reduceRight) {
+    reduceRight
+) {
     var editions = [
             'uk',
             'us',

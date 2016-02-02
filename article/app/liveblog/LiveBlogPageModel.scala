@@ -13,7 +13,7 @@ object LiveBlogPageModel {
 
     endedPages.sliding(3).toList.map {
       case List(later, curr, earlier) =>
-        LiveBlogPageModel(curr.page, main, later.self, earlier.self, curr.self)
+        LiveBlogPageModel(curr.page, blocks, later.self, earlier.self, curr.self)
     }.find(hasRequestedBlock)
   }
 

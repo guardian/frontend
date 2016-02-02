@@ -9,7 +9,8 @@ define([
     config,
     mediator,
     fastdom,
-    defaults) {
+    defaults
+) {
 
     var isNewCommercialContent = config.switches.newCommercialContent && config.page.isAdvertisementFeature;
     var header = isNewCommercialContent ?

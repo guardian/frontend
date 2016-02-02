@@ -9,7 +9,8 @@ define([
     constants,
     utils,
     compact,
-    map) {
+    map
+) {
     return React.createClass({
         onClick: function (event) {
             this.props.onClick(this.props.x, this.props.y);

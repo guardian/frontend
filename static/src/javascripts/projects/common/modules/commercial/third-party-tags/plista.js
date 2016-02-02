@@ -2,27 +2,58 @@ define([
     'fastdom',
     'common/utils/$',
     'common/utils/config',
+    'common/utils/detect',
+    'common/utils/mediator',
     'common/utils/template',
     'common/modules/identity/api',
+    'common/modules/commercial/commercial-features',
     'text!common/views/commercial/plista.html'
 ], function (
     fastdom,
     $,
     config,
+    detect,
+    mediator,
     template,
     identity,
-    plistaTpl) {
+    commercialFeatures,
+    plistaStr
+) {
 
-    var containerOuterClassName = 'js-plista';
-    var containerInnerClassName = 'js-plista-container';
+    var plistaTpl = template(plistaStr);
+    var selectors = {
+        widget: '.js-plista',
+        container: '.js-plista-container'
+    };
+
+    function loadInstantly() {
+        return !document.getElementById('dfp-ad--merchandising-high') ||
+            detect.adblockInUse();
+    }
+
+    function identityPolicy() {
+        return !(identity.isUserLoggedIn() && config.page.commentable);
+    }
+
+    function shouldServe() {
+        return commercialFeatures.outbrain &&
+                config.switches.plistaForOutbrainAu &&
+                config.page.edition == 'AU' &&
+                !config.page.isFront &&
+                !config.page.isPreview &&
+                identityPolicy();
+    }
 
     // a modification of the code provided by Plista; altered to be a lazy load rather than during DOM construction
-    function embed(publickey, widgetName, geo, u, categories, containerTag) {
+    function embed(publickey, widgetName, geo, u, categories) {
         var name = 'PLISTA_' + publickey;
         var lib = window[name];
-        var container = document.getElementsByClassName(containerTag)[0];
+        var $container = $(selectors.container);
+        var $plista = $(selectors.widget);
 
-        container.innerHTML = '<div data-display="plista_widget_' + widgetName + '"></div>';
+        $container.append('<div data-display="plista_widget_' + widgetName + '"></div>');
+        $container.css('display', 'block');
+        $plista.append(plistaTpl);
 
         if (!lib || !lib.publickey) {
             window[name] = {
@@ -38,17 +69,30 @@ define([
         }
     }
 
-    return {
-        load: function () {
-            var $containerOuter = $('.' + containerOuterClassName);
-            var $containerInner = $('.' + containerInnerClassName);
+    function load() {
+        fastdom.write(function () {
+            embed('462925f4f131001fd974bebe', 'innerArticle', 'au');
+        });
+    }
 
-            fastdom.write(function () {
-                $containerOuter.css('display', 'block');
-                $containerInner.append($.create(template(plistaTpl)));
-
-                embed('462925f4f131001fd974bebe', 'innerArticle', 'au', undefined, undefined, containerInnerClassName);
-            });
+    function init() {
+        if (shouldServe()) {
+            if (loadInstantly()) {
+                module.load();
+            } else {
+                mediator.on('modules:commercial:dfp:rendered', function (event) {
+                    if (event.slot.getSlotId().getDomId() === 'dfp-ad--merchandising-high' && event.isEmpty) {
+                        module.load();
+                    }
+                });
+            }
         }
+    }
+
+    var module = {
+        load: load,
+        init: init
     };
+
+    return module;
 });

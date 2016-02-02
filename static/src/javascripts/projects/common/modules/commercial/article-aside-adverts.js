@@ -15,7 +15,8 @@ define([
     idleFastdom,
     createAdSlot,
     commercialFeatures,
-    defaults) {
+    defaults
+) {
     function init(options) {
         var $mainCol, adType,
             opts = defaults(

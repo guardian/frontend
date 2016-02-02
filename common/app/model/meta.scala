@@ -224,7 +224,7 @@ final case class MetaData (
   description: Option[String] = None,
   rssPath: Option[String] = None,
   contentType: String = "",
-  isImmersive: Boolean = false,
+  hasHeader: Boolean = true,
   schemaType: Option[String] = None, // Must be one of... http://schema.org/docs/schemas.html
   cacheSeconds: Int = 60,
   openGraphImages: Seq[String] = Seq(),
@@ -592,6 +592,7 @@ final case class Tags(
     tags.exists(t => t.id == "sport/rugby-union")
 
   lazy val isClimateChangeSeries = tags.exists(t => t.id =="environment/series/keep-it-in-the-ground")
+  lazy val isUSMinuteSeries = tags.exists(t => t.id == "us-news/series/the-campaign-minute-2016")
 
   def javascriptConfig: Map[String, JsValue] = Map(
     ("keywords", JsString(keywords.map { _.name }.mkString(","))),

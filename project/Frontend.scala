@@ -42,7 +42,6 @@ object Frontend extends Build with Prototypes {
       romeModules,
       scalaCheck,
       scalajTime,
-      scalaTestPlus,
       scalaz,
       shadeMemcached,
       snappyJava,

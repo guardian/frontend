@@ -35,7 +35,8 @@ define([
     size,
     merge,
     pairs,
-    chain) {
+    chain
+) {
 
     var constructQuery = function (params) {
             return chain(params).and(pairs).and(map, function (param) {

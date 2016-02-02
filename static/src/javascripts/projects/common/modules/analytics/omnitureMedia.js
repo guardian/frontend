@@ -22,7 +22,6 @@ define([
             isEmbed = !!guardian.isEmbed,
             events = {
                 // this is the expected ordering of events
-                'video:request': 'event98',
                 'preroll:request': 'event97',
                 'preroll:play': 'event59',
                 'preroll:skip': 'event99',
@@ -103,10 +102,6 @@ define([
             s.eVar7 = s.pageName;
 
             s.Media.open(mediaId, this.getDuration(), 'HTML5 Video');
-
-            if (mediaType === 'video') {
-                this.sendNamedEvent('video:request');
-            }
         };
 
         this.getDurationWatched = function () { // get the duration watched since this function was last called

@@ -81,7 +81,7 @@ define([
             }
         });
 
-        if (timeline) {
+        if (timeline && config.switches.liveblogTransition) {
             bean.on(timeline, 'click', '.timeline__link', function (e) {
                 mediator.emit('module:liveblog:showkeyevents', true);
                 $('.dropdown--live-feed').addClass('dropdown--active');

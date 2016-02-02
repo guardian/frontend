@@ -2,7 +2,7 @@
 @import conf.Configuration
 
 @* must be served by localhost, not thegulocal *@
-<amp-list layout="fixed-height" height="188" src="@Configuration.ajax.url/@path" class="onward-list">
+<amp-list layout="fixed-height" height="188" src="@Configuration.amp.url/@path" class="onward-list">
     <template type="amp-mustache">
         {{#showContent}}
             <div class="fc-container__inner">
@@ -51,7 +51,7 @@
                                 </time>
                             </aside>
                         </div>
-                        <a href="{{url}}" class="fc-item__link">{{headline}}</a>
+                        <a href="@{Configuration.site.host}{{url}}" class="fc-item__link">{{headline}}</a>
                     </div>
                 {{/content}}
             </div>

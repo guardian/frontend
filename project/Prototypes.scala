@@ -36,6 +36,7 @@ trait Prototypes {
     testOptions in Test += Tests.Argument("-oDF"),
     resolvers ++= Seq(Resolver.typesafeRepo("releases")),
     libraryDependencies ++= Seq(
+      scalaTest,
       scalaTestPlus,
       seleniumJava % Test,
       jodaTime % Test,
@@ -91,6 +92,7 @@ trait Prototypes {
 
     libraryDependencies ++= Seq(
       scalaTest,
+      scalaTestPlus,
       mockito
     ),
 

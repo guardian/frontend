@@ -22,6 +22,15 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABIdentityRegisterV2 = Switch(
+    "A/B Tests",
+    "ab-identity-register-v2",
+    "New user registration page variant for Identity",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 3, 1),
+    exposeClientSide = true
+  )
+
   val ABIdentitySignInV2 = Switch(
     "A/B Tests",
     "ab-identity-sign-in-v2",
@@ -63,16 +72,16 @@ trait ABTestSwitches {
     "ab-prebid-performance",
     "Measure performance impact of running prebid auctions before showing display advertising",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 1),
+    sellByDate = new LocalDate(2016, 2, 8),
     exposeClientSide = true
   )
 
-  val UserzoomSurveyMessageV2 = Switch(
+  val UserzoomSurveyMessageV3 = Switch(
     "A/B Tests",
-    "ab-userzoom-survey-message-v2",
+    "ab-userzoom-survey-message-v3",
     "Segment the userzoom data-team survey",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 4),
+    sellByDate = new LocalDate(2016, 2, 11),
     exposeClientSide = true
   )
 }

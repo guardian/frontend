@@ -17,7 +17,8 @@ define([
     svgs,
     GuStyle,
     gustyleComcontentTpl,
-    merge) {
+    merge
+) {
 
     var GustyleComcontent = function ($adSlot, params) {
         this.$adSlot = $adSlot;
