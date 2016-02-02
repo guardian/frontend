@@ -199,7 +199,12 @@ object ContentWidths {
   }
 
   object MinuteMedia extends ContentRelation {
-    override val inline = BodyMedia.inline
+    override val inline = WidthsByBreakpoint(
+      mobile = Some(95.vw),
+      tablet = Some(300.px),
+      desktop = Some(380.px),
+      leftCol = Some(460.px),
+      wide = Some(540.px))
 
     override val thumbnail = WidthsByBreakpoint(
       mobile = Some(95.vw))

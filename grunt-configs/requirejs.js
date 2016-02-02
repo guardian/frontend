@@ -104,6 +104,21 @@ module.exports = function (grunt, options) {
                 ]
             }
         },
+        minute: {
+            options: {
+                name: 'bootstraps/enhanced/article-minute',
+                out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/article-minute.js',
+                exclude: [
+                    'boot',
+                    'bootstraps/standard/main',
+                    'bootstraps/commercial',
+                    'enhanced-vendor',
+                    'bootstraps/enhanced/main',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
         crosswords: {
             options: {
                 name: 'bootstraps/enhanced/crosswords',
