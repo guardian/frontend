@@ -19,9 +19,9 @@
             Map(
                 "js-sponsored-front" -> (
                     index.commercial.isSponsored(Some(Edition(request))) ||
-                        index.commercial.isAdvertisementFeature ||
-                        index.commercial.isFoundationSupported
-                    ),
+                    index.commercial.isAdvertisementFeature ||
+                    index.commercial.isFoundationSupported
+                ),
                 "fc-container--advertisement-feature" -> index.commercial.isAdvertisementFeature,
                 "paid-content--advertisement-feature" ->
                     (Switches.NewCommercialContent.isSwitchedOn && index.commercial.isAdvertisementFeature)
