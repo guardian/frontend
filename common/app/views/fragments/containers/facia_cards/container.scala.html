@@ -3,10 +3,18 @@
 @import common.dfp.{Keyword, Series}
 @import conf.switches.Switches
 @import layout.MetaDataHeader
-@import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList}
+@import slices.{CommercialContainerType, Dynamic, Fixed, MostPopular, NavList, NavMediaList, SingleCampaign}
 @import views.html.fragments.containers.facia_cards.{commercialContainer, containerMetaData, mostPopularContainer, navListContainer, navMediaListContainer, standardContainer}
 @import views.support.{GetClasses, RenderClasses}
-@import conf.switches.Switches.NewCommercialContent
+
+@renderCommercialContainer(containerType: CommercialContainerType) = {
+    <div class="@RenderClasses(
+        Map("fc-container__inner--full-span fc-container__inner--paidfor" -> Switches.NewCommercialContent.isSwitchedOn),
+        "fc-container__inner"
+    )">
+    @commercialContainer(containerType, containerDefinition, frontProperties)
+    </div>
+}
 
 @defining((containerDefinition.displayName, containerDefinition.faciaComponentName)) { case (title, componentName) =>
     @containerDefinition.customHeader.map {
@@ -16,7 +24,7 @@
         case _ => {}
     }
 
-    @(containerDefinition.container, isPaidContent, NewCommercialContent.isSwitchedOn) match {
+    @(containerDefinition.container, isPaidContent, Switches.NewCommercialContent.isSwitchedOn) match {
         case (MostPopular, true, true) => {}
         case _ => {
         <section id="@componentName"
@@ -45,6 +53,15 @@
             }
 
             @containerDefinition.container match {
+
+                case Fixed(definition) if containerDefinition.commercialOptions.isAdvertisementFeature => {
+                    @*
+                    This is a workaround until existing paid content containers
+                    are converted to commercial/single-campaign container types.
+                    *@
+                    @renderCommercialContainer(SingleCampaign(definition))
+                }
+
                 case _: Dynamic | _: Fixed => {
                     <div class="fc-container__inner">
                         @standardContainer(containerDefinition, frontProperties)
@@ -70,12 +87,7 @@
                 }
 
                 case slices.Commercial(container) => {
-                    <div class="@RenderClasses(
-                        Map("fc-container__inner--full-span fc-container__inner--paidfor" -> Switches.NewCommercialContent.isSwitchedOn),
-                        "fc-container__inner"
-                    )">
-                        @commercialContainer(container, containerDefinition, frontProperties)
-                    </div>
+                    @renderCommercialContainer(container)
                 }
             }
         </section>
