@@ -44,14 +44,22 @@
         .lineitem--high__feature {
             float: left;
             padding-left: 0;
-            width: 88px;
+            width: 50%;
+
+            @include mq(desktop) {
+                width: 34%;
+            }
+
+            .lineitem__image {
+                max-width: 100%;
+                width: auto;
+            }
         }
         .lineitem--high__offer {
-            float: right;
-            width: calc(100% - 98px);
+            padding-left: $gs-gutter;
         }
         .commercial__relevance--high {
-            @include mq($until: tablet) {
+            @include mq(desktop) {
                 .lineitem__title {
                     padding-right: $gs-gutter*5;
                 }
