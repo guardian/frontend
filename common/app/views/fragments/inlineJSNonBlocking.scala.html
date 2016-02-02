@@ -11,8 +11,10 @@
 
 <script>
 // non-blocking JS to improve the perceived rendering speed
+@InlineJs(getUserData().body, "getUserData.js")
+
 @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
     // Insert username in top bar on page load
-    @InlineJs(getUsername().body, "getUsername.js")
+    @InlineJs(getUserData().body, "showUserName.js")
 }
 </script>
