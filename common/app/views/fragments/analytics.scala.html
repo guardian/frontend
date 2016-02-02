@@ -10,7 +10,7 @@
 
 <script>
     // analytics code
-    @InlineJs(templates.inlineJS.blocking.js.analytics().body, "analytics.js")
+    @InlineJs(templates.inlineJS.nonBlocking.js.analytics().body, "analytics.js")
 </script>
 
 @defining(s"${request.host}${request.path}") { path =>
