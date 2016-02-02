@@ -84,6 +84,11 @@
     }
 }
 
+.paidfor-logo {
+    max-width: $gs-baseline * 6;
+    height: $gs-baseline * 3;
+}
+
 .paidfor-band {
     background: guss-colour(paidfor-background, $frontend-palette);
     width: 100%;

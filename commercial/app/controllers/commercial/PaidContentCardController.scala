@@ -13,21 +13,17 @@ object PaidContentCardController extends Controller with ExecutionContexts with 
 
   private def renderCard(format: Format) = MemcachedAction { implicit request =>
 
-    val optKeyword = request.getParameter("k")
-    /*val optLogo = request.getParameter("l")
-    val optCapiTitle = request.getParameter("ct")
-    val optCapiLink = request.getParameter("cl")
-    val optCapiAbout = request.getParameter("cal")
-    val optCapiButtonText = request.getParameter("clt")
-    val optCapiReadMoreUrl = request.getParameter("rmd")
-    val optCapiReadMoreText = request.getParameter("rmt")
-    val optCapiAdFeature = request.getParameter("af")*/
+    val optKeyword = request.getParameter("keyword")
+    val articleUrl = request.getParameter("articleUrl")
+    val brandLogo = request.getParameter("brandLogo")
+    val brand = request.getParameter("brand")
     val optClickMacro = request.getParameter("clickMacro")
     val optOmnitureId = request.getParameter("omnitureId")
 
     val eventualLatest = optKeyword.map { keyword =>
       // getting twice as many, as we filter out content without images
       Lookup.latestContentByKeyword(keyword, 8)
+      //Lookup.contentByShortUrls(articleUrl)
     }.getOrElse(Future.successful(Nil))
 
     eventualLatest onFailure {
@@ -50,7 +46,7 @@ object PaidContentCardController extends Controller with ExecutionContexts with 
     futureContents map {
       case Nil => NoCache(format.nilResult)
       case contents => Cached(componentMaxAge) {
-        format.result(views.html.paidContent.card(contents.head, optClickMacro, optOmnitureId))
+        format.result(views.html.paidContent.card(contents.head, brandLogo, brand, optClickMacro, optOmnitureId))
       }
     }
   }

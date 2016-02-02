@@ -108,7 +108,8 @@ define([
             new Tabs().init(el);
         },
         capi: createToggle,
-        capiSingle: createToggle
+        capiSingle: createToggle,
+        paidforCard: createToggle
     };
 
     CommercialComponent.prototype.create = function () {
