@@ -68,7 +68,6 @@ define([
                 arrowWhiteRight: svgs('arrowWhiteRight')
             },
             createMessage = function () {
-                console.log("Create message");
                 new Message(messageId, messageOptions).show(template(messageTemplate, messageTemplateOptions));
                 userPrefs.set('survey-message-seen', true);
             };
