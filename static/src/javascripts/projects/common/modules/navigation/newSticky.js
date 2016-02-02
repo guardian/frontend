@@ -5,6 +5,7 @@ define([
     'common/utils/mediator',
     'common/utils/config',
     'common/utils/detect',
+    'common/utils/mount-component',
     'lodash/objects/assign'
 ], function (
     fastdom,
@@ -13,52 +14,9 @@ define([
     mediator,
     config,
     detect,
-    assign) {
-
-    // Mini Redux
-    var createStore = function (reducer) {
-        // We re-assign this over time
-        var state;
-        var subscribers = [];
-
-        var notify = function () { subscribers.forEach(function (fn) { fn(); }); };
-        var dispatch = function (action) {
-            state = reducer(state, action);
-            notify();
-        };
-        var subscribe = function (fn) { subscribers.push(fn); };
-        var getState = function () { return state; };
-
-        // Set initial state
-        dispatch({ type: 'INIT' });
-
-        return {
-            dispatch: dispatch,
-            subscribe: subscribe,
-            getState: getState
-        };
-    };
-
-    var mountComponent = function (props) {
-        var store = createStore(props.reducer);
-        var update = function () {
-            return fastdom.write(function () {
-                props.render(store.getState());
-            });
-        };
-
-        props.attachListeners(store.dispatch);
-
-        // Initial update
-        // Ensure we only start listening after the first update
-        update().then(function () {
-            // Update when actions occur
-            store.subscribe(update);
-        });
-    };
-
-
-
+    mountComponent,
+    assign
+) {
     var adId = 'dfp-ad--top-above-nav';
     var $adBanner = $('.js-top-banner-above-nav');
     var $adBannerInner = $('#' + adId, $adBanner);
