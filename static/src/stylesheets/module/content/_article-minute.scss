@@ -15,7 +15,6 @@ $minute-layout-margin-nudge: gs-span(1);
 }
 
 .content__head--minute-article {
-
     .content__head--mobile,
     .content__head--desktop {
 
@@ -35,10 +34,9 @@ $minute-layout-margin-nudge: gs-span(1);
     .logo--minute--article {
         display: block;
         float: left;
-        // width: gs-span(3) + $gs-gutter;
-        height: gs-height(4);
+        height: gs-height(3);
         position: absolute;
-        top: -#{gs-height(5)};
+        top: -#{gs-height(4) - $gs-baseline};
 
         svg {
             width: auto;
@@ -46,8 +44,8 @@ $minute-layout-margin-nudge: gs-span(1);
         }
 
         @include mq(desktop) {
-            height: gs-height(5);
-            top: -#{gs-height(6)};
+            height: gs-height(4);
+            top: -#{gs-height(5)};
         }
     }
 
@@ -76,7 +74,7 @@ $minute-layout-margin-nudge: gs-span(1);
     }
 
     .content__headline {
-        @include fs-headline(9);
+        @include fs-headline(8);
         color: #ffffff;
         font-weight: 200;
         line-height: 1;
@@ -84,13 +82,17 @@ $minute-layout-margin-nudge: gs-span(1);
         padding-bottom: 1.5rem;
         position: relative;
 
+        @include mq(desktop) {
+            font-size: 3.5rem;
+        }
+
         &:after {
             background-color: $us-minute-highlight-colour;
             content: '';
-            height: $gs-baseline*3;
+            height: $gs-baseline*2;
             position: absolute;
             left: 0;
-            top: -$gs-baseline*3;
+            top: -$gs-baseline*2;
             width: gs-span(4) + $gs-gutter;
             margin-left: 0;
             margin-right: $gs-gutter;
@@ -99,16 +101,13 @@ $minute-layout-margin-nudge: gs-span(1);
                 width: gs-span(4) + $gs-gutter * 2;
             }
             @include mq(desktop) {
+                height: $gs-baseline*3;
+                top: -$gs-baseline*3;
                 width: gs-span(7);
             }
             @include mq(wide) {
                 width: gs-span(8);
             }
-
-        }
-
-        @include mq(desktop) {
-            font-size: 4rem;
         }
     }
 

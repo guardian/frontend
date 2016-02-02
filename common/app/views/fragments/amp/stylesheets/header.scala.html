@@ -1,0 +1,82 @@
+.main-header {
+    background: #005689;
+    position: relative;
+    height: 52px;
+}
+
+.main-header .logo-wrapper {
+    float: right;
+    margin: 3px 20px 0;
+}
+
+.main-header .logo-wrapper svg {
+    height: 30px;
+    width: inherit;
+}
+
+@@media (max-width: 480px) {
+    .main-header .logo-wrapper {
+        margin-right: 10px;
+    }
+}
+
+@* Kicker style nav *@
+.main-header.variant-kicker {
+    height: 68px;
+}
+
+.main-navigation.variant-kicker {
+    position: absolute;
+    top: 3px;
+    left: 20px;
+    line-height: 1.1;
+}
+
+.main-navigation.variant-kicker .main-navigation_link {
+    display: inline;
+    font-family: "Guardian Egyptian Web",Georgia,serif;
+    font-size: 22px;
+}
+
+.main-navigation.variant-kicker .main-navigation_link a {
+    font-weight: 500;
+    color: #aad8f1;
+    display: inline-block;
+}
+
+.main-navigation.variant-kicker .main-navigation_link:first-of-type a {
+    color: #fff;
+}
+
+.main-navigation.variant-kicker .main-navigation_link::after {
+    content: "/";
+    color: rgba(255,255,255,0.3);
+    font-weight: 400;
+}
+
+.main-navigation.variant-kicker .main-navigation_link:last-of-type::after {
+    content:none;
+}
+
+.main-navigation.variant-kicker .main-navigation_link:nth-child(2)::after {
+    content: "\A";
+    white-space: pre;
+}
+
+@@media (max-width: 480px) {
+    .main-navigation.variant-kicker {
+        left: 10px;
+    }
+}
+
+@@media (max-width: 380px) {
+    .main-navigation.variant-kicker .main-navigation_link{
+        font-size: 18px;
+    }
+    .main-header.variant-kicker {
+        height: 60px;
+    }
+    .main-header.variant-kicker .logo-wrapper svg {
+        height: 24px;
+    }
+}

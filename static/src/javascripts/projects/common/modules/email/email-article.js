@@ -94,7 +94,7 @@ define([
             },
             keywordExists: function (keyword) {
                 var keywords = config.page.keywords ? config.page.keywords.split(',') : '';
-                return contains(keywords, keyword)
+                return contains(keywords, keyword);
             }
         },
         canRunList = {
@@ -102,7 +102,7 @@ define([
                 return canRunHelpers.allowedArticleStructure() && canRunHelpers.keywordExists('NHS');
             },
             theCampaignMinute: function () {
-                return config.page.isMinuteArticle && canRunHelpers.keywordExists('US elections 2016')
+                return config.page.isMinuteArticle && canRunHelpers.keywordExists('US elections 2016');
             }
         };
 
