@@ -1,3 +1,4 @@
+<%if (data.scrollbg) {%><div class="creative--fluid250-bg-container"><%}%>
 <div class="ad-slot__label creative--fluid250__label fc-container--layout-front <%=data.showLabel%>" data-test-id="ad-slot-label">
     <div class="fc-container__inner">Advertisement</div>
 </div>
@@ -7,6 +8,7 @@
         background-position: <%=data.backgroundPosition%>;
         background-repeat: <%=data.backgroundRepeat%>;
     ">
+    <%if (data.scrollbg) {%><%=data.scrollbg%><%}%>
     <a href="<%=data.clickMacro%><%=data.link%>" target="_blank">
         <div class="gs-container">
             <%=data.video%>
@@ -48,3 +50,4 @@
         </div>
     </a>
 </div>
+<%if (data.scrollbg) {%></div><%}%>

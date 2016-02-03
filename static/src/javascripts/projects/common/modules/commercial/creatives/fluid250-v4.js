@@ -6,7 +6,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/utils/template',
-    'text!common/views/commercial/creatives/fluid250-scrollingbg.html',
+    'text!common/views/commercial/creatives/fluid250.html',
     'lodash/objects/merge',
     'common/modules/commercial/creatives/add-tracking-pixel'
 ], function (
@@ -70,8 +70,8 @@ define([
                 showLabel: (this.params.showAdLabel === 'hide') ?
                 'creative__label--hidden' : '',
 
-                layerTwoBGProperties: (!this.params.layerTwoAnimation || this.params.layerTwoAnimation === '' || this.params.layerTwoAnimation === 'disabled' || (!Fluid250.isModernBrowser && this.params.layerTwoAnimation === 'enabled')) ?
-                ' background-position: ' + this.params.layerTwoBGPosition + ';' : ''
+                layerTwoBGPosition: (!this.params.layerTwoAnimation || this.params.layerTwoAnimation === '' || this.params.layerTwoAnimation === 'disabled' || (!Fluid250.isModernBrowser && this.params.layerTwoAnimation === 'enabled')) ?
+                this.params.layerTwoBGPosition : '0% 0%'
             },
             leftPosition = (this.params.videoPositionH === 'left' ?
                 ' left: ' + this.params.videoHorizSpace + 'px;' : ''
