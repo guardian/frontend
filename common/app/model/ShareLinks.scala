@@ -25,7 +25,7 @@ final case class ShareLinks(
     def createShareLinkUrl(campaign: Option[String], elementId: Option[String]): String = {
       val campaignParam = campaign.flatMap(ShortCampaignCodes.getFullCampaign(_))
       val queryParams: Map[String, String] = Map(
-        "page" -> elementId.map(id => s"with:$id"),
+        "page" -> elementId.filter(x => tags.isLiveBlog).map(id => s"with:$id"),
         "CMP" -> campaignParam
       )
         .filter(_._2.isDefined)
