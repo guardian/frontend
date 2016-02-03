@@ -7,7 +7,6 @@ import conf.switches.Switches
 import controllers.AuthLogging
 import conf.Configuration
 import play.api.mvc._
-import scala.concurrent.Future
 import services.Notification
 import tools.Store
 import model.NoCache
@@ -16,53 +15,41 @@ object SwitchboardPlistaController extends Controller with AuthLogging with Logg
 
   val SwitchPattern = """([a-z\d-]+)=(on|off)""".r
 
-  def renderSwitchboard() = AuthActions.AuthActionTest.async { implicit request =>
+  def renderSwitchboard() = AuthActions.AuthActionTest { implicit request =>
     log("loaded plista Switchboard", request)
-    Future { Store.getSwitchesWithLastModified } map { switchesWithLastModified =>
-      val configuration = switchesWithLastModified.map(_._1)
-      val nextStateLookup = Properties(configuration getOrElse "")
 
-      Switches.all foreach { switch =>
-        nextStateLookup.get(switch.name) foreach {
-          case "on" => switch.switchOn()
-          case _ => switch.switchOff()
-        }
-      }
+    val switchesWithLastModified = Store.getSwitchesWithLastModified
+    val switchStates = Properties(switchesWithLastModified map {_._1} getOrElse "")
+    val lastModified = switchesWithLastModified map {_._2} map {_.getMillis} getOrElse(System.currentTimeMillis)
 
-      val lastModified = switchesWithLastModified.map(_._2).map(_.getMillis).getOrElse(System.currentTimeMillis)
-      NoCache(Ok(views.html.switchboardPlista(Configuration.environment.stage, lastModified)))
+    switchStates.get(Switches.PlistaForOutbrainAU.name) foreach {
+      case "on" => Switches.PlistaForOutbrainAU.switchOn()
+      case _ => Switches.PlistaForOutbrainAU.switchOff()
     }
+
+    NoCache(Ok(views.html.switchboardPlista(Configuration.environment.stage, Switches.PlistaForOutbrainAU, lastModified)))
   }
 
-  def save() = AuthActions.AuthActionTest.async { implicit request =>
+  def save() = AuthActions.AuthActionTest { implicit request =>
     val form = request.body.asFormUrlEncoded
 
     val localLastModified = form.get("lastModified").head.toLong
     val remoteSwitches = Store.getSwitchesWithLastModified
 
-    // if any of the switches have a later modified date than locally, redirect
+    // if any of the switches have a later modified date then redirect
     if (remoteSwitches.map(_._2).exists(_.getMillis > localLastModified)) {
-      Future {
         NoCache(Redirect("/dev/switchboard-plista").flashing("error" -> "A more recent change to the switch has been found, please refresh and try again."))
-      }
     } else {
       log("saving plista switchboard", request)
       val requester = UserIdentity.fromRequest(request).get.fullName
-      // for switches not present on this page, we need to persist their current values
-      val configuration = remoteSwitches.map(_._1)
-      val currentState = Properties(configuration getOrElse "")
-      val updates =
-          request.body.asFormUrlEncoded.map { params =>
-            Switches.all map { switch =>
-              // if the switch has been set, then the returned value will be an array buffer, holding the "on"/"off", otherwise persist the value
-              val switchSetting = params.get(switch.name)
-              switch.name + "=" + (if (!switchSetting.isEmpty) switchSetting.get(0) else currentState.get(switch.name).getOrElse("off"))
-            }
-        }.get
+      val plistaSetting = form.get(Switches.PlistaForOutbrainAU.name).head
 
-      Future {
-        saveSwitchesOrError(requester, updates)
-      }
+      // for switches not present on this page, we need to persist their current values
+      val currentState = Properties(remoteSwitches.map(_._1) getOrElse "")
+      val currentConfig = Switches.all.filterNot(_ == Switches.PlistaForOutbrainAU).map{switch => switch.name + "=" + currentState.get(switch.name).getOrElse("off")}
+      val plistaConfig = Switches.PlistaForOutbrainAU.name + "=" + plistaSetting
+
+      saveSwitchesOrError(requester, currentConfig :+ plistaConfig)
     }
   }
 

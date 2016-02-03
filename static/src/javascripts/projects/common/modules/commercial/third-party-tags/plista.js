@@ -66,7 +66,7 @@ define([
 
     function load() {
         fastdom.write(function () {
-            embed('462925f4f131001fd974bebe', 'innerArticle', 'au');
+            embed(config.page.plistaPublicApiKey, 'innerArticle', 'au');
         });
     }
 

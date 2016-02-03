@@ -31,7 +31,7 @@ define([
     plista) {
 
     function loadExternalContentWidget() {
-        if (config.switches.plistaForOutbrainAu && config.page.edition.toLowerCase() == 'au') {
+        if (config.switches.plistaForOutbrainAu && config.page.edition.toLowerCase() === 'au') {
             plista.init();
         } else {
             outbrain.init();
