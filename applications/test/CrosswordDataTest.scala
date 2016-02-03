@@ -10,7 +10,7 @@ import org.scalatest.time.{Millis, Span}
   "CrosswordData" - {
     "fromCrossword should normalize separators for grouped entries" in {
 
-      implicit val patienceConfig = PatienceConfig(timeout = scaled(Span(3000, Millis)), interval = scaled(Span(100, Millis)))
+      implicit val patienceConfig = PatienceConfig(timeout = Span(3000, Millis), interval = Span(100, Millis))
       val futureCrossword = controllers.CrosswordPageController.getCrossword("cryptic", 26666)(TestRequest("crosswords/cryptic/26666"))
 
       whenReady(futureCrossword) { result =>
