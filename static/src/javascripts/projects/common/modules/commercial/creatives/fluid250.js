@@ -1,19 +1,9 @@
 define([
-    'bean',
-    'bonzo',
-    'common/utils/$',
-    'common/utils/mediator',
-    'common/utils/storage',
     'common/utils/template',
     'text!common/views/commercial/creatives/fluid250.html',
     'lodash/objects/merge',
     'common/modules/commercial/creatives/add-tracking-pixel'
 ], function (
-    bean,
-    bonzo,
-    $,
-    mediator,
-    storage,
     template,
     fluid250Tpl,
     merge,
