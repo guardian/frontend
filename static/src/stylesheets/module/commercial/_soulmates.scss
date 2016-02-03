@@ -164,23 +164,6 @@ $c-soulmates-high: colour(neutral-1);
         }
     }
 
-    .i-soulmates-title-background {
-        padding-top: 0;
-        background-repeat: no-repeat;
-        background: none;
-        height: auto;
-        width: auto;
-        float: left;
-
-        @include mq(leftCol) {
-            overflow: hidden;
-        }
-
-        .svg & {
-            background-size: cover;
-        }
-    }
-
     .commercial__title {
         min-height: 0;
         width: 120px;
@@ -368,24 +351,6 @@ $c-soulmates-high: colour(neutral-1);
         @include mq(leftCol) {
             background-image: none;
         }
-    }
-
-    .i-soulmates-title-background {
-        padding-top: 0;
-        background-repeat: no-repeat;
-        background: none;
-        height: auto;
-        width: auto;
-        float: left;
-
-        @include mq(leftCol) {
-            overflow: hidden;
-        }
-
-        .svg & {
-            background-size: cover;
-        }
-
     }
 
     .icon__cta {
