@@ -397,16 +397,16 @@ define([
     }
 
     function adblockInUse() {
-        if (window.guardian.adBlocker) {
-            return window.guardian.adBlocker.generic;
+        if (window.guardian.adBlockers) {
+            return window.guardian.adBlockers.generic;
         }
         return false;
     }
 
     /** Includes Firefox Adblock Plus users who whitelist the Guardian domain */
     function getFirefoxAdblockPlusInstalled() {
-        if (window.guardian.adBlocker) {
-            return window.guardian.adBlocker.ffAdblockPlus;
+        if (window.guardian.adBlockers) {
+            return window.guardian.adBlockers.ffAdblockPlus;
         }
         return false;
     }
