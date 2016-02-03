@@ -310,6 +310,10 @@ GET            /admin/commercial/adops/takeovers-empty-mpus/create              
 POST           /admin/commercial/adops/takeovers-empty-mpus/create                                                               controllers.admin.commercial.TakeoverWithEmptyMPUsController.create()
 POST           /admin/commercial/adops/takeovers-empty-mpus/remove                                                               controllers.admin.commercial.TakeoverWithEmptyMPUsController.remove(url)
 
+# Breaking News
+GET             /news-alert/alerts                                                                                               controllers.NewsAlertController.alerts()
+POST            /news-alert/alert                                                                                                controllers.NewsAlertController.create()
+
 # dev-build only
 GET            /commercial/magento/token                                                                                         controllers.commercial.magento.AccessTokenGenerator.generate
 GET            /commercial/magento/resource                                                                                      controllers.commercial.magento.ApiSandbox.getResource(t: String)

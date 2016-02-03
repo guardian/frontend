@@ -113,9 +113,10 @@ object SnapStuff {
   def fromTrail(faciaContent: PressedContent): Option[SnapStuff] = {
     val snapData = SnapData(faciaContent)
 
-    // This val may exist if the facia press has pre-fetched the embed html. Currently only for CuratedContent.
+    // This val may exist if the facia press has pre-fetched the embed html. Currently only for CuratedContent or LinkSnap.
     val embedHtml = faciaContent match {
       case curated: CuratedContent => curated.enriched.flatMap(_.embedHtml)
+      case link: LinkSnap => link.enriched.flatMap(_.embedHtml)
       case _ => None
     }
     faciaContent.properties.embedType match {
