@@ -3,7 +3,7 @@ package controllers.admin
 import com.gu.googleauth.UserIdentity
 import common._
 import common.AdminMetrics.{ SwitchesUpdateCounter, SwitchesUpdateErrorCounter }
-import conf.switches.Switches
+import conf.switches.{SwitchState, Switches}
 import controllers.AuthLogging
 import conf.Configuration
 import play.api.mvc._
@@ -12,8 +12,6 @@ import tools.Store
 import model.NoCache
 
 object SwitchboardPlistaController extends Controller with AuthLogging with Logging with ExecutionContexts {
-
-  val SwitchPattern = """([a-z\d-]+)=(on|off)""".r
 
   def renderSwitchboard() = AuthActions.AuthActionTest { implicit request =>
     log("loaded plista Switchboard", request)
@@ -31,6 +29,37 @@ object SwitchboardPlistaController extends Controller with AuthLogging with Logg
   }
 
   def save() = AuthActions.AuthActionTest { implicit request =>
+
+    def saveSwitchesOrError(updates: Seq[String], newState: String) = try {
+
+      val requester = UserIdentity.fromRequest(request).get.fullName
+      Store.putSwitches(updates mkString "\n")
+      SwitchesUpdateCounter.increment()
+
+      log.info("plista switches successfully updated")
+
+      val alterationMade = Switches.PlistaForOutbrainAU.isSwitchedOn match{
+        case true => newState == "off"
+        case _ => newState == "on"
+      }
+
+      if (alterationMade) {
+        val update = Switches.PlistaForOutbrainAU.name + "=" + newState
+
+        Notification.onSwitchChanges(requester, Configuration.environment.stage, List() :+ update)
+        log.info(s"Switch change by ${requester}: ${update}")
+      }
+
+      Redirect("/dev/switchboard-plista")
+      } catch { case e: Throwable =>
+        log.error("exception saving plista switches", e)
+        SwitchesUpdateErrorCounter.increment()
+
+        Redirect("/dev/switchboard-plista").flashing(
+          "error" -> ("Error saving switches '%s'" format e.getMessage)
+        )
+      }
+
     val form = request.body.asFormUrlEncoded
 
     val localLastModified = form.get("lastModified").head.toLong
@@ -41,7 +70,6 @@ object SwitchboardPlistaController extends Controller with AuthLogging with Logg
         NoCache(Redirect("/dev/switchboard-plista").flashing("error" -> "A more recent change to the switch has been found, please refresh and try again."))
     } else {
       log("saving plista switchboard", request)
-      val requester = UserIdentity.fromRequest(request).get.fullName
       val plistaSetting = form.get(Switches.PlistaForOutbrainAU.name).head
 
       // for switches not present on this page, we need to persist their current values
@@ -49,33 +77,7 @@ object SwitchboardPlistaController extends Controller with AuthLogging with Logg
       val currentConfig = Switches.all.filterNot(_ == Switches.PlistaForOutbrainAU).map{switch => switch.name + "=" + currentState.get(switch.name).getOrElse("off")}
       val plistaConfig = Switches.PlistaForOutbrainAU.name + "=" + plistaSetting
 
-      saveSwitchesOrError(requester, currentConfig :+ plistaConfig)
+      saveSwitchesOrError(currentConfig :+ plistaConfig, plistaSetting)
     }
-  }
-
-  private def saveSwitchesOrError(requester: String, updates: Seq[String]) = try {
-    val current =  Switches.all map { switch =>
-      switch.name + "=" + (if (switch.isSwitchedOn) "on" else "off")
-    }
-
-    Store.putSwitches(updates mkString "\n")
-    SwitchesUpdateCounter.increment()
-
-    log.info("plista switches successfully updated")
-
-    val changes = updates filterNot { current contains _ }
-    Notification.onSwitchChanges(requester, Configuration.environment.stage, changes)
-    changes foreach { change =>
-      log.info(s"Switch change by ${requester}: ${change}")
-    }
-
-    Redirect("/dev/switchboard-plista")
-  } catch { case e: Throwable =>
-    log.error("exception saving plista switches", e)
-    SwitchesUpdateErrorCounter.increment()
-
-    Redirect("/dev/switchboard-plista").flashing(
-      "error" -> ("Error saving switches '%s'" format e.getMessage)
-    )
   }
 }
