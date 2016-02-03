@@ -1,6 +1,6 @@
 define([
     'videojs',
-    'videojsads',
+    'videojs-contrib-ads',
     'videojsima',
     'videojspersistvolume',
     'videojsplaylist',

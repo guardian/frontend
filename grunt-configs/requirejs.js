@@ -24,7 +24,7 @@ module.exports = function (grunt, options) {
                 stripe:               'vendor/stripe/stripe.min',
                 svgs:                 '../../../common/conf/assets/inline-svgs',
                 videojs:              'components/video.js/video',
-                videojsads:           'components/videojs-contrib-ads/videojs.ads',
+                'videojs-contrib-ads':'components/videojs-contrib-ads/videojs.ads',
                 videojsembed:         'components/videojs-embed/videojs.embed',
                 videojsima:           'components/videojs-ima/videojs.ima',
                 videojspersistvolume: 'components/videojs-persistvolume/videojs.persistvolume',
@@ -328,7 +328,12 @@ module.exports = function (grunt, options) {
                     'inlineSvg'
                 ],
                 generateSourceMaps: true,
-                preserveLicenseComments: false
+                preserveLicenseComments: false,
+                shim: {
+                    'videojs-contrib-ads': {
+                        deps: ['bootstraps/enhanced/media/videojs-global']
+                    }
+                }
             }
         },
         accessibility: {
