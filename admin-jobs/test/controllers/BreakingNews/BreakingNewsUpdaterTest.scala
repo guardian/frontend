@@ -11,15 +11,17 @@ import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.mock.MockitoSugar
+import org.scalatest.time.{Seconds, Span}
 import org.scalatest.{DoNotDiscover, Matchers, WordSpec}
 import play.api.libs.json.{JsResultException, JsValue, Json}
 import test.ConfiguredTestSuite
 
 import scala.concurrent.duration._
 
-@DoNotDiscover class BreakingNewsUpdaterTest extends WordSpec with Matchers with ConfiguredTestSuite with MockitoSugar {
-
+@DoNotDiscover class BreakingNewsUpdaterTest extends WordSpec with Matchers with ConfiguredTestSuite with MockitoSugar with ScalaFutures {
   implicit val actorTimeout = Timeout(30.seconds)
+  implicit override val patienceConfig = PatienceConfig(timeout = Span(5, Seconds), interval = Span(1, Seconds))
+
   def newActorAndMockApi = {
     val mockBreakingNewsApi = mock[BreakingNewsApi]
     val actorRef = actorSystem.actorOf(BreakingNewsUpdater.props(mockBreakingNewsApi))
@@ -34,7 +36,7 @@ import scala.concurrent.duration._
         when(mockBreakingNewsApi.getBreakingNews) thenThrow new Exception()
 
         val f = actor ? GetAlertsRequest
-        ScalaFutures.whenReady(f.failed) { e => e shouldBe an[Exception] }
+        whenReady(f.failed) { e => e shouldBe an[Exception] }
       }
     }
     "content is available" should {
@@ -45,7 +47,7 @@ import scala.concurrent.duration._
         when(mockBreakingNewsApi.getBreakingNews) thenReturn Some(fakeContent)
 
         val f = (actor ? GetAlertsRequest).mapTo[Option[JsValue]]
-        ScalaFutures.whenReady(f) {
+        whenReady(f) {
           case Some(json) => json shouldBe a[JsValue]
           case _ => fail("It should be some JsValue instance")
         }
@@ -72,7 +74,7 @@ import scala.concurrent.duration._
           val (actor, mockBreakingNewsApi) = newActorAndMockApi
           when(mockBreakingNewsApi.getBreakingNews) thenThrow (new Exception())
           val f = (actor ? NewNotificationRequest(notification)).mapTo[NewsAlertNotification]
-          ScalaFutures.whenReady(f.failed) { e => e shouldBe an[Exception] }
+          whenReady(f.failed) { e => e shouldBe an[Exception] }
         }
       }
       "succeeds " when {
@@ -83,7 +85,7 @@ import scala.concurrent.duration._
               when(mockBreakingNewsApi.getBreakingNews) thenReturn Some(Json.parse( """{"valid": "json", "but": "not", "breaking": "news"}"""))
 
               val f = (actor ? NewNotificationRequest(notification)).mapTo[NewsAlertNotification]
-              ScalaFutures.whenReady(f.failed) { e => e shouldBe an[JsResultException] }
+              whenReady(f.failed) { e => e shouldBe an[JsResultException] }
             }
           }
           "succeeds" when {
@@ -125,7 +127,7 @@ import scala.concurrent.duration._
                   when(mockBreakingNewsApi.putBreakingNews(any[JsValue])) thenThrow  new Exception()
 
                   val f = (actor ? NewNotificationRequest(notification)).mapTo[NewsAlertNotification]
-                  ScalaFutures.whenReady(f.failed) { e => e shouldBe an[Exception] }
+                  whenReady(f.failed) { e => e shouldBe an[Exception] }
                 }
               }
               "succeeds" should {
@@ -135,7 +137,7 @@ import scala.concurrent.duration._
                   when(mockBreakingNewsApi.putBreakingNews(any[JsValue])) thenReturn true
 
                   val f = (actor ? NewNotificationRequest(notification)).mapTo[NewsAlertNotification]
-                  ScalaFutures.whenReady(f) { result =>
+                  whenReady(f) { result =>
                     result shouldBe a [NewsAlertNotification]
                     result shouldBe notification
                   }
