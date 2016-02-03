@@ -1,5 +1,4 @@
 define([
-    'bean',
     'bonzo',
     'fastdom',
     'common/utils/$',

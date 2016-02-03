@@ -1,5 +1,4 @@
 define([
-    'bean',
     'bonzo',
     'fastdom',
     'common/utils/$',
@@ -11,7 +10,6 @@ define([
     'lodash/objects/merge',
     'common/modules/commercial/creatives/add-tracking-pixel'
 ], function (
-    bean,
     bonzo,
     fastdom,
     $,
