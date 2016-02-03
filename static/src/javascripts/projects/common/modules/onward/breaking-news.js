@@ -44,7 +44,7 @@ define([
             'sport': 'sport',
             'football': 'sport'
         },
-        breakingNewsSource = '/breaking-news/lite.json',
+        breakingNewsSource = (config.switches.breakingNewsFromAdminJobs) ? '/news-alert/alerts' : '/breaking-news/lite.json',
         storageKeyHidden = 'gu.breaking-news.hidden',
         maxSimultaneousAlerts = 1,
         $breakingNews,
