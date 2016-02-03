@@ -85,7 +85,7 @@
                 }
                 @if(content.item.tags.series.nonEmpty) {
                     @content.item.tags.series.map { tag =>
-                        @fragments.amp.onwardTemplateAmp("series/mf2/" + tag.id + ".json")
+                        @fragments.amp.onwardTemplateAmp("series-mf2/" + tag.id + ".json")
                     }
                 }
                 @if(!content.item.content.hasStoryPackage && content.item.tags.series.isEmpty){
