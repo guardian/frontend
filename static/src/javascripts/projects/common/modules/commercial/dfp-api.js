@@ -304,9 +304,20 @@ define([
             googletag.pubads().collapseEmptyDivs();
             setPublisherProvidedId();
             googletag.enableServices();
-            mediator.on('window:throttledScroll', lazyLoad);
             instantLoad();
-            lazyLoad();
+            enableLazyLoad();
+        },
+        lazyLoadEnabled = false,
+        enableLazyLoad = function () {
+            if (!lazyLoadEnabled) {
+                lazyLoadEnabled = true;
+                mediator.on('window:throttledScroll', lazyLoad);
+                lazyLoad();
+            }
+        },
+        disableLazyLoad = function () {
+            lazyLoadEnabled = false;
+            mediator.off('window:throttledScroll', lazyLoad);
         },
         windowResize = debounce(
             function () {
@@ -370,7 +381,7 @@ define([
         },
         lazyLoad = function () {
             if (slots.length === 0) {
-                mediator.off('window:throttledScroll', lazyLoad);
+                disableLazyLoad();
             } else {
                 var scrollTop = window.pageYOffset,
                     viewportHeight = bonzo.viewport().height,
@@ -412,7 +423,11 @@ define([
                         isLoading: false,
                         slot: defineSlot($adSlot)
                     };
-                    loadSlot(slotId);
+                    if (shouldLazyLoad()) {
+                        enableLazyLoad();
+                    } else {
+                        loadSlot(slotId);
+                    }
                 };
             if (displayed && !slots[slotId]) { // dynamically add ad slot
                 // this is horrible, but if we do this before the initial ads have loaded things go awry
