@@ -132,27 +132,21 @@ define([
         });
     };
 
-    Omniture.prototype.shouldPopulateMvtPageProperties = function () {
-        //get the users current ab status
-        var mvt = ab.makeOmnitureTag();
-        var previousMvt = config.abTestsParticipations;
-
+    Omniture.prototype.shouldPopulateMvtPageProperties = function (mvt) {
         // This checks if the user has been alocated or removed to any tests after the
         // ab testing has loaded. If they have we fire the tracking event.
-        var testStatusUpdated = mvt != previousMvt;
+        return mvt !== config.abTestsParticipations;
+    };
 
-        if (testStatusUpdated) {
+    Omniture.prototype.go = function () {
+        var mvt = ab.makeOmnitureTag();
+
+        if (this.shouldPopulateMvtPageProperties(mvt)) {
             this.s.eVar51    = mvt;
             this.s.list1     = mvt; // allows us to 'unstack' the AB test names (allows longer names)
             this.s.linkTrackVars = standardProps;
             this.s.linkTrackEvents = 'None';
-        }
 
-        return testStatusUpdated;
-    };
-
-    Omniture.prototype.go = function () {
-        if (this.shouldPopulateMvtPageProperties()) {
             this.logView();
             mediator.emit('analytics:ready');
         }
