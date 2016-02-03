@@ -40,6 +40,7 @@ final case class ShareLinks(
     lazy val twitter = createShareLinkUrl(Some("stw"), elementId).urlEncoded
     lazy val whatsapp = createShareLinkUrl(Some("swa"), elementId)
     lazy val pinterest = createShareLinkUrl(None, elementId).urlEncoded
+    lazy val linkedIn = createShareLinkUrl(None, elementId).urlEncoded
     lazy val webTitleAsciiEncoding = metadata.webTitle.encodeURIComponent
 
     lazy val fullMediaPath: Option[String] = {
@@ -66,7 +67,7 @@ final case class ShareLinks(
       case "gplus"    => Some(ShareLink("Google plus", "gplus", "Share on Google+", s"https://plus.google.com/share?url=$googlePlus&amp;hl=en-GB&amp;wwc=1"))
       case "whatsapp" => Some(ShareLink("WhatsApp", "whatsapp", "Share on WhatsApp", s"""whatsapp://send?text=${("\"" + title + "\" " + whatsapp).encodeURIComponent}"""))
       case "email"    => Some(ShareLink("Email", "email", "Share via Email", s"mailto:?subject=$webTitleAsciiEncoding&body=$link"))
-      case "linkedin"  => Some(ShareLink("LinkedIn", "linkedin", "Share on LinkedIn", s"http://www.linkedin.com/shareArticle?mini=true&title=${title.urlEncoded}&url=${shortLinkUrl.urlEncoded}"))
+      case "linkedin"  => Some(ShareLink("LinkedIn", "linkedin", "Share on LinkedIn", s"http://www.linkedin.com/shareArticle?mini=true&title=${title.urlEncoded}&url=$linkedIn"))
       case "pinterestPage"  => Some(ShareLink("Pinterest", "pinterest", "Share on Pinterest", s"http://www.pinterest.com/pin/find/?url=$pinterest"))
       case "pinterestBlock"  => Some(ShareLink("Pinterest", "pinterest", "Share on Pinterest", s"http://www.pinterest.com/pin/create/button/?description=${title.urlEncoded}&url=$pinterest&media=${fullMediaPath.getOrElse("").urlEncoded}"))
       case _ => None
