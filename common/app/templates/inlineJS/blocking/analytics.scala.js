@@ -130,6 +130,48 @@ try {
         s.prop20    = tpA[2] + ':' + tpA[1];
         s.eVar20    = 'D=c20';
 
+        var participationsKey = 'gu.ab.participations';
+        var abTestsParticipations;
+
+        try {
+            var participations = window.localStorage.getItem(participationsKey);
+
+            abTestsParticipations = makeOmnitureABTag(participations);
+
+            s.eVar51    = abTestsParticipations;
+            s.list1     = abTestsParticipations;
+
+            // This is set globally so we can check if the use ab test participations change once the ab test runs.
+            // If it does, we fire a second tracking call in modules/analytics/omniture.js
+            guardian.config.abTestsParticipations = abTestsParticipations;
+        } catch (e) { }
+
+        function makeOmnitureABTag(currentParticipations) {
+            var participations = JSON.parse(currentParticipations);
+            var tag = [];
+
+            for (var key in participations.value) {
+                if (participations != null && hasOwnProperty.call(participations.value, key)){
+                    tag.push(['AB', key, participations.value[key].variant].join(' | '));
+                }
+            }
+
+            for (var key in config.tests) {
+                if (config.tests != null && hasOwnProperty.call(config.tests, key)){
+                    if (key.toLowerCase().match(/^cm/)) {
+                        tag.push(['AB', key, 'variant'].join(' | '));
+                    }
+                    //only collect serverside tests the user is participating in
+                    if(!!config.tests[key]){
+                        tag.push('AB | ' + key + ' | inTest');
+                    }
+                }
+            };
+
+            return tag.join(',');
+        }
+
+
         @*
           eVar1 contains today's date
           in the Omniture backend it only ever holds the first
