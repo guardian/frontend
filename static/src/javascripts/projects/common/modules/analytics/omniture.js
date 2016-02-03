@@ -132,18 +132,17 @@ define([
         });
     };
 
-    Omniture.prototype.shouldPopulateMvtPageProperties = function (mvt) {
-        // This checks if the user has been alocated or removed to any tests after the
-        // ab testing has loaded. If they have we fire the tracking event.
-        return mvt !== config.abTestsParticipations;
+    Omniture.prototype.shouldPopulateMvtPageProperties = function (mvtTag) {
+        // This checks if the user test alocation has changed once ab test framework has loaded.
+        return mvtTag !== config.abTestsParticipations;
     };
 
     Omniture.prototype.go = function () {
-        var mvt = ab.makeOmnitureTag();
+        var mvtTag = ab.makeOmnitureTag();
 
-        if (this.shouldPopulateMvtPageProperties(mvt)) {
-            this.s.eVar51    = mvt;
-            this.s.list1     = mvt; // allows us to 'unstack' the AB test names (allows longer names)
+        if (this.shouldPopulateMvtPageProperties(mvtTag)) {
+            this.s.eVar51 = mvtTag;
+            this.s.list1 = mvtTag; // allows us to 'unstack' the AB test names (allows longer names)
             this.s.linkTrackVars = standardProps;
             this.s.linkTrackEvents = 'None';
 
