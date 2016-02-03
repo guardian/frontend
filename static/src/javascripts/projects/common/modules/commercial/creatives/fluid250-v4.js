@@ -6,6 +6,8 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'text!common/views/commercial/creatives/fluid250.html',
+    'text!common/views/commercial/creatives/iframe-video.html',
+    'text!common/views/commercial/creatives/scrollbg.html',
     'lodash/objects/merge',
     'common/modules/commercial/creatives/add-tracking-pixel'
 ], function (
@@ -16,6 +18,8 @@ define([
     mediator,
     template,
     fluid250Tpl,
+    iframeVideoTpl,
+    scrollBgTpl,
     merge,
     addTrackingPixel
 ) {
@@ -64,29 +68,26 @@ define([
     };
 
     Fluid250.prototype.create = function () {
+        var position = {
+            position: this.params.videoPositionH === 'left' || this.params.videoPositionH === 'right' ?
+                this.params.videoPositionH + ': ' + this.params.videoHorizSpace + 'px' :
+                ''
+        };
         var templateOptions = {
-                showLabel: (this.params.showAdLabel === 'hide') ?
-                'creative__label--hidden' : '',
+            showLabel: this.params.showAdLabel === 'hide' ? 'creative__label--hidden' : '',
 
-                layerTwoBGPosition: (!this.params.layerTwoAnimation || this.params.layerTwoAnimation === '' || this.params.layerTwoAnimation === 'disabled' || (!Fluid250.isModernBrowser && this.params.layerTwoAnimation === 'enabled')) ?
-                this.params.layerTwoBGPosition : '0% 0%'
-            },
-            leftPosition = (this.params.videoPositionH === 'left' ?
-                ' left: ' + this.params.videoHorizSpace + 'px;' : ''
-            ),
-            rightPosition = (this.params.videoPositionH === 'right' ?
-                ' right: ' + this.params.videoHorizSpace + 'px;' : ''
-            ),
-            videoDesktop = {
-                video: (this.params.videoURL !== '') ?
-                    '<iframe width="409px" height="230px" src="' + this.params.videoURL + '?rel=0&amp;controls=0&amp;showinfo=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="fluid250_video fluid250_video--desktop fluid250_video--vert-pos-' + this.params.videoPositionV + ' fluid250_video--horiz-pos-' + this.params.videoPositionH + '" style="' + leftPosition + rightPosition + '"></iframe>' : ''
-            },
-            scrollingbg = {
-                scrollbg: (this.params.backgroundImagePType !== '' || this.params.backgroundImagePType !== 'none') ?
-                    '<div class="ad-scrolling-bg" style="background-image: url(' + this.params.backgroundImageP + '); background-position: 50% 0; background-repeat: ' + this.params.backgroundImagePRepeat + ';"></div>' : ''
-            };
+            layerTwoBGPosition: (!this.params.layerTwoAnimation || this.params.layerTwoAnimation === '' || this.params.layerTwoAnimation === 'disabled' || (!Fluid250.isModernBrowser && this.params.layerTwoAnimation === 'enabled')) ?
+                this.params.layerTwoBGPosition : '0% 0%',
 
-        $.create(template(fluid250Tpl, { data: merge(this.params, templateOptions, videoDesktop, scrollingbg) })).appendTo(this.$adSlot);
+            video: this.params.videoURL ? template(iframeVideoTpl, { data: merge(this.params, position) }) : '',
+
+            scrollbg: this.params.backgroundImagePType !== '' || this.params.backgroundImagePType !== 'none' ?
+                template(scrollBgTpl, { data: this.params }) : ''
+        };
+
+        this.$adSlot.append(template(fluid250Tpl, { data: merge(this.params, templateOptions) }));
+        this.$scrollingBg = $('.ad-scrolling-bg', this.$adSlot[0]);
+        this.$layer2 = $('.hide-until-tablet .fluid250_layer2', this.$adSlot[0]);
 
         if (this.params.trackingPixel) {
             addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);

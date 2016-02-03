@@ -1,11 +1,13 @@
 define([
     'common/utils/template',
     'text!common/views/commercial/creatives/fluid250.html',
+    'text!common/views/commercial/creatives/iframe-video.html',
     'lodash/objects/merge',
     'common/modules/commercial/creatives/add-tracking-pixel'
 ], function (
     template,
     fluid250Tpl,
+    iframeVideoTpl,
     merge,
     addTrackingPixel
 ) {
@@ -15,23 +17,18 @@ define([
     };
 
     Fluid250.prototype.create = function () {
-
+        var position = {
+            position: this.params.videoPositionH === 'left' || this.params.videoPositionH === 'right' ?
+                this.params.videoPositionH + ':' + this.params.videoHorizSpace + 'px;' :
+                ''
+        };
         var templateOptions = {
-                showLabel: (this.params.showAdLabel === 'hide') ?
-                'creative__label--hidden' : ''
-            },
-            leftPosition = (this.params.videoPositionH === 'left' ?
-                ' left: ' + this.params.videoHorizSpace + 'px;' : ''
-            ),
-            rightPosition = (this.params.videoPositionH === 'right' ?
-                ' right: ' + this.params.videoHorizSpace + 'px;' : ''
-            ),
-            videoDesktop = {
-                video: (this.params.videoURL !== '') ?
-                    '<iframe width="409px" height="230px" src="' + this.params.videoURL + '?rel=0&amp;controls=0&amp;showinfo=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="fluid250_video fluid250_video--desktop fluid250_video--vert-pos-' + this.params.videoPositionV + ' fluid250_video--horiz-pos-' + this.params.videoPositionH + '" style="' + leftPosition + rightPosition + '"></iframe>' : ''
-            };
+            showLabel: this.params.showAdLabel === 'hide' ? 'creative__label--hidden' : '',
+            video: this.params.videoURL ?
+                template(iframeVideoTpl, { data: merge(this.params, position) }) : ''
+        };
 
-        $.create(template(fluid250Tpl, { data: merge(this.params, templateOptions, videoDesktop) })).appendTo(this.$adSlot);
+        this.$adSlot.append(template(fluid250Tpl, { data: merge(this.params, templateOptions) }));
 
         if (this.params.trackingPixel) {
             addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
