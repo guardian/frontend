@@ -26,7 +26,7 @@ define([
 
     'reqwest',
     'videojs',
-    'videojs-contrib-ads',
+    'videojsads',
     'videojsembed',
     'videojsima',
     'videojspersistvolume',

@@ -1,6 +1,6 @@
 define([
     'videojs',
-    'bootstraps/enhanced/media/videojs-contrib-ads',
+    'bootstraps/enhanced/media/videojsads',
     'js!videojsima',
     'js!videojspersistvolume',
     'js!videojsplaylist',
