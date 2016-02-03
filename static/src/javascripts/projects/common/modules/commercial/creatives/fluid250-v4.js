@@ -68,6 +68,7 @@ define([
                 ''
         };
         var templateOptions = {
+            isFixedHeight: this.params.creativeHeight === 'fixed',
             showLabel: this.params.showAdLabel === 'hide' ? 'creative__label--hidden' : '',
 
             layerTwoBGPosition: (!this.params.layerTwoAnimation || this.params.layerTwoAnimation === '' || this.params.layerTwoAnimation === 'disabled' || (!Fluid250.isModernBrowser && this.params.layerTwoAnimation === 'enabled')) ?
