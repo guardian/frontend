@@ -6,8 +6,8 @@ try {
 
     (function (window, document) {
 
-        var config  = guardian.config,
-            isEmbed = !!guardian.isEmbed,
+        var config  = window.guardian.config,
+            isEmbed = !!window.guardian.isEmbed,
             tpA     = s.getTimeParting('n', '+0'),
             now     = new Date(),
             webPublicationDate = config.page.webPublicationDate;
@@ -45,27 +45,6 @@ try {
                 }
             }
             return data;
-        }
-
-        function getUserFromCookie() {
-            var cookieName = 'GU_U';
-            var cookieData = cookies.get(cookieName),
-            userData = cookieData ? JSON.parse(Util.decodeBase64(cookieData.split('.')[0])) : null;
-            if (userData) {
-                userFromCookieCache = {
-                    id: userData[0],
-                    primaryEmailAddress: userData[1], // not sure where this is stored now - not in the cookie any more
-                    displayName: userData[2],
-                    accountCreatedDate: userData[6],
-                    emailVerified: userData[7],
-                    rawResponse: cookieData
-                };
-            }
-            return userFromCookieCache
-        }
-
-        function decodeBase64(str) {
-            return decodeURIComponent(escape(utilAtob(str.replace(/-/g, '+').replace(/_/g, '/').replace(/,/g, '='))));
         }
 
         // http://www.electrictoolbox.com/pad-number-zeroes-javascript/
@@ -186,6 +165,16 @@ try {
 
         s.prop47    = config.page.edition || '';
 
+        if (config.user) {
+            s.prop2 = s.eVar2 = 'GUID:' + config.user.id;
+            s.prop31 = s.eVar31 = 'registered user';
+        } else {
+            s.prop31 = s.eVar31 = 'guest user';
+        }
+
+        /* can this go ?? */
+        // s.prop40    = detect.adblockInUse() || detect.getFirefoxAdblockPlusInstalled();
+
         // Retrieve navigation interaction data
         var ni;
         try {
@@ -193,17 +182,6 @@ try {
         } catch (e) {
             ni = null;
         }
-
-        if (getUserFromCookie()) {
-            s.prop2 = 'GUID:' + getUserFromCookie().id;
-            s.eVar2 = 'GUID:' + getUserFromCookie().id;
-        }
-
-        s.prop31    = getUserFromCookie() ? 'registered user' : 'guest user';
-        s.eVar31    = getUserFromCookie() ? 'registered user' : 'guest user';
-
-        /* can this go ?? */
-        // s.prop40    = detect.adblockInUse() || detect.getFirefoxAdblockPlusInstalled();
 
         if (ni) {
             var d = new Date().getTime();
