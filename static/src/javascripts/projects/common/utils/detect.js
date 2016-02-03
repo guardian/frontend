@@ -411,12 +411,6 @@ define([
         return false;
     }
 
-    function createSacrificialAd() {
-        var sacrificialAd = $.create('<div class="ad_unit" style="position: absolute; left: -9999px; height: 10px">&nbsp;</div>');
-        sacrificialAd.appendTo(document.body);
-        return sacrificialAd;
-    }
-
     function getReferrer() {
         return document.referrer || '';
     }
