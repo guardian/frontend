@@ -28,7 +28,8 @@
                     </a>
                 </div>
                 <div class="commercial__body">
-                    <ul class="u-unstyled l-row l-row--cols-4 l-row--layout-m fc-slice">
+                    <div class="fc-slice-wrapper">
+                        <ul class="u-unstyled l-row l-row--cols-4 l-row--layout-m fc-slice">
                         @for(item <- items) {
                             <li class="fc-slice__item l-row__item l-row__item--span-1">
                                 <div class="fc-item fc-item--has-image fc-item--has-metadata @item match {
@@ -72,6 +73,7 @@
                             </li>
                         }
                     </ul>
+                    </div>
                     <div class="ad-slot--adbadge ad-slot--paid-for-badge">
                         <div class="ad-slot--paid-for-badge__inner">
                             <h3 class="ad-slot--paid-for-badge__header">@optSponsorLabel</h3>
