@@ -17,7 +17,8 @@ object PaidContentCardController extends Controller with ExecutionContexts with 
       contents.headOption map { content =>
         val articleUrl = content.metadata.webUrl
         val articleTitle = request.getParameter("articleHeaderText") getOrElse content.metadata.webTitle
-        val articleText = request.getParameter("articleText") orElse content.fields.trailText
+        val leaveTextEmpty = request.getParameter("leaveTextEmpty") == "Yes"
+        val articleText = getParameter("articleText") orElse if (!leaveTextEmpty) content.fields.trailText else ""
         val pictureUrl: Option[String] = request.getParameter("articleImage") orElse (content.trail.trailPicture.flatMap(Item300.bestFor))
         val brandLogo = request.getParameter("brandLogo")
         val brand = request.getParameter("brand")
