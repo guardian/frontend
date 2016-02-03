@@ -18,7 +18,7 @@
                 <div class="commercial commercial--paidfor commercial--tone-paidfor commercial--paidfor-single">
                     <div class="commercial__inner">
                         <div class="commercial__header">
-                            @fragments.commercial.paidForMeta(container.dataId)
+                            @fragments.commercial.paidForMeta(Some(container.dataId))
                             <h3 class="commercial__title">@container.displayName</h3>
                             <a class="commercial__cta"
                                 @if(Edition(request).id == "AU") {
@@ -74,7 +74,7 @@
                 <div class="commercial commercial--paidfor commercial--tone-paidfor commercial--paidfor-multi">
                     <div class="commercial__inner">
                         <div class="commercial__header">
-                            @fragments.commercial.paidForMeta()
+                            @fragments.commercial.paidForMeta(Some(container.dataId))
                             <h3 class="commercial__title">@container.displayName</h3>
                             <a class="commercial__cta"
                                 @if(Edition(request).id == "AU") {
