@@ -172,7 +172,7 @@ final case class Content(
     ("isContent", JsBoolean(true)),
     ("wordCount", JsNumber(wordCount)),
     ("references", JsArray(javascriptReferences)),
-    ("showRelatedContent", JsBoolean(showInRelated)),
+    ("showRelatedContent", JsBoolean(Some(!tags.isUSMinuteSeries).getOrElse(showInRelated))),
     ("productionOffice", JsString(productionOffice.getOrElse("")))
   )
 
