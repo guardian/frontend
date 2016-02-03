@@ -31,16 +31,7 @@ final case class ShareLinks(
         .filter(_._2.isDefined)
         .map { case (k, v) => (k, v.getOrElse("")) }
 
-      appendQueryParams(webLinkUrl, queryParams) + elementId.map(id => s"#${id}").getOrElse("")
-    }
-
-    def appendQueryParams(uri: String, queryParams: Map[String, String]): String = {
-      queryParams.foldLeft(uri)((currentUri, queryParam) => {
-        javax.ws.rs.core.UriBuilder.fromUri(currentUri)
-          .queryParam(queryParam._1, queryParam._2)
-          .build()
-          .toString()
-      })
+      webLinkUrl.appendQueryParams(queryParams) + elementId.map(id => s"#${id}").getOrElse("")
     }
 
     lazy val facebook = createShareLinkUrl(Some("sfb"), elementId).urlEncoded
