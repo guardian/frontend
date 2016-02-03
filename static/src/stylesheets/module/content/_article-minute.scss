@@ -30,6 +30,23 @@ $minute-layout-margin-nudge: gs-span(1);
         }
 
     }
+    .logo--us--election {
+        display: block;
+        float: left;
+        height: gs-height(2);
+        margin-top: $gs-baseline / 2;
+        margin-left: $gs-baseline / 2;
+        width: gs-span(1) + $gs-gutter;
+
+        svg {
+            width: 100%;
+            height: auto;
+        }
+
+        @include mq(tablet) {
+            width: gs-span(2) + $gs-gutter;
+        }
+    }
 
     .logo--minute--article {
         display: block;
