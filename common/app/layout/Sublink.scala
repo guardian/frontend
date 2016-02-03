@@ -133,10 +133,11 @@ case class SnapStuff(
   embedHtml: Option[String]
 ) {
   def cssClasses = Seq(
-    "js-snap",
-    "facia-snap",
-    snapCss.map(t => s"facia-snap--$t").getOrElse("facia-snap--default")
-  )
+    Some("js-snap"),
+    Some("facia-snap"),
+    snapCss.map(t => s"facia-snap--$t").orElse(Some("facia-snap--default")),
+    embedHtml.map(_ => "facia-snap-embed")
+  ).flatten
 }
 
 object FaciaCardHeader {

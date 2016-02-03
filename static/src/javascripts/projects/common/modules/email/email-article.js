@@ -36,7 +36,8 @@ define([
                 headline: 'Interested in the NHS?',
                 description: 'Sign up to email updates related to the Guardian\'s coverage of the NHS, including daily updates as the project develops',
                 successHeadline: 'Thank you for signing up to our NHS email updates',
-                successDescription: 'You\'ll receive daily updates in your inbox'
+                successDescription: 'You\'ll receive daily updates in your inbox',
+                modClass: 'end-article'
             },
             theCampaignMinute: {
                 listId: '3599',
@@ -72,7 +73,7 @@ define([
                 });
 
                 fastdom.write(function () {
-                    $iframeEl[listConfig.insertMethod || 'appendTo']($insertEl.length > 0 ? $insertEl : $articleBody);
+                    $iframeEl[listConfig.insertMethod || 'appendTo']($insertEl && $insertEl.length > 0 ? $insertEl : $articleBody);
                 });
 
                 emailInserted = true;
