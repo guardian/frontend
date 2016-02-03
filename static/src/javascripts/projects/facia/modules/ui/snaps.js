@@ -49,7 +49,7 @@ define([
     function init() {
 
         // First, init any existing inlined embeds already on the page.
-        var inlinedSnaps = toArray($('.facia-snap-embed'))
+        var inlinedSnaps = toArray($('.facia-snap-embed'));
         inlinedSnaps.forEach(initInlinedSnap);
 
         // Second, init non-inlined embeds.
