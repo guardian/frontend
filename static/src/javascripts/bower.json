@@ -18,7 +18,7 @@
     "when": "3.7.3",
     "video.js": "5.4.6",
     "videojs-playlist-audio": "guardian/videojs-playlist#v0.1.0",
-    "videojs-contrib-ads": "guardian/videojs-contrib-ads#v3.0.0",
+    "videojs-contrib-ads": "videojs/videojs-contrib-ads#3.1.3",
     "videojs-persistvolume": "guardian/videojs-persistvolume#0.1.3",
     "videojs-embed": "0.3.3",
     "videojs-ima": "guardian/videojs-ima#0.2.1",
@@ -37,7 +37,7 @@
       "domready": "bower_components/domready/ready.js",
       "when": "bower_components/when/es6-shim/Promise.js",
       "video.js": "bower_components/video.js/dist/video.js",
-      "videojs-contrib-ads": "bower_components/videojs-contrib-ads/dist/videojs.ads.min.js",
+      "videojs-contrib-ads": "bower_components/videojs-contrib-ads/src/videojs.ads.js",
       "videojs-ima": "bower_components/videojs-ima/src/videojs.ima.js",
       "videojs-playlist-audio": "bower_components/videojs-playlist-audio/javascripts/videojs.playlist.js",
       "videojs-embed" : "bower_components/videojs-embed/dist/videojs.embed.js"
