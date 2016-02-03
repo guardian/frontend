@@ -45,7 +45,6 @@ define([
                 articleAsideAdverts : false,
                 sliceAdverts : false,
                 popularContentMPU : false,
-                videoPreRolls : false,
                 frontCommercialComponents : false
             };
         }

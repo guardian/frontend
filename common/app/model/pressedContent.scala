@@ -331,7 +331,8 @@ object LinkSnap {
       header = PressedCardHeader.make(content),
       card = PressedCard.make(content),
       discussion = PressedDiscussionSettings.make(content),
-      display = PressedDisplaySettings.make(content)
+      display = PressedDisplaySettings.make(content),
+      enriched = Some(EnrichedContent.empty)
     )
   }
 }
@@ -340,7 +341,9 @@ final case class LinkSnap(
   override val header: PressedCardHeader,
   override val card: PressedCard,
   override val discussion: PressedDiscussionSettings,
-  override val display: PressedDisplaySettings) extends Snap
+  override val display: PressedDisplaySettings,
+  enriched: Option[EnrichedContent] // This is currently an option, as we introduce the new field. It can then become a value type.
+) extends Snap
 
 object LatestSnap {
   def make(content: fapi.LatestSnap): LatestSnap = {
