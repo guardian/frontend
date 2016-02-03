@@ -114,6 +114,7 @@ define([
 
     function _mapElementToDimensions(el) {
         return {
+            absoluteTop: el.getBoundingClientRect().top + window.pageYOffset,
             top: el.offsetTop,
             bottom: el.offsetTop + el.offsetHeight,
             element: el

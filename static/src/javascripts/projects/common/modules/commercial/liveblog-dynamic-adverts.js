@@ -37,13 +37,15 @@ define([
             slotSelector: ' > .block',
             fromBottom: update,
             startAt: update ? firstSlot : null,
-            minAbove: update ? 0 : windowHeight * OFFSET,
+            minAbove: 0,
             minBelow: 0,
             filter: filterSlot
         };
 
         function filterSlot(slot, index) {
-            if (index === 0) {
+            if (!prevSlot &&
+                (update || (slot.absoluteTop >= windowHeight * OFFSET))
+            ) {
                 prevSlot = slot;
                 prevIndex = index;
                 return !update;
