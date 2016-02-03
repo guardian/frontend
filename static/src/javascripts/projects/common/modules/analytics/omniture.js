@@ -132,8 +132,8 @@ define([
         });
     };
 
-    Omniture.prototype.populateMvtPageProperties = function () {
-        //check the users current ab status
+    Omniture.prototype.shouldPopulateMvtPageProperties = function () {
+        //get the users current ab status
         var mvt = ab.makeOmnitureTag();
         var previousMvt = config.abTestsParticipations;
 
@@ -152,7 +152,7 @@ define([
     };
 
     Omniture.prototype.go = function () {
-        if (this.populateMvtPageProperties()) {
+        if (this.shouldPopulateMvtPageProperties()) {
             this.logView();
             mediator.emit('analytics:ready');
         }
