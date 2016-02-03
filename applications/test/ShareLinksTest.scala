@@ -11,7 +11,7 @@ import org.scalatest.concurrent.{Futures, ScalaFutures}
 
   "ShareLink" should "provide valid page-level campaign-links in the correct order" in {
     val response = getResponse(
-      conf.LiveContentApi.item("environment/gallery/2014/oct/22/2014-wildlife-photographer-of-the-year", edition)
+      conf.LiveContentApi.item("politics/blog/live/2016/feb/03/eu-renegotiation-pmqs-cameron-corbyn-he-prepares-to-make-statement-to-mps-politics-live", edition)
     )
 
     whenReady(response) { item: ItemResponse =>
@@ -19,14 +19,16 @@ import org.scalatest.concurrent.{Futures, ScalaFutures}
       item.content.map { apiContent =>
         val pageShares = model.Content(apiContent).sharelinks.pageShares
 
-        pageShares.map(_.text) should be (List("Facebook", "Twitter", "Email", "Pinterest", "Google plus", "WhatsApp"))
+        pageShares.map(_.text) should be (List("Facebook", "Twitter", "Email", "Pinterest", "LinkedIn", "Google plus", "WhatsApp"))
         pageShares.map(_.href) should be (List(
-          "https://www.facebook.com/dialog/share?app_id=202314643182694&href=http%3A%2F%2Fwww.theguardian.com%2Fenvironment%2Fgallery%2F2014%2Foct%2F22%2F2014-wildlife-photographer-of-the-year%3FCMP%3Dshare_btn_fb&redirect_uri=http%3A%2F%2Fgu.com%2Fp%2F42jcb",
-          "https://twitter.com/intent/tweet?text=2014%20Wildlife%20photographer%20of%20the%20Year&url=http%3A%2F%2Fwww.theguardian.com%2Fenvironment%2Fgallery%2F2014%2Foct%2F22%2F2014-wildlife-photographer-of-the-year%3FCMP%3Dshare_btn_tw",
-          "mailto:?subject=2014%20Wildlife%20photographer%20of%20the%20Year&body=http%3A%2F%2Fwww.theguardian.com%2Fenvironment%2Fgallery%2F2014%2Foct%2F22%2F2014-wildlife-photographer-of-the-year%3FCMP%3Dshare_btn_link",
-          "http://www.pinterest.com/pin/find/?url=http%3A%2F%2Fwww.theguardian.com%2Fenvironment%2Fgallery%2F2014%2Foct%2F22%2F2014-wildlife-photographer-of-the-year",
-          "https://plus.google.com/share?url=http%3A%2F%2Fwww.theguardian.com%2Fenvironment%2Fgallery%2F2014%2Foct%2F22%2F2014-wildlife-photographer-of-the-year%3FCMP%3Dshare_btn_gp&amp;hl=en-GB&amp;wwc=1",
-          "whatsapp://send?text=%222014%20Wildlife%20photographer%20of%20the%20Year%22%20http%3A%2F%2Fwww.theguardian.com%2Fenvironment%2Fgallery%2F2014%2Foct%2F22%2F2014-wildlife-photographer-of-the-year%3FCMP%3Dshare_btn_wa"))
+          "https://www.facebook.com/dialog/share?app_id=202314643182694&href=http%3A%2F%2Fwww.theguardian.com%2Fpolitics%2Fblog%2Flive%2F2016%2Ffeb%2F03%2Feu-renegotiation-pmqs-cameron-corbyn-he-prepares-to-make-statement-to-mps-politics-live%3FCMP%3Dshare_btn_fb&redirect_uri=http%3A%2F%2Fgu.com%2Fp%2F4gc8j",
+          "https://twitter.com/intent/tweet?text=Obama%20reaffirms%20his%20support%20for%20Britain%20remaining%20in%20EU%20-%20Politics%20live&url=http%3A%2F%2Fwww.theguardian.com%2Fpolitics%2Fblog%2Flive%2F2016%2Ffeb%2F03%2Feu-renegotiation-pmqs-cameron-corbyn-he-prepares-to-make-statement-to-mps-politics-live%3FCMP%3Dshare_btn_tw",
+          "mailto:?subject=Obama%20reaffirms%20his%20support%20for%20Britain%20remaining%20in%20EU%20-%20Politics%20live&body=http%3A%2F%2Fwww.theguardian.com%2Fpolitics%2Fblog%2Flive%2F2016%2Ffeb%2F03%2Feu-renegotiation-pmqs-cameron-corbyn-he-prepares-to-make-statement-to-mps-politics-live%3FCMP%3Dshare_btn_link",
+          "http://www.pinterest.com/pin/find/?url=http%3A%2F%2Fwww.theguardian.com%2Fpolitics%2Fblog%2Flive%2F2016%2Ffeb%2F03%2Feu-renegotiation-pmqs-cameron-corbyn-he-prepares-to-make-statement-to-mps-politics-live",
+          "http://www.linkedin.com/shareArticle?mini=true&title=Obama+reaffirms+his+support+for+Britain+remaining+in+EU+-+Politics+live&url=http%3A%2F%2Fwww.theguardian.com%2Fpolitics%2Fblog%2Flive%2F2016%2Ffeb%2F03%2Feu-renegotiation-pmqs-cameron-corbyn-he-prepares-to-make-statement-to-mps-politics-live",
+          "https://plus.google.com/share?url=http%3A%2F%2Fwww.theguardian.com%2Fpolitics%2Fblog%2Flive%2F2016%2Ffeb%2F03%2Feu-renegotiation-pmqs-cameron-corbyn-he-prepares-to-make-statement-to-mps-politics-live%3FCMP%3Dshare_btn_gp&amp;hl=en-GB&amp;wwc=1",
+          "whatsapp://send?text=%22Obama%20reaffirms%20his%20support%20for%20Britain%20remaining%20in%20EU%20-%20Politics%20live%22%20http%3A%2F%2Fwww.theguardian.com%2Fpolitics%2Fblog%2Flive%2F2016%2Ffeb%2F03%2Feu-renegotiation-pmqs-cameron-corbyn-he-prepares-to-make-statement-to-mps-politics-live%3FCMP%3Dshare_btn_wa"
+        ))
       }
     }
   }
