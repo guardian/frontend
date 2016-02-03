@@ -3,7 +3,7 @@
 @import views.html.fragments.form.{inputField, textareaField}
 @import form.IdFormHelpers._
 @import form.Input
-@import model.Countries
+@import model.{Countries, CountryCodes}
 @import org.joda.time.DateTime.now
 @import helper._
 
@@ -51,7 +51,7 @@
                         }
                         @select(
                             accountDetailsForm("telephoneNumber.countryCode"),
-                            options(List(1, 44) map {_.toString}),
+                            options(CountryCodes.all.toSeq.sortBy(_._2):_*),
                             ('_label, ""),
                             ('_showConstraints, false),
                             ('_default, ""),
