@@ -7,7 +7,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/utils/template',
-    'text!common/views/commercial/creatives/fluid250-v3.html',
+    'text!common/views/commercial/creatives/fluid250-scrollingbg.html',
     'lodash/functions/bindAll',
     'lodash/objects/merge'
 ], function (
