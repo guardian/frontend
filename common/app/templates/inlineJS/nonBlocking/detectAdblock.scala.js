@@ -12,9 +12,9 @@ try {
 
             window.requestAnimationFrame(() => {
                 var adStyles = window.getComputedStyle(ad);
-                window.guardian.adBlock = {
-                    active: adStyles.getPropertyValue('display') === 'none',
-                    ffAdblockPlusInstalled: adStyles.getPropertyValue('-moz-binding').match('elemhidehit') !== null
+                window.guardian.adBlockers = {
+                    generic: adStyles.getPropertyValue('display') === 'none',
+                    ffAdblockPlus: adStyles.getPropertyValue('-moz-binding').match('elemhidehit') !== null
                 }
             })
         });

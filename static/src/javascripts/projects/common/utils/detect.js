@@ -397,30 +397,18 @@ define([
     }
 
     function adblockInUse() {
-        if (!detect.cachedAdblockInUse) {
-            var sacrificialAd = createSacrificialAd(),
-                contentBlocked = isHidden(sacrificialAd);
-            sacrificialAd.remove();
-            detect.cachedAdblockInUse = contentBlocked;
-            return contentBlocked;
+        if (window.guardian.adBlocker) {
+            return window.guardian.adBlocker.generic;
         }
-
-        return detect.cachedAdblockInUse;
-
-        function isHidden(bonzoElement) {
-            return bonzoElement.css('display') === 'none';
-        }
+        return false;
     }
 
     /** Includes Firefox Adblock Plus users who whitelist the Guardian domain */
     function getFirefoxAdblockPlusInstalled() {
-        var sacrificialAd = createSacrificialAd();
-        var adUnitMozBinding = sacrificialAd.css('-moz-binding');
-        if (adUnitMozBinding) {
-            return adUnitMozBinding.match('elemhidehit') !== null;
-        } else {
-            return false;
+        if (window.guardian.adBlocker) {
+            return window.guardian.adBlocker.ffAdblockPlus;
         }
+        return false;
     }
 
     function createSacrificialAd() {
