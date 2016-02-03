@@ -35,18 +35,14 @@ define([
     Fluid250.isIE9OrLess = detect.getUserAgent.browser === 'MSIE' && (detect.getUserAgent.version === '9' || detect.getUserAgent.version === '8');
 
     Fluid250.prototype.updateBgPosition = function () {
-        switch (this.params.backgroundImagePType) {
-            case 'fixed':
-                break;
-            case 'parallax':
-                fastdom.read(function () {
-                    this.scrollAmount = Math.ceil((window.pageYOffset - this.$adSlot.offset().top) * 0.3 * -1) + 20;
-                    this.scrollAmountP = this.scrollAmount + '%';
-                }.bind(this));
-                fastdom.write(function () {
-                    $('.ad-scrolling-bg', $(this.$adSlot)).addClass('ad-scrolling-bg-parallax').css('background-position', '50%' + this.scrollAmountP);
-                }.bind(this));
-                break;
+        if (this.params.backgroundImagePType === 'parallax') {
+            this.scrollAmount = Math.ceil((window.pageYOffset - this.$adSlot.offset().top) * 0.3 * -1) + 20;
+            this.scrollAmountP += '%';
+            fastdom.write(function () {
+                this.$scrollingBg
+                    .addClass('ad-scrolling-bg-parallax')
+                    .css('background-position', '50%' + this.scrollAmountP);
+            }, this);
         }
 
         this.layer2Animation();
@@ -55,15 +51,13 @@ define([
     Fluid250.prototype.layer2Animation = function () {
         var inViewB;
         if (this.params.layerTwoAnimation === 'enabled' && Fluid250.isModernBrowser && !Fluid250.isIE9OrLess) {
-            fastdom.read(function () {
-                inViewB = (window.pageYOffset + bonzo.viewport().height) > this.$adSlot.offset().top;
-            }.bind(this));
+            inViewB = (window.pageYOffset + bonzo.viewport().height) > this.$adSlot.offset().top;
             fastdom.write(function () {
-                $('.hide-until-tablet .fluid250_layer2', $(this.$adSlot)).addClass('ad-scrolling-text-hide-' + this.params.layerTwoAnimationPosition);
+                this.$layer2.addClass('ad-scrolling-text-hide-' + this.params.layerTwoAnimationPosition);
                 if (inViewB) {
-                    $('.hide-until-tablet .fluid250_layer2', $(this.$adSlot)).addClass('ad-scrolling-text-animate-' + this.params.layerTwoAnimationPosition);
+                    this.$layer2.addClass('ad-scrolling-text-animate-' + this.params.layerTwoAnimationPosition);
                 }
-            }.bind(this));
+            }, this);
         }
     };
 
@@ -95,8 +89,8 @@ define([
 
         if (Fluid250.hasScrollEnabled) {
             // update bg position
-            this.updateBgPosition();
-            mediator.on('window:scroll', this.updateBgPosition.bind(this));
+            fastdom.read(this.updateBgPosition, this);
+            mediator.on('window:throttledScroll', this.updateBgPosition.bind(this));
             // to be safe, also update on window resize
             mediator.on('window:resize', this.updateBgPosition.bind(this));
         }

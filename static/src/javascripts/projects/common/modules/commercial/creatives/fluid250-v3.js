@@ -35,35 +35,29 @@ define([
     Fluid250.isIE9OrLess = detect.getUserAgent.browser === 'MSIE' && (detect.getUserAgent.version === '9' || detect.getUserAgent.version === '8');
 
     Fluid250.prototype.updateBgPosition = function () {
-        var that = this;
-        switch (this.params.backgroundImagePType) {
-            case 'fixed':
-                break;
-            case 'parallax':
-                this.scrollAmount = Math.ceil((window.pageYOffset - this.$adSlot.offset().top) * 0.3 * -1) + 20;
-                this.scrollAmountP = this.scrollAmount + '%';
-                fastdom.write(function () {
-                    $('.ad-scrolling-bg', $(that.$adSlot)).addClass('ad-scrolling-bg-parallax').css('background-position', '50%' + that.scrollAmountP);
-                });
-                break;
+        if (this.params.backgroundImagePType === 'parallax') {
+            this.scrollAmount = Math.ceil((window.pageYOffset - this.$adSlot.offset().top) * 0.3 * -1) + 20;
+            this.scrollAmountP += '%';
+            fastdom.write(function () {
+                this.$scrollingBg
+                    .addClass('ad-scrolling-bg-parallax')
+                    .css('background-position', '50%' + this.scrollAmountP);
+            }, this);
         }
 
         this.layer2Animation();
     };
 
     Fluid250.prototype.layer2Animation = function () {
-        var inViewB,
-            that = this;
+        var inViewB;
         if (this.params.layerTwoAnimation === 'enabled' && Fluid250.isModernBrowser && !Fluid250.isIE9OrLess) {
-            fastdom.read(function () {
-                inViewB = (window.pageYOffset + bonzo.viewport().height) > that.$adSlot.offset().top;
-            });
+            inViewB = (window.pageYOffset + bonzo.viewport().height) > this.$adSlot.offset().top;
             fastdom.write(function () {
-                $('.hide-until-tablet .fluid250_layer2', $(that.$adSlot)).addClass('ad-scrolling-text-hide');
+                this.$layer2.addClass('ad-scrolling-text-hide');
                 if (inViewB) {
-                    $('.hide-until-tablet .fluid250_layer2', $(that.$adSlot)).addClass('ad-scrolling-text-animate');
+                    this.$layer2.addClass('ad-scrolling-text-animate');
                 }
-            });
+            }, this);
         }
     };
 
@@ -95,11 +89,10 @@ define([
 
         if (Fluid250.hasScrollEnabled) {
             // update bg position
-            fastdom.read(this.updateBgPosition);
-
-            mediator.on('window:throttledScroll', this.updateBgPosition);
+            fastdom.read(this.updateBgPosition, this);
+            mediator.on('window:throttledScroll', this.updateBgPosition.bind(this));
             // to be safe, also update on window resize
-            mediator.on('window:resize', this.updateBgPosition);
+            mediator.on('window:resize', this.updateBgPosition.bind(this));
         }
     };
 
