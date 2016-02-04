@@ -78,8 +78,6 @@ define([
             new Promise(function (resolve) {
                 var loadedCount = 0;
                 bean.on(body, 'load', notLoaded, function onImgLoaded(e) {
-                    var idx = notLoaded.indexOf(e.currentTarget);
-                    if (idx === -1) return;
                     loadedCount += 1;
                     if (loadedCount === notLoaded.length) {
                         bean.off(body, 'load', onImgLoaded);
