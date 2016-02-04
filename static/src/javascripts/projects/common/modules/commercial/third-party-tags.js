@@ -41,20 +41,20 @@ define([
     function loadExternalContentWidget() {
 
         var externalTpl = template(externalContentContainerStr);
-        var documentAnchorId = '.js-external-content-widget-anchor';
+        var documentAnchorClass = '.js-external-content-widget-anchor';
 
         function renderWidgetContainer(widgetType) {
-            $(documentAnchorId).append(externalTpl({widgetType: widgetType}));
+            $(documentAnchorClass).append(externalTpl({widgetType: widgetType}));
         }
 
         if (config.switches.plistaForOutbrainAu && config.page.edition.toLowerCase() === 'au') {
             fastdom.write(function () {
                 renderWidgetContainer('plista');
-            }).then(plista.init());
+            }).then(plista.init);
         } else {
             fastdom.write(function () {
                 renderWidgetContainer('outbrain');
-            }).then(outbrain.init());
+            }).then(outbrain.init);
         }
     }
 
