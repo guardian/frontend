@@ -102,7 +102,7 @@ define([
             },
             {
                 edition: 'UK',
-                supporterLink: 'https://membership.theguardian.com/supporter?INTCMP=ADBLOCK_BANNER_COIN',
+                supporterLink: 'https://membership.theguardian.com/uk/supporter?INTCMP=ADBLOCK_BANNER_COIN',
                 quoteText: 'Quality journalism',
                 linkText: 'Become a supporter from just £5 per month',
                 messageText: 'For just 16p a day you can support the Guardian\'s independence and our award-winning journalism',
