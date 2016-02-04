@@ -1,7 +1,14 @@
 package model
 
 object CountryCodes {
-  lazy val all = Map(
+
+  lazy val gu = Map(
+    ("61", "Australia +61"),
+    ("44", "United Kingdom +44"),
+    ("1", "United States of America +1")
+  )
+
+  lazy val other = Map(
    ("93", "Afghanistan +93"),
    ("355", "Albania +355"),
    ("213", "Algeria +213"),
@@ -157,7 +164,6 @@ object CountryCodes {
    ("683", "Niue +683"),
    ("6723", "Norfolk Island +6723"),
    ("850", "North Korea +850"),
-   ("44", "Northern Ireland +44"),
    ("1" ,"Northern Mariana Islands +1"),
    ("47", "Norway +47"),
    ("968", "Oman +968"),
@@ -222,8 +228,6 @@ object CountryCodes {
    ("256", "Uganda +256"),
    ("380", "Ukraine +380"),
    ("971", "United Arab Emirates +971"),
-   ("44", "United Kingdom +44"),
-   ("1", "United States of America +1"),
    ("598", "Uruguay +598"),
    ("998", "Uzbekistan +998"),
    ("678", "Vanuatu +678"),
