@@ -17,8 +17,7 @@ object PaidContentCardController extends Controller with ExecutionContexts with 
       contents.headOption map { content =>
         val articleUrl = content.metadata.webUrl
         val articleTitle = request.getParameter("articleHeaderText") getOrElse content.metadata.webTitle
-        val leaveTextEmpty = request.getParameter("leaveTextEmpty") == "Yes"
-        val articleText = request.getParameter("articleText") orElse (if (!leaveTextEmpty) content.fields.trailText else Some(""))
+        val leaveTextEmpty = request.getParameter("leaveTextEmpty").exists(_ != "No")
         val pictureUrl: Option[String] = request.getParameter("articleImage") orElse (content.trail.trailPicture.flatMap(Item300.bestFor))
         val brandLogo = request.getParameter("brandLogo")
         val brand = request.getParameter("brand")
@@ -27,6 +26,10 @@ object PaidContentCardController extends Controller with ExecutionContexts with 
         val optOmnitureId = request.getParameter("omnitureId")
         val trackingPixel = request.getParameter("trackingPixel")
         val cacheBuster = request.getParameter("cacheBuster")
+
+        val articleText = if (!leaveTextEmpty) {
+          request.getParameter("articleText") orElse content.fields.trailText
+        } else None
 
         Cached(componentMaxAge) {
           format.result(views.html.paidContent.card(articleUrl, articleTitle, articleText, pictureUrl, brandLogo, brand, linkLabel, optClickMacro, optOmnitureId, trackingPixel, cacheBuster))
