@@ -1,0 +1,28 @@
+@(articleUrl: String, articleTitle: String, articleText: Option[String], pictureUrl: Option[String], brandLogo: Option[String], brand: Option[String], linkLabel: Option[String], optClickMacro: Option[String], optOmnitureId: Option[String], trackingPixel: Option[String], cacheBuster: Option[String])(implicit request: RequestHeader)
+
+@import views.html.fragments
+
+@for(trackingPx <- trackingPixel){ <img src="@trackingPx@cacheBuster" class="creative__tracking-pixel" height="1px" width="1px"/> }
+<div class="paidfor-content" data-link-name="creative | gu style commercial content">
+    <div class="u-responsive-ratio inlined-image">
+        <a href="@optClickMacro@articleUrl" data-link-name="article image">
+            @pictureUrl.map{ url => <img src="@url" alt="@linkLabel" class="lineitem__image" /> }
+        </a>
+        <a @if(Edition(request).id == "AU") {
+                href="@LinkTo("/guardian-labs-australia")"
+            } else {
+                href="@LinkTo("/guardian-labs")"
+            } class="paidfor-content__glabs-logo" title="glabs" data-link-name="glabs logo">
+            @fragments.inlineSvg("glabs-logo-small", "logo")
+        </a>
+    </div>
+    @fragments.commercial.paidForMeta()
+    <a href="@optClickMacro@articleUrl" class="paidfor-box" data-link-name="advertisers logo">
+        <h2 class="gu-title">@articleTitle</h2>
+            @for(text <- articleText){ <div class="gu-text">@Html(text)</div> }
+        <div class="paidfor-brand">
+            <span class="paidfor-note">Paid for by:</span>
+            @for(logoUrl <- brandLogo) {<img src="@logoUrl" alt="@brand" class="paidfor-logo"/>}
+        </div>
+    </a>
+</div>

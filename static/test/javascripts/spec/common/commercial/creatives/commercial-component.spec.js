@@ -162,6 +162,21 @@ define([
                     k:                'music/ledzeppelin',
                     af:               'sponsored'
                 }
+            },
+            {
+                type:    'paidforCard',
+                url:     '/commercial/paid.json?trackingPixel=tracking%20pixel&cacheBuster=1221120223&brand=brand&' +
+                         'brandLogo=https%3A%2F%2Ftpc.googlesyndication.com%2Fpagead%2Fimgad%3Fid%3DCICAgKDTp4-D0QEQARgBMgh-ceRYAFUyZA&' +
+                         'articleUrl=http%3A%2F%2Fp%2F43b2q&linkLabel=link%20label&adType=gu-style',
+                options: {
+                    brand: 'Unilever',
+                    brandLogo: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
+                    articleUrl: 'p/43b2q',
+                    linkLabel: 'linkLabel',
+                    clickMacro: '%%CLICK_URL_ESC%%',
+                    omnitureId: '[%OmnitureID%]',
+                    adType: 'gu-style'
+                }
             }
         ].forEach(function (testConfig) {
 
