@@ -75,15 +75,19 @@ define([
 
         return notLoaded.length === 0 ?
             Promise.resolve(true) :
-            Promise.race(
-                [new Promise(expire)].concat(
-                    map(notLoaded, function (img) {
-                        return new Promise(function (resolve) {
-                            bean.one(img, 'load', resolve);
-                        });
-                    })
-                )
-            );
+            new Promise(function (resolve) {
+                var loadedCount = 0;
+                bean.on(body, 'load', notLoaded, function onImgLoaded(e) {
+                    var idx = notLoaded.indexOf(e.currentTarget);
+                    if (idx === -1) return;
+                    loadedCount += 1;
+                    if (loadedCount === notLoaded.length) {
+                        bean.off(body, 'load', onImgLoaded);
+                        notLoaded = null;
+                        resolve();
+                    }
+                });
+            });
     }
 
     function onRichLinksUpgraded(body) {
@@ -91,12 +95,9 @@ define([
 
         return unloaded.length === 0 ?
             Promise.resolve(true) :
-            Promise.race([
-                new Promise(function (resolve) {
-                    mediator.once('rich-link:loaded', resolve);
-                }),
-                new Promise(expire)
-            ]);
+            new Promise(function (resolve) {
+                mediator.once('rich-link:loaded', resolve);
+            });
     }
 
     // test one element vs another for the given rules
@@ -176,7 +177,10 @@ define([
 
     function getReady(body) {
         if (config.switches.viewability) {
-            return Promise.all([onImagesLoaded(body), onRichLinksUpgraded(body)]);
+            return Promise.race([
+                new Promise(expire),
+                Promise.all([onImagesLoaded(body), onRichLinksUpgraded(body)])
+            ]);
         }
 
         return Promise.resolve(true);
