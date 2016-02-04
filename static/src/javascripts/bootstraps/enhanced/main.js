@@ -34,8 +34,6 @@ define([
             );
         };
 
-        console.log("++ Yowza dowsa - where's ya swarkin trousers");
-
         userTiming.mark('App Begin');
         bootstrapContext('common', common);
 
@@ -65,22 +63,11 @@ define([
             });
         }
 
-        var isDev = window.location.hostname === 'localhost';
         if (config.page.contentType === 'LiveBlog') {
-            console.log('++ Live blog enhanced');
             require(['bootstraps/enhanced/liveblog', 'bootstraps/enhanced/image-content'], function (liveBlog, imageContent) {
-                console.log('++ Live blog bootstraps required');
                 bootstrapContext('liveBlog', liveBlog);
                 bootstrapContext('liveBlog : image-content', imageContent);
             });
-            if ((window.location.protocol === 'https:' || isDev)) {
-                console.log('++ Bootstrap blog notifications');
-                require(['bootstraps/enhanced/notifications'], function (notifications) {
-                    console.log('++ Notification bootstrap required');
-                    bootstrapContext('notifications', notifications);
-                });
-            }
-
         }
 
         if (config.page.isMinuteArticle) {
@@ -147,7 +134,14 @@ define([
         if ((window.location.protocol === 'https:' && config.page.section !== 'identity') || window.location.hash === '#force-sw') {
             var navigator = window.navigator;
             if (navigator && navigator.serviceWorker) {
-                navigator.serviceWorker.register('/service-worker.js');
+                navigator.serviceWorker.register('/service-worker.js').then(function () {
+                   if(config.page.contentType === 'LiveBlog') {
+                       console.log("++ Load dat mo-fo");
+                       require(['bootstraps/enhanced/notifications'], function (notifications) {
+                           bootstrapContext('notifications', notifications);
+                       });
+                   }
+               });
             }
         }
 

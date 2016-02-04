@@ -9,6 +9,8 @@
 // Offline page
 //
 
+console.log("++ Started");
+
 var staticCacheName = 'static';
 
 var getISODate = function () {
@@ -42,6 +44,7 @@ var cachePageAndAssetResponses = function (jsonResponse, assetResponses) {
 // The JSON contains the HTML and asset versions. We cache the assets at
 // their specified URLs and the page HTML as '/offline-page'.
 var updateCache = function () {
+    console.log("++ Update cache");
     // Fetch page and all assets. Iff all responses are OK then cache all assets and page.
     return fetch('/offline-page.json').then(function (jsonResponse) {
         if (jsonResponse.ok) {
@@ -87,6 +90,7 @@ var isCacheUpdated = function () {
 };
 
 self.addEventListener('install', function (event) {
+    console.log("On install");
     event.waitUntil(updateCache());
 });
 
@@ -128,5 +132,22 @@ this.addEventListener('fetch', function (event) {
                 })
         );
     }
+});
+
+self.addEventListener('activate', function(event) {
+   console.log('Actrivated', event);
+});
+
+self.addEventListener('push', function(event){
+    console.log('Push message', event);
+    var title = 'Push message';
+
+    event.waitUntil(
+        self.registration.showNotification(title, {
+            body: 'Show me your body',
+            icon: 'https://avatar.guim.co.uk/user/12279432',
+            tag: 'tag, init'
+        })
+    );
 });
 

@@ -22,7 +22,7 @@ object WebAppController extends Controller with ExecutionContexts with Logging {
 
   def serviceWorker() = Action { implicit request =>
     println("Service worker")
-    Cached(3600) { Ok(templates.js.serviceWorker()) }
+    NoCache { Ok(templates.js.serviceWorker()) }
   }
 
   def notificationsServiceWorker() = Action { implicit request =>

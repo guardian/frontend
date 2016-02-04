@@ -25,59 +25,28 @@ define([
 ) {
     var modules, reg, sub,
         isSubscribed = false,
-        subscribeButton = $('.js-follow-live-blog'),
-        debug = true;
-
-    function ready() {
-
-        modules.log('++ Notifications ready!' + " pageId: *** /" + config.page.pageId);
-
-        if ('serviceWorker' in navigator) {
-            modules.log("++ Notifications bootstrap init ready");
-            navigator.serviceWorker.register('/notifications-service-worker.js')
-                .then(modules.subscription)
-                .catch(function(error){
-                    modules.log('Service worker error:^', error);
-                });
-        } else {
-            modules.log('There is no service worker');
-        }
-    }
+        subscribeButton = $('.js-follow-live-blog');
 
     modules = {
-       log: function(message) {
-           if(debug)
-                console.log(message);
-       },
 
        subscription: function() {
-           modules.log('++ Function subscribe');
 
            navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
-               modules.log('++ READY');
                reg = serviceWorkerRegistration;
                subscribeButton.removeClass('js-hide-follow-button');
                subscribeButton[0].disabled = false;
                bean.on(subscribeButton[0], 'click', modules.buttonHandler);
-               if(modules.isSubscribedTo()) {
-                   modules.log("Subscribed to this");
+               if(modules.checkSubscriptions()) {
                    modules.setSubscriptionStatus(true);
                }
                serviceWorkerRegistration.pushManager.getSubscription().then(function(pushSubscription){
-                   modules.log('Might have a subscription');
 
                    if(pushSubscription) {
-                        modules.log("got subscription");
                         sub = pushSubscription;
-                        modules.log("Subscribed: " + sub.endpoint);
                         return;
-                   } else {
-                       modules.setSubscriptionStatus(false);
                    }
-                    modules.log("++ No subscription")
                });
            });
-           modules.log("After: Subscribed");
        },
 
        setSubscriptionStatus: function(subscribed) {
@@ -86,21 +55,18 @@ define([
        },
 
        buttonHandler: function(){
-            modules.log("++ Handler");
             if(isSubscribed) {
-                modules.unSubscribe();
+                modules.stopFollowingThis();
             } else {
                 modules.subscribe();
             }
        },
 
        subscribe: function() {
-           modules.log("++ Subscribe");
            if(modules.subscriptionsEmpty()) {
-               modules.log("++ First sub. Subscribing");
                reg.pushManager.subscribe({userVisibleOnly: true}).then(function (pushSubscription) {
+                   console.log("++ New sub: " + sub.endpoint);
                    sub = pushSubscription;
-                   modules.log("Subscribed: " + sub.endpoint + "Id: - " + sub.subscriptionId);
                });
            }
            modules.followThis();
@@ -108,24 +74,20 @@ define([
 
 
        unSubscribe: function() {
-           modules.log("++ Unsubscribe");
-           modules.stopFollowingThis();
            if(modules.subscriptionsEmpty()) {
-               modules.log("++ Last subscription");
                sub.unsubscribe().then(function (event) {
-                   modules.log('Unsubscribed', event);
                }).catch(function (error) {
-                   modules.log('Error unsubscribing', error);
                });
            }
        },
 
        subscriptionsEmpty: function() {
            var subscriptions = userPrefs.get('subscriptions') || [];
-           return subscriptions.length == 0;
+           var b = subscriptions.length ? false : true;
+           return b;
        },
 
-       isSubscribedTo: function() {
+       checkSubscriptions: function() {
            var subscriptions = userPrefs.get('subscriptions') || [];
            return some(subscriptions, function (sub) {
                 return sub == config.page.pageId;
@@ -133,11 +95,9 @@ define([
        },
 
        followThis: function() {
-           modules.log("++ Subscribe");
            var endpoint = '/notification/store';
            modules.updateSubscription(endpoint).then(
                function (rsp) {
-                   modules.log("++ Done: " + JSON.stringify(rsp));
                    var subscriptions = userPrefs.get('subscriptions') || [];
                    subscriptions.push(config.page.pageId);
                    userPrefs.set('subscriptions', uniq(subscriptions));
@@ -148,20 +108,23 @@ define([
 
        stopFollowingThis: function() {
 
-           modules.log("++ Stop");
            var endpoint = '/notification/delete';
            modules.updateSubscription(endpoint).then(
                function(rsp) {
-                   modules.log("++ Done: " + JSON.stringify(rsp));
                    var subscriptions = userPrefs.get('subscriptions') || [],
                        newSubscriptions = without(subscriptions, config.page.pageId);
                    userPrefs.set('subscriptions', uniq(newSubscriptions));
                    modules.setSubscriptionStatus(false);
+                   if(modules.subscriptionsEmpty()) {
+                       console.log("++ Subs empty") ;
+                       modules.unSubscribe();
+                   }
                }
            );
        },
 
        updateSubscription: function(endpoint) {
+
            var gcmBrowserId = sub.endpoint.substring(sub.endpoint.lastIndexOf('/') + 1),
                request =  ajax({
                url: endpoint,
@@ -174,6 +137,6 @@ define([
     };
 
     return {
-        init: ready
+        init: modules.subscription()
     };
 });

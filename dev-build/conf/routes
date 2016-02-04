@@ -334,6 +334,7 @@ GET            /sitemaps/video.xml                                              
 GET            /offline-page.json                                                                                                controllers.WebAppController.offlinePage()
 GET            /notifications-service-worker.js                                                                                   controllers.WebAppController.notificationsServiceWorker()
 GET            /service-worker.js                                                                                                controllers.WebAppController.serviceWorker()
+GET            /service-worker-2.js                                                                                               controllers.WebAppController.serviceWorker()
 
 #Notifications Store
 POST           /notification/store                                                                                               controllers.NotificationsController.saveSubscription()
