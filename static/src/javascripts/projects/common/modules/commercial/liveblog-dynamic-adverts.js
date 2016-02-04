@@ -62,7 +62,7 @@ define([
         for (var i = 0; i < slots.length && slotCounter < MAX_ADS; i++) {
             var $slot = bonzo(slots[i]);
             var $adSlot = bonzo(createAdSlot('inline1' + slotCounter++, 'liveblog-inline'));
-            $slot.after($adSlot);
+            $slot.before($adSlot);
             dfp.addSlot($adSlot);
         }
     }
