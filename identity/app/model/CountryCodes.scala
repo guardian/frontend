@@ -3,9 +3,9 @@ package model
 object CountryCodes {
 
   lazy val gu = Map(
-    ("61", "Australia +61"),
     ("44", "United Kingdom +44"),
-    ("1", "United States of America +1")
+    ("1", "United States of America +1"),
+    ("61", "Australia +61")
   )
 
   lazy val other = Map(
