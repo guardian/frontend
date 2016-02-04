@@ -77,7 +77,7 @@ define([
             Promise.resolve(true) :
             new Promise(function (resolve) {
                 var loadedCount = 0;
-                bean.on(body, 'load', notLoaded, function onImgLoaded(e) {
+                bean.on(body, 'load', notLoaded, function onImgLoaded() {
                     loadedCount += 1;
                     if (loadedCount === notLoaded.length) {
                         bean.off(body, 'load', onImgLoaded);
@@ -89,9 +89,7 @@ define([
     }
 
     function onRichLinksUpgraded(body) {
-        var unloaded = qwery('.element-rich-link--not-upgraded', body);
-
-        return unloaded.length === 0 ?
+        return qwery('.element-rich-link--not-upgraded', body).length === 0 ?
             Promise.resolve(true) :
             new Promise(function (resolve) {
                 mediator.once('rich-link:loaded', resolve);
