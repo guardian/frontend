@@ -313,24 +313,6 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val DiscussionProxySwitch = Switch(
-    "Feature",
-    "discussion-proxy",
-    "in discussion/api.js it will use a proxy to post comments so http 1.0 users can still comment",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val DiscussionHttpsSwitch = Switch(
-    "Feature",
-    "discussion-https",
-    "in discussion we will send requests to https",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val EmailInlineInFooterSwitch = Switch(
     "Feature",
     "email-inline-in-footer",

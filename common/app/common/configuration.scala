@@ -243,7 +243,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object discussion {
-    lazy val apiRoot = configuration.getMandatoryStringProperty("discussion.apiRoot")
+    lazy val apiRoot = configuration.getMandatoryStringProperty("guardian.page.discussionApiUrl")
     lazy val apiTimeout = configuration.getMandatoryStringProperty("discussion.apiTimeout")
     lazy val apiClientHeader = configuration.getMandatoryStringProperty("discussion.apiClientHeader")
     lazy val d2Uid = configuration.getMandatoryStringProperty("discussion.d2Uid")
@@ -340,7 +340,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       "googleSearchUrl" -> "//www.google.co.uk/cse/cse.js",
       "idApiUrl" -> id.apiRoot,
       "idOAuthUrl" -> id.oauthUrl,
-      "discussionApiRoot" -> discussion.apiRoot,
       "discussionApiClientHeader" -> discussion.apiClientHeader,
       "discussionD2Uid" -> discussion.d2Uid,
       ("ophanJsUrl", ophan.jsLocation),
