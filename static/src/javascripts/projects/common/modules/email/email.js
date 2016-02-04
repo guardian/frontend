@@ -195,7 +195,8 @@ define([
                     formCampaignCode = (opts && opts.formCampaignCode) || formData.formCampaignCode || '',
                     formSuccessHeadline = (opts && opts.formSuccessHeadline) || formData.formSuccessHeadline,
                     formSuccessDesc = (opts && opts.formSuccessDesc) || formData.formSuccessDesc,
-                    removeComforter = (opts && opts.removeComforter) || formData.removeComforter || false;
+                    removeComforter = (opts && opts.removeComforter) || formData.removeComforter || false,
+                    formModClass = (opts && opts.formModClass) || formData.formModClass || false;
 
                 fastdom.write(function () {
                     if (formTitle) {
@@ -208,6 +209,10 @@ define([
 
                     if (removeComforter) {
                         $('.js-email-sub__small', el).remove();
+                    }
+
+                    if (formModClass) {
+                        $(el).addClass('email-sub--' + formModClass);
                     }
                 });
 

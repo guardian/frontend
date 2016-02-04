@@ -67,7 +67,7 @@ $sfl-button-height: 30px;
 @include sfl-button-toned(media, colour(media-default), colour(media-background));
 @include sfl-button-toned(news);
 @include sfl-button-toned(review, colour(review-background));
-@include sfl-button-toned(special-reports);
+@include sfl-button-toned(special-report, colour(news-support-1), colour(news-support-6));
 
 // button labels per state
 .save-for-later__label {

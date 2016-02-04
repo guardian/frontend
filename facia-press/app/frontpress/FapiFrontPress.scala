@@ -134,39 +134,46 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
   private def getCurated(collection: Collection): Response[List[PressedContent]] = {
     // Map initial PressedContent to enhanced content which contains pre-fetched embed content.
     val initialContent = collectionContentWithSnaps(collection, searchApiQuery, itemApiQuery)
-    initialContent.flatMap(content => Response.traverse(content.map(fetchEmbeds(collection, _))))
+    initialContent.flatMap { content =>
+      Response.traverse( content.map {
+        case curated: CuratedContent if FaciaInlineEmbeds.isSwitchedOn => enrichContent(collection, curated, curated.enriched).map { updatedFields =>
+          curated.copy(enriched = Some(updatedFields))
+        }
+        case link: LinkSnap if FaciaInlineEmbeds.isSwitchedOn => enrichContent(collection, link, link.enriched).map { updatedFields =>
+          link.copy(enriched = Some(updatedFields))
+        }
+        case plain => Response.Right(plain)
+      })
+    }
   }
 
-  private def fetchEmbeds(collection: Collection, pressed: PressedContent): Response[PressedContent] = pressed match {
-    case content: CuratedContent if FaciaInlineEmbeds.isSwitchedOn => {
-        val currentEnriched = content.enriched.getOrElse(EnrichedContent.empty)
+  private def enrichContent(collection: Collection, content: PressedContent, enriched: Option[EnrichedContent]): Response[EnrichedContent] = {
 
-        val newContent = for {
-          embedType <- content.properties.embedType if embedType == "json.html"
-          embedUri <- content.properties.embedUri
-        } yield {
-            val updatedContent = WS.url(embedUri).get().map { response =>
-              Json.parse(response.body).validate[EmbedJsonHtml] match {
-                case JsSuccess(embed, _) => {
-                  val newEnriched = currentEnriched.copy(embedHtml = Some(embed.html))
-                  content.copy(enriched = Some(newEnriched))
-                }
-                case _ => {
-                  log.warn(s"An embed had invalid json format, and won't be pressed. ${pressed.properties.webTitle} for collection ${collection.id}")
-                  content
-                }
-              }
-            } recover {
-              case _ => {
-                log.warn(s"A request to an embed uri failed, embed won't be pressed. ${embedUri} for collection ${collection.id}")
-                content
-              }
+      val beforeEnrichment = enriched.getOrElse(EnrichedContent.empty)
+
+      val afterEnrichment = for {
+        embedType <- content.properties.embedType if embedType == "json.html"
+        embedUri <- content.properties.embedUri
+      } yield {
+        val maybeUpdate = WS.url(embedUri).get().map { response =>
+          Json.parse(response.body).validate[EmbedJsonHtml] match {
+            case JsSuccess(embed, _) => {
+              beforeEnrichment.copy(embedHtml = Some(embed.html))
             }
-            Response.Async.Right(updatedContent)
+            case _ => {
+              log.warn(s"An embed had invalid json format, and won't be pressed. ${content.properties.webTitle} for collection ${collection.id}")
+              beforeEnrichment
+            }
           }
-        newContent.getOrElse(Response.Right(content))
+        } recover {
+          case _ => {
+            log.warn(s"A request to an embed uri failed, embed won't be pressed. $embedUri for collection ${collection.id}")
+            beforeEnrichment
+          }
+        }
+        Response.Async.Right(maybeUpdate)
       }
-    case _ => Response.Right(pressed)
+      afterEnrichment.getOrElse(Response.Right(beforeEnrichment))
   }
 
   private def getTreats(collection: Collection): Response[List[PressedContent]] = {

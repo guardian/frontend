@@ -5,4 +5,4 @@
 GET     /_healthcheck                                                           conf.HealthCheck.healthcheck()
 
 GET     /news-alert/alerts                                                      controllers.NewsAlertController.alerts()
-
+POST    /news-alert/alert                                                       controllers.NewsAlertController.create()

@@ -23,8 +23,8 @@ module.exports = function (grunt, options) {
                 reqwest:              'components/reqwest/reqwest',
                 stripe:               'vendor/stripe/stripe.min',
                 svgs:                 '../../../common/conf/assets/inline-svgs',
-                videojs:              'components/video.js/video.min',
-                videojsads:           'components/videojs-contrib-ads/videojs.ads.min',
+                videojs:              'components/video.js/video',
+                videojsads:           'components/videojs-contrib-ads/videojs.ads',
                 videojsembed:         'components/videojs-embed/videojs.embed',
                 videojsima:           'components/videojs-ima/videojs.ima',
                 videojspersistvolume: 'components/videojs-persistvolume/videojs.persistvolume',
@@ -46,7 +46,9 @@ module.exports = function (grunt, options) {
                 dir: options.requirejsDir,
                 keepBuildDir: false,
                 shim: {
-
+                    videojsads: {
+                        deps: ['bootstraps/enhanced/media/videojs-global']
+                    }
                 },
                 modules: [
                     {
