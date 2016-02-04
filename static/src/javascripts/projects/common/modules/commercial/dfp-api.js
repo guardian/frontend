@@ -416,13 +416,6 @@ define([
         }
     }
 
-    function removeSlot(slotId) {
-        delete slots[slotId];
-        idleFastdom.write(function () {
-            $('#' + slotId).remove();
-        });
-    }
-
     function getSlots() {
         return slots;
     }
@@ -670,6 +663,13 @@ define([
         slots[slotKey].isLoading = true;
         prebidService.loadSlots(slotKey).then(function () {
             displayed = true;
+        });
+    }
+
+    function removeSlot(slotId) {
+        delete slots[slotId];
+        idleFastdom.write(function () {
+            $('#' + slotId).remove();
         });
     }
 
