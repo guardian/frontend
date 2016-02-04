@@ -132,50 +132,23 @@ define([
         });
     };
 
-    Omniture.prototype.populatePageProperties = function () {
-        var d,
-            /* Retrieve navigation interaction data */
-            ni       = storage.session.get(NG_STORAGE_KEY),
-            mvt      = ab.makeOmnitureTag(document);
-
-        if (id.getUserFromCookie()) {
-            this.s.prop2 = 'GUID:' + id.getUserFromCookie().id;
-            this.s.eVar2 = 'GUID:' + id.getUserFromCookie().id;
-        }
-
-        this.s.prop31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
-        this.s.eVar31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
-        this.s.prop40    = detect.adblockInUse() || detect.getFirefoxAdblockPlusInstalled();
-        this.s.eVar51    = mvt;
-        this.s.list1     = mvt; // allows us to 'unstack' the AB test names (allows longer names)
-
-        if (ni) {
-            d = new Date().getTime();
-            if (d - ni.time < 60 * 1000) { // One minute
-                this.s.eVar24 = ni.pageName;
-                this.s.eVar37 = ni.tag;
-            }
-            storage.session.remove(R2_STORAGE_KEY);
-            storage.session.remove(NG_STORAGE_KEY);
-        }
-
-        // Sponsored content
-        this.s.prop38 = uniq($('[data-sponsorship]')).map(function (n) {
-            var sponsorshipType = n.getAttribute('data-sponsorship');
-            var maybeSponsor = n.getAttribute('data-sponsor');
-            var sponsor = maybeSponsor ? maybeSponsor : 'unknown';
-            return sponsorshipType + ':' + sponsor;
-        }).toString();
-
-        this.s.linkTrackVars = standardProps;
-        this.s.linkTrackEvents = 'None';
-
+    Omniture.prototype.shouldPopulateMvtPageProperties = function (mvtTag) {
+        // This checks if the user test alocation has changed once ab test framework has loaded.
+        return mvtTag !== config.abTestsParticipations;
     };
 
     Omniture.prototype.go = function () {
-        this.populatePageProperties();
-        this.logView();
-        mediator.emit('analytics:ready');
+        var mvtTag = ab.makeOmnitureTag();
+
+        if (this.shouldPopulateMvtPageProperties(mvtTag)) {
+            this.s.eVar51 = mvtTag;
+            this.s.list1 = mvtTag; // allows us to 'unstack' the AB test names (allows longer names)
+            this.s.linkTrackVars = standardProps;
+            this.s.linkTrackEvents = 'None';
+
+            this.logView();
+            mediator.emit('analytics:ready');
+        }
     };
 
     // A single Omniture instance for the whole application.
