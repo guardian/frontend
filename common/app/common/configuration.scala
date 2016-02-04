@@ -181,6 +181,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       .map(_.trim).toSeq).getOrElse(Nil)
   }
 
+  object amp {
+    lazy val url = configuration.getStringProperty("amp.url").getOrElse("")
+  }
+
   object id {
     lazy val url = configuration.getStringProperty("id.url").getOrElse("")
     lazy val apiRoot = configuration.getStringProperty("id.apiRoot").getOrElse("")
@@ -468,6 +472,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object emailSignup {
     val url = configuration.getMandatoryStringProperty("email.signup.url")
+  }
+
+  object NewsAlert {
+    lazy val apiKey = configuration.getStringProperty("news-alert.api.key")
   }
 }
 

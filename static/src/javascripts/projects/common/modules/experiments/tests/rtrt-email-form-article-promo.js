@@ -24,7 +24,7 @@ define([
     return function () {
         this.id = 'RtrtEmailFormArticlePromoV2';
         this.start = '2015-12-17';
-        this.expiry = '2016-02-03';
+        this.expiry = '2016-02-10';
         this.author = 'Gareth Trufitt';
         this.description = 'Test promotion of email form at bottom vs three paragraphs from end of article pages (when clicked from front)';
         this.audience = 1;

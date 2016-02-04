@@ -50,10 +50,31 @@
 
         <div class="main-body">
 
-            <header class="main-header">
+            <header class="main-header @if(page.metadata.id == "film/2016/feb/02/alan-rickman-david-bowie-tributes-2016-berlin-film-festival") {variant-kicker}">
                 <a href="@LinkTo{/}" class="logo-wrapper" name="top">
                     @fragments.inlineSvg("guardian-logo-160", "logo")
                 </a>
+
+                @* this is for testing only *@
+                @if(page.metadata.id == "film/2016/feb/02/alan-rickman-david-bowie-tributes-2016-berlin-film-festival") {
+                    <div class="main-navigation variant-kicker">
+                        <div class="main-navigation_link">
+                            <a href="http://www.theguardian.com">news</a>
+                        </div>
+                        <div class="main-navigation_link">
+                            <a href="http://www.theguardian.com/commentisfree">opinion</a>
+                        </div>
+                        <div class="main-navigation_link">
+                            <a href="http://www.theguardian.com/sport">sports</a>
+                        </div>
+                        <div class="main-navigation_link">
+                            <a href="http://www.theguardian.com/culture">arts</a>
+                        </div>
+                        <div class="main-navigation_link">
+                            <a href="http://www.theguardian.com/lifeandstyle">life</a>
+                        </div>
+                    </div>
+                }
             </header>
 
             @body
@@ -64,7 +85,7 @@
                 }
                 @if(content.item.tags.series.nonEmpty) {
                     @content.item.tags.series.map { tag =>
-                        @fragments.amp.onwardTemplateAmp("series/mf2/" + tag.id + ".json")
+                        @fragments.amp.onwardTemplateAmp("series-mf2/" + tag.id + ".json")
                     }
                 }
                 @if(!content.item.content.hasStoryPackage && content.item.tags.series.isEmpty){
@@ -75,9 +96,9 @@
             @fragments.amp.outbrain(page)
 
             @fragments.amp.onwardTemplateAmp("most-read-mf2.json")
-            @fragments.amp.onwardTemplateAmp("container-mf2/1/0/international.json")
-            @fragments.amp.onwardTemplateAmp("container-mf2/1/1/international.json")
-            @fragments.amp.onwardTemplateAmp("container-mf2/1/2/international.json")
+            @fragments.amp.onwardTemplateAmp(s"container-mf2/1/0/${page.metadata.section}.json")
+            @fragments.amp.onwardTemplateAmp(s"container-mf2/1/1/${page.metadata.section}.json")
+            @fragments.amp.onwardTemplateAmp(s"container-mf2/1/2/${page.metadata.section}.json")
 
             <amp-font
                 layout="nodisplay"

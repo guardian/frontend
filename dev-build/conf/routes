@@ -98,7 +98,6 @@ GET            /most-read-facebook.json                                         
 GET            /most-read-twitter.json                                                                                           controllers.MostViewedSocialController.renderMostViewed(socialContext: String = "twitter")
 GET            /most-read.json                                                                                                   controllers.MostPopularController.render(path = "")
 GET            /most-read/*path.json                                                                                             controllers.MostPopularController.render(path)
-GET            /most-read-mf2.json                                                                                               controllers.MostPopularController.renderPopularMicroformat2()
 GET            /most-read-geo.json                                                                                               controllers.MostPopularController.renderPopularGeo()
 GET            /most-read-day.json                                                                                               controllers.MostPopularController.renderPopularDay(countryCode)
 
@@ -106,7 +105,6 @@ GET            /top-stories.json                                                
 GET            /top-stories/trails.json                                                                                          controllers.TopStoriesController.renderTrails()
 GET            /related/*path.json                                                                                               controllers.RelatedController.render(path)
 GET            /related/*path                                                                                                    controllers.RelatedController.renderHtml(path)
-GET            /related-mf2/*path.json                                                                                           controllers.RelatedController.renderMf2(path)
 GET            /popular-in-tag/*tag.json                                                                                         controllers.PopularInTag.render(tag)
 
 GET            /preference/edition/:edition                                                                                      controllers.ChangeEditionController.render(edition)
@@ -213,6 +211,8 @@ GET            /ophan/pageviews/*path                                           
 GET            /ophan/pageviews                                                                                                  controllers.admin.OphanApiController.platformPageViews()
 GET            /dev/switchboard                                                                                                  controllers.admin.SwitchboardController.renderSwitchboard()
 POST           /dev/switchboard                                                                                                  controllers.admin.SwitchboardController.save()
+GET            /dev/switchboard-plista                                                                                           controllers.admin.SwitchboardPlistaController.renderSwitchboard()
+POST           /dev/switchboard-plista                                                                                           controllers.admin.SwitchboardPlistaController.save()
 GET            /metrics/loadbalancers                                                                                            controllers.admin.MetricsController.renderLoadBalancers()
 GET            /metrics/googlebot/404                                                                                            controllers.admin.MetricsController.renderGooglebot404s()
 GET            /metrics/fastly                                                                                                   controllers.admin.FastlyController.renderFastly()
@@ -315,14 +315,22 @@ GET            /admin/commercial/adops/takeovers-empty-mpus/create              
 POST           /admin/commercial/adops/takeovers-empty-mpus/create                                                               controllers.admin.commercial.TakeoverWithEmptyMPUsController.create()
 POST           /admin/commercial/adops/takeovers-empty-mpus/remove                                                               controllers.admin.commercial.TakeoverWithEmptyMPUsController.remove(url)
 
+# Breaking News
+GET             /news-alert/alerts                                                                                               controllers.NewsAlertController.alerts()
+POST            /news-alert/alert                                                                                                controllers.NewsAlertController.create()
+
 # dev-build only
 GET            /commercial/magento/token                                                                                         controllers.commercial.magento.AccessTokenGenerator.generate
 GET            /commercial/magento/resource                                                                                      controllers.commercial.magento.ApiSandbox.getResource(t: String)
 GET            /commercial/magento/books                                                                                         controllers.commercial.magento.ApiSandbox.getBooks(t: String)
 
+# AMP
+GET            /most-read-mf2.json                                                                                               controllers.MostPopularController.renderPopularMicroformat2()
+GET            /related-mf2/*path.json                                                                                           controllers.RelatedController.renderMf2(path)
+GET            /container-mf2/:num/:offset/:section.json                                                                         controllers.FaciaController.renderSomeFrontContainersMf2(num, offset, section)
+GET            /series-mf2/*path.json                                                                                            controllers.SeriesController.renderMf2SeriesStories(path)
 
 # Onward journeys
-GET            /series/mf2/*path.json                                                                                            controllers.SeriesController.renderMf2SeriesStories(path)
 GET            /series/*path.json                                                                                                controllers.SeriesController.renderSeriesStories(path)
 
 # Applications (must come before wildcard)
@@ -374,7 +382,6 @@ GET            /$path<(uk|au|us|international)(/(culture|sport|commentisfree|bus
 GET            /*path/lite.json                                                                                                  controllers.FaciaController.renderFrontJsonLite(path)
 GET            /*path/deduped.json                                                                                               controllers.DedupedController.getDedupedForPath(path)
 GET            /container/*path/some/:num/:offset/:containerNameToFilter/:edition.json                                           controllers.FaciaController.renderSomeFrontContainers(path, num, offset, containerNameToFilter, edition)
-GET            /container-mf2/:num/:offset/*path.json                                                                            controllers.FaciaController.renderSomeFrontContainersMf2(num, offset, path)
 GET            /container/use-layout/*id.json                                                                                    controllers.FaciaController.renderContainerJsonWithFrontsLayout(id)
 GET            /container/*id.json                                                                                               controllers.FaciaController.renderContainerJson(id)
 GET            /most-relevant-container/*path.json                                                                               controllers.FaciaController.renderMostRelevantContainerJson(path)
