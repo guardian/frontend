@@ -13,8 +13,9 @@ define([
         var container = bonzo(el),
             updating = bonzo(bonzo.create('<div class="is-updating"></div>')),
             avatar = bonzo(bonzo.create('<img class="user-avatar__image" alt="" />')),
-            userId = container.data('userid'),
-            ownAvatar = userId === parseInt(config.user.id);
+            avatarUserId = container.data('userid'),
+            userId = config.user ? parseInt(config.user.id) : null,
+            ownAvatar = avatarUserId === userId;
 
         var updateCleanup = function () {
             updating.remove();
@@ -33,13 +34,13 @@ define([
                 .then(function (response) {
                     avatar.attr('src', response.data.avatarUrl);
                 }, function () {
-                    avatar.attr('src', avatarApi.deterministicUrl(userId));
+                    avatar.attr('src', avatarApi.deterministicUrl(avatarUserId));
                 })
                 .always(function () {
                     updateCleanup();
                 });
         } else {
-            avatar.attr('src', avatarApi.deterministicUrl(userId));
+            avatar.attr('src', avatarApi.deterministicUrl(avatarUserId));
             updateCleanup();
         }
     }
