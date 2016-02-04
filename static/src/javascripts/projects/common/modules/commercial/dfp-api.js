@@ -370,60 +370,6 @@ define([
         showSponsorshipPlaceholder();
     }
 
-    /**
-     * Public functions
-     */
-    function init() {
-        if (commercialFeatures.dfpAdvertising) {
-            setupAdvertising();
-        } else {
-            $(adSlotSelector).remove();
-        }
-        return dfp;
-    }
-
-    function addSlot(adSlot) {
-        var $adSlot = bonzo(adSlot),
-            slotId = $adSlot.attr('id'),
-            displayAd = function ($adSlot) {
-                slots[slotId] = {
-                    isRendered: false,
-                    isLoading: false,
-                    slot: defineSlot($adSlot)
-                };
-                if (shouldLazyLoad()) {
-                    enableLazyLoad();
-                } else {
-                    loadSlot(slotId);
-                }
-            };
-        if (displayed && !slots[slotId]) { // dynamically add ad slot
-            // this is horrible, but if we do this before the initial ads have loaded things go awry
-            if (rendered) {
-                displayAd($adSlot);
-            } else {
-                mediator.once('modules:commercial:dfp:rendered', function () {
-                    displayAd($adSlot);
-                });
-            }
-        }
-    }
-
-    function refreshSlot($adSlot) {
-        var slot = slots[$adSlot.attr('id')].slot;
-        if (slot) {
-            googletag.pubads().refresh([slot]);
-        }
-    }
-
-    function getSlots() {
-        return slots;
-    }
-
-    /**
-     * Private functions
-     */
-
     function defineSlot($adSlot) {
         var slotTarget     = $adSlot.data('slot-target') || $adSlot.data('name'),
             adUnitOverride = urlUtils.getUrlVars()['ad-unit'],
@@ -800,6 +746,56 @@ define([
 
     function getCreativeIDs() {
         return creativeIDs;
+    }
+
+    /**
+     * Public functions
+     */
+    function init() {
+        if (commercialFeatures.dfpAdvertising) {
+            setupAdvertising();
+        } else {
+            $(adSlotSelector).remove();
+        }
+        return dfp;
+    }
+
+    function addSlot(adSlot) {
+        var $adSlot = bonzo(adSlot),
+            slotId = $adSlot.attr('id'),
+            displayAd = function ($adSlot) {
+                slots[slotId] = {
+                    isRendered: false,
+                    isLoading: false,
+                    slot: defineSlot($adSlot)
+                };
+                if (shouldLazyLoad()) {
+                    enableLazyLoad();
+                } else {
+                    loadSlot(slotId);
+                }
+            };
+        if (displayed && !slots[slotId]) { // dynamically add ad slot
+            // this is horrible, but if we do this before the initial ads have loaded things go awry
+            if (rendered) {
+                displayAd($adSlot);
+            } else {
+                mediator.once('modules:commercial:dfp:rendered', function () {
+                    displayAd($adSlot);
+                });
+            }
+        }
+    }
+
+    function refreshSlot($adSlot) {
+        var slot = slots[$adSlot.attr('id')].slot;
+        if (slot) {
+            googletag.pubads().refresh([slot]);
+        }
+    }
+
+    function getSlots() {
+        return slots;
     }
 
     /**
