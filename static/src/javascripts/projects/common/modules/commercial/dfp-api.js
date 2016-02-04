@@ -57,7 +57,6 @@ define([
     'common/modules/commercial/creatives/expandable-video-v2',
     'common/modules/commercial/creatives/fluid250',
     'common/modules/commercial/creatives/fluid250-v3',
-    'common/modules/commercial/creatives/fluid250-v4',
     'common/modules/commercial/creatives/fluid250GoogleAndroid',
     'common/modules/commercial/creatives/foundation-funded-logo',
     'common/modules/commercial/creatives/scrollable-mpu',
@@ -594,6 +593,8 @@ define([
                                 creativeConfig = JSON.parse(breakoutContent);
                                 if (config.switches.newCommercialContent && creativeConfig.name === 'gu-style-comcontent') {
                                     creativeConfig.name = 'paidfor-content';
+                                } else if (creativeConfig.name === 'fluid250-v4') {
+                                    creativeConfig.name === 'fluid250-v3';
                                 }
                                 require(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
                                     new Creative($slot, creativeConfig.params, creativeConfig.opts).create();

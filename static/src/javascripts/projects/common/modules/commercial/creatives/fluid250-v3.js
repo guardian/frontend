@@ -53,9 +53,9 @@ define([
         if (this.params.layerTwoAnimation === 'enabled' && Fluid250.isModernBrowser && !Fluid250.isIE9OrLess) {
             inViewB = (window.pageYOffset + bonzo.viewport().height) > this.$adSlot.offset().top;
             fastdom.write(function () {
-                this.$layer2.addClass('ad-scrolling-text-hide');
+                this.$layer2.addClass('ad-scrolling-text-hide' + (this.params.layerTwoAnimationPosition ? '-' + this.params.layerTwoAnimationPosition : ''));
                 if (inViewB) {
-                    this.$layer2.addClass('ad-scrolling-text-animate');
+                    this.$layer2.addClass('ad-scrolling-text-animate' + (this.params.layerTwoAnimationPosition ? '-' + this.params.layerTwoAnimationPosition : ''));
                 }
             }, this);
         }
@@ -65,7 +65,7 @@ define([
         var position = {
             position: this.params.videoPositionH === 'left' || this.params.videoPositionH === 'right' ?
                 this.params.videoPositionH + ': ' + this.params.videoHorizSpace + 'px' :
-                '';
+                ''
         };
         var templateOptions = {
             isFixedHeight: this.params.creativeHeight === 'fixed',
