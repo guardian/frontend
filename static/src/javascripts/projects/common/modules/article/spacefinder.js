@@ -31,6 +31,7 @@ define([
     var defaultRules = { // these are written for adverts
         bodySelector: '.js-article__body',
         slotSelector: ' > p',
+        absoluteMinAbove: 0, // minimum from slot to top of page
         minAbove: 250, // minimum from para to top of article
         minBelow: 300, // minimum from (top of) para to bottom of article
         clearContentMeta: 50, // vertical px to clear the content meta element (byline etc) by. 0 to ignore
@@ -114,22 +115,30 @@ define([
 
     function _mapElementToDimensions(el) {
         return {
-            absoluteTop: el.getBoundingClientRect().top + window.pageYOffset,
             top: el.offsetTop,
             bottom: el.offsetTop + el.offsetHeight,
             element: el
         };
     }
 
-    function _enforceRules(slots, rules, bodyHeight) {
+    function _enforceRules(slots, rules, bodyTop, bodyHeight) {
         var filtered;
 
+        // enforce absoluteMinAbove rule
+        if (rules.absoluteMinAbove > 0) {
+            filtered = Promise.resolve(filter(slots, function (slot) {
+                return bodyTop + slot.top >= rules.absoluteMinAbove;
+            }));
+        }
+
         // enforce minAbove and minBelow rules
-        filtered = Promise.resolve(filter(slots, function (slot) {
-            var farEnoughFromTopOfBody = slot.top >= rules.minAbove,
-                farEnoughFromBottomOfBody = slot.top + rules.minBelow <= bodyHeight;
-            return farEnoughFromTopOfBody && farEnoughFromBottomOfBody;
-        }));
+        filtered = filtered.then(function (slots) {
+            return filter(slots, function (slot) {
+                var farEnoughFromTopOfBody = slot.top >= rules.minAbove,
+                    farEnoughFromBottomOfBody = slot.top + rules.minBelow <= bodyHeight;
+                return farEnoughFromTopOfBody && farEnoughFromBottomOfBody;
+            });
+        });
 
         // enforce content meta rule
         if (rules.clearContentMeta) {
@@ -187,7 +196,9 @@ define([
         });
 
         function getSlots() {
-            var bodyBottom = body.offsetHeight;
+            var rect = body.getBoundingClientRect();
+            var bodyTop = rect.top + window.pageYOffset;
+            var bodyHeight = rect.height;
             var slots = qwery(rules.bodySelector + rules.slotSelector);
             if (rules.fromBottom) {
                 slots.reverse();
@@ -211,11 +222,11 @@ define([
                 });
             }
             slots = map(slots, _mapElementToDimensions);
-            return [bodyBottom, slots];
+            return [bodyTop, bodyHeight, slots];
         }
 
         function enforceRules(data) {
-            return _enforceRules(data[1], rules, data[0]);
+            return _enforceRules(data[2], rules, data[0], data[1]);
         }
 
         function filterSlots(slots) {
