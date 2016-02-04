@@ -2,11 +2,13 @@
  * A regionalised container for all the commercial tags.
  */
 define([
-    'common/utils/$',
     'Promise',
+    'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/fastdom-promise',
+    'common/utils/template',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/third-party-tags/audience-science-gateway',
     'common/modules/commercial/third-party-tags/audience-science-pql',
@@ -16,15 +18,15 @@ define([
     'common/modules/identity/api',
     'common/modules/commercial/third-party-tags/outbrain',
     'common/modules/commercial/third-party-tags/plista',
-    'text!common/views/commercial/external-content.html',
-    'common/utils/fastdom-promise',
-    'common/utils/template'
+    'text!common/views/commercial/external-content.html'
 ], function (
-    $,
     Promise,
+    $,
     config,
     detect,
     mediator,
+    fastdom,
+    template,
     commercialFeatures,
     audienceScienceGateway,
     audienceSciencePql,
@@ -34,9 +36,8 @@ define([
     identity,
     outbrain,
     plista,
-    externalContentContainerStr,
-    fastdom,
-    template) {
+    externalContentContainerStr
+    ) {
 
     function loadExternalContentWidget() {
 
