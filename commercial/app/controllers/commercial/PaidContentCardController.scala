@@ -18,7 +18,7 @@ object PaidContentCardController extends Controller with ExecutionContexts with 
         val articleUrl = content.metadata.webUrl
         val articleTitle = request.getParameter("articleHeaderText") getOrElse content.metadata.webTitle
         val leaveTextEmpty = request.getParameter("leaveTextEmpty") == "Yes"
-        val articleText = getParameter("articleText") orElse if (!leaveTextEmpty) content.fields.trailText else ""
+        val articleText = request.getParameter("articleText") orElse (if (!leaveTextEmpty) content.fields.trailText else Some(""))
         val pictureUrl: Option[String] = request.getParameter("articleImage") orElse (content.trail.trailPicture.flatMap(Item300.bestFor))
         val brandLogo = request.getParameter("brandLogo")
         val brand = request.getParameter("brand")
