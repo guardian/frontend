@@ -382,25 +382,6 @@ define([
         return dfp;
     }
 
-
-    function loadSlot(slotKey) {
-        if (prebidService.testEnabled && prebidService.slotIsInTest(slotKey)) {
-            prebidAndLoadSlot(slotKey);
-        } else {
-            // original implementation
-            slots[slotKey].isLoading = true;
-            googletag.display(slotKey);
-            displayed = true;
-        }
-    }
-
-    function prebidAndLoadSlot(slotKey) {
-        slots[slotKey].isLoading = true;
-        prebidService.loadSlots(slotKey).then(function () {
-            displayed = true;
-        });
-    }
-
     function addSlot(adSlot) {
         var $adSlot = bonzo(adSlot),
             slotId = $adSlot.attr('id'),
@@ -671,6 +652,24 @@ define([
             if (contains(['dfp-ad--pageskin-inread', 'dfp-ad--merchandising-high', 'dfp-ad--im'], slot)) {
                 loadSlot(slot);
             }
+        });
+    }
+
+    function loadSlot(slotKey) {
+        if (prebidService.testEnabled && prebidService.slotIsInTest(slotKey)) {
+            prebidAndLoadSlot(slotKey);
+        } else {
+            // original implementation
+            slots[slotKey].isLoading = true;
+            googletag.display(slotKey);
+            displayed = true;
+        }
+    }
+
+    function prebidAndLoadSlot(slotKey) {
+        slots[slotKey].isLoading = true;
+        prebidService.loadSlots(slotKey).then(function () {
+            displayed = true;
         });
     }
 
