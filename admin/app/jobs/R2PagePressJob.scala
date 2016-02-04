@@ -69,36 +69,25 @@ object R2PagePressJob extends ExecutionContexts with Logging {
       WS.url(urlIn).get().map { response =>
         response.status match {
           case 200 => {
-            val originalSource = response.body
-            val pressAsUrl = urlIn.replace("https://", "").replace("http://","")
-
             try {
+              val originalSource = response.body
+              val pressAsUrl = urlIn.replace("https://", "").replace("http://","")
+
               if (S3ArchiveOriginals.get(pressAsUrl).isEmpty) {
-                try {
-                  S3ArchiveOriginals.putPublic(pressAsUrl, originalSource, "text/html")
-                  log.info(s"Original page source saved for $urlIn")
-                } catch {
-                  case e: Exception => log.error(s"Cannot write original page source for $urlIn to bucket ${S3ArchiveOriginals.bucket} (${e.getMessage})")
-                }
+                S3ArchiveOriginals.putPublic(pressAsUrl, originalSource, "text/html")
+                log.info(s"Original page source saved for $urlIn")
               }
-            } catch {
-              case e: Exception => log.error(s"Cannot read from bucket ${S3ArchiveOriginals.bucket} (${e.getMessage}) while pressing $urlIn")
-            }
 
-            val archiveDocument = Jsoup.parse(originalSource)
-            val cleanedHtmlString = cleaners.filter(_.canClean(archiveDocument))
-              .map(_.clean(archiveDocument))
-              .headOption
-              .getOrElse(archiveDocument)
-              .toString
+              val archiveDocument = Jsoup.parse(originalSource)
 
-            try {
+              val cleanedHtmlString = cleaners.filter(_.canClean(archiveDocument))
+                .map(_.clean(archiveDocument))
+                .headOption
+                .getOrElse(archiveDocument)
+                .toString
+
               S3Archive.putPublic(pressAsUrl, cleanedHtmlString, "text/html")
-            } catch {
-              case e: Exception => log.error(s"Cannot write to bucket ${S3Archive.bucket} (${e.getMessage}) while pressing $urlIn")
-            }
 
-            try {
               S3Archive.get(pressAsUrl).foreach { result =>
                 if (result == cleanedHtmlString) {
                   PagePresses.set(urlIn, pressAsUrl)
@@ -109,9 +98,10 @@ object R2PagePressJob extends ExecutionContexts with Logging {
                 }
               }
             } catch {
-              case e: Exception => log.error(s"Cannot read from bucket ${S3Archive.bucket} (${e.getMessage}) while pressing $urlIn")
+              case e: Exception => log.error(s"Unable to press $urlIn (${e.getMessage}})")
             }
           }
+
           case non200 => {
             log.error(s"Unexpected response from $urlIn, status code: $non200")
           }

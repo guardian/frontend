@@ -92,15 +92,18 @@ object BasicHtmlCleaner extends HtmlCleaner {
   }
 
   def removeAds(document: Document): Document = {
-    val elements = document.getElementById("sub-header")
-    val ads = elements.children().toList.filterNot(e => e.attr("class") == "top-navigation twelve-col top-navigation-js")
-    ads.foreach(_.remove())
+    val element = document.getElementById("sub-header")
 
-    val htmlComments = elements.childNodes().filter(node => node.nodeName().equals("#comment"))
-    htmlComments.foreach(_.remove())
+    if (element != null) {
+      val ads = element.children().toList.filterNot(e => e.attr("class") == "top-navigation twelve-col top-navigation-js")
+      ads.foreach(_.remove())
 
-    val promos = document.getElementById("promo")
-    if(promos != null) promos.remove()
+      val htmlComments = element.childNodes().filter(node => node.nodeName().equals("#comment"))
+      htmlComments.foreach(_.remove())
+
+      val promo = document.getElementById("promo")
+      if(promo != null) promo.remove()
+    }
 
     document
   }
