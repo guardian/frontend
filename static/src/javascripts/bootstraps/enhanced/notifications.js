@@ -29,7 +29,7 @@ define([
 
     modules = {
 
-       subscription: function() {
+       getPushSubscription: function() {
 
            navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
                reg = serviceWorkerRegistration;
@@ -65,7 +65,6 @@ define([
        subscribe: function() {
            if(modules.subscriptionsEmpty()) {
                reg.pushManager.subscribe({userVisibleOnly: true}).then(function (pushSubscription) {
-                   console.log("++ New sub: " + sub.endpoint);
                    sub = pushSubscription;
                });
            }
@@ -83,8 +82,7 @@ define([
 
        subscriptionsEmpty: function() {
            var subscriptions = userPrefs.get('subscriptions') || [];
-           var b = subscriptions.length ? false : true;
-           return b;
+           return subscriptions.length ? false : true;
        },
 
        checkSubscriptions: function() {
@@ -116,7 +114,6 @@ define([
                    userPrefs.set('subscriptions', uniq(newSubscriptions));
                    modules.setSubscriptionStatus(false);
                    if(modules.subscriptionsEmpty()) {
-                       console.log("++ Subs empty") ;
                        modules.unSubscribe();
                    }
                }
@@ -137,6 +134,6 @@ define([
     };
 
     return {
-        init: modules.subscription()
+        init: modules.getPushSubscription()
     };
 });
