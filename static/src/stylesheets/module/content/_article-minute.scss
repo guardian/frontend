@@ -9,15 +9,19 @@ $minute-layout-margin-nudge: gs-span(1);
     border-top: 0 none;
 }
 
-
 .content .gs-container--minute-article {
     padding: 0;
 }
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
 
 .content__head--minute-article {
     .content__head--mobile,
     .content__head--desktop {
 
+        // Header background overlay
         &:before {
             content: '';
             display: block;
@@ -31,65 +35,48 @@ $minute-layout-margin-nudge: gs-span(1);
 
     }
 
-    .logo--us-election {
+    // Logo Styles
+    .logo--us-election,
+    .logo--minute-article {
         display: block;
         float: left;
+    }
+
+    .logo--us-election {
         height: gs-height(2);
         margin-top: $gs-baseline / 2;
         margin-left: $gs-baseline / 2;
         width: gs-span(1) + $gs-gutter;
 
-        svg {
-            width: 100%;
-            height: auto;
-        }
-
         @include mq(tablet) {
             width: gs-span(2) + $gs-gutter;
         }
+
+        svg {
+            height: auto;
+            width: 100%;
+        }
     }
 
-    .logo--minute--article {
-        display: block;
-        float: left;
+    .logo--minute-article {
         height: gs-height(3);
         position: absolute;
         top: -#{gs-height(4) - $gs-baseline};
-
-        svg {
-            width: auto;
-            height: 100%;
-        }
 
         @include mq(desktop) {
             height: gs-height(4);
             top: -#{gs-height(5)};
         }
+
+        svg {
+            height: 100%;
+            width: auto;
+        }
     }
 
     .content__wrapper {
-
         margin: 0 auto;
         width: 100%;
-    }
-
-    .content__headline,
-    .content__dateline,
-    .content__standfirst,
-    .logo--us-election {
-        max-width: gs-span(4);
-
-        @include mq(tablet) {
-            margin-left: $gs-gutter;
-        }
-        @include mq(desktop) {
-            max-width: gs-span(6);
-            margin-left: gs-span(1) - $gs-gutter;
-        }
-        @include mq(wide) {
-            margin-left: gs-span(2) - $gs-gutter * 2;
-        }
-
     }
 
     .content__headline {
@@ -130,22 +117,46 @@ $minute-layout-margin-nudge: gs-span(1);
         }
     }
 
-    .content__dateline {
-        @include fs-header(2);
-        border-top: 0 none;
-        color: $us-minute-highlight-colour;
-        min-height: 0;
-        padding-bottom: 0;
-        margin-bottom: 0;
-    }
-
     .content__standfirst {
         @include fs-header(2);
         color: $minute-headline-colour;
         padding-bottom: $gs-baseline;
 
     }
+
+    /* ==========================================================================
+   Header Layout
+   ========================================================================== */
+    .content__headline,
+    .content__dateline--minute-article,
+    .content__standfirst,
+    .logo--us-election {
+        max-width: gs-span(4);
+
+        @include mq(tablet) {
+            margin-left: $gs-gutter;
+        }
+        @include mq(desktop) {
+            max-width: gs-span(6);
+            margin-left: gs-span(1) - $gs-gutter;
+        }
+        @include mq(wide) {
+            margin-left: gs-span(2) - $gs-gutter * 2;
+        }
+
+    }
+
 }
+
+.content__dateline--minute-article {
+    @include fs-header(2);
+    color: $us-minute-highlight-colour;
+    margin-bottom: 0;
+}
+
+/* ==========================================================================
+   Main Column
+   ========================================================================== */
 
 .content__main-column--minute-article {
     margin: 0 auto;
@@ -179,7 +190,7 @@ $minute-layout-margin-nudge: gs-span(1);
 }
 
 /* ==========================================================================
-   Layout
+   Blocks - Layout
    ========================================================================== */
 
 .block--minute-article {
