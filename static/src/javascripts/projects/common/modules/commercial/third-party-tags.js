@@ -2,6 +2,7 @@
  * A regionalised container for all the commercial tags.
  */
 define([
+    'common/utils/$',
     'Promise',
     'common/utils/config',
     'common/utils/detect',
@@ -14,8 +15,12 @@ define([
     'common/modules/commercial/third-party-tags/krux',
     'common/modules/identity/api',
     'common/modules/commercial/third-party-tags/outbrain',
-    'common/modules/commercial/third-party-tags/plista'
+    'common/modules/commercial/third-party-tags/plista',
+    'text!common/views/commercial/external-content.html',
+    'common/utils/fastdom-promise',
+    'common/utils/template'
 ], function (
+    $,
     Promise,
     config,
     detect,
@@ -28,13 +33,28 @@ define([
     krux,
     identity,
     outbrain,
-    plista) {
+    plista,
+    externalContentContainerStr,
+    fastdom,
+    template) {
 
     function loadExternalContentWidget() {
+
+        var externalTpl = template(externalContentContainerStr);
+        var documentAnchorId = '.js-external-content-widget-anchor';
+
+        function renderWidgetContainer(widgetType) {
+            $(documentAnchorId).append(externalTpl({widgetType: widgetType}));
+        }
+
         if (config.switches.plistaForOutbrainAu && config.page.edition.toLowerCase() === 'au') {
-            plista.init();
+            fastdom.write(function () {
+                renderWidgetContainer('plista');
+            }).then(plista.init());
         } else {
-            outbrain.init();
+            fastdom.write(function () {
+                renderWidgetContainer('outbrain');
+            }).then(outbrain.init());
         }
     }
 
