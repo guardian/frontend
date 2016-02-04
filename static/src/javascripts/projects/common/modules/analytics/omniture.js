@@ -150,7 +150,7 @@ define([
         //This is for testing moving ab testing to first omniture call.
         var inTest = this.shouldPopulateMvtPageProperties(mvt);
         var testCall = 'AB | firedSecondCall | ' + inTest;
-        mvt = (mvt ? [mvt, testCall].join(',') : testCall);
+        mvt = mvt.split(',').concat(testCall).join(',');
 
         this.s.prop31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
         this.s.eVar31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
