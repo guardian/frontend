@@ -1,6 +1,6 @@
 @(page: model.Page, related: model.RelatedContent)(body: Html)(implicit request: RequestHeader)
 
-@import common.{AnalyticsHost, LinkTo}
+@import common.{AnalyticsHost, LinkTo, CanonicalLink}
 @import conf.Configuration
 @import model.Page
 @import views.support.OmnitureAnalyticsData
@@ -78,6 +78,10 @@
             </header>
 
             @body
+
+            <a href="@LinkTo(page.metadata.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, page.metadata.webUrl)))" class="cta cta--medium cta--medium__blue">
+                View with comments on www.theguardian.com
+            </a>
 
             @Page.getContentPage(page).map { content =>
                 @if(content.item.content.hasStoryPackage) {
