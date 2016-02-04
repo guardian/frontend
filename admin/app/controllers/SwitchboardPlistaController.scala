@@ -38,10 +38,7 @@ object SwitchboardPlistaController extends Controller with AuthLogging with Logg
 
       log.info("plista switches successfully updated")
 
-      val alterationMade = Switches.PlistaForOutbrainAU.isSwitchedOn match{
-        case true => newState == "off"
-        case _ => newState == "on"
-      }
+      val alterationMade = if (Switches.PlistaForOutbrainAU.isSwitchedOn) newState == "off" else newState == "on"
 
       if (alterationMade) {
         val update = Switches.PlistaForOutbrainAU.name + "=" + newState
