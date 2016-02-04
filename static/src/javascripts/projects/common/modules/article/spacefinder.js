@@ -143,12 +143,14 @@ define([
         // enforce content meta rule
         if (rules.clearContentMeta) {
             filtered = filtered.then(function (slots) {
+                return [slots, qwery('.js-content-meta')[0]];
+            }).then(function (args) {
                 return fastdom.read(function () {
-                    return _mapElementToDimensions(qwery('.js-content-meta')[0]);
-                }).then(function (contentMeta) {
-                    return filter(slots, function (slot) {
-                        return slot.top > (contentMeta.bottom + rules.clearContentMeta);
-                    });
+                    return [args[0], _mapElementToDimensions(args[1])];
+                });
+            }).then(function (args) {
+                return filter(args[0], function (slot) {
+                    return slot.top > (args[1].bottom + rules.clearContentMeta);
                 });
             });
         }
@@ -157,12 +159,14 @@ define([
         if (rules.selectors) {
             forOwn(rules.selectors, function (params, selector) {
                 filtered = filtered.then(function (slots) {
+                    return [slots, qwery(rules.bodySelector + selector)];
+                }).then(function (args) {
                     return fastdom.read(function () {
-                        return map(qwery(rules.bodySelector + selector), _mapElementToDimensions);
-                    }).then(function (relevantElems) {
-                        return filter(slots, function (slot) {
-                            return _testElems(params, slot, relevantElems);
-                        });
+                        return [args[0], map(args[1], _mapElementToDimensions)];
+                    });
+                }).then(function (args) {
+                    return filter(args[0], function (slot) {
+                        return _testElems(params, slot, args[1]);
                     });
                 });
             });
@@ -187,18 +191,14 @@ define([
         rules = rules || defaultRules;
         body = rules.bodySelector ? document.querySelector(rules.bodySelector) : document;
 
-        // get all immediate children
-        return getReady(body).then(function () {
-            return fastdom.read(getSlots)
-            .then(enforceRules)
-            .then(filterSlots)
-            .then(returnSlots);
-        });
+        return getReady(body)
+        .then(getSlots)
+        .then(getMeasurements)
+        .then(enforceRules)
+        .then(filterSlots)
+        .then(returnSlots);
 
         function getSlots() {
-            var rect = body.getBoundingClientRect();
-            var bodyTop = rect.top + window.pageYOffset;
-            var bodyHeight = rect.height;
             var slots = qwery(rules.bodySelector + rules.slotSelector);
             if (rules.fromBottom) {
                 slots.reverse();
@@ -221,8 +221,18 @@ define([
                     return keep;
                 });
             }
-            slots = map(slots, _mapElementToDimensions);
-            return [bodyTop, bodyHeight, slots];
+            return slots;
+        }
+
+        function getMeasurements(slots) {
+            return fastdom.read(function () {
+                var rect = body.getBoundingClientRect();
+                return [
+                    rect.top + window.pageYOffset,
+                    rect.height,
+                    map(slots, _mapElementToDimensions)
+                ];
+            });
         }
 
         function enforceRules(data) {
