@@ -36,7 +36,7 @@ window.curlConfig = {
             svgs:                           '../inline-svgs',
             'bootstraps/enhanced/media/video-player': 'bootstraps/enhanced/media/video-player-dev.js',
             videojs:                        'components/video.js/video.js',
-            videojsads:                     'components/videojs-contrib-ads/videojs.ads.min.js',
+            'videojs-contrib-ads':          'components/videojs-contrib-ads/videojs.ads.js',
             videojsembed:                   'components/videojs-embed/videojs.embed.js',
             videojsima:                     'components/videojs-ima/videojs.ima.js',
             videojspersistvolume:           'components/videojs-persistvolume/videojs.persistvolume.js',
