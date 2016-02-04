@@ -30,7 +30,8 @@ $minute-layout-margin-nudge: gs-span(1);
         }
 
     }
-    .logo--us--election {
+
+    .logo--us-election {
         display: block;
         float: left;
         height: gs-height(2);
@@ -74,7 +75,8 @@ $minute-layout-margin-nudge: gs-span(1);
 
     .content__headline,
     .content__dateline,
-    .content__standfirst {
+    .content__standfirst,
+    .logo--us-election {
         max-width: gs-span(4);
 
         @include mq(tablet) {
