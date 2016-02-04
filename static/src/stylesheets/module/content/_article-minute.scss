@@ -10,10 +10,7 @@ $minute-layout-margin-nudge: gs-span(1);
     content: '';
     height: $ruleHeight;
     position: absolute;
-    top: -$gs-baseline*2;
     width: gs-span(4) + $gs-gutter;
-    margin-left: 0;
-    margin-right: $gs-gutter;
 }
 
 .content--minute-article {
@@ -106,6 +103,7 @@ $minute-layout-margin-nudge: gs-span(1);
         &:after {
             @include rule($us-minute-highlight-colour, $gs-baseline*2);
             left: 0;
+            top: -$gs-baseline*2;
 
             @include mq($from: mobileLandscape) {
                 width: gs-span(4) + $gs-gutter * 2;
@@ -199,20 +197,15 @@ $minute-layout-margin-nudge: gs-span(1);
 
 .block--minute-article {
     background-color: $us-minute-main-colour;
-    border-top: 4px solid $us-minute-highlight-colour;
     color: $us-minute-contrast-colour;
     overflow: hidden;
-    padding: $gs-baseline 0;
+    padding: $gs-baseline*3 0 0;
     position: relative;
 
     &:after {
         @include rule($us-minute-highlight-colour, $gs-baseline*2);
         right: 0;
-    }
-
-    @include mq($from: tablet) {
-        border-top: 0 none;
-        padding-left: $gs-gutter*1.5;
+        top: 0;
     }
 
     .block-elements {
@@ -220,6 +213,11 @@ $minute-layout-margin-nudge: gs-span(1);
     }
 
     @include mq($from: mobileLandscape) {
+
+        &:after {
+            width: gs-span(6);
+        }
+
         .block-elements {
             padding-left: $gs-gutter;
             padding-right: $gs-gutter;
@@ -227,8 +225,11 @@ $minute-layout-margin-nudge: gs-span(1);
     }
 
     @include mq($from: tablet) {
-        margin: 0 auto;
+        border-top: 0 none;
+        margin: $gs-baseline auto 0 auto;
         max-width: gs-span(8);
+        padding-left: $gs-gutter*1.5;
+        padding-top: $gs-baseline;
 
         &:after {
             height: $gs-baseline*3;
