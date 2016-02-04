@@ -48,7 +48,6 @@ define([
         this.unreadBlocks = 0;
         this.notification = '<';
         this.updateDelay = options.delay;
-        this.debug = false;
 
         this.template =
             '  <button class="u-button-reset live-toggler live-toggler--autoupdate live-toggler--on js-auto-update js-auto-update--on"' +
@@ -68,7 +67,6 @@ define([
 
         this.view = {
             render: function (res) {
-                this.logThis('++ Render');
                 var $attachTo = [bonzo(options.attachTo[0]), bonzo(options.attachTo[1])],
                     date = new Date().toString(),
                     resultHtml = [
@@ -91,18 +89,15 @@ define([
                 twitter.enhanceTweets();
 
                 if (this.isUpdating && detect.pageVisible()) {
-                    this.logThis('Page visible');
                     this.notificationBar.setState('hidden');
                     this.view.revealNewElements.call(this);
                 } else if (this.unreadBlocks > 0) {
-                    this.logThis('There are unread blocks');
                     this.notificationBar.notify(this.unreadBlocks);
                     mediator.emit('modules:autoupdate:unread', this.unreadBlocks);
                 }
             },
 
             toggle: function (btn) {
-                this.logThis('Toggle button');
                 var action = btn.getAttribute('data-action');
 
                 $(options.btnClass).removeClass(options.activeClass);
@@ -113,12 +108,10 @@ define([
 
             destroy: function () {
                 $('.update').remove();
-                this.logThis('Destroy');
                 mediator.emit('modules:autoupdate:destroyed');
             },
 
             revealNewElements: function () {
-                this.logThis('Reveal new blocks');
                 var $newElements = $('.autoupdate--hidden', options.attachTo);
                 $newElements.addClass('autoupdate--highlight').removeClass('autoupdate--hidden');
 
@@ -136,7 +129,6 @@ define([
         };
 
         this.load = function () {
-            this.logThis('Load');
             var that = this,
                 path = (typeof options.path === 'function') ? options.path() : options.path + '.json';
 
@@ -146,15 +138,10 @@ define([
                 crossOrigin: true
             }).then(
                 function (response) {
-                    that.logThis('Ajax response');
-
                     if (response.refreshStatus === false) {
-                        that.logThis('Refresh status false');
-
                         that.off();
                         that.view.destroy();
                     } else {
-                        that.logThis('Refresh status true');
                         that.view.render.call(that, response);
                     }
                 }
@@ -162,13 +149,11 @@ define([
         };
 
         this.on = function () {
-            this.logThis('On!');
             this.isUpdating = true;
 
             if (this.timeout) { window.clearTimeout(this.timeout); }
 
             var updateLoop = function () {
-                this.logThis('Refresh status false');
                 this.load();
                 var newDelay = detect.pageVisible() ? options.delay : this.updateDelay * options.backoff;
                 this.updateDelay = Math.min(newDelay, options.backoffMax);
@@ -179,12 +164,10 @@ define([
         };
 
         this.off = function () {
-            this.logThis("++ Off");
             this.isUpdating = false;
         };
 
         this.init = function () {
-            this.logThis('Init');
             if (config.switches && config.switches.autoRefresh !== true) {
                 return;
             }
@@ -198,18 +181,13 @@ define([
             detect.initPageVisibility();
 
             mediator.on('modules:detect:pagevisibility:visible', function () {
-                this.logThis('++ on detect visibility' );
                 if (this.isUpdating) {
-                    this.logThis('Is updating');
                     this.on(); // reset backoff
                     that.view.revealNewElements();
                 }
             }.bind(this));
 
-            mediator.on('modules:notificationbar:show', function(){
-                this.logThis('On modules notification show');
-                this.view.revealNewElements.bind(this)}
-            );
+            mediator.on('modules:notificationbar:show', this.view.revealNewElements.bind(this));
 
             // add the component to the page, and show it
             $('.update').html(this.template).removeClass('u-h');
@@ -225,12 +203,6 @@ define([
 
             this.view.toggle.call(this, this.btns[1]);
         };
-
-        this.logThis = function(message) {
-            if(this.debug){
-                console.log(message)
-            }
-        }
 
     }
 

@@ -145,7 +145,7 @@ self.addEventListener('push', function(event){
     event.waitUntil(
         self.registration.showNotification(title, {
             body: 'Show me your body',
-            icon: 'https://avatar.guim.co.uk/user/12279432',
+            icon: '@{JavaScript(Static("images/favicons/114x114.png").path)}',
             tag: 'tag, init'
         })
     );
