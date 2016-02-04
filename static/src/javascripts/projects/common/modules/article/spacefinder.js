@@ -75,7 +75,7 @@ define([
                 [new Promise(expire)].concat(
                     map(notLoaded, function (img) {
                         return new Promise(function (resolve) {
-                            bean.on(img, 'load', resolve);
+                            bean.one(img, 'load', resolve);
                         });
                     })
                 )
