@@ -5,6 +5,17 @@ $minute-headline-colour: #ffffff;
 
 $minute-layout-margin-nudge: gs-span(1);
 
+@mixin rule($ruleColour, $ruleHeight) {
+    background-color: $ruleColour;
+    content: '';
+    height: $ruleHeight;
+    position: absolute;
+    top: -$gs-baseline*2;
+    width: gs-span(4) + $gs-gutter;
+    margin-left: 0;
+    margin-right: $gs-gutter;
+}
+
 .content--minute-article {
     border-top: 0 none;
 }
@@ -93,15 +104,8 @@ $minute-layout-margin-nudge: gs-span(1);
         }
 
         &:after {
-            background-color: $us-minute-highlight-colour;
-            content: '';
-            height: $gs-baseline*2;
-            position: absolute;
+            @include rule($us-minute-highlight-colour, $gs-baseline*2);
             left: 0;
-            top: -$gs-baseline*2;
-            width: gs-span(4) + $gs-gutter;
-            margin-left: 0;
-            margin-right: $gs-gutter;
 
             @include mq($from: mobileLandscape) {
                 width: gs-span(4) + $gs-gutter * 2;
@@ -125,8 +129,8 @@ $minute-layout-margin-nudge: gs-span(1);
     }
 
     /* ==========================================================================
-   Header Layout
-   ========================================================================== */
+       Header Layout
+       ========================================================================== */
     .content__headline,
     .content__dateline--minute-article,
     .content__standfirst,
@@ -201,6 +205,11 @@ $minute-layout-margin-nudge: gs-span(1);
     padding: $gs-baseline 0;
     position: relative;
 
+    &:after {
+        @include rule($us-minute-highlight-colour, $gs-baseline*2);
+        right: 0;
+    }
+
     @include mq($from: tablet) {
         border-top: 0 none;
         padding-left: $gs-gutter*1.5;
@@ -222,11 +231,7 @@ $minute-layout-margin-nudge: gs-span(1);
         max-width: gs-span(8);
 
         &:after {
-            background-color: $us-minute-highlight-colour;
-            content: '';
             height: $gs-baseline*3;
-            position: absolute;
-            right: 0;
             top: 0;
             width: gs-span(7);
         }
@@ -268,10 +273,6 @@ $minute-layout-margin-nudge: gs-span(1);
 
     @include mq($from: leftCol) {
         max-width: gs-span(12);
-
-        &:after {
-            width: gs-span(9);
-        }
 
         .block-elements {
             width: gs-span(6);
