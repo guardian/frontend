@@ -176,7 +176,6 @@ define([
         }
     };
     var renderStartTime = null;
-
     var recordFirstAdRendered = once(function () {
         beacon.beaconCounts('ad-render');
     });
@@ -184,7 +183,7 @@ define([
     /**
      * Initial commands
      */
-    var setListeners = function () {
+    function setListeners() {
         dfpOphanTracking.trackPerformance(googletag, renderStartTime);
 
         googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
@@ -193,19 +192,19 @@ define([
             mediator.emit('modules:commercial:dfp:rendered', event);
             parseAd(event);
         }));
-    };
+    }
 
-    var setPageTargeting = function () {
+    function setPageTargeting() {
         forOwn(buildPageTargeting(), function (value, key) {
             googletag.pubads().setTargeting(key, value);
         });
-    };
+    }
 
-    var isMobileBannerTest = function () {
+    function isMobileBannerTest() {
         return config.switches.mobileTopBannerRemove && $('.top-banner-ad-container--ab-mobile').length > 0 && detect.getBreakpoint() === 'mobile';
-    };
+    }
 
-    var isSponsorshipContainerTest = function () {
+    function isSponsorshipContainerTest() {
         var sponsorshipIds = ['#dfp-ad--adbadge', '#dfp-ad--spbadge', '#dfp-ad--fobadge', '#dfp-ad--adbadge1', '#dfp-ad--spbadge1', '#dfp-ad--fobadge1', '#dfp-ad--adbadge2', '#dfp-ad--spbadge2', '#dfp-ad--fobadge2', '#dfp-ad--adbadge3', '#dfp-ad--spbadge3', '#dfp-ad--fobadge3', '#dfp-ad--adbadge4', '#dfp-ad--spbadge4', '#dfp-ad--fobadge4', '#dfp-ad--adbadge5', '#dfp-ad--spbadge5', '#dfp-ad--fobadge5'],
             sponsorshipIdsReturned = [];
 
@@ -216,9 +215,9 @@ define([
         });
 
         return sponsorshipIdsReturned;
-    };
+    }
 
-    var showSponsorshipPlaceholder = function () {
+    function showSponsorshipPlaceholder() {
         var sponsorshipIdsFound = isSponsorshipContainerTest();
 
         if (detect.adblockInUse() && sponsorshipIdsFound.length) {
@@ -236,8 +235,9 @@ define([
                 });
             });
         }
-    };
-    var shouldFilterAdvert = function ($adSlot) {
+    }
+
+    function shouldFilterAdvert($adSlot) {
         return isVisuallyHidden() || isDisabledMobileBanner() || isDisabledCommercialFeature();
 
         function isVisuallyHidden() {
@@ -251,13 +251,13 @@ define([
         function isDisabledCommercialFeature() {
             return !commercialFeatures.topBannerAd && $adSlot.data('name') === 'top-above-nav';
         }
-    };
+    }
 
     /**
      * Loop through each slot detected on the page and define it based on the data
      * attributes on the element.
      */
-    var defineSlots = function () {
+    function defineSlots() {
         slots = chain(qwery(adSlotSelector)).and(map, function (adSlot) {
                 return bonzo(adSlot);
             // filter out (and remove) hidden ads
@@ -277,15 +277,17 @@ define([
                     slot: defineSlot($adSlot)
                 }];
             }).and(zipObject).valueOf();
-    };
-    var setPublisherProvidedId = function () {
+    }
+
+    function setPublisherProvidedId() {
         var user = id.getUserFromCookie();
         if (user) {
             var hashedId = sha1.hash(user.id);
             googletag.pubads().setPublisherProvidedId(hashedId);
         }
-    };
-    var displayAds = function () {
+    }
+
+    function displayAds() {
         googletag.pubads().enableSingleRequest();
         googletag.pubads().collapseEmptyDivs();
         setPublisherProvidedId();
@@ -299,36 +301,43 @@ define([
             googletag.display(firstSlot);
             displayed = true;
         }
-    };
-    var displayLazyAds = function () {
+    }
+
+    function displayLazyAds() {
         googletag.pubads().collapseEmptyDivs();
         setPublisherProvidedId();
         googletag.enableServices();
         instantLoad();
         enableLazyLoad();
-    };
+    }
+
     var lazyLoadEnabled = false;
-    var enableLazyLoad = function () {
+
+    function enableLazyLoad() {
         if (!lazyLoadEnabled) {
             lazyLoadEnabled = true;
             mediator.on('window:throttledScroll', lazyLoad);
             lazyLoad();
         }
-    };
-    var disableLazyLoad = function () {
+    }
+
+    function disableLazyLoad() {
         lazyLoadEnabled = false;
         mediator.off('window:throttledScroll', lazyLoad);
-    };
+    }
+
     var windowResize = debounce(
         function () {
             // refresh on resize
             hasBreakpointChanged(refresh);
         }, resizeTimeout
     );
-    var postDisplay = function () {
+
+    function postDisplay() {
         mediator.on('window:resize', windowResize);
-    };
-    var setupAdvertising = function () {
+    }
+
+    function setupAdvertising() {
         // if we don't already have googletag, create command queue and load it async
         if (!window.googletag) {
             window.googletag = { cmd: [] };
@@ -359,29 +368,29 @@ define([
 
         // show sponsorship placeholder if adblock detected
         showSponsorshipPlaceholder();
-    };
+    }
 
     /**
      * Public functions
      */
-    var init = function () {
+    function init() {
         if (commercialFeatures.dfpAdvertising) {
             setupAdvertising();
         } else {
             $(adSlotSelector).remove();
         }
         return dfp;
-    };
+    }
 
-    var instantLoad = function () {
+    function instantLoad() {
         chain(slots).and(keys).and(forEach, function (slot) {
             if (contains(['dfp-ad--pageskin-inread', 'dfp-ad--merchandising-high', 'dfp-ad--im'], slot)) {
                 loadSlot(slot);
             }
         });
-    };
+    }
 
-    var lazyLoad = function () {
+    function lazyLoad() {
         if (slots.length === 0) {
             disableLazyLoad();
         } else {
@@ -399,9 +408,9 @@ define([
                 loadSlot(slot);
             });
         }
-    };
+    }
 
-    var loadSlot = function (slotKey) {
+    function loadSlot(slotKey) {
         if (prebidService.testEnabled && prebidService.slotIsInTest(slotKey)) {
             prebidAndLoadSlot(slotKey);
         } else {
@@ -410,16 +419,16 @@ define([
             googletag.display(slotKey);
             displayed = true;
         }
-    };
+    }
 
-    var prebidAndLoadSlot = function (slotKey) {
+    function prebidAndLoadSlot(slotKey) {
         slots[slotKey].isLoading = true;
         prebidService.loadSlots(slotKey).then(function () {
             displayed = true;
         });
-    };
+    }
 
-    var addSlot = function (adSlot) {
+    function addSlot(adSlot) {
         var $adSlot = bonzo(adSlot),
             slotId = $adSlot.attr('id'),
             displayAd = function ($adSlot) {
@@ -444,30 +453,30 @@ define([
                 });
             }
         }
-    };
+    }
 
-    var refreshSlot = function ($adSlot) {
+    function refreshSlot($adSlot) {
         var slot = slots[$adSlot.attr('id')].slot;
         if (slot) {
             googletag.pubads().refresh([slot]);
         }
-    };
+    }
 
-    var removeSlot = function (slotId) {
+    function removeSlot(slotId) {
         delete slots[slotId];
         idleFastdom.write(function () {
             $('#' + slotId).remove();
         });
-    };
+    }
 
-    var getSlots = function () {
+    function getSlots() {
         return slots;
-    };
+    }
 
     /**
      * Private functions
      */
-    var defineSlot = function ($adSlot) {
+    function defineSlot($adSlot) {
         var slotTarget     = $adSlot.data('slot-target') || $adSlot.data('name'),
             adUnitOverride = urlUtils.getUrlVars()['ad-unit'],
             // if ?ad-unit=x, use that
@@ -518,9 +527,9 @@ define([
         }
 
         return slot;
-    };
+    }
 
-    var parseAd = function (event) {
+    function parseAd(event) {
         var size,
             slotId = event.slot.getSlotElementId(),
             $slot,
@@ -530,7 +539,7 @@ define([
         if (event.isEmpty) {
             removeSlot(slotId);
         } else {
-            $slot = $('#' + slotId),
+            $slot = $('#' + slotId);
 
             // Store ads IDs for technical feedback
             creativeIDs.push(event.creativeId);
@@ -575,9 +584,9 @@ define([
         }
 
         allAdsRendered(slotId);
-    };
+    }
 
-    var allAdsRendered = function (slotId) {
+    function allAdsRendered(slotId) {
         if (slots[slotId] && !slots[slotId].isRendered) {
             slots[slotId].isLoading = false;
             slots[slotId].isRendered = true;
@@ -587,21 +596,21 @@ define([
             userTiming.mark('All ads are rendered');
             mediator.emit('modules:commercial:dfp:alladsrendered');
         }
-    };
+    }
 
-    var addLabel = function ($slot) {
+    function addLabel($slot) {
         idleFastdom.write(function () {
             if (shouldRenderLabel($slot)) {
                 $slot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
             }
         });
-    };
+    }
 
-    var shouldRenderLabel = function ($slot) {
+    function shouldRenderLabel($slot) {
         return $slot.data('label') !== false && qwery('.ad-slot__label', $slot[0]).length === 0;
-    };
+    }
 
-    var breakoutIFrame = function (iFrame, $slot) {
+    function breakoutIFrame(iFrame, $slot) {
         /*eslint-disable no-eval*/
         var shouldRemoveIFrame = false,
             $iFrame            = bonzo(iFrame),
@@ -661,7 +670,7 @@ define([
         }
 
         return type;
-    };
+    }
 
     /**
      * Checks the contents of the ad for special classes (see breakoutClasses).
@@ -672,7 +681,7 @@ define([
      * Currently this is being used for sponsored logos and commercial components so they
      * can inherit fonts.
      */
-    var checkForBreakout = function ($slot) {
+    function checkForBreakout($slot) {
         return new Promise(function (resolve, reject) {
             // DFP sometimes sends back two iframes, one with actual ad and one with 0,0 sizes and __hidden__ 'paramter'
             // The later one will never go to 'complete' state on IE so lets avoid it.
@@ -706,19 +715,19 @@ define([
                 return item.adType !== '';
             });
         });
-    };
+    }
 
-    var breakpointNameToAttribute = function (breakpointName) {
+    function breakpointNameToAttribute(breakpointName) {
         return breakpointName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-    };
+    }
 
-    var getSlotsBreakpoint = function (breakpoint, slotBreakpoints) {
+    function getSlotsBreakpoint(breakpoint, slotBreakpoints) {
         return chain(detect.breakpoints).and(initial, function (breakpointInfo) {
                 return breakpointInfo.name !== breakpoint;
             }).and(intersection, slotBreakpoints).and(last).value();
-    };
+    }
 
-    shouldSlotRefresh = function (slotInfo, breakpoint, previousBreakpoint) {
+    function shouldSlotRefresh(slotInfo, breakpoint, previousBreakpoint) {
         // get the slots breakpoints
         var slotBreakpoints = chain(detect.breakpoints).and(filter, function (breakpointInfo) {
                 return slotInfo.$adSlot.data(breakpointNameToAttribute(breakpointInfo.name));
@@ -727,9 +736,9 @@ define([
             slotBreakpoint = getSlotsBreakpoint(breakpoint, slotBreakpoints);
         return slotBreakpoint &&
             getSlotsBreakpoint(previousBreakpoint, slotBreakpoints) !== slotBreakpoint;
-    };
+    }
 
-    var refresh = function (breakpoint, previousBreakpoint) {
+    function refresh(breakpoint, previousBreakpoint) {
         googletag.pubads().refresh(
             chain(slotsToRefresh)
                 // only refresh if the slot needs to
@@ -739,7 +748,7 @@ define([
                     return slotInfo.slot;
                 }).valueOf()
         );
-    };
+    }
 
     /** A breakpoint can have various sizes assigned to it. You can assign either on
      * set of sizes or multiple.
@@ -747,11 +756,11 @@ define([
      * One size       - `data-mobile="300,50"`
      * Multiple sizes - `data-mobile="300,50|320,50"`
      */
-    var createSizeMapping = function (attr) {
+    function createSizeMapping(attr) {
         return map(attr.split('|'), function (size) {
             return map(size.split(','), Number);
         });
-    };
+    }
 
     /**
      * Builds and assigns the correct size map for a slot based on the breakpoints
@@ -763,7 +772,7 @@ define([
      * If it has been defined, then we add that size to the size mapping.
      *
      */
-    var defineSlotSizes = function (slot) {
+    function defineSlotSizes(slot) {
         var mapping = googletag.sizeMapping();
 
         forEach(detect.breakpoints, function (breakpointInfo) {
@@ -775,22 +784,22 @@ define([
         });
 
         return mapping.build();
-    };
+    }
 
-    var parseKeywords = function (keywords) {
+    function parseKeywords(keywords) {
         return map((keywords || '').split(','), function (keyword) {
             return keyword.split('/').pop();
         });
-    };
+    }
 
-    var shouldLazyLoad = function () {
+    function shouldLazyLoad() {
         // We do not want lazy loading on pageskins because it messes up the roadblock
         return config.switches.viewability && !(config.page.hasPageSkin && detect.getBreakpoint() === 'wide');
-    };
+    }
 
-    var getCreativeIDs = function () {
+    function getCreativeIDs() {
         return creativeIDs;
-    };
+    }
 
     /**
      * Module
