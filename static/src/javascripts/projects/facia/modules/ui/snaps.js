@@ -55,7 +55,8 @@ define([
         // Second, init non-inlined embeds.
         var snaps = toArray($('.js-snappable.js-snap'))
                 .filter(function (el) {
-                    var isInlinedSnap = el.hasClass('facia-snap-embed'),
+
+                    var isInlinedSnap = $(el).hasClass('facia-snap-embed'),
                         snapType = el.getAttribute('data-snap-type');
                     return !isInlinedSnap && snapType && clientProcessedTypes.indexOf(snapType) > -1;
                 })
