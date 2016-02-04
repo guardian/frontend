@@ -58,46 +58,41 @@ define([
         // fromBotton:Boolean
         // will reverse the order of slots (this is useful for lazy loaded content)
         fromBottom: false
-    },
-    imagesLoaded,
-    richLinksUpgraded;
+    };
+
+    function expire(resolve) {
+        window.setTimeout(resolve, 5000);
+    }
 
     function onImagesLoaded(body) {
         var notLoaded = filter(qwery('img', body), function (img) {
             return !img.complete;
         });
 
-        return imagesLoaded || (imagesLoaded = Promise.race([
-            Promise.all(map(notLoaded, function (img) {
-                return new Promise(function (resolve) {
-                    bean.on(img, 'load', resolve);
-                });
-            })),
-            new Promise(function (resolve) {
-                window.setTimeout(resolve, 5000);
-            })
-        ]));
+        return notLoaded.length === 0 ?
+            Promise.resolve(true) :
+            Promise.race(
+                [new Promise(expire)].concat(
+                    map(notLoaded, function (img) {
+                        return new Promise(function (resolve) {
+                            bean.on(img, 'load', resolve);
+                        });
+                    })
+                )
+            );
     }
 
     function onRichLinksUpgraded(body) {
-        return richLinksUpgraded || (richLinksUpgraded = Promise.race([
-            new Promise(function (resolve, reject) {
-                var unloaded = qwery('.element-rich-link--not-upgraded', body);
+        var unloaded = qwery('.element-rich-link--not-upgraded', body);
 
-                if (!unloaded.length) {
-                    resolve();
-                } else {
-                    reject();
-                }
-            }).catch(function () {
-                return new Promise(function (resolve) {
+        return unloaded.length === 0 ?
+            Promise.resolve(true) :
+            Promise.race([
+                new Promise(function (resolve) {
                     mediator.once('rich-link:loaded', resolve);
-                });
-            }),
-            new Promise(function (resolve) {
-                window.setTimeout(resolve, 5000);
-            })
-        ]));
+                }),
+                new Promise(expire)
+            ]);
     }
 
     // test one element vs another for the given rules
