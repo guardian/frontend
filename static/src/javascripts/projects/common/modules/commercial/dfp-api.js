@@ -390,26 +390,6 @@ define([
         });
     }
 
-    function lazyLoad() {
-        if (slots.length === 0) {
-            disableLazyLoad();
-        } else {
-            var scrollTop = window.pageYOffset,
-                viewportHeight = bonzo.viewport().height,
-                scrollBottom = scrollTop + viewportHeight,
-                depth = 0.5;
-
-            chain(slots).and(keys).and(filter, function (slot) {
-                return !slots[slot].isLoading &&
-                    !slots[slot].isRendered &&
-                    // if the position of the ad is above the viewport - offset (half screen size)
-                    scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - viewportHeight * depth;
-            }).and(forEach, function (slot) {
-                loadSlot(slot);
-            });
-        }
-    }
-
     function loadSlot(slotKey) {
         if (prebidService.testEnabled && prebidService.slotIsInTest(slotKey)) {
             prebidAndLoadSlot(slotKey);
@@ -476,6 +456,7 @@ define([
     /**
      * Private functions
      */
+
     function defineSlot($adSlot) {
         var slotTarget     = $adSlot.data('slot-target') || $adSlot.data('name'),
             adUnitOverride = urlUtils.getUrlVars()['ad-unit'],
@@ -670,6 +651,26 @@ define([
         }
 
         return type;
+    }
+
+    function lazyLoad() {
+        if (slots.length === 0) {
+            disableLazyLoad();
+        } else {
+            var scrollTop = window.pageYOffset,
+                viewportHeight = bonzo.viewport().height,
+                scrollBottom = scrollTop + viewportHeight,
+                depth = 0.5;
+
+            chain(slots).and(keys).and(filter, function (slot) {
+                return !slots[slot].isLoading &&
+                    !slots[slot].isRendered &&
+                        // if the position of the ad is above the viewport - offset (half screen size)
+                    scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - viewportHeight * depth;
+            }).and(forEach, function (slot) {
+                loadSlot(slot);
+            });
+        }
     }
 
     /**
