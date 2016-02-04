@@ -795,7 +795,7 @@ define([
     /**
      * Module
      */
-    return {
+    var dfp = {
         init:           init,
         addSlot:        addSlot,
         refreshSlot:    refreshSlot,
@@ -815,5 +815,7 @@ define([
             hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
         }
     };
+
+    return dfp;
 
 });
