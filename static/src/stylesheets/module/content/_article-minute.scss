@@ -331,7 +331,7 @@ $minute-layout-margin-nudge: gs-span(1);
 .block--minute-article.block--quote {
 
     .quoted__contents {
-        @include fs-headline(1);
+        @include fs-headline(4);
         font-style: normal;
     }
 
