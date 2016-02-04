@@ -198,9 +198,11 @@ $minute-layout-margin-nudge: gs-span(1);
 .block--minute-article {
     background-color: $us-minute-main-colour;
     color: $us-minute-contrast-colour;
+    display: table;
+    height: 100vh;
     overflow: hidden;
-    padding: $gs-baseline*3 0 0;
     position: relative;
+    width: 100%;
 
     &:after {
         @include rule($us-minute-highlight-colour, $gs-baseline*2);
@@ -209,10 +211,18 @@ $minute-layout-margin-nudge: gs-span(1);
     }
 
     .block-elements {
-        padding: 0 $gs-gutter/2;
+        padding: $gs-baseline*3 $gs-gutter/2 0;
+    }
+
+    figure.element-image {
+        display: table-row;
+        vertical-align: bottom;
     }
 
     @include mq($from: mobileLandscape) {
+        height: auto;
+        display: block;
+        width: auto;
 
         &:after {
             width: gs-span(6);
@@ -222,11 +232,15 @@ $minute-layout-margin-nudge: gs-span(1);
             padding-left: $gs-gutter;
             padding-right: $gs-gutter;
         }
+
+        figure.element-image {
+            display: block;
+        }
     }
 
     @include mq($from: tablet) {
         border-top: 0 none;
-        margin: $gs-baseline auto 0 auto;
+        margin: $gs-baseline auto 0;
         max-width: gs-span(8);
         padding-left: $gs-gutter*1.5;
         padding-top: $gs-baseline;
@@ -245,7 +259,6 @@ $minute-layout-margin-nudge: gs-span(1);
         }
 
         figure.element-image {
-            display: block;
             margin-top: 0;
             position: relative;
             width: gs-span(4);
@@ -301,14 +314,6 @@ $minute-layout-margin-nudge: gs-span(1);
 // Alternative Layout
 .block--minute-article--alt-layout {
 
-    @include mq($from: leftCol) {
-        margin-left: $minute-layout-margin-nudge + gs-span(1);
-    }
-
-    @include mq($from: wide) {
-        margin-left: $minute-layout-margin-nudge + gs-span(2);
-    }
-
     &:after {
         left: 0;
         right: auto;
@@ -318,8 +323,18 @@ $minute-layout-margin-nudge: gs-span(1);
         float: left;
     }
 
-    figure.element-image {
-        float: right;
+    @include mq($from: tablet) {
+        figure.element-image {
+            float: right;
+        }
+    }
+
+    @include mq($from: leftCol) {
+        margin-left: $minute-layout-margin-nudge + gs-span(1);
+    }
+
+    @include mq($from: wide) {
+        margin-left: $minute-layout-margin-nudge + gs-span(2);
     }
 }
 
