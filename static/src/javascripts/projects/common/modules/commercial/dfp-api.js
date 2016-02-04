@@ -795,7 +795,7 @@ define([
     /**
      * Module
      */
-    var dfp = {
+    return {
         init:           init,
         addSlot:        addSlot,
         refreshSlot:    refreshSlot,
@@ -816,5 +816,4 @@ define([
         }
     };
 
-    return dfp;
 });
