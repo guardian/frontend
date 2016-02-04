@@ -26,6 +26,10 @@ define([
     forOwn,
     curry
 ) {
+    // maximum time (in ms) to wait for images to be loaded and rich links
+    // to be upgraded
+    var LOADING_TIMEOUT = 5000;
+
     // find spaces in articles for inserting ads and other inline content
     // minAbove and minBelow are measured in px from the top of the paragraph element being tested
     var defaultRules = { // these are written for adverts
@@ -61,7 +65,7 @@ define([
     };
 
     function expire(resolve) {
-        window.setTimeout(resolve, 5000);
+        window.setTimeout(resolve, LOADING_TIMEOUT);
     }
 
     function onImagesLoaded(body) {
