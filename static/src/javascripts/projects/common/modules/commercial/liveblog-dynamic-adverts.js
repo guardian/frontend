@@ -69,13 +69,7 @@ define([
     function fill(rules) {
         return spaceFiller.fillSpace(rules, insertAds)
             .then(function (result) {
-                if (slotCounter === MAX_ADS) {
-                    result = false;
-                }
-                return result;
-            })
-            .then(function (result) {
-                if (result) {
+                if (result && slotCounter < MAX_ADS) {
                     firstSlot = document.querySelector(rules.bodySelector + ' > .ad-slot').previousSibling;
                     startListening();
                 } else {
