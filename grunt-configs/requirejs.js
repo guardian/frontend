@@ -46,6 +46,9 @@ module.exports = function (grunt, options) {
                 dir: options.requirejsDir,
                 keepBuildDir: false,
                 shim: {
+                    videojsima: {
+                        deps: ['videojsads']
+                    },
                     videojsads: {
                         deps: ['bootstraps/enhanced/media/videojs-global']
                     }

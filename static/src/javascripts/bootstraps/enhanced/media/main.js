@@ -251,7 +251,7 @@ define([
                                 player.ima({
                                     id: mediaId,
                                     adTagUrl: getAdUrl(),
-                                    prerollTimeout: 750
+                                    prerollTimeout: 1000
                                 });
                                 player.ima.requestAds();
 
