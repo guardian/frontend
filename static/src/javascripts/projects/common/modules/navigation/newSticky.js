@@ -33,9 +33,8 @@ define([
 
     var topAdRenderedPromise = new Promise(function (resolve) {
         mediator.on('modules:commercial:dfp:rendered', function (event) {
-            if (event.slot.getSlotElementId() === adId) {
-                resolve();
-            }
+            var isEventForTopAdBanner = event.slot.getSlotElementId() === adId;
+            if (isEventForTopAdBanner) { resolve(); }
         });
     });
 
