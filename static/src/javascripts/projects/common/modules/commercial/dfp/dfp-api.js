@@ -21,7 +21,7 @@ define([
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
     'common/modules/commercial/commercial-features',
-    'common/modules/commercial/dfp-ophan-tracking',
+    'common/modules/commercial/dfp/ophan-tracking',
     'common/modules/commercial/prebid/prebid-service',
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
