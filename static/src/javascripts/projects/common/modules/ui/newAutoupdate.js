@@ -56,7 +56,7 @@ define([
         var scrolledPastTopBlock = function () {
             return $liveblogBody.offset().top < window.pageYOffset;
         };
-        var isLivePage = !(window.location.href.search('[?&]page=') !== -1);
+        var isLivePage = window.location.search.indexOf('?page=') === -1;
 
 
         var setUpListeners = function () {
