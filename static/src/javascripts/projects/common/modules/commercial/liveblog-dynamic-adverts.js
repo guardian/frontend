@@ -37,7 +37,8 @@ define([
             slotSelector: ' > .block',
             fromBottom: update,
             startAt: update ? firstSlot : null,
-            minAbove: update ? 0 : windowHeight * OFFSET,
+            absoluteMinAbove: update ? 0 : (windowHeight * OFFSET),
+            minAbove: 0,
             minBelow: 0,
             filter: filterSlot
         };
@@ -59,9 +60,8 @@ define([
 
     function insertAds(slots) {
         for (var i = 0; i < slots.length && slotCounter < MAX_ADS; i++) {
-            var $slot = bonzo(slots[i]);
             var $adSlot = bonzo(createAdSlot('inline1' + slotCounter++, 'liveblog-inline'));
-            $slot.after($adSlot);
+            $adSlot.insertAfter(slots[i]);
             dfp.addSlot($adSlot);
         }
     }
@@ -69,13 +69,7 @@ define([
     function fill(rules) {
         return spaceFiller.fillSpace(rules, insertAds)
             .then(function (result) {
-                if (slotCounter === MAX_ADS) {
-                    result = false;
-                }
-                return result;
-            })
-            .then(function (result) {
-                if (result) {
+                if (result && slotCounter < MAX_ADS) {
                     firstSlot = document.querySelector(rules.bodySelector + ' > .ad-slot').previousSibling;
                     startListening();
                 } else {
