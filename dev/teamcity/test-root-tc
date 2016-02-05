@@ -4,9 +4,6 @@ set -o xtrace
 set -o nounset
 set -o errexit
 
-./dev/teamcity/sbt-tc "project root" compile assets test
-testPassed=$?
+./dev/teamcity/sbt-tc "project root" compile assets testThenUpload
 
 echo "Tested everything."
-
-exit $testPassed
