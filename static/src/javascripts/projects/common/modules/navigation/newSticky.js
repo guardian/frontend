@@ -17,9 +17,8 @@ define([
     detect,
     assign) {
 
-    var adId = 'dfp-ad--top-above-nav';
-    var $adBanner = $('.js-top-banner-above-nav');
-    var $adBannerInner = $('#' + adId, $adBanner);
+    var $adBanner = $('.top-banner-ad-container--above-nav');
+    var $adBannerInner = $('.ad-slot--top-above-nav', $adBanner);
     var $header = $('.js-header');
     var $document = $(document.body);
 
@@ -33,7 +32,8 @@ define([
 
     var topAdRenderedPromise = new Promise(function (resolve) {
         mediator.on('modules:commercial:dfp:rendered', function (event) {
-            var isEventForTopAdBanner = event.slot.getSlotElementId() === adId;
+            var dfpAdSlotId = 'dfp-ad--top-above-nav';
+            var isEventForTopAdBanner = event.slot.getSlotElementId() === dfpAdSlotId;
             if (isEventForTopAdBanner) { resolve(); }
         });
     });
