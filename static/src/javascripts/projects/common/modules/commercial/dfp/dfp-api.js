@@ -125,9 +125,6 @@ define([
      * You do not need to specify all of these. If you set a mobile size, then that size will be used
      * for all ads in that slot until another breakpoint is detected, in the above case, that's desktop.
      *
-     * There is also a function for breaking the ad content out of their iframes. This can be done by
-     * adding the classes below (breakoutClasses) to the ad content (in DFP).
-     *
      * Labels are automatically prepended to an ad that was successfully loaded.
      *
      */

@@ -4,13 +4,22 @@ define([
     'common/utils/config',
     'common/utils/fastdom-idle',
     'lodash/collections/forEach'
-], function (bonzo, $, config, idleFastdom, forEach) {
-
+], function (
+    bonzo,
+    $,
+    config,
+    idleFastdom,
+    forEach
+) {
     var breakoutClasses = [
         'breakout__html',
         'breakout__script'
     ];
 
+    /**
+     * Allows ad content to break out of their iframes. The ad's content must have one of the above breakoutClasses.
+     * This can be set on the DFP creative.
+     */
     function breakoutIFrame(iFrame, $slot) {
         console.log('I gotta get out of here!');
 
