@@ -104,18 +104,23 @@ trait Prototypes {
     baseDirectory in Test := file(".")
   )
 
-  val allTestfilter = Def.taskDyn {
+  val allTestFilter = Def.taskDyn {
      (test in Test).all(ScopeFilter(inProjects(thisProject.value.aggregate: _*)))
   }
 
+  val allUploadFilter = Def.taskDyn {
+    riffRaffUpload.all(ScopeFilter(inProjects(thisProject.value.aggregate: _*)))
+  }
+
   val dynamicTestThenUpload = Def.taskDyn {
-    allTestfilter.result.value match {
+    allTestFilter.result.value match {
       case Inc(inc) => Def.task[Unit] {
         println("Tests failed, no riff raff upload will be performed.")
         throw inc
       }
-      case Value(v) => Def.task {
-        riffRaffUpload.value
+      case Value(v) => Def.task[Unit] {
+        println("Tests passed, uploading artifacts to riff raff.")
+        allUploadFilter.value
       }
     }
   }
@@ -123,10 +128,7 @@ trait Prototypes {
   val testThenUpload = taskKey[Unit]("Conditional task that uploads to riff raff only if tests pass")
 
   def frontendRootSettings= List(
-    testThenUpload := {
-      val result = dynamicTestThenUpload.value
-      println("final value was " + result)
-    }
+    testThenUpload := dynamicTestThenUpload.value
   )
 
   def frontendDistSettings(application: String) = List(
@@ -172,5 +174,6 @@ trait Prototypes {
     .settings(frontendTestSettings)
     .settings(VersionInfo.settings)
     .settings(libraryDependencies ++= Seq(commonsIo))
+    .settings(riffRaffUpload := {})
   }
 }
