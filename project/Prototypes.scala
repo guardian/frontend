@@ -104,6 +104,31 @@ trait Prototypes {
     baseDirectory in Test := file(".")
   )
 
+  val allTestfilter = Def.taskDyn {
+     (test in Test).all(ScopeFilter(inProjects(thisProject.value.aggregate: _*)))
+  }
+
+  val dynamicTestThenUpload = Def.taskDyn {
+    allTestfilter.result.value match {
+      case Inc(inc) => Def.task[Unit] {
+        println("Tests failed, no riff raff upload will be performed.")
+        throw inc
+      }
+      case Value(v) => Def.task {
+        riffRaffUpload.value
+      }
+    }
+  }
+
+  val testThenUpload = taskKey[Unit]("Conditional task that uploads to riff raff only if tests pass")
+
+  def frontendRootSettings= List(
+    testThenUpload := {
+      val result = dynamicTestThenUpload.value
+      println("final value was " + result)
+    }
+  )
+
   def frontendDistSettings(application: String) = List(
     packageName in Universal := application,
     topLevelDirectory in Universal := Some(application),
@@ -126,6 +151,7 @@ trait Prototypes {
 
   def root() = Project("root", base = file(".")).enablePlugins(play.PlayScala)
     .settings(frontendCompilationSettings)
+    .settings(frontendRootSettings)
 
   def application(applicationName: String) = {
     Project(applicationName, file(applicationName)).enablePlugins(play.PlayScala, RiffRaffArtifact, UniversalPlugin)
