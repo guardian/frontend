@@ -166,6 +166,7 @@ define([
                 dispatch({ type: 'SCROLL', scrollCoords: scrollCoords });
             });
         });
+
         var dispatchNewAdHeight = function () {
             getLatestAdHeight().then(function (adHeight) {
                 dispatch({ type: 'NEW_AD_HEIGHT', adHeight: adHeight });
@@ -173,6 +174,7 @@ define([
         };
         topAdRenderedPromise.then(dispatchNewAdHeight);
         newRubiconAdHeightPromise.then(dispatchNewAdHeight);
+
         $adBanner[0].addEventListener('transitionend', function (event) {
             // Protect against any other events which have bubbled
             var isEventForAdBanner = event.target === $adBanner[0];
