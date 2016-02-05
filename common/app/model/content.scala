@@ -89,7 +89,7 @@ final case class Content(
   }
 
   lazy val hasTonalHeaderByline: Boolean = {
-    (cardStyle == Comment || cardStyle == Editorial) &&
+    (cardStyle == Comment || cardStyle == Editorial || (cardStyle == SpecialReport && tags.isComment)) &&
       hasSingleContributor &&
       metadata.contentType != GuardianContentTypes.ImageContent
   }
