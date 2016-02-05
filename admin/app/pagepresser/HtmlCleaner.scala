@@ -1,8 +1,12 @@
 package pagepresser
 
+import java.net.URLDecoder
+
 import com.netaporter.uri.Uri.parse
 import common.Logging
+import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import views.support.URLEncode
 
 import scala.collection.JavaConversions._
 import scala.io.Source
@@ -62,14 +66,38 @@ object BasicHtmlCleaner extends HtmlCleaner {
   def createSimplePageTracking(document: Document, omnitureQueryString: String): Document = {
     val omnitureTag = "<!---Omniture page tracking for pressed page ---> <img src=\"https://hits-secure.theguardian.com/b/ss/guardiangu-network/1/JS-1.4.1/s985205503180623100?" + omnitureQueryString + "\" width=\"1\" height=\"1\"/>"
 
+    val trackingExists = document.getElementsByTag("img").filter{ element =>
+      element.hasAttr("src") && element.attr("src").contains("https://hits-secure.theguardian.com")
+    }.nonEmpty
 
-    document.body().append(omnitureTag)
+    if (!trackingExists) {
+      document.body().append(omnitureTag)
+    }
     document
   }
 
   def fetchOmnitureTags(document: Document): String = {
-    val omnitureCode = document.getElementById("omnitureNoScript").getElementsByTag("img").attr("src")
-    val params = parse(omnitureCode).query.paramMap
+    val params = {
+      val omnitureScript = document.getElementById("omnitureNoScript")
+      if (omnitureScript != null) {
+        parse(omnitureScript.getElementsByTag("img").attr("src")).query.paramMap
+      } else {
+        val iFrameDocuments = document.getElementsByTag("iframe").map { f =>
+          Jsoup.parse(Jsoup.parse(f.html()).text());
+        }
+        val omnitureParams: Map[String, Seq[String]] = try {
+          iFrameDocuments.flatMap { d =>
+            parse(d.getElementById("omnitureNoScript").getElementsByTag("img").attr("src")).query.paramMap
+          }.toMap
+        } catch {
+          case e: Exception => {
+            log.error(s"Failed extracting omniture params: ${e.getMessage}", e)
+            Map.empty
+          }
+        }
+        omnitureParams
+      }
+    }
 
     val requiredParams: Map[String, Seq[String]] = params.filterKeys(key => List("pageName", "ch", "g", "ns").contains(key)) ++
       Map("AQB" -> List("1"),
@@ -88,7 +116,7 @@ object BasicHtmlCleaner extends HtmlCleaner {
         } else v
         s"$key=$updatedValue"
       }
-    }.mkString("&")
+    }.mkString(";")
   }
 
   def removeAds(document: Document): Document = {
@@ -121,6 +149,13 @@ object BasicHtmlCleaner extends HtmlCleaner {
 
   private def removeByTagName(document: Document, tagName: String): Document = {
     document.getElementsByTag(tagName).foreach(_.remove())
+    document
+  }
+
+  private def removeByTagNameAndAttributeValue(document: Document, tagName: String, attrib: String, attribValue: String): Document = {
+    document.getElementsByTag(tagName).filter{ element =>
+      element.hasAttr(attrib) && element.attr(attrib).contains(attribValue)
+    }.foreach(_.remove())
     document
   }
 
