@@ -163,7 +163,7 @@ define([
         }
     };
 
-    var attachListeners = function (dispatch) {
+    var setupDispatchers = function (dispatch) {
         window.addEventListener('scroll', function () {
             getScrollCoords().then(function (scrollCoords) {
                 dispatch({ type: 'SCROLL', scrollCoords: scrollCoords });
@@ -216,14 +216,14 @@ define([
             };
 
             var store = createStore(reducer);
+
+            setupDispatchers(store.dispatch);
+
             var update = function () {
                 return fastdom.write(function () {
                     render(store.getState());
                 });
             };
-
-            attachListeners(store.dispatch);
-
             // Initial update
             // Ensure we only start listening after the first update
             update().then(function () {
