@@ -181,16 +181,13 @@ define([
                 dispatch({ type: 'SCROLL', scrollCoords: scrollCoords });
             });
         });
-        topAdRenderedPromise.then(function () {
+        var dispatchNewAdHeight = function () {
             getLatestAdHeight().then(function (adHeight) {
                 dispatch({ type: 'NEW_AD_HEIGHT', adHeight: adHeight });
             });
-        });
-        newRubiconAdHeightPromise.then(function () {
-            getLatestAdHeight().then(function (adHeight) {
-                dispatch({ type: 'NEW_RUBICON_AD_HEIGHT', adHeight: adHeight });
-            });
-        });
+        };
+        topAdRenderedPromise.then(dispatchNewAdHeight);
+        newRubiconAdHeightPromise.then(dispatchNewAdHeight);
     };
 
     return function () {
@@ -209,12 +206,6 @@ define([
                             pageYOffset: action.scrollCoords[1]
                         });
                     case 'NEW_AD_HEIGHT':
-                        return assign({}, previousState, {
-                            firstRender: false,
-                            adHeight: action.adHeight,
-                            previousAdHeight: previousState.adHeight
-                        });
-                    case 'NEW_RUBICON_AD_HEIGHT':
                         return assign({}, previousState, {
                             firstRender: false,
                             adHeight: action.adHeight,
