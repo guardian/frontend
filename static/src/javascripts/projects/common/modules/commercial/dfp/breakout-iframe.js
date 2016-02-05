@@ -21,8 +21,6 @@ define([
      * This can be set on the DFP creative.
      */
     function breakoutIFrame(iFrame, $slot) {
-        console.log('I gotta get out of here!');
-
         /*eslint-disable no-eval*/
         var shouldRemoveIFrame = false,
             $iFrame            = bonzo(iFrame),
