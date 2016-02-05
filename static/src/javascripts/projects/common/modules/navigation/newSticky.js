@@ -52,23 +52,6 @@ define([
 
     var getAdIframe = function () { return $('iframe', $adBanner); };
 
-    var getLatestAdHeight = function () {
-        var $iframe = getAdIframe();
-        var slotWidth = $iframe.attr('width');
-        var slotHeight = $iframe.attr('height');
-        // iframe may not have been injected at this point
-        var isFluidAd = $iframe.length > 0 && [slotWidth, slotHeight].join(',') === '88,70';
-        // fluid ads are currently always 250px high. We can't just read the client height as fluid ads are
-        // injected asynchronously, so we can't be sure when they will be in the dom
-        var fluidAdInnerHeight = 250;
-        var fluidAdPadding = 18;
-        var fluidAdHeight = fluidAdInnerHeight + fluidAdPadding;
-
-        return isFluidAd
-            ? Promise.resolve(fluidAdHeight)
-            : getClientAdHeight();
-    };
-
     var topAdRenderedPromise = new Promise(function (resolve) {
         mediator.on('modules:commercial:dfp:rendered', function (event) {
             if (event.slot.getSlotElementId() === adId) {
@@ -105,11 +88,22 @@ define([
         });
     });
 
-    var oldAdHeightPromise = getLatestAdHeight();
-    var newAdHeightPromise = topAdRenderedPromise.then(getLatestAdHeight);
+    var getLatestAdHeight = function () {
+        var $iframe = getAdIframe();
+        var slotWidth = $iframe.attr('width');
+        var slotHeight = $iframe.attr('height');
+        // iframe may not have been injected at this point
+        var isFluidAd = $iframe.length > 0 && [slotWidth, slotHeight].join(',') === '88,70';
+        // fluid ads are currently always 250px high. We can't just read the client height as fluid ads are
+        // injected asynchronously, so we can't be sure when they will be in the dom
+        var fluidAdInnerHeight = 250;
+        var fluidAdPadding = 18;
+        var fluidAdHeight = fluidAdInnerHeight + fluidAdPadding;
 
-    var getCachedAdHeight = function () {
-        return Promise.race([newRubiconAdHeightPromise, newAdHeightPromise, oldAdHeightPromise]);
+        var adHeightPromise = isFluidAd
+            ? Promise.resolve(fluidAdHeight)
+            : getClientAdHeight();
+        return Promise.race([newRubiconAdHeightPromise, adHeightPromise]);
     };
 
     var getScrollCoords = function () {
@@ -122,7 +116,7 @@ define([
         var headerHeightPromise = fastdom.read(function () {
             return $header.height();
         });
-        return Promise.all([getCachedAdHeight(), headerHeightPromise, getScrollCoords()])
+        return Promise.all([getLatestAdHeight(), headerHeightPromise, getScrollCoords()])
             .then(function (args) {
                 var adHeight = args[0];
                 var headerHeight = args[1];
@@ -187,13 +181,13 @@ define([
                 dispatch({ type: 'SCROLL', scrollCoords: scrollCoords });
             });
         });
-        newAdHeightPromise.then(function () {
-            getCachedAdHeight().then(function (adHeight) {
+        topAdRenderedPromise.then(function () {
+            getLatestAdHeight().then(function (adHeight) {
                 dispatch({ type: 'NEW_AD_HEIGHT', adHeight: adHeight });
             });
         });
         newRubiconAdHeightPromise.then(function () {
-            getCachedAdHeight().then(function (adHeight) {
+            getLatestAdHeight().then(function (adHeight) {
                 dispatch({ type: 'NEW_RUBICON_AD_HEIGHT', adHeight: adHeight });
             });
         });
