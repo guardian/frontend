@@ -161,10 +161,10 @@ define([
             $adBanner.css({ 'position': 'fixed' });
         }
 
-        var scrollIsAtTop = state.pageYOffset === 0;
+        var scrollIsNotAtTop = state.pageYOffset > 0;
         var diff = state.adHeight - state.previousAdHeight;
         var adHeightHasIncreased = diff > 0;
-        if (!scrollIsAtTop && adHeightHasIncreased) {
+        if (scrollIsNotAtTop && adHeightHasIncreased) {
             // If the user is not at the top and the ad height has increased,
             // we want to offset their scroll position
             window.scrollTo(state.pageXOffset, state.pageYOffset + diff);
