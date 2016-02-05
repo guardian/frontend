@@ -20,7 +20,8 @@ object AccountDetailsMapping extends UserFormMapping[AccountFormData] with Addre
       "birthDate" -> dateMapping,
       "address" -> idAddress,
       "billingAddress" -> optional(idAddress),
-      "telephoneNumber" -> optional(telephoneNumberMapping)
+      "telephoneNumber" -> optional(telephoneNumberMapping),
+      "deleteTelephoneNumber" -> default(boolean, false)
     )(AccountFormData.apply)(AccountFormData.unapply)
   }
 
@@ -59,7 +60,8 @@ case class AccountFormData(
   birthDate: DateFormData,
   address: AddressFormData,
   billingAddress: Option[AddressFormData],
-  telephoneNumber: Option[TelephoneNumberFormData]
+  telephoneNumber: Option[TelephoneNumberFormData],
+  deleteTelephone: Boolean = false
 ) extends UserFormData {
 
   def toUserUpdate(currentUser: User): UserUpdate = UserUpdate(
