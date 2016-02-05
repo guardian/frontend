@@ -162,14 +162,17 @@ define([
         }
 
         var scrollIsNotAtTop = state.pageYOffset > 0;
-        var diff = state.adHeight - state.previousAdHeight;
-        var adHeightHasIncreased = diff > 0;
-        if (scrollIsNotAtTop && adHeightHasIncreased) {
-            // If the user is not at the top and the ad height has increased,
-            // we want to offset their scroll position
-            window.scrollTo(state.pageXOffset, state.pageYOffset + diff);
+        if (scrollIsNotAtTop) {
+            var diff = state.adHeight - state.previousAdHeight;
+            var adHeightHasIncreased = diff > 0;
+            if (adHeightHasIncreased) {
+                // If the user is not at the top and the ad height has increased,
+                // we want to offset their scroll position
+                window.scrollTo(state.pageXOffset, state.pageYOffset + diff);
+            }
         } else if (!state.firstRender) {
-            // Otherwise we want to transition the change when it happens.
+            // If the user is at the top and the ad is resizing, we want to
+            // transition the change.
             // Avoid an initial transition when we apply the margin top for the first time
             $header.css('transition', 'margin-top 1s cubic-bezier(0, 0, 0, 0.985)');
         }
