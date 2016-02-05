@@ -57,13 +57,8 @@
     window.shouldEnhance = mustNotEnhance() ? false : mustEnhance() ? true : couldEnhance() && weWantToEnhance();
 
     // just so we can tell…
-    try {
-        if (window.guardian.config.page.isDev) {
-            var console = window.console;
-            console && console.info && console.info(`THIS IS ${window.shouldEnhance ? 'ENHANCED' : 'STANDARD ONLY'}`);
-        }
-    } catch (e) {
-        // do nothing
+    @if(play.Play.isDev()) {
+        window.console && window.console.info(`THIS IS ${window.shouldEnhance ? 'ENHANCED' : 'STANDARD ONLY'}`);
     }
 })(window);
 
