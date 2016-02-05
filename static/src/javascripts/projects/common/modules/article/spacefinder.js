@@ -98,8 +98,8 @@ define([
 
     // test one element vs another for the given rules
     function _testElem(rules, elem, other) {
-        var isMinAbove = elem.top - other.bottom >= rules.minAbove,
-            isMinBelow = other.top - elem.top >= rules.minBelow;
+        var isMinAbove = elem.top - other.bottom >= rules.minAbove;
+        var isMinBelow = other.top - elem.top >= rules.minBelow;
 
         return isMinAbove || isMinBelow;
     }
@@ -130,8 +130,8 @@ define([
         // enforce minAbove and minBelow rules
         filtered = filtered.then(function (slots) {
             return filter(slots, function (slot) {
-                var farEnoughFromTopOfBody = slot.top >= rules.minAbove,
-                    farEnoughFromBottomOfBody = slot.top + rules.minBelow <= bodyHeight;
+                var farEnoughFromTopOfBody = slot.top >= rules.minAbove;
+                var farEnoughFromBottomOfBody = slot.top + rules.minBelow <= bodyHeight;
                 return farEnoughFromTopOfBody && farEnoughFromBottomOfBody;
             });
         });
