@@ -21,6 +21,7 @@ define([
     var $adBanner = $('.js-top-banner-above-nav');
     var $adBannerInner = $('#' + adId, $adBanner);
     var $header = $('.js-header');
+    var $document = $(document.body);
 
     var getClientAdHeight = function () {
         return fastdom.read(function () {
@@ -109,7 +110,6 @@ define([
             });
     };
 
-    var $document = $(document.body);
     var render = function (state) {
         // Reset so we have a clean slate
         $header.css({
