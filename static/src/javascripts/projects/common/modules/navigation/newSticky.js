@@ -104,8 +104,7 @@ define([
                     adHeight: adHeight,
                     previousAdHeight: adHeight,
                     headerHeight: headerHeight,
-                    pageXOffset: scrollCoords[0],
-                    pageYOffset: scrollCoords[1]
+                    scrollCoords: scrollCoords
                 };
             });
     };
@@ -130,7 +129,8 @@ define([
         $header.css({ 'margin-top': state.adHeight });
         $adBanner.css({ 'max-height': state.adHeight });
 
-        var userHasScrolledPastHeader = state.pageYOffset > state.headerHeight;
+        var pageYOffset = state.scrollCoords[1];
+        var userHasScrolledPastHeader = pageYOffset > state.headerHeight;
         if (userHasScrolledPastHeader) {
             $adBanner.css({
                 'position': 'absolute',
@@ -140,14 +140,15 @@ define([
             $adBanner.css({ 'position': 'fixed' });
         }
 
-        var scrollIsNotAtTop = state.pageYOffset > 0;
+        var scrollIsNotAtTop = pageYOffset > 0;
         if (scrollIsNotAtTop) {
             var diff = state.adHeight - state.previousAdHeight;
             var adHeightHasIncreased = diff > 0;
             if (adHeightHasIncreased) {
                 // If the user is not at the top and the ad height has increased,
                 // we want to offset their scroll position
-                window.scrollTo(state.pageXOffset, state.pageYOffset + diff);
+                var pageXOffset = state.scrollCoords[0];
+                window.scrollTo(pageXOffset, pageYOffset + diff);
             }
         } else if (state.adIsResizing) {
             // If the user is at the top and the ad is resizing, we want to
@@ -192,8 +193,7 @@ define([
                     case 'SCROLL':
                         return assign({}, previousState, {
                             previousAdHeight: previousState.adHeight,
-                            pageXOffset: action.scrollCoords[0],
-                            pageYOffset: action.scrollCoords[1]
+                            scrollCoords: action.scrollCoords
                         });
                     case 'NEW_AD_HEIGHT':
                         return assign({}, previousState, {
