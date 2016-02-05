@@ -178,7 +178,7 @@ define([
             // Protect against any other events which have bubbled
             var isEventForAdBanner = event.target === $adBanner[0];
             if (isEventForAdBanner) {
-                dispatch({ type: 'AD_TRANSITION_END' });
+                dispatch({ type: 'AD_BANNER_TRANSITION_END' });
             }
         });
     };
@@ -202,7 +202,7 @@ define([
                             adHeight: action.adHeight,
                             previousAdHeight: previousState.adHeight
                         });
-                    case 'AD_TRANSITION_END':
+                    case 'AD_BANNER_TRANSITION_END':
                         return assign({}, previousState, {
                             adIsResizing: false
                         });
