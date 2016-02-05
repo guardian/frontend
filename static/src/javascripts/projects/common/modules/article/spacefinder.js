@@ -118,7 +118,7 @@ define([
     }
 
     function _enforceRules(slots, rules, bodyTop, bodyHeight) {
-        var filtered = Promise.resolve(true);
+        var filtered = Promise.resolve(slots);
 
         // enforce absoluteMinAbove rule
         if (rules.absoluteMinAbove > 0) {
