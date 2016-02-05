@@ -105,7 +105,7 @@ trait Prototypes {
   )
 
   val allTestFilter = Def.taskDyn {
-     (test in Test).all(ScopeFilter(inProjects(thisProject.value.aggregate: _*)))
+    (test in Test).all(ScopeFilter(inProjects(thisProject.value.aggregate: _*)))
   }
 
   val allUploadFilter = Def.taskDyn {
