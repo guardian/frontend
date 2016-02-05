@@ -99,17 +99,6 @@ define([
             new CommercialComponent(adSlot, { type: 'bestbuy' }).create();
         });
 
-        it('should load replace oastoken token', function (done) {
-            mediator.once('modules:commercial:creatives:commercial-component:loaded', function () {
-                    expect(adSlot.innerHTML).toBe('<p>OASToken: 123</p>');
-                    done();
-                });
-
-            server.respondWith([200, {}, '{ "html": "<p>OASToken: %OASToken%</p>" }']);
-
-            new CommercialComponent(adSlot, { type: 'bestbuy', clickMacro: '123' }).create();
-        });
-
         it('should be able to run post load events', function (done) {
             server.respondWith([200, {}, '{ "html": "" }']);
 
