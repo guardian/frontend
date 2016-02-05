@@ -122,7 +122,7 @@ define([
                 var headerHeight = args[1];
                 var scrollCoords = args[2];
                 return {
-                    firstRender: true,
+                    adIsResizing: false,
                     adHeight: adHeight,
                     previousAdHeight: adHeight,
                     headerHeight: headerHeight,
@@ -142,7 +142,8 @@ define([
         $adBanner.css({
             'position': '',
             'top': '',
-            'max-height': ''
+            'max-height': '',
+            'overflow': ''
         });
 
         // Set
@@ -170,11 +171,13 @@ define([
                 // we want to offset their scroll position
                 window.scrollTo(state.pageXOffset, state.pageYOffset + diff);
             }
-        } else if (!state.firstRender) {
+        } else if (state.adIsResizing) {
             // If the user is at the top and the ad is resizing, we want to
             // transition the change.
             // Avoid an initial transition when we apply the margin top for the first time
             $header.css('transition', 'margin-top 1s cubic-bezier(0, 0, 0, 0.985)');
+            // Stop the ad from overflowing while we transition
+            $adBanner.css({ 'overflow': 'hidden' });
         }
     };
 
@@ -191,6 +194,13 @@ define([
         };
         topAdRenderedPromise.then(dispatchNewAdHeight);
         newRubiconAdHeightPromise.then(dispatchNewAdHeight);
+        $adBanner[0].addEventListener('transitionend', function (event) {
+            // Protect against any other events which have bubbled
+            var isEventForAdBanner = event.target === $adBanner[0];
+            if (isEventForAdBanner) {
+                dispatch({ type: 'AD_TRANSITION_END' });
+            }
+        });
     };
 
     return function () {
@@ -203,16 +213,19 @@ define([
                 switch (action.type) {
                     case 'SCROLL':
                         return assign({}, previousState, {
-                            firstRender: false,
                             previousAdHeight: previousState.adHeight,
                             pageXOffset: action.scrollCoords[0],
                             pageYOffset: action.scrollCoords[1]
                         });
                     case 'NEW_AD_HEIGHT':
                         return assign({}, previousState, {
-                            firstRender: false,
+                            adIsResizing: true,
                             adHeight: action.adHeight,
                             previousAdHeight: previousState.adHeight
+                        });
+                    case 'AD_TRANSITION_END':
+                        return assign({}, previousState, {
+                            adIsResizing: false
                         });
                     default:
                         return previousState;
