@@ -225,7 +225,7 @@ define([
 
         // show hiring message if we're in a very modern browser
         try { // this should never interfere with anything, so `try` it
-            if ("repeat" in String.prototype && !config.page.isDev) {
+            if ('repeat' in String.prototype && !config.page.isDev) {
                 console.log(
                     '\n' +
                     '%cHello.\n' +
