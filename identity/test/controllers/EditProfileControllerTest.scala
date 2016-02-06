@@ -305,25 +305,9 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
       }
     }
 
-    "without telephone number request" - Fake{
+    "with delete telephone number request" - Fake{
 
-      val fakeRequest = createFakeRequestWithoutTelephoneNumber
-
-      val updatedUser = user.copy(
-        primaryEmailAddress = primaryEmailAddress,
-        privateFields = PrivateFields(
-          firstName = Some(firstName),
-          secondName = Some(secondName),
-          gender = Some(gender),
-          address1 = Some(address1),
-          address2 = Some(address2),
-          address3 = Some(address3),
-          address4 = Some(address4),
-          postcode = Some(postcode),
-          country = Some(country),
-          telephoneNumber = Some(TelephoneNumber(Some(telephoneNumberCountryCode), Some(telephoneNumberLocalNumber)))
-        )
-      )
+      val fakeRequest = createFakeRequestDeleteTelephoneNumber
 
       when(api.deleteTelephone(Matchers.any[Auth]))
         .thenReturn(Future.successful(Right(())))
@@ -336,9 +320,9 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
       }
     }
 
-    "with delete telephone number request" - Fake{
+    "without telephone number request" - Fake{
 
-      val fakeRequest = createFakeRequestDeleteTelephoneNumber
+      val fakeRequest = createFakeRequestWithoutTelephoneNumber
 
       val updatedUser = user.copy(
         primaryEmailAddress = primaryEmailAddress,
