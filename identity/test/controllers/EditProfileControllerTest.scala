@@ -197,6 +197,27 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
 
     }
 
+    def createFakeRequestDeleteTelephoneNumber = {
+
+      import FakeRequestAccountData._
+
+      FakeCSRFRequest ()
+        .withFormUrlEncodedBody (
+          ("primaryEmailAddress", primaryEmailAddress),
+          ("firstName", firstName),
+          ("secondName", secondName),
+          ("gender", gender),
+          ("address.line1", address1),
+          ("address.line2", address2),
+          ("address.line3", address3),
+          ("address.line4", address4),
+          ("address.postcode", postcode),
+          ("address.country", country),
+          ("deleteTelephoneNumber", "true")
+        )
+    }
+
+
     def createFakeRequestWithBillingAddress = {
 
       import FakeRequestAccountData._
@@ -287,6 +308,37 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
     "without telephone number request" - Fake{
 
       val fakeRequest = createFakeRequestWithoutTelephoneNumber
+
+      val updatedUser = user.copy(
+        primaryEmailAddress = primaryEmailAddress,
+        privateFields = PrivateFields(
+          firstName = Some(firstName),
+          secondName = Some(secondName),
+          gender = Some(gender),
+          address1 = Some(address1),
+          address2 = Some(address2),
+          address3 = Some(address3),
+          address4 = Some(address4),
+          postcode = Some(postcode),
+          country = Some(country),
+          telephoneNumber = Some(TelephoneNumber(Some(telephoneNumberCountryCode), Some(telephoneNumberLocalNumber)))
+        )
+      )
+
+      when(api.deleteTelephone(Matchers.any[Auth]))
+        .thenReturn(Future.successful(Right(())))
+
+      val result = controller.submitAccountForm().apply(fakeRequest)
+      Await.result(result, 2.second)
+
+      "then the telephone number should be deleted on the ID API" in {
+        verify(api).deleteTelephone(Matchers.eq(testAuth))
+      }
+    }
+
+    "with delete telephone number request" - Fake{
+
+      val fakeRequest = createFakeRequestDeleteTelephoneNumber
 
       val updatedUser = user.copy(
         primaryEmailAddress = primaryEmailAddress,
