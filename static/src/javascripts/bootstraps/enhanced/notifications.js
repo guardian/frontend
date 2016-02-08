@@ -33,21 +33,32 @@ define([
 
            navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
                reg = serviceWorkerRegistration;
-               subscribeButton.removeClass('js-hide-follow-button');
-               subscribeButton[0].disabled = false;
-               bean.on(subscribeButton[0], 'click', modules.buttonHandler);
-               if(modules.checkSubscriptions()) {
-                   modules.setSubscriptionStatus(true);
-               }
                serviceWorkerRegistration.pushManager.getSubscription().then(function(pushSubscription){
 
                    if(pushSubscription) {
                         sub = pushSubscription;
-                        return;
+                        modules.configureButton();
+                   } else {
+                        reg.pushManager.subscribe({userVisibleOnly: true}).then(
+                            function(pushSubscription){
+                                sub = pushSubscription;
+                                modules.configureButton()
+                            }
+                        )
                    }
                });
            });
        },
+
+       configureButton: function() {
+           subscribeButton.removeClass('js-hide-follow-button');
+           subscribeButton[0].disabled = false;
+           bean.on(subscribeButton[0], 'click', modules.buttonHandler);
+           if(modules.checkSubscriptions()) {
+               modules.setSubscriptionStatus(true);
+           }
+       },
+
 
        setSubscriptionStatus: function(subscribed) {
             isSubscribed = subscribed;

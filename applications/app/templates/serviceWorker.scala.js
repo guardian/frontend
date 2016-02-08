@@ -139,12 +139,12 @@ self.addEventListener('activate', function(event) {
 });
 
 self.addEventListener('push', function(event){
-    console.log('Push message', event);
+    console.log('Push message 1', event);
     var title = 'Push message';
 
     event.waitUntil(
         self.registration.showNotification(title, {
-            body: 'Show me your body',
+            body: 'This is the message',
             icon: '@{JavaScript(Static("images/favicons/114x114.png").path)}',
             tag: 'tag, init'
         })
