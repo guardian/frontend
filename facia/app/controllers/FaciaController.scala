@@ -255,7 +255,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   private object JsonFront{
     def apply(faciaPage: PressedPage)(implicit request: RequestHeader) = JsonComponent(
       "html" -> views.html.fragments.frontBody(faciaPage),
-      "config" -> Json.parse(views.html.fragments.javaScriptConfig(faciaPage).body)
+      "config" -> Json.parse(templates.js.javaScriptConfig(faciaPage).body)
     )
   }
 

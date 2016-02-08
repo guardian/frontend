@@ -6,11 +6,11 @@
 
 @defining(Edition(request)) { edition =>
     {
-        "page": @Html(StringEncodings.jsonToJS(Json.stringify(JavaScriptPage.get(item)))),
-        "switches" : { @{Html(conf.switches.Switches.all.filter(_.exposeClientSide).map{ switch =>
+        "page": @JavaScript(StringEncodings.jsonToJS(Json.stringify(JavaScriptPage.get(item)))),
+        "switches" : { @{JavaScript(conf.switches.Switches.all.filter(_.exposeClientSide).map{ switch =>
             s""""${CamelCase.fromHyphenated(switch.name)}":${switch.isSwitchedOn}"""}.mkString(","))}
         },
-        "tests": { @Html(mvt.ActiveTests.getJavascriptConfig) },
+        "tests": { @JavaScript(mvt.ActiveTests.getJavascriptConfig) },
         "modules": { },
         "stylesheets": {
             "fonts": {
@@ -24,6 +24,9 @@
                     "kerningOn": "@Static("stylesheets/webfonts-hinting-auto-kerning-on.css")"
                 }
             }
+        },
+        "commercial": {
+            "showingAdfree" : undefined
         }
     }
 }
