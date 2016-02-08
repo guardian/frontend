@@ -37,10 +37,11 @@ define([
 
     var getAdIframe = function () { return $('iframe', $adBanner); };
 
-    var newRubiconAdHeightPromise = new Promise(function (resolve) {
+    // Rubicon ads are loaded via DFP like all other ads, but they can
+    // render themselves again at any time
+    var rubiconAdRenderedPromise = new Promise(function (resolve) {
         window.addEventListener('message', function (event) {
             var data;
-
             // other DFP events get caught by this listener, but if they're not json we don't want to parse them or use them
             try {
                 data = JSON.parse(event.data);
@@ -52,12 +53,7 @@ define([
                 var isEventForTopAdBanner = isRubiconAdEvent && data.value.id === $iframe[0].id;
 
                 if (isRubiconAdEvent && isEventForTopAdBanner) {
-                    fastdom.read(function () {
-                        var padding = parseInt($adBannerInner.css('padding-top'))
-                            + parseInt($adBannerInner.css('padding-bottom'));
-                        var clientHeight = parseInt(data.value.height) + padding;
-                        resolve(clientHeight);
-                    });
+                    resolve();
                 }
             }
         });
@@ -75,10 +71,9 @@ define([
         var fluidAdPadding = 18;
         var fluidAdHeight = fluidAdInnerHeight + fluidAdPadding;
 
-        var adHeightPromise = isFluidAd
+        return isFluidAd
             ? Promise.resolve(fluidAdHeight)
             : getClientAdHeight();
-        return Promise.race([newRubiconAdHeightPromise, adHeightPromise]);
     };
 
     var getScrollCoords = function () {
@@ -168,7 +163,7 @@ define([
             });
         };
         topAdRenderedPromise.then(dispatchNewAdHeight);
-        newRubiconAdHeightPromise.then(dispatchNewAdHeight);
+        rubiconAdRenderedPromise.then(dispatchNewAdHeight);
 
         $adBanner[0].addEventListener('transitionend', function (event) {
             // Protect against any other events which have bubbled
