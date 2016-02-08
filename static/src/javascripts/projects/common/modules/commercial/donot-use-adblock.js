@@ -99,15 +99,27 @@ define([
                 quoteAuthor: 'Ewen MacAskill',
                 customCssClass: 'macaskill',
                 imageAuthor: '//i.guim.co.uk/img/static/sys-images/Guardian/Pix/contributor/2015/8/18/1439913873894/Ewen-MacAskill-R.png?w=300&q=85&auto=format&sharp=10&s=0ecfbc78dc606a01c0a9b04bd5ac7a82'
-            }],
+            },
+            {
+                edition: 'UK',
+                supporterLink: 'https://membership.theguardian.com/uk/supporter?INTCMP=ADBLOCK_BANNER_COIN',
+                quoteText: 'Quality journalism',
+                linkText: 'Become a supporter from just £5 per month',
+                messageText: 'For just 16p a day you can support the Guardian\'s independence and our award-winning journalism',
+                template: 'coin'
+            }
+            ],
+            relevantToEdition = filter (allVariations, function (message) {
+                return !message.edition || message.edition == config.page.edition;
+            }),
 
-            variationsFromContributors = filter(allVariations, function (message) {
+            variationsFromContributors = filter(relevantToEdition, function (message) {
                 return find(contributors, function (contributor) {
                     return contributor[0] === message.quoteAuthor;
                 }) !== undefined;
             }),
 
-            variationsToUse = variationsFromContributors.length > 1 ? variationsFromContributors : allVariations,
+            variationsToUse = variationsFromContributors.length > 1 ? variationsFromContributors : relevantToEdition,
             variant = sample(variationsToUse);
 
         new AdblockBanner(variant).show();

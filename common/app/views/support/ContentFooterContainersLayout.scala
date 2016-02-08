@@ -18,7 +18,7 @@ object ContentFooterContainersLayout {
            (networkFrontContainers2: => Html)
            (highRelevanceCommercialComponent: => Html)
            (standardCommercialComponent: => Html)
-           (outbrainPlaceholder: Html): Html = {
+           (externalContentPlaceholder: Html): Html = {
 
     val htmlBlocks = if (isAdvertisementFeature) {
 
@@ -29,7 +29,7 @@ object ContentFooterContainersLayout {
 
       def optional(p: => Boolean, htmlBlock: => Html): Option[Html] = if (p) Some(htmlBlock) else None
 
-      def includeOutbrainPlaceholder(htmlBlocks: Seq[Html]): Seq[Html] = {
+      def includeExternalContentPlaceholder(htmlBlocks: Seq[Html]): Seq[Html] = {
         if (content.showFooterContainers && !content.shouldHideAdverts && OutbrainSwitch.isSwitchedOn) {
           val pos = if (((content.isSeries || content.isBlog) && !related.hasStoryPackage) || (!content.showInRelated && !related.hasStoryPackage)) {
             // Essentially, is the related content slot there but empty
@@ -39,7 +39,7 @@ object ContentFooterContainersLayout {
           } else {
             4
           }
-          (htmlBlocks.take(pos) :+ outbrainPlaceholder) ++ htmlBlocks.drop(pos)
+          (htmlBlocks.take(pos) :+ externalContentPlaceholder) ++ htmlBlocks.drop(pos)
         } else htmlBlocks
       }
 
@@ -55,7 +55,7 @@ object ContentFooterContainersLayout {
         Some(networkFrontContainers2)
       ).flatten
 
-      includeOutbrainPlaceholder(apartFromOutbrain)
+      includeExternalContentPlaceholder(apartFromOutbrain)
     }
 
     HtmlFormat.fill(htmlBlocks)

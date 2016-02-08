@@ -7,8 +7,8 @@ define([
     'common/utils/fastdom-idle',
     'common/modules/identity/api',
     'common/modules/experiments/ab',
+    'common/modules/commercial/dfp/dfp-api',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/commercial/dfp-api',
     'common/modules/commercial/user-features',
     'lodash/objects/defaults'
 ], function (
@@ -20,8 +20,8 @@ define([
     idleFastdom,
     identityApi,
     ab,
-    createAdSlot,
     dfp,
+    createAdSlot,
     userFeatures,
     defaults
 ) {

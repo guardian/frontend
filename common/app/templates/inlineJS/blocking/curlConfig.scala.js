@@ -34,11 +34,13 @@ window.curlConfig = {
             'ophan/ng':                     '@{Configuration.javascript.config("ophanJsUrl")}',
             'prebid.js':                    'vendor/prebid/0.5.0/prebid.js',
             svgs:                           '../inline-svgs',
+
+            // video
             'bootstraps/enhanced/media/video-player': 'bootstraps/enhanced/media/video-player-dev.js',
-            videojs:                        'components/video.js/video.min.js',
-            videojsads:                     'components/videojs-contrib-ads/videojs.ads.min.js',
+            videojs:                        'components/video.js/video.js',
+            'videojs-contrib-ads':          'components/videojs-contrib-ads/videojs.ads.js',
             videojsembed:                   'components/videojs-embed/videojs.embed.js',
-            videojsima:                     'components/videojs-ima/videojs.ima.js',
+            'videojs-ima':                  'components/videojs-ima/videojs.ima.js',
             videojspersistvolume:           'components/videojs-persistvolume/videojs.persistvolume.js',
             videojsplaylist:                'components/videojs-playlist-audio/videojs.playlist.js',
 

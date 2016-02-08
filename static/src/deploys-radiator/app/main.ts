@@ -166,7 +166,7 @@ const renderPage: (
     deploysPair: [ List<DeployRecord>, List<DeployRecord> ],
     // TODO: Use tuple instead
     deployPair: Array<DeployRecord>,
-    commits: Array<GitHubCommit>
+    commits: List<GitHubCommit>
 ) => VirtualDOM.VNode =
     (
         [ codeDeploys, prodDeploys ],
@@ -177,7 +177,7 @@ const renderPage: (
         return h('.row#root', {}, [
             h('h1', `Status: ${isInSync ? 'in sync. Ship it!' : 'out of sync.'}`),
             h('hr', {}, []),
-            exp(commits.length > 0) && h('.col', [
+            exp(commits.size > 0) && h('.col', [
                 h('h1', [
                     'Difference (',
                     h('span', { title: 'Oldest PROD deploy' }, `${oldestProdDeploy.build}`),
@@ -187,35 +187,11 @@ const renderPage: (
                 ]),
                 ih('ul', {}, (
                     commits
-                        .reduce((accumulator: List<[string, List<GitHubCommit>]>, currentCommit: GitHubCommit, currentIndex: number): List<[string, List<GitHubCommit>]> => {
-                            const isNotEmpty: boolean = ! accumulator.isEmpty();
-                            const previousGroup = accumulator.last();
-                            const maybePreviousAuthorName: Option<string> = isNotEmpty ? headOption(previousGroup) : None;
-                            return maybePreviousAuthorName
-                                .flatMap(previousAuthorName => {
-                                    if (previousAuthorName === currentCommit.authorName) {
-                                        const currentCommitsByAuthor = previousGroup[1];
-                                        const index = accumulator.indexOf(previousGroup);
-                                        return new Some(accumulator.set(index, [ previousAuthorName, currentCommitsByAuthor.push(currentCommit) ]))
-                                    } else {
-                                        return None;
-                                    }
-                                })
-                                .getOrElse(() => accumulator.push([ currentCommit.authorName, List([ currentCommit ]) ]))
-                        }, List<[string, List<GitHubCommit>]>())
-                        .map(([ authorName, commits ]) => (
+                        .groupBy(commit => commit.authorLogin)
+                        .map(commits => headOption(commits.toArray()).map(commit => commit.authorName).getOrElse(() => ''))
+                        .map(commitAuthorName => (
                             h('li', [
-                                h('h2', authorName),
-                                ih('ul', {}, (
-                                    commits
-                                        .map(commit => (
-                                            h('li', [
-                                                h('a', { href: commit.url }, headOption(commit.message.split('\n')).getOrElse(() => '')),
-                                                ` by ${commit.authorName}`
-                                            ]))
-                                        )
-                                        .toList()
-                                ))
+                                h('h2', commitAuthorName)
                             ])
                         ))
                         .toList()
@@ -258,19 +234,20 @@ const getBuild = (build: number): Promise<BuildRecord> => (
 );
 
 const gitHubApiHost = 'https://api.github.com';
-const getDifference = (base: string, head: string): Promise<Array<GitHubCommit>> => (
+const getDifference = (base: string, head: string): Promise<List<GitHubCommit>> => (
     fetch(`${gitHubApiHost}/repos/guardian/frontend/compare/${base}...${head}`, { headers: { 'Authorization': `token ${window.gitHubAccessToken}` } })
         .then(response => {
             if (response.ok) {
                 return response.clone().json<GitHubCompareJson>()
                     .then(json => json.commits)
-                    .then(gitHubCommitsJson => gitHubCommitsJson.map((gitHubCommitJson): GitHubCommit => (
+                    .then(gitHubCommitsJson => List(gitHubCommitsJson.map((gitHubCommitJson): GitHubCommit => (
                         {
                             url: gitHubCommitJson.html_url,
                             authorName: gitHubCommitJson.commit.author.name,
+                            authorLogin: gitHubCommitJson.author.login,
                             message: gitHubCommitJson.commit.message
                         }
-                    )));
+                    ))));
             } else {
                 return response.clone().json<GitHubErrorJson>()
                     .then(json => Promise.reject(new Error(json.message)));
@@ -325,7 +302,7 @@ const run = (): Promise<void> => {
     ));
 
     const differencePromise = buildsPromise.then(([ codeBuild, prodBuild ]) => (
-        getDifference(prodBuild.revision, codeBuild.revision).then(gitHubCommits => gitHubCommits.reverse())
+        getDifference(prodBuild.revision, codeBuild.revision).then(gitHubCommits => gitHubCommits.reverse().toList())
     ));
 
     return Promise.all([ deploysPromise, deployRefsPromise, differencePromise ])
