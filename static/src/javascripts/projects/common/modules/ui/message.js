@@ -58,6 +58,11 @@ define([
         }
         $('.js-site-message-copy').html(message);
 
+        // Add site modifier message
+        if (this.cssModifierClass) {
+            siteMessage.addClass('site-message--' + this.cssModifierClass);
+        }
+
         this.$siteMessage = $('.js-site-message__message');
 
         // Check and show the width based message

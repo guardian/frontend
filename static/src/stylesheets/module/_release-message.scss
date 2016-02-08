@@ -16,6 +16,10 @@
     z-index: $zindex-popover;
 }
 
+.site-message--alt {
+    background-color: colour(status-neutral);
+}
+
 .site-message__inner {
     padding: 0 $gs-gutter/2;
 
