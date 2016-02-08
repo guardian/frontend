@@ -29,12 +29,6 @@ define([
         });
     });
 
-    var getClientAdHeight = function () {
-        return fastdom.read(function () {
-            return $adBannerInner[0].clientHeight;
-        });
-    };
-
     var getAdIframe = function () { return $('iframe', $adBanner); };
 
     // Rubicon ads are loaded via DFP like all other ads, but they can
@@ -71,9 +65,13 @@ define([
         var fluidAdPadding = 18;
         var fluidAdHeight = fluidAdInnerHeight + fluidAdPadding;
 
+        var clientHeightPromise = fastdom.read(function () {
+            return $adBannerInner[0].clientHeight;
+        });
+
         return isFluidAd
             ? Promise.resolve(fluidAdHeight)
-            : getClientAdHeight();
+            : clientHeightPromise;
     };
 
     var getScrollCoords = function () {
