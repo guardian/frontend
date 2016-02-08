@@ -37,8 +37,7 @@ class SignoutController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
   }
 
   private def performSignout(request: RequestHeader) = {
-    val adfreeCookies = List(
-      DiscardingCookie("gu_adfree_user", "/", Some(conf.id.domain), secure = false),
+    val payingMemberCookies = List(
       DiscardingCookie("gu_user_features_expiry", "/", Some(conf.id.domain), secure = false),
       DiscardingCookie("gu_paying_member", "/", Some(conf.id.domain), secure = false)
       )
@@ -47,7 +46,7 @@ class SignoutController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
       DiscardingCookie("GU_U", "/", Some(conf.id.domain), secure = false) ::
       DiscardingCookie("SC_GU_U", "/", Some(conf.id.domain), secure = true) ::
       DiscardingCookie("GU_ID_CSRF", "/", Some(conf.id.domain), secure = true) ::
-      adfreeCookies
+      payingMemberCookies
 
     NoCache(Found(
       returnUrlVerifier.getVerifiedReturnUrl(request).getOrElse(returnUrlVerifier.defaultReturnUrl)
