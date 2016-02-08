@@ -68,19 +68,6 @@ define([
         }
     };
 
-    policies.adfreeExperience = function () {
-        if (userFeatures.isAdfree()) {
-            return {
-                topBannerAd : false,
-                articleBodyAdverts : false,
-                articleAsideAdverts : false,
-                sliceAdverts : false,
-                popularContentMPU : false,
-                videoPreRolls : false
-            };
-        }
-    };
-
     policies.membershipMessages = function () {
         if (!detect.adblockInUse() &&
             detect.getBreakpoint() !== 'mobile' &&

@@ -172,34 +172,6 @@ define([
             });
         });
 
-        describe('Adfree experience policy', function () {
-            it('enabling adfree hides some commercial content', function () {
-                userFeatures.isAdfree = function () {return true;};
-                var switches = commercialFeaturePolicies.getPolicySwitches().adfreeExperience;
-
-                expect(switches.articleBodyAdverts).toBe(false);
-                expect(switches.sliceAdverts).toBe(false);
-                expect(switches.popularContentMPU).toBe(false);
-                expect(switches.videoPreRolls).toBe(false);
-            });
-
-            it('enabling adfree does not hide other commercial content', function () {
-                userFeatures.isAdfree = function () {return true;};
-                var switches = commercialFeaturePolicies.getPolicySwitches().adfreeExperience;
-
-                expect(switches.dfpAdvertising).not.toBe(false);
-                expect(switches.frontCommercialComponents).not.toBe(false);
-                expect(switches.thirdPartyTags).not.toBe(false);
-                expect(switches.badges).not.toBe(false);
-            });
-
-            it('applies no changes when adfree is disabled', function () {
-                userFeatures.isAdfree = function () {return false;};
-                var switches = commercialFeaturePolicies.getPolicySwitches().adfreeExperience;
-                expect(switches).toBeUndefined();
-            });
-        });
-
         describe('Identity page policy', function () {
             it('pages in the identity section do not run third party tags', function () {
                 config.page.section = 'identity';
