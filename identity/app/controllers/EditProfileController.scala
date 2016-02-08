@@ -74,7 +74,9 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
           case data: AccountFormData if (data.deleteTelephone) => {
             identityApiClient.deleteTelephone(user.auth) map {
               case Left(errors) => forms.withErrors(errors)
-              case Right(_) => forms.bindForms(user)
+              case Right(_) => {
+                forms.bindForms(user.user.copy(privateFields = user.user.privateFields.copy(telephoneNumber = None)))
+              }
             }
           }
           case data: UserFormData =>
