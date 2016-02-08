@@ -64,14 +64,19 @@ object BasicHtmlCleaner extends HtmlCleaner {
   }
 
   def createSimplePageTracking(document: Document, omnitureQueryString: String): Document = {
+    val newOmnitureScriptBase = "https://hits-secure.theguardian.com/b/ss/guardiangu-network/1/JS-1.4.1/s985205503180623100"
+
     document.getElementsByTag("img").exists { element =>
-      element.hasAttr("src") && element.attr("src").contains("https://hits-secure.theguardian.com")
+      element.hasAttr("src") && element.attr("src").contains(newOmnitureScriptBase)
     } match {
-      case false =>
-        val omnitureTag = "<!---Omniture page tracking for pressed page ---> <img src=\"https://hits-secure.theguardian.com/b/ss/guardiangu-network/1/JS-1.4.1/s985205503180623100?" + omnitureQueryString + "\" width=\"1\" height=\"1\"/>"
-        document.body().append(omnitureTag)
+      case true =>
+        log.info(s"Archive omniture script exists and was not replaced")
         document
-      case _ => document
+      case false =>
+        val omnitureTag = "<!---Omniture page tracking for pressed page ---> <img src=\"" + newOmnitureScriptBase + "?" + omnitureQueryString + "\" width=\"1\" height=\"1\"/>"
+        document.body().append(omnitureTag)
+        log.info("Archive omniture script appended")
+        document
     }
   }
 
@@ -82,6 +87,7 @@ object BasicHtmlCleaner extends HtmlCleaner {
         parse(omnitureScript.getElementsByTag("img").attr("src")).query.paramMap
       } else {
         val iFrameDocuments = document.getElementsByTag("iframe").map { f =>
+          // use Jsoup.parse(Jsoup.parse(...)) because the iframe html contains encoded data to be extracted as .text()
           Jsoup.parse(Jsoup.parse(f.html()).text());
         }
         val omnitureParams: Map[String, Seq[String]] = try {
@@ -115,7 +121,7 @@ object BasicHtmlCleaner extends HtmlCleaner {
         } else v
         s"$key=$updatedValue"
       }
-    }.mkString(";")
+    }.mkString("&")
   }
 
   def removeAds(document: Document): Document = {
