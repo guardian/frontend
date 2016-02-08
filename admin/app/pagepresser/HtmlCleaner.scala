@@ -1,12 +1,9 @@
 package pagepresser
 
-import java.net.URLDecoder
-
 import com.netaporter.uri.Uri.parse
 import common.Logging
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import views.support.URLEncode
 
 import scala.collection.JavaConversions._
 import scala.io.Source
