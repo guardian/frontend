@@ -3,7 +3,7 @@ define(['helpers/injector'], function (Injector) {
     var injector = new Injector();
 
     describe('The user features service:', function () {
-        var config, cookies, userFeatures, identityApi,
+        var cookies, userFeatures, identityApi,
             PERSISTENCE_KEYS;
 
         PERSISTENCE_KEYS = {
@@ -13,15 +13,13 @@ define(['helpers/injector'], function (Injector) {
 
         beforeEach(function (done) {
             injector.require([
-                'common/utils/config',
                 'common/utils/cookies',
                 'common/modules/commercial/user-features',
                 'common/modules/identity/api'
             ], function () {
-                config = arguments[0];
-                cookies = arguments[1];
-                userFeatures = arguments[2];
-                identityApi = arguments[3];
+                cookies = arguments[0];
+                userFeatures = arguments[1];
+                identityApi = arguments[2];
 
                 spyOn(userFeatures, '_requestNewData');
                 spyOn(userFeatures, '_deleteOldData');
