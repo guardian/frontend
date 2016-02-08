@@ -9,7 +9,6 @@ define([
     'common/modules/experiments/ab',
     'common/modules/commercial/dfp/dfp-api',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/commercial/user-features',
     'lodash/objects/defaults'
 ], function (
     Promise,
@@ -22,7 +21,6 @@ define([
     ab,
     dfp,
     createAdSlot,
-    userFeatures,
     defaults
 ) {
     return function (options) {
@@ -47,7 +45,6 @@ define([
             !config.switches.discussion ||
             !identityApi.isUserLoggedIn() ||
             (config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts) || /* Sensitive pages */
-            userFeatures.isAdfree() ||
             (config.page.isLiveBlog && detect.getBreakpoint() !== 'wide') ||
             !config.page.commentable ||
             config.page.isMinuteArticle) {
