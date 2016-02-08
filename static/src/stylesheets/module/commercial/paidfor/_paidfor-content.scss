@@ -57,15 +57,32 @@
     }
 }
 
-.paidfor-box {
+.paidfor-box--header,
+.paidfor-box--text,
+.paidfor-box--logo {
     color: inherit;
     display: block;
-    padding: $gs-baseline / 3 $gs-gutter / 4 $gs-baseline;
+    padding: 0 $gs-gutter / 4;
 
     &:hover,
     &:focus {
         text-decoration: none;
     }
+}
+
+.paidfor-box--header {
+    padding-top: $gs-baseline / 3;
+}
+
+.paidfor-box--text {
+    &:hover,
+    &:focus {
+        text-decoration: underline;
+    }
+}
+
+.paidfor-box--logo {
+    padding-bottom: $gs-baseline;
 }
 
 .paidfor-title {
