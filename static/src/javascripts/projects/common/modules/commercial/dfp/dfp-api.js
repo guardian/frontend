@@ -150,6 +150,13 @@ define([
                     // Hardcoded for sticky nav test. It will need some on time checking if this will go to PROD
                     new StickyMpu($adSlot, {top: 58}).create();
                 }
+            } else if ($adSlot.hasClass('ad-slot--mostpop')) {
+                geoMostPopular.whenRendered.then(function (geoMostPopular) {
+                    /*idleFastdom.write(function () {
+                     bonzo(geoMostPopular.elem).remove();
+                     });*/
+                    console.log('in most popular', $adSlot);
+                });
             }
         },
         '1,1': function (event, $adSlot) {
