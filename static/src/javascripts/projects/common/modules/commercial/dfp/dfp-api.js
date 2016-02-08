@@ -21,7 +21,8 @@ define([
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
     'common/modules/commercial/commercial-features',
-    'common/modules/commercial/dfp-ophan-tracking',
+    'common/modules/commercial/dfp/ophan-tracking',
+    'common/modules/commercial/dfp/breakout-iframe',
     'common/modules/commercial/prebid/prebid-service',
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
@@ -82,7 +83,8 @@ define([
     StickyMpu,
     buildPageTargeting,
     commercialFeatures,
-    dfpOphanTracking,
+    ophanTracking,
+    breakoutIFrame,
     prebidService,
     geoMostPopular,
     ab,
@@ -123,9 +125,6 @@ define([
      * You do not need to specify all of these. If you set a mobile size, then that size will be used
      * for all ads in that slot until another breakpoint is detected, in the above case, that's desktop.
      *
-     * There is also a function for breaking the ad content out of their iframes. This can be done by
-     * adding the classes below (breakoutClasses) to the ad content (in DFP).
-     *
      * Labels are automatically prepended to an ad that was successfully loaded.
      *
      */
@@ -140,10 +139,7 @@ define([
     var slotsToRefresh       = [];
     var creativeIDs          = [];
     var hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
-    var breakoutClasses      = [
-        'breakout__html',
-        'breakout__script'
-    ];
+
     var callbacks = {
         '300,251': function (event, $adSlot) {
             new StickyMpu($adSlot).create();
@@ -184,7 +180,7 @@ define([
      * Initial commands
      */
     function setListeners() {
-        dfpOphanTracking.trackPerformance(googletag, renderStartTime);
+        ophanTracking.trackPerformance(googletag, renderStartTime);
 
         googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
             rendered = true;
@@ -504,68 +500,6 @@ define([
         return $slot.data('label') !== false && qwery('.ad-slot__label', $slot[0]).length === 0;
     }
 
-    function breakoutIFrame(iFrame, $slot) {
-        /*eslint-disable no-eval*/
-        var shouldRemoveIFrame = false,
-            $iFrame            = bonzo(iFrame),
-            iFrameBody         = iFrame.contentDocument.body,
-            $iFrameParent      = $iFrame.parent(),
-            type               = {};
-
-        if (iFrameBody) {
-            forEach(breakoutClasses, function (breakoutClass) {
-                $('.' + breakoutClass, iFrameBody).each(function (breakoutEl) {
-                    var creativeConfig,
-                        $breakoutEl     = bonzo(breakoutEl),
-                        breakoutContent = $breakoutEl.html();
-
-                    if (breakoutClass === 'breakout__script') {
-                        // new way of passing data from DFP
-                        if ($breakoutEl.attr('type') === 'application/json') {
-                            creativeConfig = JSON.parse(breakoutContent);
-                            if (config.switches.newCommercialContent && creativeConfig.name === 'gu-style-comcontent') {
-                                creativeConfig.name = 'paidfor-content';
-                            }
-                            require(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
-                                new Creative($slot, creativeConfig.params, creativeConfig.opts).create();
-                            });
-                        } else {
-                            // evil, but we own the returning js snippet
-                            eval(breakoutContent);
-                        }
-
-                        type = {
-                            type: creativeConfig.params.adType || '',
-                            variant: creativeConfig.params.adVariant || ''
-                        };
-
-                    } else {
-                        idleFastdom.write(function () {
-                            $iFrameParent.append(breakoutContent);
-                            $breakoutEl.remove();
-                        });
-
-                        $('.ad--responsive', $iFrameParent[0]).each(function (responsiveAd) {
-                            window.setTimeout(function () {
-                                idleFastdom.write(function () {
-                                    bonzo(responsiveAd).addClass('ad--responsive--open');
-                                });
-                            }, 50);
-                        });
-                    }
-                    shouldRemoveIFrame = true;
-                });
-            });
-        }
-        if (shouldRemoveIFrame) {
-            idleFastdom.write(function () {
-                $iFrame.hide();
-            });
-        }
-
-        return type;
-    }
-
     function lazyLoad() {
         if (slots.length === 0) {
             disableLazyLoad();
@@ -620,7 +554,7 @@ define([
     }
 
     /**
-     * Checks the contents of the ad for special classes (see breakoutClasses).
+     * Checks the contents of the ad for special breakout classes.
      *
      * If one of these classes is detected, then the contents of that iframe is retrieved
      * and written onto the parent page.
