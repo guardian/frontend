@@ -1,4 +1,4 @@
-@(page: model.Page, related: model.RelatedContent)(body: Html)(implicit request: RequestHeader)
+@(page: model.Page, related: model.RelatedContent, content: model.Content)(body: Html)(implicit request: RequestHeader)
 
 @import common.{AnalyticsHost, LinkTo, CanonicalLink}
 @import conf.Configuration
@@ -79,11 +79,14 @@
 
             @body
 
-            <div class="content__comments-container">
-                <a href="@LinkTo(page.metadata.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, page.metadata.webUrl)))" class="cta cta--medium cta--comments">
-                    @fragments.inlineSvg("comment-16", "icon") View comments
-                </a>
-            </div>
+            @if(content.trail.isCommentable) {
+                <div class="content__comments-container">
+                    <a href="@LinkTo(page.metadata.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, page.metadata.webUrl)))#comments" class="cta cta--medium cta--comments">
+                        @fragments.inlineSvg("comment-16", "icon") View comments
+                    </a>
+                </div>
+            }
+
 
             @Page.getContentPage(page).map { content =>
                 @if(content.item.content.hasStoryPackage) {
