@@ -10,7 +10,7 @@ trait FeatureSwitches {
     "aws-credentials-switchover",
     "Switch to remind us to remove the 'nextgen' profile from the default AWS credentials provider chain",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 5), //Friday
+    sellByDate = new LocalDate(2016, 2, 12), //Friday
     exposeClientSide = false
   )
 
@@ -311,24 +311,6 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
-  )
-
-  val DiscussionProxySwitch = Switch(
-    "Feature",
-    "discussion-proxy",
-    "in discussion/api.js it will use a proxy to post comments so http 1.0 users can still comment",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val DiscussionHttpsSwitch = Switch(
-    "Feature",
-    "discussion-https",
-    "in discussion we will send requests to https",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
   )
 
   val EmailInlineInFooterSwitch = Switch(

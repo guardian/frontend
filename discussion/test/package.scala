@@ -1,5 +1,6 @@
 package test
 
+import conf.Configuration
 import org.scalatest.Suites
 import play.api.libs.ws.ning.NingWSResponse
 import recorder.HttpRecorder
@@ -57,7 +58,13 @@ object DiscussionApiHttpRecorder extends HttpRecorder[WSResponse] {
 class DiscussionApiStub extends DiscussionApi {
   import play.api.Play.current
   protected val clientHeaderValue: String =""
-  protected val apiRoot = conf.Configuration.discussion.apiRoot
+
+  protected val apiRoot =
+    if (Configuration.environment.isProd)
+      Configuration.discussion.apiRoot
+    else
+      Configuration.discussion.apiRoot.replaceFirst("https://", "http://") // CODE SSL cert is defective and expensive to fix
+
   protected val apiTimeout = conf.Configuration.discussion.apiTimeout
 
   override protected def GET(url: String, headers: (String, String)*) = DiscussionApiHttpRecorder.load(url, Map.empty){

@@ -89,7 +89,7 @@ final case class Content(
   }
 
   lazy val hasTonalHeaderByline: Boolean = {
-    (cardStyle == Comment || cardStyle == Editorial) &&
+    (cardStyle == Comment || cardStyle == Editorial || (cardStyle == SpecialReport && tags.isComment)) &&
       hasSingleContributor &&
       metadata.contentType != GuardianContentTypes.ImageContent
   }
@@ -608,7 +608,7 @@ object Gallery {
     ) ++ lightbox.largestCrops.sortBy(_.index).take(5).zipWithIndex.flatMap { case (image, index) =>
       image.path.map(i =>
         if (i.startsWith("//")) {
-          s"twitter:image$index:src" -> s"http:$i"
+          s"twitter:image$index:src" -> s"https:$i"
         } else {
           s"twitter:image$index:src" -> i
         })

@@ -5,7 +5,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/modules/article/space-filler',
-    'common/modules/commercial/dfp-api',
+    'common/modules/commercial/dfp/dfp-api',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features'
 ], function (

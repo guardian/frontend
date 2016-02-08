@@ -243,7 +243,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object discussion {
-    lazy val apiRoot = configuration.getMandatoryStringProperty("discussion.apiRoot")
+    lazy val apiRoot = configuration.getMandatoryStringProperty("guardian.page.discussionApiUrl")
     lazy val apiTimeout = configuration.getMandatoryStringProperty("discussion.apiTimeout")
     lazy val apiClientHeader = configuration.getMandatoryStringProperty("discussion.apiClientHeader")
     lazy val d2Uid = configuration.getMandatoryStringProperty("discussion.d2Uid")
@@ -340,7 +340,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       "googleSearchUrl" -> "//www.google.co.uk/cse/cse.js",
       "idApiUrl" -> id.apiRoot,
       "idOAuthUrl" -> id.oauthUrl,
-      "discussionApiRoot" -> discussion.apiRoot,
       "discussionApiClientHeader" -> discussion.apiClientHeader,
       "discussionD2Uid" -> discussion.d2Uid,
       ("ophanJsUrl", ophan.jsLocation),
@@ -396,6 +395,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val pressRateInSeconds = configuration.getIntegerProperty("admin.r2.page.press.rate.seconds").getOrElse(60)
     lazy val pressQueueWaitTimeInSeconds = configuration.getIntegerProperty("admin.r2.press.queue.wait.seconds").getOrElse(10)
     lazy val pressQueueMaxMessages = configuration.getIntegerProperty("admin.r2.press.queue.max.messages").getOrElse(10)
+    object header {
+      val name = configuration.getStringProperty("r2.presser.header.name")
+      val value = configuration.getStringProperty("r2.presser.header.value")
+    }
   }
 
   object memcached {

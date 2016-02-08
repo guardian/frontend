@@ -6,7 +6,7 @@ define([
     'common/modules/commercial/article-aside-adverts',
     'common/modules/commercial/article-body-adverts',
     'common/modules/commercial/badges',
-    'common/modules/commercial/dfp-api',
+    'common/modules/commercial/dfp/dfp-api',
     'common/modules/commercial/front-commercial-components',
     'common/modules/commercial/top-banner-below-container',
     'common/modules/commercial/slice-adverts',
