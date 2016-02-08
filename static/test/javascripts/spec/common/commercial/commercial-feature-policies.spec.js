@@ -7,7 +7,7 @@ define([
     var injector = new Injector();
 
     describe('Commercial features', function () {
-        var commercialFeaturePolicies, config, detect, location, userFeatures, userPrefs;
+        var commercialFeaturePolicies, config, detect, location, userPrefs;
 
         beforeEach(function (done) {
             injector.require([
@@ -15,15 +15,13 @@ define([
                 'common/utils/config',
                 'common/utils/detect',
                 'common/utils/location',
-                'common/modules/commercial/user-features',
                 'common/modules/user-prefs'
             ], function () {
                 commercialFeaturePolicies = arguments[0];
                 config = arguments[1];
                 detect = arguments[2];
                 location = arguments[3];
-                userFeatures = arguments[4];
-                userPrefs = arguments[5];
+                userPrefs = arguments[4];
                 done();
             });
         });
