@@ -3,9 +3,12 @@
  */
 define([
     'Promise',
+    'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/fastdom-promise',
+    'common/utils/template',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/third-party-tags/audience-science-gateway',
     'common/modules/commercial/third-party-tags/audience-science-pql',
@@ -14,12 +17,16 @@ define([
     'common/modules/commercial/third-party-tags/krux',
     'common/modules/identity/api',
     'common/modules/commercial/third-party-tags/outbrain',
-    'common/modules/commercial/third-party-tags/plista'
+    'common/modules/commercial/third-party-tags/plista',
+    'text!common/views/commercial/external-content.html'
 ], function (
     Promise,
+    $,
     config,
     detect,
     mediator,
+    fastdom,
+    template,
     commercialFeatures,
     audienceScienceGateway,
     audienceSciencePql,
@@ -28,13 +35,27 @@ define([
     krux,
     identity,
     outbrain,
-    plista) {
+    plista,
+    externalContentContainerStr
+    ) {
 
     function loadExternalContentWidget() {
+
+        var externalTpl = template(externalContentContainerStr);
+        var documentAnchorClass = '.js-external-content-widget-anchor';
+
+        function renderWidgetContainer(widgetType) {
+            $(documentAnchorClass).append(externalTpl({widgetType: widgetType}));
+        }
+
         if (config.switches.plistaForOutbrainAu && config.page.edition.toLowerCase() === 'au') {
-            plista.init();
+            fastdom.write(function () {
+                renderWidgetContainer('plista');
+            }).then(plista.init);
         } else {
-            outbrain.init();
+            fastdom.write(function () {
+                renderWidgetContainer('outbrain');
+            }).then(outbrain.init);
         }
     }
 

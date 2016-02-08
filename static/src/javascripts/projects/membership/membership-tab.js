@@ -14,6 +14,8 @@ define([
         PACKAGE_CURRENT_RENEWAL_DATE = '.js-mem-current-renewal-date',
         PACKAGE_CURRENT_PERIOD_END = '.js-mem-current-period-end',
         PACKAGE_CURRENT_PERIOD_START = '.js-mem-current-period-start',
+        PACKAGE_CURRENT_PERIOD_START_CONTAINER = '.js-mem-current-period-start-container',
+
         PACKAGE_NEXT_PAYMENT_CONTAINER = '.js-mem-next-payment-container',
         TRIAL_INFO_CONTAINER = '.js-mem-only-for-trials',
         PACKAGE_NEXT_PAYMENT_DATE = '.js-mem-next-payment-date',
@@ -70,7 +72,6 @@ define([
             $(CHANGE_TIER_CARD_LAST4).text(userDetails.subscription.card.last4);
         }
 
-        $(PACKAGE_CURRENT_PERIOD_START).text(formatters.formatDate(userDetails.subscription.start));
         $(PACKAGE_CURRENT_PERIOD_END).text(formatters.formatDate(userDetails.subscription.end));
         $(PACKAGE_CURRENT_RENEWAL_DATE).text(formatters.formatDate(userDetails.subscription.renewalDate));
 
@@ -94,6 +95,11 @@ define([
         // update card details
         if (userDetails.subscription.card) {
             stripeForm.updateCard(userDetails.subscription.card);
+        }
+
+        if (userDetails.subscription.start) {
+            $(PACKAGE_CURRENT_PERIOD_START).text(formatters.formatDate(userDetails.subscription.start));
+            $(PACKAGE_CURRENT_PERIOD_START_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
         }
 
         // user has cancelled

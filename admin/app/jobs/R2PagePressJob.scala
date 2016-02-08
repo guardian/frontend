@@ -66,7 +66,10 @@ object R2PagePressJob extends ExecutionContexts with Logging {
   private def press(message: Message[String]) {
     val urlIn = (Json.parse(message.get) \ "Message").as[String]
     if (urlIn.nonEmpty) {
-      WS.url(urlIn).get().map { response =>
+      val r2HeaderName = Configuration.r2Press.header.name.getOrElse("")
+      val r2HeaderValue = Configuration.r2Press.header.value.getOrElse("")
+
+      WS.url(urlIn).withHeaders((r2HeaderName, r2HeaderValue)).get().map { response =>
         response.status match {
           case 200 => {
             try {

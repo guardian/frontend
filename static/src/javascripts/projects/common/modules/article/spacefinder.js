@@ -26,11 +26,16 @@ define([
     forOwn,
     curry
 ) {
+    // maximum time (in ms) to wait for images to be loaded and rich links
+    // to be upgraded
+    var LOADING_TIMEOUT = 5000;
+
     // find spaces in articles for inserting ads and other inline content
     // minAbove and minBelow are measured in px from the top of the paragraph element being tested
     var defaultRules = { // these are written for adverts
         bodySelector: '.js-article__body',
         slotSelector: ' > p',
+        absoluteMinAbove: 0, // minimum from slot to top of page
         minAbove: 250, // minimum from para to top of article
         minBelow: 300, // minimum from (top of) para to bottom of article
         clearContentMeta: 50, // vertical px to clear the content meta element (byline etc) by. 0 to ignore
@@ -57,52 +62,44 @@ define([
         // fromBotton:Boolean
         // will reverse the order of slots (this is useful for lazy loaded content)
         fromBottom: false
-    },
-    imagesLoaded,
-    richLinksUpgraded;
+    };
+
+    function expire(resolve) {
+        window.setTimeout(resolve, LOADING_TIMEOUT);
+    }
 
     function onImagesLoaded(body) {
         var notLoaded = filter(qwery('img', body), function (img) {
             return !img.complete;
         });
 
-        return imagesLoaded || (imagesLoaded = Promise.race([
-            Promise.all(map(notLoaded, function (img) {
-                return new Promise(function (resolve) {
-                    bean.on(img, 'load', resolve);
-                });
-            })),
+        return notLoaded.length === 0 ?
+            Promise.resolve(true) :
             new Promise(function (resolve) {
-                window.setTimeout(resolve, 5000);
-            })
-        ]));
+                var loadedCount = 0;
+                bean.on(body, 'load', notLoaded, function onImgLoaded() {
+                    loadedCount += 1;
+                    if (loadedCount === notLoaded.length) {
+                        bean.off(body, 'load', onImgLoaded);
+                        notLoaded = null;
+                        resolve();
+                    }
+                });
+            });
     }
 
     function onRichLinksUpgraded(body) {
-        return richLinksUpgraded || (richLinksUpgraded = Promise.race([
-            new Promise(function (resolve, reject) {
-                var unloaded = qwery('.element-rich-link--not-upgraded', body);
-
-                if (!unloaded.length) {
-                    resolve();
-                } else {
-                    reject();
-                }
-            }).catch(function () {
-                return new Promise(function (resolve) {
-                    mediator.once('rich-link:loaded', resolve);
-                });
-            }),
+        return qwery('.element-rich-link--not-upgraded', body).length === 0 ?
+            Promise.resolve(true) :
             new Promise(function (resolve) {
-                window.setTimeout(resolve, 5000);
-            })
-        ]));
+                mediator.once('rich-link:loaded', resolve);
+            });
     }
 
     // test one element vs another for the given rules
     function _testElem(rules, elem, other) {
-        var isMinAbove = elem.top - other.bottom >= rules.minAbove,
-            isMinBelow = other.top - elem.top >= rules.minBelow;
+        var isMinAbove = elem.top - other.bottom >= rules.minAbove;
+        var isMinBelow = other.top - elem.top >= rules.minBelow;
 
         return isMinAbove || isMinBelow;
     }
@@ -120,25 +117,36 @@ define([
         };
     }
 
-    function _enforceRules(slots, rules, bodyHeight) {
-        var filtered;
+    function _enforceRules(slots, rules, bodyTop, bodyHeight) {
+        var filtered = Promise.resolve(slots);
+
+        // enforce absoluteMinAbove rule
+        if (rules.absoluteMinAbove > 0) {
+            filtered = filtered.then(filter(slots, function (slot) {
+                return bodyTop + slot.top >= rules.absoluteMinAbove;
+            }));
+        }
 
         // enforce minAbove and minBelow rules
-        filtered = Promise.resolve(filter(slots, function (slot) {
-            var farEnoughFromTopOfBody = slot.top >= rules.minAbove,
-                farEnoughFromBottomOfBody = slot.top + rules.minBelow <= bodyHeight;
-            return farEnoughFromTopOfBody && farEnoughFromBottomOfBody;
-        }));
+        filtered = filtered.then(function (slots) {
+            return filter(slots, function (slot) {
+                var farEnoughFromTopOfBody = slot.top >= rules.minAbove;
+                var farEnoughFromBottomOfBody = slot.top + rules.minBelow <= bodyHeight;
+                return farEnoughFromTopOfBody && farEnoughFromBottomOfBody;
+            });
+        });
 
         // enforce content meta rule
         if (rules.clearContentMeta) {
             filtered = filtered.then(function (slots) {
+                return [slots, qwery('.js-content-meta')[0]];
+            }).then(function (args) {
                 return fastdom.read(function () {
-                    return _mapElementToDimensions(qwery('.js-content-meta')[0]);
-                }).then(function (contentMeta) {
-                    return filter(slots, function (slot) {
-                        return slot.top > (contentMeta.bottom + rules.clearContentMeta);
-                    });
+                    return [args[0], _mapElementToDimensions(args[1])];
+                });
+            }).then(function (args) {
+                return filter(args[0], function (slot) {
+                    return slot.top > (args[1].bottom + rules.clearContentMeta);
                 });
             });
         }
@@ -147,12 +155,14 @@ define([
         if (rules.selectors) {
             forOwn(rules.selectors, function (params, selector) {
                 filtered = filtered.then(function (slots) {
+                    return [slots, qwery(rules.bodySelector + selector)];
+                }).then(function (args) {
                     return fastdom.read(function () {
-                        return map(qwery(rules.bodySelector + selector), _mapElementToDimensions);
-                    }).then(function (relevantElems) {
-                        return filter(slots, function (slot) {
-                            return _testElems(params, slot, relevantElems);
-                        });
+                        return [args[0], map(args[1], _mapElementToDimensions)];
+                    });
+                }).then(function (args) {
+                    return filter(args[0], function (slot) {
+                        return _testElems(params, slot, args[1]);
                     });
                 });
             });
@@ -163,7 +173,10 @@ define([
 
     function getReady(body) {
         if (config.switches.viewability) {
-            return Promise.all([onImagesLoaded(body), onRichLinksUpgraded(body)]);
+            return Promise.race([
+                new Promise(expire),
+                Promise.all([onImagesLoaded(body), onRichLinksUpgraded(body)])
+            ]);
         }
 
         return Promise.resolve(true);
@@ -177,16 +190,14 @@ define([
         rules = rules || defaultRules;
         body = rules.bodySelector ? document.querySelector(rules.bodySelector) : document;
 
-        // get all immediate children
-        return getReady(body).then(function () {
-            return fastdom.read(getSlots)
-            .then(enforceRules)
-            .then(filterSlots)
-            .then(returnSlots);
-        });
+        return getReady(body)
+        .then(getSlots)
+        .then(getMeasurements)
+        .then(enforceRules)
+        .then(filterSlots)
+        .then(returnSlots);
 
         function getSlots() {
-            var bodyBottom = body.offsetHeight;
             var slots = qwery(rules.bodySelector + rules.slotSelector);
             if (rules.fromBottom) {
                 slots.reverse();
@@ -209,12 +220,22 @@ define([
                     return keep;
                 });
             }
-            slots = map(slots, _mapElementToDimensions);
-            return [bodyBottom, slots];
+            return slots;
+        }
+
+        function getMeasurements(slots) {
+            return fastdom.read(function () {
+                var rect = body.getBoundingClientRect();
+                return [
+                    rect.top + window.pageYOffset,
+                    rect.height,
+                    map(slots, _mapElementToDimensions)
+                ];
+            });
         }
 
         function enforceRules(data) {
-            return _enforceRules(data[1], rules, data[0]);
+            return _enforceRules(data[2], rules, data[0], data[1]);
         }
 
         function filterSlots(slots) {
