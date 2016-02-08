@@ -100,7 +100,7 @@ define([
                 var headerHeight = args[1];
                 var scrollCoords = args[2];
                 return {
-                    adIsResizing: false,
+                    isTransitioning: false,
                     adHeight: adHeight,
                     previousAdHeight: adHeight,
                     headerHeight: headerHeight,
@@ -139,17 +139,10 @@ define([
             $adBanner.css({ 'position': 'fixed' });
         }
 
+        var diff = state.adHeight - state.previousAdHeight;
+        var adHeightHasIncreased = diff > 0;
         var scrollIsNotAtTop = pageYOffset > 0;
-        if (scrollIsNotAtTop) {
-            var diff = state.adHeight - state.previousAdHeight;
-            var adHeightHasIncreased = diff > 0;
-            if (adHeightHasIncreased) {
-                // If the user is not at the top and the ad height has increased,
-                // we want to offset their scroll position
-                var pageXOffset = state.scrollCoords[0];
-                window.scrollTo(pageXOffset, pageYOffset + diff);
-            }
-        } else if (state.adIsResizing) {
+        if (state.isTransitioning) {
             // If the user is at the top and the ad is resizing, we want to
             // transition the change.
             // Avoid an initial transition when we apply the margin top for the first time
@@ -161,6 +154,11 @@ define([
                 // Stop the ad from overflowing while we transition
                 'overflow': 'hidden'
             });
+        } else if (adHeightHasIncreased && scrollIsNotAtTop) {
+            // If the user is not at the top and the ad height has increased,
+            // we want to offset their scroll position
+            var pageXOffset = state.scrollCoords[0];
+            window.scrollTo(pageXOffset, pageYOffset + diff);
         }
     };
 
@@ -202,14 +200,15 @@ define([
                             scrollCoords: action.scrollCoords
                         });
                     case 'NEW_AD_HEIGHT':
+                        var scrollIsAtTop = previousState.scrollCoords[1] === 0;
                         return assign({}, previousState, {
-                            adIsResizing: true,
+                            isTransitioning: scrollIsAtTop,
                             adHeight: action.adHeight,
                             previousAdHeight: previousState.adHeight
                         });
                     case 'AD_BANNER_TRANSITION_END':
                         return assign({}, previousState, {
-                            adIsResizing: false
+                            isTransitioning: false
                         });
                     default:
                         return previousState;
