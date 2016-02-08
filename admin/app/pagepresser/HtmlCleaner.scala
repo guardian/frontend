@@ -64,16 +64,15 @@ object BasicHtmlCleaner extends HtmlCleaner {
   }
 
   def createSimplePageTracking(document: Document, omnitureQueryString: String): Document = {
-    val omnitureTag = "<!---Omniture page tracking for pressed page ---> <img src=\"https://hits-secure.theguardian.com/b/ss/guardiangu-network/1/JS-1.4.1/s985205503180623100?" + omnitureQueryString + "\" width=\"1\" height=\"1\"/>"
-
-    val trackingExists = document.getElementsByTag("img").filter{ element =>
+    document.getElementsByTag("img").exists { element =>
       element.hasAttr("src") && element.attr("src").contains("https://hits-secure.theguardian.com")
-    }.nonEmpty
-
-    if (!trackingExists) {
-      document.body().append(omnitureTag)
+    } match {
+      case false =>
+        val omnitureTag = "<!---Omniture page tracking for pressed page ---> <img src=\"https://hits-secure.theguardian.com/b/ss/guardiangu-network/1/JS-1.4.1/s985205503180623100?" + omnitureQueryString + "\" width=\"1\" height=\"1\"/>"
+        document.body().append(omnitureTag)
+        document
+      case _ => document
     }
-    document
   }
 
   def fetchOmnitureTags(document: Document): String = {
@@ -149,13 +148,6 @@ object BasicHtmlCleaner extends HtmlCleaner {
 
   private def removeByTagName(document: Document, tagName: String): Document = {
     document.getElementsByTag(tagName).foreach(_.remove())
-    document
-  }
-
-  private def removeByTagNameAndAttributeValue(document: Document, tagName: String, attrib: String, attribValue: String): Document = {
-    document.getElementsByTag(tagName).filter{ element =>
-      element.hasAttr(attrib) && element.attr(attrib).contains(attribValue)
-    }.foreach(_.remove())
     document
   }
 
