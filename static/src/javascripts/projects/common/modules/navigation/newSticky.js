@@ -172,41 +172,37 @@ define([
         });
     };
 
+    var reducer = function (previousState, action) {
+        switch (action.type) {
+            case 'SCROLL':
+                return assign({}, previousState, {
+                    previousAdHeight: previousState.adHeight,
+                    scrollCoords: action.scrollCoords
+                });
+            case 'NEW_AD_HEIGHT':
+                var scrollIsAtTop = previousState.scrollCoords[1] === 0;
+                var previousAdHeight = previousState.adHeight;
+                var adHeight = action.adHeight;
+                var diff = adHeight - previousAdHeight;
+                var adHeightHasIncreased = diff > 0;
+                return assign({}, previousState, {
+                    shouldTransition: adHeightHasIncreased && scrollIsAtTop,
+                    adHeight: adHeight,
+                    previousAdHeight: previousAdHeight
+                });
+            case 'AD_BANNER_TRANSITION_END':
+                return assign({}, previousState, {
+                    shouldTransition: false,
+                    previousAdHeight: previousState.adHeight
+                });
+            default:
+                return previousState;
+        }
+    };
+
     var initialise = function () {
         getInitialState().then(function (initialState) {
-            var reducer = function (previousState, action) {
-                // Default param value
-                if (!previousState) {
-                    previousState = initialState;
-                }
-                switch (action.type) {
-                    case 'SCROLL':
-                        return assign({}, previousState, {
-                            previousAdHeight: previousState.adHeight,
-                            scrollCoords: action.scrollCoords
-                        });
-                    case 'NEW_AD_HEIGHT':
-                        var scrollIsAtTop = previousState.scrollCoords[1] === 0;
-                        var previousAdHeight = previousState.adHeight;
-                        var adHeight = action.adHeight;
-                        var diff = adHeight - previousAdHeight;
-                        var adHeightHasIncreased = diff > 0;
-                        return assign({}, previousState, {
-                            shouldTransition: adHeightHasIncreased && scrollIsAtTop,
-                            adHeight: adHeight,
-                            previousAdHeight: previousAdHeight
-                        });
-                    case 'AD_BANNER_TRANSITION_END':
-                        return assign({}, previousState, {
-                            shouldTransition: false,
-                            previousAdHeight: previousState.adHeight
-                        });
-                    default:
-                        return previousState;
-                }
-            };
-
-            var store = createStore(reducer);
+            var store = createStore(reducer, initialState);
 
             setupDispatchers(store.dispatch);
 
