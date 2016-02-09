@@ -118,7 +118,7 @@ trait Prototypes {
          println("Tests failed, no riff raff upload will be performed.")
          throw inc
        }
-       case Value(v) => {
+       case Value(_) => {
          println("Tests passed, uploading artifacts to riff raff.")
          uploadAll.toTask
        }
