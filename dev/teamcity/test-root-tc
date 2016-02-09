@@ -5,8 +5,7 @@ set -o nounset
 set -o errexit
 
 ./dev/teamcity/sbt-tc "project root" compile assets test
-testPassed=$?
+exitcode=$?
 
 echo "Tested everything."
-
-exit $testPassed
+exit $exitcode
