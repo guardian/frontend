@@ -56,7 +56,7 @@ define([
                 insertSelector: '.js-article__container'
             },
             theGuardianToday: {
-                listId: function(){
+                listId: (function () {
                     switch (config.page.edition) {
                         case 'UK':
                         case 'INT':
@@ -69,7 +69,7 @@ define([
                         case 'AU':
                             return '1506';
                     }
-                }(),
+                }()),
                 canRun: 'theGuardianToday',
                 campaignCode: 'guardian_today_article_bottom',
                 headline: 'Want stories like this in your inbox?',
