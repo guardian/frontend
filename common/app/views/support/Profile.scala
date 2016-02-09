@@ -95,6 +95,7 @@ object ImgSrc extends Logging {
 
   private lazy val hostPrefixMapping: Map[String, HostMapping] = Map(
     "static.guim.co.uk" -> HostMapping("static", Configuration.images.backends.staticToken),
+    "static-secure.guim.co.uk" -> HostMapping("static", Configuration.images.backends.staticToken),
     "media.guim.co.uk" -> HostMapping("media", Configuration.images.backends.mediaToken)
   )
 

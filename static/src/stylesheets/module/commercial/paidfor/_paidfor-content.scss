@@ -60,12 +60,27 @@
 .paidfor-box {
     color: inherit;
     display: block;
-    padding: $gs-baseline / 3 $gs-gutter / 4 $gs-baseline;
+    padding: 0 $gs-gutter / 4;
 
     &:hover,
     &:focus {
         text-decoration: none;
     }
+}
+
+.paidfor-box--header {
+    padding-top: $gs-baseline / 3;
+}
+
+.paidfor-box--text {
+    &:hover,
+    &:focus {
+        text-decoration: underline;
+    }
+}
+
+.paidfor-box--logo {
+    padding-bottom: $gs-baseline;
 }
 
 .paidfor-title {
@@ -82,6 +97,11 @@
     img {
         vertical-align: middle;
     }
+}
+
+.paidfor-logo {
+    max-width: $gs-baseline * 6;
+    height: $gs-baseline * 3;
 }
 
 .paidfor-band {
@@ -111,7 +131,7 @@
     }
 
     .paidfor-branding {
-        padding: $gs-baseline / 2 $gs-gutter / 2;
+        padding: ($gs-baseline / 2) 0 ($gs-baseline / 2) ($gs-gutter / 2);
 
         svg {
             height: 24px;
@@ -123,4 +143,6 @@
 .paidfor-band__inner {
     display: flex;
     justify-content: space-between;
+    box-sizing: border-box;
+    @include content-gutter();
 }

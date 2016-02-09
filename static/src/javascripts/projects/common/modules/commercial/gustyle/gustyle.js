@@ -13,7 +13,8 @@ define([
     Toggles,
     svgs,
     labelTpl,
-    merge) {
+    merge
+) {
     var Gustyle = function ($slot, params) {
         this.$slot = $slot;
         this.params  = params;

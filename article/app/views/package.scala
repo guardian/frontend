@@ -56,6 +56,8 @@ object BodyCleaner {
       PullquoteCleaner,
       CmpParamCleaner,
       ImmersiveLinks(article.isImmersive),
+      TimestampCleaner(article),
+      MinuteCleaner(article),
       AtomsCleaner(article.content.atoms)
     )
     val nonAmpCleaners = List(

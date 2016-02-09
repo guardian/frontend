@@ -18,6 +18,7 @@ import scala.collection.JavaConversions._
 trait LinkTo extends Logging {
 
   lazy val host = Configuration.site.host
+  lazy val ampUrl = Configuration.amp.url
 
   private val ProdURL = "^http://www.theguardian.com/.*$".r
   private val GuardianUrl = "^(http://www.theguardian.com)?(/.*)?$".r
@@ -28,7 +29,7 @@ trait LinkTo extends Logging {
   /**
     * email is here to allow secure POSTs from the footer signup form
     */
-  val httpsEnabledSections: Seq[String] = Seq("info", "email")
+  val httpsEnabledSections: Seq[String] = Seq("info", "email", "science", "crosswords")
 
   def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request))
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request))
@@ -49,18 +50,20 @@ trait LinkTo extends Logging {
     case RssPath(path, format) =>
       ProcessedUrl(urlFor(path, edition) + format)
     case AmpPath(path, format) =>
-      ProcessedUrl(urlFor(path, edition, secure = true) + format)
+      ProcessedUrl(urlFor(path, edition, secure = true, isAmp = true) + format)
     case GuardianUrl(_, path) =>
       ProcessedUrl(urlFor(path, edition))
     case otherUrl =>
       ProcessedUrl(otherUrl, true)
   }
 
-  private def urlFor(path: String, edition: Edition, secure: Boolean = false): String = {
+  private def urlFor(path: String, edition: Edition, secure: Boolean = false, isAmp: Boolean = false): String = {
     val pathString = Option(path).getOrElse("")
     val id = if (pathString.startsWith("/")) pathString.substring(1) else pathString
     val editionalisedPath = Editionalise(clean(id), edition)
-    val url = s"$host/$editionalisedPath"
+
+    val url = if (isAmp) s"$ampUrl/$editionalisedPath" else s"$host/$editionalisedPath"
+
     url match {
       case ProdURL() if (isHttpsEnabled(editionalisedPath) || secure) =>  url.replace("http://", "https://")
       case _ => url

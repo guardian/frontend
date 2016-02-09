@@ -25,7 +25,8 @@ define([
     twitter,
     NotificationBar,
     assign,
-    toArray) {
+    toArray
+) {
     /*
      @param {Object} options hash of configuration options:
      path             : {String}              Endpoint path to ajax request,

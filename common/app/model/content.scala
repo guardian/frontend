@@ -2,27 +2,27 @@ package model
 
 import java.net.URL
 
+import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.facia.api.{utils => fapiutils}
 import com.gu.facia.client.models.TrailMetaData
 import com.gu.util.liveblogs.{Parser => LiveBlogParser}
-import common.dfp.DfpAgent
 import common._
+import common.dfp.DfpAgent
 import conf.Configuration
 import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch}
 import cricketPa.CricketTeams
-import layout.ContentWidths.GalleryMedia
+import layout.ContentWidths.{ImmersiveMedia, BodyMedia, LiveBlogMedia, GalleryMedia}
 import model.content.{Quiz, Atoms}
 import model.liveblog.{LiveBlogDate, BodyBlock}
 import model.liveblog.BodyBlock.{SummaryEvent, KeyEvent}
+import model.pressed._
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
 import play.api.libs.json._
-import com.gu.contentapi.client.model.{v1 => contentapi}
-import model.pressed._
-import views.support.{ChaptersLinksCleaner, StripHtmlTagsAndUnescapeEntities, FacebookOpenGraphImage, ImgSrc, Item700}
+import views.support.{ChaptersLinksCleaner, FacebookOpenGraphImage, ImgSrc, Item700, StripHtmlTagsAndUnescapeEntities}
 
 import scala.collection.JavaConversions._
 import scala.language.postfixOps
@@ -81,6 +81,7 @@ final case class Content(
   lazy val shortUrlId = fields.shortUrl.replace("http://gu.com", "")
   lazy val shortUrlPath = shortUrlId
   lazy val discussionId = Some(shortUrlPath)
+  lazy val isImmersive = fields.displayHint.contains("immersive")
 
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {
@@ -90,7 +91,7 @@ final case class Content(
   }
 
   lazy val hasTonalHeaderByline: Boolean = {
-    (cardStyle == Comment || cardStyle == Editorial) &&
+    (cardStyle == Comment || cardStyle == Editorial || (cardStyle == SpecialReport && tags.isComment)) &&
       hasSingleContributor &&
       metadata.contentType != GuardianContentTypes.ImageContent
   }
@@ -173,7 +174,7 @@ final case class Content(
     ("isContent", JsBoolean(true)),
     ("wordCount", JsNumber(wordCount)),
     ("references", JsArray(javascriptReferences)),
-    ("showRelatedContent", JsBoolean(showInRelated)),
+    ("showRelatedContent", JsBoolean(if (tags.isUSMinuteSeries) { false } else showInRelated)),
     ("productionOffice", JsString(productionOffice.getOrElse("")))
   )
 
@@ -197,6 +198,10 @@ final case class Content(
       (Some("series", JsString(series.name)), Some("seriesId", JsString(series.id)))
     } getOrElse (None,None)
 
+    val articleMeta = if (tags.isUSMinuteSeries) {
+      Some("isMinuteArticle", JsBoolean(tags.isUSMinuteSeries))
+    } else None
+
     val atomsMeta = atoms.map { atoms =>
       val atomIdentifiers = atoms.all.collect { case quiz: Quiz => JsString(quiz.id) }
       ("atoms", JsArray(atomIdentifiers))
@@ -206,6 +211,7 @@ final case class Content(
       rugbyMeta,
       seriesMeta,
       seriesIdMeta,
+      articleMeta,
       atomsMeta
     ) ++ cricketMeta
     meta.flatten.toMap
@@ -252,6 +258,7 @@ object Content {
     val atoms = Atoms.make(apiContent)
     val apifields = apiContent.fields
     val references: Map[String,String] = apiContent.references.map(ref => (ref.`type`, Reference.split(ref.id)._2)).toMap
+    val cardStyle: fapiutils.CardStyle = fapiutils.CardStyle(apiContent, TrailMetaData.empty)
 
     Content(
       trail = trail,
@@ -274,7 +281,7 @@ object Content {
         Tweet(tweet.id, images)
       },
       showInRelated = apifields.flatMap(_.showInRelatedContent).getOrElse(false),
-      cardStyle = CardStyle.make(fapiutils.CardStyle(apiContent, TrailMetaData.empty)),
+      cardStyle = CardStyle.make(cardStyle),
       shouldHideAdverts = apifields.flatMap(_.shouldHideAdverts).getOrElse(false),
       witnessAssignment = references.get("witness-assignment"),
       isbn = references.get("isbn"),
@@ -284,10 +291,7 @@ object Content {
         Jsoup.clean(fields.body, Whitelist.none()).split("\\s+").size
       },
       hasStoryPackage = apifields.flatMap(_.hasStoryPackage).getOrElse(false),
-      showByline = {
-        val cardStyle = fapiutils.CardStyle(apiContent, TrailMetaData.empty)
-        fapiutils.ResolvedMetaData.fromContentAndTrailMetaData(apiContent, TrailMetaData.empty, cardStyle).showByline
-      },
+      showByline = fapiutils.ResolvedMetaData.fromContentAndTrailMetaData(apiContent, TrailMetaData.empty, cardStyle).showByline,
       rawOpenGraphImage = {
         val bestOpenGraphImage = if (FacebookShareUseTrailPicFirstSwitch.isSwitchedOn) {
           trail.trailPicture.flatMap(_.largestImageUrl)
@@ -351,7 +355,7 @@ object Article {
       ("hasInlineMerchandise", JsBoolean(commercial.hasInlineMerchandise)),
       ("lightboxImages", lightbox.javascriptConfig),
       ("hasMultipleVideosInPage", JsBoolean(content.hasMultipleVideosInPage)),
-      ("isImmersive", JsBoolean(content.metadata.isImmersive))
+      ("isImmersive", JsBoolean(content.isImmersive))
     ) ++ bookReviewIsbn
 
     val opengraphProperties: Map[String, String] = Map(
@@ -374,7 +378,6 @@ object Article {
       contentType = contentType,
       analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
-      isImmersive = content.fields.displayHint.contains("immersive"),
       schemaType = Some(ArticleSchemas(content.tags)),
       cacheSeconds = if (LongCacheSwitch.isSwitchedOn) {
           if (fields.isLive) 5
@@ -387,7 +390,8 @@ object Article {
       iosType = Some("Article"),
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
-      twitterPropertiesOverrides = twitterProperties
+      twitterPropertiesOverrides = twitterProperties,
+      hasHeader = content.tags.isUSMinuteSeries || content.isImmersive
     )
   }
 
@@ -437,7 +441,8 @@ final case class Article (
   val lightbox = GenericLightbox(content.elements, content.fields, content.trail, lightboxProperties)
 
   val isLiveBlog: Boolean = content.tags.isLiveBlog && content.fields.blocks.nonEmpty
-  val isImmersive: Boolean = content.metadata.isImmersive
+  val isUSMinute: Boolean = content.tags.isUSMinuteSeries
+  val isImmersive: Boolean = content.isImmersive
 
   lazy val hasVideoAtTop: Boolean = soupedBody.body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
@@ -614,7 +619,7 @@ object Gallery {
     ) ++ lightbox.largestCrops.sortBy(_.index).take(5).zipWithIndex.flatMap { case (image, index) =>
       image.path.map(i =>
         if (i.startsWith("//")) {
-          s"twitter:image$index:src" -> s"http:$i"
+          s"twitter:image$index:src" -> s"https:$i"
         } else {
           s"twitter:image$index:src" -> i
         })
@@ -789,7 +794,7 @@ object Interactive {
       contentType = contentType,
       analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
-      isImmersive = fields.displayHint.contains("immersive"),
+      hasHeader = content.isImmersive,
       javascriptConfigOverrides = Map("contentType" -> JsString(contentType)),
       twitterPropertiesOverrides = twitterProperties
     )
@@ -824,7 +829,6 @@ object ImageContent {
       contentType = contentType,
       analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
-      isImmersive = fields.displayHint.contains("immersive"),
       javascriptConfigOverrides = javascriptConfig,
       twitterPropertiesOverrides = Map("twitter:card" -> "photo")
     )

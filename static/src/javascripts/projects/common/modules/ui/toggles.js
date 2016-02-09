@@ -9,7 +9,8 @@ define([
     bonzo,
     $,
     mediator,
-    contains) {
+    contains
+) {
 
     var Toggles = function (parent) {
 

@@ -39,7 +39,8 @@ define([
     toArray,
     bindAll,
     RelativeDates,
-    NotificationCounter) {
+    NotificationCounter
+) {
 
     return function (opts) {
         var updateDelay = function (delay) {

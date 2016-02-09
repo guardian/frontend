@@ -15,7 +15,7 @@
     @item.fields.standfirst.map { standfirst =>
         @defining(Edition(request)) { edition =>
             @withJsoup(BulletCleaner(
-                if(item.metadata.isImmersive && item.tags.isArticle && item.trail.byline) {
+                if(item.content.isImmersive && item.tags.isArticle && item.trail.byline) {
                     if (standfirst.contains(item.trail.byline.get)) {
                         ContributorLinks(standfirst, item.tags.contributors).toString()
                     } else {

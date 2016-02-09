@@ -258,6 +258,43 @@
     }
 }
 
+// POST-ARTICLE
+
+.email-sub__iframe--post-article {
+    box-sizing: border-box;
+    display: block;
+    margin: $gs-baseline auto;
+    padding: 0 $gs-gutter/2;
+    width: 100%;
+
+    @include mq($from: mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
+
+    @include mq($from: tablet) {
+        padding: 0;
+        width: gs-span(8);
+    }
+
+    @include mq($from: desktop) {
+        width: gs-span(11);
+    }
+
+    @include mq($from: leftCol) {
+        width: gs-span(12);
+    }
+
+}
+
+.email-sub--post-article {
+    border: 0 none;
+
+    .email-sub__form {
+        padding-bottom: 0;
+    }
+}
+
 // TONE SPECIFIC MODS
 @each $toneClass, $toneColour in $tones {
     .email-sub--tone-#{$toneClass} {

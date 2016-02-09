@@ -102,12 +102,12 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
       image <- container.images.largestImage
     }{
       val hinting = findBreakpointWidths(figure)
-      val relation = if (article.isLiveBlog) {
-        LiveBlogMedia
-      } else if (article.isImmersive) {
-        ImmersiveMedia
-      } else {
-        BodyMedia
+
+      val relation = {
+        if (article.isLiveBlog) LiveBlogMedia
+        else if (article.isImmersive) ImmersiveMedia
+        else if (article.isUSMinute) MinuteMedia
+        else BodyMedia
       }
 
       val widths = ContentWidths.getWidthsFromContentElement(hinting, relation)
@@ -123,7 +123,9 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
         case _ => None
       }
 
-      val figureClasses = List(orientationClass, smallImageClass, hinting.className).flatten.mkString(" ")
+      val inlineClass = if (article.isUSMinute && !figure.hasClass("element--thumbnail")) Some("element--inline") else None
+
+      val figureClasses = List(orientationClass, smallImageClass, hinting.className, inlineClass).flatten.mkString(" ")
 
       // lightbox uses the images in the order mentioned in the header array
       val lightboxInfo: Option[(Int, ImageAsset)] = for {
@@ -290,6 +292,7 @@ class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
           }
         } else {
           val el = element.clone()
+
           if (el.children.size > 1) {
             val body = el.child(0).attr("class", "tweet-body")
             val date = el.child(1).attr("class", "tweet-date")
@@ -297,7 +300,7 @@ class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
             val userEl = document.createElement("span").attr("class", "tweet-user").text(user)
             val link = document.createElement("a").attr("href", date.attr("href")).attr("style", "display: none;")
 
-            element.empty().attr("class", "js-tweet tweet")
+            element.empty().removeClass("twitter-tweet").addClass("js-tweet tweet")
 
             tweetImage.foreach { image =>
               val img = document.createElement("img")

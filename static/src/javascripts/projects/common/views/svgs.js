@@ -34,6 +34,8 @@ define([
     'inlineSvg!svgs/icon/external-link',
     'inlineSvg!svgs/icon/tick',
     'inlineSvg!svgs/logo/glabs-logo-small',
+    'inlineSvg!svgs/commercial/logo-membership',
+    'inlineSvg!svgs/commercial/adblock-coins',
     'lodash/objects/isArray'
 ], function (
     commentCount16icon,
@@ -67,7 +69,10 @@ define([
     externalLink,
     tick,
     glabsLogoSmall,
-    isArray) {
+    membershipLogo,
+    adblockCoins,
+    isArray
+) {
     var svgs = {
         commentCount16icon: commentCount16icon,
         marque36icon: marque36icon,
@@ -99,7 +104,9 @@ define([
         shareGPlus: shareGPlus,
         externalLink: externalLink,
         tick: tick,
-        glabsLogoSmall: glabsLogoSmall
+        glabsLogoSmall: glabsLogoSmall,
+        adblockCoins: adblockCoins,
+        logomembership: membershipLogo
     };
 
     return function (name, classes, title) {

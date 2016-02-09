@@ -7,7 +7,8 @@ define([
     config,
     ajax,
     map,
-    isArray) {
+    isArray
+) {
     var canBeacon = !!navigator.sendBeacon;
 
     function buildCounts(keys) {

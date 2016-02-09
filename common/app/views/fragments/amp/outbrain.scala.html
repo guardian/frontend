@@ -1,0 +1,16 @@
+@(page: model.Page)
+@import conf.switches.Switches.OutbrainOnAmp
+@import views.support.URLEncode
+
+@if(OutbrainOnAmp.isSwitchedOn) {
+    @defining(page.metadata.webUrl) { htmlUrl =>
+        <amp-iframe width=100 height=100
+        sandbox="allow-top-navigation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+        layout="responsive"
+        frameborder="0"
+        resizable
+        src="https://widgets.outbrain.com/hub/amp.html#widgetIds=AMP_1&htmlURL=@URLEncode(htmlUrl)&ampURL=@URLEncode(s"$htmlUrl/amp")&styleFile=">
+            <div overflow tabindex=0 role=button aria-label="Outbrain Recommendations">Outbrain</div>
+        </amp-iframe>
+    }
+}

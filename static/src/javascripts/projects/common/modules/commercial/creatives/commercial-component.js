@@ -35,7 +35,8 @@ define([
     size,
     merge,
     pairs,
-    chain) {
+    chain
+) {
 
     var constructQuery = function (params) {
             return chain(params).and(pairs).and(map, function (param) {
@@ -91,7 +92,8 @@ define([
                 travel:         buildComponentUrl('travel/offers', merge({}, this.params, getKeywords())),
                 multi:          buildComponentUrl('multi', merge({}, this.params, getKeywords())),
                 capiSingle:     buildComponentUrl('capi-single', this.params),
-                capi:           buildComponentUrl('capi', this.params)
+                capi:           buildComponentUrl('capi', this.params),
+                paidforCard:    buildComponentUrl('paid', this.params)
             };
         };
 
@@ -106,18 +108,14 @@ define([
             new Tabs().init(el);
         },
         capi: createToggle,
-        capiSingle: createToggle
+        capiSingle: createToggle,
+        paidforCard: createToggle
     };
 
     CommercialComponent.prototype.create = function () {
         new LazyLoad({
             url: this.components[this.type],
             container: this.adSlot,
-            beforeInsert: function (html) {
-                // Currently we are replacing the OmnitureToken with nothing. This will change once
-                // commercial components have properly been setup in the lovely mess that is Omniture!
-                return html ? html.replace(/%OASToken%/g, this.params.clickMacro).replace(/%OmnitureToken%/g, '') : html;
-            }.bind(this),
             success: function () {
                 if (this.postLoadEvents[this.type]) {
                     this.postLoadEvents[this.type](this.adSlot);

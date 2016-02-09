@@ -10,7 +10,7 @@
                 About <%=icon%>
             </button>
             <div class="popup is-off paidfor-popup paidfor-popup--<%=dataAttr%>">
-                <h3 class="paidfor-popup__title">Paid content is paid for and controlled by an advertiser and created by the Guardian Labs team</h3>
+                <h3 class="paidfor-popup__title">Paid content is paid for and controlled by an advertiser and produced by the Guardian Labs team</h3>
                 <a class="paidfor-popup__link" href="https://www.theguardian.com/info/2014/sep/23/paid-for-content" data-link-name="popup link">
                     Learn more about Guardian Labs content
                     <%=infoLinkIcon%>
@@ -18,9 +18,13 @@
             </div>
         </div>
     </div>
-    <a href="<%=clickMacro%><%=articleUrl%>" class="paidfor-box" data-link-name="advertisers logo">
+    <a href="<%=clickMacro%><%=articleUrl%>" class="paidfor-box paidfor-box--header" data-link-name="advertisers header">
         <h2 class="gu-title"><%=articleHeaderText%></h2>
+    </a>
+    <a href="<%=clickMacro%><%=articleUrl%>" class="paidfor-box paidfor-box--text" data-link-name="advertisers text">
         <p class="gu-text"><%=articleText%></p>
+    </a>
+    <a href="<%=clickMacro%><%=articleUrl%>" class="paidfor-box paidfor-box--logo" data-link-name="advertisers logo">
         <div class="paidfor-brand">
             <span class="paidfor-note">Paid for by:</span>
             <img class="paidfor-logo" src="<%=brandLogo%>" alt="<%=brand%>">

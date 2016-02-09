@@ -36,7 +36,8 @@ define([
     svgs,
     loadingTmpl,
     titlebarTmpl,
-    debounce) {
+    debounce
+) {
 
     function initLoadingSpinner(player) {
         player.loadingSpinner.contentEl().innerHTML = loadingTmpl;

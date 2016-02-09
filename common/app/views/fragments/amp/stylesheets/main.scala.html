@@ -50,7 +50,7 @@
         display: none;
     }
 
-    .content__head .gs-container, .content__article-body, .content__meta-container, .media-primary .caption--main,  .fc-container__inner{
+    .content__head .gs-container, .content__article-body, .content__meta-container, .media-primary .caption--main,  .fc-container__inner, .content__comments-container {
         margin: 0 0.625rem;
     }
 
@@ -70,6 +70,7 @@
         border-bottom: 0.0625rem dotted #dfdfdf;
         position: relative;
         z-index: 1;
+        overflow: hidden;
     }
 
     .content__headline {
@@ -83,8 +84,19 @@
         margin: 0;
     }
 
+    .badge-slot {
+        float: left;
+        width: 2.0625rem;
+        margin-top: 0.125rem;
+        margin-right: 0.3125rem;
+    }
+
+    .badge-slot__img {
+        width: 100%;
+    }
+
     @@media (min-width: 30rem) {
-    .content__head .gs-container, .content__article-body, .content__meta-container, .media-primary .caption--main, .fc-container__inner {
+    .content__head .gs-container, .content__article-body, .content__meta-container, .media-primary .caption--main, .fc-container__inner, .content__comments-container {
         margin: 0 20px;
         }
     .content__headline {
@@ -170,20 +182,15 @@
         margin-bottom: 0.75rem;
     }
 
+    .content__comments-container  {
+        border-top: 0.0625rem dotted #dfdfdf;
+        padding: 6px 0 12px;
+    }
+
     .u-underline {
         text-decoration: none;
         border-bottom: 0.0625rem solid #dcdcdc;
         color: #005689;
-    }
-
-    .main-header {
-        background: #005689;
-        min-height: 45px;
-    }
-
-    .logo-wrapper {
-        float: right;
-        margin: 0.1875rem 0.625rem 0.34rem 0;
     }
 
     .from-content-api h2, .from-content-api .block-elements h2, .from-content-api p strong {
@@ -251,6 +258,10 @@
     @fragments.amp.stylesheets.onward()
     @fragments.amp.stylesheets.fonts()
     @fragments.amp.stylesheets.buttons()
+
+    @* this is for testing only *@
+    @fragments.amp.stylesheets.header()
+)
 
     @* temporarily hiding these for demo *@
     .inline-expand-image, .content__dateline-lm , .block-share, .witness-cta-wrapper {

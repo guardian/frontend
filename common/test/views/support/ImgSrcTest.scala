@@ -65,9 +65,15 @@ class ImgSrcTest extends FlatSpec with Matchers with OneAppPerSuite {
     Item700.bestFor(image) should be (Some("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpeg"))
   }
 
-  it should "convert the URL of the image if it is a PNG" in {
+  it should "convert the URL of the image if it is a PNG (original image from static.guim.co.uk domain)" in {
     ImageServerSwitch.switchOn()
     val pngImage = ImageMedia.apply(Seq(ImageAsset.make(asset.copy(file = Some("http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2014/10/30/1414675415419/Jessica-Valenti-R.png")),0)))
+    Item700.bestFor(pngImage) should be (Some(s"$imageHost/img/static/sys-images/Guardian/Pix/contributor/2014/10/30/1414675415419/Jessica-Valenti-R.png?w=700&q=85&auto=format&sharp=10&s=454c03a065f89e05748e41457c3bcb32"))
+  }
+
+  it should "convert the URL of the image if it is a PNG (original image from static-secure.guim.co.uk domain)" in {
+    ImageServerSwitch.switchOn()
+    val pngImage = ImageMedia.apply(Seq(ImageAsset.make(asset.copy(file = Some("http://static-secure.guim.co.uk/sys-images/Guardian/Pix/contributor/2014/10/30/1414675415419/Jessica-Valenti-R.png")),0)))
     Item700.bestFor(pngImage) should be (Some(s"$imageHost/img/static/sys-images/Guardian/Pix/contributor/2014/10/30/1414675415419/Jessica-Valenti-R.png?w=700&q=85&auto=format&sharp=10&s=454c03a065f89e05748e41457c3bcb32"))
   }
 

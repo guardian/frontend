@@ -9,7 +9,8 @@ define([
     config,
     mediator,
     fastdom,
-    defaults) {
+    defaults
+) {
 
     var isNewCommercialContent = config.switches.newCommercialContent && config.page.isAdvertisementFeature;
     var header = isNewCommercialContent ?
@@ -32,7 +33,7 @@ define([
             emitMessage: false
         });
         this.stickyCss = { position: 'fixed', top: this.opts.top };
-        this.unstickyCss = { position: null, top: null };
+        this.unstickyCss = { position: 'static', top: 'auto' };
     };
 
     Sticky.prototype.init = function () {
@@ -55,7 +56,7 @@ define([
         // have we scrolled past the element
         if (parentRect.top < this.opts.top + stickyHeaderHeight) {
             // make sure the element stays within its parent
-            fixedTop = Math.min(this.opts.top, parentRect.bottom - this.elementHeight);
+            fixedTop = Math.floor(Math.min(this.opts.top, parentRect.bottom - this.elementHeight));
             if (this.opts.containInParent && this.sticky && fixedTop < this.opts.top) {
                 css = { top: fixedTop };
                 this.bottom = true;

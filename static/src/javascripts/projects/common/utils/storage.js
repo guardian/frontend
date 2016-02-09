@@ -6,7 +6,8 @@
 define([
     'lodash/objects/isUndefined'
 ], function (
-    isUndefined) {
+    isUndefined
+) {
 
     var w = window,
         Storage = function (type) {

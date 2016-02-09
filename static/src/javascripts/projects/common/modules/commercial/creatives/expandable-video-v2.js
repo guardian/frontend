@@ -21,7 +21,8 @@ define([
     template,
     svgs,
     ExpandableVideoTpl,
-    merge) {
+    merge
+) {
 
     var ExpandableVideo = function ($adSlot, params) {
         this.$adSlot      = $adSlot;
