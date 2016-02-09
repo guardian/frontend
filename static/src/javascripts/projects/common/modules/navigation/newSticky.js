@@ -117,7 +117,8 @@ define([
             'position': '',
             'top': '',
             'max-height': '',
-            'overflow': ''
+            'overflow': '',
+            'transition': ''
         });
 
         // Set
