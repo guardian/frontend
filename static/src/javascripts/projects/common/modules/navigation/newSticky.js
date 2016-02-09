@@ -140,7 +140,6 @@ define([
 
         var diff = state.adHeight - state.previousAdHeight;
         var adHeightHasIncreased = diff > 0;
-        var scrollIsNotAtTop = pageYOffset > 0;
         if (state.shouldTransition) {
             var transitionTimingFunction = 'cubic-bezier(0, 0, 0, .985)';
             var transitionDuration = '1s';
@@ -150,7 +149,7 @@ define([
                 // Stop the ad from overflowing while we transition
                 'overflow': 'hidden'
             });
-        } else if (adHeightHasIncreased && scrollIsNotAtTop) {
+        } else if (adHeightHasIncreased) {
             // If we shouldn't transition, we want to offset their scroll position
             var pageXOffset = state.scrollCoords[0];
             window.scrollTo(pageXOffset, pageYOffset + diff);
