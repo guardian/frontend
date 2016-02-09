@@ -17,6 +17,19 @@ define([
     detect,
     assign) {
 
+    // All ads are loaded via DFP, including the following types. DFP does
+    // report which ad slot size has been chosen, however there are several
+    // cases where an asynchronous resize may occur. This feature supports the
+    // following ad formats:
+    //
+    // Fluid ads break out of the iframe and resize asynchronously. There is no
+    // resize event, but we know they are always 250px high.
+    //
+    // Expandable ads expand (overflowing the banner) upon user interaction.
+    //
+    // Rubicon ads may resize asynchronously. They have a resize event we can
+    // subscribe to.
+
     var $adBanner = $('.top-banner-ad-container--above-nav');
     var $adBannerInner = $('.ad-slot--top-above-nav', $adBanner);
     var $header = $('.js-header');
