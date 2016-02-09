@@ -43,7 +43,9 @@ define([
                     pageId: 'uk/commentisfree'
                 };
                 config.tests = {
-                    cmTopBannerPosition: false
+                    participations: {
+                        cmTopBannerPosition: false
+                    }
                 };
 
                 detect.getBreakpoint = function () {
@@ -76,7 +78,7 @@ define([
         });
 
         it('should create a maximum of 4 advert slots inside topBannerPosition AB test', function (done) {
-            config.tests.cmTopBannerPosition = false;
+            config.tests.participations.cmTopBannerPosition = false;
 
             sliceAdverts.init();
 

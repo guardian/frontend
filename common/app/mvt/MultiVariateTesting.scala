@@ -7,6 +7,7 @@ import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
 import views.support.CamelCase
 import conf.switches.Switches.ServerSideTests
+import play.api.libs.json._
 
 // To add a test, do the following:
 // 1. Create an object that extends TestDefinition
@@ -30,11 +31,25 @@ object ActiveTests extends Tests {
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
 
-    val configEntries = List(InternationalEditionVariant(request).map{ international => s""""internationalEditionVariant" : "$international" """}) ++
-      List(ActiveTests.getParticipatingTest(request).map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""})
+    val participations: Map[String, JsValue] = (
+      List(InternationalEditionVariant(request).map(international => ("internationalEditionVariant", JsString(international)))) ++
+      List(ActiveTests.getParticipatingTest(request).map(test => (CamelCase.fromHyphenated(test.name), JsBoolean(test.switch.isSwitchedOn))))
+    ).flatten.toMap
 
-    configEntries.flatten.mkString(",")
+    JsObject(Seq(
+      "definitions" -> Json.toJson(tests.map(test => Map(
+        "id" -> CamelCase.fromHyphenated(test.name),
+        "description" -> test.description
+      ))),
+      "participations" -> JsObject(participations)
+    )).toString()
   }
+}
+
+sealed case class Variant(name: String)
+
+object Variant {
+  implicit val format = Json.format[Variant]
 }
 
 case class TestDefinition (
@@ -57,6 +72,10 @@ case class TestDefinition (
   }
 }
 
+object TestDefinition {
+  implicit val format = Json.format[TestDefinition]
+}
+
 trait Tests {
 
   protected def tests: Seq[TestDefinition]
@@ -76,7 +95,7 @@ trait Tests {
 
 object MultiVariateTesting {
 
-  sealed case class Variant(name: String)
+
 
   object Variant0 extends Variant("variant-0")
   object Variant1 extends Variant("variant-1")

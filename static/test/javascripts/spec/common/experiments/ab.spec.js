@@ -27,7 +27,7 @@ define([
                     abDummyTest2: true
                 };
 
-                config.tests = [];
+                config.tests = { participations: [] };
 
                 // a list of ab-tests that can be used in the spec's
                 test = {

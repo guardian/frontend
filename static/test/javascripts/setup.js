@@ -33,7 +33,8 @@ window.guardian = {
         page: { },
         images: {
             commercial: {}
-        }
+        },
+        tests: {}
     },
     css: {}
 };

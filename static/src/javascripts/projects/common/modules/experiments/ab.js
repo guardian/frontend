@@ -144,7 +144,7 @@ define([
             }
         });
 
-        forEach(keys(config.tests), function (k) {
+        forEach(keys(config.tests.participations), function (k) {
             if (k.toLowerCase().match(/^cm/)) {
                 tag.push(['AB', k, 'variant'].join(' | '));
             }
@@ -231,7 +231,7 @@ define([
 
     // These kinds of tests are both server and client side.
     function getServerSideTests() {
-        return chain(config.tests)
+        return chain(config.tests.participations)
             .and(pick, function (participating) { return !!participating; })
             .and(keys)
             .value();
