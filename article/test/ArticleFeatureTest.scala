@@ -443,6 +443,7 @@ import collection.JavaConversions._
         val gplusShareUrl = "https://plus.google.com/share?url=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsgp&amp;hl=en-GB&amp;wwc=1"
 
         Then("I should see buttons for my favourite social network")
+
         findFirst(".social__item[data-link-name=email] .social__action").getAttribute("href") should be(mailShareUrl)
         findFirst(".social__item[data-link-name=facebook] .social__action").getAttribute("href") should be(fbShareUrl)
         findFirst(".social__item[data-link-name=twitter] .social__action").getAttribute("href") should be(twitterShareUrl)
@@ -600,29 +601,6 @@ import collection.JavaConversions._
         val link = browser.find(".breadcrumb .signposting__item a", withText().contains("Observer Ethical Awards"))
         link.length should be > 0
       }
-    }
-
-    scenario("Outbrain") {
-
-      Given("I am on an article")
-      OutbrainSwitch.switchOn()
-      goTo("/society/2014/oct/15/lord-freud-unreserved-apology-comment-disabled-people-mimimu-wage") {
-        browser =>
-          import browser._
-          Then("Then the Outbrain placeholder should be rendered")
-          var outbrainPlaceholder = $(".js-outbrain")
-          outbrainPlaceholder.length should be(1)
-      }
-
-      Given("I am on a live blog")
-      goTo("/politics/blog/live/2014/oct/15/cameron-and-miliband-at-pmqs-politics-live-blog") {
-        browser =>
-          import browser._
-          Then("Then the Outbrain placeholder should not be rendered")
-          $(".js-outbrain").isEmpty should be(true)
-
-      }
-
     }
 
   }

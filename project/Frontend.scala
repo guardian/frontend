@@ -150,6 +150,10 @@ object Frontend extends Build with Prototypes {
 
   val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
 
+  val adminJobs = application("admin-jobs")
+    .dependsOn(commonWithTests)
+    .aggregate(common)
+
   val dev = application("dev-build")
     .dependsOn(
       withTests(article)
@@ -163,7 +167,8 @@ object Frontend extends Build with Prototypes {
       identity,
       admin,
       commercial,
-      onward
+      onward,
+      adminJobs
     ).settings(
       RoutesKeys.routesImport += "bindables._",
       javaOptions in Runtime += "-Dconfig.file=dev-build/conf/dev-build.application.conf"
@@ -193,10 +198,6 @@ object Frontend extends Build with Prototypes {
     .settings(frontendIntegrationTestsSettings:_*)
 
   val rss = application("rss")
-    .dependsOn(commonWithTests)
-    .aggregate(common)
-
-  val adminJobs = application("admin-jobs")
     .dependsOn(commonWithTests)
     .aggregate(common)
 

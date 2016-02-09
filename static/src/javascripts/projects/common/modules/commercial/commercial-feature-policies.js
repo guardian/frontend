@@ -45,7 +45,6 @@ define([
                 articleAsideAdverts : false,
                 sliceAdverts : false,
                 popularContentMPU : false,
-                videoPreRolls : false,
                 frontCommercialComponents : false
             };
         }
@@ -66,19 +65,6 @@ define([
     policies.userPrefs = function () {
         if (userPrefs.isOff('adverts')) {
             return new CommercialFeatureSwitches(false);
-        }
-    };
-
-    policies.adfreeExperience = function () {
-        if (userFeatures.isAdfree()) {
-            return {
-                topBannerAd : false,
-                articleBodyAdverts : false,
-                articleAsideAdverts : false,
-                sliceAdverts : false,
-                popularContentMPU : false,
-                videoPreRolls : false
-            };
         }
     };
 

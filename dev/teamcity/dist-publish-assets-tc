@@ -14,11 +14,9 @@ static_folder="static/riffraff"
 rm -rf $static_folder
 
 mkdir -p "$static_folder/packages/frontend-static"
-mkdir -p "$static_folder/packages/frontend-static-r2/non-hashed/javascripts"
 
 cp "static/deploy.json"      "$static_folder"
 cp -r static/hash/*          "$static_folder/packages/frontend-static"
-cp static/public/javascripts/r2-pressed-page.js          "$static_folder/packages/frontend-static-r2/non-hashed/javascripts"
 cp static/abtests.json       "$static_folder/packages/frontend-abtests"
 
 pushd $static_folder

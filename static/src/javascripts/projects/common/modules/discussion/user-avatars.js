@@ -1,8 +1,9 @@
 define([
     'common/utils/$',
     'bonzo',
-    'common/modules/discussion/api'
-], function ($, bonzo, discussionApi) {
+    'common/modules/avatar/api',
+    'common/utils/config'
+], function ($, bonzo, avatarApi, config) {
 
     function init() {
         $('.user-avatar').each(avatarify);
@@ -12,18 +13,36 @@ define([
         var container = bonzo(el),
             updating = bonzo(bonzo.create('<div class="is-updating"></div>')),
             avatar = bonzo(bonzo.create('<img class="user-avatar__image" alt="" />')),
-            userId = container.data('userid');
+            avatarUserId = container.data('userid'),
+            userId = config.user ? parseInt(config.user.id) : null,
+            ownAvatar = avatarUserId === userId;
+
+        var updateCleanup = function () {
+            updating.remove();
+            avatar.appendTo(container);
+        };
+
         container
             .removeClass('is-hidden');
+
         updating
             .css('display', 'block')
             .appendTo(container);
-        discussionApi.getUser(userId)
-            .then(function (response) {
-                avatar.attr('src', response.userProfile.secureAvatarUrl);
-                updating.remove();
-                avatar.appendTo(container);
-            });
+
+        if (ownAvatar) {
+            avatarApi.getActive()
+                .then(function (response) {
+                    avatar.attr('src', response.data.avatarUrl);
+                }, function () {
+                    avatar.attr('src', avatarApi.deterministicUrl(avatarUserId));
+                })
+                .always(function () {
+                    updateCleanup();
+                });
+        } else {
+            avatar.attr('src', avatarApi.deterministicUrl(avatarUserId));
+            updateCleanup();
+        }
     }
 
     return {init: init, avatarify: avatarify};

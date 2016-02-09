@@ -44,7 +44,7 @@ object Commercial {
       isAdvertisementFeature = false,
       hasMultipleSponsors = false,
       hasMultipleFeatureAdvertisers = false,
-      hasInlineMerchandise = false
+      hasInlineMerchandise = DfpAgent.hasInlineMerchandise(tags.tags)
     )
   }
 
