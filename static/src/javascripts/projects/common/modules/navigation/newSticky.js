@@ -119,11 +119,11 @@ define([
         els.$adBanner.css({
             'position': userHasScrolledPastHeader ? 'absolute' : 'fixed',
             'top': userHasScrolledPastHeader ? state.headerHeight : '',
-            'max-height': state.adHeight,
+            'height': state.adHeight,
             // Stop the ad from overflowing while we transition
             'overflow': state.shouldTransition ? 'hidden' : '',
             'transition': state.shouldTransition
-                ? ['max-height', transitionDuration, transitionTimingFunction].join(' ')
+                ? ['height', transitionDuration, transitionTimingFunction].join(' ')
                 : ''
         });
 
