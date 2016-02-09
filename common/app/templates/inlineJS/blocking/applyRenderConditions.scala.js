@@ -80,13 +80,6 @@
         if (window.location.hash === '#kern') {docClass += ' should-kern'}
     }
 
-    @if(AdFreeExperience.isSwitchedOn) {
-        var adfreeClass = @JavaScript(templates.inlineJS.blocking.js.applyAdfreeRenderCondition().body);
-        if (adfreeClass) {
-            docClass += ' ' + adfreeClass;
-        }
-    }
-
     // MINIMISE DOM THRASHING…
 
     // READs

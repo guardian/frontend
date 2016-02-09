@@ -57,8 +57,9 @@
     window.shouldEnhance = mustNotEnhance() ? false : mustEnhance() ? true : couldEnhance() && weWantToEnhance();
 
     // just so we can tell…
-    var console = window.console;
-    console && console.info && console.info(`THIS IS ${window.shouldEnhance ? 'ENHANCED' : 'STANDARD ONLY'}`);
+    @if(play.Play.isDev()) {
+        window.console && window.console.info(`THIS IS ${window.shouldEnhance ? 'ENHANCED' : 'STANDARD ONLY'}`);
+    }
 })(window);
 
 
