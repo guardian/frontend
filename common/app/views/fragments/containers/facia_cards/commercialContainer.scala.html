@@ -35,7 +35,7 @@
                                     <span class='u-h'>Guardian Labs</span>
                                 </a>
                             </div>
-                            <div class="commercial__body js-container__header">
+                            <div class="commercial__body">
                                 @for(layout <- container.containerLayout) {
                                     @for(slice <- layout.slices) {
                                         <ul class="lineitems l-row l-row--cols-4">
@@ -78,6 +78,8 @@
                                         )
                                     }
                                 }
+
+                                <div class="js-badge-placeholder"></div>
                             </div>
                         </div>
                     </div>
