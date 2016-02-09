@@ -65,13 +65,13 @@ define([
         var fluidAdPadding = 18;
         var fluidAdHeight = fluidAdInnerHeight + fluidAdPadding;
 
-        var clientHeightPromise = fastdom.read(function () {
-            return $adBannerInner[0].clientHeight;
-        });
-
-        return isFluidAd
-            ? Promise.resolve(fluidAdHeight)
-            : clientHeightPromise;
+        if (isFluidAd) {
+            return Promise.resolve(fluidAdHeight);
+        } else {
+            return fastdom.read(function () {
+                return $adBannerInner[0].clientHeight;
+            });
+        }
     };
 
     var getScrollCoords = function () {
