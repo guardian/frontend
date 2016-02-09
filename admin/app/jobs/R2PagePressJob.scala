@@ -7,7 +7,8 @@ import common._
 import conf.Configuration
 import conf.switches.Switches.R2PagePressServiceSwitch
 import org.jsoup.Jsoup
-import pagepresser.{PollsHtmlCleaner, BasicHtmlCleaner}
+import org.jsoup.nodes.Document
+import pagepresser.{HtmlCleaner, PollsHtmlCleaner, BasicHtmlCleaner}
 import play.api.libs.json.Json
 import play.api.libs.ws.WS
 import services.{S3Archive, S3ArchiveOriginals, PagePresses}
@@ -76,18 +77,23 @@ object R2PagePressJob extends ExecutionContexts with Logging {
               val originalSource = response.body
               val pressAsUrl = urlIn.replace("https://", "").replace("http://","")
 
+              //press the original
               if (S3ArchiveOriginals.get(pressAsUrl).isEmpty) {
                 S3ArchiveOriginals.putPublic(pressAsUrl, originalSource, "text/html")
                 log.info(s"Original page source saved for $urlIn")
               }
 
+              //clean, press and add to dynamo table http version
               val archiveDocument = Jsoup.parse(originalSource)
 
-              val cleanedHtmlString = cleaners.filter(_.canClean(archiveDocument))
-                .map(_.clean(archiveDocument))
-                .headOption
-                .getOrElse(archiveDocument)
-                .toString
+              val cleaner = cleaners.filter(_.canClean(archiveDocument))
+
+              val cleanedDocument =
+                cleaner.map(_.clean(archiveDocument))
+                  .headOption
+                  .getOrElse(archiveDocument)
+
+              val cleanedHtmlString = cleanedDocument.toString
 
               S3Archive.putPublic(pressAsUrl, cleanedHtmlString, "text/html")
 
@@ -100,6 +106,9 @@ object R2PagePressJob extends ExecutionContexts with Logging {
                   log.error(s"Pressed HTML did not match cleaned HTML for $pressAsUrl")
                 }
               }
+
+              pressSecureVersion(cleaner, cleanedDocument, pressAsUrl, urlIn)
+
             } catch {
               case e: Exception => log.error(s"Unable to press $urlIn (${e.getMessage})", e)
             }
@@ -112,6 +121,26 @@ object R2PagePressJob extends ExecutionContexts with Logging {
       }
     } else {
       log.error(s"Invalid url: $urlIn")
+    }
+  }
+
+  private def pressSecureVersion(cleaner: Seq[HtmlCleaner], document: Document, pressAsUrl: String, urlIn: String) {
+    val secureUrlIn = urlIn.replace("http:", "https:")
+    try {
+      val cleanedHtmlSecureString = cleaner.map(_.replaceLinks(document)).headOption.getOrElse(document).toString()
+      val pressAsSecureUrl = s"$pressAsUrl.secure"
+      S3Archive.putPublic(pressAsSecureUrl, cleanedHtmlSecureString, "text/html")
+      S3Archive.get(pressAsSecureUrl).foreach { result =>
+        if (result == cleanedHtmlSecureString) {
+          PagePresses.set(secureUrlIn, pressAsSecureUrl)
+          log.info(s"Pressed $secureUrlIn as $pressAsSecureUrl")
+        } else {
+          log.error(s"Pressed HTML did not match cleaned HTML for $pressAsSecureUrl")
+        }
+      }
+    }
+    catch {
+      case e: Exception => log.error(s"Unable to press $secureUrlIn (${e.getMessage})", e)
     }
   }
 

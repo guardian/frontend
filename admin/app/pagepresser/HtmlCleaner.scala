@@ -11,6 +11,11 @@ import scala.io.Source
 abstract class HtmlCleaner extends Logging {
   def canClean(document: Document): Boolean
   def clean(document: Document): Document
+
+  def replaceLinks(document: Document): Document = {
+    val newDocumentString = document.html().replaceAll("http:", "https:")
+    Jsoup.parse(newDocumentString)
+  }
 }
 
 object BasicHtmlCleaner extends HtmlCleaner {
