@@ -498,10 +498,6 @@
             padding-top: 0;
             border-top: 0;
         }
-
-        &.creative__label--hidden {
-            display: none;
-        }
     }
 
     .top-banner-ad-container--mobile & {
@@ -574,12 +570,6 @@
         border-top: 0;
     }
 
-}
-
-.ad-slot--merchandising-high {
-    .creative__label--hidden {
-        display: none;
-    }
 }
 
 .creative--fluid250 {

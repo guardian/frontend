@@ -69,14 +69,14 @@ define([
         };
         var templateOptions = {
             isFixedHeight: this.params.creativeHeight === 'fixed',
-            showLabel: this.params.showAdLabel === 'hide' ? 'creative__label--hidden' : '',
+            showLabel: this.params.showAdLabel !== 'hide',
 
             layerTwoBGPosition: (!this.params.layerTwoAnimation || this.params.layerTwoAnimation === '' || this.params.layerTwoAnimation === 'disabled' || (!Fluid250.isModernBrowser && this.params.layerTwoAnimation === 'enabled')) ?
                 this.params.layerTwoBGPosition : '0% 0%',
 
             video: this.params.videoURL ? template(iframeVideoTpl, { data: merge(this.params, position) }) : '',
 
-            scrollbg: this.params.backgroundImagePType !== '' || this.params.backgroundImagePType !== 'none' ?
+            scrollbg: this.params.backgroundImagePType !== '' && this.params.backgroundImagePType !== 'none' ?
                 template(scrollBgTpl, { data: this.params }) : ''
         };
 

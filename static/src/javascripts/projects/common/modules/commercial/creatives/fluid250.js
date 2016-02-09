@@ -24,7 +24,7 @@ define([
         };
         var templateOptions = {
             isFixedHeight: this.params.creativeHeight === 'fixed',
-            showLabel: this.params.showAdLabel === 'hide' ? 'creative__label--hidden' : '',
+            showLabel: this.params.showAdLabel !== 'hide',
             video: this.params.videoURL ?
                 template(iframeVideoTpl, { data: merge(this.params, position) }) : ''
         };
