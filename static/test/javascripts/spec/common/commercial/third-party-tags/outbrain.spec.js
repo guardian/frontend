@@ -166,7 +166,6 @@ define([
             it('should load in the low-priority merch component', function (done) {
                 eventStub.isEmpty = false;
                 eventStubLo.isEmpty = true;
-                config.switches.outbrainReplacesMerch = true;
 
                 var oldEmit = mediator.emit;
                 mediator.emit = function (eventName, data) {
@@ -190,7 +189,6 @@ define([
             it('should not load if both merch components are loaded', function (done) {
                 eventStub.isEmpty = false;
                 eventStubLo.isEmpty = false;
-                config.switches.outbrainReplacesMerch = true;
 
                 var oldEmit = mediator.emit;
                 mediator.emit = function (eventName, data) {

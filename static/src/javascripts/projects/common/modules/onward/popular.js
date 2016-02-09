@@ -5,9 +5,9 @@ define([
     'common/utils/detect',
     'common/modules/component',
     'common/utils/mediator',
+    'common/modules/commercial/dfp/dfp-api',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features',
-    'common/modules/commercial/dfp-api',
     'common/modules/experiments/ab',
     'lodash/collections/contains'
 ], function (
@@ -17,9 +17,9 @@ define([
     detect,
     Component,
     mediator,
+    dfp,
     createAdSlot,
     commercialFeatures,
-    dfp,
     ab,
     contains
 ) {

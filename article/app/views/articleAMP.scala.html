@@ -1,5 +1,5 @@
 @(model: ArticlePage)(implicit request: RequestHeader)
 
-@mainAMP(model, model.related){
+@mainAMP(model, model.related, model.article.content){
     @fragments.articleBody(model, amp = true)
 }

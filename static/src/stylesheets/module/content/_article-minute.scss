@@ -79,6 +79,11 @@ $minute-layout-margin-nudge: gs-span(1);
         svg {
             height: 100%;
             width: auto;
+            max-width: 189px;
+
+            @include mq($from: desktop) {
+                max-width: 257px;
+            }
         }
     }
 

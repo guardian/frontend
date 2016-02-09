@@ -24,14 +24,22 @@ final case class ShareLinks(
 
     def createShareLinkUrl(campaign: Option[String], elementId: Option[String]): String = {
       val campaignParam = campaign.flatMap(ShortCampaignCodes.getFullCampaign(_))
-      val queryParams: Map[String, String] = Map(
-        "page" -> elementId.filter(x => tags.isLiveBlog).map(id => s"with:$id"),
-        "CMP" -> campaignParam
-      )
-        .filter(_._2.isDefined)
-        .map { case (k, v) => (k, v.getOrElse("")) }
+      val url = elementId
+        .flatMap(x => {
+          if (tags.isLiveBlog) {
+            val queryParams: Map[String, String] = Map(
+              "page" -> elementId.filter(x => tags.isLiveBlog).map(id => s"with:$id"),
+              "CMP" -> campaignParam
+            )
+              .filter(_._2.isDefined)
+              .map { case (k, v) => (k, v.getOrElse("")) }
 
-      webLinkUrl.appendQueryParams(queryParams) + elementId.map(id => s"#${id}").getOrElse("")
+            Some(webLinkUrl.appendQueryParams(queryParams))
+          } else None
+        })
+        .getOrElse(campaign.map(campaign => s"$shortLinkUrl/$campaign").getOrElse(shortLinkUrl))
+
+      url + elementId.map(id => s"#${id}").getOrElse("")
     }
 
     lazy val facebook = createShareLinkUrl(Some("sfb"), elementId).urlEncoded

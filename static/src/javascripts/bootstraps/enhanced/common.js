@@ -139,7 +139,8 @@ define([
 
             initialiseStickyHeader: function () {
                 if (config.switches.viewability
-                    && !(config.page.isProd && config.page.contentType === 'Interactive')
+                    && !(config.switches.disableStickyNavOnMobile && detect.getBreakpoint() === 'mobile')
+                    && config.page.contentType !== 'Interactive'
                     && config.page.contentType !== 'Crossword'
                     && (!config.switches.newCommercialContent || !config.page.isAdvertisementFeature)
                     && config.page.pageId !== 'offline-page') {
@@ -205,7 +206,7 @@ define([
             },
 
             cleanupCookies: function () {
-                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at']);
+                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at', 'gu_adfree_user']);
             },
 
             updateHistory: function () {
@@ -422,10 +423,6 @@ define([
             ]), function (fn) {
                 fn();
             });
-
-            if (window.console && window.console.log && !config.page.isDev) {
-                window.console.log('##::::: ##: ########::::::: ###:::: ########:: ########:::: ##:::: ##: ####: ########:: ####: ##::: ##:: ######::\n##: ##: ##: ##.....::::::: ## ##::: ##.... ##: ##.....::::: ##:::: ##:. ##:: ##.... ##:. ##:: ###:: ##: ##... ##:\n##: ##: ##: ##::::::::::: ##:. ##:: ##:::: ##: ##:::::::::: ##:::: ##:: ##:: ##:::: ##:: ##:: ####: ##: ##:::..::\n##: ##: ##: ######:::::: ##:::. ##: ########:: ######:::::: #########:: ##:: ########::: ##:: ## ## ##: ##:: ####\n##: ##: ##: ##...::::::: #########: ##.. ##::: ##...::::::: ##.... ##:: ##:: ##.. ##:::: ##:: ##. ####: ##::: ##:\n##: ##: ##: ##:::::::::: ##.... ##: ##::. ##:: ##:::::::::: ##:::: ##:: ##:: ##::. ##::: ##:: ##:. ###: ##::: ##:\n ###. ###:: ########:::: ##:::: ##: ##:::. ##: ########:::: ##:::: ##: ####: ##:::. ##: ####: ##::. ##:. ######::\n\nEver thought about joining us?\nhttp://developers.theguardian.com/join-the-team.html');
-            }
         }
     };
 });

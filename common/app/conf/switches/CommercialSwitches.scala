@@ -248,15 +248,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val AdFreeExperience = Switch(
-    "Commercial",
-    "advert-opt-out",
-    "Enable adfree experience. See with cookie 'gu_adfree_user' = true",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 8),
-    exposeClientSide = true
-  )
-
   val NewCommercialContent = Switch(
     "Commercial",
     "new-commercial-content",
@@ -266,21 +257,21 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val OutbrainReplacesMerch = Switch(
-    "Commercial",
-    "outbrain-replaces-merch",
-    "In case the low-priority merchandising component is empty, an Outbrain widget is loaded in its place",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 12),
-    exposeClientSide = true
-  )
-
   val OutbrainOnAmp = Switch(
     "Commercial",
     "outbrain-on-amp",
     "Show an Outbrain component on amp pages",
     safeState = Off,
     sellByDate = new LocalDate(2016, 3, 2),
+    exposeClientSide = false
+  )
+
+  val PaidContainerUpdate = Switch(
+    "Commercial",
+    "paid-container-update",
+    "Applies updates to paid containers",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 2, 24),
     exposeClientSide = false
   )
 }

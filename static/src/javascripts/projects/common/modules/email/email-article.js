@@ -7,6 +7,7 @@ define([
     'common/modules/email/email',
     'common/utils/detect',
     'lodash/collections/contains',
+    'lodash/arrays/intersection',
     'common/utils/config',
     'lodash/collections/every',
     'lodash/collections/find',
@@ -21,6 +22,7 @@ define([
     email,
     detect,
     contains,
+    intersection,
     config,
     every,
     find,
@@ -50,10 +52,34 @@ define([
                 modClass: 'post-article',
                 insertMethod: 'insertAfter',
                 insertSelector: '.js-article__container'
+            },
+            theGuardianToday: {
+                listId: (function () {
+                    switch (config.page.edition) {
+                        case 'UK':
+                        case 'INT':
+                        default:
+                            return '37';
+
+                        case 'US':
+                            return '1493';
+
+                        case 'AU':
+                            return '1506';
+                    }
+                }()),
+                canRun: 'theGuardianToday',
+                campaignCode: 'guardian_today_article_bottom',
+                headline: 'Want stories like this in your inbox?',
+                description: 'Sign up to The Guardian Today daily email and get the biggest headlines each morning.',
+                successHeadline: 'Thank you for signing up to the Guardian Today',
+                successDescription: 'We will send you our picks of the most important headlines tomorrow morning.',
+                modClass: 'end-article'
             }
         },
         $articleBody,
         emailInserted = false,
+        keywords = config.page.keywords ? config.page.keywords.split(',') : '',
         isParagraph = function ($el) {
             return $el.nodeName && $el.nodeName === 'P';
         },
@@ -94,16 +120,30 @@ define([
                 }
             },
             keywordExists: function (keyword) {
-                var keywords = config.page.keywords ? config.page.keywords.split(',') : '';
-                return contains(keywords, keyword);
+                // Compare page keywords with passed in array
+                return !!intersection(keywords, keyword).length;
             }
         },
         canRunList = {
             nhs: function () {
-                return canRunHelpers.allowedArticleStructure() && canRunHelpers.keywordExists('NHS');
+                return canRunHelpers.allowedArticleStructure() && canRunHelpers.keywordExists(['NHS']);
             },
             theCampaignMinute: function () {
-                return config.page.isMinuteArticle && canRunHelpers.keywordExists('US elections 2016');
+                return config.page.isMinuteArticle && canRunHelpers.keywordExists(['US elections 2016']);
+            },
+            theGuardianToday: function () {
+                var host = window.location.host,
+                    escapedHost = host.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'), // Escape anything that will mess up the regex
+                    urlRegex = new RegExp('^https?:\/\/' + escapedHost + '\/(uk\/|us\/|au\/|international\/)?([a-z-])+$', 'gi'),
+                    browser = detect.getUserAgent.browser,
+                    version = detect.getUserAgent.version,
+                    pageIsBlacklisted = canRunHelpers.keywordExists(['NHS', 'US elections 2016']);
+
+                return !pageIsBlacklisted &&
+                        canRunHelpers.allowedArticleStructure() &&
+                        urlRegex.test(document.referrer) &&
+                        !Id.isUserLoggedIn() &&
+                        !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
             }
         };
 
