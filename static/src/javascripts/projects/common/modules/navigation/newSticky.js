@@ -203,7 +203,8 @@ define([
                         });
                     case 'AD_BANNER_TRANSITION_END':
                         return assign({}, previousState, {
-                            shouldTransition: false
+                            shouldTransition: false,
+                            previousAdHeight: previousState.adHeight
                         });
                     default:
                         return previousState;
