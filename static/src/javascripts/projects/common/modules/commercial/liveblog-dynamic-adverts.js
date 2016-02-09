@@ -3,17 +3,18 @@ define([
     'common/utils/fastdom-promise',
     'common/utils/config',
     'common/utils/mediator',
+    'common/modules/commercial/dfp/dfp-api',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/article/space-filler',
-    'common/modules/commercial/dfp-api'
+    'common/modules/article/space-filler'
+
 ], function (
     bonzo,
     fastdom,
     config,
     mediator,
+    dfp,
     createAdSlot,
-    spaceFiller,
-    dfp
+    spaceFiller
 ) {
     var INTERVAL = 5;      // number of posts between ads
     var OFFSET = 1.5;      // ratio of the screen height from which ads are loaded
