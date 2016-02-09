@@ -10,7 +10,7 @@ echo "##teamcity[progressStart 'sbt test and dist']"
 set -x
 
 ./dev/teamcity/sbt-tc "project root" compile assets testThenUpload
-success=$?
+exitcode=$?
 
 echo "Done disting."
-exit $success
+exit $exitcode
