@@ -17,13 +17,13 @@
         </a>
     </div>
     @fragments.commercial.paidForMeta()
-    <a href="<%=clickMacro%><%=articleUrl%>" class="paidfor-box paidfor-box--header" data-link-name="advertisers header">
+    <a href="@optClickMacro@articleUrl" class="paidfor-box paidfor-box--header" data-link-name="advertisers header">
         <h2 class="gu-title">@articleTitle</h2>
     </a>
-    <a href="<%=clickMacro%><%=articleUrl%>" class="paidfor-box paidfor-box--text" data-link-name="advertisers text">
+    <a href="@optClickMacro@articleUrl" class="paidfor-box paidfor-box--text" data-link-name="advertisers text">
         @for(text <- articleText){ <div class="gu-text">@Html(text)</div> }
     </a>
-    <a href="<%=clickMacro%><%=articleUrl%>" class="paidfor-box paidfor-box--logo" data-link-name="advertisers logo">
+    <a href="@optClickMacro@articleUrl" class="paidfor-box paidfor-box--logo" data-link-name="advertisers logo">
         <div class="paidfor-brand">
             <span class="paidfor-note">Paid for by:</span>
             @for(logoUrl <- brandLogo) {<img src="@logoUrl" alt="@brand" class="paidfor-logo"/>}
