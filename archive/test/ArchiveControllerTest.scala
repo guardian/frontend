@@ -15,7 +15,7 @@ import scala.concurrent.Future
       "www.theguardian.com/books/reviews/travel/foo" -> "http://www.theguardian.com/books/reviews/travel/foo"
     )
     tests foreach {
-      case (key, value) => controllers.ArchiveController.normalise(key) should be (value)
+      case (key, value) => controllers.ArchiveController.normalise(key, isSecure = false) should be (value)
     }
   }
 
@@ -23,7 +23,7 @@ import scala.concurrent.Future
   it should "return a normalised r1 path with suffixed zeros" in {
     val path = "www.theguardian.com/books/reviews/travel/0,,343395,.html"
     val expectedPath = "http://www.theguardian.com/books/reviews/travel/0,,343395,00.html"
-    controllers.ArchiveController.normalise(path , zeros = "00") should be (expectedPath)
+    controllers.ArchiveController.normalise(path , isSecure = false, zeros = "00") should be (expectedPath)
   }
 
   it should "return a normalised short url path" in {
@@ -32,8 +32,13 @@ import scala.concurrent.Future
       "www.theguardian.com/p/dfas" -> "http://www.theguardian.com/p/dfas"
     )
     tests foreach {
-      case (key, value) => controllers.ArchiveController.normalise(key) should be (value)
+      case (key, value) => controllers.ArchiveController.normalise(key, isSecure = false) should be (value)
     }
+  }
+
+  it should "return the secure path if request is secure and it is non R2 or short url path" in {
+    controllers.ArchiveController.normalise("www.theguardian.com/info/developer-blog/2012/oct/30/miso-dataset-new-release-features", isSecure = true) should be ("https://www.theguardian.com/info/developer-blog/2012/oct/30/miso-dataset-new-release-features")
+    controllers.ArchiveController.normalise("www.theguardian.com/info/developer-blog/2012/oct/30/miso-dataset-new-release-features", isSecure = false) should be ("http://www.theguardian.com/info/developer-blog/2012/oct/30/miso-dataset-new-release-features")
   }
 
   it should "not decode encoded urls" in {
