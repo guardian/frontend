@@ -29,7 +29,7 @@ define([
             injector.require([
                 'common/modules/commercial/article-body-adverts',
                 'common/modules/commercial/commercial-features',
-                'common/modules/commercial/dfp-api',
+                'common/modules/commercial/dfp/dfp-api',
                 'common/modules/article/space-filler',
                 'common/utils/mediator',
                 'common/utils/config',
