@@ -100,48 +100,36 @@ define([
     };
 
     var render = function (els, state) {
-        // Reset so we have a clean slate
-        els.$header.css({
-            'transition': '',
-            'margin-top': ''
-        });
-        els.$adBanner.css({
-            'position': '',
-            'top': '',
-            'max-height': '',
-            'overflow': '',
-            'transition': ''
-        });
-
-        // Set
         // TODO: move into stylesheets when productionised
         els.$document.addClass('new-sticky-ad');
-        els.$header.css({ 'margin-top': state.adHeight });
-        els.$adBanner.css({ 'max-height': state.adHeight });
+
+        var transitionTimingFunction = 'cubic-bezier(0, 0, 0, .985)';
+        var transitionDuration = '1s';
+
+        els.$header.css({
+            'transition': state.shouldTransition
+                ? ['margin-top', transitionDuration, transitionTimingFunction].join(' ')
+                : '',
+            'margin-top': state.adHeight
+        });
 
         var pageYOffset = state.scrollCoords[1];
-        var isScrollPastStickyZone = pageYOffset > state.headerHeight;
-        if (isScrollPastStickyZone) {
-            els.$adBanner.css({
-                'position': 'absolute',
-                'top': state.headerHeight
-            });
-        } else {
-            els.$adBanner.css({ 'position': 'fixed' });
-        }
+        var userHasScrolledPastHeader = pageYOffset > state.headerHeight;
+
+        els.$adBanner.css({
+            'position': userHasScrolledPastHeader ? 'absolute' : 'fixed',
+            'top': userHasScrolledPastHeader ? state.headerHeight : '',
+            'max-height': state.adHeight,
+            // Stop the ad from overflowing while we transition
+            'overflow': state.shouldTransition ? 'hidden' : '',
+            'transition': state.shouldTransition
+                ? ['max-height', transitionDuration, transitionTimingFunction].join(' ')
+                : ''
+        });
 
         var diff = state.adHeight - state.previousAdHeight;
         var adHeightHasIncreased = diff > 0;
-        if (state.shouldTransition) {
-            var transitionTimingFunction = 'cubic-bezier(0, 0, 0, .985)';
-            var transitionDuration = '1s';
-            els.$header.css({ 'transition': ['margin-top', transitionDuration, transitionTimingFunction].join(' ') });
-            els.$adBanner.css({
-                'transition': ['max-height', transitionDuration, transitionTimingFunction].join(' '),
-                // Stop the ad from overflowing while we transition
-                'overflow': 'hidden'
-            });
-        } else if (adHeightHasIncreased) {
+        if (!state.shouldTransition && adHeightHasIncreased) {
             // If we shouldn't transition, we want to offset their scroll position
             var pageXOffset = state.scrollCoords[0];
             els.window.scrollTo(pageXOffset, pageYOffset + diff);
