@@ -27,17 +27,25 @@ object PollsHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
 
   override def clean(document: Document) = {
     if(canClean(document)){
-      pollClean(document)
+      BasicHtmlCleaner.basicClean(document)
+      removeScripts(document)
+      createSimplePageTracking(document)
+      removeByTagName(document, "noscript")
+      fetchAndPressPollResult(document)
     } else {
       document
     }
   }
 
-  private def pollClean(document: Document): Document = {
-    fetchAndPressPollResult(BasicHtmlCleaner.basicClean(document))
+  override def removeScripts(document: Document): Document = {
+    BasicHtmlCleaner.removeScripts(document)
   }
 
-  def fetchAndPressPollResult(document: Document): Document = {
+  override def extractOmnitureParams(document: Document): Map[String, Seq[String]] = {
+    BasicHtmlCleaner.extractOmnitureParams(document)
+  }
+
+  private def fetchAndPressPollResult(document: Document): Document = {
     val pollUrl = document.getElementById("results-container").attr("data-poll-url")
 
     fetchPoll(pollUrl).foreach { poll =>
