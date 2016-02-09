@@ -186,6 +186,8 @@ define([
                 var diff = adHeight - previousAdHeight;
                 var adHeightHasIncreased = diff > 0;
                 return assign({}, previousState, {
+                    // This flag must be set at the reducer level
+                    // so we can control over when it is cleared.
                     shouldTransition: adHeightHasIncreased && scrollIsAtTop,
                     adHeight: adHeight,
                     previousAdHeight: previousAdHeight
