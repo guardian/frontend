@@ -140,7 +140,7 @@ define([
                 // location right away
                 return Promise.all([
                     isHiResLoaded,
-                    isHiResLoaded && config.switches.outbrainReplacesMerch ? trackAd('dfp-ad--merchandising') : true
+                    isHiResLoaded ? trackAd('dfp-ad--merchandising') : true
                 ]);
             }).then(function (args) {
                 var isHiResLoaded = args[0];
