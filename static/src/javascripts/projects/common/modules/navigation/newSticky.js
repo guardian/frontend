@@ -142,9 +142,6 @@ define([
         var adHeightHasIncreased = diff > 0;
         var scrollIsNotAtTop = pageYOffset > 0;
         if (state.shouldTransition) {
-            // If the user is at the top and the ad is resizing, we want to
-            // transition the change.
-            // Avoid an initial transition when we apply the margin top for the first time
             var transitionTimingFunction = 'cubic-bezier(0, 0, 0, .985)';
             var transitionDuration = '1s';
             $header.css({ 'transition': ['margin-top', transitionDuration, transitionTimingFunction].join(' ') });
@@ -154,8 +151,7 @@ define([
                 'overflow': 'hidden'
             });
         } else if (adHeightHasIncreased && scrollIsNotAtTop) {
-            // If the user is not at the top and the ad height has increased,
-            // we want to offset their scroll position
+            // If we shouldn't transition, we want to offset their scroll position
             var pageXOffset = state.scrollCoords[0];
             window.scrollTo(pageXOffset, pageYOffset + diff);
         }
