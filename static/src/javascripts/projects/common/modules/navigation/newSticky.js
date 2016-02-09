@@ -195,10 +195,14 @@ define([
                         });
                     case 'NEW_AD_HEIGHT':
                         var scrollIsAtTop = previousState.scrollCoords[1] === 0;
+                        var previousAdHeight = previousState.adHeight;
+                        var adHeight = action.adHeight;
+                        var diff = adHeight - previousAdHeight;
+                        var adHeightHasIncreased = diff > 0;
                         return assign({}, previousState, {
-                            shouldTransition: scrollIsAtTop,
-                            adHeight: action.adHeight,
-                            previousAdHeight: previousState.adHeight
+                            shouldTransition: adHeightHasIncreased && scrollIsAtTop,
+                            adHeight: adHeight,
+                            previousAdHeight: previousAdHeight
                         });
                     case 'AD_BANNER_TRANSITION_END':
                         return assign({}, previousState, {
