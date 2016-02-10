@@ -38,16 +38,23 @@
             document.body.appendChild(krux);
         }
 
+        function toTitleCase(str) {
+            return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+        }
+
         function exposeMetaDataForKrux(config) {
             guardian = { 'config' : {
                 'page' : {
                     'pageId' : config.targeting.url,
-                    'edition' : config.targeting.edition,
+                    'edition' : toTitleCase(config.targeting.edition),
                     'seriesId' : config.targeting.se, //series isn't in the Krux output
-                    'contentType' : config.targeting.ct,
+                    'contentType' : toTitleCase(config.targeting.ct),
                     'keywordIds' : config.targeting.keywordIds,
+                    'keywords' : config.targeting.k.split(',').map(function (x) { toTitleCase(x)}),
                     'authorIds' : config.targeting.authorIds,
-                    'blogIds' : config.targeting.bl // blogs isn't recognised by Krux scraper
+                    'blogIds' : config.targeting.bl,// blogs isn't recognised by Krux scraper
+                    'referrer' : 'amp',
+                    'section' : config.targeting.section
                 }
             }
 
@@ -92,15 +99,16 @@
             var config = {
                 'targeting': {
                     'url' : 'hello/there',
-                    'edition' : 'uk',
+                    'edition' : 'UK',
                     'se' : 'series/tag',
-                    'ct' : 'article',
+                    'ct' : 'Article',
                     'p' : 'amp',
                     'keywordIds' : 'keyword/a,keyword/b',
-                    'k' : 'a,b',
+                    'k' : 'alpha,bravo',
                     'co' : 'johndoe',
                     'bl' : 'commentisfree/testing',
-                    'authorIds' : 'contributor/johndoe'
+                    'authorIds' : 'contributor/johndoe',
+                    'section' : 'testsection'
                 }
             }
             exposeMetaDataForKrux(config);
