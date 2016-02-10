@@ -66,20 +66,20 @@
                                         </ul>
                                     }
                                 }
-
-                                @if(container.hasShowMore && container.hasShowMoreEnabled) {
-                                    @if(container.useShowMore) {
-                                        <div class="js-show-more-placeholder"></div>
-                                        @showMoreButton(container.displayName getOrElse "")
-                                    } else {
-                                        @showMore(
-                                            container.containerLayout.map(_.remainingCards).getOrElse(Nil),
-                                            container.index
-                                        )
+                                <div class="commercial__show-mores">
+                                    @if(container.hasShowMore && container.hasShowMoreEnabled) {
+                                        @if(container.useShowMore) {
+                                            <div class="js-show-more-placeholder"></div>
+                                            @showMoreButton(container.displayName getOrElse "")
+                                        } else {
+                                            @showMore(
+                                                container.containerLayout.map(_.remainingCards).getOrElse(Nil),
+                                                container.index
+                                            )
+                                        }
                                     }
-                                }
-
-                                <div class="js-badge-placeholder"></div>
+                                    <div class="js-badge-placeholder"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
