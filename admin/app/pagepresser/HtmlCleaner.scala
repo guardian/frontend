@@ -35,6 +35,7 @@ object BasicHtmlCleaner extends HtmlCleaner {
     removeByClass(document, "user-details")
     removeByClass(document, "initially-off")
     removeByClass(document, "comment-count")
+    replaceLinks(document)
 
     //fetch omniture data before stripping it. then rea-dd it for simple page tracking
     val omnitureQueryString = fetchOmnitureTags(document)
