@@ -5,8 +5,7 @@ case class Encoding(format: String, url: String, rawFormat: String)
 object Encoding {
 
   val typeMapping = Map(
-    "mp4" -> "video/mp4",
-    "video/m3u8" -> "application/x-mpegURL"
+    "mp4" -> "video/mp4"
   )
 
   def apply(url: String, rawFormat:String): Encoding = {
