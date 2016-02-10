@@ -24,7 +24,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   def lookup(path: String) = Action.async{ implicit request =>
 
     // lookup the path to see if we have a location for it in the database
-    lookupPath(path).map(_.getOrElse{
+    lookupPath(path, request.secure).map(_.getOrElse{
 
       // if we do not have a location in the database then follow these rules
       path match {
@@ -51,16 +51,18 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   }
 
   // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html
-  def normalise(path: String, zeros: String = ""): String = {
-    val normalised = path match {
+  def normalise(path: String, isSecure: Boolean, zeros: String = ""): String = {
+    path match {
       case R1ArtifactUrl(path, artifactOrContextId, extension) =>
         val normalisedUrl = s"www.theguardian.com/$path/0,,$artifactOrContextId,$zeros.html"
-        Some(normalisedUrl)
+        s"http://$normalisedUrl"
       case ShortUrl(path) =>
-        Some(path)
-      case _ => None
+        s"http://$path"
+      case _ => {
+        if(isSecure) s"https://$path"
+        else s"http://$path"
+      }
     }
-    s"http://${normalised.getOrElse(path)}"
   }
 
   def linksToItself(path: String, destination: String): Boolean = path match {
@@ -89,7 +91,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
     }
   }
 
-  private def destinationFor(path: String): Future[Option[Destination]] = DynamoDB.destinationFor(normalise(path))
+  private def destinationFor(path: String, isSecure: Boolean): Future[Option[Destination]] = DynamoDB.destinationFor(normalise(path, isSecure))
 
   private object Combiner {
     def unapply(path: String): Option[String] = {
@@ -146,7 +148,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
         log.info(s"404,${RequestLog(request)}")
     }
 
-  private def lookupPath(path: String) = destinationFor(path).map{ _.flatMap(processLookupDestination(path).lift)}
+  private def lookupPath(path: String, isSecure: Boolean) = destinationFor(path, isSecure).map{ _.flatMap(processLookupDestination(path).lift)}
 
   def processLookupDestination(path: String) : PartialFunction[Destination, Result] = {
       case services.Redirect(location) if !linksToItself(path, location) =>

@@ -46,4 +46,13 @@ import scala.io.Source
     actualResult.html().replace(" ", "") should be(expectedDoc.html().replace(" ", ""))
   }
 
+  it should "change links from http to https" in {
+    val html = "<html><head><link rel=\"stylesheet\" type=\"text/css\" href=\"http://static.guim.co.uk/static/6d5811c93d9b815024b5a6c3ec93a54be18e52f0/common/styles/print.css\" media=\"print\" class=\"contrast\"/></head><body> some text </body></html>"
+    val expectedDoc = Jsoup.parse("<html><head><link rel=\"stylesheet\" type=\"text/css\" href=\"https://static.guim.co.uk/static/6d5811c93d9b815024b5a6c3ec93a54be18e52f0/common/styles/print.css\" media=\"print\" class=\"contrast\"/></head><body> some text </body></html>")
+
+    val actualResult = BasicHtmlCleaner.replaceLinks(Jsoup.parse(html))
+    actualResult.html().replace(" ", "") should be(expectedDoc.html().replace(" ", ""))
+
+  }
+
 }
