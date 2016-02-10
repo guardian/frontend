@@ -113,17 +113,11 @@ $breaking-news-close-icon-width: 32px;
     right: 0;
 }
 
-// copy of breaking news element used inline in the body
+// copy of breaking news banner (with blank content) used inline in the body
 // to create space for a pinned alert to be scrolled into
 .breaking-news--spectre {
+    visibility: hidden;
     position: relative;
-    background-color: colour(multimedia-support-4);
-    opacity: 1;
     z-index: 1;
-    box-shadow: none;
     transition: none;
-
-    .breaking-news__items {
-        visibility: hidden;
-    }
 }

@@ -22,6 +22,10 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
     override lazy val host = "http://www.theguardian.com"
   }
 
+  object TestAmpLinkTo extends AmpLinkTo {
+    override lazy val host = "https://amp.theguardian.com"
+  }
+
   "LinkTo" should "leave 'other' urls unchanged" in {
     val otherUrl = "http://somewhere.com/foo/bar.html?age=7#TOP"
     TestLinkTo(otherUrl, edition) should be (otherUrl)
@@ -68,7 +72,7 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
   }
 
   it should "be https to amp" in {
-    TheGuardianLinkTo("/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen/amp", edition) should be ("https://www.theguardian.com/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen/amp")
+    TestAmpLinkTo("/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen", edition) should be ("https://amp.theguardian.com/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen")
   }
 
   it should "correctly editionalise the International front" in {

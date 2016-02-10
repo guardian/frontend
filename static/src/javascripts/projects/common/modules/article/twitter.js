@@ -21,7 +21,7 @@ define([
     mediator,
     debounce
 ) {
-    var body = qwery('.js-liveblog-body, .js-article__body');
+    var body = qwery('.js-liveblog-body, .js-article__body, .js-article__body--minute-article');
 
     function bootstrap() {
         mediator.on('window:throttledScroll', debounce(enhanceTweets, 200));

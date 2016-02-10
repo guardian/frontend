@@ -7,7 +7,7 @@ define([
     var injector = new Injector();
 
     describe('Commercial features', function () {
-        var commercialFeaturePolicies, config, detect, location, userFeatures, userPrefs;
+        var commercialFeaturePolicies, config, detect, location, userPrefs;
 
         beforeEach(function (done) {
             injector.require([
@@ -15,15 +15,13 @@ define([
                 'common/utils/config',
                 'common/utils/detect',
                 'common/utils/location',
-                'common/modules/commercial/user-features',
                 'common/modules/user-prefs'
             ], function () {
                 commercialFeaturePolicies = arguments[0];
                 config = arguments[1];
                 detect = arguments[2];
                 location = arguments[3];
-                userFeatures = arguments[4];
-                userPrefs = arguments[5];
+                userPrefs = arguments[4];
                 done();
             });
         });
@@ -168,34 +166,6 @@ define([
             it('applies no changes otherwise', function () {
                 userPrefs.removeSwitch('adverts');
                 var switches = commercialFeaturePolicies.getPolicySwitches().userPrefs;
-                expect(switches).toBeUndefined();
-            });
-        });
-
-        describe('Adfree experience policy', function () {
-            it('enabling adfree hides some commercial content', function () {
-                userFeatures.isAdfree = function () {return true;};
-                var switches = commercialFeaturePolicies.getPolicySwitches().adfreeExperience;
-
-                expect(switches.articleBodyAdverts).toBe(false);
-                expect(switches.sliceAdverts).toBe(false);
-                expect(switches.popularContentMPU).toBe(false);
-                expect(switches.videoPreRolls).toBe(false);
-            });
-
-            it('enabling adfree does not hide other commercial content', function () {
-                userFeatures.isAdfree = function () {return true;};
-                var switches = commercialFeaturePolicies.getPolicySwitches().adfreeExperience;
-
-                expect(switches.dfpAdvertising).not.toBe(false);
-                expect(switches.frontCommercialComponents).not.toBe(false);
-                expect(switches.thirdPartyTags).not.toBe(false);
-                expect(switches.badges).not.toBe(false);
-            });
-
-            it('applies no changes when adfree is disabled', function () {
-                userFeatures.isAdfree = function () {return false;};
-                var switches = commercialFeaturePolicies.getPolicySwitches().adfreeExperience;
                 expect(switches).toBeUndefined();
             });
         });

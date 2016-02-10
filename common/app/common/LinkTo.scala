@@ -22,7 +22,6 @@ trait LinkTo extends Logging {
   private val ProdURL = "^http://www.theguardian.com/.*$".r
   private val GuardianUrl = "^(http://www.theguardian.com)?(/.*)?$".r
   private val RssPath = "^(/.+)?(/rss)".r
-  private val AmpPath = s"^(/.+)(${Requests.AMP_SUFFIX})$$".r
   private val TagPattern = """^([\w\d-]+)/([\w\d-]+)$""".r
 
   /**
@@ -48,8 +47,6 @@ trait LinkTo extends Logging {
       ProcessedUrl(url)
     case RssPath(path, format) =>
       ProcessedUrl(urlFor(path, edition) + format)
-    case AmpPath(path, format) =>
-      ProcessedUrl(urlFor(path, edition, secure = true) + format)
     case GuardianUrl(_, path) =>
       ProcessedUrl(urlFor(path, edition))
     case otherUrl =>
@@ -60,6 +57,7 @@ trait LinkTo extends Logging {
     val pathString = Option(path).getOrElse("")
     val id = if (pathString.startsWith("/")) pathString.substring(1) else pathString
     val editionalisedPath = Editionalise(clean(id), edition)
+
     val url = s"$host/$editionalisedPath"
     url match {
       case ProdURL() if (isHttpsEnabled(editionalisedPath) || secure) =>  url.replace("http://", "https://")
@@ -144,5 +142,17 @@ object SubscribeLink {
   private def subscribeLink(edition: Edition) = subscribeEditions.getOrDefault(edition, "")
 
   def apply(edition: Edition): String = s"https://subscribe.theguardian.com/${subscribeLink(edition)}?INTCMP=NGW_HEADER_${edition.id}_GU_SUBSCRIBE"
+}
+
+trait AmpLinkTo extends LinkTo {
+  override lazy val host = Configuration.amp.baseUrl
+}
+
+object AmpLinkTo extends AmpLinkTo {
+
+  override def processUrl(url: String, edition: Edition) = {
+    val ampUrl = if (host.isEmpty) url + "?amp=1" else url
+    super.processUrl(ampUrl, edition)
+  }
 }
 

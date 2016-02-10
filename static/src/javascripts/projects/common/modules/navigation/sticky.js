@@ -30,12 +30,6 @@ define([
     function StickyHeader() {
         this.breakpoint = detect.getBreakpoint();
 
-        // temporarily disable on mobile
-        if (this.breakpoint === 'mobile'
-            && config.switches.disableStickyNavOnMobile) {
-            return;
-        }
-
         this.$els   = {};
         this.config = {
             showHeaderDepth: 0.5,

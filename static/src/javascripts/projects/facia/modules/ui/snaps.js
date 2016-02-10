@@ -47,14 +47,22 @@ define([
         });
 
     function init() {
+
+        // First, init any existing inlined embeds already on the page.
+        var inlinedSnaps = toArray($('.facia-snap-embed'));
+        inlinedSnaps.forEach(initInlinedSnap);
+
+        // Second, init non-inlined embeds.
         var snaps = toArray($('.js-snappable.js-snap'))
                 .filter(function (el) {
-                    var snapType = el.getAttribute('data-snap-type');
-                    return snapType && clientProcessedTypes.indexOf(snapType) > -1;
+
+                    var isInlinedSnap = $(el).hasClass('facia-snap-embed'),
+                        snapType = el.getAttribute('data-snap-type');
+                    return !isInlinedSnap && snapType && clientProcessedTypes.indexOf(snapType) > -1;
                 })
                 .filter(function (el) { return el.getAttribute('data-snap-uri'); });
 
-        snaps.forEach(initSnap);
+        snaps.forEach(initStandardSnap);
     }
 
     function addCss(el, isResize) {
@@ -129,7 +137,7 @@ define([
         });
     }
 
-    function initSnap(el) {
+    function initStandardSnap(el) {
         proximityLoader.add(el, 1500, function () {
             fastdom.write(function () {
                 bonzo(el).addClass('facia-snap-embed');
@@ -156,6 +164,15 @@ define([
                 }, 200));
             }
         });
+    }
+
+    function initInlinedSnap(el) {
+        addCss(el);
+        if (!detect.isIOS) {
+            mediator.on('window:resize', debounce(function () {
+                addCss(el, true);
+            }, 200));
+        }
     }
 
     return {

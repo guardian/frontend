@@ -2,6 +2,7 @@ package pagepresser
 
 import com.netaporter.uri.Uri.parse
 import common.Logging
+import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 
 import scala.collection.JavaConversions._
@@ -60,16 +61,45 @@ object BasicHtmlCleaner extends HtmlCleaner {
   }
 
   def createSimplePageTracking(document: Document, omnitureQueryString: String): Document = {
-    val omnitureTag = "<!---Omniture page tracking for pressed page ---> <img src=\"https://hits-secure.theguardian.com/b/ss/guardiangu-network/1/JS-1.4.1/s985205503180623100?" + omnitureQueryString + "\" width=\"1\" height=\"1\"/>"
+    val newOmnitureScriptBase = "https://hits-secure.theguardian.com/b/ss/guardiangu-network/1/JS-1.4.1/s985205503180623100"
 
-
-    document.body().append(omnitureTag)
-    document
+    document.getElementsByTag("img").exists { element =>
+      element.hasAttr("src") && element.attr("src").contains(newOmnitureScriptBase)
+    } match {
+      case true =>
+        log.info(s"Archive omniture script exists and was not replaced")
+        document
+      case false =>
+        val omnitureTag = "<!---Omniture page tracking for pressed page ---> <img src=\"" + newOmnitureScriptBase + "?" + omnitureQueryString + "\" width=\"1\" height=\"1\"/>"
+        document.body().append(omnitureTag)
+        log.info("Archive omniture script appended")
+        document
+    }
   }
 
   def fetchOmnitureTags(document: Document): String = {
-    val omnitureCode = document.getElementById("omnitureNoScript").getElementsByTag("img").attr("src")
-    val params = parse(omnitureCode).query.paramMap
+    val params = {
+      val omnitureScript = document.getElementById("omnitureNoScript")
+      if (omnitureScript != null) {
+        parse(omnitureScript.getElementsByTag("img").attr("src")).query.paramMap
+      } else {
+        val iFrameDocuments = document.getElementsByTag("iframe").map { f =>
+          // use Jsoup.parse(Jsoup.parse(...)) because the iframe html contains encoded data to be extracted as .text()
+          Jsoup.parse(Jsoup.parse(f.html()).text());
+        }
+        val omnitureParams: Map[String, Seq[String]] = try {
+          iFrameDocuments.flatMap { d =>
+            parse(d.getElementById("omnitureNoScript").getElementsByTag("img").attr("src")).query.paramMap
+          }.toMap
+        } catch {
+          case e: Exception => {
+            log.error(s"Failed extracting omniture params: ${e.getMessage}", e)
+            Map.empty
+          }
+        }
+        omnitureParams
+      }
+    }
 
     val requiredParams: Map[String, Seq[String]] = params.filterKeys(key => List("pageName", "ch", "g", "ns").contains(key)) ++
       Map("AQB" -> List("1"),
@@ -92,15 +122,18 @@ object BasicHtmlCleaner extends HtmlCleaner {
   }
 
   def removeAds(document: Document): Document = {
-    val elements = document.getElementById("sub-header")
-    val ads = elements.children().toList.filterNot(e => e.attr("class") == "top-navigation twelve-col top-navigation-js")
-    ads.foreach(_.remove())
+    val element = document.getElementById("sub-header")
 
-    val htmlComments = elements.childNodes().filter(node => node.nodeName().equals("#comment"))
-    htmlComments.foreach(_.remove())
+    if (element != null) {
+      val ads = element.children().toList.filterNot(e => e.attr("class") == "top-navigation twelve-col top-navigation-js")
+      ads.foreach(_.remove())
 
-    val promos = document.getElementById("promo")
-    if(promos != null) promos.remove()
+      val htmlComments = element.childNodes().filter(node => node.nodeName().equals("#comment"))
+      htmlComments.foreach(_.remove())
+
+      val promo = document.getElementById("promo")
+      if(promo != null) promo.remove()
+    }
 
     document
   }

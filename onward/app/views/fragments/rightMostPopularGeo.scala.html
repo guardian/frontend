@@ -5,6 +5,7 @@
 @import implicits.FaciaContentFrontendHelpers._
 @import common.LinkTo
 @import views.support.ImgSrc
+@import views.html.fragments
 
 @if(popular.trails.nonEmpty) {
     <div class="js-right-most-popular right-most-popular right-most-popular--image component--rhc hide-on-childrens-books-site" data-component="geo-most-popular" data-importance="-1" data-test-id="right-most-popular">
@@ -18,7 +19,14 @@
                                 <img class="responsiveimg" src="@ImgSrc.getFallbackUrl(image.images)" alt="" />
                             </div>
                          }
-                         <h4 class="right-most-popular-item__headline media__body">@trail.properties.linkText</h4>
+                        <div class="media__body">
+                            <h4 class="right-most-popular-item__headline">@trail.properties.linkText</h4>
+                            @trail.properties.maybeContent.map { content =>
+                                @if(content.tags.tags.exists(_.id == "tone/news")) {
+                                    @fragments.contentAgeNotice(ContentOldAgeDescriber(content))
+                                }
+                            }
+                        </div>
                     </a>
                 </li>
             }

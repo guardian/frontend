@@ -10,11 +10,8 @@ define([
     'common/modules/experiments/tests/related-variants',
     'common/modules/experiments/tests/identity-register-v2',
     'common/modules/experiments/tests/identity-sign-in-v2',
-    'common/modules/experiments/tests/rtrt-email-form-article-promo',
-    'common/modules/experiments/tests/prebid-performance',
     'common/modules/experiments/tests/liveblog-toast',
     'common/modules/experiments/tests/userzoom-survey-message-v3',
-    'common/modules/experiments/tests/userzoom-survey-message-mobile-v3',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -36,11 +33,8 @@ define([
     RelatedVariants,
     IdentityRegisterV2,
     IdentitySignInV2,
-    RtrtEmailFormArticlePromo,
-    PrebidPerformance,
     LiveblogToast,
     UserzoomSurveyMessageV3,
-    UserzoomSurveyMessageMobileV3,
     flatten,
     forEach,
     keys,
@@ -58,11 +52,8 @@ define([
         new RelatedVariants(),
         new IdentityRegisterV2(),
         new IdentitySignInV2(),
-        new RtrtEmailFormArticlePromo(),
-        new PrebidPerformance(),
         new LiveblogToast(),
-        new UserzoomSurveyMessageV3(),
-        new UserzoomSurveyMessageMobileV3()
+        new UserzoomSurveyMessageV3()
     ]);
 
     var participationsKey = 'gu.ab.participations';
