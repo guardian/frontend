@@ -40,15 +40,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABRemoveStickyNav = Switch(
-    "A/B Tests",
-    "ab-remove-sticky-nav",
-    "Removes the sticky nav (0% test)",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 1),
-    exposeClientSide = true
-  )
-
   val ABLiveblogToast = Switch(
     "A/B Tests",
     "ab-liveblog-toast",

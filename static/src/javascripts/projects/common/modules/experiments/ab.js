@@ -6,7 +6,6 @@ define([
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/fronts-on-articles2',
-    'common/modules/experiments/tests/remove-sticky-nav',
     'common/modules/experiments/tests/related-variants',
     'common/modules/experiments/tests/identity-register-v2',
     'common/modules/experiments/tests/identity-sign-in-v2',
@@ -29,7 +28,6 @@ define([
     store,
     mvtCookie,
     FrontsOnArticles2,
-    RemoveStickyNav,
     RelatedVariants,
     IdentityRegisterV2,
     IdentitySignInV2,
@@ -48,7 +46,6 @@ define([
 
     var TESTS = flatten([
         new FrontsOnArticles2(),
-        new RemoveStickyNav(),
         new RelatedVariants(),
         new IdentityRegisterV2(),
         new IdentitySignInV2(),
