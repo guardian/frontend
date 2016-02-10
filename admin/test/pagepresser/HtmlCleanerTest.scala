@@ -39,15 +39,54 @@ import scala.io.Source
   }
 
   it should "add the basic omniture tag" in {
-    val html = "<html><head></head><body> some text" +
-      """<noscript id="omnitureNoScript">
-      |        <div><img alt="" src='http://hits.theguardian.com/b/ss/guardiangu-network/1/H.25.7/8091?ns=guardian&pageName=Life+%26+style%3AFeatures%3ACompetition%3Apollyjeans%3A1334360&ch=Life+and+style&c3=Obs&c4=Fashion&c5=Fashion+and+Beauty&c6=Polly+Vernon&c7=2010%2F01%2F17+12%3A15&c8=1334360&c9=Competition&c10=&c13=&c19=GUK&c47=UK&c64=UK&c65=Win+a+pair+of+Polly+jeans+from+River+Island&c66=Life+and+style&c67=nextgen-non-compatible&c72=Life+%26+style%3AFeatures&c73=Life+%26+style%3AFeatures&c74=Life+%26+style%3AFeatures&c75=Life+%26+style&h2=GU%2FLife+and+style%2FLife+and+style%2F&c2=GUID:(none)' width="1" height="1" /></div>
-      |    </noscript>""" +
+    val html = "<html><head></head><body> some text <noscript id=\"omnitureNoScript\"><div><img alt=\"\" " +
+      "src='http://hits.theguardian.com/b/ss/guardiangu-network/1/H.25.7/8091?" +
+      "ns=guardian&pageName=Life+%26+style%3AFeatures%3ACompetition%3Apollyjeans%3A1334360&ch=Life+and+style&c3=Obs" +
+      "&c4=Fashion&c5=Fashion+and+Beauty&c6=Polly+Vernon&c7=2010%2F01%2F17+12%3A15&c8=1334360&c9=Competition&c10=" +
+      "&c13=&c19=GUK&c47=UK&c64=UK&c65=Win+a+pair+of+Polly+jeans+from+River+Island&c66=Life+and+style" +
+      "&c67=nextgen-non-compatible&c72=Life+%26+style%3AFeatures&c73=Life+%26+style%3AFeatures" +
+      "&c74=Life+%26+style%3AFeatures&c75=Life+%26+style&h2=GU%2FLife+and+style%2FLife+and+style%2F" +
+      "&c2=GUID:(none)' width=\"1\" height=\"1\" /></div></noscript></body></html>"
+    val expectedHtml = "<html><head></head><body> some text <noscript id=\"omnitureNoScript\"><div><img alt=\"\" " +
+      "src='http://hits.theguardian.com/b/ss/guardiangu-network/1/H.25.7/8091?" +
+      "ns=guardian&pageName=Life+%26+style%3AFeatures%3ACompetition%3Apollyjeans%3A1334360&ch=Life+and+style&c3=Obs" +
+      "&c4=Fashion&c5=Fashion+and+Beauty&c6=Polly+Vernon&c7=2010%2F01%2F17+12%3A15&c8=1334360&c9=Competition&c10=" +
+      "&c13=&c19=GUK&c47=UK&c64=UK&c65=Win+a+pair+of+Polly+jeans+from+River+Island&c66=Life+and+style" +
+      "&c67=nextgen-non-compatible&c72=Life+%26+style%3AFeatures&c73=Life+%26+style%3AFeatures" +
+      "&c74=Life+%26+style%3AFeatures&c75=Life+%26+style&h2=GU%2FLife+and+style%2FLife+and+style%2F" +
+      "&c2=GUID:(none)' width=\"1\" height=\"1\" /></div></noscript>" +
+      "<!---Omniture page tracking for pressed page ---> " +
+      "<img src=\"https://hits-secure.theguardian.com/b/ss/guardiangu-network/1/JS-1.4.1/s985205503180623100?" +
+      "ns=guardian&ndh=1&c19=frontendarchive&AQE=1&ch=Life+and+style&ce=UTF-8&AQB=1&cpd=2&v9=D=g" +
+      "&pageName=Life+%26+style:Features:Competition:pollyjeans:1334360&v14=D=r\" width=\"1\" height=\"1\"/>" +
       "</body></html>"
-    val expectedDoc = Jsoup.parse("<html><head></head><body> some text <!---Omniture page tracking for pressed page ---> <img src=\"https://hits-secure.theguardian.com/b/ss/guardiangu-network/1/JS-1.4.1/s985205503180623100?ns=guardian&ndh=1&c19=frontendarchive&AQE=1&ch=Music&ce=UTF-8&AQB=1&cpd=2&v9=D=g&pageName=pageName=Life+%26+style:Features:Competition:pollyjeans:1334360&v14=D=r\" width=\"1\" height=\"1\"/></body></html>")
-
+    val expectedDoc = Jsoup.parse(expectedHtml)
     val actualResult = BasicHtmlCleaner.createSimplePageTracking(Jsoup.parse(html))
     actualResult.html().replace(" ", "") should be(expectedDoc.html().replace(" ", ""))
   }
 
+  it should "remove noscript tags" in {
+    val html = "<html><head></head><body> some text <noscript id=\"omnitureNoScript\"><div><img alt=\"\" " +
+      "src='http://hits.theguardian.com/b/ss/guardiangu-network/1/H.25.7/8091?" +
+      "ns=guardian&pageName=Life+%26+style%3AFeatures%3ACompetition%3Apollyjeans%3A1334360&ch=Life+and+style&c3=Obs" +
+      "&c4=Fashion&c5=Fashion+and+Beauty&c6=Polly+Vernon&c7=2010%2F01%2F17+12%3A15&c8=1334360&c9=Competition&c10=" +
+      "&c13=&c19=GUK&c47=UK&c64=UK&c65=Win+a+pair+of+Polly+jeans+from+River+Island&c66=Life+and+style" +
+      "&c67=nextgen-non-compatible&c72=Life+%26+style%3AFeatures&c73=Life+%26+style%3AFeatures" +
+      "&c74=Life+%26+style%3AFeatures&c75=Life+%26+style&h2=GU%2FLife+and+style%2FLife+and+style%2F" +
+      "&c2=GUID:(none)' width=\"1\" height=\"1\" /></div></noscript>" +
+      "<!---Omniture page tracking for pressed page ---> " +
+      "<img src=\"https://hits-secure.theguardian.com/b/ss/guardiangu-network/1/JS-1.4.1/s985205503180623100?" +
+      "ns=guardian&ndh=1&c19=frontendarchive&AQE=1&ch=Life+and+style&ce=UTF-8&AQB=1&cpd=2&v9=D=g" +
+      "&pageName=Life+%26+style:Features:Competition:pollyjeans:1334360&v14=D=r\" width=\"1\" height=\"1\"/>" +
+      "</body></html>"
+    val expectedHtml = "<html><head></head><body> some text" +
+      "<!---Omniture page tracking for pressed page ---> " +
+      "<img src=\"https://hits-secure.theguardian.com/b/ss/guardiangu-network/1/JS-1.4.1/s985205503180623100?" +
+      "ns=guardian&ndh=1&c19=frontendarchive&AQE=1&ch=Life+and+style&ce=UTF-8&AQB=1&cpd=2&v9=D=g" +
+      "&pageName=Life+%26+style:Features:Competition:pollyjeans:1334360&v14=D=r\" width=\"1\" height=\"1\"/>" +
+      "</body></html>"
+    val expectedDoc = Jsoup.parse(expectedHtml)
+    val actualResult = BasicHtmlCleaner.removeByTagName(Jsoup.parse(html), "noscript")
+    actualResult.html().replace(" ", "") should be(expectedDoc.html().replace(" ", ""))
+  }
 }

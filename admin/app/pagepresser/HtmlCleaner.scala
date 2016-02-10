@@ -57,11 +57,11 @@ abstract class HtmlCleaner extends Logging {
     if(element != null) element.remove()
     document
   }
-  protected def removeByClass(document: Document, className: String): Document = {
+  def removeByClass(document: Document, className: String): Document = {
     document.getElementsByClass(className).foreach(_.remove())
     document
   }
-  protected def removeByTagName(document: Document, tagName: String): Document = {
+  def removeByTagName(document: Document, tagName: String): Document = {
     document.getElementsByTag(tagName).foreach(_.remove())
     document
   }
