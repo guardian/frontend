@@ -4,7 +4,7 @@ import common._
 import conf.LiveContentApi
 import conf.LiveContentApi.getResponse
 import model._
-import model.content.{QuizSubmissionResult, Quiz, Atoms, QuizForm}
+import model.content.{Quiz, Atoms}
 import quiz.form
 import play.api.mvc.{Result, RequestHeader, Action, Controller}
 import views.support.RenderOtherStatus
@@ -12,11 +12,11 @@ import views.support.RenderOtherStatus
 import scala.concurrent.Future
 
 case class QuizAnswersPage(
-  inputs: form.FormInputs,
+  inputs: form.Inputs,
   quiz: Quiz) extends model.StandalonePage {
   override val metadata = MetaData.make("quiz atom", "quizzes", quiz.title, "GFE: Quizzes")
 
-  val results: QuizSubmissionResult = quiz.submitAnswers(answers)
+  val results: form.QuizResults = form.checkUsersAnswers(inputs, quiz)
 }
 
 object QuizController extends Controller with ExecutionContexts with Logging {
@@ -28,7 +28,7 @@ object QuizController extends Controller with ExecutionContexts with Logging {
     )
   }
 
-  private def renderQuiz(quizId: String, path: String, answers: form.FormInputs)(implicit request: RequestHeader): Future[Result] = {
+  private def renderQuiz(quizId: String, path: String, answers: form.Inputs)(implicit request: RequestHeader): Future[Result] = {
     val edition = Edition(request)
 
     log.info(s"Fetching quiz atom: $quizId from content id: $path: ${RequestLog(request)}")
