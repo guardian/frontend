@@ -2,30 +2,38 @@ define([
     'bonzo',
     'qwery',
     'bean',
+    'fastdom',
     'common/utils/$',
     'common/utils/config',
     'common/utils/storage',
     'common/utils/ajax',
-    'lodash/collections/some',
+    'common/utils/template',
+    'common/views/svgs',
     'common/modules/user-prefs',
+    'text!common/views/ui/notifications-subscribe-link.html',
+    'lodash/collections/some',
     'lodash/arrays/uniq',
     'lodash/arrays/without'
 ], function(
     bonzo,
     qwery,
     bean,
+    fastdom,
     $,
     config,
     storage,
     ajax,
-    some,
+    template,
+    svgs,
     userPrefs,
+    subscribeTemplate,
+    some,
     uniq,
     without
 ) {
     var modules, reg, sub,
         isSubscribed = false,
-        subscribeButton = $('.js-follow-live-blog');
+        subscribeButton;
 
     modules = {
 
@@ -37,12 +45,12 @@ define([
 
                    if(pushSubscription) {
                         sub = pushSubscription;
-                        modules.configureButton();
+                        modules.configureSubscribeTemplate();
                    } else {
                         reg.pushManager.subscribe({userVisibleOnly: true}).then(
                             function(pushSubscription){
                                 sub = pushSubscription;
-                                modules.configureButton()
+                                modules.configureSubscribeTemplate()
                             }
                         )
                    }
@@ -59,10 +67,32 @@ define([
            }
        },
 
+       configureSubscribeTemplate: function() {
+           var subscribed = modules.checkSubscriptions(),
+               src = template(subscribeTemplate, {
+                   className: subscribed ? 'notifications-subscribe-link--following' : '',
+                   text: subscribed ? 'Following story' : 'Follow story',
+                   imgMobile: svgs('notificationsExplainerMobile', ['mobile-only', 'notification-explainer']),
+                   imgDesktop: svgs('notificationsExplainerDesktop', ['hide-on-mobile', 'notification-explainer'])
+               });
+
+               fastdom.write(function () {
+                   $('.js-liveblog-body').prepend(src);
+               });
+
+               bean.on(document.body, 'click', '.js-notifications-subscribe-link', function () {
+                   modules.buttonHandler();
+               });
+      },
 
        setSubscriptionStatus: function(subscribed) {
-            isSubscribed = subscribed;
-            subscribeButton[0].textContent = subscribed ?  'Unsubscribe': 'Subscribe'
+            var subscribeButton = $('.js-notifications-subscribe-link'),
+                subscribeLink = $('.notifications-subscribe-link--follow');
+           isSubscribed = subscribed;
+           if ( subscribed ) {
+               subscribeLink.addClass('notifications-subscribe-link--following');
+           }
+           subscribeButton[0].textContent = subscribed ?  'Following story' : 'Follow story';
        },
 
        buttonHandler: function(){

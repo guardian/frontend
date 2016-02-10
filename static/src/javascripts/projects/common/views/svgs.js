@@ -36,6 +36,8 @@ define([
     'inlineSvg!svgs/logo/glabs-logo-small',
     'inlineSvg!svgs/commercial/logo-membership',
     'inlineSvg!svgs/commercial/adblock-coins',
+    'inlineSvg!svgs/notifications-explainer-mobile',
+    'inlineSvg!svgs/notifications-explainer-desktop',
     'lodash/objects/isArray'
 ], function (
     commentCount16icon,
@@ -71,6 +73,8 @@ define([
     glabsLogoSmall,
     membershipLogo,
     adblockCoins,
+    notificationsExplainerMobile,
+    notificationsExplainerDesktop,
     isArray
 ) {
     var svgs = {
@@ -106,7 +110,9 @@ define([
         tick: tick,
         glabsLogoSmall: glabsLogoSmall,
         adblockCoins: adblockCoins,
-        logomembership: membershipLogo
+        logomembership: membershipLogo,
+        notificationsExplainerMobile: notificationsExplainerMobile,
+        notificationsExplainerDesktop: notificationsExplainerDesktop
     };
 
     return function (name, classes, title) {
