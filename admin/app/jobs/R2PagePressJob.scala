@@ -101,7 +101,7 @@ object R2PagePressJob extends ExecutionContexts with Logging {
                 }
               }
             } catch {
-              case e: Exception => log.error(s"Unable to press $urlIn (${e.getMessage}})")
+              case e: Exception => log.error(s"Unable to press $urlIn (${e.getMessage})", e)
             }
           }
 

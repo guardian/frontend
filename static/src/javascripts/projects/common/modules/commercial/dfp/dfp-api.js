@@ -23,7 +23,6 @@ define([
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/dfp/ophan-tracking',
     'common/modules/commercial/dfp/breakout-iframe',
-    'common/modules/commercial/prebid/prebid-service',
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
     'common/modules/analytics/beacon',
@@ -85,7 +84,6 @@ define([
     commercialFeatures,
     ophanTracking,
     breakoutIFrame,
-    prebidService,
     geoMostPopular,
     ab,
     beacon,
@@ -290,13 +288,8 @@ define([
         googletag.enableServices();
         // as this is an single request call, only need to make a single display call (to the first ad
         // slot)
-        var firstSlot = keys(slots).shift();
-        if (prebidService.testEnabled && prebidService.slotIsInTest(firstSlot)) {
-            loadSlot(firstSlot);
-        } else {
-            googletag.display(firstSlot);
-            displayed = true;
-        }
+        googletag.display(keys(slots).shift());
+        displayed = true;
     }
 
     function displayLazyAds() {
@@ -339,10 +332,6 @@ define([
             window.googletag = { cmd: [] };
             // load the library asynchronously
             require(['js!googletag.js']);
-        }
-
-        if (prebidService.testEnabled) {
-            prebidService.loadDependencies();
         }
 
         window.googletag.cmd.push = raven.wrap({ deep: true }, window.googletag.cmd.push);
@@ -529,21 +518,9 @@ define([
     }
 
     function loadSlot(slotKey) {
-        if (prebidService.testEnabled && prebidService.slotIsInTest(slotKey)) {
-            prebidAndLoadSlot(slotKey);
-        } else {
-            // original implementation
-            slots[slotKey].isLoading = true;
-            googletag.display(slotKey);
-            displayed = true;
-        }
-    }
-
-    function prebidAndLoadSlot(slotKey) {
         slots[slotKey].isLoading = true;
-        prebidService.loadSlots(slotKey).then(function () {
-            displayed = true;
-        });
+        googletag.display(slotKey);
+        displayed = true;
     }
 
     function removeSlot(slotId) {

@@ -20,30 +20,7 @@ window.guardian = {
     css: {
         loaded: false
     },
-    config: @defining(Edition(request)) { edition => {
-        "page": @JavaScript(StringEncodings.jsonToJS(Json.stringify(JavaScriptPage.get(page)))),
-        "switches" : { @{JavaScript(conf.switches.Switches.all.filter(_.exposeClientSide).map{ switch =>
-            s""""${CamelCase.fromHyphenated(switch.name)}":${switch.isSwitchedOn}"""}.mkString(","))}
-        },
-        "tests": { @JavaScript(mvt.ActiveTests.getJavascriptConfig) },
-        "modules": { },
-        "stylesheets": {
-            "fonts": {
-                "hintingCleartype": {
-                    "kerningOn": "@Static("stylesheets/webfonts-hinting-cleartype-kerning-on.css")"
-                },
-                "hintingOff": {
-                    "kerningOn": "@Static("stylesheets/webfonts-hinting-off-kerning-on.css")"
-                },
-                "hintingAuto": {
-                    "kerningOn": "@Static("stylesheets/webfonts-hinting-auto-kerning-on.css")"
-                }
-            }
-        },
-        "commercial": {
-            "showingAdfree" : undefined
-        }
-    }}
+    config: @JavaScript(templates.js.javaScriptConfig(page).body)
 };
 
 // http://blogs.msdn.com/b/ieinternals/archive/2010/05/13/xdomainrequest-restrictions-limitations-and-workarounds.aspx
