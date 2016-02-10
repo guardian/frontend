@@ -110,7 +110,7 @@ case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends
         "se" -> grabLastFragmentOfId(article.trail.tags.series).mkString(","),
         "ct" -> article.metadata.contentType,
         "p" -> "amp",
-        "keywordIds" -> (article.trail.tags.keywords).mkString(","),
+        "keywordIds" -> article.trail.tags.keywords.map(_.id).mkString(","),
         "k" -> grabLastFragmentOfId(article.trail.tags.keywords).mkString(","),
         "co" -> grabLastFragmentOfId(article.trail.tags.contributors).mkString(","),
         "bl" -> grabLastFragmentOfId(article.trail.tags.blogs).mkString(","),
