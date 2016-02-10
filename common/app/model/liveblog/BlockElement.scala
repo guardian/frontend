@@ -13,13 +13,7 @@ case class EmbedBlockElement(html: Option[String], safe: Option[Boolean], alt: O
 
 object BlockElement {
   implicit object BlockElementFormat extends Format[Seq[BlockElement]] {
-    def reads(json: JsValue): JsResult[Seq[BlockElement]] = {
-      (json).transform[JsArray](Reads.JsArrayReads) match {
-        case JsSuccess(_, _) => JsSuccess(Seq.empty)
-        case _ => JsError("Something went very wrong")
-      }
-    }
-
+    def reads(json: JsValue): JsResult[Seq[BlockElement]] = JsSuccess(Seq.empty)
     def writes(els: Seq[BlockElement]) = JsArray(Seq(JsNull))
   }
 
