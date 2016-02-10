@@ -542,8 +542,7 @@ case class AtomsCleaner(atoms: Option[Atoms]) extends HtmlCleaner {
   }
 
   override def clean(document: Document): Document = {
-    //if (UseAtomsSwitch.isSwitchedOn) {
-    if (true){
+    if (UseAtomsSwitch.isSwitchedOn) {
       for {
         atomContainer <- document.getElementsByClass("element-atom")
         bodyElement <- atomContainer.getElementsByTag("gu-atom")
