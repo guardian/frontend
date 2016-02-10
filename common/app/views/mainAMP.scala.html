@@ -49,7 +49,7 @@
             @* this is for testing only *@
             @defining("""bowie""".r) { hasHeader =>
                 <header class="main-header @if(hasHeader.findFirstIn(page.metadata.id).nonEmpty) {variant-kicker}">
-                    <a href="@LinkTo{/}" class="logo-wrapper" name="top">
+                    <a href="@Configuration.site.host/" class="logo-wrapper" name="top">
                         @fragments.inlineSvg("guardian-logo-160", "logo")
                     </a>
                         @if(hasHeader.findFirstIn(page.metadata.id).nonEmpty) {
