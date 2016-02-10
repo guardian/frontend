@@ -3,8 +3,7 @@ package object quiz {
 
   case class QuizContent(
     questions: Seq[Question],
-    resultGroups: Seq[ResultGroup]
-  )
+    resultGroups: Seq[ResultGroup])
 
   case class Question(
     text: String,
