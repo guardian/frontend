@@ -20,10 +20,10 @@ define([
             mediator.on('window:resize', debounce(function () {
                 if (heightSet && detect.getBreakpoint() !== 'mobile') {
                     // If the height has been set and we're not on mobile
-                    stickHeight(true)
+                    stickHeight(true);
                 } else if (detect.getBreakpoint() === 'mobile') {
                     // If we are on mobile, we need to just set the new height
-                    stickHeight()
+                    stickHeight();
                 }
             }, 200));
 
