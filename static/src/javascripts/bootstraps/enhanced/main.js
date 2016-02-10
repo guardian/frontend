@@ -135,8 +135,7 @@ define([
             var navigator = window.navigator;
             if (navigator && navigator.serviceWorker) {
                 navigator.serviceWorker.register('/service-worker-2.js').then(function () {
-                   if(detect.getUserAgent.browser === 'Chrome' && config.page.contentType === 'LiveBlog') {
-                       console.log("++ Load dat mo-fo");
+                   if (detect.getUserAgent.browser === 'Chrome' && config.page.contentType === 'LiveBlog') {
                        require(['bootstraps/enhanced/notifications'], function (notifications) {
                            bootstrapContext('notifications', notifications);
                        });
