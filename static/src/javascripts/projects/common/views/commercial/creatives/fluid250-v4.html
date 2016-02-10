@@ -1,0 +1,55 @@
+<div class="creative--fluid250-bg-container">
+
+    <div class="ad-slot__label creative--fluid250__label fc-container--layout-front <%=data.showLabel%>" data-test-id="ad-slot-label">
+        <div class="fc-container__inner">Advertisement</div>
+    </div>
+
+    <div class="creative--fluid250 l-side-margins hide-until-tablet creative--fluid250__height--<%=data.creativeHeight%>" style="
+            background-color: <%=data.backgroundColor%>;
+            background-image: url(<%=data.backgroundImage%>);
+            background-position: <%=data.backgroundPosition%>;
+            background-repeat: <%=data.backgroundRepeat%>;
+        ">
+        <%=data.scrollbg%>
+        <a href="<%=data.clickMacro%><%=data.link%>" target="_blank">
+            <div class="gs-container">
+                <%=data.video%>
+                <div class="fluid250_layer fluid250_layer1" style="
+                    background-image: url(<%=data.layerOneBGImage%>);
+                    background-position: <%=data.layerOneBGPosition%>;
+                "></div>
+                <div class="fluid250_layer fluid250_layer2" style="
+                    background-image: url(<%=data.layerTwoBGImage%>);
+                    <%=data.layerTwoBGProperties%>
+                "></div>
+                <div class="fluid250_layer fluid250_layer3" style="
+                    background-image: url(<%=data.layerThreeBGImage%>);
+                    background-position: <%=data.layerThreeBGPosition%>;
+                "></div>
+            </div>
+        </a>
+    </div>
+    <div class="creative--fluid250 l-side-margins mobile-only" style="
+            background-color: <%=data.backgroundColor%>;
+            background-image: url(<%=data.backgroundImageM%>);
+            background-position: <%=data.backgroundPositionM%>;
+            background-repeat: <%=data.backgroundRepeatM%>;
+        ">
+        <a href="<%=data.link%>" target="_blank">
+            <div class="gs-container">
+                <div class="fluid250_layer fluid250_layer1" style="
+                    background-image: url(<%=data.layerOneBGImageM%>);
+                    background-position: <%=data.layerOneBGPositionM%>;
+                "></div>
+                <div class="fluid250_layer fluid250_layer2" style="
+                    background-image: url(<%=data.layerTwoBGImageM%>);
+                    background-position: <%=data.layerTwoBGPositionM%>;
+                "></div>
+                <div class="fluid250_layer fluid250_layer3" style="
+                    background-image: url(<%=data.layerThreeBGImageM%>);
+                    background-position: <%=data.layerThreeBGPositionM%>;
+                "></div>
+            </div>
+        </a>
+    </div>
+</div>
