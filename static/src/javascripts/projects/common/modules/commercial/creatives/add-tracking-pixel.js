@@ -5,9 +5,8 @@ define([
     template,
     trackingPixelStr
 ) {
-    var trackingPixelTpl;
+    var trackingPixelTpl = template(trackingPixelStr);
     function addTrackingPixel($adSlot, url) {
-        trackingPixelTpl = trackingPixelTpl || template(trackingPixelStr);
         $adSlot.before(trackingPixelTpl({ url: encodeURI(url) }));
     }
 
