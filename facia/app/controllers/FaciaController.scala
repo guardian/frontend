@@ -93,7 +93,8 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     }
   }
 
-  def renderSomeFrontContainersMf2(rawNum: String, rawOffset: String, section: String) = MemcachedAction { implicit request =>
+  def frontContainersMf2EditionRedirect(rawNum: String, rawOffset: String, section: String) = renderSomeFrontContainersMf2(rawNum, rawOffset, section, edition = "")
+  def renderSomeFrontContainersMf2(rawNum: String, rawOffset: String, section: String, edition: String) = MemcachedAction { implicit request =>
     val edition = Edition(request)
     // TODO: This list also exists in the JS for fronts on articles a/b test. Pending a decision on that, this should go in the jsconfig, or be removed
     val sectionsToLoad = List("commentisfree", "sport", "football", "fashion", "lifeandstyle", "education", "culture", "business", "technology", "politics", "environment", "travel", "film", "media", "money", "society", "science", "music", "books", "stage", "cities", "tv-and-radio", "artanddesign", "global-development")
@@ -255,7 +256,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   private object JsonFront{
     def apply(faciaPage: PressedPage)(implicit request: RequestHeader) = JsonComponent(
       "html" -> views.html.fragments.frontBody(faciaPage),
-      "config" -> Json.parse(views.html.fragments.javaScriptConfig(faciaPage).body)
+      "config" -> Json.parse(templates.js.javaScriptConfig(faciaPage).body)
     )
   }
 
