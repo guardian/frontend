@@ -16,6 +16,9 @@
 <div id="c" style="position:absolute;top:0;left:0;bottom:0;right:0;">
 
     <script>
+        // Duplicating the Guardian config object in the real site
+        var guardian = {} ;
+
         function loadKrux() {
             var krux = document.createElement('script');
             krux.setAttribute("class", "kxct");
@@ -35,46 +38,72 @@
             document.body.appendChild(krux);
         }
 
-        if (true) {
-            loadKrux();
+        function exposeMetaDataForKrux(config) {
+            guardian = { 'config' : {
+                'page' : {
+                    'pageId' : config.url,
+                    'edition' : config.edition,
+                    'seriesId' : config.se, //series
+                    'contentType' : config.ct, // content type
+                    's' : config.p, // platform
+                    'keywordIds' : config.keywordIds,  // keywords
+                    'authorIds' : config.authorIds, // contributors
+                    'blogIds' : config.bl // blogs
+                }
+            }
+
+            };
         }
 
-    </script>
+        function attachAdTestParam(config) {
+            var url = (window.location != window.parent.location)
+                ? document.referrer
+                : document.location;
 
-    <!--<script>draw3p(function(config, done){-->
-        <!--function attachAdTestParam(config) {-->
-            <!--var url = (window.location != window.parent.location)-->
-                <!--? document.referrer-->
-                <!--: document.location;-->
+            var fragments = url.split('adtest=');
+            if (fragments.length === 2) {
+                config.targeting.at = fragments[1]
+            }
+            return config;
+        }
 
-            <!--var fragments = url.split('adtest=');-->
-            <!--if (fragments.length === 2) {-->
-                <!--config.targeting.at = fragments[1]-->
-            <!--}-->
-            <!--return config;-->
-        <!--}-->
+        function attachKruxSegments(config) {
+            if (localStorage.getItem('kxsegs') !== null) {
+                var kxSegList = localStorage.getItem('kxsegs').split(',');
 
-        <!--function attachKruxSegments(config) {-->
-            <!--if (localStorage.getItem('kxsegs') !== null) {-->
-                <!--var kxSegList = localStorage.getItem('kxsegs').split(',');-->
+                if (kxSegList.length > 0) {
+                    config.targeting.x = kxSegList;
+                }
+            }
 
-                <!--if (kxSegList.length > 0) {-->
-                    <!--config.targeting.x = kxSegList;-->
-                <!--}-->
-            <!--}-->
+            return config;
+        }
 
-            <!--return config;-->
-        <!--}-->
+        function configIsValid(config) {
+            return config && config.targeting;
+        }
 
-        <!--if(config && config.targeting) {-->
-            <!--var configWithAdTestParam = attachAdTestParam(config);-->
-            <!--var result = attachKruxSegments(configWithAdTestParam);-->
-        <!--} else {-->
-            <!--done();-->
-        <!--}-->
+        function isMasterIframe(config) {
+            return window.context.isMaster && config.type == 'doubleclick';
+        }
 
-        <!--done(result);-->
-    <!--})</script>-->
+        // this is the big AMP callback
+        draw3p(function (config, done) {
+
+            if (configIsValid(config) && isMasterIframe(config)) {
+                exposeMetaDataForKrux();
+                loadKrux();
+            }
+
+            if (configIsValid(config)) {
+                var configWithAdTestParam = attachAdTestParam(config);
+                var result = attachKruxSegments(configWithAdTestParam);
+            } else {
+                done();
+            }
+
+            done(result);
+        })</script>
 </div>
 <script>if (window.docEndCallback) window.docEndCallback()</script>
 </body>
