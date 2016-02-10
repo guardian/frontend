@@ -4,6 +4,7 @@ import common.{NavItem, SectionLink, Pagination}
 import model.content._
 import model.facia.PressedCollection
 import model.liveblog.{BlockAttributes, BodyBlock}
+import quiz._
 import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
@@ -180,6 +181,7 @@ object ContentTypeFormat {
   implicit val answerFormat = Json.format[Answer]
   implicit val questionFormat = Json.format[Question]
   implicit val quizResultGroupFormat = Json.format[ResultGroup]
+  implicit val quizContentFormat = Json.format[QuizContent]
   implicit val quizFormat = Json.format[Quiz]
   implicit val atomsFormat = Json.format[Atoms]
   implicit val blockAttributesFormat = Json.format[BlockAttributes]
