@@ -49,6 +49,32 @@ class ImgSrcTest extends FlatSpec with Matchers with OneAppPerSuite {
 
   val mediaImage = ImageMedia.apply(Seq(mediaImageAsset))
 
+  val s3UploadJpgImageAsset = ImageAsset.make(Asset(
+    AssetType.Image,
+    Some("image/jpeg"),
+    Some("https://uploads.guim.co.uk/2016/02/10/Screen_Shot_2016-02-09_at_17.50.09.jpeg"),
+    None
+  ), 1)
+
+  val s3UploadJpgImage = ImageMedia.apply(Seq(s3UploadJpgImageAsset))
+
+  val s3UploadPNGImageAsset = ImageAsset.make(Asset(
+    AssetType.Image,
+    Some("image/png"),
+    Some("https://uploads.guim.co.uk/2016/02/04/gu.png"),
+    None
+  ), 1)
+
+  val s3UploadPNGImage = ImageMedia.apply(Seq(s3UploadPNGImageAsset))
+
+  val s3UploadGifImageAsset = ImageAsset.make(Asset(
+    AssetType.Image,
+    Some("image/gif"),
+    Some("https://uploads.guim.co.uk/2016/02/04/meep.gif"),
+    None
+  ), 1)
+
+  val s3UploadGifImage = ImageMedia.apply(Seq(s3UploadGifImageAsset))
 
   "ImgSrc" should "convert the URL of a static image to the resizing endpoint with a /static prefix" in {
     ImageServerSwitch.switchOn()
@@ -87,5 +113,20 @@ class ImgSrcTest extends FlatSpec with Matchers with OneAppPerSuite {
     ImageServerSwitch.switchOn()
     val someoneElsesImage = ImageMedia(Seq(ImageAsset.make(asset.copy(file = Some("http://foo.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.gif")),0)))
     Item700.bestFor(someoneElsesImage) should be (Some("http://foo.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.gif"))
+  }
+
+  it should "convert the URL of a jpeg s3 upload to the resizing endpoint with a /uploads prefix" in {
+    ImageServerSwitch.switchOn()
+    Item700.bestFor(s3UploadJpgImage) should be (Some(s"$imageHost/img/uploads/2016/02/10/Screen_Shot_2016-02-09_at_17.50.09.jpeg?w=700&q=85&auto=format&sharp=10&s=ee0643ec4ff438e30b05b070628c704e"))
+  }
+
+  it should "convert the URL of a png s3 upload to the resizing endpoint with a /uploads prefix" in {
+    ImageServerSwitch.switchOn()
+    Item700.bestFor(s3UploadPNGImage) should be (Some(s"$imageHost/img/uploads/2016/02/04/gu.png?w=700&q=85&auto=format&sharp=10&s=c19a854dc0df6dd7919adae79abb2fde"))
+  }
+
+  it should "not convert the URL of a gif s3 upload (we do not support animated GIF)" in {
+    ImageServerSwitch.switchOn()
+    Item700.bestFor(s3UploadGifImage) should be (Some(s"https://uploads.guim.co.uk/2016/02/04/meep.gif"))
   }
 }
