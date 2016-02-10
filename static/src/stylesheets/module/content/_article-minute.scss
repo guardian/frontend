@@ -193,6 +193,7 @@ $minute-layout-margin-nudge: gs-span(1);
 
 .article__container--minute-article {
     background-color: $us-minute-main-colour;
+    padding-bottom: $gs-baseline;
 }
 
 /* ==========================================================================
@@ -238,13 +239,14 @@ $minute-layout-margin-nudge: gs-span(1);
             }
         }
     }
-    @include mq($from: mobileLandscape) {
-        height: auto;
-        display: block;
-        width: auto;
 
-        &:after {
+    // Mobile Landscape
+    @include mq($from: mobileLandscape) {
+        margin-top: $gs-baseline;
+
+        &:before {
             width: gs-span(6);
+            position: absolute;
         }
 
         .block-elements {
@@ -258,6 +260,7 @@ $minute-layout-margin-nudge: gs-span(1);
         }
     }
 
+    // Tablet
     @include mq($from: tablet) {
         border-top: 0 none;
         margin: $gs-baseline auto;
@@ -286,6 +289,7 @@ $minute-layout-margin-nudge: gs-span(1);
         }
     }
 
+    // Desktop
     @include mq($from: desktop) {
         max-width: gs-span(11);
         margin: $gs-baseline/2 0 $gs-baseline $minute-layout-margin-nudge;
@@ -306,6 +310,7 @@ $minute-layout-margin-nudge: gs-span(1);
         }
     }
 
+    // LeftCol
     @include mq($from: leftCol) {
         max-width: gs-span(12);
 
@@ -319,6 +324,7 @@ $minute-layout-margin-nudge: gs-span(1);
         }
     }
 
+    // Wide
     @include mq($from: wide) {
         margin-left: $minute-layout-margin-nudge + gs-span(1);
 
