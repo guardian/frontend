@@ -214,6 +214,10 @@ $minute-layout-margin-nudge: gs-span(1);
         z-index: 2;
         margin-top: auto;
         right: 0;
+
+        @if ($browser-supports-flexbox == false) {
+            position: absolute;
+        }
     }
 
     .block-elements {
