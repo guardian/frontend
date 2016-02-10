@@ -38,12 +38,12 @@ package object form {
   // Resolves an answer posted by the user to a Question-Answer pair defined by the content Atom.
   private def findQuizDataFor(questionIndex: Int, answerIndex: Int, answerText: String, quiz: QuizContent): Option[(Question, Answer)] = {
     val quizQuestion = quiz.questions.zipWithIndex.find {
-      case (question, questionIndex) => questionIndex == questionIndex
+      case (question, index) => questionIndex == index
     }
 
     val quizAnswer = quizQuestion.flatMap { case (question, _) =>
       question.answers.zipWithIndex.find {
-        case (answer, answerIndex) => answer.text == answerText && answerIndex == answerIndex
+        case (answer, index) => answer.text == answerText && answerIndex == index
       }
     }
 
