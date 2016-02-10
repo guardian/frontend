@@ -110,13 +110,13 @@ define([
             $adSlot = $(el);
 
         if ($adSlot.hasClass('ad-slot--mostpop')) {
-            fastdom.read(function() {
+            fastdom.read(function () {
                 height = $adSlot.dim().height;
-            })
+            });
 
-            fastdom.write(function() {
+            fastdom.write(function () {
                 $('.js-most-popular-footer .tabs__pane').css('height', height);
-            })
+            });
         }
 
         createToggle(el);
