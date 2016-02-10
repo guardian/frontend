@@ -12,6 +12,7 @@ define([
     'template!common/views/save-for-later/save-url.html',
     'template!common/views/save-for-later/save-link.html',
     'template!common/views/save-for-later/save-button.html',
+    'template!common/views/save-for-later/signin-url.html',
     'lodash/functions/bindAll',
     'lodash/objects/assign',
     'lodash/collections/forEach',
@@ -31,6 +32,7 @@ define([
     saveUrl,
     saveLink,
     saveButton,
+    signinUrl,
     bindAll,
     assign,
     forEach,
@@ -352,7 +354,7 @@ define([
     };
 
     SaveForLater.prototype.signUserInToSaveArticle = function (id, shortUrl) {
-        var url = template('<%= idUrl%>/save-content?returnUrl=<%= returnUrl%>&shortUrl=<%= shortUrl%>&platform=<%= platform%>&articleId=<%= articleId %>&INTCMP=SFL-SO', {
+        var url = signinUrl({
             idUrl: config.page.idUrl,
             returnUrl: encodeURIComponent(document.location.href),
             shortUrl: shortUrl,

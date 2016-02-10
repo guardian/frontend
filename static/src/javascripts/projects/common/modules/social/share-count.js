@@ -43,8 +43,8 @@ define([
     }
 
     function addToShareCount(val) {
-        var html = $shareCountEls.hasClass('js-sharecount-immersive')) ?
-            shareCountImmersiveTemplate({ icon: svgs('share') } :
+        var html = $shareCountEls.hasClass('js-sharecount-immersive') ?
+            shareCountImmersiveTemplate({ icon: svgs('share') }) :
             shareCountTemplate();
 
         $shareCountEls

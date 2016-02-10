@@ -6,7 +6,7 @@ define([
     'common/utils/mediator',
     'common/modules/identity/api',
     'common/modules/commercial/commercial-features',
-    'externalTpl!common/views/commercial/plista.html'
+    'template!common/views/commercial/plista.html'
 ], function (
     fastdom,
     $,
