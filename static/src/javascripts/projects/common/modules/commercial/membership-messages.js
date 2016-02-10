@@ -1,9 +1,8 @@
 define([
     'common/utils/config',
     'common/utils/storage',
-    'common/utils/template',
     'common/modules/ui/message',
-    'text!common/views/membership-message.html',
+    'template!common/views/membership-message.html',
     'common/views/svgs',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/user-features',
@@ -11,7 +10,6 @@ define([
 ], function (
     config,
     storage,
-    template,
     Message,
     messageTemplate,
     svgs,
@@ -83,7 +81,7 @@ define([
             pinOnHide: false,
             siteMessageLinkName: 'membership message',
             siteMessageCloseBtn: 'hide'
-        }).show(template(messageTemplate, data));
+        }).show(messageTemplate(data));
     }
 
     function init() {

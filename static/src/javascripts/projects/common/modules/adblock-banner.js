@@ -1,14 +1,12 @@
 define([
     'fastdom',
     'common/utils/$',
-    'common/utils/template',
     'common/views/svgs',
-    'text!common/views/commercial/adblock-sticky-message.html',
-    'text!common/views/commercial/adblock-sticky-message-coin.html'
+    'template!common/views/commercial/adblock-sticky-message.html',
+    'template!common/views/commercial/adblock-sticky-message-coin.html'
 ], function (
     fastdom,
     $,
-    template,
     svgs,
     adblockStickyMessage,
     adblockStickyMessageCoin) {
@@ -38,7 +36,7 @@ define([
     };
 
     AdblockBanner.prototype.show = function () {
-        var bannerTmpl = template(this.templates[this.template],
+        var bannerTmpl = this.templates[this.template](
             {
                 supporterLink: this.supporterLink,
                 quoteText: this.quoteText,

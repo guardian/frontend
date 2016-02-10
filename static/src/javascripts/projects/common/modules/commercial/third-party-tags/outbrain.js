@@ -5,11 +5,10 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/utils/template',
     'common/modules/identity/api',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/third-party-tags/outbrain-codes',
-    'text!common/views/commercial/outbrain.html'
+    'template!common/views/commercial/outbrain.html'
 ], function (
     Promise,
     fastdom,
@@ -17,14 +16,12 @@ define([
     config,
     detect,
     mediator,
-    template,
     identity,
     commercialFeatures,
     getCode,
-    outbrainStr
+    outbrainTpl
 ) {
     var outbrainUrl = '//widgets.outbrain.com/outbrain.js';
-    var outbrainTpl = template(outbrainStr);
 
     var selectors = {
         outbrain: {

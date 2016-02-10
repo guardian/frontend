@@ -80,7 +80,7 @@ This returns a look-up method to pull icons out of the `svgs` object in `svgs.js
 ```javascript
 // myfile.js
 define([
-    'common/utils/template',
+    'lodash/utilities/template',
     'common/views/svgs'
 ], function (
     template,

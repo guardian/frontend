@@ -6,9 +6,8 @@ define([
     'fastdom',
     'common/utils/config',
     'common/utils/mediator',
-    'common/utils/template',
     'common/views/svgs',
-    'text!common/views/save-for-later/delete-all-button.html'
+    'template!common/views/save-for-later/delete-all-button.html'
 ], function (
     $,
     qwery,
@@ -17,7 +16,6 @@ define([
     fastdom,
     config,
     mediator,
-    template,
     svgs,
     deleteButtonAllTmp) {
     return function SavedForLater() {
@@ -39,7 +37,7 @@ define([
                 var $button = bonzo(qwery('.js-save-for-later__delete-all')[0]);
 
                 fastdom.write(function () {
-                    $button.html(template(deleteButtonAllTmp, {
+                    $button.html(deleteButtonAllTmp({
                         icon: svgs('crossIcon'),
                         state: state,
                         dataLinkName: 'saved | remove all' + (state === 'confirm' ? ' | confirm' : '')

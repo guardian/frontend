@@ -11,8 +11,7 @@ define([
     'common/utils/config',
     'lodash/collections/every',
     'lodash/collections/find',
-    'text!common/views/email/iframe.html',
-    'common/utils/template'
+    'template!common/views/email/iframe.html'
 ], function (
     $,
     bean,
@@ -26,8 +25,7 @@ define([
     config,
     every,
     find,
-    iframeTemplate,
-    template
+    iframeTemplate
 ) {
 
     var listConfigs = {
@@ -90,7 +88,7 @@ define([
         },
         addListToPage = function (listConfig) {
             if (listConfig) {
-                var iframe = bonzo.create(template(iframeTemplate, listConfig))[0],
+                var iframe = bonzo.create(iframeTemplate(listConfig))[0],
                     $iframeEl = $(iframe),
                     $insertEl = $(listConfig.insertSelector);
 

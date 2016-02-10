@@ -2,7 +2,6 @@ define([
     'bonzo',
     'bean',
     'common/utils/$',
-    'common/utils/template',
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/detect',
@@ -10,12 +9,12 @@ define([
     'common/modules/charts/table-doughnut',
     'common/modules/component',
     'common/modules/sport/score-board',
-    'common/modules/ui/rhc'
+    'common/modules/ui/rhc',
+    'lodash/utilities/template'
 ], function (
     bonzo,
     bean,
     $,
-    template,
     ajax,
     config,
     detect,
@@ -23,7 +22,8 @@ define([
     Doughnut,
     Component,
     ScoreBoard,
-    rhc
+    rhc,
+    template
 ) {
     function cricket() {
         var cricketScore, parentEl,

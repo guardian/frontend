@@ -2,26 +2,24 @@ define([
     'Promise',
     'common/utils/$',
     'common/utils/config',
-    'common/utils/template',
     'common/utils/fastdom-promise',
     'common/views/svgs',
     'common/modules/ui/toggles',
     'common/modules/commercial/creatives/template-preprocessor',
 
     // require templates, so they're bundled up as part of the build
-    'text!common/views/commercial/creatives/ad-feature-mpu.html',
-    'text!common/views/commercial/creatives/ad-feature-mpu-large.html',
-    'text!common/views/commercial/creatives/ad-feature-mpu-large-v2.html',
-    'text!common/views/commercial/creatives/logo-ad-feature.html',
-    'text!common/views/commercial/creatives/logo-sponsored.html',
-    'text!common/views/commercial/creatives/manual-inline.html',
-    'text!common/views/commercial/creatives/manual-multiple.html',
-    'text!common/views/commercial/creatives/manual-single.html'
+    'template!common/views/commercial/creatives/ad-feature-mpu.html',
+    'template!common/views/commercial/creatives/ad-feature-mpu-large.html',
+    'template!common/views/commercial/creatives/ad-feature-mpu-large-v2.html',
+    'template!common/views/commercial/creatives/logo-ad-feature.html',
+    'template!common/views/commercial/creatives/logo-sponsored.html',
+    'template!common/views/commercial/creatives/manual-inline.html',
+    'template!common/views/commercial/creatives/manual-multiple.html',
+    'template!common/views/commercial/creatives/manual-single.html'
 ], function (
     Promise,
     $,
     config,
-    template,
     fastdom,
     svgs,
     Toggles,
@@ -65,12 +63,12 @@ define([
 
     Template.prototype.create = function () {
         return new Promise(function (resolve) {
-            require(['text!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
+            require(['template!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
                 if (templatePreprocessor[this.params.creative]) {
                     templatePreprocessor[this.params.creative](this);
                 }
 
-                var creativeHtml = template(creativeTpl, this.params);
+                var creativeHtml = creativeTpl(this.params);
                 var $ad = $.create(creativeHtml);
 
                 resolve(fastdom.write(function () {

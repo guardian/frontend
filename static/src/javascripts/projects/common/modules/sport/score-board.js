@@ -2,14 +2,12 @@ define([
     'bonzo',
     'common/utils/detect',
     'common/utils/$',
-    'common/utils/template',
     'common/modules/component',
-    'text!common/views/sport/score-container.html'
+    'template!common/views/sport/score-container.html'
 ], function (
     bonzo,
     detect,
     $,
-    template,
     component,
     scoreContainerHtml
 ) {
@@ -24,7 +22,7 @@ define([
         this.pageType = context.pageType;
         this.parent = context.parent;
 
-        this.placeholder = bonzo.create(template(scoreContainerHtml, {
+        this.placeholder = bonzo.create(scoreContainerHtml({
             loadingState: this.pageType !== 'report' ? ' score__loading--live' : ''
         }))[0];
 

@@ -6,9 +6,8 @@ define([
     'common/utils/config',
     'lodash/utilities/noop',
     'common/views/svgs',
-    'common/utils/template',
     'common/modules/ui/message',
-    'text!common/views/survey-message.html',
+    'template!common/views/survey-message.html',
     'common/utils/detect',
     'common/modules/user-prefs',
     'common/utils/cookies'
@@ -20,7 +19,6 @@ define([
     config,
     noop,
     svgs,
-    template,
     Message,
     messageTemplate,
     detect,
@@ -71,7 +69,7 @@ define([
                 arrowWhiteRight: svgs('arrowWhiteRight')
             },
             createMessage = function () {
-                new Message(messageId, messageOptions).show(template(messageTemplate, messageTemplateOptions));
+                new Message(messageId, messageOptions).show(messageTemplate(messageTemplateOptions));
                 userPrefs.set('survey-message-seen', true);
             };
 
