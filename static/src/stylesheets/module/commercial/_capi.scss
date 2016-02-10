@@ -19,7 +19,10 @@
     .fc-item__link:visited,
     .fc-item__standfirst,
     .item__link:visited,
-    .item__link:visited .item__title {
+    .item__link:visited .item__title,
+    // Story-package overrides
+    .fc-container--story-package .fc-item__standfirst,
+    .fc-container--story-package .fc-item__link:visited {
         color: colour(neutral-2-contrasted);
     }
 
@@ -38,7 +41,8 @@
     .fc-item__standfirst,
     .fc-item--list-compact,
     .item__title,
-    .linkslist__action {
+    .linkslist__action,
+    .fc-sublink__title {
         @include f-headlineSans;
     }
 
@@ -89,7 +93,13 @@
     background-color: colour(paid-article);
 
     .ad-slot--paid-for-badge--front {
-        border-top-color: colour(paid-article-bg);
+        border-top-color: colour(neutral-2);
+
+        .ad-slot--paid-for-badge__link {
+            &:after {
+                border-bottom-color: colour(neutral-2);
+            }
+        }
     }
 
     .fc-container--first .fc-container__header__title,
@@ -110,6 +120,11 @@
         border-top: 0;
     }
 
+    .fc-container--story-package .tone-news--item.fc-item {
+        // This is to override an !important background colour in story-package items
+        background-color: colour(paid-article-subheader) !important;
+    }
+
     .tone-media--item {
         .u-faux-block-link--hover {
             background-color: colour(neutral-6);
@@ -123,6 +138,11 @@
         .fc-item__link:visited {
             color: colour(neutral-1);
         }
+    }
+
+    // Override story-package hover colours
+    .fc-container--story-package .fc-item .u-faux-block-link--hover {
+        background-color: colour(neutral-6);
     }
 
     .headline-list__item:before {
@@ -161,4 +181,14 @@
     .fc-item__kicker:after {
         color: #a0a1a2;
     }
+
+    .fc-item__meta {
+        color: colour(neutral-2);
+    }
+
+    &.fc-container--sponsored,
+    &.fc-container--foundation-supported {
+        background-color: unset;
+    }
+
 }

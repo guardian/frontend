@@ -20,7 +20,7 @@ define([
     // This must be the full path because we use curl config to change it based
     // on env
     'bootstraps/enhanced/media/video-player',
-    'template!common/views/ui/loading.html',
+    'text!common/views/ui/loading.html',
     'lodash/functions/debounce'
 ], function (
     bean,
@@ -43,7 +43,8 @@ define([
     techOrder,
     videojs,
     loadingTmpl,
-    debounce) {
+    debounce
+) {
 
     function getAdUrl() {
         // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
@@ -65,7 +66,7 @@ define([
     }
 
     function initLoadingSpinner(player) {
-        player.loadingSpinner.contentEl().innerHTML = loadingTmpl();
+        player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
     }
 
     function upgradeVideoPlayerAccessibility(player) {
@@ -147,8 +148,7 @@ define([
         });
     }
 
-    function initPlayer() {
-
+    function initPlayer(withPreroll) {
         // When possible, use our CDN instead of a third party (zencoder).
         if (config.page.videoJsFlashSwf) {
             videojs.options.flash.swf = config.page.videoJsFlashSwf;
@@ -158,7 +158,7 @@ define([
 
         fastdom.read(function () {
             $('.js-gu-media--enhance').each(function (el) {
-                enhanceVideo(el, false);
+                enhanceVideo(el, false, withPreroll);
             });
         });
 
@@ -168,7 +168,8 @@ define([
         mediator.on('page:media:moreinloaded', initPlayButtons);
     }
 
-    function enhanceVideo(el, autoplay) {
+    function enhanceVideo(el, autoplay, withPreroll) {
+
         var mediaType = el.tagName.toLowerCase(),
             $el = bonzo(el).addClass('vjs vjs-tech-' + videojs.options.techOrder[0]),
             mediaId = $el.attr('data-media-id'),
@@ -241,28 +242,21 @@ define([
 
                     player.fullscreener();
 
-                    //The `hasMultipleVideosInPage` flag is temporary until the #10034 will be fixed
-                    if (commercialFeatures.videoPreRolls && !blockVideoAds && !config.page.hasMultipleVideosInPage) {
+                    if (withPreroll && !blockVideoAds) {
                         raven.wrap(
                             { tags: { feature: 'media' } },
                             function () {
                                 events.bindPrerollEvents(player);
-                                player.adSkipCountdown(10);
-
-                                require(['js!http://imasdk.googleapis.com/js/sdkloader/ima3.js'], function () {
-                                    player.ima({
-                                        id: mediaId,
-                                        adTagUrl: getAdUrl()
-                                    });
-                                    // Video analytics event.
-                                    player.trigger(events.constructEventName('preroll:request', player));
-                                    player.ima.requestAds();
-                                }, function (e) {
-                                    raven.captureException(e, { tags: { feature: 'media', action: 'ads' } });
-                                    // ad blocker, so just carry on without
-                                    events.bindContentEvents(player);
-                                    throw e;
+                                player.adSkipCountdown(15);
+                                player.ima({
+                                    id: mediaId,
+                                    adTagUrl: getAdUrl(),
+                                    prerollTimeout: 1000
                                 });
+                                player.ima.requestAds();
+
+                                // Video analytics event.
+                                player.trigger(events.constructEventName('preroll:request', player));
                             }
                         )();
                     } else {
@@ -357,12 +351,28 @@ define([
         });
     }
 
+    function initWithRaven(withPreroll) {
+        raven.wrap(
+            { tags: { feature: 'media' } },
+            function () { initPlayer(withPreroll); }
+        )();
+    }
+
     function init() {
+        // The `hasMultipleVideosInPage` flag is temporary until the #10034 will be fixed
+        var shouldPreroll = commercialFeatures.videoPreRolls && !config.page.hasMultipleVideosInPage;
+
         if (config.switches.enhancedMediaPlayer) {
-            raven.wrap(
-                { tags: { feature: 'media' } },
-                initPlayer
-            )();
+            if (shouldPreroll) {
+                require(['js!http://imasdk.googleapis.com/js/sdkloader/ima3.js']).then(function () {
+                    initWithRaven(true);
+                }, function (e) {
+                    raven.captureException(e, { tags: { feature: 'media', action: 'ads' } });
+                    initWithRaven();
+                });
+            } else {
+                initWithRaven();
+            }
         }
         initMoreInSection();
         initMostViewedMedia();

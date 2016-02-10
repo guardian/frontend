@@ -1,8 +1,8 @@
 package views.support
 
-import model.pressed.{Audio, Gallery, Video}
 import conf.switches.Switches.SaveForLaterSwitch
 import layout._
+import model.pressed.{Audio, Gallery, Video}
 import slices.{Dynamic, DynamicSlowMPU}
 
 object GetClasses {
@@ -103,7 +103,6 @@ object GetClasses {
       ("fc-container--has-show-more", hasDesktopShowMore),
       ("js-container--first", isFirst),
       ("fc-container--sponsored", commercialOptions.isSponsored),
-      ("fc-container--advertisement-feature", commercialOptions.isAdvertisementFeature),
       ("fc-container--foundation-supported", commercialOptions.isFoundationSupported),
       ("fc-container--lazy-load", lazyLoad),
       ("js-container--lazy-load", lazyLoad),

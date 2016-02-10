@@ -1,31 +1,37 @@
 define([
+    'Promise',
     'common/utils/$',
     'common/utils/config',
+    'common/utils/template',
+    'common/utils/fastdom-promise',
     'common/views/svgs',
-    'template!common/views/commercial/creatives/ad-feature-mpu.html',
-    'template!common/views/commercial/creatives/ad-feature-mpu-large.html',
-    'template!common/views/commercial/creatives/ad-feature-mpu-large-v2.html',
-    'template!common/views/commercial/creatives/logo-ad-feature.html',
-    'template!common/views/commercial/creatives/logo-sponsored.html',
-    'template!common/views/commercial/creatives/manual-inline.html',
-    'template!common/views/commercial/creatives/manual-multiple.html',
-    'template!common/views/commercial/creatives/manual-single.html'
+    'common/modules/ui/toggles',
+    'common/modules/commercial/creatives/template-preprocessor',
+
+    // require templates, so they're bundled up as part of the build
+    'text!common/views/commercial/creatives/ad-feature-mpu.html',
+    'text!common/views/commercial/creatives/ad-feature-mpu-large.html',
+    'text!common/views/commercial/creatives/ad-feature-mpu-large-v2.html',
+    'text!common/views/commercial/creatives/logo-ad-feature.html',
+    'text!common/views/commercial/creatives/logo-sponsored.html',
+    'text!common/views/commercial/creatives/manual-inline.html',
+    'text!common/views/commercial/creatives/manual-multiple.html',
+    'text!common/views/commercial/creatives/manual-single.html'
 ], function (
+    Promise,
     $,
     config,
-    svgs
+    template,
+    fastdom,
+    svgs,
+    Toggles,
+    templatePreprocessor
 ) {
-
-    var templates = {
-        'ad-feature-mpu': arguments[3],
-        'ad-feature-mpu-large': arguments[4],
-        'ad-feature-mpu-large-v2': arguments[5],
-        'logo-ad-feature': arguments[6],
-        'logo-sponsored': arguments[7],
-        'manual-inline': arguments[8],
-        'manual-multiple': arguments[9],
-        'manual-single': arguments[10]
-    };
+    function createToggle(el) {
+        if (el.querySelector('.popup__toggle')) {
+            new Toggles(el).init();
+        }
+    }
 
     /**
      * Create simple templated creatives
@@ -37,19 +43,45 @@ define([
         this.$adSlot = $adSlot;
         this.params  = params;
 
+        if (this.params.Toneclass) {
+            this.params.soulmates = params.Toneclass.indexOf('soulmates') !== -1;
+            this.params.HeaderToneclass = 'commercial__header--' + this.params.Toneclass.replace('commercial--tone-', '');
+        }
+
         this.params.marque36icon = svgs('marque36icon');
         this.params.marque54icon = svgs('marque54icon');
+        this.params.logosoulmates = svgs('logosoulmates');
+        this.params.logosoulmatesjoin = svgs('logosoulmatesjoin');
         this.params.arrowRight = svgs('arrowRight', ['i-right']);
         this.params.logoguardian = svgs('logoguardian');
         this.params.marque36iconCreativeMarque = svgs('marque36icon', ['creative__marque']);
-        this.params.logoFeatureLabel = config.switches.newCommercialContent ? 'Paid for by:' : 'Brought to you by:';
+        this.params.logoFeatureLabel = config.switches.newCommercialContent ? 'Paid for by' : 'Brought to you by:';
+    };
+
+    Template.prototype.postLoadEvents = {
+        'manual-single': createToggle,
+        'manual-multiple': createToggle
     };
 
     Template.prototype.create = function () {
-        var creativeHtml = templates[this.params.creative](this.params);
+        return new Promise(function (resolve) {
+            require(['text!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
+                if (templatePreprocessor[this.params.creative]) {
+                    templatePreprocessor[this.params.creative](this);
+                }
 
-        $.create(creativeHtml)
-            .appendTo(this.$adSlot);
+                var creativeHtml = template(creativeTpl, this.params);
+                var $ad = $.create(creativeHtml);
+
+                resolve(fastdom.write(function () {
+                    $ad.appendTo(this.$adSlot);
+                    if (this.postLoadEvents[this.params.creative]) {
+                        this.postLoadEvents[this.params.creative]($ad[0]);
+                    }
+                    return $ad;
+                }, this));
+            }.bind(this));
+        }.bind(this));
     };
 
     return Template;

@@ -84,7 +84,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
 
   def renderPopularMicroformat2 = Action { implicit request =>
     val edition = Edition(request)
-    val mostPopular = MostPopularAgent.mostPopular(edition)
+    val mostPopular = MostPopularAgent.mostPopular(edition) take 5
 
     Cached(900) {
       JsonComponent(

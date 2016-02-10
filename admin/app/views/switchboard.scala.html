@@ -1,3 +1,4 @@
+@import conf.switches.Switch
 @(env: String, lastModified: Long)(implicit flash: Flash)
 
 @import controllers.admin.routes.UncachedAssets
@@ -19,13 +20,18 @@
             <h4>@group</h4>
             <div class="well">
                 @switches.map { switch =>
-                    <div class="checkbox">
-                        <label for="switch-@switch.name"@if(switch.expiresSoon){ class="Expiring expiry-days-@switch.daysToExpiry"}>
-                            <input id="switch-@switch.name" name="@switch.name" type="checkbox" @if(switch.isSwitchedOn) { checked="checked" }/>
-                            <strong>@switch.name</strong>
-                        </label>
-                        <span> - @switch.description<strong> @switch.daysToExpiry</strong> days left</span>
-                    </div>
+                    @defining(Switch.expiry(switch)) { expiry =>
+                        <div class="checkbox">
+                            <label for="switch-@switch.name" @if(Switch.expiry(switch).expiresSoon) {
+                                class="Expiring expiry-days-@expiry.daysToExpiry"}>
+                                <input id="switch-@switch.name" name="@switch.name" type="checkbox" @if(switch.isSwitchedOn) {
+                                    checked="checked" }/>
+                                <strong>@switch.name</strong>
+                            </label>
+                            <span> - @switch.description
+                                @expiry.daysToExpiry.map{ days => <strong> @days</strong> days left}</span>
+                        </div>
+                    }
                 }
             </div>
         }

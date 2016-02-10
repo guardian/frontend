@@ -5,7 +5,8 @@ define([
     'common/utils/$',
     'common/utils/mediator',
     'common/utils/storage',
-    'template!common/views/commercial/creatives/expandable.html',
+    'common/utils/template',
+    'text!common/views/commercial/creatives/expandable.html',
     'lodash/functions/bindAll'
 ], function (
     bean,
@@ -14,8 +15,10 @@ define([
     $,
     mediator,
     storage,
+    template,
     expandableTpl,
-    bindAll) {
+    bindAll
+) {
 
     /**
      * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10028247
@@ -50,7 +53,7 @@ define([
     };
 
     Expandable.prototype.create = function () {
-        var $expandable = $.create(expandableTpl({ data: this.params }));
+        var $expandable = $.create(template(expandableTpl, { data: this.params }));
 
         this.$ad     = $('.ad-exp--expand', $expandable);
         this.$button = $('.ad-exp__close-button', $expandable);

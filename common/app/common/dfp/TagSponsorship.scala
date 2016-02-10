@@ -89,9 +89,9 @@ object PaidForTag {
 
   def fromLineItems(lineItems: Seq[GuLineItem]): Seq[PaidForTag] = {
 
-    val lineItemsGroupedByTag: Map[String, Seq[GuLineItem]] = {
+    val lineItemsGroupedByTag: Map[PaidForTag, Seq[GuLineItem]] = {
       val logoLineItems = lineItems filterNot (_.isExpired) filter (_.paidForTags.nonEmpty)
-      logoLineItems.foldLeft(Map.empty[String, Seq[GuLineItem]]) { case (soFar, lineItem) =>
+      logoLineItems.foldLeft(Map.empty[PaidForTag, Seq[GuLineItem]]) { case (soFar, lineItem) =>
         val lineItemTags = lineItem.paidForTags map { tag =>
           val tagLineItems = soFar.get(tag).map(_ :+ lineItem).getOrElse(Seq(lineItem))
           tag -> tagLineItems
@@ -101,27 +101,10 @@ object PaidForTag {
     }
 
     lineItemsGroupedByTag.map { case (currTag, currLineItems) =>
-
-      val identifyingTargets = currLineItems.head.targeting.customTargetSets.find {
-        _.targets.exists(t => t.isSeriesTag || t.isKeywordTag)
-      }.head.targets
-
-      val tagType =
-        if (identifyingTargets exists (_.isSeriesTag)) Series
-        else Keyword
-
-      val paidForType =
-        if (identifyingTargets exists (_.isSponsoredSlot)) {
-          Sponsored
-        } else if (identifyingTargets exists (_.isAdvertisementFeatureSlot)) {
-          AdvertisementFeature
-        } else FoundationFunded
-
-      PaidForTag(targetedName = currTag,
-        tagType,
-        paidForType,
-        matchingCapiTagIds = CapiLookupAgent.getTagIds(tagType, currTag),
-        lineItems = currLineItems)
+      currTag.copy(
+        matchingCapiTagIds = CapiLookupAgent.getTagIds(currTag.tagType, currTag.targetedName),
+        lineItems = currLineItems
+      )
     }.toList.sortBy(_.targetedName)
   }
 

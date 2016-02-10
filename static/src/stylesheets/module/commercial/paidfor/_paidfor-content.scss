@@ -41,17 +41,46 @@
         height: 1px;
         z-index: 5;
     }
+
+    .inline-glabs-logo-small {
+        svg {
+            right: 0;
+            left: unset;
+            top: 4px;
+            width: 75px;
+            height: 23px;
+
+            path {
+                fill: #ffffff;
+            }
+        }
+    }
 }
 
 .paidfor-box {
     color: inherit;
     display: block;
-    padding: $gs-baseline / 3 $gs-gutter / 4 $gs-baseline;
+    padding: 0 $gs-gutter / 4;
 
     &:hover,
     &:focus {
         text-decoration: none;
     }
+}
+
+.paidfor-box--header {
+    padding-top: $gs-baseline / 3;
+}
+
+.paidfor-box--text {
+    &:hover,
+    &:focus {
+        text-decoration: underline;
+    }
+}
+
+.paidfor-box--logo {
+    padding-bottom: $gs-baseline;
 }
 
 .paidfor-title {
@@ -68,6 +97,11 @@
     img {
         vertical-align: middle;
     }
+}
+
+.paidfor-logo {
+    max-width: $gs-baseline * 6;
+    height: $gs-baseline * 3;
 }
 
 .paidfor-band {
@@ -92,8 +126,12 @@
         padding: $gs-baseline / 3 $gs-gutter / 2;
     }
 
+    .paidfor-meta__label {
+        padding-left: 0;
+    }
+
     .paidfor-branding {
-        padding: $gs-baseline / 2 $gs-gutter / 2;
+        padding: ($gs-baseline / 2) 0 ($gs-baseline / 2) ($gs-gutter / 2);
 
         svg {
             height: 24px;
@@ -105,4 +143,6 @@
 .paidfor-band__inner {
     display: flex;
     justify-content: space-between;
+    box-sizing: border-box;
+    @include content-gutter();
 }

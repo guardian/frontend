@@ -5,7 +5,11 @@ body {
 }
 
 h1 {
-    font-size: 3em;
+    font-size: 3rem;
+}
+
+h2 {
+    font-size: 2.2rem;
 }
 
 .deploys {
@@ -23,12 +27,12 @@ h1 {
 .deploy {
     width: 9em;
     margin-right: 1em;
+    margin-bottom: 1em;
     box-sizing: border-box;
     padding: 1em;
 }
 
 .deploy h2 {
-    font-size: 3em;
     margin-top: 0;
     margin-bottom: 0;
     text-align: center;
@@ -76,8 +80,14 @@ a:hover {
     text-decoration: underline;
 }
 
-div > div {
+/*Clearfix*/
+.row {
+    overflow: hidden;
+}
+
+.col {
     float: left;
-    width: 31%;
-    margin: 0 1%;
+    width: 33.333%;
+    box-sizing: border-box;
+    padding-right: 1rem;
 }

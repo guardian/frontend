@@ -1,21 +1,20 @@
 @(trails: Seq[model.pressed.PressedContent], containerLayout: layout.ContainerLayout, containerIndex: Int, actualDate: org.joda.time.DateTime, page: model.MetaData, nav: PreviousAndNext, tzOverride: Option[org.joda.time.DateTimeZone] = None)(implicit request: RequestHeader, config: model.pressed.CollectionConfig)
 
-@import views.html.fragments.containers.facia_cards.{slice, date}
-@import views.support.{GetClasses, PreviousAndNext}
 @import common.LinkTo
-@import dfp.DfpAgent
-@import services.FaciaContentConvert
+@import views.html.fragments.containers.facia_cards.{date, slice}
+@import views.support.Commercial.container
+@import views.support.{GetClasses, PreviousAndNext}
 
 @* TODO Consolidate this with the master container template to get rid of repetition *@
 
 @defining(page.webTitle) { case (webTitle) =>
     <section class="@GetClasses.forTagContainer(webTitle.nonEmpty)"
         data-link-name="all index"
-        @DfpAgent.sponsorshipTag(config).map { keyword =>
-            data-keywords="@keyword"
-        }
-        @DfpAgent.sponsorshipType(config).map { sponsorshipType =>
-            data-sponsorship="@sponsorshipType"
+        @for(sponsorData <- container.mkSponsorDataAttributes(config)) {
+            @for(sponsor <- sponsorData.sponsor) { data-sponsor="@sponsor" }
+            @for(seriesId <- sponsorData.seriesId) { data-keywords="@seriesId" }
+            @for(keywordId <- sponsorData.keywordId) { data-keywords="@keywordId" }
+            @for(sponsorshipType <- sponsorData.sponsorshipType) { data-sponsorship="@sponsorshipType" }
         }
         data-component="all index">
         <div class="fc-container__inner">

@@ -33,18 +33,19 @@ window.curlConfig = {
             'googletag.js':                 '@{Configuration.javascript.config("googletagJsUrl")}',
             'ophan/ng':                     '@{Configuration.javascript.config("ophanJsUrl")}',
             svgs:                           '../inline-svgs',
+
+            // video
             'bootstraps/enhanced/media/video-player': 'bootstraps/enhanced/media/video-player-dev.js',
-            videojs:                        'components/video.js/video.min.js',
-            videojsads:                     'components/videojs-contrib-ads/videojs.ads.min.js',
+            videojs:                        'components/video.js/video.js',
+            'videojs-contrib-ads':          'components/videojs-contrib-ads/videojs.ads.js',
             videojsembed:                   'components/videojs-embed/videojs.embed.js',
-            videojsima:                     'components/videojs-ima/videojs.ima.js',
+            'videojs-ima':                  'components/videojs-ima/videojs.ima.js',
             videojspersistvolume:           'components/videojs-persistvolume/videojs.persistvolume.js',
             videojsplaylist:                'components/videojs-playlist-audio/videojs.playlist.js',
 
             // plugins
             text:         'components/requirejs-text/text',
-            inlineSvg:    'projects/common/utils/inlineSvg',
-            template:     'projects/common/utils/lodash-loader'
+            inlineSvg:    'projects/common/utils/inlineSvg'
         } else {
             'enhanced-vendor':                   '@Static("javascripts/enhanced-vendor.js")',
             'bootstraps/enhanced/main':          '@Static("javascripts/bootstraps/enhanced/main.js")',
@@ -60,6 +61,7 @@ window.curlConfig = {
             'bootstraps/enhanced/media/main':    '@Static("javascripts/bootstraps/enhanced/media/main.js")',
             'bootstraps/enhanced/article':       '@Static("javascripts/bootstraps/enhanced/article.js")',
             'bootstraps/enhanced/liveblog':      '@Static("javascripts/bootstraps/enhanced/liveblog.js")',
+            'bootstraps/enhanced/article-minute':'@Static("javascripts/bootstraps/enhanced/article-minute.js")',
             'bootstraps/enhanced/trail':         '@Static("javascripts/bootstraps/enhanced/trail.js")',
             'bootstraps/enhanced/gallery':       '@Static("javascripts/bootstraps/enhanced/gallery.js")',
             'bootstraps/enhanced/profile':       '@Static("javascripts/bootstraps/enhanced/profile.js")',
@@ -72,8 +74,7 @@ window.curlConfig = {
 
             // plugins
             text:                       'text', // noop
-            inlineSvg:                  'inlineSvg', // noop
-            template:                   'template'
+            inlineSvg:                  'inlineSvg' // noop
         }
     }
 };

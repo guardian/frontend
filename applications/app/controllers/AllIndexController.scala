@@ -1,18 +1,19 @@
 package controllers
 
-import play.api.mvc.{RequestHeader, Action, Controller}
-import scala.concurrent.Future
-import conf.LiveContentApi
-import common.{Logging, ExecutionContexts, Edition}
-import model._
-import services.{IndexPageItem, ConfigAgent, IndexPage}
-import views.support.PreviousAndNext
-import org.joda.time.format.DateTimeFormat
-import org.joda.time.{DateTimeZone, DateTime}
-import implicits.{ItemResponses, Dates}
-import LiveContentApi.getResponse
-import common.Edition.defaultEdition
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
+import common.Edition.defaultEdition
+import common.{Edition, ExecutionContexts, Logging}
+import conf.LiveContentApi
+import conf.LiveContentApi.getResponse
+import implicits.{Dates, ItemResponses}
+import model._
+import org.joda.time.format.DateTimeFormat
+import org.joda.time.{DateTime, DateTimeZone}
+import play.api.mvc.{Action, Controller, RequestHeader}
+import services.{ConfigAgent, IndexPage, IndexPageItem}
+import views.support.PreviousAndNext
+
+import scala.concurrent.Future
 
 object AllIndexController extends Controller with ExecutionContexts with ItemResponses with Dates with Logging {
 
@@ -95,10 +96,16 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
       LiveContentApi.item(s"/$path", Edition(request)).pageSize(50).toDate(date).orderBy("newest")
     ).map{ item =>
       item.section.map( section =>
-        IndexPage(Section.make(section), item.results.map(IndexPageItem(_)), date = date)
+        IndexPage(
+          page = Section.make(section),
+          contents = item.results.map(IndexPageItem(_)),
+          Tags(Nil),
+          date,
+          tzOverride = None
+        )
       ).orElse(item.tag.map( apitag => {
         val tag = Tag.make(apitag)
-        IndexPage(tag, item.results.map(IndexPageItem(_)), Tags(Seq(tag)), date = date)
+        IndexPage(page = tag, contents = item.results.map(IndexPageItem(_)), Tags(Seq(tag)), date, tzOverride = None)
       }))
     }
 

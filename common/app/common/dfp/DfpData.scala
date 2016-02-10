@@ -231,8 +231,29 @@ case class GuLineItem(id: Long,
   val isExpiredRecently = isExpired && endTime.exists(_.isAfter(now.minusWeeks(1)))
   val isExpiringSoon = !isExpired && endTime.exists(_.isBefore(now.plusMonths(1)))
 
-  val paidForTags: Seq[String] = targeting.customTargetSets.flatMap { targetSet =>
-    targetSet.sponsoredTags ++ targetSet.advertisementFeatureTags ++ targetSet.foundationSupportedTags
+  val paidForTags: Seq[PaidForTag] = targeting.customTargetSets.flatMap { targetSet =>
+
+    def paidForTagsFromTargets(targetedNames: Seq[String], tagType: TagType, paidForType: PaidForType) = {
+      targetedNames map { targetedName =>
+        PaidForTag(
+          targetedName,
+          tagType = tagType,
+          paidForType = paidForType,
+          matchingCapiTagIds = Nil,
+          lineItems = Nil
+        )
+      }
+    }
+
+    def seriesTags = targetSet.filterTags(_.isSeriesTag) _
+    def keywordTags = targetSet.filterTags(_.isKeywordTag) _
+
+    paidForTagsFromTargets(seriesTags(_.isSponsoredSlot), Series, Sponsored) ++
+    paidForTagsFromTargets(keywordTags(_.isSponsoredSlot), Keyword, Sponsored) ++
+    paidForTagsFromTargets(seriesTags(_.isAdvertisementFeatureSlot), Series, AdvertisementFeature) ++
+    paidForTagsFromTargets(keywordTags(_.isAdvertisementFeatureSlot), Keyword, AdvertisementFeature) ++
+    paidForTagsFromTargets(seriesTags(_.isFoundationSupportedSlot), Series, FoundationFunded) ++
+    paidForTagsFromTargets(keywordTags(_.isFoundationSupportedSlot), Keyword, FoundationFunded)
   }.distinct
 
   val sponsoredTags: Seq[String] = targeting.customTargetSets.flatMap(_.sponsoredTags).distinct

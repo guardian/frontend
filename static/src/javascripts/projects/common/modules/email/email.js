@@ -10,8 +10,9 @@ define([
     'common/utils/mediator',
     'lodash/functions/debounce',
     'lodash/collections/contains',
+    'common/utils/template',
     'common/views/svgs',
-    'template!common/views/email/submissionResponse.html',
+    'text!common/views/email/submissionResponse.html',
     'common/utils/robust',
     'common/utils/detect'
 ], function (
@@ -26,6 +27,7 @@ define([
     mediator,
     debounce,
     contains,
+    template,
     svgs,
     successHtml,
     robust,
@@ -69,6 +71,10 @@ define([
             inlineLabel: 'js-email-sub__inline-label',
             textInput: 'js-email-sub__text-input',
             listIdHiddenInput: 'js-email-sub__listid-input'
+        },
+        messages = {
+            defaultSuccessHeadline: 'Thank you for subscribing',
+            defaultSuccessDesc: ''
         },
         setup = function (rootEl, thisRootEl, isIframed) {
             $('.' + classes.inlineLabel, thisRootEl).each(function (el) {
@@ -166,13 +172,14 @@ define([
         },
         updateForm = {
             replaceContent: function (isSuccess, $form) {
-                var submissionMessage = {
+                var formData = $form.data('formData'),
+                    submissionMessage = {
                         statusClass: (isSuccess) ? 'email-sub__message--success' : 'email-sub__message--failure',
-                        submissionHeadline: (isSuccess) ? 'Thank you for subscribing' : 'Something went wrong',
-                        submissionMessage: (isSuccess) ? 'We will send you our picks of the most important headlines tomorrow morning.' : 'Please try again.',
+                        submissionHeadline: (isSuccess) ? formData.customSuccessHeadline || messages.defaultSuccessHeadline : 'Something went wrong',
+                        submissionMessage: (isSuccess) ? formData.customSuccessDesc || messages.defaultSuccessDesc : 'Please try again.',
                         submissionIcon: (isSuccess) ? svgs('tick') : svgs('crossIcon')
                     },
-                    submissionHtml = successHtml(submissionMessage);
+                    submissionHtml = template(successHtml, submissionMessage);
 
                 fastdom.write(function () {
                     $form.addClass('email-sub__form--is-hidden');
@@ -186,7 +193,10 @@ define([
                     formTitle = (opts && opts.formTitle) || formData.formTitle || false,
                     formDescription = (opts && opts.formDescription) || formData.formDescription || false,
                     formCampaignCode = (opts && opts.formCampaignCode) || formData.formCampaignCode || '',
-                    removeComforter = (opts && opts.removeComforter) || formData.removeComforter || false;
+                    formSuccessHeadline = (opts && opts.formSuccessHeadline) || formData.formSuccessHeadline,
+                    formSuccessDesc = (opts && opts.formSuccessDesc) || formData.formSuccessDesc,
+                    removeComforter = (opts && opts.removeComforter) || formData.removeComforter || false,
+                    formModClass = (opts && opts.formModClass) || formData.formModClass || false;
 
                 fastdom.write(function () {
                     if (formTitle) {
@@ -200,12 +210,18 @@ define([
                     if (removeComforter) {
                         $('.js-email-sub__small', el).remove();
                     }
+
+                    if (formModClass) {
+                        $(el).addClass('email-sub--' + formModClass);
+                    }
                 });
 
                 // Cache data on the form element
                 $('.js-email-sub__form', el).data('formData', {
                     campaignCode: formCampaignCode,
-                    referrer: window.location.href
+                    referrer: window.location.href,
+                    customSuccessHeadline: formSuccessHeadline,
+                    customSuccessDesc: formSuccessDesc
                 });
 
             },

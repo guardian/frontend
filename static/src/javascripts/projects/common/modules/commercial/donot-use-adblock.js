@@ -3,13 +3,14 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/storage',
+    'common/utils/template',
     'common/modules/commercial/adblock-messages',
     'common/modules/adblock-banner',
     'common/modules/onward/history',
     'common/modules/ui/message',
     'common/modules/experiments/ab',
     'common/modules/navigation/navigation',
-    'template!common/views/membership-message.html',
+    'text!common/views/membership-message.html',
     'common/views/svgs',
     'lodash/collections/sample',
     'lodash/collections/filter',
@@ -19,6 +20,7 @@ define([
     config,
     detect,
     storage,
+    template,
     adblockMsg,
     AdblockBanner,
     history,
@@ -29,7 +31,8 @@ define([
     svgs,
     sample,
     filter,
-    find) {
+    find
+) {
     function showAdblockMessage() {
         var adblockLink = 'https://membership.theguardian.com/supporter',
             message = sample([
@@ -59,7 +62,7 @@ define([
             pinOnHide: false,
             siteMessageLinkName: 'adblock message variant ' + message.id,
             siteMessageCloseBtn: 'hide'
-        }).show(messageTemplate({
+        }).show(template(messageTemplate, {
             linkHref: adblockLink + '?INTCMP=adb-mv-' + message.id,
             messageText: message.messageText,
             linkText: message.linkText,
@@ -96,7 +99,23 @@ define([
                 quoteAuthor: 'Ewen MacAskill',
                 customCssClass: 'macaskill',
                 imageAuthor: '//i.guim.co.uk/img/static/sys-images/Guardian/Pix/contributor/2015/8/18/1439913873894/Ewen-MacAskill-R.png?w=300&q=85&auto=format&sharp=10&s=0ecfbc78dc606a01c0a9b04bd5ac7a82'
-            }],
+            }
+            ],
+
+            coinBanners = [
+                {
+                    edition: 'UK',
+                    supporterLink: 'https://membership.theguardian.com/uk/supporter?INTCMP=ADBLOCK_BANNER_COIN',
+                    quoteText: 'Quality journalism',
+                    linkText: 'Become a supporter from just £5 per month',
+                    messageText: 'For just 16p a day you can support the Guardian\'s independence and our award-winning journalism',
+                    template: 'coin'
+                }
+            ],
+
+            coinBannersRelevantToEdition = filter(coinBanners, function (message) {
+                return !message.edition || message.edition == config.page.edition;
+            }),
 
             variationsFromContributors = filter(allVariations, function (message) {
                 return find(contributors, function (contributor) {
@@ -105,7 +124,8 @@ define([
             }),
 
             variationsToUse = variationsFromContributors.length > 1 ? variationsFromContributors : allVariations,
-            variant = sample(variationsToUse);
+            oneContributorAndOneCoin = [sample(variationsToUse)].concat(sample(coinBannersRelevantToEdition)),
+            variant = sample(oneContributorAndOneCoin); //50% coin chance
 
         new AdblockBanner(variant).show();
     }

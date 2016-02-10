@@ -4,8 +4,8 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
+    'common/modules/commercial/dfp/dfp-api',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/commercial/dfp-api',
     'lodash/collections/contains',
     'lodash/functions/debounce',
     'lodash/functions/once'
@@ -15,11 +15,12 @@ define([
     $,
     config,
     mediator,
-    createAdSlot,
     dfp,
+    createAdSlot,
     contains,
     debounce,
-    once) {
+    once
+) {
 
     var postsCount,
         timedOut,
@@ -82,8 +83,8 @@ define([
             }
             adCriteria = adCriterias[criteriaType];
             reset();
-            mediator.on('modules:autoupdate:updates', function (updates) {
-                postsCount += updates.length;
+            mediator.on('modules:autoupdate:updates', function (numberOfUpdates) {
+                postsCount += Number(numberOfUpdates);
                 if (
                     postsCount >= adCriteria[state].posts &&
                     timedOut &&
@@ -98,7 +99,7 @@ define([
                                 .last()
                                 .detach();
                     // put the ad slot after the latest post
-                    $('.js-liveblog-body .block:first-child').after($adSlot);
+                    $('.js-liveblog-body .block').first().after($adSlot);
                     if (displaySlot) {
                         dfp.addSlot($adSlot);
                     } else {

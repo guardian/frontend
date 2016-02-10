@@ -75,7 +75,7 @@ define([
                     ab.getParticipations = function () {
                         return {
                             MtMaster: {
-                                variant: 'variant'
+                                variant: 'variantName'
                             }
                         };
                     };
@@ -145,7 +145,7 @@ define([
         });
 
         it('should set correct ab param', function () {
-            expect(buildPageTargeting().ab).toEqual(['MtMaster-v']);
+            expect(buildPageTargeting().ab).toEqual(['MtMaster-variantName']);
         });
 
         it('should set correct krux params', function () {
@@ -186,7 +186,7 @@ define([
                 bp: 'mobile',
                 at: 'ng101',
                 si: 't',
-                ab: ['MtMaster-v'],
+                ab: ['MtMaster-variantName'],
                 pv: '123456',
                 fr: '0'
             });

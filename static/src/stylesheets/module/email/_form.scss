@@ -222,7 +222,8 @@
     }
 }
 
-.email-sub__form--article {
+.email-sub__form--article,
+.email-sub__form--plain {
     .email-sub__label__icon {
         display: inline-block;
         margin-right: $gs-gutter / 4;
@@ -245,6 +246,52 @@
 
     .email-sub__label {
         line-height: 3;
+    }
+}
+
+// PLAIN MODS
+.email-sub__form--plain {
+    padding: 0;
+
+    .email-sub__text-input {
+        border-color: guss-colour(guardian-brand, $pasteup-palette);
+    }
+}
+
+// POST-ARTICLE
+
+.email-sub__iframe--post-article {
+    box-sizing: border-box;
+    display: block;
+    margin: $gs-baseline auto;
+    padding: 0 $gs-gutter/2;
+    width: 100%;
+
+    @include mq($from: mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
+
+    @include mq($from: tablet) {
+        padding: 0;
+        width: gs-span(8);
+    }
+
+    @include mq($from: desktop) {
+        width: gs-span(11);
+    }
+
+    @include mq($from: leftCol) {
+        width: gs-span(12);
+    }
+
+}
+
+.email-sub--post-article {
+    border: 0 none;
+
+    .email-sub__form {
+        padding-bottom: 0;
     }
 }
 

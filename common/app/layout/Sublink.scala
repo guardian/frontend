@@ -111,24 +111,33 @@ case object FrontendOtherSnap extends SnapType
 
 object SnapStuff {
   def fromTrail(faciaContent: PressedContent): Option[SnapStuff] = {
-    lazy val snapData = SnapData(faciaContent)
+    val snapData = SnapData(faciaContent)
+
+    // This val may exist if the facia press has pre-fetched the embed html. Currently only for CuratedContent or LinkSnap.
+    val embedHtml = faciaContent match {
+      case curated: CuratedContent => curated.enriched.flatMap(_.embedHtml)
+      case link: LinkSnap => link.enriched.flatMap(_.embedHtml)
+      case _ => None
+    }
     faciaContent.properties.embedType match {
-      case Some("latest") => Option(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendLatestSnap))
-      case Some("link") => Option(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendLinkSnap))
-      case Some(s) => Option(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendOtherSnap))
+      case Some("latest") => Some(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendLatestSnap, embedHtml))
+      case Some("link") => Some(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendLinkSnap, embedHtml))
+      case Some(s) => Some(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendOtherSnap, embedHtml))
       case None => None}}
 }
 
 case class SnapStuff(
   dataAttributes: String,
   snapCss: Option[String],
-  snapType: SnapType
+  snapType: SnapType,
+  embedHtml: Option[String]
 ) {
   def cssClasses = Seq(
-    "js-snap",
-    "facia-snap",
-    snapCss.map(t => s"facia-snap--$t").getOrElse("facia-snap--default")
-  )
+    Some("js-snap"),
+    Some("facia-snap"),
+    snapCss.map(t => s"facia-snap--$t").orElse(Some("facia-snap--default")),
+    embedHtml.map(_ => "facia-snap-embed")
+  ).flatten
 }
 
 object FaciaCardHeader {
@@ -284,6 +293,8 @@ case class ContentCard(
   def isSavedForLater = cardTypes.allTypes.exists(_.savedForLater)
 
   val analyticsPrefix = s"${cardStyle.toneString} | group-$group${if(displaySettings.isBoosted) "+" else ""}"
+
+  val hasInlineSnapHtml = snapStuff.exists(_.embedHtml.isDefined)
 }
 
 case class HtmlBlob(html: Html, customCssClasses: Seq[String], cardTypes: ItemClasses) extends FaciaCard

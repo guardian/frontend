@@ -1,8 +1,9 @@
 define([
     'common/utils/config',
     'common/utils/storage',
+    'common/utils/template',
     'common/modules/ui/message',
-    'template!common/views/membership-message.html',
+    'text!common/views/membership-message.html',
     'common/views/svgs',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/user-features',
@@ -10,6 +11,7 @@ define([
 ], function (
     config,
     storage,
+    template,
     Message,
     messageTemplate,
     svgs,
@@ -35,7 +37,7 @@ define([
             data: {
                 messageText: [
                     'Thank you for reading the Guardian.',
-                    'Become a Supporter today for just £49 per year and we will donate £1 to the Guardian Charity Appeal 2015.'
+                    'Help keep our journalism fearless and independent by becoming a Supporter for just £5 a month.'
                 ].join(' '),
                 linkText: 'Join'
             }
@@ -45,7 +47,7 @@ define([
             code:          'membership-message-us',
             minVisited:    10,
             data: {
-                messageText: 'Support open, independent journalism. Become a Supporter from just $5 per month',
+                messageText: 'Support open, independent journalism. Become a Supporter for just $4.99 per month',
                 linkText: 'Find out more'
             }
         }
@@ -81,7 +83,7 @@ define([
             pinOnHide: false,
             siteMessageLinkName: 'membership message',
             siteMessageCloseBtn: 'hide'
-        }).show(messageTemplate(data));
+        }).show(template(messageTemplate, data));
     }
 
     function init() {

@@ -9,7 +9,8 @@ define([
     config,
     mediator,
     fastdom,
-    defaults) {
+    defaults
+) {
 
     var isNewCommercialContent = config.switches.newCommercialContent && config.page.isAdvertisementFeature;
     var header = isNewCommercialContent ?
@@ -27,10 +28,12 @@ define([
         this.sticky   = false;
         this.bottom   = false;
         this.opts     = defaults(options || {}, {
-            top: 0
+            top: 0,
+            containInParent: true,
+            emitMessage: false
         });
         this.stickyCss = { position: 'fixed', top: this.opts.top };
-        this.unstickyCss = { position: null, top: null };
+        this.unstickyCss = { position: 'static', top: 'auto' };
     };
 
     Sticky.prototype.init = function () {
@@ -45,7 +48,7 @@ define([
     };
 
     Sticky.prototype.updatePosition = function () {
-        var fixedTop, css, stickyHeaderHeight, parentRect;
+        var fixedTop, css, stickyHeaderHeight, parentRect, message;
 
         stickyHeaderHeight = header && header !== this.element ? header.offsetHeight : 0;
         parentRect = this.parent.getBoundingClientRect();
@@ -53,28 +56,41 @@ define([
         // have we scrolled past the element
         if (parentRect.top < this.opts.top + stickyHeaderHeight) {
             // make sure the element stays within its parent
-            fixedTop = Math.min(this.opts.top, parentRect.bottom - this.elementHeight);
-            if (this.sticky && fixedTop < this.opts.top) {
+            fixedTop = Math.floor(Math.min(this.opts.top, parentRect.bottom - this.elementHeight));
+            if (this.opts.containInParent && this.sticky && fixedTop < this.opts.top) {
                 css = { top: fixedTop };
                 this.bottom = true;
+                message = 'fixed';
             } else if (!this.sticky || this.bottom) {
                 css = this.stickyCss;
                 this.sticky = true;
                 this.bottom = false;
+                message = 'fixed';
             }
         } else {
             if (this.sticky) {
                 css = this.unstickyCss;
                 this.sticky = false;
                 this.bottom = false;
+                message = 'unfixed';
             }
         }
+
+        if (this.opts.emitMessage && message && message !== this.lastMessage) {
+            this.emitMessage(message);
+        }
+
+        this.lastMessage = message;
 
         if (css) {
             fastdom.write(function () {
                 bonzo(this.element).css(css);
             }, this);
         }
+    };
+
+    Sticky.prototype.emitMessage = function (message) {
+        mediator.emit('modules:' + this.element.id + ':' + message);
     };
 
     return Sticky;

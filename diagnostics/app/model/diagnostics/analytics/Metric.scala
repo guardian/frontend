@@ -13,15 +13,11 @@ object Metric extends Logging {
 
   lazy val namespace = "Diagnostics"
 
-  // TODO delete bounce-test-present when this goes
-  import conf.switches.Switches.NoBounceIndicator
-
   lazy val metrics = Map(
 
     // page views
     ("pv", CountMetric("kpis-page-views")),            // raw page views - simple <img> in body, no javascript involved
     ("pva", CountMetric("kpis-analytics-page-views")), // page view fires after analytics
-    ("user-navigated-early", CountMetric("user-navigated-early")),
     ("omniture-library-error", CountMetric("omniture-library-error")),
     ("omniture-pageview-error", CountMetric("omniture-pageview-error")),
 

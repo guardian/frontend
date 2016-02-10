@@ -2,11 +2,11 @@ package implicits
 
 import common.Edition
 import play.api.mvc.RequestHeader
+import conf.Configuration
 
 trait Requests {
 
-  val AMP_SUFFIX = "/amp"
-
+  val EMAIL_SUFFIX = "/email"
 
   implicit class RichRequestHeader(r: RequestHeader) {
 
@@ -22,9 +22,13 @@ trait Requests {
 
     lazy val isRss: Boolean = r.path.endsWith("/rss")
 
-    lazy val isAmp: Boolean = r.path.endsWith(AMP_SUFFIX)
+    lazy val isAmp: Boolean = r.getQueryString("amp").isDefined || (!r.host.isEmpty && r.host == Configuration.amp.host)
 
-    lazy val pathWithoutModifiers: String = if (isAmp) r.path.stripSuffix(AMP_SUFFIX) else r.path.stripSuffix("/all")
+    lazy val isEmail: Boolean = r.path.endsWith(EMAIL_SUFFIX)
+
+    lazy val pathWithoutModifiers: String =
+      if (isEmail) r.path.stripSuffix(EMAIL_SUFFIX)
+      else         r.path.stripSuffix("/all")
 
     lazy val hasParameters: Boolean = r.queryString.nonEmpty
 

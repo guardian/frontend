@@ -5,7 +5,8 @@ define([
 ], function (
     bean,
     bonzo,
-    assign) {
+    assign
+) {
 
     function PasswordStrength(el, config) {
 

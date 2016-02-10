@@ -10,6 +10,7 @@ define([
     'common/utils/cookies',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/template',
     'common/utils/url',
     'common/utils/robust',
     'common/utils/storage',
@@ -52,7 +53,8 @@ define([
     'common/modules/save-for-later',
     'common/modules/commercial/membership-messages',
     'common/modules/email/email',
-    'template!common/views/international-message.html',
+    'common/modules/email/email-article',
+    'text!common/views/international-message.html',
     'bootstraps/enhanced/identity-common',
     'lodash/collections/forEach'
 ], function (
@@ -65,6 +67,7 @@ define([
     cookies,
     detect,
     mediator,
+    template,
     url,
     robust,
     storage,
@@ -107,9 +110,11 @@ define([
     SaveForLater,
     membershipMessages,
     email,
+    emailArticle,
     internationalMessage,
     identity,
-    forEach) {
+    forEach
+) {
     var modules = {
             initialiseTopNavItems: function () {
                 var profile,
@@ -134,12 +139,13 @@ define([
 
             initialiseStickyHeader: function () {
                 if (config.switches.viewability
-                    && !(config.page.isProd && config.page.contentType === 'Interactive')
+                    && !(config.switches.disableStickyNavOnMobile && detect.getBreakpoint() === 'mobile')
+                    && config.page.contentType !== 'Interactive'
                     && config.page.contentType !== 'Crossword'
                     && (!config.switches.newCommercialContent || !config.page.isAdvertisementFeature)
                     && config.page.pageId !== 'offline-page') {
-                    if (ab.isInVariant('RemoveStickyNav', 'new')) {
-                        newSticky();
+                    if (config.switches.removeStickyNav) {
+                        newSticky.initialise();
                     } else {
                         sticky.init();
                     }
@@ -200,7 +206,7 @@ define([
             },
 
             cleanupCookies: function () {
-                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at']);
+                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at', 'gu_adfree_user']);
             },
 
             updateHistory: function () {
@@ -322,7 +328,7 @@ define([
                 if (config.page.edition === 'INT' && config.page.pageId === 'international') {
                     new Message('international-with-survey-new', {
                         pinOnHide: true
-                    }).show(internationalMessage());
+                    }).show(template(internationalMessage, {}));
                 }
             },
 
@@ -345,11 +351,24 @@ define([
             },
 
             initEmail: function () {
+                // Initalise email embedded in page
                 email.init();
+
+                // Initalise email insertion into articles
+                if (config.switches.emailInArticle) {
+                    emailArticle.init();
+                }
 
                 // Initalise email forms in iframes
                 forEach(document.getElementsByClassName('js-email-sub__iframe'), function (el) {
                     email.init(el);
+                });
+
+                // Listen for interactive load event and initalise forms
+                bean.on(window, 'interactive-loaded', function () {
+                    forEach(qwery('.guInteractive .js-email-sub__iframe'), function (el) {
+                        email.init(el);
+                    });
                 });
             }
         };
@@ -404,10 +423,6 @@ define([
             ]), function (fn) {
                 fn();
             });
-
-            if (window.console && window.console.log && !config.page.isDev) {
-                window.console.log('##::::: ##: ########::::::: ###:::: ########:: ########:::: ##:::: ##: ####: ########:: ####: ##::: ##:: ######::\n##: ##: ##: ##.....::::::: ## ##::: ##.... ##: ##.....::::: ##:::: ##:. ##:: ##.... ##:. ##:: ###:: ##: ##... ##:\n##: ##: ##: ##::::::::::: ##:. ##:: ##:::: ##: ##:::::::::: ##:::: ##:: ##:: ##:::: ##:: ##:: ####: ##: ##:::..::\n##: ##: ##: ######:::::: ##:::. ##: ########:: ######:::::: #########:: ##:: ########::: ##:: ## ## ##: ##:: ####\n##: ##: ##: ##...::::::: #########: ##.. ##::: ##...::::::: ##.... ##:: ##:: ##.. ##:::: ##:: ##. ####: ##::: ##:\n##: ##: ##: ##:::::::::: ##.... ##: ##::. ##:: ##:::::::::: ##:::: ##:: ##:: ##::. ##::: ##:: ##:. ###: ##::: ##:\n ###. ###:: ########:::: ##:::: ##: ##:::. ##: ########:::: ##:::: ##: ####: ##:::. ##: ####: ##::. ##:. ######::\n\nEver thought about joining us?\nhttp://developers.theguardian.com/join-the-team.html');
-            }
         }
     };
 });

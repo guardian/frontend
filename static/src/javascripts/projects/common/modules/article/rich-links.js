@@ -7,9 +7,10 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/template',
     'common/modules/article/space-filler',
     'common/modules/ui/images',
-    'template!common/views/content/richLinkTag.html',
+    'text!common/views/content/richLinkTag.html',
     'lodash/collections/contains'
 ], function (
     fastdom,
@@ -20,10 +21,12 @@ define([
     config,
     detect,
     mediator,
+    template,
     spaceFiller,
     imagesModule,
     richLinkTagTmpl,
-    contains) {
+    contains
+) {
     function upgradeRichLink(el) {
         var href = $('a', el).attr('href'),
             matches = href.match(/(?:^https?:\/\/(?:www\.|m\.code\.dev-)theguardian\.com)?(\/.*)/);
@@ -51,6 +54,8 @@ define([
 
     function getSpacefinderRules() {
         return {
+            bodySelector: '.js-article__body',
+            slotSelector: ' > p',
             minAbove: 200,
             minBelow: 250,
             clearContentMeta: 50,
@@ -79,9 +84,10 @@ define([
             !isSensitive &&
             !isDuplicate
         ) {
-            return spaceFiller.insertAtFirstSpace(getSpacefinderRules(), function (para) {
-                $insertedEl = $.create(richLinkTagTmpl({href: config.page.richLink}));
-                $insertedEl.insertBefore(para);
+            return spaceFiller.fillSpace(getSpacefinderRules(), function (paras) {
+                $insertedEl = $.create(template(richLinkTagTmpl, {href: config.page.richLink}));
+                $insertedEl.insertBefore(paras[0]);
+                return $insertedEl[0];
             }).then(function (didInsert) {
                 if (didInsert) {
                     return Promise.resolve(upgradeRichLink($insertedEl[0]));

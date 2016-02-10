@@ -16,6 +16,10 @@
     z-index: $zindex-popover;
 }
 
+.site-message--alt {
+    background-color: colour(status-neutral);
+}
+
 .site-message__inner {
     padding: 0 $gs-gutter/2;
 
@@ -111,6 +115,31 @@
 
 .site-message__message--tall {
     padding-bottom: ($gs-baseline/3)*11;
+}
+
+.site-message__message--has-headline {
+    padding-right: $gs-gutter/2;
+
+    @include mq(desktop) {
+        padding-top: $gs-baseline/2;
+        padding-bottom: $gs-baseline/2;
+        padding-right: $gs-gutter;
+    }
+}
+
+.site-message__headline {
+    display: block;
+}
+
+.site-message__message--has-headline {
+
+    .site-message__desc {
+        @include fs-textSans(1);
+
+        @include mq(desktop) {
+            @include fs-textSans(2, true);
+        }
+    }
 }
 
 .site-message__actions {
@@ -437,6 +466,84 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     background: colour(membership-default);
 }
 
+
+
+/*
+ * Coin based adblock message
+ */
+.adblock-sticky__coin {
+    background-color: #ff5b3a;
+    position: relative;
+    height: 180px;
+    color: #ffffff;
+}
+
+.adblock-sticky__coin-result {
+    @include fs-headline(6);
+    text-align: center;
+}
+
+.adblock-sticky__coin-coins {
+    text-align: center;
+    padding-top: 5px;
+    display: block;
+}
+
+.adblock-sticky__coin-membership-logo {
+    position: absolute;
+    line-height: 0;
+    bottom: 0;
+    right: 0;
+
+    @include mq($until: tablet) {
+        display: none;
+    }
+
+    svg {
+        @include mq($until: desktop) {
+            margin-bottom: -10px;
+            width: 125px;
+        }
+    }
+
+}
+
+.adblock-sticky__coin-logo {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+.adblock-sticky__coin-message {
+    bottom: $gs-baseline / 4;
+    left: $gs-baseline;
+    position: absolute;
+    line-height: 20px;
+
+    @include mq($until: desktop) {
+        @include fs-headline(1);
+        line-height: 15px;
+    }
+}
+
+.adblock-sticky__coin-link {
+    color: #ffffff;
+    display: block;
+
+    .inline-cursor {
+        position: relative;
+        top: $gs-baseline / 3;
+
+        svg {
+            @include mq($until: desktop) {
+                top: $gs-baseline / 4;
+                height: 15px;
+            }
+        }
+    }
+}
+
+
 /**
  * Adblock banner in sticky nav
  */
@@ -456,138 +563,6 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         background-color: colour(neutral-4);
     }
 
-    .adblock-sticky__quote {
-        @include clearfix;
-    }
-
-    .adblock-sticky__info {
-        float: left;
-        padding-left: $gs-gutter;
-
-        @include mq(desktop) {
-            max-width: $gs-column-width*10;
-        }
-
-        @include mq(wide) {
-            max-width: none;
-        }
-    }
-
-    .adblock-byline-img {
-        position: absolute;
-        top: -10px;
-        right: 20%;
-
-        @include mq(desktop) {
-            right: 5%;
-            top: 7px;
-            z-index: 1;
-        }
-
-        .byline-img__img {
-            width: 145px;
-        }
-    }
-
-    .adblock-sticky__quote-text {
-        padding-top: $gs-gutter;
-        margin-bottom: 0;
-        color: colour(neutral-1);
-        @include fs-headline(2);
-        @include mq(desktop) {
-            @include fs-headline(3);
-        }
-        @include mq(wide) {
-            @include fs-headline(4);
-        }
-    }
-
-    .adblock-sticky__author {
-        color: colour(guardian-brand);
-        @include fs-headline(2);
-        @include mq(desktop) {
-            @include fs-headline(3);
-        }
-        @include mq(wide) {
-            @include fs-headline(4);
-        }
-    }
-
-    .adblock-sticky__logo {
-        float: right;
-        padding: $gs-gutter*.75 $gs-gutter*.5 0 0;
-    }
-
-    .inline-marque-54 {
-        fill: #000000;
-    }
-
-    .adblock-sticky__membership-bar {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background: colour(news-main-2);
-        padding: $gs-baseline*.25 0;
-    }
-
-    .adblock-sticky__membership-bar-text {
-        display: table-cell;
-        vertical-align: middle;
-        padding-left: $gs-gutter;
-        max-width: $gs-column-width*9;
-        @include mq(desktop) {
-            max-width: $gs-column-width*10;
-        }
-        @include mq(leftCol) {
-            max-width: $gs-column-width*13;
-        }
-        @include mq(wide) {
-            max-width: none;
-        }
-    }
-
-    .site-message__actions__sticky-item {
-        height: $btn-height;
-        @include fs-bodyHeading(1);
-        color: #ffffff;
-
-        @include mq($from: wide) {
-            padding-left: $gs-gutter*2;
-            margin-right: $gs-gutter/2;
-            @include fs-bodyHeading(2);
-        }
-
-        a {
-            float: right;
-            display: block;
-            color: #ffffff;
-            line-height: $btn-height + 1px;
-
-            &:hover,
-            &:focus,
-            &:active {
-                text-decoration: none;
-            }
-        }
-
-        .inline-cursor {
-            display: block;
-            float: left;
-            margin-top: $gs-baseline*.25;
-            margin-right: $gs-gutter*.25;
-        }
-    }
-
-    .adblock-sticky__link {
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
-
     &.macaskill {
         .adblock-sticky__info {
             @include mq(desktop) {
@@ -602,4 +577,137 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             right: 8%;
         }
     }
+}
+
+
+.adblock-sticky__quote {
+    @include clearfix;
+}
+
+.adblock-sticky__info {
+    float: left;
+    padding-left: $gs-gutter;
+
+    @include mq(desktop) {
+        max-width: $gs-column-width*10;
+    }
+
+    @include mq(wide) {
+        max-width: none;
+    }
+}
+
+.adblock-byline-img {
+    position: absolute;
+    top: -10px;
+    right: 20%;
+
+    @include mq(desktop) {
+        right: 5%;
+        top: 7px;
+        z-index: 1;
+    }
+
+    .byline-img__img {
+        width: 145px;
+    }
+}
+
+.adblock-sticky__quote-text {
+    padding-top: $gs-gutter;
+    margin-bottom: 0;
+    color: colour(neutral-1);
+    @include fs-headline(2);
+    @include mq(desktop) {
+        @include fs-headline(3);
+    }
+    @include mq(wide) {
+        @include fs-headline(4);
+    }
+}
+
+.adblock-sticky__author {
+    color: colour(guardian-brand);
+    @include fs-headline(2);
+    @include mq(desktop) {
+        @include fs-headline(3);
+    }
+    @include mq(wide) {
+        @include fs-headline(4);
+    }
+}
+
+.adblock-sticky__logo {
+    float: right;
+    padding: $gs-gutter*.75 $gs-gutter*.5 0 0;
+}
+
+.inline-marque-54 {
+    fill: #000000;
+}
+
+.adblock-sticky__membership-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: colour(news-main-2);
+    padding: $gs-baseline*.25 0;
+}
+
+.adblock-sticky__membership-bar-text {
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: $gs-gutter;
+    max-width: $gs-column-width*9;
+    @include mq(desktop) {
+        max-width: $gs-column-width*10;
+    }
+    @include mq(leftCol) {
+        max-width: $gs-column-width*13;
+    }
+    @include mq(wide) {
+        max-width: none;
+    }
+}
+
+.site-message__actions__sticky-item {
+    height: $btn-height;
+    @include fs-bodyHeading(1);
+    color: #ffffff;
+
+    @include mq($from: wide) {
+        padding-left: $gs-gutter*2;
+        margin-right: $gs-gutter/2;
+        @include fs-bodyHeading(2);
+    }
+
+    a {
+        float: right;
+        display: block;
+        color: #ffffff;
+        line-height: $btn-height + 1px;
+
+        &:hover,
+        &:focus,
+        &:active {
+            text-decoration: none;
+        }
+    }
+
+    .inline-cursor {
+        display: block;
+        float: left;
+        margin-top: $gs-baseline*.25;
+        margin-right: $gs-gutter*.25;
+    }
+}
+
+.adblock-sticky__link {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }

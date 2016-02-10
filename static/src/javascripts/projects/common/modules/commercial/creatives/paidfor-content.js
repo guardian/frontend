@@ -1,16 +1,22 @@
 define([
     'fastdom',
     'common/utils/$',
+    'common/utils/config',
+    'common/utils/template',
     'common/views/svgs',
     'common/modules/ui/toggles',
-    'template!common/views/commercial/creatives/paidfor-content.html'
+    'text!common/views/commercial/creatives/paidfor-content.html'
 ], function (
     fastdom,
     $,
+    config,
+    template,
     svgs,
     Toggles,
     paidforTpl
 ) {
+
+    paidforTpl = template(paidforTpl);
 
     var PaidforContent = function ($adSlot, params) {
         this.$adSlot = $adSlot;
@@ -22,7 +28,9 @@ define([
 
         this.params.icon = svgs('arrowdownicon');
         this.params.infoLinkIcon = svgs('arrowRight');
+        this.params.glabsLogoSmall = svgs('glabsLogoSmall');
         this.params.dataAttr = Math.floor(Math.random() * 1000);
+        this.params.glabsLink = document.location.origin + (config.page.edition === 'AU' ? '/guardian-labs-australia' : '/guardian-labs');
 
         $component = $.create(paidforTpl(this.params));
 

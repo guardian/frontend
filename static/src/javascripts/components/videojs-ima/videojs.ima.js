@@ -16,21 +16,8 @@
  * IMA SDK integration plugin for Video.js. For more information see
  * https://www.github.com/googleads/videojs-ima
  */
- (function (root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module unless amdModuleId is set
-    define('videojs-ima', ["videojs"], function (a0) {
-      return (factory(a0));
-    });
-  } else if (typeof exports === 'object') {
-    // Node. Does not work with strict CommonJS, but
-    // only CommonJS-like environments that support module.exports,
-    // like Node.
-    module.exports = factory(require("video.js"));
-  } else {
-    root['videojs-ima'] = factory(videojs);
-  }
-}(this, function(vjs) {
+
+(function(vjs) {
   'use strict';
   var extend = function(obj) {
     var arg;
@@ -98,7 +85,7 @@
       countdownDiv.style.display = showCountdown ? 'block' : 'none';
       seekBarDiv = document.createElement('div');
       seekBarDiv.id = 'ima-seek-bar-div';
-      seekBarDiv.style.width = player.width() + 'px';
+      seekBarDiv.style.width = '100%';
       progressDiv = document.createElement('div');
       progressDiv.id = 'ima-progress-div';
       playPauseDiv = document.createElement('div');
@@ -279,6 +266,7 @@
      */
     player.ima.onAdError_ = function(adErrorEvent) {
       window.console.log('Ad error: ' + adErrorEvent.getError());
+      vjsControls.show();
       adsManager.destroy();
       adContainerDiv.style.display = 'none';
       player.trigger('adserror');
@@ -525,7 +513,7 @@
       document.removeEventListener('mouseup', player.ima.onMouseUp_);
     }
 
-    /* Utility function so set vvolume and associated UI
+    /* Utility function to set volume and associated UI
      * @private
      */
     player.ima.setVolumeSlider_ = function(event) {
@@ -598,6 +586,16 @@
       var newVolume = player.muted() ? 0 : player.volume();
       if (adsManager) {
         adsManager.setVolume(newVolume);
+      }
+      // Update UI
+      if (newVolume == 0) {
+        adMuted = true;
+        muteDiv.className = 'ima-muted';
+        sliderLevelDiv.style.width = '0%';
+      } else {
+        adMuted = false;
+        muteDiv.className = 'ima-non-muted';
+        sliderLevelDiv.style.width = newVolume * 100 + '%';
       }
     };
 
@@ -675,7 +673,7 @@
      *     false to only load the content but not start playback.
      */
     player.ima.setContent =
-        function( contentSrc, adTag, playOnLoad) {
+        function(contentSrc, adTag, playOnLoad) {
       player.ima.resetIMA_();
       settings.adTagUrl = adTag ? adTag : settings.adTagUrl;
       //only try to pause the player when initialised with a source already
@@ -1121,5 +1119,5 @@
     player.on('volumechange', player.ima.onVolumeChange_);
   };
 
-  vjs.plugin('ima', imaPlugin);
-}));
+  videojs.plugin('ima', imaPlugin);
+}(window.videojs));

@@ -8,6 +8,7 @@ import play.api.mvc._
 
 import scala.concurrent.Future
 import scala.util.control.NonFatal
+import conf.switches.Switches.NewCommercialContent
 
 object ContentApiOffersController extends Controller with ExecutionContexts with implicits.Requests with Logging {
 
@@ -17,11 +18,15 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
     "foundation-supported" -> "fc-container--foundation-supported"
   )
 
-  private val sponsorTypeToLabel = Map(
+  private val sponsorTypeToLabel = {if (NewCommercialContent.isSwitchedOn) Map(
+    "sponsored" -> "Supported by",
+    "advertisement-feature" -> "Paid for by",
+    "foundation-supported" -> "Supported by"
+  ) else {Map(
     "sponsored" -> "Sponsored by",
     "advertisement-feature" -> "Brought to you by",
     "foundation-supported" -> "Supported by"
-  )
+  )}}
 
   private def renderItems(format: Format, isMulti: Boolean) = MemcachedAction { implicit request =>
 

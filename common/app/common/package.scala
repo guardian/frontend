@@ -4,12 +4,11 @@ import java.util.concurrent.TimeoutException
 
 import akka.pattern.CircuitBreakerOpenException
 import com.gu.contentapi.client.GuardianContentApiError
+import conf.switches.Switch
 import contentapi.ErrorResponseHandler.isCommercialExpiry
-import conf.switches.SwitchTrait
 import model.{Cached, NoCache}
 import org.apache.commons.lang.exception.ExceptionUtils
 import play.api.Logger
-import play.api.libs.json.{JsObject, JsString}
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
 
@@ -58,13 +57,17 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
   def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, page: model.Page)(implicit request: RequestHeader) = Cached(page) {
     if (request.isJson)
       JsonComponent(jsonResponse())
+    else if (request.isEmail)
+      Ok(InlineStyles(htmlResponse()))
     else
       Ok(htmlResponse())
   }
 
-  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, page: model.Page, switches: Seq[SwitchTrait])(implicit request: RequestHeader) = Cached(page) {
+  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, page: model.Page, switches: Seq[Switch])(implicit request: RequestHeader) = Cached(page) {
     if (request.isJson)
       JsonComponent(page, jsonResponse())
+    else if (request.isEmail)
+      Ok(InlineStyles(htmlResponse()))
     else
       Ok(htmlResponse())
   }
@@ -72,6 +75,8 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
   def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, cacheTime: Integer)(implicit request: RequestHeader) = Cached(cacheTime) {
     if (request.isJson)
       JsonComponent(jsonResponse())
+    else if (request.isEmail)
+      Ok(InlineStyles(htmlResponse()))
     else
       Ok(htmlResponse())
   }

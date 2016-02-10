@@ -1,8 +1,9 @@
 @(gallery: model.Gallery, related: model.RelatedContent, index: Int)(implicit request: RequestHeader)
-@import views.support.TrailCssClasses.toneClass
-@import layout.ContentWidths.GalleryMedia
-@import views.support.ImgSrc
+@import common.{Edition, LinkTo}
 @import conf.switches.Switches._
+@import layout.ContentWidths.GalleryMedia
+@import views.support.TrailCssClasses.toneClass
+@import views.support.{ImgSrc, RenderClasses}
 
 <div class="l-side-margins l-side-margins--media">
 
@@ -18,7 +19,7 @@
             @fragments.guBand()
         }
 
-        @fragments.headTonal(gallery, gallery.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn)
+        @fragments.headTonal(gallery, gallery.commercial.isSponsored(Some(Edition(request))) || gallery.commercial.isFoundationSupported || (gallery.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn))
 
         <div class="content__main tonal__main tonal__main--@toneClass(gallery)">
             <div class="gs-container">
@@ -37,7 +38,8 @@
         </div>
     </article>
 
-    @if(gallery.content.showInRelated) {
+    @if(gallery.content.showInRelated &&
+        !(gallery.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn) ) {
         <div class="gallery__most-popular facia-container fc-container--media hide-on-childrens-books-site">
             <div class="js-gallery-most-popular tonal--@toneClass(gallery)">
                 <div class="fc-container">

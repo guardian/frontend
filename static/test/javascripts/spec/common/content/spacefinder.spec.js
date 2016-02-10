@@ -19,11 +19,11 @@ define(['common/modules/article/spacefinder'], function (
 
             // jscs:disable disallowDanglingUnderscores
             for (var i = 0; i < others.length; i++) {
-                expect(spacefinder._testElem(para, others[i], rules)).toBe(others[i].expectedResult);
+                expect(spacefinder._testElem(rules, para, others[i])).toBe(others[i].expectedResult);
             }
 
-            expect(spacefinder._testElems(para, others, rules)).toBe(false);
-            expect(spacefinder._testElems(para, others.slice(0, 2), rules)).toBe(true);
+            expect(spacefinder._testElems(rules, para, others)).toBe(false);
+            expect(spacefinder._testElems(rules, para, others.slice(0, 2))).toBe(true);
             // jscs:enable disallowDanglingUnderscores
 
         });

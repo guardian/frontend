@@ -14,6 +14,7 @@ define([
     'inlineSvg!svgs/icon/cross',
     'inlineSvg!svgs/logo/logo-guardian',
     'inlineSvg!svgs/commercial/logo-soulmates',
+    'inlineSvg!svgs/commercial/soulmates-join',
     'inlineSvg!svgs/icon/close-central',
     'inlineSvg!svgs/icon/arrow-white-right',
     'inlineSvg!svgs/icon/arrow-right',
@@ -32,6 +33,9 @@ define([
     'inlineSvg!svgs/icon/share-gplus',
     'inlineSvg!svgs/icon/external-link',
     'inlineSvg!svgs/icon/tick',
+    'inlineSvg!svgs/logo/glabs-logo-small',
+    'inlineSvg!svgs/commercial/logo-membership',
+    'inlineSvg!svgs/commercial/adblock-coins',
     'lodash/objects/isArray'
 ], function (
     commentCount16icon,
@@ -45,6 +49,7 @@ define([
     crossIcon,
     logoguardian,
     logosoulmates,
+    logosoulmatesjoin,
     closeCentralIcon,
     arrowWhiteRight,
     arrowRight,
@@ -63,7 +68,11 @@ define([
     shareGPlus,
     externalLink,
     tick,
-    isArray) {
+    glabsLogoSmall,
+    membershipLogo,
+    adblockCoins,
+    isArray
+) {
     var svgs = {
         commentCount16icon: commentCount16icon,
         marque36icon: marque36icon,
@@ -76,6 +85,7 @@ define([
         crossIcon: crossIcon,
         logoguardian: logoguardian,
         logosoulmates: logosoulmates,
+        logosoulmatesjoin: logosoulmatesjoin,
         closeCentralIcon: closeCentralIcon,
         arrowWhiteRight: arrowWhiteRight,
         arrowRight: arrowRight,
@@ -93,7 +103,10 @@ define([
         sharePinterest: sharePinterest,
         shareGPlus: shareGPlus,
         externalLink: externalLink,
-        tick: tick
+        tick: tick,
+        glabsLogoSmall: glabsLogoSmall,
+        adblockCoins: adblockCoins,
+        logomembership: membershipLogo
     };
 
     return function (name, classes, title) {

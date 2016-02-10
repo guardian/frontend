@@ -1,0 +1,22 @@
+/* US Elections Tag Badge
+   ========================================================================== */
+.badge-slot--us-election {
+    width: 33px;
+
+    @include mq($until: tablet) {
+        margin-top: 2px;
+    }
+
+    @include mq($until: desktop) {
+        float: left;
+        margin-right: $gs-gutter / 4;
+    }
+
+    @include mq(desktop) {
+        width: gs-span(1);
+    }
+}
+
+.badge-slot__img {
+    width: 100%;
+}

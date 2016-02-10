@@ -23,8 +23,8 @@ module.exports = function (grunt, options) {
                 reqwest:              'components/reqwest/reqwest',
                 stripe:               'vendor/stripe/stripe.min',
                 svgs:                 '../../../common/conf/assets/inline-svgs',
-                videojs:              'components/video.js/video.min',
-                videojsads:           'components/videojs-contrib-ads/videojs.ads.min',
+                videojs:              'components/video.js/video',
+                videojsads:           'components/videojs-contrib-ads/videojs.ads',
                 videojsembed:         'components/videojs-embed/videojs.embed',
                 videojsima:           'components/videojs-ima/videojs.ima',
                 videojspersistvolume: 'components/videojs-persistvolume/videojs.persistvolume',
@@ -32,7 +32,6 @@ module.exports = function (grunt, options) {
                 // plugins
                 text:                 'components/requirejs-text/text',
                 inlineSvg:            'projects/common/utils/inlineSvg',
-                template:             'projects/common/utils/lodash-loader',
 
                 'react':              'empty:',
                 'ophan/ng':           'empty:'
@@ -40,14 +39,19 @@ module.exports = function (grunt, options) {
             optimize: options.isDev ? 'none' : 'uglify2',
             generateSourceMaps: true,
             preserveLicenseComments: false,
-            fileExclusionRegExp: /^bower_components|test$/i
+            fileExclusionRegExp: /^bower_components/i
         },
         common: {
             options: {
                 dir: options.requirejsDir,
                 keepBuildDir: false,
                 shim: {
-
+                    videojsima: {
+                        deps: ['videojsads']
+                    },
+                    videojsads: {
+                        deps: ['bootstraps/enhanced/media/videojs-global']
+                    }
                 },
                 modules: [
                     {
@@ -94,6 +98,21 @@ module.exports = function (grunt, options) {
             options: {
                 name: 'bootstraps/enhanced/article',
                 out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/article.js',
+                exclude: [
+                    'boot',
+                    'bootstraps/standard/main',
+                    'bootstraps/commercial',
+                    'enhanced-vendor',
+                    'bootstraps/enhanced/main',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
+        minute: {
+            options: {
+                name: 'bootstraps/enhanced/article-minute',
+                out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/article-minute.js',
                 exclude: [
                     'boot',
                     'bootstraps/standard/main',

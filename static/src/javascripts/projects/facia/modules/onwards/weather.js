@@ -21,6 +21,7 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/template',
     'common/modules/analytics/omniture',
     'common/modules/user-prefs',
     'facia/modules/onwards/search-tool',
@@ -34,10 +35,12 @@ define([
     config,
     detect,
     mediator,
+    template,
     omniture,
     userPrefs,
     SearchTool,
-    contains) {
+    contains
+) {
 
     var $holder        = null,
         searchTool     = null,

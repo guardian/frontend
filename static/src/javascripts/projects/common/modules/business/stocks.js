@@ -2,20 +2,23 @@ define([
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
+    'common/utils/template',
     'common/views/svgs',
-    'template!common/views/business/stock-value.html',
-    'template!common/views/business/stocks.html',
+    'text!common/views/business/stock-value.html',
+    'text!common/views/business/stocks.html',
     'lodash/collections/contains',
     'lodash/collections/map'
 ], function (
     $,
     ajax,
     config,
+    template,
     svgs,
     stockValueTemplate,
     stocksTemplate,
     contains,
-    map) {
+    map
+) {
     function isBusinessFront() {
         return contains(['uk/business', 'us/business', 'au/business'], config.page.pageId);
     }
@@ -33,7 +36,7 @@ define([
 
     function renderData(data) {
         var stockValues = map(data.stocks, function (stockValue) {
-            return stockValueTemplate({
+            return template(stockValueTemplate, {
                 name: stockValue.name,
                 deltaClass: 'stocks__stock-value--' + stockValue.trend,
                 price: stockValue.price,
@@ -46,7 +49,7 @@ define([
             });
         }).join('');
 
-        return stocksTemplate({
+        return template(stocksTemplate, {
             stocks: stockValues
         });
     }

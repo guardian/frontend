@@ -66,21 +66,18 @@
         margin-top: $margin-top;
         margin-bottom: $margin-bottom;
         line-height: 1;
-
-        .star__item {
-            margin-right: $margin-right;
-            width: $width;
-            height: $width;
-        }
-
-        .star__item--golden {
-            fill: #ffce4b;
-        }
-
-        .star__item--grey {
-            fill: #000000;
-            opacity: .15;
-        }
+    }
+    .star__item {
+        margin-right: $margin-right;
+        width: $width;
+        height: $width;
+    }
+    .star__item--golden {
+        fill: #ffce4b;
+    }
+    .star__item--grey {
+        fill: #000000;
+        opacity: .15;
     }
 }
 

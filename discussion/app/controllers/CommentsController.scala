@@ -23,7 +23,7 @@ object CommentsController extends DiscussionController with ExecutionContexts {
       "categoryId" -> Forms.number.verifying(ReportAbuseFormValidation.validCategoryConstraint),
       "commentId" -> Forms.number,
       "reason" -> optional(Forms.text.verifying("Reason must be 250 characters or fewer", input => Constraints.maxLength(250)(input) == Valid)),
-      "email" -> optional(Forms.text.verifying("Please enter a valid email address", input => Constraints.emailAddress == Valid))
+      "email" -> optional(Forms.text.verifying("Please enter a valid email address", input => Constraints.emailAddress(input) == Valid))
     )(DiscussionAbuseReport.apply)(DiscussionAbuseReport.unapply)
   )
 
@@ -69,7 +69,7 @@ object CommentsController extends DiscussionController with ExecutionContexts {
     Action {
       implicit request =>
 
-        Cached(60) {
+        NoCache {
           Ok(views.html.discussionComments.reportComment(commentId, reportAbusePage, userForm))
         }
     }
@@ -78,9 +78,12 @@ object CommentsController extends DiscussionController with ExecutionContexts {
   val reportAbuseThankYouPage = SimplePage(MetaData.make("/reportAbuseThankYou", "Discussion", "Report Abuse Thank You", "GFE: Report Abuse Thank You"))
 
 
-  def reportAbuseThankYou(commentId: Int) = Action { implicit request =>
-
-    Cached(60) { Ok(views.html.discussionComments.reportCommentThankYou(commentId, reportAbuseThankYouPage)) }
+  def reportAbuseThankYou(commentId: Int) = Action.async { implicit request =>
+    discussionApi.commentFor(commentId).map { comment =>
+      Cached(60) {
+        Ok(views.html.discussionComments.reportCommentThankYou(comment.webUrl, reportAbuseThankYouPage))
+      }
+    }
   }
 
   def abuseReportToMap(abuseReport: DiscussionAbuseReport): Map[String, Seq[String]] = {

@@ -2,7 +2,7 @@ package jobs
 
 import common.{ExecutionContexts, Logging}
 import conf.Configuration.frontend.webEngineersEmail
-import conf.switches.Switches
+import conf.switches.{Switch, Switches}
 import services.EmailService
 
 import scala.util.control.NonFatal
@@ -11,10 +11,10 @@ object ExpiringSwitchesEmailJob extends ExecutionContexts with Logging {
 
   def run(): Unit = {
     for (webEngineers <- webEngineersEmail) {
-      val expiringSwitches = Switches.all.filter(_.expiresSoon)
+      val expiringSwitches = Switches.all.filter(Switch.expiry(_).expiresSoon)
 
       if (expiringSwitches.nonEmpty) {
-        val (imminent, soon) = expiringSwitches.partition(_.daysToExpiry < 2)
+        val (imminent, soon) = expiringSwitches.partition(Switch.expiry(_).daysToExpiry.get < 2)
         val htmlBody = views.html.email.expiringSwitches(imminent, soon).body.trim()
         val eventualResult = EmailService.send(
           from = webEngineers,

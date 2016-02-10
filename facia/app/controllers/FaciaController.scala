@@ -93,10 +93,14 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     }
   }
 
-  def renderSomeFrontContainersMf2(rawNum: String, rawOffset: String, path: String) = MemcachedAction { implicit request =>
-    def getEditionFromString(edition: String) = Edition.all.find(_.id.toLowerCase() == "int").getOrElse(Edition.all.head)
+  def frontContainersMf2EditionRedirect(rawNum: String, rawOffset: String, section: String) = renderSomeFrontContainersMf2(rawNum, rawOffset, section, edition = "")
+  def renderSomeFrontContainersMf2(rawNum: String, rawOffset: String, section: String, edition: String) = MemcachedAction { implicit request =>
+    val edition = Edition(request)
+    // TODO: This list also exists in the JS for fronts on articles a/b test. Pending a decision on that, this should go in the jsconfig, or be removed
+    val sectionsToLoad = List("commentisfree", "sport", "football", "fashion", "lifeandstyle", "education", "culture", "business", "technology", "politics", "environment", "travel", "film", "media", "money", "society", "science", "music", "books", "stage", "cities", "tv-and-radio", "artanddesign", "global-development")
+    val id = if (sectionsToLoad.contains(section)) section else edition.id.toLowerCase()
 
-    def returnContainers(num: Int, offset: Int) = getSomeCollections(Editionalise(path, getEditionFromString("international")), num, offset, "none").map { collections =>
+    def returnContainers(num: Int, offset: Int) = getSomeCollections(Editionalise(id, edition), num, offset, "none").map { collections =>
       Cached(60) {
         JsonComponent(
           "items" -> JsArray(collections.getOrElse(List()).map(getCollection))
@@ -252,7 +256,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   private object JsonFront{
     def apply(faciaPage: PressedPage)(implicit request: RequestHeader) = JsonComponent(
       "html" -> views.html.fragments.frontBody(faciaPage),
-      "config" -> Json.parse(views.html.fragments.javaScriptConfig(faciaPage).body)
+      "config" -> Json.parse(templates.js.javaScriptConfig(faciaPage).body)
     )
   }
 

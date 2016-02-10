@@ -11,7 +11,7 @@ import play.api.libs.concurrent.Execution.Implicits._
 import play.api.libs.json.Json
 import conf.Configuration
 import model.NoCache
-import conf.switches.Switches
+import conf.switches.{Switch, Switches}
 import org.joda.time.LocalDate
 import play.api.Play.current
 
@@ -24,9 +24,9 @@ object RadiatorController extends Controller with Logging with AuthLogging with 
   // put it in your properties file as github.token=XXXXXXX
   lazy val githubAccessToken = Configuration.github.token.map{ token => s"?access_token=$token" }.getOrElse("")
 
-  def switchesExpiringThisWeek = {
+  def switchesExpiringSoon = {
     Switches.all.filter { switch =>
-      switch.sellByDate.isBefore(new LocalDate().plusDays(7))
+      Switch.expiry(switch).expiresSoon
     }
   }
 
@@ -52,7 +52,7 @@ object RadiatorController extends Controller with Logging with AuthLogging with 
     } yield {
       val graphs = Seq(user50x) ++ shortLatency ++ fastlyErrors
       NoCache(Ok(views.html.radiator(
-        graphs, multiLineGraphs, cost, switchesExpiringThisWeek,
+        graphs, multiLineGraphs, cost, switchesExpiringSoon,
         Configuration.environment.stage, external
       )))
     }

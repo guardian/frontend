@@ -42,42 +42,6 @@
     }
 }
 
-.creative--branded-component {
-    padding-left: $gs-gutter/2;
-    border-left: 1px solid colour(neutral-5);
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    box-sizing: border-box;
-    width: gs-span(3)+$gs-gutter/2;
-
-    @include mq($from: wide) {
-        left: $gs-gutter/2;
-    }
-
-    .creative__inner {
-        padding-top: $gs-baseline/2;
-        border-top: 2px solid colour(guardian-brand-dark);
-    }
-    .creative__marque {
-        display: block;
-    }
-    .creative__marque-title {
-        margin-left: 2px;
-        text-transform: lowercase;
-        color: colour(maps-support-3);
-        @include fs-header(2);
-    }
-    .creative__title {
-        @include fs-headline(4);
-    }
-    .creative__text,
-    .creative__subtitle {
-        @include fs-textSans(3);
-        color: colour(neutral-2);
-    }
-}
-
 .creative--jobs {
     .creative__inner {
         border-color: colour(news-support-2);
@@ -101,129 +65,6 @@
     .creative__marque {
         color: colour(news-accent);
         fill: colour(news-accent);
-    }
-}
-
-.creative--branded-component-soulmates {
-    // Initialize colour variables
-    $bg-colour: #f5f3e7;
-    $rotated-bg-colour: #70bacf;
-
-    border-left: 0;
-    padding-left: 0;
-    background-color: transparent;
-
-    @include mq(wide) {
-        right: auto;
-    }
-
-    .creative__inner {
-        border-top: 0;
-        margin-left: $gs-gutter/2;
-        padding: $gs-baseline/2 $gs-gutter/2 0;
-        background-color: $bg-colour;
-        width: gs-span(3);
-        position: relative;
-        z-index: 1;
-
-        box-sizing: border-box;
-
-        @include mq($from: desktop, $until: wide) {
-            width: gs-span(3)-$gs-gutter;
-            margin-right: $gs-gutter/2;
-        }
-    }
-    .creative__title {
-        margin: $gs-baseline/2 0 0;
-        @include f-header();
-        @include font-size(24, 24);
-        text-align: center;
-    }
-    .creative__subtitle {
-        @include f-bodyCopy();
-        @include font-size(12, 14);
-        color: colour(neutral-2);
-        text-align: center;
-        margin-top: $gs-baseline/2;
-    }
-    .creative__text {
-        margin: $gs-baseline/2 0 0;
-        overflow: hidden;
-
-        .creative__text__link {
-            display: block;
-            @include clearfix;
-
-            .creative__text__img {
-                float: left;
-                margin: 0 $gs-gutter/2 $gs-baseline/2 0;
-            }
-            .lineitem__title {
-                margin-bottom: 0;
-            }
-        }
-
-        &:after,
-        &:before {
-            content: '';
-            display: block;
-            height: 1px;
-            width: gs-span(1);
-            margin: 0 auto $gs-baseline;
-            background-color: #000000;
-        }
-        &:after {
-            margin: $gs-baseline/2 auto 0;
-        }
-    }
-    .creative__link-wrapper {
-        margin-top: $gs-baseline;
-        text-align: center;
-    }
-    .creative__link {
-        @include fs-header(1);
-        color: #000000;
-    }
-    .creative__link__button {
-        margin-left: $gs-gutter/3;
-        background-color: #000000;
-        border: 0;
-    }
-    .soulmates-logo {
-        height: gs-height(1);
-        margin: $gs-baseline auto 0;
-        padding-top: $gs-baseline*3;
-        background-size: 290%; /* for non svg browsers */
-        width: auto;
-
-        .svg & {
-            background-size: 100%;
-        }
-    }
-    .soulmates-logo__title {
-        text-align: center;
-        color: #ffffff;
-        fill: #ffffff;
-    }
-
-    &:after {
-        content: '';
-        display: block;
-        width: gs-span(3);
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: $gs-gutter/2;
-        background-color: $rotated-bg-colour;
-        transform: rotate(-2deg);
-
-        @include mq($from: desktop, $until: wide) {
-            width: gs-span(3)-$gs-gutter;
-        }
-
-        @include mq(wide) {
-            right: auto;
-        }
     }
 }
 
@@ -639,6 +480,7 @@
     margin-left: 0;
     padding-left: 0;
     padding-bottom: 0;
+    padding-top: 0;
 
     .ad-slot__label {
         display: none;
@@ -648,6 +490,7 @@
         width: 100%;
         display: block;
         text-align: left;
+        margin-top: 0;
 
         .fc-container__inner {
             padding-top: 0;

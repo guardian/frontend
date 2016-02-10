@@ -5,7 +5,8 @@ define([
 ], function (
     ajax,
     bonzo,
-    assign) {
+    assign
+) {
 
     var LazyLoad = function (options) {
 

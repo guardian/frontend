@@ -305,6 +305,10 @@ You may also see `java.lang.UnsupportedClassVersionError: play/runsupport/classl
 
 Follow the [JDK install guide above.](#a-jdk)
 
+###The changes are not showing when running locally
+
+To make sure your code is compiled try `make compile-dev` before running `./sbt`. This might save you lots of time debugging why your changes don't show.
+
 ## Optional steps
 
 ###NVM

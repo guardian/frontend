@@ -2,7 +2,7 @@ define([
     'fastdom',
     'qwery',
     'common/utils/$',
-    'lodash/utilities/template',
+    'common/utils/template',
     'helpers/fixtures',
     'helpers/injector'
 ], function (
@@ -60,7 +60,7 @@ define([
 
         beforeEach(function (done) {
             injector.mock({
-                'common/modules/commercial/dfp-api': {
+                'common/modules/commercial/dfp/dfp-api': {
                     addSlot: function () {}
                 }
             });

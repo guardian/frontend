@@ -36,7 +36,8 @@ define([
     forEach,
     uniq,
     map,
-    robust) {
+    robust
+) {
     var R2_STORAGE_KEY = 's_ni', // DO NOT CHANGE THIS, ITS IS SHARED WITH R2. BAD THINGS WILL HAPPEN!
         NG_STORAGE_KEY = 'gu.analytics.referrerVars',
         standardProps = 'channel,prop1,prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop37,prop38,prop47,' +
@@ -131,73 +132,41 @@ define([
         });
     };
 
+    Omniture.prototype.shouldPopulateMvtPageProperties = function (mvtTag) {
+        // This checks if the user test alocation has changed once ab test framework has loaded.
+        return mvtTag !== config.abTestsParticipations;
+    };
+
     Omniture.prototype.populatePageProperties = function () {
         var d,
             /* Retrieve navigation interaction data */
             ni       = storage.session.get(NG_STORAGE_KEY),
-            mvt      = ab.makeOmnitureTag(document),
-            // Tag the identity of this user, which is composed of
-            // the omniture visitor id, the ophan browser id, and the frontend-only mvt id.
-            mvtId    = mvtCookie.getMvtFullId();
+            mvt      = ab.makeOmnitureTag(document);
 
         if (id.getUserFromCookie()) {
             this.s.prop2 = 'GUID:' + id.getUserFromCookie().id;
             this.s.eVar2 = 'GUID:' + id.getUserFromCookie().id;
         }
-
-        // see http://blogs.adobe.com/digitalmarketing/mobile/responsive-web-design-and-web-analytics/
-        this.s.eVar18    = detect.getBreakpoint();
-
-
-        this.s.eVar32    = detect.getOrientation();
-
-        this.s.prop60    = detect.isFireFoxOSApp() ? 'firefoxosapp' : null;
+        //This is for testing moving ab testing to first omniture call.
+        var inTest = this.shouldPopulateMvtPageProperties(mvt);
+        var testCall = 'AB | firedSecondCall | ' + inTest;
+        mvt = mvt.split(',').concat(testCall).join(',');
 
         this.s.prop31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
         this.s.eVar31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
-
         this.s.prop40    = detect.adblockInUse() || detect.getFirefoxAdblockPlusInstalled();
-
-        this.s.prop51  = config.page.allowUserGeneratedContent ? 'witness-contribution-cta-shown' : null;
-
-        this.s.eVar51  = mvt;
-
-        this.s.list1  = mvt; // allows us to 'unstack' the AB test names (allows longer names)
-
-        // List of components on the page
-        this.s.list2 = uniq($('[data-component]')
-            .map(function (x) { return $(x).attr('data-component'); }))
-            .toString();
-        this.s.list3 = map(history.getPopularFiltered(), function (tagTuple) { return tagTuple[1]; }).join(',');
-
-        if (this.s.eVar51) {
-            this.s.events = this.s.apl(this.s.events, 'event58', ',');
-        }
-
-        if (mvtId) {
-            this.s.eVar60 = mvtId;
-        }
-
-
-        this.s.prop63    = detect.getPageSpeed();
-
+        this.s.eVar51    = mvt;
+        this.s.list1     = mvt; // allows us to 'unstack' the AB test names (allows longer names)
 
         if (ni) {
             d = new Date().getTime();
             if (d - ni.time < 60 * 1000) { // One minute
                 this.s.eVar24 = ni.pageName;
                 this.s.eVar37 = ni.tag;
-                this.s.events = 'event37';
-
-                // this allows 'live' Omniture tracking of Navigation Interactions
-                this.s.eVar7 = ni.pageName;
-                this.s.prop37 = ni.tag;
             }
             storage.session.remove(R2_STORAGE_KEY);
             storage.session.remove(NG_STORAGE_KEY);
         }
-
-        this.s.prop73 = detect.isFacebookApp() ? 'facebook app' : detect.isTwitterApp() ? 'twitter app' : null;
 
         // Sponsored content
         this.s.prop38 = uniq($('[data-sponsorship]')).map(function (n) {
@@ -206,7 +175,6 @@ define([
             var sponsor = maybeSponsor ? maybeSponsor : 'unknown';
             return sponsorshipType + ':' + sponsor;
         }).toString();
-
 
         this.s.linkTrackVars = standardProps;
         this.s.linkTrackEvents = 'None';

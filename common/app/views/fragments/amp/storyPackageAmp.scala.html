@@ -1,0 +1,55 @@
+@(related: model.RelatedContent)
+
+@import model.pressed.CuratedContent
+@import views.support.ContentOldAgeDescriber
+@import views.support.TrailCssClasses
+
+<div class="fc-container__inner">
+    <div class="fc-container__header__title">
+        <span>more on this story</span>
+    </div>
+    @related.items.take(6).map( i =>
+        i.faciaContent match {
+            case c: CuratedContent => onward(c)
+            case _ => None
+        }
+    )
+</div>
+
+@onward(content: CuratedContent) = {
+    <div class="fc-item @TrailCssClasses.toneClass(content)">
+        <div class="fc-item__image-container">
+            <amp-img src="@content.properties.maybeContent.flatMap(_.trail.thumbnailPath)" layout="fixed" width=126 height=75></amp-img>
+        </div>
+        <div class="fc-item__content">
+            <div class="fc-item__header">
+                <h2 class="fc-item__title">
+                    <span>
+                        @if(content.header.isVideo) { @fragments.inlineSvg("video-icon", "icon") }
+                        @if(content.header.isGallery) { @fragments.inlineSvg("camera", "icon") }
+                        @if(content.header.isAudio) { @fragments.inlineSvg("volume-high", "icon") }
+                        @if(content.header.isComment) { @fragments.inlineSvg("quote", "icon") }
+                    </span>
+                    @content.header.headline
+                </h2>
+                @if(content.header.isComment) {
+                    <div class="fc-item__byline">
+                    @content.properties.byline
+                    </div>
+                }
+            </div>
+            <aside class="fc-item__meta">
+                <time class="fc-item__timestamp" data-relativeformat="short">
+                @if(TrailCssClasses.toneClass(content) == "tone-news" && !ContentOldAgeDescriber(content).isEmpty) {
+                    @fragments.inlineSvg("clock", "icon")
+                    <span class="timestamp__text">
+                        <span class="u-h">Published: </span>
+                        @ContentOldAgeDescriber(content)
+                    </span>
+                }
+                </time>
+            </aside>
+        </div>
+        <a href="@content.header.url" class="fc-item__link">@content.header.headline</a>
+    </div>
+}

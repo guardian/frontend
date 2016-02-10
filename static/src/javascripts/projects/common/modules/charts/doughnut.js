@@ -9,7 +9,8 @@ define([
     'lodash/objects/assign'
 ], function (
     $,
-    assign) {
+    assign
+) {
     /**
      * @param {string} type
      * @return {Bonzo}

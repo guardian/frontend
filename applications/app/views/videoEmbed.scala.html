@@ -78,7 +78,7 @@
                                 || 'XDomainRequest' in window
                             )
                         ),
-                        config: @fragments.javaScriptConfig(model.SimpleContentPage(video))
+                        config: @Html(templates.js.javaScriptConfig(model.SimpleContentPage(video)).body)
                     };
                     var docClass = document.documentElement.className;
 

@@ -42,7 +42,6 @@ object Frontend extends Build with Prototypes {
       romeModules,
       scalaCheck,
       scalajTime,
-      scalaTestPlus,
       scalaz,
       shadeMemcached,
       snappyJava,
@@ -51,7 +50,9 @@ object Frontend extends Build with Prototypes {
       dispatchTest,
       closureCompiler,
       jerseyCore,
-      jerseyClient
+      jerseyClient,
+      cssParser,
+      w3cSac
     )
   ).settings(
       mappings in TestAssets ~= filterAssets
@@ -149,6 +150,10 @@ object Frontend extends Build with Prototypes {
 
   val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
 
+  val adminJobs = application("admin-jobs")
+    .dependsOn(commonWithTests)
+    .aggregate(common)
+
   val dev = application("dev-build")
     .dependsOn(
       withTests(article)
@@ -162,7 +167,8 @@ object Frontend extends Build with Prototypes {
       identity,
       admin,
       commercial,
-      onward
+      onward,
+      adminJobs
     ).settings(
       RoutesKeys.routesImport += "bindables._",
       javaOptions in Runtime += "-Dconfig.file=dev-build/conf/dev-build.application.conf"
@@ -213,6 +219,7 @@ object Frontend extends Build with Prototypes {
     archive,
     preview,
     trainingPreview,
-    rss
+    rss,
+    adminJobs
   )
 }

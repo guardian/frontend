@@ -55,7 +55,8 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
       "displayThreaded" -> (params.displayThreaded match {
         case false => "false"
         case _ => None}),
-      "showSwitches" -> "true")
+      "showSwitches" -> "true",
+      "maxResponses" -> params.maxResponses)
     val path = s"/discussion/$key" + (if(params.topComments) "/topcomments" else "")
     val url = endpointUrl(path, parameters)
 
@@ -71,7 +72,8 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
       "orderBy" -> params.orderBy,
       "displayThreaded" -> (params.displayThreaded match {
         case false => "false"
-        case _ => None}))
+        case _ => None})
+    )
     val path = s"/comment/$id/context"
     val apiUrl = endpointUrl(path, parameters)
 
