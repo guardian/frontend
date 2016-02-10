@@ -41,7 +41,7 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
 
         // Add classes
         block.addClass("block--minute-article js-is-fixed-height")
-        block.getElementsByClass("caption--img").addClass("caption--image__minute-article")
+        block.getElementsByTag("figcaption").addClass("caption__minute-article")
 
         // Add alternative layout on alternate rows
         if (block.elementSiblingIndex() % 2 == 1) block.addClass("block--minute-article--alt-layout")

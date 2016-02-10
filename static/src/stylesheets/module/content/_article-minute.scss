@@ -421,6 +421,11 @@ $minute-layout-margin-nudge: gs-span(1);
         .block-elements {
             width: gs-span(7);
         }
+
+        .caption__minute-article {
+            background-color: transparent;
+            padding-left: 0;
+        }
     }
 
     @include mq($from: desktop) {
@@ -473,21 +478,24 @@ $minute-layout-margin-nudge: gs-span(1);
         margin-right: 5px;
     }
 
-    .caption--image__minute-article {
+    .caption__minute-article {
         background-color: $us-minute-highlight-colour;
         box-sizing: border-box;
         color: $us-minute-contrast-colour;
         padding: $gs-baseline/2 $gs-gutter $gs-baseline $gs-gutter/2;
         width: 100%;
+    }
 
+    .element-image .caption__minute-article {
         @include mq($from: tablet) {
             bottom: 0;
+            padding-left: $gs-gutter/2;
             position: absolute;
             background-color: rgba(12, 87, 135, .5);
         }
     }
 
-    figcaption.caption--image__minute-article {
+    figcaption.caption__minute-article {
         max-width: none;
     }
 
