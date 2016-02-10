@@ -43,7 +43,7 @@ define([
                     elHeight;
 
                 fastdomPromise.read(function () {
-                    elHeight = (setHeightToAuto) ? 'auto' : $el.height();
+                    elHeight = (setHeightToAuto) ? '' : $el.height();
                 }).then(fastdomPromise.write(function () {
                     $el.css('height', elHeight);
                     heightSet = true;
