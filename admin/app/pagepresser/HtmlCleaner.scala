@@ -35,7 +35,6 @@ object BasicHtmlCleaner extends HtmlCleaner {
     removeByClass(document, "user-details")
     removeByClass(document, "initially-off")
     removeByClass(document, "comment-count")
-    replaceLinks(document)
 
     //fetch omniture data before stripping it. then rea-dd it for simple page tracking
     val omnitureQueryString = fetchOmnitureTags(document)
@@ -43,11 +42,21 @@ object BasicHtmlCleaner extends HtmlCleaner {
     removeByTagName(document, "noscript")
     createSimplePageTracking(document, omnitureQueryString)
 
+    replaceLinks(document)
+
   }
 
   def replaceLinks(document: Document): Document = {
-    val newDocumentString = document.html().replaceAll("http://", "//")
-    Jsoup.parse(newDocumentString)
+    try {
+      val newDocumentString = document.html().replaceAll("http://", "//")
+      Jsoup.parse(newDocumentString)
+    }
+    catch {
+      case e: Exception => {
+        log.warn("Unable to convert links for document from http to protocol relative url.")
+        document
+      }
+    }
   }
 
   def removeScriptsTagsExceptInteractives(document: Document): Document = {
