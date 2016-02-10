@@ -44,6 +44,11 @@ object BasicHtmlCleaner extends HtmlCleaner {
 
   }
 
+  def replaceLinks(document: Document): Document = {
+    val newDocumentString = document.html().replaceAll("http://", "//")
+    Jsoup.parse(newDocumentString)
+  }
+
   def removeScriptsTagsExceptInteractives(document: Document): Document = {
     val scripts = document.getElementsByTag("script")
     val (interactiveScripts, nonInteractiveScripts) = scripts.partition { e =>
