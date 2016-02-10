@@ -8,6 +8,7 @@ define([
     'raven',
     'common/utils/$',
     'common/utils/config',
+    'common/utils/fastdom-promise',
     'common/utils/mediator',
     'common/modules/lazyload',
     'common/modules/ui/tabs',
@@ -25,6 +26,7 @@ define([
     raven,
     $,
     config,
+    fastdom,
     mediator,
     LazyLoad,
     Tabs,
@@ -103,13 +105,30 @@ define([
         }
     }
 
+    function paidforCardLoaded(el) {
+        var height,
+            $adSlot = $(el);
+
+        if ($adSlot.hasClass('ad-slot--mostpop')) {
+            fastdom.read(function() {
+                height = $adSlot.dim().height;
+            })
+
+            fastdom.write(function() {
+                $('.js-most-popular-footer .tabs__pane').css('height', height);
+            })
+        }
+
+        createToggle(el);
+    }
+
     CommercialComponent.prototype.postLoadEvents = {
         bestbuy: function (el) {
             new Tabs().init(el);
         },
         capi: createToggle,
         capiSingle: createToggle,
-        paidforCard: createToggle
+        paidforCard: paidforCardLoaded
     };
 
     CommercialComponent.prototype.create = function () {
