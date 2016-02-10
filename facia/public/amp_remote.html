@@ -41,14 +41,13 @@
         function exposeMetaDataForKrux(config) {
             guardian = { 'config' : {
                 'page' : {
-                    'pageId' : config.url,
-                    'edition' : config.edition,
-                    'seriesId' : config.se, //series
-                    'contentType' : config.ct, // content type
-                    's' : config.p, // platform
-                    'keywordIds' : config.keywordIds,  // keywords
-                    'authorIds' : config.authorIds, // contributors
-                    'blogIds' : config.bl // blogs
+                    'pageId' : config.targeting.url,
+                    'edition' : config.targeting.edition,
+                    'seriesId' : config.targeting.se, //series isn't in the Krux output
+                    'contentType' : config.targeting.ct,
+                    'keywordIds' : config.targeting.keywordIds,
+                    'authorIds' : config.targeting.authorIds,
+                    'blogIds' : config.targeting.bl // blogs isn't recognised by Krux scraper
                 }
             }
 
@@ -87,11 +86,33 @@
             return window.context.isMaster && config.type == 'doubleclick';
         }
 
+        // since draw3p is going to fail, we just do it here:
+        if (true) {
+            console.log('Is this working?');
+            var config = {
+                'targeting': {
+                    'url' : 'hello/there',
+                    'edition' : 'uk',
+                    'se' : 'series/tag',
+                    'ct' : 'article',
+                    'p' : 'amp',
+                    'keywordIds' : 'keyword/a,keyword/b',
+                    'k' : 'a,b',
+                    'co' : 'johndoe',
+                    'bl' : 'commentisfree/testing',
+                    'authorIds' : 'contributor/johndoe'
+                }
+            }
+            exposeMetaDataForKrux(config);
+            loadKrux();
+        }
+
+
         // this is the big AMP callback
         draw3p(function (config, done) {
 
             if (configIsValid(config) && isMasterIframe(config)) {
-                exposeMetaDataForKrux();
+                exposeMetaDataForKrux(config);
                 loadKrux();
             }
 
