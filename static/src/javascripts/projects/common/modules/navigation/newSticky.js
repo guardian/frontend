@@ -150,7 +150,7 @@ define([
     };
 
     var setupDispatchers = function (dispatch) {
-        window.addEventListener('scroll', function () {
+        mediator.on('window:throttledScroll', function () {
             getScrollCoords().then(function (scrollCoords) {
                 dispatch({ type: 'SCROLL', scrollCoords: scrollCoords });
             });
