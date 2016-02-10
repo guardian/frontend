@@ -40,7 +40,7 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
         val allElements = block.getAllElements
 
         // Add classes
-        block.addClass("block--minute-article")
+        block.addClass("block--minute-article js-is-fixed-height")
         block.getElementsByClass("caption--img").addClass("caption--image__minute-article")
 
         // Add alternative layout on alternate rows
