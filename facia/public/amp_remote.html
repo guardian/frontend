@@ -93,29 +93,6 @@
             return window.context.isMaster && config.type == 'doubleclick';
         }
 
-        // since draw3p is going to fail, we just do it here:
-        if (true) {
-            console.log('Is this working?');
-            var config = {
-                'targeting': {
-                    'url' : 'hello/there',
-                    'edition' : 'UK',
-                    'se' : 'series/tag',
-                    'ct' : 'Article',
-                    'p' : 'amp',
-                    'keywordIds' : 'keyword/a,keyword/b',
-                    'k' : 'alpha,bravo',
-                    'co' : 'johndoe',
-                    'bl' : 'commentisfree/testing',
-                    'authorIds' : 'contributor/johndoe',
-                    'section' : 'testsection'
-                }
-            }
-            exposeMetaDataForKrux(config);
-            loadKrux();
-        }
-
-
         // this is the big AMP callback
         draw3p(function (config, done) {
 
