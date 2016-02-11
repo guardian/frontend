@@ -197,17 +197,15 @@ final case class Content(
     } getOrElse (None,None)
 
     val articleMeta = if (tags.isUSMinuteSeries) {
-      List(
-        Some("isMinuteArticle", JsBoolean(tags.isUSMinuteSeries)),
-        Some("enhanceMobileTweets", JsBoolean(true))
-      )
-    } else Nil
+      Some("isMinuteArticle", JsBoolean(tags.isUSMinuteSeries))
+    } else None
 
     val meta = List[Option[(String, JsValue)]](
       rugbyMeta,
       seriesMeta,
-      seriesIdMeta
-    ) ++ cricketMeta ++ articleMeta
+      seriesIdMeta,
+      articleMeta
+    ) ++ cricketMeta
     meta.flatten.toMap
   }
 
