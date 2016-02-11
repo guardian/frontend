@@ -14,8 +14,8 @@ define([
 
     function init() {
         // If you are not at front you can enjoy refreshing adfree experience
-        if (typeof config.tests.cmTopBannerPosition === 'undefined'
-            || !config.tests.cmTopBannerPosition
+        if (typeof config.tests.participations.cmTopBannerPosition === 'undefined'
+            || !config.tests.participations.cmTopBannerPosition
             || !config.page.isFront) {
 
             return false;

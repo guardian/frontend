@@ -10,7 +10,7 @@
         "switches" : { @{JavaScript(conf.switches.Switches.all.filter(_.exposeClientSide).map{ switch =>
             s""""${CamelCase.fromHyphenated(switch.name)}":${switch.isSwitchedOn}"""}.mkString(","))}
         },
-        "tests": { @JavaScript(mvt.ActiveTests.getJavascriptConfig) },
+        "tests": @JavaScript(mvt.ActiveTests.getJavascriptConfig),
         "modules": { },
         "stylesheets": {
             "fonts": {

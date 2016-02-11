@@ -149,12 +149,12 @@ try {
                 tag.push(['AB', key, participations.value[key].variant].join(' | '));
             }
 
-            for (var key in config.tests) {
+            for (var key in config.tests.participations) {
                 if (key.toLowerCase().match(/^cm/)) {
                     tag.push(['AB', key, 'variant'].join(' | '));
                 }
                 //only collect serverside tests the user is participating in
-                if(!!config.tests[key]){
+                if(!!config.tests.participations[key]){
                     tag.push('AB | ' + key + ' | inTest');
                 }
             };

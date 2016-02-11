@@ -82,7 +82,7 @@ define([
                 }
             });
 
-            forIn(keys(config.tests), function (n) {
+            forIn(keys(config.tests.participations), function (n) {
                 if (n.toLowerCase().match(/^cm/)) {
                     abParams.push(n);
                 }
