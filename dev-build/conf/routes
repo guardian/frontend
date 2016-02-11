@@ -332,6 +332,7 @@ GET            /series-mf2/*path.json                                           
 
 # Onward journeys
 GET            /series/*path.json                                                                                                controllers.SeriesController.renderSeriesStories(path)
+GET            /series/*path.json                                                                                                controllers.SeriesController.renderSeriesStories(path)
 
 # Applications (must come before wildcard)
 GET            /sitemaps/news.xml                                                                                                controllers.SiteMapController.renderNewsSiteMap()
@@ -344,6 +345,7 @@ GET            /service-worker-2.js                                             
 #Notifications Store
 POST           /notification/store                                                                                               controllers.NotificationsController.saveSubscription()
 POST           /notification/delete                                                                                              controllers.NotificationsController.deleteSubscription()
+POST           /notification/message                                                                                             controllers.NotificationsController.createNewMessage()
 
 
 GET            /2015-06-24-manifest.json                                                                                         controllers.WebAppController.manifest()
