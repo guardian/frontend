@@ -51,7 +51,7 @@ and point your browser at [http://localhost:9876](http://localhost:9876).
 ## Deploying
 Deployment uses the [Riff Raff](https://github.com/guardian/riff-raff) application.
 
-## Debugging
+## Debugging Play application
 You can debug your local Frontend application, by attaching a debugger.
 
 * Start Simple Build Tool in debug mode by typing `./sbt --debug`.
