@@ -24,8 +24,8 @@
     text-align: left;
     outline: none;
     color: colour(neutral-2);
-    background-color: colour(neutral-8); /* neutral-8 */
-    border: 1px solid colour(neutral-8); /* neutral-8 */
+    background-color: colour(neutral-8);
+    border: 1px solid colour(neutral-8);
     padding: 12px 12px 12px 30px;
     margin: 3px;
     flex: 1 1 50%;
@@ -35,15 +35,15 @@
     .quiz__answer:hover {
         border-color: #000000;
     }
+
+    .quiz__answer--focussed {
+        outline: 3px solid #ffbf47;
+    }
 }
 
 .quiz__answer--checked {
     border-color: #000000;
     background: #ffffff;
-}
-
-.quiz__answer--focussed {
-    outline: 3px solid #ffbf47;
 }
 
 .quiz__answer--question-has-submission {
