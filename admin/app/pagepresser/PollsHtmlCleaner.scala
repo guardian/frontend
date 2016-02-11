@@ -22,30 +22,21 @@ case class Answer(id: Int, question: Int, count: Double)
 object PollsHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
 
   override def canClean(document: Document): Boolean = {
+    log.info("*** canClean ***")
     document.getElementsByAttribute("data-poll-url").nonEmpty
   }
 
   override def clean(document: Document) = {
-    if(canClean(document)){
-      BasicHtmlCleaner.basicClean(document)
-      removeScripts(document)
-      createSimplePageTracking(document)
-      removeByTagName(document, "noscript")
-      fetchAndPressPollResult(document)
-    } else {
-      document
-    }
-  }
-
-  override def removeScripts(document: Document): Document = {
-    BasicHtmlCleaner.removeScripts(document)
-  }
-
-  override def extractOmnitureParams(document: Document): Map[String, Seq[String]] = {
-    BasicHtmlCleaner.extractOmnitureParams(document)
+    log.info("*** clean ***")
+    universalClean(document)
+    removeScripts(document)
+    createSimplePageTracking(document)
+    removeByTagName(document, "noscript")
+    fetchAndPressPollResult(document)
   }
 
   private def fetchAndPressPollResult(document: Document): Document = {
+    log.info("*** fetchAndPressPollResult ***")
     val pollUrl = document.getElementById("results-container").attr("data-poll-url")
 
     fetchPoll(pollUrl).foreach { poll =>
@@ -72,12 +63,11 @@ object PollsHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
       }
     }
     document
-
   }
-
 
   import PollDeserializer._
   def fetchPoll(url: String): Option[Poll] = {
+    log.info("*** fetchPoll ***")
     val result = Await.result(WS.url(url).getOKResponse(), 1.second)
 
     result.json.asOpt[Poll]

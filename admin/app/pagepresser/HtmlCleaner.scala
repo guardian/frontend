@@ -10,10 +10,38 @@ import scala.io.Source
 
 abstract class HtmlCleaner extends Logging {
   def canClean(document: Document): Boolean
+
   def clean(document: Document): Document
-  def extractOmnitureParams(document: Document): Map[String, Seq[String]]
-  def removeScripts(document: Document): Document
+
+  protected def universalClean(document: Document): Document = {
+    log.info("*** universalClean ***")
+    removeAds(document)
+    removeByClass(document, "top-search-box")
+    removeByClass(document, "share-links")
+    removeRelatedComponent(document)
+    removeByClass(document, "user-details")
+    removeByClass(document, "initially-off")
+    removeByClass(document, "comment-count")
+  }
+
+  def extractOmnitureParams(document: Document): Map[String, Seq[String]] = {
+    log.info("*** extractOmnitureParams ***")
+    val omnitureNoScript = document.getElementById("omnitureNoScript")
+    if (omnitureNoScript != null) {
+      parse(omnitureNoScript.getElementsByTag("img").attr("src")).query.paramMap
+    } else {
+      Map.empty
+    }
+  }
+
+  def removeScripts(document: Document): Document = {
+    log.info("*** removeScripts ***")
+    document.getElementsByTag("script").toList.foreach(_.remove())
+    document
+  }
+
   def createSimplePageTracking(document: Document): Document = {
+    log.info("*** createSimplePageTracking ***")
     val omnitureQueryString = fetchOmnitureTags(document)
 
     val newOmnitureScriptBase = "https://hits-secure.theguardian.com/b/ss/guardiangu-network/1/JS-1.4.1/s985205503180623100"
@@ -31,7 +59,9 @@ abstract class HtmlCleaner extends Logging {
         document
     }
   }
+
   def fetchOmnitureTags(document: Document): String = {
+    log.info("*** fetchOmnitureTags ***")
     val params = extractOmnitureParams(document)
     val requiredParams: Map[String, Seq[String]] = params.filterKeys(key => List("pageName", "ch", "g", "ns").contains(key)) ++
       Map("AQB" -> List("1"),
@@ -52,63 +82,9 @@ abstract class HtmlCleaner extends Logging {
       }
     }.mkString("&")
   }
-  def removeRelatedComponent(document: Document): Document = {
-    val element = document.getElementById("related")
-    if(element != null) element.remove()
-    document
-  }
-  def removeByClass(document: Document, className: String): Document = {
-    document.getElementsByClass(className).foreach(_.remove())
-    document
-  }
-  def removeByTagName(document: Document, tagName: String): Document = {
-    document.getElementsByTag(tagName).foreach(_.remove())
-    document
-  }
-}
-
-object BasicHtmlCleaner extends HtmlCleaner {
-
-  override def canClean(document: Document) = {
-    document.getElementsByAttribute("data-poll-url").isEmpty
-  }
-
-  override def clean(document: Document) = {
-    if (canClean(document)) {
-      basicClean(document)
-      removeScripts(document)
-      createSimplePageTracking(document)
-      removeByTagName(document, "noscript")
-    } else {
-      document
-    }
-  }
-
-  override def extractOmnitureParams(document: Document): Map[String, Seq[String]] = {
-    val omnitureNoScript = document.getElementById("omnitureNoScript")
-    if (omnitureNoScript != null) {
-      parse(omnitureNoScript.getElementsByTag("img").attr("src")).query.paramMap
-    } else {
-      Map.empty
-    }
-  }
-
-  def basicClean(document: Document): Document = {
-    removeAds(document)
-    removeByClass(document, "top-search-box")
-    removeByClass(document, "share-links")
-    removeRelatedComponent(document)
-    removeByClass(document, "user-details")
-    removeByClass(document, "initially-off")
-    removeByClass(document, "comment-count")
-  }
-
-  override def removeScripts(document: Document): Document = {
-    document.getElementsByTag("script").toList.foreach(_.remove())
-    document
-  }
 
   def removeAds(document: Document): Document = {
+    log.info("*** removeAds ***")
     val element = document.getElementById("sub-header")
 
     if (element != null) {
@@ -125,4 +101,22 @@ object BasicHtmlCleaner extends HtmlCleaner {
     document
   }
 
+  def removeRelatedComponent(document: Document): Document = {
+    log.info("*** removeRelatedComponent ***")
+    val element = document.getElementById("related")
+    if(element != null) element.remove()
+    document
+  }
+
+  def removeByClass(document: Document, className: String): Document = {
+    log.info("*** removeByClass ***")
+    document.getElementsByClass(className).foreach(_.remove())
+    document
+  }
+
+  def removeByTagName(document: Document, tagName: String): Document = {
+    log.info("*** removeByTagName ***")
+    document.getElementsByTag(tagName).foreach(_.remove())
+    document
+  }
 }
