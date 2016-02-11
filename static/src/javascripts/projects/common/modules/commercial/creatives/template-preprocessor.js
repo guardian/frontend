@@ -2,16 +2,21 @@ define([
     'common/utils/template',
     'text!common/views/commercial/creatives/manual-inline-button.html',
     'text!common/views/commercial/creatives/manual-single-button.html',
-    'text!common/views/commercial/creatives/manual-multiple-button.html'
+    'text!common/views/commercial/creatives/manual-multiple-button.html',
+
+    'text!common/views/commercial/creatives/manual-multiple-title.html'
 ], function (
     template,
     manualInlineButtonStr,
     manualSingleButtonStr,
-    manualMultipleButtonStr
+    manualMultipleButtonStr,
+
+    manualMultipleTitleStr
 ) {
     var manualInlineButtonTpl;
     var manualSingleButtonTpl;
     var manualMultipleButtonTpl;
+    var manualMultipleTitleTpl;
 
     function preprocessManualInline(tpl) {
         if (!manualInlineButtonTpl) {
@@ -38,12 +43,25 @@ define([
             manualMultipleButtonTpl = template(manualMultipleButtonStr);
         }
 
+        if (!manualMultipleTitleTpl) {
+            manualMultipleTitleTpl = template(manualMultipleTitleStr);
+        }
+
         var links = ['offer1linktext', 'offer2linktext', 'offer3linktext', 'offer4linktext'];
         for (var i = 0; i < links.length; i++) {
             tpl.params['offer' + (i + 1) + 'Button'] = (tpl.params.offerlinktext || tpl.params[links[i]]) ?
                 manualMultipleButtonTpl({
                     offerlinktext: tpl.params[links[i]] || tpl.params.offerlinktext,
                     arrowRight: tpl.params.arrowRight
+                }) :
+                '';
+        }
+
+        var titles = ['offer1title', 'offer2title', 'offer3title', 'offer4title'];
+        for (var i = 0; i < titles.length; i++) {
+            tpl.params['offer' + (i + 1) + 'Title'] = tpl.params[titles[i]] ?
+                manualMultipleTitleTpl({
+                    offertitle: tpl.params[titles[i]]
                 }) :
                 '';
         }
