@@ -51,7 +51,7 @@ class ModelOrResultTest extends FlatSpec with Matchers with ExecutionContexts {
   )
 
   // FML
-  val stubResponse = new ItemResponse("ok", "top_tier", None, None, None, None, None, None, None, None, None, None, Nil, Nil, Nil, Nil, Nil, Nil)
+  val stubResponse = new ItemResponse("ok", "top_tier", None, None, None, None, None, None, None, None, None, None, Nil, Nil, Nil, Nil, Nil, Nil, None)
 
   "ModelOrNotFound" should "return the model if it exists" in {
     ModelOrResult(
