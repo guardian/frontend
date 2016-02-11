@@ -58,10 +58,10 @@ define([
         }
 
         var titles = ['offer1title', 'offer2title', 'offer3title', 'offer4title'];
-        for (var i = 0; i < titles.length; i++) {
-            tpl.params['offer' + (i + 1) + 'Title'] = tpl.params[titles[i]] ?
+        for (var j = 0; j < titles.length; j++) {
+            tpl.params['offer' + (j + 1) + 'Title'] = tpl.params[titles[j]] ?
                 manualMultipleTitleTpl({
-                    offertitle: tpl.params[titles[i]]
+                    offertitle: tpl.params[titles[j]]
                 }) :
                 '';
         }
