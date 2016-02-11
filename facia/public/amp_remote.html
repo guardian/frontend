@@ -96,12 +96,12 @@
         // this is the big AMP callback
         draw3p(function (config, done) {
 
-            if (configIsValid(config) && isMasterIframe(config)) {
+            if (config && configIsValid(config) && isMasterIframe(config)) {
                 exposeMetaDataForKrux(config);
                 loadKrux();
             }
 
-            if (configIsValid(config)) {
+            if (config && configIsValid(config)) {
                 var configWithAdTestParam = attachAdTestParam(config);
                 var result = attachKruxSegments(configWithAdTestParam);
             } else {
