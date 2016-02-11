@@ -28,7 +28,7 @@ define([
     }
 
     function enhanceTweets() {
-        if (detect.getBreakpoint() === 'mobile' || !config.switches.enhanceTweets) {
+        if ((detect.getBreakpoint() === 'mobile' && !config.page.isMinuteArticle) || !config.switches.enhanceTweets) {
             return;
         }
 
