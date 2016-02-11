@@ -7,7 +7,8 @@ define([
     'common/views/svgs',
     'common/modules/commercial/gustyle/gustyle',
     'text!common/views/commercial/creatives/gu-style-comcontent.html',
-    'lodash/objects/merge'
+    'lodash/objects/merge',
+    'common/modules/commercial/creatives/add-tracking-pixel'
 ], function (
     fastdom,
     $,
@@ -17,7 +18,8 @@ define([
     svgs,
     GuStyle,
     gustyleComcontentTpl,
-    merge
+    merge,
+    addTrackingPixel
 ) {
 
     var GustyleComcontent = function ($adSlot, params) {
@@ -41,7 +43,7 @@ define([
         new GuStyle(this.$adSlot, this.params).addLabel();
 
         if (this.params.trackingPixel) {
-            this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
+            addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
         }
 
     };
