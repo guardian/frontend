@@ -133,6 +133,16 @@ import collection.JavaConversions._
         And("I should see the image caption")
         findFirst("[itemprop='associatedMedia image'] [itemprop=description]").getText should
           be("Our rivers and natural resources are to be valued and commodified, a move that will benefit only the rich, argues George Monbiot. Photograph: Alamy")
+
+        And("I should see the image url")
+        findFirst("[itemprop='associatedMedia image'] [itemprop=url]").getAttribute("content") should
+          endWith("/img/static/sys-images/Guardian/Pix/pictures/2012/8/6/1344274684805/Gunnerside-village-Swaled-009.jpg?w=300&q=85&auto=format&sharp=10&s=74e8ef24701fb21a730d6f5189ad142d")
+
+        And("I should see the image width")
+        findFirst("[itemprop='associatedMedia image'] [itemprop=width]").getAttribute("content") should be("460")
+
+        And("I should see the image height")
+        findFirst("[itemprop='associatedMedia image'] [itemprop=height]").getAttribute("content") should be("276")
       }
     }
 
