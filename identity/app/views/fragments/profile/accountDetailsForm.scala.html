@@ -6,8 +6,8 @@
 @import model.{Countries, CountryCodes}
 @import org.joda.time.DateTime.now
 @import helper._
-
 <form class="form js-account-details-form" novalidate action="@idUrlBuilder.buildUrl("/account/edit", idRequest)" role="main" method="post">
+    <button type="submit" class="is-hidden"></button>
     @views.html.helper.CSRF.formField
 
     @if(accountDetailsForm.globalError.isDefined) {
