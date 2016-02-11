@@ -46,7 +46,7 @@ define([
             newSticky.render(elements, state);
 
             expect(elements.$adBanner.css('position')).toEqual('fixed');
-            expect(elements.$adBanner.css('max-height')).toEqual(state.adHeight + 'px');
+            expect(elements.$adBanner.css('height')).toEqual(state.adHeight + 'px');
             expect(elements.$header.css('margin-top')).toEqual(state.adHeight + 'px');
         });
 
@@ -77,7 +77,7 @@ define([
 
                 // Stop the ad from overflowing while we transition
                 expect(elements.$adBanner.css('overflow')).toEqual('hidden');
-                expect(elements.$adBanner.css('transition')).toEqual('max-height 1s cubic-bezier(0, 0, 0, .985)');
+                expect(elements.$adBanner.css('transition')).toEqual('height 1s cubic-bezier(0, 0, 0, .985)');
                 expect(elements.$header.css('transition')).toEqual('margin-top 1s cubic-bezier(0, 0, 0, .985)');
 
                 expect(elements.window.scrollTo.callCount).toEqual(0);
