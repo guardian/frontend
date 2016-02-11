@@ -5,7 +5,7 @@ define([
     $,
     forEach
 ) {
-    var $quizzes = $('.quiz');
+    var $quizzes = $('.quiz--questions');
     var quizAnswerLabelClassName = 'quiz__answer';
     var quizAnswerLabelCheckedClassName = quizAnswerLabelClassName + '--checked';
     var quizAnswerLabelFocussedClassName = quizAnswerLabelClassName + '--focussed';
