@@ -466,12 +466,12 @@
     }
 }
 .ad-slot--im {
-    box-sizing: border-box;
-    max-width: 50%;
     float: left;
+    margin: 5px $gs-gutter $gs-baseline 0;
 
-    @include mq(mobileLandscape) {
-        max-width: $left-column-wide + $gs-gutter;
+    @include mq($until: mobileLandscape) {
+        margin-bottom: $gs-baseline / 2;
+        margin-right: $gs-gutter / 2;
     }
 }
 .ad-slot--fobadge.ad-slot--im {
