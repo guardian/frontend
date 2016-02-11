@@ -53,7 +53,7 @@ $minute-layout-margin-nudge: gs-span(1);
         height: gs-height(2);
         margin-top: $gs-baseline / 2;
         margin-left: $gs-baseline / 2;
-        width: gs-span(1) + $gs-gutter;
+        width: gs-span(1) + $gs-gutter * 2;
 
         @include mq(tablet) {
             width: gs-span(2) + $gs-gutter;
