@@ -1,13 +1,13 @@
 define([
     'helpers/fixtures',
     'common/utils/$',
-    'common/modules/navigation/newSticky'
+    'common/modules/commercial/sticky-ad-banner'
 ], function (
     fixtures,
     $,
     newSticky
 ) {
-    describe('Sticky ad banner (new)', function () {
+    describe('Sticky ad banner', function () {
         var fixture = {
             id: 'sticky-ad-banner-test',
             fixtures: [

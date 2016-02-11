@@ -30,7 +30,7 @@ define([
     'common/modules/identity/autosignin',
     'common/modules/identity/cookierefresh',
     'common/modules/navigation/navigation',
-    'common/modules/navigation/newSticky',
+    'common/modules/commercial/sticky-ad-banner',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/onward/history',
@@ -86,7 +86,7 @@ define([
     AutoSignin,
     CookieRefresh,
     navigation,
-    newSticky,
+    stickyAdBanner,
     Profile,
     Search,
     history,
@@ -142,7 +142,7 @@ define([
                     && config.page.contentType !== 'Crossword'
                     && (!config.switches.newCommercialContent || !config.page.isAdvertisementFeature)
                     && config.page.pageId !== 'offline-page') {
-                    newSticky.initialise();
+                    stickyAdBanner.initialise();
                     config.page.hasStickyAdBanner = true;
                 } else {
                     config.page.hasStickyAdBanner = false;
