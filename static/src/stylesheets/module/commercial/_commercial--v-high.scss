@@ -2,8 +2,6 @@
    Super-high component styling
    ========================================================================== */
 .commercial--v-high {
-    margin-right: $gs-gutter;
-
     .lineitem__image {
         float: none;
         margin-top: (-$gs-baseline/2);
@@ -16,8 +14,6 @@
     }
 
     &.commercial--tone-books {
-        width: gs-span(2);
-
         .lineitem__image {
             max-width: 100%;
             margin: 0;
