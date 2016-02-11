@@ -44,32 +44,28 @@
         <div class="main-body">
 
             @* this is for testing only *@
-            @defining("""bowie""".r) { hasHeader =>
-                <header class="main-header @if(hasHeader.findFirstIn(page.metadata.id).nonEmpty) {variant-kicker}">
-                    <a href="@Configuration.site.host/" class="logo-wrapper" name="top">
-                        @fragments.inlineSvg("guardian-logo-160", "logo")
-                    </a>
-                        @if(hasHeader.findFirstIn(page.metadata.id).nonEmpty) {
-                            <div class="main-navigation variant-kicker">
-                                <div class="main-navigation_link">
-                                    <a href="http://www.theguardian.com">news</a>
-                                </div>
-                                <div class="main-navigation_link">
-                                    <a href="http://www.theguardian.com/commentisfree">opinion</a>
-                                </div>
-                                <div class="main-navigation_link">
-                                    <a href="http://www.theguardian.com/sport">sports</a>
-                                </div>
-                                <div class="main-navigation_link">
-                                    <a href="http://www.theguardian.com/culture">arts</a>
-                                </div>
-                                <div class="main-navigation_link">
-                                    <a href="http://www.theguardian.com/lifeandstyle">life</a>
-                                </div>
-                            </div>
-                        }
-                </header>
-            }
+            <header class="main-header">
+                <a href="@Configuration.site.host/" class="logo-wrapper" name="top">
+                    @fragments.inlineSvg("guardian-logo-160", "logo")
+                </a>
+                <div class="main-navigation variant-kicker">
+                    <div class="main-navigation_link">
+                        <a href="http://www.theguardian.com">news</a>
+                    </div>
+                    <div class="main-navigation_link">
+                        <a href="http://www.theguardian.com/commentisfree">opinion</a>
+                    </div>
+                    <div class="main-navigation_link">
+                        <a href="http://www.theguardian.com/sport">sports</a>
+                    </div>
+                    <div class="main-navigation_link">
+                        <a href="http://www.theguardian.com/culture">arts</a>
+                    </div>
+                    <div class="main-navigation_link">
+                        <a href="http://www.theguardian.com/lifeandstyle">life</a>
+                    </div>
+                </div>
+            </header>
 
             @body
 
