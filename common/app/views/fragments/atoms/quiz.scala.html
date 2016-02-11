@@ -4,8 +4,10 @@
 
 @(quiz: model.content.Quiz, maybeResults: Option[QuizResults])
 
-<h2>@quiz.title</h2>
-<form action="@postUrl(quiz)" method="POST" class="quiz">
+@if(maybeResults.isDefined) {
+    <h2>@quiz.title</h2>
+}
+<form action="@postUrl(quiz)" method="POST" class="quiz @{if (maybeResults.isDefined) "quiz--results" else "quiz--questions"}">
 
     @quiz.content.questions.zipWithIndex.map { case (question, questionIndex) =>
         @renderQuestion(question, questionIndex, playForm(s"answers[$questionIndex]"))
