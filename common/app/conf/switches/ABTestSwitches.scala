@@ -40,24 +40,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABRtrtEmailFormArticlePromoV2 = Switch(
-    "A/B Tests",
-    "ab-rtrt-email-form-article-promo-v2",
-    "Testing the email sign up from the bottom of articles of user referred from fronts",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 10),
-    exposeClientSide = true
-  )
-
-  val ABRemoveStickyNav = Switch(
-    "A/B Tests",
-    "ab-remove-sticky-nav",
-    "Removes the sticky nav (0% test)",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 1),
-    exposeClientSide = true
-  )
-
   val ABLiveblogToast = Switch(
     "A/B Tests",
     "ab-liveblog-toast",
@@ -73,15 +55,6 @@ trait ABTestSwitches {
     "Segment the userzoom data-team survey",
     safeState = Off,
     sellByDate = new LocalDate(2016, 2, 11),
-    exposeClientSide = true
-  )
-
-  val UserzoomSurveyMessageMobileV3 = Switch(
-    "A/B Tests",
-    "ab-userzoom-survey-message--mobile-v3",
-    "Segment the userzoom data-team survey",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 8),
     exposeClientSide = true
   )
 }

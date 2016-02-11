@@ -327,7 +327,8 @@ GET            /commercial/magento/books                                        
 # AMP
 GET            /most-read-mf2.json                                                                                               controllers.MostPopularController.renderPopularMicroformat2()
 GET            /related-mf2/*path.json                                                                                           controllers.RelatedController.renderMf2(path)
-GET            /container-mf2/:num/:offset/:section.json                                                                         controllers.FaciaController.renderSomeFrontContainersMf2(num, offset, section)
+GET            /container-mf2/:num/:offset/:section.json                                                                         controllers.FaciaController.frontContainersMf2EditionRedirect(num, offset, section)
+GET            /container-mf2/:num/:offset/:section/:edition.json                                                                controllers.FaciaController.renderSomeFrontContainersMf2(num, offset, section, edition)
 GET            /series-mf2/*path.json                                                                                            controllers.SeriesController.renderMf2SeriesStories(path)
 
 # Onward journeys
@@ -394,7 +395,6 @@ GET            /$path<[^/]+(/[^/]+)?>                                           
 
 GET            /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>/lightbox.json                                                             controllers.GalleryController.lightboxJson(path)
 GET            /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>.json                                                                      controllers.GalleryController.renderJson(path)
-GET            /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>/amp                                                                       controllers.GalleryController.render(path)
 GET            /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>                                                                           controllers.GalleryController.render(path)
 
 GET            /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>.json                                                    controllers.ImageContentController.renderJson(path)
@@ -418,7 +418,6 @@ GET            /$leftSide<[^+]+>+*rightSide                                     
 # Articles
 GET            /$path<[^/]+/([^/]+/)?live/.*>.json                                                                               controllers.ArticleController.renderLiveBlogJson(path, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean])
 GET            /*path.json                                                                                                       controllers.ArticleController.renderJson(path)
-GET            /*path/amp                                                                                                        controllers.ArticleController.renderArticle(path)
 GET            /*path/email                                                                                                      controllers.ArticleController.renderArticle(path)
 # temp route for live blogs so we can paginate without getting the blocks for all articles
 GET            /$path<[^/]+/([^/]+/)?live/.*>                                                                                    controllers.ArticleController.renderLiveBlog(path, page: Option[String])

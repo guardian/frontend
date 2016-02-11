@@ -139,12 +139,13 @@ define([
 
             initialiseStickyHeader: function () {
                 if (config.switches.viewability
-                    && !(config.page.isProd && config.page.contentType === 'Interactive')
+                    && !(config.switches.disableStickyNavOnMobile && detect.getBreakpoint() === 'mobile')
+                    && config.page.contentType !== 'Interactive'
                     && config.page.contentType !== 'Crossword'
                     && (!config.switches.newCommercialContent || !config.page.isAdvertisementFeature)
                     && config.page.pageId !== 'offline-page') {
-                    if (ab.isInVariant('RemoveStickyNav', 'new')) {
-                        newSticky();
+                    if (config.switches.removeStickyNav) {
+                        newSticky.initialise();
                     } else {
                         sticky.init();
                     }

@@ -103,33 +103,6 @@ object Commercial {
       maxCardCount: Int
     ): Seq[CardWithSponsorDataAttributes] = {
 
-      def sponsorDataAttributes(item: PressedContent): Option[SponsorDataAttributes] = {
-
-        def sponsoredTagPair(content: ContentType): Option[CapiTagAndDfpTag] = {
-          DfpAgent.winningTagPair(
-            capiTags = content.tags.tags,
-            sectionId = Some(content.metadata.section),
-            edition = None
-          )
-        }
-
-        def mkFromSponsoredTagPair(tagProps: CapiTagAndDfpTag): SponsorDataAttributes = {
-          val capiTag = tagProps.capiTag
-          val dfpTag = tagProps.dfpTag
-
-          def tagId(p: Tag => Boolean): Option[String] = if (p(capiTag)) Some(capiTag.id) else None
-
-          SponsorDataAttributes(
-            sponsor = dfpTag.lineItems.headOption flatMap (_.sponsor),
-            sponsorshipType = dfpTag.paidForType.name,
-            seriesId = tagId(_.isSeries),
-            keywordId = tagId(_.isKeyword)
-          )
-        }
-
-        item.properties.maybeContent flatMap (sponsoredTagPair(_) map mkFromSponsoredTagPair)
-      }
-
       val contentCards = container.containerLayout map {
         _.slices flatMap {
           _.columns flatMap { case ColumnAndCards(_, cards) =>
@@ -143,13 +116,20 @@ object Commercial {
         }
       } getOrElse Nil
 
-      contentCards.take(maxCardCount) zip container.collectionEssentials.items flatMap {
-        case (card, content) =>
-          card map (CardWithSponsorDataAttributes(_, sponsorDataAttributes(content)))
+      val cardsAndContents: Seq[ContentCardAndItsContent] = {
+        val allCardsAndContents = contentCards zip container.collectionEssentials.items flatMap {
+          case (None, _) => None
+          case (Some(card), content) => Some(ContentCardAndItsContent(card, content))
+        }
+        allCardsAndContents take maxCardCount
       }
+
+      cardsAndContents map (CardWithSponsorDataAttributes(_))
     }
   }
 }
+
+case class ContentCardAndItsContent(card: ContentCard, content: PressedContent)
 
 case class SponsorDataAttributes(
   sponsor: Option[String],
@@ -159,3 +139,38 @@ case class SponsorDataAttributes(
 )
 
 case class CardWithSponsorDataAttributes(card: ContentCard, sponsorData: Option[SponsorDataAttributes])
+
+object CardWithSponsorDataAttributes {
+
+  def apply(cardAndContent: ContentCardAndItsContent): CardWithSponsorDataAttributes = {
+
+    def sponsorDataAttributes(item: PressedContent): Option[SponsorDataAttributes] = {
+
+      def sponsoredTagPair(content: ContentType): Option[CapiTagAndDfpTag] = {
+        DfpAgent.winningTagPair(
+          capiTags = content.tags.tags,
+          sectionId = Some(content.metadata.section),
+          edition = None
+        )
+      }
+
+      def mkFromSponsoredTagPair(tagProps: CapiTagAndDfpTag): SponsorDataAttributes = {
+        val capiTag = tagProps.capiTag
+        val dfpTag = tagProps.dfpTag
+
+        def tagId(p: Tag => Boolean): Option[String] = if (p(capiTag)) Some(capiTag.id) else None
+
+        SponsorDataAttributes(
+          sponsor = dfpTag.lineItems.headOption flatMap (_.sponsor),
+          sponsorshipType = dfpTag.paidForType.name,
+          seriesId = tagId(_.isSeries),
+          keywordId = tagId(_.isKeyword)
+        )
+      }
+
+      item.properties.maybeContent flatMap (sponsoredTagPair(_) map mkFromSponsoredTagPair)
+    }
+
+    CardWithSponsorDataAttributes(cardAndContent.card, sponsorDataAttributes(cardAndContent.content))
+  }
+}
