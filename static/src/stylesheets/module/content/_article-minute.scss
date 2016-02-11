@@ -104,14 +104,17 @@ $minute-layout-margin-nudge: gs-span(1);
             font-size: 3.5rem;
         }
 
-        &:after {
-            @include rule($us-minute-highlight-colour, $gs-baseline*2);
-            left: 0;
-            top: -$gs-baseline*2;
-
-            @include mq($from: mobileLandscape) {
+        @include mq(phablet) {
+            &:after {
+                @include rule($us-minute-highlight-colour, $gs-baseline*2);
+                position: absolute;
+                left: 0;
+                top: -$gs-baseline*2;
                 width: gs-span(4) + $gs-gutter * 2;
             }
+        }
+
+        &:after {
             @include mq(desktop) {
                 height: $gs-baseline*3;
                 top: -$gs-baseline*3;
