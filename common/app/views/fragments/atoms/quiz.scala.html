@@ -55,7 +55,7 @@
 
 @renderQuestion(question: Question, questionIndex: Int, field: play.api.data.Field) = {
     <li class="quiz__question" value="@{questionIndex+1}">
-        <span class="quiz__question__legend__header__text">@question.text</span>
+        <span class="quiz__question__legend">@question.text</span>
 
         @question.answers.zipWithIndex.map { case (answer, answerIndex) =>
             @{
