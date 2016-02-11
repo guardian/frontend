@@ -17,18 +17,22 @@ define([
     detect,
     assign) {
 
+    // All ads are loaded via DFP, including the following types. DFP does
+    // report which ad slot size has been chosen, however there are several
+    // cases where an asynchronous resize may occur. This feature supports the
+    // following ad formats:
+    //
+    // Fluid ads break out of the iframe and resize asynchronously. There is no
+    // resize event, but we know they are always 250px high.
+    //
+    // Expandable ads expand (overflowing the banner) upon user interaction.
+    //
+    // Rubicon ads may resize asynchronously. They have a resize event we can
+    // subscribe to.
+
     var $adBanner = $('.top-banner-ad-container--above-nav');
     var $adBannerInner = $('.ad-slot--top-above-nav', $adBanner);
     var $header = $('.js-header');
-    var $document = $(document.body);
-
-    var getClientAdHeight = function () {
-        return fastdom.read(function () {
-            return $adBannerInner[0].clientHeight;
-        });
-    };
-
-    var getAdIframe = function () { return $('iframe', $adBanner); };
 
     var topAdRenderedPromise = new Promise(function (resolve) {
         mediator.on('modules:commercial:dfp:rendered', function (event) {
@@ -38,10 +42,13 @@ define([
         });
     });
 
+    var getAdIframe = function () { return $('iframe', $adBanner); };
+
+    // Rubicon ads are loaded via DFP like all other ads, but they can
+    // render themselves again at any time
     var newRubiconAdHeightPromise = new Promise(function (resolve) {
         window.addEventListener('message', function (event) {
             var data;
-
             // other DFP events get caught by this listener, but if they're not json we don't want to parse them or use them
             try {
                 data = JSON.parse(event.data);
@@ -76,10 +83,14 @@ define([
         var fluidAdPadding = 18;
         var fluidAdHeight = fluidAdInnerHeight + fluidAdPadding;
 
-        var adHeightPromise = isFluidAd
-            ? Promise.resolve(fluidAdHeight)
-            : getClientAdHeight();
-        return Promise.race([newRubiconAdHeightPromise, adHeightPromise]);
+        if (isFluidAd) {
+            return Promise.resolve(fluidAdHeight);
+        } else {
+            var adHeightPromise = fastdom.read(function () { return $adBannerInner[0].clientHeight; });
+            // We can't calculate the height of Rubicon ads because they transition
+            // themselves, so we use the event instead.
+            return Promise.race([newRubiconAdHeightPromise, adHeightPromise]);
+        }
     };
 
     var getScrollCoords = function () {
@@ -107,57 +118,45 @@ define([
             });
     };
 
-    var render = function (state) {
-        // Reset so we have a clean slate
-        $header.css({
-            'transition': '',
-            'margin-top': ''
-        });
-        $adBanner.css({
-            'position': '',
-            'top': '',
-            'max-height': '',
-            'overflow': '',
-            'transition': ''
-        });
-
-        // Set
+    var render = function (els, state) {
         // TODO: move into stylesheets when productionised
-        $document.addClass('new-sticky-ad');
-        $header.css({ 'margin-top': state.adHeight });
-        $adBanner.css({ 'max-height': state.adHeight });
+        els.$document.addClass('new-sticky-ad');
+
+        var transitionTimingFunction = 'cubic-bezier(0, 0, 0, .985)';
+        var transitionDuration = '1s';
+
+        els.$header.css({
+            'transition': state.shouldTransition
+                ? ['margin-top', transitionDuration, transitionTimingFunction].join(' ')
+                : '',
+            'margin-top': state.adHeight
+        });
 
         var pageYOffset = state.scrollCoords[1];
         var userHasScrolledPastHeader = pageYOffset > state.headerHeight;
-        if (userHasScrolledPastHeader) {
-            $adBanner.css({
-                'position': 'absolute',
-                'top': state.headerHeight
-            });
-        } else {
-            $adBanner.css({ 'position': 'fixed' });
-        }
+
+        els.$adBanner.css({
+            'position': userHasScrolledPastHeader ? 'absolute' : 'fixed',
+            'top': userHasScrolledPastHeader ? state.headerHeight : '',
+            'height': state.adHeight,
+            // Stop the ad from overflowing while we transition
+            'overflow': state.shouldTransition ? 'hidden' : '',
+            'transition': state.shouldTransition
+                ? ['height', transitionDuration, transitionTimingFunction].join(' ')
+                : ''
+        });
 
         var diff = state.adHeight - state.previousAdHeight;
         var adHeightHasIncreased = diff > 0;
-        if (state.shouldTransition) {
-            var transitionTimingFunction = 'cubic-bezier(0, 0, 0, .985)';
-            var transitionDuration = '1s';
-            $header.css({ 'transition': ['margin-top', transitionDuration, transitionTimingFunction].join(' ') });
-            $adBanner.css({
-                'transition': ['max-height', transitionDuration, transitionTimingFunction].join(' '),
-                // Stop the ad from overflowing while we transition
-                'overflow': 'hidden'
-            });
-        } else if (adHeightHasIncreased) {
+        if (!state.shouldTransition && adHeightHasIncreased) {
             // If we shouldn't transition, we want to offset their scroll position
             var pageXOffset = state.scrollCoords[0];
-            window.scrollTo(pageXOffset, pageYOffset + diff);
+            els.window.scrollTo(pageXOffset, pageYOffset + diff);
         }
     };
 
     var setupDispatchers = function (dispatch) {
-        window.addEventListener('scroll', function () {
+        mediator.on('window:throttledScroll', function () {
             getScrollCoords().then(function (scrollCoords) {
                 dispatch({ type: 'SCROLL', scrollCoords: scrollCoords });
             });
@@ -180,47 +179,52 @@ define([
         });
     };
 
-    return function () {
-        getInitialState().then(function (initialState) {
-            var reducer = function (previousState, action) {
-                // Default param value
-                if (!previousState) {
-                    previousState = initialState;
-                }
-                switch (action.type) {
-                    case 'SCROLL':
-                        return assign({}, previousState, {
-                            previousAdHeight: previousState.adHeight,
-                            scrollCoords: action.scrollCoords
-                        });
-                    case 'NEW_AD_HEIGHT':
-                        var scrollIsAtTop = previousState.scrollCoords[1] === 0;
-                        var previousAdHeight = previousState.adHeight;
-                        var adHeight = action.adHeight;
-                        var diff = adHeight - previousAdHeight;
-                        var adHeightHasIncreased = diff > 0;
-                        return assign({}, previousState, {
-                            shouldTransition: adHeightHasIncreased && scrollIsAtTop,
-                            adHeight: adHeight,
-                            previousAdHeight: previousAdHeight
-                        });
-                    case 'AD_BANNER_TRANSITION_END':
-                        return assign({}, previousState, {
-                            shouldTransition: false,
-                            previousAdHeight: previousState.adHeight
-                        });
-                    default:
-                        return previousState;
-                }
-            };
+    var reducer = function (previousState, action) {
+        switch (action.type) {
+            case 'SCROLL':
+                return assign({}, previousState, {
+                    previousAdHeight: previousState.adHeight,
+                    scrollCoords: action.scrollCoords
+                });
+            case 'NEW_AD_HEIGHT':
+                var scrollIsAtTop = previousState.scrollCoords[1] === 0;
+                var previousAdHeight = previousState.adHeight;
+                var adHeight = action.adHeight;
+                var diff = adHeight - previousAdHeight;
+                var adHeightHasIncreased = diff > 0;
+                return assign({}, previousState, {
+                    // This flag must be set at the reducer level
+                    // so we can control over when it is cleared.
+                    shouldTransition: adHeightHasIncreased && scrollIsAtTop,
+                    adHeight: adHeight,
+                    previousAdHeight: previousAdHeight
+                });
+            case 'AD_BANNER_TRANSITION_END':
+                return assign({}, previousState, {
+                    shouldTransition: false,
+                    previousAdHeight: previousState.adHeight
+                });
+            default:
+                return previousState;
+        }
+    };
 
-            var store = createStore(reducer);
+    var initialise = function () {
+        getInitialState().then(function (initialState) {
+            var store = createStore(reducer, initialState);
 
             setupDispatchers(store.dispatch);
 
+            var elements = {
+                $document: $(document.body),
+                $adBanner: $adBanner,
+                $adBannerInner: $adBannerInner,
+                $header: $header,
+                window: window
+            };
             var update = function () {
                 return fastdom.write(function () {
-                    render(store.getState());
+                    render(elements, store.getState());
                 });
             };
             // Initial update
@@ -230,5 +234,11 @@ define([
                 store.subscribe(update);
             });
         });
+    };
+
+    return {
+        initialise: initialise,
+        // Needed for testing
+        render: render
     };
 });

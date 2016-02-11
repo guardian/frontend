@@ -1,6 +1,13 @@
-define(function () {
+define([
+    'common/utils/template',
+    'text!common/views/commercial/tracking-pixel.html'
+], function (
+    template,
+    trackingPixelStr
+) {
+    var trackingPixelTpl = template(trackingPixelStr);
     function addTrackingPixel($adSlot, url) {
-        $adSlot.before('<img src="' + encodeURI(url) + '" class="creative__tracking-pixel">');
+        $adSlot.before(trackingPixelTpl({ url: encodeURI(url) }));
     }
 
     return addTrackingPixel;
