@@ -7,16 +7,20 @@
 @if(maybeResults.isDefined) {
     <h2>@quiz.title</h2>
 }
-<form action="@postUrl(quiz)" method="POST" class="quiz @{if (maybeResults.isDefined) "quiz--results" else "quiz--questions"}">
+<form action="@postUrl(quiz)" method="POST" class="from-content-api quiz @{if (maybeResults.isDefined) "quiz--results" else "quiz--questions"}">
 
-    @quiz.content.questions.zipWithIndex.map { case (question, questionIndex) =>
-        @renderQuestion(question, questionIndex, playForm(s"answers[$questionIndex]"))
-    }
+    <ol>
+        @quiz.content.questions.zipWithIndex.map { case (question, questionIndex) =>
+            @renderQuestion(question, questionIndex, playForm(s"answers[$questionIndex]"))
+        }
+    </ol>
+
     @maybeResults.map { results =>
         @renderEndMessage(results)
     }.getOrElse {
         <button class="button" type="submit">Submit answers</button>
     }
+
 </form>
 
 @renderEndMessage(results: QuizResults) = {
@@ -50,13 +54,9 @@
 }
 
 @renderQuestion(question: Question, questionIndex: Int, field: play.api.data.Field) = {
-    <fieldset class="quiz__question">
-        <legend class="quiz__question__legend">
-            <h4 class="quiz__question__legend__header">
-                <span class="quiz__question__legend__header__number">@{questionIndex+1}</span>
-                <span class="quiz__question__legend__header__text">@question.text</span>
-            </h4>
-        </legend>
+    <li class="quiz__question" value="@{questionIndex+1}">
+        <span class="quiz__question__legend__header__text">@question.text</span>
+
         @question.answers.zipWithIndex.map { case (answer, answerIndex) =>
             @{
                 val maybeInputAnswer = maybeResults.flatMap(_.getAnswerFor(question))
@@ -64,7 +64,8 @@
                 renderAnswer(question, answer, questionIndex, answerIndex, isAnswerCorrect, maybeInputAnswer)
             }
         }
-    </fieldset>
+
+    </li>
 }
 
 @renderAnswer(question: Question, answer: Answer, questionIndex: Int, answerIndex: Int, isAnswerCorrect: Boolean, maybeInputAnswer: Option[Answer]) = {
