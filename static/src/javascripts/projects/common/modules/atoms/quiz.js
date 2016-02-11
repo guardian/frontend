@@ -11,7 +11,7 @@ define([
     var quizAnswerLabelFocussedClassName = quizAnswerLabelClassName + '--focussed';
     var quizAnswerInputClassName = quizAnswerLabelClassName + '__input';
 
-    function renderLabels (state) {
+    function renderLabels(state) {
         forEach(state.labels, function (label) {
             if (label.isChecked) {
                 label.$el.addClass(state.labelCheckedClassName);
@@ -25,9 +25,9 @@ define([
                 label.$el.removeClass(state.labelFocussedClassName);
             }
         });
-    };
+    }
 
-    function renderQuizzes () {
+    function renderQuizzes() {
         $quizzes.each(function (quizElement) {
             var $quizLabels = $('.quiz__answer', quizElement);
 
@@ -46,9 +46,9 @@ define([
                 labelFocussedClassName: quizAnswerLabelFocussedClassName
             });
         });
-    };
+    }
 
-    function init () {
+    function init() {
 
         var matches = function (element, selector) {
             return (element.matchesSelector || element.matches)(selector);
@@ -70,7 +70,7 @@ define([
         });
 
         renderQuizzes();
-    };
+    }
 
     return {
         init: init

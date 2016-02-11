@@ -14,8 +14,7 @@ define([
     'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
     'bootstraps/enhanced/article-liveblog-common',
-    'bootstraps/enhanced/trail',
-    'lodash/collections/forEach'
+    'bootstraps/enhanced/trail'
 ], function (
     qwery,
     bean,
@@ -31,8 +30,7 @@ define([
     ab,
     geoMostPopular,
     articleLiveblogCommon,
-    trail,
-    forEach
+    trail
 ) {
     var modules = {
         initCmpParam: function () {
