@@ -71,8 +71,8 @@ define([
                 idleFastdom.write(function () {
                     var placeholder = $('.js-badge-placeholder', container);
 
-                    if (placeholder[0]) {
-                        placeholder.replaceWith($adSlot[0]);
+                    if (placeholder.length) {
+                        placeholder.replaceWith($adSlot);
                     } else {
                         $('.js-container__header', container).after($adSlot);
                     }
