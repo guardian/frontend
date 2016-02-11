@@ -1,5 +1,6 @@
 try {
     ((document, window) => {
+        window.guardian.adBlockers = {};
         var ad = document.createElement('div');
         ad.style.position = 'absolute';
         ad.style.left = '-9999px';
@@ -12,10 +13,11 @@ try {
 
             window.requestAnimationFrame(() => {
                 var adStyles = window.getComputedStyle(ad);
-                window.guardian.adBlock = {
-                    active: adStyles.getPropertyValue('display') === 'none',
-                    ffAdblockPlusInstalled: adStyles.getPropertyValue('-moz-binding').match('elemhidehit') !== null
-                }
+                window.guardian.adBlockers.generic = adStyles.getPropertyValue('display') === 'none';
+                window.guardian.adBlockers.ffAdblockPlus = adStyles.getPropertyValue('-moz-binding').match('elemhidehit') !== null;
+                try {
+                    window.guardian.adBlockers.onDetect();
+                } catch(e) {};
             })
         });
     })(document, window);
