@@ -389,6 +389,22 @@ based on the Remote default.
 Ensure the Transport is Socket, the Debugger mode is Attach, and the port is set to 1044.
 Start a new Debug session, and your breakpoints should be active.
 
+###Testing your JavaScript
+
+You can run the Jasmine unit test suite with
+
+```
+make test
+```
+
+If you need to debug the tests in a browser, run the command
+
+```
+grunt test --no-single-run
+```
+
+and point your browser at [http://localhost:9876](http://localhost:9876).
+
 
 Additional Documentation
 ------------------------
@@ -403,3 +419,4 @@ Further documentation notes and useful items can be found in [docs](docs).
 - [sbteclipse](https://github.com/typesafehub/sbteclipse)
 - [sbt-idea](https://github.com/mpeltonen/sbt-idea)
 - [magenta](https://github.com/guardian/deploy)
+- [Jasmine testing framework](http://jasmine.github.io/)
