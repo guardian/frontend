@@ -11,6 +11,7 @@ define([
     'common/modules/article/membership-events',
     'common/modules/article/open-module',
     'common/modules/article/chapters',
+    'common/modules/atoms/quiz',
     'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
     'bootstraps/enhanced/article-liveblog-common',
@@ -27,6 +28,7 @@ define([
     membershipEvents,
     openModule,
     chapters,
+    quiz,
     ab,
     geoMostPopular,
     articleLiveblogCommon,
@@ -59,7 +61,7 @@ define([
         },
 
         initAtomQuiz: function () {
-
+            quiz.init();
         }
     },
 
