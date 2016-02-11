@@ -48,11 +48,12 @@ define([
         });
     }
 
-    function init() {
+    function matches(element, selector) {
+        var matchFunc = (element.matchesSelector || element.matches).bind(element);
+        return matchFunc(selector);
+    }
 
-        var matches = function (element, selector) {
-            return (element.matchesSelector || element.matches)(selector);
-        };
+    function init() {
 
         // Bean doesn't support capturing so we have to delegate ourselves.
         var delegateEvent = function (parentEl, event, childElSelector, fn, useCapture) {
