@@ -139,12 +139,13 @@ define([
 
             initialiseStickyHeader: function () {
                 if (config.switches.viewability
-                    && !(config.page.isProd && config.page.contentType === 'Interactive')
+                    && !(config.switches.disableStickyNavOnMobile && detect.getBreakpoint() === 'mobile')
+                    && config.page.contentType !== 'Interactive'
                     && config.page.contentType !== 'Crossword'
                     && (!config.switches.newCommercialContent || !config.page.isAdvertisementFeature)
                     && config.page.pageId !== 'offline-page') {
-                    if (ab.isInVariant('RemoveStickyNav', 'new')) {
-                        newSticky();
+                    if (config.switches.removeStickyNav) {
+                        newSticky.initialise();
                     } else {
                         sticky.init();
                     }
@@ -205,7 +206,7 @@ define([
             },
 
             cleanupCookies: function () {
-                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at']);
+                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at', 'gu_adfree_user']);
             },
 
             updateHistory: function () {

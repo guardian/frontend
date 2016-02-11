@@ -37,7 +37,7 @@
 
     @Page.getContentPage(page).map { page =>
         @if(page.item.tags.isArticle && !page.item.tags.isLiveBlog && !page.item.content.isImmersive && AmpSwitch.isSwitchedOn) {
-            <link rel="amphtml" href="@LinkTo{/@page.metadata.id/amp}">
+            <link rel="amphtml" href="@AmpLinkTo{/@page.metadata.id}">
         }
     }
 }

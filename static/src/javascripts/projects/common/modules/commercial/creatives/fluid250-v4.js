@@ -8,7 +8,8 @@ define([
     'common/utils/storage',
     'common/utils/template',
     'text!common/views/commercial/creatives/fluid250-v4.html',
-    'lodash/objects/merge'
+    'lodash/objects/merge',
+    'common/modules/commercial/creatives/add-tracking-pixel'
 ], function (
     bean,
     bonzo,
@@ -19,7 +20,8 @@ define([
     storage,
     template,
     fluid250Tpl,
-    merge
+    merge,
+    addTrackingPixel
 ) {
     var Fluid250 = function ($adSlot, params) {
         this.$adSlot = $adSlot;
@@ -91,7 +93,7 @@ define([
         $.create(template(fluid250Tpl, { data: merge(this.params, templateOptions, videoDesktop, scrollingbg) })).appendTo(this.$adSlot);
 
         if (this.params.trackingPixel) {
-            this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
+            addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
         }
 
         if (Fluid250.hasScrollEnabled) {
