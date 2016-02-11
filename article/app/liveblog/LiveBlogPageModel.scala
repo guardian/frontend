@@ -36,4 +36,4 @@ sealed trait PageReference {
 }
 case object NoPage extends PageReference { val suffix = None }
 case object FirstPage extends PageReference { val suffix = Some("") }
-case class BlockPage(blockId: String) extends PageReference { val suffix = Some(s"?page=with:block-$blockId") }
+case class BlockPage(blockId: String) extends PageReference { val suffix = Some(s"?page=with:block-$blockId#block-$blockId") }
