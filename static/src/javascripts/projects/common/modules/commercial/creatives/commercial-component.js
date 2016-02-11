@@ -105,17 +105,19 @@ define([
         }
     }
 
-    function paidforCardLoaded(el) {
-        var height,
-            $adSlot = $(el);
+    function initMostPopularCard(el) {
+        var height;
+        var $adSlot = $(el);
+        var $mostPopTabs;
 
         if ($adSlot.hasClass('ad-slot--mostpop')) {
             fastdom.read(function () {
                 height = $adSlot.dim().height;
+                $mostPopTabs = $('.js-most-popular-footer .tabs__pane');
             });
 
             fastdom.write(function () {
-                $('.js-most-popular-footer .tabs__pane').css('height', height);
+                $mostPopTabs.css('height', height);
             });
         }
 
@@ -128,7 +130,7 @@ define([
         },
         capi: createToggle,
         capiSingle: createToggle,
-        paidforCard: paidforCardLoaded
+        paidforCard: initMostPopularCard
     };
 
     CommercialComponent.prototype.create = function () {
