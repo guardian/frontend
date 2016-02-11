@@ -46,7 +46,7 @@ define([
 
     // Rubicon ads are loaded via DFP like all other ads, but they can
     // render themselves again at any time
-    var rubiconAdRenderedPromise = new Promise(function (resolve) {
+    var newRubiconAdHeightPromise = new Promise(function (resolve) {
         window.addEventListener('message', function (event) {
             var data;
             // other DFP events get caught by this listener, but if they're not json we don't want to parse them or use them
@@ -60,7 +60,12 @@ define([
                 var isEventForTopAdBanner = isRubiconAdEvent && data.value.id === $iframe[0].id;
 
                 if (isRubiconAdEvent && isEventForTopAdBanner) {
-                    resolve();
+                    fastdom.read(function () {
+                        var padding = parseInt($adBannerInner.css('padding-top'))
+                            + parseInt($adBannerInner.css('padding-bottom'));
+                        var clientHeight = parseInt(data.value.height) + padding;
+                        resolve(clientHeight);
+                    });
                 }
             }
         });
@@ -81,9 +86,10 @@ define([
         if (isFluidAd) {
             return Promise.resolve(fluidAdHeight);
         } else {
-            return fastdom.read(function () {
-                return $adBannerInner[0].clientHeight;
-            });
+            var adHeightPromise = fastdom.read(function () { return $adBannerInner[0].clientHeight; });
+            // We can't calculate the height of Rubicon ads because they transition
+            // themselves, so we use the event instead.
+            return Promise.race([newRubiconAdHeightPromise, adHeightPromise]);
         }
     };
 
@@ -162,7 +168,7 @@ define([
             });
         };
         topAdRenderedPromise.then(dispatchNewAdHeight);
-        rubiconAdRenderedPromise.then(dispatchNewAdHeight);
+        newRubiconAdHeightPromise.then(dispatchNewAdHeight);
 
         $adBanner[0].addEventListener('transitionend', function (event) {
             // Protect against any other events which have bubbled
