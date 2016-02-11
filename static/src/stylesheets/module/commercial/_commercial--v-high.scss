@@ -2,6 +2,14 @@
    Super-high component styling
    ========================================================================== */
 .commercial--v-high {
+    @include mq($until: mobileLandscape) {
+        width: $gs-gutter * 6.5;
+    }
+
+    @include mq(mobileLandscape) {
+        width: gs-span(3);
+    }
+
     .lineitem__image {
         float: none;
         margin-top: (-$gs-baseline/2);
@@ -14,6 +22,10 @@
     }
 
     &.commercial--tone-books {
+        @include mq(mobileLandscape) {
+            width: gs-span(2);
+        }
+
         .lineitem__image {
             max-width: 100%;
             margin: 0;

@@ -470,13 +470,8 @@
     margin: 5px $gs-gutter $gs-baseline 0;
 
     @include mq($until: mobileLandscape) {
-        width: $gs-gutter * 6.5;
         margin-bottom: $gs-baseline / 2;
         margin-right: $gs-gutter / 2;
-    }
-
-    @include mq(mobileLandscape) {
-        width: gs-span(3);
     }
 }
 .ad-slot--fobadge.ad-slot--im {
