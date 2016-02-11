@@ -4,7 +4,7 @@ import sbt._
 
 object Dependencies {
   val cucumberVersion = "1.1.5"
-  val identityLibVersion = "3.49"
+  val identityLibVersion = "3.51"
   val seleniumVersion = "2.44.0"
   val slf4jVersion = "1.7.5"
   val awsVersion = "1.10.37"
@@ -70,6 +70,7 @@ object Dependencies {
   val jerseyCore = "com.sun.jersey" % "jersey-core" % "1.19"
   val jerseyClient = "com.sun.jersey" % "jersey-client" % "1.19"
   val w3cSac = "org.w3c.css" % "sac" % "1.3"
+  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "7.2.4"
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.5"
