@@ -5,10 +5,10 @@
 define([
     'bean',
     'bonzo',
+    'fastdom',
     'raven',
     'common/utils/$',
     'common/utils/config',
-    'common/utils/fastdom-promise',
     'common/utils/mediator',
     'common/modules/lazyload',
     'common/modules/ui/tabs',
@@ -23,10 +23,10 @@ define([
 ], function (
     bean,
     bonzo,
+    fastdom,
     raven,
     $,
     config,
-    fastdom,
     mediator,
     LazyLoad,
     Tabs,
