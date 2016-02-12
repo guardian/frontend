@@ -60,7 +60,7 @@ define([
     function createScrollTransitions() {
 
         var curBinding,
-            timeline      = qwery('.timeline')[0],
+            timeline      = qwery('.timeline'),
             selectedClass = 'live-blog__key-event--selected';
 
         function unselect() {
@@ -82,7 +82,7 @@ define([
         });
 
         if (timeline && config.switches.liveblogTransition) {
-            bean.on(timeline, 'click', '.timeline__link', function (e) {
+            bean.on(timeline[0], 'click', '.timeline__link', function (e) {
                 mediator.emit('module:liveblog:showkeyevents', true);
                 $('.dropdown--live-feed').addClass('dropdown--active');
                 var $el = bonzo(e.currentTarget),
