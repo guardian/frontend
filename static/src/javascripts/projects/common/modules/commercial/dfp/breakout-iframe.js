@@ -42,7 +42,7 @@ define([
                             if (config.switches.newCommercialContent && creativeConfig.name === 'gu-style-comcontent') {
                                 creativeConfig.name = 'paidfor-content';
                             } else if (creativeConfig.name === 'fluid250-v4') {
-                                creativeConfig.name === 'fluid250-v3';
+                                creativeConfig.name = 'fluid250-v3';
                             }
                             require(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
                                 new Creative($slot, creativeConfig.params, creativeConfig.opts).create();

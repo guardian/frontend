@@ -57,7 +57,6 @@ define([
     'common/modules/commercial/creatives/expandable-video-v2',
     'common/modules/commercial/creatives/fluid250',
     'common/modules/commercial/creatives/fluid250-v3',
-    'common/modules/commercial/creatives/fluid250-v4',
     'common/modules/commercial/creatives/fluid250GoogleAndroid',
     'common/modules/commercial/creatives/foundation-funded-logo',
     'common/modules/commercial/creatives/scrollable-mpu',
