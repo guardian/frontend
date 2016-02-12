@@ -53,6 +53,16 @@ define([
                 successDescription: 'We will send you our picks of the most important headlines tomorrow afternoon.',
                 modClass: 'end-article'
             },
+            theFiver: {
+                listId: '218',
+                canRun: 'theFiver',
+                campaignCode: 'fiver_article_signup',
+                headline: 'Want a football roundup direct to your inbox?',
+                description: 'Sign up to the Fiver, our daily email on the world of football',
+                successHeadline: 'Thank you for signing up',
+                successDescription: 'You\'ll receive the Fiver daily, around 5pm.',
+                modClass: 'end-article'
+            },
             theGuardianToday: {
                 listId: (function () {
                     switch (config.page.edition) {
@@ -131,13 +141,16 @@ define([
             theFilmToday: function () {
                 return config.page.section === 'film' && canRunHelpers.allowedArticleStructure();
             },
+            theFiver: function () {
+                return canRunHelpers.keywordExists(['Football']) && canRunHelpers.allowedArticleStructure();
+            },
             theGuardianToday: function () {
                 var host = window.location.host,
                     escapedHost = host.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'), // Escape anything that will mess up the regex
                     urlRegex = new RegExp('^https?:\/\/' + escapedHost + '\/(uk\/|us\/|au\/|international\/)?([a-z-])+$', 'gi'),
                     browser = detect.getUserAgent.browser,
                     version = detect.getUserAgent.version,
-                    pageIsBlacklisted = canRunHelpers.keywordExists(['US elections 2016']) || config.page.section === 'film';
+                    pageIsBlacklisted = canRunHelpers.keywordExists(['US elections 2016', 'Football']) || config.page.section === 'film';
 
                 return !pageIsBlacklisted &&
                         canRunHelpers.allowedArticleStructure() &&
