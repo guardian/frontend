@@ -22,6 +22,20 @@ abstract class HtmlCleaner extends Logging {
     removeByClass(document, "user-details")
     removeByClass(document, "initially-off")
     removeByClass(document, "comment-count")
+    replaceLinks(document)
+  }
+
+  def replaceLinks(document: Document): Document = {
+    try {
+      val newDocumentString = document.html().replaceAll("href=\"http://", "href=\"//")
+      Jsoup.parse(newDocumentString)
+    }
+    catch {
+      case e: Exception => {
+        log.warn("Unable to convert links for document from http to protocol relative url.")
+        document
+      }
+    }
   }
 
   def extractOmnitureParams(document: Document): Map[String, Seq[String]] = {

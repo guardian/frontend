@@ -2,7 +2,7 @@ package pagepresser
 
 import org.jsoup.Jsoup
 import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
-import test.{ConfiguredTestSuite}
+import test.{SingleServerSuite, ConfiguredTestSuite}
 import scala.io.Source
 
 @DoNotDiscover class HtmlCleanerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
@@ -88,5 +88,14 @@ import scala.io.Source
     val expectedDoc = Jsoup.parse(expectedHtml)
     val actualResult = BasicHtmlCleaner.removeByTagName(Jsoup.parse(html), "noscript")
     actualResult.html().replace(" ", "") should be(expectedDoc.html().replace(" ", ""))
+  }
+
+  it should "change links to protocol relative urls to satisfy http and https requests" in {
+    val html = "<html><head><link rel=\"stylesheet\" type=\"text/css\" href=\"http://static.guim.co.uk/static/6d5811c93d9b815024b5a6c3ec93a54be18e52f0/common/styles/print.css\" media=\"print\" class=\"contrast\"/><meta property=\"og:url\" content=\"http://www.theguardian.com/info/developer-blog/2012/oct/30/miso-dataset-new-release-features\"/>\n\t</head><body> some text </body></html>"
+    val expectedDoc = Jsoup.parse("<html><head><link rel=\"stylesheet\" type=\"text/css\" href=\"//static.guim.co.uk/static/6d5811c93d9b815024b5a6c3ec93a54be18e52f0/common/styles/print.css\" media=\"print\" class=\"contrast\"/><meta property=\"og:url\" content=\"http://www.theguardian.com/info/developer-blog/2012/oct/30/miso-dataset-new-release-features\"/>\n\t</head><body> some text </body></html>")
+
+    val actualResult = BasicHtmlCleaner.replaceLinks(Jsoup.parse(html))
+    actualResult.html().replace(" ", "") should be(expectedDoc.html().replace(" ", ""))
+
   }
 }

@@ -140,9 +140,10 @@ define([
                     setTimeout(function () {
                         var message = 'breaking news alert shown' + (alertDelay ? '' : ' 2 or more times'), $breakingNewsSpectre;
 
+                        // copy of breaking news banner (with blank content) used inline in the body
+                        // to create space for a pinned alert to be scrolled into
                         $body = $body || bonzo(document.body);
                         $breakingNewsSpectre = bonzo(bonzo.create($breakingNews[0])).addClass('breaking-news--spectre').removeClass('breaking-news--hidden');
-
                         fastdom.write(function () {
                             $body.append($breakingNewsSpectre);
                         });
