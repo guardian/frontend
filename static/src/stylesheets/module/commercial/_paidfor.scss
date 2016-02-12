@@ -10,12 +10,21 @@
 .commercial--paidfor {
 
     .commercial__header,
-    .commercial__title,
-    .rich-link__header {
+    .commercial__title {
         @include f-headlineSans;
     }
 
-    .rich-link__header {
+    /* Card background */
+
+    .tone-paidfor--item, .fc-item {
+        background: colour(paid-article-subheader);
+    }
+
+
+    /* Title text */
+
+    .fc-item__header, .rich-link__header {
+        @include f-headlineSans;
         font-size: get-font-size(header, 2);
         line-height: get-line-height(header, 1);
     }
@@ -156,6 +165,10 @@
     }
 }
 
+.commercial__show-mores {
+    margin-top: $gs-baseline / 2;
+}
+
 /* Badges
    ========================================================================== */
 
@@ -251,7 +264,6 @@
 }
 
 .tone-paidfor--item {
-    background: colour(paid-article-subheader);
     flex: 0 1 auto;
 
     .rich-link__container:before {

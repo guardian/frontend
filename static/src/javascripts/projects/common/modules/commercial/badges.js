@@ -69,8 +69,13 @@ define([
 
             return new Promise(function (resolve) {
                 idleFastdom.write(function () {
-                    $('.js-container__header', container)
-                        .after($adSlot);
+                    var placeholder = $('.js-badge-placeholder', container);
+
+                    if (placeholder.length) {
+                        placeholder.replaceWith($adSlot);
+                    } else {
+                        $('.js-container__header', container).after($adSlot);
+                    }
 
                     resolve($adSlot);
                 });
