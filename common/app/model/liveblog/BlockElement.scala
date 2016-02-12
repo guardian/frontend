@@ -17,7 +17,7 @@ object BlockElement {
     def writes(els: Seq[BlockElement]) = JsArray(Seq(JsNull))
   }
 
-  def fromAPI(element: ApiBlockElement): Option[BlockElement] = {
+  def make(element: ApiBlockElement): Option[BlockElement] = {
     element.`type` match {
       case Text => Some(TextBlockElement(element.textTypeData.flatMap(_.html)))
       case Audio => Some(AudioBlockElement(element.assets.map(AudioAsset.make)))

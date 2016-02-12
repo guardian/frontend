@@ -25,7 +25,7 @@ object BodyBlock {
             bodyBlock.publishedDate.map(_.toJodaDateTime),
             bodyBlock.lastModifiedDate.map(_.toJodaDateTime),
             bodyBlock.contributors,
-            bodyBlock.elements.flatMap(BlockElement.fromAPI))
+            bodyBlock.elements.flatMap(BlockElement.make))
         }
       }
     }
