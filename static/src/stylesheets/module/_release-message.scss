@@ -150,6 +150,7 @@
     @include mq(tablet) {
         display: table-cell;
         vertical-align: middle;
+        min-width: 85px;
         margin-top: 0;
     }
 }
