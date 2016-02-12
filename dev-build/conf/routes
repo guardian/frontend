@@ -347,6 +347,12 @@ POST           /notification/store                                              
 POST           /notification/delete                                                                                              controllers.NotificationsController.deleteSubscription()
 POST           /notification/message                                                                                             controllers.NotificationsController.createNewMessage()
 
+#Get message playab
+GET            /notification/message/:gcmBrowserId                                                                               controllers.NotificationsController.getMessage(gcmBrowserId)
+
+#This should be a POST eventually
+GET            /notification/message/latest/:gcmBrowserId                                                                        controllers.NotificationsController.getLatestMessage(gcmBrowserId)
+
 
 GET            /2015-06-24-manifest.json                                                                                         controllers.WebAppController.manifest()
 GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()

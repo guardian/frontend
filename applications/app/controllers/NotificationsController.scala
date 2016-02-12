@@ -1,9 +1,11 @@
 package controllers
 
-import common.{ExecutionContexts, Logging}
+import common.{JsonComponent, ExecutionContexts, Logging}
+import model.NoCache
 import model.notifications.{LatestNotificationsDynamoDbStore, DynamoDbStore}
 import play.api.data.Form
 import play.api.data.Forms._
+import play.api.libs.json.{JsArray, JsObject}
 import play.api.mvc.{Action, Controller}
 
 
@@ -52,6 +54,19 @@ object NotificationsController extends Controller with ExecutionContexts with Lo
       )
     }
 
+    def getMessage(gcmBrowserId: String) = Action.async { implicit request =>
+        println(s"get: ${gcmBrowserId}")
+        LatestNotificationsDynamoDbStore.getLatestMessage(gcmBrowserId).flatMap {
+          attributes =>
+            attributes.get("messages").map{
+              messages =>
+                println("wotcha")
+                println(messages.toString)
+            }
+            Future.successful(Ok)
+        }
+    }
+
     //Tbis is a personal development tool which under no circumstances should ever make it to production
     def createNewMessage() = Action.async { implicit request =>
       newMessageForm.bindFromRequest.fold(
@@ -62,6 +77,18 @@ object NotificationsController extends Controller with ExecutionContexts with Lo
           }
       )
     }
+
+   def getLatestMessage(gcmBrowserId: String) = Action.async { implicit request =>
+
+     LatestNotificationsDynamoDbStore.getLatestMessageAndCheck(gcmBrowserId) map {
+       messages =>
+         NoCache(
+           JsonComponent(
+             JsObject(Seq("messages" -> JsArray(messages.map(_.toJson))))
+           )
+         )
+      }
+   }
 
 
 

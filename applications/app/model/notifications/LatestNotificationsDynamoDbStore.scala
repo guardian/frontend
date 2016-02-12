@@ -8,8 +8,14 @@ import conf.Configuration
 import model.notifications.DynamoDbStore._
 import scala.collection.JavaConverters._
 import awswrappers.dynamodb._
+import scala.concurrent.Future
+import play.api.libs.json._
 
-case class LatestMessage(title: String, body: String)
+case class LatestMessage(title: String, body: String) {
+    lazy val toJson = JsObject(
+      Seq("title" -> JsString(title), "body" -> JsString(body))
+    )
+}
 
 object LatestNotificationsDynamoDbStore extends Logging with ExecutionContexts {
 
@@ -29,6 +35,7 @@ object LatestNotificationsDynamoDbStore extends Logging with ExecutionContexts {
           )
         }).asJava)
 
+
       val updateItemRequest = new UpdateItemRequest()
         .withTableName(tableName)
         .withKey(Map[String, AttributeValue] (
@@ -46,6 +53,50 @@ object LatestNotificationsDynamoDbStore extends Logging with ExecutionContexts {
           val message = t.getMessage
           log.error(s"Unable to add new message to db: ${t.getMessage}" )
       }
+    }
 
+    def getLatestMessage(gcmBrowserId: String): Future[Map[String, AttributeValue]] = {
+
+        val getItemRequest = new GetItemRequest()
+          .withTableName(tableName)
+          .withKey(Map[String,AttributeValue](
+            ("gcmBrowserId", new AttributeValue().withS(gcmBrowserId))
+          ).asJava)
+
+        val getItemResultFuture = client.getItemFuture(getItemRequest)
+
+        getItemResultFuture map { result =>
+            result.getItem.asScala.toMap
+        }
+    }
+
+    def getLatestMessageAndCheck(gcmBrowserId: String): Future[List[LatestMessage]] = {
+
+
+      val getItemRequest = new GetItemRequest()
+        .withTableName(tableName)
+        .withKey(Map[String,AttributeValue](
+          ("gcmBrowserId", new AttributeValue().withS(gcmBrowserId))
+        ).asJava)
+
+      val getItemResultFuture = client.getItemFuture(getItemRequest)
+
+      getItemResultFuture map { result =>
+          val resultMap = result.getItem.asScala.toMap
+          val messages = resultMap.get("messages")map {
+            messageAttributeList =>
+              val messageList = messageAttributeList.getL()
+              messageList.asScala.toList.map {
+                message =>
+                    val messageMap = message.getM.asScala.toMap
+                    //TODO inline or map
+                    val title = messageMap.get("title").get.getS
+                    val body = messageMap.get("body").get.getS
+                    LatestMessage(title, body)
+                }
+          }
+          messages.getOrElse(List.empty)
+
+      }
     }
 }
