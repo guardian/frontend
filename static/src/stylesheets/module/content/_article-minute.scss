@@ -472,16 +472,19 @@ $minute-layout-margin-nudge: gs-span(1);
         color: $us-minute-contrast-colour;
     }
 
-    a:link {
+    a {
         border-bottom: 1px solid rgba(255, 255, 255, .4);
+        
+        &:hover {
+            border-bottom-color: $us-minute-highlight-colour;
+        }
+
+        &:active {
+            color: $us-minute-highlight-colour;
+            border-bottom-color: $us-minute-highlight-colour;
+        }
     }
-    a:hover {
-        border-bottom-color: $us-minute-highlight-colour;
-    }
-    a:active {
-        color: $us-minute-highlight-colour;
-        border-bottom-color: $us-minute-highlight-colour;
-    }
+
 
     // Captions
 
