@@ -55,6 +55,10 @@
             }
         }
     }
+
+    .gu-text {
+        margin-bottom: $gs-baseline;
+    }
 }
 
 .paidfor-box {
@@ -80,7 +84,7 @@
 }
 
 .paidfor-box--logo {
-    padding-bottom: $gs-baseline;
+    padding-bottom: $gs-gutter / 4;
 }
 
 .paidfor-title {

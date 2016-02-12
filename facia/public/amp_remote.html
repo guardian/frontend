@@ -104,11 +104,10 @@
             if (configIsValid(config)) {
                 var configWithAdTestParam = attachAdTestParam(config);
                 var result = attachKruxSegments(configWithAdTestParam);
+                done(result);
             } else {
-                done();
+                done(config);
             }
-
-            done(result);
         })</script>
 </div>
 <script>if (window.docEndCallback) window.docEndCallback()</script>
