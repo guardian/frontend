@@ -100,7 +100,6 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
         val pageSize = if (blog.article.content.tags.tags.map(_.id).contains("sport/sport")) 50 else 10
         val modelGen = LiveBlogPageModel(
           pageSize = pageSize,
-          extrasOnFirstPage = 10,
           blog.article.content.fields.blocks
         )_
         pageParam.map(new PageParser().blockId) match {
