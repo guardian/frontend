@@ -2,16 +2,16 @@
 @import _root_.quiz.{postUrl, Question, Answer}
 @import views.html.fragments.inlineSvg
 
-@(quiz: model.content.Quiz, maybeResults: Option[QuizResults])
+@(quiz: model.content.Quiz, maybeResults: Option[QuizResults], showResults: Boolean)
 
-@if(maybeResults.isDefined) {
+@if(showResults) {
     <h2>@quiz.title</h2>
 }
-<form action="@postUrl(quiz)" method="POST" class="from-content-api quiz @{if (maybeResults.isDefined) "quiz--results" else "quiz--questions"}">
+<form action="@postUrl(quiz)" method="POST" class="from-content-api quiz @{if (showResults) "quiz--results" else "quiz--questions"}">
 
     <ol>
         @quiz.content.questions.zipWithIndex.map { case (question, questionIndex) =>
-            @renderQuestion(question, questionIndex, playForm(s"answers[$questionIndex]"))
+            @renderQuestion(question, questionIndex, playForm(s"answers[$questionIndex]"), maybeResults.flatMap(_.getAnswerFor(question)))
         }
     </ol>
 
@@ -53,62 +53,62 @@
     </div>
 }
 
-@renderQuestion(question: Question, questionIndex: Int, field: play.api.data.Field) = {
-    <li class="quiz__question" value="@{questionIndex+1}">
-        <span class="quiz__question__legend">@question.text</span>
+@renderQuestion(question: Question, questionIndex: Int, field: play.api.data.Field, maybeInputAnswer: Option[Answer]) = {
+    <li class="quiz__question
+        @{ if (showResults) {
+            s"quiz__question--${if(maybeInputAnswer.isEmpty) "without-response" else "with-response" }"
+          }
+        }"
+        value="@{questionIndex+1}">
+        <span class="quiz__question__label">@question.text</span>
 
-        @question.answers.zipWithIndex.map { case (answer, answerIndex) =>
-            @{
-                val maybeInputAnswer = maybeResults.flatMap(_.getAnswerFor(question))
-                val isAnswerCorrect = maybeResults.exists(_.isCorrectAnswer(question, answer))
-                renderAnswer(question, answer, questionIndex, answerIndex, isAnswerCorrect, maybeInputAnswer)
+        <div class="quiz__question__rows">
+            @question.answers.zipWithIndex.map { case (answer, answerIndex) => @{
+                    val isCorrect = maybeResults.exists(_.isCorrectAnswer(question, answer))
+                    if(showResults) {
+                        renderAnswerWithResponse(question, answer, questionIndex, answerIndex, isCorrect, maybeInputAnswer)
+                    } else {
+                        renderAnswer(question, answer, questionIndex, answerIndex, isCorrect)
+                    }
+                }
             }
-        }
+        </div>
 
     </li>
 }
 
-@renderAnswer(question: Question, answer: Answer, questionIndex: Int, answerIndex: Int, isAnswerCorrect: Boolean, maybeInputAnswer: Option[Answer]) = {
-    <div class="quiz__question__answer-row">
+@renderAnswer(question: Question, answer: Answer, questionIndex: Int, answerIndex: Int, isAnswerCorrect: Boolean) = {
+    <div class="quiz__answer">
+        <label for="question-@questionIndex-answer-@answerIndex" class="quiz__answer__label">
+            <input type="radio"
+                name="answers[@questionIndex]"
+                id="question-@questionIndex-answer-@answerIndex"
+                value="Q@{questionIndex}##A@{answerIndex}##@{answer.text}"
+                class="quiz__answer__input">
+
+            <span class="quiz__answer__text">@{answer.text}</span>
+        </label>
+    </div>
+}
+
+@renderAnswerWithResponse(question: Question, answer: Answer, questionIndex: Int, answerIndex: Int, isAnswerCorrect: Boolean, maybeInputAnswer: Option[Answer]) = {
+    <div class="quiz__answer @{
+            if(isAnswerCorrect) "quiz__answer--correct" else "quiz__answer--incorrect"
+        } @{
+            if(maybeInputAnswer.exists(_.equals(answer))) "quiz__answer--selected"
+        }">
         <label for="question-@questionIndex-answer-@answerIndex"
-            class="@{
-                (
-                    Seq("quiz__answer") ++
-                    maybeResults
-                        .map(x => {
-                            Seq(
-                                "quiz__answer--question-has-submission",
-                                s"quiz__answer--${if(isAnswerCorrect) { "correct" } else { "incorrect" }}",
-                                maybeInputAnswer
-                                    .map { inputAnswer => {
-                                        val isChosen = inputAnswer.equals(answer)
-                                        if(isChosen) {
-                                            s"quiz__answer--${if(isAnswerCorrect) { "correct" } else { "incorrect" }}--is-chosen"
-                                        } else ""
-                                    } }
-                                    .getOrElse(if (isAnswerCorrect) { "quiz__answer--correct--not-answered" } else Nil))
-                        })
-                        .getOrElse(Nil)
-                ).mkString(" ")
-            }">
-            @maybeResults.map { x =>
+            class="quiz__answer__label ">
+            @maybeInputAnswer.map { inputAnswer =>
                 <span class="quiz__answer__icon">
                     @if(isAnswerCorrect) {
                         @inlineSvg("tick", "icon")
                     } else {
-                        @maybeInputAnswer.map { inputAnswer =>
-                            @if(inputAnswer.equals(answer)) {
-                                @inlineSvg("cross", "icon")
-                            }
+                        @if(inputAnswer.equals(answer)) {
+                            @inlineSvg("cross", "icon")
                         }
                     }
                 </span>
-            }.getOrElse {
-                <input type="radio"
-                    name="answers[@questionIndex]"
-                    id="question-@questionIndex-answer-@answerIndex"
-                    value="Q@{questionIndex}##A@{answerIndex}##@{answer.text}"
-                    class="quiz__answer__input">
             }
             <span class="quiz__answer__text">@{answer.text}</span>
             @maybeInputAnswer.map { inputAnswer =>
