@@ -176,7 +176,8 @@ define([
 
             this.notificationBar = new NotificationBar({attachTo: $('.js-update-notification')[0] });
 
-            $(options.attachTo).addClass('autoupdate--has-animation');
+            var identity = function (val) { return val; };
+            $(options.attachTo.filter(identity)).addClass('autoupdate--has-animation');
 
             detect.initPageVisibility();
 
