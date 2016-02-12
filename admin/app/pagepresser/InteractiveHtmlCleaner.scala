@@ -9,12 +9,10 @@ import scala.io.Source
 object InteractiveHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
 
   override def canClean(document: Document): Boolean = {
-    log.info("*** canClean ***")
     document.getElementById("interactive-content") != null
   }
 
   override def clean(document: Document): Document = {
-    log.info("*** clean ***")
     universalClean(document)
     removeScripts(document)
     createSimplePageTracking(document)
@@ -25,12 +23,11 @@ object InteractiveHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
     val omnitureNoScript = if(document.getElementById("omnitureNoScript") != null) {
       document.getElementById("omnitureNoScript")
     } else {
-//      val theTag = document.select("#interactive-content #interactive iframe").text()
-//      val iframeBodyEx = """<body>.*<iframe(.*)?>(.*)</iframe></body>""".r
-//      val doc = Jsoup.parseBodyFragment(iframeBodyEx.findFirstIn(theTag).getOrElse(""))
-//      println("***************************")
-//      println(doc.body())
-//      println("***************************")
+      // Dear reviewer, this horrible code is here because I've found examples of interactives that have nested iframes.
+      // Yes, honestly. Nested iframes. Which Jsoup struggles to parse properly.
+      // Anyway, the omnitureNoScript element we're seeking may exist at some nested level and so this is an attempt at
+      // working arounf the shortcomings of Jsoup's parser. It's horrible and I'm sorry. But I need to get on with
+      // pressing these damned things. If you know a better way, please say.
       document.getElementsByTag("iframe").map { frame =>
         val tempDoc: Element = {
           val x = Jsoup.parseBodyFragment(frame.html()).getElementById("omnitureNoScript")
@@ -54,12 +51,6 @@ object InteractiveHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
             }
           }
         }
-
-        //val tempDoc = Jsoup.parse(Jsoup.parse(Jsoup.parse(frame.html()).text()).text())
-
-//        println("******** tempDoc *******")
-//        println(tempDoc.html())
-//        println("************************")
         tempDoc
       }.map(_.getElementById("omnitureNoScript")).headOption.orNull
     }
@@ -70,14 +61,10 @@ object InteractiveHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
       log.error("Failed to extract params from omnitureNoScript (element cannot be found)")
       Map.empty
     }
-    println("***** params *****")
-    println(params)
-    println("******************")
     params
   }
 
   override def removeScripts(document: Document): Document = {
-    log.info("*** removeScripts ***")
     val scripts = document.getElementsByTag("script")
     val (interactiveScripts, nonInteractiveScripts) = scripts.partition { e =>
       val parentIds = e.parents().map(p => p.id()).toList
@@ -94,8 +81,6 @@ object InteractiveHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
   }
 
   private def addSwfObjectScript(document: Document): Document = {
-    log.info("*** addSwfObjectScript ***")
-
     val swfScriptOpt = try {
       val source = Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("resources/r2/interactiveSwfScript.js"), "UTF-8").getLines().mkString
       Some(source)

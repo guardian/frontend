@@ -22,12 +22,10 @@ case class Answer(id: Int, question: Int, count: Double)
 object PollsHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
 
   override def canClean(document: Document): Boolean = {
-    log.info("*** canClean ***")
     document.getElementsByAttribute("data-poll-url").nonEmpty
   }
 
   override def clean(document: Document) = {
-    log.info("*** clean ***")
     universalClean(document)
     removeScripts(document)
     createSimplePageTracking(document)
@@ -36,7 +34,6 @@ object PollsHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
   }
 
   private def fetchAndPressPollResult(document: Document): Document = {
-    log.info("*** fetchAndPressPollResult ***")
     val pollUrl = document.getElementById("results-container").attr("data-poll-url")
 
     fetchPoll(pollUrl).foreach { poll =>
@@ -67,7 +64,6 @@ object PollsHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
 
   import PollDeserializer._
   def fetchPoll(url: String): Option[Poll] = {
-    log.info("*** fetchPoll ***")
     val result = Await.result(WS.url(url).getOKResponse(), 1.second)
 
     result.json.asOpt[Poll]
