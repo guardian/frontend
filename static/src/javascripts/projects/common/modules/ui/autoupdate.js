@@ -176,6 +176,8 @@ define([
 
             this.notificationBar = new NotificationBar({attachTo: $('.js-update-notification')[0] });
 
+            // Remove undefined elements in the list (e.g. key events when
+            // there are none)
             var identity = function (val) { return val; };
             $(options.attachTo.filter(identity)).addClass('autoupdate--has-animation');
 
