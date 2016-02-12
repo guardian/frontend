@@ -1,24 +1,27 @@
 
 .quiz__question {
-    margin-bottom: 36px;
+    margin-bottom: $gs-baseline * 3;
     border: 0;
     margin-left: 0;
     margin-right: 0;
     padding: 0;
 }
 
-.quiz__question__legend {
+.quiz__question__label {
     @include fs-bodyCopy(2);
     color: colour(neutral-1);
-    margin-bottom: 10px;
 }
 
-.quiz__question__answer-row {
+.quiz__question__rows {
+    margin-bottom: $gs-baseline;
+}
+
+.quiz__answer {
     display: flex;
     color: colour(neutral-2);
 }
 
-.quiz__answer {
+.quiz__answer__label {
     position: relative;
     display: inline-block;
     text-align: left;
@@ -26,63 +29,62 @@
     color: colour(neutral-2);
     background-color: colour(neutral-8);
     border: 1px solid colour(neutral-8);
-    padding: 12px 12px 12px 30px;
-    margin: 3px;
+    padding: $gs-baseline $gs-gutter * 1.5;
+    margin: $gs-baseline / 4;
     flex: 1 1 50%;
 }
 
 .quiz--questions {
-    .quiz__answer:hover {
-        border-color: #000000;
+
+    .quiz__answer .quiz__answer__label:hover {
+        border-color: colour(neutral-1);
     }
 
-    .quiz__answer--focussed {
-        outline: 3px solid #ffbf47;
+    .quiz__answer--focussed .quiz__answer__label {
+        outline: $gs-baseline/4 solid #ffbf47;
+    }
+
+    .quiz__answer--checked .quiz__answer__label {
+        border-color: colour(neutral-1);
+        background: colour(neutral-8);
     }
 }
 
-.quiz__answer--checked {
-    border-color: #000000;
-    background: #ffffff;
-}
+.quiz--results {
 
-.quiz__answer--question-has-submission {
-    cursor: default;
-    opacity: .5;
-}
+    .quiz__answer--correct .quiz__answer__label {
+        background: #aedfb8;
+        color: #505050;
+    }
 
-.quiz__answer--correct {
-    background: #aedfb8;
-    color: #505050;
-}
+    .quiz__answer--incorrect .quiz__answer__label {
+        color: colour(neutral-3);
+    }
 
-.quiz__answer--incorrect {
-    color: #bdbdbd; /* neutral-3 */
-}
+    .quiz__question--without-response,
+    .quiz__question--with-response .quiz__answer--correct,
+    .quiz__question--with-response .quiz__answer--incorrect {
+        opacity: 1;
+        color: #ffffff;
+    }
 
-.quiz__answer--correct--not-answered,
-.quiz__answer--correct--is-chosen,
-.quiz__answer--incorrect--is-chosen {
-    opacity: 1;
-    color: #ffffff;
-}
+    .quiz__answer--selected {
+        cursor: default;
+        opacity: .5;
+    }
 
-// TODO: Highlight unchosen but correct differently
-.quiz__answer--correct--is-chosen,
-.quiz__answer--correct--not-answered {
-    background-color: #43b347; /* ??? */
-}
+    .quiz__question--with-response .quiz__answer--selected.quiz__answer--correct .quiz__answer__label {
+        background-color: #43b347; /* ??? */
+    }
 
-.quiz__answer--incorrect--is-chosen {
-    background-color: #bb001a; /* ??? */
+    .quiz__question--with-response .quiz__answer--selected.quiz__answer--incorrect .quiz__answer__label {
+        background-color: #bb001a; /* ??? */
+    }
 }
 
 .quiz__answer__input {
-    // Unset
     float: none;
-    // Unset
     margin-left: 0;
-    // Reset
     margin-right: 1rem;
 }
 
