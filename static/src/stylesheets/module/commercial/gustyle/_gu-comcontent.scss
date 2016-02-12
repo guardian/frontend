@@ -6,8 +6,21 @@
     padding: $gs-baseline / 2;
 }
 
+.gu-image-layer {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    position: static;
+}
+
 .gu-box {
     @extend %gu-style-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
 }
 
 .gu-title {
@@ -22,7 +35,7 @@
 .gu-text {
     @include f-textSans;
     @include font-size(14, 18);
-    
+
     color: colour(neutral-2);
     text-align: left;
     margin-bottom: $gs-row-height;
@@ -36,7 +49,7 @@
     @include f-textSans;
     @include font-size(13, 18);
 
-    color: colour(neutral-2);   
+    color: colour(neutral-2);
 }
 
 .gu-logo {
@@ -50,7 +63,7 @@
 }
 
 .gu-external-icon {
-    float: right; 
+    float: right;
     svg {
         fill: #ffffff;
         margin: 0 5px;
@@ -80,19 +93,21 @@
 }
 
 .gu-display {
-    min-height: 400px;
-    position: relative;
+
+    &:before {
+        border-top: #fedd79 1px solid;
+        display: block;
+    }
 
     .gu-box {
         position: absolute;
         bottom: 0;
-        z-index: 1;
         padding: $gs-gutter/2;
     }
 
     .gu-title {
         padding-bottom: $gs-baseline/2;
-        
+
         a {
             color: #ffffff;
         }

@@ -17,7 +17,7 @@ define([
 ) {
     var Gustyle = function ($slot, params) {
         this.$slot = $slot;
-        this.params  = params;
+        this.params = params;
     };
 
     Gustyle.prototype.addLabel = function () {

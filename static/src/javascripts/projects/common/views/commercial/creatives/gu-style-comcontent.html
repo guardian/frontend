@@ -1,13 +1,18 @@
-<a class="<%=data.gustyleClass%>" href="<%=data.clickMacro%><%=data.articleUrl%>" data-link-name="creative | gu style commercial content">
-    <div class="u-responsive-ratio inlined-image">
+<div class="gu-display" data-link-name="creative | gu style commercial display content">
+    <div class="gu-image-layer u-responsive-ratio inlined-image">
         <img class="gu-image" src="<%=data.articleImage%>">
     </div>
     <div class="gu-box">
-        <h2 class="gu-title"><%=data.articleHeaderText%></h2>
-        <%=data.standFirst%>
+        <a href="<%=data.clickMacro%><%=data.articleUrl%>" data-link-name="header text">
+            <h2 class="gu-title"><%=data.articleHeaderText%></h2>
+        </a>
+        <a href="<%=data.clickMacro%><%=data.articleUrl%>" data-link-name="text">
+            <p class="gu-text"><%=data.articleText%></p>
+        </a>
         <div class="gu-brand">
-        	<%=data.noteOrLink%>
-        	<img class="gu-logo" src="<%=data.brandLogo%>" alt="<%=data.brand%>">
+            <a href="<%=data.clickMacro%><%=data.callToActionLink%>" class="button button--tertiary button--medium" data-link-name="logo">
+                <%=data.callToAction%><%=data.externalLinkIcon%>
+            </a>
         </div>
     </div>
-</a>
+</div>
