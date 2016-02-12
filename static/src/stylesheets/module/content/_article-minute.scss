@@ -36,7 +36,7 @@ $minute-layout-margin-nudge: gs-span(1);
             top: 0;
             bottom: 0;
             background: rgba(0, 0, 0, .4);
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #000000 100%);
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 20%, #000000 90%);
             width: 100%;
         }
 
@@ -51,7 +51,8 @@ $minute-layout-margin-nudge: gs-span(1);
 
     .logo--us-election {
         height: gs-height(2);
-        margin-top: $gs-baseline / 2;
+        position: absolute;
+        top: $gs-baseline / 2;
         width: gs-span(1) + $gs-gutter;
 
         @include mq(tablet) {
@@ -60,6 +61,7 @@ $minute-layout-margin-nudge: gs-span(1);
 
         svg {
             height: auto;
+            max-height: 47px;
             width: 100%;
         }
     }
@@ -295,6 +297,7 @@ $minute-layout-margin-nudge: gs-span(1);
     @include mq($from: desktop) {
         max-width: gs-span(11);
         margin: $gs-baseline/2 0 $gs-baseline $minute-layout-margin-nudge;
+        margin-top: $gs-baseline * 2;
         padding-left: 0;
 
         &:before {
@@ -469,6 +472,17 @@ $minute-layout-margin-nudge: gs-span(1);
         color: $us-minute-contrast-colour;
     }
 
+    a:link {
+        border-bottom: 1px solid rgba(255, 255, 255, .4);
+    }
+    a:hover {
+        border-bottom-color: $us-minute-highlight-colour;
+    }
+    a:active {
+        color: $us-minute-highlight-colour;
+        border-bottom-color: $us-minute-highlight-colour;
+    }
+
     // Captions
 
     .caption {
@@ -496,6 +510,7 @@ $minute-layout-margin-nudge: gs-span(1);
             background-color: rgba(12, 87, 135, .5);
         }
     }
+
 
     figcaption.caption__minute-article {
         max-width: none;
