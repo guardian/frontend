@@ -573,6 +573,7 @@ final case class Tags(
   lazy val isLetters = tones.exists(_.id == Tags.Letters)
   lazy val isCrossword = types.exists(_.id == Tags.Crossword)
   lazy val isMatchReport = tones.exists(_.id == Tags.MatchReports)
+  lazy val isQuiz = tones.exists(_.id == Tags.quizzes)
 
   lazy val isArticle: Boolean = tags.exists { _.id == Tags.Article }
   lazy val isSudoku: Boolean = tags.exists { _.id == Tags.Sudoku } || tags.exists(t => t.id == "lifeandstyle/series/sudoku")
@@ -618,7 +619,7 @@ object Tags {
   val Letters = "tone/letters"
   val Podcast = "type/podcast"
   val MatchReports = "tone/matchreports"
-
+  val quizzes = "tone/quizzes"
   val Article = "type/article"
   val Gallery = "type/gallery"
   val Video = "type/video"
