@@ -43,6 +43,16 @@ define([
                 insertMethod: 'insertAfter',
                 insertSelector: '.js-article__container'
             },
+            theFilmToday: {
+                listId: '1950',
+                canRun: 'theFilmToday',
+                campaignCode: 'film_article_signup',
+                headline: 'Want the best of Film, direct to your inbox?',
+                description: 'Sign up to Film Today and we\'ll deliver to you the latest movie news, blogs, big name interviews, festival coverage, reviews and more.',
+                successHeadline: 'Thank you for signing up to Film Today',
+                successDescription: 'We will send you our picks of the most important headlines tomorrow afternoon.',
+                modClass: 'end-article'
+            },
             theGuardianToday: {
                 listId: (function () {
                     switch (config.page.edition) {
@@ -118,13 +128,16 @@ define([
             theCampaignMinute: function () {
                 return config.page.isMinuteArticle && canRunHelpers.keywordExists(['US elections 2016']);
             },
+            theFilmToday: function () {
+                return config.page.section === 'film' && canRunHelpers.allowedArticleStructure();
+            },
             theGuardianToday: function () {
                 var host = window.location.host,
                     escapedHost = host.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'), // Escape anything that will mess up the regex
                     urlRegex = new RegExp('^https?:\/\/' + escapedHost + '\/(uk\/|us\/|au\/|international\/)?([a-z-])+$', 'gi'),
                     browser = detect.getUserAgent.browser,
                     version = detect.getUserAgent.version,
-                    pageIsBlacklisted = canRunHelpers.keywordExists(['NHS', 'US elections 2016']);
+                    pageIsBlacklisted = canRunHelpers.keywordExists(['US elections 2016']) || config.page.section === 'film';
 
                 return !pageIsBlacklisted &&
                         canRunHelpers.allowedArticleStructure() &&
