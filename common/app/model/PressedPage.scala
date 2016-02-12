@@ -8,6 +8,7 @@ import conf.Configuration.commercial.showMpuInAllContainersPageId
 import contentapi.Paths
 import model.facia.PressedCollection
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
+import services.ConfigAgent
 
 import scala.language.postfixOps
 
@@ -104,9 +105,12 @@ case class PressedPage (
     }
   }
   val navSection: String = metadata.section
+
   val keywordIds: Seq[String] = frontKeywordIds(id)
 
-   def sponsorshipType: Option[String] = {
+  lazy val frontPriority: Option[FrontPriority] = ConfigAgent.getFrontPriorityFromConfig(id)
+
+  def sponsorshipType: Option[String] = {
     if (isSponsored(None)) {
       Option("sponsoredfeatures")
     } else if (isAdvertisementFeature) {
