@@ -35,6 +35,7 @@ define([
         this.quoteAuthor = opts.quoteAuthor || '';
         this.imageAuthor = opts.imageAuthor || '';
         this.customCssClass = opts.customCssClass || '';
+        this.edition = opts.edition || 'UK';
     };
 
     AdblockBanner.prototype.show = function () {
@@ -49,7 +50,7 @@ define([
                 customCssClass: this.customCssClass,
                 cursor: svgs('cursor'),
                 rectangleLogo: svgs('logomembership'),
-                adblockCoins: svgs('adblockCoins'),
+                adblockCoins: svgs('adblockCoins' + this.edition),
                 marque54icon: svgs('marque54icon'),
                 marque36icon: svgs('marque36icon')
             });

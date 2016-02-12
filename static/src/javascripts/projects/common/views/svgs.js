@@ -37,6 +37,7 @@ define([
     'inlineSvg!svgs/logo/membership-logo',
     'inlineSvg!svgs/commercial/logo-membership',
     'inlineSvg!svgs/commercial/adblock-coins',
+    'inlineSvg!svgs/commercial/adblock-coins-US',
     'lodash/objects/isArray'
 ], function (
     commentCount16icon,
@@ -73,6 +74,7 @@ define([
     membershipLogoWhite,
     membershipLogo,
     adblockCoins,
+    adblockCoinsUS,
     isArray
 ) {
     var svgs = {
@@ -107,7 +109,9 @@ define([
         externalLink: externalLink,
         tick: tick,
         glabsLogoSmall: glabsLogoSmall,
-        adblockCoins: adblockCoins,
+        adblockCoinsUK: adblockCoins,
+        adblockCoinsUS: adblockCoinsUS,
+        adblockCoinsINT: adblockCoinsUS, //deliberate
         logomembership: membershipLogo,
         logomembershipwhite: membershipLogoWhite
     };

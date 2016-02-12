@@ -14,7 +14,9 @@ define([
     'common/views/svgs',
     'lodash/collections/sample',
     'lodash/collections/filter',
-    'lodash/collections/find'
+    'lodash/collections/find',
+    'lodash/objects/merge',
+    'lodash/collections/map'
 ], function (
     $,
     config,
@@ -31,7 +33,9 @@ define([
     svgs,
     sample,
     filter,
-    find
+    find,
+    merge,
+    map
 ) {
     function showAdblockMessage() {
         var adblockLink = 'https://membership.theguardian.com/supporter',
@@ -72,35 +76,54 @@ define([
 
     function showAdblockBanner() {
         var contributors = history.getContributors(),
-            allVariations = [{
-                supporterLink: 'https://membership.theguardian.com/supporter?INTCMP=ADBLOCK_BANNER_MONBIOT',
-                quoteText: 'Become a Guardian Member and support independent journalism',
-                quoteAuthor: 'George Monbiot',
-                customCssClass: 'monbiot',
-                imageAuthor: '//i.guim.co.uk/img/static/sys-images/Guardian/Pix/contributor/2015/7/9/1436429159376/George-Monbiot-L.png?w=300&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=903233b032379d7529d7337b8c26bcc9'
-            },
-            {
-                supporterLink: 'https://membership.theguardian.com/supporter?INTCMP=ADBLOCK_BANNER_MUIR',
-                quoteText: 'Support and become part of the Guardian',
-                quoteAuthor: 'Hugh Muir',
-                customCssClass: 'muir',
-                imageAuthor: '//i.guim.co.uk/img/static/sys-images/Guardian/Pix/pictures/2014/3/13/1394733739000/HughMuir.png?w=300&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=c1eeb35230ad2a215ec9de76b3eb69fb'
-            },
-            {
-                supporterLink: 'https://membership.theguardian.com/supporter?INTCMP=ADBLOCK_BANNER_TOYNBEE',
-                quoteText: 'If you read the Guardian, join the Guardian',
-                quoteAuthor: 'Polly Toynbee',
-                customCssClass: 'toynbee',
-                imageAuthor: '//i.guim.co.uk/img/static/sys-images/Guardian/Pix/contributor/2014/6/30/1404146756739/Polly-Toynbee-L.png?w=300&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=abf0ce1a1a7935e82612b330322f5fa4'
-            },
-            {
-                supporterLink: 'https://membership.theguardian.com/supporter?INTCMP=ADBLOCK_BANNER_MACASKILL',
-                quoteText: 'The Guardian enjoys rare freedom and independence. Support our journalism',
-                quoteAuthor: 'Ewen MacAskill',
-                customCssClass: 'macaskill',
-                imageAuthor: '//i.guim.co.uk/img/static/sys-images/Guardian/Pix/contributor/2015/8/18/1439913873894/Ewen-MacAskill-R.png?w=300&q=85&auto=format&sharp=10&s=0ecfbc78dc606a01c0a9b04bd5ac7a82'
-            }
+            contributorBannersUK = [
+                {
+                    edition: 'UK',
+                    supporterLink: 'https://membership.theguardian.com/supporter?INTCMP=ADBLOCK_BANNER_MONBIOT',
+                    quoteText: 'Become a Guardian Member and support independent journalism',
+                    quoteAuthor: 'George Monbiot',
+                    customCssClass: 'monbiot',
+                    imageAuthor: '//i.guim.co.uk/img/static/sys-images/Guardian/Pix/contributor/2015/7/9/1436429159376/George-Monbiot-L.png?w=300&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=903233b032379d7529d7337b8c26bcc9'
+                },
+                {
+                    edition: 'UK',
+                    supporterLink: 'https://membership.theguardian.com/supporter?INTCMP=ADBLOCK_BANNER_MUIR',
+                    quoteText: 'Support and become part of the Guardian',
+                    quoteAuthor: 'Hugh Muir',
+                    customCssClass: 'muir',
+                    imageAuthor: '//i.guim.co.uk/img/static/sys-images/Guardian/Pix/pictures/2014/3/13/1394733739000/HughMuir.png?w=300&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=c1eeb35230ad2a215ec9de76b3eb69fb'
+                },
+                {
+                    edition: 'UK',
+                    supporterLink: 'https://membership.theguardian.com/supporter?INTCMP=ADBLOCK_BANNER_TOYNBEE',
+                    quoteText: 'If you read the Guardian, join the Guardian',
+                    quoteAuthor: 'Polly Toynbee',
+                    customCssClass: 'toynbee',
+                    imageAuthor: '//i.guim.co.uk/img/static/sys-images/Guardian/Pix/contributor/2014/6/30/1404146756739/Polly-Toynbee-L.png?w=300&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=abf0ce1a1a7935e82612b330322f5fa4'
+                },
+                {
+                    edition: 'UK',
+                    supporterLink: 'https://membership.theguardian.com/supporter?INTCMP=ADBLOCK_BANNER_MACASKILL',
+                    quoteText: 'The Guardian enjoys rare freedom and independence. Support our journalism',
+                    quoteAuthor: 'Ewen MacAskill',
+                    customCssClass: 'macaskill',
+                    imageAuthor: '//i.guim.co.uk/img/static/sys-images/Guardian/Pix/contributor/2015/8/18/1439913873894/Ewen-MacAskill-R.png?w=300&q=85&auto=format&sharp=10&s=0ecfbc78dc606a01c0a9b04bd5ac7a82'
+                }
             ],
+
+            internationaliseBanner = function (country) {
+                return function (contributor) {
+                    return merge({}, contributor, {
+                        messageText: 'Become a supporter from just $4.99 per month to ensure quality journalism is available to all',
+                        supporterLink: contributor.supporterLink + '_' + country,
+                        edition: country
+                    });
+                };
+            },
+
+            relevantToEdition = function (message) {
+                return !message.edition || message.edition == config.page.edition;
+            },
 
             coinBanners = [
                 {
@@ -110,21 +133,31 @@ define([
                     linkText: 'Become a supporter from just £5 per month',
                     messageText: 'For just 16p a day you can support the Guardian\'s independence and our award-winning journalism',
                     template: 'coin'
+                },
+                {
+                    edition: 'INT',
+                    supporterLink: 'https://membership.theguardian.com/supporter?INTCMP=ADBLOCK_BANNER_COIN_INT',
+                    quoteText: 'Quality journalism',
+                    linkText: 'Become a supporter from just $4.99 per month',
+                    messageText: 'For just 16¢ a day you can support the Guardian\'s independence and our award-winning journalism',
+                    template: 'coin'
                 }
             ],
 
-            coinBannersRelevantToEdition = filter(coinBanners, function (message) {
-                return !message.edition || message.edition == config.page.edition;
-            }),
+            coinBannersRelevantToEdition = filter(coinBanners, relevantToEdition),
+            contributorBannersRelevantToEdition = filter(contributorBannersUK.concat(
+                map(contributorBannersUK, internationaliseBanner('INT')),
+                map(contributorBannersUK, internationaliseBanner('US'))
+            ), relevantToEdition),
 
-            variationsFromContributors = filter(allVariations, function (message) {
+            variationsFromContributors = filter(contributorBannersRelevantToEdition, function (message) {
                 return find(contributors, function (contributor) {
                     return contributor[0] === message.quoteAuthor;
                 }) !== undefined;
             }),
 
-            variationsToUse = variationsFromContributors.length > 1 ? variationsFromContributors : allVariations,
-            oneContributorAndOneCoin = [sample(variationsToUse)].concat(sample(coinBannersRelevantToEdition)),
+            variationsToUse = variationsFromContributors.length > 1 ? variationsFromContributors : contributorBannersRelevantToEdition,
+            oneContributorAndOneCoin = [sample(variationsToUse)].concat(sample(coinBannersRelevantToEdition) || []),
             variant = sample(oneContributorAndOneCoin); //50% coin chance
 
         new AdblockBanner(variant).show();
