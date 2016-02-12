@@ -31,16 +31,6 @@ define([
 ) {
 
     var listConfigs = {
-            nhs: {
-                listId: '3573',
-                canRun: 'nhs',
-                campaignCode: 'NHS_in_article',
-                headline: 'Interested in the NHS?',
-                description: 'Sign up to email updates related to the Guardian\'s coverage of the NHS, including daily updates as the project develops',
-                successHeadline: 'Thank you for signing up to our NHS email updates',
-                successDescription: 'You\'ll receive daily updates in your inbox',
-                modClass: 'end-article'
-            },
             theCampaignMinute: {
                 listId: '3599',
                 canRun: 'theCampaignMinute',
@@ -125,9 +115,6 @@ define([
             }
         },
         canRunList = {
-            nhs: function () {
-                return canRunHelpers.allowedArticleStructure() && canRunHelpers.keywordExists(['NHS']);
-            },
             theCampaignMinute: function () {
                 return config.page.isMinuteArticle && canRunHelpers.keywordExists(['US elections 2016']);
             },
