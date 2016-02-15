@@ -23,12 +23,9 @@ define([
     Gustyle.prototype.addLabel = function () {
         var toggles,
             templateOptions = {
-                buttonTitle: (this.params.adVariant === 'content') ?
-                    'Paid Story' : 'Ad',
-                infoTitle: (this.params.adVariant === 'content') ?
-                    'Paid Stories' : 'Adverts',
-                infoText: (this.params.adVariant === 'content') ?
-                    'are paid for by a third party advertiser' : 'are paid for by a third party advertisers and link to an external site',
+                buttonTitle: 'Ad',
+                infoTitle: 'Advertising',
+                infoText: 'is created and paid for by third parties and link to an external site',
                 infoLinkText: 'Learn how advertising supports the Guardian',
                 infoLinkUrl: 'http://www.theguardian.com/sponsored-content',
                 icon: svgs('arrowicon', ['gu-comlabel__icon']),

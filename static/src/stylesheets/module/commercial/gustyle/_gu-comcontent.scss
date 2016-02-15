@@ -13,36 +13,50 @@
     position: static;
 }
 
-.gu-box {
-    @extend %gu-style-box;
+.gu-mutable {
+    display: block;
     position: absolute;
-    top: 0;
-    left: 0;
     z-index: 2;
+}
+
+.gu-content {
+    @extend %gu-style-box;
+    bottom: 30px;
+    left: 0;
     width: 100%;
-    height: 100%;
+    padding: $gs-gutter/2;
 }
 
-.gu-title {
+.gu-link {
+    color: #ffffff;
+}
+
+.gu-content__title {
     @include f-headlineSans;
-    @include font-size(21, 26);
+    @include font-size(20, 20);
 
-    color: colour(neutral-1);
-    padding-bottom: $gs-baseline;
+    color: #ffffff;
+    text-align: left;
+    font-weight: normal;
+}
+
+.gu-content__text {
+    @include f-headlineSans;
+    @include font-size(20, 20);
+
+    color: #ffffff;
     text-align: left;
 }
 
-.gu-text {
-    @include f-textSans;
-    @include font-size(14, 18);
-
-    color: colour(neutral-2);
-    text-align: left;
-    margin-bottom: $gs-row-height;
+.gu-cta {
+    left: 10px;
+    bottom: 10px;
 }
 
-.gu-brand {
-    text-align: right;
+.gu-logo-link {
+    right: 10px;
+    bottom: 10px;
+    line-height: 1;
 }
 
 .gu-note {
@@ -53,8 +67,8 @@
 }
 
 .gu-logo {
-    width: 40%;
-    vertical-align: sub;
+    width: 80px;
+    height: 30px;
 }
 
 .gu-image {
@@ -93,18 +107,6 @@
 }
 
 .gu-display {
-
-    &:before {
-        border-top: #fedd79 1px solid;
-        display: block;
-    }
-
-    .gu-box {
-        position: absolute;
-        bottom: 0;
-        padding: $gs-gutter/2;
-    }
-
     .gu-title {
         padding-bottom: $gs-baseline/2;
 
@@ -118,13 +120,13 @@
         color: #ffffff;
         box-shadow: 0 0 1px 0px #ffffff inset, 0 0 1px 0px #ffffff;
     }
-
 }
 
 $mobile-max-container-width: gs-span(8);
 @include mq-add-breakpoint(containerWidestMobile, $mobile-max-container-width + $gs-gutter * 2);
 
 .gu-style {
+    border-top: #fedd79 1px solid;
     width: auto;
     margin-left: $gs-gutter / 2;
     margin-right: $gs-gutter / 2;
