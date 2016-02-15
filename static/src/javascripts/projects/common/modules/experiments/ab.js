@@ -6,11 +6,9 @@ define([
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/fronts-on-articles2',
-    'common/modules/experiments/tests/related-variants',
     'common/modules/experiments/tests/identity-register-v2',
     'common/modules/experiments/tests/identity-sign-in-v2',
     'common/modules/experiments/tests/liveblog-toast',
-    'common/modules/experiments/tests/userzoom-survey-message-v3',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -28,11 +26,9 @@ define([
     store,
     mvtCookie,
     FrontsOnArticles2,
-    RelatedVariants,
     IdentityRegisterV2,
     IdentitySignInV2,
     LiveblogToast,
-    UserzoomSurveyMessageV3,
     flatten,
     forEach,
     keys,
@@ -46,11 +42,9 @@ define([
 
     var TESTS = flatten([
         new FrontsOnArticles2(),
-        new RelatedVariants(),
         new IdentityRegisterV2(),
         new IdentitySignInV2(),
-        new LiveblogToast(),
-        new UserzoomSurveyMessageV3()
+        new LiveblogToast()
     ]);
 
     var participationsKey = 'gu.ab.participations';

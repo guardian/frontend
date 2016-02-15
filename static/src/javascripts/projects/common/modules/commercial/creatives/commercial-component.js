@@ -5,6 +5,7 @@
 define([
     'bean',
     'bonzo',
+    'fastdom',
     'raven',
     'common/utils/$',
     'common/utils/config',
@@ -22,6 +23,7 @@ define([
 ], function (
     bean,
     bonzo,
+    fastdom,
     raven,
     $,
     config,
@@ -103,13 +105,34 @@ define([
         }
     }
 
+    function adjustMostPopHeight(el) {
+        var height;
+        var $adSlot = $(el);
+        var $mostPopTabs = $('.js-most-popular-footer .tabs__pane');
+
+        if ($adSlot.hasClass('ad-slot--mostpop')) {
+            fastdom.read(function () {
+                height = $adSlot.dim().height;
+            });
+
+            fastdom.write(function () {
+                $mostPopTabs.css('height', height);
+            });
+        }
+    }
+
+
+
     CommercialComponent.prototype.postLoadEvents = {
         bestbuy: function (el) {
             new Tabs().init(el);
         },
         capi: createToggle,
         capiSingle: createToggle,
-        paidforCard: createToggle
+        paidforCard: function (el) {
+            adjustMostPopHeight(el);
+            createToggle(el);
+        }
     };
 
     CommercialComponent.prototype.create = function () {

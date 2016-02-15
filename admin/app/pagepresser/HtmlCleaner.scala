@@ -48,7 +48,7 @@ object BasicHtmlCleaner extends HtmlCleaner {
 
   def replaceLinks(document: Document): Document = {
     try {
-      val newDocumentString = document.html().replaceAll("http://", "//")
+      val newDocumentString = document.html().replaceAll("href=\"http://", "href=\"//").replaceAll("src=\"http://", "src=\"//")
       Jsoup.parse(newDocumentString)
     }
     catch {
