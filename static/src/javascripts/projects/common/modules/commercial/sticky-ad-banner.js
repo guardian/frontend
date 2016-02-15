@@ -119,8 +119,7 @@ define([
     };
 
     var render = function (els, state) {
-        // TODO: move into stylesheets when productionised
-        els.$document.addClass('new-sticky-ad');
+        els.$document.addClass('sticky-ad-banner');
 
         var transitionTimingFunction = 'cubic-bezier(0, 0, 0, .985)';
         var transitionDuration = '1s';

@@ -30,8 +30,7 @@ define([
     'common/modules/identity/autosignin',
     'common/modules/identity/cookierefresh',
     'common/modules/navigation/navigation',
-    'common/modules/navigation/sticky',
-    'common/modules/navigation/newSticky',
+    'common/modules/commercial/sticky-ad-banner',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/onward/history',
@@ -87,8 +86,7 @@ define([
     AutoSignin,
     CookieRefresh,
     navigation,
-    sticky,
-    newSticky,
+    stickyAdBanner,
     Profile,
     Search,
     history,
@@ -137,21 +135,17 @@ define([
                 navigation.init();
             },
 
-            initialiseStickyHeader: function () {
+            initialiseStickyAdBanner: function () {
                 if (config.switches.viewability
-                    && !(config.switches.disableStickyNavOnMobile && detect.getBreakpoint() === 'mobile')
+                    && !(config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile')
                     && config.page.contentType !== 'Interactive'
                     && config.page.contentType !== 'Crossword'
                     && (!config.switches.newCommercialContent || !config.page.isAdvertisementFeature)
                     && config.page.pageId !== 'offline-page') {
-                    if (config.switches.removeStickyNav) {
-                        newSticky.initialise();
-                    } else {
-                        sticky.init();
-                    }
-                    config.page.hasStickyHeader = true;
+                    stickyAdBanner.initialise();
+                    config.page.hasStickyAdBanner = true;
                 } else {
-                    config.page.hasStickyHeader = false;
+                    config.page.hasStickyAdBanner = false;
                 }
             },
 
@@ -392,7 +386,7 @@ define([
                 ['c-tabs', modules.showTabs],
                 ['c-top-nav', modules.initialiseTopNavItems],
                 ['c-init-nav', modules.initialiseNavigation],
-                ['c-sticky-header', modules.initialiseStickyHeader],
+                ['c-sticky-ad-banner', modules.initialiseStickyAdBanner],
                 ['c-toggles', modules.showToggles],
                 ['c-dates', modules.showRelativeDates],
                 ['c-clickstream', modules.initClickstream],
