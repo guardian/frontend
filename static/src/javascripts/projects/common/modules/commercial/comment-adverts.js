@@ -61,7 +61,7 @@ define([
                 idleFastdom.write(function () {
                     $commentMainColumn.addClass('discussion__ad-wrapper');
 
-                    if (!config.page.isLiveBlog || !config.page.isMinuteArticle) {
+                    if (!config.page.isLiveBlog && !config.page.isMinuteArticle) {
                         $commentMainColumn.addClass('discussion__ad-wrapper-wider');
                     }
 
