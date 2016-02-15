@@ -33,7 +33,7 @@ define([
     contains,
     pluck,
     initial,
-    rest
+    rest,
     Promise
 ) {
 
