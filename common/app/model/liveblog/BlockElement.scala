@@ -2,12 +2,12 @@ package model.liveblog
 
 import com.gu.contentapi.client.model.v1.ElementType.{Text, Image, Audio, Video, Embed}
 import com.gu.contentapi.client.model.v1.{BlockElement => ApiBlockElement, ImageElementFields}
-import model.{ImageAsset, AudioAsset, VideoAsset}
+import model.{ImageMedia, ImageAsset, AudioAsset, VideoAsset}
 import play.api.libs.json._
 
 sealed trait BlockElement
 case class TextBlockElement(html: Option[String]) extends BlockElement
-case class ImageBlockElement(assets: Seq[ImageAsset], data: Map[String, String], displayCredit: Option[Boolean]) extends BlockElement
+case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean]) extends BlockElement
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends BlockElement
 case class VideoBlockElement(assets: Seq[VideoAsset]) extends BlockElement
 case class EmbedBlockElement(html: Option[String], safe: Option[Boolean], alt: Option[String]) extends BlockElement
@@ -22,7 +22,7 @@ object BlockElement {
     element.`type` match {
       case Text => Some(TextBlockElement(element.textTypeData.flatMap(_.html)))
       case Image => Some(ImageBlockElement(
-        element.assets.zipWithIndex.map { case (a, i) => ImageAsset.make(a, i) },
+        ImageMedia(element.assets.zipWithIndex.map { case (a, i) => ImageAsset.make(a, i) }),
         element.imageTypeData.map { d => Map(
           "copyright" -> d.copyright,
           "alt" -> d.alt,

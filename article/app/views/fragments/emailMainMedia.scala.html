@@ -1,5 +1,5 @@
 @import views.MainMediaWidths
-@import views.support.Item460
+@import views.support.EmailArticleImage
 @(article: model.Article)(implicit request: RequestHeader)
 
 @import model.EndSlateComponents
@@ -13,18 +13,21 @@
     </div>
 } else {
     @article.elements.mainPicture.map { picture =>
-        @Item460.bestFor(picture.images).map { url =>
-            <img src="@url" alt="@ImgSrc.getFallbackAsset(picture.images).flatMap(_.altText).getOrElse("")" />
+        @EmailArticleImage.bestFor(picture.images).map { url =>
+            <img class="article-image" src="@url" alt="@ImgSrc.getFallbackAsset(picture.images).flatMap(_.altText).getOrElse("")" />
         }
 
         @picture.images.largestImage.map { img =>
             @if(img.showCaption) {
-                <small class="caption caption--img">
-                    @img.caption.map(Html(_))
-                    @if(img.displayCredit && !img.creditEndsWithCaption) {
-                        @img.credit.map(Html(_))
-                    }
-                </small>
+                <div class="container">
+                    <small class="article-image-caption">
+                        @img.caption.map(Html(_))
+                        @if(img.displayCredit && !img.creditEndsWithCaption) {
+                            @img.credit.map(Html(_))
+                        }
+                    </small>
+                </div>
+
             }
         }
     }

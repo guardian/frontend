@@ -14,24 +14,18 @@
     </head>
 
     <body>
-        <table class="outer" width="700px" cellspacing="0" cellpadding="0">
+        <table class="outer" width="600px" cellspacing="0" cellpadding="0">
             <tbody>
                 <tr class="header">
-                    <td class="main">
+                    <td>
                         <a href="@LinkTo(page.metadata.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, page.metadata.webUrl)))">
                             Having trouble viewing this email?
                         </a>
                     </td>
-
-                    <td>
-                        <a href="http://www.theguardian.com" class="logo-wrapper" name="top">@fragments.inlineSvg("guardian-logo-160", "logo")</a>
-                    </td>
                 </tr>
 
-                <tr class="banner"></tr>
-
                 <tr>
-                    <td class="main" width="460px">
+                    <td>
                         @body
                     </td>
                 </tr>
