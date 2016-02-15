@@ -20,8 +20,8 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
     "element-tweet" -> "block--embed block--tweet",
     "block-title" -> "has-title",
     "quoted" -> "block--quote",
-    "element--inline" -> "block--background-image",
-    "element--thumbnail" -> "block--bottom-image"
+    "element--inline" -> "block--background-image block--image",
+    "element--thumbnail" -> "block--bottom-image block--image"
   )
 
   /**
