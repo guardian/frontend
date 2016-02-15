@@ -423,7 +423,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
         new EnvironmentVariableCredentialsProvider(),
         new SystemPropertiesCredentialsProvider(),
         new ProfileCredentialsProvider("frontend"),
-        new ProfileCredentialsProvider("nextgen"),
         new InstanceProfileCredentialsProvider
       )
 

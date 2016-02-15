@@ -133,6 +133,16 @@ import collection.JavaConversions._
         And("I should see the image caption")
         findFirst("[itemprop='associatedMedia image'] [itemprop=description]").getText should
           be("Our rivers and natural resources are to be valued and commodified, a move that will benefit only the rich, argues George Monbiot. Photograph: Alamy")
+
+        And("I should see the image url")
+        findFirst("[itemprop='associatedMedia image'] [itemprop=url]").getAttribute("content") should
+          endWith("/img/static/sys-images/Guardian/Pix/pictures/2012/8/6/1344274684805/Gunnerside-village-Swaled-009.jpg?w=300&q=85&auto=format&sharp=10&s=74e8ef24701fb21a730d6f5189ad142d")
+
+        And("I should see the image width")
+        findFirst("[itemprop='associatedMedia image'] [itemprop=width]").getAttribute("content") should be("460")
+
+        And("I should see the image height")
+        findFirst("[itemprop='associatedMedia image'] [itemprop=height]").getAttribute("content") should be("276")
       }
     }
 
@@ -379,6 +389,16 @@ import collection.JavaConversions._
         import browser._
         Then("the main media should contain a video")
         $(".media-primary video") should have size 1
+
+        And("video meta name should be set")
+        findFirst("[itemprop='associatedMedia video'] [itemprop=name]").getAttribute("content") should be("Nigel Farage's LBC interview – the key moments")
+
+        And("video meta thumbnailUrl should be set")
+        findFirst("[itemprop='associatedMedia video'] [itemprop=thumbnailUrl]").getAttribute("content") should
+          endWith("img/static/sys-images/Guardian/Pix/audio/video/2014/5/16/1400240928538/Nigel-Farage-LBC-debate-i-014.jpg?w=640&h=360&q=85&auto=format&sharp=10&s=642bf1757bcb095c924d2f3789857019")
+
+        And("video meta uploadDate should be set")
+        findFirst("[itemprop='associatedMedia video'] [itemprop=uploadDate]").getAttribute("content") should be("2014-05-16T16:09:34.000+01:00")
       }
     }
 
@@ -458,7 +478,7 @@ import collection.JavaConversions._
 
       SearchSwitch.switchOn()
 
-      goTo("/world/2013/jan/27/brazil-nightclub-blaze-high-death-toll") { browser =>
+      goTo("/media/2015/aug/27/sky-sports-news-presenter-kirsty-gallacher-joins-strictly-line-up") { browser =>
         import browser._
 
         Then("I should see the main ARIA roles described")
@@ -489,7 +509,7 @@ import collection.JavaConversions._
     scenario("Story package with a gallery trail") {
 
       Given("I'm on an article that has a gallery in its story package")
-      goTo("/global-development/poverty-matters/2013/jun/03/burma-rohingya-segregation") { browser =>
+      goTo("/media/2015/aug/27/sky-sports-news-presenter-kirsty-gallacher-joins-strictly-line-up") { browser =>
         import browser._
 
         Then("I should see a fancy gallery trail")
@@ -541,7 +561,7 @@ import collection.JavaConversions._
 
         // at the time of writing, Twitter does not like i.guim.co.uk
         // will see if I can get that fixed, but in the meantime this must be static.guim.co.uk
-        $("meta[name='twitter:image']").getAttributes("content").head should be("http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/9/15/1379275550234/Irans-President-Hassan-Ro-011.jpg")
+        $("meta[name='twitter:image']").getAttributes("content").head should be("https://static-secure.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/9/15/1379275549160/Irans-President-Hassan-Ro-010.jpg")
       }
     }
 

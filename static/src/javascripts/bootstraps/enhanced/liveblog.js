@@ -89,14 +89,8 @@ define([
                     eventId = $el.attr('data-event-id'),
                     title = $('.timeline__title', $el).text(),
                     targetEl = qwery('#' + eventId),
-                    dim = bonzo(targetEl).offset(),
-                    duration = 500,
-                    slimHeaderHeight = 52,
-                    topPadding = 12,
-                    scrollAmount;
-
-                scrollAmount = config.switches.viewability ? dim.top - slimHeaderHeight : dim.top - topPadding;
-                scroller.scrollTo(scrollAmount, duration, 'easeOutQuint');
+                    dim = bonzo(targetEl).offset();
+                scroller.scrollTo(dim.top - 12, 500, 'easeOutQuint');
                 window.setTimeout(unselectOnScroll, 550);
                 bean.off(curBinding);
                 unselect();

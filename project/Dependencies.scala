@@ -4,7 +4,7 @@ import sbt._
 
 object Dependencies {
   val cucumberVersion = "1.1.5"
-  val identityLibVersion = "3.49"
+  val identityLibVersion = "3.51"
   val seleniumVersion = "2.44.0"
   val slf4jVersion = "1.7.5"
   val awsVersion = "1.10.37"
@@ -25,7 +25,7 @@ object Dependencies {
   val commonsHttpClient = "commons-httpclient" % "commons-httpclient" % "3.1"
   val commonsIo = "commons-io" % "commons-io" % "2.4"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.18"
-  val contentApiClient = "com.gu" %% "content-api-client" % "7.13"
+  val contentApiClient = "com.gu" %% "content-api-client" % "7.26"
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "2.8.0"
   val dispatch = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3"
   val dispatchTest = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3" % Test
@@ -70,6 +70,7 @@ object Dependencies {
   val jerseyCore = "com.sun.jersey" % "jersey-core" % "1.19"
   val jerseyClient = "com.sun.jersey" % "jersey-client" % "1.19"
   val w3cSac = "org.w3c.css" % "sac" % "1.3"
+  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "7.2.4"
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.5"

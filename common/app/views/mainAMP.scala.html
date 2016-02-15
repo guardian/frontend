@@ -10,11 +10,8 @@
     <head>
         @* "utf-8" meta tag needs to be first according to AMP spec *@
         <meta charset="utf-8">
-        @if(page.metadata.id == "books/booksblog/2016/jan/20/the-best-music-to-listen-to-while-reading-or-is-it-sacrilege") {
-            <meta name="amp-3p-iframe-src" content="https://static.theguardian.com/amp/remote-3.html">
-        } else {
-            <meta name="amp-3p-iframe-src" content="https://static.theguardian.com/amp/remote.html">
-        }
+        <meta name="amp-3p-iframe-src" content="https://www.theguardian.com/amp/remote.html">
+
 
         @fragments.metaData(page, amp = true)
         <title>@views.support.Title(page)</title>
@@ -46,33 +43,7 @@
 
         <div class="main-body">
 
-            @* this is for testing only *@
-            @defining("""bowie""".r) { hasHeader =>
-                <header class="main-header @if(hasHeader.findFirstIn(page.metadata.id).nonEmpty) {variant-kicker}">
-                    <a href="@LinkTo{/}" class="logo-wrapper" name="top">
-                        @fragments.inlineSvg("guardian-logo-160", "logo")
-                    </a>
-                        @if(hasHeader.findFirstIn(page.metadata.id).nonEmpty) {
-                            <div class="main-navigation variant-kicker">
-                                <div class="main-navigation_link">
-                                    <a href="http://www.theguardian.com">news</a>
-                                </div>
-                                <div class="main-navigation_link">
-                                    <a href="http://www.theguardian.com/commentisfree">opinion</a>
-                                </div>
-                                <div class="main-navigation_link">
-                                    <a href="http://www.theguardian.com/sport">sports</a>
-                                </div>
-                                <div class="main-navigation_link">
-                                    <a href="http://www.theguardian.com/culture">arts</a>
-                                </div>
-                                <div class="main-navigation_link">
-                                    <a href="http://www.theguardian.com/lifeandstyle">life</a>
-                                </div>
-                            </div>
-                        }
-                </header>
-            }
+            @fragments.amp.header()
 
             @body
 

@@ -44,38 +44,6 @@ $c-navigation-expandable-background: colour(neutral-1);
 @include mq-add-breakpoint(navigationBreakOnTwoLevels, mq-get-breakpoint-width(desktop));
 @include mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-get-breakpoint-width(leftCol));
 
-@mixin animate-height-up($height) {
-    @keyframes animate-height-up {
-        from {
-            height: 0px;
-        }
-
-        to {
-            height: $height;
-        }
-    }
-
-    animation: animate-height-up ease-in .2s;
-    animation-fill-mode: forwards;
-    overflow: visible;
-}
-
-@mixin animate-height-down($height) {
-    @keyframes animate-height-down {
-        from {
-            height: $height;
-        }
-
-        to {
-            height: 0px;
-        }
-    }
-
-    animation: animate-height-down ease-in .2s;
-    animation-fill-mode: forwards;
-    overflow: hidden;
-}
-
 /* Styles common to all states
    ========================================================================== */
 
@@ -89,22 +57,6 @@ $c-navigation-expandable-background: colour(neutral-1);
     clear: both;
     background: $c-navigation-background;
     height: $navigation-height;
-
-    &.animate-up-desktop {
-        @include animate-height-up('72px');
-    }
-
-    &.animate-down-desktop {
-        @include animate-height-down('72px');
-    }
-
-    &.animate-up-mobile {
-        @include animate-height-up('0px');
-    }
-
-    &.animate-down-mobile {
-        @include animate-height-down('0px');
-    }
 
     &:before,
     &:after {
@@ -167,10 +119,6 @@ $c-navigation-expandable-background: colour(neutral-1);
 .navigation__expandable {
     background: $c-navigation-expandable-background;
     overflow: hidden;
-}
-.navigation__expandable--sticky {
-    overflow-x: hidden;
-    overflow-y: scroll;
 }
 .signposting,
 .local-navigation,

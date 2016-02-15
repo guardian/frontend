@@ -66,7 +66,7 @@
     background-color: colour(neutral-8);
     display: none;
 
-    .js-on .new-sticky-ad & {
+    .sticky-ad-banner & {
         z-index: 1022;
         width: 100%;
         transform: translateZ(0);
@@ -121,7 +121,7 @@
     min-height: 90px;
 
     // overwrite if in the new sticky ad AB test
-    .new-sticky-ad & {
+    .sticky-ad-banner & {
         transition: none;
         transform: none;
         min-height: auto;
@@ -163,14 +163,6 @@
     @include mq(wide) {
         width: gs-span(16) - ($left-column-wide + $gs-gutter);
         padding-left: $left-column-wide + $gs-gutter;
-    }
-
-    @include mq(wide) {
-        /* Fluid ads just expand horizontally to the size of their container */
-        &.ad-slot--fluid {
-            padding-left: 0;
-            width: auto;
-        }
     }
 
     .top-banner-ad-container--mobile & {
@@ -466,12 +458,12 @@
     }
 }
 .ad-slot--im {
-    box-sizing: border-box;
-    max-width: 50%;
     float: left;
+    margin: 5px $gs-gutter $gs-baseline 0;
 
-    @include mq(mobileLandscape) {
-        max-width: $left-column-wide + $gs-gutter;
+    @include mq($until: mobileLandscape) {
+        margin-bottom: $gs-baseline / 2;
+        margin-right: $gs-gutter / 2;
     }
 }
 .ad-slot--fobadge.ad-slot--im {

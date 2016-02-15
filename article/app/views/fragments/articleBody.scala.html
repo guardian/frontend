@@ -13,7 +13,7 @@
             @if(article.commercial.isAdvertisementFeature){content--advertisement-feature}
             @if(article.tags.isFeature && article.elements.hasShowcaseMainElement){has-feature-showcase-element}
             @if(article.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn){paid-content--advertisement-feature}"
-            itemscope itemtype="@article.metadata.schemaType" role="main">
+            itemscope itemtype="@if(amp && ForceSchemaOrgTypeForAmpArticlesSwitch.isSwitchedOn){http://schema.org/NewsArticle} else {@article.metadata.schemaType}" role="main"> @*Feb 2015: Google does only support NewsArticle in their amp carrousel. To remove once Google starts supporting other schema like schema.org/Review*@
             <meta itemprop="mainEntityOfPage" content="@LinkTo(article.metadata.url)">
             <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
                 <meta itemprop="name" content="The Guardian">
