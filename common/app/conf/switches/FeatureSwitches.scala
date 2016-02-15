@@ -366,4 +366,14 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2016, 3, 1), //Tuesday
     exposeClientSide = true
   )
+
+  // Owner: Dotcom reach
+  val ForceSchemaOrgTypeForAmpArticlesSwitch = Switch(
+    "Feature",
+    "force-schema-org-type-for-amp-articles",
+    "When ON, all amplified articles have schema.org type set to 'NewsArticle' (which is the only type Google search carousel supports as of Feb 2015)",
+    safeState = On,
+    sellByDate = new LocalDate(2016, 4, 5), //Tuesday
+    exposeClientSide = false
+  )
 }
