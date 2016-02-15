@@ -39,8 +39,8 @@ define([
 
     function build(codes, breakpoint) {
         var html = outbrainTpl({ widgetCode: codes.code || codes.image });
-        if (breakpoint !== 'mobile') {
-            html += outbrainTpl({ widgetCode: codes.code || codes.text });
+        if (breakpoint !== 'mobile' && codes.text) {
+            html += outbrainTpl({ widgetCode: codes.text });
         }
         return html;
     }
@@ -94,7 +94,7 @@ define([
      */
     function loadInstantly() {
         return !document.getElementById('dfp-ad--merchandising-high') ||
-            detect.adblockInUse();
+            detect.adblockInUseSync();
     }
 
     function init() {
@@ -116,7 +116,7 @@ define([
                 // location right away
                 return Promise.all([
                     isHiResLoaded,
-                    isHiResLoaded && config.switches.outbrainReplacesMerch ? trackAd('dfp-ad--merchandising') : true
+                    isHiResLoaded ? trackAd('dfp-ad--merchandising') : true
                 ]);
             }).then(function (args) {
                 var isHiResLoaded = args[0];

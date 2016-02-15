@@ -182,7 +182,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object amp {
-    lazy val url = configuration.getStringProperty("amp.url").getOrElse("")
+    private lazy val scheme = configuration.getStringProperty("amp.scheme").getOrElse("")
+    lazy val host = configuration.getStringProperty("amp.host").getOrElse("")
+    lazy val baseUrl = scheme + host
   }
 
   object id {
@@ -421,7 +423,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
         new EnvironmentVariableCredentialsProvider(),
         new SystemPropertiesCredentialsProvider(),
         new ProfileCredentialsProvider("frontend"),
-        new ProfileCredentialsProvider("nextgen"),
         new InstanceProfileCredentialsProvider
       )
 

@@ -314,7 +314,7 @@ object Navigation {
       SectionLink("careers", "newsletter", "newsletter", "https://register.theguardian.com/careers"),
       SectionLink("careers", "courses", "courses", "http://jobs.theguardian.com/courses"),
       SectionLink("careers", "jobs", "jobs", "http://jobs.theguardian.com"),
-      SectionLink("careers", "top employers UK", "top employers UK", "/careers/britains-top-employers")
+      SectionLink("careers", "top employers UK", "top employers UK", "/careers/top-employers-uk")
     ),
     "guardian-masterclasses" -> Seq(
       SectionLink("guardian-masterclasses", "guardian masterclasses", "guardian masterclasses", "/guardian-masterclasses"),

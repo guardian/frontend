@@ -2,7 +2,7 @@ package pagepresser
 
 import org.jsoup.Jsoup
 import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
-import test.{ConfiguredTestSuite}
+import test.{SingleServerSuite, ConfiguredTestSuite}
 import scala.io.Source
 
 @DoNotDiscover class HtmlCleanerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
@@ -44,6 +44,15 @@ import scala.io.Source
 
     val actualResult = BasicHtmlCleaner.createSimplePageTracking(Jsoup.parse(html), "ns=guardian&ndh=1&c19=frontendarchive&AQE=1&ch=Music&ce=UTF-8&AQB=1&cpd=2&v9=D=g&pageName=pageName=Life+%26+style:Features:Competition:pollyjeans:1334360&v14=D=r")
     actualResult.html().replace(" ", "") should be(expectedDoc.html().replace(" ", ""))
+  }
+
+  it should "change links to protocol relative urls to satisfy http and https requests" in {
+    val html = "<html><head><link rel=\"stylesheet\" type=\"text/css\" href=\"http://static.guim.co.uk/static/6d5811c93d9b815024b5a6c3ec93a54be18e52f0/common/styles/print.css\" media=\"print\" class=\"contrast\"/><meta property=\"og:url\" content=\"http://www.theguardian.com/info/developer-blog/2012/oct/30/miso-dataset-new-release-features\"/>\n\t</head><body> some text <img src=\"http://static.guim.co.uk/static/6d5811c93d9b815024b5a6c3ec93a54be18e52f0/common/images/logos/the-guardian/info.gif\" width=\"115\" height=\"22\" alt=\"The Guardian home\" /></body></html>"
+    val expectedDoc = Jsoup.parse("<html><head><link rel=\"stylesheet\" type=\"text/css\" href=\"//static.guim.co.uk/static/6d5811c93d9b815024b5a6c3ec93a54be18e52f0/common/styles/print.css\" media=\"print\" class=\"contrast\"/><meta property=\"og:url\" content=\"http://www.theguardian.com/info/developer-blog/2012/oct/30/miso-dataset-new-release-features\"/>\n\t</head><body> some text <img src=\"//static.guim.co.uk/static/6d5811c93d9b815024b5a6c3ec93a54be18e52f0/common/images/logos/the-guardian/info.gif\" width=\"115\" height=\"22\" alt=\"The Guardian home\" /></body></html>")
+
+    val actualResult = BasicHtmlCleaner.replaceLinks(Jsoup.parse(html))
+    actualResult.html().replace(" ", "") should be(expectedDoc.html().replace(" ", ""))
+
   }
 
 }

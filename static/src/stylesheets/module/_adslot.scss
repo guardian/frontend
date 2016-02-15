@@ -72,8 +72,6 @@
         transform: translateZ(0);
         will-change: transform;
         position: relative;
-        overflow: hidden;
-        transition: max-height 1s cubic-bezier(0, 0, 0, .985);
     }
 
     &.top-banner-ad-container--below-nav {
@@ -165,14 +163,6 @@
     @include mq(wide) {
         width: gs-span(16) - ($left-column-wide + $gs-gutter);
         padding-left: $left-column-wide + $gs-gutter;
-    }
-
-    @include mq(wide) {
-        /* Fluid ads just expand horizontally to the size of their container */
-        &.ad-slot--fluid {
-            padding-left: 0;
-            width: auto;
-        }
     }
 
     .top-banner-ad-container--mobile & {
@@ -468,12 +458,12 @@
     }
 }
 .ad-slot--im {
-    box-sizing: border-box;
-    max-width: 50%;
     float: left;
+    margin: 5px $gs-gutter $gs-baseline 0;
 
-    @include mq(mobileLandscape) {
-        max-width: $left-column-wide + $gs-gutter;
+    @include mq($until: mobileLandscape) {
+        margin-bottom: $gs-baseline / 2;
+        margin-right: $gs-gutter / 2;
     }
 }
 .ad-slot--fobadge.ad-slot--im {

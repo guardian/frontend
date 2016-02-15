@@ -5,13 +5,13 @@ import org.joda.time.LocalDate
 
 trait FeatureSwitches {
 
-  val AWSCredentialsProfileSwitchOver = Switch(
+  val RemoveStickyNav = Switch(
     "Feature",
-    "aws-credentials-switchover",
-    "Switch to remind us to remove the 'nextgen' profile from the default AWS credentials provider chain",
+    "remove-sticky-nav",
+    "Replaces the current sticky ad/nav implementation with a new sticky ad implementation",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 12), //Friday
-    exposeClientSide = false
+    sellByDate = new LocalDate(2016, 3, 1),
+    exposeClientSide = true
   )
 
   val FixturesAndResultsContainerSwitch = Switch(

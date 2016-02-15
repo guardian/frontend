@@ -5,7 +5,8 @@ define([
     'common/utils/template',
     'common/views/svgs',
     'common/modules/ui/toggles',
-    'text!common/views/commercial/creatives/paidfor-content.html'
+    'text!common/views/commercial/creatives/paidfor-content.html',
+    'common/modules/commercial/creatives/add-tracking-pixel'
 ], function (
     fastdom,
     $,
@@ -13,7 +14,8 @@ define([
     template,
     svgs,
     Toggles,
-    paidforTpl
+    paidforTpl,
+    addTrackingPixel
 ) {
 
     paidforTpl = template(paidforTpl);
@@ -39,7 +41,7 @@ define([
             new Toggles(this.$adSlot[0]).init();
 
             if (this.params.trackingPixel) {
-                this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
+                addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
             }
         }, this);
     };

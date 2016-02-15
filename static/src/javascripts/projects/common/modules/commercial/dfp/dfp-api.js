@@ -56,8 +56,6 @@ define([
     'common/modules/commercial/creatives/expandable-video',
     'common/modules/commercial/creatives/expandable-video-v2',
     'common/modules/commercial/creatives/fluid250',
-    'common/modules/commercial/creatives/fluid250-v3',
-    'common/modules/commercial/creatives/fluid250-v4',
     'common/modules/commercial/creatives/fluid250GoogleAndroid',
     'common/modules/commercial/creatives/foundation-funded-logo',
     'common/modules/commercial/creatives/scrollable-mpu',
@@ -214,7 +212,7 @@ define([
     function showSponsorshipPlaceholder() {
         var sponsorshipIdsFound = isSponsorshipContainerTest();
 
-        if (detect.adblockInUse() && sponsorshipIdsFound.length) {
+        if (detect.adblockInUseSync() && sponsorshipIdsFound.length) {
             idleFastdom.write(function () {
                 forEach(sponsorshipIdsFound, function (value) {
                     var sponsorshipIdFoundEl = $(value),
@@ -368,13 +366,6 @@ define([
 
         if ($adSlot.data('out-of-page')) {
             slot = googletag.defineOutOfPageSlot(adUnit, id);
-        } else if ($adSlot.data('fluid') && cookies.get('adtest') === 'tm2') {
-            $adSlot.addClass('ad-slot--fluid');
-            sizeMapping = defineSlotSizes($adSlot);
-            // SizeMappingBuilder does not handle 'fluid' very well,
-            // so instead we add it manually ourselves to the end of each array of sizes
-            forEach(sizeMapping, function (sizeMap) { sizeMap[1].push('fluid'); });
-            slot = googletag.defineSlot(adUnit, 'fluid', id).defineSizeMapping(sizeMapping);
         } else {
             sizeMapping = defineSlotSizes($adSlot);
             // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
