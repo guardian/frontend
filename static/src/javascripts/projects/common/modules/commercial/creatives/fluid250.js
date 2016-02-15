@@ -63,7 +63,7 @@ define([
                 this.params.layerTwoBGPosition :
                 '0% 0%',
             scrollbg: this.params.backgroundImagePType && this.params.backgroundImagePType !== 'none' ?
-                template(scrollBgTpl, this.params) :
+                scrollBgTpl(this.params) :
                 false
         };
 
