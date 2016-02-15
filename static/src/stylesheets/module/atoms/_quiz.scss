@@ -1,4 +1,9 @@
 
+$accessibility-outline: #ffbf47;
+$correct-answer--background: #aedfb8;
+$user-response-was-right: #43b347;
+$user-response-was-wrong: #bb001a;
+
 .quiz__question {
     margin-bottom: $gs-baseline * 3;
     border: 0;
@@ -18,7 +23,6 @@
 
 .quiz__answer {
     display: flex;
-    color: colour(neutral-2);
 }
 
 .quiz__answer__label {
@@ -26,7 +30,7 @@
     display: inline-block;
     text-align: left;
     outline: none;
-    color: colour(neutral-2);
+    color: colour(neutral-1);
     background-color: colour(neutral-8);
     border: 1px solid colour(neutral-8);
     padding: $gs-baseline $gs-gutter * 1.5;
@@ -36,12 +40,16 @@
 
 .quiz--questions {
 
+    .quiz__answer__label {
+        color: colour(neutral-2);
+    }
+
     .quiz__answer .quiz__answer__label:hover {
         border-color: colour(neutral-1);
     }
 
     .quiz__answer--focussed .quiz__answer__label {
-        outline: $gs-baseline/4 solid #ffbf47;
+        outline: $gs-baseline/4 solid $accessibility-outline;
     }
 
     .quiz__answer--checked .quiz__answer__label {
@@ -53,39 +61,29 @@
 .quiz--results {
 
     .quiz__answer--correct .quiz__answer__label {
-        background: #aedfb8;
-        color: #505050;
+        background: $correct-answer--background;
     }
 
-    .quiz__answer--incorrect .quiz__answer__label {
-        color: colour(neutral-3);
-    }
-
-    .quiz__question--without-response,
-    .quiz__question--with-response .quiz__answer--correct,
-    .quiz__question--with-response .quiz__answer--incorrect {
-        opacity: 1;
-        color: #ffffff;
+    .quiz__answer {
+        opacity: .6;
     }
 
     .quiz__answer--selected {
-        cursor: default;
-        opacity: .5;
+        opacity: 1;
     }
 
     .quiz__question--with-response .quiz__answer--selected.quiz__answer--correct .quiz__answer__label {
-        background-color: #43b347; /* ??? */
+        background-color: $user-response-was-right;
     }
 
     .quiz__question--with-response .quiz__answer--selected.quiz__answer--incorrect .quiz__answer__label {
-        background-color: #bb001a; /* ??? */
+        background-color: $user-response-was-wrong;
+        color: colour(neutral-7);
     }
 }
 
 .quiz__answer__input {
     float: none;
-    margin-left: 0;
-    margin-right: 1rem;
 }
 
 .quiz__answer__reveal-text {
@@ -99,36 +97,35 @@
     left: 10px;
     top: 5px;
     font-size: 26px;
-    color: #ffffff;
+    color: colour(neutral-8);
 
     svg {
-        width: 12px;
-        height: 12px;
+        width: $gs-baseline;
+        height: $gs-baseline;
         vertical-align: middle;
     }
 }
 
 .quiz__end-message {
-    border-top: 1px solid #aad8f1; /* news-support-1 */
-    background-color: #f6f6f6; /* neutral-8 */
-    padding: 10px 12px;
+    border-top: 1px solid colour(news-support-1);
+    background-color: colour(neutral-8);
+    padding: $gs-baseline $gs-gutter/2;
 }
 
 .quiz__score-message {
-    font-weight: 500;
-    color: #333333; /* neutral-1 */
+    @include fs-bodyCopy(3);
 }
 
 .quiz__score {
-    color: #005689;
-    font-size: 48px;
-    margin-left: 4px;
+    @include fs-headline(9, true);
+    color: colour(news-main-1);
+    margin-left: $gs-gutter/5;
     vertical-align: middle;
 }
 
 .quiz__bucket-message {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: $gs-baseline/2;
+    margin-bottom: $gs-baseline/2;
 }
 
 .quiz__share {
@@ -138,10 +135,9 @@
 }
 
 .quiz__share__cta {
+    @include fs-bodyCopy(3);
     padding-top: $gs-baseline;
     padding-bottom: $gs-baseline;
-    font-weight: 500;
-    font-size: 24px;
 }
 
 .quiz__share__action {
