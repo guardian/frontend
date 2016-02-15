@@ -1,6 +1,7 @@
 package services
 
 import akka.util.Timeout
+import com.gu.facia.api.models.{CommercialPriority, EditorialPriority, FrontPriority, TrainingPriority}
 import com.gu.facia.client.models.{ConfigJson => Config, FrontJson => Front}
 import common._
 import conf.Configuration
@@ -94,6 +95,18 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
       title  = frontOption.flatMap(_.title).filter(_.nonEmpty),
       description  = frontOption.flatMap(_.description).filter(_.nonEmpty)
     )
+  }
+
+  def getFrontPriorityFromConfig(pageId: String): Option[FrontPriority] = {
+    configAgent.get() flatMap {
+      _.fronts.get(pageId) map {
+        _.priority match {
+          case Some("commercial") => CommercialPriority
+          case Some("training") => TrainingPriority
+          case _ => EditorialPriority
+        }
+      }
+    }
   }
 
   def fetchFrontProperties(id: String): FrontProperties = {

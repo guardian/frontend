@@ -32,15 +32,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val FluidAdvertsSwitch = Switch(
-    "Commercial",
-    "fluid-adverts",
-    "Enable fluid ads, which occupy 100% of the width of their parent container but have a fixed height",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 15),
-    exposeClientSide = true
-  )
-
   val CommercialComponentsSwitch = Switch(
     "Commercial",
     "commercial-components",
@@ -91,7 +82,7 @@ trait CommercialSwitches {
     "liveblog-dynamic-adverts",
     "Dynamically insert inline adverts on liveblogs",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 15),
+    sellByDate = new LocalDate(2016, 3, 15),
     exposeClientSide = true
   )
 
