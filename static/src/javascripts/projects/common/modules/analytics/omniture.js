@@ -154,7 +154,7 @@ define([
 
         this.s.prop31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
         this.s.eVar31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
-        this.s.prop40    = detect.adblockInUse() || detect.getFirefoxAdblockPlusInstalled();
+        this.s.prop40    = detect.adblockInUseSync() || detect.getFirefoxAdblockPlusInstalledSync();
         this.s.eVar51    = mvt;
         this.s.list1     = mvt; // allows us to 'unstack' the AB test names (allows longer names)
 
