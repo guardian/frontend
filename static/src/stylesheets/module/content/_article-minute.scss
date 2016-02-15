@@ -452,6 +452,28 @@ $minute-layout-margin-nudge: gs-span(1);
     }
 }
 
+// Background Image Layout
+.block--background-image {
+    @include mq($until: mobileLandscape) {
+        .block-elements {
+            position: relative;
+            z-index: 2;
+        }
+
+        .element--inline {
+            bottom: 0;
+            position: absolute;
+            z-index: 1;
+
+            .gu-image {
+                height: 100vh;
+                width: 100vw;
+                object-fit: cover;
+            }
+        }
+    }
+}
+
 /* ==========================================================================
    Content Overrides
    ========================================================================== */

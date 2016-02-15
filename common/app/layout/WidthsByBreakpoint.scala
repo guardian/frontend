@@ -200,7 +200,8 @@ object ContentWidths {
 
   object MinuteMedia extends ContentRelation {
     override val inline = WidthsByBreakpoint(
-      mobile = Some(95.vw),
+      // In the minute inline images match the immersive header size
+      mobile = Some(1000.px),
       tablet = Some(300.px),
       desktop = Some(380.px),
       leftCol = Some(460.px),

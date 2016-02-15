@@ -20,8 +20,8 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
     "element-tweet" -> "block--embed block--tweet",
     "block-title" -> "has-title",
     "quoted" -> "block--quote",
-    "element--inline" -> "background-image",
-    "element--thumbnail" -> "bottom-image"
+    "element--inline" -> "block--background-image",
+    "element--thumbnail" -> "block--bottom-image"
   )
 
   /**
@@ -62,6 +62,16 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
         block.getElementsByClass("block-elements").headOption.map { outer =>
           block.getElementsByClass("block-title").headOption.map(t => outer.insertChildren(0, Seq(t)))
           outer.getElementsByClass("element-image").headOption.map(outer.after)
+        }
+
+        // Inline (fullscreen) image mark-up
+        // Move the picture element out of thumbnail anchor and responsive image
+        block.getElementsByClass("element--inline").headOption.map { figure =>
+          figure.getElementsByTag("picture").headOption.map(picture => {
+            figure.insertChildren(0, Seq(picture))
+            picture.getElementsByClass("gu-image").headOption.map(image => image.addClass("js-is-fixed-height"))
+          })
+          figure.getElementsByClass("article__img-container").headOption.map(container => container.remove())
         }
 
         // Remove Elements
