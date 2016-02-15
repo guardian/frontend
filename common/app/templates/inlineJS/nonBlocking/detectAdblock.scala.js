@@ -8,7 +8,8 @@ try {
         ad.innerHTML = '&nbsp;';
         ad.setAttribute('class', 'ad_unit');
 
-        // avoid a forced sync layout
+        // avoid a forced sync layout, and open door to more accurate detection
+        // e.g. detecting network behaviour
         window.requestAnimationFrame(() => {
             document.body.appendChild(ad);
 
