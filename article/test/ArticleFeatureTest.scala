@@ -478,7 +478,7 @@ import collection.JavaConversions._
 
       SearchSwitch.switchOn()
 
-      goTo("/world/2013/jan/27/brazil-nightclub-blaze-high-death-toll") { browser =>
+      goTo("/media/2015/aug/27/sky-sports-news-presenter-kirsty-gallacher-joins-strictly-line-up") { browser =>
         import browser._
 
         Then("I should see the main ARIA roles described")
@@ -509,7 +509,7 @@ import collection.JavaConversions._
     scenario("Story package with a gallery trail") {
 
       Given("I'm on an article that has a gallery in its story package")
-      goTo("/global-development/poverty-matters/2013/jun/03/burma-rohingya-segregation") { browser =>
+      goTo("/media/2015/aug/27/sky-sports-news-presenter-kirsty-gallacher-joins-strictly-line-up") { browser =>
         import browser._
 
         Then("I should see a fancy gallery trail")
@@ -561,7 +561,7 @@ import collection.JavaConversions._
 
         // at the time of writing, Twitter does not like i.guim.co.uk
         // will see if I can get that fixed, but in the meantime this must be static.guim.co.uk
-        $("meta[name='twitter:image']").getAttributes("content").head should be("http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/9/15/1379275550234/Irans-President-Hassan-Ro-011.jpg")
+        $("meta[name='twitter:image']").getAttributes("content").head should be("https://static-secure.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/9/15/1379275549160/Irans-President-Hassan-Ro-010.jpg")
       }
     }
 
