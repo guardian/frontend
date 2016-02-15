@@ -450,12 +450,12 @@ define([
     });
 
     var adblockInUse = getAdBlockers.then(function (adBlockers) {
-        return adBlockers.generic
+        return adBlockers.generic;
     });
 
     /** Includes Firefox Adblock Plus users who whitelist the Guardian domain */
     var getFirefoxAdblockPlusInstalled = getAdBlockers.then(function (adBlockers) {
-        return adBlockers.ffAdblockPlus
+        return adBlockers.ffAdblockPlus;
     });
 
     function getReferrer() {
