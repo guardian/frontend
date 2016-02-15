@@ -60,7 +60,7 @@ define([
                     browser: window.navigator.userAgent,
                     page: window.location,
                     width: window.innerWidth,
-                    adBlock: detect.adblockInUse(),
+                    adBlock: detect.adblockInUseSync(),
                     devicePixelRatio: window.devicePixelRatio,
                     abTests : summariseAbTests(ab.getParticipations())
                 };
