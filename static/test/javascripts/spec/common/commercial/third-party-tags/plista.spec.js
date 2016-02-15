@@ -61,7 +61,7 @@ define([
                     return false;
                 };
 
-                detect.adblockInUse = function () {
+                detect.adblockInUseSync = function () {
                     return false;
                 };
 
@@ -92,7 +92,7 @@ define([
 
             it('should load plista component immediately when adblock in use', function () {
 
-                detect.adblockInUse = function () {
+                detect.adblockInUseSync = function () {
                     return true;
                 };
 
@@ -155,7 +155,7 @@ define([
             });
 
             it('should load instantly when ad block is in use', function () {
-                detect.adblockInUse = function () {
+                detect.adblockInUseSync = function () {
                     return true;
                 };
                 spyOn(sut, 'load');

@@ -212,7 +212,7 @@ define([
     function showSponsorshipPlaceholder() {
         var sponsorshipIdsFound = isSponsorshipContainerTest();
 
-        if (detect.adblockInUse() && sponsorshipIdsFound.length) {
+        if (detect.adblockInUseSync() && sponsorshipIdsFound.length) {
             idleFastdom.write(function () {
                 forEach(sponsorshipIdsFound, function (value) {
                     var sponsorshipIdFoundEl = $(value),
