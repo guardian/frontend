@@ -8,9 +8,11 @@ try {
         ad.innerHTML = '&nbsp;';
         ad.setAttribute('class', 'ad_unit');
 
+        // avoid a forced sync layout
         window.requestAnimationFrame(() => {
             document.body.appendChild(ad);
 
+            // avoid a forced layout, and be sure the element has been added to the DOM
             window.requestAnimationFrame(() => {
                 var adStyles = window.getComputedStyle(ad);
                 window.guardian.adBlockers.generic = adStyles.getPropertyValue('display') === 'none';
