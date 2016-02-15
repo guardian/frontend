@@ -14,15 +14,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val AWSCredentialsProfileSwitchOver = Switch(
-    "Feature",
-    "aws-credentials-switchover",
-    "Switch to remind us to remove the 'nextgen' profile from the default AWS credentials provider chain",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 12), //Friday
-    exposeClientSide = false
-  )
-
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
     "fixtures-and-results-container",
