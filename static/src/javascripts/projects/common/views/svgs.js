@@ -37,7 +37,7 @@ define([
     'inlineSvg!svgs/logo/membership-logo',
     'inlineSvg!svgs/commercial/logo-membership',
     'inlineSvg!svgs/commercial/adblock-coins',
-    'inlineSvg!svgs/commercial/adblock-coins-US',
+    'inlineSvg!svgs/commercial/adblock-coins-us',
     'lodash/objects/isArray'
 ], function (
     commentCount16icon,

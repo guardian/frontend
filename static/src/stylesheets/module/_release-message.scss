@@ -489,7 +489,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     padding-top: 5px;
     display: block;
 
-    span {
+    .inline-adblock-coins-us, .inline-adblock-coins {
         display: block;
         line-height: 0;
     }
