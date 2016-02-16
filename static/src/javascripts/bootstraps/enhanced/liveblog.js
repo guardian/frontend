@@ -23,8 +23,7 @@ define([
     'common/modules/ui/relativedates',
     'bootstraps/enhanced/article-liveblog-common',
     'bootstraps/enhanced/trail',
-    'common/utils/robust',
-    'common/modules/experiments/ab'
+    'common/utils/robust'
 ], function (
     bean,
     bonzo,
@@ -50,8 +49,8 @@ define([
     RelativeDates,
     articleLiveblogCommon,
     trail,
-    robust,
-    ab) {
+    robust
+) {
     'use strict';
 
     var modules,
@@ -122,7 +121,7 @@ define([
 
         // once Toast is shipped this can be removed completely, the notification counter is initialised within Toast
         createFilter: function () {
-            if (!ab.isInVariant('LiveblogToast', 'toast')) {
+            if (!config.switches.liveblogToast) {
                 new NotificationCounter().init();
             }
         },
@@ -145,7 +144,7 @@ define([
 
         createAutoUpdate: function () {
             if (config.page.isLive) {
-                if (ab.isInVariant('LiveblogToast', 'toast')) {
+                if (config.switches.liveblogToast) {
                     AutoUpdateNew();
                 } else if (window.location.search.indexOf('?page=') !== 0/*TODO proper guardian.config val*/) {
                     var timerDelay = detect.isBreakpoint({ min: 'desktop' }) ? 5000 : 60000;

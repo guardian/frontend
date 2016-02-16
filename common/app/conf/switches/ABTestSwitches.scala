@@ -31,13 +31,4 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABLiveblogToast = Switch(
-    "A/B Tests",
-    "ab-liveblog-toast",
-    "Enables Liveblog toast (0% test)",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 1),
-    exposeClientSide = true
-  )
-
 }
