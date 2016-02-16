@@ -46,10 +46,10 @@ object CommentsController extends DiscussionController with ExecutionContexts {
         Cached(60) {
           if (request.isJson)
             JsonComponent(
-              "html" -> views.html.fragments.comment(comment).toString
+              "html" -> views.html.fragments.comment(comment, comment.discussion.isClosedForRecommendation).toString
             )
           else
-            Ok(views.html.fragments.comment(comment))
+            Ok(views.html.fragments.comment(comment, comment.discussion.isClosedForRecommendation))
         }
     }
   }

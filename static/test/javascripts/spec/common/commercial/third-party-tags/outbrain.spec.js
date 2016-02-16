@@ -61,7 +61,7 @@ define([
                 identity.isUserLoggedIn = function () {
                     return false;
                 };
-                detect.adblockInUse = function () { return false; };
+                detect.adblockInUseSync = function () { return false; };
 
                 commercialFeatures.outbrain = true;
 
@@ -155,7 +155,7 @@ define([
             });
 
             it('should load instantly when ad block is in use', function (done) {
-                detect.adblockInUse = function () { return true; };
+                detect.adblockInUseSync = function () { return true; };
 
                 sut.init().then(function () {
                     expect(sut.load).toHaveBeenCalled();

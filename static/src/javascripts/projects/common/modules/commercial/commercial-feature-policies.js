@@ -69,7 +69,7 @@ define([
     };
 
     policies.membershipMessages = function () {
-        if (!detect.adblockInUse() &&
+        if (!detect.adblockInUseSync() &&
             detect.getBreakpoint() !== 'mobile' &&
             config.page.contentType === 'Article' &&
             !userFeatures.isPayingMember()
