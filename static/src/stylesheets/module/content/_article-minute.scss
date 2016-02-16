@@ -380,6 +380,86 @@ $minute-layout-margin-nudge: gs-span(1);
 }
 
 /* ==========================================================================
+   Block Content Overrides
+   ========================================================================== */
+
+.block--minute-article {
+
+    .updated-time {
+        display: none;
+    }
+
+    // Standard elements
+
+    a,
+    .u-fauxlink {
+        color: $us-minute-contrast-colour;
+    }
+
+    a {
+        border-bottom: 1px solid rgba(255, 255, 255, .4);
+
+        &:hover {
+            border-bottom-color: $us-minute-highlight-colour;
+        }
+
+        &:active {
+            color: $us-minute-highlight-colour;
+            border-bottom-color: $us-minute-highlight-colour;
+        }
+    }
+
+
+    // Captions
+    .caption__minute-article {
+        background-color: $us-minute-highlight-colour;
+        box-sizing: border-box;
+        color: $us-minute-contrast-colour;
+        padding: $gs-baseline/2 $gs-gutter $gs-baseline $gs-gutter/2;
+        width: 100%;
+    }
+
+    .element-image .caption__minute-article {
+        @include mq($from: tablet) {
+            bottom: 0;
+            padding-left: $gs-gutter/2;
+            position: absolute;
+            background-color: rgba(12, 87, 135, .5);
+        }
+    }
+
+    .caption {
+        color: $us-minute-contrast-colour;
+    }
+
+    .svg  & .caption--img:before {
+        @extend %svg-i-camera-white-large;
+        margin-right: 5px;
+    }
+
+    figcaption.caption__minute-article {
+        max-width: none;
+    }
+
+    // Embeds
+
+    .tweet-main-image {
+        display: none;
+    }
+
+    // From content API
+
+    .from-content-api & blockquote.quoted {
+        color: $us-minute-contrast-colour;
+
+        .inline-quote {
+            fill: $us-minute-contrast-colour;
+        }
+    }
+
+}
+
+/* ==========================================================================
    Block Content Styles & Layout
    ========================================================================== */
 
@@ -497,102 +577,13 @@ $minute-layout-margin-nudge: gs-span(1);
                     object-fit: cover;
                 }
             }
-        }
-    }
-}
 
-/* ==========================================================================
-   Content Overrides
-   ========================================================================== */
-
-.block--minute-article {
-
-    .updated-time {
-        display: none;
-    }
-
-    // Standard elements
-
-    a,
-    .u-fauxlink {
-        color: $us-minute-contrast-colour;
-    }
-
-    a {
-        border-bottom: 1px solid rgba(255, 255, 255, .4);
-
-        &:hover {
-            border-bottom-color: $us-minute-highlight-colour;
-        }
-
-        &:active {
-            color: $us-minute-highlight-colour;
-            border-bottom-color: $us-minute-highlight-colour;
-        }
-    }
-
-
-    // Captions
-    .caption__minute-article {
-        padding: $gs-baseline/2 $gs-gutter $gs-baseline $gs-gutter/2;
-    }
-
-    .element-image .caption__minute-article {
-        @include mq($from: tablet) {
-            bottom: 0;
-            padding-left: $gs-gutter/2;
-            position: absolute;
-            background-color: rgba(12, 87, 135, .5);
-        }
-    }
-    
-    .caption {
-        color: $us-minute-contrast-colour;
-    }
-
-    .svg  & .caption--img:before {
-        @extend %svg-i-camera-white-large;
-        margin-right: 5px;
-    }
-
-    figcaption.caption__minute-article {
-        max-width: none;
-    }
-
-    // Embeds
-
-    .tweet-main-image {
-        display: none;
-    }
-
-    // From content API
-
-    .from-content-api & blockquote.quoted {
-        color: $us-minute-contrast-colour;
-
-        .inline-quote {
-            fill: $us-minute-contrast-colour;
-        }
-    }
-
-}
-
-.block--image {
-    .caption__minute-article {
-        background-color: $us-minute-highlight-colour;
-        box-sizing: border-box;
-        color: $us-minute-contrast-colour;
-        width: 100%;
-    }
-}
-
-@supports (object-fit: cover) {
-    .block--background-image {
-        .caption__minute-article {
-            background-color: transparent;
-            min-height: $gs-baseline*2;
-            position: relative;
-            z-index: 2;
+            .caption__minute-article {
+                background-color: transparent;
+                min-height: $gs-baseline*2;
+                position: relative;
+                z-index: 2;
+            }
         }
     }
 }
