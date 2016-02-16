@@ -139,34 +139,3 @@ $user-response-was-wrong: #bb001a;
     padding-top: $gs-baseline;
     padding-bottom: $gs-baseline;
 }
-
-.quiz__share__action {
-    float: left;
-    margin-right: $gs-gutter / 4;
-    border-radius: 25px;
-    display: block;
-}
-
-.quiz__share__action--twitter {
-    background-color: #03b3ee;
-}
-
-.quiz__share__action--facebook {
-    background-color: #3067a3;
-}
-
-.quiz__share__action__svg {
-    background-size: 96%;
-    background-position: center;
-    display: block;
-    width: 50px;
-    height: 50px;
-}
-
-.quiz__share__action__svg--twitter {
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iLTIgLTIgMzIgMzIiPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0yMS4zIDEwLjV2LjVjMCA0LjctMy41IDEwLjEtOS45IDEwLjEtMiAwLTMuOC0uNi01LjMtMS42LjMgMCAuNi4xLjguMSAxLjYgMCAzLjEtLjYgNC4zLTEuNS0xLjUgMC0yLjgtMS0zLjMtMi40LjIgMCAuNC4xLjcuMWwuOS0uMWMtMS42LS4zLTIuOC0xLjgtMi44LTMuNS41LjMgMSAuNCAxLjYuNC0uOS0uNi0xLjYtMS43LTEuNi0yLjkgMC0uNi4yLTEuMy41LTEuOCAxLjcgMi4xIDQuMyAzLjYgNy4yIDMuNy0uMS0uMy0uMS0uNS0uMS0uOCAwLTIgMS42LTMuNSAzLjUtMy41IDEgMCAxLjkuNCAyLjUgMS4xLjgtLjEgMS41LS40IDIuMi0uOC0uMy44LS44IDEuNS0xLjUgMS45LjctLjEgMS40LS4zIDItLjUtLjQuNC0xIDEtMS43IDEuNXoiLz48L3N2Zz4=);
-}
-
-.quiz__share__action__svg--facebook {
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iLTIgLTIgMzIgMzIiPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0xNy45IDE0aC0zdjhIMTJ2LThoLTJ2LTIuOWgyVjguN0MxMiA2LjggMTMuMSA1IDE2IDVjMS4yIDAgMiAuMSAyIC4xdjNoLTEuOGMtMSAwLTEuMi41LTEuMiAxLjN2MS44aDNsLS4xIDIuOHoiLz48L3N2Zz4=);
-}
