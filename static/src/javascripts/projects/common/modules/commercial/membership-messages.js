@@ -56,7 +56,7 @@ define([
     function checkWeCanShowMessage(message) {
         return commercialFeatures.checkWeCanShowMembershipMessages.then(function (canShow) {
             return canShow && message.minVisited <= (storage.local.get('gu.alreadyVisited') || 0);
-        })
+        });
     }
 
     function formatEndpointUrl(edition, message) {
