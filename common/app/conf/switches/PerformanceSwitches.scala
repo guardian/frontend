@@ -209,16 +209,16 @@ trait PerformanceSwitches {
   val Viewability = Switch(
     "Performance",
     "viewability",
-    "Viewability - Includes whole viewability package: ads lazy loading, sticky header, sticky MPU, spacefinder 2.0, dynamic ads, ad next to comments",
+    "Viewability - Includes whole viewability package: ads lazy loading, sticky ad banner, sticky MPU, spacefinder 2.0, dynamic ads, ad next to comments",
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
   )
 
-  val DisableStickyNavOnMobileSwitch = Switch(
+  val DisableStickyAdBannerOnMobileSwitch = Switch(
     "Performance",
-    "disable-sticky-nav-on-mobile",
-    "If this switch is on, the sticky nav will be disabled on mobile.",
+    "disable-sticky-ad-banner-on-mobile",
+    "If this switch is on, the sticky ad banner will be disabled on mobile.",
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true

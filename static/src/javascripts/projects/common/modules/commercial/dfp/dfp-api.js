@@ -56,8 +56,6 @@ define([
     'common/modules/commercial/creatives/expandable-video',
     'common/modules/commercial/creatives/expandable-video-v2',
     'common/modules/commercial/creatives/fluid250',
-    'common/modules/commercial/creatives/fluid250-v3',
-    'common/modules/commercial/creatives/fluid250-v4',
     'common/modules/commercial/creatives/fluid250GoogleAndroid',
     'common/modules/commercial/creatives/foundation-funded-logo',
     'common/modules/commercial/creatives/scrollable-mpu',
@@ -145,8 +143,7 @@ define([
         '300,250': function (event, $adSlot) {
             if (config.switches.viewability && $adSlot.hasClass('ad-slot--right')) {
                 if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
-                    // Hardcoded for sticky nav test. It will need some on time checking if this will go to PROD
-                    new StickyMpu($adSlot, {top: 58}).create();
+                    new StickyMpu($adSlot).create();
                 }
             }
         },
@@ -194,10 +191,6 @@ define([
         });
     }
 
-    function isMobileBannerTest() {
-        return config.switches.mobileTopBannerRemove && $('.top-banner-ad-container--ab-mobile').length > 0 && detect.getBreakpoint() === 'mobile';
-    }
-
     function isSponsorshipContainerTest() {
         var sponsorshipIds = ['#dfp-ad--adbadge', '#dfp-ad--spbadge', '#dfp-ad--fobadge', '#dfp-ad--adbadge1', '#dfp-ad--spbadge1', '#dfp-ad--fobadge1', '#dfp-ad--adbadge2', '#dfp-ad--spbadge2', '#dfp-ad--fobadge2', '#dfp-ad--adbadge3', '#dfp-ad--spbadge3', '#dfp-ad--fobadge3', '#dfp-ad--adbadge4', '#dfp-ad--spbadge4', '#dfp-ad--fobadge4', '#dfp-ad--adbadge5', '#dfp-ad--spbadge5', '#dfp-ad--fobadge5'],
             sponsorshipIdsReturned = [];
@@ -214,7 +207,7 @@ define([
     function showSponsorshipPlaceholder() {
         var sponsorshipIdsFound = isSponsorshipContainerTest();
 
-        if (detect.adblockInUse() && sponsorshipIdsFound.length) {
+        if (detect.adblockInUseSync() && sponsorshipIdsFound.length) {
             idleFastdom.write(function () {
                 forEach(sponsorshipIdsFound, function (value) {
                     var sponsorshipIdFoundEl = $(value),
@@ -232,14 +225,10 @@ define([
     }
 
     function shouldFilterAdvert($adSlot) {
-        return isVisuallyHidden() || isDisabledMobileBanner() || isDisabledCommercialFeature();
+        return isVisuallyHidden() || isDisabledCommercialFeature();
 
         function isVisuallyHidden() {
             return $css($adSlot, 'display') === 'none';
-        }
-
-        function isDisabledMobileBanner() {
-            return isMobileBannerTest() && $adSlot.hasClass('ad-slot--top');
         }
 
         function isDisabledCommercialFeature() {
@@ -368,13 +357,6 @@ define([
 
         if ($adSlot.data('out-of-page')) {
             slot = googletag.defineOutOfPageSlot(adUnit, id);
-        } else if ($adSlot.data('fluid') && cookies.get('adtest') === 'tm2') {
-            $adSlot.addClass('ad-slot--fluid');
-            sizeMapping = defineSlotSizes($adSlot);
-            // SizeMappingBuilder does not handle 'fluid' very well,
-            // so instead we add it manually ourselves to the end of each array of sizes
-            forEach(sizeMapping, function (sizeMap) { sizeMap[1].push('fluid'); });
-            slot = googletag.defineSlot(adUnit, 'fluid', id).defineSizeMapping(sizeMapping);
         } else {
             sizeMapping = defineSlotSizes($adSlot);
             // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays

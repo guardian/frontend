@@ -14,6 +14,7 @@ GET        /_agentcontents                                                      
 GET        /humans.txt                                                              controllers.Assets.at(path="/public", file="humans.txt")
 GET        /rockabox/rockabox_buster.html                                           controllers.Assets.at(path="/public", file="rockabox_buster.html")
 GET        /external/eyeblaster/addineyeV2.html                                     controllers.Assets.at(path="/public", file="addineyeV2.html")
+GET        /amp/remote.html                                                         controllers.Assets.at(path="/public", file="amp_remote.html")
 
 
 #Facia Press
