@@ -26,8 +26,13 @@ abstract class HtmlCleaner extends Logging {
 
   def replaceLinks(document: Document): Document = {
     try {
-      val newDocumentString = document.html().replaceAll("href=\"http://", "href=\"//")
-      Jsoup.parse(newDocumentString)
+      document.getAllElements.filter{ el =>
+        el.hasAttr("href") && el.attr("href").contains("http://")
+      }.foreach{ el =>
+        val protoRelative = el.attr("href").replace("http://", "//")
+        el.attr("href", protoRelative)
+      }
+      document
     }
     catch {
       case e: Exception => {
