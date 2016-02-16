@@ -39,9 +39,7 @@ define([
                         // new way of passing data from DFP
                         if ($breakoutEl.attr('type') === 'application/json') {
                             creativeConfig = JSON.parse(breakoutContent);
-                            if (config.switches.newCommercialContent && creativeConfig.name === 'gu-style-comcontent') {
-                                creativeConfig.name = 'paidfor-content';
-                            } else if (creativeConfig.name === 'fluid250-v4' || creativeConfig.name === 'fluid250-v3') {
+                            if (creativeConfig.name === 'fluid250-v4' || creativeConfig.name === 'fluid250-v3') {
                                 creativeConfig.name = 'fluid250';
                             }
                             require(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {

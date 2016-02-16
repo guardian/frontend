@@ -6,8 +6,9 @@ import com.amazonaws.services.sqs.model.ReceiveMessageRequest
 import common._
 import conf.Configuration
 import conf.switches.Switches.R2PagePressServiceSwitch
+import conf.switches.Switches.R2HeadersRequiredForPagePressingSwitch
 import org.jsoup.Jsoup
-import pagepresser.{PollsHtmlCleaner, BasicHtmlCleaner}
+import pagepresser.{SimpleHtmlCleaner, InteractiveHtmlCleaner, PollsHtmlCleaner}
 import play.api.libs.json.Json
 import play.api.libs.ws.WS
 import services.{S3Archive, S3ArchiveOriginals, PagePresses}
@@ -17,7 +18,7 @@ object R2PagePressJob extends ExecutionContexts with Logging {
   val waitTimeSeconds = Configuration.r2Press.pressQueueWaitTimeInSeconds
   val maxMessages = Configuration.r2Press.pressQueueMaxMessages
 
-  val cleaners = Seq(BasicHtmlCleaner, PollsHtmlCleaner)
+  val cleaners = Seq(PollsHtmlCleaner, InteractiveHtmlCleaner, SimpleHtmlCleaner)
 
   val queue: TextMessageQueue[SNSNotification] = (Configuration.r2Press.sqsQueueUrl map { queueUrl =>
     val credentials = Configuration.aws.mandatoryCredentials
@@ -69,7 +70,10 @@ object R2PagePressJob extends ExecutionContexts with Logging {
       val r2HeaderName = Configuration.r2Press.header.name.getOrElse("")
       val r2HeaderValue = Configuration.r2Press.header.value.getOrElse("")
 
-      WS.url(urlIn).withHeaders((r2HeaderName, r2HeaderValue)).get().map { response =>
+      val wSRequest = if(R2HeadersRequiredForPagePressingSwitch.isSwitchedOn) WS.url(urlIn).withHeaders((r2HeaderName, r2HeaderValue))
+                      else WS.url(urlIn)
+
+      wSRequest.get().map { response =>
         response.status match {
           case 200 => {
             try {

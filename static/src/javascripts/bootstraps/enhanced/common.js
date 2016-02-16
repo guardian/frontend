@@ -140,6 +140,8 @@ define([
                     && !(config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile')
                     && config.page.contentType !== 'Interactive'
                     && config.page.contentType !== 'Crossword'
+                    && !config.page.isImmersive
+                    && !config.page.isUsMinute
                     && (!config.switches.newCommercialContent || !config.page.isAdvertisementFeature)
                     && config.page.pageId !== 'offline-page') {
                     stickyAdBanner.initialise();
