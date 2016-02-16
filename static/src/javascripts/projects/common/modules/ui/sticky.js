@@ -15,7 +15,7 @@ define([
     var isNewCommercialContent = config.switches.newCommercialContent && config.page.isAdvertisementFeature;
     var header = isNewCommercialContent ?
         document.querySelector('.paidfor-band') :
-        config.page.hasStickyHeader ?
+        config.page.hasStickyAdBanner ?
         document.querySelector('.js-navigation') :
         null;
 
