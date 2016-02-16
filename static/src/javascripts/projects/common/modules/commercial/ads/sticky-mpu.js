@@ -10,33 +10,28 @@ define([
     defaults
 ) {
 
-    var mpuHeight = 275,
-        StickyMpu = function ($adSlot, options) {
-            this.$adSlot = $adSlot;
-            this.opts    = defaults(options || {}, {
-                top: 0
-            });
-        };
+    var MPU_HEIGHT = 275;
 
-    StickyMpu.prototype.create = function () {
-        if (this.$adSlot.data('name') !== 'right') {
+    function StickyMpu($adSlot) {
+        if ($adSlot.data('name') !== 'right') {
             return;
         }
 
-        var element = document.querySelector(config.page.hasShowcaseMainElement ? '.media-primary' : '.content__article-body');
-        if (!element) {
+        var referenceElement = document.querySelector(config.page.hasShowcaseMainElement ? '.media-primary' : '.content__article-body');
+        if (!referenceElement) {
             return;
         }
 
         return fastdom.read(function () {
-            return element[config.page.hasShowcaseMainElement ? 'offsetHeight' : 'offsetTop'];
+            return referenceElement[config.page.hasShowcaseMainElement ? 'offsetHeight' : 'offsetTop'];
         }).then(function (articleBodyOffset) {
             return fastdom.write(function () {
-                this.$adSlot.parent().css('height', (articleBodyOffset + mpuHeight) + 'px');
-                return new Sticky(this.$adSlot[0], { top: this.opts.top }).init();
-            }, this);
-        }.bind(this));
-    };
+                $adSlot.parent().css('height', (articleBodyOffset + MPU_HEIGHT) + 'px');
+            }).then(function () {
+                return new Sticky($adSlot[0]).init();
+            });
+        });
+    }
 
     return StickyMpu;
 

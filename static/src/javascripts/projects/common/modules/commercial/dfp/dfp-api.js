@@ -138,12 +138,12 @@ define([
 
     var callbacks = {
         '300,251': function (event, $adSlot) {
-            new StickyMpu($adSlot).create();
+            StickyMpu($adSlot);
         },
         '300,250': function (event, $adSlot) {
             if (config.switches.viewability && $adSlot.hasClass('ad-slot--right')) {
                 if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
-                    new StickyMpu($adSlot).create();
+                    StickyMpu($adSlot);
                 }
             }
         },
