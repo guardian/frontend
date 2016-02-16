@@ -27,10 +27,14 @@ abstract class HtmlCleaner extends Logging {
   def replaceLinks(document: Document): Document = {
     try {
       document.getAllElements.filter{ el =>
-        el.hasAttr("href") && el.attr("href").contains("http://")
+        (el.hasAttr("href") && el.attr("href").contains("http://")) || (el.hasAttr("src") && el.attr("src").contains("http://"))
       }.foreach{ el =>
-        val protoRelative = el.attr("href").replace("http://", "//")
-        el.attr("href", protoRelative)
+
+        if (el.hasAttr("href")) {
+          el.attr("href", el.attr("href").replace("http://", "//"))
+        } else {
+          el.attr("src", el.attr("src").replace("http://", "//"))
+        }
       }
       document
     }
