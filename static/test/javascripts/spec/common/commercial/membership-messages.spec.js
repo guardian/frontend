@@ -4,14 +4,16 @@ define([
     'qwery',
     'common/utils/$',
     'helpers/fixtures',
-    'helpers/injector'
+    'helpers/injector',
+    'Promise'
 ], function (
     bonzo,
     fastdom,
     qwery,
     $,
     fixtures,
-    Injector
+    Injector,
+    Promise
 ) {
     var commercialFeatures, membershipMessages,
         showMembershipMessages, alreadyVisited, storage, config;
@@ -51,15 +53,20 @@ define([
 
         describe('If user already member', function () {
             beforeEach(function (done) {
-                showMembershipMessages = commercialFeatures.membershipMessages;
+                showMembershipMessages = commercialFeatures.checkWeCanShowMembershipMessages;
                 alreadyVisited = storage.local.get('gu.alreadyVisited');
-                commercialFeatures.membershipMessages = false;
+                window.guardian.adBlockers.onDetect = new Promise(function (resolve) {
+                    resolve({
+                        generic: false,
+                        ffAdblockPlus: false
+                    });
+                });
                 storage.local.set('gu.alreadyVisited', 10);
                 done();
             });
 
             afterEach(function () {
-                commercialFeatures.membershipMessages = showMembershipMessages;
+                commercialFeatures.checkWeCanShowMembershipMessages = showMembershipMessages;
                 storage.local.set('gu.alreadyVisited', alreadyVisited);
             });
 
@@ -72,15 +79,20 @@ define([
 
         describe('If user not member', function () {
             beforeEach(function (done) {
-                showMembershipMessages = commercialFeatures.membershipMessages;
+                showMembershipMessages = commercialFeatures.checkWeCanShowMembershipMessages;
                 alreadyVisited = storage.local.get('gu.alreadyVisited');
-                commercialFeatures.membershipMessages = true;
+                window.guardian.adBlockers.onDetect = new Promise(function (resolve) {
+                    resolve({
+                        generic: true,
+                        ffAdblockPlus: true
+                    });
+                });
                 fixtures.render(conf);
                 done();
             });
 
             afterEach(function () {
-                commercialFeatures.membershipMessages = showMembershipMessages;
+                commercialFeatures.checkWeCanShowMembershipMessages = showMembershipMessages;
                 storage.local.set('gu.alreadyVisited', alreadyVisited);
                 fixtures.clean(conf.id);
             });
@@ -89,9 +101,10 @@ define([
                 it('should show a message to engaged readers', function () {
                     config.page = { edition: 'UK' };
                     storage.local.set('gu.alreadyVisited', 10);
-                    membershipMessages.init();
-                    var message = document.querySelector('.js-site-message.site-message--membership-message-uk');
-                    expect(message).not.toBeNull();
+                    membershipMessages.init().then(function () {
+                        var message = document.querySelector('.js-site-message.site-message--membership-message-uk');
+                        expect(message).not.toBeNull();
+                    });
                 });
             });
 
@@ -99,9 +112,10 @@ define([
                 it('should show a message to engaged readers', function () {
                     config.page = { edition: 'US' };
                     storage.local.set('gu.alreadyVisited', 10);
-                    membershipMessages.init();
-                    var message = document.querySelector('.js-site-message.site-message--membership-message-us');
-                    expect(message).not.toBeNull();
+                    membershipMessages.init().then(function () {
+                        var message = document.querySelector('.js-site-message.site-message--membership-message-us');
+                        expect(message).not.toBeNull();
+                    });
                 });
             });
         });

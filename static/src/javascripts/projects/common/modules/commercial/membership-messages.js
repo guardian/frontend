@@ -53,11 +53,10 @@ define([
         }
     };
 
-    function canShow(message) {
-        return (
-            commercialFeatures.membershipMessages &&
-            message.minVisited <= (storage.local.get('gu.alreadyVisited') || 0)
-        );
+    function checkWeCanShowMessage(message) {
+        return commercialFeatures.checkWeCanShowMembershipMessages.then(function (canShow) {
+            return canShow && message.minVisited <= (storage.local.get('gu.alreadyVisited') || 0);
+        })
     }
 
     function formatEndpointUrl(edition, message) {
@@ -88,9 +87,16 @@ define([
 
     function init() {
         var message = messages[config.page.edition];
-        if (message && canShow(message)) {
-            show(config.page.edition, message);
+        if (message) {
+            return checkWeCanShowMessage(message).then(function (weCanShowMessage) {
+                if (weCanShowMessage) {
+                    return show(config.page.edition, message);
+                } else {
+                    return false;
+                }
+            });
         }
+        return Promise.reject();
     }
 
     return {

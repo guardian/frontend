@@ -35,7 +35,8 @@ window.guardian = {
             commercial: {}
         }
     },
-    css: {}
+    css: {},
+    adBlockers: {}
 };
 
 // Omniture variables expected on the page
