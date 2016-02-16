@@ -6,6 +6,7 @@ define([
     'common/utils/mediator',
     'common/utils/config',
     'common/utils/detect',
+    'common/modules/commercial/track-ad',
     'lodash/objects/assign'
 ], function (
     fastdom,
@@ -15,6 +16,7 @@ define([
     mediator,
     config,
     detect,
+    trackAd,
     assign) {
 
     // All ads are loaded via DFP, including the following types. DFP does
@@ -34,13 +36,7 @@ define([
     var $adBannerInner = $('.ad-slot--top-above-nav', $adBanner);
     var $header = $('.js-header');
 
-    var topAdRenderedPromise = new Promise(function (resolve) {
-        mediator.on('modules:commercial:dfp:rendered', function (event) {
-            var dfpAdSlotId = 'dfp-ad--top-above-nav';
-            var isEventForTopAdBanner = event.slot.getSlotElementId() === dfpAdSlotId;
-            if (isEventForTopAdBanner) { resolve(); }
-        });
-    });
+    var topAdRenderedPromise = trackAd('dfp-ad--top-above-nav');
 
     var getAdIframe = function () { return $('iframe', $adBanner); };
 
@@ -162,13 +158,11 @@ define([
             });
         });
 
-        var dispatchNewAdHeight = function () {
-            getLatestAdHeight().then(function (adHeight) {
-                dispatch({ type: 'NEW_AD_HEIGHT', adHeight: adHeight });
-            });
+        var dispatchNewAdHeight = function (adHeight) {
+            dispatch({ type: 'NEW_AD_HEIGHT', adHeight: adHeight });
         };
-        topAdRenderedPromise.then(dispatchNewAdHeight);
-        newRubiconAdHeightPromise.then(dispatchNewAdHeight);
+        topAdRenderedPromise.then(getLatestAdHeight).then(dispatchNewAdHeight);
+        newRubiconAdHeightPromise.then(getLatestAdHeight).then(dispatchNewAdHeight);
 
         $adBanner[0].addEventListener('transitionend', function (event) {
             // Protect against any other events which have bubbled
