@@ -113,24 +113,24 @@
     }
 }
 .commercial__title--membership {
-	svg {
-		width: 145px;
-		height: 45px;
-	}
+    svg {
+        width: 145px;
+        height: 45px;
+    }
 
-	@include mq(leftCol) {
-		svg {
-			width: 125px;
-			height: 45px;
-		}
-	}
+    @include mq(leftCol) {
+        svg {
+            width: 125px;
+            height: 45px;
+        }
+    }
 
-	@include mq(wide) {
-		svg {
-			width: 200px;
-			height: 65px;		
-		}
-	}
+    @include mq(wide) {
+        svg {
+            width: 200px;
+            height: 65px;		
+        }
+    }
 }
 .commercial__search {
     @include mq(mobileLandscape) {
@@ -248,18 +248,18 @@
     }
 }
 .commercial__desc--emphasized {
-	display: none;
+    display: none;
 
-	@include mq(leftCol) {
-		@include fs-headline(1);
+    @include mq(leftCol) {
+        @include fs-headline(1);
 
-		font-style: italic;
-		display: block;
-	}
+        font-style: italic;
+        display: block;
+    }
 
-	@include mq(wide) {
-		width: 70%;
-	}
+    @include mq(wide) {
+        width: 70%;
+    }
 }
 
 /* ==========================================================================
