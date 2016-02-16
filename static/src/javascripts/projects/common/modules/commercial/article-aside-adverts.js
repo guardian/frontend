@@ -5,8 +5,7 @@ define([
     'common/utils/config',
     'common/utils/fastdom-promise',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/commercial/commercial-features',
-    'lodash/objects/defaults'
+    'common/modules/commercial/commercial-features'
 ], function (
     Promise,
     $,
@@ -14,19 +13,16 @@ define([
     config,
     fastdom,
     createAdSlot,
-    commercialFeatures,
-    defaults
+    commercialFeatures
 ) {
-    function init(options) {
+    var mainColumnSelector = '.js-content-main-column';
+    var rhColumnSelector = '.js-secondary-column';
+    var adSlotContainerSelector = '.js-ad-slot-container';
+    var componentsContainerSelector = '.js-components-container';
+
+    function init() {
         var $mainCol, adType,
-            opts = defaults(
-                options || {},
-                {
-                    columnSelector: '.js-secondary-column',
-                    adSlotContainerSelector: '.js-ad-slot-container'
-                }
-            ),
-            $col        = $(opts.columnSelector),
+            $col        = $(columnSelector),
             colIsHidden = $col.length && $css($col, 'display') === 'none',
             $componentsContainer,
             $adSlotContainer;
@@ -36,9 +32,9 @@ define([
             return false;
         }
 
-        $mainCol = config.page.contentType === 'Article' ? $('.js-content-main-column') : false;
-        $componentsContainer = $('.js-components-container', '.js-secondary-column');
-        $adSlotContainer = $(opts.adSlotContainerSelector);
+        $mainCol = config.page.contentType === 'Article' ? $(mainColumnSelector) : false;
+        $componentsContainer = $(componentsContainerSelector, $col[0]);
+        $adSlotContainer = $(adSlotContainerSelector);
 
         return new Promise(function (resolve) {
             fastdom.read(function () {
