@@ -11,26 +11,30 @@ define([
     'lodash/arrays/last',
     'lodash/arrays/findIndex',
     'lodash/objects/defaults',
+    'lodash/objects/has',
     'lodash/arrays/first',
     'lodash/collections/findLast',
     'common/utils/chain',
     'lodash/collections/contains',
     'lodash/collections/pluck',
     'lodash/arrays/initial',
-    'lodash/arrays/rest'
+    'lodash/arrays/rest',
+    'Promise'
 ], function (
     mediator,
     $,
     last,
     findIndex,
     defaults,
+    has,
     first,
     findLast,
     chain,
     contains,
     pluck,
     initial,
-    rest
+    rest,
+    Promise
 ) {
 
     var supportsPushState,
@@ -396,7 +400,12 @@ define([
         return window.guardian.isModernBrowser;
     }
 
-    function adblockInUse() {
+    // sync adblock detection is deprecated.
+    // it will be removed once sticky nav and omniture top up call are both removed
+    // this is soon - it's not worth refactoring them when they're off soon
+    //
+    // ** don't forget to remove them from the return object too **
+    function adblockInUseSync() {
         if (!detect.cachedAdblockInUse) {
             var sacrificialAd = createSacrificialAd(),
                 contentBlocked = isHidden(sacrificialAd);
@@ -413,7 +422,7 @@ define([
     }
 
     /** Includes Firefox Adblock Plus users who whitelist the Guardian domain */
-    function getFirefoxAdblockPlusInstalled() {
+    function getFirefoxAdblockPlusInstalledSync() {
         var sacrificialAd = createSacrificialAd();
         var adUnitMozBinding = sacrificialAd.css('-moz-binding');
         if (adUnitMozBinding) {
@@ -428,6 +437,26 @@ define([
         sacrificialAd.appendTo(document.body);
         return sacrificialAd;
     }
+    // end sync adblock detection
+
+    var getAdBlockers = new Promise(function (resolve) {
+        if (has(window.guardian.adBlockers, 'generic')) {
+            // adblock detection has completed
+            resolve(window.guardian.adBlockers);
+        } else {
+            // Push a listener for when the JS loads
+            window.guardian.adBlockers.onDetect = resolve.bind(this, window.guardian.adBlockers);
+        }
+    });
+
+    var adblockInUse = getAdBlockers.then(function (adBlockers) {
+        return adBlockers.generic;
+    });
+
+    /** Includes Firefox Adblock Plus users who whitelist the Guardian domain */
+    var getFirefoxAdblockPlusInstalled = getAdBlockers.then(function (adBlockers) {
+        return adBlockers.ffAdblockPlus;
+    });
 
     function getReferrer() {
         return document.referrer || '';
@@ -460,6 +489,8 @@ define([
         getPageSpeed: getPageSpeed,
         breakpoints: breakpoints,
         isModernBrowser: isModernBrowser,
+        adblockInUseSync: adblockInUseSync,
+        getFirefoxAdblockPlusInstalledSync: getFirefoxAdblockPlusInstalledSync,
         adblockInUse: adblockInUse,
         getFirefoxAdblockPlusInstalled: getFirefoxAdblockPlusInstalled,
         getReferrer: getReferrer

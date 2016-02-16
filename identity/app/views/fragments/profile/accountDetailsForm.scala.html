@@ -43,7 +43,7 @@
                     }
                 </li>
 
-                <li class="form-field form-fields__inline form-fields--date-of-birth">
+                <li class="form-field form-fields--phone">
                     <span class="form-fields__heading">Phone</span>
                     <ul class="u-unstyled">
                         @if(accountDetailsForm("telephoneNumber").hasErrors) {
@@ -55,7 +55,8 @@
                             ('_label, ""),
                             ('_showConstraints, false),
                             ('_default, ""),
-                            Symbol("data-test-id") -> "telephone-number-country-code"
+                            Symbol("data-test-id") -> "telephone-number-country-code",
+                            Symbol("class") -> "select--telephone-number-country-code"
                         )
                         @inputField(
                             Input(

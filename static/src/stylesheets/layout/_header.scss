@@ -22,7 +22,6 @@ $c-guardian-services-action: #ffffff;
 .l-header--is-slim {
     // TODO: Palette?
     background: colour(guardian-brand);
-    transition: transform .3s;
 
     .l-header__inner {
         @include clearfix;

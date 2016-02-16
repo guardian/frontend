@@ -526,10 +526,6 @@ object ChaptersLinksCleaner extends HtmlCleaner {
     autoaChapters.foreach { ch =>
       val h2 = ch.getElementsByTag("h2")
       h2.attr("id", slugify(h2.text()))
-
-      if(Viewability.isSwitchedOn) {
-        h2.attr("class", "anchor-link-fix")
-      }
     }
     document
   }

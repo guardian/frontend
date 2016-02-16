@@ -66,7 +66,7 @@
     background-color: colour(neutral-8);
     display: none;
 
-    .js-on .new-sticky-ad & {
+    .sticky-ad-banner & {
         z-index: 1022;
         width: 100%;
         transform: translateZ(0);
@@ -121,7 +121,7 @@
     min-height: 90px;
 
     // overwrite if in the new sticky ad AB test
-    .new-sticky-ad & {
+    .sticky-ad-banner & {
         transition: none;
         transform: none;
         min-height: auto;
