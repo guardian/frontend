@@ -101,7 +101,7 @@ define([
                 expect(sut.load).toHaveBeenCalled();
             });
 
-            it('should load plista component when render completes', function () {
+            it('should load plista component when render completes', function (done) {
                 var fixturesMerch = {
                     id: 'merch',
                     fixtures: [
@@ -111,12 +111,14 @@ define([
                 fixtures.render(fixturesMerch);
 
                 spyOn(sut, 'load');
-                sut.init();
+                var p = sut.init();
                 expect(sut.load).not.toHaveBeenCalled();
+                p.then(function () {
+                    expect(sut.load).toHaveBeenCalled();
+                    fixtures.clean(fixturesMerch.id);
+                    done();
+                });
                 mediator.emit('modules:commercial:dfp:rendered', eventStub);
-                expect(sut.load).toHaveBeenCalled();
-
-                fixtures.clean(fixturesMerch.id);
             });
 
             it('should not load when sensitive content', function () {

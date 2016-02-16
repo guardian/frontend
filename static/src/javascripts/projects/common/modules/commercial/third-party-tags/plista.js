@@ -6,6 +6,7 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'common/modules/identity/api',
+    'common/modules/commercial/track-ad',
     'common/modules/commercial/commercial-features',
     'text!common/views/commercial/plista.html'
 ], function (
@@ -16,6 +17,7 @@ define([
     mediator,
     template,
     identity,
+    trackAd,
     commercialFeatures,
     plistaStr
 ) {
@@ -74,9 +76,10 @@ define([
         if (shouldServe()) {
             if (loadInstantly()) {
                 module.load();
+                return Promise.resolve(true);
             } else {
-                mediator.on('modules:commercial:dfp:rendered', function (event) {
-                    if (event.slot.getSlotElementId() === 'dfp-ad--merchandising-high' && event.isEmpty) {
+                return trackAd('dfp-ad--merchandising-high').then(function (isLoaded) {
+                    if (!isLoaded) {
                         module.load();
                     }
                 });
