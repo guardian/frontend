@@ -1,5 +1,6 @@
 package quiz
 
+import model.{Twitter, Facebook}
 import model.content.Quiz
 import play.api.data.Form
 import play.api.data.Forms._
@@ -11,6 +12,8 @@ package object form {
   val playForm = Form(
     mapping("answers" -> list(text))(Inputs.apply)(Inputs.unapply)
   )
+
+  val shares = List(Facebook, Twitter)
 
   // each answer is expected in the format "Q1##A2##Answer Text"
   private val answerFormat = """Q(\d*)##A(\d*)##(.*)""".r
