@@ -1,8 +1,10 @@
 package views.support
 
+import com.gu.facia.api.models.{EditorialPriority, FrontPriority}
 import common.Edition
 import common.dfp.AdSize.{leaderboardSize, responsiveSize}
 import common.dfp._
+import conf.switches.Switches
 import conf.switches.Switches._
 import layout.{ColumnAndCards, ContentCard, FaciaContainer}
 import model.pressed.{CollectionConfig, PressedContent}
@@ -80,6 +82,13 @@ object Commercial {
   }
 
   object container {
+
+    def shouldRenderAsCommercialContainer(frontPriority: Option[FrontPriority], container: FaciaContainer): Boolean = {
+      Switches.NewCommercialContent.isSwitchedOn &&
+      Switches.PaidContainerUpdate.isSwitchedOn &&
+      frontPriority.contains(EditorialPriority) &&
+      container.commercialOptions.isAdvertisementFeature
+    }
 
     def mkSponsorDataAttributes(config: CollectionConfig): Option[SponsorDataAttributes] = {
       DfpAgent.findContainerCapiTagIdAndDfpTag(config) map { tagData =>

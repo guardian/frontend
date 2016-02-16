@@ -31,16 +31,6 @@ define([
 ) {
 
     var listConfigs = {
-            nhs: {
-                listId: '3573',
-                canRun: 'nhs',
-                campaignCode: 'NHS_in_article',
-                headline: 'Interested in the NHS?',
-                description: 'Sign up to email updates related to the Guardian\'s coverage of the NHS, including daily updates as the project develops',
-                successHeadline: 'Thank you for signing up to our NHS email updates',
-                successDescription: 'You\'ll receive daily updates in your inbox',
-                modClass: 'end-article'
-            },
             theCampaignMinute: {
                 listId: '3599',
                 canRun: 'theCampaignMinute',
@@ -52,6 +42,26 @@ define([
                 modClass: 'post-article',
                 insertMethod: 'insertAfter',
                 insertSelector: '.js-article__container'
+            },
+            theFilmToday: {
+                listId: '1950',
+                canRun: 'theFilmToday',
+                campaignCode: 'film_article_signup',
+                headline: 'Want the best of Film, direct to your inbox?',
+                description: 'Sign up to Film Today and we\'ll deliver to you the latest movie news, blogs, big name interviews, festival coverage, reviews and more.',
+                successHeadline: 'Thank you for signing up to Film Today',
+                successDescription: 'We will send you our picks of the most important headlines tomorrow afternoon.',
+                modClass: 'end-article'
+            },
+            theFiver: {
+                listId: '218',
+                canRun: 'theFiver',
+                campaignCode: 'fiver_article_signup',
+                headline: 'Want a football roundup direct to your inbox?',
+                description: 'Sign up to the Fiver, our daily email on the world of football',
+                successHeadline: 'Thank you for signing up',
+                successDescription: 'You\'ll receive the Fiver daily, around 5pm.',
+                modClass: 'end-article'
             },
             theGuardianToday: {
                 listId: (function () {
@@ -125,11 +135,14 @@ define([
             }
         },
         canRunList = {
-            nhs: function () {
-                return canRunHelpers.allowedArticleStructure() && canRunHelpers.keywordExists(['NHS']);
-            },
             theCampaignMinute: function () {
                 return config.page.isMinuteArticle && canRunHelpers.keywordExists(['US elections 2016']);
+            },
+            theFilmToday: function () {
+                return config.page.section === 'film' && canRunHelpers.allowedArticleStructure();
+            },
+            theFiver: function () {
+                return canRunHelpers.keywordExists(['Football']) && canRunHelpers.allowedArticleStructure();
             },
             theGuardianToday: function () {
                 var host = window.location.host,
@@ -137,7 +150,7 @@ define([
                     urlRegex = new RegExp('^https?:\/\/' + escapedHost + '\/(uk\/|us\/|au\/|international\/)?([a-z-])+$', 'gi'),
                     browser = detect.getUserAgent.browser,
                     version = detect.getUserAgent.version,
-                    pageIsBlacklisted = canRunHelpers.keywordExists(['NHS', 'US elections 2016']);
+                    pageIsBlacklisted = canRunHelpers.keywordExists(['US elections 2016', 'Football']) || config.page.section === 'film';
 
                 return !pageIsBlacklisted &&
                         canRunHelpers.allowedArticleStructure() &&
