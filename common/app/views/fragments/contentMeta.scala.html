@@ -30,7 +30,7 @@
     @if(showExtras) {
         <div class="meta__extras">
             <div class="meta__social" data-component="share">
-            @fragments.social(item, "top")
+            @fragments.social(item.sharelinks.pageShares, "top")
             </div>
             @if(item.content.tags.tags.exists(_.id == "tone/news")) {
                 @fragments.contentAgeNotice(ContentOldAgeDescriber(item.content))
