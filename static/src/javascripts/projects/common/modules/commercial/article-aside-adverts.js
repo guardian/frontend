@@ -34,7 +34,7 @@ define([
             return false;
         }
 
-        $mainCol = config.page.contentType === 'Article' ? $(mainColumnSelector) : false;
+        $mainCol = $(mainColumnSelector);
         $componentsContainer = $(componentsContainerSelector, $col[0]);
         $adSlotContainer = $(adSlotContainerSelector);
 
