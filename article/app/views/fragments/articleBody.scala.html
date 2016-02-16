@@ -6,14 +6,24 @@
 @import views.support.TrailCssClasses.toneClass
 @import conf.switches.Switches._
 
+@*Feb 2015: Google does only support NewsArticle in their amp carousel. To remove once Google starts supporting other schemas like schema.org/Review*@
+@shouldForceSchemaType = @{amp && ForceSchemaOrgTypeForAmpArticlesSwitch.isSwitchedOn}
+@schemaType(page: ArticlePage) = @{
+    if (shouldForceSchemaType) "http://schema.org/NewsArticle" else page.article.metadata.schemaType
+}
+@bodyType(page: ArticlePage) = @{
+    if (page.article.tags.isReview && !shouldForceSchemaType) "reviewBody" else "articleBody"
+}
+
 @defining(model.article) { article =>
+
     <div class="l-side-margins">
         <article id="article" data-test-id="article-root"
             class="content content--article tonal tonal--@toneClass(article) section-@article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")
             @if(article.commercial.isAdvertisementFeature){content--advertisement-feature}
             @if(article.tags.isFeature && article.elements.hasShowcaseMainElement){has-feature-showcase-element}
             @if(article.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn){paid-content--advertisement-feature}"
-            itemscope itemtype="@if(amp && ForceSchemaOrgTypeForAmpArticlesSwitch.isSwitchedOn){http://schema.org/NewsArticle} else {@article.metadata.schemaType}" role="main"> @*Feb 2015: Google does only support NewsArticle in their amp carrousel. To remove once Google starts supporting other schema like schema.org/Review*@
+            itemscope itemtype="@schemaType(model)" role="main">
             <meta itemprop="mainEntityOfPage" content="@LinkTo(article.metadata.url)">
             <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
                 <meta itemprop="name" content="The Guardian">
@@ -57,7 +67,7 @@
                             <hr class="content__hr hide-until-leftcol" />
                         }
 
-                        <div class="content__article-body from-content-api js-article__body" itemprop="@if(article.tags.isReview){reviewBody} else {articleBody}"
+                        <div class="content__article-body from-content-api js-article__body" itemprop="@bodyType(model)"
                             data-test-id="article-review-body">
                             @BodyCleaner(article, article.fields.body, amp = amp)
                         </div>
