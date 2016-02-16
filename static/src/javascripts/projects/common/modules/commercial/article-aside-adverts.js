@@ -3,7 +3,7 @@ define([
     'common/utils/$',
     'common/utils/$css',
     'common/utils/config',
-    'common/utils/fastdom-idle',
+    'common/utils/fastdom-promise',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features',
     'lodash/objects/defaults'
@@ -12,7 +12,7 @@ define([
     $,
     $css,
     config,
-    idleFastdom,
+    fastdom,
     createAdSlot,
     commercialFeatures,
     defaults
@@ -41,7 +41,7 @@ define([
         $adSlotContainer = $(opts.adSlotContainerSelector);
 
         return new Promise(function (resolve) {
-            idleFastdom.read(function () {
+            fastdom.read(function () {
                 if (
                     !config.page.isImmersive && (
                     !$mainCol.length ||
@@ -54,7 +54,7 @@ define([
                 } else {
                     adType = 'right-small';
                 }
-                idleFastdom.write(function () {
+                fastdom.write(function () {
                     if (config.page.contentType === 'Article' && config.page.sponsorshipType === 'advertisement-features') {
                         $componentsContainer.addClass('u-h');
                     }
