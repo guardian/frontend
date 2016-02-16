@@ -244,7 +244,7 @@ $minute-layout-margin-nudge: gs-span(1);
         }
 
 
-        &.block--embed {
+        &.block--minute-article--embed {
             justify-content: center;
 
             &:before {
@@ -510,7 +510,7 @@ $minute-layout-margin-nudge: gs-span(1);
 }
 
 // Video Layout
-.block--minute-article.block--video {
+.block--minute-article--video {
     @include mq($from: tablet) {
         .block-elements {
             width: gs-span(7);
@@ -530,7 +530,7 @@ $minute-layout-margin-nudge: gs-span(1);
 }
 
 // Tweet Layout
-.block--minute-article.block--tweet {
+.block--minute-article--tweet {
     @include mq($from: tablet) {
         .block-elements {
             width: gs-span(4);
@@ -546,7 +546,7 @@ $minute-layout-margin-nudge: gs-span(1);
 
 // Background Image Layout
 @supports (object-fit: cover) {
-    .block--background-image {
+    .block--minute-article--background-image {
         @include mq($until: mobileLandscape) {
             .block-elements {
                 margin-bottom: $gs-baseline*4;

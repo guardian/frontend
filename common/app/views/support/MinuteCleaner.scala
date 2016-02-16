@@ -16,12 +16,12 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
     * Associate child classes (keys) with those to add to the parent (values).
     */
   val ParentClasses = Map(
-    "element-video" -> "block--embed block--video",
-    "element-tweet" -> "block--embed block--tweet",
+    "element-video" -> "block--minute-article--embed block--minute-article--video",
+    "element-tweet" -> "block--minute-article--embed block--minute-article--tweet",
     "block-title" -> "has-title",
-    "quoted" -> "block--quote",
-    "element--inline" -> "block--background-image block--image",
-    "element--thumbnail" -> "block--bottom-image block--image"
+    "quoted" -> "block--minute-article--quote",
+    "element--inline" -> "block--minute-article--background-image block--minute-article--image",
+    "element--thumbnail" -> "block--minute-article--bottom-image block--minute-article--image"
   )
 
   /**
