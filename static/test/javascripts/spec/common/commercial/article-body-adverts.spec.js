@@ -19,6 +19,7 @@ define([
             spaceFiller,
             spaceFillerStub,
             commercialFeatures,
+            trackAd,
             mediator,
             config,
             detect,
@@ -30,6 +31,7 @@ define([
                 'common/modules/commercial/article-body-adverts',
                 'common/modules/commercial/commercial-features',
                 'common/modules/commercial/dfp/dfp-api',
+                'common/modules/commercial/track-ad',
                 'common/modules/article/space-filler',
                 'common/utils/mediator',
                 'common/utils/config',
@@ -45,13 +47,15 @@ define([
                     // nothing to see here, move along bro.
                 });
 
-                spaceFiller = arguments[3];
+                trackAd = arguments[3];
+
+                spaceFiller = arguments[4];
                 spaceFillerStub = sinon.stub(spaceFiller, 'fillSpace');
                 spaceFillerStub.returns(Promise.resolve(true));
 
-                mediator = arguments[4];
+                mediator = arguments[5];
 
-                config = arguments[5];
+                config = arguments[6];
                 config.page = {};
                 config.switches = {};
 
@@ -131,36 +135,25 @@ define([
                 spaceFillerStub.onCall(1).returns(Promise.resolve(false));
                 spaceFillerStub.returns(Promise.resolve(true));
 
-                var oldOn = mediator.on;
-                var fn;
-                mediator.on = function (eventName, fn2) {
-                    fn = fn2;
-                };
-                var oldEmit = mediator.emit;
-                mediator.emit = function (eventName, arg) {
-                    return fn(arg);
+                var fakeEvent = {
+                    slot: {
+                        getSlotElementId: function () {
+                            return 'dfp-ad--im';
+                        }
+                    },
+                    isEmpty: true
                 };
 
                 config.switches.viewability = true;
                 detect.getBreakpoint = function () {return 'tablet';};
 
-                articleBodyAdverts.init().then(function () {
-                    var fakeEvent = {
-                        slot: {
-                            getSlotElementId: function () {
-                                return 'dfp-ad--im';
-                            }
-                        },
-                        isEmpty: true
-                    };
-
-                    mediator.emit('modules:commercial:dfp:rendered', fakeEvent).then(function () {
-                        mediator.on = oldOn;
-                        mediator.emit = oldEmit;
-                        expect(spaceFillerStub.callCount).toBe(12);
-                        done();
-                    });
+                trackAd('dfp-ad--im')
+                .then(articleBodyAdverts.init)
+                .then(function () {
+                    expect(spaceFillerStub.callCount).toBe(12);
+                    done();
                 });
+                mediator.emit('modules:commercial:dfp:rendered', fakeEvent);
             });
         });
 
