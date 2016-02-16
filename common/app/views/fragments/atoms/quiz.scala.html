@@ -2,14 +2,14 @@
 @import _root_.quiz.{postUrl, Question, Answer}
 @import views.html.fragments.inlineSvg
 
-@(quiz: model.content.Quiz, maybeResults: Option[QuizResults], showResults: Boolean)
+@(quiz: model.content.Quiz, maybeResults: Option[QuizResults], showResults: Boolean, sharelinks: Seq[model.ShareLink])
 
 @if(showResults) {
     <h2>@quiz.title</h2>
 }
-<form action="@postUrl(quiz)" method="POST" class="from-content-api quiz @{if (showResults) "quiz--results" else "quiz--questions"}">
+<form action="@postUrl(quiz)" method="POST" class="quiz @{if (showResults) "quiz--results" else "quiz--questions"}">
 
-    <ol>
+    <ol class="from-content-api">
         @quiz.content.questions.zipWithIndex.map { case (question, questionIndex) =>
             @renderQuestion(question, questionIndex, playForm(s"answers[$questionIndex]"), maybeResults.flatMap(_.getAnswerFor(question)))
         }
@@ -33,22 +33,8 @@
             <div class="quiz__bucket-message">@resultGroup.title</div>
         }
         <div class="quiz__share">
-            <div class="quiz__share__cta">Challenge your friends</div>
-            <a class="quiz__share__action quiz__share__action--facebook"
-                data-link-name="social results : facebook"
-                href=""
-                target="_blank"
-                title="facebook">
-                <i class="quiz__share__action__svg--facebook quiz__share__action__svg"></i>
-            </a>
-            <div class="quiz__share__gap"></div>
-            <a class="quiz__share__action quiz__share__action--twitter"
-                data-link-name="social results : twitter"
-                href=""
-                target="_blank"
-                title="twitter">
-                <i class="quiz__share__action__svg--twitter quiz__share__action__svg"></i>
-            </a>
+            <div class="quiz__share__cta">Share your results</div>
+            @fragments.social(sharelinks)
         </div>
     </div>
 }
@@ -99,16 +85,17 @@
         }">
         <label for="question-@questionIndex-answer-@answerIndex"
             class="quiz__answer__label ">
+
             @maybeInputAnswer.map { inputAnswer =>
-                <span class="quiz__answer__icon">
-                    @if(isAnswerCorrect) {
-                        @inlineSvg("tick", "icon")
-                    } else {
-                        @if(inputAnswer.equals(answer)) {
+                @if(inputAnswer.equals(answer)) {
+                    <span class="quiz__answer__icon">
+                        @if(isAnswerCorrect) {
+                            @inlineSvg("tick", "icon")
+                        } else {
                             @inlineSvg("cross", "icon")
                         }
-                    }
-                </span>
+                    </span>
+                }
             }
             <span class="quiz__answer__text">@{answer.text}</span>
             @maybeInputAnswer.map { inputAnswer =>

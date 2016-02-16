@@ -1,7 +1,7 @@
 package controllers
 
 import common._
-import conf.LiveContentApi
+import conf.{Configuration, LiveContentApi}
 import conf.LiveContentApi.getResponse
 import model._
 import model.content.{Quiz, Atoms}
@@ -13,10 +13,12 @@ import scala.concurrent.Future
 
 case class QuizAnswersPage(
   inputs: form.Inputs,
+  contentPage: String,
   quiz: Quiz) extends model.StandalonePage {
   override val metadata = MetaData.make("quiz atom", "quizzes", quiz.title, "GFE: Quizzes")
 
   val results: form.QuizResults = form.checkUsersAnswers(inputs, quiz)
+  val shares: Seq[ShareLink] = ShareLinks.createShareLinks(form.shares, href = contentPage, title = quiz.title, mediaPath = None)
 }
 
 object QuizController extends Controller with ExecutionContexts with Logging {
@@ -37,7 +39,7 @@ object QuizController extends Controller with ExecutionContexts with Logging {
       val maybePage: Option[QuizAnswersPage] = itemResponse.content.flatMap { content =>
 
         val quiz = Atoms.make(content).flatMap(_.quizzes.find(_.id == quizId))
-        quiz.map(QuizAnswersPage(answers, _))
+        quiz.map(QuizAnswersPage(answers, s"${Configuration.site.host}/$path", _))
       }
 
       maybePage.toLeft(NotFound)
