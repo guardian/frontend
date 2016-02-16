@@ -25,11 +25,9 @@ define([
     var componentsContainerSelector = '.js-components-container';
 
     function init() {
-        var $mainCol, adType,
-            $col        = $(columnSelector),
-            colIsHidden = $col.length && $css($col, 'display') === 'none',
-            $componentsContainer,
-            $adSlotContainer;
+        var $col        = $(rhColumnSelector);
+        var colIsHidden = $col.length && $css($col, 'display') === 'none';
+        var $mainCol, $componentsContainer, $adSlotContainer;
 
         // are article aside ads disabled, or secondary column hidden?
         if (!commercialFeatures.articleAsideAdverts || colIsHidden) {
