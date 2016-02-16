@@ -97,10 +97,9 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   private def render(path: String, page: PageWithStoryPackage, pageParam: Option[String])(implicit request: RequestHeader) = page match {
     case blog: LiveBlogPage =>
       noAMP {
-        val pageSize = if (blog.article.content.tags.tags.map(_.id).contains("sport/sport")) 50 else 10
+        val pageSize = if (blog.article.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
         val modelGen = LiveBlogPageModel(
           pageSize = pageSize,
-          extrasOnFirstPage = 10,
           blog.article.content.fields.blocks
         )_
         pageParam.map(new PageParser().blockId) match {

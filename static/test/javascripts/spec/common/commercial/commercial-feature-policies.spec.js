@@ -114,7 +114,7 @@ define([
 
         describe('Membership messages policy', function () {
             it('displays message when all required conditions are true', function () {
-                detect.adblockInUse = function () { return false; };
+                detect.adblockInUseSync = function () { return false; };
                 detect.getBreakpoint = function () { return 'desktop'; };
                 config.page.contentType = 'Article';
                 var switches = commercialFeaturePolicies.getPolicySwitches().membershipMessages;
@@ -124,7 +124,7 @@ define([
             });
 
             it('Does not display messages when adBlock is enabled', function () {
-                detect.adblockInUse = function () { return true; };
+                detect.adblockInUseSync = function () { return true; };
                 detect.getBreakpoint = function () { return 'desktop'; };
                 config.page.contentType = 'Article';
                 var switches = commercialFeaturePolicies.getPolicySwitches().membershipMessages;
@@ -134,7 +134,7 @@ define([
             });
 
             it('Does not display messages on mobile', function () {
-                detect.adblockInUse = function () { return false; };
+                detect.adblockInUseSync = function () { return false; };
                 detect.getBreakpoint = function () { return 'mobile'; };
                 config.page.contentType = 'Article';
                 var switches = commercialFeaturePolicies.getPolicySwitches().membershipMessages;
@@ -144,7 +144,7 @@ define([
             });
 
             it('Does not display messages on non-article content', function () {
-                detect.adblockInUse = function () { return false; };
+                detect.adblockInUseSync = function () { return false; };
                 detect.getBreakpoint = function () { return 'mobile'; };
                 config.page.contentType = 'LiveBlog';
                 var switches = commercialFeaturePolicies.getPolicySwitches().membershipMessages;

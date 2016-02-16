@@ -27,7 +27,7 @@ define([
 
     function loadInstantly() {
         return !document.getElementById('dfp-ad--merchandising-high') ||
-            detect.adblockInUse();
+            detect.adblockInUseSync();
     }
 
     function identityPolicy() {

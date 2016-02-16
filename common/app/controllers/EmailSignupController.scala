@@ -71,8 +71,6 @@ object ListIds {
   val theGuardianGardener = 3562
   val theGuardianBookshop = 3563
 
-  val theNHS = 3573
-
   val UsElection = 3599
 
   val allWithoutTrigger: List[Int] = List(
@@ -103,7 +101,6 @@ object ListIds {
     theGuardianMasterclasses,
     theGuardianGardener,
     theGuardianBookshop,
-    theNHS,
     UsElection)
 }
 
