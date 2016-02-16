@@ -1,6 +1,6 @@
 define([
     'common/modules/commercial/track-ad'
-], function(
+], function (
     trackAd
 ) {
     function trackRubiconAdResize(id) {
@@ -31,13 +31,13 @@ define([
                             data.type === 'set-ad-height' &&
                             data.value.id === id
                         ) {
-                            resolve([data.value.width, data.value.height])
+                            resolve([data.value.width, data.value.height]);
                             window.removeEventListener('message', onMessage);
                         }
-                    }
+                    };
 
                     window.addEventListener('message', onMessage);
-                } :
+                }) :
                 false;
         }
 
@@ -45,4 +45,6 @@ define([
             return data ? [data.width, data.height] : [-1, -1];
         }
     }
+
+    return trackRubiconAdResize;
 });
