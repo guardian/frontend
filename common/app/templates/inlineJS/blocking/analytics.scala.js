@@ -57,11 +57,11 @@ try {
             + 'x'
             + (window.innerHeight || document.documentElement.clientHeight);
 
-
         s.prop4     = config.page.keywords || '';
         s.prop8     = config.page.pageCode || '';
         s.prop9     = config.page.contentType || '';
         s.prop10    = config.page.tones || '';
+        s.prop5     = config.page.trackingIds || '';
 
         s.prop25    = config.page.blogs || '';
 
