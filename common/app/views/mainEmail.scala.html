@@ -7,6 +7,7 @@
     <head>
         <meta name="robots" content="noindex">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
         <link rel="canonical" href="@LinkTo(page.metadata.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, page.metadata.webUrl)))" />
         <title>@views.support.Title(page)</title>
 
@@ -16,14 +17,6 @@
     <body>
         <table class="outer" width="600px" cellspacing="0" cellpadding="0">
             <tbody>
-                <tr class="header">
-                    <td>
-                        <a href="@LinkTo(page.metadata.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, page.metadata.webUrl)))">
-                            Having trouble viewing this email?
-                        </a>
-                    </td>
-                </tr>
-
                 <tr>
                     <td>
                         @body
