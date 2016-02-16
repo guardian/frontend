@@ -191,7 +191,6 @@ object ContentTypeFormat {
   implicit val tweetFormat = Json.format[Tweet]
   implicit val cardStyleFormat = CardStyleFormat
   implicit val imageMediaFormat = ElementsFormat.imageMediaFormat
-  private val shareLinksJsonFormat = Json.format[JsonShareLinks]
   private val commercialJsonFormat = Json.format[JsonCommercial]
   private val trailJsonFormat = Json.format[JsonTrail]
 
@@ -218,11 +217,6 @@ object ContentTypeFormat {
     rawOpenGraphImage: String,
     showFooterContainers: Boolean,
     atoms: Option[Atoms])
-
-  private case class JsonShareLinks(
-    elementShareOrder: List[String],
-    pageShareOrder: List[String]
-  )
 
   private case class JsonCommercial(
     isInappropriateForSponsorship: Boolean,
@@ -251,9 +245,8 @@ object ContentTypeFormat {
     val contentJson: Reads[JsonContent] = Json.reads[JsonContent]
 
     // Combine a Builder[Reads] with a function that can create Content to make a Reads[Content].
-    (contentJson and shareLinksJsonFormat and commercialJsonFormat and trailJsonFormat and elementsFormat and metadataFormat and fieldsFormat and tagsFormat) {
+    (contentJson and commercialJsonFormat and trailJsonFormat and elementsFormat and metadataFormat and fieldsFormat and tagsFormat) {
       (jsonContent: JsonContent,
-       jsonShareLinks: JsonShareLinks,
        jsonCommercial: JsonCommercial,
        jsonTrail: JsonTrail,
        elements: Elements,
@@ -262,7 +255,7 @@ object ContentTypeFormat {
        tags: Tags
        ) => {
 
-       val sharelinks = ShareLinks.apply(tags, fields, metadata, jsonShareLinks.elementShareOrder, jsonShareLinks.pageShareOrder)
+       val sharelinks = ShareLinks.apply(tags, fields, metadata)
        val commercial = Commercial.apply(tags, metadata,
         jsonCommercial.isInappropriateForSponsorship,
         jsonCommercial.sponsorshipTag,
@@ -311,7 +304,7 @@ object ContentTypeFormat {
 
   private val writesContent: Writes[Content] = {
 
-    (Json.writes[JsonContent] and Json.writes[JsonShareLinks] and Json.writes[JsonCommercial] and Json.writes[JsonTrail] and ElementsFormat.format and MetaDataFormat.writesMetadata and Json.writes[Fields] and Json.writes[Tags])((content: Content) => {
+    (Json.writes[JsonContent] and Json.writes[JsonCommercial] and Json.writes[JsonTrail] and ElementsFormat.format and MetaDataFormat.writesMetadata and Json.writes[Fields] and Json.writes[Tags])((content: Content) => {
       // Return a tuple of decomposed classes. This is a handwritten unapply method, converting
       // from the big Content class to the smaller classes.
       ( JsonContent.apply(
@@ -337,7 +330,6 @@ object ContentTypeFormat {
           content.showFooterContainers,
           content.atoms
         ),
-        JsonShareLinks.apply(content.sharelinks.elementShareOrder, content.sharelinks.pageShareOrder),
         JsonCommercial.apply(
           content.commercial.isInappropriateForSponsorship,
           content.commercial.sponsorshipTag,

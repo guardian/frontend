@@ -395,14 +395,6 @@ object Article {
     )
   }
 
-  private def copyShareLinks(content: Content) = {
-    if (content.tags.isLiveBlog) {
-      content.sharelinks.copy(elementShareOrder = List("facebook", "twitter", "gplus"))
-    } else {
-      content.sharelinks
-    }
-  }
-
   // Perform a copy of the content object to enable Article to override Content.
   def make(content: Content): Article = {
 
@@ -420,7 +412,7 @@ object Article {
       standfirst = fields.standfirst)
     val lightbox = GenericLightbox(elements, fields, trail, lightboxProperties)
     val metadata = copyMetaData(content, commercial, lightbox, trail, tags)
-    val sharelinks = copyShareLinks(content)
+    val sharelinks = content.sharelinks
 
     val contentOverrides = content.copy(
       trail = trail,
@@ -597,10 +589,6 @@ object Gallery {
       "gallerySize" -> JsNumber(lightbox.size),
       "lightboxImages" -> lightbox.javascriptConfig
     )
-    val sharelinks = content.sharelinks.copy(
-      elementShareOrder = List("facebook", "twitter", "pinterestBlock"),
-      pageShareOrder = List("facebook", "twitter", "email", "pinterestPage", "gplus", "whatsapp")
-    )
     val trail = content.trail.copy(
       trailPicture = elements.thumbnail.map(_.images))
 
@@ -638,7 +626,6 @@ object Gallery {
     val contentOverrides = content.copy(
       metadata = metadata,
       trail = trail,
-      sharelinks = sharelinks,
       rawOpenGraphImage = {
         val bestOpenGraphImage = if (FacebookShareUseTrailPicFirstSwitch.isSwitchedOn) {
           trail.trailPicture.flatMap(_.largestImageUrl)
