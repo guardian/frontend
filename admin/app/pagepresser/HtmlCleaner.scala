@@ -10,24 +10,10 @@ import scala.io.Source
 
 abstract class HtmlCleaner extends Logging {
   def canClean(document: Document): Boolean
+
   def clean(document: Document): Document
-}
 
-object BasicHtmlCleaner extends HtmlCleaner {
-
-  override def canClean(document: Document) = {
-    document.getElementsByAttribute("data-poll-url").isEmpty
-  }
-
-  override def clean(document: Document) = {
-    if (canClean(document)) {
-      basicClean(document)
-    } else {
-      document
-    }
-  }
-
-  def basicClean(document: Document): Document = {
+  protected def universalClean(document: Document): Document = {
     removeAds(document)
     removeByClass(document, "top-search-box")
     removeByClass(document, "share-links")
@@ -35,21 +21,22 @@ object BasicHtmlCleaner extends HtmlCleaner {
     removeByClass(document, "user-details")
     removeByClass(document, "initially-off")
     removeByClass(document, "comment-count")
-
-    //fetch omniture data before stripping it. then rea-dd it for simple page tracking
-    val omnitureQueryString = fetchOmnitureTags(document)
-    removeScriptsTagsExceptInteractives(document)
-    removeByTagName(document, "noscript")
-    createSimplePageTracking(document, omnitureQueryString)
-
     replaceLinks(document)
-
   }
 
   def replaceLinks(document: Document): Document = {
     try {
-      val newDocumentString = document.html().replaceAll("href=\"http://", "href=\"//").replaceAll("src=\"http://", "src=\"//")
-      Jsoup.parse(newDocumentString)
+      document.getAllElements.filter{ el =>
+        (el.hasAttr("href") && el.attr("href").contains("http://")) || (el.hasAttr("src") && el.attr("src").contains("http://"))
+      }.foreach{ el =>
+
+        if (el.hasAttr("href")) {
+          el.attr("href", el.attr("href").replace("http://", "//"))
+        } else {
+          el.attr("src", el.attr("src").replace("http://", "//"))
+        }
+      }
+      document
     }
     catch {
       case e: Exception => {
@@ -59,23 +46,23 @@ object BasicHtmlCleaner extends HtmlCleaner {
     }
   }
 
-  def removeScriptsTagsExceptInteractives(document: Document): Document = {
-    val scripts = document.getElementsByTag("script")
-    val (interactiveScripts, nonInteractiveScripts) = scripts.partition { e =>
-      val parentIds = e.parents().map(p => p.id()).toList
-      parentIds.contains("interactive-content")
+  def extractOmnitureParams(document: Document): Map[String, Seq[String]] = {
+    val omnitureNoScript = document.getElementById("omnitureNoScript")
+    if (omnitureNoScript != null) {
+      parse(omnitureNoScript.getElementsByTag("img").attr("src")).query.paramMap
+    } else {
+      Map.empty
     }
-    nonInteractiveScripts.toList.foreach(_.remove())
+  }
 
-    interactiveScripts.toList.map { interactiveElement =>
-      if (interactiveElement.html().contains("swfobject")) {
-        addSwfObjectScript(document)
-      }
-    }
+  def removeScripts(document: Document): Document = {
+    document.getElementsByTag("script").toList.foreach(_.remove())
     document
   }
 
-  def createSimplePageTracking(document: Document, omnitureQueryString: String): Document = {
+  def createSimplePageTracking(document: Document): Document = {
+    val omnitureQueryString = fetchOmnitureTags(document)
+
     val newOmnitureScriptBase = "https://hits-secure.theguardian.com/b/ss/guardiangu-network/1/JS-1.4.1/s985205503180623100"
 
     document.getElementsByTag("img").exists { element =>
@@ -93,38 +80,16 @@ object BasicHtmlCleaner extends HtmlCleaner {
   }
 
   def fetchOmnitureTags(document: Document): String = {
-    val params = {
-      val omnitureScript = document.getElementById("omnitureNoScript")
-      if (omnitureScript != null) {
-        parse(omnitureScript.getElementsByTag("img").attr("src")).query.paramMap
-      } else {
-        val iFrameDocuments = document.getElementsByTag("iframe").map { f =>
-          // use Jsoup.parse(Jsoup.parse(...)) because the iframe html contains encoded data to be extracted as .text()
-          Jsoup.parse(Jsoup.parse(f.html()).text());
-        }
-        val omnitureParams: Map[String, Seq[String]] = try {
-          iFrameDocuments.flatMap { d =>
-            parse(d.getElementById("omnitureNoScript").getElementsByTag("img").attr("src")).query.paramMap
-          }.toMap
-        } catch {
-          case e: Exception => {
-            log.error(s"Failed extracting omniture params: ${e.getMessage}", e)
-            Map.empty
-          }
-        }
-        omnitureParams
-      }
-    }
-
+    val params = extractOmnitureParams(document)
     val requiredParams: Map[String, Seq[String]] = params.filterKeys(key => List("pageName", "ch", "g", "ns").contains(key)) ++
       Map("AQB" -> List("1"),
-          "ndh" -> List("1"),
-          "c19" -> List("frontendarchive"),
-          "ce" -> List("UTF-8"),
-          "cpd" -> List("2"),
-          "AQE" -> List("1"),
-          "v14" -> List("D=r"),
-          "v9" -> List("D=g"))
+        "ndh" -> List("1"),
+        "c19" -> List("frontendarchive"),
+        "ce" -> List("UTF-8"),
+        "cpd" -> List("2"),
+        "AQE" -> List("1"),
+        "v14" -> List("D=r"),
+        "v9" -> List("D=g"))
 
     requiredParams.flatMap { case ((key: String, value: Seq[String])) =>
       for (v <- value) yield {
@@ -159,33 +124,13 @@ object BasicHtmlCleaner extends HtmlCleaner {
     document
   }
 
-  private def removeByClass(document: Document, className: String): Document = {
+  def removeByClass(document: Document, className: String): Document = {
     document.getElementsByClass(className).foreach(_.remove())
     document
   }
 
-  private def removeByTagName(document: Document, tagName: String): Document = {
+  def removeByTagName(document: Document, tagName: String): Document = {
     document.getElementsByTag(tagName).foreach(_.remove())
     document
   }
-
-  private def addSwfObjectScript(document: Document): Document = {
-
-    val swfScriptOpt = try {
-      val source = Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("resources/r2/interactiveSwfScript.js"), "UTF-8").getLines().mkString
-      Some(source)
-
-    } catch {
-      case ex: Exception => {
-        log.error(ex.getMessage)
-        None
-      }
-    }
-    swfScriptOpt.foreach { script =>
-      val html = "<script type=\"text/javascript\">" + script + "</script>"
-      document.head().append(html)
-    }
-    document
-  }
-
 }
