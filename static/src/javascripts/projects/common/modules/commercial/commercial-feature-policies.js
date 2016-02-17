@@ -68,16 +68,15 @@ define([
         }
     };
 
-    policies.membershipMessages = function () {
-        if (!detect.adblockInUseSync() &&
-            detect.getBreakpoint() !== 'mobile' &&
-            config.page.contentType === 'Article' &&
-            !userFeatures.isPayingMember()
-        ) {
-            return {
-                membershipMessages : true
-            };
-        }
+    policies.checkWeCanShowMembershipMessages = function () {
+        return {
+            checkWeCanShowMembershipMessages: detect.adblockInUse.then(function (adblockInUse) {
+                return !adblockInUse &&
+                    detect.getBreakpoint() !== 'mobile' &&
+                    config.page.contentType === 'Article' &&
+                    !userFeatures.isPayingMember();
+            })
+        };
     };
 
     policies.identityPages = function () {

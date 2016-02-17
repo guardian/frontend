@@ -445,7 +445,7 @@ define([
             resolve(window.guardian.adBlockers);
         } else {
             // Push a listener for when the JS loads
-            window.guardian.adBlockers.onDetect = resolve.bind(this, window.guardian.adBlockers);
+            window.guardian.adBlockers.onDetect = resolve;
         }
     });
 

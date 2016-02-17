@@ -23,7 +23,7 @@ try {
                 window.guardian.adBlockers.ffAdblockPlus = adMozBinding && adMozBinding.match('elemhidehit') !== null;
 
                 try {
-                    window.guardian.adBlockers.onDetect();
+                    window.guardian.adBlockers.onDetect(window.guardian.adBlockers);
                 } catch(e) {}
             })
         });
