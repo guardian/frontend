@@ -61,9 +61,13 @@ trait HttpRecorder[A] extends ExecutionContexts {
 
   def fromResponse(response: A): String
 
-  private [recorder] def name(url: String, headers: Map[String, String]) = {
-    val headersString = headers.map{ case (key, value) => key + value }.mkString
-    DigestUtils.sha256Hex(url.sorted +  headersString.sorted)
+  private def headersFormat(headers: Map[String, String]): String = {
+    headers.map{ case (key, value) => key + value }.mkString
+  }
+
+  private [recorder] def name(url: String, headers: Map[String, String]): String = {
+    val headersString = headersFormat(headers)
+    DigestUtils.sha256Hex(url +  headersString)
   }
 }
 
