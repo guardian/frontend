@@ -26,24 +26,24 @@ define([
         this.$adSlot = $adSlot;
         this.params  = params;
         this.contentPosition = {
-            bottom: 'bottom: 30px;',
-            top: 'top: 30px;'
+            bottom: 'gu-display__content-position--bottom',
+            top: 'gu-display__content-position--top'
         };
         this.fontSize = {
-            small: 'font-size: 0.9rem; line-height: 0.9rem;',
-            regular: 'font-size: 1.25rem;',
-            big: 'font-size: 1.35rem;'
+            small: 'gu-display__content-size--small',
+            regular: 'gu-display__content-size--regular',
+            big: 'gu-display__content-size--big'
         };
     };
 
     GustyleComcontent.prototype.create = function () {
         var externalLinkIcon = svgs('externalLink', ['gu-external-icon']),
             templateOptions = {
-                articleContentColor: this.params.articleContentColor === 'white' ? 'color: #ffffff;' : 'color: #000000;',
+                articleContentColor: this.params.articleContentColor === 'white' ? 'gu-display__content-color--bright ' : 'gu-display__content-color--dark',
                 articleContentPosition: this.contentPosition[this.params.articleContentPosition],
                 articleHeaderFontSize: this.fontSize[this.params.articleHeaderFontSize],
                 articleTextFontSize: this.fontSize[this.params.articleTextFontSize],
-                brandLogoPosition: this.params.brandLogoPosition === 'bottom-right' ? 'right: 10px; bottom: 10px; left: auto;' : 'left: 10px; top: 0; right: auto;',
+                brandLogoPosition: this.params.brandLogoPosition === 'bottom-right' ? 'gu-display__logo-pos--bottom-right' : 'gu-display__logo-pos--top-left',
                 externalLinkIcon: externalLinkIcon
             };
 

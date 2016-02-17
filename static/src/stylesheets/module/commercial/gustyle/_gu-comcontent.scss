@@ -122,6 +122,48 @@
     }
 }
 
+/* values configurable in DFP */
+.gu-display__content-color--bright {
+    color: #ffffff;
+}
+
+.gu-display__content-color--dark {
+    color: #000000;
+}
+
+.gu-display__content-position--bottom {
+    bottom: 30px;
+}
+
+.gu-display__content-position--top {
+    top: 30px;
+}
+
+.gu-display__content-size--small {
+    font-size: 0.9rem;
+    line-height: 0.9rem;
+}
+
+.gu-display__content-size--regular {
+    font-size: 1.25rem;
+}
+
+.gu-display__content-size--big {
+    font-size: 1.35rem;
+}
+
+.gu-display__logo-pos--bottom-right {
+    right: 10px;
+    bottom: 10px;
+    left: auto;
+}
+
+.gu-display__logo-pos--top-left {
+    left: 10px;
+    top: 0;
+    right: auto;
+}
+
 $mobile-max-container-width: gs-span(8);
 @include mq-add-breakpoint(containerWidestMobile, $mobile-max-container-width + $gs-gutter * 2);
 
