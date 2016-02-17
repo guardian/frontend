@@ -30,9 +30,7 @@ define([
      */
     function Sticky(element, options) {
         this.element  = element;
-        this.parent   = element.parentNode;
-        this.sticky   = false;
-        this.bottom   = false;
+        this.isSticky = false;
         this.opts     = defaults(options || {}, {
             top: 0,
             containInParent: true,
@@ -46,41 +44,30 @@ define([
         }
         mediator.on('window:throttledScroll', this.updatePosition.bind(this));
         // kick off an initial position update
-        fastdom.read(this.initGeometry, this);
         fastdom.read(this.updatePosition, this);
     };
 
-    Sticky.prototype.initGeometry = function () {
-        this.elementHeight = this.element.offsetHeight;
-    };
-
-    Sticky.prototype.updatePosition = function () {
-        var fixedTop, css, stickyHeaderHeight, parentRect, message;
-
-        stickyHeaderHeight = header && header !== this.element ? header.offsetHeight : 0;
-        parentRect = this.parent.getBoundingClientRect();
+    Sticky.prototype.updatePosition = function updatePosition() {
+        var parentRect = this.element.parentNode.getBoundingClientRect();
+        var elementHeight = this.element.offsetHeight;
+        var css, message;
 
         // have we scrolled past the element
         if (parentRect.top < this.opts.top + paidforBandHeight) {
             // make sure the element stays within its parent
-            fixedTop = Math.floor(Math.min(this.opts.top, parentRect.bottom - this.elementHeight));
-            if (this.opts.containInParent && this.sticky && fixedTop < this.opts.top) {
-                css = { top: fixedTop };
-                this.bottom = true;
+            if (this.opts.containInParent && parentRect.bottom < this.opts.top + elementHeight) {
+                var fixedTop = Math.floor(parentRect.bottom - elementHeight - this.opts.top);
+                css = { position: 'fixed', top: fixedTop };
                 message = 'fixed';
-            } else if (!this.sticky || this.bottom) {
-                css = this.stickyCss;
-                this.sticky = true;
-                this.bottom = false;
+            } else if (!this.isSticky) {
+                css = { position: 'fixed', top: this.opts.top };
                 message = 'fixed';
             }
-        } else {
-            if (this.sticky) {
-                css = this.unstickyCss;
-                this.sticky = false;
-                this.bottom = false;
-                message = 'unfixed';
-            }
+            this.isSticky = true;
+        } else if (this.isSticky) {
+            css = { position: 'static', top: 'auto' };
+            message = 'unfixed';
+            this.isSticky = false;
         }
 
         if (this.opts.emitMessage && message && message !== this.lastMessage) {
