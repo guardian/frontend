@@ -478,11 +478,11 @@ $block-padding-right: $gs-gutter;
 .dropdown--live-feed {
     border-top: 0;
 
-    $content-gutter: $gs-gutter/2;
+    $content-gutter: $gs-gutter / 2;
 
     @include mq($until: desktop) {
-        margin-right: ($content-gutter)*-1;
-        margin-left: ($content-gutter)*-1;
+        margin-right: $content-gutter * -1;
+        margin-left: $content-gutter * -1;
     }
 
     .dropdown__button {
