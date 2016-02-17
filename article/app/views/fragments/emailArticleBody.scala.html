@@ -8,7 +8,7 @@
     <table class="container">
         <tr>
             <td>
-                @fullRow {
+                @paddedRow {
                     <h1>@article.trail.headline</h1>
                 }
 
@@ -16,11 +16,11 @@
                     @article.elements.mainPicture.map { picture =>
                         @fullRow {
                             @EmailArticleImage.bestFor(picture.images).map { url =>
-                                <img src="@url" alt="@ImgSrc.getFallbackAsset(picture.images).flatMap(_.altText).getOrElse("")" />
+                                <img width="580" src="@url" alt="@ImgSrc.getFallbackAsset(picture.images).flatMap(_.altText).getOrElse("")" />
 
                                 @picture.images.largestImage.map { img =>
                                     @if(img.showCaption) {
-                                        <small>
+                                        <small class="caption">
                                             @img.caption.map(Html(_))
                                             @if(img.displayCredit && !img.creditEndsWithCaption) {
                                                 @img.credit.map(Html(_))
@@ -33,7 +33,7 @@
                     }
                 }
 
-                @fullRow {
+                @paddedRow {
                     @article.trail.byline.map { byline =>
                         <h2 class="byline">@byline</h2>
 
@@ -45,25 +45,23 @@
 
                 @page.article.fields.blocks.map { block =>
                     @block.elements.map { element =>
-                        @fullRow {
-                            @element match {
-                                case TextBlockElement(Some(html)) => { @Html(html) }
-                                case EmbedBlockElement(Some(html), _, _) => { @Html(html) }
-                                case ImageBlockElement(media, data, showCredit) => {
-                                    @EmailArticleImage.bestFor(media).map { url =>
-                                        <img class="article-image" src="@url" @data.get("alt").map { alt => alt="@alt" }>
+                        @element match {
+                            case TextBlockElement(Some(html)) => { @paddedRow(Html(html)) }
+                            case EmbedBlockElement(Some(html), _, _) => { @fullRow(Html(html)) }
+                            case ImageBlockElement(media, data, showCredit) => { @fullRow {
+                                @EmailArticleImage.bestFor(media).map { url =>
+                                    <img width="580" src="@url" @data.get("alt").map { alt => alt="@alt" }>
 
-                                        @data.get("caption").map { caption =>
-                                            <small>@Html(caption)</small>
-                                        }
+                                    @data.get("caption").map { caption =>
+                                        <small class="caption">@Html(caption)</small>
+                                    }
 
-                                        @if(showCredit) {
-                                            @data.get("credit").map(Html(_))
-                                        }
+                                    @if(showCredit) {
+                                        <small class="caption">@data.get("credit").map(Html(_))</small>
                                     }
                                 }
-                                case _ => {}
-                            }
+                            }}
+                            case _ => {}
                         }
                     }
                 }
