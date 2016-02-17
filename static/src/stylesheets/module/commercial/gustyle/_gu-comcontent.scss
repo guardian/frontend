@@ -28,7 +28,6 @@
     @extend %gu-style-box;
     bottom: 30px;
     left: 0;
-    width: 100%;
     padding: $gs-gutter/2;
 }
 
@@ -43,6 +42,7 @@
     color: #ffffff;
     text-align: left;
     font-weight: normal;
+    margin-bottom: 5px;
 }
 
 .gu-display__content-text {
