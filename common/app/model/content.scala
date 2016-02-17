@@ -194,9 +194,20 @@ final case class Content(
       )
     } else Nil
 
-    val (seriesMeta, seriesIdMeta) = tags.series.filterNot{ tag => tag.id == "commentisfree/commentisfree"}.headOption.map { series =>
-      (Some("series", JsString(series.name)), Some("seriesId", JsString(series.id)))
-    } getOrElse (None,None)
+    val seriesMeta = tags.series.filterNot{ _.id == "commentisfree/commentisfree"} match {
+      case Nil => Nil
+      case allTags@(mainSeries :: _) => List(
+        Some("series", JsString(mainSeries.name)),
+        Some("seriesId", JsString(mainSeries.id)),
+        Some("seriesTags", JsString(allTags.map(_.name).mkString(",")))
+      )
+    }
+
+    // Tracking tags are used for things like commissioning desks.
+    val trackingMeta = tags.tracking match {
+      case Nil => None
+      case trackingTags => Some("trackingIds", JsString(trackingTags.map(_.id).mkString(",")))
+    }
 
     val articleMeta = if (tags.isUSMinuteSeries) {
       Some("isMinuteArticle", JsBoolean(tags.isUSMinuteSeries))
@@ -207,13 +218,12 @@ final case class Content(
       ("atoms", JsArray(atomIdentifiers))
     }
 
-    val meta = List[Option[(String, JsValue)]](
+    val meta: List[Option[(String, JsValue)]] = List(
       rugbyMeta,
-      seriesMeta,
-      seriesIdMeta,
       articleMeta,
+      trackingMeta,
       atomsMeta
-    ) ++ cricketMeta
+    ) ++ cricketMeta ++ seriesMeta
     meta.flatten.toMap
   }
 

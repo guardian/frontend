@@ -50,18 +50,18 @@ try {
 
         s.prop6     = config.page.author || '';
 
-        s.prop13    = config.page.series || '';
+        s.prop13    = config.page.seriesTags || '';
 
         // getting clientWidth causes a reflow, so avoid using if possible
         s.eVar21    = (window.innerWidth || document.documentElement.clientWidth)
             + 'x'
             + (window.innerHeight || document.documentElement.clientHeight);
 
-
         s.prop4     = config.page.keywords || '';
         s.prop8     = config.page.pageCode || '';
         s.prop9     = config.page.contentType || '';
         s.prop10    = config.page.tones || '';
+        s.prop5     = config.page.trackingIds || '';
 
         s.prop25    = config.page.blogs || '';
 
