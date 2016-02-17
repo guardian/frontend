@@ -246,6 +246,12 @@
         list-style: none;
     }
 
+    @* temporarily hiding these for after launch *@
+    .inline-expand-image, .content__dateline-lm , .block-share, .witness-cta-wrapper, .block-share {
+        display: none;
+        visibility: hidden;
+    }
+
     @fragments.amp.stylesheets.tones()
     @fragments.amp.stylesheets.embeds()
     @fragments.amp.stylesheets.quotes()
@@ -261,10 +267,5 @@
 
     @* this is for testing only *@
     @fragments.amp.stylesheets.header()
-)
 
-    @* temporarily hiding these for demo *@
-    .inline-expand-image, .content__dateline-lm , .block-share, .witness-cta-wrapper {
-        display: none;
-    }
 </style>
