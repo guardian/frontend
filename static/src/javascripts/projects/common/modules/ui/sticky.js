@@ -72,9 +72,8 @@ define([
 
         if (this.opts.emitMessage && message && message !== this.lastMessage) {
             this.emitMessage(message);
+            this.lastMessage = message;
         }
-
-        this.lastMessage = message;
 
         if (css) {
             fastdom.write(function () {
