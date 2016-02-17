@@ -168,7 +168,7 @@ define([
         mediator.on('page:media:moreinloaded', initPlayButtons);
     }
 
-    function enhanceVideo(el, autoplay, withPreroll) {
+    function enhanceVideo(el, autoplay, shouldPreroll) {
 
         var mediaType = el.tagName.toLowerCase(),
             $el = bonzo(el).addClass('vjs vjs-tech-' + videojs.options.techOrder[0]),
@@ -178,6 +178,7 @@ define([
             endSlateUri = $el.attr('data-end-slate'),
             embedPath = $el.attr('data-embed-path'),
             techPriority = techOrder(el),
+            withPreroll = shouldPreroll && !blockVideoAds,
             player,
             mouseMoveIdle;
 
@@ -204,14 +205,23 @@ define([
 
         // Location of this is important.
         events.bindErrorHandler(player);
-
         player.guMediaType = mediaType;
+
+        // Analytics and events
+        deferToAnalytics(function () {
+            events.initOmnitureTracking(player);
+            events.initOphanTracking(player, mediaId);
+        });
+        events.bindGlobalEvents(player);
+        events.bindContentEvents(player);
+        if (withPreroll) {
+            events.bindPrerollEvents(player);
+        }
 
         player.ready(function () {
             var vol;
 
             initLoadingSpinner(player);
-            events.bindGlobalEvents(player);
             upgradeVideoPlayerAccessibility(player);
             supportedBrowsers(player);
 
@@ -232,49 +242,38 @@ define([
 
             player.persistvolume({namespace: 'gu.vjs'});
 
-            deferToAnalytics(function () {
+            // preroll for videos only
+            if (mediaType === 'video') {
 
-                events.initOmnitureTracking(player);
-                events.initOphanTracking(player, mediaId);
+                player.fullscreener();
 
-                // preroll for videos only
-                if (mediaType === 'video') {
+                if (withPreroll) {
+                    raven.wrap(
+                        { tags: { feature: 'media' } },
+                        function () {
+                            player.adSkipCountdown(15);
+                            player.ima({
+                                id: mediaId,
+                                adTagUrl: getAdUrl(),
+                                prerollTimeout: 1000
+                            });
+                            player.ima.requestAds();
 
-                    player.fullscreener();
-
-                    if (withPreroll && !blockVideoAds) {
-                        raven.wrap(
-                            { tags: { feature: 'media' } },
-                            function () {
-                                events.bindPrerollEvents(player);
-                                player.adSkipCountdown(15);
-                                player.ima({
-                                    id: mediaId,
-                                    adTagUrl: getAdUrl(),
-                                    prerollTimeout: 1000
-                                });
-                                player.ima.requestAds();
-
-                                // Video analytics event.
-                                player.trigger(events.constructEventName('preroll:request', player));
-                            }
-                        )();
-                    } else {
-                        events.bindContentEvents(player);
-                    }
-
-                    if (showEndSlate && detect.isBreakpoint({ min: 'desktop' })) {
-                        initEndSlate(player, endSlateUri);
-                    }
-                } else {
-                    player.playlist({
-                        mediaType: 'audio',
-                        continuous: false
-                    });
-
-                    events.bindContentEvents(player);
+                            // Video analytics event.
+                            player.trigger(events.constructEventName('preroll:request', player));
+                        }
+                    )();
                 }
-            });
+
+                if (showEndSlate && detect.isBreakpoint({ min: 'desktop' })) {
+                    initEndSlate(player, endSlateUri);
+                }
+            } else {
+                player.playlist({
+                    mediaType: 'audio',
+                    continuous: false
+                });
+            }
         });
 
         mouseMoveIdle = debounce(function () { player.removeClass('vjs-mousemoved'); }, 500);
