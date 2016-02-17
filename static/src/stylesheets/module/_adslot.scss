@@ -33,6 +33,12 @@
     }
  }
 
+.ad-slot--right {
+    &.is-sticky {
+        width: 300px;
+    }
+}
+
 .ad-slot__label {
     height: $mpu-ad-label-height;
     background-color: colour(neutral-8);

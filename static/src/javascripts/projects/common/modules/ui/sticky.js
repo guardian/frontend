@@ -32,7 +32,6 @@ define([
      */
     function Sticky(element, options) {
         this.element  = element;
-        this.isSticky = false;
         this.opts     = defaults(options || {}, {
             top: 0,
             containInParent: true,
@@ -52,24 +51,20 @@ define([
     Sticky.prototype.updatePosition = function updatePosition() {
         var parentRect = this.element.parentNode.getBoundingClientRect();
         var elementHeight = this.element.offsetHeight;
-        var css, message;
+        var css = {}, message, stick;
 
         // have we scrolled past the element
         if (parentRect.top < this.opts.top + paidforBandHeight) {
             // make sure the element stays within its parent
-            if (this.opts.containInParent && parentRect.bottom < this.opts.top + elementHeight) {
-                var fixedTop = Math.floor(parentRect.bottom - elementHeight - this.opts.top);
-                css = { position: 'fixed', top: fixedTop };
-                message = 'fixed';
-            } else if (!this.isSticky) {
-                css = { position: 'fixed', top: this.opts.top };
-                message = 'fixed';
-            }
-            this.isSticky = true;
-        } else if (this.isSticky) {
-            css = { position: 'static', top: 'auto' };
+            var fixedTop = this.opts.containInParent && parentRect.bottom < this.opts.top + elementHeight ?
+                Math.floor(parentRect.bottom - elementHeight - this.opts.top) :
+                this.opts.top;
+            stick = true;
+            css = { top: fixedTop };
+            message = 'fixed';
+        } else {
+            stick = false;
             message = 'unfixed';
-            this.isSticky = false;
         }
 
         if (this.opts.emitMessage && message && message !== this.lastMessage) {
@@ -79,7 +74,11 @@ define([
 
         if (css) {
             fastdom.write(function () {
-                bonzo(this.element).css(css);
+                if (stick) {
+                    bonzo(this.element).addClass('is-sticky').css(css);
+                } else {
+                    bonzo(this.element).removeClass('is-sticky').css(css);
+                }
             }, this);
         }
     };
