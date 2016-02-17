@@ -87,7 +87,7 @@
 @if(amp) {
 
     @picture.largestImage.map { largestImage =>
-        <amp-img src="@ImgSrc.getFallbackUrl(picture)"
+        <amp-img src="@ImgSrc.getAmpImageUrl(picture)"
         layout="responsive"
         width="@largestImage.width"
         height="@largestImage.height"

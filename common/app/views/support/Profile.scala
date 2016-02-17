@@ -171,6 +171,10 @@ object ImgSrc extends Logging {
     }
   }
 
+  def getAmpImageUrl(ImageElement: ImageMedia): Option[String] = {
+      findNearestSrc(ImageElement, Item620)
+  }
+
   def getFallbackAsset(ImageElement: ImageMedia): Option[ImageAsset] = {
     Item300.elementFor(ImageElement)
   }
