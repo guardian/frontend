@@ -551,7 +551,7 @@ final case class Tags(
   lazy val blogs: Seq[Tag] = tagsOfType("Blog")
   lazy val tones: Seq[Tag] = tagsOfType("Tone")
   lazy val types: Seq[Tag] = tagsOfType("Type")
-
+  lazy val tracking: Seq[Tag] = tagsOfType("Tracking")
 
   lazy val richLink: Option[String] = tags.flatMap(_.richLinkId).headOption
   lazy val openModule: Option[String] = tags.flatMap(_.openModuleId).headOption

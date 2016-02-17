@@ -17,10 +17,14 @@ try {
             window.requestAnimationFrame(() => {
                 var adStyles = window.getComputedStyle(ad);
                 window.guardian.adBlockers.generic = adStyles.getPropertyValue('display') === 'none';
-                window.guardian.adBlockers.ffAdblockPlus = adStyles.getPropertyValue('-moz-binding').match('elemhidehit') !== null;
+
+                // Only tells us if FF ABP is installed - not whether it is active
+                var adMozBinding = adStyles.getPropertyValue('-moz-binding');
+                window.guardian.adBlockers.ffAdblockPlus = adMozBinding && adMozBinding.match('elemhidehit') !== null;
+
                 try {
                     window.guardian.adBlockers.onDetect();
-                } catch(e) {};
+                } catch(e) {}
             })
         });
     })(document, window);

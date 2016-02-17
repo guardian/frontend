@@ -191,10 +191,6 @@ define([
         });
     }
 
-    function isMobileBannerTest() {
-        return config.switches.mobileTopBannerRemove && $('.top-banner-ad-container--ab-mobile').length > 0 && detect.getBreakpoint() === 'mobile';
-    }
-
     function isSponsorshipContainerTest() {
         var sponsorshipIds = ['#dfp-ad--adbadge', '#dfp-ad--spbadge', '#dfp-ad--fobadge', '#dfp-ad--adbadge1', '#dfp-ad--spbadge1', '#dfp-ad--fobadge1', '#dfp-ad--adbadge2', '#dfp-ad--spbadge2', '#dfp-ad--fobadge2', '#dfp-ad--adbadge3', '#dfp-ad--spbadge3', '#dfp-ad--fobadge3', '#dfp-ad--adbadge4', '#dfp-ad--spbadge4', '#dfp-ad--fobadge4', '#dfp-ad--adbadge5', '#dfp-ad--spbadge5', '#dfp-ad--fobadge5'],
             sponsorshipIdsReturned = [];
@@ -229,14 +225,10 @@ define([
     }
 
     function shouldFilterAdvert($adSlot) {
-        return isVisuallyHidden() || isDisabledMobileBanner() || isDisabledCommercialFeature();
+        return isVisuallyHidden() || isDisabledCommercialFeature();
 
         function isVisuallyHidden() {
             return $css($adSlot, 'display') === 'none';
-        }
-
-        function isDisabledMobileBanner() {
-            return isMobileBannerTest() && $adSlot.hasClass('ad-slot--top');
         }
 
         function isDisabledCommercialFeature() {
