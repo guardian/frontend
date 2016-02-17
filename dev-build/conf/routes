@@ -327,9 +327,12 @@ GET            /commercial/magento/books                                        
 # AMP
 GET            /most-read-mf2.json                                                                                               controllers.MostPopularController.renderPopularMicroformat2()
 GET            /related-mf2/*path.json                                                                                           controllers.RelatedController.renderMf2(path)
-GET            /container-mf2/:num/:offset/:section.json                                                                         controllers.FaciaController.frontContainersMf2EditionRedirect(num, offset, section)
-GET            /container-mf2/:num/:offset/:section/:edition.json                                                                controllers.FaciaController.renderSomeFrontContainersMf2(num, offset, section, edition)
 GET            /series-mf2/*path.json                                                                                            controllers.SeriesController.renderMf2SeriesStories(path)
+
+GET            /container/count/:count/offset/:offset/mf2.json                                                                   controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section = "", edition = "")
+GET            /container/count/:count/offset/:offset/section/:section/mf2.json                                                  controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section, edition = "")
+GET            /container/count/:count/offset/:offset/edition/:edition/mf2.json                                                  controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section = "", edition)
+GET            /container/count/:count/offset/:offset/section/:section/edition/:edition/mf2.json                                 controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section, edition)
 
 # Onward journeys
 GET            /series/*path.json                                                                                                controllers.SeriesController.renderSeriesStories(path)
