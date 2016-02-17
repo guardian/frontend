@@ -26,11 +26,10 @@ define([
 
     function init() {
         var $col        = $(rhColumnSelector);
-        var colIsHidden = $col.length && $css($col, 'display') === 'none';
         var $mainCol, $componentsContainer, $adSlotContainer;
 
         // are article aside ads disabled, or secondary column hidden?
-        if (!commercialFeatures.articleAsideAdverts || colIsHidden) {
+        if (!(commercialFeatures.articleAsideAdverts && $col.length && $css($col, 'display') !== 'none')) {
             return false;
         }
 
