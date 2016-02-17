@@ -23,7 +23,7 @@ trait HttpRecorder[A] extends ExecutionContexts {
     // integration test environment
     // make sure people have checked in test files
     if (Configuration.environment.stage.equalsIgnoreCase("DEVINFRA") && !new File(baseDir, fileName).exists()) {
-      throw new IllegalStateException(s"Data file has not been checked in for: $url, file: $fileName")
+      throw new IllegalStateException(s"Data file has not been checked in for: $url, file: $fileName, headers: ${headersFormat(headers)}")
     }
 
     get(fileName).map { f =>
