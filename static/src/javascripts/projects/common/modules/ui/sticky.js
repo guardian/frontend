@@ -13,11 +13,17 @@ define([
 ) {
 
     var isNewCommercialContent = config.switches.newCommercialContent && config.page.isAdvertisementFeature;
-    var header = isNewCommercialContent ?
-        document.querySelector('.paidfor-band') :
-        config.page.hasStickyAdBanner ?
-        document.querySelector('.js-navigation') :
-        null;
+    var paidforBandHeight;
+
+    function initPFBand() {
+        var paidforBand = document.querySelector('.paidfor-band');
+        paidforBandHeight = 0;
+        if (paidforBand) {
+            fastdom.read(function () {
+                paidforBandHeight = paidforBand.offsetHeight;
+            });
+        }
+    }
 
     /**
      * @todo: check if browser natively supports "position: sticky"
@@ -36,7 +42,10 @@ define([
         this.unstickyCss = { position: 'static', top: 'auto' };
     };
 
-    Sticky.prototype.init = function () {
+    Sticky.prototype.init = function init() {
+        if (paidforBandHeight === undefined) {
+            initPFBand();
+        }
         mediator.on('window:throttledScroll', this.updatePosition.bind(this));
         // kick off an initial position update
         fastdom.read(this.initGeometry, this);
@@ -54,7 +63,7 @@ define([
         parentRect = this.parent.getBoundingClientRect();
 
         // have we scrolled past the element
-        if (parentRect.top < this.opts.top + stickyHeaderHeight) {
+        if (parentRect.top < this.opts.top + paidforBandHeight) {
             // make sure the element stays within its parent
             fixedTop = Math.floor(Math.min(this.opts.top, parentRect.bottom - this.elementHeight));
             if (this.opts.containInParent && this.sticky && fixedTop < this.opts.top) {
