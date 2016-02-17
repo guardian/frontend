@@ -1,31 +1,8 @@
 @(page: PageWithStoryPackage)(implicit request: RequestHeader)
 
 @import views.support.{ImgSrc, EmailArticleImage}
+@import views.support.Zurb._
 @import model.liveblog._
-
-@columnNumber(n: Int) = @{
-    Seq("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve").lift(n - 1).getOrElse("")
-}
-
-@row(inner: Html) = {
-    <table class="row">
-        <tr>@inner</tr>
-    </table>
-}
-
-@columns(n: Int, last: Boolean = false)(inner: Html) = {
-    <td class="wrapper @if(last || n == 12) {last}">
-        <table class="@columnNumber(n) columns">
-            <tr>
-                <td>@inner</td>
-            </tr>
-        </table>
-    </td>
-}
-
-@fullRow(inner: Html) = {
-    @row(columns(12)(inner))
-}
 
 @defining(page.article) { article =>
     <table class="container">
