@@ -10,7 +10,7 @@ define([
 
     var MPU_HEIGHT = 275;
 
-    function StickyMpu($adSlot) {
+    function stickyMpu($adSlot) {
         if ($adSlot.data('name') !== 'right') {
             return;
         }
@@ -31,6 +31,6 @@ define([
         });
     }
 
-    return StickyMpu;
+    return stickyMpu;
 
 });
