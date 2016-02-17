@@ -2,27 +2,29 @@
 
 @import common.{LinkTo, CanonicalLink}
 
-<!doctype html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
     <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width"/>
         <meta name="robots" content="noindex">
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
         <link rel="canonical" href="@LinkTo(page.metadata.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, page.metadata.webUrl)))" />
         <title>@views.support.Title(page)</title>
 
+        @fragments.email.stylesheets.ink()
         @fragments.email.stylesheets.main()
     </head>
 
     <body>
-        <table class="outer" width="600px" cellspacing="0" cellpadding="0">
-            <tbody>
-                <tr>
-                    <td>
+        <table class="body">
+            <tr>
+                <td class="center" align="center" valign="top">
+                    <center>
                         @body
-                    </td>
-                </tr>
-            </tbody>
+                    </center>
+                </td>
+            </tr>
         </table>
     </body>
 </html>

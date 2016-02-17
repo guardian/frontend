@@ -1,54 +1,96 @@
-
 @(page: PageWithStoryPackage)(implicit request: RequestHeader)
 
+@import views.support.{ImgSrc, EmailArticleImage}
 @import model.liveblog._
-@import views.support.EmailArticleImage
+
+@columnNumber(n: Int) = @{
+    Seq("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve").lift(n - 1).getOrElse("")
+}
+
+@row(inner: Html) = {
+    <table class="row">
+        <tr>@inner</tr>
+    </table>
+}
+
+@columns(n: Int, last: Boolean = false)(inner: Html) = {
+    <td class="wrapper @if(last || n == 12) {last}">
+        <table class="@columnNumber(n) columns">
+            <tr>
+                <td>@inner</td>
+            </tr>
+        </table>
+    </td>
+}
+
+@fullRow(inner: Html) = {
+    @row(columns(12)(inner))
+}
 
 @defining(page.article) { article =>
-    <div class="container">
-        <h1>@article.trail.headline</h1>
-    </div>
+    <table class="container">
+        <tr>
+            <td>
+                @fullRow {
+                    <h1>@article.trail.headline</h1>
+                }
 
-    @fragments.emailMainMedia(article)
+                @if(!article.elements.hasMainEmbed) {
+                    @article.elements.mainPicture.map { picture =>
+                        @fullRow {
+                            @EmailArticleImage.bestFor(picture.images).map { url =>
+                                <img src="@url" alt="@ImgSrc.getFallbackAsset(picture.images).flatMap(_.altText).getOrElse("")" />
 
-    <div class="container">
-        @fragments.contentMeta(article, showExtras = false)
-    </div>
-
-    @page.article.fields.blocks.map { block =>
-        <div class="article-body">
-            @block.elements.map { element =>
-                @element match {
-                    case TextBlockElement(Some(html)) => {
-                        <div class="container">
-                            @Html(html)
-                        </div>
+                                @picture.images.largestImage.map { img =>
+                                    @if(img.showCaption) {
+                                        <small>
+                                            @img.caption.map(Html(_))
+                                            @if(img.displayCredit && !img.creditEndsWithCaption) {
+                                                @img.credit.map(Html(_))
+                                            }
+                                        </small>
+                                    }
+                                }
+                            }
+                        }
                     }
+                }
 
-                    case EmbedBlockElement(Some(html), _, _) => { @Html(html) }
+                @fullRow {
+                    @article.trail.byline.map { byline =>
+                        <h2 class="byline">@byline</h2>
 
-                    case ImageBlockElement(media, data, showCredit) => {
-                        @EmailArticleImage.bestFor(media).map { url =>
-                            <img class="article-image" src="@url" @data.get("alt").map { alt => alt="@alt" }>
+                        @if(article.content.tags.contributors.length == 1) {
+                            @fragments.meta.contactAuthor(article.tags)
+                        }
+                    }
+                }
 
-                            @data.get("caption").map { caption =>
-                                <div class="container">
-                                    <small class="article-image-caption">
-                                        @Html(caption)
+                @page.article.fields.blocks.map { block =>
+                    @block.elements.map { element =>
+                        @fullRow {
+                            @element match {
+                                case TextBlockElement(Some(html)) => { @Html(html) }
+                                case EmbedBlockElement(Some(html), _, _) => { @Html(html) }
+                                case ImageBlockElement(media, data, showCredit) => {
+                                    @EmailArticleImage.bestFor(media).map { url =>
+                                        <img class="article-image" src="@url" @data.get("alt").map { alt => alt="@alt" }>
+
+                                        @data.get("caption").map { caption =>
+                                            <small>@Html(caption)</small>
+                                        }
 
                                         @if(showCredit) {
                                             @data.get("credit").map(Html(_))
                                         }
-                                    </small>
-                                </div>
+                                    }
+                                }
+                                case _ => {}
                             }
-
                         }
                     }
-
-                    case _ => { }
                 }
-            }
-        </div>
-    }
+            </td>
+        </tr>
+    </table>
 }
