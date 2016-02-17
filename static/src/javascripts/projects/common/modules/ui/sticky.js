@@ -28,7 +28,7 @@ define([
     /**
      * @todo: check if browser natively supports "position: sticky"
      */
-    var Sticky = function (element, options) {
+    function Sticky(element, options) {
         this.element  = element;
         this.parent   = element.parentNode;
         this.sticky   = false;
@@ -38,9 +38,7 @@ define([
             containInParent: true,
             emitMessage: false
         });
-        this.stickyCss = { position: 'fixed', top: this.opts.top };
-        this.unstickyCss = { position: 'static', top: 'auto' };
-    };
+    }
 
     Sticky.prototype.init = function init() {
         if (paidforBandHeight === undefined) {
@@ -98,7 +96,7 @@ define([
         }
     };
 
-    Sticky.prototype.emitMessage = function (message) {
+    Sticky.prototype.emitMessage = function emitMessage(message) {
         mediator.emit('modules:' + this.element.id + ':' + message);
     };
 
