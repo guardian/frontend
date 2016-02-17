@@ -34,6 +34,7 @@ define([
     'inlineSvg!svgs/icon/external-link',
     'inlineSvg!svgs/icon/tick',
     'inlineSvg!svgs/logo/glabs-logo-small',
+    'inlineSvg!svgs/logo/membership-logo',
     'inlineSvg!svgs/commercial/logo-membership',
     'inlineSvg!svgs/commercial/adblock-coins',
     'inlineSvg!svgs/notifications-explainer-mobile',
@@ -71,6 +72,7 @@ define([
     externalLink,
     tick,
     glabsLogoSmall,
+    membershipLogoWhite,
     membershipLogo,
     adblockCoins,
     notificationsExplainerMobile,
@@ -112,7 +114,8 @@ define([
         adblockCoins: adblockCoins,
         logomembership: membershipLogo,
         notificationsExplainerMobile: notificationsExplainerMobile,
-        notificationsExplainerDesktop: notificationsExplainerDesktop
+        notificationsExplainerDesktop: notificationsExplainerDesktop,
+        logomembershipwhite: membershipLogoWhite
     };
 
     return function (name, classes, title) {

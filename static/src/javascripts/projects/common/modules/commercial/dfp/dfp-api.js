@@ -77,7 +77,7 @@ define([
     sha1,
     idleFastdom,
     cookies,
-    StickyMpu,
+    stickyMpu,
     buildPageTargeting,
     commercialFeatures,
     ophanTracking,
@@ -138,12 +138,12 @@ define([
 
     var callbacks = {
         '300,251': function (event, $adSlot) {
-            new StickyMpu($adSlot).create();
+            stickyMpu($adSlot);
         },
         '300,250': function (event, $adSlot) {
             if (config.switches.viewability && $adSlot.hasClass('ad-slot--right')) {
                 if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
-                    new StickyMpu($adSlot).create();
+                    stickyMpu($adSlot);
                 }
             }
         },
