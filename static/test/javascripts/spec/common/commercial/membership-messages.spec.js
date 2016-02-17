@@ -54,13 +54,8 @@ define([
         describe('If user already member', function () {
             beforeEach(function (done) {
                 showMembershipMessages = commercialFeatures.checkWeCanShowMembershipMessages;
+                commercialFeatures.checkWeCanShowMembershipMessages = Promise.resolve(false);
                 alreadyVisited = storage.local.get('gu.alreadyVisited');
-                window.guardian.adBlockers.onDetect = new Promise(function (resolve) {
-                    resolve({
-                        generic: false,
-                        ffAdblockPlus: false
-                    });
-                });
                 storage.local.set('gu.alreadyVisited', 10);
                 done();
             });
@@ -81,12 +76,7 @@ define([
             beforeEach(function (done) {
                 showMembershipMessages = commercialFeatures.checkWeCanShowMembershipMessages;
                 alreadyVisited = storage.local.get('gu.alreadyVisited');
-                window.guardian.adBlockers.onDetect = new Promise(function (resolve) {
-                    resolve({
-                        generic: true,
-                        ffAdblockPlus: true
-                    });
-                });
+                commercialFeatures.checkWeCanShowMembershipMessages = Promise.resolve(true);
                 fixtures.render(conf);
                 done();
             });
