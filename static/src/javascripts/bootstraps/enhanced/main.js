@@ -134,8 +134,9 @@ define([
         if ((window.location.protocol === 'https:' && config.page.section !== 'identity') || window.location.hash === '#force-sw') {
             var navigator = window.navigator;
             if (navigator && navigator.serviceWorker) {
-                navigator.serviceWorker.register('/service-worker-2.js').then(function () {
+                navigator.serviceWorker.register('/service-worker.js').then(function () {
                    if (detect.getUserAgent.browser === 'Chrome' && config.page.contentType === 'LiveBlog') {
+                       console.log("++++++++++++++++++++++ LOADING");
                        require(['bootstraps/enhanced/notifications'], function (notifications) {
                            bootstrapContext('notifications', notifications);
                        });

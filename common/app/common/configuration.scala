@@ -420,9 +420,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     def mandatoryCredentials: AWSCredentialsProvider = credentials.getOrElse(throw new BadConfigurationException("AWS credentials are not configured"))
     val credentials: Option[AWSCredentialsProvider] = {
       val provider = new AWSCredentialsProviderChain(
+        new ProfileCredentialsProvider("frontend"),
         new EnvironmentVariableCredentialsProvider(),
         new SystemPropertiesCredentialsProvider(),
-        new ProfileCredentialsProvider("frontend"),
         new InstanceProfileCredentialsProvider
       )
 
@@ -438,6 +438,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
           // We really, really want to ensure that PROD is configured before saying a box is OK
           if (Play.isProd) throw ex
           // this means that on dev machines you only need to configure keys if you are actually going to use them
+          println("++ This is happening")
           None
       }
     }

@@ -135,6 +135,8 @@ define([
 
         followThis: function () {
             var endpoint = '/notification/store';
+            console.log("Follow: - " + sub.endpoint);
+
             modules.updateSubscription(endpoint).then(
                 function (rsp) {
                     var subscriptions = userPrefs.get('subscriptions') || [];

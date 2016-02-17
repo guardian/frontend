@@ -11,6 +11,8 @@ import awswrappers.dynamodb._
 import scala.concurrent.Future
 import play.api.libs.json._
 
+import scala.util.{Failure, Success}
+
 case class LatestMessage(title: String, body: String) {
     lazy val toJson = JsObject(
       Seq("title" -> JsString(title), "body" -> JsString(body))
@@ -72,6 +74,7 @@ object LatestNotificationsDynamoDbStore extends Logging with ExecutionContexts {
 
     def getLatestMessageAndCheck(gcmBrowserId: String): Future[List[LatestMessage]] = {
 
+      println("Get Latest Message")
 
       val getItemRequest = new GetItemRequest()
         .withTableName(tableName)
@@ -83,20 +86,187 @@ object LatestNotificationsDynamoDbStore extends Logging with ExecutionContexts {
 
       getItemResultFuture map { result =>
           val resultMap = result.getItem.asScala.toMap
-          val messages = resultMap.get("messages")map {
-            messageAttributeList =>
-              val messageList = messageAttributeList.getL()
-              messageList.asScala.toList.map {
-                message =>
-                    val messageMap = message.getM.asScala.toMap
-                    //TODO inline or map
-                    val title = messageMap.get("title").get.getS
-                    val body = messageMap.get("body").get.getS
-                    LatestMessage(title, body)
-                }
-          }
-          messages.getOrElse(List.empty)
-
+          getMessagesFromAttributeValues(resultMap)
       }
     }
+
+
+    private def getMessagesFromAttributeValues(attributeValueMap: Map[String, AttributeValue]): List[LatestMessage] = {
+         val messages = attributeValueMap.get("messages").map{
+             messageAttributeList =>
+                val messageList = messageAttributeList.getL
+                messageList.asScala.toList.map {
+                    message =>
+                      val messageMap = message.getM.asScala.toMap
+                      val title = messageMap.get("title").get.getS
+                      val body = messageMap.get("body").get.getS
+                      LatestMessage(title, body)
+                }
+         }
+         //TODO should return Option[List], no?
+         messages.getOrElse(List.empty)
+
+    }
+
+    def getLatestMessageAndDoConditionalWrite(gcmBrowserId: String) : Future[Option[List[LatestMessage]]]  = {
+
+      println("Get Latest Message And do Write")
+
+      def getUpdateAttributeValues( messages: List[LatestMessage] ) : AttributeValue = {
+        val messageAttributeValues : AttributeValue
+        = new AttributeValue().withL(
+          (messages map {
+            message => new AttributeValue().withM(
+              Map[String, AttributeValue](
+                ("title", new AttributeValue().withS(message.title)),
+                ("body", new AttributeValue().withS(message.body))
+              ).asJava
+            )
+          }).asJava
+        )
+        messageAttributeValues
+      }
+
+      def getUpdateFailAttributes( messages: List[LatestMessage]) : AttributeValue = {
+         val messageAttributes : AttributeValue = new AttributeValue().withL(
+           (messages.map {
+             message => new AttributeValue().withM(
+                Map[String, AttributeValue](
+                  ("title", new AttributeValue().withS("Some bollox")),
+                  ("body", new AttributeValue().withS("Some more bollox"))
+                ).asJava
+             )
+           }).asJava
+         )
+         messageAttributes
+      }
+
+      def getExpectedAttributeValue(attributeValue: AttributeValue) : ExpectedAttributeValue = {
+        val expectedAttributeValues : ExpectedAttributeValue = new ExpectedAttributeValue()
+          .withComparisonOperator(ComparisonOperator.EQ)
+          .withValue(attributeValue)
+        expectedAttributeValues
+      }
+
+      getLatestMessageAndCheck(gcmBrowserId).flatMap {
+          messages =>
+            println("Got Latest Message")
+            val latestMessage = messages.reverse.head
+            val messageUpdateAttribute = getUpdateAttributeValues(messages)
+            //val messageUpdateAttribute = getUpdateFailAttributes(messages)
+            val expectedAttribute = getExpectedAttributeValue(messageUpdateAttribute)
+
+            val updateItemRequest  = new UpdateItemRequest()
+              .withTableName(tableName)
+              .withKey(Map[String, AttributeValue] (
+                ("gcmBrowserId", new AttributeValue().withS(gcmBrowserId))
+              ).asJava)
+
+              .withAttributeUpdates(Map[String, AttributeValueUpdate](
+                ("messages", new AttributeValueUpdate()
+                  .withAction(AttributeAction.PUT)
+                  .withValue(messageUpdateAttribute))
+              ).asJava )
+
+
+            updateItemRequest addExpectedEntry("messages", expectedAttribute)
+
+            println("Make Req")
+            val updateItemFuture = client.updateItemFuture(updateItemRequest)
+            println("My bad")
+
+
+            updateItemFuture.map {
+              updatedMessages =>
+                println("Written latest message")
+                Some(messages)
+            }.recover{
+              case _ =>
+                println("Gotcha, mothafookah")
+                None
+
+            }
+       }
+    }
+
+    def getLatestMessageAndDoConditionalWriteAndFail(gcmBrowserId: String) : Future[Option[List[LatestMessage]]] = {
+
+      println("Get Latest Message And do Write")
+
+      def getUpdateAttributeValues( messages: List[LatestMessage] ) : AttributeValue = {
+        val messageAttributeValues : AttributeValue
+        = new AttributeValue().withL(
+          (messages map {
+            message => new AttributeValue().withM(
+              Map[String, AttributeValue](
+                ("title", new AttributeValue().withS(message.title)),
+                ("body", new AttributeValue().withS(message.body))
+              ).asJava
+            )
+          }).asJava
+        )
+        messageAttributeValues
+      }
+
+      def getUpdateFailAttributes( messages: List[LatestMessage]) : AttributeValue = {
+         val messageAttributes : AttributeValue = new AttributeValue().withL(
+           (messages.map {
+             message => new AttributeValue().withM(
+                Map[String, AttributeValue](
+                  ("title", new AttributeValue().withS("Some bollox")),
+                  ("body", new AttributeValue().withS("Some more bollox"))
+                ).asJava
+             )
+           }).asJava
+         )
+         messageAttributes
+      }
+
+      def getExpectedAttributeValue(attributeValue: AttributeValue) : ExpectedAttributeValue = {
+        val expectedAttributeValues : ExpectedAttributeValue = new ExpectedAttributeValue()
+          .withComparisonOperator(ComparisonOperator.EQ)
+          .withValue(attributeValue)
+        expectedAttributeValues
+      }
+
+      getLatestMessageAndCheck(gcmBrowserId).flatMap {
+          messages =>
+            println("Got Latest Message")
+            val latestMessage = messages.reverse.head
+            //val messageUpdateAttribute = getUpdateAttributeValues(messages)
+            val messageUpdateAttribute = getUpdateFailAttributes(messages)
+            val expectedAttribute = getExpectedAttributeValue(messageUpdateAttribute)
+
+            val updateItemRequest  = new UpdateItemRequest()
+              .withTableName(tableName)
+              .withKey(Map[String, AttributeValue] (
+                ("gcmBrowserId", new AttributeValue().withS(gcmBrowserId))
+              ).asJava)
+
+              .withAttributeUpdates(Map[String, AttributeValueUpdate](
+                ("messages", new AttributeValueUpdate()
+                  .withAction(AttributeAction.PUT)
+                  .withValue(messageUpdateAttribute))
+              ).asJava )
+
+
+            updateItemRequest addExpectedEntry("messages", expectedAttribute)
+
+            println("Make Req")
+            val updateItemFuture = client.updateItemFuture(updateItemRequest)
+            println("My bad")
+
+            updateItemFuture.map {
+              updatedMessages =>
+                println("Written latest message")
+                Option(messages)
+            }.recover{
+              case _ =>
+               println("++ Gotcha, muthafuckah")
+               None
+            }
+       }
+    }
+
+
 }

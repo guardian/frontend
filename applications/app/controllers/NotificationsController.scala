@@ -5,7 +5,7 @@ import model.NoCache
 import model.notifications.{LatestNotificationsDynamoDbStore, DynamoDbStore}
 import play.api.data.Form
 import play.api.data.Forms._
-import play.api.libs.json.{JsArray, JsObject}
+import play.api.libs.json.{JsString, JsArray, JsObject}
 import play.api.mvc.{Action, Controller}
 
 
@@ -80,16 +80,23 @@ object NotificationsController extends Controller with ExecutionContexts with Lo
 
    def getLatestMessage(gcmBrowserId: String) = Action.async { implicit request =>
 
-     LatestNotificationsDynamoDbStore.getLatestMessageAndCheck(gcmBrowserId) map {
+     LatestNotificationsDynamoDbStore.getLatestMessageAndDoConditionalWrite(gcmBrowserId) map {
        messages =>
-         NoCache(
-           JsonComponent(
-             JsObject(Seq("messages" -> JsArray(messages.map(_.toJson))))
-           )
-         )
+         messages match {
+           case Some(m) =>
+             NoCache(
+               JsonComponent(
+                 JsObject(
+                   Seq("status" -> JsString("ok"), "messages" -> JsArray(m.map(_.toJson)))
+                 )
+               )
+             )
+
+           case _ =>
+             NoCache(
+                JsonComponent("status" -> JsString("error"))
+             )
+         }
       }
    }
-
-
-
 }
