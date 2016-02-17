@@ -8,7 +8,7 @@ define([
     fastdom
 ) {
 
-    var MPU_HEIGHT = 275;
+    var mpuHeight = 275;
 
     function stickyMpu($adSlot) {
         if ($adSlot.data('name') !== 'right') {
@@ -24,7 +24,7 @@ define([
             return referenceElement[config.page.hasShowcaseMainElement ? 'offsetHeight' : 'offsetTop'];
         }).then(function (articleBodyOffset) {
             return fastdom.write(function () {
-                $adSlot.parent().css('height', (articleBodyOffset + MPU_HEIGHT) + 'px');
+                $adSlot.parent().css('height', (articleBodyOffset + mpuHeight) + 'px');
             }).then(function () {
                 return new Sticky($adSlot[0]).init();
             });

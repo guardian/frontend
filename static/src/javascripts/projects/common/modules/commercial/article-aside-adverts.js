@@ -15,9 +15,9 @@ define([
     createAdSlot,
     commercialFeatures
 ) {
-    var MIN_ARTICLE_HEIGHT = 1300;
-    var MIN_FOOTBALL_ARTICLE_HEIGHT = 2200;
-    var MIN_IMMERSIVE_ARTICLE_HEIGHT = 600;
+    var minArticleHeight = 1300;
+    var minFootballArticleHeight = 2200;
+    var minImmersiveArticleHeight = 600;
 
     var mainColumnSelector = '.js-content-main-column';
     var rhColumnSelector = '.js-secondary-column';
@@ -44,11 +44,11 @@ define([
 
             adType = !config.page.isImmersive && (
                 !$mainCol.length ||
-                (config.page.section !== 'football' && mainColHeight >= MIN_ARTICLE_HEIGHT) ||
-                (config.page.section === 'football' && mainColHeight >= MIN_FOOTBALL_ARTICLE_HEIGHT)
+                (config.page.section !== 'football' && mainColHeight >= minArticleHeight) ||
+                (config.page.section === 'football' && mainColHeight >= minFootballArticleHeight)
             ) ?
                 'right-sticky' :
-            mainColHeight >= MIN_IMMERSIVE_ARTICLE_HEIGHT ?
+            mainColHeight >= minImmersiveArticleHeight ?
                 'right' :
                 'right-small';
 
