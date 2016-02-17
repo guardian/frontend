@@ -1,13 +1,11 @@
 define([
     'common/utils/config',
     'common/modules/ui/sticky',
-    'common/utils/fastdom-promise',
-    'lodash/objects/defaults'
+    'common/utils/fastdom-promise'
 ], function (
     config,
     Sticky,
-    fastdom,
-    defaults
+    fastdom
 ) {
 
     var MPU_HEIGHT = 275;

@@ -16,12 +16,14 @@ define([
     var paidforBandHeight;
 
     function initPFBand() {
-        var paidforBand = document.querySelector('.paidfor-band');
         paidforBandHeight = 0;
-        if (paidforBand) {
-            fastdom.read(function () {
-                paidforBandHeight = paidforBand.offsetHeight;
-            });
+        if (isNewCommercialContent) {
+            var paidforBand = document.querySelector('.paidfor-band');
+            if (paidforBand) {
+                fastdom.read(function () {
+                    paidforBandHeight = paidforBand.offsetHeight;
+                });
+            }
         }
     }
 
