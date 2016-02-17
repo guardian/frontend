@@ -90,13 +90,11 @@ define([
         if (message) {
             return checkWeCanShowMessage(message).then(function (weCanShowMessage) {
                 if (weCanShowMessage) {
-                    return show(config.page.edition, message);
-                } else {
-                    return false;
+                    show(config.page.edition, message);
                 }
             });
         }
-        return Promise.reject();
+        return Promise.resolve();
     }
 
     return {

@@ -65,10 +65,11 @@ define([
                 storage.local.set('gu.alreadyVisited', alreadyVisited);
             });
 
-            it('should not show any messages even to engaged readers', function () {
-                membershipMessages.init();
-                var message = document.querySelector('.js-site-message.site-message--banner');
-                expect(message).toBeNull();
+            it('should not show any messages even to engaged readers', function (done) {
+                membershipMessages.init().then(function () {
+                    var message = document.querySelector('.js-site-message.site-message--banner');
+                    expect(message).toBeNull();
+                }).then(done);
             });
         });
 
@@ -88,24 +89,24 @@ define([
             });
 
             describe('of the UK edition', function () {
-                it('should show a message to engaged readers', function () {
+                it('should show a message to engaged readers', function (done) {
                     config.page = { edition: 'UK' };
                     storage.local.set('gu.alreadyVisited', 10);
                     membershipMessages.init().then(function () {
                         var message = document.querySelector('.js-site-message.site-message--membership-message-uk');
                         expect(message).not.toBeNull();
-                    });
+                    }).then(done);
                 });
             });
 
             describe('of the US edition', function () {
-                it('should show a message to engaged readers', function () {
+                it('should show a message to engaged readers', function (done) {
                     config.page = { edition: 'US' };
                     storage.local.set('gu.alreadyVisited', 10);
                     membershipMessages.init().then(function () {
                         var message = document.querySelector('.js-site-message.site-message--membership-message-us');
                         expect(message).not.toBeNull();
-                    });
+                    }).then(done);
                 });
             });
         });
