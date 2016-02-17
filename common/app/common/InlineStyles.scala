@@ -47,38 +47,43 @@ object InlineStyles {
   /**
     * Attempt to inline the rules from the <style> tags in a page.
     *
-    * First, combine each style tag, inline everything that can be inlined, and then create a new style tag with
-    * whatever's left (which should be pseudo-selectors and media queries).
+    * Each <style> tag is split into rules that can be inlined and those that can't (pseudo-selectors and
+    * media queries).
     *
-    * If everything works, you'll get the document with the inlined styles and the updated <style> tag. Otherwise
-    * you'll get the original document, untouched.
+    * Everything that can be inlined gets added to the corresponding elements and whatever's left stays in the head.
+    *
+    * If any <style> tag can't be parsed, it'll be left in the head without modification.
     */
   def apply(html: Html): Html = {
-    val document = Jsoup.parse(html.body).clone()
+    val document = Jsoup.parse(html.body)
 
-    val rules = document.getElementsByTag("style").foldLeft(Set.empty[String])(_ + _.html)
-    val source = new InputSource(new StringReader(rules.mkString("\n")))
+    Html(document.getElementsByTag("style").foldLeft(document) { (document, element) =>
+      val newDocument = document.clone
+      val source = new InputSource(new StringReader(element.html))
 
-    Try(cssParser.parseStyleSheet(source, null, null)).toOption map { sheet =>
-      val (mediaQueries, styles) = seq(sheet.getCssRules).partition(isMediaQuery)
-      val (inline, head) = styles.flatMap(CSSRule.fromW3).flatten.partition(_.canInline)
+      Try(cssParser.parseStyleSheet(source, null, null)).toOption map { sheet =>
+        val (mediaQueries, styles) = seq(sheet.getCssRules).partition(isMediaQuery)
+        val (inline, head) = styles.flatMap(CSSRule.fromW3).flatten.partition(_.canInline)
+        val style = (head.map(_.toString) ++ mediaQueries.map(_.getCssText))
 
-      document.getElementsByTag("head").headOption map { el =>
-        el.getElementsByTag("style").remove()
-        el.appendChild(document.createElement("style").text {
-          (head.map(_.toString) ++ mediaQueries.map(_.getCssText)).mkString("\n")
-        })
-      }
+        newDocument.getElementsByTag("head").headOption map { el =>
+          el.getElementsByTag("style").headOption map(_.remove)
 
-      inline sortBy(_.specifity) foreach { rule =>
-        document.select(rule.selector) foreach { el =>
-          val style = Seq(el.attr("style"), rule.styles) filter (_.nonEmpty) mkString ("; ")
-          el.attr("style", style)
+          if (style.nonEmpty) {
+            el.appendChild(newDocument.createElement("style").text(style.mkString("\n")))
+          }
         }
-      }
 
-      Html(document.toString)
-    } getOrElse html
+        inline sortBy(_.specifity) foreach { rule =>
+          newDocument.select(rule.selector) foreach { el =>
+            val style = Seq(el.attr("style"), rule.styles) filter (_.nonEmpty) mkString ("; ")
+            el.attr("style", style)
+          }
+        }
+
+        newDocument
+      } getOrElse document
+    }.toString)
   }
 
   private def seq(rules: CSSRuleList): Seq[W3CSSRule] = for (i <- 0 until rules.getLength) yield rules.item(i)
