@@ -34,6 +34,7 @@ define([
     'inlineSvg!svgs/icon/external-link',
     'inlineSvg!svgs/icon/tick',
     'inlineSvg!svgs/logo/glabs-logo-small',
+    'inlineSvg!svgs/logo/membership-logo',
     'inlineSvg!svgs/commercial/logo-membership',
     'inlineSvg!svgs/commercial/adblock-coins',
     'lodash/objects/isArray'
@@ -69,6 +70,7 @@ define([
     externalLink,
     tick,
     glabsLogoSmall,
+    membershipLogoWhite,
     membershipLogo,
     adblockCoins,
     isArray
@@ -106,7 +108,8 @@ define([
         tick: tick,
         glabsLogoSmall: glabsLogoSmall,
         adblockCoins: adblockCoins,
-        logomembership: membershipLogo
+        logomembership: membershipLogo,
+        logomembershipwhite: membershipLogoWhite
     };
 
     return function (name, classes, title) {
