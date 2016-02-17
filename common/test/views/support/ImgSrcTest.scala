@@ -117,12 +117,12 @@ class ImgSrcTest extends FlatSpec with Matchers with OneAppPerSuite {
 
   it should "convert the URL of a jpeg s3 upload to the resizing endpoint with a /uploads prefix" in {
     ImageServerSwitch.switchOn()
-    Item700.bestFor(s3UploadJpgImage) should be (Some(s"$imageHost/img/uploads/2016/02/10/Screen_Shot_2016-02-09_at_17.50.09.jpeg?w=700&q=85&auto=format&sharp=10&s=ee0643ec4ff438e30b05b070628c704e"))
+    Item700.bestFor(s3UploadJpgImage) should be (Some(s"$imageHost/img/uploads/2016/02/10/Screen_Shot_2016-02-09_at_17.50.09.jpeg?w=700&q=85&auto=format&sharp=10&s=0b99c35bdef4f7797872058898771443"))
   }
 
   it should "convert the URL of a png s3 upload to the resizing endpoint with a /uploads prefix" in {
     ImageServerSwitch.switchOn()
-    Item700.bestFor(s3UploadPNGImage) should be (Some(s"$imageHost/img/uploads/2016/02/04/gu.png?w=700&q=85&auto=format&sharp=10&s=c19a854dc0df6dd7919adae79abb2fde"))
+    Item700.bestFor(s3UploadPNGImage) should be (Some(s"$imageHost/img/uploads/2016/02/04/gu.png?w=700&q=85&auto=format&sharp=10&s=a7334eb719aae4f07c6a4c32e9d005d5"))
   }
 
   it should "not convert the URL of a gif s3 upload (we do not support animated GIF)" in {
