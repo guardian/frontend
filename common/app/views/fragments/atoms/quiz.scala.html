@@ -7,9 +7,9 @@
 @if(showResults) {
     <h2>@quiz.title</h2>
 }
-<form action="@postUrl(quiz)" method="POST" class="quiz @{if (showResults) "quiz--results" else "quiz--questions"}">
+<form action="@postUrl(quiz)" method="POST">
 
-    <ol class="from-content-api">
+    <ol class="quiz @{if (showResults) "quiz--results" else "quiz--questions"}">
         @quiz.content.questions.zipWithIndex.map { case (question, questionIndex) =>
             @renderQuestion(question, questionIndex, playForm(s"answers[$questionIndex]"), maybeResults.flatMap(_.getAnswerFor(question)))
         }
