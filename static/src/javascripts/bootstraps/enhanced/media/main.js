@@ -214,8 +214,8 @@ define([
         events.bindErrorHandler(player);
         player.guMediaType = mediaType;
 
-        playerSetupComplete = new Promise(function(resolve) {
-            player.ready(function() {
+        playerSetupComplete = new Promise(function (resolve) {
+            player.ready(function () {
                 var vol;
 
                 events.bindGlobalEvents(player);
@@ -295,7 +295,7 @@ define([
             });
         });
 
-        playerSetupComplete.then(function() {
+        playerSetupComplete.then(function () {
             if (autoplay) {
                 player.play();
             }
