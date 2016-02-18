@@ -74,8 +74,8 @@ object InlineStyles {
     val (inline, head) = styles(document)
 
     document.getElementsByTag("head").headOption map { el =>
-      el.getElementsByTag("style").headOption map(_.remove)
-      el.appendChild(document.createElement("style").text(head.mkString("\n")))
+      el.getElementsByTag("style").map(_.remove)
+      head.map(css => el.appendChild(document.createElement("style").text(css)))
     }
 
     inline sortBy(_.specifity) foreach { rule =>
