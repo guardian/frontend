@@ -196,8 +196,12 @@ define([
         player = createVideoPlayer(el, {
             techOrder: techPriority,
             controls: true,
+            // This is always set to false.
+            // We use `autoplay` after we are certain the player is ready.
             autoplay: false,
-            preload: 'auto', // preload='none' & autoplay breaks ad loading on chrome35, preload="metadata" breaks older Safari's
+            // preload='none' & autoplay breaks ad loading on chrome35.
+            // preload="metadata" breaks older Safari's
+            preload: 'auto',
             plugins: {
                 embed: {
                     embeddable: !config.page.isFront && config.switches.externalVideoEmbeds && (config.page.contentType === 'Video' || $el.attr('data-embeddable') === 'true'),
