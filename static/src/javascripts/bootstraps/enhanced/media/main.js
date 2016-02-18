@@ -21,8 +21,7 @@ define([
     // This must be the full path because we use curl config to change it based
     // on env
     'bootstraps/enhanced/media/video-player',
-    'text!common/views/ui/loading.html',
-    'lodash/functions/debounce'
+    'text!common/views/ui/loading.html'
 ], function (
     bean,
     bonzo,
@@ -44,8 +43,7 @@ define([
     supportedBrowsers,
     techOrder,
     videojs,
-    loadingTmpl,
-    debounce
+    loadingTmpl
 ) {
 
     function getAdUrl() {
