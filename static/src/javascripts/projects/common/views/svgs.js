@@ -109,9 +109,8 @@ define([
         externalLink: externalLink,
         tick: tick,
         glabsLogoSmall: glabsLogoSmall,
-        adblockCoinsUK: adblockCoins,
-        adblockCoinsUS: adblockCoinsUS,
-        adblockCoinsINT: adblockCoinsUS, //deliberate
+        adblockCoinsUk: adblockCoins,
+        adblockCoinsUs: adblockCoinsUS,
         logomembership: membershipLogo,
         logomembershipwhite: membershipLogoWhite
     };
