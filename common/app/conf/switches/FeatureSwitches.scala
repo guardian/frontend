@@ -386,4 +386,13 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2016, 4, 5), //Tuesday
     exposeClientSide = false
   )
+
+  val LiveblogToast = Switch(
+    "Feature",
+    "liveblog-toast",
+    "Enables Liveblog toast",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 3, 1),
+    exposeClientSide = true
+  )
 }

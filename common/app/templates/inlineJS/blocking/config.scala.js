@@ -20,6 +20,7 @@ window.guardian = {
     css: {
         loaded: false
     },
+    adBlockers: {},
     config: @JavaScript(templates.js.javaScriptConfig(page).body)
 };
 

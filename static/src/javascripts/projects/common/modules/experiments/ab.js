@@ -8,7 +8,6 @@ define([
     'common/modules/experiments/tests/fronts-on-articles2',
     'common/modules/experiments/tests/identity-register-v2',
     'common/modules/experiments/tests/identity-sign-in-v2',
-    'common/modules/experiments/tests/liveblog-toast',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -28,7 +27,6 @@ define([
     FrontsOnArticles2,
     IdentityRegisterV2,
     IdentitySignInV2,
-    LiveblogToast,
     flatten,
     forEach,
     keys,
@@ -43,8 +41,7 @@ define([
     var TESTS = flatten([
         new FrontsOnArticles2(),
         new IdentityRegisterV2(),
-        new IdentitySignInV2(),
-        new LiveblogToast()
+        new IdentitySignInV2()
     ]);
 
     var participationsKey = 'gu.ab.participations';

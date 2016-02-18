@@ -141,7 +141,9 @@ define([
                     && !config.page.isImmersive
                     && !config.page.isUsMinute
                     && (!config.switches.newCommercialContent || !config.page.isAdvertisementFeature)
-                    && config.page.pageId !== 'offline-page') {
+                    && config.page.pageId !== 'offline-page'
+                    && !config.page.shouldHideAdverts
+                    && config.page.section !== 'childrens-books-site') {
                     stickyAdBanner.initialise();
                     config.page.hasStickyAdBanner = true;
                 } else {
