@@ -86,6 +86,7 @@ define([
         };
 
         this.sendNamedEvent = function (eventName, ad) {
+            console.log('OMNITURE', eventName);
             this.sendEvent(events[eventName], eventName, ad);
         };
 

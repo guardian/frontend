@@ -3,6 +3,7 @@ define([
     'bonzo',
     'fastdom',
     'raven',
+    'Promise',
     'common/utils/$',
     'common/utils/config',
     'common/utils/defer-to-analytics',
@@ -27,6 +28,7 @@ define([
     bonzo,
     fastdom,
     raven,
+    Promise,
     $,
     config,
     deferToAnalytics,
@@ -180,7 +182,8 @@ define([
             techPriority = techOrder(el),
             withPreroll = shouldPreroll && !blockVideoAds,
             player,
-            mouseMoveIdle;
+            mouseMoveIdle,
+            playerSetupComplete;
 
         if (config.page.videoJsVpaidSwf && config.switches.vpaidAdverts) {
 
@@ -193,7 +196,7 @@ define([
         player = createVideoPlayer(el, {
             techOrder: techPriority,
             controls: true,
-            autoplay: autoplay,
+            autoplay: false,
             preload: 'auto', // preload='none' & autoplay breaks ad loading on chrome35, preload="metadata" breaks older Safari's
             plugins: {
                 embed: {
@@ -207,83 +210,92 @@ define([
         events.bindErrorHandler(player);
         player.guMediaType = mediaType;
 
-        // Analytics and events
-        deferToAnalytics(function () {
-            events.initOmnitureTracking(player);
-            events.initOphanTracking(player, mediaId);
-        });
-        events.bindGlobalEvents(player);
-        events.bindContentEvents(player);
-        if (withPreroll) {
-            events.bindPrerollEvents(player);
-        }
+        playerSetupComplete = new Promise(function(resolve) {
+            player.ready(function() {
+                var vol;
 
-        player.ready(function () {
-            var vol;
-
-            initLoadingSpinner(player);
-            upgradeVideoPlayerAccessibility(player);
-            supportedBrowsers(player);
-
-            player.one('playing', function (e) {
-                if (isFlash(e)) {
-                    beacon.counts('video-tech-flash');
-                } else {
-                    beacon.counts('video-tech-html5');
-                }
-            });
-
-            // unglitching the volume on first load
-            vol = player.volume();
-            if (vol) {
-                player.volume(0);
-                player.volume(vol);
-            }
-
-            player.persistvolume({namespace: 'gu.vjs'});
-
-            // preroll for videos only
-            if (mediaType === 'video') {
-
-                player.fullscreener();
-
+                events.bindGlobalEvents(player);
+                events.bindContentEvents(player);
                 if (withPreroll) {
-                    raven.wrap(
-                        { tags: { feature: 'media' } },
-                        function () {
-                            player.adSkipCountdown(15);
-                            player.ima({
-                                id: mediaId,
-                                adTagUrl: getAdUrl(),
-                                prerollTimeout: 1000
-                            });
-                            player.ima.requestAds();
-
-                            // Video analytics event.
-                            player.trigger(events.constructEventName('preroll:request', player));
-                        }
-                    )();
+                    events.bindPrerollEvents(player);
                 }
-
-                if (showEndSlate && detect.isBreakpoint({ min: 'desktop' })) {
-                    initEndSlate(player, endSlateUri);
-                }
-            } else {
-                player.playlist({
-                    mediaType: 'audio',
-                    continuous: false
+                deferToAnalytics(function () {
+                    events.initOmnitureTracking(player);
+                    events.initOphanTracking(player, mediaId);
                 });
+
+                initLoadingSpinner(player);
+                upgradeVideoPlayerAccessibility(player);
+                supportedBrowsers(player);
+
+                player.one('playing', function (e) {
+                    if (isFlash(e)) {
+                        beacon.counts('video-tech-flash');
+                    } else {
+                        beacon.counts('video-tech-html5');
+                    }
+                });
+
+                // unglitching the volume on first load
+                vol = player.volume();
+                if (vol) {
+                    player.volume(0);
+                    player.volume(vol);
+                }
+
+                player.persistvolume({namespace: 'gu.vjs'});
+
+                // preroll for videos only
+                if (mediaType === 'video') {
+                    player.fullscreener();
+
+                    if (showEndSlate && detect.isBreakpoint({ min: 'desktop' })) {
+                        initEndSlate(player, endSlateUri);
+                    }
+
+                    if (withPreroll) {
+                        raven.wrap(
+                            { tags: { feature: 'media' } },
+                            function () {
+                                player.adSkipCountdown(15);
+                                player.ima({
+                                    id: mediaId,
+                                    adTagUrl: getAdUrl(),
+                                    prerollTimeout: 1000
+                                });
+                                player.ima.requestAds();
+
+                                // Video analytics event.
+                                player.trigger(events.constructEventName('preroll:request', player));
+                                resolve();
+                            }
+                        )();
+                    } else {
+                        resolve();
+                    }
+                } else {
+                    player.playlist({
+                        mediaType: 'audio',
+                        continuous: false
+                    });
+                    resolve();
+                }
+
+                mouseMoveIdle = debounce(function () { player.removeClass('vjs-mousemoved'); }, 500);
+
+                // built in vjs-user-active is buggy so using custom implementation
+                player.on('mousemove', function () {
+                    player.addClass('vjs-mousemoved');
+                    mouseMoveIdle();
+                });
+            });
+        });
+
+        playerSetupComplete.then(function() {
+            if (autoplay) {
+                player.play();
             }
         });
-
-        mouseMoveIdle = debounce(function () { player.removeClass('vjs-mousemoved'); }, 500);
-
-        // built in vjs-user-active is buggy so using custom implementation
-        player.on('mousemove', function () {
-            player.addClass('vjs-mousemoved');
-            mouseMoveIdle();
-        });
-
     }
 
     function initEndSlate(player, endSlatePath) {
