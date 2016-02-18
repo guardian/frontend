@@ -100,7 +100,6 @@ object InlineStyles {
 
         (inline ++ inlineStyles, (head :+ newHead).filter(_.nonEmpty))
       } getOrElse {
-        println(inline)
         (inline, head :+ element.html)
       }
     }
