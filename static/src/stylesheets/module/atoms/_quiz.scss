@@ -68,6 +68,7 @@ $user-response-was-wrong: #bb001a;
 
     .quiz__answer {
         opacity: .6;
+        font-weight: normal;
     }
 
     .quiz__answer--selected {
@@ -76,10 +77,13 @@ $user-response-was-wrong: #bb001a;
 
     .quiz__question--with-response .quiz__answer--selected.quiz__answer--correct .quiz__answer__label {
         background-color: $user-response-was-right;
+        font-weight: bold;
+        color: colour(neutral-7);
     }
 
     .quiz__question--with-response .quiz__answer--selected.quiz__answer--incorrect .quiz__answer__label {
         background-color: $user-response-was-wrong;
+        font-weight: bold;
         color: colour(neutral-7);
     }
 }
