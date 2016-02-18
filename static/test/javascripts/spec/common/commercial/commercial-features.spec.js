@@ -237,7 +237,7 @@ define(['helpers/injector'], function (Injector) {
             });
         });
 
-        describe("Outbrain / Plista", function () {
+        describe('Outbrain / Plista', function () {
             // These are the 'promoted links from around the web' widgets
             it('Runs by default', function () {
                 features = new CommercialFeatures;
