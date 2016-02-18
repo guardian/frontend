@@ -10,8 +10,8 @@
 <form action="@postUrl(quiz)" method="POST">
 
     <ol class="quiz @{if (showResults) "quiz--results" else "quiz--questions"}">
-        @quiz.content.questions.zipWithIndex.map { case (question, questionIndex) =>
-            @renderQuestion(question, questionIndex, playForm(s"answers[$questionIndex]"), maybeResults.flatMap(_.getAnswerFor(question)))
+        @quiz.content.questions.map { (question) =>
+            @renderQuestion(question, playForm(s"answers[${question.id}]"), maybeResults.flatMap(_.getAnswerFor(question)))
         }
     </ol>
 
@@ -39,37 +39,35 @@
     </div>
 }
 
-@renderQuestion(question: Question, questionIndex: Int, field: play.api.data.Field, maybeInputAnswer: Option[Answer]) = {
+@renderQuestion(question: Question, field: play.api.data.Field, maybeInputAnswer: Option[Answer]) = {
     <li class="quiz__question
         @{ if (showResults) {
             s"quiz__question--${if(maybeInputAnswer.isEmpty) "without-response" else "with-response" }"
           }
-        }"
-        value="@{questionIndex+1}">
+        }">
         <span class="quiz__question__label">@question.text</span>
 
         <div class="quiz__question__rows">
-            @question.answers.zipWithIndex.map { case (answer, answerIndex) => @{
+            @question.answers.map( answer => {
+                if(showResults) {
                     val isCorrect = maybeResults.exists(_.isCorrectAnswer(question, answer))
-                    if(showResults) {
-                        renderAnswerWithResponse(question, answer, questionIndex, answerIndex, isCorrect, maybeInputAnswer)
-                    } else {
-                        renderAnswer(question, answer, questionIndex, answerIndex, isCorrect)
-                    }
+                    renderAnswerWithResponse(question, answer, isCorrect, maybeInputAnswer)
+                } else {
+                    renderAnswer(question, answer)
                 }
-            }
+            })
         </div>
 
     </li>
 }
 
-@renderAnswer(question: Question, answer: Answer, questionIndex: Int, answerIndex: Int, isAnswerCorrect: Boolean) = {
+@renderAnswer(question: Question, answer: Answer) = {
     <div class="quiz__answer">
-        <label for="question-@questionIndex-answer-@answerIndex" class="quiz__answer__label">
+        <label for="answer-@{answer.id}" class="quiz__answer__label">
             <input type="radio"
-                name="answers[@questionIndex]"
-                id="question-@questionIndex-answer-@answerIndex"
-                value="Q@{questionIndex}##A@{answerIndex}##@{answer.text}"
+                name="answers[question-@{question.id}]"
+                id="answer-@{answer.id}"
+                value="@{answer.id}"
                 class="quiz__answer__input">
 
             <span class="quiz__answer__text">@{answer.text}</span>
@@ -77,14 +75,13 @@
     </div>
 }
 
-@renderAnswerWithResponse(question: Question, answer: Answer, questionIndex: Int, answerIndex: Int, isAnswerCorrect: Boolean, maybeInputAnswer: Option[Answer]) = {
+@renderAnswerWithResponse(question: Question, answer: Answer, isAnswerCorrect: Boolean, maybeInputAnswer: Option[Answer]) = {
     <div class="quiz__answer @{
             if(isAnswerCorrect) "quiz__answer--correct" else "quiz__answer--incorrect"
         } @{
             if(maybeInputAnswer.exists(_.equals(answer))) "quiz__answer--selected"
         }">
-        <label for="question-@questionIndex-answer-@answerIndex"
-            class="quiz__answer__label ">
+        <label class="quiz__answer__label">
 
             @maybeInputAnswer.map { inputAnswer =>
                 @if(inputAnswer.equals(answer)) {

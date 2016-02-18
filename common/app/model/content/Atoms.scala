@@ -44,11 +44,13 @@ object Quiz {
     val questions = quiz.content.questions.map { question =>
       val answers = question.answers.map { answer =>
         Answer(
+          id = answer.id,
           text = answer.answerText,
           revealText = answer.revealText.flatMap(revealText => if (revealText != "") Some(revealText) else None),
           weight = answer.weight.toInt)
       }
       Question(
+        id = question.id,
         text = question.questionText,
         answers = answers)
     }

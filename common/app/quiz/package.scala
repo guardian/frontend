@@ -6,10 +6,12 @@ package object quiz {
     resultGroups: Seq[ResultGroup])
 
   case class Question(
+    id: String,
     text: String,
     answers: Seq[Answer])
 
   case class Answer(
+    id: String,
     text: String,
     revealText: Option[String],
     weight: Int)

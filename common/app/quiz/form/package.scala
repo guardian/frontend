@@ -7,7 +7,7 @@ import play.api.data.Forms._
 
 package object form {
 
-  case class Inputs(answers: List[String])
+  case class Inputs(answerIds: List[String])
 
   val playForm = Form(
     mapping("answers" -> list(text))(Inputs.apply)(Inputs.unapply)
@@ -15,45 +15,19 @@ package object form {
 
   val shares = List(Facebook, Twitter)
 
-  // each answer is expected in the format "Q1##A2##Answer Text"
-  private val answerFormat = """Q(\d*)##A(\d*)##(.*)""".r
-
   def checkUsersAnswers(inputs: Inputs, quiz: Quiz): QuizResults = {
-    val validAnswers: Seq[(Int, Int, String)] = (for { answer <- inputs.answers } yield {
-      answer match {
-        case answerFormat(questionIndex, answerIndex, answerText) => Some(
-          questionIndex.toInt,
-          answerIndex.toInt,
-          answerText)
-        case _ => None
-      }
-    }).flatten
+    val validAnswers = inputs.answerIds.map(findQuizDataFor(_, quiz.content))
 
-    val entries = validAnswers.flatMap {
-      case (questionIndex: Int, answerIndex: Int, answerText: String) => {
-        findQuizDataFor(questionIndex, answerIndex, answerText, quiz.content)
-      }
-    }
-
-    QuizResults(quiz, entries)
+    QuizResults(quiz, validAnswers.flatten)
   }
 
   // Resolves an answer posted by the user to a Question-Answer pair defined by the content Atom.
-  private def findQuizDataFor(questionIndex: Int, answerIndex: Int, answerText: String, quiz: QuizContent): Option[(Question, Answer)] = {
-    val quizQuestion = quiz.questions.zipWithIndex.find {
-      case (question, index) => questionIndex == index
-    }
+  private def findQuizDataFor(answerId: String, quiz: QuizContent): Option[(Question, Answer)] = {
+    val questionsWithAnswers = quiz.questions.flatMap( question => question.answers.map(question -> _))
 
-    val quizAnswer = quizQuestion.flatMap { case (question, _) =>
-      question.answers.zipWithIndex.find {
-        case (answer, index) => answer.text == answerText && answerIndex == index
-      }
+    questionsWithAnswers.find {
+      case (question, answer) => answer.id == answerId
     }
-
-    for {
-      (q, _) <- quizQuestion
-      (a, _) <- quizAnswer
-    } yield { (q,a) }
   }
 
   case class QuizResults(
@@ -61,7 +35,7 @@ package object form {
     entries: Seq[(Question, Answer)]
   ) {
     def getAnswerFor(question: Question): Option[Answer] = entries
-      .find { case (inputQuestion, _) => inputQuestion.equals(question) }
+      .find { case (inputQuestion, _) => inputQuestion.id == question.id }
       .map(_._2)
 
     val correctAnswers: Seq[Answer] = entries
@@ -79,14 +53,14 @@ package object form {
 
     private def getCorrectAnswer(question: Question): Option[Answer] = {
       if (quiz.quizType == "knowledge") {
-        question.answers.sortBy(_.weight).reverse.headOption
+        question.answers.find(_.weight == 1)
       } else {
         None
       }
     }
 
     def isCorrectAnswer(inputQuestion: Question, inputAnswer: Answer): Boolean = {
-      getCorrectAnswer(inputQuestion).map(inputAnswer.equals(_)).exists(boolean => boolean)
+      getCorrectAnswer(inputQuestion).exists(_.id == inputAnswer.id)
     }
   }
 }
