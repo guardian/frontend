@@ -285,12 +285,19 @@ define([
                     resolve();
                 }
 
-                mouseMoveIdle = debounce(function () { player.removeClass('vjs-mousemoved'); }, 500);
-
                 // built in vjs-user-active is buggy so using custom implementation
                 player.on('mousemove', function () {
-                    player.addClass('vjs-mousemoved');
-                    mouseMoveIdle();
+                    clearTimeout(mouseMoveIdle);
+                    fastdom.write(function () {
+                        player.addClass('vjs-mousemoved');
+                    });
+
+
+                    mouseMoveIdle = setTimeout(function () {
+                        fastdom.write(function () {
+                            player.removeClass('vjs-mousemoved');
+                        });
+                    }, 500);
                 });
             });
         });
