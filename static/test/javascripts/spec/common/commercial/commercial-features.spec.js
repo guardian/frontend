@@ -95,7 +95,7 @@ define(['helpers/injector'], function (Injector) {
                 expect(features.topBannerAd).toBe(true);
             });
 
-            it("Doesn't run in minute articles", function () {
+            it('Doesn`t run in minute articles', function () {
                 config.page.isMinuteArticle = true;
                 features = new CommercialFeatures;
                 expect(features.topBannerAd).toBe(false);
@@ -108,19 +108,19 @@ define(['helpers/injector'], function (Injector) {
                 expect(features.articleBodyAdverts).toBe(true);
             });
 
-            it("Doesn't run in minute articles", function () {
+            it('Doesn`t run in minute articles', function () {
                 config.page.isMinuteArticle = true;
                 features = new CommercialFeatures;
                 expect(features.articleBodyAdverts).toBe(false);
             });
 
-            it("Doesn't run in non-article pages", function () {
+            it('Doesn`t run in non-article pages', function () {
                 config.page.contentType = 'Network Front';
                 features = new CommercialFeatures;
                 expect(features.articleBodyAdverts).toBe(false);
             });
 
-            it("Doesn't run in live blogs", function () {
+            it('Doesn`t run in live blogs', function () {
                 config.page.isLiveBlog = true;
                 features = new CommercialFeatures;
                 expect(features.articleBodyAdverts).toBe(false);
@@ -141,13 +141,13 @@ define(['helpers/injector'], function (Injector) {
                 expect(features.articleAsideAdverts).toBe(true);
             });
 
-            it("Doesn't run in minute articles", function () {
+            it('Doesn`t run in minute articles', function () {
                 config.page.isMinuteArticle = true;
                 features = new CommercialFeatures;
                 expect(features.articleAsideAdverts).toBe(false);
             });
 
-            it("Doesn't run in non-article non-liveblog pages", function () {
+            it('Doesn`t run in non-article non-liveblog pages', function () {
                 config.page.contentType = 'Network Front';
                 config.page.isLiveBlog = false;
                 features = new CommercialFeatures;
