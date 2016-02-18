@@ -31,7 +31,7 @@ define([
             config.page.shouldHideAdverts ||
             config.page.section === 'childrens-books-site';
 
-        var minuteArticle = config.page.isMinuteArticle;
+        var isMinuteArticle = config.page.isMinuteArticle;
 
         var isArticle = config.page.contentType === 'Article';
 
@@ -53,30 +53,30 @@ define([
 
         this.topBannerAd =
             this.dfpAdvertising &&
-            !minuteArticle;
+            !isMinuteArticle;
 
         this.articleBodyAdverts =
             this.dfpAdvertising &&
-            !minuteArticle &&
+            !isMinuteArticle &&
             isArticle &&
             !isLiveBlog &&
             switches.standardAdverts;
 
         this.articleAsideAdverts =
             this.dfpAdvertising &&
-            !minuteArticle &&
+            !isMinuteArticle &&
             !isMatchReport &&
             !!(isArticle || isLiveBlog) &&
             switches.standardAdverts;
 
         this.sliceAdverts =
             this.dfpAdvertising &&
-            !minuteArticle &&
+            !isMinuteArticle &&
             switches.standardAdverts;
 
         this.popularContentMPU =
             this.dfpAdvertising &&
-            !minuteArticle;
+            !isMinuteArticle;
 
         this.videoPreRolls =
             externalAdvertising &&
@@ -85,7 +85,7 @@ define([
 
         this.frontCommercialComponents =
             this.dfpAdvertising &&
-            !minuteArticle &&
+            !isMinuteArticle &&
             config.page.isFront &&
             switches.commercialComponents;
 
