@@ -50,10 +50,7 @@ define([
                             eval(breakoutContent);
                         }
 
-                        type = {
-                            type: creativeConfig.params.adType || '',
-                            variant: creativeConfig.params.adVariant || ''
-                        };
+                        type = creativeConfig.params.adType || '';
 
                     } else {
                         idleFastdom.write(function () {
