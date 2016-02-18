@@ -46,6 +46,7 @@ define([
     'lodash/arrays/last',
     'lodash/arrays/intersection',
     'lodash/arrays/initial',
+    'common/views/svgs',
 
     'common/modules/commercial/creatives/commercial-component',
     'common/modules/commercial/creatives/gu-style-comcontent',
@@ -104,7 +105,8 @@ define([
     find,
     last,
     intersection,
-    initial
+    initial,
+    svgs
 ) {
     /**
      * Right, so an explanation as to how this works...
@@ -463,6 +465,14 @@ define([
         idleFastdom.write(function () {
             if (shouldRenderLabel($slot)) {
                 $slot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
+            } else {
+                var crossIcon = svgs('crossIcon');
+                $slot.prepend('<div class="commercial__inner"><a href="#" class="ad-slot--dimiss js-ad-slot-dismiss" data-link-name="dimiss commercial component">Dismiss ' + crossIcon + '</a></div>');
+
+                bean.on(document, 'click', $('.js-ad-slot-dismiss', $slot), function (e) {
+                    e.preventDefault();
+                    console.log('yeah');
+                });
             }
         });
     }

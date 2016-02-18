@@ -662,3 +662,28 @@
         }
     }
 }
+
+.ad-slot--dimiss {
+    background-color: #eaeaea;
+    padding: 3px 10px;
+    cursor: pointer;
+    color: #6e6e6e;
+    font-family: $f-sans-serif-text;
+    @include font-size(12, 20);
+    float: right;
+
+    &:hover {
+        background-color: darken(#eaeaea, 15%);
+    }
+
+    .inline-icon {
+        fill: #6e6e6e;
+        margin-left: 5px;
+        vertical-align: middle;
+
+        svg {
+            width: 10px;
+            height: 10px;
+        }
+    }
+}
