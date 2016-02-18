@@ -1,6 +1,5 @@
 try {
     ((document, window) => {
-        window.guardian.adBlockers = {};
         var ad = document.createElement('div');
         ad.style.position = 'absolute';
         ad.style.left = '-9999px';
