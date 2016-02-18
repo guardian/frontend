@@ -1,9 +1,11 @@
 package common
 
+import org.jsoup.Jsoup
 import org.scalatest.{FlatSpec, Matchers}
+import scala.collection.immutable.ListMap
 
 class InlineStylesTest extends FlatSpec with Matchers {
-  val stub: Map[String, String] = Map.empty
+  val stub: ListMap[String, String] = ListMap.empty
 
   // https://www.w3.org/TR/css3-selectors/#specificity
   it should "calculate specifity" in {
@@ -43,22 +45,22 @@ class InlineStylesTest extends FlatSpec with Matchers {
     val (toInline, head) = InlineStyles.styles(document)
 
     toInline should be(Seq(
-      CSSRule("h1", Map("color" -> "red")),
-      CSSRule("h2", Map("color" -> "blue !important", "border" -> "10px dashed aquamarine")),
-      CSSRule("h1", Map("color" -> "green", "border" -> "1px solid black")),
-      CSSRule("h2", Map("color" -> "yellow", "border" -> "1px solid orange"))
+      CSSRule("h1", ListMap("color" -> "red")),
+      CSSRule("h2", ListMap("color" -> "blue !important", "border" -> "10px dashed aquamarine")),
+      CSSRule("h1", ListMap("color" -> "green", "border" -> "1px solid black")),
+      CSSRule("h2", ListMap("color" -> "yellow", "border" -> "1px solid orange"))
     ))
 
     head should be(Seq("a:hover { color: blue }"))
   }
 
   it should "merge styles correctly" in {
-    val toAdd = CSSRule("h2", Map("color" -> "blue", "border" -> "10px dashed aquamarine"))
+    val toAdd = CSSRule("h2", ListMap("color" -> "blue", "border" -> "10px dashed aquamarine"))
     val existing = "color: red !important; border: 5px dashed yellow"
-    val toAdd2 = CSSRule("td", Map("padding-right" -> "0px"))
-    val existing2 = "margin: 0; hyphens: none; vertical-align: top; color: rgb(34, 34, 34); font-family: Helvetica, Arial, sans-serif; padding-right: 0px; line-height: 19px; -moz-hyphens: none; position: relative; padding: 10px 20px 0px 0px; text-align: left; word-break: break-word; border-collapse: collapse !important; font-weight: normal; -webkit-hyphens: none; font-size: 14px"
+    val toAdd2 = CSSRule("td", ListMap("padding-right" -> "0px"))
+    val existing2 = "margin: 0; hyphens: none; vertical-align: top; color: rgb(34, 34, 34); font-family: Helvetica, Arial, sans-serif; line-height: 19px; -moz-hyphens: none; position: relative; padding: 10px 20px 0px 0px; text-align: left; word-break: break-word; border-collapse: collapse !important; font-weight: normal; -webkit-hyphens: none; font-size: 14px"
 
     InlineStyles.mergeStyles(toAdd, existing) should be("color: red !important; border: 10px dashed aquamarine")
-    InlineStyles.mergeStyles(toAdd2, existing2) should be("padding: 10px 10px 10px 10px; padding-left: 0px")
+    InlineStyles.mergeStyles(toAdd2, existing2) should be("margin: 0; hyphens: none; vertical-align: top; color: rgb(34, 34, 34); font-family: Helvetica, Arial, sans-serif; line-height: 19px; -moz-hyphens: none; position: relative; padding: 10px 20px 0px 0px; text-align: left; word-break: break-word; border-collapse: collapse !important; font-weight: normal; -webkit-hyphens: none; font-size: 14px; padding-right: 0px")
   }
 }
