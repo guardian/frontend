@@ -91,7 +91,7 @@ self.addEventListener('install', function (event) {
 });
 
 var needCredentialsWorkaround = function (url) {
-    var whitelist = ['https://discussion.code.dev-theguardian.com/discussion-api'];
+    var whitelist = ['https://discussion.theguardian.com/discussion-api'];
     return whitelist.some(function (entry) {
         return new RegExp('^' + entry).test(url);
     });
