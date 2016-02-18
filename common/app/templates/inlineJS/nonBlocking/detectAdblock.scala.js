@@ -19,7 +19,7 @@ try {
 
                 // Only tells us if FF ABP is installed - not whether it is active
                 var adMozBinding = adStyles.getPropertyValue('-moz-binding');
-                window.guardian.adBlockers.ffAdblockPlus = adMozBinding && adMozBinding.match('elemhidehit') !== null;
+                window.guardian.adBlockers.ffAdblockPlus = !!adMozBinding && adMozBinding.match('elemhidehit') !== null;
 
                 try {
                     window.guardian.adBlockers.onDetect(window.guardian.adBlockers);
