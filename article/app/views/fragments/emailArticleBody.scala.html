@@ -14,32 +14,37 @@
 
                 @if(!article.elements.hasMainEmbed) {
                     @article.elements.mainPicture.map { picture =>
-                        @fullRow {
                             @EmailArticleImage.bestFor(picture.images).map { url =>
-                                <img width="580" src="@url" alt="@ImgSrc.getFallbackAsset(picture.images).flatMap(_.altText).getOrElse("")" />
+                                @fullRow {
+                                    <img width="580" src="@url" alt="@ImgSrc.getFallbackAsset(picture.images).flatMap(_.altText).getOrElse("")" />
+                                }
 
                                 @picture.images.largestImage.map { img =>
-                                    @if(img.showCaption) {
-                                        <small class="caption">
-                                            @img.caption.map(Html(_))
-                                            @if(img.displayCredit && !img.creditEndsWithCaption) {
-                                                @img.credit.map(Html(_))
-                                            }
-                                        </small>
+                                    @paddedRow(Seq("caption")) {
+                                        @if(img.showCaption) {
+                                            <small>
+                                                @img.caption.map(Html(_))
+
+                                                @if(img.displayCredit && !img.creditEndsWithCaption) {
+                                                    @img.credit.map(Html(_))
+                                                }
+                                            </small>
+                                        }
                                     }
                                 }
                             }
-                        }
                     }
                 }
 
-                @paddedRow {
+                @paddedRow(Seq("author-outer")) {
                     @article.trail.byline.map { byline =>
-                        <h2 class="byline">@byline</h2>
+                        <div class="author">
+                            <h3 class="byline">@byline</h3>
 
-                        @if(article.content.tags.contributors.length == 1) {
-                            @fragments.meta.contactAuthor(article.tags)
-                        }
+                            @if(article.content.tags.contributors.length == 1) {
+                                @fragments.meta.contactAuthor(article.tags)
+                            }
+                        </div>
                     }
                 }
 
@@ -48,19 +53,24 @@
                         @element match {
                             case TextBlockElement(Some(html)) => { @paddedRow(Html(html)) }
                             case EmbedBlockElement(Some(html), _, _) => { @fullRow(Html(html)) }
-                            case ImageBlockElement(media, data, showCredit) => { @fullRow {
+                            case ImageBlockElement(media, data, showCredit) => {
                                 @EmailArticleImage.bestFor(media).map { url =>
-                                    <img width="580" src="@url" @data.get("alt").map { alt => alt="@alt" }>
 
-                                    @data.get("caption").map { caption =>
-                                        <small class="caption">@Html(caption)</small>
+                                    @fullRow {
+                                        <img width="580" src="@url" @data.get("alt").map { alt => alt="@alt" }>
                                     }
 
-                                    @if(showCredit) {
-                                        <small class="caption">@data.get("credit").map(Html(_))</small>
+                                    @paddedRow(Seq("caption")) {
+                                        @data.get("caption").map { caption =>
+                                            <small>@Html(caption)</small>
+                                        }
+
+                                        @if(showCredit) {
+                                            <small>@data.get("credit").map(Html(_))</small>
+                                        }
                                     }
                                 }
-                            }}
+                            }
                             case _ => {}
                         }
                     }

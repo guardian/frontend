@@ -5,6 +5,67 @@
         background: #eaeaea;
     }
 
+    h1, h2, h3, h4, h5, h6, p {
+        font-family: Georgia, serif;
+        color: #333333;
+    }
+
+    h1 {
+        font-size: 32px;
+        line-height: 36px;
+    }
+
+    h2, h3 {
+        font-size: 18px;
+        line-height: 28px;
+    }
+
+    h2 {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    h3 {
+        font-weight: normal;
+    }
+
+    p {
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    a, a:visited, a:active {
+        color: #005689;
+    }
+
+    a:hover {
+        color: #94b1ca;
+    }
+
+    a {
+        text-decoration: underline;
+    }
+
+    .author a {
+        text-decoration: none;
+        color: #005689 !important;
+    }
+
+    .author a:hover .contact,
+    .author a:hover svg {
+        fill: #94b1ca !important;
+        color: #94b1ca !important;
+    }
+
+    .inline-twitter-bird {
+        margin-top: 2px;
+        margin-right: 4px;
+    }
+
+    .inline-twitter-bird svg {
+        fill: #005689;
+    }
+
     .container,
     .panel {
         background: white;
@@ -14,10 +75,25 @@
         border: none;
     }
 
-    .caption {
-        padding: 10px;
+    .author-outer {
+        padding-bottom: 0 !important;
     }
 
+    .author {
+        border-bottom: 2px dotted #dcdcdc;
+    }
+
+    .author {
+        padding: 5px 0 20px;
+    }
+
+    .caption {
+        margin: 0 10px;
+    }
+
+    .byline {
+        color: #005689
+    }
     .i-left {
         float: left;
     }

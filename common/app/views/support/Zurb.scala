@@ -14,10 +14,10 @@ object Zurb {
   }
 
   def columns(n: Int, innerClasses: Seq[String] = Seq(), last: Boolean = false)(inner: Html): Html = Html {
-    s"""<td class="wrapper ${if (last || n == 12) "last"}">
+    s"""<td class="wrapper ${if (last || n == 12) "last" else ""}">
       <table class="${columnNumber(n)} columns">
         <tr>
-          <td ${if (innerClasses.nonEmpty) s"class=${innerClasses.mkString(" ")}"}>$inner</td>
+          <td ${if (innerClasses.nonEmpty) s"""class="${innerClasses.mkString(" ")}" """ else ""}>$inner</td>
           <td class="expander"></td>
         </tr>
       </table>
@@ -25,5 +25,7 @@ object Zurb {
   }
 
   def fullRow(inner: Html): Html = row(columns(12)(inner))
+  def fullRow(classes: Seq[String] = Seq.empty)(inner: Html): Html = row(columns(12, classes)(inner))
   def paddedRow(inner: Html): Html = row(columns(12, Seq("panel"))(inner))
+  def paddedRow(classes: Seq[String] = Seq.empty)(inner: Html): Html = row(columns(12, classes ++ Seq("panel"))(inner))
 }
