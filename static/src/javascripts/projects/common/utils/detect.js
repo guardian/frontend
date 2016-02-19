@@ -409,58 +409,21 @@ define([
     // this is soon - it's not worth refactoring them when they're off soon
     //
     // ** don't forget to remove them from the return object too **
-    var adblockInUseSync, getFirefoxAdblockPlusInstalledSync, createSacrificialAd;
-    if (userPrefs.get('lighter-adblock')) {
-        adblockInUseSync = memoize(function () {
-            return createSacrificialAd().css('display') === 'none';
-        });
+    var adblockInUseSync = memoize(function () {
+        return createSacrificialAd().css('display') === 'none';
+    });
 
-        /** Includes Firefox Adblock Plus users who whitelist the Guardian domain */
-        getFirefoxAdblockPlusInstalledSync = memoize(function () {
-            var adUnitMozBinding = createSacrificialAd().css('-moz-binding');
-            return !!adUnitMozBinding && adUnitMozBinding.match('elemhidehit') !== null;
-        });
+    /** Includes Firefox Adblock Plus users who whitelist the Guardian domain */
+    var getFirefoxAdblockPlusInstalledSync = memoize(function () {
+        var adUnitMozBinding = createSacrificialAd().css('-moz-binding');
+        return !!adUnitMozBinding && adUnitMozBinding.match('elemhidehit') !== null;
+    });
 
-        createSacrificialAd = memoize(function () {
-            var sacrificialAd = $.create('<div class="ad_unit" style="position: absolute; height: 10px; top: 0; left: 0; z-index: -1;">&nbsp;</div>');
-            sacrificialAd.appendTo(document.body);
-            return sacrificialAd;
-        });
-    } else {
-        adblockInUseSync = function () {
-            if (!detect.cachedAdblockInUse) {
-                var sacrificialAd = createSacrificialAd(),
-                    contentBlocked = isHidden(sacrificialAd);
-                sacrificialAd.remove();
-                detect.cachedAdblockInUse = contentBlocked;
-                return contentBlocked;
-            }
-
-            return detect.cachedAdblockInUse;
-
-            function isHidden(bonzoElement) {
-                return bonzoElement.css('display') === 'none';
-            }
-        };
-
-        /** Includes Firefox Adblock Plus users who whitelist the Guardian domain */
-        getFirefoxAdblockPlusInstalledSync = function () {
-            var sacrificialAd = createSacrificialAd();
-            var adUnitMozBinding = sacrificialAd.css('-moz-binding');
-            if (adUnitMozBinding) {
-                return adUnitMozBinding.match('elemhidehit') !== null;
-            } else {
-                return false;
-            }
-        };
-
-        createSacrificialAd = function () {
-            var sacrificialAd = $.create('<div class="ad_unit" style="position: absolute; left: -9999px; height: 10px">&nbsp;</div>');
-            sacrificialAd.appendTo(document.body);
-            return sacrificialAd;
-        };
-    }
-
+    var createSacrificialAd = memoize(function () {
+        var sacrificialAd = $.create('<div class="ad_unit" style="position: absolute; height: 10px; top: 0; left: 0; z-index: -1;">&nbsp;</div>');
+        sacrificialAd.appendTo(document.body);
+        return sacrificialAd;
+    });
     // end sync adblock detection
 
     var getAdBlockers = new Promise(function (resolve) {
