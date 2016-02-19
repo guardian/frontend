@@ -62,6 +62,10 @@
     </div>
 
     @if(isImmersive) {
-        @interactive.figureEl.map(HtmlFormat.raw(_))
+        <div class="@RenderClasses(Map(
+                    "paid-content--advertisement-feature" -> (interactive.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn)
+                ))">
+                @interactive.figureEl.map(HtmlFormat.raw(_))
+        </div>
     }
 }
