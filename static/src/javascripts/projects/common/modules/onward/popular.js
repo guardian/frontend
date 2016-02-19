@@ -41,12 +41,8 @@ define([
         this.fetch(qwery('.js-popular-trails'), 'html');
     };
 
-    MostPopular.prototype.mobileMaximumSlotsReached = function () {
-        return (detect.getBreakpoint() === 'mobile' && $('.ad-slot--inline').length > 1);
-    };
-
     MostPopular.prototype.prerender = function () {
-        if (commercialFeatures.popularContentMPU && !this.mobileMaximumSlotsReached()) {
+        if (commercialFeatures.popularContentMPU) {
             var $mpuEl = $('.js-fc-slice-mpu-candidate', this.elem);
             this.$mpu = $mpuEl.append(createAdSlot('mostpop', 'container-inline'));
         } else {
