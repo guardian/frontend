@@ -15,11 +15,11 @@ define([
     var isNewCommercialContent = config.switches.newCommercialContent && config.page.isAdvertisementFeature;
     var paidforBandHeight;
 
-    function initPFBand() {
+    function initPFBand(element) {
         paidforBandHeight = 0;
         if (isNewCommercialContent) {
             var paidforBand = document.querySelector('.paidfor-band');
-            if (paidforBand) {
+            if (paidforBand && paidforBand !== element) {
                 fastdom.read(function () {
                     paidforBandHeight = paidforBand.offsetHeight;
                 });
@@ -41,7 +41,7 @@ define([
 
     Sticky.prototype.init = function init() {
         if (paidforBandHeight === undefined) {
-            initPFBand();
+            initPFBand(this.element);
         }
         mediator.on('window:throttledScroll', this.updatePosition.bind(this));
         // kick off an initial position update
