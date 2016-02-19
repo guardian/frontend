@@ -1,7 +1,3 @@
-.gu-image-container {
-    background-color: colour(neutral-8);
-}
-
 %gu-style-box {
     padding: $gs-baseline / 2;
 }
@@ -64,13 +60,6 @@
     line-height: 1;
 }
 
-.gu-note {
-    @include f-textSans;
-    @include font-size(13, 18);
-
-    color: colour(neutral-2);
-}
-
 .gu-display__logo {
     width: 80px;
     height: 30px;
@@ -84,41 +73,6 @@
         width: 15px;
         height: 15px;
         vertical-align: sub;
-    }
-}
-
-.gu-comcontent {
-    display: block;
-    background-color: colour(neutral-8);
-    border-top: 1px solid $gustyle-tone;
-    padding: 0;
-    overflow: hidden;
-    position: relative;
-
-    &:hover {
-        background-color: colour(neutral-6);
-        text-decoration: none;
-
-        .gu-image {
-            background-color: #000000;
-            opacity: .9;
-        }
-    }
-}
-
-.gu-display {
-    .gu-title {
-        padding-bottom: $gs-baseline/2;
-
-        a {
-            color: #ffffff;
-        }
-    }
-
-    .button {
-        float: left;
-        color: #ffffff;
-        box-shadow: 0 0 1px 0px #ffffff inset, 0 0 1px 0px #ffffff;
     }
 }
 
