@@ -2,7 +2,7 @@ package model.content
 
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentatom.thrift.{atom => atomapi, AtomData}
-import quiz.{QuizContent, Question, Answer, ResultGroup}
+import quiz.{QuizContent, Question, Answer, ResultGroup, ResultBucket}
 
 final case class Atoms(
   quizzes: Seq[Quiz]
@@ -47,7 +47,8 @@ object Quiz {
           id = answer.id,
           text = answer.answerText,
           revealText = answer.revealText.flatMap(revealText => if (revealText != "") Some(revealText) else None),
-          weight = answer.weight.toInt)
+          weight = answer.weight.toInt,
+          buckets = answer.bucket.getOrElse(Nil))
       }
       Question(
         id = question.id,
@@ -60,9 +61,20 @@ object Quiz {
       resultGroups = quiz.content.resultGroups.map(resultGroups => {
         resultGroups.groups.map(resultGroup => {
           ResultGroup(
+            id = resultGroup.id,
             title = resultGroup.title,
             shareText = resultGroup.share,
             minScore = resultGroup.minScore
+          )
+        })
+      }).getOrElse(Nil),
+      resultBuckets = quiz.content.resultBuckets.map(resultBuckets =>{
+        resultBuckets.buckets.map(resultBucket => {
+          ResultBucket(
+            id = resultBucket.id,
+            title = resultBucket.title,
+            shareText = resultBucket.share,
+            description = resultBucket.description
           )
         })
       }).getOrElse(Nil)
