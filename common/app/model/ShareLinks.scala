@@ -75,12 +75,7 @@ object ShareLinks {
 
   val defaultShares = List(Facebook, Twitter, PinterestBlock)
 
-  def createCampaignHref(platform: SharePlatform, url: String): String = platform.campaign.flatMap(ShortCampaignCodes.getFullCampaign) match {
-    case Some(campaign) => s"$url/$campaign"
-    case _ => url
-  }
-
-  def createShareLink(platform: SharePlatform, href: String, title: String, mediaPath: Option[String]): ShareLink = {
+  private[model] def create(platform: SharePlatform, href: String, title: String, mediaPath: Option[String]): ShareLink = {
 
     val encodedHref = href.urlEncoded
     val fullMediaPath: Option[String] = mediaPath.map { originalPath =>
@@ -108,11 +103,17 @@ object ShareLinks {
     ShareLink(platform, fullLink)
   }
 
+  // A generic link constructor that works with absolute-url hrefs and creates links for each provided platform.
+  // A campaign will be added to the href link.
+  // The href only makes sense with long urls, because a CMP parameter can safely be added. Short urls are not supported here.
+  def createShareLink(platform: SharePlatform, href: String, title: String, mediaPath: Option[String]): ShareLink = {
+    val webUrlParams = platform.campaign.flatMap(ShortCampaignCodes.getFullCampaign).map(campaign => "CMP" -> campaign).toList.toMap
+    val campaignHref = href.appendQueryParams(webUrlParams)
+    create(platform, campaignHref, title, mediaPath)
+  }
+
   def createShareLinks(platforms: Seq[SharePlatform], href: String, title: String, mediaPath: Option[String]): Seq[ShareLink] = {
-    platforms.map( platform => {
-      val campaignHref = createCampaignHref(platform, href)
-      createShareLink(platform, campaignHref, title, mediaPath)
-    })
+    platforms.map(create(_, href, title, mediaPath))
   }
 }
 
@@ -134,20 +135,27 @@ final case class ShareLinks(
     List(Facebook, Twitter, PinterestBlock)
   }
 
+  private def createShortUrlWithCampaign(platform: SharePlatform): String = platform.campaign match {
+    case Some(campaign) => s"${fields.shortUrl}/$campaign"
+    case _ => fields.shortUrl
+  }
+
   def elementShares(elementId: String, mediaPath: Option[String]): Seq[ShareLink] = elementShareOrder.map( sharePlatform => {
 
-    val webUrlParams = List(
-      Some("page" -> s"with:$elementId"),
-      sharePlatform.campaign.flatMap(ShortCampaignCodes.getFullCampaign).map(campaign => "CMP" -> campaign)
-    ).flatten.toMap
-
+    // Currently, only element shares on live blogs will use fully expanded urls. These urls take a CMP parameter.
+    // Everything else uses short urls with campaign codes.
     val href = if (tags.isLiveBlog) {
-      ShareLinks.createCampaignHref(sharePlatform, metadata.webUrl).addFragment(elementId).appendQueryParams(webUrlParams)
+      val webUrlParams = List(
+        Some("page" -> s"with:$elementId"),
+        sharePlatform.campaign.flatMap(ShortCampaignCodes.getFullCampaign).map(campaign => "CMP" -> campaign)
+      ).flatten.toMap
+
+      metadata.webUrl.addFragment(elementId).appendQueryParams(webUrlParams)
     } else {
-      ShareLinks.createCampaignHref(sharePlatform, fields.shortUrl).addFragment(elementId)
+      createShortUrlWithCampaign(sharePlatform).addFragment(elementId)
     }
 
-    ShareLinks.createShareLink(sharePlatform, href = href, title = metadata.webTitle, mediaPath = mediaPath)
+    ShareLinks.create(sharePlatform, href = href, title = metadata.webTitle, mediaPath = mediaPath)
   })
 
   val pageShares: Seq[ShareLink] = pageShareOrder.map( sharePlatform => {
@@ -156,8 +164,8 @@ final case class ShareLinks(
       case _ => metadata.webTitle
     }
 
-    val href = ShareLinks.createCampaignHref(sharePlatform, fields.shortUrl)
+    val href = createShortUrlWithCampaign(sharePlatform)
 
-    ShareLinks.createShareLink(sharePlatform, href = href, title = contentTitle, mediaPath = None)
+    ShareLinks.create(sharePlatform, href = href, title = contentTitle, mediaPath = None)
   })
 }
