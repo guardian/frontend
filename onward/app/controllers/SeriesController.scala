@@ -14,6 +14,7 @@ import play.api.mvc.{Action, Controller, RequestHeader}
 import services.{CollectionConfigWithId, FaciaContentConvert}
 import slices.Fixed
 import views.support.FaciaToMicroFormat2Helpers._
+import scala.concurrent.duration._
 
 import scala.concurrent.Future
 
@@ -33,7 +34,9 @@ object SeriesController extends Controller with Logging with Paging with Executi
 
   def renderMf2SeriesStories(seriesId:String) = Action.async { implicit request =>
     lookup(Edition(request), seriesId) map { series =>
-      series.map(rendermf2Series).getOrElse(NotFound)
+      Cached(15.minutes)(
+        series.map(rendermf2Series).getOrElse(NotFound)
+      )
     }
   }
 
