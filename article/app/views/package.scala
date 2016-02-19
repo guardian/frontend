@@ -36,6 +36,10 @@ object MainCleaner {
 object BodyCleaner {
   def apply(article: Article, html: String, amp: Boolean)(implicit request: RequestHeader) = {
     implicit val edition = Edition(request)
+
+    val shouldShowAds = !article.content.shouldHideAdverts && article.metadata.section != "childrens-books-site"
+    def ListIf[T](condition: Boolean)(value: => T): List[T] = if(condition) List(value) else Nil
+
     val cleaners = List(
       InBodyElementCleaner,
       InBodyLinkCleaner("in body link", amp),
@@ -58,14 +62,11 @@ object BodyCleaner {
       ImmersiveLinks(article.isImmersive),
       TimestampCleaner(article),
       MinuteCleaner(article)
-    )
-    val nonAmpCleaners = List(
-      VideoEmbedCleaner(article)
-    )
-    val ampOnlyCleaners = List(
-      AmpAdCleaner(edition, request.uri, article),
-      AmpEmbedCleaner(article)
-    )
-    withJsoup(BulletCleaner(html))((if (amp) ampOnlyCleaners else nonAmpCleaners) ++ cleaners :_*)
+    ) ++
+      ListIf(!amp)(VideoEmbedCleaner(article)) ++
+      ListIf(amp)(AmpEmbedCleaner(article)) ++
+      ListIf(amp && shouldShowAds)(AmpAdCleaner(edition, request.uri, article))
+
+    withJsoup(BulletCleaner(html))(cleaners :_*)
   }
 }
