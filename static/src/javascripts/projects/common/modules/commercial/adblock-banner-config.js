@@ -1,7 +1,9 @@
 define([
     'lodash/objects/merge',
+    'lodash/collections/filter',
+    'lodash/collections/map',
     'common/views/svgs'
-], function (merge, svgs) {
+], function (merge, filter, map, svgs) {
 
     //this is used in all banners
     var cursor = svgs('cursor');
@@ -48,10 +50,6 @@ define([
             ],
 
             editions: {
-                UK: {
-                    messageText: 'Become a supporter from just £5 per month to ensure quality journalism is available to all',
-                    trackingSuffix: '_UK'
-                },
                 US: {
                     messageText: 'Become a supporter from just $4.99 per month to ensure quality journalism is available to all',
                     trackingSuffix: '_US'
@@ -60,10 +58,6 @@ define([
                 AU: {
                     messageText: 'Become a supporter from just £5 per month to ensure quality journalism is available to all',
                     trackingSuffix: '_AU'
-                },
-                INT: {
-                    messageText: 'Become a supporter from just $4.99 per month to ensure quality journalism is available to all',
-                    trackingSuffix: '_INT'
                 }
             }
         },
@@ -102,26 +96,20 @@ define([
 
     return {
         banners: banners,
+
         getBanners: function (edition) {
-            if (!edition) {
-                return [];
-            }
-            var out = [];
-            this.banners.forEach(function (banner) {
-                if (typeof banner.editions[edition] !== 'object') {
-                    return;
-                }
-                var variantSet = [];
-                banner.variants.forEach(function (variant) {
-                    variantSet.push(merge({
+            var editionFilter = function (banner) {
+                return typeof banner.editions[edition] !== 'undefined';
+            },
+            mergeVariantConfigurations = function (banner) {
+                return map(banner.variants, function (variant) {
+                    return merge({
                         edition: edition,
                         template: banner.template
-                    }, banner.defaults, variant, banner.editions[edition]));
+                    }, banner.defaults, variant, banner.editions[edition] || {});
                 });
-                out.push(variantSet);
-            });
-
-            return out;
+            };
+            return map(filter(this.banners, editionFilter), mergeVariantConfigurations);
         }
     };
 });

@@ -25,8 +25,12 @@ define([
         };
     };
 
+    AdblockBanner.prototype.renderTemplate = function () {
+        return template(this.templates[this.template], this.config);
+    };
+
     AdblockBanner.prototype.show = function () {
-        var bannerTmpl = template(this.templates[this.template], this.config);
+        var bannerTmpl = this.renderTemplate();
 
         fastdom.write(function () {
             $('.top-banner-ad-container--desktop').after(bannerTmpl);
