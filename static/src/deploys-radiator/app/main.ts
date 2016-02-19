@@ -5,7 +5,7 @@
 /// <reference path="../manual-typings/custom-window.d.ts" />
 /// <reference path="../jspm_packages/npm/monapt@0.5.0/dist/monapt.d.ts" />
 
-import { diff, patch, h, create } from 'virtual-dom';
+import { VPatch, diff, patch, h, create } from 'virtual-dom';
 import {
     Deploy, DeployRecord, createDeployRecord,
     Build, BuildRecord, createBuildRecord,
@@ -30,11 +30,11 @@ const ih =
     );
 
 let currentTree = h('div', {}, []);
-let rootNode = create(currentTree);
+let rootNode: Element = create(currentTree);
 document.body.appendChild(rootNode);
 
 const updateDom = (newTree: VirtualDOM.VNode): void => {
-    const patches = diff(currentTree, newTree);
+    const patches: VPatch[] = diff(currentTree, newTree);
     rootNode = patch(rootNode, patches);
     currentTree = newTree;
 };
