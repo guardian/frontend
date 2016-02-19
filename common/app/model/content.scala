@@ -5,7 +5,6 @@ import java.net.URL
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.facia.api.{utils => fapiutils}
 import com.gu.facia.client.models.TrailMetaData
-import com.gu.util.liveblogs.{Parser => LiveBlogParser}
 import common._
 import common.dfp.DfpAgent
 import conf.Configuration
@@ -470,8 +469,7 @@ final case class Article (
   lazy val hasKeyEvents: Boolean = soupedBody.body().select(".is-key-event").nonEmpty
 
   lazy val isSport: Boolean = tags.tags.exists(_.id == "sport/sport")
-  //@deprecated("use content.fields.blocks", "")
-  lazy val blocks = LiveBlogParser.parse(fields.body)
+  lazy val blocks = content.fields.blocks
   lazy val mostRecentBlock: Option[String] = blocks.headOption.map(_.id)
 }
 
