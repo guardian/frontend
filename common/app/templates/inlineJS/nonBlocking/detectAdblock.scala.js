@@ -3,8 +3,10 @@ try {
         window.guardian.adBlockers = {};
         var ad = document.createElement('div');
         ad.style.position = 'absolute';
-        ad.style.left = '-9999px';
+        ad.style.left = '0';
+        ad.style.top = '0';
         ad.style.height = '10px';
+        ad.style.zIndex = '-1';
         ad.innerHTML = '&nbsp;';
         ad.setAttribute('class', 'ad_unit');
 
