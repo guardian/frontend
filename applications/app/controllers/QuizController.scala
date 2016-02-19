@@ -18,7 +18,26 @@ case class QuizAnswersPage(
   override val metadata = MetaData.make("quiz atom", "quizzes", quiz.title, "GFE: Quizzes")
 
   val results: form.QuizResults = form.checkUsersAnswers(inputs, quiz)
-  val shares: Seq[ShareLink] = ShareLinks.createShareLinks(form.shares, href = contentPage, title = quiz.title, mediaPath = None)
+
+  private val knowledgeShares: Seq[ShareLink] = {
+    val twitterMessage =  s"I scored ${results.knowledgeScore}/${quiz.content.questions.size} in ${quiz.title} @guardian"
+
+    Seq(
+      ShareLinks.createShareLink(Facebook, href = contentPage, title = "", mediaPath = None),
+      ShareLinks.createShareLink(Twitter, href = contentPage, title = twitterMessage, mediaPath = None)
+    )
+  }
+
+  private val personalityShares: Seq[ShareLink] = {
+    val twitterMessage = s"${results.resultGroup.map(_.shareText).getOrElse("")} @guardian"
+
+    Seq(
+      ShareLinks.createShareLink(Facebook, href = contentPage, title = "", mediaPath = None),
+      ShareLinks.createShareLink(Twitter, href = contentPage, title = twitterMessage, mediaPath = None)
+    )
+  }
+
+  val shares: Seq[ShareLink] = if (results.isKnowledge) knowledgeShares else personalityShares
 }
 
 object QuizController extends Controller with ExecutionContexts with Logging {
