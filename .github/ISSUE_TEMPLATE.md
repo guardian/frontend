@@ -1,13 +1,17 @@
 # ISSUE
 
-## Reproduction Steps
+## Steps to Reproduce
+
+## Actual Results (include screenshots)
+
+## Expected Results (include screenshots)
 
 ## URL
 
 ## OS and Browser details
 
-Device:
-Browser:
-OS:
+- Device:
+- Browser (inc version):
+- OS:
 
-*Please tag with relevant tags*
+*Please add relevant labels*
