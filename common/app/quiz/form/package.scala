@@ -38,7 +38,7 @@ package object form {
       .find { case (inputQuestion, _) => inputQuestion.id == question.id }
       .map(_._2)
 
-    val correctAnswers: Seq[Answer] = entries
+    private val correctAnswers: Seq[Answer] = entries
       .filter { case (question, answer) => isCorrectAnswer(question, answer) }
       .map(_._2)
 
