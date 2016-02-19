@@ -23,10 +23,12 @@ define([
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/dfp/ophan-tracking',
     'common/modules/commercial/dfp/breakout-iframe',
+    'common/modules/commercial/survey/survey-simple',
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
     'common/modules/analytics/beacon',
     'common/modules/identity/api',
+    'common/views/svgs',
     'lodash/functions/once',
     'lodash/objects/forOwn',
     'lodash/collections/forEach',
@@ -46,7 +48,6 @@ define([
     'lodash/arrays/last',
     'lodash/arrays/intersection',
     'lodash/arrays/initial',
-    'common/views/svgs',
 
     'common/modules/commercial/creatives/commercial-component',
     'common/modules/commercial/creatives/gu-style-comcontent',
@@ -83,10 +84,12 @@ define([
     commercialFeatures,
     ophanTracking,
     breakoutIFrame,
+    surveySimple,
     geoMostPopular,
     ab,
     beacon,
     id,
+    svgs,
     once,
     forOwn,
     forEach,
@@ -105,8 +108,7 @@ define([
     find,
     last,
     intersection,
-    initial,
-    svgs
+    initial
 ) {
     /**
      * Right, so an explanation as to how this works...
@@ -471,7 +473,7 @@ define([
 
                 bean.on(document, 'click', $('.js-ad-slot-dismiss', $slot), function (e) {
                     e.preventDefault();
-                    console.log('yeah');
+                    $('.js-survey-overlay').removeClass('u-h');
                 });
             }
         });

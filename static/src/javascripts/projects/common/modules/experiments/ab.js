@@ -5,6 +5,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
+    'common/modules/experiments/tests/commercial-components-dismiss',
     'common/modules/experiments/tests/fronts-on-articles2',
     'common/modules/experiments/tests/identity-register-v2',
     'common/modules/experiments/tests/identity-sign-in-v2',
@@ -25,6 +26,7 @@ define([
     mediator,
     store,
     mvtCookie,
+    CommercialComponentsDismiss,
     FrontsOnArticles2,
     IdentityRegisterV2,
     IdentitySignInV2,
@@ -41,6 +43,7 @@ define([
 ) {
 
     var TESTS = flatten([
+        new CommercialComponentsDismiss(),
         new FrontsOnArticles2(),
         new IdentityRegisterV2(),
         new IdentitySignInV2(),
