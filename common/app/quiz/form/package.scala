@@ -1,6 +1,5 @@
 package quiz
 
-import model.{Twitter, Facebook}
 import model.content.Quiz
 import play.api.data.Form
 import play.api.data.Forms._
@@ -12,8 +11,6 @@ package object form {
   val playForm = Form(
     mapping("answers" -> list(text))(Inputs.apply)(Inputs.unapply)
   )
-
-  val shares = List(Facebook, Twitter)
 
   def checkUsersAnswers(inputs: Inputs, quiz: Quiz): QuizResults = {
     val validAnswers = inputs.answerIds.map(findQuizDataFor(_, quiz.content))
@@ -34,6 +31,10 @@ package object form {
     quiz: Quiz,
     entries: Seq[(Question, Answer)]
   ) {
+
+    val isKnowledge = quiz.quizType == "knowledge"
+    val isPersonality = quiz.quizType == "personality"
+
     def getAnswerFor(question: Question): Option[Answer] = entries
       .find { case (inputQuestion, _) => inputQuestion.id == question.id }
       .map(_._2)
@@ -42,17 +43,34 @@ package object form {
       .filter { case (question, answer) => isCorrectAnswer(question, answer) }
       .map(_._2)
 
-    val score: Int = correctAnswers.size
+    val knowledgeScore: Int = correctAnswers.size
 
     val resultGroup: Option[ResultGroup] = {
       quiz.content.resultGroups
-        .filter(score >= _.minScore)
+        .filter(knowledgeScore >= _.minScore)
         .sortBy(_.minScore)
         .lastOption
     }
 
+    val knowledgeShareText: Option[String] = resultGroup.map(_.shareText)
+
+    val resultBucket: Option[ResultBucket] = {
+
+      // Find the bucket which the user responded to the most.
+      val buckets: Seq[(String, Int)] = entries.flatMap { case (_, answer) =>
+        answer.buckets
+      } .groupBy(identity)
+        .toList
+        .map{ case (bucketId, occurrences) => bucketId -> occurrences.size }
+        .sortBy(-_._2)
+
+      buckets.headOption.flatMap{ case (bucketId, _) =>
+        quiz.content.resultBuckets.find(_.id == bucketId)
+      }
+    }
+
     private def getCorrectAnswer(question: Question): Option[Answer] = {
-      if (quiz.quizType == "knowledge") {
+      if (isPersonality) {
         question.answers.find(_.weight == 1)
       } else {
         None
