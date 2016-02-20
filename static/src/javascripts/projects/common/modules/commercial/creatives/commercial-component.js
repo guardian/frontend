@@ -3,50 +3,37 @@
  Description: Loads our commercial components
  */
 define([
-<<<<<<< HEAD
-=======
-    'bean',
-    'bonzo',
     'fastdom',
-    'raven',
-    'common/utils/$',
->>>>>>> master
     'common/utils/config',
     'common/utils/mediator',
-    'common/utils/fastdom-promise',
     'common/modules/lazyload',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
     'lodash/objects/isArray',
-    'lodash/collections/map',
     'lodash/objects/pick',
     'lodash/objects/merge',
+    'lodash/collections/map',
     'lodash/collections/reduce'
 ], function (
-<<<<<<< HEAD
-=======
-    bean,
-    bonzo,
     fastdom,
-    raven,
-    $,
->>>>>>> master
     config,
     mediator,
-    fastdom,
     LazyLoad,
     Tabs,
     Toggles,
     isArray,
-    map,
     pick,
     merge,
-<<<<<<< HEAD
+    map,
     reduce
 ) {
 
     function constructQuery(params) {
         return reduce(params, function (result, value, key) {
+            var buildParam = function(value) {
+                return key + '=' + encodeURIComponent(value);
+            };
+
             if (result !== '?') {
                 result += '&';
             }
@@ -54,10 +41,6 @@ define([
             return result + isArray(value) ?
                 map(value, buildParam).join('&') :
                 buildParam(value);
-
-            function buildParam(value) {
-                return key + '=' + encodeURIComponent(value);
-            }
         }, '?');
     }
 
