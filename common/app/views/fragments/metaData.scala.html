@@ -35,9 +35,15 @@
 
     <link rel="manifest" href="/2015-06-24-manifest.json" crossorigin="use-credentials">
 
-    @Page.getContentPage(page).map { content =>
-        @if(content.item.tags.isArticle && !content.item.tags.isLiveBlog && !content.metadata.isImmersive && AmpSwitch.isSwitchedOn) {
-            <link rel="amphtml" href="@LinkTo{/@page.metadata.id/amp}">
+    @Page.getContentPage(page).map { page =>
+        @if(
+            page.item.tags.isArticle &&
+            !page.item.tags.isLiveBlog &&
+            !page.item.content.isImmersive &&
+            !page.item.tags.isQuiz &&
+            AmpSwitch.isSwitchedOn
+        ) {
+            <link rel="amphtml" href="@AmpLinkTo{/@page.metadata.id}">
         }
     }
 }

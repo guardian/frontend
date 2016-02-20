@@ -9,7 +9,8 @@ define([
     $,
     detect,
     config,
-    some) {
+    some
+) {
 
     var browsers = {
             'Firefox': '25',

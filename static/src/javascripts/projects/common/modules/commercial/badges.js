@@ -6,9 +6,9 @@ define([
     'common/utils/config',
     'common/utils/template',
     'common/utils/fastdom-idle',
+    'common/modules/commercial/dfp/dfp-api',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features',
-    'common/modules/commercial/dfp-api',
     'text!common/views/commercial/badge.html',
     'lodash/collections/map'
 ], function (
@@ -19,11 +19,12 @@ define([
     config,
     template,
     idleFastdom,
+    dfp,
     createAdSlot,
     commercialFeatures,
-    dfp,
     badgeTpl,
-    map) {
+    map
+) {
     var badgesConfig = {
             sponsoredfeatures: {
                 count:      0,
@@ -68,8 +69,13 @@ define([
 
             return new Promise(function (resolve) {
                 idleFastdom.write(function () {
-                    $('.js-container__header', container)
-                        .after($adSlot);
+                    var placeholder = $('.js-badge-placeholder', container);
+
+                    if (placeholder.length) {
+                        placeholder.replaceWith($adSlot);
+                    } else {
+                        $('.js-container__header', container).after($adSlot);
+                    }
 
                     resolve($adSlot);
                 });

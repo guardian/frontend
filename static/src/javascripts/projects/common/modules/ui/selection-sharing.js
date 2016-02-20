@@ -25,7 +25,8 @@ define([
     svgs,
     debounce,
     throttle,
-    some) {
+    some
+) {
 
     var $body = bonzo(document.body),
         twitterIcon = svgs('shareTwitter', ['icon']),

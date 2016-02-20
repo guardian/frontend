@@ -68,7 +68,7 @@ import scala.collection.JavaConversions._
     val fakeRequest = FakeRequest(GET, "/environment/blog/2013/jun/26/barack-obama-climate-action-plan.json?lastUpdate=block-51cae3aee4b02dad15c7494e")
       .withHeaders("host" -> "localhost:9000")
 
-    val result = controllers.ArticleController.renderLiveBlogJson("environment/blog/2013/jun/26/barack-obama-climate-action-plan", Some("block-51cae3aee4b02dad15c7494e"), None)(fakeRequest)
+    val result = controllers.ArticleController.renderLiveBlogJson("environment/blog/2013/jun/26/barack-obama-climate-action-plan", Some("block-51cae3aee4b02dad15c7494e"), None, Some(true))(fakeRequest)
     status(result) should be(200)
 
     val content = contentAsString(result)
@@ -111,26 +111,6 @@ import scala.collection.JavaConversions._
       )
     val result = route(app, request).head
     contentAsString(result) should include ("\"edition\":\"INT\"")
-  }
-
-  they can "be in the control variant" in {
-    val request = TestRequest("/world/2014/sep/24/radical-cleric-islamic-state-release-british-hostage-alan-henning")
-      .withHeaders(
-        "X-GU-Edition" -> "intl",
-        "X-GU-International" -> "control"
-      )
-    val result = route(app, request).head
-    contentAsString(result) should include ("\"internationalEdition\":\"control\"")
-  }
-
-  they can "be in the test variant" in {
-    val request = TestRequest("/world/2014/sep/24/radical-cleric-islamic-state-release-british-hostage-alan-henning")
-      .withHeaders(
-        "X-GU-Edition" -> "intl",
-        "X-GU-International" -> "international"
-      )
-    val result = route(app, request).head
-    contentAsString(result) should include ("\"internationalEdition\":\"international\"")
   }
 
   "Interactive articles" should "provide a boot.js script element as a main embed" in goTo("/sport/2015/sep/11/how-women-in-tennis-achieved-equal-pay-us-open") { browser =>

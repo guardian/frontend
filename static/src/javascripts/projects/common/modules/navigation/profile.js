@@ -15,7 +15,8 @@ define([
     ajax,
     mediator,
     id,
-    assign) {
+    assign
+) {
 
     /**
      * @param {Object} config

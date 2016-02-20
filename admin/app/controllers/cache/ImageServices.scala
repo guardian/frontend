@@ -19,7 +19,8 @@ object ImageServices extends ExecutionContexts {
 
   private val fastlyOriginCdns = Map(
     "static.guim.co.uk" -> "5qHts5Ev0rFxzm1DhCkmyA",
-    "media.guim.co.uk" -> "1NLDlK1ywahkZzRZrmWIYw"
+    "media.guim.co.uk" -> "1NLDlK1ywahkZzRZrmWIYw",
+    "uploads.guim.co.uk" -> "2TmfkSoyUoNo8aFNe6Htjs"
   )
 
   // clear both the origin CDN and i.guim.co.uk
@@ -28,7 +29,8 @@ object ImageServices extends ExecutionContexts {
 
   private val imgixBackends = Map(
     "static.guim.co.uk" -> "static-guim.imgix.net",
-    "media.guim.co.uk" -> "media-guim.imgix.net"
+    "media.guim.co.uk" -> "media-guim.imgix.net",
+    "uploads.guim.co.uk" -> "uploads-guim.imgix.net"
   )
   private def imgixBackendFor(host: String): String = imgixBackends(host)
 

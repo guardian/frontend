@@ -7,7 +7,8 @@ define([
     'common/utils/storage',
     'common/utils/template',
     'text!common/views/commercial/creatives/expandable.html',
-    'lodash/functions/bindAll'
+    'lodash/functions/bindAll',
+    'common/modules/commercial/creatives/add-tracking-pixel'
 ], function (
     bean,
     bonzo,
@@ -17,7 +18,9 @@ define([
     storage,
     template,
     expandableTpl,
-    bindAll) {
+    bindAll,
+    addTrackingPixel
+) {
 
     /**
      * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10028247
@@ -61,7 +64,7 @@ define([
             this.$ad.css('height', this.closedHeight);
             $('.ad-exp-collapse__slide', $expandable).css('height', this.closedHeight);
             if (this.params.trackingPixel) {
-                this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
+                addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
             }
             $expandable.appendTo(this.$adSlot);
         }.bind(this));

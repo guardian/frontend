@@ -3,61 +3,71 @@
  Description: Loads our commercial components
  */
 define([
+<<<<<<< HEAD
+=======
+    'bean',
+    'bonzo',
+    'fastdom',
+    'raven',
+    'common/utils/$',
+>>>>>>> master
     'common/utils/config',
     'common/utils/mediator',
     'common/utils/fastdom-promise',
     'common/modules/lazyload',
     'common/modules/ui/tabs',
+    'common/modules/ui/toggles',
     'lodash/objects/isArray',
     'lodash/collections/map',
     'lodash/objects/pick',
     'lodash/objects/merge',
     'lodash/collections/reduce'
 ], function (
+<<<<<<< HEAD
+=======
+    bean,
+    bonzo,
+    fastdom,
+    raven,
+    $,
+>>>>>>> master
     config,
     mediator,
     fastdom,
     LazyLoad,
     Tabs,
+    Toggles,
     isArray,
     map,
     pick,
     merge,
+<<<<<<< HEAD
     reduce
 ) {
 
     function constructQuery(params) {
         return reduce(params, function (result, value, key) {
-            function buildParam(value) {
-                return key + '=' + encodeURIComponent(value);
-            }
-
-            if (result.length) {
+            if (result !== '?') {
                 result += '&';
             }
 
             return result + isArray(value) ?
                 map(value, buildParam).join('&') :
                 buildParam(value);
+
+            function buildParam(value) {
+                return key + '=' + encodeURIComponent(value);
+            }
         }, '?');
     }
 
     function buildComponentUrl(url, params) {
-        var query = '';
-        if (params) {
-            // filter out empty params
-            var filteredParams = pick(params, function (v) {
-                return isArray(v) ? v.length : v;
-            });
-            if (filteredParams.length) {
-                query = constructQuery(filteredParams);
-            }
-        }
-        return [config.page.ajaxUrl, '/commercial/', url, '.json', query].join('');
-    }
-
-    function getKeyword(str) {
-        return str.substring(str.lastIndexOf('/') + 1);
+        // filter out empty params
+        var filteredParams = pick(params, function (v) {
+            return isArray(v) ? v.length : v;
+        });
+        var query = filteredParams.length ? constructQuery(filteredParams) : '';
+        return config.page.ajaxUrl + '/commercial/' + url + '.json' + query;
     }
 
     function getKeywords() {
@@ -67,6 +77,10 @@ define([
         return {
             k: keywords
         };
+
+        function getKeyword(str) {
+            return str.substring(str.lastIndexOf('/') + 1);
+        }
     }
 
     function defaultUrlBuilder(url) {
@@ -81,33 +95,19 @@ define([
         }
     }
 
-    function booksUrlBuilder(url) {
-        return function (params) {
-            return buildComponentUrl(url, merge({}, params, { t: params.isbns ? params.isbns.split(',') : [] }));
-        }
-    }
-
-    function jobsUrlBuilder(url) {
-        return function (params) {
-            return buildComponentUrl(url, merge({}, params, { t: params.jobIds ? params.jobIds.split(',') : [] }, getKeywords()));
-        }
-    }
-
-    function masterclassesUrlBuilder(url) {
-        return function (params) {
-            return buildComponentUrl(url, merge({}, params, { t: params.ids ? params.ids.split(',') : [] }, getKeywords()));
-        }
-    }
-
     function soulmatesGroupUrlBuilder(url) {
         return function (params) {
             return buildComponentUrl(url + params.soulmatesFeedName, params);
         }
     }
 
-    function keywordsUrlBuilder(url) {
+    function complexUrlBuilder(url, withT, withKeywords) {
         return function (params) {
-            return buildComponentUrl(url, merge({}, params, getKeywords()));
+            return buildComponentUrl(url, merge(
+                params,
+                withT && params[withT] ? { t: params[withT].split(',') } : {},
+                withKeywords ? getKeywords() : {}
+            ));
         }
     }
 
@@ -117,13 +117,14 @@ define([
         soulmatesTest:  defaultUrlBuilder('soulmates-test/mixed'),
         capiSingle:     defaultUrlBuilder('capi-single'),
         capi:           defaultUrlBuilder('capi'),
+        paidforCard:    defaultUrlBuilder('paid'),
         book:           bookUrlBuilder('books/book'),
-        books:          booksUrlBuilder('books/books'),
-        jobs:           jobsUrlBuilder('jobs'),
-        masterclasses:  masterclassesUrlBuilder('masterclasses'),
+        books:          complexUrlBuilder('books/books', 'isbns'),
+        jobs:           complexUrlBuilder('jobs', 'jobIds', true),
+        masterclasses:  complexUrlBuilder('masterclasses', 'ids', true),
         soulmatesGroup: soulmatesGroupUrlBuilder('soulmates/'),
-        travel:         keywordsUrlBuilder('travel/offers'),
-        multi:          keywordsUrlBuilder('multi')
+        travel:         complexUrlBuilder('travel/offers', '', true),
+        multi:          complexUrlBuilder('multi', '', true)
     };
 
     /**
@@ -137,16 +138,44 @@ define([
      */
     function CommercialComponent(adSlot, params) {
         this.params = params || {};
-        this.type   = this.params.type;
+        this.type = this.params.type;
         // remove type from params
         this.params.type = null;
-        this.adSlot    = adSlot;
+        this.adSlot = adSlot.length ? adSlot[0] : adSlot;
         this.url = urlBuilders[this.type](this.params, this);
+    }
+
+    function createToggle(el) {
+        if (el.querySelector('.popup__toggle')) {
+            new Toggles(el).init();
+        }
+    }
+
+    function adjustMostPopHeight(el) {
+        var height;
+        var $adSlot = $(el);
+        var $mostPopTabs = $('.js-most-popular-footer .tabs__pane');
+
+        if ($adSlot.hasClass('ad-slot--mostpop')) {
+            fastdom.read(function () {
+                height = $adSlot.dim().height;
+            });
+
+            fastdom.write(function () {
+                $mostPopTabs.css('height', height);
+            });
+        }
     }
 
     CommercialComponent.prototype.postLoadEvents = {
         bestbuy: function (el) {
             new Tabs().init(el);
+        },
+        capi: createToggle,
+        capiSingle: createToggle,
+        paidforCard: function (el) {
+            adjustMostPopHeight(el);
+            createToggle(el);
         }
     };
 
@@ -154,11 +183,6 @@ define([
         new LazyLoad({
             url: this.url,
             container: this.adSlot,
-            beforeInsert: function (html) {
-                // Currently we are replacing the OmnitureToken with nothing. This will change once
-                // commercial components have properly been setup in the lovely mess that is Omniture!
-                return html ? html.replace('%OASToken%', this.params.clickMacro).replace('%OmnitureToken%', '') : html;
-            }.bind(this),
             success: function () {
                 if (this.postLoadEvents[this.type]) {
                     this.postLoadEvents[this.type](this.adSlot);

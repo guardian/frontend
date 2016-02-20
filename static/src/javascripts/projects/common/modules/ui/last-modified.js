@@ -12,7 +12,7 @@ define([
     return function () {
         var $jsLm = $('.js-lm');
 
-        if ($jsLm) {
+        if ($jsLm.length > 0) {
             fastdom.write(function () {
                 $('.js-wpd').addClass('content__dateline-wpd--modified tone-colour');
             });

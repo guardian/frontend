@@ -25,6 +25,14 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   val frontJsonFapi: FrontJsonFapi
 
+  private def getEditionFromString(edition: String) = {
+    val editionToFilterBy = edition match {
+      case "international" => "int"
+      case _ => edition
+    }
+    Edition.all.find(_.id.toLowerCase() == editionToFilterBy).getOrElse(Edition.all.head)
+  }
+
   def applicationsRedirect(path: String)(implicit request: RequestHeader) = {
     FaciaToApplicationRedirectMetric.increment()
     successful(InternalRedirect.internalRedirect("applications", path, request.rawQueryStringOption.map("?" + _)))
@@ -48,14 +56,6 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   def renderContainerJson(id: String) = renderContainer(id, false)
 
   def renderSomeFrontContainers(path: String, rawNum: String, rawOffset: String, sectionNameToFilter: String, edition: String) = MemcachedAction { implicit request =>
-    def getEditionFromString(edition: String) = {
-      val editionToFilterBy = edition match {
-        case "international" => "int"
-        case _ => edition
-      }
-
-      Edition.all.find(_.id.toLowerCase() == editionToFilterBy).getOrElse(Edition.all.head)
-    }
 
     def returnContainers(num: Int, offset: Int) = getSomeCollections(Editionalise(path, getEditionFromString(edition)), num, offset, sectionNameToFilter).map { collections =>
       Cached(60) {
@@ -93,10 +93,10 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     }
   }
 
-  def renderSomeFrontContainersMf2(rawNum: String, rawOffset: String, path: String) = MemcachedAction { implicit request =>
-    def getEditionFromString(edition: String) = Edition.all.find(_.id.toLowerCase() == "int").getOrElse(Edition.all.head)
-
-    def returnContainers(num: Int, offset: Int) = getSomeCollections(Editionalise(path, getEditionFromString("international")), num, offset, "none").map { collections =>
+  def renderSomeFrontContainersMf2(count: Int, offset: Int, section: String = "", edition: String = "") = MemcachedAction { implicit request =>
+    val e = if(edition.isEmpty) Edition(request) else getEditionFromString(edition)
+    val collectionsPath = if(section.isEmpty) e.id.toLowerCase else Editionalise(section, e)
+    getSomeCollections(collectionsPath, count, offset, "none").map { collections =>
       Cached(60) {
         JsonComponent(
           "items" -> JsArray(collections.getOrElse(List()).map(getCollection))
@@ -104,12 +104,6 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       }
     }
 
-    (rawNum, rawOffset) match {
-      case (Int(num), Int(offset)) => returnContainers(num, offset)
-      case _ => Future.successful(Cached(600) {
-        BadRequest
-      })
-    }
   }
 
   def renderContainerJsonWithFrontsLayout(id: String) = renderContainer(id, true)
@@ -252,7 +246,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   private object JsonFront{
     def apply(faciaPage: PressedPage)(implicit request: RequestHeader) = JsonComponent(
       "html" -> views.html.fragments.frontBody(faciaPage),
-      "config" -> Json.parse(views.html.fragments.javaScriptConfig(faciaPage).body)
+      "config" -> Json.parse(templates.js.javaScriptConfig(faciaPage).body)
     )
   }
 

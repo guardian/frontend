@@ -9,7 +9,7 @@ import conf.switches.Switches.RelatedContentSwitch
 import LiveContentApi.getResponse
 
 trait Related extends ConciergeRepository {
-  def related(edition: Edition, path: String, excludeTags: Seq[String] = Nil, relatedType: Option[String] = None): Future[RelatedContent] = {
+  def related(edition: Edition, path: String, excludeTags: Seq[String] = Nil): Future[RelatedContent] = {
 
     if (RelatedContentSwitch.isSwitchedOff) {
       Future.successful(RelatedContent(Nil))
@@ -21,11 +21,10 @@ trait Related extends ConciergeRepository {
         case excluding => Some(excluding.map(t => s"-$t").mkString(","))
       }
 
-      val requestBuilder = LiveContentApi.item(path, edition)
+      val response = getResponse(LiveContentApi.item(path, edition)
         .tag(tags)
         .showRelated(true)
-
-      val response = getResponse(relatedType.fold(requestBuilder) { someType => requestBuilder.stringParam("related-type", someType) })
+      )
 
       val trails = response.map { response =>
         val relatedContentItems = response.relatedContent map { item =>

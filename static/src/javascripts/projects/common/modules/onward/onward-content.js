@@ -11,7 +11,8 @@ define([
     register,
     badges,
     Component,
-    union) {
+    union
+) {
 
     var getTag = function () {
         var seriesAndBlogTags = config.page.blogIds.split(',').concat([config.page.seriesId]);

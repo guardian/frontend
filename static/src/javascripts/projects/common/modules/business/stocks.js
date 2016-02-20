@@ -17,7 +17,8 @@ define([
     stockValueTemplate,
     stocksTemplate,
     contains,
-    map) {
+    map
+) {
     function isBusinessFront() {
         return contains(['uk/business', 'us/business', 'au/business'], config.page.pageId);
     }

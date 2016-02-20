@@ -39,6 +39,7 @@
             min-height: gs-height(12);
         }
     }
+
     .content__secondary-column--media {
         @include mq($until: desktop) {
             display: block;
@@ -69,9 +70,17 @@
         }
     }
 }
-// if it's audio and there's body text, we display an advert
-.content--has-body .content__main-column--audio {
-    min-height: 274px;
+
+.content--has-body {
+    // if it's audio and there's body text, we display an advert
+    .content__main-column--audio {
+        min-height: 274px;
+    }
+
+    // increase height if we have sponsorship logos
+    &.paid-content--advertisement-feature .content__main-column--audio {
+        min-height: $gs-row-height * 9;
+    }
 }
 .content__headline:before {
     .content--media--audio & {

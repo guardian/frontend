@@ -23,6 +23,7 @@
 @import 'module/_live-pulse';
 @import 'module/_chapters';
 @import 'module/content/_article-immersive';
+@import 'module/content/_article-minute';
 
 
 /* ==========================================================================
@@ -33,3 +34,4 @@
 // and may contain more specific selectors than we would usually like
 
 @import 'module/external/_from-content-api';
+@import 'module/content/_badging';

@@ -1,0 +1,31 @@
+@import views.MainMediaWidths
+@import views.support.Item460
+@(article: model.Article)(implicit request: RequestHeader)
+
+@import model.EndSlateComponents
+@import model.{AudioPlayer, VideoPlayer}
+@import views.support.Video640
+@import views.{BodyCleaner, MainCleaner}
+
+@if(article.elements.hasMainEmbed || article.elements.elements("main").isEmpty) {
+    <div class="media-primary">
+        @MainCleaner(article, article.fields.main, true)
+    </div>
+} else {
+    @article.elements.mainPicture.map { picture =>
+        @Item460.bestFor(picture.images).map { url =>
+            <img src="@url" alt="@ImgSrc.getFallbackAsset(picture.images).flatMap(_.altText).getOrElse("")" />
+        }
+
+        @picture.images.largestImage.map { img =>
+            @if(img.showCaption) {
+                <small class="caption caption--img">
+                    @img.caption.map(Html(_))
+                    @if(img.displayCredit && !img.creditEndsWithCaption) {
+                        @img.credit.map(Html(_))
+                    }
+                </small>
+            }
+        }
+    }
+}

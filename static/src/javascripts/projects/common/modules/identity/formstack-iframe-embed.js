@@ -22,7 +22,8 @@ define([
     bean,
     $,
     idApi,
-    assign) {
+    assign
+) {
 
     function Formstack(el, formstackId, config) {
 

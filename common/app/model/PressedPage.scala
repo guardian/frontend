@@ -8,6 +8,7 @@ import conf.Configuration.commercial.showMpuInAllContainersPageId
 import contentapi.Paths
 import model.facia.PressedCollection
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
+import services.ConfigAgent
 
 import scala.language.postfixOps
 
@@ -19,7 +20,7 @@ object PressedPage {
     def optionalMapEntry(key:String, o: Option[String]): Map[String, String] =
       o.map(value => Map(key -> value)).getOrElse(Map())
 
-    val isNetworkFront: Boolean = Edition.all.exists(_.id.toLowerCase == id)
+    val isNetworkFront: Boolean = Edition.all.exists(_.networkFrontId == id)
     val showMpuInAllContainers: Boolean = showMpuInAllContainersPageId contains id
     val keywordIds: Seq[String] = frontKeywordIds(id)
     val contentType = if (isNetworkFront) GuardianContentTypes.NetworkFront else GuardianContentTypes.Section
@@ -104,9 +105,12 @@ case class PressedPage (
     }
   }
   val navSection: String = metadata.section
+
   val keywordIds: Seq[String] = frontKeywordIds(id)
 
-   def sponsorshipType: Option[String] = {
+  lazy val frontPriority: Option[FrontPriority] = ConfigAgent.getFrontPriorityFromConfig(id)
+
+  def sponsorshipType: Option[String] = {
     if (isSponsored(None)) {
       Option("sponsoredfeatures")
     } else if (isAdvertisementFeature) {

@@ -87,7 +87,7 @@ object AmpAdCleaner {
 
 case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends HtmlCleaner {
 
-  private def parseIds(items: Seq[Tag]) = {
+  private def grabLastFragmentOfId(items: Seq[Tag]) = {
     items.map { item =>
       if (item.id == "uk/uk") {
         item.id
@@ -107,12 +107,15 @@ case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends
       "targeting" -> Json.obj(
         "url" -> uri,
         "edition" -> edition.id.toLowerCase(),
-        "se" -> parseIds(article.trail.tags.series).mkString(","),
+        "se" -> grabLastFragmentOfId(article.trail.tags.series).mkString(","),
         "ct" -> article.metadata.contentType,
         "p" -> "amp",
-        "k" -> parseIds(article.trail.tags.keywords).mkString(","),
-        "co" -> parseIds(article.trail.tags.contributors).mkString(","),
-        "bl" -> parseIds(article.trail.tags.blogs).mkString(",")
+        "keywordIds" -> article.trail.tags.keywords.map(_.id).mkString(","),
+        "k" -> grabLastFragmentOfId(article.trail.tags.keywords).mkString(","),
+        "co" -> grabLastFragmentOfId(article.trail.tags.contributors).mkString(","),
+        "bl" -> grabLastFragmentOfId(article.trail.tags.blogs).mkString(","),
+        "authorIds" -> article.trail.tags.contributors.map(_.id).mkString(","),
+        "section" -> article.metadata.section
       )
     )
 

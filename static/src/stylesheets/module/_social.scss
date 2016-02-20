@@ -196,6 +196,7 @@ category: Common
     opacity: 0;
     visibility: hidden;
     transition: opacity .15s ease;
+    z-index: $zindex-content;
 
     .social__item {
         padding: 0 $gs-gutter / 10;

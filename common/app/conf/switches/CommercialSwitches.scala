@@ -32,15 +32,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val FluidAdvertsSwitch = Switch(
-    "Commercial",
-    "fluid-adverts",
-    "Enable fluid ads, which occupy 100% of the width of their parent container but have a fixed height",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 15),
-    exposeClientSide = true
-  )
-
   val CommercialComponentsSwitch = Switch(
     "Commercial",
     "commercial-components",
@@ -91,7 +82,7 @@ trait CommercialSwitches {
     "liveblog-dynamic-adverts",
     "Dynamically insert inline adverts on liveblogs",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 15),
+    sellByDate = new LocalDate(2016, 3, 15),
     exposeClientSide = true
   )
 
@@ -248,21 +239,30 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val AdFreeExperience = Switch(
-    "Commercial",
-    "advert-opt-out",
-    "Enable adfree experience. See with cookie 'gu_adfree_user' = true",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 1),
-    exposeClientSide = true
-  )
-
   val NewCommercialContent = Switch(
     "Commercial",
     "new-commercial-content",
     "New commercial content designs",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 1),
+    sellByDate = new LocalDate(2016, 3, 1),
     exposeClientSide = true
+  )
+
+  val OutbrainOnAmp = Switch(
+    "Commercial",
+    "outbrain-on-amp",
+    "Show an Outbrain component on amp pages",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 3, 2),
+    exposeClientSide = false
+  )
+
+  val PaidContainerUpdate = Switch(
+    "Commercial",
+    "paid-container-update",
+    "Applies updates to paid containers",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 2, 24),
+    exposeClientSide = false
   )
 }

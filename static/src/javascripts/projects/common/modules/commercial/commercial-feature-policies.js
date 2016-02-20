@@ -11,7 +11,8 @@ define([
     detect,
     userFeatures,
     userPrefs,
-    mapValues) {
+    mapValues
+) {
     var policies = {};
 
     policies.defaultAds = function () {
@@ -29,6 +30,21 @@ define([
                 sliceAdverts : false,
                 popularContentMPU : false,
                 videoPreRolls : false,
+                frontCommercialComponents : false,
+                outbrain: false
+            };
+        }
+    };
+
+    policies.minuteArticle = function () {
+        // Describe the policy for minute articles
+        if (config.page.isMinuteArticle) {
+            return {
+                topBannerAd : false,
+                articleBodyAdverts : false,
+                articleAsideAdverts : false,
+                sliceAdverts : false,
+                popularContentMPU : false,
                 frontCommercialComponents : false
             };
         }
@@ -52,29 +68,15 @@ define([
         }
     };
 
-    policies.adfreeExperience = function () {
-        if (userFeatures.isAdfree()) {
-            return {
-                topBannerAd : false,
-                articleBodyAdverts : false,
-                articleAsideAdverts : false,
-                sliceAdverts : false,
-                popularContentMPU : false,
-                videoPreRolls : false
-            };
-        }
-    };
-
-    policies.membershipMessages = function () {
-        if (!detect.adblockInUse() &&
-            detect.getBreakpoint() !== 'mobile' &&
-            config.page.contentType === 'Article' &&
-            !userFeatures.isPayingMember()
-        ) {
-            return {
-                membershipMessages : true
-            };
-        }
+    policies.checkWeCanShowMembershipMessages = function () {
+        return {
+            checkWeCanShowMembershipMessages: detect.adblockInUse.then(function (adblockInUse) {
+                return !adblockInUse &&
+                    detect.getBreakpoint() !== 'mobile' &&
+                    config.page.contentType === 'Article' &&
+                    !userFeatures.isPayingMember();
+            })
+        };
     };
 
     policies.identityPages = function () {
@@ -103,7 +105,9 @@ define([
 
     policies.nonFrontPages = function () {
         if (!config.page.isFront) {
-            return {frontCommercialComponents : false};
+            return {
+                frontCommercialComponents : false
+            };
         }
     };
 
@@ -130,6 +134,9 @@ define([
         if (!config.switches.sponsored) {
             switches.badges = false;
         }
+        if (!config.switches.outbrain) {
+            switches.outbrain = false;
+        }
 
         return switches;
     };
@@ -145,6 +152,7 @@ define([
         this.frontCommercialComponents = enabled;
         this.thirdPartyTags = enabled;
         this.badges = enabled;
+        this.outbrain = enabled;
     }
 
     function getPolicySwitches() {

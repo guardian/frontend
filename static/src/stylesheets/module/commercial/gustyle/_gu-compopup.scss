@@ -3,7 +3,7 @@
     @extend %gu-style-box;
 
     width: 80%;
-    top: ($gs-baseline / 2) * 3 + $gs-row-height / 2;
+    top: 44px;
     left: auto;
     right: $gs-baseline / 2;
     z-index: $zindex-modal;
