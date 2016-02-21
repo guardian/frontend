@@ -7,9 +7,6 @@ define([
     bonzo,
     merge
 ) {
-    function noop() {
-    }
-
     function identity(x) {
         return x;
     }
@@ -28,9 +25,9 @@ define([
             force             - boolean, default false. Reload an already-populated container
         */
         options = merge({
-            success: noop,
-            error:   noop,
-            always:  noop,
+            success: identity,
+            error:   identity,
+            always:  identity,
             beforeInsert: identity,
             force: false
         }, options);
