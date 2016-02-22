@@ -8,6 +8,7 @@
 define([
     'common/utils/mediator',
     'common/utils/$',
+    'common/modules/user-prefs',
     'lodash/arrays/last',
     'lodash/arrays/findIndex',
     'lodash/objects/defaults',
@@ -19,10 +20,12 @@ define([
     'lodash/collections/pluck',
     'lodash/arrays/initial',
     'lodash/arrays/rest',
+    'lodash/functions/memoize',
     'Promise'
 ], function (
     mediator,
     $,
+    userPrefs,
     last,
     findIndex,
     defaults,
@@ -34,6 +37,7 @@ define([
     pluck,
     initial,
     rest,
+    memoize,
     Promise
 ) {
 
@@ -405,38 +409,21 @@ define([
     // this is soon - it's not worth refactoring them when they're off soon
     //
     // ** don't forget to remove them from the return object too **
-    function adblockInUseSync() {
-        if (!detect.cachedAdblockInUse) {
-            var sacrificialAd = createSacrificialAd(),
-                contentBlocked = isHidden(sacrificialAd);
-            sacrificialAd.remove();
-            detect.cachedAdblockInUse = contentBlocked;
-            return contentBlocked;
-        }
-
-        return detect.cachedAdblockInUse;
-
-        function isHidden(bonzoElement) {
-            return bonzoElement.css('display') === 'none';
-        }
-    }
+    var adblockInUseSync = memoize(function () {
+        return createSacrificialAd().css('display') === 'none';
+    });
 
     /** Includes Firefox Adblock Plus users who whitelist the Guardian domain */
-    function getFirefoxAdblockPlusInstalledSync() {
-        var sacrificialAd = createSacrificialAd();
-        var adUnitMozBinding = sacrificialAd.css('-moz-binding');
-        if (adUnitMozBinding) {
-            return adUnitMozBinding.match('elemhidehit') !== null;
-        } else {
-            return false;
-        }
-    }
+    var getFirefoxAdblockPlusInstalledSync = memoize(function () {
+        var adUnitMozBinding = createSacrificialAd().css('-moz-binding');
+        return !!adUnitMozBinding && adUnitMozBinding.match('elemhidehit') !== null;
+    });
 
-    function createSacrificialAd() {
-        var sacrificialAd = $.create('<div class="ad_unit" style="position: absolute; left: -9999px; height: 10px">&nbsp;</div>');
+    var createSacrificialAd = memoize(function () {
+        var sacrificialAd = $.create('<div class="ad_unit" style="position: absolute; height: 10px; top: 0; left: 0; z-index: -1;">&nbsp;</div>');
         sacrificialAd.appendTo(document.body);
         return sacrificialAd;
-    }
+    });
     // end sync adblock detection
 
     var getAdBlockers = new Promise(function (resolve) {
@@ -445,7 +432,7 @@ define([
             resolve(window.guardian.adBlockers);
         } else {
             // Push a listener for when the JS loads
-            window.guardian.adBlockers.onDetect = resolve.bind(this, window.guardian.adBlockers);
+            window.guardian.adBlockers.onDetect = resolve;
         }
     });
 

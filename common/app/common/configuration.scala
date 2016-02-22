@@ -211,6 +211,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     object backends {
       lazy val mediaToken: String = configuration.getMandatoryStringProperty("images.media.token")
       lazy val staticToken: String = configuration.getMandatoryStringProperty("images.static.token")
+      lazy val uploadsToken: String = configuration.getMandatoryStringProperty("images.uploads.token")
     }
   }
 

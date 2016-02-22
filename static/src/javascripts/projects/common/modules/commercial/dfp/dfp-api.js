@@ -49,7 +49,6 @@ define([
 
     'common/modules/commercial/creatives/commercial-component',
     'common/modules/commercial/creatives/gu-style-comcontent',
-    'common/modules/commercial/creatives/paidfor-content',
     'common/modules/commercial/creatives/expandable',
     'common/modules/commercial/creatives/expandable-v2',
     'common/modules/commercial/creatives/expandable-v3',
@@ -77,7 +76,7 @@ define([
     sha1,
     idleFastdom,
     cookies,
-    StickyMpu,
+    stickyMpu,
     buildPageTargeting,
     commercialFeatures,
     ophanTracking,
@@ -138,12 +137,12 @@ define([
 
     var callbacks = {
         '300,251': function (event, $adSlot) {
-            new StickyMpu($adSlot).create();
+            stickyMpu($adSlot);
         },
         '300,250': function (event, $adSlot) {
             if (config.switches.viewability && $adSlot.hasClass('ad-slot--right')) {
                 if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
-                    new StickyMpu($adSlot).create();
+                    stickyMpu($adSlot);
                 }
             }
         },
@@ -551,8 +550,8 @@ define([
                 resolve(breakoutIFrame(iFrame, $slot));
             }
         }).then(function (items) {
-            return find(items, function (item) {
-                return item.adType !== '';
+            return find(items, function (adType) {
+                return adType !== '';
             });
         });
     }

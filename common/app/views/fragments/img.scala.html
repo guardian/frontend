@@ -67,19 +67,22 @@
 }
 
 @lightbox(imageHtml: => Html) =  {
-
-    @lightboxIndex.map { index =>
-        <a href="#img-@index" class="article__img-container js-gallerythumbs" data-link-name="Launch Article Lightbox" data-is-ajax>
+    @if(amp) {
+        @imageHtml
+    } else {
+        @lightboxIndex.map { index =>
+            <a href="#img-@index" class="article__img-container js-gallerythumbs" data-link-name="Launch Article Lightbox" data-is-ajax>
                 @imageHtml
                 @fragments.inlineSvg("expand-image", "icon", List("centered-icon rounded-icon article__fullscreen modern-visible"))
-        </a>
-        @shareInfo.map { case (shareLinks, contentType) =>
-            @share.blockLevelSharing(s"img-$index", shareLinks, contentType)
-        }
-    }.getOrElse {
-        @imageHtml
-    }
+            </a>
 
+            @shareInfo.map { case (shareLinks, contentType) =>
+                @share.blockLevelSharing(s"img-$index", shareLinks, contentType)
+            }
+        }.getOrElse {
+            @imageHtml
+        }
+    }
 }
 
 @image(picture: model.ImageMedia, widths: WidthsByBreakpoint, imageOption: Option[ImageAsset], isMain: Boolean) = {
