@@ -40,7 +40,7 @@ package object form {
       .map(_._2)
 
     private val correctAnswers: Seq[Answer] = entries
-      .filter { case (question, answer) => isCorrectAnswer(question, answer) }
+      .filter { case (question, answer) => isCorrectAnswer(question, answer).getOrElse(false) }
       .map(_._2)
 
     val knowledgeScore: Int = correctAnswers.size
@@ -77,8 +77,8 @@ package object form {
       }
     }
 
-    def isCorrectAnswer(inputQuestion: Question, inputAnswer: Answer): Boolean = {
-      getCorrectAnswer(inputQuestion).exists(_.id == inputAnswer.id)
+    def isCorrectAnswer(inputQuestion: Question, inputAnswer: Answer): Option[Boolean] = {
+      getCorrectAnswer(inputQuestion).map(_.id == inputAnswer.id)
     }
   }
 }

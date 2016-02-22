@@ -62,10 +62,6 @@ $user-response-was-wrong: #bb001a;
 
 .quiz--results {
 
-    .quiz__answer--correct .quiz__answer__label {
-        background: $correct-answer--background;
-    }
-
     .quiz__answer {
         opacity: .6;
         font-weight: normal;
@@ -74,17 +70,31 @@ $user-response-was-wrong: #bb001a;
     .quiz__answer--selected {
         opacity: 1;
     }
+}
 
-    .quiz__question--with-response .quiz__answer--selected.quiz__answer--correct .quiz__answer__label {
+.quiz--results.quiz--knowledge {
+
+    .quiz__answer--correct .quiz__answer__label {
+        background-color: $correct-answer--background;
+    }
+
+    .quiz__answer--selected.quiz__answer--correct .quiz__answer__label {
         background-color: $user-response-was-right;
         font-weight: bold;
         color: colour(neutral-7);
     }
 
-    .quiz__question--with-response .quiz__answer--selected.quiz__answer--incorrect .quiz__answer__label {
+    .quiz__answer--selected.quiz__answer--incorrect .quiz__answer__label {
         background-color: $user-response-was-wrong;
         font-weight: bold;
         color: colour(neutral-7);
+    }
+}
+
+.quiz--results.quiz--personality {
+
+    .quiz__answer--selected .quiz__answer__label {
+        background: $correct-answer--background;
     }
 }
 
