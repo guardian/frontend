@@ -15,7 +15,7 @@ define([
     var isNewCommercialContent = config.switches.newCommercialContent && config.page.isAdvertisementFeature;
     var paidforBandHeight;
 
-    function initPFBand(element) {
+    function initPaidForBand(element) {
         paidforBandHeight = 0;
         if (isNewCommercialContent) {
             var paidforBand = document.querySelector('.paidfor-band');
@@ -41,7 +41,7 @@ define([
 
     Sticky.prototype.init = function init() {
         if (paidforBandHeight === undefined) {
-            initPFBand(this.element);
+            initPaidForBand(this.element);
         }
         mediator.on('window:throttledScroll', this.updatePosition.bind(this));
         // kick off an initial position update
