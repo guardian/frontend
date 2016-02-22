@@ -1,7 +1,7 @@
 package football.controllers
 
 import common._
-import conf.LiveContentApi
+import conf.{LiveContentApi, Configuration}
 import feed.Competitions
 import football.model.FootballMatchTrail
 import implicits.{Football, Requests}
@@ -10,10 +10,10 @@ import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 import org.scala_tools.time.Imports._
 import pa.FootballMatch
+import play.api.libs.json._
 import play.api.mvc.{Action, Controller, RequestHeader, Result}
 import play.twirl.api.Html
 import LiveContentApi.getResponse
-
 import scala.concurrent.Future
 
 case class Report(trail: FootballMatchTrail, name: String)
@@ -122,6 +122,51 @@ object MoreOnMatchController extends Controller with Football with Requests with
         JsonComponent("html" -> football.views.html.fragments.matchSummary(fMatch, Some(competition), link = true))
       }
     Cached(30)(response)
+  }
+
+  def matchSummaryMf2(year: String, month: String, day: String, team1: String, team2: String) = Action.async { implicit request =>
+    val contentDate = dateFormat.parseDateTime(year + month + day).toLocalDate
+
+    val maybeResponse: Option[Future[Result]] = Competitions().matchFor(interval(contentDate), team1, team2) map { theMatch =>
+      val related: Future[Seq[ContentType]] = loadMoreOn(request, theMatch)
+      // We are only interested in content with exactly 2 team tags
+
+      val group = theMatch.round.name.flatMap {
+        case roundName if roundName.toLowerCase.startsWith("group") => Some(roundName.toLowerCase.replace(' ', '-'))
+        case _ => None
+      }.getOrElse("")
+
+      related map { _ filter hasExactlyTwoTeams } map { filtered =>
+        Cached(if(theMatch.isLive) 10 else 300) {
+          JsonComponent(
+            "items" -> Json.arr(Seq(
+              Json.obj(
+                "id" -> theMatch.id,
+                "date" -> theMatch.date,
+                "venue" -> theMatch.venue.map(_.name),
+                "isFixture" -> theMatch.isFixture,
+                "isLive" -> theMatch.isLive,
+                "isResult" -> theMatch.isResult,
+                "homeTeam" -> Json.obj(
+                  "name" -> theMatch.homeTeam.name,
+                  "id" -> theMatch.homeTeam.id,
+                  "score" -> theMatch.homeTeam.score,
+                  "crest" -> s"${Configuration.staticSport.path}/football/crests/120/${theMatch.homeTeam.id}.png"
+                ),
+                "awayTeam" -> Json.obj(
+                  "name" -> theMatch.awayTeam.name,
+                  "id" -> theMatch.awayTeam.id,
+                  "score" -> theMatch.awayTeam.score,
+                  "crest" -> s"${Configuration.staticSport.path}/football/crests/120/${theMatch.awayTeam.id}.png"
+                )
+              )
+            ))
+          )
+        }
+      }
+    }
+
+    maybeResponse.getOrElse(Future.successful(Cached(30){ JsonNotFound() }))
   }
 
   private def canonicalRedirectForMatch(maybeMatch: Option[FootballMatch], request: RequestHeader): Future[Result] = {
