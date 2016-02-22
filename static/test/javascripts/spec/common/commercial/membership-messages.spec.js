@@ -53,15 +53,15 @@ define([
 
         describe('If user already member', function () {
             beforeEach(function (done) {
-                showMembershipMessages = commercialFeatures.checkWeCanShowMembershipMessages;
-                commercialFeatures.checkWeCanShowMembershipMessages = Promise.resolve(false);
+                showMembershipMessages = commercialFeatures.async.membershipMessages;
+                commercialFeatures.async.membershipMessages = Promise.resolve(false);
                 alreadyVisited = storage.local.get('gu.alreadyVisited');
                 storage.local.set('gu.alreadyVisited', 10);
                 done();
             });
 
             afterEach(function () {
-                commercialFeatures.checkWeCanShowMembershipMessages = showMembershipMessages;
+                commercialFeatures.async.membershipMessages = showMembershipMessages;
                 storage.local.set('gu.alreadyVisited', alreadyVisited);
             });
 
@@ -75,15 +75,15 @@ define([
 
         describe('If user not member', function () {
             beforeEach(function (done) {
-                showMembershipMessages = commercialFeatures.checkWeCanShowMembershipMessages;
+                showMembershipMessages = commercialFeatures.async.membershipMessages;
                 alreadyVisited = storage.local.get('gu.alreadyVisited');
-                commercialFeatures.checkWeCanShowMembershipMessages = Promise.resolve(true);
+                commercialFeatures.async.membershipMessages = Promise.resolve(true);
                 fixtures.render(conf);
                 done();
             });
 
             afterEach(function () {
-                commercialFeatures.checkWeCanShowMembershipMessages = showMembershipMessages;
+                commercialFeatures.async.membershipMessages = showMembershipMessages;
                 storage.local.set('gu.alreadyVisited', alreadyVisited);
                 fixtures.clean(conf.id);
             });
