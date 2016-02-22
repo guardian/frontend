@@ -70,7 +70,7 @@ package object form {
     }
 
     private def getCorrectAnswer(question: Question): Option[Answer] = {
-      if (isPersonality) {
+      if (isKnowledge) {
         question.answers.find(_.weight == 1)
       } else {
         None
