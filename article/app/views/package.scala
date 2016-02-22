@@ -45,6 +45,7 @@ object BodyCleaner {
       TagLinker(article),
       TableEmbedComplimentaryToP,
       R2VideoCleaner,
+      AtomsCleaner(article.content.atoms),
       PictureCleaner(article, amp),
       DropCaps(article.tags.isComment || article.tags.isFeature, article.isImmersive),
       ImmersiveHeaders(article.isImmersive),
@@ -57,8 +58,7 @@ object BodyCleaner {
       CmpParamCleaner,
       ImmersiveLinks(article.isImmersive),
       TimestampCleaner(article),
-      MinuteCleaner(article),
-      AtomsCleaner(article.content.atoms)
+      MinuteCleaner(article)
     )
     val nonAmpCleaners = List(
       VideoEmbedCleaner(article)
