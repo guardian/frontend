@@ -11,15 +11,18 @@
             }
 
             @picture.images.largestImage.map { img =>
-                @paddedRow(Seq("caption")) {
+                @paddedRow {
                     @if(img.showCaption) {
-                        <small>
+                        <div class="caption">
+                            @fragments.inlineSvg("camera", "icon", Seq("i-left"))
+
                             @img.caption.map(Html(_))
 
                             @if(img.displayCredit && !img.creditEndsWithCaption) {
                                 @img.credit.map(Html(_))
                             }
-                        </small>
+                            <hr />
+                        </div>
                     }
                 }
             }

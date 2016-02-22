@@ -14,15 +14,15 @@
 
                 @fragments.emailMainMedia(article)
 
-                @paddedRow(Seq("author-outer")) {
+                @paddedRow(Seq("author")) {
                     @article.trail.byline.map { byline =>
-                        <div class="author">
-                            <h3 class="byline">@byline</h3>
+                        <h3 class="byline">@byline</h3>
 
-                            @if(article.content.tags.contributors.length == 1) {
-                                @fragments.meta.contactAuthor(article.tags)
-                            }
-                        </div>
+                        @if(article.content.tags.contributors.length == 1) {
+                            @fragments.meta.contactAuthor(article.tags)
+                        }
+
+                        <hr />
                     }
                 }
 
@@ -38,13 +38,19 @@
                                         <img width="580" src="@url" @data.get("alt").map { alt => alt="@alt" }>
                                     }
 
-                                    @paddedRow(Seq("caption")) {
+                                    @paddedRow {
                                         @data.get("caption").map { caption =>
-                                            <small>@Html(caption)</small>
-                                        }
+                                            <div class="caption">
+                                                @fragments.inlineSvg("camera", "icon", Seq("i-left"))
 
-                                        @if(showCredit) {
-                                            <small>@data.get("credit").map(Html(_))</small>
+                                                @Html(caption)
+
+                                                @if(showCredit) {
+                                                    @data.get("credit").map(Html(_))
+                                                }
+
+                                                <hr />
+                                            </div>
                                         }
                                     }
                                 }

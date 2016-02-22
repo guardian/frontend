@@ -5,6 +5,15 @@
         background: #eaeaea;
     }
 
+    td.wrapper {
+        padding: 0;
+    }
+
+    table.columns td,
+    table.column td {
+        padding: 0;
+    }
+
     h1, h2, h3, h4, h5, h6, p {
         font-family: Georgia, serif;
         color: #333333;
@@ -13,6 +22,7 @@
     h1 {
         font-size: 32px;
         line-height: 36px;
+        margin-bottom: 10px;
     }
 
     h2, h3 {
@@ -34,16 +44,28 @@
         line-height: 24px;
     }
 
-    a, a:visited, a:active {
+    a {
         color: #005689;
     }
 
+    a:visited, a:active {
+        color: #005689 !important;
+    }
+
     a:hover {
-        color: #94b1ca;
+        color: #94b1ca !important;
     }
 
     a {
         text-decoration: underline;
+    }
+
+    hr {
+        background: white;
+        height: 0px;
+        border: 1px dashed #dcdcdc;
+        margin-top: 20px;
+        margin-bottom: 0;
     }
 
     .author a {
@@ -57,43 +79,50 @@
         color: #94b1ca !important;
     }
 
-    .inline-twitter-bird {
-        margin-top: 2px;
-        margin-right: 4px;
-    }
-
-    .inline-twitter-bird svg {
-        fill: #005689;
-    }
-
     .container,
     .panel {
         background: white;
     }
 
     .panel {
+        padding: 5px 10px !important;
         border: none;
     }
 
-    .author-outer {
-        padding-bottom: 0 !important;
-    }
-
-    .author {
-        border-bottom: 2px dotted #dcdcdc;
-    }
-
-    .author {
-        padding: 5px 0 20px;
-    }
-
-    .caption {
-        margin: 0 10px;
+    .panel.author {
+        padding-top: 0 !important;
     }
 
     .byline {
         color: #005689
     }
+
+    .caption {
+        padding-top: 5px;
+        font-size: 13px;
+        line-height: 16px;
+        color: #767676;
+    }
+
+    .inline-icon {
+        margin-right: 4px;
+    }
+
+    .inline-icon svg {
+        height: 16px;
+        width: 16px;
+    }
+
+
+    .inline-twitter-bird svg {
+        fill: #005689;
+    }
+
+    .inline-camera svg {
+        fill: #767676;
+        margin-top: -1px;
+    }
+
     .i-left {
         float: left;
     }
