@@ -45,7 +45,7 @@ define([
                         .addClass('lazyloaded');
                     options.success(resp);
                 })
-                .catch(options.onerror)
+                .catch(options.error)
                 .always(options.always);
             }
         }
