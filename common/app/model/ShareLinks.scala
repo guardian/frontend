@@ -92,12 +92,12 @@ object ShareLinks {
     val fullLink = platform match {
       case GooglePlus => s"https://plus.google.com/share?url=$encodedHref&amp;hl=en-GB&amp;wwc=1"
       case WhatsApp => s"""whatsapp://send?text=${("\"" + title + "\" " + href).encodeURIComponent}"""
-      case PinterestBlock => s"http://www.pinterest.com/pin/create/button/?description=${title.urlEncoded}&url=$href&media=${fullMediaPath.getOrElse("").urlEncoded}"
+      case PinterestBlock => s"http://www.pinterest.com/pin/create/button/?description=${title.urlEncoded}&url=$encodedHref&media=${fullMediaPath.getOrElse("").urlEncoded}"
       case PinterestPage => s"http://www.pinterest.com/pin/find/?url=$encodedHref"
       case Email => s"mailto:?subject=${title.encodeURIComponent}&body=$encodedHref"
       case LinkedIn => s"http://www.linkedin.com/shareArticle?mini=true&title=${title.urlEncoded}&url=$encodedHref"
       case Facebook => s"https://www.facebook.com/dialog/share".appendQueryParams(facebookParams)
-      case Twitter => s"https://twitter.com/intent/tweet?text=$title&url=$encodedHref"
+      case Twitter => s"https://twitter.com/intent/tweet?text=${title.encodeURIComponent}&url=$encodedHref"
     }
 
     ShareLink(platform, fullLink)
@@ -160,7 +160,7 @@ final case class ShareLinks(
 
   val pageShares: Seq[ShareLink] = pageShareOrder.map( sharePlatform => {
     val contentTitle = sharePlatform match {
-      case Twitter if tags.isClimateChangeSeries => s"${metadata.webTitle.encodeURIComponent} ${URLEncoder.encode("#keepitintheground", "utf-8")}"
+      case Twitter if tags.isClimateChangeSeries => s"${metadata.webTitle} #keepitintheground"
       case _ => metadata.webTitle
     }
 
