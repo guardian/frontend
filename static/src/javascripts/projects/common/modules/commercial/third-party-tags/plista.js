@@ -38,6 +38,7 @@ define([
         return commercialFeatures.outbrain &&
                 !config.page.isFront &&
                 !config.page.isPreview &&
+                config.page.section !== 'childrens-books-site' &&
                 identityPolicy();
     }
 

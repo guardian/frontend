@@ -125,6 +125,7 @@ define([
         if (commercialFeatures.outbrain &&
             !config.page.isFront &&
             !config.page.isPreview &&
+            config.page.section !== 'childrens-books-site' &&
             identityPolicy()
         ) {
             // if there is no merch component, load the outbrain widget right away
