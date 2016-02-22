@@ -58,11 +58,11 @@
         // polyfills
         @Html(polyfills().body)
 
-        // determine whether to run enhanced JS
-        @InlineJs(shouldEnhance(offlinePage.metadata).body, "shouldEnhance.js")
-
         // page config
         @Html(config(offlinePage).body)
+
+        // determine whether to run enhanced JS
+        @InlineJs(isEnhanced(offlinePage.metadata).body, "isEnhanced.js")
 
         // analytics code
         @InlineJs(analytics().body, "analytics.js")
