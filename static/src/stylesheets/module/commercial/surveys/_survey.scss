@@ -144,15 +144,15 @@
     }
 }
 
- .adfreesurvey-wrapper {
-    .adfreesurvey-wrapper-inner {
+ .live-events-survey-wrapper {
+    .live-events-survey-wrapper-inner {
         margin: 0 auto;
         width: auto;
         padding: 0 $gs-gutter $gs-gutter;
 
         @include mq(tablet) {
             margin: 0 auto;
-            width: $gs-column-width*6;
+            width: $gs-column-width*8;
             padding: $gs-gutter 0;
         }
     }
@@ -263,14 +263,6 @@
             }
         }
 
-    }
-
-    &.adfreesurvey-simple-wrapper {
-        .adfreesurvey-wrapper-inner--footer {
-            @include mq(tablet) {
-                width: $gs-column-width*8;
-            }
-        }
     }
 
 }

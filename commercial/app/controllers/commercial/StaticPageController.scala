@@ -17,7 +17,6 @@ case class StaticSurveyPage() extends StandalonePage {
 object StaticPageController extends Controller {
 
   def renderSurveySimplePage() = Action { implicit request =>
-    //Cached(60)(Ok(views.html.static.surveySimplePage(StaticSurveyPage())))
-    Ok(views.html.static.surveySimplePage(StaticSurveyPage()))
+    Cached(60)(Ok(views.html.static.surveySimplePage(StaticSurveyPage())))
   }
 }
