@@ -82,7 +82,11 @@ object VideoAsset {
     VideoAsset(
       fields = Helpers.assetFieldsToMap(asset),
       mimeType = asset.mimeType,
-      url = asset.typeData.flatMap(_.secureFile).orElse(asset.file) )
+      url = asset.typeData.flatMap {
+        // FIXME: Remove this once the multimedia.guardianapis are available over https
+        case asset if !asset.secureFile.exists(s => s.startsWith("https://multimedia.guardianapis.com")) => asset.secureFile
+        case _ => None
+      }.orElse(asset.file) )
   }
 }
 
