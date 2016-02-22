@@ -339,6 +339,8 @@ GET            /container/count/:count/offset/:offset/section/:section/mf2.json 
 GET            /container/count/:count/offset/:offset/edition/:edition/mf2.json                                                  controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section = "", edition)
 GET            /container/count/:count/offset/:offset/section/:section/edition/:edition/mf2.json                                 controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section, edition)
 
+GET            /football-mf2/api/match-nav/:year/:month/:day/:home/:away.json                                                    football.controllers.MoreOnMatchController.matchSummaryMf2(year, month, day, home, away)
+
 # Onward journeys
 GET            /series/*path.json                                                                                                controllers.SeriesController.renderSeriesStories(path)
 
