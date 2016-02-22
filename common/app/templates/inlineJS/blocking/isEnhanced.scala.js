@@ -64,5 +64,4 @@
         return mustNotEnhance() ? false : mustEnhance() ? true : couldEnhance() && weWantToEnhance();
     }
 
-
 })(window);
