@@ -488,6 +488,15 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     text-align: center;
     padding-top: 5px;
     display: block;
+
+    .inline-adblock-coins-us, .inline-adblock-coins {
+        display: block;
+        line-height: 0;
+    }
+
+    svg {
+        height: 72px;
+    }
 }
 
 .adblock-sticky__coin-membership-logo {

@@ -26,8 +26,6 @@ object Frontend extends Build with Prototypes {
       contentApiClient,
       faciaScalaClient,
       filters,
-      flexibleContentBlockToText,
-      flexibleContentBodyParser,
       googleSheetsApi,
       guardianConfiguration,
       jacksonCore,

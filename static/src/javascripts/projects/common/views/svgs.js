@@ -39,6 +39,7 @@ define([
     'inlineSvg!svgs/commercial/adblock-coins',
     'inlineSvg!svgs/notifications-explainer-mobile',
     'inlineSvg!svgs/notifications-explainer-desktop',
+    'inlineSvg!svgs/commercial/adblock-coins-us',
     'lodash/objects/isArray'
 ], function (
     commentCount16icon,
@@ -77,6 +78,7 @@ define([
     adblockCoins,
     notificationsExplainerMobile,
     notificationsExplainerDesktop,
+    adblockCoinsUS,
     isArray
 ) {
     var svgs = {
@@ -111,7 +113,8 @@ define([
         externalLink: externalLink,
         tick: tick,
         glabsLogoSmall: glabsLogoSmall,
-        adblockCoins: adblockCoins,
+        adblockCoinsUk: adblockCoins,
+        adblockCoinsUs: adblockCoinsUS,
         logomembership: membershipLogo,
         notificationsExplainerMobile: notificationsExplainerMobile,
         notificationsExplainerDesktop: notificationsExplainerDesktop,

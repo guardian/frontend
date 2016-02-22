@@ -24,7 +24,7 @@ object ImageDecacheController extends Controller with Logging with AuthLogging w
   case object Cleared extends MessageType
   case object Error extends MessageType
 
-  private val iGuim = """i.guim.co.uk/img/(static|media)(/.*)""".r
+  private val iGuim = """i.guim.co.uk/img/(static|media|uploads)(/.*)""".r
   private val Origin = """(static|media).guim.co.uk/.*""".r
 
   def renderImageDecacheForm() = AuthActions.AuthActionTest { request =>
