@@ -1,0 +1,27 @@
+@()
+
+@import views.support.Zurb._
+
+@fullRow(Seq("social__links")) {
+    <a class="social__link" href="https://www.facebook.com/theguardian">
+        @fragments.inlineSvg("fb", "icon") 5.4m
+    </a>
+
+    <a class="social__link" href="https://twitter.com/guardian">
+        @fragments.inlineSvg("twitter-bird", "icon") 5.2m
+    </a>
+
+    <a class="social__link" href="https://www.instagram.com/guardian">
+        @fragments.inlineSvg("instagram", "icon") 272k
+    </a>
+}
+
+@fullRow(Seq("email__links")) {
+    <a class="email__link" href="">Manage your emails</a> | <a class="email__link" href="">Unsubscribe</a>
+}
+
+@fullRow(Seq("disclaimer")) {
+    <p>You are receiving this email because you are a subscriber to The Fiver.</p>
+    <p>Guardian News & Media Limited - a member of Guardian Media Group PLC.</p>
+    <p>Registered Office: Kings Place, 90 York Way, London, N1 9GU. Registered in England No. 908396</p>
+}

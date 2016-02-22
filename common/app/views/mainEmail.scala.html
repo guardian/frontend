@@ -14,6 +14,7 @@
 
         @fragments.email.stylesheets.ink()
         @fragments.email.stylesheets.main()
+        @fragments.email.stylesheets.footer()
     </head>
 
     <body>
@@ -21,7 +22,15 @@
             <tr>
                 <td class="center" align="center" valign="top">
                     <center>
-                        @body
+                        <table class="container">
+                            <tr>
+                                <td>@body</td>
+                            </tr>
+
+                            <tr>
+                                <td class="footer">@fragments.email.footer()</td>
+                            </tr>
+                        </table>
                     </center>
                 </td>
             </tr>

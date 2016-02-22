@@ -12,54 +12,59 @@
                     <h1>@article.trail.headline</h1>
                 }
 
-                @fragments.emailMainMedia(article)
+    @paddedRow {
+        <h1>@article.trail.headline</h1>
+    }
 
-                @paddedRow(Seq("author")) {
-                    @article.trail.byline.map { byline =>
-                        <h3 class="byline">@byline</h3>
+    @fragments.emailMainMedia(article)
 
-                        @if(article.content.tags.contributors.length == 1) {
-                            @fragments.meta.contactAuthor(article.tags)
+    @paddedRow(Seq("author")) {
+        @article.trail.byline.map { byline =>
+            <h3 class="byline">@byline</h3>
+
+        @if(article.content.tags.contributors.length == 1) {
+            @fragments.meta.contactAuthor(article.tags)
+        }
+
+            <hr />
+        }
+    }
+
+    @page.article.fields.blocks.map { block =>
+        @block.elements.map { element =>
+            @element match {
+                case TextBlockElement(Some(html)) => {
+                    @paddedRow(Html(html))
+                }
+                case EmbedBlockElement(Some(html), _, _) => {
+                    @fullRow(Html(html))
+                }
+                case ImageBlockElement(media, data, showCredit) => {
+                    @EmailArticleImage.bestFor(media).map { url =>
+
+                        @fullRow {
+                            <img width="580" src="@url" @data.get("alt").map { alt => alt="@alt" }>
                         }
 
-                        <hr />
-                    }
-                }
+                        @paddedRow {
+                            @data.get("caption").map { caption =>
+                                <div class="caption">
+                                    @fragments.inlineSvg("camera", "icon", Seq("i-left"))
 
-                @page.article.fields.blocks.map { block =>
-                    @block.elements.map { element =>
-                        @element match {
-                            case TextBlockElement(Some(html)) => { @paddedRow(Html(html)) }
-                            case EmbedBlockElement(Some(html), _, _) => { @fullRow(Html(html)) }
-                            case ImageBlockElement(media, data, showCredit) => {
-                                @EmailArticleImage.bestFor(media).map { url =>
+                                    @Html(caption)
 
-                                    @fullRow {
-                                        <img width="580" src="@url" @data.get("alt").map { alt => alt="@alt" }>
+                                    @if(showCredit) {
+                                        @data.get("credit").map(Html(_))
                                     }
 
-                                    @paddedRow {
-                                        @data.get("caption").map { caption =>
-                                            <div class="caption">
-                                                @fragments.inlineSvg("camera", "icon", Seq("i-left"))
-
-                                                @Html(caption)
-
-                                                @if(showCredit) {
-                                                    @data.get("credit").map(Html(_))
-                                                }
-
-                                                <hr />
-                                            </div>
-                                        }
-                                    }
-                                }
+                                    <hr />
+                                </div>
                             }
-                            case _ => {}
                         }
                     }
                 }
-            </td>
-        </tr>
-    </table>
+                case _ => {}
+            }
+        }
+    }
 }
