@@ -1,6 +1,6 @@
 @(page: PageWithStoryPackage)(implicit request: RequestHeader)
 
-@import views.support.{ImgSrc, EmailArticleImage}
+@import views.support.EmailArticleImage
 @import views.support.Zurb._
 @import model.liveblog._
 
@@ -12,29 +12,7 @@
                     <h1>@article.trail.headline</h1>
                 }
 
-                @if(!article.elements.hasMainEmbed) {
-                    @article.elements.mainPicture.map { picture =>
-                            @EmailArticleImage.bestFor(picture.images).map { url =>
-                                @fullRow {
-                                    <img width="580" src="@url" alt="@ImgSrc.getFallbackAsset(picture.images).flatMap(_.altText).getOrElse("")" />
-                                }
-
-                                @picture.images.largestImage.map { img =>
-                                    @paddedRow(Seq("caption")) {
-                                        @if(img.showCaption) {
-                                            <small>
-                                                @img.caption.map(Html(_))
-
-                                                @if(img.displayCredit && !img.creditEndsWithCaption) {
-                                                    @img.credit.map(Html(_))
-                                                }
-                                            </small>
-                                        }
-                                    }
-                                }
-                            }
-                    }
-                }
+                @fragments.emailMainMedia(article)
 
                 @paddedRow(Seq("author-outer")) {
                     @article.trail.byline.map { byline =>
