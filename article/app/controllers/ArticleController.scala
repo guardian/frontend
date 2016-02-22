@@ -3,7 +3,6 @@ package controllers
 import _root_.liveblog.LiveBlogPageModel
 import com.gu.contentapi.client.model.ItemResponse
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
-import com.gu.util.liveblogs.{Block, BlockToText}
 import common._
 import conf.LiveContentApi.getResponse
 import conf._
@@ -52,7 +51,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   case class TextBlock(
     id: String,
     title: Option[String],
-    publishedDateTime: DateTime,
+    publishedDateTime: Option[DateTime],
     lastUpdatedDateTime: Option[DateTime],
     body: String
     )
@@ -60,7 +59,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   implicit val blockWrites = (
     (__ \ "id").write[String] ~
       (__ \ "title").write[Option[String]] ~
-      (__ \ "publishedDateTime").write[DateTime] ~
+      (__ \ "publishedDateTime").write[Option[DateTime]] ~
       (__ \ "lastUpdatedDateTime").write[Option[DateTime]] ~
       (__ \ "body").write[String]
     )(unlift(TextBlock.unapply))
@@ -68,7 +67,8 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   private def blockText(page: PageWithStoryPackage, number: Int)(implicit request: RequestHeader): Result = page match {
     case LiveBlogPage(liveBlog, _) =>
       val blocks = liveBlog.blocks.collect {
-        case Block(id, title, publishedAt, updatedAt, BlockToText(text), _) if text.trim.nonEmpty => TextBlock(id, title, publishedAt, updatedAt, text)
+        case BodyBlock(id, html, _, title, _, _, _, publishedAt, _, updatedAt, _, _) if html.trim.nonEmpty =>
+          TextBlock(id, title, publishedAt, updatedAt, html)
       }.take(number)
       Cached(page)(JsonComponent("blocks" -> Json.toJson(blocks)))
     case _ => Cached(600)(NotFound("Can only return block text for a live blog"))

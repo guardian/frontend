@@ -65,7 +65,9 @@
                         @fragments.amp.onwardTemplateAmp("series-mf2/" + tag.id + ".json")
                     }
                 }
-                @if(!content.item.content.hasStoryPackage && content.item.tags.series.isEmpty){
+                @if(content.item.content.showInRelated
+                    && !content.item.content.hasStoryPackage
+                    && content.item.tags.series.isEmpty){
                     @fragments.amp.onwardTemplateAmp("related-mf2/" + page.metadata.id + ".json")
                 }
             }
