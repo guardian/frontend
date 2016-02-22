@@ -71,7 +71,7 @@ define([
 
 
     var shouldRunEnhance = guardian.isEnhanced;
-    var shouldRunCommercial = guardian.isEnhanced;
+    var shouldRunCommercial = guardian.isModernBrowser;
 
     var commercialResponsesPromise = (
         shouldRunCommercial
