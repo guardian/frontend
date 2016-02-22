@@ -9,7 +9,7 @@
 // Offline page
 //
 
-console.log("++ Started");
+console.log("++ Started IT");
 
 var staticCacheName = 'static';
 
@@ -96,7 +96,6 @@ self.addEventListener('install', function (event) {
 
 this.addEventListener('fetch', function (event) {
     var request = event.request;
-    console.log("++ Grind it a, A-Go-Go");
 
     if (doesRequestAcceptHtml(request)) {
         isCacheUpdated().then(function (isUpdated) {
@@ -141,9 +140,10 @@ self.addEventListener('activate', function(event) {
 
 
 self.addEventListener('push', function(event){
-    console.log('Push message 11', event);
+    console.log('Push message 11I', JSON.stringify(event) );
     var title = 'Push message';
 
+/*
     event.waitUntil(
        self.registration.pushManager.getSubscription().then(function(sub){
            var gcmInd = sub.endpoint.substring(sub.endpoint.lastIndexOf('/') + 1);
@@ -174,6 +174,7 @@ self.addEventListener('push', function(event){
 
        })
     );
+*/
 
 
     /*

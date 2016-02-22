@@ -37,6 +37,8 @@ define([
         userTiming.mark('App Begin');
         bootstrapContext('common', common);
 
+        console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ BOTCHY!");
+
         // Front
         if (config.page.isFront) {
             require(['bootstraps/enhanced/facia'], function (facia) {
@@ -133,8 +135,10 @@ define([
         // use a #force-sw hash fragment to force service worker registration for local dev
         if ((window.location.protocol === 'https:' && config.page.section !== 'identity') || window.location.hash === '#force-sw') {
             var navigator = window.navigator;
+            console.log("Scotcha!!``")
             if (navigator && navigator.serviceWorker) {
                 navigator.serviceWorker.register('/service-worker.js').then(function () {
+                   console.log("++ Wotcha!")
                    if (detect.getUserAgent.browser === 'Chrome' && config.page.contentType === 'LiveBlog') {
                        console.log("++++++++++++++++++++++ LOADING");
                        require(['bootstraps/enhanced/notifications'], function (notifications) {

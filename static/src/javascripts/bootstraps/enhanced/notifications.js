@@ -115,6 +115,7 @@ define([
 
         unSubscribe: function () {
             if (modules.subscriptionsEmpty()) {
+                console.log("++ Last");
                 sub.unsubscribe().then(function (event) {
                 }).catch(function (error) {
                 });
@@ -134,8 +135,8 @@ define([
         },
 
         followThis: function () {
-            var endpoint = '/notification/store';
-            console.log("Follow: - " + sub.endpoint);
+            var endpoint = '/notification/topic/subscribe';
+            console.log("Follow: - " + JSON.stringify(sub));
 
             modules.updateSubscription(endpoint).then(
                 function (rsp) {
@@ -145,6 +146,10 @@ define([
                     modules.setSubscriptionStatus(true);
                 }
             );
+        },
+
+        followThisTopic: function() {
+            var endpoint = 'notifications'
         },
 
         stopFollowingThis: function () {
@@ -170,7 +175,7 @@ define([
                 url: endpoint,
                 method: 'POST',
                 contentType: 'application/x-www-form-urlencoded',
-                data: {gcmBrowserId: gcmBrowserId, notificationTopicId: config.page.pageId }
+                data: {gcmBrowserId: gcmBrowserId, notificationTopicId: 'test' }
             });
             return request;
         }
