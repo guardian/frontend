@@ -50,15 +50,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val VpaidAdvertsSwitch = Switch(
-    "Commercial",
-    "vpaid-adverts",
-    "Turns on support for vpaid-format adverts on videos.",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val SponsoredSwitch = Switch(
     "Commercial",
     "sponsored",
