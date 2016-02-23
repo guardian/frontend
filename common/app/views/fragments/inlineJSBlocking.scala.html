@@ -34,11 +34,11 @@
     // polyfills
     @Html(polyfills().body)
 
+    // determine whether to run enhanced JS
+    @InlineJs(shouldEnhance(page.metadata).body, "shouldEnhance.js")
+
     // page config
     @Html(config(page).body)
-
-    // determine whether to run enhanced JS
-    @InlineJs(isEnhanced(page.metadata).body, "isEnhanced.js")
 
     @if(NonBlockingOmniture.isSwitchedOff) {
         // analytics code

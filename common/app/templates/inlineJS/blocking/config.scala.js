@@ -17,7 +17,8 @@ var isModernBrowser =
 
 window.guardian = {
     isModernBrowser : isModernBrowser,
-    isEnhanced: undefined, // set by isEnhanced.scala.js
+    isEnhanced:
+        window.shouldEnhance && isModernBrowser,
     css: {
         loaded: false
     },
