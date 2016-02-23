@@ -4,92 +4,168 @@ import java.net.URLEncoder
 
 import campaigns.ShortCampaignCodes
 import common.`package`._
-import conf.Configuration.facebook.{ appId => facbookAppId }
+import conf.Configuration.facebook.{ appId => facebookAppId }
 
 case class ShareLink (
-  text: String,
-  css: String,
-  userMessage: String,
+  platform: SharePlatform,
   href: String
-)
+) {
+  val css: String = platform.css
+  val text: String = platform.text
+  val userMessage: String = platform.userMessage
+}
+
+sealed trait SharePlatform {
+  def campaign: Option[String]
+  def text: String
+  def css: String
+  def userMessage: String
+}
+
+object Facebook extends SharePlatform {
+  override val campaign = Some("sfb")
+  override val text = "Facebook"
+  override val css = "facebook"
+  override val userMessage = "Share on Facebook"
+}
+object GooglePlus extends SharePlatform {
+  override val campaign = Some("sgp")
+  override val text = "Google plus"
+  override val css =  "gplus"
+  override val userMessage = "Share on Google+"
+}
+object Email extends SharePlatform {
+  override val campaign = Some("sbl")
+  override val text = "Email"
+  override val css =  "email"
+  override val userMessage = "Share via Email"
+}
+object Twitter extends SharePlatform {
+  override val campaign = Some("stw")
+  override val text = "Twitter"
+  override val css = "twitter"
+  override val userMessage = "Share on Twitter"
+}
+object WhatsApp extends SharePlatform {
+  override val campaign = Some("swa")
+  override val text = "WhatsApp"
+  override val css = "whatsapp"
+  override val userMessage = "Share on WhatsApp"
+}
+object PinterestBlock extends SharePlatform {
+  override val campaign = None
+  override val text = "Pinterest"
+  override val css = "pinterest"
+  override val userMessage = "Share on Pinterest"
+}
+object PinterestPage extends SharePlatform {
+  override val campaign = None
+  override val text = "Pinterest"
+  override val css = "pinterest"
+  override val userMessage = "Share on Pinterest"
+}
+object LinkedIn extends SharePlatform {
+  override val campaign = None
+  override val text = "LinkedIn"
+  override val css = "linkedin"
+  override val userMessage = "Share on LinkedIn"
+}
+
+object ShareLinks {
+
+  val defaultShares = List(Facebook, Twitter, PinterestBlock)
+
+  private[model] def create(platform: SharePlatform, href: String, title: String, mediaPath: Option[String]): ShareLink = {
+
+    val encodedHref = href.urlEncoded
+    val fullMediaPath: Option[String] = mediaPath.map { originalPath =>
+      if(originalPath.startsWith("//")) { "http:" + originalPath } else { originalPath }
+    }
+
+    lazy val facebookParams = List(
+      Some("app_id" -> facebookAppId),
+      Some("href" -> encodedHref),
+      Some("redirect_uri" -> encodedHref),
+      mediaPath.map(path => "picture" -> path.urlEncoded)
+    ).flatten.toMap
+
+    val fullLink = platform match {
+      case GooglePlus => s"https://plus.google.com/share?url=$encodedHref&amp;hl=en-GB&amp;wwc=1"
+      case WhatsApp => s"""whatsapp://send?text=${("\"" + title + "\" " + href).encodeURIComponent}"""
+      case PinterestBlock => s"http://www.pinterest.com/pin/create/button/?description=${title.urlEncoded}&url=$encodedHref&media=${fullMediaPath.getOrElse("").urlEncoded}"
+      case PinterestPage => s"http://www.pinterest.com/pin/find/?url=$encodedHref"
+      case Email => s"mailto:?subject=${title.encodeURIComponent}&body=$encodedHref"
+      case LinkedIn => s"http://www.linkedin.com/shareArticle?mini=true&title=${title.urlEncoded}&url=$encodedHref"
+      case Facebook => s"https://www.facebook.com/dialog/share".appendQueryParams(facebookParams)
+      case Twitter => s"https://twitter.com/intent/tweet?text=${title.encodeURIComponent}&url=$encodedHref"
+    }
+
+    ShareLink(platform, fullLink)
+  }
+
+  // A generic link constructor that works with absolute-url hrefs and creates links for each provided platform.
+  // A campaign will be added to the href link.
+  // The href only makes sense with long urls, because a CMP parameter can safely be added. Short urls are not supported here.
+  def createShareLink(platform: SharePlatform, href: String, title: String, mediaPath: Option[String]): ShareLink = {
+    val webUrlParams = platform.campaign.flatMap(ShortCampaignCodes.getFullCampaign).map(campaign => "CMP" -> campaign).toList.toMap
+    val campaignHref = href.appendQueryParams(webUrlParams)
+    create(platform, campaignHref, title, mediaPath)
+  }
+
+  def createShareLinks(platforms: Seq[SharePlatform], href: String, title: String, mediaPath: Option[String]): Seq[ShareLink] = {
+    platforms.map(create(_, href, title, mediaPath))
+  }
+}
 
 final case class ShareLinks(
   tags: Tags,
   fields: Fields,
-  metadata: MetaData,
-  elementShareOrder: List[String] = List("facebook", "twitter", "pinterestBlock"),
-  pageShareOrder: List[String] = List("facebook", "twitter", "email", "pinterestPage", "linkedin", "gplus", "whatsapp")
+  metadata: MetaData
 ) {
-  private def shareLink(shareType: String, elementId: Option[String] = None, mediaPath: Option[String] = None, shortLinkUrl: String, webLinkUrl: String, title: String): Option[ShareLink] = {
 
-    def createShareLinkUrl(campaign: Option[String], elementId: Option[String]): String = {
-      val campaignParam = campaign.flatMap(ShortCampaignCodes.getFullCampaign(_))
-      val url = elementId
-        .flatMap(x => {
-          if (tags.isLiveBlog) {
-            val queryParams: Map[String, String] = Map(
-              "page" -> elementId.filter(x => tags.isLiveBlog).map(id => s"with:$id"),
-              "CMP" -> campaignParam
-            )
-              .filter(_._2.isDefined)
-              .map { case (k, v) => (k, v.getOrElse("")) }
-
-            Some(webLinkUrl.appendQueryParams(queryParams))
-          } else None
-        })
-        .getOrElse(campaign.map(campaign => s"$shortLinkUrl/$campaign").getOrElse(shortLinkUrl))
-
-      url + elementId.map(id => s"#${id}").getOrElse("")
-    }
-
-    lazy val facebook = createShareLinkUrl(Some("sfb"), elementId).urlEncoded
-    lazy val googlePlus = createShareLinkUrl(Some("sgp"), elementId).urlEncoded
-    lazy val link = createShareLinkUrl(Some("sbl"), elementId).urlEncoded
-    lazy val twitter = createShareLinkUrl(Some("stw"), elementId).urlEncoded
-    lazy val whatsapp = createShareLinkUrl(Some("swa"), elementId)
-    lazy val pinterest = createShareLinkUrl(None, elementId).urlEncoded
-    lazy val linkedIn = createShareLinkUrl(None, elementId).urlEncoded
-    lazy val webTitleAsciiEncoding = metadata.webTitle.encodeURIComponent
-
-    lazy val fullMediaPath: Option[String] = {
-      mediaPath.map { originalPath => if(originalPath.startsWith("//")) { "http:" + originalPath } else { originalPath } }
-    }
-
-    shareType match {
-      case "facebook" =>
-        val imageUrl = mediaPath.map(_.urlEncoded).map(url => s"&picture=$url").getOrElse("")
-        Some(ShareLink(
-        "Facebook", "facebook",
-        "Share on Facebook",
-        s"https://www.facebook.com/dialog/share?app_id=${facbookAppId}&href=$facebook&redirect_uri=${shortLinkUrl.urlEncoded}$imageUrl")
-        )
-
-      case "twitter"  =>
-        val text = if (tags.isClimateChangeSeries) {
-          s"${title.encodeURIComponent} ${URLEncoder.encode("#keepitintheground", "utf-8")}"
-        } else {
-          title.encodeURIComponent
-        }
-        Some(ShareLink("Twitter", "twitter", "Share on Twitter", s"https://twitter.com/intent/tweet?text=$text&url=$twitter"))
-
-      case "gplus"    => Some(ShareLink("Google plus", "gplus", "Share on Google+", s"https://plus.google.com/share?url=$googlePlus&amp;hl=en-GB&amp;wwc=1"))
-      case "whatsapp" => Some(ShareLink("WhatsApp", "whatsapp", "Share on WhatsApp", s"""whatsapp://send?text=${("\"" + title + "\" " + whatsapp).encodeURIComponent}"""))
-      case "email"    => Some(ShareLink("Email", "email", "Share via Email", s"mailto:?subject=$webTitleAsciiEncoding&body=$link"))
-      case "linkedin"  => Some(ShareLink("LinkedIn", "linkedin", "Share on LinkedIn", s"http://www.linkedin.com/shareArticle?mini=true&title=${title.urlEncoded}&url=$linkedIn"))
-      case "pinterestPage"  => Some(ShareLink("Pinterest", "pinterest", "Share on Pinterest", s"http://www.pinterest.com/pin/find/?url=$pinterest"))
-      case "pinterestBlock"  => Some(ShareLink("Pinterest", "pinterest", "Share on Pinterest", s"http://www.pinterest.com/pin/create/button/?description=${title.urlEncoded}&url=$pinterest&media=${fullMediaPath.getOrElse("").urlEncoded}"))
-      case _ => None
-    }
+  private val pageShareOrder: List[SharePlatform] = if (tags.isGallery) {
+    List(Facebook, Twitter, Email, PinterestPage, GooglePlus, WhatsApp)
+  } else {
+    List(Facebook, Twitter, Email, PinterestPage, LinkedIn, GooglePlus, WhatsApp)
   }
 
-  def elementShares(
-    elementId: Option[String] = None,
-    mediaPath: Option[String] = None,
-    shortLinkUrl: String = fields.shortUrl,
-    webLinkUrl: String = metadata.webUrl,
-    title: String = metadata.webTitle): Seq[ShareLink] =
-    elementShareOrder.flatMap(shareLink(_, elementId, mediaPath, shortLinkUrl, webLinkUrl, title))
+  private val elementShareOrder: List[SharePlatform] = if (tags.isLiveBlog) {
+    List(Facebook, Twitter, GooglePlus)
+  } else {
+    List(Facebook, Twitter, PinterestBlock)
+  }
 
-  lazy val pageShares: Seq[ShareLink] = pageShareOrder.flatMap(shareLink(_, shortLinkUrl = fields.shortUrl, webLinkUrl = metadata.webUrl, title = metadata.webTitle))
+  private def createShortUrlWithCampaign(platform: SharePlatform): String = platform.campaign match {
+    case Some(campaign) => s"${fields.shortUrl}/$campaign"
+    case _ => fields.shortUrl
+  }
+
+  def elementShares(elementId: String, mediaPath: Option[String]): Seq[ShareLink] = elementShareOrder.map( sharePlatform => {
+
+    // Currently, only element shares on live blogs will use fully expanded urls. These urls take a CMP parameter.
+    // Everything else uses short urls with campaign codes.
+    val href = if (tags.isLiveBlog) {
+      val webUrlParams = List(
+        Some("page" -> s"with:$elementId"),
+        sharePlatform.campaign.flatMap(ShortCampaignCodes.getFullCampaign).map(campaign => "CMP" -> campaign)
+      ).flatten.toMap
+
+      metadata.webUrl.addFragment(elementId).appendQueryParams(webUrlParams)
+    } else {
+      createShortUrlWithCampaign(sharePlatform).addFragment(elementId)
+    }
+
+    ShareLinks.create(sharePlatform, href = href, title = metadata.webTitle, mediaPath = mediaPath)
+  })
+
+  val pageShares: Seq[ShareLink] = pageShareOrder.map( sharePlatform => {
+    val contentTitle = sharePlatform match {
+      case Twitter if tags.isClimateChangeSeries => s"${metadata.webTitle} #keepitintheground"
+      case _ => metadata.webTitle
+    }
+
+    val href = createShortUrlWithCampaign(sharePlatform)
+
+    ShareLinks.create(sharePlatform, href = href, title = contentTitle, mediaPath = None)
+  })
 }
-

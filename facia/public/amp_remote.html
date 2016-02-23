@@ -50,7 +50,7 @@
                     'seriesId' : config.targeting.se, //series isn't in the Krux output
                     'contentType' : toTitleCase(config.targeting.ct),
                     'keywordIds' : config.targeting.keywordIds,
-                    'keywords' : config.targeting.k.split(',').map(function (x) { toTitleCase(x)}),
+                    'keywords' : config.targeting.k.split(',').map(function (x) { return toTitleCase(x)}),
                     'authorIds' : config.targeting.authorIds,
                     'blogIds' : config.targeting.bl,// blogs isn't recognised by Krux scraper
                     'referrer' : 'amp',

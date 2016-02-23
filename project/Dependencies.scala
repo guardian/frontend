@@ -32,8 +32,6 @@ object Dependencies {
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.24"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client" % "0.68"
   val faciaScalaClient = "com.gu" %% "facia-json" % "0.68"
-  val flexibleContentBlockToText = "com.gu" %% "flexible-content-block-to-text" % "0.4"
-  val flexibleContentBodyParser = "com.gu" %% "flexible-content-body-parser" % "0.6"
   val googleSheetsApi = "com.google.gdata" % "core" % "1.47.1"
   val guardianConfiguration = "com.gu" %% "configuration" % "4.1"
   val guice = "com.google.inject" % "guice" % "3.0"
@@ -44,7 +42,7 @@ object Dependencies {
   val jacksonMapper = "org.codehaus.jackson" % "jackson-mapper-asl" % "1.9.6"
   val jodaTime = "joda-time" % "joda-time" % "2.9.1"
   val jodaConvert = "org.joda" % "joda-convert" % "1.2"
-  val jSoup = "org.jsoup" % "jsoup" % "1.7.3"
+  val jSoup = "org.jsoup" % "jsoup" % "1.8.3"
   val liftJson = "net.liftweb" %% "lift-json" % "2.6-RC2"
   val mockito = "org.mockito" % "mockito-all" % "1.9.5" % Test
   val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "1.2.0"

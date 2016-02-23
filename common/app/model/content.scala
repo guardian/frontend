@@ -5,13 +5,13 @@ import java.net.URL
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.facia.api.{utils => fapiutils}
 import com.gu.facia.client.models.TrailMetaData
-import com.gu.util.liveblogs.{Parser => LiveBlogParser}
 import common._
 import common.dfp.DfpAgent
 import conf.Configuration
 import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch}
 import cricketPa.CricketTeams
 import layout.ContentWidths.{ImmersiveMedia, BodyMedia, LiveBlogMedia, GalleryMedia}
+import model.content.{Quiz, Atoms}
 import model.liveblog.{LiveBlogDate, BodyBlock}
 import model.liveblog.BodyBlock.{SummaryEvent, KeyEvent}
 import model.pressed._
@@ -48,6 +48,7 @@ final case class Content(
   elements: Elements,
   fields: Fields,
   sharelinks: ShareLinks,
+  atoms: Option[Atoms],
   publication: String,
   internalPageCode: String,
   contributorBio: Option[String],
@@ -211,10 +212,16 @@ final case class Content(
       Some("isMinuteArticle", JsBoolean(tags.isUSMinuteSeries))
     } else None
 
+    val atomsMeta = atoms.map { atoms =>
+      val atomIdentifiers = atoms.all.collect { case quiz: Quiz => JsString(quiz.id) }
+      ("atoms", JsArray(atomIdentifiers))
+    }
+
     val meta: List[Option[(String, JsValue)]] = List(
       rugbyMeta,
       articleMeta,
-      trackingMeta
+      trackingMeta,
+      atomsMeta
     ) ++ cricketMeta ++ seriesMeta
     meta.flatten.toMap
   }
@@ -230,6 +237,7 @@ final case class Content(
     "twitter:image" -> rawOpenGraphImage
   ) ++ contributorTwitterHandle.map(handle => "twitter:creator" -> s"@$handle").toList
 
+  val quizzes: Seq[Quiz] = atoms.map(_.quizzes).getOrElse(Nil)
 }
 
 object Content {
@@ -256,6 +264,7 @@ object Content {
     val commercial = Commercial.make(metadata, tags, apiContent)
     val trail = Trail.make(tags, fields, commercial, elements, metadata, apiContent)
     val sharelinks = ShareLinks(tags, fields, metadata)
+    val atoms = Atoms.make(apiContent)
     val apifields = apiContent.fields
     val references: Map[String,String] = apiContent.references.map(ref => (ref.`type`, Reference.split(ref.id)._2)).toMap
     val cardStyle: fapiutils.CardStyle = fapiutils.CardStyle(apiContent, TrailMetaData.empty)
@@ -268,6 +277,7 @@ object Content {
       elements = elements,
       fields = fields,
       sharelinks = sharelinks,
+      atoms = atoms,
       publication = apifields.flatMap(_.publication).getOrElse(""),
       internalPageCode = apifields.flatMap(_.internalPageCode).map(_.toString).getOrElse(""),
       contributorBio = apifields.flatMap(_.contributorBio),
@@ -394,14 +404,6 @@ object Article {
     )
   }
 
-  private def copyShareLinks(content: Content) = {
-    if (content.tags.isLiveBlog) {
-      content.sharelinks.copy(elementShareOrder = List("facebook", "twitter", "gplus"))
-    } else {
-      content.sharelinks
-    }
-  }
-
   // Perform a copy of the content object to enable Article to override Content.
   def make(content: Content): Article = {
 
@@ -419,7 +421,7 @@ object Article {
       standfirst = fields.standfirst)
     val lightbox = GenericLightbox(elements, fields, trail, lightboxProperties)
     val metadata = copyMetaData(content, commercial, lightbox, trail, tags)
-    val sharelinks = copyShareLinks(content)
+    val sharelinks = content.sharelinks
 
     val contentOverrides = content.copy(
       trail = trail,
@@ -470,8 +472,7 @@ final case class Article (
   lazy val hasKeyEvents: Boolean = soupedBody.body().select(".is-key-event").nonEmpty
 
   lazy val isSport: Boolean = tags.tags.exists(_.id == "sport/sport")
-  //@deprecated("use content.fields.blocks", "")
-  lazy val blocks = LiveBlogParser.parse(fields.body)
+  lazy val blocks = content.fields.blocks
   lazy val mostRecentBlock: Option[String] = blocks.headOption.map(_.id)
 }
 
@@ -596,10 +597,6 @@ object Gallery {
       "gallerySize" -> JsNumber(lightbox.size),
       "lightboxImages" -> lightbox.javascriptConfig
     )
-    val sharelinks = content.sharelinks.copy(
-      elementShareOrder = List("facebook", "twitter", "pinterestBlock"),
-      pageShareOrder = List("facebook", "twitter", "email", "pinterestPage", "gplus", "whatsapp")
-    )
     val trail = content.trail.copy(
       trailPicture = elements.thumbnail.map(_.images))
 
@@ -637,7 +634,6 @@ object Gallery {
     val contentOverrides = content.copy(
       metadata = metadata,
       trail = trail,
-      sharelinks = sharelinks,
       rawOpenGraphImage = {
         val bestOpenGraphImage = if (FacebookShareUseTrailPicFirstSwitch.isSwitchedOn) {
           trail.trailPicture.flatMap(_.largestImageUrl)

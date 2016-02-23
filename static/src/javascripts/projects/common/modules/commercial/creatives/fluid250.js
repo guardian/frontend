@@ -24,7 +24,7 @@ define([
     merge
 ) {
     var hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
-    var isModernBrowser = detect.isModernBrowser();
+    var isEnhanced = detect.isEnhanced();
     var isIE9OrLess = detect.getUserAgent.browser === 'MSIE' && (detect.getUserAgent.version === '9' || detect.getUserAgent.version === '8');
 
     var fluid250Tpl;
@@ -58,7 +58,7 @@ define([
             layerTwoBGPosition: this.params.layerTwoBGPosition && (
                 !this.params.layerTwoAnimation ||
                 this.params.layerTwoAnimation === 'disabled' ||
-                (!isModernBrowser && this.params.layerTwoAnimation === 'enabled')
+                (!isEnhanced && this.params.layerTwoAnimation === 'enabled')
             ) ?
                 this.params.layerTwoBGPosition :
                 '0% 0%',
@@ -102,7 +102,7 @@ define([
 
     Fluid250.prototype.layer2Animation = function () {
         var inViewB;
-        if (this.params.layerTwoAnimation === 'enabled' && isModernBrowser && !isIE9OrLess) {
+        if (this.params.layerTwoAnimation === 'enabled' && isEnhanced && !isIE9OrLess) {
             inViewB = (window.pageYOffset + bonzo.viewport().height) > this.$adSlot.offset().top;
             fastdom.write(function () {
                 this.$layer2.addClass('ad-scrolling-text-hide' + (this.params.layerTwoAnimationPosition ? '-' + this.params.layerTwoAnimationPosition : ''));
