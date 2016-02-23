@@ -111,11 +111,6 @@
 @include mq(tablet, desktop) {
     @include guss-columns('.headline-column--tablet', $column-min-width: 340px, $columns-fallback-width: gs-span(9), $columns-fallback-columns: 2);
 
-    .headline-column {
-        height: gs-height(11) - $gs-baseline;
-        column-fill: auto;
-    }
-
     .headline-column__item {
         height: auto;
     }
