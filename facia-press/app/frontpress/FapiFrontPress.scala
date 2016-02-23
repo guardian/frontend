@@ -280,18 +280,6 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
       val slimElements = Elements.apply(content.elements.mainVideo.toList)
       val slimFields = content.fields.copy(body = HTML.takeFirstNElements(content.fields.body, 2), blocks = Nil)
 
-      val slimTrailPicture = content.trail.trailPicture.map { imageMedia =>
-        // Keep the biggest 5:3 image. Facia will render the image using the image resizing service.
-        val filteredTrailImages = imageMedia.allImages.filter { image =>
-          IsRatio(5, 3, image.width, image.height)
-        }
-        val largestTrailImage = filteredTrailImages.sortBy(-_.width).take(1)
-
-        ImageMedia.make(largestTrailImage)
-      }
-
-      val slimTrail = content.trail.copy(trailPicture = slimTrailPicture)
-
       // Clear the config fields, because they are not used by facia. That is, the config of
       // an individual card is not used to render a facia front page.
       val slimMetadata = content.metadata.copy(
@@ -299,7 +287,7 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
         opengraphPropertiesOverrides = Map(),
         twitterPropertiesOverrides = Map())
 
-      val slimContent = content.content.copy(metadata = slimMetadata, elements = slimElements, fields = slimFields, trail = slimTrail)
+      val slimContent = content.content.copy(metadata = slimMetadata, elements = slimElements, fields = slimFields)
 
       content match {
         case article: Article => article.copy(content = slimContent)
