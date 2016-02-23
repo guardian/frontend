@@ -85,7 +85,6 @@ object Commercial {
 
     def shouldRenderAsCommercialContainer(frontPriority: Option[FrontPriority], container: FaciaContainer): Boolean = {
       Switches.NewCommercialContent.isSwitchedOn &&
-      Switches.PaidContainerUpdate.isSwitchedOn &&
       frontPriority.contains(EditorialPriority) &&
       container.commercialOptions.isAdvertisementFeature
     }
