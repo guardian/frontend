@@ -44,7 +44,12 @@ object QuizController extends Controller with ExecutionContexts with Logging {
 
   def submit(quizId: String, path: String) = Action.async { implicit request =>
     form.playForm.bindFromRequest.fold(
-      hasErrors = errors => Future.successful(InternalServerError("error")),
+      hasErrors = errors => {
+        val errorMessages = errors.errors.flatMap(_.messages.mkString(", ")).mkString(". ")
+        val serverError = s"Problem with quiz form request: $errorMessages"
+        log.error(serverError)
+        Future.successful(InternalServerError(serverError))
+      },
       success = form => renderQuiz(quizId, path, form)
     )
   }
