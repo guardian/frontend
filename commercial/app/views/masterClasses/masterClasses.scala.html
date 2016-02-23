@@ -31,7 +31,10 @@
                                 <h4 class="lineitem__title">@event.eventBriteEvent.name</h4>
                                 <p class="lineitem__meta">
                                     <span class="lineitem__meta__strong">@event.eventBriteEvent.readableDate &#20; <span class="commercial--tone__highlight">@event.eventBriteEvent.displayPrice</span></span><br/>
-                                    @event.eventBriteEvent.venue.description
+                                    @event.eventBriteEvent.venue.description<br>
+                                    @if(event.eventBriteEvent.ratioTicketsLeft <= 0.1){
+                                        <span class="lineitem__scarcity">Last few tickets remaining</span>
+                                    }
                                 </p>
                             </a>
                             <a class="lineitem__cta button button--primary button--small" href="@clickMacro@event.eventBriteEvent.guardianUrl" data-link-name="merchandising-masterclasses-s-v@{version}_@{date}-@{relevance}-@event.eventBriteEvent.name">
