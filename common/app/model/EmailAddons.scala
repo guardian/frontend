@@ -12,11 +12,11 @@ case object TheFiver extends EmailContent {
   def test(a: Article) = a.content.tags.series.exists(_.id == "football/series/thefiver")
 }
 
-object EmailArticle {
+object EmailAddons {
   private val defaultBanner = "default.jpg"
   private val allEmails     = Seq(TheFiver)
 
-  implicit class EmailArticleAddons(a: Article) {
+  implicit class EmailArticle(a: Article) {
     lazy val banner = {
       val banner = emailFor(a) map (_.banner) getOrElse defaultBanner
       Static(s"images/email/banners/$banner").path
