@@ -94,6 +94,14 @@ define([
             expect(typeof popular.$mpu).toEqual('object');
         });
 
+        it('should not render MPU when on mobile and 2+ MPUs are already on the page', function () {
+            var popular = new Popular();
+
+            detect.getBreakpoint = function () { return 'mobile'; };
+            popular.prerender();
+            expect(popular.$mpu).toBe(null);
+        });
+
         it('should not render MPU when disabled in commercial-features', function () {
             var popular = new Popular();
             commercialFeatures.popularContentMPU = false;
