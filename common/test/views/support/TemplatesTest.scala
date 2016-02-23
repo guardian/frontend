@@ -166,7 +166,7 @@ class TemplatesTest extends FlatSpec with Matchers with OneAppPerSuite {
   }
 
   it should "convert to html entities" in {
-    StripHtmlTags("This is \"sarcasm\" & so is \"this\"") should be("This is &quot;sarcasm&quot; &amp; so is &quot;this&quot;")
+    StripHtmlTags("This is \"sarcasm\" & so is \"this\"") should be("This is \"sarcasm\" &amp; so is \"this\"")
   }
 
   private def tag(name: String = "name", tagType: TagType = TagType.Keyword, id: String = "/id") = {
