@@ -211,22 +211,17 @@ Hence why a greater depth of selector specificity is needed.
 }
 
 .fc-slice__popular-mpu {
+    width: $mpu-original-width + 20px;
+
     .ad-slot {
-        min-height: 274px;
+        min-height: $mpu-original-height + $mpu-ad-label-height;
     }
 
     @include mq(tablet, desktop) {
         margin: 0 auto;
-        width: gs-span(4.5);
-
-        .ad-slot--container-inline {
-            margin: 0;
-            height: 286px;
-        }
     }
 
     @include mq(desktop) {
-        width: 320px;
         position: absolute;
         top: $gs-baseline;
         right: -($gs-gutter / 2);
