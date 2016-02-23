@@ -45,7 +45,7 @@ define([
             fastdom.write(function () {
                 $iFrame.hide();
                 $breakoutEl.detach();
-                $iFrameParent.append($breakoutEl.html());
+                $iFrameParent.append($breakoutEl[0].children);
             }).then(function () {
                 var $responsiveAds = $('.ad--responsive', $iFrameParent[0]);
                 fastdom.write(function () {
