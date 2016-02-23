@@ -50,15 +50,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val VpaidAdvertsSwitch = Switch(
-    "Commercial",
-    "vpaid-adverts",
-    "Turns on support for vpaid-format adverts on videos.",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val SponsoredSwitch = Switch(
     "Commercial",
     "sponsored",
@@ -254,15 +245,6 @@ trait CommercialSwitches {
     "Show an Outbrain component on amp pages",
     safeState = Off,
     sellByDate = new LocalDate(2016, 3, 2),
-    exposeClientSide = false
-  )
-
-  val PaidContainerUpdate = Switch(
-    "Commercial",
-    "paid-container-update",
-    "Applies updates to paid containers",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 24),
     exposeClientSide = false
   )
 }

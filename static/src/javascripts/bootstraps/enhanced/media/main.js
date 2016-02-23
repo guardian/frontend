@@ -183,14 +183,6 @@ define([
             mouseMoveIdle,
             playerSetupComplete;
 
-        if (config.page.videoJsVpaidSwf && config.switches.vpaidAdverts) {
-
-            // clone the video options and add 'vpaid' to them.
-            techPriority = ['vpaid'].concat(techPriority);
-
-            videojs.options.vpaid = {swf: config.page.videoJsVpaidSwf};
-        }
-
         player = createVideoPlayer(el, {
             techOrder: techPriority,
             controls: true,

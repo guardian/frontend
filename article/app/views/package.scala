@@ -45,6 +45,7 @@ object BodyCleaner {
       TagLinker(article),
       TableEmbedComplimentaryToP,
       R2VideoCleaner,
+      AtomsCleaner(article.content.atoms),
       PictureCleaner(article, amp),
       DropCaps(article.tags.isComment || article.tags.isFeature, article.isImmersive),
       ImmersiveHeaders(article.isImmersive),
