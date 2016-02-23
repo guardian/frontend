@@ -27,7 +27,7 @@
             <hr/>
             <div class="u-cf">
                 <div data-component="share" class="submeta__share">
-                    @fragments.social(content)
+                    @fragments.social(content.sharelinks.pageShares)
                 </div>
                 @if(SaveForLaterSwitch.isSwitchedOn) {
                     <div class="js-save-for-later submeta__save-for-later" data-position="bottom"></div>
