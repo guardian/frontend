@@ -247,13 +247,4 @@ trait CommercialSwitches {
     sellByDate = new LocalDate(2016, 3, 2),
     exposeClientSide = false
   )
-
-  val PaidContainerUpdate = Switch(
-    "Commercial",
-    "paid-container-update",
-    "Applies updates to paid containers",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 24),
-    exposeClientSide = false
-  )
 }
