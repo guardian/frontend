@@ -139,10 +139,6 @@ define([
             });
         };
 
-        var getLatestBlockId = function () {
-            return $('.block').first().attr('id');
-        };
-
         var injectNewBlocks = function () {
             if (!updating && newBlocks) {
                 updating = true;
@@ -165,7 +161,7 @@ define([
 
                     mediator.emit('modules:autoupdate:updates', elementsToAdd.length);
 
-                    latestBlockId = getLatestBlockId();
+                    latestBlockId = $('.block').first().attr('id');
 
                     newBlocks = '';
 
@@ -207,7 +203,7 @@ define([
         var $toastText = $('.toast__text', this.$toastButton);
         var toastContainer = qwery('.toast__container')[0];
 
-        latestBlockId = getLatestBlockId();
+        latestBlockId = $liveblogBody.data('most-recent-block');
 
         new NotificationCounter().init();
         new Sticky(toastContainer, { top: options.toastOffsetTop, emitMessage: true, containInParent: false }).init();
