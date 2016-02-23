@@ -40,10 +40,12 @@ object EventbriteMasterClass {
           ticketClass <- ticketClasses
           hidden <- (ticketClass \ "hidden").asOpt[Boolean]
           cost <- (ticketClass \ "cost").asOpt[JsValue]
+          quantityTotal <- (ticketClass \ "quantity_total").asOpt[Int]
+          quantitySold <- (ticketClass \ "quantity_sold").asOpt[Int]
           if !hidden
         } yield {
           val price = (cost \ "value").as[Int] / 100
-          new Ticket(price)
+          new Ticket(price, quantityTotal, quantitySold)
         }
       }
       maybeTickets getOrElse Nil
@@ -99,12 +101,14 @@ case class EventbriteMasterClass(id: String,
     } else f"£${priceList.head}%,.2f"
   }
 
+  lazy val ratioTicketsLeft = 1 - (tickets.map(_.quantitySold).reduceLeft(_ + _) / tickets.map(_.quantityTotal).reduceLeft(_ + _))
+
   lazy val readableDate = DateTimeFormat.forPattern("d MMMMM yyyy").print(startDate)
 
   lazy val truncatedFirstParagraph = StringUtils.abbreviate(firstParagraph, 250)
 }
 
-case class Ticket(price: Double)
+case class Ticket(price: Double, quantityTotal: Int, quantitySold: Int)
 
 
 object Venue {
