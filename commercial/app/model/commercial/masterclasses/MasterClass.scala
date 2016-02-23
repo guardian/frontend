@@ -101,7 +101,7 @@ case class EventbriteMasterClass(id: String,
     } else f"£${priceList.head}%,.2f"
   }
 
-  lazy val ratioTicketsLeft = 1 - (tickets.map(_.quantitySold).sum / tickets.map(_.quantityTotal).sum)
+  lazy val ratioTicketsLeft = 1 - (tickets.map(_.quantitySold).sum.toDouble / tickets.map(_.quantityTotal).sum)
 
   lazy val readableDate = DateTimeFormat.forPattern("d MMMMM yyyy").print(startDate)
 
