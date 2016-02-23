@@ -1,6 +1,5 @@
 @(gallery: model.Gallery, related: model.RelatedContent, index: Int)(implicit request: RequestHeader)
 @import common.{Edition, LinkTo}
-@import conf.switches.Switches._
 @import layout.ContentWidths.GalleryMedia
 @import views.support.TrailCssClasses.toneClass
 @import views.support.{ImgSrc, RenderClasses}
@@ -9,17 +8,17 @@
 
     <article id="article" class="@RenderClasses(
             Map("content--advertisement-feature" -> gallery.commercial.isAdvertisementFeature,
-                "paid-content--advertisement-feature" -> (NewCommercialContent.isSwitchedOn && gallery.commercial.isAdvertisementFeature)
+                "paid-content--advertisement-feature" -> gallery.commercial.isAdvertisementFeature
             ),
             "content", "content--media", "content--gallery", "tonal", s"tonal--${toneClass(gallery)}"
         )"
         itemscope itemtype="@gallery.metadata.schemaType" role="main">
 
-        @if(gallery.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn){
+        @if(gallery.commercial.isAdvertisementFeature){
             @fragments.guBand()
         }
 
-        @fragments.headTonal(gallery, gallery.commercial.isSponsored(Some(Edition(request))) || gallery.commercial.isFoundationSupported || (gallery.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn))
+        @fragments.headTonal(gallery, gallery.commercial.isSponsored(Some(Edition(request))) || gallery.commercial.isFoundationSupported || gallery.commercial.isAdvertisementFeature)
 
         <div class="content__main tonal__main tonal__main--@toneClass(gallery)">
             <div class="gs-container">
@@ -39,7 +38,7 @@
     </article>
 
     @if(gallery.content.showInRelated &&
-        !(gallery.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn) ) {
+        !gallery.commercial.isAdvertisementFeature ) {
         <div class="gallery__most-popular facia-container fc-container--media hide-on-childrens-books-site">
             <div class="js-gallery-most-popular tonal--@toneClass(gallery)">
                 <div class="fc-container">

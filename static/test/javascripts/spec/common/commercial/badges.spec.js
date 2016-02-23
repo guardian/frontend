@@ -34,11 +34,11 @@ define([
                 var header;
                 switch (sponsorship) {
                     case 'sponsoredfeatures':
-                        header = 'Sponsored by:';
+                        header = 'Supported by:';
                         break;
 
                     case 'advertisement-features':
-                        header = 'Brought to you by:';
+                        header = 'Paid for by:';
                         break;
 
                     default:
