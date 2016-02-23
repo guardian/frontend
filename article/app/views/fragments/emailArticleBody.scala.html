@@ -3,14 +3,12 @@
 @import views.support.EmailArticleImage
 @import views.support.Zurb._
 @import model.liveblog._
+@import model.EmailArticle.EmailArticleAddons
 
 @defining(page.article) { article =>
-    <table class="container">
-        <tr>
-            <td>
-                @paddedRow {
-                    <h1>@article.trail.headline</h1>
-                }
+    @fullRow {
+        <img src="@article.banner">
+    }
 
     @paddedRow {
         <h1>@article.trail.headline</h1>
