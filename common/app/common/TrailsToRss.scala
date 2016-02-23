@@ -132,16 +132,21 @@ object TrailsToRss extends implicits.Collections {
         .distinctBy(faciaContent => faciaContent.properties.maybeContentId.getOrElse(faciaContent.card.id))
         .flatMap(_.properties.maybeContent)
 
-    fromFaciaContent(pressedPage.metadata.webTitle, faciaContentList, pressedPage.metadata.url, pressedPage.metadata.description)
+    val webTitle = if (pressedPage.metadata.contentType != GuardianContentTypes.NetworkFront) {
+      s"${pressedPage.metadata.webTitle} | The Guardian"
+    } else {
+      "The Guardian"
+    }
+
+    fromFaciaContent(webTitle, faciaContentList, pressedPage.metadata.url, pressedPage.metadata.description)
   }
 
-  def fromFaciaContent(webTitle: String, faciaContentList: Seq[ContentType], url: String, description: Option[String] = None)(implicit request: RequestHeader): String  = {
-    val feedTitle = s"$webTitle | The Guardian"
+  def fromFaciaContent(webTitle: String, faciaContentList: Seq[ContentType], url: String, description: Option[String] = None)(implicit request: RequestHeader): String = {
 
     // Feed
     val feed = new SyndFeedImpl
     feed.setFeedType("rss_2.0")
-    feed.setTitle(feedTitle)
+    feed.setTitle(webTitle)
     feed.setDescription(description.getOrElse("Latest news and features from theguardian.com, the world's leading liberal voice"))
     feed.setLink("http://www.theguardian.com" + url)
     feed.setLanguage("en-gb")
