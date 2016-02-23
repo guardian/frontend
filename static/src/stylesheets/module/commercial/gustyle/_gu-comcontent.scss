@@ -143,4 +143,9 @@ $mobile-max-container-width: gs-span(8);
     @include mq(desktop) {
         width: 300px;
     }
+
+    // Right slot width is exactly the size of the banner so we don't want any margin
+    &.ad-slot--right {
+        margin: 0 auto;
+    }
 }
