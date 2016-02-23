@@ -2,6 +2,10 @@
     padding: $gs-baseline / 2;
 }
 
+.gu-display {
+    position: relative;
+}
+
 .gu-display__image-layer {
     width: 100%;
     height: 100%;
@@ -124,8 +128,11 @@ $mobile-max-container-width: gs-span(8);
 .gu-style {
     width: auto;
     border-top: #fedd79 1px solid;
-    margin-left: $gs-gutter / 2;
-    margin-right: $gs-gutter / 2;
+    margin: 0 $gs-gutter / 2;
+
+    @include mq(mobileLandscape) {
+        margin: 0 $gs-gutter;
+    }
 
     @include mq(containerWidestMobile) {
         margin: 0 auto;
