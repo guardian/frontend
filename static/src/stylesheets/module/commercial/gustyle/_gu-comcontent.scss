@@ -122,13 +122,10 @@ $mobile-max-container-width: gs-span(8);
 @include mq-add-breakpoint(containerWidestMobile, $mobile-max-container-width + $gs-gutter * 2);
 
 .gu-style {
+    width: auto;
     border-top: #fedd79 1px solid;
     margin-left: $gs-gutter / 2;
     margin-right: $gs-gutter / 2;
-
-    @include mq(mobile) {
-        margin: 0 auto;
-    }
 
     @include mq(containerWidestMobile) {
         margin: 0 auto;
@@ -142,5 +139,9 @@ $mobile-max-container-width: gs-span(8);
 
     @include mq(desktop) {
         width: 300px;
+    }
+
+    .ad-slot__label {
+        display: none;
     }
 }
