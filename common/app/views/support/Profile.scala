@@ -44,7 +44,7 @@ sealed trait ElementProfile {
     val fitParam = "fit=max"
     val dprParam = if (hidpi) {
       if (isPng) {
-        "dpr=1.5"
+        "dpr=1.3"
       } else {
         "dpr=2"
       }
