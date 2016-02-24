@@ -247,4 +247,13 @@ trait CommercialSwitches {
     sellByDate = new LocalDate(2016, 3, 2),
     exposeClientSide = false
   )
+
+  val OutbrainLowRel = Switch(
+    "Commercial",
+    "outbrain-low-rel",
+    "Show Outbrain in the low relevance slot in place of the merchandising component",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 3, 31),
+    exposeClientSide = true
+  )
 }
