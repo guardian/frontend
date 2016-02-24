@@ -51,7 +51,6 @@ define([
                 commercialFeatures = arguments[6];
 
                 config.switches.outbrain = true;
-                config.switches.outbrainLowRel = true;
                 config.page = {
                     section: 'uk-news',
                     isPreview: false,
