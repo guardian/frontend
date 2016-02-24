@@ -230,15 +230,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val NewCommercialContent = Switch(
-    "Commercial",
-    "new-commercial-content",
-    "New commercial content designs",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 1),
-    exposeClientSide = true
-  )
-
   val OutbrainOnAmp = Switch(
     "Commercial",
     "outbrain-on-amp",

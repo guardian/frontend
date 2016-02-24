@@ -1,13 +1,9 @@
 
 @(page: PageWithStoryPackage)(implicit request: RequestHeader)
-
-@import common.LinkTo
-@import views.BodyCleaner
-@import views.support.TrailCssClasses.toneClass
-@import conf.switches.Switches._
+    @import views.BodyCleaner
 
 @defining(page.article) { article =>
-    @fragments.headTonal(article, article.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn, showMeta = false)
+    @fragments.headTonal(article, article.commercial.isAdvertisementFeature, showMeta = false)
 
     @fragments.emailMainMedia(article)
 

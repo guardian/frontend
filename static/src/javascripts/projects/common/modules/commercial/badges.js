@@ -28,17 +28,17 @@ define([
     var badgesConfig = {
             sponsoredfeatures: {
                 count:      0,
-                header:     config.switches.newCommercialContent ? 'Supported by:' : 'Sponsored by:',
+                header:     'Supported by',
                 namePrefix: 'sp'
             },
             'advertisement-features': {
                 count:      0,
-                header:     config.switches.newCommercialContent ? 'Paid for by' : 'Brought to you by:',
+                header:     'Paid for by',
                 namePrefix: 'ad'
             },
             'foundation-features': {
                 count:      0,
-                header:     'Supported by:',
+                header:     'Supported by',
                 namePrefix: 'fo'
             }
         },
