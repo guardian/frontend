@@ -1,0 +1,115 @@
+.live-navigation {
+    // If we do support flexbox
+    display: flex;
+    @include fs-textSans(5);
+}
+
+.live-navigation__detail {
+    // If we do support flexbox
+    order: 1;
+    // Centre (vertically and horizontally) text
+    // If we do support flexbox
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// If we do support flexbox
+.live-navigation__older {
+    order: 2;
+}
+
+.live-navigation__page-number,
+.live-navigation__pages-length {
+    font-weight: bold;
+}
+
+.live-navigation__link {
+    padding: $gs-gutter / 2;
+    display: inline-block;
+
+    // Override user-agent styles for <a>
+    &:hover {
+        text-decoration: none;
+    }
+
+    .inline-icon {
+        vertical-align: middle;
+        display: inline-block;
+    }
+
+    svg {
+        display: block;
+    }
+}
+
+.live-navigation__link--disabled {
+    cursor: default;
+    color: colour(neutral-2);
+}
+
+.live-navigation__link--primary {
+    background: colour(guardian-brand-dark);
+    border-radius: 100%;
+
+    .inline-icon {
+        fill: #ffffff;
+    }
+
+    svg {
+        width: 21px;
+        height: 21px;
+    }
+}
+
+.live-navigation__link--primary--disabled {
+    background: colour(neutral-4);
+}
+
+.link-navigation__link--secondary {
+    // Override user-agent styles for <a>
+    color: inherit;
+
+    // If we do support flexbox
+    display: inline-flex;
+    vertical-align: middle;
+    align-items: center;
+
+    .inline-icon {
+        fill: currentColor;
+    }
+
+    svg {
+        width: 13px;
+        height: 13px;
+    }
+}
+
+.link-navigation__link--secondary--newer {
+    margin-right: $gs-gutter / 2;
+}
+
+.live-navigation__link--secondary--older {
+    margin-left: $gs-gutter / 2;
+}
+
+.link-navigation__link--secondary--newer__icon {
+    margin-right: $gs-gutter / 2;
+}
+
+.link-navigation__link--secondary--older__icon {
+    margin-right: $gs-gutter / 2;
+    // We only want to change the margin if we can re-order the child using
+    // flexbox
+    @supports (display: inline-flex) {
+        order: 1;
+        // Unset
+        margin-right: 0;
+        margin-left: $gs-gutter / 2;
+    }
+    // TODO: Move this icon in the HTML?
+    // TODO: Float right the older div, text align center the detail div OR just center
+    // TODO: Remove horizontal padding from secondary buttons
+    // TODO: .has-flex?
+}

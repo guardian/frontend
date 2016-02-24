@@ -3,17 +3,28 @@ package liveblog
 object LiveBlogPageModel {
 
   def apply[B](pageSize: Int, blocks: Seq[B])(isRequestedBlock: Option[B => Boolean], id: B => String): Option[LiveBlogPageModel[_ <: B]] = {
-    val (main, pages) = getPages(pageSize, blocks)
+    val (mainPage, restPages) = getPages(pageSize, blocks)
     val noPage = BlockInfo(Nil/*ignored*/, NoPage)
-    val endedPages = noPage :: BlockInfo(main, FirstPage) :: (pages.map(page => BlockInfo(page, BlockPage(id(page.head)))) :+ noPage)
+    val pages = BlockInfo(mainPage, FirstPage) :: restPages.map(page => BlockInfo(page, BlockPage(id(page.head))))
+    val endedPages = noPage :: (pages :+ noPage)
 
     def hasRequestedBlock(page: LiveBlogPageModel[_ <: B]): Boolean = {
       page.blocks.exists(isRequestedBlock.getOrElse(_ => true))
     }
 
-    endedPages.sliding(3).toList.map {
-      case List(later, curr, earlier) =>
-        LiveBlogPageModel(curr.page, blocks, later.self, earlier.self, curr.self)
+    endedPages.sliding(3).toList.zipWithIndex.map {
+      case (List(newer, curr, older), index) =>
+        LiveBlogPageModel(
+          blocks = curr.page,
+          main = blocks,
+          newer = newer.self,
+          older = older.self,
+          canonical = curr.self,
+          pageNumber = index + 1,
+          pagesLength = pages.length,
+          newest = pages.headOption.getOrElse(noPage).self,
+          oldest = pages.lastOption.getOrElse(noPage).self
+        )
     }.find(hasRequestedBlock)
   }
 
@@ -29,7 +40,17 @@ object LiveBlogPageModel {
 
 case class BlockInfo[B](page: Seq[B], self: PageReference)
 
-case class LiveBlogPageModel[+B](blocks: Seq[B], main: Seq[B]/*for key events - TODO remove*/, later: PageReference, earlier: PageReference, canonical: PageReference)
+case class LiveBlogPageModel[+B](
+  blocks: Seq[B],
+  main: Seq[B] /*for key events - TODO remove*/ ,
+  newer: PageReference,
+  older: PageReference,
+  canonical: PageReference,
+  pageNumber: Int,
+  pagesLength: Int,
+  newest: PageReference,
+  oldest: PageReference
+)
 
 sealed trait PageReference {
   def suffix: Option[String]

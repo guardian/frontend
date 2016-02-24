@@ -1,0 +1,75 @@
+@import _root_.liveblog.LiveBlogPageModel
+@import model.liveblog.BodyBlock
+@import model.Article
+@(isLive: Boolean, article: Article, pageModel: LiveBlogPageModel[BodyBlock])
+
+<div class="live-toolbar js-live-toolbar modern-visible">
+    @if(pageModel.pagesLength > 1) {
+        <div class="live-navigation">
+            <div class="live-navigation__detail">
+                <!-- div necessary for flexbox -->
+                <div><span class="live-navigation__page-number">@pageModel.pageNumber</span> of <span class="live-navigation__pages-length">@pageModel.pagesLength</span></div>
+            </div>
+
+            <div class="live-navigation__newer">
+                @defining(pageModel.newest.equals(pageModel.canonical)) { isNewestPage =>
+                    @pageModel.newest.suffix.map { suffix =>
+                        <a @if(!isNewestPage) {
+                            href="/@{article.content.metadata.id}@suffix"
+                            title="Go to page 1"
+                        }
+                        class="live-navigation__link link-navigation__link--secondary link-navigation__link--secondary--newer @if(isNewestPage) { live-navigation__link--disabled }"
+                        data-link-name="newest page">
+                            @fragments.inlineSvg("arrow-left-double", "icon", List("link-navigation__link--secondary--newer__icon"))
+                            Newest
+                        </a>
+                    }
+                }
+
+                @defining(pageModel.newer.suffix.map(x => true).getOrElse(false)) { hasNewerPage =>
+                    <a @pageModel.newer.suffix.map { suffix =>
+                        href="/@{article.content.metadata.id}@suffix"
+                        title="Go to page @{pageModel.pageNumber - 1}"
+                    }
+                    class="live-navigation__link live-navigation__link--primary @if(!hasNewerPage) { live-navigation__link--disabled live-navigation__link--primary--disabled }"
+                    data-link-name="newer page">
+                        @fragments.inlineSvg("arrow-left", "icon")<span class="u-h">Newer</span>
+                    </a>
+                }
+            </div>
+
+            <div class="live-navigation__older">
+                @defining(pageModel.older.suffix.map(x => true).getOrElse(false)) { hasOlderPage =>
+                    <a @pageModel.older.suffix.map { suffix =>
+                        href="/@{article.content.metadata.id}@suffix"
+                        title="Go to page @{pageModel.pageNumber + 1}"
+                    }
+                    class="live-navigation__link live-navigation__link--primary @if(!hasOlderPage) { live-navigation__link--disabled live-navigation__link--primary--disabled }"
+                    data-link-name="older page">
+                        @fragments.inlineSvg("chevron-right", "icon")<span class="u-h">Older</span>
+                    </a>
+                }
+
+                @defining(pageModel.oldest.equals(pageModel.canonical)) { isOldestPage =>
+                    @pageModel.oldest.suffix.map { suffix =>
+                        <a @if(!isOldestPage) {
+                            href="/@{article.content.metadata.id}@suffix"
+                            title="Go to page @pageModel.pagesLength"
+                        }
+                        class="live-navigation__link link-navigation__link--secondary live-navigation__link--secondary--older @if(isOldestPage) { live-navigation__link--disabled }"
+                        data-link-name="oldest page">
+                            @fragments.inlineSvg("arrow-right-double", "icon", List("link-navigation__link--secondary--older__icon"))
+                            Oldest
+                        </a>
+                    }
+                }
+            </div>
+        </div>
+    }
+    @if(isLive) {
+        <div class="update u-h" data-link-name="autoupdate"></div>
+    }
+</div>
+@if(isLive) {
+    <div class="js-update-notification notify-wrapper" data-component="live-notification"></div>
+}
