@@ -174,13 +174,11 @@ const renderPage: (
         commits
     ) => {
         const isInSync = oldestProdDeploy.build === latestCodeDeploy.build;
-        const date = new Date();
-        const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
         return h('.row#root', {}, [
             h('h1', [
                 `Status: ${isInSync ? 'in sync. Ship it!' : 'out of sync.'}`,
                 ' ',
-                `Last updated: ${formattedDate}`
+                `Last updated: ${new Date().toISOString()}`
             ]),
             h('hr', {}, []),
             exp(commits.size > 0) && h('.col', [

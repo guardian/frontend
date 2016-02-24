@@ -400,8 +400,8 @@ define([
         return 'WebSocket' in window;
     }
 
-    function isModernBrowser() {
-        return window.guardian.isModernBrowser;
+    function isEnhanced() {
+        return window.guardian.isEnhanced;
     }
 
     // sync adblock detection is deprecated.
@@ -475,7 +475,7 @@ define([
         hasWebSocket: hasWebSocket,
         getPageSpeed: getPageSpeed,
         breakpoints: breakpoints,
-        isModernBrowser: isModernBrowser,
+        isEnhanced: isEnhanced,
         adblockInUseSync: adblockInUseSync,
         getFirefoxAdblockPlusInstalledSync: getFirefoxAdblockPlusInstalledSync,
         adblockInUse: adblockInUse,

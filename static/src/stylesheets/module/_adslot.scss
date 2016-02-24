@@ -235,9 +235,9 @@
 .ad-slot--container-inline,
 .ad-slot--gallery-inline,
 .ad-slot--liveblog-inline {
-    width: 300px;
+    width: $mpu-original-width;
     margin: $gs-baseline auto;
-    min-height: 250 + $mpu-ad-label-height;
+    min-height: $mpu-original-height + $mpu-ad-label-height;
     text-align: center;
 
     @include mq(mobileLandscape) {
@@ -333,8 +333,8 @@
 }
 .ad-slot--mpu-banner-ad {
     display: none;
-    width: 300px;
-    min-height: 250 + $mpu-ad-label-height;
+    width: $mpu-original-width;
+    min-height: $mpu-original-height + $mpu-ad-label-height;
     margin-bottom: $gs-baseline*2;
 
     @include mq(desktop) {
