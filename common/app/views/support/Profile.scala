@@ -14,6 +14,7 @@ sealed trait ElementProfile {
 
   def width: Option[Int]
   def height: Option[Int]
+  def hidpi: Boolean
   def compression: Int
 
   def elementFor(image: ImageMedia): Option[ImageAsset] = {
@@ -36,13 +37,15 @@ sealed trait ElementProfile {
 
   // NOTE - if you modify this in any way there is a decent chance that you decache all our images :(
   lazy val resizeString = {
-    val qualityparam = "q=85"
+    val qualityparam = if(hidpi){"q=20"}else{"q=55"}
     val autoParam = "auto=format"
-    val sharpParam = "sharp=10"
+    val sharpParam = "usm=12"
+    val fitParam = "fit=max"
+    val dprParam = if(hidpi){"dpr=2"}else{""}
     val heightParam = height.map(pixels => s"h=$pixels").getOrElse("")
     val widthParam = width.map(pixels => s"w=$pixels").getOrElse("")
 
-    val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam).filter(_.nonEmpty).mkString("&")
+    val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam, fitParam, dprParam).filter(_.nonEmpty).mkString("&")
     s"?$params"
   }
 
@@ -52,6 +55,7 @@ sealed trait ElementProfile {
 case class Profile(
   override val width: Option[Int] = None,
   override val height: Option[Int] = None,
+  override val hidpi: Boolean = false,
   override val compression: Int = 95) extends ElementProfile
 
 object VideoProfile {
@@ -61,6 +65,7 @@ object VideoProfile {
 case class VideoProfile(
   override val width: Some[Int],
   override val height: Some[Int],
+  override val hidpi: Boolean = false,
   override val compression: Int = 95) extends ElementProfile {
 
   lazy val isRatioHD: Boolean = Precision.compareTo(VideoProfile.ratioHD.doubleValue, aspectRatio.doubleValue, 0.1d) == 0
@@ -140,9 +145,9 @@ object ImgSrc extends Logging {
     widths.profiles.map { profile => srcsetForProfile(profile, imageContainer) } mkString ", "
   }
 
-  def srcsetForBreakpoint(breakpointWidth: BreakpointWidth, breakpointWidths: Seq[BreakpointWidth], maybePath: Option[String] = None, maybeImageMedia: Option[ImageMedia] = None) = {
+  def srcsetForBreakpoint(breakpointWidth: BreakpointWidth, breakpointWidths: Seq[BreakpointWidth], maybePath: Option[String] = None, maybeImageMedia: Option[ImageMedia] = None, hidpi: Boolean = false) = {
     breakpointWidth.toPixels(breakpointWidths)
-      .map(browserWidth => Profile(width = Some(browserWidth)))
+      .map(browserWidth => Profile(width = Some(browserWidth), hidpi = hidpi))
       .map { profile => {
         maybePath
           .map(url => srcsetForProfile(profile, url))
