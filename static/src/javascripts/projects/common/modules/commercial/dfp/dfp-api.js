@@ -462,9 +462,9 @@ define([
                 depth = 0.5;
 
             chain(adverts).and(keys).and(filter, function (adSlotId) {
-                return  !adverts[adSlotId].isLoading &&
-                        !adverts[adSlotId].isRendered &&
-                        // if the position of the ad is above the viewport - offset (half screen size)
+                return !adverts[adSlotId].isLoading &&
+                       !adverts[adSlotId].isRendered &&
+                       // if the position of the ad is above the viewport - offset (half screen size)
                     scrollBottom > document.getElementById(adSlotId).getBoundingClientRect().top + scrollTop - viewportHeight * depth;
             }).and(forEach, function (slot) {
                 loadSlot(slot);
