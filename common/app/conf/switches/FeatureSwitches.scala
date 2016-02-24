@@ -5,15 +5,6 @@ import org.joda.time.LocalDate
 
 trait FeatureSwitches {
 
-  val RemoveStickyNav = Switch(
-    "Feature",
-    "remove-sticky-nav",
-    "Replaces the current sticky ad/nav implementation with a new sticky ad implementation",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 1),
-    exposeClientSide = true
-  )
-
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
     "fixtures-and-results-container",
@@ -401,7 +392,7 @@ trait FeatureSwitches {
     "liveblog-toast",
     "Enables Liveblog toast",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 1),
+    sellByDate = new LocalDate(2016, 3, 8),
     exposeClientSide = true
   )
 }
