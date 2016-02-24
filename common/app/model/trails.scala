@@ -31,10 +31,8 @@ object Trail {
         IsRatio(5, 3, image.width, image.height)
       }
 
-      // If there isn't a 5:3 image, take the largest one.
-      val bestFitImage = filteredTrailImages.sortBy(-_.width).headOption.orElse(imageMedia.largestImage)
-
-      bestFitImage.map { bestImage =>
+      // If there isn't a 5:3 image, no ImageMedia object will be created.
+      filteredTrailImages.sortBy(-_.width).headOption.map { bestImage =>
         ImageMedia.make(List(bestImage))
       }
     }
