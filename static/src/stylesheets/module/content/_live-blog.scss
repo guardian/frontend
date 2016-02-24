@@ -149,6 +149,10 @@ $block-padding-right: $gs-gutter;
 
 /* Blocks
    ========================================================================== */
+.blocks {
+    margin-top: $gs-baseline;
+}
+
 .block {
     @include clearfix;
 
