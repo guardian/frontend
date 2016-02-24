@@ -16,7 +16,7 @@ object FaciaContentFrontendHelpers {
     def frontendTags: Seq[model.Tag] = faciaContent.properties.maybeContent.map(_.tags.tags).getOrElse(Nil)
 
     val trailPicture: Option[ImageMedia] = {
-      val imageOverride = faciaContent.properties.image.map(ImageOverride.createImageMedia)
+      val imageOverride = faciaContent.properties.image.flatMap(ImageOverride.createImageMedia)
       val defaultTrailPicture = faciaContent.properties.maybeContent.flatMap(_.trail.trailPicture)
       imageOverride.orElse(defaultTrailPicture)
     }

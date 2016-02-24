@@ -5,7 +5,7 @@ import model.pressed.{Cutout, Replace, Image}
 
 object ImageOverride {
 
-  def createImageMedia(image: Image): ImageMedia = {
+  def createImageMedia(image: Image): Option[ImageMedia] = {
 
     val (maybeSrc, maybeWidth, maybeHeight) = image match {
       case cutout: Cutout => (Some(cutout.imageSrc), cutout.imageSrcHeight, cutout.imageSrcWidth)
@@ -21,13 +21,15 @@ object ImageOverride {
 
     val imageAsset = assetFields.map( fields => {
       ImageAsset(
-      index = 0,
-      fields = fields,
-      mediaType = AssetType.Image.name,
-      mimeType = Some("image/jpg"),
-      url = maybeSrc )
+        index = 0,
+        fields = fields,
+        mediaType = AssetType.Image.name,
+        mimeType = Some("image/jpg"),
+        url = maybeSrc )
     })
 
-    ImageMedia.make(imageAsset.toList)
+    imageAsset.map { image =>
+      ImageMedia.make(List(image))
+    }
   }
 }
