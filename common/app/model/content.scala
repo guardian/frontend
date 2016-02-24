@@ -326,16 +326,6 @@ object Article {
       hasInlineMerchandise = content.isbn.isDefined || content.commercial.hasInlineMerchandise)
   }
 
-  private def copyTrail(content: Content) = {
-    content.trail.copy(
-      commercial = copyCommercial(content),
-      trailPicture = content.elements.thumbnail.map(_.images)
-        .find(_.imageCrops.exists(_.width >= 620))
-        .orElse(content.elements.mainPicture.map(_.images))
-        .orElse(content.elements.videos.headOption.map(_.images))
-    )
-  }
-
   private def copyMetaData(content: Content, commercial: Commercial, lightbox: GenericLightbox, trail: Trail, tags: Tags) = {
 
     val contentType = if (content.tags.isLiveBlog) GuardianContentTypes.LiveBlog else GuardianContentTypes.Article
@@ -407,7 +397,7 @@ object Article {
     val fields = content.fields
     val elements = content.elements
     val tags = content.tags
-    val trail = copyTrail(content)
+    val trail = content.trail
     val commercial = copyCommercial(content)
     val lightboxProperties = GenericLightboxProperties(
       lightboxableCutoffWidth = 620,

@@ -20,6 +20,7 @@ object Trail {
     // Try to pick a thumbnail element which contains an image with at least 460 width.
     val trailImageMedia = elements.thumbnail.find(_.images.imageCrops.exists(_.width >= trailPicMinDesiredSize)).map(_.images)
       .orElse(elements.mainPicture.map(_.images))
+      .orElse(elements.videos.headOption.map(_.images))
       .orElse(elements.thumbnail.map(_.images))
 
     // Keep the biggest 5:3 image. At render-time, the image resizing service will size the image according to card width.
