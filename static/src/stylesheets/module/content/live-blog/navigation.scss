@@ -4,7 +4,10 @@
     @include clearfix;
     // If we do support flexbox
     display: flex;
-    @include fs-textSans(5);
+    @include fs-textSans(2);
+    @include mq(mobileLandscape) {
+        @include fs-textSans(5);
+    }
 }
 
 .live-navigation__detail {
@@ -96,22 +99,18 @@
     }
 }
 
-.link-navigation__link--secondary--newer {
-    margin-right: $gs-gutter / 2;
-}
-
-.live-navigation__link--secondary--older {
-    margin-left: $gs-gutter / 2;
-}
-
+.link-navigation__link--secondary--newer,
 .link-navigation__link--secondary--newer__icon {
-    margin-right: $gs-gutter / 2;
+    margin-right: $gs-gutter / 4;
+    @include mq(mobileLandscape) {
+        margin-right: $gs-gutter / 2;
+    }
 }
 
+.live-navigation__link--secondary--older,
 .link-navigation__link--secondary--older__icon {
-    margin-left: $gs-gutter / 2;
-    // TODO: Move this icon in the HTML?
-    // TODO: Float right the older div, text align center the detail div OR just center
-    // TODO: Remove horizontal padding from secondary buttons
-    // TODO: .has-flex?
+    margin-left: $gs-gutter / 4;
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter / 2;
+    }
 }
