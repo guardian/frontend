@@ -151,4 +151,9 @@ $mobile-max-container-width: gs-span(8);
     .ad-slot__label {
         display: none;
     }
+
+    // Right slot width is exactly the size of the banner so we don't want any margin
+    &.ad-slot--right {
+        margin: 0 auto;
+    }
 }
