@@ -478,12 +478,11 @@ $block-padding-right: $gs-gutter;
 .dropdown--live-feed {
     border-top: 0;
 
+    $content-gutter: $gs-gutter / 2;
+
     @include mq($until: desktop) {
-        margin-right: $gs-gutter*-1;
-        margin-left: $gs-gutter*-1;
-        padding-right: $gs-gutter;
-        padding-left: $gs-gutter;
-        padding-top: $gs-baseline*4;
+        margin-right: $content-gutter * -1;
+        margin-left: $content-gutter * -1;
     }
 
     .dropdown__button {
@@ -491,10 +490,6 @@ $block-padding-right: $gs-gutter;
             background-color: #ffffff;
             padding-right: $gs-gutter;
             padding-left: $gs-gutter;
-            position: absolute;
-            top: 0;
-            right: 0;
-            left: 0;
         }
 
         @include mq(desktop) {
@@ -522,7 +517,7 @@ $block-padding-right: $gs-gutter;
 
         @include mq($until: desktop) {
             background-color: colour(neutral-8);
-            padding: $gs-baseline 0;
+            padding: $gs-baseline $content-gutter;
         }
 
         @include mq(desktop) {
@@ -633,7 +628,6 @@ $timeline-width: 15px;
         display: inline-block;
         font-weight: 700;
         float: right;
-        margin-top: 10px;
         opacity: 1;
         padding-left: $gs-gutter * 5/4;
         transition: opacity .3s ease-in-out;

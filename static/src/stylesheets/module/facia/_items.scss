@@ -54,7 +54,7 @@
 
 .fc-slice__item--mpu-candidate {
     @include mq(tablet) {
-        min-height: 250 + $mpu-ad-label-height;
+        min-height: $mpu-original-height + $mpu-ad-label-height;
     }
 }
 .fc-slice__item--no-mpu {

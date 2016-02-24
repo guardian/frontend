@@ -45,7 +45,7 @@ import tools.MatchListFeatureTools
         import browser._
 
         And("I click the 'next' results link")
-        findFirst("[data-link-name=next]").click()
+        scrollToElementAndClick("[data-link-name=next]", browser)
 
         Then("I should see additional results")
         val matches = $(".football-match__team")

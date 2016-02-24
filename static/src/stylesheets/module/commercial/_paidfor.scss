@@ -10,18 +10,30 @@
 .commercial--paidfor {
 
     .commercial__header,
-    .commercial__title,
-    .rich-link__header {
+    .commercial__title {
         @include f-headlineSans;
     }
 
-    .rich-link__header {
+    /* Card background */
+
+    .tone-paidfor--item, .fc-item {
+        background: colour(paid-article-subheader);
+    }
+
+
+    /* Title text */
+
+    .fc-item__header, .rich-link__header {
+        @include f-headlineSans;
         font-size: get-font-size(header, 2);
         line-height: get-line-height(header, 1);
     }
 
     .commercial__body {
         padding-top: $gs-gutter / 2;
+        max-width: none;
+        padding-left: $gs-gutter / 2;
+        padding-right: $gs-gutter / 2;
     }
 
     .rich-link__standfirst {
@@ -153,8 +165,19 @@
     }
 }
 
+.commercial__show-mores {
+    margin-top: $gs-baseline / 2;
+}
+
 /* Badges
    ========================================================================== */
+
+.commercial--paidfor {
+    .ad-slot--paid-for-badge {
+        padding-left: $gs-gutter / 2;
+        padding-right: $gs-gutter / 2;
+    }
+}
 
 .commercial--paidfor,
 .commercial--dfp-single {
@@ -241,7 +264,6 @@
 }
 
 .tone-paidfor--item {
-    background: colour(paid-article-subheader);
     flex: 0 1 auto;
 
     .rich-link__container:before {

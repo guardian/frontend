@@ -9,7 +9,8 @@ define([
     'common/utils/template',
     'common/views/svgs',
     'text!common/views/commercial/creatives/expandable-video.html',
-    'lodash/objects/merge'
+    'lodash/objects/merge',
+    'common/modules/commercial/creatives/add-tracking-pixel'
 ], function (
     bean,
     bonzo,
@@ -21,7 +22,9 @@ define([
     template,
     svgs,
     ExpandableVideoTpl,
-    merge) {
+    merge,
+    addTrackingPixel
+) {
 
     /**
      * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10028247
@@ -64,7 +67,7 @@ define([
                     $('.ad-exp-collapse__slide', $ExpandableVideo).css('height', this.closedHeight);
 
                     if (this.params.trackingPixel) {
-                        this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
+                        addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
                     }
                     $ExpandableVideo.appendTo(this.$adSlot);
                     resolve();

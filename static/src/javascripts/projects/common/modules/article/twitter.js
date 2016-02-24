@@ -19,15 +19,16 @@ define([
     config,
     detect,
     mediator,
-    debounce) {
-    var body = qwery('.js-liveblog-body, .js-article__body');
+    debounce
+) {
+    var body = qwery('.js-liveblog-body, .js-article__body, .js-article__body--minute-article');
 
     function bootstrap() {
         mediator.on('window:throttledScroll', debounce(enhanceTweets, 200));
     }
 
     function enhanceTweets() {
-        if (detect.getBreakpoint() === 'mobile' || !config.switches.enhanceTweets) {
+        if ((detect.getBreakpoint() === 'mobile' && !config.page.isMinuteArticle) || !config.switches.enhanceTweets) {
             return;
         }
 

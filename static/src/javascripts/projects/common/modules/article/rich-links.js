@@ -25,7 +25,8 @@ define([
     spaceFiller,
     imagesModule,
     richLinkTagTmpl,
-    contains) {
+    contains
+) {
     function upgradeRichLink(el) {
         var href = $('a', el).attr('href'),
             matches = href.match(/(?:^https?:\/\/(?:www\.|m\.code\.dev-)theguardian\.com)?(\/.*)/);

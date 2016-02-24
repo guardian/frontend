@@ -6,13 +6,8 @@ define([
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/fronts-on-articles2',
-    'common/modules/experiments/tests/remove-sticky-nav',
-    'common/modules/experiments/tests/related-variants',
+    'common/modules/experiments/tests/identity-register-v2',
     'common/modules/experiments/tests/identity-sign-in-v2',
-    'common/modules/experiments/tests/rtrt-email-form-article-promo',
-    'common/modules/experiments/tests/prebid-performance',
-    'common/modules/experiments/tests/liveblog-toast',
-    'common/modules/experiments/tests/userzoom-survey-message-v2',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -30,13 +25,8 @@ define([
     store,
     mvtCookie,
     FrontsOnArticles2,
-    RemoveStickyNav,
-    RelatedVariants,
+    IdentityRegisterV2,
     IdentitySignInV2,
-    RtrtEmailFormArticlePromo,
-    PrebidPerformance,
-    LiveblogToast,
-    UserzoomSurveyMessageV2,
     flatten,
     forEach,
     keys,
@@ -45,17 +35,13 @@ define([
     map,
     find,
     pick,
-    chain) {
+    chain
+) {
 
     var TESTS = flatten([
         new FrontsOnArticles2(),
-        new RemoveStickyNav(),
-        new RelatedVariants(),
-        new IdentitySignInV2(),
-        new RtrtEmailFormArticlePromo(),
-        new PrebidPerformance(),
-        new LiveblogToast(),
-        new UserzoomSurveyMessageV2()
+        new IdentityRegisterV2(),
+        new IdentitySignInV2()
     ]);
 
     var participationsKey = 'gu.ab.participations';

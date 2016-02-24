@@ -2,8 +2,7 @@
 @import common.{Edition, PagePaths}
 @import model.FrontProperties.empty
 @import services.IndexPage
-@import views.html.fragments.containers.facia_cards.container
-@import views.html.fragments.containers.facia_cards.containerScaffold
+@import views.html.fragments.containers.facia_cards.{container, containerScaffold}
 @import views.html.fragments.pagination
 @import views.support.RenderClasses
 
@@ -14,13 +13,16 @@
 }
 
 <div class="l-side-margins">
-    <div class="@RenderClasses(Map(
-        "u-cf" -> true,
-        "index-page" -> true,
-        "js-sponsored-front" -> (index.commercial.isSponsored(Some(Edition(request))) ||
-            index.commercial.isAdvertisementFeature ||
-            index.commercial.isFoundationSupported),
-        "fc-container--advertisement-feature" -> index.commercial.isAdvertisementFeature)
+    <div
+        class="@RenderClasses(
+            Map(
+                "js-sponsored-front" -> (
+                    index.commercial.isSponsored(Some(Edition(request))) ||
+                    index.commercial.isAdvertisementFeature ||
+                    index.commercial.isFoundationSupported
+                ),
+                "fc-container--advertisement-feature paid-content--advertisement-feature" -> index.commercial.isAdvertisementFeature
+            ), "u-cf index-page"
         )"
         data-link-name="Front | @request.path"
         @index.tags.sponsor.map { sponsor =>
@@ -30,6 +32,10 @@
             data-sponsorship="@sponsorshipType"
         }
         role="main">
+
+        @if(index.commercial.isAdvertisementFeature) {
+            @fragments.guBand()
+        }
 
         @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
             @containers.map { containerDefinition =>

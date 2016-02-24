@@ -91,9 +91,14 @@ export interface GitHubCompareJson {
     commits: Array<GitHubCommitJson>
 }
 
+export interface GitHubNestedAuthorJson {
+    login: string;
+}
+
 export interface GitHubCommitJson {
     html_url: string;
     commit: GitHubNestedCommitJson;
+    author: GitHubNestedAuthorJson;
 }
 
 interface GitHubNestedCommitJson {
@@ -108,6 +113,7 @@ interface GitHubNestedCommitAuthorJson {
 export interface GitHubCommit {
     url: string;
     authorName: string;
+    authorLogin: string;
     message: string;
 }
 

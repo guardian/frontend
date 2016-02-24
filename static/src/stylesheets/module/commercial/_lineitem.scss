@@ -51,7 +51,6 @@
         @include fs-header(1);
         font-weight: 500;
         padding-top: 2px;
-        margin-bottom: $gs-baseline/2;
     }
     .lineitem__desc {
         @include fs-headline(1);
@@ -59,9 +58,9 @@
         display: block !important;
     }
     .lineitem__meta {
-        color: colour(neutral-2);
         @include fs-textSans(1);
-        margin-bottom: $gs-baseline/2;
+        color: colour(neutral-2);
+        margin: $gs-baseline/2 0 0;
     }
     .lineitem__meta__highlight {
         color: colour(guardian-brand);
@@ -69,6 +68,12 @@
     .lineitem__meta__strong {
         color: colour(neutral-1);
         font-weight: bold;
+    }
+    .lineitem__cta {
+        margin-top: $gs-baseline/2;
+    }
+    .lineitem__scarcity {
+        color: guss-colour(rainbow-red);
     }
 
     /* Line items - high relevance */

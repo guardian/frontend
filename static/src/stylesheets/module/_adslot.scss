@@ -33,6 +33,12 @@
     }
  }
 
+.ad-slot--right {
+    &.is-sticky {
+        width: 300px;
+    }
+}
+
 .ad-slot__label {
     height: $mpu-ad-label-height;
     background-color: colour(neutral-8);
@@ -66,14 +72,12 @@
     background-color: colour(neutral-8);
     display: none;
 
-    .js-on .new-sticky-ad & {
+    .sticky-ad-banner & {
         z-index: 1022;
         width: 100%;
         transform: translateZ(0);
         will-change: transform;
         position: relative;
-        overflow: hidden;
-        transition: max-height 1s cubic-bezier(0, 0, 0, .985);
     }
 
     &.top-banner-ad-container--below-nav {
@@ -123,7 +127,7 @@
     min-height: 90px;
 
     // overwrite if in the new sticky ad AB test
-    .new-sticky-ad & {
+    .sticky-ad-banner & {
         transition: none;
         transform: none;
         min-height: auto;
@@ -131,14 +135,14 @@
 }
 .top-banner-ad-container--above-nav {
     @include mq(tablet) {
-        .js-on:not(.is-adfree) & {
+        .js-on & {
             display: block;
         }
     }
 }
 .top-banner-ad-container--below-nav {
     @include mq(desktop) {
-        .js-on:not(.is-adfree) & {
+        .js-on & {
             display: block;
         }
     }
@@ -165,14 +169,6 @@
     @include mq(wide) {
         width: gs-span(16) - ($left-column-wide + $gs-gutter);
         padding-left: $left-column-wide + $gs-gutter;
-    }
-
-    @include mq(wide) {
-        /* Fluid ads just expand horizontally to the size of their container */
-        &.ad-slot--fluid {
-            padding-left: 0;
-            width: auto;
-        }
     }
 
     .top-banner-ad-container--mobile & {
@@ -221,7 +217,8 @@
             text-align: center;
 
             .ad-slot__label {
-                margin: 0 auto;
+                margin-left: auto;
+                margin-right: auto;
             }
         }
     }
@@ -238,9 +235,9 @@
 .ad-slot--container-inline,
 .ad-slot--gallery-inline,
 .ad-slot--liveblog-inline {
-    width: 300px;
+    width: $mpu-original-width;
     margin: $gs-baseline auto;
-    min-height: 250 + $mpu-ad-label-height;
+    min-height: $mpu-original-height + $mpu-ad-label-height;
     text-align: center;
 
     @include mq(mobileLandscape) {
@@ -336,8 +333,8 @@
 }
 .ad-slot--mpu-banner-ad {
     display: none;
-    width: 300px;
-    min-height: 250 + $mpu-ad-label-height;
+    width: $mpu-original-width;
+    min-height: $mpu-original-height + $mpu-ad-label-height;
     margin-bottom: $gs-baseline*2;
 
     @include mq(desktop) {
@@ -467,12 +464,12 @@
     }
 }
 .ad-slot--im {
-    box-sizing: border-box;
-    max-width: 50%;
     float: left;
+    margin: 5px $gs-gutter $gs-baseline 0;
 
-    @include mq(mobileLandscape) {
-        max-width: $left-column-wide + $gs-gutter;
+    @include mq($until: mobileLandscape) {
+        margin-bottom: $gs-baseline / 2;
+        margin-right: $gs-gutter / 2;
     }
 }
 .ad-slot--fobadge.ad-slot--im {

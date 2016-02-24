@@ -39,7 +39,8 @@ define([
     toArray,
     bindAll,
     RelativeDates,
-    NotificationCounter) {
+    NotificationCounter
+) {
 
     return function (opts) {
         var updateDelay = function (delay) {
@@ -53,9 +54,9 @@ define([
         };
 
         var scrolledPastTopBlock = function () {
-            return $liveblogBody.offset().top < window.scrollY;
+            return $liveblogBody.offset().top < window.pageYOffset;
         };
-        var isLivePage = !(window.location.href.search('[?&]page=') !== -1);
+        var isLivePage = window.location.search.indexOf('?page=') === -1;
 
 
         var setUpListeners = function () {
@@ -76,7 +77,7 @@ define([
             });
 
             mediator.on('modules:toast__tofix:unfixed', function () {
-                if (isLivePage) {
+                if (isLivePage && newBlocks) {
                     fastdom.write(function () {
                         $toastButton.addClass('loading');
                     }).then(function () {
@@ -202,7 +203,7 @@ define([
         var $toastText = $('.toast__text', this.$toastButton);
         var toastContainer = qwery('.toast__container')[0];
 
-        latestBlockId = $liveblogBody.data('most-recent-block');
+        latestBlockId = 'block-' + $liveblogBody.data('most-recent-block');
 
         new NotificationCounter().init();
         new Sticky(toastContainer, { top: options.toastOffsetTop, emitMessage: true, containInParent: false }).init();

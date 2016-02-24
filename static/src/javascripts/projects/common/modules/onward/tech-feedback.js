@@ -4,7 +4,7 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
-    'common/modules/commercial/dfp-api',
+    'common/modules/commercial/dfp/dfp-api',
     'common/modules/experiments/ab',
     'lodash/collections/map',
     'lodash/collections/reduce',
@@ -21,7 +21,8 @@ define([
     map,
     reduce,
     assign,
-    keys) {
+    keys
+) {
 
     function objToString(obj) {
         return reduce(obj, function (str, value, key) {
@@ -59,7 +60,7 @@ define([
                     browser: window.navigator.userAgent,
                     page: window.location,
                     width: window.innerWidth,
-                    adBlock: detect.adblockInUse(),
+                    adBlock: detect.adblockInUseSync(),
                     devicePixelRatio: window.devicePixelRatio,
                     abTests : summariseAbTests(ab.getParticipations())
                 };

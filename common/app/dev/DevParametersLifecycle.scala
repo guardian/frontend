@@ -33,7 +33,8 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
     "rel", // used by browsersync
     "pageSize",
     "projectName",
-    "stage"
+    "stage",
+    "amp" // used in dev to request the amp version of a specific url
   )
 
   val commercialParams = Seq(

@@ -15,7 +15,8 @@ define([
     url,
     component,
     ActivityStream,
-    mapValues) {
+    mapValues
+) {
     function getActivityStream(cb) {
         var activityStream, opts = {
             userId: 'data-user-id',

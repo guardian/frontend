@@ -6,22 +6,6 @@
 @import model.Page.getContent
 <!DOCTYPE html>
 <html id="js-context" class="js-off is-not-modern id--signed-out" data-page-path="@request.path">
-
-<!--
-
-##::::: ##: ########::::::: ###:::: ########:: ########:::: ##:::: ##: ####: ########:: ####: ##::: ##:: ######::
-##: ##: ##: ##.....::::::: ## ##::: ##.... ##: ##.....::::: ##:::: ##:. ##:: ##.... ##:. ##:: ###:: ##: ##... ##:
-##: ##: ##: ##::::::::::: ##:. ##:: ##:::: ##: ##:::::::::: ##:::: ##:: ##:: ##:::: ##:: ##:: ####: ##: ##:::..::
-##: ##: ##: ######:::::: ##:::. ##: ########:: ######:::::: #########:: ##:: ########::: ##:: ## ## ##: ##:: ####
-##: ##: ##: ##...::::::: #########: ##.. ##::: ##...::::::: ##.... ##:: ##:: ##.. ##:::: ##:: ##. ####: ##::: ##:
-##: ##: ##: ##:::::::::: ##.... ##: ##::. ##:: ##:::::::::: ##:::: ##:: ##:: ##::. ##::: ##:: ##:. ###: ##::: ##:
- ###. ###:: ########:::: ##:::: ##: ##:::. ##: ########:::: ##:::: ##: ####: ##:::. ##: ####: ##::. ##:. ######::
-
-Ever thought about joining us?
-http://developers.theguardian.com/join-the-team.html
-
--->
-
 <head>
     @fragments.head(page, projectName, head)
 </head>
@@ -61,7 +45,7 @@ http://developers.theguardian.com/join-the-team.html
                     @fragments.commercial.topBannerMobile(page.metadata, edition)
                 }
 
-                <div id="maincontent" class="js-maincontent" tabindex="0"></div>
+                <div id="maincontent" tabindex="0"></div>
             } else {
                 @fragments.header(page)
             }

@@ -29,7 +29,8 @@ define([
     uniq,
     filter,
     some,
-    chain) {
+    chain
+) {
     var getLastCellInClue = function (clue) {
         var ax = {
             'true': 'x',

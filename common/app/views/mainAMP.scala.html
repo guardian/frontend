@@ -1,8 +1,7 @@
-@(page: model.Page, related: model.RelatedContent)(body: Html)(implicit request: RequestHeader)
+@(page: model.Page, related: model.RelatedContent, content: model.Content)(body: Html)(implicit request: RequestHeader)
 
-@import common.{AnalyticsHost, LinkTo}
+@import common.{AnalyticsHost, LinkTo, CanonicalLink}
 @import conf.Configuration
-@import model.Page
 @import views.support.OmnitureAnalyticsData
 
 <!doctype html>
@@ -10,9 +9,10 @@
     <head>
         @* "utf-8" meta tag needs to be first according to AMP spec *@
         <meta charset="utf-8">
-        <meta name="amp-3p-iframe-src" content="https://static.theguardian.com/amp/remote.html">
+        <meta name="amp-3p-iframe-src" content="https://www.theguardian.com/amp/remote.html">
 
-        @fragments.metaData(page, true)
+
+        @fragments.metaData(page, amp = true)
         <title>@views.support.Title(page)</title>
         @fragments.amp.stylesheets.main(page.metadata)
         <script custom-element="amp-font" src="https://cdn.ampproject.org/v0/amp-font-0.1.js" async></script>
@@ -21,9 +21,9 @@
         <script custom-element="amp-instagram" src="https://cdn.ampproject.org/v0/amp-instagram-0.1.js" async></script>
         <script custom-element="amp-list" src="https://cdn.ampproject.org/v0/amp-list-0.1.js" async ></script>
         <script custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.1.js" async ></script>
-        @if(page.metadata.id == "info/developer-blog/2015/jan/05/delivering-continuous-delivery-continuously") {
-            <script custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" async></script>
-        }
+        @* Required for outbrain served in an amp-iframe *@
+        <script custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js" async></script>
+        <script custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" async></script>
         <style>body {opacity: 0}</style><noscript><style>body {opacity: 1}</style></noscript>
         <script src="https://cdn.ampproject.org/v0.js" async></script>
     </head>
@@ -38,38 +38,58 @@
                 <amp-pixel src="//beacon.guim.co.uk/count/pva.gif"></amp-pixel>
             }
         }
-        @if(page.metadata.id == "info/developer-blog/2015/jan/05/delivering-continuous-delivery-continuously") {
-            <amp-analytics config="https://j.ophan.co.uk/amp.json"></amp-analytics>
-        }
+        <amp-analytics config="https://ophan.theguardian.com/amp.json"></amp-analytics>
 
         <div class="main-body">
 
-            <header class="main-header">
-                <a href="@LinkTo{/}" class="logo-wrapper" name="top">
-                    @fragments.inlineSvg("guardian-logo-160", "logo")
-                </a>
-            </header>
+            @fragments.amp.header()
 
             @body
 
-            @Page.getContentPage(page).map { content =>
-                @if(content.item.content.hasStoryPackage) {
-                    @fragments.amp.storyPackageAmp(related)
-                }
-                @if(!content.item.tags.series.isEmpty) {
-                    @content.item.tags.series.map { tag =>
-                        @fragments.amp.onwardTemplateAmp("series/mf2/" + tag.id + ".json")
-                    }
-                }
-                @if(!content.item.content.hasStoryPackage && content.item.tags.series.isEmpty){
-                    @fragments.amp.onwardTemplateAmp("related-mf2/" + page.metadata.id + ".json")
-                }
+            @if(content.trail.isCommentable) {
+                <div class="content__comments-container">
+                    <a href="@LinkTo(page.metadata.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, page.metadata.webUrl)))#comments" class="cta cta--medium cta--comments">
+                        @fragments.inlineSvg("comment-16", "icon") View comments
+                    </a>
+                </div>
             }
 
-            @fragments.amp.onwardTemplateAmp("most-read-mf2.json")
-            @fragments.amp.onwardTemplateAmp("container-mf2/1/0/international.json")
-            @fragments.amp.onwardTemplateAmp("container-mf2/1/1/international.json")
-            @fragments.amp.onwardTemplateAmp("container-mf2/1/2/international.json")
+            @if(content.metadata.section != "childrens-books-site") {
+                @if(content.hasStoryPackage) {
+                    @fragments.amp.storyPackageAmp(related)
+                }
+                @if(content.tags.series.nonEmpty) {
+                    @content.tags.series.map { tag =>
+                        @fragments.amp.onwardTemplateAmp("series-mf2/" + tag.id + ".json")
+                    }
+                }
+                @if(content.showInRelated
+                    && !content.hasStoryPackage
+                    && content.tags.series.isEmpty) {
+                    @fragments.amp.onwardTemplateAmp("related-mf2/" + page.metadata.id + ".json")
+                }
+
+                @fragments.amp.outbrain(page)
+                @* Show top container for section front only if current page belongs to one of the following sections *@
+                @* Otherwise show top container for network front *@
+                @* TODO: This list also exists in the JS for fronts on articles a/b test. Pending a decision on that, this should go in the jsconfig, or be removed*@
+
+                @defining({
+                    val whitelistedSections = List("commentisfree", "sport", "football", "fashion", "lifeandstyle",
+                                    "education", "culture", "business", "technology", "politics", "environment", "travel",
+                                    "film", "media", "money", "society", "science", "music", "books", "stage", "cities",
+                                    "tv-and-radio", "artanddesign", "global-development")
+                    whitelistedSections.contains(page.metadata.section)
+                }) { isWhitelistedSection =>
+                    @if(isWhitelistedSection) {
+                        @fragments.amp.onwardTemplateAmp(s"container/count/1/offset/0/section/${page.metadata.section}/mf2.json")
+                    } else {
+                        @fragments.amp.onwardTemplateAmp(s"container/count/1/offset/0/mf2.json")
+                    }
+                    @fragments.amp.onwardTemplateAmp("most-read-mf2.json")
+                    @fragments.amp.onwardTemplateAmp(s"container/count/3/offset/${if(isWhitelistedSection) 0 else 1}/mf2.json")
+                }
+            }
 
             <amp-font
                 layout="nodisplay"

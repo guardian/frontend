@@ -199,7 +199,14 @@ object ContentWidths {
   }
 
   object MinuteMedia extends ContentRelation {
-    override val inline = BodyMedia.inline
+    override val inline = WidthsByBreakpoint(
+      // Inline images, on mobile, in minute articles have a large width
+      // to retain a high resolution when cropping using `object-fit: cover;`
+      mobile = Some(1000.px),
+      tablet = Some(300.px),
+      desktop = Some(380.px),
+      leftCol = Some(460.px),
+      wide = Some(540.px))
 
     override val thumbnail = WidthsByBreakpoint(
       mobile = Some(95.vw))

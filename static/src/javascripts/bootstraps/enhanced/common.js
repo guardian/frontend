@@ -30,8 +30,7 @@ define([
     'common/modules/identity/autosignin',
     'common/modules/identity/cookierefresh',
     'common/modules/navigation/navigation',
-    'common/modules/navigation/sticky',
-    'common/modules/navigation/newSticky',
+    'common/modules/commercial/sticky-ad-banner',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/onward/history',
@@ -54,7 +53,6 @@ define([
     'common/modules/commercial/membership-messages',
     'common/modules/email/email',
     'common/modules/email/email-article',
-    'text!common/views/international-message.html',
     'bootstraps/enhanced/identity-common',
     'lodash/collections/forEach'
 ], function (
@@ -87,8 +85,7 @@ define([
     AutoSignin,
     CookieRefresh,
     navigation,
-    sticky,
-    newSticky,
+    stickyAdBanner,
     Profile,
     Search,
     history,
@@ -111,9 +108,9 @@ define([
     membershipMessages,
     email,
     emailArticle,
-    internationalMessage,
     identity,
-    forEach) {
+    forEach
+) {
     var modules = {
             initialiseTopNavItems: function () {
                 var profile,
@@ -136,20 +133,21 @@ define([
                 navigation.init();
             },
 
-            initialiseStickyHeader: function () {
+            initialiseStickyAdBanner: function () {
                 if (config.switches.viewability
-                    && !(config.page.isProd && config.page.contentType === 'Interactive')
+                    && !(config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile')
+                    && config.page.contentType !== 'Interactive'
                     && config.page.contentType !== 'Crossword'
-                    && (!config.switches.newCommercialContent || !config.page.isAdvertisementFeature)
-                    && config.page.pageId !== 'offline-page') {
-                    if (ab.isInVariant('RemoveStickyNav', 'new')) {
-                        newSticky();
-                    } else {
-                        sticky.init();
-                    }
-                    config.page.hasStickyHeader = true;
+                    && !config.page.isImmersive
+                    && !config.page.isUsMinute
+                    && !config.page.isAdvertisementFeature
+                    && config.page.pageId !== 'offline-page'
+                    && !config.page.shouldHideAdverts
+                    && config.page.section !== 'childrens-books-site') {
+                    stickyAdBanner.initialise();
+                    config.page.hasStickyAdBanner = true;
                 } else {
-                    config.page.hasStickyHeader = false;
+                    config.page.hasStickyAdBanner = false;
                 }
             },
 
@@ -204,7 +202,7 @@ define([
             },
 
             cleanupCookies: function () {
-                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at']);
+                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at', 'gu_adfree_user']);
             },
 
             updateHistory: function () {
@@ -322,14 +320,6 @@ define([
                 };
             },
 
-            internationalSignposting: function () {
-                if (config.page.edition === 'INT' && config.page.pageId === 'international') {
-                    new Message('international-with-survey-new', {
-                        pinOnHide: true
-                    }).show(template(internationalMessage, {}));
-                }
-            },
-
             initPinterest: function () {
                 if (/Article|LiveBlog|Gallery|Video/.test(config.page.contentType)) {
                     pinterest();
@@ -390,7 +380,7 @@ define([
                 ['c-tabs', modules.showTabs],
                 ['c-top-nav', modules.initialiseTopNavItems],
                 ['c-init-nav', modules.initialiseNavigation],
-                ['c-sticky-header', modules.initialiseStickyHeader],
+                ['c-sticky-ad-banner', modules.initialiseStickyAdBanner],
                 ['c-toggles', modules.showToggles],
                 ['c-dates', modules.showRelativeDates],
                 ['c-clickstream', modules.initClickstream],
@@ -412,7 +402,6 @@ define([
                 ['c-tech-feedback', techFeedback],
                 ['c-media-listeners', mediaListener],
                 ['c-accessibility-prefs', accessibilityPrefs],
-                ['c-international-signposting', modules.internationalSignposting],
                 ['c-pinterest', modules.initPinterest],
                 ['c-save-for-later', modules.saveForLater],
                 ['c-show-membership-messages', modules.showMembershipMessages],
@@ -421,10 +410,6 @@ define([
             ]), function (fn) {
                 fn();
             });
-
-            if (window.console && window.console.log && !config.page.isDev) {
-                window.console.log('##::::: ##: ########::::::: ###:::: ########:: ########:::: ##:::: ##: ####: ########:: ####: ##::: ##:: ######::\n##: ##: ##: ##.....::::::: ## ##::: ##.... ##: ##.....::::: ##:::: ##:. ##:: ##.... ##:. ##:: ###:: ##: ##... ##:\n##: ##: ##: ##::::::::::: ##:. ##:: ##:::: ##: ##:::::::::: ##:::: ##:: ##:: ##:::: ##:: ##:: ####: ##: ##:::..::\n##: ##: ##: ######:::::: ##:::. ##: ########:: ######:::::: #########:: ##:: ########::: ##:: ## ## ##: ##:: ####\n##: ##: ##: ##...::::::: #########: ##.. ##::: ##...::::::: ##.... ##:: ##:: ##.. ##:::: ##:: ##. ####: ##::: ##:\n##: ##: ##: ##:::::::::: ##.... ##: ##::. ##:: ##:::::::::: ##:::: ##:: ##:: ##::. ##::: ##:: ##:. ###: ##::: ##:\n ###. ###:: ########:::: ##:::: ##: ##:::. ##: ########:::: ##:::: ##: ####: ##:::. ##: ####: ##::. ##:. ######::\n\nEver thought about joining us?\nhttp://developers.theguardian.com/join-the-team.html');
-            }
         }
     };
 });

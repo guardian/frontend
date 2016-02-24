@@ -36,7 +36,8 @@ define([
     forEach,
     uniq,
     map,
-    robust) {
+    robust
+) {
     var R2_STORAGE_KEY = 's_ni', // DO NOT CHANGE THIS, ITS IS SHARED WITH R2. BAD THINGS WILL HAPPEN!
         NG_STORAGE_KEY = 'gu.analytics.referrerVars',
         standardProps = 'channel,prop1,prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop37,prop38,prop47,' +
@@ -131,6 +132,11 @@ define([
         });
     };
 
+    Omniture.prototype.shouldPopulateMvtPageProperties = function (mvtTag) {
+        // This checks if the user test alocation has changed once ab test framework has loaded.
+        return mvtTag !== config.abTestsParticipations;
+    };
+
     Omniture.prototype.populatePageProperties = function () {
         var d,
             /* Retrieve navigation interaction data */
@@ -141,10 +147,14 @@ define([
             this.s.prop2 = 'GUID:' + id.getUserFromCookie().id;
             this.s.eVar2 = 'GUID:' + id.getUserFromCookie().id;
         }
+        //This is for testing moving ab testing to first omniture call.
+        var inTest = this.shouldPopulateMvtPageProperties(mvt);
+        var testCall = 'AB | firedSecondCall | ' + inTest;
+        mvt = mvt.split(',').concat(testCall).join(',');
 
         this.s.prop31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
         this.s.eVar31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
-        this.s.prop40    = detect.adblockInUse() || detect.getFirefoxAdblockPlusInstalled();
+        this.s.prop40    = detect.adblockInUseSync() || detect.getFirefoxAdblockPlusInstalledSync();
         this.s.eVar51    = mvt;
         this.s.list1     = mvt; // allows us to 'unstack' the AB test names (allows longer names)
 

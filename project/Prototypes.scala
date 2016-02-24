@@ -36,6 +36,7 @@ trait Prototypes {
     testOptions in Test += Tests.Argument("-oDF"),
     resolvers ++= Seq(Resolver.typesafeRepo("releases")),
     libraryDependencies ++= Seq(
+      scalaTest,
       scalaTestPlus,
       seleniumJava % Test,
       jodaTime % Test,
@@ -91,6 +92,7 @@ trait Prototypes {
 
     libraryDependencies ++= Seq(
       scalaTest,
+      scalaTestPlus,
       mockito
     ),
 
@@ -100,6 +102,28 @@ trait Prototypes {
     javaOptions in Test += "-XX:+UseConcMarkSweepGC",
     javaOptions in Test += "-XX:ReservedCodeCacheSize=128m",
     baseDirectory in Test := file(".")
+  )
+
+  val testAll = taskKey[Unit]("test all aggregate projects")
+  val uploadAll = taskKey[Unit]("upload all riff-raff artifacts from aggregate projects")
+  val testThenUpload = taskKey[Unit]("Conditional task that uploads to riff raff only if tests pass")
+
+  def frontendRootSettings= List(
+    testAll := (test in Test).all(ScopeFilter(inAggregates(ThisProject, includeRoot = false))).value,
+    uploadAll := riffRaffUpload.all(ScopeFilter(inAggregates(ThisProject, includeRoot = false))).value,
+
+    testThenUpload := Def.taskDyn({
+     testAll.result.value match {
+       case Inc(inc) => Def.task[Unit] {
+         println("Tests failed, no riff raff upload will be performed.")
+         throw inc
+       }
+       case Value(_) => {
+         println("Tests passed, uploading artifacts to riff raff.")
+         uploadAll.toTask
+       }
+     }
+    }).value
   )
 
   def frontendDistSettings(application: String) = List(
@@ -124,6 +148,7 @@ trait Prototypes {
 
   def root() = Project("root", base = file(".")).enablePlugins(play.PlayScala)
     .settings(frontendCompilationSettings)
+    .settings(frontendRootSettings)
 
   def application(applicationName: String) = {
     Project(applicationName, file(applicationName)).enablePlugins(play.PlayScala, RiffRaffArtifact, UniversalPlugin)
@@ -144,5 +169,6 @@ trait Prototypes {
     .settings(frontendTestSettings)
     .settings(VersionInfo.settings)
     .settings(libraryDependencies ++= Seq(commonsIo))
+    .settings(riffRaffUpload := {})
   }
 }

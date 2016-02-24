@@ -2,8 +2,8 @@ package liveblog
 
 object LiveBlogPageModel {
 
-  def apply[B](pageSize: Int, extrasOnFirstPage: Int, blocks: Seq[B])(isRequestedBlock: Option[B => Boolean], id: B => String): Option[LiveBlogPageModel[_ <: B]] = {
-    val (main, pages) = getPages(pageSize, extrasOnFirstPage, blocks)
+  def apply[B](pageSize: Int, blocks: Seq[B])(isRequestedBlock: Option[B => Boolean], id: B => String): Option[LiveBlogPageModel[_ <: B]] = {
+    val (main, pages) = getPages(pageSize, blocks)
     val noPage = BlockInfo(Nil/*ignored*/, NoPage)
     val endedPages = noPage :: BlockInfo(main, FirstPage) :: (pages.map(page => BlockInfo(page, BlockPage(id(page.head)))) :+ noPage)
 
@@ -13,14 +13,14 @@ object LiveBlogPageModel {
 
     endedPages.sliding(3).toList.map {
       case List(later, curr, earlier) =>
-        LiveBlogPageModel(curr.page, main, later.self, earlier.self, curr.self)
+        LiveBlogPageModel(curr.page, blocks, later.self, earlier.self, curr.self)
     }.find(hasRequestedBlock)
   }
 
   // returns the pages, newest at the end, newest at the start
-  def getPages[B](pageSize: Int, extrasOnFirstPage: Int, blocks: Seq[B]): (Seq[B], List[Seq[B]]) = {
+  def getPages[B](pageSize: Int, blocks: Seq[B]): (Seq[B], List[Seq[B]]) = {
     val length = blocks.size
-    val remainder = extrasOnFirstPage + (length % pageSize)
+    val remainder = length % pageSize
     val (main, rest) = blocks.splitAt(remainder + pageSize)
     (main, rest.grouped(pageSize).toList)
   }
@@ -36,4 +36,4 @@ sealed trait PageReference {
 }
 case object NoPage extends PageReference { val suffix = None }
 case object FirstPage extends PageReference { val suffix = Some("") }
-case class BlockPage(blockId: String) extends PageReference { val suffix = Some(s"?page=with:block-$blockId") }
+case class BlockPage(blockId: String) extends PageReference { val suffix = Some(s"?page=with:block-$blockId#block-$blockId") }

@@ -17,7 +17,8 @@ define([
     forEach,
     range,
     map,
-    assign) {
+    assign
+) {
     var Grid = React.createClass({
 
         handleSelect: function (x, y) {

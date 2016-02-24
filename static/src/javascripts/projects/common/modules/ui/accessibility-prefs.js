@@ -5,7 +5,8 @@ define([
 ], function (
     $,
     userPrefs,
-    forEach) {
+    forEach
+) {
     /* We live in a rainbow of chaos. */
     // ^ U WOT
 

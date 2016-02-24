@@ -46,10 +46,10 @@ object CommentsController extends DiscussionController with ExecutionContexts {
         Cached(60) {
           if (request.isJson)
             JsonComponent(
-              "html" -> views.html.fragments.comment(comment).toString
+              "html" -> views.html.fragments.comment(comment, comment.discussion.isClosedForRecommendation).toString
             )
           else
-            Ok(views.html.fragments.comment(comment))
+            Ok(views.html.fragments.comment(comment, comment.discussion.isClosedForRecommendation))
         }
     }
   }
@@ -78,9 +78,12 @@ object CommentsController extends DiscussionController with ExecutionContexts {
   val reportAbuseThankYouPage = SimplePage(MetaData.make("/reportAbuseThankYou", "Discussion", "Report Abuse Thank You", "GFE: Report Abuse Thank You"))
 
 
-  def reportAbuseThankYou(commentId: Int) = Action { implicit request =>
-
-    Cached(60) { Ok(views.html.discussionComments.reportCommentThankYou(commentId, reportAbuseThankYouPage)) }
+  def reportAbuseThankYou(commentId: Int) = Action.async { implicit request =>
+    discussionApi.commentFor(commentId).map { comment =>
+      Cached(60) {
+        Ok(views.html.discussionComments.reportCommentThankYou(comment.webUrl, reportAbuseThankYouPage))
+      }
+    }
   }
 
   def abuseReportToMap(abuseReport: DiscussionAbuseReport): Map[String, Seq[String]] = {

@@ -1,56 +1,76 @@
-.gu-image-container {
-    background-color: colour(neutral-8);
-}
-
 %gu-style-box {
     padding: $gs-baseline / 2;
 }
 
-.gu-box {
-    @extend %gu-style-box;
+.gu-display {
+    position: relative;
 }
 
-.gu-title {
-    @include f-headlineSans;
-    @include font-size(21, 26);
-
-    color: colour(neutral-1);
-    padding-bottom: $gs-baseline;
-    text-align: left;
+.gu-display__image-layer {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    position: static;
 }
 
-.gu-text {
-    @include f-textSans;
-    @include font-size(14, 18);
-    
-    color: colour(neutral-2);
-    text-align: left;
-    margin-bottom: $gs-row-height;
-}
-
-.gu-brand {
-    text-align: right;
-}
-
-.gu-note {
-    @include f-textSans;
-    @include font-size(13, 18);
-
-    color: colour(neutral-2);   
-}
-
-.gu-logo {
-    width: 40%;
-    vertical-align: sub;
-}
-
-.gu-image {
+.gu-display__image {
     width: 100%;
     display: block;
 }
 
+.gu-mutable {
+    display: block;
+    position: absolute;
+    z-index: 2;
+}
+
+.gu-display__content {
+    @extend %gu-style-box;
+    bottom: 30px;
+    left: 0;
+    padding: $gs-gutter/2;
+}
+
+.gu-display__link {
+    color: #ffffff;
+}
+
+.gu-display__content-title {
+    @include f-headlineSans;
+    @include font-size(20, 20);
+
+    color: #ffffff;
+    text-align: left;
+    font-weight: normal;
+    margin-bottom: 5px;
+}
+
+.gu-display__content-text {
+    @include f-headlineSans;
+    @include font-size(20, 20);
+
+    color: #ffffff;
+    text-align: left;
+}
+
+.gu-display__cta {
+    left: 10px;
+    bottom: 10px;
+}
+
+.gu-display__logo-link {
+    right: 10px;
+    bottom: 10px;
+    line-height: 1;
+}
+
+.gu-display__logo {
+    width: 80px;
+    height: 30px;
+}
+
 .gu-external-icon {
-    float: right; 
+    float: right;
     svg {
         fill: #ffffff;
         margin: 0 5px;
@@ -60,50 +80,46 @@
     }
 }
 
-.gu-comcontent {
-    display: block;
-    background-color: colour(neutral-8);
-    border-top: 1px solid $gustyle-tone;
-    padding: 0;
-    overflow: hidden;
-    position: relative;
-
-    &:hover {
-        background-color: colour(neutral-6);
-        text-decoration: none;
-
-        .gu-image {
-            background-color: #000000;
-            opacity: .9;
-        }
-    }
+/* values configurable in DFP */
+.gu-display__content-color--bright {
+    color: #ffffff;
 }
 
-.gu-display {
-    min-height: 400px;
-    position: relative;
+.gu-display__content-color--dark {
+    color: #000000;
+}
 
-    .gu-box {
-        position: absolute;
-        bottom: 0;
-        z-index: 1;
-        padding: $gs-gutter/2;
-    }
+.gu-display__content-position--bottom {
+    bottom: 30px;
+}
 
-    .gu-title {
-        padding-bottom: $gs-baseline/2;
-        
-        a {
-            color: #ffffff;
-        }
-    }
+.gu-display__content-position--top {
+    top: 30px;
+}
 
-    .button {
-        float: left;
-        color: #ffffff;
-        box-shadow: 0 0 1px 0px #ffffff inset, 0 0 1px 0px #ffffff;
-    }
+.gu-display__content-size--small {
+    font-size: .9rem;
+    line-height: .9rem;
+}
 
+.gu-display__content-size--regular {
+    font-size: 1.25rem;
+}
+
+.gu-display__content-size--big {
+    font-size: 1.35rem;
+}
+
+.gu-display__logo-pos--bottom-right {
+    right: 10px;
+    bottom: 10px;
+    left: auto;
+}
+
+.gu-display__logo-pos--top-left {
+    left: 10px;
+    top: 0;
+    right: auto;
 }
 
 $mobile-max-container-width: gs-span(8);
@@ -111,12 +127,11 @@ $mobile-max-container-width: gs-span(8);
 
 .gu-style {
     width: auto;
-    margin-left: $gs-gutter / 2;
-    margin-right: $gs-gutter / 2;
+    border-top: #fedd79 1px solid;
+    margin: 0 $gs-gutter / 2;
 
     @include mq(mobileLandscape) {
-        margin-left: $gs-gutter;
-        margin-right: $gs-gutter;
+        margin: 0 $gs-gutter;
     }
 
     @include mq(containerWidestMobile) {
@@ -131,5 +146,14 @@ $mobile-max-container-width: gs-span(8);
 
     @include mq(desktop) {
         width: 300px;
+    }
+
+    .ad-slot__label {
+        display: none;
+    }
+
+    // Right slot width is exactly the size of the banner so we don't want any margin
+    &.ad-slot--right {
+        margin: 0 auto;
     }
 }

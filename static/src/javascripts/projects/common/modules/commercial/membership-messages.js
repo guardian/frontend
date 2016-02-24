@@ -47,17 +47,16 @@ define([
             code:          'membership-message-us',
             minVisited:    10,
             data: {
-                messageText: 'Support open, independent journalism. Become a Supporter from just $5 per month',
+                messageText: 'Support open, independent journalism. Become a Supporter for just $4.99 per month',
                 linkText: 'Find out more'
             }
         }
     };
 
-    function canShow(message) {
-        return (
-            commercialFeatures.membershipMessages &&
-            message.minVisited <= (storage.local.get('gu.alreadyVisited') || 0)
-        );
+    function checkWeCanShowMessage(message) {
+        return commercialFeatures.async.membershipMessages.then(function (canShow) {
+            return canShow && message.minVisited <= (storage.local.get('gu.alreadyVisited') || 0);
+        });
     }
 
     function formatEndpointUrl(edition, message) {
@@ -88,9 +87,14 @@ define([
 
     function init() {
         var message = messages[config.page.edition];
-        if (message && canShow(message)) {
-            show(config.page.edition, message);
+        if (message) {
+            return checkWeCanShowMessage(message).then(function (weCanShowMessage) {
+                if (weCanShowMessage) {
+                    show(config.page.edition, message);
+                }
+            });
         }
+        return Promise.resolve();
     }
 
     return {
