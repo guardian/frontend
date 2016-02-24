@@ -2,16 +2,19 @@
 
 ## How are trail pictures picked in Frontend?
 
-### Default behaviour
-1. Use the trail pic (known in content api as 'image element with thumbnail relation') if it has width >= 460.
+Use the rules below like a filter to narrow down the content api response into a list of candidate images.
+From the candidate images, choose the largest 5:3 image, or simply the largest one if a 5:3 wasn't found.
+
+### Default rules
+1. Use the trail pic (known in content api as 'image element with thumbnail relation'), if it contains an image with width >= 460.
 2. Use the main picture.
 3. Use the image from the first embedded video
 4. Fall back to small trail pic.
 
-### Galleries
-1. Use the thumbnail.
+### For a Gallery
+1. Only use the thumbnail.
 
-### Facia cards
-1. Use the Image override.
+### For a Facia card
+1. Use the Image override if specified.
 2. If the card is a Gallery, use the Gallery behaviour.
-2. Use the Default behaviour.
+3. Use the default rules.

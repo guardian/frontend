@@ -16,22 +16,27 @@ object Trail {
 
   private val trailPicMinDesiredSize = 460
 
-  def findTrailImages(elements: Elements): Option[ImageMedia] = {
+  // if you change these rules make sure you update IMAGES.md (in this project)
+  private def findTrailImages(elements: Elements): Option[ImageMedia] = {
     // Try to pick a thumbnail element which contains an image with at least 460 width.
     val trailImageMedia = elements.thumbnail.find(_.images.imageCrops.exists(_.width >= trailPicMinDesiredSize)).map(_.images)
       .orElse(elements.mainPicture.map(_.images))
       .orElse(elements.videos.headOption.map(_.images))
       .orElse(elements.thumbnail.map(_.images))
 
-    // Keep the biggest 5:3 image. At render-time, the image resizing service will size the image according to card width.
+    // Try to take the biggest 5:3 image. At render-time, the image resizing service will size the image according to card width.
     // Filtering the list images here means that facia-press does not need to slim down the Trail object.
-    trailImageMedia.map { imageMedia =>
+    trailImageMedia.flatMap { imageMedia =>
       val filteredTrailImages = imageMedia.allImages.filter { image =>
         IsRatio(5, 3, image.width, image.height)
       }
-      val largestTrailImage = filteredTrailImages.sortBy(-_.width).take(1)
 
-      ImageMedia.make(largestTrailImage)
+      // If there isn't a 5:3 image, take the largest one.
+      val bestFitImage = filteredTrailImages.sortBy(-_.width).headOption.orElse(imageMedia.largestImage)
+
+      bestFitImage.map { bestImage =>
+        ImageMedia.make(List(bestImage))
+      }
     }
   }
 
