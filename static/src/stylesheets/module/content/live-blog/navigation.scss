@@ -26,7 +26,6 @@
 }
 
 .live-navigation__link {
-    padding: $gs-gutter / 2;
     display: inline-block;
 
     // Override user-agent styles for <a>
@@ -50,6 +49,7 @@
 }
 
 .live-navigation__link--primary {
+    padding: $gs-gutter / 2;
     background: colour(guardian-brand-dark);
     border-radius: 100%;
 
@@ -68,6 +68,9 @@
 }
 
 .link-navigation__link--secondary {
+    // Increase target area
+    padding-top: $gs-gutter / 2;
+    padding-bottom: $gs-gutter / 2;
     // Override user-agent styles for <a>
     color: inherit;
 
