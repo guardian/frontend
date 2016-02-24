@@ -63,4 +63,10 @@ class InlineStylesTest extends FlatSpec with Matchers {
     InlineStyles.mergeStyles(toAdd, existing) should be("color: red !important; border: 10px dashed aquamarine")
     InlineStyles.mergeStyles(toAdd2, existing2) should be("margin: 0; hyphens: none; vertical-align: top; color: rgb(34, 34, 34); font-family: Helvetica, Arial, sans-serif; line-height: 19px; -moz-hyphens: none; position: relative; padding: 10px 20px 0px 0px; text-align: left; word-break: break-word; border-collapse: collapse !important; font-weight: normal; -webkit-hyphens: none; font-size: 14px; padding-right: 0px")
   }
+
+  it should "preserve properties with base64 strings" in {
+    val styles = "font-family: Arial; background: red url(data:image/png;base64,ABCDEF)"
+
+    CSSRule.makeStyles(styles) should be(ListMap("font-family" -> "Arial", "background" -> "red url(data:image/png;base64,ABCDEF)"))
+  }
 }
