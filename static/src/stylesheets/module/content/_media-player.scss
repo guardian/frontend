@@ -207,6 +207,8 @@ $ima-controls-height: 70px;
 }
 
 .vjs-control-bar {
+    position: relative;
+
     .gu-media--video & {
         position: absolute;
         bottom: $gs-baseline*-5;
