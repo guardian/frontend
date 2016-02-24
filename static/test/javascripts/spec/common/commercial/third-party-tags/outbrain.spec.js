@@ -337,8 +337,7 @@ define([
                 config.page.edition = 'AU';
 
                 sut.load('merchandising').then(function () {
-                    expect($('.OUTBRAIN', $fixtureContainer).first().data('widgetId')).toEqual('CR_14');
-                    expect($('.OUTBRAIN', $fixtureContainer).last().data('widgetId')).toEqual('CR_14');
+                    expect($('.OUTBRAIN', $fixtureContainer).first().data('widgetId')).toEqual('AR_28');
                     done();
                 });
             });
@@ -350,7 +349,6 @@ define([
 
                 sut.load('merchandising').then(function () {
                     expect($('.OUTBRAIN', $fixtureContainer).first().data('widgetId')).toEqual('MB_11');
-                    expect($('.OUTBRAIN', $fixtureContainer).last().data('widgetId')).toEqual('MB_11');
                     done();
                 });
             });

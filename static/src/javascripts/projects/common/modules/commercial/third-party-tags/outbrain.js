@@ -55,7 +55,6 @@ define([
         widgetCodes = getCode({
             slot: slot,
             section: config.page.section,
-            edition: config.page.edition,
             breakpoint: breakpoint
         });
         widgetHtml = build(widgetCodes, breakpoint);
