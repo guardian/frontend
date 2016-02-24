@@ -16,6 +16,7 @@ sealed trait ElementProfile {
   def height: Option[Int]
   def hidpi: Boolean
   def compression: Int
+  def isPng: Boolean
 
   def elementFor(image: ImageMedia): Option[ImageAsset] = {
     val sortedCrops = image.imageCrops.sortBy(-_.width)
@@ -37,11 +38,17 @@ sealed trait ElementProfile {
 
   // NOTE - if you modify this in any way there is a decent chance that you decache all our images :(
   lazy val resizeString = {
-    val qualityparam = if(hidpi){"q=20"}else{"q=55"}
+    val qualityparam = if (hidpi && isPng) {"q=20"} else {"q=55"}
     val autoParam = "auto=format"
     val sharpParam = "usm=12"
     val fitParam = "fit=max"
-    val dprParam = if(hidpi){"dpr=2"}else{""}
+    val dprParam = if (hidpi) {
+      if (isPng) {
+        "dpr=1.5"
+      } else {
+        "dpr=2"
+      }
+    } else {""}
     val heightParam = height.map(pixels => s"h=$pixels").getOrElse("")
     val widthParam = width.map(pixels => s"w=$pixels").getOrElse("")
 
@@ -56,7 +63,8 @@ case class Profile(
   override val width: Option[Int] = None,
   override val height: Option[Int] = None,
   override val hidpi: Boolean = false,
-  override val compression: Int = 95) extends ElementProfile
+  override val compression: Int = 95,
+  override val isPng: Boolean = false) extends ElementProfile
 
 object VideoProfile {
   lazy val ratioHD = new Fraction(16,9)
@@ -66,7 +74,8 @@ case class VideoProfile(
   override val width: Some[Int],
   override val height: Some[Int],
   override val hidpi: Boolean = false,
-  override val compression: Int = 95) extends ElementProfile {
+  override val compression: Int = 95,
+  override val isPng: Boolean = false) extends ElementProfile {
 
   lazy val isRatioHD: Boolean = Precision.compareTo(VideoProfile.ratioHD.doubleValue, aspectRatio.doubleValue, 0.1d) == 0
 
@@ -146,8 +155,9 @@ object ImgSrc extends Logging {
   }
 
   def srcsetForBreakpoint(breakpointWidth: BreakpointWidth, breakpointWidths: Seq[BreakpointWidth], maybePath: Option[String] = None, maybeImageMedia: Option[ImageMedia] = None, hidpi: Boolean = false) = {
+    val isPng = maybePath.map(path => path.toLowerCase.endsWith("png")).getOrElse(false)
     breakpointWidth.toPixels(breakpointWidths)
-      .map(browserWidth => Profile(width = Some(browserWidth), hidpi = hidpi))
+      .map(browserWidth => Profile(width = Some(browserWidth), hidpi = hidpi, isPng = isPng))
       .map { profile => {
         maybePath
           .map(url => srcsetForProfile(profile, url))
