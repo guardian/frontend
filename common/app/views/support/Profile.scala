@@ -38,7 +38,7 @@ sealed trait ElementProfile {
 
   // NOTE - if you modify this in any way there is a decent chance that you decache all our images :(
   lazy val resizeString = {
-    val qualityparam = if (hidpi && isPng) {"q=20"} else {"q=55"}
+    val qualityparam = if (hidpi) {"q=20"} else {"q=55"}
     val autoParam = "auto=format"
     val sharpParam = "usm=12"
     val fitParam = "fit=max"
