@@ -20,9 +20,7 @@
         @article.trail.byline.map { byline =>
             <h3 class="byline">@byline</h3>
 
-        @if(article.content.tags.contributors.length == 1) {
             @fragments.meta.contactAuthor(article.tags)
-        }
 
             <hr />
         }
