@@ -230,15 +230,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val NewCommercialContent = Switch(
-    "Commercial",
-    "new-commercial-content",
-    "New commercial content designs",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 1),
-    exposeClientSide = true
-  )
-
   val OutbrainOnAmp = Switch(
     "Commercial",
     "outbrain-on-amp",
@@ -246,5 +237,14 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = new LocalDate(2016, 3, 2),
     exposeClientSide = false
+  )
+
+  val OutbrainLowRel = Switch(
+    "Commercial",
+    "outbrain-low-rel",
+    "Show Outbrain in the low relevance slot in place of the merchandising component",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 3, 31),
+    exposeClientSide = true
   )
 }

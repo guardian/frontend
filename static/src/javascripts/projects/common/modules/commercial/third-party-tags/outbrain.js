@@ -140,7 +140,7 @@ define([
                 // location right away
                 return Promise.all([
                     isHiResLoaded,
-                    isHiResLoaded ? trackAd('dfp-ad--merchandising') : true
+                    isHiResLoaded && config.switches.outbrainLowRel ? trackAd('dfp-ad--merchandising') : true
                 ]);
             }).then(function (args) {
                 var isHiResLoaded = args[0];
