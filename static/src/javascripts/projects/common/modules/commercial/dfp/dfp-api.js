@@ -683,8 +683,9 @@ define([
         init:           init,
         addSlot:        addSlot,
         refreshSlot:    refreshSlot,
-        getSlots:       getSlots,
+
         // Used privately but exposed only for unit testing
+        getSlots:       getSlots,
         shouldLazyLoad: shouldLazyLoad,
         getCreativeIDs: getCreativeIDs,
         checkForBreakout: checkForBreakout,
