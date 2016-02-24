@@ -392,7 +392,7 @@ trait FeatureSwitches {
     "liveblog-toast",
     "Enables Liveblog toast",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 1),
+    sellByDate = new LocalDate(2016, 3, 8),
     exposeClientSide = true
   )
 }
