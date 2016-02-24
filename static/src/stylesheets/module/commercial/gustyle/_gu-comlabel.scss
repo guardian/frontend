@@ -1,4 +1,6 @@
 .gu-comlabel {
+    color: colour(neutral-1);
+    
     .gu-comlabel__btn {
         @include f-textSans;
         @include font-size(14, 10);
