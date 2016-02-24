@@ -128,14 +128,17 @@ $mobile-max-container-width: gs-span(8);
 .gu-style {
     width: auto;
     border-top: #fedd79 1px solid;
-    margin: 0 $gs-gutter / 2;
+    margin-left: $gs-gutter / 2;
+    margin-right: $gs-gutter / 2;
 
     @include mq(mobileLandscape) {
-        margin: 0 $gs-gutter;
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
     }
 
     @include mq(containerWidestMobile) {
-        margin: 0 auto;
+        margin-left: auto;
+        margin-right: auto;
         width: $mobile-max-container-width;
     }
 
@@ -148,12 +151,27 @@ $mobile-max-container-width: gs-span(8);
         width: 300px;
     }
 
+    // Hide 'advertisement' label for gu style
     .ad-slot__label {
         display: none;
     }
 
-    // Right slot width is exactly the size of the banner so we don't want any margin
+    // Article styles: Right slot width is exactly the size of the banner so we don't want any margin
     &.ad-slot--right {
-        margin: 0 auto;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    // Gallery & Liveblog sections styles
+    &.ad-slot--gallery-inline,
+    &.ad-slot--liveblog-inline {
+        margin-left: auto;
+        margin-right: auto;
+        padding-top: 0;
+        padding-bottom: 0;
+
+        @include mq(tablet) {
+            width: 300px;
+        }
     }
 }
