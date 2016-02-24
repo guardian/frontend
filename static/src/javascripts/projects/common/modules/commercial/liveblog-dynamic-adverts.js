@@ -61,7 +61,7 @@ define([
 
     function insertAds(slots) {
         for (var i = 0; i < slots.length && slotCounter < MAX_ADS; i++) {
-            var $adSlot = bonzo(createAdSlot('inline1' + slotCounter++, 'liveblog-inline'));
+            var $adSlot = bonzo(createAdSlot('inline1' + slotCounter++, 'liveblog-inline block'));
             $adSlot.insertAfter(slots[i]);
             dfp.addSlot($adSlot);
         }
