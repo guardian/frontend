@@ -74,11 +74,6 @@
     // Override user-agent styles for <a>
     color: inherit;
 
-    // If we do support flexbox
-    display: inline-flex;
-    vertical-align: middle;
-    align-items: center;
-
     .inline-icon {
         fill: currentColor;
     }
@@ -102,15 +97,7 @@
 }
 
 .link-navigation__link--secondary--older__icon {
-    margin-right: $gs-gutter / 2;
-    // We only want to change the margin if we can re-order the child using
-    // flexbox
-    @supports (display: inline-flex) {
-        order: 1;
-        // Unset
-        margin-right: 0;
-        margin-left: $gs-gutter / 2;
-    }
+    margin-left: $gs-gutter / 2;
     // TODO: Move this icon in the HTML?
     // TODO: Float right the older div, text align center the detail div OR just center
     // TODO: Remove horizontal padding from secondary buttons
