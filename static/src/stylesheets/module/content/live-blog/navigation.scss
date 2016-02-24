@@ -1,4 +1,4 @@
-.live-navigation {
+.liveblog-navigation {
     // If we don't support flexbox
     // then the children are floated
     @include clearfix;
@@ -10,7 +10,7 @@
     }
 }
 
-.live-navigation__detail {
+.liveblog-navigation__detail {
     // If we don't support flexbox
     text-align: center;
     // If we do support flexbox
@@ -23,24 +23,24 @@
     justify-content: center;
 }
 
-.live-navigation__newer {
+.liveblog-navigation__newer {
     // If we don't support flexbox
     float: left;
 }
 
-.live-navigation__older {
+.liveblog-navigation__older {
     // If we don't support flexbox
     float: right;
     // If we do support flexbox
     order: 2;
 }
 
-.live-navigation__page-number,
-.live-navigation__pages-length {
+.liveblog-navigation__page-number,
+.liveblog-navigation__pages-length {
     font-weight: bold;
 }
 
-.live-navigation__link {
+.liveblog-navigation__link {
     display: inline-block;
 
     // Override user-agent styles for <a>
@@ -58,12 +58,12 @@
     }
 }
 
-.live-navigation__link--disabled {
+.liveblog-navigation__link--disabled {
     cursor: default;
     color: colour(neutral-2);
 }
 
-.live-navigation__link--primary {
+.liveblog-navigation__link--primary {
     padding: $gs-gutter / 2;
     background: colour(guardian-brand-dark);
     border-radius: 100%;
@@ -78,7 +78,7 @@
     }
 }
 
-.live-navigation__link--primary--disabled {
+.liveblog-navigation__link--primary--disabled {
     background: colour(neutral-4);
 }
 
@@ -107,7 +107,7 @@
     }
 }
 
-.live-navigation__link--secondary--older,
+.liveblog-navigation__link--secondary--older,
 .link-navigation__link--secondary--older__icon {
     margin-left: $gs-gutter / 4;
     @include mq(mobileLandscape) {
