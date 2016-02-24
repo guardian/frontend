@@ -1,7 +1,7 @@
 @(content: model.ContentType)(implicit request: RequestHeader)
 @import common.Edition
 @import conf.switches.Switches.SponsoredSwitch
-@import model.{Video, Audio, Gallery, Interactive, Article}
+@import model.{Article, Audio, Gallery, Interactive, Video}
 
 @defining(content.commercial.isSponsored(Some(Edition(request))),
     content.commercial.isAdvertisementFeature,
@@ -44,16 +44,16 @@
                                 @if(content.commercial.hasMultipleSponsors) {
                                     This content is sponsored.
                                 } else {
-                                    Supported by:
+                                    Supported by
                                 }
                             } else {
                                 @if(isAdFeature) {
-                                    Paid for by:
+                                    Paid for by
                                 } else {
                                     @content.commercial.sponsorshipTag.map { tag =>
-                                        @tag.name is supported by:
+                                        @tag.name is supported by
                                     }.getOrElse {
-                                        Supported by:
+                                        Supported by
                                     }
                                 }
                             }
