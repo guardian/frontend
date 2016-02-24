@@ -58,11 +58,6 @@
     }
 }
 
-.liveblog-navigation__link--disabled {
-    cursor: default;
-    color: colour(neutral-2);
-}
-
 .liveblog-navigation__link--primary {
     padding: $gs-gutter / 2;
     background: colour(guardian-brand-dark);
@@ -113,4 +108,9 @@
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter / 2;
     }
+}
+
+.liveblog-navigation__link--disabled {
+    cursor: default;
+    color: colour(neutral-2);
 }
