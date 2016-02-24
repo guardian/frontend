@@ -13,7 +13,8 @@ define([
     'lodash/collections/find',
     'text!common/views/email/iframe.html',
     'common/utils/template',
-    'common/modules/article/space-filler'
+    'common/modules/article/space-filler',
+    'common/modules/analytics/omniture'
 ], function (
     $,
     bean,
@@ -29,7 +30,8 @@ define([
     find,
     iframeTemplate,
     template,
-    spaceFiller
+    spaceFiller,
+    omniture
 ) {
 
     var listConfigs = {
@@ -129,6 +131,7 @@ define([
                 } else {
                     spaceFiller.fillSpace(getSpacefinderRules(), function (paras) {
                         $iframeEl.insertBefore(paras[0]);
+                        omniture.trackLinkImmediate('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
                         emailInserted = true;
                     });
                 }
