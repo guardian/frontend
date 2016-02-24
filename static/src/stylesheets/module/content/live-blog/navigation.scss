@@ -1,10 +1,15 @@
 .live-navigation {
+    // If we don't support flexbox
+    // then the children are floated
+    @include clearfix;
     // If we do support flexbox
     display: flex;
     @include fs-textSans(5);
 }
 
 .live-navigation__detail {
+    // If we don't support flexbox
+    text-align: center;
     // If we do support flexbox
     order: 1;
     // Centre (vertically and horizontally) text
@@ -15,8 +20,15 @@
     justify-content: center;
 }
 
-// If we do support flexbox
+.live-navigation__newer {
+    // If we don't support flexbox
+    float: left;
+}
+
 .live-navigation__older {
+    // If we don't support flexbox
+    float: right;
+    // If we do support flexbox
     order: 2;
 }
 
