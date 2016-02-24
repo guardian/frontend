@@ -31,6 +31,9 @@ GET        /commercial/money/loans/:loanType                             control
 GET        /commercial/books/book.json                                   controllers.commercial.BookOffersController.renderBook
 GET        /commercial/books/books.json                                  controllers.commercial.BookOffersController.renderBooks
 
+# Live events merchandising components
+GET        /commercial/liveevents/event.json                             controllers.commercial.LiveEventsController.renderEvent
+
 # Multiple offer merchandising components
 GET        /commercial/multi.json                                        controllers.commercial.Multi.renderMulti
 

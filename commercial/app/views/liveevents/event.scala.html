@@ -1,0 +1,32 @@
+@(event: model.commercial.liveevents.LiveEvent, omnitureId: Option[String], clickMacro: Option[String])(implicit request: RequestHeader)
+
+@defining(("2_0", "2016-02-24")) { case (version, date) =>
+    <div class="commercial commercial--tone-membership commercial--v-high" role="complementary" itemscope itemtype="http://schema.org/Event" data-link-name="merchandising | event | @omnitureId">
+        <div class="commercial--v-high__header">
+            <h3 class="commercial__title">
+                <a href="@{clickMacro}https://membership.theguardian.com/events" data-link-name="">
+                    @fragments.inlineSvg("marque-36", "icon")
+                    <span class="u-h">The Guardian</span> <span class="u-h">Live</span>
+                </a>
+            </h3>
+        </div>
+        <div class="commercial--v-high__body">
+            <a href="@clickMacro@event.eventUrl" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-superHigh-@{event.id}-@{event.title}">
+            <img class="lineitem__image" itemprop="image" src="@event.imageUrl" alt=""/>
+            <h4 class="lineitem__title" itemprop="name">@event.title</h4>
+            <p class="lineitem__meta lineitem__author" itemprop="author">@event.date, @event.location</p>
+            @if(event.ratioTicketsLeft <= 0.1){
+            <p class="lineitem__meta"><span class="lineitem__scarcity">Last few tickets remaining</span></p>
+            }
+            <p class="lineitem__meta">
+                @event.tickets.map { ticket =>
+                    £@("%.2f".format(ticket.price))<br/>
+                }
+            </p>
+            </a>
+            <a href="@clickMacro@event.eventUrl" class="lineitem__cta button button--primary button--small" data-link-name="merchandising-bookshop-v@{version}_@{date}-superHigh-visit-shop">
+                Book now@fragments.inlineSvg("arrow-right", "icon", List("i-right"))
+            </a>
+        </div>
+    </div>
+}

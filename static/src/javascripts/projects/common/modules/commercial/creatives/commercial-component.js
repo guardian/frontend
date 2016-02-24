@@ -86,6 +86,7 @@ define([
                 bestbuy:        buildComponentUrl('money/bestbuys', this.params),
                 book:           buildComponentUrl('books/book', merge({}, this.params, { t: config.page.isbn || this.params.isbn })),
                 books:          buildComponentUrl('books/books', merge({}, this.params, { t: this.params.isbns ? this.params.isbns.split(',') : [] })),
+                event:          buildComponentUrl('liveevents/event', merge({}, this.params, { t: this.params.id })),
                 jobs:           buildComponentUrl('jobs', merge({}, this.params, { t: this.params.jobIds ? this.params.jobIds.split(',') : [] }, getKeywords())),
                 masterclasses:  buildComponentUrl('masterclasses', merge({}, this.params, { t: this.params.ids ? this.params.ids.split(',') : [] }, getKeywords())),
                 soulmates:      buildComponentUrl('soulmates/mixed', this.params),
