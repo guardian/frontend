@@ -102,7 +102,7 @@ define([
                 fromBottom: true,
                 selectors: {
                     ' .element-rich-link': {minAbove: 100, minBelow: 100},
-                    ' > h2': {minAbove: 20, minBelow: 200},
+                    ' > h2': {minAbove: 0, minBelow: 200},
                     ' > *:not(p):not(h2):not(blockquote)': {minAbove: 35, minBelow: 200},
                     ' .ad-slot': {minAbove: 150, minBelow: 200}
                 }
