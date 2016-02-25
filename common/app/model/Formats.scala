@@ -73,7 +73,7 @@ object MetaDataFormat {
 
   private case class MetaDataPart2(
     contentType: String,
-    isImmersive: Boolean,
+    hasHeader: Boolean,
     schemaType: Option[String],
     cacheSeconds: Int,
     openGraphImages: Seq[String],
@@ -108,7 +108,7 @@ object MetaDataFormat {
         part1.description,
         part1.rssPath,
         part2.contentType,
-        part2.isImmersive,
+        part2.hasHeader,
         part2.schemaType,
         part2.cacheSeconds,
         part2.openGraphImages,
