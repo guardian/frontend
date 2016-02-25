@@ -30,7 +30,7 @@ object LiveBlogPageModel {
             newer = newerPage,
             oldest = if (oldestPage.equals(currentPage)) None else Some(oldestPage),
             older = olderPage,
-            pagesLength = pages.length
+            numberOfPages = pages.length
           )) else None
         )
     }.find(hasRequestedBlock)
@@ -57,7 +57,7 @@ case class Pagination[B](
   newer: Option[PageReference[B]],
   oldest: Option[PageReference[B]],
   older: Option[PageReference[B]],
-  pagesLength: Int
+  numberOfPages: Int
 )
 
 case class LiveBlogPageModel[B](
@@ -68,5 +68,6 @@ case class LiveBlogPageModel[B](
 
 case class FirstPage[B](blocks: Seq[B]) extends PageReference[B] {
   val suffix = ""
-  val pageNumber = 1 }
+  val pageNumber = 1
+}
 case class BlockPage[B](blocks: Seq[B], blockId: String, pageNumber: Int) extends PageReference[B] { val suffix = s"?page=with:block-$blockId#block-$blockId" }
