@@ -148,43 +148,39 @@ self.addEventListener('activate', function(event) {
 });
 
 
-self.addEventListener('push', function(event){
-    console.log('Push message 11I', JSON.stringify(event) );
+self.addEventListener('push', function(event) {
+    console.log('Push message 11I', JSON.stringify(event));
     var title = 'Push message';
-
-/*
     event.waitUntil(
-       self.registration.pushManager.getSubscription().then(function(sub){
-           var gcmInd = sub.endpoint.substring(sub.endpoint.lastIndexOf('/') + 1);
-           console.log("++ Getting message for: -- " + gcmInd);
-           var endpoint = '/notification/message/latest/' + gcmInd;
-           console.log("++ Endpoint " + gcmInd);
-           fetch(endpoint, {
+        self.registration.pushManager.getSubscription().then(function (sub) {
+            var gcmInd = sub.endpoint.substring(sub.endpoint.lastIndexOf('/') + 1);
+            console.log("++ Getting message for: -- " + gcmInd);
+            var endpoint = '/notification/message/latest/' + gcmInd;
+            console.log("++ Endpoint " + gcmInd);
+            fetch(endpoint, {
                 method: 'get',
                 headers: {
-                    'Accept' : 'application/json',
-                    'Content-Type' : 'application/json'
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 }
-           }).then(function(response){
-               console.log("Got Response");
-               return response.json();
-           })
-          .then(function(data) {
-              console.log("Data Resp " + JSON.stringify(data));
+            }).then(function (response) {
+                    console.log("Got Response");
+                    return response.json();
+                })
+                .then(function (data) {
+                    console.log("Data Resp " + JSON.stringify(data));
 
-              var message = data.messages.pop();
+                    var message = data.messages.pop();
 
-              self.registration.showNotification(message.title, {
-                  body: message.body,
-                  icon: '@{JavaScript(Static("images/favicons/114x114.png").path)}',
-                  tag: 'tag, init'
-              });
-          })
+                    self.registration.showNotification(message.title, {
+                        body: message.body,
+                        icon: '@{JavaScript(Static("images/favicons/114x114.png").path)}',
+                        tag: 'tag, init'
+                    });
+                })
 
-       })
+        })
     );
-*/
-
 
     /*
     event.waitUntil(
@@ -193,7 +189,5 @@ self.addEventListener('push', function(event){
             icon: '@{JavaScript(Static("images/favicons/114x114.png").path)}',
             tag: 'tag, init'
         })
-    );
-    */
+    );*/
 });
-

@@ -41,18 +41,25 @@ define([
 
             navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
                 reg = serviceWorkerRegistration;
+                console.log("++ SW: " + JSON.stringify(reg));
                 serviceWorkerRegistration.pushManager.getSubscription().then(function (pushSubscription) {
 
                     if (pushSubscription) {
+                        console.log("++ Sub: " + JSON.stringify(pushSubscription));
                         sub = pushSubscription;
                         modules.configureSubscribeTemplate();
                     } else {
+                        console.log("++ Not a sub");
+                        modules.configureSubscribeTemplate();
+
+                        /*
                         reg.pushManager.subscribe({userVisibleOnly: true}).then(
                             function (pushSubscription) {
                                 sub = pushSubscription;
                                 modules.configureSubscribeTemplate();
                             }
                         );
+*/
                     }
                 });
             });
@@ -105,11 +112,15 @@ define([
 
         subscribe: function () {
             if (modules.subscriptionsEmpty()) {
+                console.log("++ Dog")
                 reg.pushManager.subscribe({userVisibleOnly: true}).then(function (pushSubscription) {
+                    console.log("Wotcgher");
                     sub = pushSubscription;
+                    modules.followThis();
                 });
+            } else {
+                modules.followThis();
             }
-            modules.followThis();
         },
 
 
@@ -136,7 +147,7 @@ define([
 
         followThis: function () {
             var endpoint = '/notification/topic/subscribe';
-            console.log("Follow: - " + JSON.stringify(sub));
+            console.log("Follow this: - " + sub.endpoint);
 
             modules.updateSubscription(endpoint).then(
                 function (rsp) {
@@ -146,10 +157,6 @@ define([
                     modules.setSubscriptionStatus(true);
                 }
             );
-        },
-
-        followThisTopic: function() {
-            var endpoint = 'notifications'
         },
 
         stopFollowingThis: function () {
@@ -175,7 +182,7 @@ define([
                 url: endpoint,
                 method: 'POST',
                 contentType: 'application/x-www-form-urlencoded',
-                data: {gcmBrowserId: gcmBrowserId, notificationTopicId: 'test' }
+                data: {gcmBrowserId: gcmBrowserId, notificationTopicId: 'guardiantest' }
             });
             return request;
         }

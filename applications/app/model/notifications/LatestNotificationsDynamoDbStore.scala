@@ -258,11 +258,9 @@ object LatestNotificationsDynamoDbStore extends Logging with ExecutionContexts {
 
             updateItemFuture.map {
               updatedMessages =>
-                println("Written latest message")
                 Option(messages)
             }.recover{
               case _ =>
-               println("++ Gotcha, muthafuckah")
                None
             }
        }

@@ -487,6 +487,14 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object notifications {
     lazy val gcmAuthorinzationKey = configuration.getMandatoryStringProperty("gcm.authorization.key")
   }
+
+  object redis {
+     lazy val messageCacheHost = configuration.getMandatoryStringProperty("redis.message.cache.host")
+     lazy val messageCachePort: Int =
+       Try(configuration.getMandatoryStringProperty("redis.message.cache.port"))
+       .map(_.toInt)
+       .getOrElse(throw new RuntimeException("Cant convert redismessagecacheport to an integer"))
+  }
 }
 
 object ManifestData {

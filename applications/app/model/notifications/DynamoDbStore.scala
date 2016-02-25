@@ -9,6 +9,7 @@ import scala.collection.JavaConverters._
 import awswrappers.dynamodb._
 
 
+
 object DynamoDbStore extends Logging with ExecutionContexts {
   val tableName = "frontend-notifications"
 

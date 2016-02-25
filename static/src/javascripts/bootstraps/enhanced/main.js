@@ -138,9 +138,10 @@ define([
             console.log("Scotcha!!``")
             if (navigator && navigator.serviceWorker) {
                 navigator.serviceWorker.register('/service-worker.js').then(function () {
-                   console.log("++ Wotcha!")
+                   console.log("++ Wotcha! Joolax!");
                    if (detect.getUserAgent.browser === 'Chrome' && config.page.contentType === 'LiveBlog') {
-                       console.log("++++++++++++++++++++++ LOADING");
+                       console.log("++++++++++++++++++++++ Block#LOADING");
+                       //chrome.instanceID.getID(function(id){console.log("++++++++++++++++++++++ LOADING ID" + id );})
                        require(['bootstraps/enhanced/notifications'], function (notifications) {
                            bootstrapContext('notifications', notifications);
                        });

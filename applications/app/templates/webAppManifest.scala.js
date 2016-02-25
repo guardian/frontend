@@ -15,5 +15,10 @@
     }
     ],
     "gcm_sender_id":"660236028602",
-    "gcm_user_visible_only":true
+    "gcm_user_visible_only":true,
+    "permissisons" : [
+     "gcm",
+     "identity",
+     "instanceid"
+     ]
 }

@@ -358,6 +358,9 @@ GET            /notification/message/latest/:gcmBrowserId                       
 POST           /notification/topic/subscribe                                                                                      controllers.NotificationsController.subscribeToTopic()
 POST           /notification/topic/send                                                                                          controllers.NotificationsController.sendMessageToTopic()
 
+#REDLIS
+POST            /notification/message/save                                                                                      controllers.NotificationsController.saveARedlisMessage()
+
 
 GET            /2015-06-24-manifest.json                                                                                         controllers.WebAppController.manifest()
 GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()
