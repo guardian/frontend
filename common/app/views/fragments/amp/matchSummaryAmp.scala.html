@@ -1,0 +1,100 @@
+@(path: String)
+@import conf.Configuration
+
+@* must be served by localhost, not thegulocal *@
+<amp-list layout="fixed-height" height="184" src="@Configuration.amp.baseUrl/@path" class="onward-list">
+    <template type="amp-mustache">
+        <div class="match-summary">
+
+            {{#isLiveOrIsResult}}
+                <h1>
+                    {{homeTeam.name}} {{homeTeam.score}} - {{awayTeam.score}} {{awayTeam.name}}
+                </h1>
+            {{/isLiveOrIsResult}}
+            {{^isLiveOrIsResult}}
+                <h1>
+                    {{homeTeam.name}} v {{awayTeam.name}}
+                </h1>
+            {{/isLiveOrIsResult}}
+
+            <div class="match-info">
+            @* @competition.map{ competition => <div class="match-info__competition">@competition.fullName</div>}*@
+                <div class="match-info__venue">{{venue}}</div>
+            </div>
+
+            <div class="match-summary__teams">
+                <div class="match-summary__team match-summary__team--home">
+                    <div class="team__crest team__crest--home">
+                        <div class="team__crest__img-container">
+                            <amp-img class="team__crest__img" src="{{homeTeam.crest}}" layout="fixed" height="50" width="50"></amp-img>
+                        </div>
+                    </div>
+                    <div class="team__info">
+                        <h2 class="team__heading">
+                            @*<span class="team__name" data-abbr="@pa.TeamCodes.codeFor(homeTeam)">*@
+                            <span class="team__name-long">{{ homeTeam.name }} </span>
+                            @*</span>*@
+                            {{#isLiveOrIsResult}}
+                                <span class="team__score">{{ homeTeam.score }}</span>
+                            {{/isLiveOrIsResult}}
+                        </h2>
+
+                        {{#isFixture}}
+                            @* @competition.map{ competition =>¡*@
+                            <div class="team__results-container">
+                                @* @teamForm(homeTeam.id, competition)*@
+                            </div>
+                            @*}*@
+                        {{/isFixture}}
+                        {{^isFixture}}
+                            <dl class="team__scorers u-unstyled">
+                                <dt class="u-h">Home team scorers</dt>
+                                @* @homeTeam.scorers.map{scorers => @scorers.split(",").map{ scorer => <dd>@scorer.replace("(", "").replace(")", "")</dd>}}*@
+                            </dl>
+                        {{/isFixture}}
+                    </div>
+                </div>
+
+                <div class="match-summary__team match-summary__team--away u-cf">
+                    <div class="team__crest team__crest--away">
+                        <div class="team__crest__img-container">
+                            <amp-img class="team__crest__img" src="{{awayTeam.crest}}" layout="fixed" height="50" width="50"></amp-img>
+                        </div>
+                    </div>
+                    <div class="team__info">
+                        <h2 class="team__heading">
+                            <span class="team__name">
+                                <span class="team__name-long">{{awayTeam.name}}</span>
+                            </span>
+                            {{#isLiveOrIsResult}}
+                                <span class="team__score">{{awayTeam.score}}</span>
+                            {{/isLiveOrIsResult}}
+                        </h2>
+                        {{#isFixture}}
+                        @* @competition.map{ competition =>¡*@
+                            <div class="team__results-container">
+                        @* @teamForm(awayTeam.id, competition)*@
+                            </div>
+                        @*}*@
+                        {{/isFixture}}
+                        {{^isFixture}}
+                            <dl class="team__scorers u-unstyled">
+                            <dt class="u-h">Away team scorers</dt>
+                            @* @awayTeam.scorers.map{scorers => @scorers.split(",").map{ scorer => <dd>@scorer.replace("(", "").replace(")", "")</dd>}}*@
+                            </dl>
+                        {{/isFixture}}
+                    </div>
+                </div>
+            </div>
+
+            @* @theMatch.comments.map{ comments => <div class="match-summary__comment">@comments.replace("(", "").replace(")", "")</div>}*@
+            @* @theMatch.homeTeam.aggregateScore.map{ score => <div class="match-summary__aggregate">agg. @score-@theMatch.awayTeam.aggregateScore</div>}*@
+        </div>
+
+    </template>
+    <div overflow class="cta cta--medium cta--show-more">
+        @fragments.inlineSvg("plus", "icon")
+        See all the scores
+    </div>
+</amp-list>
+

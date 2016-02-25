@@ -44,6 +44,14 @@
 
             @body
 
+            @defining({
+                val date = content.trail.webPublicationDate.minusDays(1).toLocalDate.toString("yyyy/MM/dd")
+                val teams = content.paFootballTeams.mkString("/")
+                s"football-mf2/api/match-summary/$date/$teams.json"
+            }) { path =>
+                @fragments.amp.matchSummaryAmp(path)
+            }
+
             @if(content.trail.isCommentable) {
                 <div class="submeta">
                     <a href="@LinkTo(page.metadata.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, page.metadata.webUrl)))#comments" class="cta cta--medium cta--comments">
