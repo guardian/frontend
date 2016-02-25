@@ -8,20 +8,55 @@
     <h2>@quiz.title</h2>
 }
 <form action="@postUrl(quiz)" method="POST">
-
-    <ol class="quiz @{if (quiz.quizType == "personality") "quiz--personality" else "quiz--knowledge" } @{if (showResults) "quiz--results" else "quiz--questions"}">
+    <ol class="quiz quiz--@{quiz.quizType} @{if (showResults) "quiz--results" else "quiz--questions"}">
         @quiz.content.questions.zipWithIndex.map { case (question, index) =>
-            @renderQuestion(question, playForm(s"answers[$index]"), maybeResults.flatMap(_.getAnswerFor(question)))
+            @renderQuestion(question,
+                playForm(s"answers[$index]"),
+                maybeResults.flatMap(_.getAnswerFor(question))
+            )
         }
     </ol>
-
     @maybeResults.map { results =>
         @renderEndMessage(results)
     }.getOrElse {
-        <button class="button" type="submit">Submit answers</button>
+        <button class="button button--xlarge button--primary" type="submit">Submit answers</button>
     }
-
 </form>
+
+@renderQuestion(question: Question, field: play.api.data.Field, maybeInputAnswer: Option[Answer]) = {
+    <li class="quiz__question
+        @{ if (showResults) {
+            s"quiz__question--${if(maybeInputAnswer.isEmpty) "without-response" else "with-response" }"
+          }
+        }">
+        <span class="quiz__question-text">@question.text</span>
+
+        <div class="quiz__question__rows">
+            @question.answers.map( answer => {
+                if(showResults) {
+                    val isCorrect = maybeResults.flatMap(_.isCorrectAnswer(question, answer))
+                    renderAnswerWithResponse(question, answer, isCorrect, maybeInputAnswer)
+                } else {
+                    renderAnswer(question, answer, field)
+                }
+            })
+        </div>
+
+    </li>
+}
+
+@renderAnswer(question: Question, answer: Answer, field: play.api.data.Field) = {
+    <div class="quiz__answer">
+        <input type="radio"
+            name="@{field.name}"
+            id="answer-@{answer.id}"
+            value="@{answer.id}"
+            class="quiz__answer__input">
+        <label for="answer-@{answer.id}" class="quiz__answer-text">
+            @{answer.text}
+        </label>
+    </div>
+}
 
 @renderEndMessage(results: QuizResults) = {
     <div class="quiz__end-message">
@@ -40,42 +75,6 @@
             <div class="quiz__share__cta">Share your results</div>
             @fragments.social(sharelinks)
         </div>
-    </div>
-}
-
-@renderQuestion(question: Question, field: play.api.data.Field, maybeInputAnswer: Option[Answer]) = {
-    <li class="quiz__question
-        @{ if (showResults) {
-            s"quiz__question--${if(maybeInputAnswer.isEmpty) "without-response" else "with-response" }"
-          }
-        }">
-        <span class="quiz__question__label">@question.text</span>
-
-        <div class="quiz__question__rows">
-            @question.answers.map( answer => {
-                if(showResults) {
-                    val isCorrect = maybeResults.flatMap(_.isCorrectAnswer(question, answer))
-                    renderAnswerWithResponse(question, answer, isCorrect, maybeInputAnswer)
-                } else {
-                    renderAnswer(question, answer, field)
-                }
-            })
-        </div>
-
-    </li>
-}
-
-@renderAnswer(question: Question, answer: Answer, field: play.api.data.Field) = {
-    <div class="quiz__answer">
-        <label for="answer-@{answer.id}" class="quiz__answer__label">
-            <input type="radio"
-                name="@{field.name}"
-                id="answer-@{answer.id}"
-                value="@{answer.id}"
-                class="quiz__answer__input">
-
-            <span class="quiz__answer__text">@{answer.text}</span>
-        </label>
     </div>
 }
 

@@ -2,6 +2,10 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+# temp path for atom quizzes
+GET            /open-platform/blog/related-content                                                                               controllers.ArticleController.renderArticle(path = "open-platform/blog/related-content")
+
+
 GET            /surveys/*file                                                                                                    dev.DevAssetsController.surveys(file)
 GET            /commercial/test-page                                                                                             controllers.commercial.CreativeTestPage.allComponents(k: List[String])
 
