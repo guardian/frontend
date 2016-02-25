@@ -33,4 +33,6 @@ object EmailHelpers {
   def icon(name: String) = Html {
     s"""<img src="${Static(s"images/email/icons/$name.png")}" class="icon">"""
   }
+
+  val footerImage = Static("images/email/grey-g.png")
 }
