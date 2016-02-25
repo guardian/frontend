@@ -69,7 +69,10 @@
                     @fragments.amp.onwardTemplateAmp("related-mf2/" + page.metadata.id + ".json")
                 }
 
-                @fragments.amp.outbrain(page)
+                @if(!content.shouldHideAdverts) {
+                    @fragments.amp.outbrain(page)
+                }
+
                 @* Show top container for section front only if current page belongs to one of the following sections *@
                 @* Otherwise show top container for network front *@
                 @* TODO: This list also exists in the JS for fronts on articles a/b test. Pending a decision on that, this should go in the jsconfig, or be removed*@
