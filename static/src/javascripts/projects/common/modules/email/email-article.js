@@ -47,7 +47,7 @@ define([
                 insertMethod: function () {
                     return function ($iframeEl) {
                         $iframeEl.insertAfter('.js-article__container');
-                    }
+                    };
                 }
             },
             theFilmToday: {
