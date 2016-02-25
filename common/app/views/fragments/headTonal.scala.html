@@ -1,4 +1,4 @@
-@(item: model.ContentType, showBadge: Boolean = false, showMeta: Boolean = true)(implicit request: RequestHeader)
+@(item: model.ContentType, showBadge: Boolean = false, showMeta: Boolean = true, amp: Boolean = false)(implicit request: RequestHeader)
 
 @import views.support.TrailCssClasses.toneClass
 @import views.support.ContributorLinks
@@ -23,6 +23,16 @@
                         case _ => { @Html(item.trail.headline) }
                     }
                 </h1>
+
+                @if(amp && item.tags.isMatchReport) {
+                    @defining({
+                        val date = item.trail.webPublicationDate.minusDays(1).toLocalDate.toString("yyyy/MM/dd")
+                        val teams = item.content.paFootballTeams.mkString("/")
+                        s"football-mf2/api/match-summary/$date/$teams.json"
+                    }) { path =>
+                        @fragments.amp.matchSummaryAmp(path)
+                    }
+                }
 
                 @if(item.content.hasTonalHeaderByline && item.tags.hasLargeContributorImage) {
                     @fragments.meta.bylineImage(item.tags)
