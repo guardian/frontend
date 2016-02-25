@@ -8,7 +8,7 @@
 
     &:before {
         counter-increment: quiz-question;
-        content: counter(quiz-question) ".";
+        content: counter(quiz-question) '.';
         float: left;
         padding-right: .5ch;
     }
@@ -35,7 +35,7 @@
     transition: background-color 40ms;
 
     &:hover {
-        background-color: colour(neutral-4)
+        background-color: colour(neutral-4);
     }
 
     :checked + & {
