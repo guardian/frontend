@@ -133,13 +133,15 @@ object MoreOnMatchController extends Controller with Football with Requests with
       // We are only interested in content with exactly 2 team tags
       related map { _ filter hasExactlyTwoTeams } map { filtered =>
         Cached(if(theMatch.isLive) 10 else 300) {
+          lazy val competition = Competitions().competitionForMatch(theMatch.id)
+          lazy val homeTeamResults = competition.map(_.teamResults(theMatch.homeTeam.id).take(5))
+
           JsonComponent(
             "items" -> Json.arr(
               Json.obj(
                 "id" -> theMatch.id,
                 "date" -> theMatch.date,
                 "venue" -> theMatch.venue.map(_.name),
-                "isFixture" -> theMatch.isFixture,
                 "isLive" -> theMatch.isLive,
                 "isResult" -> theMatch.isResult,
                 "isLiveOrIsResult" -> (theMatch.isResult || theMatch.isLive),
@@ -147,13 +149,26 @@ object MoreOnMatchController extends Controller with Football with Requests with
                   "name" -> theMatch.homeTeam.name,
                   "id" -> theMatch.homeTeam.id,
                   "score" -> theMatch.homeTeam.score,
-                  "crest" -> s"${Configuration.staticSport.path}/football/crests/120/${theMatch.homeTeam.id}.png"
+                  "crest" -> s"${Configuration.staticSport.path}/football/crests/120/${theMatch.homeTeam.id}.png",
+                  "scorers" -> theMatch.homeTeam.scorers.getOrElse("").split(",").map(scorer => {
+                    Json.obj(
+                      "scorer" -> scorer.replace("(", "").replace(")", "")
+                    )
+                  })
                 ),
                 "awayTeam" -> Json.obj(
                   "name" -> theMatch.awayTeam.name,
                   "id" -> theMatch.awayTeam.id,
                   "score" -> theMatch.awayTeam.score,
-                  "crest" -> s"${Configuration.staticSport.path}/football/crests/120/${theMatch.awayTeam.id}.png"
+                  "crest" -> s"${Configuration.staticSport.path}/football/crests/120/${theMatch.awayTeam.id}.png",
+                  "scorers" -> theMatch.awayTeam.scorers.getOrElse("").split(",").map(scorer => {
+                    Json.obj(
+                      "scorer" -> scorer.replace("(", "").replace(")", "")
+                    )
+                  })
+                ),
+                "competition" -> Json.obj(
+                  "fullName" -> competition.map(_.fullName)
                 )
               )
             )

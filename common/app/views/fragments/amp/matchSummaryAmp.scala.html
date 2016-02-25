@@ -7,18 +7,18 @@
         <div class="match-summary">
 
             {{#isLiveOrIsResult}}
-                <h1>
+                <h1 class="u-h">
                     {{homeTeam.name}} {{homeTeam.score}} - {{awayTeam.score}} {{awayTeam.name}}
                 </h1>
             {{/isLiveOrIsResult}}
             {{^isLiveOrIsResult}}
-                <h1>
+                <h1 class="u-h">
                     {{homeTeam.name}} v {{awayTeam.name}}
                 </h1>
             {{/isLiveOrIsResult}}
 
             <div class="match-info">
-            @* @competition.map{ competition => <div class="match-info__competition">@competition.fullName</div>}*@
+                <div class="match-info__competition">{{competition.fullName}}</div>
                 <div class="match-info__venue">{{venue}}</div>
             </div>
 
@@ -31,27 +31,20 @@
                     </div>
                     <div class="team__info">
                         <h2 class="team__heading">
-                            @*<span class="team__name" data-abbr="@pa.TeamCodes.codeFor(homeTeam)">*@
-                            <span class="team__name-long">{{ homeTeam.name }} </span>
-                            @*</span>*@
+                            <span class="team__name">
+                                <span class="team__name-long">{{ homeTeam.name }} </span>
+                            </span>
                             {{#isLiveOrIsResult}}
                                 <span class="team__score">{{ homeTeam.score }}</span>
                             {{/isLiveOrIsResult}}
                         </h2>
 
-                        {{#isFixture}}
-                            @* @competition.map{ competition =>¡*@
-                            <div class="team__results-container">
-                                @* @teamForm(homeTeam.id, competition)*@
-                            </div>
-                            @*}*@
-                        {{/isFixture}}
-                        {{^isFixture}}
-                            <dl class="team__scorers u-unstyled">
-                                <dt class="u-h">Home team scorers</dt>
-                                @* @homeTeam.scorers.map{scorers => @scorers.split(",").map{ scorer => <dd>@scorer.replace("(", "").replace(")", "")</dd>}}*@
-                            </dl>
-                        {{/isFixture}}
+                        <dl class="team__scorers u-unstyled">
+                            <dt class="u-h">Home team scorers</dt>
+                                {{#homeTeam.scorers}}
+                                    <dd>{{scorer}}</dd>
+                                {{/homeTeam.scorers}}
+                        </dl>
                     </div>
                 </div>
 
@@ -70,19 +63,12 @@
                                 <span class="team__score">{{awayTeam.score}}</span>
                             {{/isLiveOrIsResult}}
                         </h2>
-                        {{#isFixture}}
-                        @* @competition.map{ competition =>¡*@
-                            <div class="team__results-container">
-                        @* @teamForm(awayTeam.id, competition)*@
-                            </div>
-                        @*}*@
-                        {{/isFixture}}
-                        {{^isFixture}}
-                            <dl class="team__scorers u-unstyled">
+                        <dl class="team__scorers u-unstyled">
                             <dt class="u-h">Away team scorers</dt>
-                            @* @awayTeam.scorers.map{scorers => @scorers.split(",").map{ scorer => <dd>@scorer.replace("(", "").replace(")", "")</dd>}}*@
-                            </dl>
-                        {{/isFixture}}
+                            {{#awayTeam.scorers}}
+                                <dd>{{scorer}}</dd>
+                            {{/awayTeam.scorers}}
+                        </dl>
                     </div>
                 </div>
             </div>
