@@ -18,7 +18,7 @@ define([
     fastdom,
     config,
     mediator,
-    LazyLoad,
+    lazyload,
     Tabs,
     Toggles,
     isArray,
@@ -163,7 +163,7 @@ define([
     };
 
     CommercialComponent.prototype.create = function () {
-        new LazyLoad({
+        lazyload({
             url: this.url,
             container: this.adSlot,
             success: function () {
@@ -178,7 +178,7 @@ define([
                     this.adSlot.style.display = 'none';
                 }, this);
             }.bind(this)
-        }).load();
+        });
 
         return this;
     };

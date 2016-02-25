@@ -1,6 +1,5 @@
 @(faciaPage: model.PressedPage)(implicit request: RequestHeader)
 @import common.Edition
-@import conf.switches.Switches._
 @import views.support.RenderClasses
 
 @defining((faciaPage.isSponsored(Some(Edition(request))),
@@ -10,9 +9,8 @@
         <div class="l-side-margins">
             <div class="@RenderClasses(Map(
                 "fc-container--sponsored" -> isSponsored,
-                "fc-container--advertisement-feature" -> isAdFeature,
-                "js-sponsored-front" -> (isSponsored || isAdFeature || isFoundationFunded),
-                "paid-content--advertisement-feature" -> (NewCommercialContent.isSwitchedOn && isAdFeature)
+                "fc-container--advertisement-feature paid-content--advertisement-feature" -> isAdFeature,
+                "js-sponsored-front" -> (isSponsored || isAdFeature || isFoundationFunded)
             ), "facia-page")"
             data-link-name="Front | @request.path"
                 @faciaPage.sponsor.map { sponsor =>
@@ -23,7 +21,7 @@
                 }
             role="main">
 
-            @if(NewCommercialContent.isSwitchedOn && isAdFeature){
+            @if(isAdFeature){
                 @fragments.guBand()
             }
 

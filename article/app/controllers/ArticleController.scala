@@ -161,7 +161,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
 
   def renderArticle(path: String) = {
     LongCacheAction { implicit request =>
-      mapModel(path) {
+      mapModel(path, blocks = request.isEmail) {
         render(path, _, None)
       }
     }
@@ -182,6 +182,8 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       .showTags("all")
       .showFields("all")
       .showReferences("all")
+      .showAtoms("all")
+
     val capiItemWithBlocks = if (blocks) capiItem.showBlocks("body") else capiItem
     getResponse(capiItemWithBlocks)
 

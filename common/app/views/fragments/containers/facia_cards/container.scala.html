@@ -13,10 +13,7 @@
 @import views.support.{Commercial, GetClasses, RenderClasses}
 
 @renderCommercialContainer(containerType: CommercialContainerType) = {
-    <div class="@RenderClasses(
-        Map("fc-container__inner--full-span fc-container__inner--paidfor" -> Switches.NewCommercialContent.isSwitchedOn),
-        "fc-container__inner"
-    )">
+    <div class="fc-container__inner--full-span fc-container__inner--paidfor fc-container__inner">
     @commercialContainer(containerType, containerDefinition, frontProperties)
     </div>
 }
@@ -29,8 +26,8 @@
         case _ => {}
     }
 
-    @(containerDefinition.container, isPaidContent, Switches.NewCommercialContent.isSwitchedOn) match {
-        case (MostPopular, true, true) => {}
+    @(containerDefinition.container, isPaidContent) match {
+        case (MostPopular, true) => {}
         case _ => {
         <section id="@componentName"
         class="@GetClasses.forContainerDefinition(containerDefinition)"
