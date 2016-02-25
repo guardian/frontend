@@ -11,6 +11,9 @@ Tests are failing because of mis pressed data committed
 * run facia-press locally
 * go to http://localhost:9000 just to get the switches file warmed up
 * curl -v -X POST http://localhost:9000/press/live/music
+* curl -v -X POST http://localhost:9000/press/live/inline-embeds
+* curl -v -X POST http://localhost:9000/press/live/uk
+* curl -v -X POST http://localhost:9000/press/live/politics
 * stop facia press and rerun the tests
 
 ## shipping
