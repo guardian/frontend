@@ -140,11 +140,7 @@ define([
      * @param (Object=) adSlot
      * @param {Object=} params
      */
-    var index = 0;
     function CommercialComponent(adSlot, params) {
-        window.performance.mark('commercial_component_start_' + index);
-        this.index = index;
-        index += 1;
         this.params = params || {};
         this.type = this.params.type;
         // remove type from params
@@ -158,11 +154,7 @@ define([
             url: this.url,
             container: this.adSlot,
             success: onSuccess.bind(this),
-            error: onError.bind(this),
-            always: function () {
-                window.performance.mark('commercial_component_end_' + this.index);
-                window.performance.measure('commercial_component_' + this.index, 'commercial_component_start_' + this.index, 'commercial_component_end_' + this.index);
-            }.bind(this)
+            error: onError.bind(this)
         });
 
         return this;
@@ -193,14 +185,6 @@ define([
             createToggle(el);
         }
     };
-
-    window.setTimeout(function () {
-        var items = window.performance.getEntriesByType('measure');
-        for (var i = 0; i < items.length; ++i) {
-          var req = items[i];
-          console.log(req.name + ' took ' + req.duration + 'ms');
-        }
-    }, 10000);
 
     return CommercialComponent;
 });
