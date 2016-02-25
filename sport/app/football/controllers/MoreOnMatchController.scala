@@ -128,18 +128,13 @@ object MoreOnMatchController extends Controller with Football with Requests with
     val contentDate = dateFormat.parseDateTime(year + month + day).toLocalDate
 
     val maybeResponse: Option[Future[Result]] = Competitions().matchFor(interval(contentDate), team1, team2) map { theMatch =>
+
       val related: Future[Seq[ContentType]] = loadMoreOn(request, theMatch)
       // We are only interested in content with exactly 2 team tags
-
-      val group = theMatch.round.name.flatMap {
-        case roundName if roundName.toLowerCase.startsWith("group") => Some(roundName.toLowerCase.replace(' ', '-'))
-        case _ => None
-      }.getOrElse("")
-
       related map { _ filter hasExactlyTwoTeams } map { filtered =>
         Cached(if(theMatch.isLive) 10 else 300) {
           JsonComponent(
-            "items" -> Json.arr(Seq(
+            "items" -> Json.arr(
               Json.obj(
                 "id" -> theMatch.id,
                 "date" -> theMatch.date,
@@ -147,6 +142,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
                 "isFixture" -> theMatch.isFixture,
                 "isLive" -> theMatch.isLive,
                 "isResult" -> theMatch.isResult,
+                "isLiveOrIsResult" -> (theMatch.isResult || theMatch.isLive),
                 "homeTeam" -> Json.obj(
                   "name" -> theMatch.homeTeam.name,
                   "id" -> theMatch.homeTeam.id,
@@ -160,7 +156,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
                   "crest" -> s"${Configuration.staticSport.path}/football/crests/120/${theMatch.awayTeam.id}.png"
                 )
               )
-            ))
+            )
           )
         }
       }

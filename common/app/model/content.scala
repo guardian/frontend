@@ -63,6 +63,7 @@ final case class Content(
   witnessAssignment: Option[String],
   isbn: Option[String],
   imdb: Option[String],
+  paFootballTeams: Seq[String],
   javascriptReferences: Seq[JsObject],
   wordCount: Int,
   showByline: Boolean,
@@ -297,6 +298,7 @@ object Content {
       witnessAssignment = references.get("witness-assignment"),
       isbn = references.get("isbn"),
       imdb = references.get("imdb"),
+      paFootballTeams = apiContent.references.filter(ref => ref.id.contains("pa-football-team")).map(ref => ref.id.split("/").last).distinct,
       javascriptReferences = apiContent.references.map(ref => Reference.toJavaScript(ref.id)),
       wordCount = {
         Jsoup.clean(fields.body, Whitelist.none()).split("\\s+").size
