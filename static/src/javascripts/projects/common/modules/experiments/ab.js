@@ -6,6 +6,7 @@ define([
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/fronts-on-articles2',
+    'common/modules/experiments/tests/identity-register-membership-standfirst',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -23,6 +24,7 @@ define([
     store,
     mvtCookie,
     FrontsOnArticles2,
+    IdentityRegisterMembershipStandfirst,
     flatten,
     forEach,
     keys,
@@ -35,7 +37,8 @@ define([
 ) {
 
     var TESTS = flatten([
-        new FrontsOnArticles2()
+        new FrontsOnArticles2(),
+        new IdentityRegisterMembershipStandfirst()
     ]);
 
     var participationsKey = 'gu.ab.participations';
