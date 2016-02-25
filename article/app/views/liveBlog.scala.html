@@ -5,10 +5,10 @@
 @import common.LinkTo
 
 @main(model){
-    @pageModel.older.suffix.map { suffix =>
+    @pageModel.pagination.flatMap(_.older).map(_.suffix).map { suffix =>
         <link rel="next" href="@LinkTo{ /@{model.article.content.metadata.id}@suffix }">
     }
-    @pageModel.newer.suffix.map { suffix =>
+    @pageModel.pagination.flatMap(_.newer).map(_.suffix).map { suffix =>
         <link rel="prev" href="@LinkTo{ /@{model.article.content.metadata.id}@suffix }">
     }
 }{

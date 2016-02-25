@@ -2,28 +2,36 @@ package liveblog
 
 object LiveBlogPageModel {
 
-  def apply[B](pageSize: Int, blocks: Seq[B])(isRequestedBlock: Option[B => Boolean], id: B => String): Option[LiveBlogPageModel[_ <: B]] = {
-    val (mainPage, restPages) = getPages(pageSize, blocks)
-    val noPage = BlockInfo(Nil/*ignored*/, NoPage)
-    val pages = BlockInfo(mainPage, FirstPage) :: restPages.map(page => BlockInfo(page, BlockPage(id(page.head))))
-    val endedPages = noPage :: (pages :+ noPage)
+  def apply[B](pageSize: Int, blocks: Seq[B])(isRequestedBlock: Option[B => Boolean], id: B => String): Option[LiveBlogPageModel[B]] = {
+    val (mainPageBlocks, restPagesBlocks) = getPages(pageSize, blocks)
+    val newestPage = FirstPage(mainPageBlocks)
+    val pages = newestPage :: restPagesBlocks
+      .zipWithIndex
+      .map { case (page, index) =>
+        // page number is index + 2 to account for first page and 0 based index
+        BlockPage(blocks = page, blockId = id(page.head), pageNumber = index + 2)
+      }
+    val oldestPage = pages.lastOption.getOrElse(newestPage)
 
-    def hasRequestedBlock(page: LiveBlogPageModel[_ <: B]): Boolean = {
-      page.blocks.exists(isRequestedBlock.getOrElse(_ => true))
+    val endedPages = None :: (pages.map(Some.apply) :+ None)
+
+    def hasRequestedBlock(page: LiveBlogPageModel[B]): Boolean = {
+      page.currentPage.blocks.exists(isRequestedBlock.getOrElse(_ => true))
     }
 
+
     endedPages.sliding(3).toList.zipWithIndex.map {
-      case (List(newer, curr, older), index) =>
+      case (List(newerPage, Some(currentPage), olderPage), index) =>
         LiveBlogPageModel(
-          blocks = curr.page,
-          main = blocks,
-          newer = newer.self,
-          older = older.self,
-          canonical = curr.self,
-          pageNumber = index + 1,
-          pagesLength = pages.length,
-          newest = pages.headOption.getOrElse(noPage).self,
-          oldest = pages.lastOption.getOrElse(noPage).self
+          allBlocks = blocks,
+          currentPage = currentPage,
+          pagination = if (pages.length > 1) Some(Pagination(
+            newest = if (newestPage.equals(currentPage)) None else Some(newestPage),
+            newer = newerPage,
+            oldest = if (oldestPage.equals(currentPage)) None else Some(oldestPage),
+            older = olderPage,
+            pagesLength = pages.length
+          )) else None
         )
     }.find(hasRequestedBlock)
   }
@@ -38,23 +46,27 @@ object LiveBlogPageModel {
 
 }
 
-case class BlockInfo[B](page: Seq[B], self: PageReference)
+sealed trait PageReference[B] {
+  def blocks: Seq[B]
+  def suffix: String
+  def pageNumber: Int
+}
 
-case class LiveBlogPageModel[+B](
-  blocks: Seq[B],
-  main: Seq[B] /*for key events - TODO remove*/ ,
-  newer: PageReference,
-  older: PageReference,
-  canonical: PageReference,
-  pageNumber: Int,
-  pagesLength: Int,
-  newest: PageReference,
-  oldest: PageReference
+case class Pagination[B](
+  newest: Option[PageReference[B]],
+  newer: Option[PageReference[B]],
+  oldest: Option[PageReference[B]],
+  older: Option[PageReference[B]],
+  pagesLength: Int
 )
 
-sealed trait PageReference {
-  def suffix: Option[String]
-}
-case object NoPage extends PageReference { val suffix = None }
-case object FirstPage extends PageReference { val suffix = Some("") }
-case class BlockPage(blockId: String) extends PageReference { val suffix = Some(s"?page=with:block-$blockId#block-$blockId") }
+case class LiveBlogPageModel[B](
+  allBlocks: Seq[B] /*for key events - TODO remove*/ ,
+  currentPage: PageReference[B],
+  pagination: Option[Pagination[B]]
+)
+
+case class FirstPage[B](blocks: Seq[B]) extends PageReference[B] {
+  val suffix = ""
+  val pageNumber = 1 }
+case class BlockPage[B](blocks: Seq[B], blockId: String, pageNumber: Int) extends PageReference[B] { val suffix = s"?page=with:block-$blockId#block-$blockId" }
