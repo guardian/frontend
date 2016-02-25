@@ -93,15 +93,14 @@ define([
                 successDescription: 'We will send you our picks of the most important headlines tomorrow morning.',
                 modClass: 'end-article',
                 insertMethod: function () {
-                    switch (config.page.edition) {
-                        case 'AU':
-                            // In AU Edition, we want to place the article at the bottom of the body
-                            // and not use space-finder
-                            return function ($iframeEl) {
-                                $iframeEl.appendTo('.js-article__body');
-                            };
-                        default:
-                            return false;
+                    if (config.page.edition === 'AU') {
+                        // In AU Edition, we want to place the article at the bottom of the body
+                        // and not use space-finder
+                        return function ($iframeEl) {
+                            $iframeEl.appendTo('.js-article__body');
+                        };
+                    } else {
+                        return false;
                     }
                 }
             }
