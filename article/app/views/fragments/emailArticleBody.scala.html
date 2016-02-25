@@ -1,7 +1,7 @@
 @(page: PageWithStoryPackage)(implicit request: RequestHeader)
 
 @import views.support.EmailArticleImage
-@import views.support.Zurb._
+@import views.support.EmailHelpers._
 @import model.liveblog._
 @import model.EmailAddons.EmailArticle
 
@@ -20,7 +20,24 @@
         @article.trail.byline.map { byline =>
             <h3 class="byline">@byline</h3>
 
-            @fragments.meta.contactAuthor(article.tags)
+        @article.tags.contributors.headOption.map { profile =>
+            @profile.properties.twitterHandle.map { twitter =>
+                <div class="meta__twitter">
+                    <a href="http://twitter.com/@twitter" data-link-name="twitter-handle" data-component="meta-twitter-handle" class="button button--small button--secondary tone-colour">
+                        @icon("twitter-bird")
+                        <div class="contact">@@@twitter</div>
+                    </a>
+                </div>
+            }
+            @profile.properties.emailAddress.map { email =>
+                <div class="meta__email">
+                    <a href="mailto:@email" data-link-name="email-address" data-component="meta-email-address" class="button button--small button--secondary tone-colour">
+                        @icon("mail")
+                        <div class="contact">email</div>
+                    </a>
+                </div>
+            }
+        }
 
             <hr />
         }
@@ -47,7 +64,7 @@
                         @paddedRow {
                             @data.get("caption").map { caption =>
                                 <div class="caption">
-                                    @fragments.inlineSvg("camera", "icon", Seq("i-left"))
+                                    @icon("camera")
 
                                     @Html(caption)
 

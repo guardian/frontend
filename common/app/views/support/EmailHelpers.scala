@@ -1,8 +1,9 @@
 package views.support
 
+import conf.Static
 import play.twirl.api.Html
 
-object Zurb {
+object EmailHelpers {
   def columnNumber(n: Int): String = {
     Seq("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve").lift(n - 1).getOrElse("")
   }
@@ -28,4 +29,8 @@ object Zurb {
   def fullRow(classes: Seq[String] = Seq.empty)(inner: Html): Html = row(columns(12, classes)(inner))
   def paddedRow(inner: Html): Html = row(columns(12, Seq("panel"))(inner))
   def paddedRow(classes: Seq[String] = Seq.empty)(inner: Html): Html = row(columns(12, classes ++ Seq("panel"))(inner))
+
+  def icon(name: String) = Html {
+    s"""<img src="${Static(s"images/email/icons/$name.png")}" class="icon">"""
+  }
 }
