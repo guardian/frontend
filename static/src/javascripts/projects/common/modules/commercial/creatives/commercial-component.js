@@ -48,19 +48,19 @@ define([
     function defaultUrlBuilder(url) {
         return function (params) {
             return buildComponentUrl(url, params);
-        }
+        };
     }
 
     function bookUrlBuilder(url) {
         return function (params) {
             return buildComponentUrl(url, merge(params, { t: config.page.isbn || params.isbn }));
-        }
+        };
     }
 
     function soulmatesGroupUrlBuilder(url) {
         return function (params) {
             return buildComponentUrl(url + params.soulmatesFeedName, params);
-        }
+        };
     }
 
     function complexUrlBuilder(url, withT, withKeywords) {
@@ -70,7 +70,7 @@ define([
                 withT && params[withT] ? { t: params[withT].split(',') } : {},
                 withKeywords ? getKeywords() : {}
             ));
-        }
+        };
     }
 
     function createToggle(el) {
