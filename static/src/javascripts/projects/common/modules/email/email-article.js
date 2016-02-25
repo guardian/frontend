@@ -44,8 +44,10 @@ define([
                 successHeadline: 'Thank you for signing up to the Guardian US Campaign minute',
                 successDescription: 'We will send you the biggest political story lines of the day',
                 modClass: 'post-article',
-                insertMethod: function ($iframeEl) {
-                    $iframeEl.insertAfter('.js-article__container');
+                insertMethod: function () {
+                    return function ($iframeEl) {
+                        $iframeEl.insertAfter('.js-article__container');
+                    };
                 }
             },
             theFilmToday: {
@@ -89,7 +91,18 @@ define([
                 description: 'Sign up to The Guardian Today daily email and get the biggest headlines each morning.',
                 successHeadline: 'Thank you for signing up to the Guardian Today',
                 successDescription: 'We will send you our picks of the most important headlines tomorrow morning.',
-                modClass: 'end-article'
+                modClass: 'end-article',
+                insertMethod: function () {
+                    if (config.page.edition === 'AU') {
+                        // In AU Edition, we want to place the article at the bottom of the body
+                        // and not use space-finder
+                        return function ($iframeEl) {
+                            $iframeEl.appendTo('.js-article__body');
+                        };
+                    } else {
+                        return false;
+                    }
+                }
             }
         },
         emailInserted = false,
@@ -123,10 +136,9 @@ define([
                 bean.on(iframe, 'load', function () {
                     email.init(iframe);
                 });
-
-                if (listConfig.insertMethod) {
+                if (listConfig.insertMethod && listConfig.insertMethod()) {
                     fastdom.write(function () {
-                        listConfig.insertMethod($iframeEl);
+                        listConfig.insertMethod()($iframeEl);
                     });
                 } else {
                     spaceFiller.fillSpace(getSpacefinderRules(), function (paras) {
