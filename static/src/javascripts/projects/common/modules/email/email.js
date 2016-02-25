@@ -14,7 +14,8 @@ define([
     'common/views/svgs',
     'text!common/views/email/submissionResponse.html',
     'common/utils/robust',
-    'common/utils/detect'
+    'common/utils/detect',
+    'common/modules/identity/api'
 ], function (
     formInlineLabels,
     bean,
@@ -31,7 +32,8 @@ define([
     svgs,
     successHtml,
     robust,
-    detect
+    detect,
+    Id
 ) {
     var omniture;
 
@@ -94,7 +96,8 @@ define([
 
                 formSubmission.bindSubmit($formEl, {
                     formType: $formEl.data('email-form-type'),
-                    listId: $formEl.data('email-list-id')
+                    listId: $formEl.data('email-list-id'),
+                    signedIn: (Id.isUserLoggedIn()) ? 'user signed-in' : 'user not signed-in'
                 });
 
                 // If we're in an iframe, we should check whether we need to add a title and description
@@ -146,7 +149,7 @@ define([
                         state.submitting = true;
 
                         return getOmniture().then(function (omniture) {
-                            omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | subscribe clicked');
+                            omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | ' + analytics.signedIn + ' | subscribe clicked');
 
                             return ajax({
                                 url: url,
@@ -157,12 +160,12 @@ define([
                                 }
                             })
                             .then(function () {
-                                omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | subscribe successful');
+                                omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | ' + analytics.signedIn + ' | subscribe successful');
                             })
                             .then(handleSubmit(true, $form))
                             .catch(function (error) {
                                 robust.log('c-email', error);
-                                omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | error');
+                                omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | ' + analytics.signedIn + ' | error');
                                 handleSubmit(false, $form)();
                             });
                         });
@@ -196,9 +199,20 @@ define([
                     formSuccessHeadline = (opts && opts.formSuccessHeadline) || formData.formSuccessHeadline,
                     formSuccessDesc = (opts && opts.formSuccessDesc) || formData.formSuccessDesc,
                     removeComforter = (opts && opts.removeComforter) || formData.removeComforter || false,
-                    formModClass = (opts && opts.formModClass) || formData.formModClass || false;
+                    formModClass = (opts && opts.formModClass) || formData.formModClass || false,
+                    userFromId;
+
+                userFromId = Id.getUserFromApi(function(userResponse){
+                        return userResponse;
+                    });
 
                 fastdom.write(function () {
+                    if (userFromId && userFromId.primaryEmailAddress) {
+                        $('.js-email-sub__inline-label', el).addClass('email-sub__inline-label--is-hidden');
+                        $('.js-email-sub__submit-input', el).addClass('email-sub__submit-input--solo');
+                        $('.js-email-sub__text-input', el).val(userFromId.primaryEmailAddress);
+                    }
+
                     if (formTitle) {
                         $('.js-email-sub__heading', el).text(formTitle);
                     }

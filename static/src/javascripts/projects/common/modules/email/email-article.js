@@ -176,7 +176,6 @@ define([
 
                 return !pageIsBlacklisted &&
                         urlRegex.test(document.referrer) &&
-                        !Id.isUserLoggedIn() &&
                         !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
             }
         };
