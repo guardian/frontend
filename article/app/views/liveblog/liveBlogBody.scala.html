@@ -73,7 +73,7 @@
 
                     @fragments.dropdown("Live feed", Some("live-feed"), true) {
                         <div class="js-article__container" data-component="body">
-                            @fragments.liveFilter(isLive = article.fields.isLive, article = model.article, pageModel)
+                            @fragments.liveBlogNavigation(isLive = article.fields.isLive, article = model.article, pageModel)
                             <div class="js-liveblog-body u-cf from-content-api js-blog-blocks blocks @if(article.fields.isLive) {live-blog}" data-most-recent-block="@article.mostRecentBlock" data-test-id="live-blog-blocks"
                                 itemprop="@if(article.tags.isReview) {reviewBody} else {articleBody}">
                                 <div class="toast__space-reserver">
@@ -87,7 +87,7 @@
                                 @views.html.liveblog.liveBlogBlocks(pageModel.currentPage.blocks, article, timezone)
                             </div>
                             @* Remove LiveFilter and the fragment once Toast comes out of AB test status *@
-                            @fragments.liveFilter(isLive = article.fields.isLive, article = model.article, pageModel)
+                            @fragments.liveBlogNavigation(isLive = article.fields.isLive, article = model.article, pageModel)
                         </div>
 
                         @fragments.submeta(article)
