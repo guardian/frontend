@@ -37,7 +37,7 @@
                         <div class="commercial__body">
                             @for(layout <- container.containerLayout) {
                                 @for(slice <- layout.slices) {
-                                    <ul class="lineitems l-row l-row--cols-@math.min(slice.columns.flatMap(_.cards).map(_.item).filter(_.isInstanceOf[ContentCard]).length, 4)">
+                                    <ul class="lineitems l-row l-row--cols-@math.min(Commercial.container.numberOfItems(container), 4)">
                                     @for(ColumnAndCards(_, cards) <- slice.columns) {
                                         @for(FaciaCardAndIndex(_, card, hideUpTo) <- cards) {
                                             @card match {
