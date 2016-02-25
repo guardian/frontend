@@ -83,6 +83,7 @@
     padding-bottom: $gs-gutter / 2;
     // Override user-agent styles for <a>
     color: inherit;
+    font-weight: bold;
 
     .inline-icon {
         fill: currentColor;
@@ -94,20 +95,26 @@
     }
 }
 
-.link-navigation__link--secondary--newer,
-.link-navigation__link--secondary--newer__icon {
+.link-navigation__link--secondary--newer {
     margin-right: $gs-gutter / 4;
     @include mq(mobileLandscape) {
         margin-right: $gs-gutter / 2;
     }
 }
 
-.liveblog-navigation__link--secondary--older,
-.link-navigation__link--secondary--older__icon {
+.link-navigation__link--secondary--newer__icon {
+    margin-right: $gs-gutter / 4;
+}
+
+.liveblog-navigation__link--secondary--older {
     margin-left: $gs-gutter / 4;
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter / 2;
     }
+}
+
+.link-navigation__link--secondary--older__icon {
+    margin-left: $gs-gutter / 4;
 }
 
 .liveblog-navigation__link--disabled {
