@@ -12,17 +12,16 @@
         </div>
         <div class="commercial--v-high__body">
             <a href="@clickMacro@event.eventUrl" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-superHigh-@{event.id}-@{event.title}">
-            <img class="lineitem__image" itemprop="image" src="@event.imageUrl" alt=""/>
-            <h4 class="lineitem__title" itemprop="name">@event.title</h4>
-            <p class="lineitem__meta lineitem__author" itemprop="author">@event.date, @event.location</p>
-            @if(event.ratioTicketsLeft <= 0.1){
-            <p class="lineitem__meta"><span class="lineitem__scarcity">Last few tickets remaining</span></p>
-            }
-            <p class="lineitem__meta">
-                @event.tickets.map { ticket =>
-                    £@("%.2f".format(ticket.price))<br/>
-                }
-            </p>
+                <img class="lineitem__image" itemprop="image" src="@event.imageUrl" alt=""/>
+                <h4 class="lineitem__title" itemprop="name">@event.title</h4>
+                <p class="lineitem__meta">
+                    <span class="lineitem__startdate" itemprop="startDate">@event.date</span>,
+                    <span class="lineitem__location" itemprop="location">@event.location</span>
+                    @if(event.ratioTicketsLeft <= 0.1){
+                    <br><span class="lineitem__scarcity">Last few tickets remaining</span>
+                    }
+                </p>
+                <p class="lineitem__price">@event.displayPrice</p>
             </a>
             <a href="@clickMacro@event.eventUrl" class="lineitem__cta button button--primary button--small" data-link-name="merchandising-bookshop-v@{version}_@{date}-superHigh-visit-shop">
                 Book now@fragments.inlineSvg("arrow-right", "icon", List("i-right"))
