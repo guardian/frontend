@@ -32,9 +32,11 @@
                 case TextBlockElement(Some(html)) => {
                     @paddedRow(Html(html))
                 }
+
                 case EmbedBlockElement(Some(html), _, _) => {
-                    @fullRow(Html(html))
+                    @*fullRow(Html(html))*@
                 }
+
                 case ImageBlockElement(media, data, showCredit) => {
                     @EmailArticleImage.bestFor(media).map { url =>
 
