@@ -1,24 +1,22 @@
 /**
- * Defines a test to record usage of user registration variant for Identity.
+ * Defines a test to a Membership registration variant with a Standfirst.
  *
- * Code for recording test events is in the new identity-frontend repo, and will
- * run automatically when users are routed to the new service.
- *
- * Audience offsets unused, user segmenting controlled by Varnish director in Fastly.
+ * Code for recording test events is in the new identity-frontend repo.
  *
  * @see https://github.com/guardian/identity-frontend
+ * @see https://profile.theguardian.com/register?clientId=members&mvt_registermembershipstandfirst=a
  */
 define([], function () {
 
     return function () {
 
-        this.id = 'IdentityRegisterV2';
-        this.start = '2016-01-27';
-        this.expiry = '2016-03-01';
+        this.id = 'IdentityRegisterMembershipStandfirst';
+        this.start = '2016-02-25';
+        this.expiry = '2016-04-01';
         this.author = 'James Pamplin';
-        this.description = 'New user registration page variant for Identity';
-        this.audience = 0.2;
-        this.audienceOffset = 0.5;
+        this.description = 'Membership registration page variant for Identity';
+        this.audience = 0.5;
+        this.audienceOffset = 0;
         this.successMeasure = 'More people register';
         this.audienceCriteria = 'everyone';
         this.dataLinkNames = '';
