@@ -1,5 +1,7 @@
 @()
 
+@import views.support.EmailHelpers.Images.quote
+
 <style>
     body, .body {
         background: #eaeaea;
@@ -14,7 +16,7 @@
         padding: 0;
     }
 
-    h1, h2, h3, h4, h5, h6, p {
+    h1, h2, h3, h4, h5, h6, p, blockquote {
         font-family: Georgia, serif;
         color: #333333;
     }
@@ -78,6 +80,11 @@
     .author a:hover svg {
         fill: #94b1ca !important;
         color: #94b1ca !important;
+    }
+
+    blockquote {
+        background: transparent url(@quote.path) no-repeat top left;
+        font-size: 16px;
     }
 
     .container,

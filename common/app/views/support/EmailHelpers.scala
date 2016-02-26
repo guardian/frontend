@@ -34,5 +34,8 @@ object EmailHelpers {
     s"""<img src="${Static(s"images/email/icons/$name.png")}" class="icon icon-$name">"""
   }
 
-  val footerImage = Static("images/email/grey-g.png")
+  object Images {
+    val footerG = Static("images/email/grey-g.png")
+    val quote = Static("images/email/quote.png")
+  }
 }
