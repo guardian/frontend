@@ -8,6 +8,7 @@ define([
     'common/utils/detect',
     'lodash/collections/contains',
     'lodash/arrays/intersection',
+    'lodash/collections/pluck',
     'common/utils/config',
     'lodash/collections/every',
     'lodash/collections/find',
@@ -25,6 +26,7 @@ define([
     detect,
     contains,
     intersection,
+    pluck,
     config,
     every,
     find,
@@ -106,6 +108,7 @@ define([
             }
         },
         emailInserted = false,
+        userListSubscriptions = [],
         keywords = config.page.keywords ? config.page.keywords.split(',') : '',
         getSpacefinderRules = function () {
             return {
@@ -123,8 +126,17 @@ define([
                 }
             };
         },
+        buildUserSubscriptions = function (response) {
+            if (response && response.status !== 'error' && response.result && response.result.subscriptions) {
+                userListSubscriptions = pluck(response.result.subscriptions, 'listId');
+            }
+
+            // Get the first list that is allowed on this page
+            addListToPage(find(listConfigs, listCanRun));
+        },
         listCanRun = function (listConfig) {
-            if (listConfig.canRun && canRunList[listConfig.canRun]()) {
+            // Check our lists canRun method and make sure that the user isn't already subscribed to this email
+            if (listConfig.canRun && canRunList[listConfig.canRun]() && !contains(userListSubscriptions, listConfig.listId)) {
                 return listConfig;
             }
         },
@@ -183,8 +195,8 @@ define([
     return {
         init: function () {
             if (!emailInserted) {
-                // Get the first list that is allowed on this page
-                addListToPage(find(listConfigs, listCanRun));
+                // Get the user's current subscriptions
+                Id.getUserEmailSignUps().then(buildUserSubscriptions);
             }
         }
     };
