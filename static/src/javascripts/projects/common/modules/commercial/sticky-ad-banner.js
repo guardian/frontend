@@ -7,6 +7,7 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/modules/commercial/track-ad',
+    'common/modules/commercial/track-rubicon-ad-resize',
     'lodash/objects/assign'
 ], function (
     fastdom,
@@ -17,6 +18,7 @@ define([
     config,
     detect,
     trackAd,
+    trackRubiconAdResize,
     assign) {
 
     // All ads are loaded via DFP, including the following types. DFP does
@@ -42,28 +44,12 @@ define([
 
     // Rubicon ads are loaded via DFP like all other ads, but they can
     // render themselves again at any time
-    var newRubiconAdHeightPromise = new Promise(function (resolve) {
-        window.addEventListener('message', function (event) {
-            var data;
-            // other DFP events get caught by this listener, but if they're not json we don't want to parse them or use them
-            try {
-                data = JSON.parse(event.data);
-            } catch (e) {/**/}
-
-            if (data) {
-                var $iframe = getAdIframe();
-                var isRubiconAdEvent = data.type === 'set-ad-height';
-                var isEventForTopAdBanner = isRubiconAdEvent && data.value.id === $iframe[0].id;
-
-                if (isRubiconAdEvent && isEventForTopAdBanner) {
-                    fastdom.read(function () {
-                        var padding = parseInt($adBannerInner.css('padding-top'))
-                            + parseInt($adBannerInner.css('padding-bottom'));
-                        var clientHeight = parseInt(data.value.height) + padding;
-                        resolve(clientHeight);
-                    });
-                }
-            }
+    var newRubiconAdHeightPromise = trackRubiconAdResize('dfp-ad--top-above-nav').then(function(dims) {
+        return fastdom.read(function () {
+            var padding = parseInt($adBannerInner.css('padding-top'))
+                + parseInt($adBannerInner.css('padding-bottom'));
+            var clientHeight = parseInt(dims.height) + padding;
+            return clientHeight;
         });
     });
 

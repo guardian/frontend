@@ -5,11 +5,21 @@ define([
 ) {
     function trackRubiconAdResize(id) {
         return trackAd(id)
+            .then(getIframeId)
             .then(listenForRubicon)
             .then(getDims);
 
-        function listenForRubicon(isLoaded) {
-            return isLoaded ?
+        function getIframeId(isLoaded) {
+            if (!isLoaded) {
+                return false;
+            }
+
+            var iframe = document.getElementById(id).querySelector('iframe');
+            return iframe && iframe.id;
+        }
+
+        function listenForRubicon(iFrameId) {
+            return iFrameId ?
                 new Promise(function (resolve) {
                     var onMessage = function onMessage(event) {
                         var origin = event.origin || event.originalEvent.origin;
@@ -29,7 +39,7 @@ define([
 
                         if (data &&
                             data.type === 'set-ad-height' &&
-                            data.value.id === id
+                            data.value.id === iFrameId
                         ) {
                             resolve([data.value.width, data.value.height]);
                             window.removeEventListener('message', onMessage);
