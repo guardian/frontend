@@ -199,20 +199,13 @@ define([
                     formSuccessHeadline = (opts && opts.formSuccessHeadline) || formData.formSuccessHeadline,
                     formSuccessDesc = (opts && opts.formSuccessDesc) || formData.formSuccessDesc,
                     removeComforter = (opts && opts.removeComforter) || formData.removeComforter || false,
-                    formModClass = (opts && opts.formModClass) || formData.formModClass || false,
-                    userFromId;
+                    formModClass = (opts && opts.formModClass) || formData.formModClass || false;
 
-                userFromId = Id.getUserFromApi(function(userResponse){
-                        return userResponse;
-                    });
+                Id.getUserFromApi(function (userFromId) {
+                    ui.updateFormForLoggedIn(userFromId, el)
+                });
 
                 fastdom.write(function () {
-                    if (userFromId && userFromId.primaryEmailAddress) {
-                        $('.js-email-sub__inline-label', el).addClass('email-sub__inline-label--is-hidden');
-                        $('.js-email-sub__submit-input', el).addClass('email-sub__submit-input--solo');
-                        $('.js-email-sub__text-input', el).val(userFromId.primaryEmailAddress);
-                    }
-
                     if (formTitle) {
                         $('.js-email-sub__heading', el).text(formTitle);
                     }
@@ -238,6 +231,15 @@ define([
                     customSuccessDesc: formSuccessDesc
                 });
 
+            },
+            updateFormForLoggedIn: function (userFromId, el) {
+                if (userFromId && userFromId.primaryEmailAddress) {
+                    fastdom.write(function () {
+                        $('.js-email-sub__inline-label', el).addClass('email-sub__inline-label--is-hidden');
+                        $('.js-email-sub__submit-input', el).addClass('email-sub__submit-input--solo');
+                        $('.js-email-sub__text-input', el).val(userFromId.primaryEmailAddress);
+                    });
+                }
             },
             setTone: function ($el) {
                 if ($el.hasClass('js-email-sub--article')) {
