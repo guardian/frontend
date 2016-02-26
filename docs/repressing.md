@@ -13,7 +13,7 @@ Tests are failing because of mis pressed data committed
 * curl -v -X POST http://localhost:9000/press/live/music
 * curl -v -X POST http://localhost:9000/press/live/inline-embeds
 * curl -v -X POST http://localhost:9000/press/live/uk
-* curl -v -X POST http://localhost:9000/press/live/politics
+* curl -v -X POST http://localhost:9000/press/live/au/media
 * stop facia press and rerun the tests
 
 ## shipping

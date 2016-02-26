@@ -22,7 +22,7 @@ import org.scalatest._
   override def beforeAll() {
     ConfigAgent.refreshWith(
       ConfigJson(
-        fronts = Map("music" -> frontJson, "inline-embeds" -> frontJson, "uk" -> frontJson, "politics" -> frontJson),
+        fronts = Map("music" -> frontJson, "inline-embeds" -> frontJson, "uk" -> frontJson, "au/media" -> frontJson),
         collections = Map.empty)
     )
     conf.switches.Switches.FaciaInlineEmbeds.switchOn()
@@ -163,8 +163,8 @@ import org.scalatest._
   }
 
   it should "render fronts in mf2 format" in {
-    val section = "politics"
-    val edition = "uk"
+    val section = "media" // has to be an editionalised section
+    val edition = "au"
     val count = 3
     val request = FakeRequest("GET", s"/container/count/${count}/offset/0/section/${section}/edition/${edition}/mf2.json")
     val result = test.faciaController.renderSomeFrontContainersMf2(count, 0, section, edition)(request)
