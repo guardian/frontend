@@ -15,7 +15,7 @@ define([
     'text!common/views/email/iframe.html',
     'common/utils/template',
     'common/modules/article/space-filler',
-    'common/modules/analytics/omniture'
+    'common/modules/analytics/omniture',
     'common/utils/robust'
 ], function (
     $,
@@ -34,7 +34,7 @@ define([
     iframeTemplate,
     template,
     spaceFiller,
-    omniture
+    omniture,
     robust
 ) {
 
@@ -153,6 +153,9 @@ define([
                 if (listConfig.insertMethod && listConfig.insertMethod()) {
                     fastdom.write(function () {
                         listConfig.insertMethod()($iframeEl);
+
+                        omniture.trackLinkImmediate('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
+                        emailInserted = true;
                     });
                 } else {
                     spaceFiller.fillSpace(getSpacefinderRules(), function (paras) {
