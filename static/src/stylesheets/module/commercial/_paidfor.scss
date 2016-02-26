@@ -163,6 +163,19 @@
     .inline-icon {
         fill: colour(neutral-2);
     }
+
+    .l-row--cols-1 .lineitem {
+        flex: 0 1 50%;
+    }
+
+    .l-row--cols-1 .fc-item__media-wrapper,
+    .l-row--cols-2 .fc-item__media-wrapper {
+        @include mq(desktop) {
+            width: 50%;
+            float: left;
+            margin-right: $gs-gutter/2;
+        }
+    }
 }
 
 .commercial__show-mores {
