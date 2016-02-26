@@ -6,7 +6,8 @@ define([
     'common/utils/cookies',
     'common/utils/mediator',
     'common/utils/storage',
-    'common/modules/asyncCallMerger'
+    'common/modules/asyncCallMerger',
+    'Promise'
 ], function (
     ajax,
     utilAtob,
@@ -14,7 +15,8 @@ define([
     cookies,
     mediator,
     storage,
-    asyncCallMerger
+    asyncCallMerger,
+    Promise
 ) {
 
     /**
@@ -213,6 +215,21 @@ define([
             });
 
         return request;
+    };
+
+    Id.getUserEmailSignUps = function () {
+        if (Id.getUserFromCookie()) {
+            var endpoint = '/useremails/' + Id.getUserFromCookie().id,
+                request = ajax({
+                    url: Id.idApiRoot + endpoint,
+                    type: 'jsonp',
+                    crossOrigin: true
+                });
+
+            return request;
+        }
+
+        return Promise.resolve(null);
     };
 
     Id.sendValidationEmail = function () {
