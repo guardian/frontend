@@ -99,34 +99,6 @@ case class CollectionEssentials(
 )
 
 object ContainerCommercialOptions {
-  def fromConfig(config: CollectionConfig) = {
-    DfpAgent.findContainerCapiTagIdAndDfpTag(config) map { tagData =>
-      val capiTagId = tagData.capiTagId
-      val dfpTag = tagData.dfpTag
-
-      val sponsor = {
-        def tagTypeAndIdMatch(): Boolean = {
-          (dfpTag.tagType == Series && capiTagId.contains("/series/")) ||
-          (dfpTag.tagType == Keyword && capiTagId.matches("(\\w+)/\\1"))
-        }
-        if (tagTypeAndIdMatch()) {
-          dfpTag.lineItems.headOption flatMap (_.sponsor)
-        } else {
-          None
-        }
-      }
-
-      ContainerCommercialOptions(
-        isSponsored = dfpTag.paidForType == Sponsored,
-        isAdvertisementFeature = dfpTag.paidForType == AdvertisementFeature,
-        isFoundationSupported = dfpTag.paidForType == FoundationFunded,
-        sponsor,
-        sponsorshipTag = Some(SponsorshipTag(dfpTag.tagType, capiTagId)),
-        sponsorshipType = Some(dfpTag.paidForType.name),
-        omitMPU = false
-      )
-    } getOrElse empty
-  }
 
   def fromCollection(collection: CollectionEssentials): ContainerCommercialOptions = {
 
@@ -242,27 +214,26 @@ object FaciaContainer {
     omitMPU: Boolean = false
   ): FaciaContainer = FaciaContainer(
     index,
-    config.id,
-    config.config.displayName orElse collectionEssentials.displayName,
-    config.config.href orElse collectionEssentials.href,
+    dataId = config.id,
+    displayName = config.config.displayName orElse collectionEssentials.displayName,
+    href = config.config.href orElse collectionEssentials.href,
     componentId,
     container,
     collectionEssentials,
     containerLayout,
-    config.config.showDateHeader,
-    config.config.showLatestUpdate,
-    // popular containers should never be sponsored
-    container match {
+    showDateHeader = config.config.showDateHeader,
+    showLatestUpdate = config.config.showLatestUpdate,
+    commercialOptions = container match {
+      // popular containers should never be sponsored
       case MostPopular => ContainerCommercialOptions.mostPopular(omitMPU)
-      case Commercial(SingleCampaign(_)) => ContainerCommercialOptions.fromCollection(collectionEssentials)
       case Commercial(MultiCampaign(_)) => ContainerCommercialOptions.empty
-      case _ => ContainerCommercialOptions.fromConfig(config.config)
+      case _ => ContainerCommercialOptions.fromCollection(collectionEssentials)
     },
-    config.config.description.map(DescriptionMetaHeader),
-    None,
+    customHeader = config.config.description.map(DescriptionMetaHeader),
+    customClasses = None,
     hideToggle = false,
     showTimestamps = false,
-    None,
+    dateLinkPath = None,
     useShowMore = true,
     hasShowMoreEnabled = !config.config.hideShowMore
   )

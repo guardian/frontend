@@ -2,19 +2,20 @@
 
 @import common.LinkTo
 @import views.html.fragments.containers.facia_cards.{date, slice}
-@import views.support.Commercial.container
-@import views.support.{GetClasses, PreviousAndNext}
+@import views.support.{BrandedContentDataAttributes, GetClasses, PreviousAndNext}
 
 @* TODO Consolidate this with the master container template to get rid of repetition *@
 
 @defining(page.webTitle) { case (webTitle) =>
     <section class="@GetClasses.forTagContainer(webTitle.nonEmpty)"
         data-link-name="all index"
-        @for(sponsorData <- container.mkSponsorDataAttributes(config)) {
-            @for(sponsor <- sponsorData.sponsor) { data-sponsor="@sponsor" }
-            @for(seriesId <- sponsorData.seriesId) { data-keywords="@seriesId" }
-            @for(keywordId <- sponsorData.keywordId) { data-keywords="@keywordId" }
-            @for(sponsorshipType <- sponsorData.sponsorshipType) { data-sponsorship="@sponsorshipType" }
+        @for(firstTrail <- trails.headOption) {
+            @for(sponsorData <- BrandedContentDataAttributes(firstTrail)) {
+                @for(sponsor <- sponsorData.sponsor) { data-sponsor="@sponsor" }
+                @for(seriesId <- sponsorData.seriesId) { data-keywords="@seriesId" }
+                @for(keywordId <- sponsorData.keywordId) { data-keywords="@keywordId" }
+                @for(sponsorshipType <- sponsorData.sponsorshipType) { data-sponsorship="@sponsorshipType" }
+            }
         }
         data-component="all index">
         <div class="fc-container__inner">
