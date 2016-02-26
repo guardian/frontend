@@ -44,6 +44,10 @@
     }
 
     @page.article.fields.blocks.map { block =>
+        @block.title.map { title =>
+            <h2 class="block__title">@title</h2>
+        }
+
         @block.elements.map { element =>
             @element match {
                 case TextBlockElement(Some(html)) => {
