@@ -176,6 +176,17 @@
             margin-right: $gs-gutter/2;
         }
     }
+
+    .l-row--cols-1 .fc-item__content,
+    .l-row--cols-2 .fc-item__content {
+        padding-bottom: 0;
+    }
+
+    .l-row--cols-1 .fc-item__container,
+    .l-row--cols-2 .fc-item__container {
+        display: block;
+        padding-bottom: $gs-baseline * 2;
+    }
 }
 
 .commercial__show-mores {
