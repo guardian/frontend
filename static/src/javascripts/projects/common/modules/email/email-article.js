@@ -16,6 +16,7 @@ define([
     'common/utils/template',
     'common/modules/article/space-filler',
     'common/modules/analytics/omniture'
+    'common/utils/robust'
 ], function (
     $,
     bean,
@@ -34,6 +35,7 @@ define([
     template,
     spaceFiller,
     omniture
+    robust
 ) {
 
     var listConfigs = {
