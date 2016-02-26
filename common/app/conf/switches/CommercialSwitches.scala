@@ -243,7 +243,7 @@ trait CommercialSwitches {
     "Commercial",
     "british-council-beacon",
     "British Council's beacon",
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2016, 8, 1),
     exposeClientSide = false
   )
