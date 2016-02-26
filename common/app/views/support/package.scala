@@ -9,6 +9,8 @@ import org.joda.time.{DateTimeZone, LocalDate, DateTime}
 import org.joda.time.format.DateTimeFormat
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import org.jsoup.nodes.Document.OutputSettings
+import org.jsoup.nodes.Entities.EscapeMode
 import org.jsoup.safety.{ Whitelist, Cleaner }
 import play.api.libs.json.Json._
 import play.api.libs.json.Writes
@@ -147,7 +149,7 @@ object cleanTrailText {
 }
 
 object StripHtmlTags {
-  def apply(html: String): String = Jsoup.clean(html, Whitelist.none())
+  def apply(html: String): String = Jsoup.clean(html, "", Whitelist.none())
 }
 
 object StripHtmlTagsAndUnescapeEntities{

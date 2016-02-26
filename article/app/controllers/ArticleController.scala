@@ -3,7 +3,6 @@ package controllers
 import _root_.liveblog.LiveBlogPageModel
 import com.gu.contentapi.client.model.ItemResponse
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
-import com.gu.util.liveblogs.{Block, BlockToText}
 import common._
 import conf.LiveContentApi.getResponse
 import conf._
@@ -52,7 +51,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   case class TextBlock(
     id: String,
     title: Option[String],
-    publishedDateTime: DateTime,
+    publishedDateTime: Option[DateTime],
     lastUpdatedDateTime: Option[DateTime],
     body: String
     )
@@ -60,7 +59,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   implicit val blockWrites = (
     (__ \ "id").write[String] ~
       (__ \ "title").write[Option[String]] ~
-      (__ \ "publishedDateTime").write[DateTime] ~
+      (__ \ "publishedDateTime").write[Option[DateTime]] ~
       (__ \ "lastUpdatedDateTime").write[Option[DateTime]] ~
       (__ \ "body").write[String]
     )(unlift(TextBlock.unapply))
@@ -68,7 +67,8 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   private def blockText(page: PageWithStoryPackage, number: Int)(implicit request: RequestHeader): Result = page match {
     case LiveBlogPage(liveBlog, _) =>
       val blocks = liveBlog.blocks.collect {
-        case Block(id, title, publishedAt, updatedAt, BlockToText(text), _) if text.trim.nonEmpty => TextBlock(id, title, publishedAt, updatedAt, text)
+        case BodyBlock(id, html, _, title, _, _, _, publishedAt, _, updatedAt, _, _) if html.trim.nonEmpty =>
+          TextBlock(id, title, publishedAt, updatedAt, html)
       }.take(number)
       Cached(page)(JsonComponent("blocks" -> Json.toJson(blocks)))
     case _ => Cached(600)(NotFound("Can only return block text for a live blog"))
@@ -97,10 +97,9 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   private def render(path: String, page: PageWithStoryPackage, pageParam: Option[String])(implicit request: RequestHeader) = page match {
     case blog: LiveBlogPage =>
       noAMP {
-        val pageSize = if (blog.article.content.tags.tags.map(_.id).contains("sport/sport")) 50 else 10
+        val pageSize = if (blog.article.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
         val modelGen = LiveBlogPageModel(
           pageSize = pageSize,
-          extrasOnFirstPage = 10,
           blog.article.content.fields.blocks
         )_
         pageParam.map(new PageParser().blockId) match {
@@ -123,10 +122,10 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
 
     case article: ArticlePage =>
       val htmlResponse = () => {
-        if (article.article.isImmersive) views.html.articleImmersive(article)
-        else if (request.isAmp)          views.html.articleAMP(article)
-        else if (request.isEmail)        views.html.articleEmail(article)
-        else                             views.html.article(article)
+        if (request.isEmail) views.html.articleEmail(article)
+        else if (article.article.isImmersive) views.html.articleImmersive(article)
+        else if (request.isAmp) views.html.articleAMP(article)
+        else views.html.article(article)
       }
 
       val jsonResponse = () => views.html.fragments.articleBody(article)
@@ -162,7 +161,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
 
   def renderArticle(path: String) = {
     LongCacheAction { implicit request =>
-      mapModel(path) {
+      mapModel(path, blocks = request.isEmail) {
         render(path, _, None)
       }
     }
@@ -183,6 +182,8 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       .showTags("all")
       .showFields("all")
       .showReferences("all")
+      .showAtoms("all")
+
     val capiItemWithBlocks = if (blocks) capiItem.showBlocks("body") else capiItem
     getResponse(capiItemWithBlocks)
 

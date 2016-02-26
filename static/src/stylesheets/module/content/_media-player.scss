@@ -162,10 +162,6 @@ $ima-controls-height: 70px;
     .vjs-using-native-controls & {
         display: none;
     }
-
-    .vjs-ad-playing--vpaid & {
-        display: none;
-    }
 }
 
 .vjs-loading-spinner {
@@ -211,6 +207,8 @@ $ima-controls-height: 70px;
 }
 
 .vjs-control-bar {
+    position: relative;
+
     .gu-media--video & {
         position: absolute;
         bottom: $gs-baseline*-5;
@@ -622,10 +620,6 @@ $ima-controls-height: 70px;
     .vjs-playing & {
         display: block;
     }
-
-    .vjs-playing.vjs-ad-playing--vpaid & {
-        display: none;
-    }
 }
 
 .vast-skip-button {
@@ -979,8 +973,7 @@ $ima-controls-height: 70px;
 
 /* Tech overrides
    ========================================================================== */
-.vjs-tech-flash,
-.vjs-tech-vpaid {
+.vjs-tech-flash {
     .vjs-poster,
     .vjs-big-play-button,
     .vjs-fullscreen-clickbox,

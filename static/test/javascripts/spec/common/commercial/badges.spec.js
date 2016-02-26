@@ -34,15 +34,15 @@ define([
                 var header;
                 switch (sponsorship) {
                     case 'sponsoredfeatures':
-                        header = 'Sponsored by:';
+                        header = 'Supported by';
                         break;
 
                     case 'advertisement-features':
-                        header = 'Brought to you by:';
+                        header = 'Paid for by';
                         break;
 
                     default:
-                        header = 'Supported by:';
+                        header = 'Supported by';
                 }
                 return template(
                     '<div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">\n' +

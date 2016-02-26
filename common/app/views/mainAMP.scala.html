@@ -2,7 +2,6 @@
 
 @import common.{AnalyticsHost, LinkTo, CanonicalLink}
 @import conf.Configuration
-@import model.Page
 @import views.support.OmnitureAnalyticsData
 
 <!doctype html>
@@ -55,27 +54,45 @@
                 </div>
             }
 
-
-            @Page.getContentPage(page).map { content =>
-                @if(content.item.content.hasStoryPackage) {
+            @if(content.metadata.section != "childrens-books-site") {
+                @if(content.hasStoryPackage) {
                     @fragments.amp.storyPackageAmp(related)
                 }
-                @if(content.item.tags.series.nonEmpty) {
-                    @content.item.tags.series.map { tag =>
+                @if(content.tags.series.nonEmpty) {
+                    @content.tags.series.map { tag =>
                         @fragments.amp.onwardTemplateAmp("series-mf2/" + tag.id + ".json")
                     }
                 }
-                @if(!content.item.content.hasStoryPackage && content.item.tags.series.isEmpty){
+                @if(content.showInRelated
+                    && !content.hasStoryPackage
+                    && content.tags.series.isEmpty) {
                     @fragments.amp.onwardTemplateAmp("related-mf2/" + page.metadata.id + ".json")
                 }
+
+                @if(!content.shouldHideAdverts) {
+                    @fragments.amp.outbrain(page)
+                }
+
+                @* Show top container for section front only if current page belongs to one of the following sections *@
+                @* Otherwise show top container for network front *@
+                @* TODO: This list also exists in the JS for fronts on articles a/b test. Pending a decision on that, this should go in the jsconfig, or be removed*@
+
+                @defining({
+                    val whitelistedSections = List("commentisfree", "sport", "football", "fashion", "lifeandstyle",
+                                    "education", "culture", "business", "technology", "politics", "environment", "travel",
+                                    "film", "media", "money", "society", "science", "music", "books", "stage", "cities",
+                                    "tv-and-radio", "artanddesign", "global-development")
+                    whitelistedSections.contains(page.metadata.section)
+                }) { isWhitelistedSection =>
+                    @if(isWhitelistedSection) {
+                        @fragments.amp.onwardTemplateAmp(s"container/count/1/offset/0/section/${page.metadata.section}/mf2.json")
+                    } else {
+                        @fragments.amp.onwardTemplateAmp(s"container/count/1/offset/0/mf2.json")
+                    }
+                    @fragments.amp.onwardTemplateAmp("most-read-mf2.json")
+                    @fragments.amp.onwardTemplateAmp(s"container/count/3/offset/${if(isWhitelistedSection) 0 else 1}/mf2.json")
+                }
             }
-
-            @fragments.amp.outbrain(page)
-
-            @fragments.amp.onwardTemplateAmp("most-read-mf2.json")
-            @fragments.amp.onwardTemplateAmp(s"container-mf2/1/0/${page.metadata.section}.json")
-            @fragments.amp.onwardTemplateAmp(s"container-mf2/1/1/${page.metadata.section}.json")
-            @fragments.amp.onwardTemplateAmp(s"container-mf2/1/2/${page.metadata.section}.json")
 
             <amp-font
                 layout="nodisplay"

@@ -17,7 +17,7 @@ define([
     config,
     mediator,
     register,
-    LazyLoad,
+    lazyload,
     Expandable,
     ab,
     intersection,
@@ -83,7 +83,7 @@ define([
                     }).join('&');
                 }
 
-                new LazyLoad({
+                lazyload({
                     url: relatedUrl,
                     container: container,
                     success: function () {
@@ -101,7 +101,7 @@ define([
                         bonzo(container).remove();
                         register.error(componentName);
                     }
-                }).load();
+                });
             }
         } else {
             $('.js-related').addClass('u-h');

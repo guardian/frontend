@@ -274,38 +274,11 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
 
   def slimContent(pressedContent: PressedContent): PressedContent = {
     val slimMaybeContent = pressedContent.properties.maybeContent.map { content =>
-      val slimElements: Seq[Option[Element]] = content.elements.trailPictureAll(5, 3).map { element =>
-        val naked = Naked.elementFor(element.images)
 
-        //These sizes are used in RSS
-        val size140 = Item140.elementFor(element.images)
-        val size460 = Item460.elementFor(element.images)
-
-        val paredImages = ImageMedia.make(Seq(naked ++ size140 ++ size460).flatten.distinct)
-
-        val slimElement: Element = element match {
-          case image: ImageElement => image.copy(images = paredImages)
-          case video: VideoElement => video.copy(images = paredImages)
-          case audio: AudioElement => audio.copy(images = paredImages)
-          case embed: EmbedElement => embed.copy(images = paredImages)
-          case default: DefaultElement => default.copy(images = paredImages)
-        }
-        Some(slimElement)
-      }
-      val elements = Elements.apply((slimElements :+ content.elements.mainVideo).flatten)
+      // Discard all elements except the main video.
+      // It is safe to do so because the trail picture is held in trailPicture in the Trail class.
+      val slimElements = Elements.apply(content.elements.mainVideo.toList)
       val slimFields = content.fields.copy(body = HTML.takeFirstNElements(content.fields.body, 2), blocks = Nil)
-
-      val slimTrailPicture = content.trail.trailPicture.map { imageMedia =>
-        val naked = Naked.elementFor(imageMedia)
-
-        //These sizes are used in RSS
-        val size140 = Item140.elementFor(imageMedia)
-        val size460 = Item460.elementFor(imageMedia)
-
-        ImageMedia.make(Seq(naked ++ size140 ++ size460).flatten.distinct)
-      }
-
-      val slimTrail = content.trail.copy(trailPicture = slimTrailPicture)
 
       // Clear the config fields, because they are not used by facia. That is, the config of
       // an individual card is not used to render a facia front page.
@@ -314,7 +287,7 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
         opengraphPropertiesOverrides = Map(),
         twitterPropertiesOverrides = Map())
 
-      val slimContent = content.content.copy(metadata = slimMetadata, elements = elements, fields = slimFields, trail = slimTrail)
+      val slimContent = content.content.copy(metadata = slimMetadata, elements = slimElements, fields = slimFields)
 
       content match {
         case article: Article => article.copy(content = slimContent)

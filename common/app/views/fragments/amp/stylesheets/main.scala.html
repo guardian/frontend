@@ -193,10 +193,6 @@
         color: #005689;
     }
 
-    .from-content-api h2, .from-content-api .block-elements h2, .from-content-api p strong {
-        letter-spacing: -0.02em;
-    }
-
     @* Dropcap styling *@
     .drop-cap__inner {
         float: left;
@@ -246,6 +242,11 @@
         list-style: none;
     }
 
+    @* temporarily hiding these until after launch *@
+    .inline-expand-image, .content__dateline-lm, .witness-cta-wrapper {
+        display: none;
+    }
+
     @fragments.amp.stylesheets.tones()
     @fragments.amp.stylesheets.embeds()
     @fragments.amp.stylesheets.quotes()
@@ -261,10 +262,5 @@
 
     @* this is for testing only *@
     @fragments.amp.stylesheets.header()
-)
 
-    @* temporarily hiding these for demo *@
-    .inline-expand-image, .content__dateline-lm , .block-share, .witness-cta-wrapper {
-        display: none;
-    }
 </style>

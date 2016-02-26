@@ -120,16 +120,14 @@ define([
             addInlineMerchAd(getInlineMerchRules());
         }
 
-        if (config.switches.viewability && detect.getBreakpoint() !== 'mobile') {
-            return addArticleAds(2, rules)
+        return config.switches.viewability ?
+            addArticleAds(2, rules)
             .then(function (countAdded) {
-                // If a merchandizing component has been rendered but is empty,
-                // we allow a second pass for regular inline ads. This is because of
-                // the decoupling between the spacefinder algorightm and the targeting
-                // in DFP: we can only know if a slot can be removed after we have
-                // received a response from DFP
                 return Promise.all([
                     countAdded,
+                    /* This flag is to check if we allow a second pass: If the page has an inline
+                       merch component and because of it no inline slot could be added, we'll wait
+                       for it to load and the re-try */
                     !(config.page.hasInlineMerchandise && countAdded === 0) || trackAd('dfp-ad--im')
                 ]);
             })
@@ -146,18 +144,12 @@ define([
                 ]);
             })
             .then(function (finalCountAdded) {
+                /* We can safely add slots, even if they were previously added.
+                   dfp-api handles everything for us */
                 $('.ad-slot--inline').each(dfp.addSlot);
                 return finalCountAdded[0] + finalCountAdded[1];
-            });
-        } else {
-            return tryAddingAdvert(rules).then(function (trySuccessful) {
-                if (trySuccessful && detect.isBreakpoint({max: 'tablet'})) {
-                    return tryAddingAdvert(rules);
-                } else {
-                    return null;
-                }
-            });
-        }
+            }) :
+            addArticleAds(2, rules);
     }
 
     return {
