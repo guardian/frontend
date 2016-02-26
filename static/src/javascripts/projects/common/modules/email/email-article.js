@@ -196,7 +196,11 @@ define([
         init: function () {
             if (!emailInserted) {
                 // Get the user's current subscriptions
-                Id.getUserEmailSignUps().then(buildUserSubscriptions);
+                Id.getUserEmailSignUps()
+                    .then(buildUserSubscriptions)
+                    .catch(function (error) {
+                        robust.log('c-email', error);
+                    });
             }
         }
     };
