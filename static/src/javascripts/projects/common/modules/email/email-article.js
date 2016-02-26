@@ -150,7 +150,6 @@ define([
                 bean.on(iframe, 'load', function () {
                     email.init(iframe);
                 });
-
                 if (listConfig.insertMethod && listConfig.insertMethod()) {
                     fastdom.write(function () {
                         listConfig.insertMethod()($iframeEl);
@@ -160,15 +159,12 @@ define([
                     });
                 } else {
                     spaceFiller.fillSpace(getSpacefinderRules(), function (paras) {
-                        var figureEmbed = bonzo.create('<figure class="element element-embed element--supporting">'),
-                            $wrappedEmailEl = $(figureEmbed).append($iframeEl);
-
-                        $wrappedEmailEl.insertBefore(paras[0]);
-
+                        $iframeEl.insertBefore(paras[0]);
                         omniture.trackLinkImmediate('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
                         emailInserted = true;
                     });
                 }
+
             }
         },
         canRunHelpers = {
