@@ -202,7 +202,7 @@ define([
                     formModClass = (opts && opts.formModClass) || formData.formModClass || false;
 
                 Id.getUserFromApi(function (userFromId) {
-                    ui.updateFormForLoggedIn(userFromId, el)
+                    ui.updateFormForLoggedIn(userFromId, el);
                 });
 
                 fastdom.write(function () {
