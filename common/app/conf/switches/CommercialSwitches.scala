@@ -239,4 +239,13 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
+  val BritishCouncilBeacon = Switch(
+    "Commercial",
+    "british-council-beacon",
+    "British Council's beacon",
+    safeState = On,
+    sellByDate = new LocalDate(2016, 8, 1),
+    exposeClientSide = false
+  )
+
 }
