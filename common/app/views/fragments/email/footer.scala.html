@@ -4,7 +4,7 @@
 @import common.{CanonicalLink, LinkTo}
 
 @fullRow(Seq("email__links")) {
-    <a class="email__link" href="https://profile.theguardian.com/email-prefs">Manage your emails</a> | <a class="email__link" href="http://click.mail.theguardian.com/?qs=699722b7e50d4eb4c88091e8d2b9b341b0bba21aed1e528c64a42b5605713f23">Unsubscribe</a> | <a class="email__link" href="@LinkTo(page.metadata.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, page.metadata.webUrl)))">Trouble viewing?</a>
+    <a class="email__link" href="https://profile.theguardian.com/email-prefs">Manage your emails</a> | <a class="email__link" href="%%unsub_center_url%%">Unsubscribe</a> | <a class="email__link" href="@LinkTo(page.metadata.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, page.metadata.webUrl)))">Trouble viewing?</a>
 }
 
 @fullRow(Seq("disclaimer")) {
