@@ -57,8 +57,8 @@
     display: none;
 }
 
-.email-sub__submit-input__icon,
-.email-sub__label__icon {
+.submit-input__icon,
+.label__icon {
     display: none; // Hidden by default
 
     svg {
@@ -67,11 +67,11 @@
     }
 }
 
-.email-sub__submit-input__icon svg {
+.submit-input__icon svg {
     fill: $form-primary-colour;
 }
 
-.email-sub__label__icon svg {
+.label__icon svg {
     fill: $form-label-colour;
     opacity: .65;
 }
@@ -99,7 +99,7 @@
 
 .email-sub__submit-input--solo {
 
-    .email-sub__submit-input__icon {
+    .submit-input__icon {
         display: inline-block;
         margin-right: $gs-gutter / 4;
     }
@@ -251,7 +251,7 @@
 
 .email-sub__form--article,
 .email-sub__form--plain {
-    .email-sub__label__icon {
+    .label__icon {
         display: inline-block;
         margin-right: $gs-gutter / 4;
     }
