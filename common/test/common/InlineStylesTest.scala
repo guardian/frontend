@@ -69,4 +69,10 @@ class InlineStylesTest extends FlatSpec with Matchers {
 
     CSSRule.makeStyles(styles) should be(ListMap("font-family" -> "Arial", "background" -> "red url(data:image/png;base64,ABCDEF)"))
   }
+
+  it should "work with urls in values" in {
+    val styles = "background: url(http://www.example.com/image.png)"
+
+    CSSRule.makeStyles(styles) should be(ListMap("background" -> "url(http://www.example.com/image.png)"))
+  }
 }
