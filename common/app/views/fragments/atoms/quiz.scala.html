@@ -23,10 +23,10 @@
     }
 </form>
 
-@renderQuestion(question: Question, field: play.api.data.Field, maybeInputAnswer: Option[Answer]) = {
+@renderQuestion(question: Question, field: play.api.data.Field, maybeUserAnswer: Option[Answer]) = {
     <li class="quiz__question
         @{ if (showResults) {
-            s"quiz__question--${if(maybeInputAnswer.isEmpty) "without-response" else "with-response" }"
+            s"quiz__question--${if(maybeUserAnswer.isEmpty) "without-response" else "with-response" }"
           }
         }">
         <span class="quiz__question-text">@question.text</span>
@@ -35,7 +35,7 @@
             @question.answers.map( answer => {
                 if(showResults) {
                     val isCorrect = maybeResults.flatMap(_.isCorrectAnswer(question, answer))
-                    renderAnswerWithResponse(question, answer, isCorrect, maybeInputAnswer)
+                    renderAnswerWithResponse(question, answer, isCorrect, maybeUserAnswer)
                 } else {
                     renderAnswer(question, answer, field)
                 }
@@ -58,6 +58,40 @@
     </div>
 }
 
+@renderAnswerWithResponse(question: Question, answer: Answer, isAnswerCorrect: Option[Boolean], maybeUserAnswer: Option[Answer]) = {
+    <div class="quiz__answer @{ isAnswerCorrect.map(correct =>
+            if (correct == true) "quiz__answer--correct"
+            else if (correct == false) "quiz__answer--incorrect"
+        ).getOrElse("")
+        } @{
+            if(maybeUserAnswer.exists(_.equals(answer))) "quiz__answer--selected"
+        }">
+        <label class="quiz__answer-text">
+            @maybeUserAnswer.map { inputAnswer =>
+                @if(inputAnswer.equals(answer)) {
+                    @isAnswerCorrect.map { correct =>
+                        @inlineSvg(if (correct) {
+                            "tick"
+                        } else {
+                            "cross"
+                        }, "icon", List("quiz__answer__icon"))
+                    }
+                }
+            }
+            @{answer.text}
+            @maybeUserAnswer.map { inputAnswer =>
+                @isAnswerCorrect.map { correct =>
+                    @answer.revealText.map { revealText =>
+                        @if(correct && inputAnswer.equals(answer)) {
+                            <span class="quiz__answer__reveal-text">@revealText</span>
+                        }
+                    }
+                }
+            }
+        </label>
+    </div>
+}
+
 @renderEndMessage(results: QuizResults) = {
     <div class="quiz__end-message">
         <div class="quiz__score-message">
@@ -75,40 +109,5 @@
             <div class="quiz__share__cta">Share your results</div>
             @fragments.social(sharelinks)
         </div>
-    </div>
-}
-
-@renderAnswerWithResponse(question: Question, answer: Answer, isAnswerCorrect: Option[Boolean], maybeInputAnswer: Option[Answer]) = {
-    <div class="quiz__answer @{ isAnswerCorrect.map(correct =>
-            if(correct) "quiz__answer--correct" else "quiz__answer--incorrect").getOrElse("")
-        } @{
-            if(maybeInputAnswer.exists(_.equals(answer))) "quiz__answer--selected"
-        }">
-        <label class="quiz__answer__label">
-
-            @maybeInputAnswer.map { inputAnswer =>
-                @if(inputAnswer.equals(answer)) {
-                    @isAnswerCorrect.map { correct =>
-                        <span class="quiz__answer__icon">
-                            @if(correct) {
-                                @inlineSvg("tick", "icon")
-                            } else {
-                                @inlineSvg("cross", "icon")
-                            }
-                        </span>
-                    }
-                }
-            }
-            <span class="quiz__answer__text">@{answer.text}</span>
-            @maybeInputAnswer.map { inputAnswer =>
-                @isAnswerCorrect.map { correct =>
-                    @answer.revealText.map { revealText =>
-                        @if(correct && inputAnswer.equals(answer)) {
-                            <span class="quiz__answer__reveal-text">@revealText</span>
-                        }
-                    }
-                }
-            }
-        </label>
     </div>
 }

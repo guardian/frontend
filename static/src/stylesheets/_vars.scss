@@ -140,6 +140,12 @@ $frontend-palette: (
     status-neutral:         guss-colour(neutral-2, $pasteup-palette),
     status-negative:        guss-colour(error, $pasteup-palette),
 
+    // Commercial content
+    // =============================================================================
+
+    quiz-correct:           #3db540,
+    quiz-incorrect:         #c3021b,
+
     // Social
     // =============================================================================
 
