@@ -71,8 +71,12 @@ class InlineStylesTest extends FlatSpec with Matchers {
   }
 
   it should "work with urls in values" in {
-    val styles = "background: url(http://www.example.com/image.png)"
+    val http = "background: url(http://www.example.com/image.png)"
+    val https = "background: url(https://www.example.com/image.png)"
+    val relative = "background: url(//www.example.com/image.png)"
 
-    CSSRule.makeStyles(styles) should be(ListMap("background" -> "url(http://www.example.com/image.png)"))
+    CSSRule.makeStyles(http) should be(ListMap("background" -> "url(http://www.example.com/image.png)"))
+    CSSRule.makeStyles(https) should be(ListMap("background" -> "url(https://www.example.com/image.png)"))
+    CSSRule.makeStyles(relative) should be(ListMap("background" -> "url(//www.example.com/image.png)"))
   }
 }
