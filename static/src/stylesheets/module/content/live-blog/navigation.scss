@@ -1,0 +1,123 @@
+.liveblog-navigation {
+    // If we don't support flexbox
+    // then the children are floated
+    @include clearfix;
+    // If we do support flexbox
+    display: flex;
+    @include fs-textSans(2);
+    @include mq(mobileLandscape) {
+        @include fs-textSans(5);
+    }
+}
+
+.liveblog-navigation__detail {
+    // If we don't support flexbox
+    text-align: center;
+    // If we do support flexbox
+    order: 1;
+    // Centre (vertically and horizontally) text
+    // If we do support flexbox
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.liveblog-navigation__newer {
+    // If we don't support flexbox
+    float: left;
+}
+
+.liveblog-navigation__older {
+    // If we don't support flexbox
+    float: right;
+    // If we do support flexbox
+    order: 2;
+}
+
+.liveblog-navigation__page-number,
+.liveblog-navigation__pages-length {
+    font-weight: bold;
+}
+
+.liveblog-navigation__link {
+    display: inline-block;
+
+    // Override user-agent styles for <a>
+    &:hover {
+        text-decoration: none;
+    }
+
+    .inline-icon {
+        vertical-align: middle;
+        display: inline-block;
+    }
+
+    svg {
+        display: block;
+    }
+}
+
+.liveblog-navigation__link--primary {
+    padding: $gs-gutter / 2;
+    background: colour(guardian-brand-dark);
+    border-radius: 100%;
+
+    .inline-icon {
+        fill: #ffffff;
+    }
+
+    svg {
+        width: 21px;
+        height: 21px;
+    }
+}
+
+.liveblog-navigation__link--primary--disabled {
+    background: colour(neutral-5);
+}
+
+.link-navigation__link--secondary {
+    // Increase target area
+    padding-top: $gs-gutter / 2;
+    padding-bottom: $gs-gutter / 2;
+    // Override user-agent styles for <a>
+    color: inherit;
+    font-weight: bold;
+
+    .inline-icon {
+        fill: currentColor;
+    }
+
+    svg {
+        width: 13px;
+        height: 13px;
+    }
+}
+
+.link-navigation__link--secondary--newer {
+    margin-right: $gs-gutter / 4;
+    @include mq(mobileLandscape) {
+        margin-right: $gs-gutter / 2;
+    }
+}
+
+.link-navigation__link--secondary--newer__icon {
+    margin-right: $gs-gutter / 4;
+}
+
+.liveblog-navigation__link--secondary--older {
+    margin-left: $gs-gutter / 4;
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter / 2;
+    }
+}
+
+.link-navigation__link--secondary--older__icon {
+    margin-left: $gs-gutter / 4;
+}
+
+.liveblog-navigation__link--disabled {
+    cursor: default;
+    color: colour(neutral-3);
+}
