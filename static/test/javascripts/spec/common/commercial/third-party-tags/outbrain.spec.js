@@ -25,6 +25,7 @@ define([
         mediator,
         identity,
         detect,
+        trackAd,
         sut, // System under test
         getSection,
         commercialFeatures,
@@ -81,29 +82,41 @@ define([
         describe('Init', function () {
             var eventStub, eventStubLo;
 
-            beforeEach(function () {
-                eventStub = {
-                    slot: {
-                        getSlotElementId: function () {
-                            return 'dfp-ad--merchandising-high';
-                        }
-                    },
-                    isEmpty: true
-                };
-                eventStubLo = {
-                    slot: {
-                        getSlotElementId: function () {
-                            return 'dfp-ad--merchandising';
-                        }
-                    },
-                    isEmpty: true
-                };
+            beforeEach(function (done) {
+                injector.require(['common/modules/commercial/track-ad'], function () {
+                    // this is just to re-initialize trackAd
+                    trackAd = arguments[0];
 
-                spyOn(sut, 'load');
+                    eventStub = {
+                        slot: {
+                            getSlotElementId: function () {
+                                return 'dfp-ad--merchandising-high';
+                            }
+                        },
+                        isEmpty: true
+                    };
+                    eventStubLo = {
+                        slot: {
+                            getSlotElementId: function () {
+                                return 'dfp-ad--merchandising';
+                            }
+                        },
+                        isEmpty: true
+                    };
+
+                    spyOn(sut, 'load');
+
+                    done();
+                });
             });
 
             it('should start outbrain component', function (done) {
-                sut.init().then(function () {
+                Promise.all([
+                    trackAd('dfp-ad--merchandising-high'),
+                    trackAd('dfp-ad--merchandising')
+                ])
+                .then(sut.init)
+                .then(function () {
                     expect(sut.load).toHaveBeenCalled();
                     done();
                 });
@@ -146,7 +159,12 @@ define([
 
                 config.page.commentable = false;
 
-                sut.init().then(function () {
+                Promise.all([
+                    trackAd('dfp-ad--merchandising-high'),
+                    trackAd('dfp-ad--merchandising')
+                ])
+                .then(sut.init)
+                .then(function () {
                     expect(sut.load).toHaveBeenCalled();
                     done();
                 });
@@ -167,46 +185,34 @@ define([
                 eventStub.isEmpty = false;
                 eventStubLo.isEmpty = true;
 
-                var oldEmit = mediator.emit;
-                mediator.emit = function (eventName, data) {
-                    return new Promise(function (resolve) {
-                        oldEmit.call(mediator, eventName, data);
-                        resolve();
-                    });
-                };
-
-                sut.init().then(function () {
+                Promise.all([
+                    trackAd('dfp-ad--merchandising-high'),
+                    trackAd('dfp-ad--merchandising')
+                ])
+                .then(sut.init)
+                .then(function () {
                     expect(sut.load).toHaveBeenCalledWith('merchandising');
                     done();
                 });
-                mediator.emit('modules:commercial:dfp:rendered', eventStub).then(function () {
-                    mediator.emit('modules:commercial:dfp:rendered', eventStubLo);
-                });
-
-                mediator.emit = oldEmit;
+                mediator.emit('modules:commercial:dfp:rendered', eventStub);
+                mediator.emit('modules:commercial:dfp:rendered', eventStubLo);
             });
 
             it('should not load if both merch components are loaded', function (done) {
                 eventStub.isEmpty = false;
                 eventStubLo.isEmpty = false;
 
-                var oldEmit = mediator.emit;
-                mediator.emit = function (eventName, data) {
-                    return new Promise(function (resolve) {
-                        oldEmit.call(mediator, eventName, data);
-                        resolve();
-                    });
-                };
-
-                sut.init().then(function () {
+                Promise.all([
+                    trackAd('dfp-ad--merchandising-high'),
+                    trackAd('dfp-ad--merchandising')
+                ])
+                .then(sut.init)
+                .then(function () {
                     expect(sut.load).not.toHaveBeenCalledWith('merchandising');
                     done();
                 });
-                mediator.emit('modules:commercial:dfp:rendered', eventStub).then(function () {
-                    mediator.emit('modules:commercial:dfp:rendered', eventStubLo);
-                });
-
-                mediator.emit = oldEmit;
+                mediator.emit('modules:commercial:dfp:rendered', eventStub);
+                mediator.emit('modules:commercial:dfp:rendered', eventStubLo);
             });
         });
 

@@ -31,7 +31,6 @@ define([
                 'common/modules/commercial/article-body-adverts',
                 'common/modules/commercial/commercial-features',
                 'common/modules/commercial/dfp/dfp-api',
-                'common/modules/commercial/track-ad',
                 'common/modules/article/space-filler',
                 'common/utils/mediator',
                 'common/utils/config',
@@ -47,15 +46,13 @@ define([
                     // nothing to see here, move along bro.
                 });
 
-                trackAd = arguments[3];
-
-                spaceFiller = arguments[4];
+                spaceFiller = arguments[3];
                 spaceFillerStub = sinon.stub(spaceFiller, 'fillSpace');
                 spaceFillerStub.returns(Promise.resolve(true));
 
-                mediator = arguments[5];
+                mediator = arguments[4];
 
-                config = arguments[6];
+                config = arguments[5];
                 config.page = {};
                 config.switches = {};
 
@@ -97,8 +94,14 @@ define([
         });
 
         describe('When merchandising components enabled', function () {
-            beforeEach(function () {
+            beforeEach(function (done) {
                 config.page.hasInlineMerchandise = true;
+                injector.require([
+                    'common/modules/commercial/track-ad'
+                ], function () {
+                    trackAd = arguments[0];
+                    done();
+                });
             });
 
             it('its first call to space-filler uses the inline-merch rules', function (done) {

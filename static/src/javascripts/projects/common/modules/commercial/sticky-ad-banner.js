@@ -44,7 +44,7 @@ define([
 
     // Rubicon ads are loaded via DFP like all other ads, but they can
     // render themselves again at any time
-    var newRubiconAdHeightPromise = trackRubiconAdResize('dfp-ad--top-above-nav').then(function(dims) {
+    var newRubiconAdHeightPromise = trackRubiconAdResize('dfp-ad--top-above-nav').then(function (dims) {
         return fastdom.read(function () {
             var padding = parseInt($adBannerInner.css('padding-top'))
                 + parseInt($adBannerInner.css('padding-bottom'));

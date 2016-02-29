@@ -5,8 +5,10 @@ define([
     Promise,
     mediator
 ) {
+    var promises = {};
+
     function trackAd(id) {
-        return new Promise(function (resolve, reject) {
+        promises[id] = promises[id] || new Promise(function (resolve, reject) {
             var onAdLoaded = function (event) {
                 if (event.slot.getSlotElementId() === id) {
                     unlisten();
@@ -16,7 +18,7 @@ define([
 
             var onAllAdsLoaded = function () {
                 unlisten();
-                reject(new Error('Unable to load Outbrain widget: slot ' + id + ' was never loaded'));
+                reject(new Error('Slot ' + id + ' was never loaded'));
             };
 
             function unlisten() {
@@ -27,6 +29,8 @@ define([
             mediator.on('modules:commercial:dfp:rendered', onAdLoaded);
             mediator.on('modules:commercial:dfp:alladsrendered', onAllAdsLoaded);
         });
+
+        return promises[id];
     }
 
     return trackAd;
