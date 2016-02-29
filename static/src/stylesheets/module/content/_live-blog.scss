@@ -1,3 +1,5 @@
+@import './live-blog/navigation';
+
 $block-padding-left: gs-span(1) + $gs-gutter;
 $block-padding-right: $gs-gutter;
 
@@ -147,6 +149,10 @@ $block-padding-right: $gs-gutter;
 
 /* Blocks
    ========================================================================== */
+.blocks {
+    margin-top: $gs-baseline;
+}
+
 .block {
     @include clearfix;
 
@@ -934,26 +940,4 @@ $timeline-width: 15px;
             color: colour(neutral-1);
         }
     }
-}
-
-.liveblog__show-more {
-    background-color: colour(live-accent);
-    border: 0;
-    margin-bottom: $gs-baseline;
-    padding-left: $gs-gutter * 4 / 5;
-
-    @include mq(leftCol) {
-        margin-top: $gs-baseline;
-        margin-bottom: 0;
-    }
-
-    &:hover,
-    &:focus,
-    &:active {
-        background-color: darken(colour(live-accent), 7%);
-    }
-}
-
-.js-hide-follow-button {
-    visibility: hidden;
 }

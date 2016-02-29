@@ -1,7 +1,4 @@
 .live-toolbar {
-    width: 100%;
-    height: $gs-row-height + $gs-baseline;
-
     @include mq($until: tablet) {
         font-size: .875em;
     }

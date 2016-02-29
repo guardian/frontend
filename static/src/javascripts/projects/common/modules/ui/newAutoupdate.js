@@ -151,7 +151,7 @@ define([
                     elementsToAdd = toArray(resultHtml.children);
 
                     // Insert new blocks and animate
-                    $toastSpaceReserver.after(elementsToAdd);
+                    $liveblogBody.prepend(elementsToAdd);
 
                     if (detect.pageVisible()) {
                         revealInjectedElements();
@@ -214,7 +214,8 @@ define([
 
         fastdom.write(function () {
             // Enables the animations for injected blocks
-            $liveblogBody.addClass('autoupdate--has-animation toast-enabled');
+            $('.js-article__container').addClass('toast-enabled');
+            $liveblogBody.addClass('autoupdate--has-animation');
             $('.js-live-toolbar').remove(); // only necessary in the AB test
         });
     };
