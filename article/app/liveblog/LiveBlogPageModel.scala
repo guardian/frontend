@@ -22,11 +22,13 @@ object LiveBlogPageModel {
 
     endedPages.sliding(3).toList.zipWithIndex.map {
       case (List(newerPage, Some(currentPage), olderPage), index) =>
+        val isNewestPage = newestPage.equals(currentPage)
         LiveBlogPageModel(
           allBlocks = blocks,
           currentPage = currentPage,
           pagination = if (pages.length > 1) Some(Pagination(
-            newest = if (newestPage.equals(currentPage)) None else Some(newestPage),
+            isNewestPage = newestPage.equals(currentPage),
+            newest = if (isNewestPage) None else Some(newestPage),
             newer = newerPage,
             oldest = if (oldestPage.equals(currentPage)) None else Some(oldestPage),
             older = olderPage,
@@ -53,6 +55,7 @@ sealed trait PageReference[B] {
 }
 
 case class Pagination[B](
+  isNewestPage: Boolean,
   newest: Option[PageReference[B]],
   newer: Option[PageReference[B]],
   oldest: Option[PageReference[B]],
