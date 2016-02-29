@@ -149,13 +149,13 @@ self.addEventListener('activate', function(event) {
 
 
 self.addEventListener('push', function(event) {
-    console.log('Push message 11I', JSON.stringify(event));
+    console.log('Push message ++ V', JSON.stringify(event));
     var title = 'Push message';
     event.waitUntil(
         self.registration.pushManager.getSubscription().then(function (sub) {
             var gcmInd = sub.endpoint.substring(sub.endpoint.lastIndexOf('/') + 1);
             console.log("++ Getting message for: -- " + gcmInd);
-            var endpoint = '/notification/message/latest/' + gcmInd;
+            var endpoint = '/notification/message/' + gcmInd;
             console.log("++ Endpoint " + gcmInd);
             fetch(endpoint, {
                 method: 'get',
@@ -170,24 +170,19 @@ self.addEventListener('push', function(event) {
                 .then(function (data) {
                     console.log("Data Resp " + JSON.stringify(data));
 
-                    var message = data.messages.pop();
+                    var messages = data.messages;
 
-                    self.registration.showNotification(message.title, {
-                        body: message.body,
-                        icon: '@{JavaScript(Static("images/favicons/114x114.png").path)}',
-                        tag: 'tag, init'
+                    messages.forEach( function(message) {
+                        console.log("++ Message!");
+                        self.registration.showNotification(message.title, {
+                            body: message.body,
+                            icon: '@{JavaScript(Static("images/favicons/114x114.png").path)}',
+                            tag: message.title
+                        });
                     });
                 })
 
         })
     );
 
-    /*
-    event.waitUntil(
-        self.registration.showNotification(title, {
-            body: 'This is the message',
-            icon: '@{JavaScript(Static("images/favicons/114x114.png").path)}',
-            tag: 'tag, init'
-        })
-    );*/
 });

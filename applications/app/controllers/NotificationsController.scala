@@ -167,21 +167,15 @@ object NotificationsController extends Controller with ExecutionContexts with Lo
 
   def getMessage(gcmBrowserId: String) = Action.async { implicit request =>
       RedisMessageStore.getMessages(gcmBrowserId).map {
-         message =>
-          message match {
-            case Some(m) =>
-              NoCache(
-                JsonComponent(
-                  JsObject(
-                    Seq("status" -> JsString("ok"), "messages" -> Json.toJson(m) )
-                  )
+          messages =>
+            NoCache(
+              JsonComponent(
+                JsObject(
+                  Seq("status" -> JsString("ok"),
+                      "messages" -> JsArray(messages.map{ message => Json.toJson(message) }))
                 )
               )
-            case _ =>
-              NoCache(
-                JsonComponent("status" -> JsString("error"))
-              )
-          }
+            )
       }
   }
 
@@ -192,6 +186,7 @@ object NotificationsController extends Controller with ExecutionContexts with Lo
       messages =>
         messages match {
           case Some(m) =>
+
             NoCache(
               JsonComponent(
                 JsObject(

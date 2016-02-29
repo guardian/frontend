@@ -82,7 +82,12 @@ object RedisMessageStore extends Logging with ExecutionContexts {
    result
   }
 
-  def getMessages(gcmClientId: String) : Future[Option[RedisMessage]] = {
-   redis.lpop[RedisMessage](gcmClientId)
+  def getMessages(gcmClientId: String) : Future[Seq[RedisMessage]] = {
+   //redis.lpop[RedisMessage](gcmClientId)
+    val redisTransaction = redis.transaction()
+    val eventualMessages = redisTransaction.lrange[RedisMessage](gcmClientId, 0, -1)
+    redisTransaction.del(gcmClientId)
+    redisTransaction.exec()
+    eventualMessages
   }
 }
