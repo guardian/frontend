@@ -8,7 +8,7 @@ define([
     'common/utils/detect',
     'lodash/collections/contains',
     'lodash/arrays/intersection',
-    'lodash/collections/pluck',
+    'lodash/collections/map',
     'common/utils/config',
     'lodash/collections/every',
     'lodash/collections/find',
@@ -27,7 +27,7 @@ define([
     detect,
     contains,
     intersection,
-    pluck,
+    map,
     config,
     every,
     find,
@@ -130,7 +130,7 @@ define([
         },
         buildUserSubscriptions = function (response) {
             if (response && response.status !== 'error' && response.result && response.result.subscriptions) {
-                userListSubscriptions = pluck(response.result.subscriptions, 'listId');
+                userListSubscriptions = map(response.result.subscriptions, 'listId');
             }
 
             // Get the first list that is allowed on this page
