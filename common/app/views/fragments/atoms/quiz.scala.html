@@ -96,7 +96,7 @@
     <div class="quiz__end-message">
         <div class="quiz__score-message">
             @if(results.isKnowledge) {
-                You got <span class="quiz__score">@results.knowledgeScore/@quiz.content.questions.size</span>
+                You got&#133; <span class="quiz__score">@results.knowledgeScore/@quiz.content.questions.size</span>
             }
             @if(results.isPersonality) {
                 @results.resultBucket.map(_.description)
@@ -106,7 +106,7 @@
             <div class="quiz__bucket-message">@resultGroup.title</div>
         }
         <div class="quiz__share">
-            <div class="quiz__share__cta">Share your results</div>
+            <div class="quiz__share__cta">Challenge your friends</div>
             @fragments.social(sharelinks)
         </div>
     </div>

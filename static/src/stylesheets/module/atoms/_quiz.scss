@@ -39,7 +39,7 @@
         cursor: pointer;
     }
 
-    .quiz--personality &:before {
+    .quiz--questions.quiz--personality &:before {
         content: '';
         height: 1em;
         width: 1em;
@@ -68,9 +68,9 @@
     }
 
     .quiz--questions :checked + &:before {
-    background-color: colour(neutral-1);
-    box-shadow: 0px 0px 0px 1px colour(neutral-1),
-        inset 0px 0px 0px 3px colour(comment-main-2);
+        background-color: colour(neutral-1);
+        box-shadow: 0px 0px 0px 1px colour(neutral-1),
+            inset 0px 0px 0px 3px colour(comment-main-2);
     }
 }
 
@@ -110,4 +110,33 @@
     .quiz__answer-text {
         padding-left: 3em;
     }
+}
+
+.quiz__end-message {
+    border-top: 1px solid colour(neutral-4);
+    background-color: colour(neutral-8);
+    padding: $gs-baseline $gs-gutter;
+}
+
+.quiz__score-message,
+.quiz__bucket-message {
+    color: colour(neutral-2);
+}
+
+.quiz__score {
+    @include fs-headline(9);
+    font-size: 72px;
+    line-height: 78px;
+    color: colour(guardian-brand);
+    display: block;
+}
+
+.quiz__share {
+    border-top: 1px solid colour(neutral-4);
+    padding-top: $gs-baseline;
+    margin-top: $gs-baseline;
+}
+
+.quiz__share__cta {
+    padding-bottom: $gs-baseline;
 }
