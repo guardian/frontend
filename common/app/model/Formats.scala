@@ -1,14 +1,14 @@
 package model
 
-import common.{NavItem, SectionLink, Pagination}
+import common.{NavItem, Pagination, SectionLink}
 import model.content._
 import model.facia.PressedCollection
 import model.liveblog.{BlockAttributes, BodyBlock}
-import quiz._
+import model.pressed._
 import org.joda.time.DateTime
-import play.api.libs.json._
 import play.api.libs.functional.syntax._
-import pressed._
+import play.api.libs.json._
+import quiz._
 
 object ElementsFormat {
 
@@ -221,6 +221,7 @@ object ContentTypeFormat {
 
   private case class JsonCommercial(
     isInappropriateForSponsorship: Boolean,
+    sponsor: Option[String],
     sponsorshipTag: Option[Tag],
     isFoundationSupported: Boolean,
     isAdvertisementFeature: Boolean,
@@ -259,6 +260,7 @@ object ContentTypeFormat {
        val sharelinks = ShareLinks.apply(tags, fields, metadata)
        val commercial = Commercial.apply(tags, metadata,
         jsonCommercial.isInappropriateForSponsorship,
+        jsonCommercial.sponsor,
         jsonCommercial.sponsorshipTag,
         jsonCommercial.isFoundationSupported,
         jsonCommercial.isAdvertisementFeature,
@@ -333,6 +335,7 @@ object ContentTypeFormat {
         ),
         JsonCommercial.apply(
           content.commercial.isInappropriateForSponsorship,
+          content.commercial.sponsor,
           content.commercial.sponsorshipTag,
           content.commercial.isFoundationSupported,
           content.commercial.isAdvertisementFeature,
