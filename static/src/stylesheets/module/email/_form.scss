@@ -180,7 +180,7 @@
         &:focus,
         &:active {
             background-color: darken(guss-colour(neutral-2, $pasteup-palette), 10%);
-            border: 1px solid darken(guss-colour(neutral-2, $pasteup-palette), 10%);
+            border-color: darken(guss-colour(neutral-2, $pasteup-palette), 10%);
         }
     }
 
