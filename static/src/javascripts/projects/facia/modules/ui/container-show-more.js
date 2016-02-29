@@ -27,7 +27,8 @@ define([
     filter,
     map,
     forEach,
-    find) {
+    find
+) {
     var HIDDEN_CLASS_NAME = 'fc-show-more--hidden',
         VISIBLE_CLASS_NAME = 'fc-show-more--visible',
         TEXT_HOOK = 'js-button-text',

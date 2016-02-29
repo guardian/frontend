@@ -28,7 +28,8 @@ define([
     bind,
     constant,
     contains,
-    without) {
+    without
+) {
     return React.createClass({
         getInitialState: function () {
             return {

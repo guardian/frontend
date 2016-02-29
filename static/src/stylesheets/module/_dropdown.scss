@@ -23,7 +23,7 @@
     }
 
     .dropdown__button {
-        padding: $gs-baseline/2 0 $gs-baseline*1.5;
+        padding: $gs-baseline/2 0;
         color: colour(neutral-1);
         text-align: left;
 
@@ -35,9 +35,10 @@
 
         .inline-icon {
             background-color: colour(neutral-2);
-            right: 0;
-            position: absolute;
-            max-height: 32px;
+
+            svg {
+                display: block;
+            }
         }
     }
 

@@ -3,7 +3,8 @@ define([
     'lodash/objects/defaults'
 ], function (
     storage,
-    defaults) {
+    defaults
+) {
 
     var storagePrefix = 'gu.prefs.',
         store         = {

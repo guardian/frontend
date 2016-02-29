@@ -33,13 +33,8 @@
         .content__article-body {
             padding-right: gs-span(1) + $gs-gutter;
 
-            .ad-slot {
+            .ad-slot:not(.ad-slot--im) {
                 margin-right: -1 * (gs-span(1) + $gs-gutter);
-            }
-
-            /* Inline merchandising component is on the left so negative margin-right is bad */
-            .ad-slot--im {
-                margin-right: 0;
             }
 
             .gu-media-wrapper {
@@ -675,6 +670,10 @@
     &.content--interactive,
     &.tonal--tone-media {
         background-color: colour(paid-article);
+
+        .caption {
+            color: colour(neutral-1);
+        }
     }
 
     &.content {
@@ -690,9 +689,13 @@
     }
 
     .tonal__standfirst {
-        background-color: colour(paid-article-subheader);
+        background-color: transparent;
         padding: $gs-baseline 0 $gs-baseline*2;
         min-height: $gs-baseline*8;
+
+        .content__standfirst {
+            color: colour(neutral-1);
+        }
     }
 
     .ad-slot__label,
@@ -740,7 +743,7 @@
 
         &.content--media--audio,
         &.content--media--video {
-            .tonal__standfirst {
+            .content__head .tonal__standfirst {
                 display: none;
             }
         }

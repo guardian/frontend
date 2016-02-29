@@ -7,7 +7,8 @@ define([
     $,
     config,
     assign,
-    find) {
+    find
+) {
 
     function isit(isTrue, yes, no, arg) {
         if (isTrue) {

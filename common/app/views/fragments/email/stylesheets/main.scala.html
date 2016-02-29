@@ -1,0 +1,122 @@
+@()
+
+@import views.support.EmailHelpers.Images.quote
+
+<style>
+    body, .body {
+        background: #eaeaea;
+    }
+
+    td.wrapper {
+        padding: 0;
+    }
+
+    table.columns td,
+    table.column td {
+        padding: 0;
+    }
+
+    h1, h2, h3, h4, h5, h6, p, blockquote {
+        font-family: Georgia, serif;
+        color: #333333;
+    }
+
+    h1 {
+        font-size: 32px;
+        line-height: 36px;
+        margin-bottom: 20px;
+    }
+
+    h2, h3 {
+        font-size: 18px;
+        line-height: 28px;
+    }
+
+    h2 {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    h3 {
+        font-weight: normal;
+    }
+
+    p {
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    a, h2 a {
+        color: #005689;
+    }
+
+    a:visited, a:active,
+    h2 a:visited, h2 a:active {
+        color: #005689 !important;
+    }
+
+    a:hover, h2 a:hover {
+        color: #94b1ca !important;
+    }
+
+    a {
+        text-decoration: underline;
+    }
+
+    hr {
+        background: white;
+        height: 0px;
+        border: 1px dashed #dcdcdc;
+        margin-top: 20px;
+        margin-bottom: -4px;
+    }
+
+    .author a {
+        text-decoration: none;
+        color: #005689 !important;
+    }
+
+    .author a:hover .contact,
+    .author a:hover svg {
+        fill: #94b1ca !important;
+        color: #94b1ca !important;
+    }
+
+    blockquote {
+        background: transparent url(@quote.path) no-repeat top left;
+        font-size: 16px;
+        padding-top: 24px;
+    }
+
+    .container,
+    .panel {
+        background: white;
+    }
+
+    .panel {
+        padding: 5px 10px !important;
+        border: none;
+    }
+
+    .panel.author {
+        padding-top: 0 !important;
+    }
+
+    .byline {
+        color: #005689
+    }
+
+    .caption {
+        font-size: 12px;
+        line-height: 14px;
+        color: #767676;
+    }
+
+    .icon {
+        padding-top: 1px;
+    }
+
+    .icon-camera {
+        margin-right: 4px;
+    }
+</style>

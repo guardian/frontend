@@ -90,6 +90,13 @@ self.addEventListener('install', function (event) {
     event.waitUntil(updateCache());
 });
 
+var needCredentialsWorkaround = function (url) {
+    var whitelist = ['https://discussion.theguardian.com/discussion-api'];
+    return whitelist.some(function (entry) {
+        return new RegExp('^' + entry).test(url);
+    });
+};
+
 this.addEventListener('fetch', function (event) {
     var request = event.request;
 
@@ -124,7 +131,9 @@ this.addEventListener('fetch', function (event) {
         event.respondWith(
             caches.match(request)
                 .then(function (response) {
-                    return response || fetch(request);
+                    // Workaround Firefox bug which drops cookies
+                    // https://github.com/guardian/frontend/issues/12012
+                    return response || fetch(request, needCredentialsWorkaround(request.url) ? { credentials: 'include' } : {});
                 })
         );
     }

@@ -11,7 +11,8 @@ define([
     mediator,
     fastdom,
     bindAll,
-    debounce) {
+    debounce
+) {
 
     var Affix = function (options) {
         bindAll(this, 'checkPosition', 'calculateContainerPositioning');

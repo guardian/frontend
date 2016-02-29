@@ -7,16 +7,12 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/utils/scroller',
-    'common/utils/url',
     'common/modules/accessibility/helpers',
     'common/modules/article/rich-links',
     'common/modules/commercial/liveblog-adverts',
     'common/modules/commercial/liveblog-dynamic-adverts',
     'common/modules/experiments/affix',
     'common/modules/ui/autoupdate',
-    'common/modules/ui/dropdowns',
-    'common/modules/ui/last-modified',
     'common/modules/ui/notification-counter',
     'common/modules/ui/relativedates',
     'bootstraps/enhanced/article-liveblog-common',
@@ -31,74 +27,21 @@ define([
     config,
     detect,
     mediator,
-    scroller,
-    url,
     accessibility,
     richLinks,
     liveblogAdverts,
     liveblogDynamicAdverts,
     Affix,
     AutoUpdate,
-    dropdowns,
-    lastModified,
     NotificationCounter,
     RelativeDates,
     articleLiveblogCommon,
     trail,
-    robust) {
+    robust
+) {
     'use strict';
 
     var modules;
-
-    function createScrollTransitions() {
-
-        var curBinding,
-            timeline      = qwery('.timeline')[0],
-            selectedClass = 'live-blog__key-event--selected';
-
-        function unselect() {
-            fastdom.write(function () {
-                $('.' + selectedClass).removeClass(selectedClass);
-            });
-        }
-
-        function unselectOnScroll() {
-            bean.off(curBinding);
-            curBinding = mediator.once('window:throttledScroll', unselect);
-        }
-
-        bean.on(document.body, 'click', 'a', function (e) {
-            var id = e.currentTarget.href.match(/.*(#.*)/);
-            if (id && $(id[1]).hasClass('truncated-block')) {
-                mediator.emit('module:liveblog:showkeyevents', true);
-            }
-        });
-
-        if (timeline) {
-            bean.on(timeline, 'click', '.timeline__link', function (e) {
-                mediator.emit('module:liveblog:showkeyevents', true);
-                $('.dropdown--live-feed').addClass('dropdown--active');
-                var $el = bonzo(e.currentTarget),
-                    eventId = $el.attr('data-event-id'),
-                    title = $('.timeline__title', $el).text(),
-                    targetEl = qwery('#' + eventId),
-                    dim = bonzo(targetEl).offset(),
-                    duration = 500,
-                    slimHeaderHeight = 52,
-                    topPadding = 12,
-                    scrollAmount;
-
-                scrollAmount = config.switches.viewability ? dim.top - slimHeaderHeight : dim.top - topPadding;
-                scroller.scrollTo(scrollAmount, duration, 'easeOutQuint');
-                window.setTimeout(unselectOnScroll, 550);
-                bean.off(curBinding);
-                unselect();
-                $el.addClass(selectedClass);
-                url.pushUrl({blockId: eventId}, title, window.location.pathname + '#' + eventId, true);
-                e.stop();
-            });
-        }
-    }
 
     modules = {
         initAdverts: function () {
@@ -122,7 +65,6 @@ define([
                 });
                 /*eslint-enable no-new*/
             }
-            createScrollTransitions();
         },
 
         createAutoUpdate: function () {

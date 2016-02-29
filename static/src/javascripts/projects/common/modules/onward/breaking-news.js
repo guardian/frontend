@@ -37,13 +37,14 @@ define([
     filter,
     flatten,
     chain,
-    first) {
+    first
+) {
     var alertWithinSeconds = 1200, // 20 minutes
         supportedSections = {
             'sport': 'sport',
             'football': 'sport'
         },
-        breakingNewsSource = '/breaking-news/lite.json',
+        breakingNewsSource = (config.switches.breakingNewsFromAdminJobs) ? '/news-alert/alerts' : '/breaking-news/lite.json',
         storageKeyHidden = 'gu.breaking-news.hidden',
         maxSimultaneousAlerts = 1,
         $breakingNews,
@@ -139,9 +140,10 @@ define([
                     setTimeout(function () {
                         var message = 'breaking news alert shown' + (alertDelay ? '' : ' 2 or more times'), $breakingNewsSpectre;
 
+                        // copy of breaking news banner (with blank content) used inline in the body
+                        // to create space for a pinned alert to be scrolled into
                         $body = $body || bonzo(document.body);
                         $breakingNewsSpectre = bonzo(bonzo.create($breakingNews[0])).addClass('breaking-news--spectre').removeClass('breaking-news--hidden');
-
                         fastdom.write(function () {
                             $body.append($breakingNewsSpectre);
                         });

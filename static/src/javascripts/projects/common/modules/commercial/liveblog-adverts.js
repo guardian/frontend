@@ -4,8 +4,8 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
+    'common/modules/commercial/dfp/dfp-api',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/commercial/dfp-api',
     'lodash/collections/contains',
     'lodash/functions/debounce',
     'lodash/functions/once'
@@ -15,11 +15,12 @@ define([
     $,
     config,
     mediator,
-    createAdSlot,
     dfp,
+    createAdSlot,
     contains,
     debounce,
-    once) {
+    once
+) {
 
     var postsCount,
         timedOut,

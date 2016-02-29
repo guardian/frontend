@@ -1,5 +1,7 @@
 .creative__tracking-pixel {
     position: absolute;
+    width: 1px;
+    height: 1px;
 }
 
 .creative--scrollable-mpu {
@@ -496,10 +498,6 @@
             padding-top: 0;
             border-top: 0;
         }
-
-        &.creative__label--hidden {
-            display: none;
-        }
     }
 
     .top-banner-ad-container--mobile & {
@@ -574,12 +572,6 @@
 
 }
 
-.ad-slot--merchandising-high {
-    .creative__label--hidden {
-        display: none;
-    }
-}
-
 .creative--fluid250 {
     height: 100px;
 
@@ -636,6 +628,10 @@
     .fluid250_layer3 {
         z-index: 3;
     }
+}
+
+.creative--fluid250__height--fixed {
+    height: 250px;
 }
 
 @include mq(tablet) {

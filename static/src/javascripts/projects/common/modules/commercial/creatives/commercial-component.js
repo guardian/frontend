@@ -5,12 +5,14 @@
 define([
     'bean',
     'bonzo',
+    'fastdom',
     'raven',
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/lazyload',
     'common/modules/ui/tabs',
+    'common/modules/ui/toggles',
     'lodash/objects/isArray',
     'lodash/collections/map',
     'lodash/objects/pick',
@@ -21,19 +23,22 @@ define([
 ], function (
     bean,
     bonzo,
+    fastdom,
     raven,
     $,
     config,
     mediator,
-    LazyLoad,
+    lazyload,
     Tabs,
+    Toggles,
     isArray,
     map,
     pick,
     size,
     merge,
     pairs,
-    chain) {
+    chain
+) {
 
     var constructQuery = function (params) {
             return chain(params).and(pairs).and(map, function (param) {
@@ -76,7 +81,7 @@ define([
             this.type   = this.params.type;
             // remove type from params
             delete this.params.type;
-            this.adSlot    = adSlot;
+            this.adSlot    = adSlot.length ? adSlot[0] : adSlot;
             this.components = {
                 bestbuy:        buildComponentUrl('money/bestbuys', this.params),
                 book:           buildComponentUrl('books/book', merge({}, this.params, { t: config.page.isbn || this.params.isbn })),
@@ -89,25 +94,51 @@ define([
                 travel:         buildComponentUrl('travel/offers', merge({}, this.params, getKeywords())),
                 multi:          buildComponentUrl('multi', merge({}, this.params, getKeywords())),
                 capiSingle:     buildComponentUrl('capi-single', this.params),
-                capi:           buildComponentUrl('capi', this.params)
+                capi:           buildComponentUrl('capi', this.params),
+                paidforCard:    buildComponentUrl('paid', this.params)
             };
         };
+
+    function createToggle(el) {
+        if (el.querySelector('.popup__toggle')) {
+            new Toggles(el).init();
+        }
+    }
+
+    function adjustMostPopHeight(el) {
+        var height;
+        var $adSlot = $(el);
+        var $mostPopTabs = $('.js-most-popular-footer .tabs__pane');
+
+        if ($adSlot.hasClass('ad-slot--mostpop')) {
+            fastdom.read(function () {
+                height = $adSlot.dim().height;
+            });
+
+            fastdom.write(function () {
+                $mostPopTabs.css('height', height);
+            });
+        }
+    }
+
+
 
     CommercialComponent.prototype.postLoadEvents = {
         bestbuy: function (el) {
             new Tabs().init(el);
+        },
+        capi: createToggle,
+        capiSingle: createToggle,
+        paidforCard: function (el) {
+            adjustMostPopHeight(el);
+            createToggle(el);
         }
     };
 
     CommercialComponent.prototype.create = function () {
-        new LazyLoad({
+        lazyload({
             url: this.components[this.type],
             container: this.adSlot,
-            beforeInsert: function (html) {
-                // Currently we are replacing the OmnitureToken with nothing. This will change once
-                // commercial components have properly been setup in the lovely mess that is Omniture!
-                return html ? html.replace(/%OASToken%/g, this.params.clickMacro).replace(/%OmnitureToken%/g, '') : html;
-            }.bind(this),
             success: function () {
                 if (this.postLoadEvents[this.type]) {
                     this.postLoadEvents[this.type](this.adSlot);
@@ -118,7 +149,7 @@ define([
             error: function () {
                 bonzo(this.adSlot).hide();
             }.bind(this)
-        }).load();
+        });
 
         return this;
     };

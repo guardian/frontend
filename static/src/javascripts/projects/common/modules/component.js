@@ -12,7 +12,8 @@ define([
     qwery,
     ajax,
     assign,
-    clone) {
+    clone
+) {
 
     /**
      * TODO (jamesgorrie):

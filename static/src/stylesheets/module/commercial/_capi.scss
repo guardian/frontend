@@ -19,7 +19,10 @@
     .fc-item__link:visited,
     .fc-item__standfirst,
     .item__link:visited,
-    .item__link:visited .item__title {
+    .item__link:visited .item__title,
+    // Story-package overrides
+    .fc-container--story-package .fc-item__standfirst,
+    .fc-container--story-package .fc-item__link:visited {
         color: colour(neutral-2-contrasted);
     }
 
@@ -38,7 +41,8 @@
     .fc-item__standfirst,
     .fc-item--list-compact,
     .item__title,
-    .linkslist__action {
+    .linkslist__action,
+    .fc-sublink__title {
         @include f-headlineSans;
     }
 
@@ -116,6 +120,11 @@
         border-top: 0;
     }
 
+    .fc-container--story-package .tone-news--item.fc-item {
+        // This is to override an !important background colour in story-package items
+        background-color: colour(paid-article-subheader) !important;
+    }
+
     .tone-media--item {
         .u-faux-block-link--hover {
             background-color: colour(neutral-6);
@@ -129,6 +138,11 @@
         .fc-item__link:visited {
             color: colour(neutral-1);
         }
+    }
+
+    // Override story-package hover colours
+    .fc-container--story-package .fc-item .u-faux-block-link--hover {
+        background-color: colour(neutral-6);
     }
 
     .headline-list__item:before {
@@ -175,6 +189,17 @@
     &.fc-container--sponsored,
     &.fc-container--foundation-supported {
         background-color: unset;
+    }
+
+    &.tonal--tone-media .tonal__standfirst a {
+        color: colour(news-default);
+    }
+
+    &.tonal--tone-media .tonal__standfirst {
+        .bullet:before,
+        ul>li:before {
+            background-color: colour(neutral-1);
+        }
     }
 
 }
