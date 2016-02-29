@@ -7,9 +7,6 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/utils/scroller',
-    'common/utils/template',
-    'common/utils/url',
     'common/modules/accessibility/helpers',
     'common/modules/article/rich-links',
     'common/modules/commercial/liveblog-adverts',
@@ -17,8 +14,6 @@ define([
     'common/modules/experiments/affix',
     'common/modules/ui/autoupdate',
     'common/modules/ui/newAutoupdate',
-    'common/modules/ui/dropdowns',
-    'common/modules/ui/last-modified',
     'common/modules/ui/notification-counter',
     'common/modules/ui/relativedates',
     'bootstraps/enhanced/article-liveblog-common',
@@ -33,9 +28,6 @@ define([
     config,
     detect,
     mediator,
-    scroller,
-    template,
-    url,
     accessibility,
     richLinks,
     liveblogAdverts,
@@ -43,8 +35,6 @@ define([
     Affix,
     AutoUpdate,
     AutoUpdateNew,
-    dropdowns,
-    lastModified,
     NotificationCounter,
     RelativeDates,
     articleLiveblogCommon,
@@ -55,50 +45,6 @@ define([
 
     var modules,
         autoUpdate;
-
-    function createScrollTransitions() {
-
-        var curBinding,
-            timeline      = qwery('.timeline')[0],
-            selectedClass = 'live-blog__key-event--selected';
-
-        function unselect() {
-            fastdom.write(function () {
-                $('.' + selectedClass).removeClass(selectedClass);
-            });
-        }
-
-        function unselectOnScroll() {
-            bean.off(curBinding);
-            curBinding = mediator.once('window:throttledScroll', unselect);
-        }
-
-        bean.on(document.body, 'click', 'a', function (e) {
-            var id = e.currentTarget.href.match(/.*(#.*)/);
-            if (id && $(id[1]).hasClass('truncated-block')) {
-                mediator.emit('module:liveblog:showkeyevents', true);
-            }
-        });
-
-        if (timeline && config.switches.liveblogTransition) {
-            bean.on(timeline, 'click', '.timeline__link', function (e) {
-                mediator.emit('module:liveblog:showkeyevents', true);
-                $('.dropdown--live-feed').addClass('dropdown--active');
-                var $el = bonzo(e.currentTarget),
-                    eventId = $el.attr('data-event-id'),
-                    title = $('.timeline__title', $el).text(),
-                    targetEl = qwery('#' + eventId),
-                    dim = bonzo(targetEl).offset();
-                scroller.scrollTo(dim.top - 12, 500, 'easeOutQuint');
-                window.setTimeout(unselectOnScroll, 550);
-                bean.off(curBinding);
-                unselect();
-                $el.addClass(selectedClass);
-                url.pushUrl({blockId: eventId}, title, window.location.pathname + '#' + eventId, true);
-                e.stop();
-            });
-        }
-    }
 
     function getUpdatePath() {
         var id,
@@ -139,7 +85,6 @@ define([
                 });
                 /*eslint-enable no-new*/
             }
-            createScrollTransitions();
         },
 
         createAutoUpdate: function () {

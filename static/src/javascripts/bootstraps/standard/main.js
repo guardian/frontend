@@ -115,7 +115,7 @@ define([
         //
 
         robust.catchErrorsAndLog('ab-tests', function () {
-            if (guardian.isModernBrowser) {
+            if (guardian.isEnhanced) {
                 ab.segmentUser();
                 ab.run();
             }
@@ -152,7 +152,7 @@ define([
         //
 
         var alreadyVisted;
-        if (guardian.isModernBrowser) {
+        if (guardian.isEnhanced) {
             alreadyVisted = storage.local.get('gu.alreadyVisited') || 0;
             storage.local.set('gu.alreadyVisited', alreadyVisted + 1);
         }

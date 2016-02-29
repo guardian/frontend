@@ -12,12 +12,11 @@ define([
     defaults
 ) {
 
-    var isNewCommercialContent = config.switches.newCommercialContent && config.page.isAdvertisementFeature;
     var paidforBandHeight;
 
     function initPaidForBand(element) {
         paidforBandHeight = 0;
-        if (isNewCommercialContent) {
+        if (config.page.isAdvertisementFeature) {
             var paidforBand = document.querySelector('.paidfor-band');
             if (paidforBand && paidforBand !== element) {
                 fastdom.read(function () {

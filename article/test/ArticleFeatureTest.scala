@@ -136,7 +136,7 @@ import collection.JavaConversions._
 
         And("I should see the image url")
         findFirst("[itemprop='associatedMedia image'] [itemprop=url]").getAttribute("content") should
-          endWith("/img/static/sys-images/Guardian/Pix/pictures/2012/8/6/1344274684805/Gunnerside-village-Swaled-009.jpg?w=300&q=85&auto=format&sharp=10&s=74e8ef24701fb21a730d6f5189ad142d")
+          endWith("/img/static/sys-images/Guardian/Pix/pictures/2012/8/6/1344274684805/Gunnerside-village-Swaled-009.jpg?w=300&q=55&auto=format&usm=12&fit=max&s=5c104f891f729f652c8f50caf5ee2dc6")
 
         And("I should see the image width")
         findFirst("[itemprop='associatedMedia image'] [itemprop=width]").getAttribute("content") should be("460")
@@ -395,7 +395,7 @@ import collection.JavaConversions._
 
         And("video meta thumbnailUrl should be set")
         findFirst("[itemprop='associatedMedia video'] [itemprop=thumbnailUrl]").getAttribute("content") should
-          endWith("img/static/sys-images/Guardian/Pix/audio/video/2014/5/16/1400240928538/Nigel-Farage-LBC-debate-i-014.jpg?w=640&h=360&q=85&auto=format&sharp=10&s=642bf1757bcb095c924d2f3789857019")
+          endWith("img/static/sys-images/Guardian/Pix/audio/video/2014/5/16/1400240928538/Nigel-Farage-LBC-debate-i-014.jpg?w=640&h=360&q=55&auto=format&usm=12&fit=max&s=d113cafb7eb9b6e05e71352c83f0c4bf")
 
         And("video meta uploadDate should be set")
         findFirst("[itemprop='associatedMedia video'] [itemprop=uploadDate]").getAttribute("content") should be("2014-05-16T16:09:34.000+01:00")
@@ -458,7 +458,7 @@ import collection.JavaConversions._
         import browser._
 
         val mailShareUrl = "mailto:?subject=Mark%20Kermode's%20DVD%20round-up&body=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsbl"
-        val fbShareUrl = "https://www.facebook.com/dialog/share?app_id=202314643182694&href=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsfb&redirect_uri=http%3A%2F%2Fgu.com%2Fp%2F3bk2f"
+        val fbShareUrl = "https://www.facebook.com/dialog/share?app_id=202314643182694&href=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsfb&redirect_uri=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsfb"
         val twitterShareUrl = "https://twitter.com/intent/tweet?text=Mark%20Kermode's%20DVD%20round-up&url=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fstw"
         val gplusShareUrl = "https://plus.google.com/share?url=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsgp&amp;hl=en-GB&amp;wwc=1"
 
