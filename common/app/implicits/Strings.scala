@@ -55,6 +55,13 @@ trait Strings {
           .toString()
       })
     }
+
+    def addFragment(fragment: String): String = {
+      javax.ws.rs.core.UriBuilder.fromUri(uri)
+        .fragment(fragment)
+        .build()
+        .toString()
+    }
   }
 
   implicit class string2decodings(s: String) {

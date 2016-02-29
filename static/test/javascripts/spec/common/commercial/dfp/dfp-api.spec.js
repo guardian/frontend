@@ -166,14 +166,14 @@ define([
         it('should get the slots', function () {
             dfp.init();
             window.googletag.cmd.forEach(function (func) { func(); });
-            expect(Object.keys(dfp.getSlots()).length).toBe(4);
+            expect(Object.keys(dfp.getAdverts()).length).toBe(4);
         });
 
         it('should not get hidden ad slots', function () {
             $('.js-ad-slot').first().css('display', 'none');
             dfp.init();
             window.googletag.cmd.forEach(function (func) { func(); });
-            var slots = dfp.getSlots();
+            var slots = dfp.getAdverts();
             expect(Object.keys(slots).length).toBe(3);
             for (var slotId in slots) {
                 expect(slotId).not.toBe('dfp-ad-html-slot');

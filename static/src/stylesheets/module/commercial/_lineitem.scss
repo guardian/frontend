@@ -72,6 +72,9 @@
     .lineitem__cta {
         margin-top: $gs-baseline/2;
     }
+    .lineitem__scarcity {
+        color: guss-colour(rainbow-red);
+    }
 
     /* Line items - high relevance */
     .lineitem--high {

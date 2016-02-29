@@ -14,7 +14,9 @@ sealed trait ElementProfile {
 
   def width: Option[Int]
   def height: Option[Int]
+  def hidpi: Boolean
   def compression: Int
+  def isPng: Boolean
 
   def elementFor(image: ImageMedia): Option[ImageAsset] = {
     val sortedCrops = image.imageCrops.sortBy(-_.width)
@@ -36,13 +38,21 @@ sealed trait ElementProfile {
 
   // NOTE - if you modify this in any way there is a decent chance that you decache all our images :(
   lazy val resizeString = {
-    val qualityparam = "q=85"
+    val qualityparam = if (hidpi) {"q=20"} else {"q=55"}
     val autoParam = "auto=format"
-    val sharpParam = "sharp=10"
+    val sharpParam = "usm=12"
+    val fitParam = "fit=max"
+    val dprParam = if (hidpi) {
+      if (isPng) {
+        "dpr=1.3"
+      } else {
+        "dpr=2"
+      }
+    } else {""}
     val heightParam = height.map(pixels => s"h=$pixels").getOrElse("")
     val widthParam = width.map(pixels => s"w=$pixels").getOrElse("")
 
-    val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam).filter(_.nonEmpty).mkString("&")
+    val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam, fitParam, dprParam).filter(_.nonEmpty).mkString("&")
     s"?$params"
   }
 
@@ -52,7 +62,9 @@ sealed trait ElementProfile {
 case class Profile(
   override val width: Option[Int] = None,
   override val height: Option[Int] = None,
-  override val compression: Int = 95) extends ElementProfile
+  override val hidpi: Boolean = false,
+  override val compression: Int = 95,
+  override val isPng: Boolean = false) extends ElementProfile
 
 object VideoProfile {
   lazy val ratioHD = new Fraction(16,9)
@@ -61,7 +73,9 @@ object VideoProfile {
 case class VideoProfile(
   override val width: Some[Int],
   override val height: Some[Int],
-  override val compression: Int = 95) extends ElementProfile {
+  override val hidpi: Boolean = false,
+  override val compression: Int = 95,
+  override val isPng: Boolean = false) extends ElementProfile {
 
   lazy val isRatioHD: Boolean = Precision.compareTo(VideoProfile.ratioHD.doubleValue, aspectRatio.doubleValue, 0.1d) == 0
 
@@ -80,6 +94,7 @@ object Item640 extends Profile(width = Some(640))
 object Item700 extends Profile(width = Some(700))
 object Video640 extends VideoProfile(width = Some(640), height = Some(360)) // 16:9
 object FacebookOpenGraphImage extends Profile(width = Some(1200))
+object EmailArticleImage extends Profile(width = Some(640))
 
 // The imager/images.js base image.
 object SeoOptimisedContentImage extends Profile(width = Some(460))
@@ -140,9 +155,10 @@ object ImgSrc extends Logging {
     widths.profiles.map { profile => srcsetForProfile(profile, imageContainer) } mkString ", "
   }
 
-  def srcsetForBreakpoint(breakpointWidth: BreakpointWidth, breakpointWidths: Seq[BreakpointWidth], maybePath: Option[String] = None, maybeImageMedia: Option[ImageMedia] = None) = {
+  def srcsetForBreakpoint(breakpointWidth: BreakpointWidth, breakpointWidths: Seq[BreakpointWidth], maybePath: Option[String] = None, maybeImageMedia: Option[ImageMedia] = None, hidpi: Boolean = false) = {
+    val isPng = maybePath.map(path => path.toLowerCase.endsWith("png")).getOrElse(false)
     breakpointWidth.toPixels(breakpointWidths)
-      .map(browserWidth => Profile(width = Some(browserWidth)))
+      .map(browserWidth => Profile(width = Some(browserWidth), hidpi = hidpi, isPng = isPng))
       .map { profile => {
         maybePath
           .map(url => srcsetForProfile(profile, url))

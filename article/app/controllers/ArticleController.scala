@@ -122,10 +122,10 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
 
     case article: ArticlePage =>
       val htmlResponse = () => {
-        if (article.article.isImmersive) views.html.articleImmersive(article)
-        else if (request.isAmp)          views.html.articleAMP(article)
-        else if (request.isEmail)        views.html.articleEmail(article)
-        else                             views.html.article(article)
+        if (request.isEmail) views.html.articleEmail(article)
+        else if (article.article.isImmersive) views.html.articleImmersive(article)
+        else if (request.isAmp) views.html.articleAMP(article)
+        else views.html.article(article)
       }
 
       val jsonResponse = () => views.html.fragments.articleBody(article)
@@ -161,7 +161,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
 
   def renderArticle(path: String) = {
     LongCacheAction { implicit request =>
-      mapModel(path) {
+      mapModel(path, blocks = request.isEmail) {
         render(path, _, None)
       }
     }
@@ -182,6 +182,8 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       .showTags("all")
       .showFields("all")
       .showReferences("all")
+      .showAtoms("all")
+
     val capiItemWithBlocks = if (blocks) capiItem.showBlocks("body") else capiItem
     getResponse(capiItemWithBlocks)
 
