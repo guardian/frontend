@@ -199,7 +199,7 @@ define([
 
     return {
         init: function () {
-            if (!emailInserted && !config.page.isFront) {
+            if (!emailInserted && !config.page.isFront && config.switches.emailInArticle) {
                 // Get the user's current subscriptions
                 Id.getUserEmailSignUps()
                     .then(buildUserSubscriptions)
