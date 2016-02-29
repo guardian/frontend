@@ -104,6 +104,17 @@
     }
 }
 
+.quiz__answer__reveal-text {
+    display: block;
+    color: colour(neutral-1);
+    margin-top: $gs-baseline;
+    @include fs-bodyCopy(1);
+
+    .quiz__answer--selected & {
+        color: #ffffff;
+    }
+}
+
 .quiz--personality,
 .quiz__answer--correct,
 .quiz__answer--incorrect {
