@@ -82,7 +82,7 @@ object Commercial {
   object container {
 
     def shouldRenderAsCommercialContainer(isPaidFront: Boolean, container: FaciaContainer): Boolean = {
-      !isPaidFront && container.commercialOptions.isAdvertisementFeature
+      !isPaidFront && container.commercialOptions.isPaidContainer
     }
 
     private def contentCards(container: FaciaContainer): Seq[Option[ContentCard]] = {
