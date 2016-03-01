@@ -36,13 +36,13 @@ define([
         capiSingle:     defaultUrlBuilder('capi-single'),
         capi:           defaultUrlBuilder('capi'),
         paidforCard:    defaultUrlBuilder('paid'),
-        book:           bookUrlBuilder('books/book'),
         books:          complexUrlBuilder('books/books', 'isbns'),
         jobs:           complexUrlBuilder('jobs', 'jobIds', true),
         masterclasses:  complexUrlBuilder('masterclasses', 'ids', true),
-        soulmatesGroup: soulmatesGroupUrlBuilder('soulmates/'),
         travel:         complexUrlBuilder('travel/offers', '', true),
-        multi:          complexUrlBuilder('multi', '', true)
+        multi:          complexUrlBuilder('multi', '', true),
+        book:           bookUrlBuilder('books/book'),
+        soulmatesGroup: soulmatesGroupUrlBuilder('soulmates/')
     };
 
     function defaultUrlBuilder(url) {
@@ -63,11 +63,11 @@ define([
         };
     }
 
-    function complexUrlBuilder(url, withT, withKeywords) {
+    function complexUrlBuilder(url, withSpecificId, withKeywords) {
         return function (params) {
             return buildComponentUrl(url, merge(
                 params,
-                withT && params[withT] ? { t: params[withT].split(',') } : {},
+                withSpecificId && params[withSpecificId] ? { t: params[withSpecificId].split(',') } : {},
                 withKeywords ? getKeywords() : {}
             ));
         };
