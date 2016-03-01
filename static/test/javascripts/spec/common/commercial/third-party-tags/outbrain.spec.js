@@ -32,6 +32,8 @@ define([
         injector = new Injector();
 
     describe('Outbrain', function () {
+        var eventStub, eventStubLo;
+
         beforeEach(function (done) {
             // injector.mock('ophan/ng', { record: function () {} });
             injector.require([
@@ -41,7 +43,8 @@ define([
                 'common/utils/config',
                 'common/modules/identity/api',
                 'common/utils/detect',
-                'common/modules/commercial/commercial-features'
+                'common/modules/commercial/commercial-features',
+                'common/modules/commercial/track-ad'
             ], function () {
                 sut      = arguments[0];
                 getSection = arguments[1];
@@ -50,6 +53,7 @@ define([
                 identity = arguments[4];
                 detect   = arguments[5];
                 commercialFeatures = arguments[6];
+                trackAd  = arguments[7];
 
                 config.switches.outbrain = true;
                 config.page = {
@@ -66,6 +70,21 @@ define([
 
                 commercialFeatures.outbrain = true;
 
+                eventStub = {
+                    slot: {
+                        getSlotElementId: function () {
+                            return 'dfp-ad--merchandising-high';
+                        }
+                    }
+                };
+                eventStubLo = {
+                    slot: {
+                        getSlotElementId: function () {
+                            return 'dfp-ad--merchandising';
+                        }
+                    }
+                };
+
                 $fixtureContainer = fixtures.render(fixturesConfig);
                 done();
             });
@@ -80,37 +99,13 @@ define([
         });
 
         describe('Init', function () {
-            var eventStub, eventStubLo;
-
-            beforeEach(function (done) {
-                injector.require(['common/modules/commercial/track-ad'], function () {
-                    // this is just to re-initialize trackAd
-                    trackAd = arguments[0];
-
-                    eventStub = {
-                        slot: {
-                            getSlotElementId: function () {
-                                return 'dfp-ad--merchandising-high';
-                            }
-                        },
-                        isEmpty: true
-                    };
-                    eventStubLo = {
-                        slot: {
-                            getSlotElementId: function () {
-                                return 'dfp-ad--merchandising';
-                            }
-                        },
-                        isEmpty: true
-                    };
-
-                    spyOn(sut, 'load');
-
-                    done();
-                });
+            beforeEach(function () {
+                spyOn(sut, 'load');
             });
 
             it('should start outbrain component', function (done) {
+                eventStub.isEmpty = true;
+                eventStubLo.isEmpty = true;
                 Promise.all([
                     trackAd('dfp-ad--merchandising-high'),
                     trackAd('dfp-ad--merchandising')
@@ -159,6 +154,8 @@ define([
 
                 config.page.commentable = false;
 
+                eventStub.isEmpty = true;
+                eventStubLo.isEmpty = true;
                 Promise.all([
                     trackAd('dfp-ad--merchandising-high'),
                     trackAd('dfp-ad--merchandising')
@@ -189,11 +186,16 @@ define([
                     trackAd('dfp-ad--merchandising-high'),
                     trackAd('dfp-ad--merchandising')
                 ])
-                .then(sut.init)
-                .then(function () {
-                    expect(sut.load).toHaveBeenCalledWith('merchandising');
+                .then(function (args) {
+                    expect(args[0]).toBe(true);
+                    expect(args[1]).toBe(false);
                     done();
                 });
+                // .then(sut.init)
+                // .then(function () {
+                //     expect(sut.load).toHaveBeenCalledWith('merchandising');
+                //     done();
+                // });
                 mediator.emit('modules:commercial:dfp:rendered', eventStub);
                 mediator.emit('modules:commercial:dfp:rendered', eventStubLo);
             });
