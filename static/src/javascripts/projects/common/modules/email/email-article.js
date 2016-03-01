@@ -74,11 +74,29 @@ define([
                 successDescription: 'You\'ll receive the Fiver daily, around 5pm.',
                 modClass: 'end-article'
             },
+            morningMailUk: {
+                listId: '3640',
+                canRun: 'morningMailUk',
+                campaignCode: 'morning_mail_uk_article_signup',
+                headline: 'Ever wanted someone to brief you on the day\'s news?',
+                description: 'For the next two weeks we\'ll be trialling a new morning briefing email. We\'re collecting feedback - and if we continue the email, you\'ll be among the first to receive it',
+                successHeadline: 'Thank you!',
+                successDescription: 'We\'ll send you your briefing every morning.',
+                modClass: 'end-article'
+            },
+            morningMailUkSeries: {
+                listId: '3640',
+                canRun: 'morningMailUkSeries',
+                campaignCode: 'morning_mail_uk_series_article_signup',
+                headline: 'The morning briefing - start the day one step ahead',
+                description: 'Sign up and we\'ll give you a leg-up on the day\'s big stories/ We\'re collecting feedback for the next two weeks - and if we continue the email, you\'ll be the first to receive it.',
+                successHeadline: 'Thank you!',
+                successDescription: 'We\'ll send you your briefing every morning.',
+                modClass: 'end-article'
+            },
             theGuardianToday: {
                 listId: (function () {
                     switch (config.page.edition) {
-                        case 'UK':
-                        case 'INT':
                         default:
                             return '37';
 
@@ -137,8 +155,15 @@ define([
             addListToPage(find(listConfigs, listCanRun));
         },
         listCanRun = function (listConfig) {
-            // Check our lists canRun method and make sure that the user isn't already subscribed to this email
-            if (listConfig.canRun && canRunList[listConfig.canRun]() && !contains(userListSubscriptions, listConfig.listId)) {
+            var browser = detect.getUserAgent.browser,
+                version = detect.getUserAgent.version;
+
+            // Check our lists canRun method and
+            // make sure that the user isn't already subscribed to this email and
+            // don't show on IE 7,8,9 for now
+            if (listConfig.canRun && canRunList[listConfig.canRun]() &&
+                !contains(userListSubscriptions, listConfig.listId &&
+                !(browser === 'MSIE' && contains(['7','8','9'], version + '')))) {
                 return listConfig;
             }
         },
@@ -171,6 +196,17 @@ define([
             keywordExists: function (keyword) {
                 // Compare page keywords with passed in array
                 return !!intersection(keywords, keyword).length;
+            },
+            userReferredFromFront: function () {
+                var host = window.location.host,
+                    escapedHost = host.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'), // Escape anything that will mess up the regex
+                    urlRegex = new RegExp('^https?:\/\/' + escapedHost + '\/(uk\/|us\/|au\/|international\/)?([a-z-])+$', 'gi');
+
+                return urlRegex.test(document.referrer);
+            },
+            pageHasBlanketBlacklist: function () {
+                // Prevent the blanket emails from ever showing on certain keywords or sections
+                return canRunHelpers.keywordExists(['US elections 2016', 'Football']) || config.page.section === 'film';
             }
         },
         canRunList = {
@@ -183,17 +219,16 @@ define([
             theFiver: function () {
                 return canRunHelpers.keywordExists(['Football']);
             },
+            morningMailUkSeries: function () {
+                return config.page.seriesId === 'world/series/guardian-morning-briefing';
+            },
+            morningMailUk: function () {
+                return (config.page.edition === 'UK' || config.page.edition === 'INT') &&
+                        !canRunHelpers.pageHasBlanketBlacklist() &&
+                        canRunHelpers.userReferredFromFront();
+            },
             theGuardianToday: function () {
-                var host = window.location.host,
-                    escapedHost = host.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'), // Escape anything that will mess up the regex
-                    urlRegex = new RegExp('^https?:\/\/' + escapedHost + '\/(uk\/|us\/|au\/|international\/)?([a-z-])+$', 'gi'),
-                    browser = detect.getUserAgent.browser,
-                    version = detect.getUserAgent.version,
-                    pageIsBlacklisted = canRunHelpers.keywordExists(['US elections 2016', 'Football']) || config.page.section === 'film';
-
-                return !pageIsBlacklisted &&
-                        urlRegex.test(document.referrer) &&
-                        !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
+                return !canRunHelpers.pageHasBlanketBlacklist() && canRunHelpers.userReferredFromFront();
             }
         };
 
