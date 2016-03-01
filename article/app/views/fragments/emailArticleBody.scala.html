@@ -62,7 +62,6 @@
 
                 case ImageBlockElement(media, data, showCredit) => {
                     @EmailArticleImage.bestFor(media).map { url =>
-
                         @fullRow {
                             <img width="580" src="@url" @data.get("alt").map { alt => alt="@alt" }>
                         }
@@ -84,6 +83,15 @@
                         }
                     }
                 }
+
+                case GuVideoBlockElement(video, media, data) => {
+                    @data.get("url").map { url =>
+                        @fullRowWithBackground(media) {
+                            <a class="play--button" href="@url"><img class="play--icon" src="@Images.play"></a>
+                        }
+                    }
+                }
+
                 case _ => {}
             }
         }
