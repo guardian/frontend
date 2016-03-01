@@ -1,5 +1,7 @@
 @()
 
+@import views.support.EmailHelpers.Images.quote
+
 <style>
     body, .body {
         background: #eaeaea;
@@ -14,7 +16,7 @@
         padding: 0;
     }
 
-    h1, h2, h3, h4, h5, h6, p {
+    h1, h2, h3, h4, h5, h6, p, blockquote {
         font-family: Georgia, serif;
         color: #333333;
     }
@@ -80,6 +82,12 @@
         color: #94b1ca !important;
     }
 
+    blockquote {
+        background: transparent url(@quote.path) no-repeat top left;
+        font-size: 16px;
+        padding-top: 24px;
+    }
+
     .container,
     .panel {
         background: white;
@@ -104,26 +112,11 @@
         color: #767676;
     }
 
-    .inline-icon {
+    .icon {
+        padding-top: 1px;
+    }
+
+    .icon-camera {
         margin-right: 4px;
-    }
-
-    .inline-icon svg {
-        height: 14px;
-        width: 14px;
-    }
-
-
-    .inline-twitter-bird svg {
-        fill: #005689;
-    }
-
-    .inline-camera svg {
-        fill: #767676;
-        margin-top: -1px;
-    }
-
-    .i-left {
-        float: left;
     }
 </style>

@@ -47,12 +47,17 @@
             @body
 
             @if(content.trail.isCommentable) {
-                <div class="content__comments-container">
+                <div class="submeta">
                     <a href="@LinkTo(page.metadata.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, page.metadata.webUrl)))#comments" class="cta cta--medium cta--comments">
                         @fragments.inlineSvg("comment-16", "icon") View comments
                     </a>
-                </div>
+            } else {
+                <div class="submeta no-comments">
             }
+                    <a href="@Configuration.site.host/" class="cta cta--medium main-site-link">
+                        View on theguardian.com
+                    </a>
+                </div>
 
             @if(content.metadata.section != "childrens-books-site") {
                 @if(content.hasStoryPackage) {

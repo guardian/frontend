@@ -8,13 +8,15 @@ define([
     'common/utils/detect',
     'lodash/collections/contains',
     'lodash/arrays/intersection',
+    'lodash/collections/map',
     'common/utils/config',
     'lodash/collections/every',
     'lodash/collections/find',
     'text!common/views/email/iframe.html',
     'common/utils/template',
     'common/modules/article/space-filler',
-    'common/modules/analytics/omniture'
+    'common/modules/analytics/omniture',
+    'common/utils/robust'
 ], function (
     $,
     bean,
@@ -25,13 +27,15 @@ define([
     detect,
     contains,
     intersection,
+    map,
     config,
     every,
     find,
     iframeTemplate,
     template,
     spaceFiller,
-    omniture
+    omniture,
+    robust
 ) {
 
     var listConfigs = {
@@ -106,6 +110,7 @@ define([
             }
         },
         emailInserted = false,
+        userListSubscriptions = [],
         keywords = config.page.keywords ? config.page.keywords.split(',') : '',
         getSpacefinderRules = function () {
             return {
@@ -123,8 +128,17 @@ define([
                 }
             };
         },
+        buildUserSubscriptions = function (response) {
+            if (response && response.status !== 'error' && response.result && response.result.subscriptions) {
+                userListSubscriptions = map(response.result.subscriptions, 'listId');
+            }
+
+            // Get the first list that is allowed on this page
+            addListToPage(find(listConfigs, listCanRun));
+        },
         listCanRun = function (listConfig) {
-            if (listConfig.canRun && canRunList[listConfig.canRun]()) {
+            // Check our lists canRun method and make sure that the user isn't already subscribed to this email
+            if (listConfig.canRun && canRunList[listConfig.canRun]() && !contains(userListSubscriptions, listConfig.listId)) {
                 return listConfig;
             }
         },
@@ -139,6 +153,9 @@ define([
                 if (listConfig.insertMethod && listConfig.insertMethod()) {
                     fastdom.write(function () {
                         listConfig.insertMethod()($iframeEl);
+
+                        omniture.trackLinkImmediate('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
+                        emailInserted = true;
                     });
                 } else {
                     spaceFiller.fillSpace(getSpacefinderRules(), function (paras) {
@@ -176,16 +193,19 @@ define([
 
                 return !pageIsBlacklisted &&
                         urlRegex.test(document.referrer) &&
-                        !Id.isUserLoggedIn() &&
                         !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
             }
         };
 
     return {
         init: function () {
-            if (!emailInserted) {
-                // Get the first list that is allowed on this page
-                addListToPage(find(listConfigs, listCanRun));
+            if (!emailInserted && !config.page.isFront && config.switches.emailInArticle) {
+                // Get the user's current subscriptions
+                Id.getUserEmailSignUps()
+                    .then(buildUserSubscriptions)
+                    .catch(function (error) {
+                        robust.log('c-email', error);
+                    });
             }
         }
     };

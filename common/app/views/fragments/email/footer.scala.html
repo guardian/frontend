@@ -1,23 +1,10 @@
-@()
+@(page: model.Page)(implicit request: RequestHeader)
 
-@import views.support.Zurb._
-
-@fullRow(Seq("social__links")) {
-    <a class="social__link" href="https://www.facebook.com/theguardian">
-        @fragments.inlineSvg("fb", "icon") 5.4m
-    </a>
-
-    <a class="social__link" href="https://twitter.com/guardian">
-        @fragments.inlineSvg("twitter-bird", "icon") 5.2m
-    </a>
-
-    <a class="social__link" href="https://www.instagram.com/guardian">
-        @fragments.inlineSvg("instagram", "icon") 272k
-    </a>
-}
+@import views.support.EmailHelpers._
+@import common.{CanonicalLink, LinkTo}
 
 @fullRow(Seq("email__links")) {
-    <a class="email__link" href="">Manage your emails</a> | <a class="email__link" href="">Unsubscribe</a>
+    <a class="email__link" href="https://profile.theguardian.com/email-prefs">Manage your emails</a> | <a class="email__link" href="%%unsub_center_url%%">Unsubscribe</a> | <a class="email__link" href="@LinkTo(page.metadata.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, page.metadata.webUrl)))">Trouble viewing?</a>
 }
 
 @fullRow(Seq("disclaimer")) {

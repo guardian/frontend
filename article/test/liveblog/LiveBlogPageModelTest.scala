@@ -7,7 +7,7 @@ class LiveBlogPageModelTest extends FlatSpec with Matchers {
    "LiveBlogPageModel" should "allow 1 block on one page" in {
      val result = LiveBlogPageModel(2, Seq(()))(isRequestedBlock = None, id = _.toString)
 
-     result.map(_.copy(main = Seq())) should be(Some(LiveBlogPageModel(Seq(()), Seq(), NoPage, NoPage, FirstPage)))
+     result.map(_.copy(allBlocks = Seq())) should be(Some(LiveBlogPageModel(allBlocks = Seq(), currentPage = FirstPage(Seq(())), pagination = None)))
 
    }
 
@@ -15,7 +15,7 @@ class LiveBlogPageModelTest extends FlatSpec with Matchers {
     val blocks = Seq.fill(3)(())
     val result = LiveBlogPageModel(2, blocks)(None, _.toString)
 
-    result.map(_.copy(main = Seq())) should be(Some(LiveBlogPageModel(blocks, Seq(), NoPage, NoPage, FirstPage)))
+    result.map(_.copy(allBlocks = Seq())) should be(Some(LiveBlogPageModel(allBlocks = Seq(), currentPage = FirstPage(blocks), pagination = None)))
 
   }
 
@@ -27,8 +27,14 @@ class LiveBlogPageModelTest extends FlatSpec with Matchers {
     val result = LiveBlogPageModel(2, blocks)(None, _.toString)
 
     val expected = blocks.take(2)
+    val expectedOldestPage = BlockPage(blocks = blocks.drop(2), blockId = "old 2", pageNumber = 2)
+    val expectedPagination = Some(Pagination(isNewestPage = true, newest = None, newer = None, older = Some(expectedOldestPage), oldest = Some(expectedOldestPage), numberOfPages = 2))
 
-    result.map(_.copy(main = Seq())) should be(Some(LiveBlogPageModel(expected, Seq(), NoPage, BlockPage("old 2"), FirstPage)))
+    result.map(_.copy(allBlocks = Seq())) should be(Some(LiveBlogPageModel(
+      allBlocks = Seq(),
+      currentPage = FirstPage(expected),
+      pagination = expectedPagination
+    )))
 
   }
 
@@ -39,9 +45,15 @@ class LiveBlogPageModelTest extends FlatSpec with Matchers {
     }
     val result = LiveBlogPageModel(2, blocks)(Some(_ == "old 2"), _.toString)
 
-    val expected = blocks.takeRight(2)
+    val expectedCurrentPage = BlockPage(blocks = blocks.takeRight(2), blockId = "old 2", pageNumber = 2)
+    val expectedNewestPage = FirstPage(blocks.take(2))
+    val expectedPagination = Some(Pagination(isNewestPage = false, newest = Some(expectedNewestPage), newer = Some(expectedNewestPage), older = None, oldest = None, numberOfPages = 2))
 
-    result.map(_.copy(main = Seq())) should be(Some(LiveBlogPageModel(expected, Seq(), FirstPage, NoPage, BlockPage("old 2"))))
+    result.map(_.copy(allBlocks = Seq())) should be(Some(LiveBlogPageModel(
+      allBlocks = Seq(),
+      currentPage = expectedCurrentPage,
+      pagination = expectedPagination
+    )))
 
   }
 
@@ -52,9 +64,15 @@ class LiveBlogPageModelTest extends FlatSpec with Matchers {
     }
     val result = LiveBlogPageModel(2, blocks)(Some(_ == "old 3"), _.toString)
 
-    val expected = blocks.takeRight(2)
+    val expectedCurrentPage = BlockPage(blocks = blocks.takeRight(2), blockId = "old 2", pageNumber = 2)
+    val expectedNewestPage = FirstPage(blocks.take(2))
+    val expectedPagination = Some(Pagination(isNewestPage = false, newest = Some(expectedNewestPage), newer = Some(expectedNewestPage), older = None, oldest = None, numberOfPages = 2))
 
-    result.map(_.copy(main = Seq())) should be(Some(LiveBlogPageModel(expected, Seq(), FirstPage, NoPage, BlockPage("old 2"))))
+    result.map(_.copy(allBlocks = Seq())) should be(Some(LiveBlogPageModel(
+      allBlocks = Seq(),
+      currentPage = expectedCurrentPage,
+      pagination = expectedPagination
+    )))
 
   }
 
@@ -62,9 +80,15 @@ class LiveBlogPageModelTest extends FlatSpec with Matchers {
     val blocks = Seq.fill(5)(()).zipWithIndex.map(_._2)
     val result = LiveBlogPageModel(2, blocks)(None, _.toString)
 
-    val expected = blocks.take(3)
+    val expectedCurrentPage = FirstPage(blocks = blocks.take(3))
+    val expectedOldestPage = BlockPage(blocks = blocks.drop(3), blockId = "3", pageNumber = 2)
+    val expectedPagination = Some(Pagination(isNewestPage = true, newest = None, newer = None, older = Some(expectedOldestPage), oldest = Some(expectedOldestPage), numberOfPages = 2))
 
-    result.map(_.copy(main = Seq())) should be(Some(LiveBlogPageModel(expected, Seq(), NoPage, BlockPage("3"), FirstPage)))
+    result.map(_.copy(allBlocks = Seq())) should be(Some(LiveBlogPageModel(
+      allBlocks = Seq(),
+      currentPage = expectedCurrentPage,
+      pagination = expectedPagination
+    )))
 
   }
 
@@ -72,9 +96,15 @@ class LiveBlogPageModelTest extends FlatSpec with Matchers {
     val blocks = Seq.fill(5)(()).zipWithIndex.map(_._2)
     val result = LiveBlogPageModel(2, blocks)(Some(_ == 3), _.toString)
 
-    val expected = blocks.takeRight(2)
+    val expectedCurrentPage = BlockPage(blocks = blocks.takeRight(2), blockId = "3", pageNumber = 2)
+    val expectedNewestPage = FirstPage(blocks.take(3))
+    val expectedPagination = Some(Pagination(isNewestPage = false, newest = Some(expectedNewestPage), newer = Some(expectedNewestPage), older = None, oldest = None, numberOfPages = 2))
 
-    result.map(_.copy(main = Seq())) should be(Some(LiveBlogPageModel(expected, Seq(), FirstPage, NoPage, BlockPage("3"))))
+    result.map(_.copy(allBlocks = Seq())) should be(Some(LiveBlogPageModel(
+      allBlocks = Seq(),
+      currentPage = expectedCurrentPage,
+      pagination = expectedPagination
+    )))
 
   }
 
@@ -82,9 +112,16 @@ class LiveBlogPageModelTest extends FlatSpec with Matchers {
     val blocks = Seq.fill(6)(()).zipWithIndex.map(_._2)
     val result = LiveBlogPageModel(2, blocks)(None, _.toString)
 
-    val expected = blocks.take(2)
+    val expectedCurrentPage = FirstPage(blocks = blocks.take(2))
+    val expectedMiddlePage = BlockPage(blocks = blocks.drop(2).take(2), blockId = "2", pageNumber = 2)
+    val expectedOldestPage = BlockPage(blocks = blocks.takeRight(2), blockId = "4", pageNumber = 3)
+    val expectedPagination = Some(Pagination(isNewestPage = true, newest = None, newer = None, older = Some(expectedMiddlePage), oldest = Some(expectedOldestPage), numberOfPages = 3))
 
-    result.map(_.copy(main = Seq())) should be(Some(LiveBlogPageModel(expected, Seq(), NoPage, BlockPage("2"), FirstPage)))
+    result.map(_.copy(allBlocks = Seq())) should be(Some(LiveBlogPageModel(
+      allBlocks = Seq(),
+      currentPage = expectedCurrentPage,
+      pagination = expectedPagination
+    )))
 
   }
 
@@ -92,9 +129,16 @@ class LiveBlogPageModelTest extends FlatSpec with Matchers {
     val blocks = Seq.fill(6)(()).zipWithIndex.map(_._2)
     val result = LiveBlogPageModel(2, blocks)(Some(_ == 2), _.toString)
 
-    val expected = blocks.take(4).takeRight(2)
+    val expectedCurrentPage = BlockPage(blocks = blocks.drop(2).take(2), blockId = "2", pageNumber = 2)
+    val expectedFirstPage = FirstPage(blocks = blocks.take(2))
+    val expectedOldestPage = BlockPage(blocks = blocks.takeRight(2), blockId = "4", pageNumber = 3)
+    val expectedPagination = Some(Pagination(isNewestPage = false, newest = Some(expectedFirstPage), newer = Some(expectedFirstPage), older = Some(expectedOldestPage), oldest = Some(expectedOldestPage), numberOfPages = 3))
 
-    result.map(_.copy(main = Seq())) should be(Some(LiveBlogPageModel(expected, Seq(), FirstPage, BlockPage("4"), BlockPage("2"))))
+    result.map(_.copy(allBlocks = Seq())) should be(Some(LiveBlogPageModel(
+      allBlocks = Seq(),
+      currentPage = expectedCurrentPage,
+      pagination = expectedPagination
+    )))
 
   }
 
@@ -102,12 +146,16 @@ class LiveBlogPageModelTest extends FlatSpec with Matchers {
     val blocks = Seq.fill(6)(()).zipWithIndex.map(_._2)
     val result = LiveBlogPageModel(2, blocks)(Some(_ == 4), _.toString)
 
-    val expected = blocks.takeRight(2)
+    val expectedCurrentPage = BlockPage(blocks = blocks.takeRight(2), blockId = "4", pageNumber = 3)
+    val expectedFirstPage = FirstPage(blocks = blocks.take(2))
+    val expectedMiddlePage = BlockPage(blocks = blocks.drop(2).take(2), blockId = "2", pageNumber = 2)
+    val expectedPagination = Some(Pagination(isNewestPage = false, newest = Some(expectedFirstPage), newer = Some(expectedMiddlePage), older = None, oldest = None, numberOfPages = 3))
 
-    result.map(_.copy(main = Seq())) should be(Some(LiveBlogPageModel(expected, Seq(), BlockPage("2"), NoPage, BlockPage("4"))))
+    result.map(_.copy(allBlocks = Seq())) should be(Some(LiveBlogPageModel(
+      allBlocks = Seq(),
+      currentPage = expectedCurrentPage,
+      pagination = expectedPagination
+    )))
 
   }
-
-//  // should really test the preload and timeline generation too
-
 }

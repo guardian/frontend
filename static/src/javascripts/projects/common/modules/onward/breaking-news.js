@@ -64,7 +64,7 @@ define([
         var page = config.page,
             hiddenIds = storage.local.get(storageKeyHidden) || {};
 
-        if (!page || hiddenIds[page.pageId] === true) { return; }
+        if (!page || hiddenIds[page.pageId] === true || !storage.isAvailable) { return; }
 
         ajax({
             url: breakingNewsSource,
