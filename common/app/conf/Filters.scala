@@ -67,6 +67,19 @@ object SurrogateKeyFilter extends Filter with ExecutionContexts {
   }
 }
 
+object AmpFilter extends Filter with ExecutionContexts with implicits.Requests {
+  override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
+    if (request.isAmp) {
+      val domain = "https://" + request.domain
+      val ampHeader = "AMP-Access-Control-Allow-Source-Origin" -> Configuration.amp.corsOrigins.find(_ == domain).getOrElse("*")
+
+      nextFilter(request).map(_.withHeaders(ampHeader))
+    } else {
+      nextFilter(request)
+    }
+  }
+}
+
 object Filters {
   // NOTE - order is important here, Gzipper AFTER CorsVaryHeaders
   // which effectively means "JsonVaryHeaders goes around Gzipper"
@@ -76,6 +89,7 @@ object Filters {
     BackendHeaderFilter,
     RequestLoggingFilter,
     GNUFilter,
-    SurrogateKeyFilter
+    SurrogateKeyFilter,
+    AmpFilter
   )
 }
