@@ -6,6 +6,13 @@
 .quiz__question {
     margin-bottom: $gs-baseline * 2;
     list-style-type: none;
+    border: 0;
+    padding: 0;
+}
+
+.quiz__question-text {
+    margin-bottom: $gs-baseline;
+    display: block;
 
     &:before {
         counter-increment: quiz-question;
@@ -15,17 +22,12 @@
     }
 }
 
-.quiz__question-text {
-    margin-bottom: $gs-baseline;
-    display: block;
-}
-
 .quiz__answer + .quiz__answer {
     margin-top: $gs-baseline * .5;
 }
 
 .quiz__answer__input {
-    display: none;
+    @include u-h;
 }
 
 .quiz__answer-text {
@@ -39,6 +41,7 @@
         cursor: pointer;
     }
 
+    // show a fake, stylised radio button on personality quiz answers
     .quiz--questions.quiz--personality &:before {
         content: '';
         height: 1em;
