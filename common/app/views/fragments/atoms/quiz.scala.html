@@ -8,7 +8,7 @@
 @if(showResults) {
     <h2>@quiz.title</h2>
 }
-<form action="@postUrl(quiz)" method="POST" class="quiz quiz--@{quiz.quizType} @{if (showResults) "quiz--results" else "quiz--questions"}" >
+<form action="@postUrl(quiz)" method="POST" class="atom-quiz atom-quiz--@{quiz.quizType} @{if (showResults) "atom-quiz--results" else "atom-quiz--questions"}" >
         @quiz.content.questions.zipWithIndex.map { case (question, index) =>
             @renderQuestion(question,
                 playForm(s"answers[$index]"),
@@ -23,12 +23,12 @@
 </form>
 
 @renderQuestion(question: Question, field: play.api.data.Field, maybeUserAnswer: Option[Answer]) = {
-    <fieldset class="quiz__question
+    <fieldset class="atom-quiz__question
         @{ if (showResults) {
-            s"quiz__question--${if(maybeUserAnswer.isEmpty) "without-response" else "with-response" }"
+            s"atom-quiz__question--${if(maybeUserAnswer.isEmpty) "without-response" else "with-response" }"
           }
         }">
-        <legend class="quiz__question-text">@question.text</legend>
+        <legend class="atom-quiz__question-text">@question.text</legend>
 
         @question.imageMedia.map { image =>
             @fragments.img(image, widthsByBreakpoint = BodyMedia.inline)
@@ -46,13 +46,13 @@
 }
 
 @renderAnswer(question: Question, answer: Answer, field: play.api.data.Field) = {
-    <div class="quiz__answer">
+    <div class="atom-quiz__answer">
         <input type="radio"
             name="@{field.name}"
             id="answer-@{answer.id}"
             value="@{answer.id}"
-            class="quiz__answer__input">
-        <label for="answer-@{answer.id}" class="quiz__answer-text">
+            class="atom-quiz__answer__input">
+        <label for="answer-@{answer.id}" class="atom-quiz__answer-text">
             @{answer.text}
         </label>
         @answer.imageMedia.map { image =>
@@ -62,14 +62,14 @@
 }
 
 @renderAnswerWithResponse(question: Question, answer: Answer, isAnswerCorrect: Option[Boolean], maybeUserAnswer: Option[Answer]) = {
-    <div class="quiz__answer @{ isAnswerCorrect.map(correct =>
-            if (correct == true) "quiz__answer--correct"
-            else if (correct == false) "quiz__answer--incorrect"
+    <div class="atom-quiz__answer @{ isAnswerCorrect.map(correct =>
+            if (correct == true) "atom-quiz__answer--correct"
+            else if (correct == false) "atom-quiz__answer--incorrect"
         ).getOrElse("")
         } @{
-            if(maybeUserAnswer.exists(_.equals(answer))) "quiz__answer--selected"
+            if(maybeUserAnswer.exists(_.equals(answer))) "atom-quiz__answer--selected"
         }">
-        <div class="quiz__answer-text">
+        <div class="atom-quiz__answer-text">
             @maybeUserAnswer.map { inputAnswer =>
                 @if(inputAnswer.equals(answer)) {
                     @isAnswerCorrect.map { correct =>
@@ -77,7 +77,7 @@
                             "tick"
                         } else {
                             "cross"
-                        }, "icon", List("quiz__answer__icon"))
+                        }, "icon", List("atom-quiz__answer__icon"))
                     }
                 }
             }
@@ -86,7 +86,7 @@
                 @isAnswerCorrect.map { correct =>
                     @answer.revealText.map { revealText =>
                         @if(correct && inputAnswer.equals(answer)) {
-                            <span class="quiz__answer__reveal-text">@revealText</span>
+                            <span class="atom-quiz__answer__reveal-text">@revealText</span>
                         }
                     }
                 }
@@ -99,20 +99,20 @@
 }
 
 @renderEndMessage(results: QuizResults) = {
-    <div class="quiz__end-message">
-        <div class="quiz__score-message">
+    <div class="atom-quiz__end-message">
+        <div class="atom-quiz__score-message">
             @if(results.isKnowledge) {
-                You got&#133; <span class="quiz__score">@results.knowledgeScore/@quiz.content.questions.size</span>
+                You got&#133; <span class="atom-quiz__score">@results.knowledgeScore/@quiz.content.questions.size</span>
             }
             @if(results.isPersonality) {
                 @results.resultBucket.map(_.description)
             }
         </div>
         @results.resultGroup.map { resultGroup =>
-            <div class="quiz__bucket-message">@resultGroup.title</div>
+            <div class="atom-quiz__bucket-message">@resultGroup.title</div>
         }
-        <div class="quiz__share">
-            <div class="quiz__cta">Challenge your friends</div>
+        <div class="atom-quiz__share">
+            <div class="atom-quiz__cta">Challenge your friends</div>
             @fragments.social(sharelinks)
         </div>
     </div>
