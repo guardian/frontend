@@ -1,6 +1,7 @@
 define([
     'common/utils/formInlineLabels',
     'bean',
+    'bonzo',
     'qwery',
     'common/utils/$',
     'common/utils/ajax-promise',
@@ -13,12 +14,16 @@ define([
     'common/utils/template',
     'common/views/svgs',
     'text!common/views/email/submissionResponse.html',
+    'text!common/views/ui/close-button.html',
     'common/utils/robust',
     'common/utils/detect',
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+    'common/modules/user-prefs',
+    'lodash/arrays/uniq'
 ], function (
     formInlineLabels,
     bean,
+    bonzo,
     qwery,
     $,
     ajax,
@@ -31,9 +36,12 @@ define([
     template,
     svgs,
     successHtml,
+    closeHtml,
     robust,
     detect,
-    Id
+    Id,
+    userPrefs,
+    uniq
 ) {
     var omniture;
 
@@ -92,18 +100,19 @@ define([
                 var $el = $(el),
                     freezeHeight = ui.freezeHeight($el, false),
                     freezeHeightReset = ui.freezeHeight($el, true),
-                    $formEl = $('.' + classes.form, el);
+                    $formEl = $('.' + classes.form, el),
+                    analytics = {
+                        formType: $formEl.data('email-form-type'),
+                        listId: $formEl.data('email-list-id'),
+                        signedIn: (Id.isUserLoggedIn()) ? 'user signed-in' : 'user not signed-in'
+                    };
 
-                formSubmission.bindSubmit($formEl, {
-                    formType: $formEl.data('email-form-type'),
-                    listId: $formEl.data('email-list-id'),
-                    signedIn: (Id.isUserLoggedIn()) ? 'user signed-in' : 'user not signed-in'
-                });
+                formSubmission.bindSubmit($formEl, analytics);
 
                 // If we're in an iframe, we should check whether we need to add a title and description
                 // from the data attributes on the iframe (eg: allowing us to set them from composer)
                 if (isIframed) {
-                    ui.updateForm(rootEl, $el);
+                    ui.updateForm(rootEl, $el, analytics);
                     ui.setTone($el);
                 }
 
@@ -114,6 +123,21 @@ define([
                     debounce((isIframed) ? ui.setIframeHeight(rootEl, freezeHeightReset) : freezeHeightReset, 500)
                 );
             });
+        },
+        removeAndRemember = function (e, data) {
+            var $iframe = data[0],
+                analytics = data[1],
+                currentListPrefs = userPrefs.get('email-sign-up-' + analytics.formType) || [];
+
+            currentListPrefs.push(analytics.listId + '');
+            userPrefs.set('email-sign-up-' + analytics.formType, uniq(currentListPrefs));
+
+            $iframe.remove();
+
+            getOmniture().then(function (omniture) {
+                omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | ' + analytics.signedIn + ' | form hidden');
+            });
+
         },
         formSubmission = {
             bindSubmit: function ($form, analytics) {
@@ -191,7 +215,7 @@ define([
             }
         },
         ui = {
-            updateForm: function (thisRootEl, el, opts) {
+            updateForm: function (thisRootEl, el, analytics, opts) {
                 var formData = $(thisRootEl).data(),
                     formTitle = (opts && opts.formTitle) || formData.formTitle || false,
                     formDescription = (opts && opts.formDescription) || formData.formDescription || false,
@@ -199,7 +223,8 @@ define([
                     formSuccessHeadline = (opts && opts.formSuccessHeadline) || formData.formSuccessHeadline,
                     formSuccessDesc = (opts && opts.formSuccessDesc) || formData.formSuccessDesc,
                     removeComforter = (opts && opts.removeComforter) || formData.removeComforter || false,
-                    formModClass = (opts && opts.formModClass) || formData.formModClass || false;
+                    formModClass = (opts && opts.formModClass) || formData.formModClass || false,
+                    formCloseButton = (opts && opts.formCloseButton) || formData.formCloseButton || false;
 
                 Id.getUserFromApi(function (userFromId) {
                     ui.updateFormForLoggedIn(userFromId, el);
@@ -220,6 +245,17 @@ define([
 
                     if (formModClass) {
                         $(el).addClass('email-sub--' + formModClass);
+                    }
+
+                    if (formCloseButton) {
+                        var closeButtonTemplate = {
+                            closeIcon: svgs('closeCentralIcon')
+                        },
+                        closeButtonHtml = template(closeHtml, closeButtonTemplate);
+
+                        el.append(closeButtonHtml);
+
+                        bean.on(el[0], 'click', '.js-email-sub--close', removeAndRemember, [thisRootEl, analytics]);
                     }
                 });
 

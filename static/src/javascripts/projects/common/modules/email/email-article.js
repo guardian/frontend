@@ -16,7 +16,8 @@ define([
     'common/utils/template',
     'common/modules/article/space-filler',
     'common/modules/analytics/omniture',
-    'common/utils/robust'
+    'common/utils/robust',
+    'common/modules/user-prefs'
 ], function (
     $,
     bean,
@@ -35,7 +36,8 @@ define([
     template,
     spaceFiller,
     omniture,
-    robust
+    robust,
+    userPrefs
 ) {
 
     var listConfigs = {
@@ -138,9 +140,16 @@ define([
         },
         listCanRun = function (listConfig) {
             // Check our lists canRun method and make sure that the user isn't already subscribed to this email
-            if (listConfig.canRun && canRunList[listConfig.canRun]() && !contains(userListSubscriptions, listConfig.listId)) {
+            if (listConfig.canRun &&
+                canRunList[listConfig.canRun]() &&
+                !contains(userListSubscriptions, listConfig.listId) &&
+                !userHasRemoved(listConfig.listId, 'article')) {
                 return listConfig;
             }
+        },
+        userHasRemoved = function (id, formType) {
+            var currentListPrefs = userPrefs.get('email-sign-up-' + formType);
+            return currentListPrefs && currentListPrefs.indexOf(id) > -1;
         },
         addListToPage = function (listConfig) {
             if (listConfig) {
