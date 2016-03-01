@@ -1,8 +1,9 @@
 @import _root_.quiz.form.{QuizResults, playForm}
 @import _root_.quiz.{postUrl, Question, Answer}
 @import views.html.fragments.inlineSvg
+@import layout.ContentWidths.BodyMedia
 
-@(quiz: model.content.Quiz, maybeResults: Option[QuizResults], showResults: Boolean, sharelinks: Seq[model.ShareLink])
+@(quiz: model.content.Quiz, maybeResults: Option[QuizResults], showResults: Boolean, sharelinks: Seq[model.ShareLink])(implicit request: RequestHeader)
 
 @if(showResults) {
     <h2>@quiz.title</h2>
@@ -28,6 +29,10 @@
           }
         }">
         <legend class="quiz__question-text">@question.text</legend>
+
+        @question.imageMedia.map { image =>
+            @fragments.img(image, widthsByBreakpoint = BodyMedia.inline)
+        }
 
         @question.answers.map( answer => {
             if(showResults) {
