@@ -125,14 +125,14 @@ define([
             });
         },
         removeAndRemember = function (e, data) {
-            var $iframe = data[0],
+            var iframe = data[0],
                 analytics = data[1],
                 currentListPrefs = userPrefs.get('email-sign-up-' + analytics.formType) || [];
 
             currentListPrefs.push(analytics.listId + '');
             userPrefs.set('email-sign-up-' + analytics.formType, uniq(currentListPrefs));
 
-            $iframe.remove();
+            $(iframe).remove();
 
             getOmniture().then(function (omniture) {
                 omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | ' + analytics.signedIn + ' | form hidden');
