@@ -1,10 +1,9 @@
 @(containerType: slices.CommercialContainerType, container: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit request: RequestHeader)
 @import common.{Edition, LinkTo}
-@import conf.switches.Switches
 @import layout.{ColumnAndCards, ContentCard, FaciaCardAndIndex}
 @import model.InlineImage
 @import slices.{MultiCampaign, SingleCampaign}
-@import views.html.fragments.containers.facia_cards.{showMore, showMoreButton, standardContainer}
+@import views.html.fragments.containers.facia_cards.{showMore, showMoreButton}
 @import views.html.fragments.inlineSvg
 @import views.html.fragments.items.elements.facia_cards.{itemImage, title}
 @import views.support.{Commercial, RemoveOuterParaHtml, RenderClasses}
@@ -37,7 +36,7 @@
                         <div class="commercial__body">
                             @for(layout <- container.containerLayout) {
                                 @for(slice <- layout.slices) {
-                                    <ul class="lineitems l-row l-row--cols-@math.min(Commercial.container.numberOfItems(container), 4)">
+                                    <ul class="lineitems l-row l-row--cols-@math.min(Commercial.container.numberOfContentCards(container), 4)">
                                     @for(ColumnAndCards(_, cards) <- slice.columns) {
                                         @for(FaciaCardAndIndex(_, card, hideUpTo) <- cards) {
                                             @card match {
@@ -106,7 +105,7 @@
                             </a>
                         </div>
                         <div class="commercial__body">
-                            @defining(Commercial.containerCard.mkCardsWithSponsorDataAttributes(container, 4)) { items =>
+                            @defining(Commercial.container.mkCardsWithBrandedContentDataAttributes(container, 4)) { items =>
                                 <ul class="lineitems l-row l-row--cols-@math.min(items.length, 4)">
                                     @*
                                     Taking first 4 cards as a temporary fix until container can show a 'more' CTA

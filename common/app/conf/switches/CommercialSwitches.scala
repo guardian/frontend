@@ -235,7 +235,7 @@ trait CommercialSwitches {
     "outbrain-on-amp",
     "Show an Outbrain component on amp pages",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 2),
+    sellByDate = new LocalDate(2016, 4, 5),
     exposeClientSide = false
   )
 
