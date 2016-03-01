@@ -91,7 +91,7 @@ object NotificationsController extends Controller with ExecutionContexts with Lo
   curl --header "Authorization: key=AIzaSyBnqI_GGFus_LVy80sMo-Ngo_t3X1dDb4w" --header "Content-Type: application/json"
   https://android.googleapis.com/gcm/send -d '{"to": "/topics/test", "data": {"message": "This is a GCM Topic Message!" } }'
 */
-
+  //Blat
   def sendMessageToTopic() = Action.async { implicit request =>
     val messageData = Json.obj("to" -> "/topics/guardiantest", "data" -> Json.obj("message" -> "This is a GCM topic message"))
     val sendResponse = WS.url(gcmSendApi).withHeaders(headers: _*).post(messageData)
@@ -117,21 +117,6 @@ object NotificationsController extends Controller with ExecutionContexts with Lo
       }
     )
   }
-
-/*
-  def getMessage(gcmBrowserId: String) = Action.async { implicit request =>
-    println(s"get: ${gcmBrowserId}")
-    LatestNotificationsDynamoDbStore.getLatestMessage(gcmBrowserId).flatMap {
-      attributes =>
-        attributes.get("messages").map {
-          messages =>
-            println("wotcha")
-            println(messages.toString)
-        }
-        Future.successful(Ok)
-    }
-  }
-*/
 
   def saveARedlisMessage() = Action.async { implicit request =>
 
