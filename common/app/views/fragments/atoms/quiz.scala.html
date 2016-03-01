@@ -46,18 +46,27 @@
 }
 
 @renderAnswer(question: Question, answer: Answer, field: play.api.data.Field) = {
-    <div class="atom-quiz__answer">
+    <div class="atom-quiz__answer @{if (answer.imageMedia.isEmpty) {
+            "atom-quiz__answer--text"
+        } else {
+            "atom-quiz__answer--image"
+        }}">
         <input type="radio"
             name="@{field.name}"
             id="answer-@{answer.id}"
             value="@{answer.id}"
             class="atom-quiz__answer__input">
-        <label for="answer-@{answer.id}" class="atom-quiz__answer-text">
-            @{answer.text}
-        </label>
+        <label for="answer-@{answer.id}" class="@{if (answer.imageMedia.isEmpty) {
+            "atom-quiz__answer__text"
+        } else {
+            "atom-quiz__answer__image"
+        }}">
         @answer.imageMedia.map { image =>
             @fragments.img(image, widthsByBreakpoint = BodyMedia.inline)
+            }.getOrElse {
+                @{answer.text}
         }
+        </label>
     </div>
 }
 
@@ -68,8 +77,22 @@
         ).getOrElse("")
         } @{
             if(maybeUserAnswer.exists(_.equals(answer))) "atom-quiz__answer--selected"
-        }">
-        <div class="atom-quiz__answer-text">
+        } @{
+            if (answer.imageMedia.isEmpty) {
+            "atom-quiz__answer--text"
+        } else {
+            "atom-quiz__answer--image"
+        }}">
+        <div class="@{if (answer.imageMedia.isEmpty) {
+            "atom-quiz__answer__text"
+        } else {
+            "atom-quiz__answer__image"
+        }}">
+            @answer.imageMedia.map { image =>
+                @fragments.img(image, widthsByBreakpoint = BodyMedia.inline)
+            }.getOrElse {
+                @{answer.text}
+            }
             @maybeUserAnswer.map { inputAnswer =>
                 @if(inputAnswer.equals(answer)) {
                     @isAnswerCorrect.map { correct =>
@@ -81,7 +104,6 @@
                     }
                 }
             }
-            @{answer.text}
             @maybeUserAnswer.map { inputAnswer =>
                 @isAnswerCorrect.map { correct =>
                     @answer.revealText.map { revealText =>
@@ -90,9 +112,6 @@
                         }
                     }
                 }
-            }
-            @answer.imageMedia.map { image =>
-                @fragments.img(image, widthsByBreakpoint = BodyMedia.inline)
             }
         </div>
     </div>
