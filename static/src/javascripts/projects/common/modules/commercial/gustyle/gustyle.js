@@ -1,6 +1,7 @@
 define([
     'fastdom',
     'common/utils/$',
+    'common/utils/config',
     'common/utils/template',
     'common/modules/ui/toggles',
     'common/views/svgs',
@@ -9,6 +10,7 @@ define([
 ], function (
     fastdom,
     $,
+    config,
     template,
     Toggles,
     svgs,
@@ -33,12 +35,19 @@ define([
             };
 
         fastdom.write(function () {
-            this.$slot.addClass('gu-style');
+            var classList = 'gu-style' + ((this.isContentPage()) ? ' gu-style--unboxed' : '');
+
+            this.$slot.addClass(classList);
             this.$slot.prepend($.create(template(labelTpl, { data: merge(templateOptions) })));
 
             toggles = new Toggles(this.$slot[0]);
             toggles.init();
         }.bind(this));
     };
+
+    Gustyle.prototype.isContentPage = function () {
+        return !!config.page.isContent;
+    };
+
     return Gustyle;
 });
