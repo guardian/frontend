@@ -1,157 +1,156 @@
-
-$accessibility-outline: #ffbf47;
-$correct-answer--background: #aedfb8;
-$user-response-was-right: #43b347;
-$user-response-was-wrong: #bb001a;
-
 .quiz {
-    margin: 0 0 $gs-baseline;
-    padding: 0;
-    list-style: decimal inside;
+    counter-reset: quiz-question;
+    margin: 0; // override pasteup
 }
 
 .quiz__question {
-    margin-bottom: $gs-baseline * 3;
+    margin-bottom: $gs-baseline * 2;
+    list-style-type: none;
     border: 0;
-    margin-left: 0;
-    margin-right: 0;
     padding: 0;
-    font-weight: bold;
 }
 
-.quiz__question__rows {
+.quiz__question-text {
     margin-bottom: $gs-baseline;
-}
+    display: block;
 
-.quiz__answer {
-    display: flex;
-}
-
-.quiz__answer__label {
-    position: relative;
-    display: inline-block;
-    text-align: left;
-    outline: none;
-    color: colour(neutral-1);
-    background-color: colour(neutral-8);
-    border: 1px solid colour(neutral-8);
-    padding: $gs-baseline $gs-gutter * 1.5;
-    margin: $gs-baseline / 4 0;
-    flex: 1 1 50%;
-}
-
-.quiz--questions {
-
-    .quiz__answer__label {
-        color: colour(neutral-2);
-    }
-
-    .quiz__answer .quiz__answer__label:hover {
-        border-color: colour(neutral-1);
-    }
-
-    .quiz__answer--focussed .quiz__answer__label {
-        outline: $gs-baseline/4 solid $accessibility-outline;
-    }
-
-    .quiz__answer--checked .quiz__answer__label {
-        border-color: colour(neutral-1);
-        background: colour(neutral-8);
+    &:before {
+        counter-increment: quiz-question;
+        content: counter(quiz-question) '.';
+        float: left;
+        padding-right: .5ch;
     }
 }
 
-.quiz--results {
-
-    .quiz__answer {
-        opacity: .6;
-        font-weight: normal;
-    }
-
-    .quiz__answer--selected {
-        opacity: 1;
-    }
-}
-
-.quiz--results.quiz--knowledge {
-
-    .quiz__answer--correct .quiz__answer__label {
-        background-color: $correct-answer--background;
-    }
-
-    .quiz__answer--selected.quiz__answer--correct .quiz__answer__label {
-        background-color: $user-response-was-right;
-        font-weight: bold;
-        color: colour(neutral-7);
-    }
-
-    .quiz__answer--selected.quiz__answer--incorrect .quiz__answer__label {
-        background-color: $user-response-was-wrong;
-        font-weight: bold;
-        color: colour(neutral-7);
-    }
-}
-
-.quiz--results.quiz--personality {
-
-    .quiz__answer--selected .quiz__answer__label {
-        background: $correct-answer--background;
-    }
+.quiz__answer + .quiz__answer {
+    margin-top: $gs-baseline * .5;
 }
 
 .quiz__answer__input {
-    float: none;
+    @include u-h;
 }
 
-.quiz__answer__reveal-text {
+.quiz__answer-text {
     display: block;
-    font-size: 12px;
-    padding: .5em 0em;
+    background-color: colour(neutral-8);
+    padding: $gs-baseline $gs-gutter;
+    transition: background-color 40ms;
+    position: relative;
+
+    .quiz--questions & {
+        cursor: pointer;
+    }
+
+    // show a fake, stylised radio button on personality quiz answers
+    .quiz--questions.quiz--personality &:before {
+        content: '';
+        height: 1em;
+        width: 1em;
+        border-radius: 1em;
+        display: inline-block;
+        position: absolute;
+        left: 1em;
+        top: 1em;
+        box-shadow: 0px 0px 0px 1px colour(neutral-3);
+        transition: background-color 40ms, box-shadow 20ms;
+    }
+
+    .quiz--questions &:hover {
+        background-color: colour(neutral-4);
+    }
+
+    .quiz--questions &:hover:before {
+        background-color: colour(neutral-2);
+        box-shadow: 0px 0px 0px 1px colour(neutral-2),
+            inset 0px 0px 0px 3px colour(neutral-4);
+    }
+
+    :checked + & {
+        background-color: colour(comment-main-2);
+        cursor: default;
+    }
+
+    :checked + &:before {
+        background-color: colour(neutral-1);
+        box-shadow: 0px 0px 0px 1px colour(neutral-1),
+            inset 0px 0px 0px 3px colour(comment-main-2);
+    }
 }
 
 .quiz__answer__icon {
     position: absolute;
-    left: 10px;
-    top: 5px;
-    font-size: 26px;
-    color: colour(neutral-8);
+    left: 1em;
+    top: .9em;
 
     svg {
-        width: $gs-baseline;
-        height: $gs-baseline;
-        vertical-align: middle;
+        height: 1em;
+        width: 1em;
+    }
+}
+
+.quiz__answer--correct {
+    .quiz__answer-text {
+        color: #ffffff;
+        background-color: fade-out(colour(quiz-correct), .4);
+    }
+
+    &.quiz__answer--selected {
+        color: #ffffff;
+        background-color: colour(quiz-correct);
+    }
+}
+
+.quiz__answer--incorrect.quiz__answer--selected {
+    .quiz__answer-text {
+        color: #ffffff;
+        background-color: colour(quiz-incorrect);
+    }
+}
+
+.quiz__answer__reveal-text {
+    display: block;
+    color: colour(neutral-1);
+    margin-top: $gs-baseline;
+    @include fs-bodyCopy(1);
+
+    .quiz__answer--selected & {
+        color: #ffffff;
+    }
+}
+
+.quiz--personality,
+.quiz__answer--correct,
+.quiz__answer--incorrect {
+    .quiz__answer-text {
+        padding-left: 3em;
     }
 }
 
 .quiz__end-message {
-    border-top: 1px solid colour(news-support-1);
+    border-top: 1px solid colour(neutral-4);
     background-color: colour(neutral-8);
-    padding: $gs-baseline $gs-gutter/2;
+    padding: $gs-baseline $gs-gutter;
 }
 
-.quiz__score-message {
-    @include fs-bodyCopy(3);
+.quiz__score-message,
+.quiz__bucket-message {
+    color: colour(neutral-2);
 }
 
 .quiz__score {
-    @include fs-headline(9, true);
-    color: colour(news-main-1);
-    margin-left: $gs-gutter/5;
-    vertical-align: middle;
-}
-
-.quiz__bucket-message {
-    margin-top: $gs-baseline/2;
-    margin-bottom: $gs-baseline/2;
+    @include fs-headline(9);
+    font-size: 72px;
+    line-height: 78px;
+    color: colour(guardian-brand);
+    display: block;
 }
 
 .quiz__share {
-    width: 100%;
-    // Clearfix floated children
-    overflow: hidden;
+    border-top: 1px solid colour(neutral-4);
+    padding-top: $gs-baseline;
+    margin-top: $gs-baseline;
 }
 
-.quiz__share__cta {
-    @include fs-bodyCopy(3);
-    padding-top: $gs-baseline;
+.quiz__cta {
     padding-bottom: $gs-baseline;
 }
