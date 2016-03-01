@@ -48,7 +48,7 @@
     vertical-align: middle;
 
     &:hover {
-        background: darken(colour(guardian-brand), 10%);
+        background: colour(guardian-brand-dark);
         text-decoration: none;
     }
 
@@ -95,29 +95,29 @@
         height: 14px;
         top: 11px;
     }
-}
 
-.link-navigation__link--secondary--newer {
-    margin-right: $gs-gutter / 4;
-    padding-left: $gs-gutter * 1.5;
+    &--newer {
+        margin-right: $gs-gutter / 4;
+        padding-left: $gs-gutter * 1.5;
 
-    svg {
-        left: $gs-gutter / 2;
+        svg {
+            left: $gs-gutter / 2;
+        }
+        @include mq(mobileLandscape) {
+            margin-right: $gs-gutter / 2;
+        }
     }
-    @include mq(mobileLandscape) {
-        margin-right: $gs-gutter / 2;
-    }
-}
 
-.liveblog-navigation__link--secondary--older {
-    margin-left: $gs-gutter / 4;
-    padding-right: $gs-gutter * 1.5;
+    &--older {
+        margin-left: $gs-gutter / 4;
+        padding-right: $gs-gutter * 1.5;
 
-    svg {
-        right: $gs-gutter / 2;
-    }
-    @include mq(mobileLandscape) {
-        margin-left: $gs-gutter / 2;
+        svg {
+            right: $gs-gutter / 2;
+        }
+        @include mq(mobileLandscape) {
+            margin-left: $gs-gutter / 2;
+        }
     }
 }
 
@@ -127,9 +127,17 @@
         padding: 0;
 
         svg {
-            top: 10px;
-            width: 16px;
-            height: 16px;
+            top: 9px;
+            width: 18px;
+            height: 18px;
+        }
+
+        &--newer svg {
+            left: 8px;
+        }
+
+        &--older svg {
+            right: 8px;
         }
     }
 }

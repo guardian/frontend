@@ -45,7 +45,7 @@
                 href="/@{article.content.metadata.id}@oldest.suffix"
                 title="Go to page @oldest.pageNumber"
             }
-            class="liveblog-navigation__link link-navigation__link--secondary liveblog-navigation__link--secondary--older @if(pagination.oldest.isEmpty) { liveblog-navigation__link--disabled }"
+            class="liveblog-navigation__link link-navigation__link--secondary link-navigation__link--secondary--older @if(pagination.oldest.isEmpty) { liveblog-navigation__link--disabled }"
             data-link-name="oldest page">
                 Oldest
                 @fragments.inlineSvg("arrow-right-double", "icon", List("link-navigation__link--secondary--older__icon"))
@@ -53,4 +53,3 @@
         </div>
     </div>
 }
-
