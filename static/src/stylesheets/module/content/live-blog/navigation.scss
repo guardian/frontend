@@ -39,11 +39,13 @@
 
 .liveblog-navigation__link {
     display: inline-block;
+    position: relative;
     color: #ffffff;
     background: colour(guardian-brand);
     height: $gs-baseline * 3;
-    line-height: $gs-baseline * 3;
+    line-height: 38px;
     font-weight: bold;
+    vertical-align: middle;
 
     &:hover {
         background: darken(colour(guardian-brand), 10%);
@@ -52,36 +54,30 @@
 
     svg {
         fill: #ffffff;
-        display: block;
-    }
-
-    .inline-icon {
-        vertical-align: middle;
-        display: inline-block;
+        position: absolute;
     }
 
     @include mq($until: mobileLandscape) {
         font-size: 0;
     }
-
 }
 
 .liveblog-navigation__link--primary {
     width: $gs-baseline * 3;
     border-radius: 100%;
-    text-align: center;
 
     svg {
-        width: 21px;
-        height: 21px;
+        top: 7px;
+        width: 22px;
+        height: 22px;
     }
 
-    .inline-chevron-right {
-        margin-right: -1px;
+    .inline-chevron-right svg{
+        right: 6px;
     }
 
-    .inline-arrow-left {
-        margin-left: -1px;
+    .inline-arrow-left svg{
+        left: 6px;
     }
 }
 
@@ -93,17 +89,11 @@
 .link-navigation__link--secondary {
     border-radius: 21px;
     padding: 0 $gs-gutter / 2;
-    position: relative;
-
-    .inline-icon {
-        position: absolute;
-        fill: currentColor;
-        top: $gs-baseline - 1px;
-    }
 
     svg {
-        width: 13px;
-        height: 13px;
+        width: 14px;
+        height: 14px;
+        top: 11px;
     }
 }
 
@@ -111,7 +101,7 @@
     margin-right: $gs-gutter / 4;
     padding-left: $gs-gutter * 1.5;
 
-    .inline-icon {
+    svg {
         left: $gs-gutter / 2;
     }
     @include mq(mobileLandscape) {
@@ -123,7 +113,7 @@
     margin-left: $gs-gutter / 4;
     padding-right: $gs-gutter * 1.5;
 
-    .inline-icon {
+    svg {
         right: $gs-gutter / 2;
     }
     @include mq(mobileLandscape) {
@@ -136,11 +126,8 @@
         width: $gs-baseline * 3;
         padding: 0;
 
-        .inline-icon {
-            top: 10px;
-        }
-
         svg {
+            top: 10px;
             width: 16px;
             height: 16px;
         }
@@ -149,16 +136,11 @@
 
 .liveblog-navigation__link--disabled {
     cursor: default;
-    color: #ffffff;
     background: colour(neutral-6);
 
     &:hover,
     &:active  {
         color: #ffffff;
         background: colour(neutral-6);
-    }
-
-    svg {
-        fill: #ffffff;
     }
 }
