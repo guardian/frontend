@@ -15,6 +15,19 @@ import play.api.libs.json.{JsBoolean, JsString, JsValue}
 
 object Commercial {
 
+  def mkEmpty(tags: Tags, metaData: MetaData, isInappropriateForSponsorship: Boolean) = Commercial(
+    tags,
+    metaData,
+    isInappropriateForSponsorship,
+    sponsor = None,
+    sponsorshipTag = None,
+    isFoundationSupported = false,
+    isAdvertisementFeature = false,
+    hasMultipleSponsors = false,
+    hasMultipleFeatureAdvertisers = false,
+    hasInlineMerchandise = DfpAgent.hasInlineMerchandise(tags.tags)
+  )
+
   private def make(metadata: MetaData, tags: Tags, maybeApiContent: Option[contentapi.Content]): model.Commercial = {
 
     val section = Some(metadata.section)
@@ -28,6 +41,7 @@ object Commercial {
         tags,
         metadata,
         isInappropriateForSponsorship,
+        sponsor = dfpTag.lineItems.headOption.flatMap(_.sponsor),
         sponsorshipTag = Some(tagPair.capiTag),
         isFoundationSupported = dfpTag.paidForType == FoundationFunded,
         isAdvertisementFeature = dfpTag.paidForType == AdvertisementFeature,
@@ -35,17 +49,7 @@ object Commercial {
         hasMultipleFeatureAdvertisers = DfpAgent.hasMultipleFeatureAdvertisers(tags.tags),
         hasInlineMerchandise = DfpAgent.hasInlineMerchandise(tags.tags)
       )
-    } getOrElse model.Commercial(
-      tags,
-      metadata,
-      isInappropriateForSponsorship,
-      sponsorshipTag = None,
-      isFoundationSupported = false,
-      isAdvertisementFeature = false,
-      hasMultipleSponsors = false,
-      hasMultipleFeatureAdvertisers = false,
-      hasInlineMerchandise = DfpAgent.hasInlineMerchandise(tags.tags)
-    )
+    } getOrElse mkEmpty(tags, metadata, isInappropriateForSponsorship)
   }
 
   def make(metadata: MetaData, tags: Tags, apiContent: contentapi.Content): model.Commercial = {
@@ -62,6 +66,7 @@ object Commercial {
       tags = Tags(Nil),
       metadata = section.metadata,
       isInappropriateForSponsorship = false,
+      sponsor = None,
       sponsorshipTag = None,
       isFoundationSupported = keywordSponsorship.isFoundationSupported,
       isAdvertisementFeature = keywordSponsorship.isAdvertisementFeature,
@@ -76,6 +81,7 @@ final case class Commercial(
   tags: Tags,
   metadata: MetaData,
   isInappropriateForSponsorship: Boolean,
+  sponsor: Option[String],
   sponsorshipTag: Option[Tag],
   isFoundationSupported: Boolean,
   isAdvertisementFeature: Boolean,
@@ -102,7 +108,13 @@ final case class Commercial(
   def javascriptConfig: Map[String, JsValue] = Map(
     ("isAdvertisementFeature", JsBoolean(isAdvertisementFeature))
   )
+
+  private def tagId(p: Tag => Boolean): Option[String] = sponsorshipTag filter p map (_.id)
+
+  lazy val seriesId: Option[String] = tagId(_.isSeries)
+  lazy val keywordId: Option[String] = tagId(_.isKeyword)
 }
+
 /**
  * MetaData represents a page on the site, whether facia or content
  */
