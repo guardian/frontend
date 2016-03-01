@@ -4,10 +4,7 @@
     @include clearfix;
     // If we do support flexbox
     display: flex;
-    @include fs-textSans(2);
-    @include mq(mobileLandscape) {
-        @include fs-textSans(5);
-    }
+    @include fs-textSans(3);
 }
 
 .liveblog-navigation__detail {
@@ -42,10 +39,20 @@
 
 .liveblog-navigation__link {
     display: inline-block;
+    color: #ffffff;
+    background: colour(guardian-brand);
+    height: $gs-baseline * 3;
+    line-height: $gs-baseline * 3;
+    font-weight: bold;
 
-    // Override user-agent styles for <a>
     &:hover {
+        background: darken(colour(guardian-brand), 10%);
         text-decoration: none;
+    }
+
+    svg {
+        fill: #ffffff;
+        display: block;
     }
 
     .inline-icon {
@@ -53,40 +60,45 @@
         display: inline-block;
     }
 
-    svg {
-        display: block;
+    @include mq($until: mobileLandscape) {
+        font-size: 0;
     }
+
 }
 
 .liveblog-navigation__link--primary {
-    padding: $gs-gutter / 2;
-    background: colour(guardian-brand-dark);
+    width: $gs-baseline * 3;
     border-radius: 100%;
-
-    .inline-icon {
-        fill: #ffffff;
-    }
+    text-align: center;
 
     svg {
         width: 21px;
         height: 21px;
     }
+
+    .inline-chevron-right {
+        margin-right: -1px;
+    }
+
+    .inline-arrow-left {
+        margin-left: -1px;
+    }
 }
 
-.liveblog-navigation__link--primary--disabled {
-    background: colour(neutral-5);
+.liveblog-navigation__link--primary--disabled,
+.liveblog-navigation__link--primary--disabled:hover {
+    background: colour(neutral-6);
 }
 
 .link-navigation__link--secondary {
-    // Increase target area
-    padding-top: $gs-gutter / 2;
-    padding-bottom: $gs-gutter / 2;
-    // Override user-agent styles for <a>
-    color: inherit;
-    font-weight: bold;
+    border-radius: 21px;
+    padding: 0 $gs-gutter / 2;
+    position: relative;
 
     .inline-icon {
+        position: absolute;
         fill: currentColor;
+        top: $gs-baseline - 1px;
     }
 
     svg {
@@ -97,27 +109,56 @@
 
 .link-navigation__link--secondary--newer {
     margin-right: $gs-gutter / 4;
+    padding-left: $gs-gutter * 1.5;
+
+    .inline-icon {
+        left: $gs-gutter / 2;
+    }
     @include mq(mobileLandscape) {
         margin-right: $gs-gutter / 2;
     }
 }
 
-.link-navigation__link--secondary--newer__icon {
-    margin-right: $gs-gutter / 4;
-}
-
 .liveblog-navigation__link--secondary--older {
     margin-left: $gs-gutter / 4;
+    padding-right: $gs-gutter * 1.5;
+
+    .inline-icon {
+        right: $gs-gutter / 2;
+    }
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter / 2;
     }
 }
 
-.link-navigation__link--secondary--older__icon {
-    margin-left: $gs-gutter / 4;
+@include mq($until: mobileLandscape) {
+    .link-navigation__link--secondary {
+        width: $gs-baseline * 3;
+        padding: 0;
+
+        .inline-icon {
+            top: 10px;
+        }
+
+        svg {
+            width: 16px;
+            height: 16px;
+        }
+    }
 }
 
 .liveblog-navigation__link--disabled {
     cursor: default;
-    color: colour(neutral-3);
+    color: #ffffff;
+    background: colour(neutral-6);
+
+    &:hover,
+    &:active  {
+        color: #ffffff;
+        background: colour(neutral-6);
+    }
+
+    svg {
+        fill: #ffffff;
+    }
 }
