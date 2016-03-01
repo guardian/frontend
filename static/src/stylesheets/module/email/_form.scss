@@ -176,12 +176,12 @@
 }
 
 .email-sub--close-icon svg {
-    fill: darken(guss-colour(neutral-2, $pasteup-palette), 10%);
+    fill: darken(colour(neutral-2), 10%);
 
     &:hover,
     &:focus {
         cursor: pointer;
-        fill: guss-colour(neutral-2, $pasteup-palette);
+        fill: colour(neutral-2);
     }
 }
 
