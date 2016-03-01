@@ -55,6 +55,9 @@
         <label for="answer-@{answer.id}" class="quiz__answer-text">
             @{answer.text}
         </label>
+        @answer.imageMedia.map { image =>
+            @fragments.img(image, widthsByBreakpoint = BodyMedia.inline)
+        }
     </div>
 }
 
@@ -87,6 +90,9 @@
                         }
                     }
                 }
+            }
+            @answer.imageMedia.map { image =>
+                @fragments.img(image, widthsByBreakpoint = BodyMedia.inline)
             }
         </div>
     </div>
