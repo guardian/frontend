@@ -5,6 +5,7 @@ import model.content._
 import model.facia.PressedCollection
 import model.liveblog.{BlockAttributes, BodyBlock}
 import model.pressed._
+import quiz.{Image => _, _}
 import org.joda.time.DateTime
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
@@ -178,6 +179,7 @@ object ContentTypeFormat {
   implicit val tagPropertiesFormat = Json.format[TagProperties]
   implicit val tagFormat = Json.format[Tag]
   val tagsFormat = Json.format[Tags]
+  implicit val imageMediaFormat = ElementsFormat.imageMediaFormat
   implicit val answerFormat = Json.format[Answer]
   implicit val questionFormat = Json.format[Question]
   implicit val quizResultBucketFormat = Json.format[ResultBucket]
@@ -191,7 +193,6 @@ object ContentTypeFormat {
   val elementsFormat = ElementsFormat.format
   implicit val tweetFormat = Json.format[Tweet]
   implicit val cardStyleFormat = CardStyleFormat
-  implicit val imageMediaFormat = ElementsFormat.imageMediaFormat
   private val commercialJsonFormat = Json.format[JsonCommercial]
   private val trailJsonFormat = Json.format[JsonTrail]
 
