@@ -19,7 +19,8 @@ body {
 
 
 @if $old-ie == false {
-    #page {
+    html,
+    body {
         overflow-x: hidden;
     }
 }

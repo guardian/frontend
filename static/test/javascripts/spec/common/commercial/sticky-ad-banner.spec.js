@@ -12,7 +12,7 @@ define([
             id: 'sticky-ad-banner-test',
             fixtures: [
                 '<div class="ad-banner"><div class="ad-banner-inner"></div></div>' +
-                '<div class="page"><div class="header"></div></div>'
+                '<div class="header"></div>'
             ]
         };
 
@@ -25,7 +25,6 @@ define([
                 $adBanner: $('.ad-banner'),
                 $adBannerInner: $('.ad-banner-inner'),
                 $header: $('.header'),
-                $page: $('.page'),
                 // We can't scroll the Phantom window for some reason, so
                 // we mock window instead
                 window: { scrollTo: sinon.spy() }
@@ -48,7 +47,7 @@ define([
 
             expect(elements.$adBanner.css('position')).toEqual('fixed');
             expect(elements.$adBanner.css('height')).toEqual(state.adHeight + 'px');
-            expect(elements.$page.css('transform')).toEqual('translateY(' + state.adHeight + 'px)');
+            expect(elements.$header.css('margin-top')).toEqual(state.adHeight + 'px');
         });
 
         it('when the user has scrolled past the sticky (fixed) zone, it should begin pushing the ad banner up', function () {
@@ -79,7 +78,7 @@ define([
                 // Stop the ad from overflowing while we transition
                 expect(elements.$adBanner.css('overflow')).toEqual('hidden');
                 expect(elements.$adBanner.css('transition')).toEqual('height 1s cubic-bezier(0, 0, 0, .985)');
-                expect(elements.$page.css('transition')).toEqual('transform 1s cubic-bezier(0, 0, 0, .985)');
+                expect(elements.$header.css('transition')).toEqual('margin-top 1s cubic-bezier(0, 0, 0, .985)');
 
                 expect(elements.window.scrollTo.callCount).toEqual(0);
             });

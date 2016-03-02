@@ -34,70 +34,65 @@
                 @if(showAdverts) {
                     @fragments.commercial.topBanner(page.metadata, edition)
                 }
+
+                @fragments.header(page)
+
+                @if(adBelowNav) {
+                    @fragments.commercial.topBannerBelowNav()
+                }
+
+                @if(showAdverts) {
+                    @fragments.commercial.topBannerMobile(page.metadata, edition)
+                }
+
+                <div id="maincontent" tabindex="0"></div>
+            } else {
+                @fragments.header(page)
             }
         }
 
-        <div id="page">
-            @if(!(page.metadata.hasHeader && getContent(page).exists(_.tags.isArticle))) {
-                @fragments.header(page)
-                @if(!mvt.CMTopBannerPosition.isParticipating) {
-                    @if(adBelowNav) {
-                        @fragments.commercial.topBannerBelowNav()
-                    }
+        @if(BreakingNewsSwitch.isSwitchedOn) {
+            <div class="js-breaking-news-placeholder breaking-news breaking-news--hidden breaking-news--fade-in"
+            data-link-name="breaking news"
+            data-component="breaking-news"></div>
+        }
 
-                    @if(showAdverts) {
-                        @fragments.commercial.topBannerMobile(page.metadata, edition)
-                    }
-                }
-            }
+        @body
 
-            <!-- Used for skipping to content -->
-            <div id="maincontent" tabindex="0"></div>
+        @**********************
+         24x7 support training
 
-            @if(BreakingNewsSwitch.isSwitchedOn) {
-                <div class="js-breaking-news-placeholder breaking-news breaking-news--hidden breaking-news--fade-in"
-                data-link-name="breaking news"
-                data-component="breaking-news"></div>
-            }
+         We intentionally modified the displayed section on this specific article.
+         This is a failure that trainees have to diagnose in frontend.
+        ************************@
+        @if(request.path == "/info/2015/mar/11/-removed-article") {
+            <script type="text/javascript">
+                document.querySelectorAll('[data-link-name="article section"]')[0].textContent = "Culture"
+                @***
+                 The following is a misdirection to let people think damned CAPI is causing the issue
+                ***@
+                console.log("Error connecting to content API to retrieve section: 503")
+                console.log("Defaulting to Culture")
+            </script>
+        }
 
-            @body
+        @fragments.footer(page)
 
-            @**********************
-             24x7 support training
+        @if(NonBlockingOmniture.isSwitchedOn) {
 
-             We intentionally modified the displayed section on this specific article.
-             This is a failure that trainees have to diagnose in frontend.
-            ************************@
-            @if(request.path == "/info/2015/mar/11/-removed-article") {
-                <script type="text/javascript">
-                    document.querySelectorAll('[data-link-name="article section"]')[0].textContent = "Culture"
-                    @***
-                     The following is a misdirection to let people think damned CAPI is causing the issue
-                    ***@
-                    console.log("Error connecting to content API to retrieve section: 503")
-                    console.log("Defaulting to Culture")
-                </script>
-            }
+            @fragments.inlineJSNonBlocking()
 
-            @fragments.footer(page)
+            @fragments.analytics(page)
 
-            @if(NonBlockingOmniture.isSwitchedOn) {
+        } else {
 
-                @fragments.inlineJSNonBlocking()
+            @fragments.analytics(page)
 
-                @fragments.analytics(page)
+            @fragments.inlineJSNonBlocking()
 
-            } else {
+        }
 
-                @fragments.analytics(page)
-
-                @fragments.inlineJSNonBlocking()
-
-            }
-
-            @fragments.commercial.pageSkin()
-
-        </div>
+        @fragments.commercial.pageSkin()
 
     </body>
     </html>
