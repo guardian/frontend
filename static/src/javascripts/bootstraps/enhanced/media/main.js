@@ -51,7 +51,7 @@ define([
 ) {
     // For the A/B test
     var abVideoAutoplay = ab.getParticipations().ArticleVideoAutoplay || true;
-    function elementIsInView (el, offset) {
+    function elementIsInView(el, offset) {
         var viewportHeight = window.innerHeight;
         var rect = el.getBoundingClientRect();
         var fromTop = rect.top + offset;
@@ -60,16 +60,16 @@ define([
         return fromTop < viewportHeight && fromBottom > 0;
     }
 
-    function ElementViewable (element, offset, inViewOnloadCallback_) {
+    function ElementViewable(element, offset, inViewOnloadCallbackOpt) {
         // This is rubbish, but we can refine it later.
-        var inViewOnloadCallback = inViewOnloadCallback_ || function() {};
+        var inViewOnloadCallback = inViewOnloadCallbackOpt || function () {};
         var wasAlreadyInView = false;
         var events = {
-            viewenter: function() {},
-            viewexit: function() {}
+            viewenter: function viewenter() {},
+            viewexit: function viewexit() {}
         };
         // TODO: latch onto debounced event
-        mediator.on('window:throttledScroll', function() {
+        mediator.on('window:throttledScroll', function () {
             var inView = elementIsInView(element, offset);
 
             if (inView) {
@@ -87,7 +87,7 @@ define([
         });
 
         fastdomPromise.read(function () {
-            wasAlreadyInView = elementIsInView(element, offset)
+            wasAlreadyInView = elementIsInView(element, offset);
             return wasAlreadyInView;
         }).then(function (inView) {
             if (inView) {
@@ -99,7 +99,7 @@ define([
             on: function (event, func) {
                 events[event] = func;
             }
-        }
+        };
     }
     // End A/B test
 
@@ -331,10 +331,10 @@ define([
                         var elementInView = ElementViewable(parentNode, parentNode.clientHeight * (3 / 4), function () {
                             player.play();
                         });
-                        elementInView.on('viewenter', function autoplayInView () {
+                        elementInView.on('viewenter', function autoplayInView() {
                             player.play();
                         });
-                        elementInView.on('viewexit', function autoStopInView () {
+                        elementInView.on('viewexit', function autoStopInView() {
                             player.pause();
                         });
                     }
