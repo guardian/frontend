@@ -1,0 +1,27 @@
+define([], function () {
+
+    return function () {
+        this.id = 'ArticleVideoAutoplay';
+        this.start = '2016-07-16';
+        this.expiry = '2016-07-30';
+        this.author = 'James Gorrie';
+        this.description = 'Autoplay embedded videos on article pages';
+        this.audience = 0.45;
+        this.audienceOffset = .5;
+        this.successMeasure = 'More video watched when embedded in articles';
+        this.audienceCriteria = '';
+        this.dataLinkNames = '';
+        this.idealOutcome = 'People are more engaged with video when embedded in article pages';
+
+        this.canRun = function () {
+            return true;
+        };
+
+        this.variants = [{
+            id: 'autoplay',
+            test: function () {}
+        }];
+
+    };
+
+});

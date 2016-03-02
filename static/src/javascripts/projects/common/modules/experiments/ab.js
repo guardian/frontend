@@ -7,6 +7,7 @@ define([
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/fronts-on-articles2',
     'common/modules/experiments/tests/identity-register-membership-standfirst',
+    'common/modules/experiments/tests/ab-article-video-autoplay',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -25,6 +26,7 @@ define([
     mvtCookie,
     FrontsOnArticles2,
     IdentityRegisterMembershipStandfirst,
+    ArticleVideoAutoplay,
     flatten,
     forEach,
     keys,
@@ -38,7 +40,8 @@ define([
 
     var TESTS = flatten([
         new FrontsOnArticles2(),
-        new IdentityRegisterMembershipStandfirst()
+        new IdentityRegisterMembershipStandfirst(),
+        new ArticleVideoAutoplay()
     ]);
 
     var participationsKey = 'gu.ab.participations';
