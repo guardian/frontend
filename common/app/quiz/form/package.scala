@@ -27,6 +27,16 @@ package object form {
     }
   }
 
+  // Find the correct answer for a given question.
+  private[quiz] def getCorrectAnswer(question: Question): Option[Answer] = {
+    question.answers.find(_.weight == 1)
+  }
+
+  // Returns true of inputAnswer is the correct answer of inputQuestion.
+  def isCorrectAnswer(inputQuestion: Question, inputAnswer: Answer): Option[Boolean] = {
+    getCorrectAnswer(inputQuestion).map(_.id == inputAnswer.id)
+  }
+
   case class QuizResults(
     quiz: Quiz,
     entries: Seq[(Question, Answer)]
@@ -74,18 +84,5 @@ package object form {
       }
     }
 
-    // Find the correct answer for a given question.
-    private def getCorrectAnswer(question: Question): Option[Answer] = {
-      if (isKnowledge) {
-        question.answers.find(_.weight == 1)
-      } else {
-        None
-      }
-    }
-
-    // Returns true of inputAnswer is the correct answer of inputQuestion.
-    def isCorrectAnswer(inputQuestion: Question, inputAnswer: Answer): Option[Boolean] = {
-      getCorrectAnswer(inputQuestion).map(_.id == inputAnswer.id)
-    }
   }
 }
