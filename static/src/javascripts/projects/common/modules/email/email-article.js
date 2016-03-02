@@ -94,7 +94,12 @@ define([
                 description: 'Sign up and we\'ll give you a leg-up on the day\'s big stories. We\'re collecting feedback for the next two weeks - and if we continue the email, you\'ll be the first to receive it.',
                 successHeadline: 'Thank you!',
                 successDescription: 'We\'ll send you your briefing every morning.',
-                modClass: 'end-article'
+                modClass: 'end-article',
+                insertMethod: function () {
+                    return function ($iframeEl) {
+                        $iframeEl.appendTo('.js-article__body');
+                    };
+                }
             },
             theGuardianToday: {
                 listId: (function () {
@@ -153,19 +158,13 @@ define([
                 userListSubscriptions = map(response.result.subscriptions, 'listId');
             }
 
-            console.log('here')
-console.log(find(listConfigs, listCanRun))
             // Get the first list that is allowed on this page
             addListToPage(find(listConfigs, listCanRun));
         },
         listCanRun = function (listConfig) {
             var browser = detect.getUserAgent.browser,
                 version = detect.getUserAgent.version;
-console.log(listConfig.listName)
-            console.log(canRunList[listConfig.listName]())
-            console.log(!contains(userListSubscriptions, listConfig.listId))
-            console.log(!userHasRemoved(listConfig.listId, 'article'))
-            console.log(!(browser === 'MSIE' && contains(['7','8','9'], version + '')))
+
             // Check our lists canRun method and
             // make sure that the user isn't already subscribed to this email and
             // don't show on IE 7,8,9 for now
@@ -237,9 +236,6 @@ console.log(listConfig.listName)
                 return config.page.seriesId === 'world/series/guardian-morning-briefing';
             },
             morningMailUk: function () {
-                console.log((config.page.edition === 'UK' || config.page.edition === 'INT') &&
-                    !canRunHelpers.pageHasBlanketBlacklist() &&
-                    canRunHelpers.userReferredFromFront())
                 return (config.page.edition === 'UK' || config.page.edition === 'INT') &&
                         !canRunHelpers.pageHasBlanketBlacklist() &&
                         canRunHelpers.userReferredFromFront();
