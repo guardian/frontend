@@ -19,7 +19,6 @@ define([
             spaceFiller,
             spaceFillerStub,
             commercialFeatures,
-            trackAd,
             mediator,
             config,
             detect,
@@ -94,14 +93,8 @@ define([
         });
 
         describe('When merchandising components enabled', function () {
-            beforeEach(function (done) {
+            beforeEach(function () {
                 config.page.hasInlineMerchandise = true;
-                injector.require([
-                    'common/modules/commercial/track-ad'
-                ], function () {
-                    trackAd = arguments[0];
-                    done();
-                });
             });
 
             it('its first call to space-filler uses the inline-merch rules', function (done) {
@@ -138,25 +131,36 @@ define([
                 spaceFillerStub.onCall(1).returns(Promise.resolve(false));
                 spaceFillerStub.returns(Promise.resolve(true));
 
-                var fakeEvent = {
-                    slot: {
-                        getSlotElementId: function () {
-                            return 'dfp-ad--im';
-                        }
-                    },
-                    isEmpty: true
+                var oldOn = mediator.on;
+                var fn;
+                mediator.on = function (eventName, fn2) {
+                    fn = fn2;
+                };
+                var oldEmit = mediator.emit;
+                mediator.emit = function (eventName, arg) {
+                    return fn(arg);
                 };
 
                 config.switches.viewability = true;
                 detect.getBreakpoint = function () {return 'tablet';};
 
-                trackAd.waitFor('dfp-ad--im')
-                .then(articleBodyAdverts.init)
-                .then(function () {
-                    expect(spaceFillerStub.callCount).toBe(12);
-                    done();
+                articleBodyAdverts.init().then(function () {
+                    var fakeEvent = {
+                        slot: {
+                            getSlotElementId: function () {
+                                return 'dfp-ad--im';
+                            }
+                        },
+                        isEmpty: true
+                    };
+
+                    mediator.emit('modules:commercial:dfp:rendered', fakeEvent).then(function () {
+                        mediator.on = oldOn;
+                        mediator.emit = oldEmit;
+                        expect(spaceFillerStub.callCount).toBe(12);
+                        done();
+                    });
                 });
-                mediator.emit('modules:commercial:dfp:rendered', fakeEvent);
             });
         });
 
