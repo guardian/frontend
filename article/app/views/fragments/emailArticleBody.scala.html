@@ -7,7 +7,9 @@
 
 @defining(page.article) { article =>
     @fullRow {
-        <img width="580" src="@article.banner">
+        <a href="@article.metadata.webUrl" @page.item.email.map { email => title="View @email.name online"}>
+            <img width="580" src="@article.banner" @page.item.email.map { email => alt="View @email.name online"}>
+        </a>
     }
 
     @paddedRow {
@@ -17,7 +19,7 @@
     @article.fields.standfirst.map { standfirst =>
         @paddedRow(Html(standfirst))
     }
-    
+
     @fragments.emailMainMedia(article)
 
     @paddedRow(Seq("author")) {
