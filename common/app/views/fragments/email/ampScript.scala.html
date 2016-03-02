@@ -5,10 +5,10 @@
 <!--
 %%[
     Var @@subject, @@intro
-    Set @@subject "@page.item.trail.headline"
+    Set @@subject = "@page.item.trail.headline"
 
     @page.item.trail.fields.trailText.map { byline =>
-        Set @@intro "@StripHtmlTags(byline)"
+        Set @@intro = "@StripHtmlTags(byline)"
     }
 ]%%
 -->
