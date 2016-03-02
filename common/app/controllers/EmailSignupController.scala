@@ -38,7 +38,7 @@ object ListIds {
   val guardianTodayUs = 1493
   val guardianTodayAu = 1506
 
-  val theBestOfCiF = 2313
+  val theBestOfOpinion = 2313
   val theFiver = 218
   val mediaBriefing = 217
   val greenLight = 28
@@ -74,7 +74,7 @@ object ListIds {
   val UsElection = 3599
 
   val allWithoutTrigger: List[Int] = List(
-    theBestOfCiF,
+    theBestOfOpinion,
     theFiver,
     mediaBriefing,
     greenLight,

@@ -8,13 +8,16 @@ define([
     'common/utils/detect',
     'lodash/collections/contains',
     'lodash/arrays/intersection',
+    'lodash/collections/map',
     'common/utils/config',
     'lodash/collections/every',
     'lodash/collections/find',
     'text!common/views/email/iframe.html',
     'common/utils/template',
     'common/modules/article/space-filler',
-    'common/modules/analytics/omniture'
+    'common/modules/analytics/omniture',
+    'common/utils/robust',
+    'common/modules/user-prefs'
 ], function (
     $,
     bean,
@@ -25,19 +28,22 @@ define([
     detect,
     contains,
     intersection,
+    map,
     config,
     every,
     find,
     iframeTemplate,
     template,
     spaceFiller,
-    omniture
+    omniture,
+    robust,
+    userPrefs
 ) {
 
     var listConfigs = {
             theCampaignMinute: {
                 listId: '3599',
-                canRun: 'theCampaignMinute',
+                listName: 'theCampaignMinute',
                 campaignCode: 'the_minute_footer',
                 headline: 'Enjoying The Minute?',
                 description: 'Sign up and we\'ll send you the Guardian US Campaign Minute, once per day.',
@@ -52,7 +58,7 @@ define([
             },
             theFilmToday: {
                 listId: '1950',
-                canRun: 'theFilmToday',
+                listName: 'theFilmToday',
                 campaignCode: 'film_article_signup',
                 headline: 'Want the best of Film, direct to your inbox?',
                 description: 'Sign up to Film Today and we\'ll deliver to you the latest movie news, blogs, big name interviews, festival coverage, reviews and more.',
@@ -62,7 +68,7 @@ define([
             },
             theFiver: {
                 listId: '218',
-                canRun: 'theFiver',
+                listName: 'theFiver',
                 campaignCode: 'fiver_article_signup',
                 headline: 'Want a football roundup direct to your inbox?',
                 description: 'Sign up to the Fiver, our daily email on the world of football',
@@ -85,7 +91,7 @@ define([
                             return '1506';
                     }
                 }()),
-                canRun: 'theGuardianToday',
+                listName: 'theGuardianToday',
                 campaignCode: 'guardian_today_article_bottom',
                 headline: 'Want stories like this in your inbox?',
                 description: 'Sign up to The Guardian Today daily email and get the biggest headlines each morning.',
@@ -106,6 +112,7 @@ define([
             }
         },
         emailInserted = false,
+        userListSubscriptions = [],
         keywords = config.page.keywords ? config.page.keywords.split(',') : '',
         getSpacefinderRules = function () {
             return {
@@ -123,10 +130,26 @@ define([
                 }
             };
         },
+        buildUserSubscriptions = function (response) {
+            if (response && response.status !== 'error' && response.result && response.result.subscriptions) {
+                userListSubscriptions = map(response.result.subscriptions, 'listId');
+            }
+
+            // Get the first list that is allowed on this page
+            addListToPage(find(listConfigs, listCanRun));
+        },
         listCanRun = function (listConfig) {
-            if (listConfig.canRun && canRunList[listConfig.canRun]()) {
+            // Check our lists listName method and make sure that the user isn't already subscribed to this email
+            if (listConfig.listName &&
+                canRunList[listConfig.listName]() &&
+                !contains(userListSubscriptions, listConfig.listId) &&
+                !userHasRemoved(listConfig.listId, 'article')) {
                 return listConfig;
             }
+        },
+        userHasRemoved = function (id, formType) {
+            var currentListPrefs = userPrefs.get('email-sign-up-' + formType);
+            return currentListPrefs && currentListPrefs.indexOf(id) > -1;
         },
         addListToPage = function (listConfig) {
             if (listConfig) {
@@ -139,6 +162,9 @@ define([
                 if (listConfig.insertMethod && listConfig.insertMethod()) {
                     fastdom.write(function () {
                         listConfig.insertMethod()($iframeEl);
+
+                        omniture.trackLinkImmediate('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
+                        emailInserted = true;
                     });
                 } else {
                     spaceFiller.fillSpace(getSpacefinderRules(), function (paras) {
@@ -176,16 +202,19 @@ define([
 
                 return !pageIsBlacklisted &&
                         urlRegex.test(document.referrer) &&
-                        !Id.isUserLoggedIn() &&
                         !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
             }
         };
 
     return {
         init: function () {
-            if (!emailInserted) {
-                // Get the first list that is allowed on this page
-                addListToPage(find(listConfigs, listCanRun));
+            if (!emailInserted && !config.page.isFront && config.switches.emailInArticle) {
+                // Get the user's current subscriptions
+                Id.getUserEmailSignUps()
+                    .then(buildUserSubscriptions)
+                    .catch(function (error) {
+                        robust.log('c-email', error);
+                    });
             }
         }
     };

@@ -44,7 +44,7 @@ object CSSRule {
 
   def makeStyles(styles: String): ListMap[String, String] = {
     styles.split(";(?!base)").flatMap { style =>
-      val split = style.split(":(?!\\w)")
+      val split = style.split(":(?!(\\w)|(//))")
 
       for {
         property <- split.lift(0)

@@ -1,3 +1,5 @@
+@import './live-blog/navigation';
+
 $block-padding-left: gs-span(1) + $gs-gutter;
 $block-padding-right: $gs-gutter;
 
@@ -147,6 +149,10 @@ $block-padding-right: $gs-gutter;
 
 /* Blocks
    ========================================================================== */
+.blocks {
+    margin-top: $gs-baseline;
+}
+
 .block {
     @include clearfix;
 
@@ -481,6 +487,7 @@ $block-padding-right: $gs-gutter;
 .dropdown--key-events,
 .dropdown--live-feed {
     border-top: 0;
+    margin-top: $gs-baseline;
 
     $content-gutter: $gs-gutter / 2;
 
@@ -576,7 +583,7 @@ $timeline-width: 15px;
 }
 
 .toast__container {
-    z-index: 900;
+    z-index: $zindex-content;
     padding-bottom: $gs-baseline;
     text-align: center;
     transition: transform .3s ease-in-out;
@@ -615,6 +622,7 @@ $timeline-width: 15px;
     box-sizing: border-box;
     overflow: hidden;
     border: 0;
+    margin-right: 0;
     max-width: 300px; // somewhat arbitrary, just need a max-width to animate from
     position: relative;
 
@@ -670,13 +678,9 @@ $timeline-width: 15px;
 }
 
 .toast__space-reserver {
-    padding-bottom: $gs-baseline;
     height: $gs-baseline*3; // was 0, for testing
-    display: none;
-
-    .toast-enabled & {
-        display: block;
-    }
+    margin-bottom: -$gs-baseline*3;
+    display: block;
 }
 
 .timeline {
@@ -935,22 +939,3 @@ $timeline-width: 15px;
         }
     }
 }
-
-.liveblog__show-more {
-    background-color: colour(live-accent);
-    border: 0;
-    margin-bottom: $gs-baseline;
-    padding-left: $gs-gutter * 4 / 5;
-
-    @include mq(leftCol) {
-        margin-top: $gs-baseline;
-        margin-bottom: 0;
-    }
-
-    &:hover,
-    &:focus,
-    &:active {
-        background-color: darken(colour(live-accent), 7%);
-    }
-}
-

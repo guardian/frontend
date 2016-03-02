@@ -1,7 +1,7 @@
 @(article: model.Article)(implicit request: RequestHeader)
 
 @import views.support.{ImgSrc, EmailArticleImage}
-@import views.support.Zurb._
+@import views.support.EmailHelpers._
 
 @if(!article.elements.hasMainEmbed) {
     @article.elements.mainPicture.map { picture =>
@@ -14,7 +14,7 @@
                 @paddedRow {
                     @if(img.showCaption) {
                         <div class="caption">
-                            @fragments.inlineSvg("camera", "icon", Seq("i-left"))
+                            @icon("camera")
 
                             @img.caption.map(Html(_))
 

@@ -1,6 +1,5 @@
 package views.support
 
-import com.gu.facia.api.models.{EditorialPriority, FrontPriority}
 import common.Edition
 import common.dfp.AdSize.{leaderboardSize, responsiveSize}
 import common.dfp._
@@ -82,9 +81,8 @@ object Commercial {
 
   object container {
 
-    def shouldRenderAsCommercialContainer(frontPriority: Option[FrontPriority], container: FaciaContainer): Boolean = {
-      frontPriority.contains(EditorialPriority) &&
-      container.commercialOptions.isAdvertisementFeature
+    def shouldRenderAsCommercialContainer(isPaidFront: Boolean, container: FaciaContainer): Boolean = {
+      !isPaidFront && container.commercialOptions.isPaidContainer
     }
 
     def mkSponsorDataAttributes(config: CollectionConfig): Option[SponsorDataAttributes] = {
