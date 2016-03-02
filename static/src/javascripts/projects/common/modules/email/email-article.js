@@ -91,7 +91,7 @@ define([
                 canRun: 'morningMailUkSeries',
                 campaignCode: 'morning_mail_uk_series_article_signup',
                 headline: 'The morning briefing - start the day one step ahead',
-                description: 'Sign up and we\'ll give you a leg-up on the day\'s big stories/ We\'re collecting feedback for the next two weeks - and if we continue the email, you\'ll be the first to receive it.',
+                description: 'Sign up and we\'ll give you a leg-up on the day\'s big stories. We\'re collecting feedback for the next two weeks - and if we continue the email, you\'ll be the first to receive it.',
                 successHeadline: 'Thank you!',
                 successDescription: 'We\'ll send you your briefing every morning.',
                 modClass: 'end-article'
@@ -168,7 +168,6 @@ define([
                 !contains(userListSubscriptions, listConfig.listId) &&
                 !userHasRemoved(listConfig.listId, 'article') &&
                 !(browser === 'MSIE' && contains(['7','8','9'], version + ''))) {
-                
                 return listConfig;
             }
         },
