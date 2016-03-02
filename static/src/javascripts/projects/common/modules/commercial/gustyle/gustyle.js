@@ -20,6 +20,7 @@ define([
     var Gustyle = function ($slot, params) {
         this.$slot = $slot;
         this.params = params;
+        this.isContentPage = !!config.page.isContent;
     };
 
     Gustyle.prototype.addLabel = function () {
@@ -35,7 +36,7 @@ define([
             };
 
         fastdom.write(function () {
-            var classList = 'gu-style' + ((this.isContentPage()) ? ' gu-style--unboxed' : '');
+            var classList = 'gu-style' + ((this.isContentPage) ? ' gu-style--unboxed' : '');
 
             this.$slot.addClass(classList);
             this.$slot.prepend($.create(template(labelTpl, { data: merge(templateOptions) })));
@@ -43,10 +44,6 @@ define([
             toggles = new Toggles(this.$slot[0]);
             toggles.init();
         }.bind(this));
-    };
-
-    Gustyle.prototype.isContentPage = function () {
-        return !!config.page.isContent;
     };
 
     return Gustyle;
