@@ -1,0 +1,14 @@
+@(page: model.ContentPage)
+
+@import views.support.StripHtmlTags
+
+<!--
+%%[
+    Var @@subject, @@intro
+    Set @@subject "@page.item.trail.headline"
+
+    @page.item.trail.fields.trailText.map { byline =>
+        Set @@intro "@StripHtmlTags(byline)"
+    }
+]%%
+-->
