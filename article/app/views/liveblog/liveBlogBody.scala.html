@@ -81,8 +81,8 @@
                                     </button>
                                 </div>
                             </div>
-                            @pageModel.pagination.map { pagination =>
-                                @if(!pagination.isNewestPage) {
+                            @if(pageModel.currentPage.isArchivePage) {
+                                @pageModel.pagination.map { pagination =>
                                     @fragments.liveBlogNavigation(article = model.article, pageModel)
                                 }
                             }
