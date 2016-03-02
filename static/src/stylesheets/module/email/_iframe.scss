@@ -62,6 +62,12 @@ body {
             margin-right: 0;
             width: 38%;
         }
+
+        // Solo submit button - for logged in users where we remove the input
+        // because we know the email address already
+        .email-sub__submit-input--solo {
+            border-radius: 1000px;
+        }
     }
 
     .email-sub__form--footer,

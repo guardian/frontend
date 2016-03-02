@@ -31,9 +31,6 @@
 
     .commercial__body {
         padding-top: $gs-gutter / 2;
-        max-width: none;
-        padding-left: $gs-gutter / 2;
-        padding-right: $gs-gutter / 2;
     }
 
     .rich-link__standfirst {
@@ -154,6 +151,11 @@
         margin-right: $gs-gutter;
     }
 
+    .fc-slice {
+        margin: 0 -10px;
+        width: auto;
+    }
+
     .fc-item__kicker {
         &:after {
             color: colour(neutral-2);
@@ -195,13 +197,6 @@
 
 /* Badges
    ========================================================================== */
-
-.commercial--paidfor {
-    .ad-slot--paid-for-badge {
-        padding-left: $gs-gutter / 2;
-        padding-right: $gs-gutter / 2;
-    }
-}
 
 .commercial--paidfor,
 .commercial--dfp-single {

@@ -88,9 +88,9 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
     modelGen(
       maybeRequiredBlockId.map(blockId => block => blockId == block.id),
       _.id
-    ) map { blocks =>
-      val htmlResponse = () => views.html.liveBlog (blog, blocks)
-      val jsonResponse = () => views.html.liveblog.liveBlogBody (blog, blocks)
+    ) map { pageModel =>
+      val htmlResponse = () => views.html.liveBlog (blog, pageModel)
+      val jsonResponse = () => views.html.liveblog.liveBlogBody (blog, pageModel)
       renderFormat(htmlResponse, jsonResponse, blog, Switches.all)
     } getOrElse NotFound
 

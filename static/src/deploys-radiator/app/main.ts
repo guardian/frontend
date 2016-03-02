@@ -317,9 +317,15 @@ const run = (): Promise<void> => {
 
 const intervalSeconds = 10;
 const wait = (): Promise<{}> => new Promise(resolve => setTimeout(resolve, intervalSeconds * 1000));
+interface Error {
+    stack: string;
+}
 const update = (): Promise<void> => {
     return run()
-        .then(wait, wait)
+        .then(wait, (error: Error) => {
+            console.error('Handled promise rejection.', error.stack);
+            return wait();
+        })
         .then(update);
 };
 update();

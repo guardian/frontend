@@ -9,27 +9,27 @@ sealed trait EmailContent {
 
 case object ArtWeekly extends EmailContent {
   val banner = "art-weekly.png"
-  def test(a: Article) = false // TODO: update with actual check
+  def test(a: Article) = a.content.tags.series.exists(_.id == "artanddesign/series/art-weekly")
 }
 
 case object GreenLight extends EmailContent {
   val banner = "green-light.png"
-  def test(a: Article) = false // TODO: update with actual check
+  def test(a: Article) = a.content.tags.series.exists(_.id == "environment/series/green-light")
 }
 
 case object MoneyTalks extends EmailContent {
   val banner = "money-talks.png"
-  def test(a: Article) = false // TODO: update with actual check
+  def test(a: Article) = a.content.tags.series.exists(_.id == "money/series/money-talks")
 }
 
 case object PovertyMatters extends EmailContent {
   val banner = "poverty-matters.png"
-  def test(a: Article) = false // TODO: update with actual check
+  def test(a: Article) = a.content.tags.blogs.exists(_.id == "global-development/poverty-matters")
 }
 
 case object TheBreakdown extends EmailContent {
   val banner = "the-breakdown.png"
-  def test(a: Article) = false // TODO: update with actual check
+  def test(a: Article) = a.content.tags.series.exists(_.id == "sport/series/breakdown")
 }
 
 case object TheFiver extends EmailContent {
@@ -39,7 +39,7 @@ case object TheFiver extends EmailContent {
 
 case object TheSpin extends EmailContent {
   val banner = "the-spin.png"
-  def test(a: Article) = false // TODO: update with actual check
+  def test(a: Article) = a.content.tags.series.exists(_.id == "sport/series/thespin")
 }
 
 object EmailAddons {
@@ -47,11 +47,11 @@ object EmailAddons {
   private val allEmails     = Seq(ArtWeekly, GreenLight, MoneyTalks, PovertyMatters, TheBreakdown, TheFiver, TheSpin)
 
   implicit class EmailArticle(a: Article) {
+    val email = allEmails.find(_.test(a))
+
     lazy val banner = {
-      val banner = emailFor(a) map (_.banner) getOrElse defaultBanner
+      val banner = email map (_.banner) getOrElse defaultBanner
       Static(s"images/email/banners/$banner").path
     }
   }
-
-  private def emailFor(a: Article): Option[EmailContent] = allEmails.find(_.test(a))
 }

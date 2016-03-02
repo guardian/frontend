@@ -1,9 +1,6 @@
-@import com.gu.facia.api.models.FrontPriority
 @(containerDefinition: layout.FaciaContainer,
   frontProperties: model.FrontProperties = model.FrontProperties.empty,
-  isPaidContent: Boolean = false,
-  frontPriority: Option[FrontPriority] = None
-)(implicit request: RequestHeader)
+  isPaidFront: Boolean = false)(implicit request: RequestHeader)
 
 @import common.dfp.{Keyword, Series}
 @import conf.switches.Switches
@@ -26,8 +23,8 @@
         case _ => {}
     }
 
-    @(containerDefinition.container, isPaidContent) match {
-        case (MostPopular, true) => {}
+    @containerDefinition.container match {
+        case _: MostPopular if isPaidFront => {}
         case _ => {
         <section id="@componentName"
         class="@GetClasses.forContainerDefinition(containerDefinition)"
@@ -56,7 +53,7 @@
 
             @containerDefinition.container match {
 
-                case Fixed(definition) if Commercial.container.shouldRenderAsCommercialContainer(frontPriority, containerDefinition) => {
+                case Fixed(definition) if Commercial.container.shouldRenderAsCommercialContainer(isPaidFront, containerDefinition) => {
                     @renderCommercialContainer(SingleCampaign(definition))
                 }
 
