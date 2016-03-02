@@ -53,7 +53,6 @@ define([
     'common/modules/commercial/membership-messages',
     'common/modules/email/email',
     'common/modules/email/email-article',
-    'text!common/views/international-message.html',
     'bootstraps/enhanced/identity-common',
     'lodash/collections/forEach'
 ], function (
@@ -109,7 +108,6 @@ define([
     membershipMessages,
     email,
     emailArticle,
-    internationalMessage,
     identity,
     forEach
 ) {
@@ -140,8 +138,12 @@ define([
                     && !(config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile')
                     && config.page.contentType !== 'Interactive'
                     && config.page.contentType !== 'Crossword'
-                    && (!config.switches.newCommercialContent || !config.page.isAdvertisementFeature)
-                    && config.page.pageId !== 'offline-page') {
+                    && !config.page.isImmersive
+                    && !config.page.isUsMinute
+                    && !config.page.isAdvertisementFeature
+                    && config.page.pageId !== 'offline-page'
+                    && !config.page.shouldHideAdverts
+                    && config.page.section !== 'childrens-books-site') {
                     stickyAdBanner.initialise();
                     config.page.hasStickyAdBanner = true;
                 } else {
@@ -318,14 +320,6 @@ define([
                 };
             },
 
-            internationalSignposting: function () {
-                if (config.page.edition === 'INT' && config.page.pageId === 'international') {
-                    new Message('international-with-survey-new', {
-                        pinOnHide: true
-                    }).show(template(internationalMessage, {}));
-                }
-            },
-
             initPinterest: function () {
                 if (/Article|LiveBlog|Gallery|Video/.test(config.page.contentType)) {
                     pinterest();
@@ -408,7 +402,6 @@ define([
                 ['c-tech-feedback', techFeedback],
                 ['c-media-listeners', mediaListener],
                 ['c-accessibility-prefs', accessibilityPrefs],
-                ['c-international-signposting', modules.internationalSignposting],
                 ['c-pinterest', modules.initPinterest],
                 ['c-save-for-later', modules.saveForLater],
                 ['c-show-membership-messages', modules.showMembershipMessages],

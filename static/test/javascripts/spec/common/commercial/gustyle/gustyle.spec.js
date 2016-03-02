@@ -29,10 +29,7 @@ define([
                 fixtures.render(fixturesConfig);
 
                 adSlot = $('.ad-slot-test');
-                adType =  {
-                    type: 'gu-style',
-                    variant: 'content'
-                };
+                adType = 'gu-style';
 
                 done();
             });

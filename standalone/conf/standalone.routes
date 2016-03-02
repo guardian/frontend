@@ -158,6 +158,7 @@ GET        /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\
 
 GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                     controllers.AllIndexController.on(path)
 GET        /$path<.+>/latest                                                                   controllers.LatestIndexController.latest(path)
+GET        /$path<.+>/latest/email                                                             controllers.LatestIndexController.latest(path)
 GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all                            controllers.AllIndexController.allOn(path, day, month, year)
 GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/altdate                        controllers.AllIndexController.altDate(path, day, month, year)
 GET        /$path<.+>/all                                                                      controllers.AllIndexController.all(path)
@@ -193,6 +194,7 @@ GET        /weatherapi/locations                                                
 
 # Articles
 GET        /*path.json                                                                         controllers.ArticleController.renderLiveBlogJson(path, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean])
+GET        /*path/email                                                                        controllers.ArticleController.renderArticle(path)
 
 # Don't forward requests for favicon.ico to the Content API
 GET        /favicon.ico                                                                        controllers.FaviconController.favicon

@@ -45,22 +45,7 @@ define([
     'lodash/collections/find',
     'lodash/arrays/last',
     'lodash/arrays/intersection',
-    'lodash/arrays/initial',
-
-    'common/modules/commercial/creatives/commercial-component',
-    'common/modules/commercial/creatives/gu-style-comcontent',
-    'common/modules/commercial/creatives/paidfor-content',
-    'common/modules/commercial/creatives/expandable',
-    'common/modules/commercial/creatives/expandable-v2',
-    'common/modules/commercial/creatives/expandable-v3',
-    'common/modules/commercial/creatives/expandable-video',
-    'common/modules/commercial/creatives/expandable-video-v2',
-    'common/modules/commercial/creatives/fluid250',
-    'common/modules/commercial/creatives/fluid250GoogleAndroid',
-    'common/modules/commercial/creatives/foundation-funded-logo',
-    'common/modules/commercial/creatives/scrollable-mpu',
-    'common/modules/commercial/creatives/scrollable-mpu-v2',
-    'common/modules/commercial/creatives/template'
+    'lodash/arrays/initial'
 ], function (
     bean,
     bonzo,
@@ -77,7 +62,7 @@ define([
     sha1,
     idleFastdom,
     cookies,
-    StickyMpu,
+    stickyMpu,
     buildPageTargeting,
     commercialFeatures,
     ophanTracking,
@@ -131,19 +116,19 @@ define([
     var adSlotSelector       = '.js-ad-slot';
     var displayed            = false;
     var rendered             = false;
-    var slots                = {};
+    var adverts              = {};
     var slotsToRefresh       = [];
     var creativeIDs          = [];
     var hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
 
     var callbacks = {
         '300,251': function (event, $adSlot) {
-            new StickyMpu($adSlot).create();
+            stickyMpu($adSlot);
         },
         '300,250': function (event, $adSlot) {
             if (config.switches.viewability && $adSlot.hasClass('ad-slot--right')) {
                 if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
-                    new StickyMpu($adSlot).create();
+                    stickyMpu($adSlot);
                 }
             }
         },
@@ -191,10 +176,6 @@ define([
         });
     }
 
-    function isMobileBannerTest() {
-        return config.switches.mobileTopBannerRemove && $('.top-banner-ad-container--ab-mobile').length > 0 && detect.getBreakpoint() === 'mobile';
-    }
-
     function isSponsorshipContainerTest() {
         var sponsorshipIds = ['#dfp-ad--adbadge', '#dfp-ad--spbadge', '#dfp-ad--fobadge', '#dfp-ad--adbadge1', '#dfp-ad--spbadge1', '#dfp-ad--fobadge1', '#dfp-ad--adbadge2', '#dfp-ad--spbadge2', '#dfp-ad--fobadge2', '#dfp-ad--adbadge3', '#dfp-ad--spbadge3', '#dfp-ad--fobadge3', '#dfp-ad--adbadge4', '#dfp-ad--spbadge4', '#dfp-ad--fobadge4', '#dfp-ad--adbadge5', '#dfp-ad--spbadge5', '#dfp-ad--fobadge5'],
             sponsorshipIdsReturned = [];
@@ -228,15 +209,11 @@ define([
         }
     }
 
-    function shouldFilterAdvert($adSlot) {
-        return isVisuallyHidden() || isDisabledMobileBanner() || isDisabledCommercialFeature();
+    function shouldFilterAdSlot($adSlot) {
+        return isVisuallyHidden() || isDisabledCommercialFeature();
 
         function isVisuallyHidden() {
             return $css($adSlot, 'display') === 'none';
-        }
-
-        function isDisabledMobileBanner() {
-            return isMobileBannerTest() && $adSlot.hasClass('ad-slot--top');
         }
 
         function isDisabledCommercialFeature() {
@@ -248,12 +225,12 @@ define([
      * Loop through each slot detected on the page and define it based on the data
      * attributes on the element.
      */
-    function defineSlots() {
-        slots = chain(qwery(adSlotSelector)).and(map, function (adSlot) {
+    function defineAdverts() {
+        adverts = chain(qwery(adSlotSelector)).and(map, function (adSlot) {
                 return bonzo(adSlot);
             // filter out (and remove) hidden ads
             }).and(filter, function ($adSlot) {
-                if (shouldFilterAdvert($adSlot)) {
+                if (shouldFilterAdSlot($adSlot)) {
                     idleFastdom.write(function () {
                         $adSlot.remove();
                     });
@@ -262,11 +239,7 @@ define([
                     return true;
                 }
             }).and(map, function ($adSlot) {
-                return [$adSlot.attr('id'), {
-                    isRendered: false,
-                    isLoading: false,
-                    slot: defineSlot($adSlot)
-                }];
+                return [$adSlot.attr('id'), new Advert($adSlot)];
             }).and(zipObject).valueOf();
     }
 
@@ -285,7 +258,7 @@ define([
         googletag.enableServices();
         // as this is an single request call, only need to make a single display call (to the first ad
         // slot)
-        googletag.display(keys(slots).shift());
+        googletag.display(keys(adverts).shift());
         displayed = true;
     }
 
@@ -338,7 +311,7 @@ define([
         });
         window.googletag.cmd.push(setListeners);
         window.googletag.cmd.push(setPageTargeting);
-        window.googletag.cmd.push(defineSlots);
+        window.googletag.cmd.push(defineAdverts);
 
         if (shouldLazyLoad()) {
             window.googletag.cmd.push(displayLazyAds);
@@ -400,87 +373,87 @@ define([
 
     function parseAd(event) {
         var size,
-            slotId = event.slot.getSlotElementId(),
-            $slot,
+            adSlotId = event.slot.getSlotElementId(),
+            $adSlot,
             $placeholder,
             $adSlotContent;
 
         if (event.isEmpty) {
-            removeSlot(slotId);
+            removeSlot(adSlotId);
         } else {
-            $slot = $('#' + slotId);
+            $adSlot = $('#' + adSlotId);
 
             // Store ads IDs for technical feedback
             creativeIDs.push(event.creativeId);
 
             // remove any placeholder ad content
-            $placeholder = $('.ad-slot__content--placeholder', $slot);
-            $adSlotContent = $('div', $slot);
+            $placeholder = $('.ad-slot__content--placeholder', $adSlot);
+            $adSlotContent = $('div', $adSlot);
             idleFastdom.write(function () {
                 $placeholder.remove();
                 $adSlotContent.addClass('ad-slot__content');
             });
 
             // Check if creative is a new gu style creative and place labels accordingly
-            dfp.checkForBreakout($slot).then(function (adType) {
+            dfp.checkForBreakout($adSlot).then(function (adType) {
                 if (adType !== 'gu-style') {
-                    addLabel($slot);
+                    addLabel($adSlot);
                 }
 
                 size = event.size.join(',');
                 // is there a callback for this size
                 if (callbacks[size]) {
-                    callbacks[size](event, $slot);
+                    callbacks[size](event, $adSlot);
                 }
 
-                if ($slot.hasClass('ad-slot--container-inline') && $slot.hasClass('ad-slot--not-mobile')) {
+                if ($adSlot.hasClass('ad-slot--container-inline') && $adSlot.hasClass('ad-slot--not-mobile')) {
                     idleFastdom.write(function () {
-                        $slot.parent().css('display', 'flex');
+                        $adSlot.parent().css('display', 'flex');
                     });
-                } else if (!($slot.hasClass('ad-slot--top-above-nav') && size === '1,1')) {
+                } else if (!($adSlot.hasClass('ad-slot--top-above-nav') && size === '1,1')) {
                     idleFastdom.write(function () {
-                        $slot.parent().css('display', 'block');
+                        $adSlot.parent().css('display', 'block');
                     });
                 }
 
-                if (($slot.hasClass('ad-slot--top-banner-ad') && size === '88,70')
-                || ($slot.hasClass('ad-slot--commercial-component') && size === '88,88')) {
+                if (($adSlot.hasClass('ad-slot--top-banner-ad') && size === '88,70')
+                || ($adSlot.hasClass('ad-slot--commercial-component') && size === '88,88')) {
                     idleFastdom.write(function () {
-                        $slot.addClass('ad-slot__fluid250');
+                        $adSlot.addClass('ad-slot__fluid250');
                     });
                 }
             });
         }
 
-        allAdsRendered(slotId);
+        allAdsRendered(adSlotId);
     }
 
-    function allAdsRendered(slotId) {
-        if (slots[slotId] && !slots[slotId].isRendered) {
-            slots[slotId].isLoading = false;
-            slots[slotId].isRendered = true;
+    function allAdsRendered(adSlotId) {
+        if (adverts[adSlotId] && !adverts[adSlotId].isRendered) {
+            adverts[adSlotId].isLoading = false;
+            adverts[adSlotId].isRendered = true;
         }
 
-        if (every(slots, 'isRendered')) {
+        if (every(adverts, 'isRendered')) {
             userTiming.mark('All ads are rendered');
             mediator.emit('modules:commercial:dfp:alladsrendered');
         }
     }
 
-    function addLabel($slot) {
+    function addLabel($adSlot) {
         idleFastdom.write(function () {
-            if (shouldRenderLabel($slot)) {
-                $slot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
+            if (shouldRenderLabel($adSlot)) {
+                $adSlot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
             }
         });
     }
 
-    function shouldRenderLabel($slot) {
-        return $slot.data('label') !== false && qwery('.ad-slot__label', $slot[0]).length === 0;
+    function shouldRenderLabel($adSlot) {
+        return $adSlot.data('label') !== false && qwery('.ad-slot__label', $adSlot[0]).length === 0;
     }
 
     function lazyLoad() {
-        if (slots.length === 0) {
+        if (adverts.length === 0) {
             disableLazyLoad();
         } else {
             var scrollTop = window.pageYOffset,
@@ -488,11 +461,11 @@ define([
                 scrollBottom = scrollTop + viewportHeight,
                 depth = 0.5;
 
-            chain(slots).and(keys).and(filter, function (slot) {
-                return !slots[slot].isLoading &&
-                    !slots[slot].isRendered &&
-                        // if the position of the ad is above the viewport - offset (half screen size)
-                    scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - viewportHeight * depth;
+            chain(adverts).and(keys).and(filter, function (adSlotId) {
+                return !adverts[adSlotId].isLoading &&
+                       !adverts[adSlotId].isRendered &&
+                       // if the position of the ad is above the viewport - offset (half screen size)
+                    scrollBottom > document.getElementById(adSlotId).getBoundingClientRect().top + scrollTop - viewportHeight * depth;
             }).and(forEach, function (slot) {
                 loadSlot(slot);
             });
@@ -500,23 +473,23 @@ define([
     }
 
     function instantLoad() {
-        chain(slots).and(keys).and(forEach, function (slot) {
-            if (contains(['dfp-ad--pageskin-inread', 'dfp-ad--merchandising-high', 'dfp-ad--im'], slot)) {
-                loadSlot(slot);
+        chain(adverts).and(keys).and(forEach, function (adSlotId) {
+            if (contains(['dfp-ad--pageskin-inread', 'dfp-ad--merchandising-high', 'dfp-ad--im'], adSlotId)) {
+                loadSlot(adSlotId);
             }
         });
     }
 
-    function loadSlot(slotKey) {
-        slots[slotKey].isLoading = true;
-        googletag.display(slotKey);
+    function loadSlot(adSlotId) {
+        adverts[adSlotId].isLoading = true;
+        googletag.display(adSlotId);
         displayed = true;
     }
 
-    function removeSlot(slotId) {
-        delete slots[slotId];
+    function removeSlot(adSlotId) {
+        delete adverts[adSlotId];
         idleFastdom.write(function () {
-            $('#' + slotId).remove();
+            $('#' + adSlotId).remove();
         });
     }
 
@@ -529,11 +502,11 @@ define([
      * Currently this is being used for sponsored logos and commercial components so they
      * can inherit fonts.
      */
-    function checkForBreakout($slot) {
+    function checkForBreakout($adSlot) {
         return new Promise(function (resolve, reject) {
             // DFP sometimes sends back two iframes, one with actual ad and one with 0,0 sizes and __hidden__ 'paramter'
             // The later one will never go to 'complete' state on IE so lets avoid it.
-            var iFrame = find($('iframe', $slot), function (iframe) { return iframe.id.match('__hidden__') === null; });
+            var iFrame = find($('iframe', $adSlot), function (iframe) { return iframe.id.match('__hidden__') === null; });
 
             // No iFrame, no work to do
             if (typeof iFrame === 'undefined') {
@@ -552,15 +525,15 @@ define([
                         /*eslint-enable valid-typeof*/
                     ) {
                         bean.off(updatedIFrame, 'readystatechange');
-                        resolve(breakoutIFrame(updatedIFrame, $slot));
+                        resolve(breakoutIFrame(updatedIFrame, $adSlot));
                     }
                 });
             } else {
-                resolve(breakoutIFrame(iFrame, $slot));
+                resolve(breakoutIFrame(iFrame, $adSlot));
             }
         }).then(function (items) {
-            return find(items, function (item) {
-                return item.adType !== '';
+            return find(items, function (adType) {
+                return adType !== '';
             });
         });
     }
@@ -620,12 +593,12 @@ define([
      * If it has been defined, then we add that size to the size mapping.
      *
      */
-    function defineSlotSizes(slot) {
+    function defineSlotSizes($adSlot) {
         var mapping = googletag.sizeMapping();
 
         forEach(detect.breakpoints, function (breakpointInfo) {
             // turn breakpoint name into attribute style (lowercase, hyphenated)
-            var attr  = slot.data(breakpointNameToAttribute(breakpointInfo.name));
+            var attr  = $adSlot.data(breakpointNameToAttribute(breakpointInfo.name));
             if (attr) {
                 mapping.addSize([breakpointInfo.width, 0], createSizeMapping(attr));
             }
@@ -665,18 +638,14 @@ define([
         var $adSlot = bonzo(adSlot),
             slotId = $adSlot.attr('id'),
             displayAd = function ($adSlot) {
-                slots[slotId] = {
-                    isRendered: false,
-                    isLoading: false,
-                    slot: defineSlot($adSlot)
-                };
+                adverts[slotId] = new Advert($adSlot);
                 if (shouldLazyLoad()) {
                     enableLazyLoad();
                 } else {
                     loadSlot(slotId);
                 }
             };
-        if (displayed && !slots[slotId]) { // dynamically add ad slot
+        if (displayed && !adverts[slotId]) { // dynamically add ad slot
             // this is horrible, but if we do this before the initial ads have loaded things go awry
             if (rendered) {
                 displayAd($adSlot);
@@ -689,14 +658,20 @@ define([
     }
 
     function refreshSlot($adSlot) {
-        var slot = slots[$adSlot.attr('id')].slot;
+        var slot = adverts[$adSlot.attr('id')].slot;
         if (slot) {
             googletag.pubads().refresh([slot]);
         }
     }
 
-    function getSlots() {
-        return slots;
+    function Advert($adSlot) {
+        this.isRendered = false;
+        this.isLoading = false;
+        this.slot = defineSlot($adSlot);
+    }
+
+    function getAdverts() {
+        return adverts;
     }
 
     /**
@@ -706,17 +681,18 @@ define([
         init:           init,
         addSlot:        addSlot,
         refreshSlot:    refreshSlot,
-        getSlots:       getSlots,
+
         // Used privately but exposed only for unit testing
+        getAdverts:     getAdverts,
         shouldLazyLoad: shouldLazyLoad,
         getCreativeIDs: getCreativeIDs,
         checkForBreakout: checkForBreakout,
 
         // testing
         reset: function () {
-            displayed      = false;
-            rendered       = false;
-            slots          = {};
+            displayed = false;
+            rendered = false;
+            adverts = {};
             slotsToRefresh = [];
             mediator.off('window:resize', windowResize);
             hasBreakpointChanged = detect.hasCrossedBreakpoint(true);

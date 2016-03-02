@@ -1,29 +1,37 @@
-.gu-comlabel__btn {
-    @include f-textSans;
-    @include font-size(14, 18);
+.gu-comlabel {
+    color: colour(neutral-1);
+    
+    .gu-comlabel__btn {
+        @include f-textSans;
+        @include font-size(14, 10);
 
-    position: absolute;
-    top: $gs-baseline / 2;
-    right: $gs-baseline / 2;
-    width: auto;
-    padding: 5px 5px 1px;
-    z-index: $zindex-modal;
-    background-color: $gustyle-tone;
-    border: 0;
-    font-weight: bold;
-    text-transform: uppercase;
+        position: absolute;
+        top: $gs-baseline / 2;
+        right: $gs-baseline / 2;
+        width: auto;
+        padding: 8px 5px 1px;
+        border-radius: 100%;
+        z-index: $zindex-modal;
+        background-color: $gustyle-tone;
+        border: 0;
+        font-weight: bold;
+        text-transform: uppercase;
 
-    &.is-active:before {
-        top: $gs-baseline * 2;
-        border-bottom-color: $gustyle-tone;
-    }
+        &.is-active:before {
+            top: 32px;
+            border-bottom-color: $gustyle-tone;
+            margin-left: -6px;
+        }
 
-    &:after {
-        display: none;
+        &:after {
+            display: none;
+        }
     }
 }
 
 .gu-comlabel__icon {
+    display: block;
+
     svg {
         width: 13px;
         height: 13px;

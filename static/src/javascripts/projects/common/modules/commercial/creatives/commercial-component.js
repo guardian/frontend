@@ -28,7 +28,7 @@ define([
     $,
     config,
     mediator,
-    LazyLoad,
+    lazyload,
     Tabs,
     Toggles,
     isArray,
@@ -136,7 +136,7 @@ define([
     };
 
     CommercialComponent.prototype.create = function () {
-        new LazyLoad({
+        lazyload({
             url: this.components[this.type],
             container: this.adSlot,
             success: function () {
@@ -149,7 +149,7 @@ define([
             error: function () {
                 bonzo(this.adSlot).hide();
             }.bind(this)
-        }).load();
+        });
 
         return this;
     };
