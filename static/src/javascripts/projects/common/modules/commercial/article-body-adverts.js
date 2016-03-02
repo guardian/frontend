@@ -5,6 +5,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/modules/article/space-filler',
+    'common/modules/commercial/track-ad',
     'common/modules/commercial/dfp/dfp-api',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features'
@@ -15,6 +16,7 @@ define([
     detect,
     mediator,
     spaceFiller,
+    trackAd,
     dfp,
     createAdSlot,
     commercialFeatures
@@ -105,24 +107,6 @@ define([
         $ad.insertBefore(para);
     }
 
-    // If a merchandizing component has been rendered but is empty,
-    // we allow a second pass for regular inline ads. This is because of
-    // the decoupling between the spacefinder algorightm and the targeting
-    // in DFP: we can only know if a slot can be removed after we have
-    // received a response from DFP
-    function onAdRendered(event) {
-        if (event.slot.getSlotElementId() === 'dfp-ad--im' && event.isEmpty) {
-            mediator.off('modules:commercial:dfp:rendered', onAdRendered);
-            return addArticleAds(2, getRules()).then(function (countAdded) {
-                return countAdded === 2 ?
-                    addArticleAds(8, getLongArticleRules()) :
-                    countAdded;
-            }).then(function () {
-                $('.ad-slot--inline').each(dfp.addSlot);
-            });
-        }
-    }
-
     function init() {
         if (!commercialFeatures.articleBodyAdverts) {
             return false;
@@ -137,14 +121,33 @@ define([
         }
 
         return config.switches.viewability ?
-            addArticleAds(2, rules).then(function (countAdded) {
-                if (config.page.hasInlineMerchandise && countAdded === 0) {
-                    mediator.on('modules:commercial:dfp:rendered', onAdRendered);
-                }
-
-                return countAdded === 2 ?
-                    addArticleAds(8, getLongArticleRules()) :
-                    countAdded;
+            addArticleAds(2, rules)
+            .then(function (countAdded) {
+                return Promise.all([
+                    countAdded,
+                    /* This flag is to check if we allow a second pass: If the page has an inline
+                       merch component and because of it no inline slot could be added, we'll wait
+                       for it to load and the re-try */
+                    !(config.page.hasInlineMerchandise && countAdded === 0) || trackAd.waitFor('dfp-ad--im')
+                ]);
+            })
+            .then(function (args) {
+                var countAdded = args[0];
+                var isLoaded = args[1];
+                // isLoaded can only be false if we fall in the second-pass case
+                return !isLoaded ? addArticleAds(2, rules) : countAdded;
+            })
+            .then(function (countAdded) {
+                return Promise.all([
+                    countAdded,
+                    countAdded === 2 ? addArticleAds(8, getLongArticleRules()) : 0
+                ]);
+            })
+            .then(function (finalCountAdded) {
+                /* We can safely add slots, even if they were previously added.
+                   dfp-api handles everything for us */
+                $('.ad-slot--inline').each(dfp.addSlot);
+                return finalCountAdded[0] + finalCountAdded[1];
             }) :
             addArticleAds(2, rules);
     }
