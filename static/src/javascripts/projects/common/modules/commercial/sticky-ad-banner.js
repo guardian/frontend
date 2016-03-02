@@ -38,7 +38,7 @@ define([
     var $adBannerInner = $('.ad-slot--top-above-nav', $adBanner);
     var $header = $('.js-header');
 
-    var topAdRenderedPromise = trackAd('dfp-ad--top-above-nav');
+    var topAdRenderedPromise = trackAd.track('dfp-ad--top-above-nav');
 
     var getAdIframe = function () { return $('iframe', $adBanner); };
 

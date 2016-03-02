@@ -4,7 +4,7 @@ define([
     trackAd
 ) {
     function trackRubiconAdResize(id) {
-        return trackAd(id)
+        return trackAd.track(id)
             .then(getIframeId)
             .then(listenForRubicon)
             .then(getDims);

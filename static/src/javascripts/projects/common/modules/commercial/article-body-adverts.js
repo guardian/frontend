@@ -128,7 +128,7 @@ define([
                     /* This flag is to check if we allow a second pass: If the page has an inline
                        merch component and because of it no inline slot could be added, we'll wait
                        for it to load and the re-try */
-                    !(config.page.hasInlineMerchandise && countAdded === 0) || trackAd('dfp-ad--im')
+                    !(config.page.hasInlineMerchandise && countAdded === 0) || trackAd.track('dfp-ad--im')
                 ]);
             })
             .then(function (args) {

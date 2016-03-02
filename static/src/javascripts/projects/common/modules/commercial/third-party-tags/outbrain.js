@@ -108,14 +108,14 @@ define([
                 return Promise.resolve(true);
             }
 
-            return trackAd('dfp-ad--merchandising-high').then(function (isHiResLoaded) {
+            return trackAd.track('dfp-ad--merchandising-high').then(function (isHiResLoaded) {
                 // if the high-priority merch component has loaded, we wait until
                 // the low-priority one has loaded to decide if an outbrain widget is loaded
                 // if it hasn't loaded, the outbrain widget is loaded at its default
                 // location right away
                 return Promise.all([
                     isHiResLoaded,
-                    isHiResLoaded ? trackAd('dfp-ad--merchandising') : true
+                    isHiResLoaded ? trackAd.track('dfp-ad--merchandising') : true
                 ]);
             }).then(function (args) {
                 var isHiResLoaded = args[0];

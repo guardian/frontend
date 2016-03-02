@@ -107,8 +107,8 @@ define([
                 eventStub.isEmpty = true;
                 eventStubLo.isEmpty = true;
                 Promise.all([
-                    trackAd('dfp-ad--merchandising-high'),
-                    trackAd('dfp-ad--merchandising')
+                    trackAd.track('dfp-ad--merchandising-high'),
+                    trackAd.track('dfp-ad--merchandising')
                 ])
                 .then(sut.init)
                 .then(function () {
@@ -157,8 +157,8 @@ define([
                 eventStub.isEmpty = true;
                 eventStubLo.isEmpty = true;
                 Promise.all([
-                    trackAd('dfp-ad--merchandising-high'),
-                    trackAd('dfp-ad--merchandising')
+                    trackAd.track('dfp-ad--merchandising-high'),
+                    trackAd.track('dfp-ad--merchandising')
                 ])
                 .then(sut.init)
                 .then(function () {
@@ -179,12 +179,13 @@ define([
             });
 
             it('should load in the low-priority merch component', function (done) {
+                trackAd = new trackAd.constructor();
                 eventStub.isEmpty = false;
                 eventStubLo.isEmpty = true;
 
                 Promise.all([
-                    trackAd('dfp-ad--merchandising-high'),
-                    trackAd('dfp-ad--merchandising')
+                    trackAd.track('dfp-ad--merchandising-high'),
+                    trackAd.track('dfp-ad--merchandising')
                 ])
                 .then(function (args) {
                     expect(args[0]).toBe(true);
@@ -201,12 +202,13 @@ define([
             });
 
             it('should not load if both merch components are loaded', function (done) {
+                trackAd = new trackAd.constructor();
                 eventStub.isEmpty = false;
                 eventStubLo.isEmpty = false;
 
                 Promise.all([
-                    trackAd('dfp-ad--merchandising-high'),
-                    trackAd('dfp-ad--merchandising')
+                    trackAd.track('dfp-ad--merchandising-high'),
+                    trackAd.track('dfp-ad--merchandising')
                 ])
                 .then(sut.init)
                 .then(function () {
