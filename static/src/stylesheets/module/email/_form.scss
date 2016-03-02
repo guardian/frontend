@@ -163,7 +163,7 @@
     @include fs-textSans(1, $size-only: true);
 }
 
-.email-sub--close {
+.email-sub__close {
     background: 0 none;
     border: 0 none;
     position: absolute;
@@ -171,11 +171,11 @@
     right: 0;
 }
 
-.email-sub--hidden {
+.email-sub__hidden {
     @include u-h();
 }
 
-.email-sub--close-icon svg {
+.email-sub__close-icon svg {
     fill: darken(colour(neutral-2), 10%);
 
     &:hover,
