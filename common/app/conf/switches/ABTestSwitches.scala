@@ -22,4 +22,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABArticleVideoAutoplay = Switch(
+    "A/B Tests",
+    "ab-article-video-autoplay",
+    "Autoplay embedded videos in article",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 4, 3),
+    exposeClientSide = true
+  )
+
 }
