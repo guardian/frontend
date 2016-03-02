@@ -106,11 +106,11 @@ define([
         var transitionTimingFunction = 'cubic-bezier(0, 0, 0, .985)';
         var transitionDuration = '1s';
 
-        els.$page.css({
+        els.$header.css({
             'transition': state.shouldTransition
-                ? ['transform', transitionDuration, transitionTimingFunction].join(' ')
+                ? ['margin-top', transitionDuration, transitionTimingFunction].join(' ')
                 : '',
-            'transform': 'translateY(' + state.adHeight + 'px)'
+            'margin-top': state.adHeight
         });
 
         var pageYOffset = state.scrollCoords[1];
@@ -198,7 +198,7 @@ define([
                 $document: $(document.body),
                 $adBanner: $adBanner,
                 $adBannerInner: $adBannerInner,
-                $page: $('#page'),
+                $header: $header,
                 window: window
             };
             var update = function () {
