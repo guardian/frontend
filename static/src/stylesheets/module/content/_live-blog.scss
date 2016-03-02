@@ -680,11 +680,7 @@ $timeline-width: 15px;
 .toast__space-reserver {
     height: $gs-baseline*3; // was 0, for testing
     margin-bottom: -$gs-baseline*3;
-    display: none;
-
-    .toast-enabled & {
-        display: block;
-    }
+    display: block;
 }
 
 .timeline {
