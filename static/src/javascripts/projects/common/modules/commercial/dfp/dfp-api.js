@@ -531,10 +531,6 @@ define([
             } else {
                 resolve(breakoutIFrame(iFrame, $adSlot));
             }
-        }).then(function (items) {
-            return find(items, function (adType) {
-                return adType !== '';
-            });
         });
     }
 
