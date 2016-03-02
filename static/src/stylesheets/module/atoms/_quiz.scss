@@ -99,26 +99,29 @@
 }
 
 .atom-quiz__answer__icon {
-    position: absolute;
-    left: 1em;
-    top: .9em;
-
-    .atom-quiz__answer__image & {
-        top: auto;
-        bottom: .9em;
-    }
-
-    .atom-quiz__answer--correct .atom-quiz__answer__image &:after {
-        content: 'Correct';
-    }
-
-    .atom-quiz__answer--incorrect .atom-quiz__answer__image &:after {
-        content: 'Incorrect';
-    }
 
     svg {
         height: 1em;
         width: 1em;
+    }
+}
+
+.atom-quiz__answer__text .atom-quiz__answer__icon {
+    position: absolute;
+    left: 1em;
+    top: .9em;
+}
+
+.atom-quiz__answer__image .atom-quiz__answer__icon {
+    top: auto;
+    bottom: .9em;
+
+    .atom-quiz__answer--correct &:after {
+        content: 'Correct';
+    }
+
+    .atom-quiz__answer--incorrect &:after {
+        content: 'Incorrect';
     }
 }
 
