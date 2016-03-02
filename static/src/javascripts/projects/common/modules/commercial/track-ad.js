@@ -11,7 +11,7 @@ define([
         promises = {};
     }
 
-    TrackAd.prototype.track = function(id) {
+    TrackAd.prototype.track = function (id) {
         promises[id] = promises[id] || new Promise(function (resolve, reject) {
             var onAdLoaded = function (event) {
                 if (event.slot.getSlotElementId() === id) {
