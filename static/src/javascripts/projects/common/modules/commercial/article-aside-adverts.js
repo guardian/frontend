@@ -1,4 +1,4 @@
- define([
+define([
     'Promise',
     'common/utils/$',
     'common/utils/$css',
