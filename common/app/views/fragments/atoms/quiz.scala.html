@@ -34,14 +34,16 @@
             @fragments.img(image, widthsByBreakpoint = BodyMedia.inline)
         }
 
-        @question.answers.map( answer => {
-            val hasImage = answer.imageMedia.isDefined
-            if(showResults) {
-                renderAnswerWithResponse(question, answer, maybeUserAnswer, hasImage)
-            } else {
-                renderAnswer(question, answer, field, hasImage)
-            }
-        })
+        <div class="atom-quiz__answers @{if(hasImages(question)) "atom-quiz__answers-images"}">
+            @question.answers.map( answer => {
+                val hasImage = answer.imageMedia.isDefined
+                if(showResults) {
+                    renderAnswerWithResponse(question, answer, maybeUserAnswer, hasImage)
+                } else {
+                    renderAnswer(question, answer, field, hasImage)
+                }
+            })
+        </div>
 
         @maybeUserAnswer.map( userAnswer => {
             userAnswer.imageMedia.map( _ => {

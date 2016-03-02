@@ -37,6 +37,11 @@ package object form {
     getCorrectAnswer(inputQuestion).map(_.id == inputAnswer.id)
   }
 
+  // Returns true if each answer in this question has images.
+  def hasImages(question: Question): Boolean = {
+    !question.answers.exists(answer => answer.imageMedia.isEmpty)
+  }
+
   case class QuizResults(
     quiz: Quiz,
     entries: Seq[(Question, Answer)]
