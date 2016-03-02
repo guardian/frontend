@@ -328,10 +328,19 @@ define([
                     if (abVideoAutoplay) {
                         // Annoyingly we pass the `parentNode` as the video is absolutely positioned.
                         var parentNode = player.el().parentNode;
+                        var firstAutoplay = true;
                         var elementInView = ElementViewable(parentNode, parentNode.clientHeight * (3 / 4), function () {
+                            if (firstAutoplay) {
+                                player.volume(0);
+                                firstAutoplay = false;
+                            }
                             player.play();
                         });
                         elementInView.on('viewenter', function autoplayInView() {
+                            if (firstAutoplay) {
+                                player.volume(0);
+                                firstAutoplay = false;
+                            }
                             player.play();
                         });
                         elementInView.on('viewexit', function autoStopInView() {
