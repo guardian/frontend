@@ -56,10 +56,10 @@ object EmailSubscriptions {
       subscribedTo = subscribedListIds.exists{ x => x == "2635" }
     ),
     EmailSubscription(
-      "Best of Comment is free - Australia",
+      "Best of Guardian Opinion - Australia",
       "comment",
-      "Cartoons from Guardian Australia's resident Walkley-winning cartoonist",
-      "An evening selection of the best reads on Comment is free in Australia",
+      "An evening selection of the best reads from Guardian Opinion in Australia",
+      "An evening selection of the best reads from Guardian Opinion in Australia",
       "Daily",
       "2976",
       11,
@@ -187,10 +187,10 @@ object EmailSubscriptions {
       subscribedTo = subscribedListIds.exists{ x => x == "1493" }
     ),
     EmailSubscription(
-      "The best of CiF",
+      "The best of Guardian Opinion",
       "news",
-      "The best of Comment is free",
-      "Comment is free's daily email newsletter with the most shared comment, analysis and editorial articles from the last 24 hours — sign up to read, share and join the debate on the Guardian's most popular opinion pieces every lunchtime.",
+      "Opinion's daily email newsletter",
+      "Guardian Opinion's daily email newsletter with the most shared opinion, analysis and editorial articles from the last 24 hours — sign up to read, share and join the debate every lunchtime.",
       "Weekday lunchtime",
       "2313",
       10,
