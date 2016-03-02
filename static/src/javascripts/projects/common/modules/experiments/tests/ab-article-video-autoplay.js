@@ -1,4 +1,7 @@
-define([], function () {
+define([
+    'common/utils/detect',
+    'common/utils/config'
+], function (detect, config) {
 
     return function () {
         this.id = 'ArticleVideoAutoplay';
@@ -14,7 +17,9 @@ define([], function () {
         this.idealOutcome = 'People are more engaged with video when embedded in article pages';
 
         this.canRun = function () {
-            return true;
+            var bp = detect.getBreakpoint();
+            var ct = config.page.contentType;
+            return (bp === 'desktop' || bp === 'tablet') && (ct === 'LiveBlog' || ct === 'Article');
         };
 
         this.variants = [{
