@@ -107,8 +107,8 @@ define([
                 eventStub.isEmpty = true;
                 eventStubLo.isEmpty = true;
                 Promise.all([
-                    trackAd.track('dfp-ad--merchandising-high'),
-                    trackAd.track('dfp-ad--merchandising')
+                    trackAd.waitFor('dfp-ad--merchandising-high'),
+                    trackAd.waitFor('dfp-ad--merchandising')
                 ])
                 .then(sut.init)
                 .then(function () {
@@ -157,8 +157,8 @@ define([
                 eventStub.isEmpty = true;
                 eventStubLo.isEmpty = true;
                 Promise.all([
-                    trackAd.track('dfp-ad--merchandising-high'),
-                    trackAd.track('dfp-ad--merchandising')
+                    trackAd.waitFor('dfp-ad--merchandising-high'),
+                    trackAd.waitFor('dfp-ad--merchandising')
                 ])
                 .then(sut.init)
                 .then(function () {
@@ -179,44 +179,26 @@ define([
             });
 
             it('should load in the low-priority merch component', function (done) {
-                trackAd = new trackAd.constructor();
-                eventStub.isEmpty = false;
-                eventStubLo.isEmpty = true;
+                var trackAdStub = sinon.stub(trackAd, 'waitFor');
+                trackAdStub.onCall(0).returns(Promise.resolve(true));
+                trackAdStub.onCall(1).returns(Promise.resolve(false));
 
-                Promise.all([
-                    trackAd.track('dfp-ad--merchandising-high'),
-                    trackAd.track('dfp-ad--merchandising')
-                ])
-                .then(function (args) {
-                    expect(args[0]).toBe(true);
-                    expect(args[1]).toBe(false);
+                sut.init().then(function () {
+                    expect(sut.load).toHaveBeenCalledWith('merchandising');
+                    trackAdStub.restore();
                     done();
                 });
-                // .then(sut.init)
-                // .then(function () {
-                //     expect(sut.load).toHaveBeenCalledWith('merchandising');
-                //     done();
-                // });
-                mediator.emit('modules:commercial:dfp:rendered', eventStub);
-                mediator.emit('modules:commercial:dfp:rendered', eventStubLo);
             });
 
             it('should not load if both merch components are loaded', function (done) {
-                trackAd = new trackAd.constructor();
-                eventStub.isEmpty = false;
-                eventStubLo.isEmpty = false;
+                var trackAdStub = sinon.stub(trackAd, 'waitFor');
+                trackAdStub.onCall(0).returns(Promise.resolve(true));
+                trackAdStub.onCall(1).returns(Promise.resolve(true));
 
-                Promise.all([
-                    trackAd.track('dfp-ad--merchandising-high'),
-                    trackAd.track('dfp-ad--merchandising')
-                ])
-                .then(sut.init)
-                .then(function () {
+                sut.init().then(function () {
                     expect(sut.load).not.toHaveBeenCalledWith('merchandising');
                     done();
                 });
-                mediator.emit('modules:commercial:dfp:rendered', eventStub);
-                mediator.emit('modules:commercial:dfp:rendered', eventStubLo);
             });
         });
 

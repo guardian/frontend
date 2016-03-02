@@ -4,18 +4,18 @@ define([
     trackAd
 ) {
     function trackRubiconAdResize(id) {
-        return trackAd.track(id)
+        return trackAd.waitFor(id)
             .then(getIframeId)
             .then(listenForRubicon)
             .then(getDims);
 
         function getIframeId(isLoaded) {
             if (!isLoaded) {
-                return false;
+                return null;
             }
 
             var iframe = document.getElementById(id).querySelector('iframe');
-            return iframe && iframe.id;
+            return iframe && iframe.id ? iframe.id : null;
         }
 
         function listenForRubicon(iFrameId) {
@@ -48,7 +48,7 @@ define([
 
                     window.addEventListener('message', onMessage);
                 }) :
-                false;
+                null;
         }
 
         function getDims(data) {

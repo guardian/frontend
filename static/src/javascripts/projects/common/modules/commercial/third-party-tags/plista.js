@@ -78,7 +78,7 @@ define([
                 module.load();
                 return Promise.resolve(true);
             } else {
-                return trackAd.track('dfp-ad--merchandising-high').then(function (isLoaded) {
+                return trackAd.waitFor('dfp-ad--merchandising-high').then(function (isLoaded) {
                     if (!isLoaded) {
                         module.load();
                     }

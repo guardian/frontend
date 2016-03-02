@@ -111,9 +111,9 @@ define([
                 fixtures.render(fixturesMerch);
 
                 spyOn(sut, 'load');
-                var p = sut.init();
+                var promise = sut.init();
                 expect(sut.load).not.toHaveBeenCalled();
-                p.then(function () {
+                promise.then(function () {
                     expect(sut.load).toHaveBeenCalled();
                     fixtures.clean(fixturesMerch.id);
                     done();

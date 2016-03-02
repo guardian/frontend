@@ -150,7 +150,7 @@ define([
                 config.switches.viewability = true;
                 detect.getBreakpoint = function () {return 'tablet';};
 
-                trackAd.track('dfp-ad--im')
+                trackAd.waitFor('dfp-ad--im')
                 .then(articleBodyAdverts.init)
                 .then(function () {
                     expect(spaceFillerStub.callCount).toBe(12);

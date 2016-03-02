@@ -5,13 +5,9 @@ define([
     Promise,
     mediator
 ) {
-    var promises;
+    var promises = {};
 
-    function TrackAd() {
-        promises = {};
-    }
-
-    TrackAd.prototype.track = function (id) {
+    function waitFor(id) {
         promises[id] = promises[id] || new Promise(function (resolve, reject) {
             var onAdLoaded = function (event) {
                 if (event.slot.getSlotElementId() === id) {
@@ -37,5 +33,7 @@ define([
         return promises[id];
     };
 
-    return new TrackAd();
+    return {
+        waitFor: waitFor
+    };
 });
