@@ -51,7 +51,7 @@ object Quiz extends common.Logging {
     parseResult match {
       case parsed: JsSuccess[Image] => {
         val image = parsed.get
-        val typeData = image.fields.mapValues(value => value.toString)
+        val typeData = image.fields.mapValues(value => value.toString) - "caption"
 
         val assets = for {
           plainAsset <- image.assets
