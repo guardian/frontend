@@ -125,7 +125,6 @@ define([
         var transitionDuration = '1s';
 
         els.$page.css({
-            'will-change': 'transform',
             'transition': state.shouldTransition
                 ? ['transform', transitionDuration, transitionTimingFunction].join(' ')
                 : '',
