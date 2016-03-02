@@ -78,7 +78,7 @@ define([
             },
             morningMailUk: {
                 listId: '3640',
-                canRun: 'morningMailUk',
+                listName: 'morningMailUk',
                 campaignCode: 'morning_mail_uk_article_signup',
                 headline: 'Ever wanted someone to brief you on the day\'s news?',
                 description: 'For the next two weeks we\'ll be trialling a new morning briefing email. We\'re collecting feedback - and if we continue the email, you\'ll be among the first to receive it',
@@ -88,7 +88,7 @@ define([
             },
             morningMailUkSeries: {
                 listId: '3640',
-                canRun: 'morningMailUkSeries',
+                listName: 'morningMailUkSeries',
                 campaignCode: 'morning_mail_uk_series_article_signup',
                 headline: 'The morning briefing - start the day one step ahead',
                 description: 'Sign up and we\'ll give you a leg-up on the day\'s big stories. We\'re collecting feedback for the next two weeks - and if we continue the email, you\'ll be the first to receive it.',
@@ -153,13 +153,19 @@ define([
                 userListSubscriptions = map(response.result.subscriptions, 'listId');
             }
 
+            console.log('here')
+console.log(find(listConfigs, listCanRun))
             // Get the first list that is allowed on this page
             addListToPage(find(listConfigs, listCanRun));
         },
         listCanRun = function (listConfig) {
             var browser = detect.getUserAgent.browser,
                 version = detect.getUserAgent.version;
-
+console.log(listConfig.listName)
+            console.log(canRunList[listConfig.listName]())
+            console.log(!contains(userListSubscriptions, listConfig.listId))
+            console.log(!userHasRemoved(listConfig.listId, 'article'))
+            console.log(!(browser === 'MSIE' && contains(['7','8','9'], version + '')))
             // Check our lists canRun method and
             // make sure that the user isn't already subscribed to this email and
             // don't show on IE 7,8,9 for now
@@ -231,6 +237,9 @@ define([
                 return config.page.seriesId === 'world/series/guardian-morning-briefing';
             },
             morningMailUk: function () {
+                console.log((config.page.edition === 'UK' || config.page.edition === 'INT') &&
+                    !canRunHelpers.pageHasBlanketBlacklist() &&
+                    canRunHelpers.userReferredFromFront())
                 return (config.page.edition === 'UK' || config.page.edition === 'INT') &&
                         !canRunHelpers.pageHasBlanketBlacklist() &&
                         canRunHelpers.userReferredFromFront();
