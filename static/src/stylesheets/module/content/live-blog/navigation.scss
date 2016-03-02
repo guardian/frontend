@@ -81,7 +81,7 @@
     }
 }
 
-.link-navigation__link--secondary {
+.liveblog-navigation__link--secondary {
     border-radius: 21px;
     padding: 0 $gs-gutter / 2;
 
@@ -92,7 +92,7 @@
     }
 }
 
-.link-navigation__link--secondary--newer {
+.liveblog-navigation__link--secondary--newer {
     margin-right: $gs-gutter / 4;
     padding-left: $gs-gutter * 1.5;
 
@@ -104,7 +104,7 @@
     }
 }
 
-.link-navigation__link--secondary--older {
+.liveblog-navigation__link--secondary--older {
     margin-left: $gs-gutter / 4;
     padding-right: $gs-gutter * 1.5;
 
@@ -117,7 +117,7 @@
 }
 
 @include mq($until: mobileLandscape) {
-    .link-navigation__link--secondary {
+    .liveblog-navigation__link--secondary {
         width: $gs-baseline * 3;
         padding: 0;
     }
