@@ -449,7 +449,7 @@ define([
             !config.page.isAdvertisementFeature;
 
         if (config.switches.enhancedMediaPlayer) {
-            if (shouldPreroll) {
+            if (shouldPreroll && !abVideoAutoplay) {
                 require(['js!//imasdk.googleapis.com/js/sdkloader/ima3.js']).then(function () {
                     initWithRaven(true);
                 }, function (e) {
