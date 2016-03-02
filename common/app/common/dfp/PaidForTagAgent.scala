@@ -1,7 +1,11 @@
 package common.dfp
 
+import java.net.URLDecoder
+
 import common.Edition
 import model.Tag
+import model.`package`.frontKeywordIds
+import model.pressed.CollectionConfig
 
 trait PaidForTagAgent {
 
@@ -114,6 +118,29 @@ trait PaidForTagAgent {
   def isFoundationSupported(capiTagId: String,
                             maybeSectionId: Option[String]): Boolean = {
     isPaidFor(capiTagId, maybeSectionId, maybeEdition = None, FoundationFunded)
+  }
+
+  def findContainerCapiTagIdAndDfpTag(config: CollectionConfig):
+  Option[CapiTagIdAndDfpTag] = {
+
+    def containerCapiTagIds(config: CollectionConfig): Seq[String] = {
+      val stopWords = Set("newest", "order-by", "published", "search", "tag", "use-date")
+
+      config.apiQuery map { encodedQuery =>
+        def negativeClause(token: String): Boolean = token.startsWith("-")
+        val query = URLDecoder.decode(encodedQuery, "utf-8")
+        val tokens = query.split( """\?|&|=|\(|\)|\||\,""")
+        (tokens filterNot negativeClause filterNot stopWords.contains flatMap frontKeywordIds).toSeq
+      } getOrElse Nil
+    }
+
+    val candidateCapiTagIds = containerCapiTagIds(config)
+    for (capiTagId <- candidateCapiTagIds) {
+      for (dfpTag <- findWinningDfpTag(currentPaidForTags, capiTagId, None, None)) {
+        return Some(CapiTagIdAndDfpTag(capiTagId, dfpTag))
+      }
+    }
+    None
   }
 
   def sponsorshipTag(capiTags: Seq[Tag], maybeSectionId: Option[String]): Option[Tag] = {
