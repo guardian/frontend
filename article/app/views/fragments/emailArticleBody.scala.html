@@ -3,7 +3,7 @@
 @import views.support.EmailArticleImage
 @import views.support.EmailHelpers._
 @import model.liveblog._
-@import model.EmailAddons.EmailArticle
+@import model.EmailAddons.EmailContentType
 
 @defining(page.article) { article =>
     @fullRow {
@@ -14,6 +14,10 @@
         <h1>@article.trail.headline</h1>
     }
 
+    @article.fields.standfirst.map { standfirst =>
+        @paddedRow(Html(standfirst))
+    }
+    
     @fragments.emailMainMedia(article)
 
     @paddedRow(Seq("author")) {
@@ -62,7 +66,6 @@
 
                 case ImageBlockElement(media, data, showCredit) => {
                     @EmailArticleImage.bestFor(media).map { url =>
-
                         @fullRow {
                             <img width="580" src="@url" @data.get("alt").map { alt => alt="@alt" }>
                         }
@@ -84,6 +87,15 @@
                         }
                     }
                 }
+
+                case GuVideoBlockElement(video, media, data) => {
+                    @data.get("url").map { url =>
+                        @fullRowWithBackground(media) {
+                            <a class="play--button" href="@url"><img class="play--icon" src="@Images.play"></a>
+                        }
+                    }
+                }
+
                 case _ => {}
             }
         }

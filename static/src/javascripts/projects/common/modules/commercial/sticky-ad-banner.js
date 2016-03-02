@@ -6,6 +6,8 @@ define([
     'common/utils/mediator',
     'common/utils/config',
     'common/utils/detect',
+    'common/modules/commercial/track-ad',
+    'common/modules/commercial/track-rubicon-ad-resize',
     'lodash/objects/assign'
 ], function (
     fastdom,
@@ -15,6 +17,8 @@ define([
     mediator,
     config,
     detect,
+    trackAd,
+    trackRubiconAdResize,
     assign) {
 
     // All ads are loaded via DFP, including the following types. DFP does
@@ -34,40 +38,18 @@ define([
     var $adBannerInner = $('.ad-slot--top-above-nav', $adBanner);
     var $header = $('.js-header');
 
-    var topAdRenderedPromise = new Promise(function (resolve) {
-        mediator.on('modules:commercial:dfp:rendered', function (event) {
-            var dfpAdSlotId = 'dfp-ad--top-above-nav';
-            var isEventForTopAdBanner = event.slot.getSlotElementId() === dfpAdSlotId;
-            if (isEventForTopAdBanner) { resolve(); }
-        });
-    });
+    var topAdRenderedPromise = trackAd.waitFor('dfp-ad--top-above-nav');
 
     var getAdIframe = function () { return $('iframe', $adBanner); };
 
     // Rubicon ads are loaded via DFP like all other ads, but they can
     // render themselves again at any time
-    var newRubiconAdHeightPromise = new Promise(function (resolve) {
-        window.addEventListener('message', function (event) {
-            var data;
-            // other DFP events get caught by this listener, but if they're not json we don't want to parse them or use them
-            try {
-                data = JSON.parse(event.data);
-            } catch (e) {/**/}
-
-            if (data) {
-                var $iframe = getAdIframe();
-                var isRubiconAdEvent = data.type === 'set-ad-height';
-                var isEventForTopAdBanner = isRubiconAdEvent && data.value.id === $iframe[0].id;
-
-                if (isRubiconAdEvent && isEventForTopAdBanner) {
-                    fastdom.read(function () {
-                        var padding = parseInt($adBannerInner.css('padding-top'))
-                            + parseInt($adBannerInner.css('padding-bottom'));
-                        var clientHeight = parseInt(data.value.height) + padding;
-                        resolve(clientHeight);
-                    });
-                }
-            }
+    var newRubiconAdHeightPromise = trackRubiconAdResize('dfp-ad--top-above-nav').then(function (dims) {
+        return fastdom.read(function () {
+            var padding = parseInt($adBannerInner.css('padding-top'))
+                + parseInt($adBannerInner.css('padding-bottom'));
+            var clientHeight = parseInt(dims.height) + padding;
+            return clientHeight;
         });
     });
 
@@ -161,13 +143,11 @@ define([
             });
         });
 
-        var dispatchNewAdHeight = function () {
-            getLatestAdHeight().then(function (adHeight) {
-                dispatch({ type: 'NEW_AD_HEIGHT', adHeight: adHeight });
-            });
+        var dispatchNewAdHeight = function (adHeight) {
+            dispatch({ type: 'NEW_AD_HEIGHT', adHeight: adHeight });
         };
-        topAdRenderedPromise.then(dispatchNewAdHeight);
-        newRubiconAdHeightPromise.then(dispatchNewAdHeight);
+        topAdRenderedPromise.then(getLatestAdHeight).then(dispatchNewAdHeight);
+        newRubiconAdHeightPromise.then(getLatestAdHeight).then(dispatchNewAdHeight);
 
         $adBanner[0].addEventListener('transitionend', function (event) {
             // Protect against any other events which have bubbled

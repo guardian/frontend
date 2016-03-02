@@ -4,9 +4,9 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
-    'common/utils/mediator',
     'common/utils/template',
     'common/modules/identity/api',
+    'common/modules/commercial/track-ad',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/third-party-tags/outbrain-codes',
     'text!common/views/commercial/outbrain.html'
@@ -16,9 +16,9 @@ define([
     $,
     config,
     detect,
-    mediator,
     template,
     identity,
+    trackAd,
     commercialFeatures,
     getCode,
     outbrainStr
@@ -81,30 +81,6 @@ define([
         });
     }
 
-    function trackAd(id) {
-        return new Promise(function (resolve, reject) {
-            var onAdLoaded = function (event) {
-                if (event.slot.getSlotElementId() === id) {
-                    unlisten();
-                    resolve(!event.isEmpty);
-                }
-            };
-
-            var onAllAdsLoaded = function () {
-                unlisten();
-                reject(new Error('Unable to load Outbrain widget: slot ' + id + ' was never loaded'));
-            };
-
-            function unlisten() {
-                mediator.off('modules:commercial:dfp:rendered', onAdLoaded);
-                mediator.off('modules:commercial:dfp:alladsrendered', onAllAdsLoaded);
-            }
-
-            mediator.on('modules:commercial:dfp:rendered', onAdLoaded);
-            mediator.on('modules:commercial:dfp:alladsrendered', onAllAdsLoaded);
-        });
-    }
-
     function identityPolicy() {
         return !(identity.isUserLoggedIn() && config.page.commentable);
     }
@@ -132,14 +108,14 @@ define([
                 return Promise.resolve(true);
             }
 
-            return trackAd('dfp-ad--merchandising-high').then(function (isHiResLoaded) {
+            return trackAd.waitFor('dfp-ad--merchandising-high').then(function (isHiResLoaded) {
                 // if the high-priority merch component has loaded, we wait until
                 // the low-priority one has loaded to decide if an outbrain widget is loaded
                 // if it hasn't loaded, the outbrain widget is loaded at its default
                 // location right away
                 return Promise.all([
                     isHiResLoaded,
-                    isHiResLoaded ? trackAd('dfp-ad--merchandising') : true
+                    isHiResLoaded ? trackAd.waitFor('dfp-ad--merchandising') : true
                 ]);
             }).then(function (args) {
                 var isHiResLoaded = args[0];
