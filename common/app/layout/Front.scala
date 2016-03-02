@@ -118,7 +118,7 @@ object ContainerCommercialOptions {
 
       ContainerCommercialOptions(
         isSponsored = dfpTag.paidForType == Sponsored,
-        isAdvertisementFeature = dfpTag.paidForType == AdvertisementFeature,
+        isPaidContainer = dfpTag.paidForType == AdvertisementFeature,
         isFoundationSupported = dfpTag.paidForType == FoundationFunded,
         sponsor,
         sponsorshipTag = Some(SponsorshipTag(dfpTag.tagType, capiTagId)),

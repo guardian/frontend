@@ -23,8 +23,8 @@
         case _ => {}
     }
 
-    @(containerDefinition.container, isPaidContent) match {
-        case (MostPopular, true) => {}
+    @containerDefinition.container match {
+        case _: MostPopular if isPaidFront => {}
         case _ => {
         <section id="@componentName"
         class="@GetClasses.forContainerDefinition(containerDefinition)"
