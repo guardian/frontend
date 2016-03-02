@@ -30,10 +30,6 @@
     width: 50%;
     float: left;
 
-    &:nth-child(even) {
-        clear: both;
-    }
-
     .caption {
         padding-bottom: 0;
     }
@@ -96,6 +92,20 @@
 
 .atom-quiz__answer__image {
     padding: $gs-gutter * .5;
+    border-left: 4px solid #ffffff;
+    border-bottom: 4px solid #ffffff;
+    box-sizing: border-box;
+}
+
+.atom-quiz__answers-images {
+    overflow: auto;
+    margin-left: -4px;
+}
+
+// Text answers have reveal-text nested, but Image answers have reveal-text as a sibling to atom-quiz__answers.
+.atom-quiz__answers + .atom-quiz__answer__reveal-text {
+    padding: $gs-gutter * .5;
+    background-color: fade-out(colour(quiz-correct), .4);
 }
 
 .atom-quiz__answer__icon {
@@ -113,8 +123,8 @@
 }
 
 .atom-quiz__answer__image .atom-quiz__answer__icon {
-    top: auto;
-    bottom: .9em;
+    padding-top: $gs-baseline;
+    display: block;
 
     .atom-quiz__answer--correct &:after {
         content: 'Correct';
