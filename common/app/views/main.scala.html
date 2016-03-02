@@ -38,9 +38,12 @@
         }
 
         <div id="page">
+
+            @fragments.header(page)
+
             @if(!(page.metadata.hasHeader && getContent(page).exists(_.tags.isArticle))) {
-                @fragments.header(page)
                 @if(!mvt.CMTopBannerPosition.isParticipating) {
+
                     @if(adBelowNav) {
                         @fragments.commercial.topBannerBelowNav()
                     }
