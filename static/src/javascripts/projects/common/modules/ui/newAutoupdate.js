@@ -143,7 +143,8 @@ define([
             if (!updating && newBlocks) {
                 updating = true;
                 // Clean up blocks before insertion
-                var resultHtml = $.create('<div>' + newBlocks + '</div>')[0];
+                var resultHtml = $.create('<div>' + newBlocks + '</div>')[0],
+                    $notificationsLink = $('js-notification-link');
                 var elementsToAdd;
 
                 fastdom.write(function () {
@@ -151,7 +152,15 @@ define([
                     elementsToAdd = toArray(resultHtml.children);
 
                     // Insert new blocks and animate
-                    $liveblogBody.prepend(elementsToAdd);
+                    if($notificationsLink.length ==0 ) {
+                        console.log("++ Notifications shown");
+                        $liveblogBody.prepend(elementsToAdd);
+                    } else {
+                        console.log("++ No Notifications shown");
+                        var latestBlock = $('.block').first();
+                        latestBlock.before(elementsToAdd);
+                    }
+
 
                     if (detect.pageVisible()) {
                         revealInjectedElements();

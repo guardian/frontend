@@ -80,6 +80,7 @@ define([
                 });
 
             fastdom.write(function () {
+                console.log("Jacksie!");
                 $('.js-liveblog-body').prepend(src);
             });
 

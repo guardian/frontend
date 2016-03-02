@@ -90,8 +90,10 @@ define([
         createAutoUpdate: function () {
             if (config.page.isLive) {
                 if (config.switches.liveblogToast) {
+                    console.log("++ New auto");
                     AutoUpdateNew();
                 } else if (window.location.search.indexOf('?page=') !== 0/*TODO proper guardian.config val*/) {
+                    console.log("++ Old auto")
                     var timerDelay = detect.isBreakpoint({ min: 'desktop' }) ? 5000 : 60000;
                     autoUpdate = new AutoUpdate({
                         path: getUpdatePath,

@@ -67,25 +67,35 @@ define([
 
         this.view = {
             render: function (res) {
-                var $attachTo = [bonzo(options.attachTo[0]), bonzo(options.attachTo[1])],
+                var $liveBlogBody = bonzo(options.attachTo[0]),
+                    $liveBlogTimeline = bonzo(options.attachTo[1]),
                     date = new Date().toString(),
                     resultHtml = [
                         $.create('<div>' + res[options.responseField[0]] + '</div>')[0],
                         $.create('<div>' + res[options.responseField[1]] + '</div>')[0]
                     ],
-                    elementsToAdd = toArray(resultHtml[0].children);
+                    elementsToAdd = toArray(resultHtml[0].children),
+                    $notificationsLink = $('js-notification-link');
 
                 this.unreadBlocks += resultHtml[0].children.length;
 
                 bonzo(resultHtml[0].children).addClass('autoupdate--hidden');
-                $attachTo[0].prepend(elementsToAdd);
-                $attachTo[1].prepend(toArray(resultHtml[1].children));
+                if($notificationsLink.length == 0) {
+                    console.log("++ No Notifications")
+                    $liveBlogBody.prepend(elementsToAdd);
+                } else {
+                    console.log("++ No Notifications shown");
+                    var latestBlock = $('.block').first();
+                    latestBlock.before(elementsToAdd);
+                }
+
+                $liveBlogTimeline.prepend(toArray(resultHtml[1].children));
 
                 if (elementsToAdd.length) {
                     mediator.emit('modules:autoupdate:updates', elementsToAdd.length);
                 }
                 // add a timestamp to the attacher
-                $attachTo[0].attr('data-last-updated', date);
+                $liveBlogBody.attr('data-last-updated', date);
                 twitter.enhanceTweets();
 
                 if (this.isUpdating && detect.pageVisible()) {
