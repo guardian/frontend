@@ -55,7 +55,7 @@ define([
             });
 
             Promise.all(modulePromises).then(function () {
-                 robust.catchErrorsAndLogAll([
+                robust.catchErrorsAndLogAll([
                     ['cm-dfp', dfp.init],
                     // TODO does dfp return a promise?
                     ['cm-ready', function () {
