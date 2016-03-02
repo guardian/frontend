@@ -54,7 +54,7 @@
             } else {
                 <div class="submeta no-comments">
             }
-                    <a href="@Configuration.site.host/" class="cta cta--medium main-site-link">
+                    <a href="@LinkTo(page.metadata.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, page.metadata.webUrl)))" class="cta cta--medium main-site-link">
                         View on theguardian.com
                     </a>
                 </div>
