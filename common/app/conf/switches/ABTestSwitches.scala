@@ -13,21 +13,12 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABIdentityRegisterV2 = Switch(
+  val ABIdentityRegisterMembershipStandfirst = Switch(
     "A/B Tests",
-    "ab-identity-register-v2",
-    "New user registration page variant for Identity",
+    "ab-identity-register-membership-standfirst",
+    "Membership registration page variant for Identity",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 1),
-    exposeClientSide = true
-  )
-
-  val ABIdentitySignInV2 = Switch(
-    "A/B Tests",
-    "ab-identity-sign-in-v2",
-    "New sign in page variant for Identity",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 1),
+    sellByDate = new LocalDate(2016, 4, 1),
     exposeClientSide = true
   )
 

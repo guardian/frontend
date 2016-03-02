@@ -235,7 +235,16 @@ trait CommercialSwitches {
     "outbrain-on-amp",
     "Show an Outbrain component on amp pages",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 2),
+    sellByDate = new LocalDate(2016, 4, 5),
+    exposeClientSide = false
+  )
+
+  val BritishCouncilBeacon = Switch(
+    "Commercial",
+    "british-council-beacon",
+    "British Council's beacon",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 1),
     exposeClientSide = false
   )
 

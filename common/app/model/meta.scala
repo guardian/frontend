@@ -435,24 +435,6 @@ object Elements {
   }
 }
 final case class Elements(elements: Seq[Element]) {
-
-  val trailPicMinDesiredSize = 460
-
-  // Find a main picture crop which matches this aspect ratio.
-  def trailPictureAll(aspectWidth: Int, aspectHeight: Int): List[Element] = {
-
-    (thumbnail.find(_.images.imageCrops.exists(_.width >= trailPicMinDesiredSize)) ++ mainPicture ++ thumbnail).flatMap { image: ImageElement =>
-      image.images.imageCrops.filter { crop =>
-        IsRatio(aspectWidth, aspectHeight, crop.width, crop.height)
-      } match {
-        case Nil => None
-        case crops => Some(image)
-      }
-    } .toList
-  }
-
-  def trailPicture(aspectWidth: Int, aspectHeight: Int): Option[Element] = trailPictureAll(aspectWidth, aspectHeight).headOption
-
   /*
   Now I know you might THINK that you want to change how we get the main picture.
   The people around you might have convinced you that there is some magic formula.

@@ -1,6 +1,6 @@
 package model.liveblog
 
-import com.gu.contentapi.client.model.v1.ElementType.{Text, Image, Audio, Video, Embed}
+import com.gu.contentapi.client.model.v1.ElementType.{Text, Tweet, Image, Audio, Video, Embed}
 import com.gu.contentapi.client.model.v1.{BlockElement => ApiBlockElement}
 import model.{ImageMedia, ImageAsset, AudioAsset, VideoAsset}
 import play.api.libs.json._
@@ -23,6 +23,7 @@ object BlockElement {
   def make(element: ApiBlockElement): Option[BlockElement] = {
     element.`type` match {
       case Text => Some(TextBlockElement(element.textTypeData.flatMap(_.html)))
+      case Tweet => Some(TextBlockElement(element.tweetTypeData.flatMap(_.html)))
       case Image => Some(ImageBlockElement(
         ImageMedia(element.assets.zipWithIndex.map { case (a, i) => ImageAsset.make(a, i) }),
         imageDataFor(element),

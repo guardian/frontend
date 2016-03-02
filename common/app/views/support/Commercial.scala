@@ -1,6 +1,5 @@
 package views.support
 
-import com.gu.facia.api.models.{EditorialPriority, FrontPriority}
 import common.Edition
 import common.dfp.AdSize.{leaderboardSize, responsiveSize}
 import common.dfp._
@@ -82,9 +81,8 @@ object Commercial {
 
   object container {
 
-    def shouldRenderAsCommercialContainer(frontPriority: Option[FrontPriority], container: FaciaContainer): Boolean = {
-      frontPriority.contains(EditorialPriority) &&
-      container.commercialOptions.isAdvertisementFeature
+    def shouldRenderAsCommercialContainer(isPaidFront: Boolean, container: FaciaContainer): Boolean = {
+      !isPaidFront && container.commercialOptions.isPaidContainer
     }
 
     def mkSponsorDataAttributes(config: CollectionConfig): Option[SponsorDataAttributes] = {
@@ -100,6 +98,19 @@ object Commercial {
         )
       }
     }
+
+    def numberOfItems(container: FaciaContainer): Int = container.containerLayout.map {
+      _.slices.flatMap {
+        _.columns.flatMap { case ColumnAndCards(_, cards) =>
+          cards.flatMap {
+            _.item match {
+                case card: ContentCard => Some(card)
+                case _ => None
+            }
+          }
+        }
+      }.length
+    }.getOrElse(0)
   }
 
   object containerCard {

@@ -7,109 +7,102 @@
 @if(showResults) {
     <h2>@quiz.title</h2>
 }
-<form action="@postUrl(quiz)" method="POST">
-
-    <ol class="quiz @{if (quiz.quizType == "personality") "quiz--personality" else "quiz--knowledge" } @{if (showResults) "quiz--results" else "quiz--questions"}">
+<form action="@postUrl(quiz)" method="POST" class="atom-quiz atom-quiz--@{quiz.quizType} @{if (showResults) "atom-quiz--results" else "atom-quiz--questions"}" >
         @quiz.content.questions.zipWithIndex.map { case (question, index) =>
-            @renderQuestion(question, playForm(s"answers[$index]"), maybeResults.flatMap(_.getAnswerFor(question)))
+            @renderQuestion(question,
+                playForm(s"answers[$index]"),
+                maybeResults.flatMap(_.getAnswerFor(question))
+            )
         }
-    </ol>
-
     @maybeResults.map { results =>
         @renderEndMessage(results)
     }.getOrElse {
-        <button class="button" type="submit">Submit answers</button>
+        <button class="button button--xlarge button--primary" type="submit">Submit answers</button>
     }
-
 </form>
 
+@renderQuestion(question: Question, field: play.api.data.Field, maybeUserAnswer: Option[Answer]) = {
+    <fieldset class="atom-quiz__question
+        @{ if (showResults) {
+            s"atom-quiz__question--${if(maybeUserAnswer.isEmpty) "without-response" else "with-response" }"
+          }
+        }">
+        <legend class="atom-quiz__question-text">@question.text</legend>
+
+        @question.answers.map( answer => {
+            if(showResults) {
+                val isCorrect = maybeResults.flatMap(_.isCorrectAnswer(question, answer))
+                renderAnswerWithResponse(question, answer, isCorrect, maybeUserAnswer)
+            } else {
+                renderAnswer(question, answer, field)
+            }
+        })
+    </fieldset>
+}
+
+@renderAnswer(question: Question, answer: Answer, field: play.api.data.Field) = {
+    <div class="atom-quiz__answer">
+        <input type="radio"
+            name="@{field.name}"
+            id="answer-@{answer.id}"
+            value="@{answer.id}"
+            class="atom-quiz__answer__input">
+        <label for="answer-@{answer.id}" class="atom-quiz__answer-text">
+            @{answer.text}
+        </label>
+    </div>
+}
+
+@renderAnswerWithResponse(question: Question, answer: Answer, isAnswerCorrect: Option[Boolean], maybeUserAnswer: Option[Answer]) = {
+    <div class="atom-quiz__answer @{ isAnswerCorrect.map(correct =>
+            if (correct == true) "atom-quiz__answer--correct"
+            else if (correct == false) "atom-quiz__answer--incorrect"
+        ).getOrElse("")
+        } @{
+            if(maybeUserAnswer.exists(_.equals(answer))) "atom-quiz__answer--selected"
+        }">
+        <div class="atom-quiz__answer-text">
+            @maybeUserAnswer.map { inputAnswer =>
+                @if(inputAnswer.equals(answer)) {
+                    @isAnswerCorrect.map { correct =>
+                        @inlineSvg(if (correct) {
+                            "tick"
+                        } else {
+                            "cross"
+                        }, "icon", List("atom-quiz__answer__icon"))
+                    }
+                }
+            }
+            @{answer.text}
+            @maybeUserAnswer.map { inputAnswer =>
+                @isAnswerCorrect.map { correct =>
+                    @answer.revealText.map { revealText =>
+                        @if(correct && inputAnswer.equals(answer)) {
+                            <span class="atom-quiz__answer__reveal-text">@revealText</span>
+                        }
+                    }
+                }
+            }
+        </div>
+    </div>
+}
+
 @renderEndMessage(results: QuizResults) = {
-    <div class="quiz__end-message">
-        <div class="quiz__score-message">
+    <div class="atom-quiz__end-message">
+        <div class="atom-quiz__score-message">
             @if(results.isKnowledge) {
-                You got <span class="quiz__score">@results.knowledgeScore/@quiz.content.questions.size</span>
+                You got&#133; <span class="atom-quiz__score">@results.knowledgeScore/@quiz.content.questions.size</span>
             }
             @if(results.isPersonality) {
                 @results.resultBucket.map(_.description)
             }
         </div>
         @results.resultGroup.map { resultGroup =>
-            <div class="quiz__bucket-message">@resultGroup.title</div>
+            <div class="atom-quiz__bucket-message">@resultGroup.title</div>
         }
-        <div class="quiz__share">
-            <div class="quiz__share__cta">Share your results</div>
+        <div class="atom-quiz__share">
+            <div class="atom-quiz__cta">Challenge your friends</div>
             @fragments.social(sharelinks)
         </div>
-    </div>
-}
-
-@renderQuestion(question: Question, field: play.api.data.Field, maybeInputAnswer: Option[Answer]) = {
-    <li class="quiz__question
-        @{ if (showResults) {
-            s"quiz__question--${if(maybeInputAnswer.isEmpty) "without-response" else "with-response" }"
-          }
-        }">
-        <span class="quiz__question__label">@question.text</span>
-
-        <div class="quiz__question__rows">
-            @question.answers.map( answer => {
-                if(showResults) {
-                    val isCorrect = maybeResults.flatMap(_.isCorrectAnswer(question, answer))
-                    renderAnswerWithResponse(question, answer, isCorrect, maybeInputAnswer)
-                } else {
-                    renderAnswer(question, answer, field)
-                }
-            })
-        </div>
-
-    </li>
-}
-
-@renderAnswer(question: Question, answer: Answer, field: play.api.data.Field) = {
-    <div class="quiz__answer">
-        <label for="answer-@{answer.id}" class="quiz__answer__label">
-            <input type="radio"
-                name="@{field.name}"
-                id="answer-@{answer.id}"
-                value="@{answer.id}"
-                class="quiz__answer__input">
-
-            <span class="quiz__answer__text">@{answer.text}</span>
-        </label>
-    </div>
-}
-
-@renderAnswerWithResponse(question: Question, answer: Answer, isAnswerCorrect: Option[Boolean], maybeInputAnswer: Option[Answer]) = {
-    <div class="quiz__answer @{ isAnswerCorrect.map(correct =>
-            if(correct) "quiz__answer--correct" else "quiz__answer--incorrect").getOrElse("")
-        } @{
-            if(maybeInputAnswer.exists(_.equals(answer))) "quiz__answer--selected"
-        }">
-        <label class="quiz__answer__label">
-
-            @maybeInputAnswer.map { inputAnswer =>
-                @if(inputAnswer.equals(answer)) {
-                    @isAnswerCorrect.map { correct =>
-                        <span class="quiz__answer__icon">
-                            @if(correct) {
-                                @inlineSvg("tick", "icon")
-                            } else {
-                                @inlineSvg("cross", "icon")
-                            }
-                        </span>
-                    }
-                }
-            }
-            <span class="quiz__answer__text">@{answer.text}</span>
-            @maybeInputAnswer.map { inputAnswer =>
-                @isAnswerCorrect.map { correct =>
-                    @answer.revealText.map { revealText =>
-                        @if(correct && inputAnswer.equals(answer)) {
-                            <span class="quiz__answer__reveal-text">@revealText</span>
-                        }
-                    }
-                }
-            }
-        </label>
     </div>
 }

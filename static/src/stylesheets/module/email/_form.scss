@@ -53,15 +53,27 @@
     }
 }
 
-.email-sub__label__icon {
+.email-sub__inline-label--is-hidden {
+    display: none;
+}
+
+.submit-input__icon,
+.label__icon {
     display: none; // Hidden by default
 
     svg {
-        fill: $form-label-colour;
-        opacity: .65;
         width: 1.143em;
         height: .857em;
     }
+}
+
+.submit-input__icon svg {
+    fill: $form-primary-colour;
+}
+
+.label__icon svg {
+    fill: $form-label-colour;
+    opacity: .65;
 }
 
 .email-sub__text-input {
@@ -82,6 +94,14 @@
     &:active {
         border-color: $form-primary-colour;
         cursor: pointer;
+    }
+}
+
+.email-sub__submit-input--solo {
+
+    .submit-input__icon {
+        display: inline-block;
+        margin-right: $gs-gutter / 4;
     }
 }
 
@@ -143,6 +163,28 @@
     @include fs-textSans(1, $size-only: true);
 }
 
+.email-sub__close {
+    background: 0 none;
+    border: 0 none;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.email-sub__hidden {
+    @include u-h();
+}
+
+.email-sub__close-icon svg {
+    fill: darken(colour(neutral-2), 10%);
+
+    &:hover,
+    &:focus {
+        cursor: pointer;
+        fill: colour(neutral-2);
+    }
+}
+
 /**
 * Modifications
 */
@@ -160,11 +202,12 @@
         &:focus,
         &:active {
             background-color: darken(guss-colour(neutral-2, $pasteup-palette), 10%);
-            border: 1px solid darken(guss-colour(neutral-2, $pasteup-palette), 10%);
+            border-color: darken(guss-colour(neutral-2, $pasteup-palette), 10%);
         }
     }
 
     .email-sub__small {
+        clear: left;
         color: $form-primary-colour;
         @include fs-textSans(1, $size-only: true);
     }
@@ -220,11 +263,17 @@
     .email-sub__message__description {
         color: guss-colour(neutral-1, $pasteup-palette);
     }
+
+    @include mq($until: tablet) {
+        .email-sub__small {
+            clear: left;
+        }
+    }
 }
 
 .email-sub__form--article,
 .email-sub__form--plain {
-    .email-sub__label__icon {
+    .label__icon {
         display: inline-block;
         margin-right: $gs-gutter / 4;
     }
