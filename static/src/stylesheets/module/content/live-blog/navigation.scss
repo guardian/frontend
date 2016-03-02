@@ -4,10 +4,7 @@
     @include clearfix;
     // If we do support flexbox
     display: flex;
-    @include fs-textSans(2);
-    @include mq(mobileLandscape) {
-        @include fs-textSans(5);
-    }
+    @include fs-textSans(3);
 }
 
 .liveblog-navigation__detail {
@@ -42,82 +39,102 @@
 
 .liveblog-navigation__link {
     display: inline-block;
+    position: relative;
+    color: colour(neutral-1);
+    border: 1px solid colour(neutral-4);
+    height: $gs-baseline * 3;
+    line-height: 38px;
+    font-weight: bold;
+    vertical-align: middle;
 
-    // Override user-agent styles for <a>
     &:hover {
+        border-color: colour(neutral-2);
         text-decoration: none;
     }
 
-    .inline-icon {
-        vertical-align: middle;
-        display: inline-block;
+    svg {
+        fill: colour(neutral-2);
+        position: absolute;
     }
 
-    svg {
-        display: block;
+    @include mq($until: mobileLandscape) {
+        font-size: 0;
     }
 }
 
 .liveblog-navigation__link--primary {
-    padding: $gs-gutter / 2;
-    background: colour(guardian-brand-dark);
+    width: $gs-baseline * 3;
     border-radius: 100%;
 
-    .inline-icon {
-        fill: #ffffff;
+    svg {
+        top: 10px;
+        width: 16px;
+        height: 16px;
     }
+
+    .inline-chevron-right svg {
+        right: 9px;
+    }
+
+    .inline-arrow-left svg {
+        left: 9px;
+    }
+}
+
+.liveblog-navigation__link--secondary {
+    border-radius: 21px;
+    padding: 0 $gs-gutter / 2;
 
     svg {
-        width: 21px;
-        height: 21px;
+        width: 14px;
+        height: 14px;
+        top: 11px;
     }
 }
 
-.liveblog-navigation__link--primary--disabled {
-    background: colour(neutral-5);
-}
-
-.link-navigation__link--secondary {
-    // Increase target area
-    padding-top: $gs-gutter / 2;
-    padding-bottom: $gs-gutter / 2;
-    // Override user-agent styles for <a>
-    color: inherit;
-    font-weight: bold;
-
-    .inline-icon {
-        fill: currentColor;
-    }
-
-    svg {
-        width: 13px;
-        height: 13px;
-    }
-}
-
-.link-navigation__link--secondary--newer {
+.liveblog-navigation__link--secondary--newer {
     margin-right: $gs-gutter / 4;
+    padding-left: $gs-gutter * 1.5;
+
+    svg {
+        left: $gs-gutter / 2;
+    }
     @include mq(mobileLandscape) {
         margin-right: $gs-gutter / 2;
     }
 }
 
-.link-navigation__link--secondary--newer__icon {
-    margin-right: $gs-gutter / 4;
-}
-
 .liveblog-navigation__link--secondary--older {
     margin-left: $gs-gutter / 4;
+    padding-right: $gs-gutter * 1.5;
+
+    svg {
+        right: $gs-gutter / 2;
+    }
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter / 2;
     }
 }
 
-.link-navigation__link--secondary--older__icon {
-    margin-left: $gs-gutter / 4;
+@include mq($until: mobileLandscape) {
+    .liveblog-navigation__link--secondary {
+        width: $gs-baseline * 3;
+        padding: 0;
+    }
 }
 
 .liveblog-navigation__link--disabled {
     cursor: default;
-    color: colour(neutral-3);
+    color: colour(neutral-5);
+    border-color: colour(neutral-6);
+
+    svg {
+        fill: colour(neutral-5);
+    }
+
+    &:hover,
+    &:active {
+        color: colour(neutral-5);
+        border-color: colour(neutral-6);
+    }
 }
