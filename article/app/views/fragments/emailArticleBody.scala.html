@@ -14,6 +14,10 @@
         <h1>@article.trail.headline</h1>
     }
 
+    @article.fields.standfirst.map { standfirst =>
+        @paddedRow(Html(standfirst))
+    }
+    
     @fragments.emailMainMedia(article)
 
     @paddedRow(Seq("author")) {
