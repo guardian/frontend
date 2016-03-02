@@ -43,7 +43,7 @@ define([
     var listConfigs = {
             theCampaignMinute: {
                 listId: '3599',
-                canRun: 'theCampaignMinute',
+                listName: 'theCampaignMinute',
                 campaignCode: 'the_minute_footer',
                 headline: 'Enjoying The Minute?',
                 description: 'Sign up and we\'ll send you the Guardian US Campaign Minute, once per day.',
@@ -58,7 +58,7 @@ define([
             },
             theFilmToday: {
                 listId: '1950',
-                canRun: 'theFilmToday',
+                listName: 'theFilmToday',
                 campaignCode: 'film_article_signup',
                 headline: 'Want the best of Film, direct to your inbox?',
                 description: 'Sign up to Film Today and we\'ll deliver to you the latest movie news, blogs, big name interviews, festival coverage, reviews and more.',
@@ -68,7 +68,7 @@ define([
             },
             theFiver: {
                 listId: '218',
-                canRun: 'theFiver',
+                listName: 'theFiver',
                 campaignCode: 'fiver_article_signup',
                 headline: 'Want a football roundup direct to your inbox?',
                 description: 'Sign up to the Fiver, our daily email on the world of football',
@@ -91,7 +91,7 @@ define([
                             return '1506';
                     }
                 }()),
-                canRun: 'theGuardianToday',
+                listName: 'theGuardianToday',
                 campaignCode: 'guardian_today_article_bottom',
                 headline: 'Want stories like this in your inbox?',
                 description: 'Sign up to The Guardian Today daily email and get the biggest headlines each morning.',
@@ -139,9 +139,9 @@ define([
             addListToPage(find(listConfigs, listCanRun));
         },
         listCanRun = function (listConfig) {
-            // Check our lists canRun method and make sure that the user isn't already subscribed to this email
-            if (listConfig.canRun &&
-                canRunList[listConfig.canRun]() &&
+            // Check our lists listName method and make sure that the user isn't already subscribed to this email
+            if (listConfig.listName &&
+                canRunList[listConfig.listName]() &&
                 !contains(userListSubscriptions, listConfig.listId) &&
                 !userHasRemoved(listConfig.listId, 'article')) {
                 return listConfig;
