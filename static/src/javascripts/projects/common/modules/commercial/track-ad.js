@@ -31,7 +31,7 @@ define([
         });
 
         return promises[id];
-    };
+    }
 
     return {
         waitFor: waitFor
