@@ -50,7 +50,7 @@ define([
     ab
 ) {
     // For the A/B test
-    var abVideoAutoplay = ab.getParticipations().ArticleVideoAutoplay || true;
+    var abVideoAutoplay = ab.getParticipations().ArticleVideoAutoplay;
     function elementIsInView(el, offset) {
         var viewportHeight = window.innerHeight;
         var rect = el.getBoundingClientRect();
@@ -325,7 +325,7 @@ define([
                         resolve();
                     }
 
-                    if (abVideoAutoplay) {
+                    if (abVideoAutoplay.variant === 'autoplay') {
                         // Annoyingly we pass the `parentNode` as the video is absolutely positioned.
                         var parentNode = player.el().parentNode;
                         var firstAutoplay = true;

@@ -9,8 +9,8 @@ define([
         this.expiry = '2016-07-30';
         this.author = 'James Gorrie';
         this.description = 'Autoplay embedded videos on article pages';
-        this.audience = 0.45;
-        this.audienceOffset = .5;
+        this.audience = .2;
+        this.audienceOffset = .8;
         this.successMeasure = 'More video watched when embedded in articles';
         this.audienceCriteria = '';
         this.dataLinkNames = '';
@@ -23,6 +23,9 @@ define([
         };
 
         this.variants = [{
+            id: 'noautoplay',
+            test: function () {}
+        }, {
             id: 'autoplay',
             test: function () {}
         }];
