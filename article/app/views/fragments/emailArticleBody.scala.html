@@ -76,7 +76,7 @@
                 case ImageBlockElement(media, data, showCredit) => {
                     @EmailArticleImage.bestFor(media).map { url =>
                         @fullRow {
-                            <img width="580" src="@url" @data.get("alt").map { alt => alt="@alt" }>
+                            <img width="580" class="media--main" src="@url" @data.get("alt").map { alt => alt="@alt" }>
                         }
 
                         @paddedRow {
