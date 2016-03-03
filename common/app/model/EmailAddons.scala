@@ -57,6 +57,8 @@ object EmailAddons {
   implicit class EmailContentType(c: ContentType) {
     val email = allEmails.find(_.test(c))
 
+    val hasCustomEmailBanner: Boolean = email.exists(_.banner.nonEmpty)
+
     lazy val banner = {
       val banner = email map (_.banner) getOrElse defaultBanner
       Static(s"images/email/banners/$banner").path

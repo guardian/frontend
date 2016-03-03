@@ -12,6 +12,15 @@
         </a>
     }
 
+    @if(!article.hasCustomEmailBanner) {
+        @article.content.seriesName.map { seriesName =>
+            @paddedRow {
+                <h3 class="text--brand">@seriesName</h3>
+                <hr class="rule--compact" />
+            }
+        }
+    }
+
     @paddedRow {
         <h1>@article.trail.headline</h1>
     }

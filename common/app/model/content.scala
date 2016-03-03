@@ -152,6 +152,11 @@ final case class Content(
     tags.blogs.find{tag => tag.id != "commentisfree/commentisfree"}.orElse(tags.series.headOption)
   }
 
+  val seriesName: Option[String] = tags.series.filterNot{ _.id == "commentisfree/commentisfree"} match {
+    case allTags@(mainSeries :: _) => Some(mainSeries.name)
+    case _ => None
+  }
+
   lazy val linkCounts = LinkTo.countLinks(fields.body) + fields.standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
 
   lazy val hasMultipleVideosInPage: Boolean = mainVideoCanonicalPath match {
