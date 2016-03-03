@@ -30,7 +30,11 @@ define([
     GustyleComcontent.prototype.create = function () {
         var externalLinkIcon = svgs('externalLink', ['gu-external-icon']),
             templateOptions = {
-                clickMacro: this.params.clickMacro,
+                articleContentColor: 'gu-display__content-color--' + this.params.articleContentColor,
+                articleContentPosition: 'gu-display__content-position--' + this.params.articleContentPosition,
+                articleHeaderFontSize: 'gu-display__content-size--' + this.params.articleHeaderFontSize,
+                articleTextFontSize: 'gu-display__content-size--' + this.params.articleTextFontSize,
+                brandLogoPosition: 'gu-display__logo-pos--' + this.params.brandLogoPosition,
                 externalLinkIcon: externalLinkIcon
             };
 

@@ -299,14 +299,14 @@ GET            /commercial/capi-single-merch.json                               
 GET            /commercial/capi-single-merch                                                                                     controllers.commercial.ContentApiOffersController.itemHtml
 GET            /commercial/paid.json                                                                                             controllers.commercial.PaidContentCardController.cardJson
 GET            /commercial/paid                                                                                                  controllers.commercial.PaidContentCardController.cardHtml
-GET        /commercial/survey-simple                                     controllers.commercial.StaticPageController.renderSurveySimplePage()
+GET            /commercial/survey-simple                                     controllers.commercial.StaticPageController.renderSurveySimplePage()
+GET            /commercial/multi.json                                                                                                   controllers.commercial.Multi.renderMulti
 
 # Commercial Admin
 GET            /admin/commercial                                                                                                 controllers.admin.CommercialController.renderCommercialMenu()
 GET            /commercialtools/adunits/toapprove                                                                                controllers.admin.CommercialAdUnitController.renderToApprove()
 POST           /commercialtools/adunits/toapprove                                                                                controllers.admin.CommercialAdUnitController.approve()
 GET            /admin/commercial/fluid250                                                                                        controllers.admin.CommercialController.renderFluidAds()
-GET            /commercial/multi.json                                                                                            controllers.commercial.Multi.renderMulti
 GET            /admin/commercial/dfp/flush/view                                                                                  controllers.admin.commercial.DfpDataController.renderCacheFlushPage()
 GET            /admin/commercial/dfp/flush                                                                                       controllers.admin.commercial.DfpDataController.flushCache()
 GET            /admin/commercial/radiator                                                                                        controllers.admin.CommercialController.renderCommercialRadiator()
@@ -328,9 +328,12 @@ GET            /commercial/magento/books                                        
 # AMP
 GET            /most-read-mf2.json                                                                                               controllers.MostPopularController.renderPopularMicroformat2()
 GET            /related-mf2/*path.json                                                                                           controllers.RelatedController.renderMf2(path)
-GET            /container-mf2/:num/:offset/:section.json                                                                         controllers.FaciaController.frontContainersMf2EditionRedirect(num, offset, section)
-GET            /container-mf2/:num/:offset/:section/:edition.json                                                                controllers.FaciaController.renderSomeFrontContainersMf2(num, offset, section, edition)
 GET            /series-mf2/*path.json                                                                                            controllers.SeriesController.renderMf2SeriesStories(path)
+
+GET            /container/count/:count/offset/:offset/mf2.json                                                                   controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section = "", edition = "")
+GET            /container/count/:count/offset/:offset/section/:section/mf2.json                                                  controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section, edition = "")
+GET            /container/count/:count/offset/:offset/edition/:edition/mf2.json                                                  controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section = "", edition)
+GET            /container/count/:count/offset/:offset/section/:section/edition/:edition/mf2.json                                 controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section, edition)
 
 # Onward journeys
 GET            /series/*path.json                                                                                                controllers.SeriesController.renderSeriesStories(path)
@@ -349,6 +352,7 @@ GET            /index/contributors                                              
 GET            /index/contributors/*contributor                                                                                  controllers.TagIndexController.contributor(contributor)
 GET            /$shortCode<p/[\w]+>                                                                                              controllers.ShortUrlsController.redirectShortUrl(shortCode)
 GET            /$shortCode<p/[\w]+>/:campaignCode                                                                                controllers.ShortUrlsController.fetchCampaignAndRedirectShortCode(shortCode, campaignCode)
+POST           /atom/quiz/:id/*path                                                                                              controllers.QuizController.submit(id,path)
 
 # Newspaper pages
 GET            /theguardian                                                                                                      controllers.NewspaperController.latestGuardianNewspaper()

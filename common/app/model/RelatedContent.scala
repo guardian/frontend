@@ -25,8 +25,17 @@ case class RelatedContent (
 
 object RelatedContent {
   def apply(parent: ContentType, response: ItemResponse): RelatedContent = {
-    // It's misleading to use storyPackage here rather than relatedContent. A tidy up should rename this file.
-    val items = response.storyPackage.map { item =>
+    // It's misleading to use storyPackage here rather than relatedContent. A tidy up should rename this object
+    val storyPackagesContent = response.packages.map { packages =>
+      packages.flatMap { p =>
+        p.articles.map(_.content)
+      }
+    } match {
+      case Some(packagesContent) if packagesContent.nonEmpty => packagesContent
+      case _ => response.storyPackage // Fallback to old 'storyPackage' field if no 'packages'
+    }
+
+    val items = storyPackagesContent.map { item =>
       val frontendContent = Content(item)
       RelatedContentItem(frontendContent, FaciaContentConvert.contentToFaciaContent(item))
     }

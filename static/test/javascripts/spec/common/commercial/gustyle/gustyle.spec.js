@@ -11,7 +11,8 @@ define([
 ) {
     var Sut, // System under test
         injector = new Injector(),
-        gustyle;
+        gustyle,
+        config;
 
     describe('GU Style', function () {
         var fixturesConfig = {
@@ -23,16 +24,19 @@ define([
             adSlot, adType;
 
         beforeEach(function (done) {
-            injector.require(['common/modules/commercial/gustyle/gustyle'], function () {
+            injector.require([
+                'common/modules/commercial/gustyle/gustyle',
+                'common/utils/config'
+                ], function () {
                 Sut = arguments[0];
+                config = arguments[1];
 
                 fixtures.render(fixturesConfig);
 
                 adSlot = $('.ad-slot-test');
-                adType =  {
-                    type: 'gu-style',
-                    variant: 'content'
-                };
+                adType = 'gu-style';
+
+                config.page.isContent = false;
 
                 done();
             });
@@ -55,6 +59,17 @@ define([
 
             fastdom.defer(function () {
                 expect(adSlot.hasClass('gu-style')).toBeTruthy();
+                done();
+            });
+        });
+
+        it('should set gu-style--unboxed class on content pages', function (done) {
+            config.page.isContent = true;
+            gustyle = new Sut(adSlot, adType);
+            gustyle.addLabel();
+
+            fastdom.defer(function () {
+                expect(adSlot.hasClass('gu-style--unboxed')).toBeTruthy();
                 done();
             });
         });

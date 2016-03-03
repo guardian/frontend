@@ -2,19 +2,27 @@ define([
     'bonzo',
     'common/utils/$',
     'common/utils/config',
-    'common/utils/fastdom-idle',
-    'lodash/collections/forEach'
+    'common/utils/fastdom-promise',
+
+    'common/modules/commercial/creatives/commercial-component',
+    'common/modules/commercial/creatives/gu-style-comcontent',
+    'common/modules/commercial/creatives/expandable',
+    'common/modules/commercial/creatives/expandable-v2',
+    'common/modules/commercial/creatives/expandable-v3',
+    'common/modules/commercial/creatives/expandable-video',
+    'common/modules/commercial/creatives/expandable-video-v2',
+    'common/modules/commercial/creatives/fluid250',
+    'common/modules/commercial/creatives/fluid250GoogleAndroid',
+    'common/modules/commercial/creatives/foundation-funded-logo',
+    'common/modules/commercial/creatives/scrollable-mpu',
+    'common/modules/commercial/creatives/scrollable-mpu-v2',
+    'common/modules/commercial/creatives/template'
 ], function (
     bonzo,
     $,
     config,
-    idleFastdom,
-    forEach
+    fastdom
 ) {
-    var breakoutClasses = [
-        'breakout__html',
-        'breakout__script'
-    ];
 
     /**
      * Allows ad content to break out of their iframes. The ad's content must have one of the above breakoutClasses.
@@ -22,60 +30,46 @@ define([
      */
     function breakoutIFrame(iFrame, $slot) {
         /*eslint-disable no-eval*/
-        var shouldRemoveIFrame = false,
-            $iFrame            = bonzo(iFrame),
-            iFrameBody         = iFrame.contentDocument.body,
-            $iFrameParent      = $iFrame.parent(),
-            type               = {};
+        var $iFrame            = bonzo(iFrame);
+        var $iFrameParent      = bonzo(iFrame.parentNode);
+        var iFrameBody         = iFrame.contentDocument.body;
+        var type               = {};
+        var $breakoutEl;
 
-        if (iFrameBody) {
-            forEach(breakoutClasses, function (breakoutClass) {
-                $('.' + breakoutClass, iFrameBody).each(function (breakoutEl) {
-                    var creativeConfig,
-                        $breakoutEl     = bonzo(breakoutEl),
-                        breakoutContent = $breakoutEl.html();
+        if (!iFrameBody) {
+            return type;
+        }
 
-                    if (breakoutClass === 'breakout__script') {
-                        // new way of passing data from DFP
-                        if ($breakoutEl.attr('type') === 'application/json') {
-                            creativeConfig = JSON.parse(breakoutContent);
-                            if (creativeConfig.name === 'fluid250-v4' || creativeConfig.name === 'fluid250-v3') {
-                                creativeConfig.name = 'fluid250';
-                            }
-                            require(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
-                                new Creative($slot, creativeConfig.params, creativeConfig.opts).create();
-                            });
-                        } else {
-                            // evil, but we own the returning js snippet
-                            eval(breakoutContent);
-                        }
-
-                        type = {
-                            type: creativeConfig.params.adType || '',
-                            variant: creativeConfig.params.adVariant || ''
-                        };
-
-                    } else {
-                        idleFastdom.write(function () {
-                            $iFrameParent.append(breakoutContent);
-                            $breakoutEl.remove();
-                        });
-
-                        $('.ad--responsive', $iFrameParent[0]).each(function (responsiveAd) {
-                            window.setTimeout(function () {
-                                idleFastdom.write(function () {
-                                    bonzo(responsiveAd).addClass('ad--responsive--open');
-                                });
-                            }, 50);
-                        });
-                    }
-                    shouldRemoveIFrame = true;
+        $breakoutEl = $('.breakout__html, .breakout__script', iFrameBody);
+        if ($breakoutEl.hasClass('breakout__html')) {
+            fastdom.write(function () {
+                $iFrame.hide();
+                $breakoutEl.detach();
+                $iFrameParent.append($breakoutEl[0].children);
+            }).then(function () {
+                var $responsiveAds = $('.ad--responsive', $iFrameParent[0]);
+                fastdom.write(function () {
+                    $responsiveAds.addClass('ad--responsive--open');
                 });
             });
-        }
-        if (shouldRemoveIFrame) {
-            idleFastdom.write(function () {
+        } else if ($breakoutEl.hasClass('breakout__script')) {
+            fastdom.write(function () {
                 $iFrame.hide();
+            }).then(function () {
+                var breakoutContent = $breakoutEl.html();
+                if ($breakoutEl.attr('type') === 'application/json') {
+                    var creativeConfig = JSON.parse(breakoutContent);
+                    if (creativeConfig.name === 'fluid250-v4' || creativeConfig.name === 'fluid250-v3') {
+                        creativeConfig.name = 'fluid250';
+                    }
+                    require(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
+                        new Creative($slot, creativeConfig.params, creativeConfig.opts).create();
+                    });
+                    type = creativeConfig.params.adType || '';
+                } else {
+                    // evil, but we own the returning js snippet
+                    eval(breakoutContent);
+                }
             });
         }
 

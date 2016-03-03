@@ -36,15 +36,16 @@ define([
         ['cm-frontCommercialComponents', frontCommercialComponents.init],
         ['cm-topBannerBelowContainer', topBannerBelowContainer.init],
         ['cm-thirdPartyTags', thirdPartyTags.init],
-        ['cm-badges', badges.init]
+        ['cm-badges', badges.init],
+        ['cm-paidforBand', paidforBand.init]
     ];
-
-    if (config.switches.newCommercialContent) {
-        modules.push(['cm-paidforBand', paidforBand.init]);
-    }
 
     return {
         init: function () {
+            if (!config.switches.commercial) {
+                return;
+            }
+
             var modulePromises = [];
 
             forEach(modules, function (pair) {
@@ -54,15 +55,13 @@ define([
             });
 
             Promise.all(modulePromises).then(function () {
-                if (config.switches.commercial) {
-                    robust.catchErrorsAndLogAll([
-                        ['cm-dfp', dfp.init],
-                        // TODO does dfp return a promise?
-                        ['cm-ready', function () {
-                            mediator.emit('page:commercial:ready');
-                        }]
-                    ]);
-                }
+                robust.catchErrorsAndLogAll([
+                    ['cm-dfp', dfp.init],
+                    // TODO does dfp return a promise?
+                    ['cm-ready', function () {
+                        mediator.emit('page:commercial:ready');
+                    }]
+                ]);
             });
         }
     };

@@ -4,6 +4,7 @@
 @import views.support.{OmnitureAnalyticsData, OmnitureAnalyticsAccount}
 @import conf.Static
 @import conf.switches.Switches.NonBlockingOmniture
+@import conf.switches.Switches.BritishCouncilBeacon
 @import common.InlineJs
 
 @if(NonBlockingOmniture.isSwitchedOn) {
@@ -36,7 +37,7 @@
                 We just need to run Ophan here.
             *@
 
-            if (!guardian.isModernBrowser) {
+            if (!guardian.isEnhanced) {
                 var ophanScript = document.createElement('script'),
                         sc = document.getElementsByTagName('script')[0];
 
@@ -55,3 +56,8 @@
 </noscript>
 
 <img src="@Configuration.debug.beaconUrl/count/pv.gif" alt="" style="display : none ;" rel="nofollow"/>
+
+@if(BritishCouncilBeacon.isSwitchedOn && page.metadata.url.contains("british-council-partner-zone")) {
+    <img alt="DCSIMG" id="DCSIMG" width="1" height="1"
+    src="http://statse.webtrendslive.com/dcsozkqgb00000sh0y1unaabw_9e3r/njs.gif?dcssip=www.guardian.co.uk&amp;dcsuri=/british-council-partner-zone&amp;WT.dl=0&amp;WT.es=www.guardian.co.uk/british-council-partner-zone&amp;WT.sp=Guardian_British_Council_Zone&amp;WT.js=No&amp;WT.tv=BC.nojs.1"/>
+}

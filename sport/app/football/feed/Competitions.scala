@@ -144,7 +144,7 @@ trait Competitions extends LiveMatches with Logging with implicits.Collections w
           case _ =>
         }
       }
-    })
+    }).recover(FootballClient.logErrors)
   }
 
   //one http call updates all competitions
