@@ -36,7 +36,6 @@ define([
             var $iFrame = bonzo(iFrame);
             var $iFrameParent = bonzo(iFrame.parentNode);
             var iFrameBody = iFrame.contentDocument.body;
-            var type = '';
             var $breakoutEl;
 
             if (!iFrameBody) {
@@ -69,14 +68,15 @@ define([
                         require(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
                             new Creative($slot, creativeConfig.params, creativeConfig.opts).create();
                         });
-                        type = creativeConfig.params.adType || '';
-                        resolve(type);
+                        resolve(creativeConfig.params.adType || '');
                     } else {
                         // evil, but we own the returning js snippet
                         eval(breakoutContent);
                         resolve();
                     }
                 });
+            } else {
+                resolve();
             }
         });
     }
