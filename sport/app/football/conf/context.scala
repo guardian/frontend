@@ -4,7 +4,7 @@ import common.PaMetrics._
 import common._
 import feed.Competitions
 import model.{TeamMap, LiveBlogAgent}
-import pa.{Http, PaClient}
+import pa.{PaClientErrorsException, Http, PaClient}
 import play.api.GlobalSettings
 import play.api.libs.ws.WS
 import scala.concurrent.Future
@@ -106,6 +106,14 @@ object FootballClient extends PaClient with Http with Logging with ExecutionCont
   override def GET(urlString: String): Future[pa.Response] = {
     _http.GET(urlString)
   }
+
+  def logErrors[T]: PartialFunction[Throwable, T] = {
+    case e: PaClientErrorsException =>
+      log.error(s"Football Client errors: ${e.getMessage}")
+      PaApiErrorsMetric.increment()
+      throw e
+  }
+
 }
 
 object HealthCheck extends AllGoodHealthcheckController(

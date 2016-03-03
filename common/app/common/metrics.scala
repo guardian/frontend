@@ -188,7 +188,12 @@ object PaMetrics {
     "AP api returned error"
   )
 
-  val all: Seq[FrontendMetric] = Seq(PaApiHttpTimingMetric, PaApiHttpOkMetric, PaApiHttpErrorMetric)
+  object PaApiErrorsMetric extends CountMetric(
+    "pa-content-errors",
+    "AP api returned errors in content"
+  )
+
+  val all: Seq[FrontendMetric] = Seq(PaApiHttpTimingMetric, PaApiHttpOkMetric, PaApiHttpErrorMetric, PaApiErrorsMetric)
 }
 
 object DiscussionMetrics {
