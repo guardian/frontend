@@ -59,8 +59,6 @@ object EmailAddons {
 
     val fallbackSeriesText = if (email.isEmpty) c.content.seriesName else None
 
-    val hasCustomEmailBanner: Boolean = email.exists(_.banner.nonEmpty)
-
     lazy val banner = {
       val banner = email map (_.banner) getOrElse defaultBanner
       Static(s"images/email/banners/$banner").path
