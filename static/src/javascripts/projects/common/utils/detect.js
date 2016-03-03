@@ -8,29 +8,37 @@
 define([
     'common/utils/mediator',
     'common/utils/$',
+    'common/modules/user-prefs',
     'lodash/arrays/last',
     'lodash/arrays/findIndex',
     'lodash/objects/defaults',
+    'lodash/objects/has',
     'lodash/arrays/first',
     'lodash/collections/findLast',
     'common/utils/chain',
     'lodash/collections/contains',
     'lodash/collections/pluck',
     'lodash/arrays/initial',
-    'lodash/arrays/rest'
+    'lodash/arrays/rest',
+    'lodash/functions/memoize',
+    'Promise'
 ], function (
     mediator,
     $,
+    userPrefs,
     last,
     findIndex,
     defaults,
+    has,
     first,
     findLast,
     chain,
     contains,
     pluck,
     initial,
-    rest
+    rest,
+    memoize,
+    Promise
 ) {
 
     var supportsPushState,
@@ -392,42 +400,50 @@ define([
         return 'WebSocket' in window;
     }
 
-    function isModernBrowser() {
-        return window.guardian.isModernBrowser;
+    function isEnhanced() {
+        return window.guardian.isEnhanced;
     }
 
-    function adblockInUse() {
-        if (!detect.cachedAdblockInUse) {
-            var sacrificialAd = createSacrificialAd(),
-                contentBlocked = isHidden(sacrificialAd);
-            sacrificialAd.remove();
-            detect.cachedAdblockInUse = contentBlocked;
-            return contentBlocked;
-        }
-
-        return detect.cachedAdblockInUse;
-
-        function isHidden(bonzoElement) {
-            return bonzoElement.css('display') === 'none';
-        }
-    }
+    // sync adblock detection is deprecated.
+    // it will be removed once sticky nav and omniture top up call are both removed
+    // this is soon - it's not worth refactoring them when they're off soon
+    //
+    // ** don't forget to remove them from the return object too **
+    var adblockInUseSync = memoize(function () {
+        return createSacrificialAd().css('display') === 'none';
+    });
 
     /** Includes Firefox Adblock Plus users who whitelist the Guardian domain */
-    function getFirefoxAdblockPlusInstalled() {
-        var sacrificialAd = createSacrificialAd();
-        var adUnitMozBinding = sacrificialAd.css('-moz-binding');
-        if (adUnitMozBinding) {
-            return adUnitMozBinding.match('elemhidehit') !== null;
-        } else {
-            return false;
-        }
-    }
+    var getFirefoxAdblockPlusInstalledSync = memoize(function () {
+        var adUnitMozBinding = createSacrificialAd().css('-moz-binding');
+        return !!adUnitMozBinding && adUnitMozBinding.match('elemhidehit') !== null;
+    });
 
-    function createSacrificialAd() {
-        var sacrificialAd = $.create('<div class="ad_unit" style="position: absolute; left: -9999px; height: 10px">&nbsp;</div>');
+    var createSacrificialAd = memoize(function () {
+        var sacrificialAd = $.create('<div class="ad_unit" style="position: absolute; height: 10px; top: 0; left: 0; z-index: -1;">&nbsp;</div>');
         sacrificialAd.appendTo(document.body);
         return sacrificialAd;
-    }
+    });
+    // end sync adblock detection
+
+    var getAdBlockers = new Promise(function (resolve) {
+        if (has(window.guardian.adBlockers, 'generic')) {
+            // adblock detection has completed
+            resolve(window.guardian.adBlockers);
+        } else {
+            // Push a listener for when the JS loads
+            window.guardian.adBlockers.onDetect = resolve;
+        }
+    });
+
+    var adblockInUse = getAdBlockers.then(function (adBlockers) {
+        return adBlockers.generic;
+    });
+
+    /** Includes Firefox Adblock Plus users who whitelist the Guardian domain */
+    var getFirefoxAdblockPlusInstalled = getAdBlockers.then(function (adBlockers) {
+        return adBlockers.ffAdblockPlus;
+    });
 
     function getReferrer() {
         return document.referrer || '';
@@ -459,7 +475,9 @@ define([
         hasWebSocket: hasWebSocket,
         getPageSpeed: getPageSpeed,
         breakpoints: breakpoints,
-        isModernBrowser: isModernBrowser,
+        isEnhanced: isEnhanced,
+        adblockInUseSync: adblockInUseSync,
+        getFirefoxAdblockPlusInstalledSync: getFirefoxAdblockPlusInstalledSync,
         adblockInUse: adblockInUse,
         getFirefoxAdblockPlusInstalled: getFirefoxAdblockPlusInstalled,
         getReferrer: getReferrer

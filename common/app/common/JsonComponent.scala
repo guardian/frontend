@@ -39,7 +39,7 @@ object JsonComponent extends Results with implicits.Requests {
   )
 
   private def jsonFor(page: Page, items: (String, Any)*)(implicit request: RequestHeader): String = {
-    jsonFor(("config" -> Json.parse(views.html.fragments.javaScriptConfig(page).body)) +: items: _*)
+    jsonFor(("config" -> Json.parse(templates.js.javaScriptConfig(page).body)) +: items: _*)
   }
 
   private def jsonFor(items: (String, Any)*) = {

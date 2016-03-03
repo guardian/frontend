@@ -281,8 +281,7 @@ final case class MetaData (
     ("analyticsName", JsString(analyticsName)),
     ("isFront", JsBoolean(isFront)),
     ("isSurging", JsString(isSurging.mkString(","))),
-    ("videoJsFlashSwf", JsString(conf.Static("flash/components/video-js-swf/video-js.swf").path)),
-    ("videoJsVpaidSwf", JsString(conf.Static("flash/components/video-js-vpaid/video-js.swf").path))
+    ("videoJsFlashSwf", JsString(conf.Static("flash/components/video-js-swf/video-js.swf").path))
   )
 
   def opengraphProperties: Map[String, String] = Map(
@@ -436,24 +435,6 @@ object Elements {
   }
 }
 final case class Elements(elements: Seq[Element]) {
-
-  val trailPicMinDesiredSize = 460
-
-  // Find a main picture crop which matches this aspect ratio.
-  def trailPictureAll(aspectWidth: Int, aspectHeight: Int): List[Element] = {
-
-    (thumbnail.find(_.images.imageCrops.exists(_.width >= trailPicMinDesiredSize)) ++ mainPicture ++ thumbnail).flatMap { image: ImageElement =>
-      image.images.imageCrops.filter { crop =>
-        IsRatio(aspectWidth, aspectHeight, crop.width, crop.height)
-      } match {
-        case Nil => None
-        case crops => Some(image)
-      }
-    } .toList
-  }
-
-  def trailPicture(aspectWidth: Int, aspectHeight: Int): Option[Element] = trailPictureAll(aspectWidth, aspectHeight).headOption
-
   /*
   Now I know you might THINK that you want to change how we get the main picture.
   The people around you might have convinced you that there is some magic formula.
@@ -551,7 +532,7 @@ final case class Tags(
   lazy val blogs: Seq[Tag] = tagsOfType("Blog")
   lazy val tones: Seq[Tag] = tagsOfType("Tone")
   lazy val types: Seq[Tag] = tagsOfType("Type")
-
+  lazy val tracking: Seq[Tag] = tagsOfType("Tracking")
 
   lazy val richLink: Option[String] = tags.flatMap(_.richLinkId).headOption
   lazy val openModule: Option[String] = tags.flatMap(_.openModuleId).headOption
@@ -573,6 +554,7 @@ final case class Tags(
   lazy val isLetters = tones.exists(_.id == Tags.Letters)
   lazy val isCrossword = types.exists(_.id == Tags.Crossword)
   lazy val isMatchReport = tones.exists(_.id == Tags.MatchReports)
+  lazy val isQuiz = tones.exists(_.id == Tags.quizzes)
 
   lazy val isArticle: Boolean = tags.exists { _.id == Tags.Article }
   lazy val isSudoku: Boolean = tags.exists { _.id == Tags.Sudoku } || tags.exists(t => t.id == "lifeandstyle/series/sudoku")
@@ -618,7 +600,7 @@ object Tags {
   val Letters = "tone/letters"
   val Podcast = "type/podcast"
   val MatchReports = "tone/matchreports"
-
+  val quizzes = "tone/quizzes"
   val Article = "type/article"
   val Gallery = "type/gallery"
   val Video = "type/video"

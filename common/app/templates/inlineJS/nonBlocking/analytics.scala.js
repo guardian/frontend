@@ -72,18 +72,21 @@ try {
         s.prop1     = config.page.headline || '';
         s.prop3     = config.page.publication || '';
         s.prop6     = config.page.author || '';
-        s.prop13    = config.page.series || '';
+        s.prop13    = config.page.seriesTags || '';
 
         // getting clientWidth causes a reflow, so avoid using if possible
         s.eVar21    = (window.innerWidth || document.documentElement.clientWidth)
             + 'x'
             + (window.innerHeight || document.documentElement.clientHeight);
 
-
         s.prop4     = config.page.keywords || '';
         s.prop8     = config.page.pageCode || '';
         s.prop9     = config.page.contentType || '';
+        // Previous Content type
+        s.prop70    = s.getPreviousValue(s.prop9, "s_prev_ct");
         s.prop10    = config.page.tones || '';
+        s.prop5     = config.page.trackingIds || '';
+
         s.prop25    = config.page.blogs || '';
         s.channel   = getChannel();
 
@@ -144,7 +147,7 @@ try {
         // Set Page View Event
         s.events    = s.apl(s.events, 'event4', ',', 2);
 
-        s.prop56    = guardian.isModernBrowser ? 'Javascript' : 'Partial Javascript';
+        s.prop56    = guardian.isEnhanced ? 'Javascript' : 'Partial Javascript';
 
         // Set Time Parting Day and Hour Combination - 0 = GMT
         s.prop20    = tpA[2] + ':' + tpA[1];
@@ -154,6 +157,45 @@ try {
         // in the Omniture backend it only ever holds the first
         // value a user gets, so in effect it is the first time
         // we saw this user
+        try {
+            var participationsKey = 'gu.ab.participations';
+            var participations = window.localStorage.getItem(participationsKey);
+
+            var abTestsParticipations = makeOmnitureABTag(participations);
+
+            // This is set globally so we can check if the use ab test participations change once the ab test runs.
+            // If it does, we fire a second tracking call in modules/analytics/omniture.js
+            guardian.config.abTestsParticipations = abTestsParticipations;
+        } catch (e) { }
+
+        function makeOmnitureABTag(currentParticipations) {
+            var participations = JSON.parse(currentParticipations);
+            var tag = [];
+
+            for (var key in participations.value) {
+                tag.push(['AB', key, participations.value[key].variant].join(' | '));
+            }
+
+            for (var key in config.tests) {
+                if (key.toLowerCase().match(/^cm/)) {
+                    tag.push(['AB', key, 'variant'].join(' | '));
+                }
+                //only collect serverside tests the user is participating in
+                if(!!config.tests[key]){
+                    tag.push('AB | ' + key + ' | inTest');
+                }
+            };
+
+            return tag.join(',');
+        }
+
+        @*
+          eVar1 contains today's date
+          in the Omniture backend it only ever holds the first
+          value a user gets, so in effect it is the first time
+          we saw this user
+        *@
+
         s.eVar1 = now.getFullYear() + '/' + pad(now.getMonth() + 1, 2) + '/' + pad(now.getDate(), 2);
         s.prop7     = webPublicationDate ? new Date(webPublicationDate).toISOString().substr(0, 10).replace(/-/g, '/') : '';
 

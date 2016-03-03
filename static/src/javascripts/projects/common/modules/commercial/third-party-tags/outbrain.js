@@ -39,8 +39,8 @@ define([
 
     function build(codes, breakpoint) {
         var html = outbrainTpl({ widgetCode: codes.code || codes.image });
-        if (breakpoint !== 'mobile') {
-            html += outbrainTpl({ widgetCode: codes.code || codes.text });
+        if (breakpoint !== 'mobile' && codes.text) {
+            html += outbrainTpl({ widgetCode: codes.text });
         }
         return html;
     }
@@ -55,7 +55,6 @@ define([
         widgetCodes = getCode({
             slot: slot,
             section: config.page.section,
-            edition: config.page.edition,
             breakpoint: breakpoint
         });
         widgetHtml = build(widgetCodes, breakpoint);
@@ -111,14 +110,14 @@ define([
     }
 
     /*
-        Loading Outbrain is dependent on successful return of high relevance component
-        from DFP. AdBlock is blocking DFP calls so we are not getting any response and thus
-        not loading Outbrain. As Outbrain is being partially loaded behind the adblock we can
-        make the call instantly when we detect adBlock in use.
+     Loading Outbrain is dependent on successful return of high relevance component
+     from DFP. AdBlock is blocking DFP calls so we are not getting any response and thus
+     not loading Outbrain. As Outbrain is being partially loaded behind the adblock we can
+     make the call instantly when we detect adBlock in use.
      */
     function loadInstantly() {
         return !document.getElementById('dfp-ad--merchandising-high') ||
-            detect.adblockInUse();
+            detect.adblockInUseSync();
     }
 
     function init() {
@@ -140,7 +139,7 @@ define([
                 // location right away
                 return Promise.all([
                     isHiResLoaded,
-                    isHiResLoaded && config.switches.outbrainReplacesMerch ? trackAd('dfp-ad--merchandising') : true
+                    isHiResLoaded ? trackAd('dfp-ad--merchandising') : true
                 ]);
             }).then(function (args) {
                 var isHiResLoaded = args[0];

@@ -3,66 +3,65 @@ define([
     'common/utils/$',
     'common/utils/$css',
     'common/utils/config',
-    'common/utils/fastdom-idle',
+    'common/utils/fastdom-promise',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/commercial/commercial-features',
-    'lodash/objects/defaults'
+    'common/modules/commercial/commercial-features'
 ], function (
     Promise,
     $,
     $css,
     config,
-    idleFastdom,
+    fastdom,
     createAdSlot,
-    commercialFeatures,
-    defaults
+    commercialFeatures
 ) {
-    function init(options) {
-        var $mainCol, adType,
-            opts = defaults(
-                options || {},
-                {
-                    columnSelector: '.js-secondary-column',
-                    adSlotContainerSelector: '.js-ad-slot-container'
-                }
-            ),
-            $col        = $(opts.columnSelector),
-            colIsHidden = $col.length && $css($col, 'display') === 'none',
-            $componentsContainer,
-            $adSlotContainer;
+    var minArticleHeight = 1300;
+    var minFootballArticleHeight = 2200;
+    var minImmersiveArticleHeight = 600;
+
+    var mainColumnSelector = '.js-content-main-column';
+    var rhColumnSelector = '.js-secondary-column';
+    var adSlotContainerSelector = '.js-ad-slot-container';
+    var componentsContainerSelector = '.js-components-container';
+
+    function init() {
+        var $col        = $(rhColumnSelector);
+        var $mainCol, $componentsContainer, $adSlotContainer;
 
         // are article aside ads disabled, or secondary column hidden?
-        if (!commercialFeatures.articleAsideAdverts || colIsHidden) {
+        if (!(commercialFeatures.articleAsideAdverts && $col.length && $css($col, 'display') !== 'none')) {
             return false;
         }
 
-        $mainCol = config.page.contentType === 'Article' ? $('.js-content-main-column') : false;
-        $componentsContainer = $('.js-components-container', '.js-secondary-column');
-        $adSlotContainer = $(opts.adSlotContainerSelector);
+        $mainCol = $(mainColumnSelector);
+        $componentsContainer = $(componentsContainerSelector, $col[0]);
+        $adSlotContainer = $(adSlotContainerSelector);
 
-        return new Promise(function (resolve) {
-            idleFastdom.read(function () {
-                if (
-                    !config.page.isImmersive && (
-                    !$mainCol.length ||
-                    (config.page.section !== 'football' && $mainCol.dim().height >= 1300) ||
-                    (config.page.section === 'football' && $mainCol.dim().height >= 2200))
-                ) {
-                    adType = 'right-sticky';
-                } else if ($mainCol.dim().height >= 600) {
-                    adType = 'right';
-                } else {
-                    adType = 'right-small';
+        return fastdom.read(function () {
+            return $mainCol.dim().height;
+        }).then(function (mainColHeight) {
+            var $adSlot, adType;
+
+            adType = !config.page.isImmersive && (
+                !$mainCol.length ||
+                (config.page.section !== 'football' && mainColHeight >= minArticleHeight) ||
+                (config.page.section === 'football' && mainColHeight >= minFootballArticleHeight)
+            ) ?
+                'right-sticky' :
+            mainColHeight >= minImmersiveArticleHeight ?
+                'right' :
+                'right-small';
+
+            $adSlot = createAdSlot(adType, 'mpu-banner-ad');
+
+            return fastdom.write(function () {
+                if (config.page.contentType === 'Article' && config.page.sponsorshipType === 'advertisement-features') {
+                    $componentsContainer.addClass('u-h');
                 }
-                idleFastdom.write(function () {
-                    if (config.page.contentType === 'Article' && config.page.sponsorshipType === 'advertisement-features') {
-                        $componentsContainer.addClass('u-h');
-                    }
 
-                    $adSlotContainer.append(createAdSlot(adType, 'mpu-banner-ad'));
+                $adSlotContainer.append($adSlot);
 
-                    resolve($adSlotContainer);
-                });
+                return $adSlotContainer;
             });
         });
     }

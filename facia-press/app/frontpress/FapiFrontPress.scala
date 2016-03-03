@@ -134,39 +134,46 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
   private def getCurated(collection: Collection): Response[List[PressedContent]] = {
     // Map initial PressedContent to enhanced content which contains pre-fetched embed content.
     val initialContent = collectionContentWithSnaps(collection, searchApiQuery, itemApiQuery)
-    initialContent.flatMap(content => Response.traverse(content.map(fetchEmbeds(collection, _))))
+    initialContent.flatMap { content =>
+      Response.traverse( content.map {
+        case curated: CuratedContent if FaciaInlineEmbeds.isSwitchedOn => enrichContent(collection, curated, curated.enriched).map { updatedFields =>
+          curated.copy(enriched = Some(updatedFields))
+        }
+        case link: LinkSnap if FaciaInlineEmbeds.isSwitchedOn => enrichContent(collection, link, link.enriched).map { updatedFields =>
+          link.copy(enriched = Some(updatedFields))
+        }
+        case plain => Response.Right(plain)
+      })
+    }
   }
 
-  private def fetchEmbeds(collection: Collection, pressed: PressedContent): Response[PressedContent] = pressed match {
-    case content: CuratedContent if FaciaInlineEmbeds.isSwitchedOn => {
-        val currentEnriched = content.enriched.getOrElse(EnrichedContent.empty)
+  private def enrichContent(collection: Collection, content: PressedContent, enriched: Option[EnrichedContent]): Response[EnrichedContent] = {
 
-        val newContent = for {
-          embedType <- content.properties.embedType if embedType == "json.html"
-          embedUri <- content.properties.embedUri
-        } yield {
-            val updatedContent = WS.url(embedUri).get().map { response =>
-              Json.parse(response.body).validate[EmbedJsonHtml] match {
-                case JsSuccess(embed, _) => {
-                  val newEnriched = currentEnriched.copy(embedHtml = Some(embed.html))
-                  content.copy(enriched = Some(newEnriched))
-                }
-                case _ => {
-                  log.warn(s"An embed had invalid json format, and won't be pressed. ${pressed.properties.webTitle} for collection ${collection.id}")
-                  content
-                }
-              }
-            } recover {
-              case _ => {
-                log.warn(s"A request to an embed uri failed, embed won't be pressed. ${embedUri} for collection ${collection.id}")
-                content
-              }
+      val beforeEnrichment = enriched.getOrElse(EnrichedContent.empty)
+
+      val afterEnrichment = for {
+        embedType <- content.properties.embedType if embedType == "json.html"
+        embedUri <- content.properties.embedUri
+      } yield {
+        val maybeUpdate = WS.url(embedUri).get().map { response =>
+          Json.parse(response.body).validate[EmbedJsonHtml] match {
+            case JsSuccess(embed, _) => {
+              beforeEnrichment.copy(embedHtml = Some(embed.html))
             }
-            Response.Async.Right(updatedContent)
+            case _ => {
+              log.warn(s"An embed had invalid json format, and won't be pressed. ${content.properties.webTitle} for collection ${collection.id}")
+              beforeEnrichment
+            }
           }
-        newContent.getOrElse(Response.Right(content))
+        } recover {
+          case _ => {
+            log.warn(s"A request to an embed uri failed, embed won't be pressed. $embedUri for collection ${collection.id}")
+            beforeEnrichment
+          }
+        }
+        Response.Async.Right(maybeUpdate)
       }
-    case _ => Response.Right(pressed)
+      afterEnrichment.getOrElse(Response.Right(beforeEnrichment))
   }
 
   private def getTreats(collection: Collection): Response[List[PressedContent]] = {
@@ -267,38 +274,11 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
 
   def slimContent(pressedContent: PressedContent): PressedContent = {
     val slimMaybeContent = pressedContent.properties.maybeContent.map { content =>
-      val slimElements: Seq[Option[Element]] = content.elements.trailPictureAll(5, 3).map { element =>
-        val naked = Naked.elementFor(element.images)
 
-        //These sizes are used in RSS
-        val size140 = Item140.elementFor(element.images)
-        val size460 = Item460.elementFor(element.images)
-
-        val paredImages = ImageMedia.make(Seq(naked ++ size140 ++ size460).flatten.distinct)
-
-        val slimElement: Element = element match {
-          case image: ImageElement => image.copy(images = paredImages)
-          case video: VideoElement => video.copy(images = paredImages)
-          case audio: AudioElement => audio.copy(images = paredImages)
-          case embed: EmbedElement => embed.copy(images = paredImages)
-          case default: DefaultElement => default.copy(images = paredImages)
-        }
-        Some(slimElement)
-      }
-      val elements = Elements.apply((slimElements :+ content.elements.mainVideo).flatten)
+      // Discard all elements except the main video.
+      // It is safe to do so because the trail picture is held in trailPicture in the Trail class.
+      val slimElements = Elements.apply(content.elements.mainVideo.toList)
       val slimFields = content.fields.copy(body = HTML.takeFirstNElements(content.fields.body, 2), blocks = Nil)
-
-      val slimTrailPicture = content.trail.trailPicture.map { imageMedia =>
-        val naked = Naked.elementFor(imageMedia)
-
-        //These sizes are used in RSS
-        val size140 = Item140.elementFor(imageMedia)
-        val size460 = Item460.elementFor(imageMedia)
-
-        ImageMedia.make(Seq(naked ++ size140 ++ size460).flatten.distinct)
-      }
-
-      val slimTrail = content.trail.copy(trailPicture = slimTrailPicture)
 
       // Clear the config fields, because they are not used by facia. That is, the config of
       // an individual card is not used to render a facia front page.
@@ -307,7 +287,7 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
         opengraphPropertiesOverrides = Map(),
         twitterPropertiesOverrides = Map())
 
-      val slimContent = content.content.copy(metadata = slimMetadata, elements = elements, fields = slimFields, trail = slimTrail)
+      val slimContent = content.content.copy(metadata = slimMetadata, elements = slimElements, fields = slimFields)
 
       content match {
         case article: Article => article.copy(content = slimContent)

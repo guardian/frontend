@@ -61,7 +61,7 @@ define([
                 identity.isUserLoggedIn = function () {
                     return false;
                 };
-                detect.adblockInUse = function () { return false; };
+                detect.adblockInUseSync = function () { return false; };
 
                 commercialFeatures.outbrain = true;
 
@@ -155,7 +155,7 @@ define([
             });
 
             it('should load instantly when ad block is in use', function (done) {
-                detect.adblockInUse = function () { return true; };
+                detect.adblockInUseSync = function () { return true; };
 
                 sut.init().then(function () {
                     expect(sut.load).toHaveBeenCalled();
@@ -166,7 +166,6 @@ define([
             it('should load in the low-priority merch component', function (done) {
                 eventStub.isEmpty = false;
                 eventStubLo.isEmpty = true;
-                config.switches.outbrainReplacesMerch = true;
 
                 var oldEmit = mediator.emit;
                 mediator.emit = function (eventName, data) {
@@ -190,7 +189,6 @@ define([
             it('should not load if both merch components are loaded', function (done) {
                 eventStub.isEmpty = false;
                 eventStubLo.isEmpty = false;
-                config.switches.outbrainReplacesMerch = true;
 
                 var oldEmit = mediator.emit;
                 mediator.emit = function (eventName, data) {
@@ -338,8 +336,7 @@ define([
                 config.page.edition = 'AU';
 
                 sut.load('merchandising').then(function () {
-                    expect($('.OUTBRAIN', $fixtureContainer).first().data('widgetId')).toEqual('CR_14');
-                    expect($('.OUTBRAIN', $fixtureContainer).last().data('widgetId')).toEqual('CR_14');
+                    expect($('.OUTBRAIN', $fixtureContainer).first().data('widgetId')).toEqual('AR_28');
                     done();
                 });
             });
@@ -351,7 +348,6 @@ define([
 
                 sut.load('merchandising').then(function () {
                     expect($('.OUTBRAIN', $fixtureContainer).first().data('widgetId')).toEqual('MB_11');
-                    expect($('.OUTBRAIN', $fixtureContainer).last().data('widgetId')).toEqual('MB_11');
                     done();
                 });
             });

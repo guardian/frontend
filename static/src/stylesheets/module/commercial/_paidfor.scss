@@ -10,21 +10,27 @@
 .commercial--paidfor {
 
     .commercial__header,
-    .commercial__title,
-    .rich-link__header {
+    .commercial__title {
         @include f-headlineSans;
     }
 
-    .rich-link__header {
+    /* Card background */
+
+    .tone-paidfor--item, .fc-item {
+        background: colour(paid-article-subheader);
+    }
+
+
+    /* Title text */
+
+    .fc-item__header, .rich-link__header {
+        @include f-headlineSans;
         font-size: get-font-size(header, 2);
         line-height: get-line-height(header, 1);
     }
 
     .commercial__body {
         padding-top: $gs-gutter / 2;
-        max-width: none;
-        padding-left: $gs-gutter / 2;
-        padding-right: $gs-gutter / 2;
     }
 
     .rich-link__standfirst {
@@ -145,6 +151,11 @@
         margin-right: $gs-gutter;
     }
 
+    .fc-slice {
+        margin: 0 -10px;
+        width: auto;
+    }
+
     .fc-item__kicker {
         &:after {
             color: colour(neutral-2);
@@ -154,17 +165,38 @@
     .inline-icon {
         fill: colour(neutral-2);
     }
+
+    .l-row--cols-1 .lineitem {
+        flex: 0 1 50%;
+    }
+
+    .l-row--cols-1 .fc-item__media-wrapper,
+    .l-row--cols-2 .fc-item__media-wrapper {
+        @include mq(desktop) {
+            width: 50%;
+            float: left;
+            margin-right: $gs-gutter/2;
+        }
+    }
+
+    .l-row--cols-1 .fc-item__content,
+    .l-row--cols-2 .fc-item__content {
+        padding-bottom: 0;
+    }
+
+    .l-row--cols-1 .fc-item__container,
+    .l-row--cols-2 .fc-item__container {
+        display: block;
+        padding-bottom: $gs-baseline * 2;
+    }
+}
+
+.commercial__show-mores {
+    margin-top: $gs-baseline / 2;
 }
 
 /* Badges
    ========================================================================== */
-
-.commercial--paidfor {
-    .ad-slot--paid-for-badge {
-        padding-left: $gs-gutter / 2;
-        padding-right: $gs-gutter / 2;
-    }
-}
 
 .commercial--paidfor,
 .commercial--dfp-single {
@@ -251,7 +283,6 @@
 }
 
 .tone-paidfor--item {
-    background: colour(paid-article-subheader);
     flex: 0 1 auto;
 
     .rich-link__container:before {

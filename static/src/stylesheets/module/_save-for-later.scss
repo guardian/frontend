@@ -67,7 +67,24 @@ $sfl-button-height: 30px;
 @include sfl-button-toned(media, colour(media-default), colour(media-background));
 @include sfl-button-toned(news);
 @include sfl-button-toned(review, colour(review-background));
-@include sfl-button-toned(special-reports);
+
+// Specific fix for pages that are special-report & media
+.content--media.tonal--tone-special-report {
+    .save-for-later__button {
+        color: colour(news-support-1);
+        .inline-icon {
+            fill: colour(news-support-1);
+            border-color: colour(news-support-1);
+            background-color: colour(news-support-6);
+        }
+        &:hover {
+            .inline-icon {
+                fill: colour(news-support-6);
+                background-color: colour(news-support-1);
+            }
+        }
+    }
+}
 
 // button labels per state
 .save-for-later__label {

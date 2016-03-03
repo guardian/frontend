@@ -44,7 +44,8 @@ define([
         this.params  = params;
 
         if (this.params.Toneclass) {
-            this.params.soulmates = params.Toneclass.indexOf('soulmates') !== -1;
+            this.params.isSoulmates = params.Toneclass.indexOf('soulmates') !== -1;
+            this.params.isMembership = params.Toneclass.indexOf('membership') !== -1;
             this.params.HeaderToneclass = 'commercial__header--' + this.params.Toneclass.replace('commercial--tone-', '');
         }
 
@@ -52,10 +53,11 @@ define([
         this.params.marque54icon = svgs('marque54icon');
         this.params.logosoulmates = svgs('logosoulmates');
         this.params.logosoulmatesjoin = svgs('logosoulmatesjoin');
+        this.params.logomembership = svgs('logomembershipwhite');
         this.params.arrowRight = svgs('arrowRight', ['i-right']);
         this.params.logoguardian = svgs('logoguardian');
         this.params.marque36iconCreativeMarque = svgs('marque36icon', ['creative__marque']);
-        this.params.logoFeatureLabel = config.switches.newCommercialContent ? 'Paid for by' : 'Brought to you by:';
+        this.params.logoFeatureLabel = 'Paid for by';
     };
 
     Template.prototype.postLoadEvents = {

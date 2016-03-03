@@ -7,10 +7,10 @@
 <li class="fc-item fc-item--media">
     <div class="fc-item__container">
         <a class="fc-item__action" href="@LinkTo{@content.metadata.url}" data-link-name="item @index">
-            @content.elements.trailPicture(5, 3).map{ image =>
+            @content.trail.trailPicture.map{ imageMedia =>
                 <div class="fc-item__media-wrapper">
                     <div class="fc-item__image-container u-responsive-ratio">
-                        <img class="responsive-img" src="@Item140.bestFor(image.images)" alt="" />
+                        <img class="responsive-img" src="@Item140.bestFor(imageMedia)" alt="" />
                     </div>
                 </div>
             }

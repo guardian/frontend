@@ -38,7 +38,7 @@ object ListIds {
   val guardianTodayUs = 1493
   val guardianTodayAu = 1506
 
-  val theBestOfCiF = 2313
+  val theBestOfOpinion = 2313
   val theFiver = 218
   val mediaBriefing = 217
   val greenLight = 28
@@ -71,12 +71,12 @@ object ListIds {
   val theGuardianGardener = 3562
   val theGuardianBookshop = 3563
 
-  val theNHS = 3573
-
   val UsElection = 3599
 
+  val morningMailUk = 3640
+
   val allWithoutTrigger: List[Int] = List(
-    theBestOfCiF,
+    theBestOfOpinion,
     theFiver,
     mediaBriefing,
     greenLight,
@@ -103,8 +103,8 @@ object ListIds {
     theGuardianMasterclasses,
     theGuardianGardener,
     theGuardianBookshop,
-    theNHS,
-    UsElection)
+    UsElection,
+    morningMailUk)
 }
 
 object EmailTypes {

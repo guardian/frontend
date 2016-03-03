@@ -1,0 +1,212 @@
+.atom-quiz {
+    counter-reset: quiz-question;
+    margin: 0; // override pasteup
+}
+
+.atom-quiz__question {
+    margin-bottom: $gs-baseline * 2;
+    list-style-type: none;
+    border: 0;
+    padding: 0;
+}
+
+.atom-quiz__question-text {
+    margin-bottom: $gs-baseline;
+    display: block;
+
+    &:before {
+        counter-increment: quiz-question;
+        content: counter(quiz-question) '.';
+        float: left;
+        padding-right: .5ch;
+    }
+}
+
+.atom-quiz__question-image {
+    margin-bottom: $gs-baseline / 2;
+}
+
+.atom-quiz__answer--text + .atom-quiz__answer--text {
+    margin-top: $gs-baseline * .5;
+}
+
+.atom-quiz__answer--image {
+    width: 50%;
+    float: left;
+
+    .caption {
+        padding-bottom: 0;
+    }
+}
+
+.atom-quiz__answer__input {
+    @include u-h;
+}
+
+.atom-quiz__answer__text,
+.atom-quiz__answer__image {
+    background-color: colour(neutral-8);
+    transition: background-color 40ms;
+    display: block;
+    position: relative;
+
+    .atom-quiz--questions & {
+        cursor: pointer;
+    }
+
+    // show a fake, stylised radio button on personality quiz answers
+    .atom-quiz--questions.atom-quiz--personality &:before {
+        content: '';
+        height: 1em;
+        width: 1em;
+        border-radius: 1em;
+        display: inline-block;
+        position: absolute;
+        left: 1em;
+        top: 1em;
+        box-shadow: 0px 0px 0px 1px colour(neutral-3);
+        transition: background-color 40ms, box-shadow 20ms;
+    }
+
+    .atom-quiz--questions &:hover {
+        background-color: colour(neutral-4);
+    }
+
+    .atom-quiz--questions &:hover:before {
+        background-color: colour(neutral-2);
+        box-shadow: 0px 0px 0px 1px colour(neutral-2),
+            inset 0px 0px 0px 3px colour(neutral-4);
+    }
+
+    .atom-quiz--questions :checked + & {
+        background-color: colour(comment-main-2);
+        cursor: default;
+    }
+
+    .atom-quiz--questions :checked + &:before {
+        background-color: colour(neutral-1);
+        box-shadow: 0px 0px 0px 1px colour(neutral-1),
+            inset 0px 0px 0px 3px colour(comment-main-2);
+    }
+}
+
+.atom-quiz__answer__text {
+    padding: $gs-baseline $gs-gutter;
+}
+
+.atom-quiz__answer__image {
+    padding: $gs-gutter * .5;
+    border-left: 4px solid #ffffff;
+    border-bottom: 4px solid #ffffff;
+    box-sizing: border-box;
+}
+
+.atom-quiz__answers--images {
+    overflow: auto;
+    margin-left: -4px;
+}
+
+// Text answers have reveal-text nested, but Image answers have reveal-text as a sibling to atom-quiz__answers.
+.atom-quiz__answers + .atom-quiz__answer__reveal-text {
+    padding: $gs-gutter * .5;
+    background-color: fade-out(colour(quiz-correct), .4);
+}
+
+.atom-quiz__answer__icon {
+
+    svg {
+        height: 1em;
+        width: 1em;
+    }
+}
+
+.atom-quiz__answer__icon--text {
+    position: absolute;
+    left: 1em;
+    top: .9em;
+}
+
+.atom-quiz__answer__icon--image {
+    padding-top: $gs-baseline;
+    display: block;
+
+    .atom-quiz__answer--correct &:after {
+        content: 'Correct';
+    }
+
+    .atom-quiz__answer--incorrect &:after {
+        content: 'Incorrect';
+    }
+}
+
+.atom-quiz__answer--correct {
+    .atom-quiz__answer__text,
+    .atom-quiz__answer__image {
+        background-color: fade-out(colour(quiz-correct), .4);
+    }
+
+    &.atom-quiz__answer--selected {
+        color: #ffffff;
+        background-color: colour(quiz-correct);
+    }
+}
+
+.atom-quiz--personality .atom-quiz__answer--selected .atom-quiz__answer__text {
+    background-color: colour(comment-main-2);
+}
+
+.atom-quiz__answer--incorrect.atom-quiz__answer--selected {
+    .atom-quiz__answer__text,
+    .atom-quiz__answer__image {
+        color: #ffffff;
+        background-color: colour(quiz-incorrect);
+    }
+}
+
+.atom-quiz__answer__reveal-text {
+    display: block;
+    color: colour(neutral-1);
+    margin-top: $gs-baseline;
+    @include fs-bodyCopy(1);
+
+    .atom-quiz__answer--selected & {
+        color: #ffffff;
+    }
+}
+
+.atom-quiz--personality,
+.atom-quiz__answer--correct,
+.atom-quiz__answer--incorrect {
+    .atom-quiz__answer__text {
+        padding-left: 3em;
+    }
+}
+
+.atom-quiz__end-message {
+    border-top: 1px solid colour(neutral-4);
+    background-color: colour(neutral-8);
+    padding: $gs-baseline $gs-gutter;
+}
+
+.atom-quiz__score-message,
+.atom-quiz__bucket-message {
+    color: colour(neutral-2);
+}
+
+.atom-quiz__score {
+    @include fs-headline(9);
+    font-size: 72px;
+    line-height: 78px;
+    color: colour(guardian-brand);
+    display: block;
+}
+
+.atom-quiz__share {
+    border-top: 1px solid colour(neutral-4);
+    padding-top: $gs-baseline;
+    margin-top: $gs-baseline;
+}
+
+.atom-quiz__cta {
+    padding-bottom: $gs-baseline;
+}

@@ -104,9 +104,10 @@ case class PressedPage (
     }
   }
   val navSection: String = metadata.section
+
   val keywordIds: Seq[String] = frontKeywordIds(id)
 
-   def sponsorshipType: Option[String] = {
+  def sponsorshipType: Option[String] = {
     if (isSponsored(None)) {
       Option("sponsoredfeatures")
     } else if (isAdvertisementFeature) {

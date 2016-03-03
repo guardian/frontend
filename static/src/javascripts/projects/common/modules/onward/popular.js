@@ -5,9 +5,9 @@ define([
     'common/utils/detect',
     'common/modules/component',
     'common/utils/mediator',
+    'common/modules/commercial/dfp/dfp-api',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features',
-    'common/modules/commercial/dfp-api',
     'common/modules/experiments/ab',
     'lodash/collections/contains'
 ], function (
@@ -17,9 +17,9 @@ define([
     detect,
     Component,
     mediator,
+    dfp,
     createAdSlot,
     commercialFeatures,
-    dfp,
     ab,
     contains
 ) {
@@ -33,6 +33,7 @@ define([
         mediator.emit('register:begin', 'popular-in-section');
         this.hasSection = config.page && config.page.section && !contains(sectionsWithoutPopular, config.page.section);
         this.endpoint = '/most-read' + (this.hasSection ? '/' + config.page.section : '') + '.json';
+        this.$mpu = null;
     }
 
     Component.define(MostPopular);
@@ -49,8 +50,6 @@ define([
         if (commercialFeatures.popularContentMPU && !this.mobileMaximumSlotsReached()) {
             var $mpuEl = $('.js-fc-slice-mpu-candidate', this.elem);
             this.$mpu = $mpuEl.append(createAdSlot('mostpop', 'container-inline'));
-        } else {
-            this.$mpu = undefined;
         }
     };
 

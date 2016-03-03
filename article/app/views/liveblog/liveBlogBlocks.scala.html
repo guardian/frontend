@@ -8,7 +8,7 @@
 @import model.liveblog.{LiveBlogDate}
 
 @blocks.map { block =>
-    <div id="block-@block.id" class="block@block.eventClass" itemprop="liveBlogUpdate" itemscope="" itemtype="http://schema.org/BlogPosting">
+    <div id="block-@block.id" class="block block--content@block.eventClass" itemprop="liveBlogUpdate" itemscope="" itemtype="http://schema.org/BlogPosting">
         <p class="block-time published-time">
             <a href="/@article.metadata.id?page=with:block-@block.id#block-@block.id" itemprop="url" class="block-time__link">
             @views.html.liveblog.dateBlock(block.publishedCreatedDate(timezone))
@@ -30,6 +30,6 @@
             <time datetime="@republishedDate">at @ampm @gmt</time>
         </p>
         }
-        @views.html.fragments.share.blockLevelSharing(s"block-${block.id}", article.sharelinks.elementShares(Some(s"block-${block.id}")), article.metadata.contentType)
+        @views.html.fragments.share.blockLevelSharing(s"block-${block.id}", article.sharelinks.elementShares(s"block-${block.id}", None), article.metadata.contentType)
     </div>
 }

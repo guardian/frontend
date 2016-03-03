@@ -22,11 +22,11 @@ define([
             isEmbed = !!guardian.isEmbed,
             events = {
                 // this is the expected ordering of events
+                'video:play': 'event17',
                 'preroll:request': 'event97',
                 'preroll:play': 'event59',
                 'preroll:skip': 'event99',
                 'preroll:end': 'event64',
-                'video:play': 'event17',
                 'audio:play': 'event19',
                 'video:25': 'event21',
                 'video:50': 'event22',

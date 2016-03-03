@@ -3,17 +3,18 @@ define([
     'common/utils/fastdom-promise',
     'common/utils/config',
     'common/utils/mediator',
+    'common/modules/commercial/dfp/dfp-api',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/article/space-filler',
-    'common/modules/commercial/dfp-api'
+    'common/modules/article/space-filler'
+
 ], function (
     bonzo,
     fastdom,
     config,
     mediator,
+    dfp,
     createAdSlot,
-    spaceFiller,
-    dfp
+    spaceFiller
 ) {
     var INTERVAL = 5;      // number of posts between ads
     var OFFSET = 1.5;      // ratio of the screen height from which ads are loaded
@@ -37,7 +38,8 @@ define([
             slotSelector: ' > .block',
             fromBottom: update,
             startAt: update ? firstSlot : null,
-            minAbove: update ? 0 : windowHeight * OFFSET,
+            absoluteMinAbove: update ? 0 : (windowHeight * OFFSET),
+            minAbove: 0,
             minBelow: 0,
             filter: filterSlot
         };
@@ -59,9 +61,8 @@ define([
 
     function insertAds(slots) {
         for (var i = 0; i < slots.length && slotCounter < MAX_ADS; i++) {
-            var $slot = bonzo(slots[i]);
-            var $adSlot = bonzo(createAdSlot('inline1' + slotCounter++, 'liveblog-inline'));
-            $slot.after($adSlot);
+            var $adSlot = bonzo(createAdSlot('inline1' + slotCounter++, 'liveblog-inline block'));
+            $adSlot.insertAfter(slots[i]);
             dfp.addSlot($adSlot);
         }
     }
@@ -69,13 +70,7 @@ define([
     function fill(rules) {
         return spaceFiller.fillSpace(rules, insertAds)
             .then(function (result) {
-                if (slotCounter === MAX_ADS) {
-                    result = false;
-                }
-                return result;
-            })
-            .then(function (result) {
-                if (result) {
+                if (result && slotCounter < MAX_ADS) {
                     firstSlot = document.querySelector(rules.bodySelector + ' > .ad-slot').previousSibling;
                     startListening();
                 } else {

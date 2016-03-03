@@ -50,7 +50,7 @@
         display: none;
     }
 
-    .content__head .gs-container, .content__article-body, .content__meta-container, .media-primary .caption--main,  .fc-container__inner{
+    .content__head .gs-container, .content__article-body, .content__meta-container, .media-primary .caption--main,  .fc-container__inner, .fc-container__outbrain, .submeta {
         margin: 0 0.625rem;
     }
 
@@ -96,7 +96,7 @@
     }
 
     @@media (min-width: 30rem) {
-    .content__head .gs-container, .content__article-body, .content__meta-container, .media-primary .caption--main, .fc-container__inner {
+    .content__head .gs-container, .content__article-body, .content__meta-container, .media-primary .caption--main, .fc-container__inner, .fc-container__outbrain, .submeta {
         margin: 0 20px;
         }
     .content__headline {
@@ -182,14 +182,16 @@
         margin-bottom: 0.75rem;
     }
 
+    .submeta {
+        border-top: 0.0625rem dotted #dfdfdf;
+        padding: 6px 0 12px;
+        clear: both;
+    }
+
     .u-underline {
         text-decoration: none;
         border-bottom: 0.0625rem solid #dcdcdc;
         color: #005689;
-    }
-
-    .from-content-api h2, .from-content-api .block-elements h2, .from-content-api p strong {
-        letter-spacing: -0.02em;
     }
 
     @* Dropcap styling *@
@@ -241,6 +243,11 @@
         list-style: none;
     }
 
+    @* temporarily hiding these until after launch *@
+    .inline-expand-image, .content__dateline-lm, .witness-cta-wrapper {
+        display: none;
+    }
+
     @fragments.amp.stylesheets.tones()
     @fragments.amp.stylesheets.embeds()
     @fragments.amp.stylesheets.quotes()
@@ -256,10 +263,5 @@
 
     @* this is for testing only *@
     @fragments.amp.stylesheets.header()
-)
 
-    @* temporarily hiding these for demo *@
-    .inline-expand-image, .content__dateline-lm , .block-share, .witness-cta-wrapper {
-        display: none;
-    }
 </style>

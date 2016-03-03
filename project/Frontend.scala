@@ -26,8 +26,6 @@ object Frontend extends Build with Prototypes {
       contentApiClient,
       faciaScalaClient,
       filters,
-      flexibleContentBlockToText,
-      flexibleContentBodyParser,
       googleSheetsApi,
       guardianConfiguration,
       jacksonCore,
@@ -142,13 +140,18 @@ object Frontend extends Build with Prototypes {
       slf4jExt,
       exactTargetClient,
       nScalaTime,
-      dispatch
+      dispatch,
+      libPhoneNumber
     )
   )
 
   val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common)
 
   val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
+
+  val adminJobs = application("admin-jobs")
+    .dependsOn(commonWithTests)
+    .aggregate(common)
 
   val dev = application("dev-build")
     .dependsOn(
@@ -163,7 +166,8 @@ object Frontend extends Build with Prototypes {
       identity,
       admin,
       commercial,
-      onward
+      onward,
+      adminJobs
     ).settings(
       RoutesKeys.routesImport += "bindables._",
       javaOptions in Runtime += "-Dconfig.file=dev-build/conf/dev-build.application.conf"
@@ -193,10 +197,6 @@ object Frontend extends Build with Prototypes {
     .settings(frontendIntegrationTestsSettings:_*)
 
   val rss = application("rss")
-    .dependsOn(commonWithTests)
-    .aggregate(common)
-
-  val adminJobs = application("admin-jobs")
     .dependsOn(commonWithTests)
     .aggregate(common)
 

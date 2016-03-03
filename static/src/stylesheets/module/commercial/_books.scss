@@ -57,6 +57,10 @@
         }
         .lineitem--high__offer {
             padding-left: $gs-gutter;
+
+            @include mq(desktop) {
+                width: 66%;
+            }
         }
         .commercial__relevance--high {
             @include mq(desktop) {
@@ -66,8 +70,8 @@
                 .lineitem__cta {
                     margin-right: 0;
                     position: absolute;
-                    top: $gs-baseline/2;
-                    right: 0;
+                    top: 0;
+                    right: $gs-gutter;
                 }
             }
         }

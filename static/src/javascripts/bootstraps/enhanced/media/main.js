@@ -3,6 +3,7 @@ define([
     'bonzo',
     'fastdom',
     'raven',
+    'Promise',
     'common/utils/$',
     'common/utils/config',
     'common/utils/defer-to-analytics',
@@ -20,13 +21,13 @@ define([
     // This must be the full path because we use curl config to change it based
     // on env
     'bootstraps/enhanced/media/video-player',
-    'text!common/views/ui/loading.html',
-    'lodash/functions/debounce'
+    'text!common/views/ui/loading.html'
 ], function (
     bean,
     bonzo,
     fastdom,
     raven,
+    Promise,
     $,
     config,
     deferToAnalytics,
@@ -42,8 +43,7 @@ define([
     supportedBrowsers,
     techOrder,
     videojs,
-    loadingTmpl,
-    debounce
+    loadingTmpl
 ) {
 
     function getAdUrl() {
@@ -168,7 +168,7 @@ define([
         mediator.on('page:media:moreinloaded', initPlayButtons);
     }
 
-    function enhanceVideo(el, autoplay, withPreroll) {
+    function enhanceVideo(el, autoplay, shouldPreroll) {
 
         var mediaType = el.tagName.toLowerCase(),
             $el = bonzo(el).addClass('vjs vjs-tech-' + videojs.options.techOrder[0]),
@@ -178,22 +178,20 @@ define([
             endSlateUri = $el.attr('data-end-slate'),
             embedPath = $el.attr('data-embed-path'),
             techPriority = techOrder(el),
+            withPreroll = shouldPreroll && !blockVideoAds,
             player,
-            mouseMoveIdle;
-
-        if (config.page.videoJsVpaidSwf && config.switches.vpaidAdverts) {
-
-            // clone the video options and add 'vpaid' to them.
-            techPriority = ['vpaid'].concat(techPriority);
-
-            videojs.options.vpaid = {swf: config.page.videoJsVpaidSwf};
-        }
+            mouseMoveIdle,
+            playerSetupComplete;
 
         player = createVideoPlayer(el, {
             techOrder: techPriority,
             controls: true,
-            autoplay: autoplay,
-            preload: 'auto', // preload='none' & autoplay breaks ad loading on chrome35, preload="metadata" breaks older Safari's
+            // This is always set to false.
+            // We use `autoplay` after we are certain the player is ready.
+            autoplay: false,
+            // preload='none' & autoplay breaks ad loading on chrome35.
+            // preload="metadata" breaks older Safari's
+            preload: 'auto',
             plugins: {
                 embed: {
                     embeddable: !config.page.isFront && config.switches.externalVideoEmbeds && (config.page.contentType === 'Video' || $el.attr('data-embeddable') === 'true'),
@@ -204,87 +202,102 @@ define([
 
         // Location of this is important.
         events.bindErrorHandler(player);
-
         player.guMediaType = mediaType;
 
-        player.ready(function () {
-            var vol;
+        playerSetupComplete = new Promise(function (resolve) {
+            player.ready(function () {
+                var vol;
 
-            initLoadingSpinner(player);
-            events.bindGlobalEvents(player);
-            upgradeVideoPlayerAccessibility(player);
-            supportedBrowsers(player);
+                deferToAnalytics(function () {
+                    events.initOmnitureTracking(player);
+                    events.initOphanTracking(player, mediaId);
 
-            player.one('playing', function (e) {
-                if (isFlash(e)) {
-                    beacon.counts('video-tech-flash');
-                } else {
-                    beacon.counts('video-tech-html5');
+                    events.bindGlobalEvents(player);
+                    events.bindContentEvents(player);
+                    if (withPreroll) {
+                        events.bindPrerollEvents(player);
+                    }
+                });
+
+                initLoadingSpinner(player);
+                upgradeVideoPlayerAccessibility(player);
+                supportedBrowsers(player);
+
+                player.one('playing', function (e) {
+                    if (isFlash(e)) {
+                        beacon.counts('video-tech-flash');
+                    } else {
+                        beacon.counts('video-tech-html5');
+                    }
+                });
+
+                // unglitching the volume on first load
+                vol = player.volume();
+                if (vol) {
+                    player.volume(0);
+                    player.volume(vol);
                 }
-            });
 
-            // unglitching the volume on first load
-            vol = player.volume();
-            if (vol) {
-                player.volume(0);
-                player.volume(vol);
-            }
-
-            player.persistvolume({namespace: 'gu.vjs'});
-
-            deferToAnalytics(function () {
-
-                events.initOmnitureTracking(player);
-                events.initOphanTracking(player, mediaId);
+                player.persistvolume({namespace: 'gu.vjs'});
 
                 // preroll for videos only
                 if (mediaType === 'video') {
-
                     player.fullscreener();
 
-                    if (withPreroll && !blockVideoAds) {
+                    if (showEndSlate && detect.isBreakpoint({ min: 'desktop' })) {
+                        initEndSlate(player, endSlateUri);
+                    }
+
+                    if (withPreroll) {
                         raven.wrap(
                             { tags: { feature: 'media' } },
                             function () {
-                                events.bindPrerollEvents(player);
                                 player.adSkipCountdown(15);
                                 player.ima({
                                     id: mediaId,
                                     adTagUrl: getAdUrl(),
-                                    prerollTimeout: 750
+                                    prerollTimeout: 1000
                                 });
                                 player.ima.requestAds();
 
                                 // Video analytics event.
                                 player.trigger(events.constructEventName('preroll:request', player));
+                                resolve();
                             }
                         )();
                     } else {
-                        events.bindContentEvents(player);
-                    }
-
-                    if (showEndSlate && detect.isBreakpoint({ min: 'desktop' })) {
-                        initEndSlate(player, endSlateUri);
+                        resolve();
                     }
                 } else {
                     player.playlist({
                         mediaType: 'audio',
                         continuous: false
                     });
-
-                    events.bindContentEvents(player);
+                    resolve();
                 }
+
+                // built in vjs-user-active is buggy so using custom implementation
+                player.on('mousemove', function () {
+                    clearTimeout(mouseMoveIdle);
+                    fastdom.write(function () {
+                        player.addClass('vjs-mousemoved');
+                    });
+
+
+                    mouseMoveIdle = setTimeout(function () {
+                        fastdom.write(function () {
+                            player.removeClass('vjs-mousemoved');
+                        });
+                    }, 500);
+                });
             });
         });
 
-        mouseMoveIdle = debounce(function () { player.removeClass('vjs-mousemoved'); }, 500);
-
-        // built in vjs-user-active is buggy so using custom implementation
-        player.on('mousemove', function () {
-            player.addClass('vjs-mousemoved');
-            mouseMoveIdle();
+        playerSetupComplete.then(function () {
+            if (autoplay) {
+                player.play();
+            }
         });
-
     }
 
     function initEndSlate(player, endSlatePath) {
@@ -360,11 +373,13 @@ define([
 
     function init() {
         // The `hasMultipleVideosInPage` flag is temporary until the #10034 will be fixed
-        var shouldPreroll = commercialFeatures.videoPreRolls && !config.page.hasMultipleVideosInPage;
+        var shouldPreroll = commercialFeatures.videoPreRolls &&
+            !config.page.hasMultipleVideosInPage &&
+            !config.page.isAdvertisementFeature;
 
         if (config.switches.enhancedMediaPlayer) {
             if (shouldPreroll) {
-                require(['js!http://imasdk.googleapis.com/js/sdkloader/ima3.js']).then(function () {
+                require(['js!//imasdk.googleapis.com/js/sdkloader/ima3.js']).then(function () {
                     initWithRaven(true);
                 }, function (e) {
                     raven.captureException(e, { tags: { feature: 'media', action: 'ads' } });
