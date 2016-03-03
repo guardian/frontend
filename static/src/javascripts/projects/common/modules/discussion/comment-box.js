@@ -73,8 +73,8 @@ CommentBox.prototype.errorMessages = {
     USER_BANNED: 'Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>).',
     DISCUSSION_CLOSED: 'Sorry your comment can not be published as the discussion is now closed for comments.',
     COMMENT_RATE_LIMIT_EXCEEDED: 'You can only post one comment every minute. Please try again in a moment.',
-    INVALID_PROTOCOL: 'Sorry your comment can not be published as it was not sent over a secure channel. Please report us this issue',
-    AUTH_COOKIE_INVALID: 'Sorry your comment can not be published as your authenciation cookie seems invalid. Please try to sign in before posting again.',
+    INVALID_PROTOCOL: 'Sorry your comment can not be published as it was not sent over a secure channel. Please report us this issue using the technical issue link in the page footer.',
+    AUTH_COOKIE_INVALID: 'Sorry, your comment was not published as you are no longer signed in. Please sign in and try again.',
     'READ-ONLY-MODE': 'Sorry your comment can not currently be published as commenting is undergoing maintenance but will be back shortly. Please try again in a moment.',
     /* Custom error codes */
     API_CORS_BLOCKED: /*CORS blocked by HTTP/1.0 proxy*/'Could not post due to your internet settings, which might be controlled by your provider. Please contact your administrator or disable any proxy servers or VPNs and try again.',
