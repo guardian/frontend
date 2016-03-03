@@ -1,7 +1,6 @@
 define([
-    'common/utils/detect',
-    'common/utils/config'
-], function (detect, config) {
+    'common/utils/detect'
+], function (detect) {
 
     return function () {
         this.id = 'ArticleVideoAutoplay';
