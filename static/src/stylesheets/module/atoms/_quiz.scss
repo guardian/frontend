@@ -22,6 +22,10 @@
     }
 }
 
+.atom-quiz__question-image {
+    margin-bottom: $gs-baseline / 2;
+}
+
 .atom-quiz__answer--text + .atom-quiz__answer--text {
     margin-top: $gs-baseline * .5;
 }
@@ -145,6 +149,10 @@
         color: #ffffff;
         background-color: colour(quiz-correct);
     }
+}
+
+.atom-quiz--personality .atom-quiz__answer--selected .atom-quiz__answer__text {
+    background-color: colour(comment-main-2);
 }
 
 .atom-quiz__answer--incorrect.atom-quiz__answer--selected {

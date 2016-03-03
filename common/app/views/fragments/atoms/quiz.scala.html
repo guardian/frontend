@@ -31,7 +31,9 @@
         <legend class="atom-quiz__question-text">@question.text</legend>
 
         @question.imageMedia.map { image =>
-            @fragments.img(image, widthsByBreakpoint = BodyMedia.inline)
+            <div class="atom-quiz__question-image">
+                @fragments.img(image, widthsByBreakpoint = BodyMedia.inline)
+            </div>
         }
 
         <div class="atom-quiz__answers @{if(hasImages(question)) "atom-quiz__answers--images"}">
@@ -141,7 +143,8 @@
                 You got&#133; <span class="atom-quiz__score">@results.knowledgeScore/@quiz.content.questions.size</span>
             }
             @if(results.isPersonality) {
-                @results.resultBucket.map(_.description)
+                <div class="atom-quiz__personality-title">@results.resultBucket.map(_.title)</div>
+                <div class="atom-quiz__personality-description">@results.resultBucket.map(_.description)</div>
             }
         </div>
         @results.resultGroup.map { resultGroup =>
