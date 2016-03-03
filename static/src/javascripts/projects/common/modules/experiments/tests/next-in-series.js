@@ -43,7 +43,7 @@ define([
         {
             name: 'What I’m Really Thinking',
             pageId: 'lifeandstyle/2016/mar/05/what-really-thinking-theme-park-costume-character',
-            title: 'What I’m Really Thinking: the mother of a disabled baby',
+            title: 'What I’m Really Thinking: the mother of a baby with disabilities',
             trail: 'Normal now means a routine of tube feeding, tracheostomy care, physiotherapy, overnight shifts and endless logistics',
             link: 'https://www.surveymonkey.co.uk/r/guardian-whatimreallythinking-remindme'
         }
