@@ -450,9 +450,9 @@ define([
                 $adSlot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
             } else {
                 var crossIcon = svgs('crossIcon');
-                $slot.prepend('<div class="commercial__inner"><a href="#" class="ad-slot--dimiss js-ad-slot-dismiss" data-link-name="dimiss commercial component">Dismiss ' + crossIcon + '</a></div>');
+                $adSlot.prepend('<div class="commercial__inner"><a href="#" class="ad-slot--dimiss js-ad-slot-dismiss" data-link-name="dimiss commercial component">Dismiss ' + crossIcon + '</a></div>');
 
-                bean.on(document, 'click', $('.js-ad-slot-dismiss', $slot), function (e) {
+                bean.on(document, 'click', $('.js-ad-slot-dismiss', $adSlot), function (e) {
                     e.preventDefault();
                     $('.js-survey-overlay').removeClass('u-h');
                 });
