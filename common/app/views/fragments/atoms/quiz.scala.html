@@ -94,7 +94,7 @@
                     @fragments.img(image, widthsByBreakpoint = BodyMedia.inline)
                 }
 
-                @renderAnswerSvg(question, answer, maybeUserAnswer)
+                @renderAnswerSvg(question, answer, maybeUserAnswer, "atom-quiz__answer__icon--image")
             </div>
         }
 
@@ -102,7 +102,7 @@
             <div class="atom-quiz__answer__text">
                 @{answer.text}
 
-                @renderAnswerSvg(question, answer, maybeUserAnswer)
+                @renderAnswerSvg(question, answer, maybeUserAnswer, "atom-quiz__answer__icon--text")
 
                 @renderAnswerRevealText(question, answer, maybeUserAnswer)
             </div>
@@ -110,7 +110,7 @@
     </div>
 }
 
-@renderAnswerSvg(question: Question, answer: Answer, maybeUserAnswer: Option[Answer]) = {
+@renderAnswerSvg(question: Question, answer: Answer, maybeUserAnswer: Option[Answer], iconType: String) = {
     @maybeUserAnswer.map { inputAnswer =>
         @if(inputAnswer.equals(answer)) {
             @isCorrectAnswer(question, answer).map { correct =>
@@ -118,7 +118,7 @@
                     "tick"
                 } else {
                     "cross"
-                }, "icon", List("atom-quiz__answer__icon"))
+                }, "icon", List("atom-quiz__answer__icon", iconType))
             }
         }
     }

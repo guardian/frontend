@@ -120,13 +120,13 @@
     }
 }
 
-.atom-quiz__answer__text .atom-quiz__answer__icon {
+.atom-quiz__answer__icon--text {
     position: absolute;
     left: 1em;
     top: .9em;
 }
 
-.atom-quiz__answer__image .atom-quiz__answer__icon {
+.atom-quiz__answer__icon--image {
     padding-top: $gs-baseline;
     display: block;
 
