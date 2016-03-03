@@ -127,14 +127,20 @@
 }
 
 .atom-quiz__answer__icon--image {
-    padding-top: $gs-baseline;
+    padding-top: $gs-baseline * 4 / 3;
     display: block;
 
     .atom-quiz__answer--correct &:after {
+        position: relative;
+        top: -2px; // magic numbers to align text with svg icon.
+        left: 8px;
         content: 'Correct';
     }
 
     .atom-quiz__answer--incorrect &:after {
+        position: relative;
+        top: -2px; // magic numbers to align text with svg icon.
+        left: 8px;
         content: 'Incorrect';
     }
 }
@@ -185,7 +191,7 @@
 .atom-quiz__end-message {
     border-top: 1px solid colour(neutral-4);
     background-color: colour(neutral-8);
-    padding: $gs-baseline $gs-gutter;
+    padding: $gs-baseline / 2 $gs-gutter * 2 / 3;
 }
 
 .atom-quiz__score-message,
@@ -203,7 +209,7 @@
 
 .atom-quiz__share {
     border-top: 1px solid colour(neutral-4);
-    padding-top: $gs-baseline;
+    padding-top: $gs-baseline * 2 / 3;
     margin-top: $gs-baseline;
 }
 
