@@ -34,7 +34,7 @@
             @fragments.img(image, widthsByBreakpoint = BodyMedia.inline)
         }
 
-        <div class="atom-quiz__answers @{if(hasImages(question)) "atom-quiz__answers-images"}">
+        <div class="atom-quiz__answers @{if(hasImages(question)) "atom-quiz__answers--images"}">
             @question.answers.map( answer => {
                 val hasImage = answer.imageMedia.isDefined
                 if(showResults) {
