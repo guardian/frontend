@@ -62,9 +62,9 @@ define([
         this.description = 'Show next in series';
         this.audience = 0;
         this.audienceOffset = 0.3;
-        this.successMeasure = '';
+        this.successMeasure = 'We will track clicks on the button and email the next article to people who complete the survey in order to track the return journey. We will measure these to see what the interest is like.';
         this.audienceCriteria = 'All users';
-        this.dataLinkNames = '';
+        this.dataLinkNames = 'next in series | remind me';
         this.idealOutcome = '';
 
         this.canRun = function () {
