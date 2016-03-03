@@ -23,7 +23,7 @@ define([
             name: 'Experience',
             pageId: 'lifeandstyle/2016/mar/04/experience-my-head-was-crushed-by-a-rock-thrown-at-my-car',
             title: 'I fought off a mountain lion',
-            trail: 'Its ears were slanted in attack position, its teeth yellow splinters buried in black gums',
+            trail: 'Its ears were slanted in attack position, its teeth yellow splinters buried in black gums…',
             link: 'https://www.surveymonkey.co.uk/r/guardian-experience-remindme'
         },
         {
@@ -44,7 +44,7 @@ define([
             name: 'What I’m Really Thinking',
             pageId: 'lifeandstyle/2016/mar/05/what-really-thinking-theme-park-costume-character',
             title: 'What I’m Really Thinking: the mother of a baby with disabilities',
-            trail: 'Normal now means a routine of tube-feeding, tracheostomy care, physiotherapy, overnight shifts and endless logistics',
+            trail: 'Normal now means a routine of tube-feeding, tracheostomy care, physiotherapy, overnight shifts and endless logistics…',
             link: 'https://www.surveymonkey.co.uk/r/guardian-whatimreallythinking-remindme'
         }
     ];
