@@ -63,6 +63,7 @@ define([
             message = 'fixed';
         } else {
             stick = false;
+            css = { top: 0 };
             message = 'unfixed';
         }
 
