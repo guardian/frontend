@@ -39,7 +39,7 @@ package object form {
 
   // Returns true if each answer in this question has images.
   def hasImages(question: Question): Boolean = {
-    !question.answers.exists(answer => answer.imageMedia.isEmpty)
+    question.answers.forall(answer => answer.imageMedia.nonEmpty)
   }
 
   case class QuizResults(
