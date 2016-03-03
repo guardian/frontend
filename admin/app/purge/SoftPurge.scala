@@ -41,20 +41,23 @@ object CdnPurge extends ExecutionContexts with Dates with Logging {
 
   private lazy val agent = new AtomicReference[Seq[LastChange]](Nil)
 
-  def run(): Unit = if (SoftPurgeSwitch.isSwitchedOn || LongCacheSwitch.isSwitchedOn) {
+  def run(): Future[Unit] = if (SoftPurgeSwitch.isSwitchedOn || LongCacheSwitch.isSwitchedOn) {
 
     val lastKnownChanges = agent.get()
     val recentlyModifiedContent = getMostRecentlyModifiedContent
     val changedSinceLastTime = recentlyModifiedContent.map(_.filter(changed => !lastKnownChanges.contains(changed)))
     val indexedKeys = changedSinceLastTime.map(_.map(_.key)).map(_.zipWithIndex)
 
-    indexedKeys.foreach(_.foreach {
+    val purging = indexedKeys.map(_.foreach {
       case (key, index) => AkkaAsync.after(index * 100.milliseconds) {
         soft(key)
       }
     })
 
-    recentlyModifiedContent.foreach(agent.set)
+    val remembering = recentlyModifiedContent.map(agent.set)
+    Future.sequence(Seq(purging, remembering)).map(_ => ())
+  } else {
+    Future.successful(())
   }
 
 

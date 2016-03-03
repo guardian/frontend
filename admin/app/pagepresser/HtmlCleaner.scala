@@ -2,19 +2,17 @@ package pagepresser
 
 import com.netaporter.uri.Uri.parse
 import common.{ExecutionContexts, Logging}
-import org.jsoup.nodes.{DataNode, Document, Element}
-import play.api.libs.ws.WS
+import org.jsoup.nodes.Document
 
 import scala.collection.JavaConversions._
-import scala.concurrent.duration._
-import scala.concurrent.{Await, Future}
+import scala.concurrent.Future
 
-abstract class HtmlCleaner extends Logging {
+abstract class HtmlCleaner extends Logging with ExecutionContexts {
   def canClean(document: Document): Boolean
 
-  def clean(document: Document): Document
+  def clean(document: Document): Future[Document]
 
-  protected def universalClean(document: Document): Document = {
+  protected def universalClean(document: Document): Future[Unit] = {
     removeAds(document)
     removeByClass(document, "top-search-box")
     removeByClass(document, "share-links")
@@ -23,88 +21,7 @@ abstract class HtmlCleaner extends Logging {
     removeByClass(document, "initially-off")
     removeByClass(document, "comment-count")
     replaceLinks(document)
-    println("processing document")
     ComboCleaner(document)
-  }
-
-  object ComboCleaner extends ExecutionContexts {
-
-    def apply(document: Document): Document = {
-      import play.api.Play.current
-
-      def inlineMicroApp(cacheBustId: String, path: String, extension: String): Future[Element] = {
-        val url = s"http://combo.guim.co.uk/$cacheBustId/$path$extension"
-        WS.url(url).get().flatMap { response =>
-          response.status match {
-            case 200 => {
-              val elementTag = if (extension != ".css") "style" else "script"
-              val script = document.createElement(elementTag).appendChild(new DataNode(/*response.body*/"var x = 45;\n", ""/*baseUrl*/))
-              //println(s"result body ${script}")
-              Future.successful(script)
-            }
-            case non200 => {
-              //println(s"got $non200")
-              log.error(s"Unexpected response from combo microapp url $url, status code: $non200")
-              Future.failed(new RuntimeException(s"Unexpected response from combo microapp url $url, status code: $non200"))
-            }
-          }
-        }
-      }
-
-
-      try {
-        document.getAllElements.filter { el =>
-          el.hasAttr("href") && el.attr("href").contains("combo.guim.co.uk")
-        }.foreach { el =>
-
-          val combinerRegex = """//combo.guim.co.uk/(\w+)/(.+)(\.\w+)$""".r("cacheBustId", "paths", "extension")
-          val microAppRegex = """^m-(\d+)~(.+)""".r
-
-          val href = el.attr("href")
-
-          val combiner = combinerRegex.findFirstMatchIn(href)
-
-          combiner.foreach { combiner =>
-            val cacheBustId = combiner.group("cacheBustId")
-            val extension = combiner.group("extension")
-            val paths = combiner.group("paths").split('+')
-            paths.map { path =>
-              if (microAppRegex.findFirstIn(path).isDefined) {
-                // get the content and inline it - FIXME await
-                //el.after("<!---john john john --->")
-                val future = inlineMicroApp(cacheBustId, path, extension).map { x=>
-                  println(s"x: $x")
-                  el.after(x)
-                  //el.after("<p>hello world</p>")
-                  //el.after("<!---hi hi hi --->").parent()
-                }
-                future.onFailure({case fail => println(s"failed: $fail")})
-                future.onSuccess({case fail => println(s"succeeded: $fail")})
-                Await.result(
-                  future,
-                10.seconds)
-              } else {
-                val newPath = s"//static.guim.co.uk/static/$cacheBustId/$path$extension"
-                val newEl = el.clone.attr("href", newPath)
-                el.after(newEl)
-              }
-            }
-            el.remove()
-
-          }
-
-          el.attr("href", el.attr("href").replace("http://", "//"))
-        }
-        document
-      }
-      catch {
-        case e: Exception => {
-          log.warn("Unable to convert links for document from http to protocol relative url.")
-          document
-        }
-      }
-    }
-
   }
 
   def replaceLinks(document: Document): Document = {
