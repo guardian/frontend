@@ -56,7 +56,7 @@ object Jobs extends Logging {
     // want to check in
     if (!Play.isTest) {
       log.info(s"Scheduling $name")
-      jobs.put(name, () => Future(block))
+      jobs.put(name, () => Future(block))// TODO make a version to take a future
 
       scheduler.scheduleJob(
         JobBuilder.newJob(classOf[FunctionJob]).withIdentity(name).build(),
@@ -69,7 +69,7 @@ object Jobs extends Logging {
     if (!Play.isTest) {
       val schedule = DailyTimeIntervalScheduleBuilder.dailyTimeIntervalSchedule().withIntervalInMinutes(intervalInMinutes)
       log.info(s"Scheduling $name to run every $intervalInMinutes minutes")
-      jobs.put(name, () => Future(block))
+      jobs.put(name, () => Future(block))// TODO make a version to take a future
 
       scheduler.scheduleJob(
         JobBuilder.newJob(classOf[FunctionJob]).withIdentity(name).build(),

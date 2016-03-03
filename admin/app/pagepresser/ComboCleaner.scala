@@ -52,11 +52,6 @@ object ComboCleaner extends ExecutionContexts with Logging {
               val future = inlineMicroApp(cacheBustId, path, extension).map(_.map { element=>
                 el.after(element)
               })
-//              future.onFailure({case fail => println(s"failed: $fail")})
-//              future.onSuccess({case fail => println(s"succeeded: $fail")})
-//              Await.result(
-//                future,
-//                10.seconds)// FIXME happens on a scheduled task but should still refactor this
               future
             } else {
               val newPath = s"//static.guim.co.uk/static/$cacheBustId/$path$extension"
