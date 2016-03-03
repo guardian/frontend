@@ -67,11 +67,17 @@ CommentBox.prototype.classes = {};
  * @override
  */
 CommentBox.prototype.errorMessages = {
+    /* Discussion API error codes - See DAPI exceptions and associated error messages  */
     EMPTY_COMMENT_BODY: 'Please write a comment.',
     COMMENT_TOO_LONG: 'Your comment must be fewer than 5000 characters long.',
-    HTTP_420: 'You can only post one comment every minute. Please try again in a moment.',
-    HTTP_0: /*CORS blocked by HTTP/1.0 proxy*/'Could not post due to your internet settings, which might be controlled by your provider. Please contact your administrator or disable any proxy servers or VPNs and try again.',
     USER_BANNED: 'Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>).',
+    DISCUSSION_CLOSED: 'Sorry your comment can not be published as the discussion is now closed for comments.',
+    COMMENT_RATE_LIMIT_EXCEEDED: 'You can only post one comment every minute. Please try again in a moment.',
+    INVALID_PROTOCOL: 'Sorry your comment can not be published as it was not sent over a secure channel. Please report us this issue using the technical issue link in the page footer.',
+    AUTH_COOKIE_INVALID: 'Sorry, your comment was not published as you are no longer signed in. Please sign in and try again.',
+    'READ-ONLY-MODE': 'Sorry your comment can not currently be published as commenting is undergoing maintenance but will be back shortly. Please try again in a moment.',
+    /* Custom error codes */
+    API_CORS_BLOCKED: /*CORS blocked by HTTP/1.0 proxy*/'Could not post due to your internet settings, which might be controlled by your provider. Please contact your administrator or disable any proxy servers or VPNs and try again.',
     API_ERROR: 'Sorry, there was a problem posting your comment.  Please try another browser or network connection.  Reference code ',
     EMAIL_VERIFIED: '<span class="d-comment-box__error-meta">Sent. Please check your email to verify ' +
         ' your email address' + '. Once verified post your comment.</span>',
@@ -252,7 +258,7 @@ CommentBox.prototype.postComment = function(e) {
  */
 CommentBox.prototype.error = function(type, message) {
 
-    if (type === 'HTTP_0') {
+    if (type === 'API_CORS_BLOCKED') {
         beacon.counts('comment-http-proxy-error', 'comment-error');
     } else {
         beacon.counts('comment-error');
@@ -298,8 +304,8 @@ CommentBox.prototype.fail = function(xhr) {
 
     this.setFormState();
 
-    if (this.errorMessages['HTTP_' + xhr.status]) {
-        this.error('HTTP_' + xhr.status);
+    if (xhr.status == 0) {
+        this.error('API_CORS_BLOCKED');
     } else if (this.errorMessages[response.errorCode]) {
         this.error(response.errorCode);
     } else {
