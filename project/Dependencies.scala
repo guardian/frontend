@@ -47,7 +47,7 @@ object Dependencies {
   val mockito = "org.mockito" % "mockito-all" % "1.9.5" % Test
   val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "1.2.0"
   val openCsv = "net.sf.opencsv" % "opencsv" % "2.3"
-  val paClient = "com.gu" %% "pa-client" % "5.0.1-NG"
+  val paClient = "com.gu" %% "pa-client" % "6.0.0"
   val playGoogleAuth = "com.gu" %% "play-googleauth" % "0.3.3"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.2.1"
   val rome = "rome" % "rome" % "1.0"

@@ -163,6 +163,28 @@
     @include fs-textSans(1, $size-only: true);
 }
 
+.email-sub__close {
+    background: 0 none;
+    border: 0 none;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.email-sub__hidden {
+    @include u-h();
+}
+
+.email-sub__close-icon svg {
+    fill: darken(colour(neutral-2), 10%);
+
+    &:hover,
+    &:focus {
+        cursor: pointer;
+        fill: colour(neutral-2);
+    }
+}
+
 /**
 * Modifications
 */

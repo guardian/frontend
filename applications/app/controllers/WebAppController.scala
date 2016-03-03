@@ -25,11 +25,6 @@ object WebAppController extends Controller with ExecutionContexts with Logging {
     NoCache { Ok(templates.js.serviceWorker()) }
   }
 
-  def notificationsServiceWorker() = Action { implicit request =>
-    println("Notifications Service worker")
-    Cached(3600) { Ok(templates.js.notificationsServiceWorker()) }
-  }
-
   def manifest() = Action {
     Cached(3600) { Ok(templates.js.webAppManifest()) }
   }

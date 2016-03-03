@@ -57,6 +57,7 @@ trait Prototypes {
       Resolver.typesafeRepo("releases"),
       Resolver.sonatypeRepo("releases"),
       "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
+      "Guardian Frontend Bintray" at "https://dl.bintray.com/guardian/frontend",
       "Spy" at "https://files.couchbase.com/maven2/"
     ),
 

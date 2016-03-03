@@ -13,7 +13,6 @@ define([
     'common/modules/commercial/liveblog-dynamic-adverts',
     'common/modules/experiments/affix',
     'common/modules/ui/autoupdate',
-    'common/modules/ui/newAutoupdate',
     'common/modules/ui/notification-counter',
     'common/modules/ui/relativedates',
     'bootstraps/enhanced/article-liveblog-common',
@@ -34,7 +33,6 @@ define([
     liveblogDynamicAdverts,
     Affix,
     AutoUpdate,
-    AutoUpdateNew,
     NotificationCounter,
     RelativeDates,
     articleLiveblogCommon,
@@ -43,18 +41,7 @@ define([
 ) {
     'use strict';
 
-    var modules,
-        autoUpdate;
-
-    function getUpdatePath() {
-        var id,
-            blocks = qwery('.js-liveblog-body .block'),
-            newestBlock = blocks.shift();
-
-        // There may be no blocks at all. 'block-0' will return any new blocks found.
-        id = newestBlock ? newestBlock.id : 'block-0';
-        return window.location.pathname + '.json?isLivePage=true&lastUpdate=' + id;
-    }
+    var modules;
 
     modules = {
         initAdverts: function () {
@@ -62,13 +49,6 @@ define([
                 liveblogDynamicAdverts.init();
             } else if (config.switches.liveblogAdverts) {
                 liveblogAdverts.init();
-            }
-        },
-
-        // once Toast is shipped this can be removed completely, the notification counter is initialised within Toast
-        createFilter: function () {
-            if (!config.switches.liveblogToast) {
-                new NotificationCounter().init();
             }
         },
 
@@ -89,26 +69,8 @@ define([
 
         createAutoUpdate: function () {
             if (config.page.isLive) {
-                if (config.switches.liveblogToast) {
-                    console.log("++ New auto");
-                    AutoUpdateNew();
-                } else if (window.location.search.indexOf('?page=') !== 0/*TODO proper guardian.config val*/) {
-                    console.log("++ Old auto")
-                    var timerDelay = detect.isBreakpoint({ min: 'desktop' }) ? 5000 : 60000;
-                    autoUpdate = new AutoUpdate({
-                        path: getUpdatePath,
-                        delay: timerDelay,
-                        backoff: 2,
-                        backoffMax: 1000 * 60 * 20,
-                        attachTo: [$('.js-liveblog-body')[0], $('.js-live-blog__timeline')[0]],
-                        switches: config.switches,
-                        manipulationType: 'prepend',
-                        responseField: ['html', 'timeline']
-                    });
-                    autoUpdate.init();
-                }
+                AutoUpdate();
             }
-
         },
 
         keepTimestampsCurrent: function () {
@@ -133,7 +95,6 @@ define([
             ['lb-adverts',    modules.initAdverts],
             ['lb-autoupdate', modules.createAutoUpdate],
             ['lb-timeline',   modules.affixTimeline],
-            ['lb-filter',     modules.createFilter],
             ['lb-timestamp',  modules.keepTimestampsCurrent],
             ['lb-richlinks',  richLinks.upgradeRichLinks]
         ]);
