@@ -18,7 +18,6 @@ define([
 
         this.canRun = function () {
             var bp = detect.getBreakpoint();
-            var ct = config.page.contentType;
             return (bp === 'desktop' || bp === 'tablet');
         };
 
