@@ -75,7 +75,9 @@ object MoreOnMatchController extends Controller with Football with Requests with
 
     val maybeResponse: Option[Future[Result]] = maybeMatch map { theMatch =>
       loadMoreOn(request, theMatch) map {
-        case Nil => JsonNotFound()
+        case Nil =>
+          log.info(s"Cannot load more for match id: ${theMatch.id}")
+          JsonNotFound()
         case related => JsonComponent(
           "nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, related filter {
             hasExactlyTwoTeams
