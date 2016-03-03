@@ -1,0 +1,27 @@
+.next-in-series-test {
+    padding-top: $gs-baseline / 4;
+    padding-bottom: $gs-baseline / 4;
+    border-top: 1px dotted guss-colour(neutral-3, $pasteup-palette);
+
+    h3 {
+        color: colour(neutral-2);
+        @include fs-textSans(5);
+    }
+
+    h4 {
+        @include fs-header(5);
+        margin-bottom: ($gs-baseline / 3) * 2;
+    }
+}
+
+.next-in-series-test__teaser {
+    margin-bottom: $gs-baseline;
+}
+
+.next-in-series-test__remind-me-link {
+    &, a:hover, a:active {
+        background-color: colour(features-support-1) !important;
+        border-color: darken(colour(features-support-1), 5%) !important;
+        color: #ffffff !important;
+    }
+}
