@@ -12,12 +12,10 @@
         </a>
     }
 
-    @if(!article.hasCustomEmailBanner) {
-        @article.content.seriesName.map { seriesName =>
-            @paddedRow {
-                <h3 class="text--brand">@seriesName</h3>
-                <hr class="rule--compact" />
-            }
+    @article.fallbackSeriesText.map { seriesName =>
+        @paddedRow {
+            <h3 class="text--brand">@seriesName</h3>
+            <hr class="rule--compact" />
         }
     }
 

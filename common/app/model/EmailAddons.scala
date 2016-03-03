@@ -57,6 +57,8 @@ object EmailAddons {
   implicit class EmailContentType(c: ContentType) {
     val email = allEmails.find(_.test(c))
 
+    val fallbackSeriesText = if (email.isEmpty) c.content.seriesName else None
+
     val hasCustomEmailBanner: Boolean = email.exists(_.banner.nonEmpty)
 
     lazy val banner = {
