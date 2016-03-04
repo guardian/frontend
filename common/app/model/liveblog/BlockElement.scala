@@ -75,7 +75,7 @@ object BlockElement {
     element.videoTypeData.map { d => Map(
       "caption" -> d.caption,
       "url" -> d.url
-    ) collect {case (k, Some (v) ) => (k, v)}
-    } getOrElse Map ()
+    ) collect { case (k, Some (v) ) => (k, v) }
+    } getOrElse Map()
   }
 }
