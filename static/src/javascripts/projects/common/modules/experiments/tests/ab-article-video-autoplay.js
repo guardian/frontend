@@ -4,8 +4,8 @@ define([
 
     return function () {
         this.id = 'ArticleVideoAutoplay';
-        this.start = '2016-07-16';
-        this.expiry = '2016-07-30';
+        this.start = '2016-03-07';
+        this.expiry = '2016-03-21';
         this.author = 'James Gorrie';
         this.description = 'Autoplay embedded videos on article pages';
         this.audience = .2;
