@@ -16,7 +16,7 @@ case object ArtWeekly extends EmailContent {
 
 case object GreenLight extends EmailContent {
   val name = "Green Light"
-  val banner = "green-light.png"
+  val banner = "generic.png" // temporary hack until we have the right banner
   def test(c: ContentType) = c.tags.series.exists(_.id == "environment/series/green-light")
 }
 
