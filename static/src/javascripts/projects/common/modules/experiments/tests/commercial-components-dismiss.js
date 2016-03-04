@@ -1,8 +1,4 @@
-define([
-    'common/modules/commercial/survey/survey-simple'
-], function (
-    SurveySimple
-) {
+define([], function () {
     return function () {
 
         this.id = 'CommercialComponentsDismiss';
@@ -24,10 +20,7 @@ define([
         this.variants = [
             {
                 id: 'dismiss',
-                test: function () {
-                    //attach hidden survey overlay, it will be triggered by a 'Dimiss' label
-                    new SurveySimple().attach();
-                }
+                test: function () {}
             },
             {
                 id: 'control',

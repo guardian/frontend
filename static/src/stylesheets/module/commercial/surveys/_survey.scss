@@ -44,7 +44,7 @@
         @include mq(tablet) {
             left: 50%;
             top: percentage(1/5);
-            width: $gs-column-width*6;
+            width: $gs-column-width * 8;
             height: auto;
             margin-left: -180px;
         }
@@ -124,8 +124,13 @@
         @include circular;
         
         padding-left: 10px;
+        margin-right: $gs-gutter / 2;
         border: 1px solid rgba(#ffffff, .3);
         float: left;
+
+        @include mq($until: mobile) {
+            margin-bottom: $gs-row-height / 4;
+        }
     }
 
     .survey-link__takepart {
