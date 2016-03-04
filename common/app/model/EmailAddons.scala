@@ -50,12 +50,20 @@ case object TheSpin extends EmailContent {
   def test(c: ContentType) = c.tags.series.exists(_.id == "sport/series/thespin")
 }
 
+case object MorningBriefing extends EmailContent {
+  val name = "Morning Briefing"
+  val banner = "morning-briefing.png"
+  def test(c: ContentType) = c.tags.series.exists(_.id == "world/series/guardian-morning-briefing")
+}
+
 object EmailAddons {
   private val defaultBanner = "generic.png"
-  private val allEmails     = Seq(ArtWeekly, GreenLight, MoneyTalks, PovertyMatters, TheBreakdown, TheFiver, TheSpin)
+  private val allEmails     = Seq(ArtWeekly, GreenLight, MoneyTalks, PovertyMatters, TheBreakdown, TheFiver, TheSpin, MorningBriefing)
 
   implicit class EmailContentType(c: ContentType) {
     val email = allEmails.find(_.test(c))
+
+    val fallbackSeriesText = if (email.isEmpty) c.content.seriesName else None
 
     lazy val banner = {
       val banner = email map (_.banner) getOrElse defaultBanner

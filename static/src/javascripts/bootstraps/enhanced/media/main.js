@@ -208,14 +208,15 @@ define([
             player.ready(function () {
                 var vol;
 
-                events.bindGlobalEvents(player);
-                events.bindContentEvents(player);
-                if (withPreroll) {
-                    events.bindPrerollEvents(player);
-                }
                 deferToAnalytics(function () {
                     events.initOmnitureTracking(player);
                     events.initOphanTracking(player, mediaId);
+
+                    events.bindGlobalEvents(player);
+                    events.bindContentEvents(player);
+                    if (withPreroll) {
+                        events.bindPrerollEvents(player);
+                    }
                 });
 
                 initLoadingSpinner(player);

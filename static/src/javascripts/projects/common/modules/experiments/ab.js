@@ -8,6 +8,7 @@ define([
     'common/modules/experiments/tests/fronts-on-articles2',
     'common/modules/experiments/tests/identity-register-membership-standfirst',
     'common/modules/experiments/tests/live-blog-chrome-notifications',
+    'common/modules/experiments/tests/next-in-series',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -27,6 +28,7 @@ define([
     FrontsOnArticles2,
     IdentityRegisterMembershipStandfirst,
     LiveBlogChromeNotifications,
+    NextInSeries,
     flatten,
     forEach,
     keys,
@@ -42,6 +44,7 @@ define([
         new FrontsOnArticles2(),
         new IdentityRegisterMembershipStandfirst(),
         new LiveBlogChromeNotifications()
+        new NextInSeries()
     ]);
 
     var participationsKey = 'gu.ab.participations';

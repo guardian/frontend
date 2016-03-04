@@ -22,19 +22,32 @@
     }
 }
 
-.atom-quiz__answer + .atom-quiz__answer {
+.atom-quiz__question-image {
+    margin-bottom: $gs-baseline / 2;
+}
+
+.atom-quiz__answer--text + .atom-quiz__answer--text {
     margin-top: $gs-baseline * .5;
+}
+
+.atom-quiz__answer--image {
+    width: 50%;
+    float: left;
+
+    .caption {
+        padding-bottom: 0;
+    }
 }
 
 .atom-quiz__answer__input {
     @include u-h;
 }
 
-.atom-quiz__answer-text {
-    display: block;
+.atom-quiz__answer__text,
+.atom-quiz__answer__image {
     background-color: colour(neutral-8);
-    padding: $gs-baseline $gs-gutter;
     transition: background-color 40ms;
+    display: block;
     position: relative;
 
     .atom-quiz--questions & {
@@ -77,10 +90,29 @@
     }
 }
 
+.atom-quiz__answer__text {
+    padding: $gs-baseline $gs-gutter;
+}
+
+.atom-quiz__answer__image {
+    padding: $gs-gutter * .5;
+    border-left: 4px solid #ffffff;
+    border-bottom: 4px solid #ffffff;
+    box-sizing: border-box;
+}
+
+.atom-quiz__answers--images {
+    overflow: auto;
+    margin-left: -4px;
+}
+
+// Text answers have reveal-text nested, but Image answers have reveal-text as a sibling to atom-quiz__answers.
+.atom-quiz__answers + .atom-quiz__answer__reveal-text {
+    padding: $gs-gutter * .5;
+    background-color: fade-out(colour(quiz-correct), .4);
+}
+
 .atom-quiz__answer__icon {
-    position: absolute;
-    left: 1em;
-    top: .9em;
 
     svg {
         height: 1em;
@@ -88,9 +120,28 @@
     }
 }
 
+.atom-quiz__answer__icon--text {
+    position: absolute;
+    left: 1em;
+    top: .9em;
+}
+
+.atom-quiz__answer__icon--image {
+    padding-top: $gs-baseline;
+    display: block;
+
+    .atom-quiz__answer--correct &:after {
+        content: 'Correct';
+    }
+
+    .atom-quiz__answer--incorrect &:after {
+        content: 'Incorrect';
+    }
+}
+
 .atom-quiz__answer--correct {
-    .atom-quiz__answer-text {
-        color: #ffffff;
+    .atom-quiz__answer__text,
+    .atom-quiz__answer__image {
         background-color: fade-out(colour(quiz-correct), .4);
     }
 
@@ -100,8 +151,13 @@
     }
 }
 
+.atom-quiz--personality .atom-quiz__answer--selected .atom-quiz__answer__text {
+    background-color: colour(comment-main-2);
+}
+
 .atom-quiz__answer--incorrect.atom-quiz__answer--selected {
-    .atom-quiz__answer-text {
+    .atom-quiz__answer__text,
+    .atom-quiz__answer__image {
         color: #ffffff;
         background-color: colour(quiz-incorrect);
     }
@@ -121,7 +177,7 @@
 .atom-quiz--personality,
 .atom-quiz__answer--correct,
 .atom-quiz__answer--incorrect {
-    .atom-quiz__answer-text {
+    .atom-quiz__answer__text {
         padding-left: 3em;
     }
 }

@@ -219,7 +219,9 @@ define([
             },
             pageHasBlanketBlacklist: function () {
                 // Prevent the blanket emails from ever showing on certain keywords or sections
-                return canRunHelpers.keywordExists(['US elections 2016', 'Football']) || config.page.section === 'film';
+                return canRunHelpers.keywordExists(['US elections 2016', 'Football']) ||
+                        config.page.section === 'film' ||
+                        config.page.seriesId === 'world/series/guardian-morning-briefing';
             }
         },
         canRunList = {
