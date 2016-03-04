@@ -8,6 +8,7 @@ define([
     'common/modules/experiments/tests/commercial-components-dismiss',
     'common/modules/experiments/tests/fronts-on-articles2',
     'common/modules/experiments/tests/identity-register-membership-standfirst',
+    'common/modules/experiments/tests/next-in-series',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -27,6 +28,7 @@ define([
     CommercialComponentsDismiss,
     FrontsOnArticles2,
     IdentityRegisterMembershipStandfirst,
+    NextInSeries,
     flatten,
     forEach,
     keys,
@@ -41,7 +43,8 @@ define([
     var TESTS = flatten([
         new CommercialComponentsDismiss(),
         new FrontsOnArticles2(),
-        new IdentityRegisterMembershipStandfirst()
+        new IdentityRegisterMembershipStandfirst(),
+        new NextInSeries()
     ]);
 
     var participationsKey = 'gu.ab.participations';
