@@ -8,6 +8,7 @@ define([
     'common/utils/storage',
     'common/utils/ajax',
     'common/utils/template',
+    'common/utils/mediator',
     'common/views/svgs',
     'common/modules/user-prefs',
     'text!common/views/ui/notifications-subscribe-link.html',
@@ -24,6 +25,7 @@ define([
     storage,
     ajax,
     template,
+    mediator,
     svgs,
     userPrefs,
     subscribeTemplate,
@@ -41,15 +43,12 @@ define([
 
             navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
                 reg = serviceWorkerRegistration;
-                console.log("++ SW: " + JSON.stringify(reg));
                 serviceWorkerRegistration.pushManager.getSubscription().then(function (pushSubscription) {
 
                     if (pushSubscription) {
-                        console.log("++ Sub: " + JSON.stringify(pushSubscription));
                         sub = pushSubscription;
                         modules.configureSubscribeTemplate();
                     } else {
-                        console.log("++ Not a sub");
                         reg.pushManager.subscribe({userVisibleOnly: true}).then(
                             function (pushSubscription) {
                                 sub = pushSubscription;
@@ -80,13 +79,16 @@ define([
                 });
 
             fastdom.write(function () {
-                console.log("Jacksie!");
                 $('.js-liveblog-body').prepend(src);
             });
 
             bean.on(document.body, 'click', '.js-notifications-subscribe-link', function () {
                 modules.buttonHandler();
             });
+
+            console.log("Nearly");
+            mediator.emit('page:notifications:ready');
+            console.log("Ready");
         },
 
         setSubscriptionStatus: function (subscribed) {

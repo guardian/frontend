@@ -7,6 +7,7 @@ define([
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/fronts-on-articles2',
     'common/modules/experiments/tests/identity-register-membership-standfirst',
+    'common/modules/experiments/tests/live-blog-chrome-notifications',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -25,6 +26,7 @@ define([
     mvtCookie,
     FrontsOnArticles2,
     IdentityRegisterMembershipStandfirst,
+    LiveBlogChromeNotifications,
     flatten,
     forEach,
     keys,
@@ -38,7 +40,8 @@ define([
 
     var TESTS = flatten([
         new FrontsOnArticles2(),
-        new IdentityRegisterMembershipStandfirst()
+        new IdentityRegisterMembershipStandfirst(),
+        new LiveBlogChromeNotifications()
     ]);
 
     var participationsKey = 'gu.ab.participations';
