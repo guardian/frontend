@@ -16,7 +16,8 @@ define([
     'text!common/views/commercial/creatives/logo-sponsored.html',
     'text!common/views/commercial/creatives/manual-inline.html',
     'text!common/views/commercial/creatives/manual-multiple.html',
-    'text!common/views/commercial/creatives/manual-single.html'
+    'text!common/views/commercial/creatives/manual-single.html',
+    'text!common/views/commercial/creatives/gimbap.html'
 ], function (
     Promise,
     $,
