@@ -1,45 +1,45 @@
 .gimbap {
-	display: block;
-	padding: $gs-gutter / 3;
+    display: block;
+    padding: $gs-gutter / 3;
 
-    background-color: lightgrey;
+    background-color: #d3d3d3;
 
     &:hover {
-    	text-decoration: none;
+        text-decoration: none;
     }
 }
 
 .gimbap__title {
-	@include fs-headline(4);
+    @include fs-headline(4);
 
-	margin-bottom: $gs-baseline;
+    margin-bottom: $gs-baseline;
 }
 
 .gimbap__cta {
-	@include fs-headline(2);
+    @include fs-headline(2);
 }
 
 .gimbap__arrow {
-	@include circular;
+    @include circular;
 
-	display: inline-block;
-	vertical-align: middle;
-	width: $gs-baseline * 2;
-	height: $gs-baseline * 2;
-	background-color: rgba(255,255,255,.4);
+    display: inline-block;
+    vertical-align: middle;
+    width: $gs-baseline * 2;
+    height: $gs-baseline * 2;
+    background-color: rgba(255, 255, 255, .4);
 
-	svg {
-		width: $gs-baseline * 2;
-		height: $gs-baseline * 2;
-	}
+    svg {
+        width: $gs-baseline * 2;
+        height: $gs-baseline * 2;
+    }
 }
 
 .gimbap__logo {
-	text-align: right;
-	line-height: 0;
+    text-align: right;
+    line-height: 0;
 
-	svg {
-		width: 40%;
-		fill: #ffffff;
-	}
+    svg {
+        width: 40%;
+        fill: #ffffff;
+    }
 }
