@@ -71,7 +71,6 @@ define([
             });
         }
 
-        console.log("Bonza!")
         if (config.page.isMinuteArticle) {
             require(['bootstraps/enhanced/article-minute', 'bootstraps/enhanced/image-content'], function (articleMinute, imageContent) {
                 bootstrapContext('articleMinute', articleMinute);
@@ -131,14 +130,13 @@ define([
                 bootstrapContext('preferences', preferences);
             });
         }
-        console.log("+++++++++++++++++++++++++++++++++++++++++++++ LOL BOMMPdswads Wotcha!");
 
-        // use a #force-sw hash fragment to force service worker registration for local dev
+        // use a #force-sw hasz\h fragment to force service worker registration for local dev
         if ((window.location.protocol === 'https:' && config.page.section !== 'identity') || window.location.hash === '#force-sw') {
             var navigator = window.navigator;
             if (navigator && navigator.serviceWorker) {
                 navigator.serviceWorker.register('/service-worker.js').then(function () {
-                   if (detect.getUserAgent.browser === 'Chrome' && config.page.contentType === 'LiveBlog') {
+                   if (detect.getUserAgent.browser === 'Chrome' && config.page.contentType === 'LiveBlog' && config.page.isLive) {
                        require(['bootstraps/enhanced/notifications'], function (notifications) {
                            bootstrapContext('notifications', notifications);
                        });

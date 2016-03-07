@@ -161,16 +161,17 @@ self.addEventListener('push', function(event) {
             })
             .then(function (data) {
 
-                var messages = data.messages;
+               if(data.status === "")
+                    var messages = data.messages;
 
-                messages.forEach( function(message) {
-                    self.registration.showNotification(message.title, {
-                        body: message.body,
-                        icon: '@{JavaScript(Static("images/favicons/114x114.png").path)}',
-                        tag: message.title
+                    messages.forEach( function(message) {
+                        self.registration.showNotification(message.title, {
+                            body: message.body,
+                            icon: '@{JavaScript(Static("images/favicons/114x114.png").path)}',
+                            tag: message.title
+                        });
                     });
-                });
-            })
+                })
 
         })
     );

@@ -45,11 +45,8 @@ define([
     var TESTS = flatten([
         new FrontsOnArticles2(),
         new IdentityRegisterMembershipStandfirst(),
-<<<<<<< HEAD
         new LiveBlogChromeNotifications(),
-=======
         new ArticleVideoAutoplay(),
->>>>>>> origin/master
         new NextInSeries()
     ]);
 
