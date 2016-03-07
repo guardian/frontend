@@ -52,7 +52,7 @@ define([
         // These should match those defined in:
         //   stylesheets/_vars.scss
         //   common/app/layout/Breakpoint.scala
-        breakpoints = [
+            breakpoints = [
             {
                 name: 'mobile',
                 isTweakpoint: false,

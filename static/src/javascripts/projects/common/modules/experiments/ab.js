@@ -8,6 +8,7 @@ define([
     'common/modules/experiments/tests/fronts-on-articles2',
     'common/modules/experiments/tests/identity-register-membership-standfirst',
     'common/modules/experiments/tests/live-blog-chrome-notifications',
+    'common/modules/experiments/tests/article-video-autoplay',
     'common/modules/experiments/tests/next-in-series',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
@@ -28,6 +29,7 @@ define([
     FrontsOnArticles2,
     IdentityRegisterMembershipStandfirst,
     LiveBlogChromeNotifications,
+    ArticleVideoAutoplay,
     NextInSeries,
     flatten,
     forEach,
@@ -43,7 +45,11 @@ define([
     var TESTS = flatten([
         new FrontsOnArticles2(),
         new IdentityRegisterMembershipStandfirst(),
+<<<<<<< HEAD
         new LiveBlogChromeNotifications(),
+=======
+        new ArticleVideoAutoplay(),
+>>>>>>> origin/master
         new NextInSeries()
     ]);
 
