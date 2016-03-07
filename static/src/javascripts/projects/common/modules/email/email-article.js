@@ -168,7 +168,8 @@ define([
             // Check our lists canRun method and
             // make sure that the user isn't already subscribed to this email and
             // don't show on IE 7,8,9 for now
-            if (listConfig.listName &&
+            if (!config.page.shouldHideAdverts &&
+                listConfig.listName &&
                 canRunList[listConfig.listName]() &&
                 !contains(userListSubscriptions, listConfig.listId) &&
                 !userHasRemoved(listConfig.listId, 'article') &&
