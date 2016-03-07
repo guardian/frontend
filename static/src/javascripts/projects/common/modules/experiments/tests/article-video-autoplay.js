@@ -1,6 +1,7 @@
 define([
+    'common/utils/config',
     'common/utils/detect'
-], function (detect) {
+], function (config, detect) {
 
     return function () {
         this.id = 'ArticleVideoAutoplay';
@@ -17,7 +18,9 @@ define([
 
         this.canRun = function () {
             var bp = detect.getBreakpoint();
-            return !(bp === 'mobile' || bp === 'mobileLandscape');
+            var ct = config.page.contentType;
+
+            return !(bp === 'mobile' || bp === 'mobileLandscape') && (ct === 'Article' || ct === 'LiveBlog');
         };
 
         this.variants = [{
