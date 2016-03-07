@@ -40,7 +40,12 @@ define([
     userPrefs
 ) {
 
-    var listConfigs = {
+    var insertBottomOfArticle = function () {
+            return function ($iframeEl) {
+                $iframeEl.appendTo('.js-article__body');
+            };
+        },
+        listConfigs = {
             theCampaignMinute: {
                 listId: '3599',
                 listName: 'theCampaignMinute',
@@ -74,7 +79,8 @@ define([
                 description: 'Sign up to the Fiver, our daily email on the world of football',
                 successHeadline: 'Thank you for signing up',
                 successDescription: 'You\'ll receive the Fiver daily, around 5pm.',
-                modClass: 'end-article'
+                modClass: 'end-article',
+                insertMethod: insertBottomOfArticle
             },
             morningMailUk: {
                 listId: '3640',
@@ -84,7 +90,8 @@ define([
                 description: 'For the next two weeks we\'ll be trialling a new morning briefing email. We\'re collecting feedback - and if we continue the email, you\'ll be among the first to receive it',
                 successHeadline: 'Thank you!',
                 successDescription: 'We\'ll send you your briefing every morning.',
-                modClass: 'end-article'
+                modClass: 'end-article',
+                insertMethod: insertBottomOfArticle
             },
             morningMailUkSeries: {
                 listId: '3640',
@@ -95,11 +102,7 @@ define([
                 successHeadline: 'Thank you!',
                 successDescription: 'We\'ll send you your briefing every morning.',
                 modClass: 'end-article',
-                insertMethod: function () {
-                    return function ($iframeEl) {
-                        $iframeEl.appendTo('.js-article__body');
-                    };
-                }
+                insertMethod: insertBottomOfArticle
             },
             theGuardianToday: {
                 listId: (function () {
@@ -121,17 +124,7 @@ define([
                 successHeadline: 'Thank you for signing up to the Guardian Today',
                 successDescription: 'We will send you our picks of the most important headlines tomorrow morning.',
                 modClass: 'end-article',
-                insertMethod: function () {
-                    if (config.page.edition === 'AU') {
-                        // In AU Edition, we want to place the article at the bottom of the body
-                        // and not use space-finder
-                        return function ($iframeEl) {
-                            $iframeEl.appendTo('.js-article__body');
-                        };
-                    } else {
-                        return false;
-                    }
-                }
+                insertMethod: insertBottomOfArticle
             }
         },
         emailInserted = false,
