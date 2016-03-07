@@ -31,7 +31,7 @@ case class JobsFeedMetaData(urlTemplate: String) extends FeedMetaData {
     urlTemplate replace("yyyy-MM-dd", feedDate)
   }
 
-  val switch = Switches.JobFeedSwitch
+  val switch = Switches.JobFeedReadSwitch
   override val responseEncoding = utf8
 }
 

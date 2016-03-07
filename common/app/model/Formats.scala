@@ -179,6 +179,7 @@ object ContentTypeFormat {
   implicit val tagFormat = Json.format[Tag]
   val tagsFormat = Json.format[Tags]
   implicit val imageMediaFormat = ElementsFormat.imageMediaFormat
+  implicit val quizImageMediaFormat = Json.format[QuizImageMedia]
   implicit val answerFormat = Json.format[Answer]
   implicit val questionFormat = Json.format[Question]
   implicit val quizResultBucketFormat = Json.format[ResultBucket]
