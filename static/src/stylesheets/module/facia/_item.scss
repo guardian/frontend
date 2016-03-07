@@ -245,13 +245,13 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 }
 
-.fc-item--video .fc-item__title,
-.rich-link--video .rich-link__title,
-.fc-sublink--video .fc-sublink__link {
+.fc-item__title,
+.rich-link__title,
+.fc-sublink__link {
     .inline-video-icon {
         fill: colour(media-default);
 
-        svg {
+        > svg {
             height: .75em;
             width: 1.1em;
             margin-right: .3em;
@@ -685,7 +685,7 @@ $block-height: 71px;
     @include mq(tablet) {
         border: 0;
         padding: 0;
-        
+
         .inline-icon {
             margin-left: 0;
         }
