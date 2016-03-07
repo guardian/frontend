@@ -43,7 +43,7 @@
     };
 
     // If this is an older iOS, we assume it's an older device (they stop being upgradeable at some point).
-    // Old here means iOS 3-6.
+    // Old here means iOS 3-7.
     // For usage stats see http://david-smith.org/iosversionstats/
     function isOlderIOSDevice() {
         return /.*(iPhone|iPad|iPod; CPU) OS ([34567])_\d+.*/.test(navigator.userAgent);
