@@ -37,7 +37,7 @@ define([
 
         this.loadAdvert = function loadAdvert(advert) {
             return advertQueue.add(function () {
-                runAuction(advert);
+                return runAuction(advert);
             });
         };
 
