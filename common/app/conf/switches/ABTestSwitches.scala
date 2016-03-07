@@ -36,7 +36,7 @@ trait ABTestSwitches {
     "ab-article-video-autoplay",
     "Autoplay embedded videos in article",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 21),
+    sellByDate = new LocalDate(2016, 3, 22),
     exposeClientSide = true
   )
 
