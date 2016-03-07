@@ -48,7 +48,7 @@ define([
         new CommercialComponentsDismiss(),
         new FrontsOnArticles2(),
         new IdentityRegisterMembershipStandfirst(),
-        new HeaderBiddingUS()
+        new HeaderBiddingUS(),
         new ArticleVideoAutoplay(),
         new NextInSeries()
     ]);

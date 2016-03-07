@@ -17,6 +17,10 @@ define([
             add : jasmine.createSpy('QueueAsync.add')
         };
 
+        var mockPageTargeting = {
+            k : 'technology, laptops'
+        };
+
         beforeEach(function (done) {
             injector.mock(
                 'common/modules/commercial/dfp/QueueAsync',
@@ -28,7 +32,7 @@ define([
             injector.require([
                 'common/modules/commercial/dfp/PrebidService'
             ], function () {
-                prebidService = new arguments[0]();
+                prebidService = new arguments[0](mockPageTargeting);
                 done();
             });
         });
