@@ -49,6 +49,10 @@ define([
 
         beforeEach(function (done) {
 
+            injector.mock('common/modules/commercial/dfp/PrebidService', function MockPrebidService() {
+                // No implementation
+            });
+
             injector.require([
                 'common/modules/commercial/dfp/dfp-api',
                 'common/utils/config',

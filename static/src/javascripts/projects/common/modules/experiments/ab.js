@@ -8,6 +8,7 @@ define([
     'common/modules/experiments/tests/commercial-components-dismiss',
     'common/modules/experiments/tests/fronts-on-articles2',
     'common/modules/experiments/tests/identity-register-membership-standfirst',
+    'common/modules/experiments/tests/header-bidding-us',
     'common/modules/experiments/tests/article-video-autoplay',
     'common/modules/experiments/tests/next-in-series',
     'lodash/arrays/flatten',
@@ -29,6 +30,7 @@ define([
     CommercialComponentsDismiss,
     FrontsOnArticles2,
     IdentityRegisterMembershipStandfirst,
+    HeaderBiddingUS,
     ArticleVideoAutoplay,
     NextInSeries,
     flatten,
@@ -46,6 +48,7 @@ define([
         new CommercialComponentsDismiss(),
         new FrontsOnArticles2(),
         new IdentityRegisterMembershipStandfirst(),
+        new HeaderBiddingUS()
         new ArticleVideoAutoplay(),
         new NextInSeries()
     ]);
