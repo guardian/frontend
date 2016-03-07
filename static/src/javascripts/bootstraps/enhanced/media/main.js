@@ -2,6 +2,7 @@ define([
     'bean',
     'bonzo',
     'fastdom',
+    'common/utils/fastdom-promise',
     'raven',
     'Promise',
     'common/utils/$',
@@ -21,11 +22,13 @@ define([
     // This must be the full path because we use curl config to change it based
     // on env
     'bootstraps/enhanced/media/video-player',
-    'text!common/views/ui/loading.html'
+    'text!common/views/ui/loading.html',
+    'common/modules/experiments/ab'
 ], function (
     bean,
     bonzo,
     fastdom,
+    fastdomPromise,
     raven,
     Promise,
     $,
@@ -43,8 +46,62 @@ define([
     supportedBrowsers,
     techOrder,
     videojs,
-    loadingTmpl
+    loadingTmpl,
+    ab
 ) {
+    // For the A/B test
+    var abVideoAutoplay = ab.getParticipations().ArticleVideoAutoplay;
+    function elementIsInView(el, offset) {
+        var viewportHeight = window.innerHeight;
+        var rect = el.getBoundingClientRect();
+        var fromTop = rect.top + offset;
+        var fromBottom = rect.bottom - offset;
+
+        return fromTop < viewportHeight && fromBottom > 0;
+    }
+
+    function ElementViewable(element, offset, inViewOnloadCallbackOpt) {
+        // This is rubbish, but we can refine it later.
+        var inViewOnloadCallback = inViewOnloadCallbackOpt || function () {};
+        var wasAlreadyInView = false;
+        var events = {
+            viewenter: function viewenter() {},
+            viewexit: function viewexit() {}
+        };
+        // TODO: latch onto debounced event
+        mediator.on('window:throttledScroll', function () {
+            var inView = elementIsInView(element, offset);
+
+            if (inView) {
+                if (!wasAlreadyInView) {
+                    wasAlreadyInView = true;
+                    events.viewenter();
+                }
+            } else {
+                if (wasAlreadyInView) {
+                    wasAlreadyInView = false;
+                    events.viewexit();
+                }
+                wasAlreadyInView = false;
+            }
+        });
+
+        fastdomPromise.read(function () {
+            wasAlreadyInView = elementIsInView(element, offset);
+            return wasAlreadyInView;
+        }).then(function (inView) {
+            if (inView) {
+                inViewOnloadCallback();
+            }
+        });
+
+        return {
+            on: function (event, func) {
+                events[event] = func;
+            }
+        };
+    }
+    // End A/B test
 
     function getAdUrl() {
         // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
@@ -268,6 +325,30 @@ define([
                     } else {
                         resolve();
                     }
+
+                    if (abVideoAutoplay.variant === 'autoplay') {
+                        // Annoyingly we pass the `parentNode` as the video is absolutely positioned.
+                        var parentNode = player.el().parentNode;
+                        var firstAutoplay = true;
+                        var elementInView = ElementViewable(parentNode, parentNode.clientHeight * (3 / 4), function () {
+                            if (firstAutoplay) {
+                                player.volume(0);
+                                firstAutoplay = false;
+                            }
+                            player.play();
+                        });
+                        elementInView.on('viewenter', function autoplayInView() {
+                            if (firstAutoplay) {
+                                player.volume(0);
+                                firstAutoplay = false;
+                            }
+                            player.play();
+                        });
+                        elementInView.on('viewexit', function autoStopInView() {
+                            player.pause();
+                        });
+                    }
+
                 } else {
                     player.playlist({
                         mediaType: 'audio',
@@ -378,7 +459,7 @@ define([
             !config.page.isAdvertisementFeature;
 
         if (config.switches.enhancedMediaPlayer) {
-            if (shouldPreroll) {
+            if (shouldPreroll && !abVideoAutoplay) {
                 require(['js!//imasdk.googleapis.com/js/sdkloader/ima3.js']).then(function () {
                     initWithRaven(true);
                 }, function (e) {

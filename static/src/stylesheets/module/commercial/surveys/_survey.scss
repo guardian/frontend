@@ -46,7 +46,7 @@
             top: percentage(1/5);
             width: $gs-column-width * 8;
             height: auto;
-            margin-left: -180px;
+            margin-left: -$gs-column-width * 3;
         }
 
     }

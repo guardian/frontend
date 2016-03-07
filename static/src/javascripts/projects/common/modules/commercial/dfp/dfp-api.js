@@ -453,7 +453,7 @@ define([
                 var crossIcon = svgs('crossIcon');
 
                 survey.attach();
-                $adSlot.prepend('<div class="commercial__inner"><a href="#" class="ad-slot--dimiss js-ad-slot-dismiss" data-link-name="dimiss commercial component">Dismiss ' + crossIcon + '</a></div>');
+                $adSlot.prepend('<div class="commercial__inner"><a href="#" class="ad-slot--dismiss js-ad-slot-dismiss" data-link-name="dimiss commercial component">Dismiss ' + crossIcon + '</a></div>');
 
                 bean.on(document, 'click', $('.js-ad-slot-dismiss', $adSlot), function (e) {
                     e.preventDefault();
