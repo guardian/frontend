@@ -43,3 +43,104 @@
         fill: #ffffff;
     }
 }
+
+.gimbap-wrap {
+    padding: 0 $gs-gutter / 2 $gs-baseline;
+    position: relative;
+
+    @include mq(tablet) {
+        max-width: 740px;
+        padding: 0 calc(50% - 370px) $gs-baseline;
+
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: calc(50% - 370px);
+            background: rgba(51, 51, 51, 0.05);
+        }
+
+        &::before { left: 0 }
+        &::after  { right: 0 }
+    }
+
+    @include mq(desktop) {
+        max-width: 980px;
+        padding: 0 calc(50% - 490px) $gs-baseline;
+
+        &::before,
+        &::after {
+            width: calc(50% - 490px);
+        }
+    }
+
+    @include mq(leftCol) {
+        max-width: 1140px;
+        padding: 0 calc(50% - 570px) $gs-baseline;
+
+        &::before,
+        &::after {
+            width: calc(50% - 570px);
+        }
+    }
+
+    @include mq(wide) {
+        max-width: 1300px;
+        padding: 0 calc(50% - 650px) $gs-baseline;
+
+        &::before,
+        &::after {
+            width: calc(50% - 650px);
+        }
+    }
+}
+
+.gimbap-wrap__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @include mq(tablet) {
+        padding: 0 $gs-gutter;
+    }
+
+}
+
+.gimbap-wrap__body {
+    @include mq(mobile, tablet) {
+        > .gimbap + .gimbap {
+            margin-top: $gs-baseline;
+        }
+    }
+
+    @include mq(tablet) {
+        display: flex;
+        padding: 0 $gs-gutter / 2;
+
+        > .gimbap {
+            flex: 1;
+            margin: 0 $gs-gutter / 2;
+        }
+    }
+
+    @include mq(wide) {
+        margin-left: 240px;
+        width: 960px;
+    }
+}
+
+.gimbap-wrap__body--2x1x1 > .gimbap:first-child,
+.gimbap-wrap__body--1x2x1 > .gimbap:nth-child(2),
+.gimbap-wrap__body--1x1x2 > .gimbap:nth-child(3) {
+    @include mq(tablet) {
+        flex: 0 0 calc(50% - 20px);
+    }
+}
+
+.gimbap-wrap__title {
+    font: 900 1.375rem/2.25rem "Guardian Egyptian Web","Guardian Text Egyptian Web",Georgia,serif;
+    color: #00456e;
+    margin: 0;
+}
