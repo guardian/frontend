@@ -23,7 +23,7 @@ define([
             name: 'Experience',
             pageId: 'lifeandstyle/2016/mar/04/experience-my-head-was-crushed-by-a-rock-thrown-at-my-car',
             title: 'I fought off a mountain lion',
-            trail: 'Its ears were slanted in attack position, its teeth yellow splinters buried in black gums',
+            trail: 'Its ears were slanted in attack position, its teeth yellow splinters buried in black gums…',
             link: 'https://www.surveymonkey.co.uk/r/guardian-experience-remindme'
         },
         {
@@ -43,8 +43,8 @@ define([
         {
             name: 'What I’m Really Thinking',
             pageId: 'lifeandstyle/2016/mar/05/what-really-thinking-theme-park-costume-character',
-            title: 'What I’m Really Thinking: the mother of a disabled baby',
-            trail: 'Normal now means a routine of tube feeding, tracheostomy care, physiotherapy, overnight shifts and endless logistics',
+            title: 'What I’m Really Thinking: the mother of a baby with disabilities',
+            trail: 'Normal now means a routine of tube-feeding, tracheostomy care, physiotherapy, overnight shifts and endless logistics…',
             link: 'https://www.surveymonkey.co.uk/r/guardian-whatimreallythinking-remindme'
         }
     ];
@@ -57,11 +57,11 @@ define([
     return function () {
         this.id = 'NextInSeries';
         this.start = '2016-03-07';
-        this.expiry = '2016-03-30';
+        this.expiry = '2016-03-23';
         this.author = 'Oliver Ash';
         this.description = 'Show next in series';
-        this.audience = 0;
-        this.audienceOffset = 0.3;
+        this.audience = 1;
+        this.audienceOffset = 0;
         this.successMeasure = 'We will track clicks on the button and email the next article to people who complete the survey in order to track the return journey. We will measure these to see what the interest is like.';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = 'next in series | remind me';
