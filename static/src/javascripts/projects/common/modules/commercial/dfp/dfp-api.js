@@ -448,7 +448,7 @@ define([
         idleFastdom.write(function () {
             if (shouldRenderLabel($adSlot)) {
                 $adSlot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
-            } else if (ab.isInVariant('CommercialComponentsDismiss','dismiss')) {
+            } else if (ab.isInVariant('CommercialComponentsDismiss', 'dismiss')) {
                 var survey = new SurveySimple();
                 var crossIcon = svgs('crossIcon');
 
