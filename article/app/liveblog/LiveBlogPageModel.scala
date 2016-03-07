@@ -27,7 +27,6 @@ object LiveBlogPageModel {
           allBlocks = blocks,
           currentPage = currentPage,
           pagination = if (pages.length > 1) Some(Pagination(
-            isNewestPage = newestPage.equals(currentPage),
             newest = if (isNewestPage) None else Some(newestPage),
             newer = newerPage,
             oldest = if (oldestPage.equals(currentPage)) None else Some(oldestPage),
@@ -52,10 +51,10 @@ sealed trait PageReference[B] {
   def blocks: Seq[B]
   def suffix: String
   def pageNumber: Int
+  def isArchivePage: Boolean
 }
 
 case class Pagination[B](
-  isNewestPage: Boolean,
   newest: Option[PageReference[B]],
   newer: Option[PageReference[B]],
   oldest: Option[PageReference[B]],
@@ -72,5 +71,9 @@ case class LiveBlogPageModel[B](
 case class FirstPage[B](blocks: Seq[B]) extends PageReference[B] {
   val suffix = ""
   val pageNumber = 1
+  val isArchivePage = false
 }
-case class BlockPage[B](blocks: Seq[B], blockId: String, pageNumber: Int) extends PageReference[B] { val suffix = s"?page=with:block-$blockId#block-$blockId" }
+case class BlockPage[B](blocks: Seq[B], blockId: String, pageNumber: Int) extends PageReference[B] {
+  val suffix = s"?page=with:block-$blockId"
+  val isArchivePage = true
+}

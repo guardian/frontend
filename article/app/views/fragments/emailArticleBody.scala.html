@@ -3,15 +3,28 @@
 @import views.support.EmailArticleImage
 @import views.support.EmailHelpers._
 @import model.liveblog._
-@import model.EmailAddons.EmailArticle
+@import model.EmailAddons.EmailContentType
 
 @defining(page.article) { article =>
     @fullRow {
-        <img width="580" src="@article.banner">
+        <a href="@article.metadata.webUrl" @page.item.email.map { email => title="View @email.name online"}>
+            <img width="580" src="@article.banner" @page.item.email.map { email => alt="View @email.name online"}>
+        </a>
+    }
+
+    @article.fallbackSeriesText.map { seriesName =>
+        @paddedRow {
+            <h3 class="text--brand">@seriesName</h3>
+            <hr class="rule--compact" />
+        }
     }
 
     @paddedRow {
         <h1>@article.trail.headline</h1>
+    }
+
+    @article.fields.standfirst.map { standfirst =>
+        @paddedRow(Html(standfirst))
     }
 
     @fragments.emailMainMedia(article)
@@ -33,7 +46,7 @@
                 <div class="meta__email">
                     <a href="mailto:@email" data-link-name="email-address" data-component="meta-email-address" class="button button--small button--secondary tone-colour">
                         @icon("mail")
-                        <div class="contact">email</div>
+                        <div class="contact">Email</div>
                     </a>
                 </div>
             }
@@ -62,9 +75,8 @@
 
                 case ImageBlockElement(media, data, showCredit) => {
                     @EmailArticleImage.bestFor(media).map { url =>
-
                         @fullRow {
-                            <img width="580" src="@url" @data.get("alt").map { alt => alt="@alt" }>
+                            <img width="580" class="media--main" src="@url" @data.get("alt").map { alt => alt="@alt" }>
                         }
 
                         @paddedRow {
@@ -84,6 +96,15 @@
                         }
                     }
                 }
+
+                case GuVideoBlockElement(video, media, data) => {
+                    @data.get("url").map { url =>
+                        @fullRowWithBackground(media) {
+                            <a class="play--button" href="@url"><img class="play--icon" src="@Images.play"></a>
+                        }
+                    }
+                }
+
                 case _ => {}
             }
         }

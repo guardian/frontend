@@ -1,4 +1,4 @@
-@(page: model.Page)(body: Html)(implicit request: RequestHeader)
+@(page: model.ContentPage)(body: Html)(implicit request: RequestHeader)
 
 @import common.{LinkTo, CanonicalLink}
 
@@ -18,6 +18,8 @@
     </head>
 
     <body>
+        @fragments.email.ampScript(page)
+
         <table class="body">
             <tr>
                 <td class="center" align="center" valign="top">

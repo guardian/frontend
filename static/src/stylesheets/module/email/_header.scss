@@ -34,6 +34,7 @@
 .email-sub__header--article {
     .email-sub__heading {
         color: guss-colour(guardian-brand, $pasteup-palette);
+        padding-right: 40px; // Avoid close icon
     }
 
     .email-sub__description {

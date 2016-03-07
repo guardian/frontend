@@ -150,12 +150,7 @@ $mobile-max-container-width: gs-span(8);
     }
 
     @include mq(desktop) {
-        width: 300px;
-    }
-
-    // Hide 'advertisement' label for gu style
-    .ad-slot__label {
-        display: none;
+        max-width: 300px;
     }
 
     // Article styles: Right slot width is exactly the size of the banner so we don't want any margin
@@ -172,5 +167,16 @@ $mobile-max-container-width: gs-span(8);
         margin-right: auto;
         padding-top: 0;
         padding-bottom: 0;
+    }
+}
+
+.gu-style--unboxed {
+    @include mq($until: tablet) {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    @include mq(tablet) {
+        max-width: 300px;
     }
 }

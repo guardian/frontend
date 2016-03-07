@@ -28,7 +28,7 @@ class LiveBlogPageModelTest extends FlatSpec with Matchers {
 
     val expected = blocks.take(2)
     val expectedOldestPage = BlockPage(blocks = blocks.drop(2), blockId = "old 2", pageNumber = 2)
-    val expectedPagination = Some(Pagination(isNewestPage = true, newest = None, newer = None, older = Some(expectedOldestPage), oldest = Some(expectedOldestPage), numberOfPages = 2))
+    val expectedPagination = Some(Pagination(newest = None, newer = None, older = Some(expectedOldestPage), oldest = Some(expectedOldestPage), numberOfPages = 2))
 
     result.map(_.copy(allBlocks = Seq())) should be(Some(LiveBlogPageModel(
       allBlocks = Seq(),
@@ -47,7 +47,7 @@ class LiveBlogPageModelTest extends FlatSpec with Matchers {
 
     val expectedCurrentPage = BlockPage(blocks = blocks.takeRight(2), blockId = "old 2", pageNumber = 2)
     val expectedNewestPage = FirstPage(blocks.take(2))
-    val expectedPagination = Some(Pagination(isNewestPage = false, newest = Some(expectedNewestPage), newer = Some(expectedNewestPage), older = None, oldest = None, numberOfPages = 2))
+    val expectedPagination = Some(Pagination(newest = Some(expectedNewestPage), newer = Some(expectedNewestPage), older = None, oldest = None, numberOfPages = 2))
 
     result.map(_.copy(allBlocks = Seq())) should be(Some(LiveBlogPageModel(
       allBlocks = Seq(),
@@ -66,7 +66,7 @@ class LiveBlogPageModelTest extends FlatSpec with Matchers {
 
     val expectedCurrentPage = BlockPage(blocks = blocks.takeRight(2), blockId = "old 2", pageNumber = 2)
     val expectedNewestPage = FirstPage(blocks.take(2))
-    val expectedPagination = Some(Pagination(isNewestPage = false, newest = Some(expectedNewestPage), newer = Some(expectedNewestPage), older = None, oldest = None, numberOfPages = 2))
+    val expectedPagination = Some(Pagination(newest = Some(expectedNewestPage), newer = Some(expectedNewestPage), older = None, oldest = None, numberOfPages = 2))
 
     result.map(_.copy(allBlocks = Seq())) should be(Some(LiveBlogPageModel(
       allBlocks = Seq(),
@@ -82,7 +82,7 @@ class LiveBlogPageModelTest extends FlatSpec with Matchers {
 
     val expectedCurrentPage = FirstPage(blocks = blocks.take(3))
     val expectedOldestPage = BlockPage(blocks = blocks.drop(3), blockId = "3", pageNumber = 2)
-    val expectedPagination = Some(Pagination(isNewestPage = true, newest = None, newer = None, older = Some(expectedOldestPage), oldest = Some(expectedOldestPage), numberOfPages = 2))
+    val expectedPagination = Some(Pagination(newest = None, newer = None, older = Some(expectedOldestPage), oldest = Some(expectedOldestPage), numberOfPages = 2))
 
     result.map(_.copy(allBlocks = Seq())) should be(Some(LiveBlogPageModel(
       allBlocks = Seq(),
@@ -98,7 +98,7 @@ class LiveBlogPageModelTest extends FlatSpec with Matchers {
 
     val expectedCurrentPage = BlockPage(blocks = blocks.takeRight(2), blockId = "3", pageNumber = 2)
     val expectedNewestPage = FirstPage(blocks.take(3))
-    val expectedPagination = Some(Pagination(isNewestPage = false, newest = Some(expectedNewestPage), newer = Some(expectedNewestPage), older = None, oldest = None, numberOfPages = 2))
+    val expectedPagination = Some(Pagination(newest = Some(expectedNewestPage), newer = Some(expectedNewestPage), older = None, oldest = None, numberOfPages = 2))
 
     result.map(_.copy(allBlocks = Seq())) should be(Some(LiveBlogPageModel(
       allBlocks = Seq(),
@@ -115,7 +115,7 @@ class LiveBlogPageModelTest extends FlatSpec with Matchers {
     val expectedCurrentPage = FirstPage(blocks = blocks.take(2))
     val expectedMiddlePage = BlockPage(blocks = blocks.drop(2).take(2), blockId = "2", pageNumber = 2)
     val expectedOldestPage = BlockPage(blocks = blocks.takeRight(2), blockId = "4", pageNumber = 3)
-    val expectedPagination = Some(Pagination(isNewestPage = true, newest = None, newer = None, older = Some(expectedMiddlePage), oldest = Some(expectedOldestPage), numberOfPages = 3))
+    val expectedPagination = Some(Pagination(newest = None, newer = None, older = Some(expectedMiddlePage), oldest = Some(expectedOldestPage), numberOfPages = 3))
 
     result.map(_.copy(allBlocks = Seq())) should be(Some(LiveBlogPageModel(
       allBlocks = Seq(),
@@ -132,7 +132,7 @@ class LiveBlogPageModelTest extends FlatSpec with Matchers {
     val expectedCurrentPage = BlockPage(blocks = blocks.drop(2).take(2), blockId = "2", pageNumber = 2)
     val expectedFirstPage = FirstPage(blocks = blocks.take(2))
     val expectedOldestPage = BlockPage(blocks = blocks.takeRight(2), blockId = "4", pageNumber = 3)
-    val expectedPagination = Some(Pagination(isNewestPage = false, newest = Some(expectedFirstPage), newer = Some(expectedFirstPage), older = Some(expectedOldestPage), oldest = Some(expectedOldestPage), numberOfPages = 3))
+    val expectedPagination = Some(Pagination(newest = Some(expectedFirstPage), newer = Some(expectedFirstPage), older = Some(expectedOldestPage), oldest = Some(expectedOldestPage), numberOfPages = 3))
 
     result.map(_.copy(allBlocks = Seq())) should be(Some(LiveBlogPageModel(
       allBlocks = Seq(),
@@ -149,7 +149,7 @@ class LiveBlogPageModelTest extends FlatSpec with Matchers {
     val expectedCurrentPage = BlockPage(blocks = blocks.takeRight(2), blockId = "4", pageNumber = 3)
     val expectedFirstPage = FirstPage(blocks = blocks.take(2))
     val expectedMiddlePage = BlockPage(blocks = blocks.drop(2).take(2), blockId = "2", pageNumber = 2)
-    val expectedPagination = Some(Pagination(isNewestPage = false, newest = Some(expectedFirstPage), newer = Some(expectedMiddlePage), older = None, oldest = None, numberOfPages = 3))
+    val expectedPagination = Some(Pagination(newest = Some(expectedFirstPage), newer = Some(expectedMiddlePage), older = None, oldest = None, numberOfPages = 3))
 
     result.map(_.copy(allBlocks = Seq())) should be(Some(LiveBlogPageModel(
       allBlocks = Seq(),
