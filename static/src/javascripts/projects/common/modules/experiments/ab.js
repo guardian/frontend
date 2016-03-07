@@ -43,7 +43,7 @@ define([
     var TESTS = flatten([
         new FrontsOnArticles2(),
         new IdentityRegisterMembershipStandfirst(),
-        new LiveBlogChromeNotifications()
+        new LiveBlogChromeNotifications(),
         new NextInSeries()
     ]);
 

@@ -34,6 +34,7 @@ define([
             );
         };
 
+
         userTiming.mark('App Begin');
         bootstrapContext('common', common);
 
@@ -70,6 +71,7 @@ define([
             });
         }
 
+        console.log("Bonza!")
         if (config.page.isMinuteArticle) {
             require(['bootstraps/enhanced/article-minute', 'bootstraps/enhanced/image-content'], function (articleMinute, imageContent) {
                 bootstrapContext('articleMinute', articleMinute);
@@ -129,9 +131,7 @@ define([
                 bootstrapContext('preferences', preferences);
             });
         }
-
-
-        console.log("++ MAKING THE SCENE");
+        console.log("+++++++++++++++++++++++++++++++++++++++++++++ LOL BOMMPdswads Wotcha!");
 
         // use a #force-sw hash fragment to force service worker registration for local dev
         if ((window.location.protocol === 'https:' && config.page.section !== 'identity') || window.location.hash === '#force-sw') {

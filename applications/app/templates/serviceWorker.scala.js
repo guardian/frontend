@@ -9,7 +9,6 @@
 // Offline page
 //
 
-console.log("++ Started IT");
 
 var staticCacheName = 'static';
 
@@ -44,7 +43,6 @@ var cachePageAndAssetResponses = function (jsonResponse, assetResponses) {
 // The JSON contains the HTML and asset versions. We cache the assets at
 // their specified URLs and the page HTML as '/offline-page'.
 var updateCache = function () {
-    console.log("++ Update cache 20");
     // Fetch page and all assets. Iff all responses are OK then cache all assets and page.
     return fetch('/offline-page.json').then(function (jsonResponse) {
         if (jsonResponse.ok) {
@@ -147,16 +145,11 @@ self.addEventListener('activate', function(event) {
    console.log('Actrivated', event);
 });
 
-
 self.addEventListener('push', function(event) {
-    console.log('Push message ++ V', JSON.stringify(event));
-    var title = 'Push message';
     event.waitUntil(
         self.registration.pushManager.getSubscription().then(function (sub) {
             var gcmInd = sub.endpoint.substring(sub.endpoint.lastIndexOf('/') + 1);
-            console.log("++ Getting message for: -- " + gcmInd);
             var endpoint = '/notification/message/' + gcmInd;
-            console.log("++ Endpoint " + gcmInd);
             fetch(endpoint, {
                 method: 'get',
                 headers: {
@@ -164,23 +157,20 @@ self.addEventListener('push', function(event) {
                     'Content-Type': 'application/json'
                 }
             }).then(function (response) {
-                    console.log("Got Response");
-                    return response.json();
-                })
-                .then(function (data) {
-                    console.log("Data Resp " + JSON.stringify(data));
+               return response.json();
+            })
+            .then(function (data) {
 
-                    var messages = data.messages;
+                var messages = data.messages;
 
-                    messages.forEach( function(message) {
-                        console.log("++ Message!");
-                        self.registration.showNotification(message.title, {
-                            body: message.body,
-                            icon: '@{JavaScript(Static("images/favicons/114x114.png").path)}',
-                            tag: message.title
-                        });
+                messages.forEach( function(message) {
+                    self.registration.showNotification(message.title, {
+                        body: message.body,
+                        icon: '@{JavaScript(Static("images/favicons/114x114.png").path)}',
+                        tag: message.title
                     });
-                })
+                });
+            })
 
         })
     );

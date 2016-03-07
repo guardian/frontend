@@ -80,15 +80,12 @@ define([
 
             fastdom.write(function () {
                 $('.js-liveblog-body').prepend(src);
+                mediator.emit('page:notifications:ready');
             });
 
             bean.on(document.body, 'click', '.js-notifications-subscribe-link', function () {
                 modules.buttonHandler();
             });
-
-            console.log("Nearly");
-            mediator.emit('page:notifications:ready');
-            console.log("Ready");
         },
 
         setSubscriptionStatus: function (subscribed) {
@@ -111,9 +108,7 @@ define([
 
         subscribe: function () {
             if (modules.subscriptionsEmpty()) {
-                console.log("++ Dog");
                 reg.pushManager.subscribe({userVisibleOnly: true}).then(function (pushSubscription) {
-                    console.log("Wotcgher");
                     sub = pushSubscription;
                     modules.followThis();
                 });
@@ -125,7 +120,6 @@ define([
 
         unSubscribe: function () {
             if (modules.subscriptionsEmpty()) {
-                console.log("++ Last");
                 sub.unsubscribe().then(function (event) {
                 }).catch(function (error) {
                 });
@@ -146,7 +140,6 @@ define([
 
         followThis: function () {
             var endpoint = '/notification/store';
-            console.log("Follow this: - " + sub.endpoint);
 
             modules.updateSubscription(endpoint).then(
                 function (rsp) {

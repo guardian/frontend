@@ -24,18 +24,15 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function() {
-            var run = detect.getUserAgent.browser === 'Chrome' && config.page.contentType === 'LiveBlog'
-            console.log("++ Run: " + run);
-            return run;
+            return detect.getUserAgent.browser === 'Chrome' && config.page.contentType === 'LiveBlog';
         };
 
         this.variants = [
             {
                 id: 'control',
                 test: function() {
-                    console.log("++ AB Test");
                     mediator.on('page:notifications:ready', function(){
-                       console.log("++ AB - notifications Ready");
+                       $('.js-notification-link').removeClass('hidden-notifications-link');
                     });
                 }
             }

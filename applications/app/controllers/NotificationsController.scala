@@ -68,16 +68,13 @@ object NotificationsController extends Controller with ExecutionContexts with Lo
 
   def saveARedlisMessage() = Action.async { implicit request =>
 
-    println("Send to redlis")
     gcmMessageForm.bindFromRequest.fold(
       errors => {
         Future.successful(BadRequest)
       },
       msg => {
-        println("Parsed form ")
         RedisMessageStore.leaveMessage(msg).flatMap {
           b =>
-            println("Saved message")
             Future.successful(Ok)
         }
       }
@@ -87,13 +84,18 @@ object NotificationsController extends Controller with ExecutionContexts with Lo
   def getMessage(gcmBrowserId: String) = Action.async { implicit request =>
       RedisMessageStore.getMessages(gcmBrowserId).map {
           messages =>
-            NoCache(
-              JsonComponent(
-                JsObject(
-                  Seq("status" -> JsString("ok"),
-                      "messages" -> JsArray(messages.map{ message => Json.toJson(message) }))
-                )
+            val jsonResponse = messages match {
+              case Nil =>
+                log.error(s"Could not retrieve latest message for $gcmBrowserId")
+                JsObject(Seq("status" -> JsString("not found")))
+              case _ => JsObject(
+                Seq("status" -> JsString("ok"),
+                  "messages" -> JsArray(messages.map{ message => Json.toJson(message) }))
               )
+            }
+
+            NoCache(
+              JsonComponent(jsonResponse)
             )
       }
   }
