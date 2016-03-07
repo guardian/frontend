@@ -43,11 +43,8 @@ define([
     var TESTS = flatten([
         new FrontsOnArticles2(),
         new IdentityRegisterMembershipStandfirst(),
-<<<<<<< HEAD
-        new ArticleVideoAutoplay()
-=======
+        new ArticleVideoAutoplay(),
         new NextInSeries()
->>>>>>> 10cdfd24592f93b363ecf0d98a5c8f48d1ec7f49
     ]);
 
     var participationsKey = 'gu.ab.participations';
