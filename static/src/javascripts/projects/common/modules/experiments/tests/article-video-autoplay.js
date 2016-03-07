@@ -17,7 +17,7 @@ define([
 
         this.canRun = function () {
             var bp = detect.getBreakpoint();
-            return (bp === 'desktop' || bp === 'tablet');
+            return !(bp === 'mobile' || bp === 'mobileLandscape');
         };
 
         this.variants = [{
