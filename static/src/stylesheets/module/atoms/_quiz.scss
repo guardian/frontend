@@ -8,6 +8,11 @@
     list-style-type: none;
     border: 0;
     padding: 0;
+
+    // Overrides capi styling for figure elements in _from-content-api.scss.
+    & figure.element {
+        margin: 0;
+    }
 }
 
 .atom-quiz__question-text {
