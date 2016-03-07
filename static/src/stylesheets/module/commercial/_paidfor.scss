@@ -193,6 +193,10 @@
 
 .commercial__show-mores {
     margin-top: $gs-baseline / 2;
+
+    > .fc-slice-wrapper {
+        margin: 0;
+    }
 }
 
 /* Badges

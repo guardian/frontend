@@ -48,4 +48,16 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 3, 21),
     exposeClientSide = true
   )
+
+  val ABCommercialComponentsDismiss = Switch(
+    "A/B Tests",
+    "ab-commercial-components-dismiss",
+    "Survey possibility of dismiss option for commercial components",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 4, 5),
+    exposeClientSide = true
+  )
+
+
+
 }
