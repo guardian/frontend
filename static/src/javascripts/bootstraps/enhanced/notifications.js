@@ -9,6 +9,7 @@ define([
     'common/utils/ajax',
     'common/utils/template',
     'common/utils/mediator',
+    'common/utils/robust',
     'common/views/svgs',
     'common/modules/user-prefs',
     'text!common/views/ui/notifications-subscribe-link.html',
@@ -26,6 +27,7 @@ define([
     ajax,
     template,
     mediator,
+    robust,
     svgs,
     userPrefs,
     subscribeTemplate,
@@ -120,8 +122,9 @@ define([
 
         unSubscribe: function () {
             if (modules.subscriptionsEmpty()) {
-                sub.unsubscribe().then(function (event) {
+                sub.unsubscribe().then(function () {
                 }).catch(function (error) {
+                    robust.log('cm-frontendNotificatons', error);
                 });
             }
         },
@@ -142,7 +145,7 @@ define([
             var endpoint = '/notification/store';
 
             modules.updateSubscription(endpoint).then(
-                function (rsp) {
+                function () {
                     var subscriptions = userPrefs.get('subscriptions') || [];
                     subscriptions.push(config.page.pageId);
                     userPrefs.set('subscriptions', uniq(subscriptions));

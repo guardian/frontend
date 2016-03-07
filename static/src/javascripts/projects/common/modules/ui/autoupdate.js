@@ -154,10 +154,10 @@ define([
 
 
                     // Insert new blocks and animate
-                    if($notificationsLink.length == 0) {
+                    if ($notificationsLink.length == 0) {
                         $liveblogBody.prepend(elementsToAdd);
                     } else {
-                       $lastElement.before(elementsToAdd);
+                        $lastElement.before(elementsToAdd);
                     }
 
 

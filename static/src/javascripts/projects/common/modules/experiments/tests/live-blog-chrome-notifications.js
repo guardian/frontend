@@ -3,7 +3,7 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator'
-], function(
+], function (
     $,
     config,
     detect,
@@ -23,16 +23,16 @@ define([
         this.dataLinkNames = '';
         this.idealOutcome = '';
 
-        this.canRun = function() {
+        this.canRun = function () {
             return detect.getUserAgent.browser === 'Chrome' && config.page.contentType === 'LiveBlog';
         };
 
         this.variants = [
             {
                 id: 'control',
-                test: function() {
-                    mediator.on('page:notifications:ready', function(){
-                       $('.js-notification-link').removeClass('hidden-notifications-link');
+                test: function () {
+                    mediator.on('page:notifications:ready', function () {
+                        $('.js-notification-link').removeClass('hidden-notifications-link');
                     });
                 }
             }

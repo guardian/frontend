@@ -342,13 +342,12 @@ GET            /sitemaps/news.xml                                               
 GET            /sitemaps/video.xml                                                                                               controllers.SiteMapController.renderVideoSiteMap()
 GET            /offline-page.json                                                                                                controllers.WebAppController.offlinePage()
 GET            /service-worker.js                                                                                                controllers.WebAppController.serviceWorker()
-GET            /service-worker-2.js                                                                                               controllers.WebAppController.serviceWorker()
 
 #Notifications Store
 POST           /notification/store                                                                                               controllers.NotificationsController.saveSubscription()
 POST           /notification/delete                                                                                              controllers.NotificationsController.deleteSubscription()
 
-#Get message playab
+#Get latest notificationd
 GET            /notification/message/:gcmBrowserId                                                                               controllers.NotificationsController.getMessage(gcmBrowserId)
 
 #REDLIS
