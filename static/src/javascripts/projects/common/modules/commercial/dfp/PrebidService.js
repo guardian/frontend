@@ -5,7 +5,6 @@ define([
     'common/utils/config',
     'common/utils/robust',
     'lodash/arrays/uniq',
-    'lodash/functions/partial',
     'lodash/objects/values'
 ], function (
     Promise,
@@ -13,7 +12,6 @@ define([
     config,
     robust,
     uniq,
-    partial,
     values
 ) {
     var PREBID_TIMEOUT = 2000;
@@ -38,9 +36,9 @@ define([
         var targetingKeywords = pageTargeting.k.toString();
 
         this.loadAdvert = function loadAdvert(advert) {
-            return advertQueue.add(
-                partial(runAuction, advert)
-            );
+            return advertQueue.add(function () {
+                runAuction(advert);
+            });
         };
 
         function runAuction(advert) {
