@@ -7,6 +7,7 @@ define([
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/fronts-on-articles2',
     'common/modules/experiments/tests/identity-register-membership-standfirst',
+    'common/modules/experiments/tests/article-video-autoplay',
     'common/modules/experiments/tests/next-in-series',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
@@ -26,6 +27,7 @@ define([
     mvtCookie,
     FrontsOnArticles2,
     IdentityRegisterMembershipStandfirst,
+    ArticleVideoAutoplay,
     NextInSeries,
     flatten,
     forEach,
@@ -41,6 +43,7 @@ define([
     var TESTS = flatten([
         new FrontsOnArticles2(),
         new IdentityRegisterMembershipStandfirst(),
+        new ArticleVideoAutoplay(),
         new NextInSeries()
     ]);
 
