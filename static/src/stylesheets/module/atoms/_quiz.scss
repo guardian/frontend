@@ -34,6 +34,10 @@
     width: 50%;
     float: left;
 
+    &:nth-child(odd) {
+        clear: both;
+    }
+
     .caption {
         padding-bottom: 0;
     }
