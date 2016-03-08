@@ -80,12 +80,20 @@
                     <option value="soulmates">Soulmates</option>
                 </select>
             </dd>
-            <dt>Component in the RH column</dt>
+            <dt>Blended component style</dt>
             <dd>
-                <select class="rh-column-component">
-                    <option value="soulmates">Soulmates</option>
-                    <option value="jobs">Jobs</option>
-                    <option value="membership">Membership</option>
+                <select id="blended-style">
+                    <option value="normal" selected>Normal</option>
+                    <option value="reversed-out">Reversed out</option>
+                </select>
+            </dd>
+            <dt>Blended component layout</dt>
+            <dd>
+                <select id="blended-layout">
+                    <option selected>1x1x1x1</option>
+                    <option>2x1x1</option>
+                    <option>1x2x1</option>
+                    <option>1x1x2</option>
                 </select>
             </dd>
         </dl>
@@ -148,9 +156,21 @@
                             .addClass('commercial--tone-' + $palette.val());
                     });
 
-                    var $rhComponent = $('.rh-column-component');
-                    bean.on($rhComponent[0], 'change', function () {
-                        showRHColumn($rhComponent.val());
+                    var blendedStyle = document.getElementById('blended-style'),
+                        gimbap       = document.getElementById('gimbap'),
+                        styleClasses = ['gimbap-wrap--normal', 'gimbap-wrap--reversed-out'];
+                    bean.on(blendedStyle, 'change', function () {
+                        styleClasses.forEach(function(c) { gimbap.classList.remove(c); });
+                        gimbap.classList.add('gimbap-wrap--' + blendedStyle.value);
+                    });
+
+                    var blendedLayout = document.getElementById('blended-layout'),
+                        gimbapBody    = null,
+                        layoutClasses = ['gimbap-wrap__body--1x1x1x1', 'gimbap-wrap__body--2x1x1', 'gimbap-wrap__body--1x2x1', 'gimbap-wrap__body--1x1x2'];
+                    bean.on(blendedLayout, 'change', function () {
+                        gimbapBody = gimbapBody || gimbap.querySelector('.gimbap-wrap__body');
+                        layoutClasses.forEach(function(c) { gimbapBody.classList.remove(c); });
+                        gimbapBody.classList.add('gimbap-wrap__body--' + blendedLayout.value);
                     });
                 });
         });

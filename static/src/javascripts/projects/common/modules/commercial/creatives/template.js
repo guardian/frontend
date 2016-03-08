@@ -59,6 +59,7 @@ define([
         this.params.logomasterclasses = svgs('logomasterclasses');
         this.params.arrowRight = svgs('arrowRight', ['i-right']);
         this.params.logoguardian = svgs('logoguardian');
+        this.params.inlineQuote = svgs('quoteIcon');
         this.params.marque36iconCreativeMarque = svgs('marque36icon', ['creative__marque']);
         this.params.logoFeatureLabel = 'Paid for by';
     };
