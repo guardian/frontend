@@ -38,6 +38,8 @@ define([
         userTiming.mark('App Begin');
         bootstrapContext('common', common);
 
+        console.log("++ Gotcha");
+
         // Front
         if (config.page.isFront) {
             require(['bootstraps/enhanced/facia'], function (facia) {
@@ -130,6 +132,7 @@ define([
                 bootstrapContext('preferences', preferences);
             });
         }
+        console.log("++ HELLO");
 
         // use a #force-sw hasz\h fragment to force service worker registration for local dev
         if ((window.location.protocol === 'https:' && config.page.section !== 'identity') || window.location.hash === '#force-sw') {
