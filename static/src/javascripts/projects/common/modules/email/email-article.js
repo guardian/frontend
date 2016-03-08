@@ -130,6 +130,9 @@ define([
         emailInserted = false,
         userListSubscriptions = [],
         keywords = config.page.keywords ? config.page.keywords.split(',') : '',
+        isParagraph = function ($el) {
+            return $el.nodeName && $el.nodeName === 'P';
+        },
         getSpacefinderRules = function () {
             return {
                 bodySelector: '.js-article__body',
@@ -216,6 +219,16 @@ define([
                 return canRunHelpers.keywordExists(['US elections 2016', 'Football']) ||
                         config.page.section === 'film' ||
                         config.page.seriesId === 'world/series/guardian-morning-briefing';
+            },
+            allowedArticleStructure: function () {
+                var $articleBody = $('.js-article__body');
+
+                if ($articleBody.length) {
+                    var allArticleEls = $('> *', $articleBody);
+                    return every([].slice.call(allArticleEls, allArticleEls.length - 3), isParagraph);
+                } else {
+                    return false;
+                }
             }
         },
         canRunList = {
@@ -226,18 +239,23 @@ define([
                 return config.page.section === 'film';
             },
             theFiver: function () {
-                return canRunHelpers.keywordExists(['Football']);
+                return canRunHelpers.keywordExists(['Football']) &&
+                        canRunHelpers.allowedArticleStructure();
             },
             morningMailUkSeries: function () {
-                return config.page.seriesId === 'world/series/guardian-morning-briefing';
+                return config.page.seriesId === 'world/series/guardian-morning-briefing' &&
+                        canRunHelpers.allowedArticleStructure();
             },
             morningMailUk: function () {
                 return (config.page.edition === 'UK' || config.page.edition === 'INT') &&
                         !canRunHelpers.pageHasBlanketBlacklist() &&
-                        canRunHelpers.userReferredFromFront();
+                        canRunHelpers.userReferredFromFront() &&
+                        canRunHelpers.allowedArticleStructure();
             },
             theGuardianToday: function () {
-                return !canRunHelpers.pageHasBlanketBlacklist() && canRunHelpers.userReferredFromFront();
+                return !canRunHelpers.pageHasBlanketBlacklist() &&
+                        canRunHelpers.userReferredFromFront() &&
+                        canRunHelpers.allowedArticleStructure();
             }
         };
 
