@@ -10,6 +10,7 @@ define([
     'common/modules/experiments/tests/identity-register-membership-standfirst',
     'common/modules/experiments/tests/article-video-autoplay',
     'common/modules/experiments/tests/next-in-series',
+    'common/modules/experiments/tests/article-related-content-display-as-recommendation',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -31,6 +32,7 @@ define([
     IdentityRegisterMembershipStandfirst,
     ArticleVideoAutoplay,
     NextInSeries,
+    RelatedContentDisplayAsRecommendation,
     flatten,
     forEach,
     keys,
@@ -47,7 +49,8 @@ define([
         new FrontsOnArticles2(),
         new IdentityRegisterMembershipStandfirst(),
         new ArticleVideoAutoplay(),
-        new NextInSeries()
+        new NextInSeries(),
+        new RelatedContentDisplayAsRecommendation()
     ]);
 
     var participationsKey = 'gu.ab.participations';
