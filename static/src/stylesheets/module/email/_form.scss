@@ -264,10 +264,8 @@
         color: guss-colour(neutral-1, $pasteup-palette);
     }
 
-    @include mq($until: tablet) {
-        .email-sub__small {
-            clear: left;
-        }
+    .email-sub__small {
+        display: none;
     }
 }
 
