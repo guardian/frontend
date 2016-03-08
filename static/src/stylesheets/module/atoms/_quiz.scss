@@ -141,7 +141,7 @@
     }
 
     // overide both defaults if you selected the correct answer (bright green)
-    .atom-quiz__answer__item--is-correct.atom-quiz__answer__item--selected  {
+    .atom-quiz__answer__item--is-correct.atom-quiz__answer__item--selected {
         @include atom-quiz__answer__item--selected--is-correct;
     }
 }
@@ -266,7 +266,7 @@
 .atom-quiz--instant-reveal:invalid,
 .atom-quiz--instant-reveal:valid {
     // create additional counter to keep track of correct results
-    counter-reset:  quiz-question quiz-score;
+    counter-reset: quiz-question quiz-score;
 
     // hide the submit button
     [type=submit] {
@@ -303,7 +303,7 @@
 
     // update the results
     .atom-quiz__score:after {
-        content: counter(quiz-score) "/" attr(data-question-count)
+        content: counter(quiz-score) '/' attr(data-question-count);
     }
 
     .atom-quiz__bucket-message {
