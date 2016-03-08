@@ -69,6 +69,12 @@
                     @paddedRow(Html(html))
                 }
 
+                case RichLinkBlockElement(Some(url), Some(text), _) => {
+                    @paddedRow(Seq("rich-link")) {
+                        <span class="rich-link__prefix">More:</span> <a href="@url">@text</a>
+                    }
+                }
+
                 case EmbedBlockElement(Some(html), _, _) => {
                     @*fullRow(Html(html))*@
                 }

@@ -326,7 +326,9 @@ define([
                         resolve();
                     }
 
-                    if (abVideoAutoplay.variant === 'autoplay') {
+                    var contentType = config.page.contentType;
+                    var isArticleOrLiveBlog = contentType === 'Article' || contentType === 'LiveBlog';
+                    if (abVideoAutoplay.variant === 'autoplay' && isArticleOrLiveBlog) {
                         // Annoyingly we pass the `parentNode` as the video is absolutely positioned.
                         var parentNode = player.el().parentNode;
                         var firstAutoplay = true;
