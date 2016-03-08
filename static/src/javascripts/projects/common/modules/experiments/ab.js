@@ -11,6 +11,7 @@ define([
     'common/modules/experiments/tests/header-bidding-us',
     'common/modules/experiments/tests/article-video-autoplay',
     'common/modules/experiments/tests/next-in-series',
+    'common/modules/experiments/tests/article-related-content-display-as-recommendation',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -33,6 +34,7 @@ define([
     HeaderBiddingUS,
     ArticleVideoAutoplay,
     NextInSeries,
+    RelatedContentDisplayAsRecommendation,
     flatten,
     forEach,
     keys,
@@ -50,7 +52,8 @@ define([
         new IdentityRegisterMembershipStandfirst(),
         new HeaderBiddingUS(),
         new ArticleVideoAutoplay(),
-        new NextInSeries()
+        new NextInSeries(),
+        new RelatedContentDisplayAsRecommendation()
     ]);
 
     var participationsKey = 'gu.ab.participations';

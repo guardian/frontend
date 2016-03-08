@@ -49,6 +49,15 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABRelatedContentDisplayAsRecommendation = Switch(
+    "A/B Tests",
+    "ab-article-related-content-display-as-recommendation",
+    "Display related content as people who read this also read",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 3, 16),
+    exposeClientSide = true
+  )
+
   val ABHeaderBiddingUS = Switch(
     "A/B Tests",
     "ab-header-bidding-us",
