@@ -70,14 +70,7 @@ object SurrogateKeyFilter extends Filter with ExecutionContexts {
 object AmpFilter extends Filter with ExecutionContexts with implicits.Requests {
   override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
     if (request.isAmp) {
-      val domain = request.headers.get("Origin") match {
-        case None => {
-          "https://" + request.domain
-        }
-        case Some(requestOrigin) => {
-          requestOrigin
-        }
-      }
+      val domain = request.headers.get("Origin").getOrElse("https://" + request.domain)
       val exposeAmpHeader = "Access-Control-Expose-Headers" -> "AMP-Access-Control-Allow-Source-Origin"
       val ampHeader = "AMP-Access-Control-Allow-Source-Origin" -> Configuration.amp.corsOrigins.find(_ == domain).getOrElse("*")
 
