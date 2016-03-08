@@ -664,6 +664,7 @@
             height: 100vh;
             min-height: 520px;
             max-height: 800px;
+            transition: height 999999s; // remove when fixed: https://bugs.chromium.org/p/chromium/issues/detail?id=428132
         }
 
         .content__header {
