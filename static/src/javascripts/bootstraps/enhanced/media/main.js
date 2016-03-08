@@ -50,7 +50,7 @@ define([
     ab
 ) {
     // For the A/B test
-    var abVideoAutoplay = ab.getParticipations().ArticleVideoAutoplay;
+    var abVideoAutoplay = ab.testCanBeRun('ArticleVideoAutoplay');
     function elementIsInView(el, offset) {
         var viewportHeight = window.innerHeight;
         var rect = el.getBoundingClientRect();
@@ -326,9 +326,7 @@ define([
                         resolve();
                     }
 
-                    var contentType = config.page.contentType;
-                    var isArticleOrLiveBlog = contentType === 'Article' || contentType === 'LiveBlog';
-                    if (abVideoAutoplay.variant === 'autoplay' && isArticleOrLiveBlog) {
+                    if (ab.isInVariant('ArticleVideoAutoplay', 'autoplay')) {
                         // Annoyingly we pass the `parentNode` as the video is absolutely positioned.
                         var parentNode = player.el().parentNode;
                         var firstAutoplay = true;
