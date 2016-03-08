@@ -448,8 +448,7 @@ define([
         idleFastdom.write(function () {
             if (shouldRenderLabel($adSlot)) {
                 $adSlot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
-            } else if (ab.isInVariant('CommercialComponentsDismiss', 'dismiss') 
-                    && contains(['dfp-ad--merchandising', 'dfp-ad--merchandising-high', 'dfp-ad--im'], $adSlot.attr('id'))) {
+            } else if (ab.isInVariant('CommercialComponentsDismiss', 'dismiss') && contains(['dfp-ad--merchandising', 'dfp-ad--merchandising-high', 'dfp-ad--im'], $adSlot.attr('id'))) {
                 var survey = new SurveySimple();
                 var crossIcon = svgs('crossIcon');
 
