@@ -2,19 +2,25 @@
 @import _root_.quiz.{postUrl, Question, Answer}
 @import views.html.fragments.inlineSvg
 @import layout.ContentWidths.BodyMedia
+@import views.support.RenderClasses
 
 @(quiz: model.content.Quiz, maybeResults: Option[QuizResults], showResults: Boolean, sharelinks: Seq[model.ShareLink])(implicit request: RequestHeader)
 
 @if(showResults) {
     <h2>@quiz.title</h2>
 }
-<form action="@postUrl(quiz)" method="POST" class="atom-quiz atom-quiz--@{quiz.quizType} @{if (showResults) "atom-quiz--results" else "atom-quiz--questions"}" >
-        @quiz.content.questions.zipWithIndex.map { case (question, index) =>
-            @renderQuestion(question,
-                playForm(s"answers[$index]"),
-                maybeResults.flatMap(_.getAnswerFor(question))
-            )
-        }
+<form action="@postUrl(quiz)" method="POST" data-question-count="@{quiz.content.questions.length}" class="@RenderClasses(Map(
+    ("atom-quiz", true),
+    ("atom-quiz--" + quiz.quizType, true),
+    ("atom-quiz--is-not-results", !showResults),
+    ("atom-quiz--is-results", showResults)
+))">
+    @quiz.content.questions.zipWithIndex.map { case (question, index) =>
+        @renderQuestion(question,
+            playForm(s"answers[$index]"),
+            maybeResults.flatMap(_.getAnswerFor(question))
+        )
+    }
     @maybeResults.map { results =>
         @renderEndMessage(results)
     }.getOrElse {
@@ -23,11 +29,7 @@
 </form>
 
 @renderQuestion(question: Question, field: play.api.data.Field, maybeUserAnswer: Option[Answer]) = {
-    <fieldset class="atom-quiz__question
-        @{ if (showResults) {
-            s"atom-quiz__question--${if(maybeUserAnswer.isEmpty) "without-response" else "with-response" }"
-          }
-        }">
+    <fieldset class="atom-quiz__question">
         <legend class="atom-quiz__question-text">@question.text</legend>
 
         @question.imageMedia.map { image =>
@@ -36,81 +38,65 @@
             </div>
         }
 
-        <div class="atom-quiz__answers @{if(hasImages(question)) "atom-quiz__answers--images"}">
+        <div class="@RenderClasses(Map(
+            ("atom-quiz__answers", true),
+            ("atom-quiz__answers--images", hasImages(question))
+        ))">
             @question.answers.map( answer => {
                 val hasImage = answer.imageMedia.isDefined
-                if(showResults) {
-                    renderAnswerWithResponse(question, answer, maybeUserAnswer, hasImage)
-                } else {
-                    renderAnswer(question, answer, field, hasImage)
-                }
+                renderAnswer(question, answer, field, hasImage, maybeUserAnswer, showResults)
             })
         </div>
 
-        @maybeUserAnswer.map( userAnswer => {
-            userAnswer.imageMedia.map( _ => {
-                renderAnswerRevealText(question, userAnswer, maybeUserAnswer)
-            })
+        @question.answers.map( answer => {
+            if(answer.revealText && answer.imageMedia.isDefined) {
+                <span class="atom-quiz__answer__reveal-text">@{answer.revealText}</span>
+            }
         })
 
     </fieldset>
 }
 
-@renderAnswer(question: Question, answer: Answer, field: play.api.data.Field, hasImage: Boolean) = {
-    <div class="atom-quiz__answer @{if (hasImage) "atom-quiz__answer--image" else "atom-quiz__answer--text" }">
+@renderAnswer(question: Question, answer: Answer, field: play.api.data.Field, hasImage: Boolean, maybeUserAnswer: Option[Answer], showResults: Boolean) = {
+    <div class="@RenderClasses(Map(
+        ("atom-quiz__answer", true),
+        ("atom-quiz__answer--image", hasImage),
+        ("atom-quiz__answer--text", !hasImage)
+    ))">
         <input type="radio"
             name="@{field.name}"
             id="answer-@{answer.id}"
             value="@{answer.id}"
-            class="atom-quiz__answer__input">
+            class="atom-quiz__answer__input"
+            @{if (maybeUserAnswer.exists(_.equals(answer))) "checked=checked" }
+            @{if (showResults) "disabled=disabled"}
+            required
+        >
 
-        @if(hasImage) {
-            <label for="answer-@{answer.id}" class="atom-quiz__answer__image">
+        <label for="answer-@{answer.id}" class="@RenderClasses(Map(
+            ("atom-quiz__answer__item", true),
+            ("atom-quiz__answer__text", !hasImage),
+            ("atom-quiz__answer__image", hasImage),
+            ("atom-quiz__answer__item--is-correct", isCorrectAnswer(question, answer).getOrElse(false)),
+            ("atom-quiz__answer__item--selected", maybeUserAnswer.exists(_.equals(answer)))
+        ))">
+            @if(hasImage) {
                 @answer.imageMedia.map { image =>
                     @fragments.img(image.imageMedia, widthsByBreakpoint = BodyMedia.inline, image_figureClasses = image.imageClasses)
                 }
-            </label>
-        }
-
-        @if(!hasImage) {
-            <label for="answer-@{answer.id}" class="atom-quiz__answer__text">
+                @renderIcon(question, answer, maybeUserAnswer, "atom-quiz__answer__icon--image")
+            } else {
                 @{answer.text}
-            </label>
-        }
-    </div>
-}
-
-@renderAnswerWithResponse(question: Question, answer: Answer, maybeUserAnswer: Option[Answer], hasImage: Boolean) = {
-    <div class="atom-quiz__answer
-        @{isCorrectAnswer(question, answer).map(correct =>
-            if (correct) "atom-quiz__answer--correct" else "atom-quiz__answer--incorrect"
-        ).getOrElse("")}
-        @{if (maybeUserAnswer.exists(_.equals(answer))) "atom-quiz__answer--selected" }
-        @{if (hasImage) "atom-quiz__answer--image" else "atom-quiz__answer--text" }">
-
-        @if(hasImage) {
-            <div class="atom-quiz__answer__image">
-                @answer.imageMedia.map { image =>
-                    @fragments.img(image.imageMedia, widthsByBreakpoint = BodyMedia.inline, image_figureClasses = image.imageClasses)
+                @renderIcon(question, answer, maybeUserAnswer, "atom-quiz__answer__icon--text")
+                @if(answer.revealText) {
+                    <span class="atom-quiz__answer__reveal-text">@answer.revealText</span>
                 }
-
-                @renderAnswerSvg(question, answer, maybeUserAnswer, "atom-quiz__answer__icon--image")
-            </div>
-        }
-
-        @if(!hasImage) {
-            <div class="atom-quiz__answer__text">
-                @{answer.text}
-
-                @renderAnswerSvg(question, answer, maybeUserAnswer, "atom-quiz__answer__icon--text")
-
-                @renderAnswerRevealText(question, answer, maybeUserAnswer)
-            </div>
-        }
+            }
+        </label>
     </div>
 }
 
-@renderAnswerSvg(question: Question, answer: Answer, maybeUserAnswer: Option[Answer], iconType: String) = {
+@renderIcon(question: Question, answer: Answer, maybeUserAnswer: Option[Answer], iconType: String) = {
     @maybeUserAnswer.map { inputAnswer =>
         @if(inputAnswer.equals(answer)) {
             @isCorrectAnswer(question, answer).map { correct =>

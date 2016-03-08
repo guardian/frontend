@@ -1,8 +1,14 @@
+
+
+// ********************* quiz layout *********************
+// see bottom for auto-reveal stuff
+
 .atom-quiz {
-    counter-reset: quiz-question;
+    counter-reset: quiz-question quiz-score;
     margin: 0; // override pasteup
 }
 
+// general question block (fieldset)
 .atom-quiz__question {
     margin-bottom: $gs-baseline * 2;
     list-style-type: none;
@@ -15,6 +21,7 @@
     }
 }
 
+// fieldset > legend
 .atom-quiz__question-text {
     margin-bottom: $gs-baseline;
     display: block;
@@ -27,10 +34,12 @@
     }
 }
 
+// image attached to the question, rather than an answer
 .atom-quiz__question-image {
     margin-bottom: $gs-baseline / 2;
 }
 
+// space answers out
 .atom-quiz__answer--text + .atom-quiz__answer--text {
     margin-top: $gs-baseline * .5;
 }
@@ -42,29 +51,30 @@
     &:nth-child(odd) {
         clear: both;
     }
-
-    .caption {
-        padding-bottom: 0;
-    }
 }
 
+// [type=radio]
+// we use the radio button for a bit of state and for screen readers etc,
+// but we don't want to see it
 .atom-quiz__answer__input {
     @include u-h;
 }
 
-.atom-quiz__answer__text,
-.atom-quiz__answer__image {
+// [type=radio] + label
+.atom-quiz__answer__item {
     background-color: colour(neutral-8);
     transition: background-color 40ms;
     display: block;
     position: relative;
+    cursor: pointer;
 
-    .atom-quiz--questions & {
-        cursor: pointer;
+    // make it look un-clickable
+    .atom-quiz--is-results & {
+        cursor: default;
     }
 
     // show a fake, stylised radio button on personality quiz answers
-    .atom-quiz--questions.atom-quiz--personality &:before {
+    .atom-quiz--personality &:before {
         content: '';
         height: 1em;
         width: 1em;
@@ -77,30 +87,66 @@
         transition: background-color 40ms, box-shadow 20ms;
     }
 
-    .atom-quiz--questions &:hover {
-        background-color: colour(neutral-4);
-    }
-
-    .atom-quiz--questions &:hover:before {
-        background-color: colour(neutral-2);
-        box-shadow: 0px 0px 0px 1px colour(neutral-2),
-            inset 0px 0px 0px 3px colour(neutral-4);
-    }
-
-    .atom-quiz--questions :checked + & {
+    // hightlight for when answer is selected, but in unknown state (gold)
+    // i.e. awaiting round trip
+    // [type=radio]:checked + label
+    :checked + & {
+        cursor: default; // make it look un-clickable
         background-color: colour(comment-main-2);
-        cursor: default;
+
+        &:before {
+            background-color: colour(neutral-1);
+            box-shadow: 0px 0px 0px 1px colour(neutral-1),
+                inset 0px 0px 0px 3px colour(comment-main-2);
+        }
     }
 
-    .atom-quiz--questions :checked + &:before {
-        background-color: colour(neutral-1);
-        box-shadow: 0px 0px 0px 1px colour(neutral-1),
-            inset 0px 0px 0px 3px colour(comment-main-2);
+    // highlight state (darker grey)
+    .atom-quiz--is-not-results :not(:checked) + &:hover,
+    .atom-quiz--is-not-results :not(:checked):focus + & {
+        background-color: colour(neutral-4);
+
+        &:before {
+            background-color: colour(neutral-2);
+            box-shadow: 0px 0px 0px 1px colour(neutral-2),
+                inset 0px 0px 0px 3px colour(neutral-4);
+        }
+    }
+}
+
+// correct/incorrect highlighting
+.atom-quiz--is-results.atom-quiz--knowledge {
+
+    // default highlight for the actual correct answer (light-green)
+    .atom-quiz__answer__item--is-correct {
+        background-color: fade-out(colour(quiz-correct), .4);
+    }
+
+    // default hightlight for the selected answer (red)
+    .atom-quiz__answer__item--selected {
+        color: #ffffff;
+        background-color: colour(quiz-incorrect);
+    }
+
+    // overide both defaults if you selected the correct answer (bright green)
+    .atom-quiz__answer__item--is-correct.atom-quiz__answer__item--selected  {
+        background-color: colour(quiz-correct);
+        counter-increment: quiz-score;
     }
 }
 
 .atom-quiz__answer__text {
     padding: $gs-baseline $gs-gutter;
+
+    // don't show the fake radio button on a personality quiz results page
+    .atom-quiz--is-results &:before {
+        display: none;
+    }
+
+    .atom-quiz--is-not-results.atom-quiz--personality &,
+    .atom-quiz--is-results.atom-quiz--knowledge & {
+        padding-left: 3em;
+    }
 }
 
 .atom-quiz__answer__image {
@@ -113,16 +159,10 @@
 .atom-quiz__answers--images {
     overflow: auto;
     margin-left: -4px;
-}
-
-// Text answers have reveal-text nested, but Image answers have reveal-text as a sibling to atom-quiz__answers.
-.atom-quiz__answers + .atom-quiz__answer__reveal-text {
-    padding: $gs-gutter * .5;
-    background-color: fade-out(colour(quiz-correct), .4);
+    margin-bottom: -4px;
 }
 
 .atom-quiz__answer__icon {
-
     svg {
         height: 1em;
         width: 1em;
@@ -139,61 +179,36 @@
     padding-top: $gs-baseline * 4 / 3;
     display: block;
 
-    .atom-quiz__answer--correct &:after {
+    &:after {
         position: relative;
         top: -2px; // magic numbers to align text with svg icon.
-        left: 8px;
-        content: 'Correct';
-    }
-
-    .atom-quiz__answer--incorrect &:after {
-        position: relative;
-        top: -2px; // magic numbers to align text with svg icon.
-        left: 8px;
+        left: 1ch;
         content: 'Incorrect';
     }
-}
 
-.atom-quiz__answer--correct {
-    .atom-quiz__answer__text,
-    .atom-quiz__answer__image {
-        background-color: fade-out(colour(quiz-correct), .4);
-    }
-
-    &.atom-quiz__answer--selected {
-        color: #ffffff;
-        background-color: colour(quiz-correct);
-    }
-}
-
-.atom-quiz--personality .atom-quiz__answer--selected .atom-quiz__answer__text {
-    background-color: colour(comment-main-2);
-}
-
-.atom-quiz__answer--incorrect.atom-quiz__answer--selected {
-    .atom-quiz__answer__text,
-    .atom-quiz__answer__image {
-        color: #ffffff;
-        background-color: colour(quiz-incorrect);
+    .atom-quiz__answer__item--is-correct &:after {
+        content: 'Correct';
     }
 }
 
 .atom-quiz__answer__reveal-text {
-    display: block;
+    display: none;
     color: colour(neutral-1);
     margin-top: $gs-baseline;
     @include fs-bodyCopy(1);
 
+    .atom-quiz--is-results & {
+        display: block;
+    }
+
     .atom-quiz__answer--selected & {
         color: #ffffff;
     }
-}
 
-.atom-quiz--personality,
-.atom-quiz__answer--correct,
-.atom-quiz__answer--incorrect {
-    .atom-quiz__answer__text {
-        padding-left: 3em;
+    // Text answers have reveal-text nested, but Image answers have reveal-text as a sibling to atom-quiz__answers.
+    .atom-quiz__answers + & {
+        padding: $gs-gutter * .5;
+        background-color: fade-out(colour(quiz-correct), .4);
     }
 }
 
@@ -225,3 +240,6 @@
 .atom-quiz__cta {
     padding-bottom: $gs-baseline;
 }
+
+// ********************* end quiz layout ******************
+
