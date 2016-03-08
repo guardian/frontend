@@ -9,11 +9,13 @@
 @if(showResults) {
     <h2>@quiz.title</h2>
 }
-<form action="@postUrl(quiz)" method="POST" data-question-count="@{quiz.content.questions.length}" class="@RenderClasses(Map(
+<form action="@postUrl(quiz)" method="POST" class="@RenderClasses(Map(
+    ("js-atom-quiz", true),
     ("atom-quiz", true),
     ("atom-quiz--" + quiz.quizType, true),
     ("atom-quiz--is-not-results", !showResults),
-    ("atom-quiz--is-results", showResults)
+    ("atom-quiz--is-results", showResults),
+    ("atom-quiz--instant-reveal", quiz.revealAtEnd && quiz.quizType == "knowledge")
 ))">
     @quiz.content.questions.zipWithIndex.map { case (question, index) =>
         @renderQuestion(question,
@@ -21,11 +23,27 @@
             maybeResults.flatMap(_.getAnswerFor(question))
         )
     }
-    @maybeResults.map { results =>
-        @renderEndMessage(results)
-    }.getOrElse {
+    @renderFooter(maybeResults)
+    @if(!maybeResults) {
         <button class="button button--xlarge button--primary" type="submit">Submit answers</button>
     }
+    <script>
+    (function (document) {
+        try {
+            var quiz = document.querySelector('.js-atom-quiz:invalid');
+            quiz.addEventListener('click', function () {
+                if (quiz.checkValidity()) {
+                    var el = null, bucket = quiz.querySelectorAll(':checked + .atom-quiz__answer__item--is-correct').length;
+                    do {
+                        el = quiz.querySelector('.js-atom-quiz__bucket-message--' + bucket);
+                        el && (el.style.display = 'block');
+                        bucket--;
+                    } while (!el && bucket >= 0);
+                }
+            }, true);
+        } catch (e) {};
+    })(document);
+    </script>
 </form>
 
 @renderQuestion(question: Question, field: play.api.data.Field, maybeUserAnswer: Option[Answer]) = {
@@ -53,6 +71,7 @@
                 <span class="atom-quiz__answer__reveal-text">@{answer.revealText}</span>
             }
         })
+                <span class="atom-quiz__answer__reveal-text">ewfewf</span>
 
     </fieldset>
 }
@@ -122,19 +141,28 @@
     }
 }
 
-@renderEndMessage(results: QuizResults) = {
+@renderFooter(maybeResults: Option[QuizResults]) = {
     <div class="atom-quiz__end-message">
-        <div class="atom-quiz__score-message">
-            @if(results.isKnowledge) {
-                You got&#133; <span class="atom-quiz__score">@results.knowledgeScore/@quiz.content.questions.size</span>
+        @maybeResults.map { results =>
+            <div class="atom-quiz__score-message">
+                @if(results.isKnowledge) {
+                    You got&hellip; <span class="atom-quiz__score">@results.knowledgeScore/@quiz.content.questions.size</span>
+                }
+                @if(results.isPersonality) {
+                    <div class="atom-quiz__personality-title">@results.resultBucket.map(_.title)</div>
+                    <div class="atom-quiz__personality-description">@results.resultBucket.map(_.description)</div>
+                }
+            </div>
+            @results.resultGroup.map { resultGroup =>
+                <div class="atom-quiz__bucket-message">@resultGroup.title</div>
             }
-            @if(results.isPersonality) {
-                <div class="atom-quiz__personality-title">@results.resultBucket.map(_.title)</div>
-                <div class="atom-quiz__personality-description">@results.resultBucket.map(_.description)</div>
+        }.getOrElse {
+            <div class="atom-quiz__score-message">
+                You got&hellip; <span class="atom-quiz__score" data-question-count="@{quiz.content.questions.length}"></span>
+            </div>
+            @quiz.content.resultGroups.map { resultGroup =>
+                <div class="atom-quiz__bucket-message js-atom-quiz__bucket-message--@{resultGroup.minScore}">@resultGroup.title</div>
             }
-        </div>
-        @results.resultGroup.map { resultGroup =>
-            <div class="atom-quiz__bucket-message">@resultGroup.title</div>
         }
         <div class="atom-quiz__share">
             <div class="atom-quiz__cta">Challenge your friends</div>

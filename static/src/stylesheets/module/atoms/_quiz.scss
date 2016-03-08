@@ -4,7 +4,7 @@
 // see bottom for auto-reveal stuff
 
 .atom-quiz {
-    counter-reset: quiz-question quiz-score;
+    counter-reset: quiz-question;
     margin: 0; // override pasteup
 }
 
@@ -114,24 +114,35 @@
     }
 }
 
+@mixin atom-quiz__answer__item--selected--is-incorrect {
+    color: #ffffff;
+    background-color: colour(quiz-incorrect);
+}
+
+@mixin atom-quiz__answer__item--selected--is-correct {
+    background-color: colour(quiz-correct);
+}
+
+@mixin atom-quiz__answer__item--is-correct {
+    background-color: fade-out(colour(quiz-correct), .4);
+}
+
 // correct/incorrect highlighting
 .atom-quiz--is-results.atom-quiz--knowledge {
 
     // default highlight for the actual correct answer (light-green)
     .atom-quiz__answer__item--is-correct {
-        background-color: fade-out(colour(quiz-correct), .4);
+        @include atom-quiz__answer__item--is-correct;
     }
 
     // default hightlight for the selected answer (red)
     .atom-quiz__answer__item--selected {
-        color: #ffffff;
-        background-color: colour(quiz-incorrect);
+        @include atom-quiz__answer__item--selected--is-incorrect;
     }
 
     // overide both defaults if you selected the correct answer (bright green)
     .atom-quiz__answer__item--is-correct.atom-quiz__answer__item--selected  {
-        background-color: colour(quiz-correct);
-        counter-increment: quiz-score;
+        @include atom-quiz__answer__item--selected--is-correct;
     }
 }
 
@@ -213,9 +224,14 @@
 }
 
 .atom-quiz__end-message {
+    display: none;
     border-top: 1px solid colour(neutral-4);
     background-color: colour(neutral-8);
     padding: $gs-baseline / 2 $gs-gutter * 2 / 3;
+
+    .atom-quiz--is-results & {
+        display: block;
+    }
 }
 
 .atom-quiz__score-message,
@@ -242,4 +258,64 @@
 }
 
 // ********************* end quiz layout ******************
+
+
+// ********************* auto-reveal *********************
+// if we can style based on form validity, we can reveal
+// the answers for knowlegde quizzes automatically
+.atom-quiz--instant-reveal:invalid,
+.atom-quiz--instant-reveal:valid {
+    // create additional counter to keep track of correct results
+    counter-reset:  quiz-question quiz-score;
+
+    // hide the submit button
+    [type=submit] {
+        display: none;
+    }
+
+    // once we have a selection ([required]:valid), kill mouse input,
+    // highlight the correct answer and show the reveal text
+    // .atom-quiz__answer__input[required]:valid
+    :valid {
+        &, & + .atom-quiz__answer__item {
+            pointer-events: none;
+        }
+
+        .atom-quiz__answer__item--is-correct {
+            @include atom-quiz__answer__item--is-correct;
+        }
+
+        .atom-quiz__answer__reveal-text {
+            display: block;
+        }
+    }
+
+    // assume selected asnwer is wrong
+    :checked + .atom-quiz__answer__item {
+        @include atom-quiz__answer__item--selected--is-incorrect;
+    }
+
+    // if its correct, override style and increment correct result counter
+    :checked + .atom-quiz__answer__item.atom-quiz__answer__item--is-correct {
+        @include atom-quiz__answer__item--selected--is-correct;
+        counter-increment: quiz-score;
+    }
+
+    // update the results
+    .atom-quiz__score:after {
+        content: counter(quiz-score) "/" attr(data-question-count)
+    }
+
+    .atom-quiz__bucket-message {
+        display: none;
+    }
+}
+
+// when the whole form is valid (i.e all fields have an answer),
+// show the results
+.atom-quiz--knowledge:valid .atom-quiz__end-message {
+    display: block;
+}
+
+// ********************* end auto reveal ******************
 

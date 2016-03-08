@@ -21,7 +21,8 @@ final case class Quiz(
   title: String,
   path: String,
   quizType: String,
-  content: QuizContent
+  content: QuizContent,
+  revealAtEnd: Boolean = false
 ) extends Atom
 
 object Atoms extends common.Logging {
@@ -120,7 +121,8 @@ object Quiz extends common.Logging {
       path = path,
       title = quiz.title,
       quizType = quiz.quizType,
-      content = content
+      content = content,
+      revealAtEnd = quiz.revealAtEnd
     )
   }
 }
