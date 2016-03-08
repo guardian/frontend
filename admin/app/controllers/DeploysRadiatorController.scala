@@ -11,8 +11,11 @@ import play.api.mvc.{Results, Result, Controller}
 import play.api.Play.current
 import play.api.libs.concurrent.Execution.Implicits._
 import scala.concurrent.Future
+import play.api.libs.json.Reads._
+import play.api.libs.functional.syntax._
+import scala.language.postfixOps
 
-case class Deploy(
+case class RiffRaffDeploy(
   uuid: String,
   projectName: String,
   build: String,
@@ -20,54 +23,38 @@ case class Deploy(
   deployer: String,
   status: String,
   time: String)
+object RiffRaffDeploy { implicit val format = Json.format[RiffRaffDeploy] }
+
 case class Commit(sha: String, username: String, message: String)
-case class Build(number: String, projectName: String, parentNumber: Option[String], revision: String, commits: List[Commit])
-
-object Deploy {
-  implicit val format = Json.format[Deploy]
-}
-
 object Commit {
-  implicit val format = Json.format[Commit]
+  implicit val w = Json.writes[Commit]
+  implicit val r: Reads[Commit] = (
+    (__ \ "version").read[String] and
+      (__ \ "username").read[String] and
+      (__ \ "comment").read[String]
+    )(Commit.apply _)
 }
+case class TeamCityBuild(number: String,
+                         projectName: String,
+                         parentNumber: Option[String],
+                         revision: String,
+                         commits: List[Commit])
 
-object Build {
-  implicit val format = Json.format[Build]
-}
-
-case class BuildTypeJson(name: String, projectName: String)
-case class ChangeJson(version: String, username: String, comment: String)
-case class ChangesJson(change: List[ChangeJson])
-case class ArtifactDependenciesBuildJson(number: String)
-case class ArtifactDependenciesJson(build: List[ArtifactDependenciesBuildJson])
-case class RevisionJson(version: String)
-object RevisionJson { implicit val format = Json.format[RevisionJson] }
-case class RevisionsJson(revision: List[RevisionJson])
-object RevisionsJson { implicit val format = Json.format[RevisionsJson] }
-case class BuildJson(number: String, buildType: BuildTypeJson, changes: ChangesJson, `artifact-dependencies`: ArtifactDependenciesJson, revisions: RevisionsJson)
-
-object BuildTypeJson {
-  implicit val format = Json.format[BuildTypeJson]
-}
-
-object ChangeJson {
-  implicit val format = Json.format[ChangeJson]
-}
-
-object ChangesJson {
-  implicit val format = Json.format[ChangesJson]
-}
-
-object ArtifactDependenciesBuildJson {
-  implicit val format = Json.format[ArtifactDependenciesBuildJson]
-}
-
-object ArtifactDependenciesJson {
-  implicit val format = Json.format[ArtifactDependenciesJson]
-}
-
-object BuildJson {
-  implicit val format = Json.format[BuildJson]
+object TeamCityBuild {
+  implicit val w = Json.writes[TeamCityBuild]
+  implicit val r: Reads[TeamCityBuild] = (
+    (__ \ "number").read[String] and
+    (__ \ "buildType").read(
+        (__ \ "projectName").read[String] and
+        (__ \ "name").read[String]
+        tupled
+    ).map{case (project, name) => project + "::" + name} and
+    (__ \ "artifact-dependencies" \ "build").read(
+      (__ \\ "number").readNullable[String]
+    ) and
+    (__ \ "revisions" \ "revision" \\ "version").read[String] and
+    (__ \ "changes" \ "change").read[List[Commit]]
+  )(TeamCityBuild.apply _)
 }
 
 trait DeploysRadiatorController extends Controller with Logging with AuthLogging with Requests{
@@ -84,7 +71,7 @@ trait DeploysRadiatorController extends Controller with Logging with AuthLogging
 
   type ApiResponse[T] = Either[ApiErrors, T]
 
-  object ApiResponse extends Results {
+  object ApiResults extends Results {
     def apply[T](action: => ApiResponse[T])(implicit tjs: Writes[T]): Result ={
       action.fold(
         apiErrors =>
@@ -110,7 +97,7 @@ trait DeploysRadiatorController extends Controller with Logging with AuthLogging
     WS.url(url).withQueryString(queryString.toSeq: _*).withHeaders(headers.toSeq: _*).withRequestTimeout(10000).get()
   }
 
-  def getRiffRaffDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String]): Future[ApiResponse[JsValue]] = {
+  def getRiffRaffDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String]): Future[ApiResponse[List[RiffRaffDeploy]]] = {
     val url = s"${Configuration.riffraff.url}/api/history"
 
     GET(url,
@@ -122,23 +109,17 @@ trait DeploysRadiatorController extends Controller with Logging with AuthLogging
       )
     ).map { response =>
       response.status match {
-        case 200 => Right(response.json)
-        case statusCode => Left(ApiErrors(List(ApiError(
-          message = s"Invalid status code from RiffRaff: $statusCode",
-          statusCode = 500
-        ))))
+        case 200 =>
+          (response.json \ "response" \ "results").validate[List[RiffRaffDeploy]] match {
+            case JsSuccess(listOfDeploys, _) => Right(listOfDeploys)
+            case JsError(error) => Left(ApiErrors(List(ApiError("Invalid JSON from RiffRaff API", 500))))
+          }
+        case statusCode => Left(ApiErrors(List(ApiError(s"Invalid status code from RiffRaff: $statusCode", 500 ))))
       }
     }
   }
 
-  def jsonToDeploys(json: JsValue): ApiResponse[List[Deploy]] = {
-    (json \ "response" \ "results").validate[List[Deploy]] match {
-      case JsSuccess(listOfDeploys, _) => Right(listOfDeploys)
-      case JsError(errors) => Left(ApiErrors(List(ApiError("Failed to validate JSON", 500))))
-    }
-  }
-
-  def getTeamCityBuild(number: String): Future[ApiResponse[JsValue]] = {
+  def getTeamCityBuild(number: String): Future[ApiResponse[TeamCityBuild]] = {
     val apiPath = "/guestAuth/app/rest"
     val url = s"${Configuration.teamcity.host}${apiPath}/builds/number:$number,state:any,canceled(any)"
 
