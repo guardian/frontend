@@ -69,16 +69,6 @@ define([
             }).init();
         } else if (fetchRelated) {
 
-
-            if (ab.isInVariant('ArticleRelatedContentDisplayAsRecommendation', 'people-who-read-this-also-read-title')) {
-                var relatedContentSection = document.getElementById('related-content');
-                if (relatedContentSection) {
-                    fastdom.write(function () {
-                        $('.fc-container__header__title', relatedContentSection).textContent = 'people who have read this also read';
-                    });
-                }
-            }
-
             container = document.body.querySelector('.js-related');
 
             if (container) {
@@ -100,6 +90,16 @@ define([
                     url: relatedUrl,
                     container: container,
                     success: function () {
+
+                        if (ab.isInVariant('ArticleRelatedContentDisplayAsRecommendation', 'people-who-read-this-also-read-title')) {
+                            var relatedContentSection = document.getElementById('related-content');
+                            if (relatedContentSection) {
+                                fastdom.write(function () {
+                                    $('.fc-container__header__title', relatedContentSection).textContent = 'people who have read this also read';
+                                });
+                            }
+                        }
+
                         var relatedContainer = container.querySelector('.related-content');
 
                         new Expandable({dom: relatedContainer, expanded: false, showCount: false}).init();
