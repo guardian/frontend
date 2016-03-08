@@ -6,7 +6,7 @@ define([
     noop
 ) {
     return function () {
-        this.id = 'HeaderBiddingUS';
+        this.id = 'HeaderBiddingUs';
         this.start = '2016-03-08';
         this.expiry = '2016-04-06';
         this.author = 'Jimmy Breck-McKye';
