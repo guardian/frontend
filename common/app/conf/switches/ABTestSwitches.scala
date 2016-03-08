@@ -13,21 +13,39 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABIdentityRegisterV2 = Switch(
+  val ABNextInSeries = Switch(
     "A/B Tests",
-    "ab-identity-register-v2",
-    "New user registration page variant for Identity",
+    "ab-next-in-series",
+    "Show next in series",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 1),
+    sellByDate = new LocalDate(2016, 3, 23),
     exposeClientSide = true
   )
 
-  val ABIdentitySignInV2 = Switch(
+  val ABIdentityRegisterMembershipStandfirst = Switch(
     "A/B Tests",
-    "ab-identity-sign-in-v2",
-    "New sign in page variant for Identity",
+    "ab-identity-register-membership-standfirst",
+    "Membership registration page variant for Identity",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 1),
+    sellByDate = new LocalDate(2016, 4, 1),
+    exposeClientSide = true
+  )
+
+  val ABArticleVideoAutoplay = Switch(
+    "A/B Tests",
+    "ab-article-video-autoplay",
+    "Autoplay embedded videos in article",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 3, 21),
+    exposeClientSide = true
+  )
+
+  val ABCommercialComponentsDismiss = Switch(
+    "A/B Tests",
+    "ab-commercial-components-dismiss",
+    "Survey possibility of dismiss option for commercial components",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 4, 5),
     exposeClientSide = true
   )
 

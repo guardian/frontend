@@ -11,7 +11,6 @@ define([
     'common/modules/article/membership-events',
     'common/modules/article/open-module',
     'common/modules/article/chapters',
-    'common/modules/atoms/quiz',
     'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
     'bootstraps/enhanced/article-liveblog-common',
@@ -28,7 +27,6 @@ define([
     membershipEvents,
     openModule,
     chapters,
-    quiz,
     ab,
     geoMostPopular,
     articleLiveblogCommon,
@@ -58,10 +56,6 @@ define([
             require(['ophan/ng'], function (ophan) {
                 mediator.on('quiz/ophan-event', ophan.record);
             });
-        },
-
-        initAtomQuiz: function () {
-            quiz.init();
         }
     },
 
@@ -71,7 +65,6 @@ define([
         modules.initRightHandComponent();
         modules.initCmpParam();
         modules.initQuizListeners();
-        modules.initAtomQuiz();
         richLinks.upgradeRichLinks();
         richLinks.insertTagRichLink();
         membershipEvents.upgradeEvents();

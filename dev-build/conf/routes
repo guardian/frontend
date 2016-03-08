@@ -299,13 +299,15 @@ GET            /commercial/capi-single-merch.json                               
 GET            /commercial/capi-single-merch                                                                                     controllers.commercial.ContentApiOffersController.itemHtml
 GET            /commercial/paid.json                                                                                             controllers.commercial.PaidContentCardController.cardJson
 GET            /commercial/paid                                                                                                  controllers.commercial.PaidContentCardController.cardHtml
+GET        /commercial/survey-simple-sign-up                             controllers.commercial.StaticPageController.renderSurveySimpleSignupPage()
+GET        /commercial/survey-simple-membership                          controllers.commercial.StaticPageController.renderSurveySimpleMembershipPage()
+GET            /commercial/multi.json                                                                                                   controllers.commercial.Multi.renderMulti
 
 # Commercial Admin
 GET            /admin/commercial                                                                                                 controllers.admin.CommercialController.renderCommercialMenu()
 GET            /commercialtools/adunits/toapprove                                                                                controllers.admin.CommercialAdUnitController.renderToApprove()
 POST           /commercialtools/adunits/toapprove                                                                                controllers.admin.CommercialAdUnitController.approve()
 GET            /admin/commercial/fluid250                                                                                        controllers.admin.CommercialController.renderFluidAds()
-GET            /commercial/multi.json                                                                                            controllers.commercial.Multi.renderMulti
 GET            /admin/commercial/dfp/flush/view                                                                                  controllers.admin.commercial.DfpDataController.renderCacheFlushPage()
 GET            /admin/commercial/dfp/flush                                                                                       controllers.admin.commercial.DfpDataController.flushCache()
 GET            /admin/commercial/radiator                                                                                        controllers.admin.CommercialController.renderCommercialRadiator()

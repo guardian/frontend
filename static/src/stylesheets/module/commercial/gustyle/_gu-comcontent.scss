@@ -35,6 +35,7 @@
     color: #ffffff;
 }
 
+.content--immersive .from-content-api .gu-display__content-title,
 .gu-display__content-title {
     @include f-headlineSans;
     @include font-size(20, 20);
@@ -85,6 +86,7 @@
     color: #ffffff;
 }
 
+.content--immersive .from-content-api .gu-display__content-color--dark,
 .gu-display__content-color--dark {
     color: #000000;
 }
@@ -148,12 +150,7 @@ $mobile-max-container-width: gs-span(8);
     }
 
     @include mq(desktop) {
-        width: 300px;
-    }
-
-    // Hide 'advertisement' label for gu style
-    .ad-slot__label {
-        display: none;
+        max-width: 300px;
     }
 
     // Article styles: Right slot width is exactly the size of the banner so we don't want any margin
@@ -165,13 +162,21 @@ $mobile-max-container-width: gs-span(8);
     // Gallery & Liveblog sections styles
     &.ad-slot--gallery-inline,
     &.ad-slot--liveblog-inline {
+        width: 100%;
         margin-left: auto;
         margin-right: auto;
         padding-top: 0;
         padding-bottom: 0;
+    }
+}
 
-        @include mq(tablet) {
-            width: 300px;
-        }
+.gu-style--unboxed {
+    @include mq($until: tablet) {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    @include mq(tablet) {
+        max-width: 300px;
     }
 }

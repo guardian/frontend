@@ -26,11 +26,12 @@ object PollsHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
   }
 
   override def clean(document: Document) = {
-    universalClean(document)
-    removeScripts(document)
-    createSimplePageTracking(document)
-    removeByTagName(document, "noscript")
-    fetchAndPressPollResult(document)
+    universalClean(document).map { _ =>
+      removeScripts(document)
+      createSimplePageTracking(document)
+      removeByTagName(document, "noscript")
+      fetchAndPressPollResult(document)
+    }
   }
 
   private def fetchAndPressPollResult(document: Document): Document = {

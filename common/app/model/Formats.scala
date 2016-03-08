@@ -4,7 +4,7 @@ import common.{NavItem, SectionLink, Pagination}
 import model.content._
 import model.facia.PressedCollection
 import model.liveblog.{BlockAttributes, BodyBlock}
-import quiz._
+import quiz.{Image => _, _}
 import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
@@ -73,7 +73,7 @@ object MetaDataFormat {
 
   private case class MetaDataPart2(
     contentType: String,
-    isImmersive: Boolean,
+    hasHeader: Boolean,
     schemaType: Option[String],
     cacheSeconds: Int,
     openGraphImages: Seq[String],
@@ -108,7 +108,7 @@ object MetaDataFormat {
         part1.description,
         part1.rssPath,
         part2.contentType,
-        part2.isImmersive,
+        part2.hasHeader,
         part2.schemaType,
         part2.cacheSeconds,
         part2.openGraphImages,
@@ -178,6 +178,8 @@ object ContentTypeFormat {
   implicit val tagPropertiesFormat = Json.format[TagProperties]
   implicit val tagFormat = Json.format[Tag]
   val tagsFormat = Json.format[Tags]
+  implicit val imageMediaFormat = ElementsFormat.imageMediaFormat
+  implicit val quizImageMediaFormat = Json.format[QuizImageMedia]
   implicit val answerFormat = Json.format[Answer]
   implicit val questionFormat = Json.format[Question]
   implicit val quizResultBucketFormat = Json.format[ResultBucket]
@@ -191,7 +193,6 @@ object ContentTypeFormat {
   val elementsFormat = ElementsFormat.format
   implicit val tweetFormat = Json.format[Tweet]
   implicit val cardStyleFormat = CardStyleFormat
-  implicit val imageMediaFormat = ElementsFormat.imageMediaFormat
   private val commercialJsonFormat = Json.format[JsonCommercial]
   private val trailJsonFormat = Json.format[JsonTrail]
 

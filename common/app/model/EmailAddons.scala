@@ -2,56 +2,72 @@ package model
 
 import conf.Static
 
-sealed trait EmailContent {
+sealed trait EmailContent extends Product with Serializable {
+  def name: String
   def banner: String
-  def test(a: Article): Boolean
+  def test(c: ContentType): Boolean
 }
 
 case object ArtWeekly extends EmailContent {
+  val name = "Art Weekly"
   val banner = "art-weekly.png"
-  def test(a: Article) = false // TODO: update with actual check
+  def test(c: ContentType) = c.tags.series.exists(_.id == "artanddesign/series/art-weekly")
 }
 
 case object GreenLight extends EmailContent {
+  val name = "Green Light"
   val banner = "green-light.png"
-  def test(a: Article) = false // TODO: update with actual check
+  def test(c: ContentType) = c.tags.series.exists(_.id == "environment/series/green-light")
 }
 
 case object MoneyTalks extends EmailContent {
+  val name = "Money Talks"
   val banner = "money-talks.png"
-  def test(a: Article) = false // TODO: update with actual check
+  def test(c: ContentType) = c.tags.series.exists(_.id == "money/series/money-talks")
 }
 
 case object PovertyMatters extends EmailContent {
+  val name = "Poverty Matters"
   val banner = "poverty-matters.png"
-  def test(a: Article) = false // TODO: update with actual check
+  def test(c: ContentType) = c.tags.blogs.exists(_.id == "global-development/poverty-matters")
 }
 
 case object TheBreakdown extends EmailContent {
+  val name = "The Breakdown"
   val banner = "the-breakdown.png"
-  def test(a: Article) = false // TODO: update with actual check
+  def test(c: ContentType) = c.tags.series.exists(_.id == "sport/series/breakdown")
 }
 
 case object TheFiver extends EmailContent {
+  val name = "The Fiver"
   val banner = "the-fiver.png"
-  def test(a: Article) = a.content.tags.series.exists(_.id == "football/series/thefiver")
+  def test(c: ContentType) = c.tags.series.exists(_.id == "football/series/thefiver")
 }
 
 case object TheSpin extends EmailContent {
+  val name = "The Spin"
   val banner = "the-spin.png"
-  def test(a: Article) = false // TODO: update with actual check
+  def test(c: ContentType) = c.tags.series.exists(_.id == "sport/series/thespin")
+}
+
+case object MorningBriefing extends EmailContent {
+  val name = "Morning Briefing"
+  val banner = "morning-briefing.png"
+  def test(c: ContentType) = c.tags.series.exists(_.id == "world/series/guardian-morning-briefing")
 }
 
 object EmailAddons {
   private val defaultBanner = "generic.png"
-  private val allEmails     = Seq(ArtWeekly, GreenLight, MoneyTalks, PovertyMatters, TheBreakdown, TheFiver, TheSpin)
+  private val allEmails     = Seq(ArtWeekly, GreenLight, MoneyTalks, PovertyMatters, TheBreakdown, TheFiver, TheSpin, MorningBriefing)
 
-  implicit class EmailArticle(a: Article) {
+  implicit class EmailContentType(c: ContentType) {
+    val email = allEmails.find(_.test(c))
+
+    val fallbackSeriesText = if (email.isEmpty) c.content.seriesName else None
+
     lazy val banner = {
-      val banner = emailFor(a) map (_.banner) getOrElse defaultBanner
+      val banner = email map (_.banner) getOrElse defaultBanner
       Static(s"images/email/banners/$banner").path
     }
   }
-
-  private def emailFor(a: Article): Option[EmailContent] = allEmails.find(_.test(a))
 }

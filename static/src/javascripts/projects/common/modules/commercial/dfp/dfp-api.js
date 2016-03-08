@@ -23,10 +23,12 @@ define([
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/dfp/ophan-tracking',
     'common/modules/commercial/dfp/breakout-iframe',
+    'common/modules/commercial/survey/survey-simple',
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
     'common/modules/analytics/beacon',
     'common/modules/identity/api',
+    'common/views/svgs',
     'lodash/functions/once',
     'lodash/objects/forOwn',
     'lodash/collections/forEach',
@@ -67,10 +69,12 @@ define([
     commercialFeatures,
     ophanTracking,
     breakoutIFrame,
+    SurveySimple,
     geoMostPopular,
     ab,
     beacon,
     id,
+    svgs,
     once,
     forOwn,
     forEach,
@@ -444,6 +448,17 @@ define([
         idleFastdom.write(function () {
             if (shouldRenderLabel($adSlot)) {
                 $adSlot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
+            } else if (ab.getParticipations().CommercialComponentsDismiss && ab.getParticipations().CommercialComponentsDismiss.variant === 'dismiss') {
+                var survey = new SurveySimple();
+                var crossIcon = svgs('crossIcon');
+
+                survey.attach();
+                $adSlot.prepend('<div class="commercial__inner"><a href="#" class="ad-slot--dismiss js-ad-slot-dismiss" data-link-name="dimiss commercial component">Dismiss ' + crossIcon + '</a></div>');
+
+                bean.on(document, 'click', $('.js-ad-slot-dismiss', $adSlot), function (e) {
+                    e.preventDefault();
+                    $('.js-survey-overlay').removeClass('u-h');
+                });
             }
         });
     }
@@ -531,10 +546,6 @@ define([
             } else {
                 resolve(breakoutIFrame(iFrame, $adSlot));
             }
-        }).then(function (items) {
-            return find(items, function (adType) {
-                return adType !== '';
-            });
         });
     }
 

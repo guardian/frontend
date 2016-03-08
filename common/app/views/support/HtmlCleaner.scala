@@ -532,7 +532,7 @@ object ChaptersLinksCleaner extends HtmlCleaner {
   }
 }
 
-case class AtomsCleaner(atoms: Option[Atoms]) extends HtmlCleaner {
+case class AtomsCleaner(atoms: Option[Atoms])(implicit val request: RequestHeader) extends HtmlCleaner {
   private def findAtom(id: String): Option[Atom] = {
     atoms.flatMap(_.all.find(_.id == id))
   }

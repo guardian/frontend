@@ -88,9 +88,9 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
     modelGen(
       maybeRequiredBlockId.map(blockId => block => blockId == block.id),
       _.id
-    ) map { blocks =>
-      val htmlResponse = () => views.html.liveBlog (blog, blocks)
-      val jsonResponse = () => views.html.liveblog.liveBlogBody (blog, blocks)
+    ) map { pageModel =>
+      val htmlResponse = () => views.html.liveBlog (blog, pageModel)
+      val jsonResponse = () => views.html.liveblog.liveBlogBody (blog, pageModel)
       renderFormat(htmlResponse, jsonResponse, blog, Switches.all)
     } getOrElse NotFound
 
@@ -122,10 +122,10 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
 
     case article: ArticlePage =>
       val htmlResponse = () => {
-        if (article.article.isImmersive) views.html.articleImmersive(article)
-        else if (request.isAmp)          views.html.articleAMP(article)
-        else if (request.isEmail)        views.html.articleEmail(article)
-        else                             views.html.article(article)
+        if (request.isEmail) views.html.articleEmail(article)
+        else if (article.article.isImmersive) views.html.articleImmersive(article)
+        else if (request.isAmp) views.html.articleAMP(article)
+        else views.html.article(article)
       }
 
       val jsonResponse = () => views.html.fragments.articleBody(article)

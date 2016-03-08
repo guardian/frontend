@@ -1,5 +1,6 @@
 package model
 
+import com.gu.contentapi.client.model.v1.AssetType
 import org.joda.time.Duration
 import com.gu.contentapi.client.model.v1.{Element => ApiElement, ElementType, AssetType}
 import org.apache.commons.math3.fraction.Fraction
@@ -47,7 +48,7 @@ sealed trait Element {
 
 object ImageMedia {
   def make(capiElement: ApiElement, properties: ElementProperties): ImageMedia = ImageMedia(
-    allImages = capiElement.assets.filter(_.`type`.name == "Image").map(ImageAsset.make(_,properties.index)).sortBy(-_.width)
+    allImages = capiElement.assets.filter(_.`type` == AssetType.Image).map(ImageAsset.make(_,properties.index)).sortBy(-_.width)
   )
   def make(crops: Seq[ImageAsset]): ImageMedia = ImageMedia(
     allImages = crops
@@ -79,7 +80,7 @@ final case class ImageMedia(allImages: Seq[ImageAsset]) {
 
 object VideoMedia {
   def make(capiElement: ApiElement): VideoMedia = VideoMedia(
-    videoAssets = capiElement.assets.filter(_.`type`.name == "Video").map(VideoAsset.make).sortBy(-_.width).toList
+    videoAssets = capiElement.assets.filter(_.`type` == AssetType.Video).map(VideoAsset.make).sortBy(-_.width).toList
   )
 }
 final case class VideoMedia(videoAssets: List[VideoAsset]) {

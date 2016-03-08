@@ -1,3 +1,4 @@
+import play.api.libs.json.JsValue
 
 package object quiz {
 
@@ -9,14 +10,30 @@ package object quiz {
   case class Question(
     id: String,
     text: String,
-    answers: Seq[Answer])
+    answers: Seq[Answer],
+    imageMedia: Option[QuizImageMedia])
 
   case class Answer(
     id: String,
     text: String,
     revealText: Option[String],
     weight: Int,
-    buckets: Seq[String])
+    buckets: Seq[String],
+    imageMedia: Option[QuizImageMedia])
+
+  case class QuizImageMedia(
+    imageMedia: model.ImageMedia
+  ) {
+    val imageClasses: Option[(model.ImageAsset, String)] = {
+      imageMedia.masterImage.map { master =>
+        val orientationClass = master.orientation match {
+          case views.support.Portrait => "img--portrait"
+          case _ => "img--landscape"
+        }
+        (master, orientationClass)
+      }
+    }
+  }
 
   case class ResultGroup(
     id: String,
@@ -29,6 +46,22 @@ package object quiz {
     title: String,
     shareText: String,
     description: String
+  )
+
+  // Currently, CAPI are returning opaque json strings as assets for quiz atoms.
+  // These json strings are immediately transformed into ImageMedia objects.
+  case class Image(
+    elementType: String,
+    fields: Map[String, JsValue],
+    assets: Seq[Asset]
+  )
+
+  case class Asset(
+    assetType: String,
+    url: Option[String],
+    secureUrl: Option[String],
+    mimeType: Option[String],
+    fields: Map[String, JsValue]
   )
 
   def postUrl(quiz: model.content.Quiz) = s"/atom/quiz/${quiz.id}/${quiz.path}"

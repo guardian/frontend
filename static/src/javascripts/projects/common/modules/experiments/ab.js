@@ -5,9 +5,11 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
+    'common/modules/experiments/tests/commercial-components-dismiss',
     'common/modules/experiments/tests/fronts-on-articles2',
-    'common/modules/experiments/tests/identity-register-v2',
-    'common/modules/experiments/tests/identity-sign-in-v2',
+    'common/modules/experiments/tests/identity-register-membership-standfirst',
+    'common/modules/experiments/tests/article-video-autoplay',
+    'common/modules/experiments/tests/next-in-series',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -24,9 +26,11 @@ define([
     mediator,
     store,
     mvtCookie,
+    CommercialComponentsDismiss,
     FrontsOnArticles2,
-    IdentityRegisterV2,
-    IdentitySignInV2,
+    IdentityRegisterMembershipStandfirst,
+    ArticleVideoAutoplay,
+    NextInSeries,
     flatten,
     forEach,
     keys,
@@ -39,9 +43,11 @@ define([
 ) {
 
     var TESTS = flatten([
+        new CommercialComponentsDismiss(),
         new FrontsOnArticles2(),
-        new IdentityRegisterV2(),
-        new IdentitySignInV2()
+        new IdentityRegisterMembershipStandfirst(),
+        new ArticleVideoAutoplay(),
+        new NextInSeries()
     ]);
 
     var participationsKey = 'gu.ab.participations';

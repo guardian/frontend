@@ -131,9 +131,18 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val JobFeedSwitch = Switch(
+  val JobFeedReadSwitch = Switch(
     "Commercial",
-    "gu-jobs",
+    "gu-jobs-feed-read",
+    "If this switch is on, cached jobs feed will be updated from external source.",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val JobParseSwitch = Switch(
+    "Commercial",
+    "gu-jobs-parse",
     "If this switch is on, commercial components will be fed by job feed.",
     safeState = Off,
     sellByDate = never,
@@ -235,7 +244,16 @@ trait CommercialSwitches {
     "outbrain-on-amp",
     "Show an Outbrain component on amp pages",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 2),
+    sellByDate = new LocalDate(2016, 4, 5),
+    exposeClientSide = false
+  )
+
+  val BritishCouncilBeacon = Switch(
+    "Commercial",
+    "british-council-beacon",
+    "British Council's beacon",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 1),
     exposeClientSide = false
   )
 
