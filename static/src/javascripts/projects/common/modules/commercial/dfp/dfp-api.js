@@ -48,8 +48,7 @@ define([
     'lodash/collections/find',
     'lodash/arrays/last',
     'lodash/arrays/intersection',
-    'lodash/arrays/initial',
-    'lodash/objects/values'
+    'lodash/arrays/initial'
 ], function (
     bean,
     bonzo,
@@ -96,8 +95,7 @@ define([
     find,
     last,
     intersection,
-    initial,
-    values
+    initial
 ) {
     /**
      * Right, so an explanation as to how this works...
@@ -268,7 +266,7 @@ define([
         googletag.enableServices();
         // as this is an single request call, only need to make a single display call (to the first ad
         // slot)
-        var firstAd = values(adverts)[0];
+        var firstAd = getAdvertArray()[0];
         loadSlot(firstAd);
     }
 
@@ -490,21 +488,18 @@ define([
             var scrollBottom = scrollTop + viewportHeight;
             var depth = 0.5;
 
-            var advertsToLoad = values(adverts).filter(function (advert) {
+            var advertsToLoad = getAdvertArray().filter(function (advert) {
                 return !advert.isRendered
                     && !advert.isLoading
                     // if the position of the ad is above the viewport - offset (half screen size)
                     && (scrollBottom > document.getElementById(advert.adSlotId).getBoundingClientRect().top + scrollTop - viewportHeight * depth);
             });
-
-            advertsToLoad.forEach(function (advert) {
-                loadSlot(advert);
-            });
+            advertsToLoad.forEach(loadSlot);
         }
     }
 
     function instantLoad() {
-        values(adverts).forEach(function (advert) {
+        getAdvertArray().forEach(function (advert) {
             if (contains(['dfp-ad--pageskin-inread', 'dfp-ad--merchandising-high', 'dfp-ad--im'], advert.adSlotId)) {
                 loadSlot(advert);
             }
@@ -729,6 +724,12 @@ define([
 
     function getAdverts() {
         return adverts;
+    }
+
+    function getAdvertArray() {
+        return Object.keys(adverts).map(function (key) {
+            return adverts[key];
+        });
     }
 
     /**

@@ -7,7 +7,7 @@ define([
 ) {
     return function () {
         this.id = 'HeaderBiddingUS';
-        this.start = '2016-03-09';
+        this.start = '2016-03-08';
         this.expiry = '2016-04-06';
         this.author = 'Jimmy Breck-McKye';
         this.description = 'Auction adverts on the client before calling DFP (US edition only)';
