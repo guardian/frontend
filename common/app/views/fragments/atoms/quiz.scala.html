@@ -15,7 +15,7 @@
     ("atom-quiz--" + quiz.quizType, true),
     ("atom-quiz--is-not-results", !showResults),
     ("atom-quiz--is-results", showResults),
-    ("atom-quiz--instant-reveal", quiz.revealAtEnd && quiz.quizType == "knowledge")
+    ("atom-quiz--instant-reveal", !quiz.revealAtEnd && quiz.quizType == "knowledge")
 ))">
     @quiz.content.questions.zipWithIndex.map { case (question, index) =>
         @renderQuestion(question,
