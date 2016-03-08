@@ -7,32 +7,37 @@
 @import views.html.fragments.items.facia_cards.meta
 @import views.html.fragments.media.video
 @import views.support.{CutOut, GetClasses, RemoveOuterParaHtml, RenderClasses, Video640}
+@import headlines.ABHeadlines
 
 @import Function.const
 
-<div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(item.hasImage && !item.hasInlineSnapHtml) {js-snappable}"
-    @if(item.discussionSettings.isCommentable) {
-        @item.discussionSettings.discussionId.map { id =>
-        data-discussion-id="@id"
+@defining(ABHeadlines.upgrade(item)) { item =>
+    <div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(item.hasImage && !item.hasInlineSnapHtml) {js-snappable}"
+        @if(item.discussionSettings.isCommentable) {
+            @item.discussionSettings.discussionId.map { id =>
+            data-discussion-id="@id"
+            }
+            data-discussion-closed="@item.discussionSettings.isClosedForComments"
+            data-discussion-url="@item.header.url.get(request)#comments"
         }
-        data-discussion-closed="@item.discussionSettings.isClosedForComments"
-        data-discussion-url="@item.header.url.get(request)#comments"
-    }
-    data-link-name="@item.analyticsPrefix | card-@{ index + 1 }"
+    data-link-name="@item.analyticsPrefix | card-@{
+        index + 1
+    }"
     data-item-visibility="@visibilityDataAttribute"
     data-test-id="facia-card"
-    @item.id.map { id => data-id="@id" }
-    @item.snapStuff.map(_.dataAttributes)
-    @item.shortUrl.map { shortUrl => data-loyalty-short-url="@shortUrl" }>
+        @item.id.map { id => data-id="@id" }
+        @item.snapStuff.map(_.dataAttributes)
+        @item.shortUrl.map { shortUrl => data-loyalty-short-url="@shortUrl" }>
 
-    @if(!item.hasInlineSnapHtml) {
-        @container()
-    }
-    @if(item.hasInlineSnapHtml) {
-        @item.snapStuff.map { snap => @snap.embedHtml.map(Html(_)) }
-    }
+        @if(!item.hasInlineSnapHtml) {
+            @container()
+        }
+        @if(item.hasInlineSnapHtml) {
+            @item.snapStuff.map { snap => @snap.embedHtml.map(Html(_)) }
+        }
 
-</div>
+    </div>
+}
 
 @container() = {
     <div class="fc-item__container">
