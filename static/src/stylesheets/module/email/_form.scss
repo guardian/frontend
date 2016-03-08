@@ -255,12 +255,9 @@
         padding: $gs-baseline $gs-gutter $gs-baseline $icon-padding;
     }
 
-    .email-sub__message__headline {
-        color: guss-colour(guardian-brand, $pasteup-palette);
-    }
-
+    .email-sub__message__headline,
     .email-sub__message__description {
-        color: guss-colour(neutral-1, $pasteup-palette);
+        color: #ffffff;
     }
 
     .email-sub__small {
@@ -377,8 +374,11 @@
             }
         }
 
-        .email-sub__message__headline {
-            color: $tone-colour-headline;
+        @if ($tone-brightness == light) {
+            .email-sub__message__headline,
+            .email-sub__message__description {
+                color: $tone-colour-description;
+            }
         }
 
         @if ($tone-brightness == light) {
