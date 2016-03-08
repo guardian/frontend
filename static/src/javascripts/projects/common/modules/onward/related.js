@@ -70,7 +70,7 @@ define([
         } else if (fetchRelated) {
 
 
-            if (ab.isInVariant('RelatedContentDisplayAsRecommendation', 'people-who-read-this-also-read-title')) {
+            if (ab.isInVariant('ArticleRelatedContentDisplayAsRecommendation', 'people-who-read-this-also-read-title')) {
                 var relatedContentSection = document.getElementById('related-content');
                 if (relatedContentSection) {
                     fastdom.write(function () {

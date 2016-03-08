@@ -3,7 +3,7 @@ define([
 ], function (config) {
 
     return function () {
-        this.id = 'RelatedContentDisplayAsRecommendation';
+        this.id = 'ArticleRelatedContentDisplayAsRecommendation';
         this.start = '2016-03-07';
         this.expiry = '2016-03-16';
         this.author = 'Mariot Chauvin';
