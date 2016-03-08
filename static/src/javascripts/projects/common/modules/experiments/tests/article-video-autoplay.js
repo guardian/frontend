@@ -1,11 +1,12 @@
 define([
+    'common/utils/config',
     'common/utils/detect'
-], function (detect) {
+], function (config, detect) {
 
     return function () {
         this.id = 'ArticleVideoAutoplay';
-        this.start = '2016-03-07';
-        this.expiry = '2016-03-21';
+        this.start = '2016-03-09';
+        this.expiry = '2016-03-23';
         this.author = 'James Gorrie';
         this.description = 'Autoplay embedded videos on article pages';
         this.audience = .2;
@@ -17,7 +18,8 @@ define([
 
         this.canRun = function () {
             var bp = detect.getBreakpoint();
-            return !(bp === 'mobile' || bp === 'mobileLandscape');
+            var ct = config.page.contentType;
+            return !(bp === 'mobile' || bp === 'mobileLandscape') && (ct === 'Article' || ct === 'LiveBlog');
         };
 
         this.variants = [{

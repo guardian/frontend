@@ -13,8 +13,7 @@
         max-width: gs-span(14) + $gs-gutter*2;
     }
     @include mq(wide) {
-        width: gs-span(16) + $gs-gutter*2;
-        max-width: none;
+        max-width: gs-span(16) + $gs-gutter*2;
     }
 }
 .commercial__header,
