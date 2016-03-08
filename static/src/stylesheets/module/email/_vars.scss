@@ -8,11 +8,11 @@ $rounded-adjustment: .66em;
 
 $tones: (
     (analysis, light, colour(neutral-7), colour(analysis-accent), colour(neutral-2), colour(neutral-1)),
-    (news, light, colour(comment-background), colour(comment-accent), colour(neutral-1), colour(neutral-1)),
+    (comment, light, colour(comment-background), colour(comment-accent), colour(neutral-1), colour(neutral-1)),
     (feature, dark, colour(feature-default), colour(feature-accent)),
     (live, dark, colour(live-default), colour(live-accent)),
     (media, dark, colour(media-background), colour(media-default), colour(media-default)),
-    (nws, dark, colour(news-default), colour(news-accent)),
+    (news, dark, colour(news-default), colour(news-accent)),
     (review, dark, darken(colour(review-background), 10%), colour(review-accent), colour(review-accent)),
     (special-report, dark, colour(news-support-6), colour(news-support-1))
 );
