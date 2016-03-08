@@ -225,6 +225,8 @@
         display: inline-block;
         vertical-align: middle;
         font-size: 0; // remove whitespace on inline-block children
+
+        &::after { content: none; }
     }
 
     .ad-slot.ad-slot--paid-for-badge--front {
@@ -258,7 +260,7 @@
         position: relative;
         // reserve space in-flow for absolutely positioned badge
         // baseline * 3 from the height of the element, plus baseline / 2 for its bottom margin
-        padding-bottom: $gs-baseline * 3.5;
+        padding-bottom: $gs-baseline * 5;
     }
 
     .ad-slot--paid-for-badge {
