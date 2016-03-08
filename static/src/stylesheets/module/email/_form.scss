@@ -30,7 +30,6 @@
 }
 
 .email-sub__label {
-    color: $form-label-colour;
     display: block;
 }
 
@@ -46,6 +45,7 @@
     width: 100%;
 
     .email-sub__label {
+        color: $form-label-colour;
         line-height: 3;
         left: 1.250em;
         position: absolute;
@@ -245,8 +245,7 @@
 
 // IN-ARTICLE (COMPOSER) PAGE MODS
 .email-sub--article {
-    border-top: 1px dotted guss-colour(neutral-3, $pasteup-palette);
-    border-bottom: 1px dotted guss-colour(neutral-3, $pasteup-palette);
+    padding: $gs-gutter / 4;
 
     @include mq($from: phablet) {
         padding-right: gs-span(1);
@@ -277,7 +276,7 @@
     }
 
     .email-sub__text-input {
-        border-color: guss-colour(neutral-1, $pasteup-palette);
+        border-color: $form-primary-colour;
     }
 
     .email-sub__submit-input {
@@ -343,19 +342,65 @@
 }
 
 // TONE SPECIFIC MODS
-@each $toneClass, $toneColour in $tones {
-    .email-sub--tone-#{$toneClass} {
+@each $tone-class, $tone-brightness, $tone-colour-background, $tone-colour-accent, $tone-colour-headline, $tone-colour-description in $tones {
+
+    @if ($tone-brightness == light) {
+        $svg-fill: $tone-colour-accent;
+    } @else {
+        $svg-fill: #ffffff;
+    }
+
+    .email-sub--tone-#{$tone-class} {
+        background-color: $tone-colour-background;
+        border-top: 1px solid $tone-colour-accent;
+
+        .email-sub__close-icon svg {
+            fill: $svg-fill;
+
+            &:hover,
+            &:focus {
+                cursor: pointer;
+                fill: darken($svg-fill, 10%);
+            }
+        }
+
+        // No-js colour
+        @if ($tone-colour-description) {
+            .email-sub__label {
+                color: $tone-colour-description;
+            }
+        }
+
+        .email-sub__inline-label--enabled {
+            .email-sub__label {
+                color: $form-label-colour;
+            }
+        }
+
         .email-sub__message__headline {
-            color: $toneColour;
+            color: $tone-colour-headline;
+        }
+
+        @if ($tone-brightness == light) {
+            .email-sub__text-input {
+                border-color: colour(neutral-3);
+            }
         }
 
         .email-sub__submit-input {
-            background-color: $toneColour;
-            border-color: $toneColour;
+            background-color: transparent;
+            border-color: $tone-colour-accent;
+            color: $tone-colour-headline;
+
+            &:hover,
+            &:focus {
+                background-color: $tone-colour-accent;
+                color: #ffffff;
+            }
         }
 
         .email-sub__small {
-            color: $toneColour;
+            color: $tone-colour-headline;
         }
     }
 }

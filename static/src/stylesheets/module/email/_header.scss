@@ -28,31 +28,49 @@
     .email-sub__heading {
         margin: $gs-baseline / 2 0 $gs-baseline;
     }
+
+    .email-sub__description {
+        @include fs-textSans(2)
+    }
 }
 
 // IN-ARTICLE (COMPOSER) PAGE MODS
 .email-sub__header--article {
     .email-sub__heading {
-        color: guss-colour(guardian-brand, $pasteup-palette);
+        color: #ffffff;
         padding-right: 40px; // Avoid close icon
     }
 
     .email-sub__description {
         background-color: transparent;
         border-top: 0 none;
-        color: guss-colour(neutral-1, $pasteup-palette);
+        color: #ffffff;
         min-height: 20px; // Min-height required to avoid some of the layout thrashing from loading in an iframe
     }
 }
 
 // TONE SPECIFIC MODS
-@each $toneClass, $toneColour in $tones {
-    .email-sub--tone-#{$toneClass} {
-        .email-sub__heading {
-            color: $toneColour;
+
+@each $tone-class, $tone-brightness, $tone-colour-background, $tone-colour-accent, $tone-colour-headline, $tone-colour-description in $tones {
+    .email-sub--tone-#{$tone-class} {
+        .email-sub__header {
+            background-color: $tone-colour-background;
+        }
+
+        @if ($tone-colour-headline) {
+            .email-sub__heading {
+                color: $tone-colour-headline;
+            }
+        }
+
+        @if ($tone-colour-description) {
+            .email-sub__description {
+                color: $tone-colour-description;
+            }
         }
     }
 }
+
 
 // FOOTER MODS
 .email-sub__header--footer {

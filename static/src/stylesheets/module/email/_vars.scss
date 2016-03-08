@@ -7,15 +7,12 @@ $icon-padding: $icon-size + ($gs-gutter / 2);
 $rounded-adjustment: .66em;
 
 $tones: (
-    (analysis, darken(colour(analysis-accent), 15%)),
-    (comment, colour(comment-default)),
-    (dead, colour(live-default)),
-    (editorial, colour(guardian-brand)),
-    (feature, colour(feature-default)),
-    (letters, colour(comment-default)),
-    (live, colour(live-default)),
-    (media, colour(media-default)),
-    (news, colour(news-default)),
-    (review, darken(colour(review-background), 10%)),
-    (special-report, colour(news-support-6))
+    (analysis, light, colour(neutral-7), colour(analysis-accent), colour(neutral-2), colour(neutral-1)),
+    (news, light, colour(comment-background), colour(comment-accent), colour(neutral-1), colour(neutral-1)),
+    (feature, dark, colour(feature-default), colour(feature-accent)),
+    (live, dark, colour(live-default), colour(live-accent)),
+    (media, dark, colour(media-background), colour(media-default), colour(media-default)),
+    (nws, dark, colour(news-default), colour(news-accent)),
+    (review, dark, darken(colour(review-background), 10%), colour(review-accent), colour(review-accent)),
+    (special-report, dark, colour(news-support-6), colour(news-support-1))
 );

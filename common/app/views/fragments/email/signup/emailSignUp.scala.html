@@ -9,13 +9,20 @@
 
 @import common.LinkTo
 
+@listIdTones = @{ Map[Int, String] (
+    2313 -> "comment",
+    1950 -> "media",
+    218 -> "feature"
+)}
+
 @formId = @{ componentClass + "-email-sub-form" }
 @inputId = @{ componentClass + "-email-sub-input" }
 
-@wrapperClass = @{"email-sub js-email-sub" + " email-sub--" + componentClass + " js-email-sub--" + componentClass}
+@wrapperClass = @{ "email-sub js-email-sub" + " email-sub--" + componentClass + " js-email-sub--" + componentClass }
+@wrapperToneClass = @{ if (componentClass == "article") "email-sub--tone-" + listIdTones.getOrElse(listId, "news") }
 @formClass = @{ "email-sub__form js-email-sub__form" + " email-sub__form--" + componentClass }
 
-<div class="@wrapperClass">
+<div class="@wrapperClass @wrapperToneClass">
     @if(formHeading) {
         @fragments.email.signup.emailSignUpHeader(componentClass, formHeading, formDescription, formImage)
     }
