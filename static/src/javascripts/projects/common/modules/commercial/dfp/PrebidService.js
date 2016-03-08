@@ -16,7 +16,7 @@ define([
 ) {
     var PREBID_TIMEOUT = 2000;
 
-    return function PrebidService(pageTargeting) {
+    return function PrebidService() {
         // We create a stub interface to use while Prebid.js is loading, passing commands it will run when it
         // finally arrives, before it replaces the stub with itself.
         window.pbjs = {que: []};
@@ -33,8 +33,6 @@ define([
         // This allows us to re-use ad units on refresh
         var adUnits = {};
 
-        var targetingKeywords = pageTargeting.k.toString();
-
         this.loadAdvert = function loadAdvert(advert) {
             return advertQueue.add(function () {
                 return runAuction(advert);
@@ -44,7 +42,7 @@ define([
         function runAuction(advert) {
             var adSlotId = advert.adSlotId;
             var isNewAdvert = !adUnits[adSlotId];
-            adUnits[adSlotId] =  adUnits[adSlotId] || new PrebidAdUnit(advert, targetingKeywords);
+            adUnits[adSlotId] =  adUnits[adSlotId] || new PrebidAdUnit(advert);
 
             return new Promise(function (resolve, reject) {
                 pbjs.que.push(function () {
@@ -69,7 +67,7 @@ define([
         }
     };
 
-    function PrebidAdUnit(advert, targetingKeywords) {
+    function PrebidAdUnit(advert) {
         this.code = advert.adSlotId;
         this.sizes = getAllValidSlotSizes(advert);
         this.bids = [{
@@ -79,7 +77,7 @@ define([
                 siteId : 37668,
                 zoneId : 157046,
                 visitor : {geo : 'us'},
-                keywords : targetingKeywords
+                inventory : config.page.section
             }
         }];
     }

@@ -178,8 +178,8 @@ define([
         }));
     }
 
-    function setPageTargeting(pageTargeting) {
-        forOwn(pageTargeting, function (value, key) {
+    function setPageTargeting() {
+        forOwn(buildPageTargeting(), function (value, key) {
             googletag.pubads().setTargeting(key, value);
         });
     }
@@ -312,10 +312,8 @@ define([
             require(['js!googletag.js']);
         }
 
-        var pageTargeting = buildPageTargeting();
-
         if (prebidEnabled) {
-            prebidService = new PrebidService(pageTargeting);
+            prebidService = new PrebidService();
         }
 
         window.googletag.cmd.push = raven.wrap({ deep: true }, window.googletag.cmd.push);
@@ -324,9 +322,7 @@ define([
             renderStartTime = new Date().getTime();
         });
         window.googletag.cmd.push(setListeners);
-        window.googletag.cmd.push(function () {
-            setPageTargeting(pageTargeting);
-        });
+        window.googletag.cmd.push(setPageTargeting);
         window.googletag.cmd.push(defineAdverts);
 
         if (shouldLazyLoad()) {
