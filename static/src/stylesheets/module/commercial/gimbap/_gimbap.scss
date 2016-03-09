@@ -50,8 +50,24 @@
     margin-top: auto;
 
     svg {
-        width: 40%;
         fill: #ffffff;
+    }
+}
+
+.gimbap__logo--membership-horizontal {
+    .logo--part1,
+    .logo--part2 {
+        fill: #fff;
+    }
+
+    .gimbap-style--normal & {
+        .logo--part1 {
+            fill: #ff9580;
+        }
+
+        .logo--part2 {
+            fill: #000;
+        }        
     }
 }
 
