@@ -148,8 +148,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
         c.matchReport && !c.minByMin && !c.preview
     }
     val minByMin = related.find { c =>
-      c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")).toLocalDate == matchDate &&
-        c.matchReport && c.minByMin && !c.preview
+      c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")).toLocalDate == matchDate && c.minByMin && !c.preview
     }
     val preview = related.find { c =>
       c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")) <= matchDate.toDateTimeAtStartOfDay &&
