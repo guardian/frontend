@@ -77,7 +77,10 @@ define([
                 siteId : 37668,
                 zoneId : 157046,
                 visitor : {geo : 'us'},
-                inventory : config.page.section
+                // Lets us target advert inventory
+                inventory : config.page.section,
+                // Lets us report on targeting
+                keyword : config.page.section
             }
         }];
     }
