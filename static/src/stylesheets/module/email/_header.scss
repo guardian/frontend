@@ -28,7 +28,7 @@
     }
 
     .email-sub__description {
-        @include fs-textSans(2);
+        @include fs-textSans(3);
         color: colour(neutral-2);
         margin-bottom: $gs-baseline;
     }
