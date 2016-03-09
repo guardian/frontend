@@ -65,14 +65,6 @@
                 renderAnswer(question, answer, field, hasImage, maybeUserAnswer, showResults)
             })
         </div>
-
-        @question.answers.map( answer => {
-            if(answer.revealText && answer.imageMedia.isDefined) {
-                <span class="atom-quiz__answer__reveal-text">@{answer.revealText}</span>
-            }
-        })
-                <span class="atom-quiz__answer__reveal-text">ewfewf</span>
-
     </fieldset>
 }
 
@@ -94,8 +86,8 @@
 
         <label for="answer-@{answer.id}" class="@RenderClasses(Map(
             ("atom-quiz__answer__item", true),
-            ("atom-quiz__answer__text", !hasImage),
-            ("atom-quiz__answer__image", hasImage),
+            ("atom-quiz__answer__item--text", !hasImage),
+            ("atom-quiz__answer__item--image", hasImage),
             ("atom-quiz__answer__item--is-correct", isCorrectAnswer(question, answer).getOrElse(false)),
             ("atom-quiz__answer__item--selected", maybeUserAnswer.exists(_.equals(answer)))
         ))">
@@ -107,10 +99,8 @@
             } else {
                 @{answer.text}
                 @renderIcon(question, answer, maybeUserAnswer, "atom-quiz__answer__icon--text")
-                @if(answer.revealText) {
-                    <span class="atom-quiz__answer__reveal-text">@answer.revealText</span>
-                }
             }
+            @renderAnswerRevealText(answer)
         </label>
     </div>
 }
@@ -129,15 +119,9 @@
     }
 }
 
-@renderAnswerRevealText(question: Question, answer: Answer, maybeUserAnswer: Option[Answer]) = {
-    @maybeUserAnswer.map { inputAnswer =>
-        @isCorrectAnswer(question, answer).map { correct =>
-            @answer.revealText.map { revealText =>
-                @if(correct && inputAnswer.equals(answer)) {
-                    <span class="atom-quiz__answer__reveal-text">@revealText</span>
-                }
-            }
-        }
+@renderAnswerRevealText(answer: Answer) = {
+    @answer.revealText.map { revealText =>
+        <span class="atom-quiz__answer__reveal-text">@revealText</span>
     }
 }
 
