@@ -95,7 +95,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
 
     getResponse(LiveContentApi.search(Edition(request))
       .section("football")
-      .tag("tone/matchreports|football/series/squad-sheets|football/series/match-previews|football/series/saturday-clockwatch")
+      .tag("tone/minutebyminute|tone/matchreports|football/series/squad-sheets|football/series/match-previews|football/series/saturday-clockwatch")
       .fromDate(matchDate.minusDays(2).toDateTimeAtStartOfDay)
       .toDate(matchDate.plusDays(2).toDateTimeAtStartOfDay)
       .reference(s"pa-football-team/${theMatch.homeTeam.id},pa-football-team/${theMatch.awayTeam.id}")
