@@ -113,7 +113,6 @@ define([
                 // from the data attributes on the iframe (eg: allowing us to set them from composer)
                 if (isIframed) {
                     ui.updateForm(rootEl, $el, analytics);
-                    ui.setTone($el);
                 }
 
                 // Ensure our form is the right height, both in iframe and outside
@@ -274,13 +273,6 @@ define([
                         $('.js-email-sub__inline-label', el).addClass('email-sub__inline-label--is-hidden');
                         $('.js-email-sub__submit-input', el).addClass('email-sub__submit-input--solo');
                         $('.js-email-sub__text-input', el).val(userFromId.primaryEmailAddress);
-                    });
-                }
-            },
-            setTone: function ($el) {
-                if ($el.hasClass('js-email-sub--article')) {
-                    fastdom.write(function () {
-                        $el.addClass('email-sub--tone-' + config.page.cardStyle);
                     });
                 }
             },
