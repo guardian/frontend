@@ -339,7 +339,7 @@
 }
 
 // TONE SPECIFIC MODS
-@each $tone-class, $tone-colour-background, $tone-colour-accent, $tone-colour-headline in $tones {
+@each $tone-class, $tone-colour-accent, $tone-colour-headline in $tones {
 
 
     .email-sub--tone-#{$tone-class} {
