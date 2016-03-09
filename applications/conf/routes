@@ -23,14 +23,8 @@ GET            /crosswords/search                                               
 GET            /crosswords/lookup                                                                                                controllers.CrosswordSearchController.lookup()
 
 #Notifications Store
-POST           /notification/store                                                                                               controllers.NotificationsController.saveSubscription()
-POST           /notification/delete                                                                                              controllers.NotificationsController.deleteSubscription()
-
-#Get latest notificationd
-GET            /notification/message/:gcmBrowserId                                                                               controllers.NotificationsController.getMessage(gcmBrowserId)
-
-#REDLIS
-POST            /notification/message/save                                                                                       controllers.NotificationsController.saveARedlisMessage()
+POST           /notification/store                                              controllers.NotificationsController.saveSubscription()
+POST           /notification/delete                                             controllers.NotificationsController.deleteSubscription()
 
 # Email paths
 GET        /email                                                               controllers.EmailSignupController.renderPage()
@@ -47,8 +41,8 @@ GET        /index/contributors/*contributor                                     
 GET        /embed/video/*path                                                   controllers.EmbedController.render(path)
 
 #Notifications Store
-POST           /notification/store                    controllers.NotificationsController.saveSubscription()
-POST           /notification/delete                   controllers.NotificationsController.deleteSubscription()
+POST           /notification/store                                              controllers.NotificationsController.saveSubscription()
+POST           /notification/delete                                             controllers.NotificationsController.deleteSubscription()
 
 # Preferences
 GET        /preferences                                                         controllers.PreferencesController.indexPrefs()

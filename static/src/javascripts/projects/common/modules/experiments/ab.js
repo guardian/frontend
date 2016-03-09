@@ -9,6 +9,7 @@ define([
     'common/modules/experiments/tests/fronts-on-articles2',
     'common/modules/experiments/tests/identity-register-membership-standfirst',
     'common/modules/experiments/tests/live-blog-chrome-notifications',
+    'common/modules/experiments/tests/header-bidding-us',
     'common/modules/experiments/tests/article-video-autoplay',
     'common/modules/experiments/tests/next-in-series',
     'common/modules/experiments/tests/article-related-content-display-as-recommendation',
@@ -32,6 +33,7 @@ define([
     FrontsOnArticles2,
     IdentityRegisterMembershipStandfirst,
     LiveBlogChromeNotifications,
+    HeaderBiddingUS,
     ArticleVideoAutoplay,
     NextInSeries,
     RelatedContentDisplayAsRecommendation,
@@ -51,6 +53,7 @@ define([
         new FrontsOnArticles2(),
         new IdentityRegisterMembershipStandfirst(),
         new LiveBlogChromeNotifications(),
+        new HeaderBiddingUS(),
         new ArticleVideoAutoplay(),
         new NextInSeries(),
         new RelatedContentDisplayAsRecommendation()

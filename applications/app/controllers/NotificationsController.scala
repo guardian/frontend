@@ -3,7 +3,7 @@ package controllers
 import common.{ExecutionContexts, JsonComponent, Logging}
 import conf.Configuration
 import model.NoCache
-import model.notifications.{DynamoDbStore, GCMMessage, RedisMessageStore}
+import model.notifications.DynamoDbStore
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.libs.json._
@@ -25,23 +25,6 @@ object NotificationsController extends Controller with ExecutionContexts with Lo
     "gcmBrowserId" -> nonEmptyText
   )(Subscription.apply)(Subscription.unapply)
   )
-
-  val newMessageForm = Form(mapping(
-    "gcmBrowserId" -> nonEmptyText,
-    "title" -> nonEmptyText,
-    "body" -> nonEmptyText
-  )(TestMessage.apply)(TestMessage.unapply)
-  )
-
-  val gcmMessageForm = Form(
-    mapping(
-      "clientId" -> nonEmptyText,
-      "topic" -> nonEmptyText,
-      "title" -> nonEmptyText,
-      "body" -> nonEmptyText
-    )(GCMMessage.apply)(GCMMessage.unapply)
-  )
-
   def saveSubscription() = Action.async { implicit request =>
     form.bindFromRequest.fold(
       errors => {
@@ -64,39 +47,5 @@ object NotificationsController extends Controller with ExecutionContexts with Lo
         Future.successful(Ok)
       }
     )
-  }
-
-  def saveARedlisMessage() = Action.async { implicit request =>
-
-    gcmMessageForm.bindFromRequest.fold(
-      errors => {
-        Future.successful(BadRequest)
-      },
-      msg => {
-        RedisMessageStore.leaveMessage(msg).flatMap {
-          b =>
-            Future.successful(Ok)
-        }
-      }
-    )
-  }
-
-  def getMessage(gcmBrowserId: String) = Action.async { implicit request =>
-      RedisMessageStore.getMessages(gcmBrowserId).map {
-          messages =>
-            val jsonResponse = messages match {
-              case Nil =>
-                log.error(s"Could not retrieve latest message for $gcmBrowserId")
-                JsObject(Seq("status" -> JsString("not found")))
-              case _ => JsObject(
-                Seq("status" -> JsString("ok"),
-                  "messages" -> JsArray(messages.map{ message => Json.toJson(message) }))
-              )
-            }
-
-            NoCache(
-              JsonComponent(jsonResponse)
-            )
-      }
   }
 }

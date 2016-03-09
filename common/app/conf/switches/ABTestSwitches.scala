@@ -45,7 +45,7 @@ trait ABTestSwitches {
     "ab-article-video-autoplay",
     "Autoplay embedded videos in article",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 22),
+    sellByDate = new LocalDate(2016, 3, 23),
     exposeClientSide = true
   )
 
@@ -64,6 +64,15 @@ trait ABTestSwitches {
     "Display related content as people who read this also read",
     safeState = Off,
     sellByDate = new LocalDate(2016, 3, 16),
+    exposeClientSide = true
+  )
+
+  val ABHeaderBiddingUS = Switch(
+    "A/B Tests",
+    "ab-header-bidding-us",
+    "Auction adverts on the client before calling DFP (US edition only)",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 4, 20),
     exposeClientSide = true
   )
 

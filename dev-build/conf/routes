@@ -349,13 +349,6 @@ GET            /service-worker.js                                               
 POST           /notification/store                                                                                               controllers.NotificationsController.saveSubscription()
 POST           /notification/delete                                                                                              controllers.NotificationsController.deleteSubscription()
 
-#Get latest notificationd
-GET            /notification/message/:gcmBrowserId                                                                               controllers.NotificationsController.getMessage(gcmBrowserId)
-
-#REDLIS
-POST            /notification/message/save                                                                                       controllers.NotificationsController.saveARedlisMessage()
-
-
 GET            /2015-06-24-manifest.json                                                                                         controllers.WebAppController.manifest()
 GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()
 GET            /embed/video/*path                                                                                                controllers.EmbedController.render(path)

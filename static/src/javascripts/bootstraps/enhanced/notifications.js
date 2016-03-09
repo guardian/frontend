@@ -62,19 +62,11 @@ define([
             });
         },
 
-        configureButton: function () {
-            subscribeButton.removeClass('js-hide-follow-button');
-            subscribeButton[0].disabled = false;
-            bean.on(subscribeButton[0], 'click', modules.buttonHandler);
-            if (modules.checkSubscriptions()) {
-                modules.setSubscriptionStatus(true);
-            }
-        },
-
         configureSubscribeTemplate: function () {
             var subscribed = modules.checkSubscriptions(),
+                hasNoSubscriptions = modules.subscriptionsEmpty(),
                 src = template(subscribeTemplate, {
-                    className: subscribed ? 'notifications-subscribe-link--following' : '',
+                    className: hasNoSubscriptions ? '' : 'notifications-subscribe-link--has-subscriptions',
                     text: subscribed ? 'Following story' : 'Follow story',
                     imgMobile: svgs('notificationsExplainerMobile', ['mobile-only', 'notification-explainer']),
                     imgDesktop: svgs('notificationsExplainerDesktop', ['hide-on-mobile', 'notification-explainer'])
@@ -124,7 +116,7 @@ define([
             if (modules.subscriptionsEmpty()) {
                 sub.unsubscribe().then(function () {
                 }).catch(function (error) {
-                    robust.log('cm-frontendNotificatons', error);
+                    robust.log('07cm-frontendNotificatons', error);
                 });
             }
         },
