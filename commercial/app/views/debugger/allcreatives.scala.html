@@ -158,10 +158,10 @@
 
                     var blendedStyle = document.getElementById('blended-style'),
                         gimbap       = document.getElementById('gimbap'),
-                        styleClasses = ['gimbap-wrap--normal', 'gimbap-wrap--reversed-out'];
+                        styleClasses = ['gimbap-style--normal', 'gimbap-style--reversed-out'];
                     bean.on(blendedStyle, 'change', function () {
                         styleClasses.forEach(function(c) { gimbap.classList.remove(c); });
-                        gimbap.classList.add('gimbap-wrap--' + blendedStyle.value);
+                        gimbap.classList.add('gimbap-style--' + blendedStyle.value);
                     });
 
                     var blendedLayout = document.getElementById('blended-layout'),
