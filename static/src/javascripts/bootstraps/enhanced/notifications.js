@@ -43,6 +43,7 @@ define([
 
         getPushSubscription: function () {
 
+            console.log("++ Strapped 2");
             navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
                 reg = serviceWorkerRegistration;
                 serviceWorkerRegistration.pushManager.getSubscription().then(function (pushSubscription) {
@@ -87,7 +88,7 @@ define([
                 subscribeLink = $('.notifications-subscribe-link--follow');
             isSubscribed = subscribed;
             if (subscribed) {
-                subscribeLink.addClass('notifications-subscribe-link--following');
+                subscribeLink.addClass('notifications-subscribe-link--has-subscriptions');
             }
             subscribeButton[0].textContent = subscribed ?  'Following story' : 'Follow story';
         },

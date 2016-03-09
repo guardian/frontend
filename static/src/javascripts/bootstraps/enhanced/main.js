@@ -38,7 +38,6 @@ define([
         userTiming.mark('App Begin');
         bootstrapContext('common', common);
 
-        console.log("++ Gotcha");
 
         // Front
         if (config.page.isFront) {
