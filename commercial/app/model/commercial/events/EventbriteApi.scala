@@ -1,11 +1,11 @@
-package model.commercial.masterclasses
+package model.commercial.events
 
 import java.lang.System._
 
 import commercial.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
 import common.{ExecutionContexts, Logging}
 import org.joda.time.DateTime.now
-import play.api.libs.json.{JsArray, JsValue, Json}
+import play.api.libs.json._
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -13,15 +13,14 @@ import scala.util.control.NonFatal
 
 object EventbriteApi extends ExecutionContexts with Logging {
 
-  def extractEventsFromFeed(jsValue: JsValue): Seq[JsValue] = {
-    val maybeEvents = for (JsArray(events) <- (jsValue \ "events").toOption) yield events
-    maybeEvents getOrElse Nil
+  def parsePageOfEvents(json: JsValue): Seq[Event] = {
+
+    val events: Seq[Event] = (json \ "events").as[Seq[Event]]
+    events.filter(_.startDate.isAfter(now.plusWeeks(2)))
   }
 
-  def parseEvents(
-    feedMetaData: FeedMetaData,
-    feedContent: => Option[String]
-  ): Future[ParsedFeed[EventbriteMasterClass]] = {
+  def parseEvents(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[Event]] = {
+
     feedMetaData.switch.isGuaranteedSwitchedOn flatMap { switchedOn =>
       if (switchedOn) {
         val start = currentTimeMillis
@@ -40,13 +39,5 @@ object EventbriteApi extends ExecutionContexts with Logging {
     } recoverWith {
       case NonFatal(e) => Future.failed(e)
     }
-  }
-
-  def parsePageOfEvents(json: JsValue): Seq[EventbriteMasterClass] = {
-    for {
-      jsValue <- extractEventsFromFeed(json)
-      masterclass <- EventbriteMasterClass(jsValue)
-      if masterclass.startDate.isAfter(now.plusWeeks(2))
-    } yield masterclass
   }
 }

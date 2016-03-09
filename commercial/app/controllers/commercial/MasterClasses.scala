@@ -1,6 +1,6 @@
 package controllers.commercial
 
-import model.commercial.masterclasses.MasterClassAgent
+import model.commercial.events.MasterclassAgent
 import model.{Cached, NoCache}
 import performance.MemcachedAction
 import play.api.mvc._
@@ -13,7 +13,7 @@ object MasterClasses extends Controller with implicits.Requests {
 
   def renderMasterclasses = MemcachedAction { implicit request =>
     Future.successful {
-      (MasterClassAgent.specificClasses(specificIds) ++ MasterClassAgent.masterclassesTargetedAt(segment)).distinct match {
+      (MasterclassAgent.specificMasterclasses(specificIds) ++ MasterclassAgent.masterclassesTargetedAt(segment)).distinct match {
         case Nil => NoCache(jsonFormat.nilResult)
         case masterclasses => Cached(componentMaxAge) {
           val clickMacro = request.getParameter("clickMacro")

@@ -1,4 +1,4 @@
-package model.commercial.masterclasses
+package model.commercial.events
 
 object Fixtures {
 
