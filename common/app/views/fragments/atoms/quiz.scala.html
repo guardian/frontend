@@ -97,8 +97,8 @@
                 }
                 @renderIcon(question, answer, maybeUserAnswer, "atom-quiz__answer__icon--image")
             } else {
-                @{answer.text}
                 @renderIcon(question, answer, maybeUserAnswer, "atom-quiz__answer__icon--text")
+                @{answer.text}
             }
             @renderAnswerRevealText(answer)
         </label>
@@ -106,16 +106,12 @@
 }
 
 @renderIcon(question: Question, answer: Answer, maybeUserAnswer: Option[Answer], iconType: String) = {
-    @maybeUserAnswer.map { inputAnswer =>
-        @if(inputAnswer.equals(answer)) {
-            @isCorrectAnswer(question, answer).map { correct =>
-                @inlineSvg(if (correct) {
-                    "tick"
-                } else {
-                    "cross"
-                }, "icon", List("atom-quiz__answer__icon", iconType))
-            }
-        }
+    @isCorrectAnswer(question, answer).map { correct =>
+        @inlineSvg(if (correct) {
+            "tick"
+        } else {
+            "cross"
+        }, "icon", List("atom-quiz__answer__icon", iconType))
     }
 }
 

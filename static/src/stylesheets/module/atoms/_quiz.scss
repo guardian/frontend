@@ -127,10 +127,21 @@
 @mixin atom-quiz__answer__item--selected--is-incorrect {
     color: #ffffff;
     background-color: colour(quiz-incorrect);
+
+    .atom-quiz__answer__icon {
+        display: inline-block;
+    }
 }
 
 @mixin atom-quiz__answer__item--selected--is-correct {
     background-color: colour(quiz-correct);
+
+    .atom-quiz__answer__reveal-text {
+        color: #ffffff;
+        padding-left: 28px;
+        padding-top: 0;
+        min-height: auto;
+    }
 }
 
 @mixin atom-quiz__answer__item--is-correct {
@@ -164,8 +175,7 @@
         display: none;
     }
 
-    .atom-quiz--is-not-results.atom-quiz--personality &,
-    .atom-quiz--is-results.atom-quiz--knowledge & {
+    .atom-quiz--is-not-results.atom-quiz--personality & {
         padding-left: 3em;
     }
 }
@@ -184,26 +194,28 @@
 }
 
 .atom-quiz__answer__icon {
+    display: none;
+
     svg {
-        height: 1em;
-        width: 1em;
+        height: 16px;
+        width: 16px;
     }
 }
 
 .atom-quiz__answer__icon--text {
-    position: absolute;
-    left: 1em;
-    top: .9em;
+    position: relative;
+    top: 2px; // magic numbers to align text with svg icon.
+    padding-right: 8px;
+    margin-left: -2px;
 }
 
 .atom-quiz__answer__icon--image {
-    padding-top: $gs-baseline * 4 / 3;
-    display: block;
+    padding-top: $gs-baseline;
 
     &:after {
         position: relative;
         top: -2px; // magic numbers to align text with svg icon.
-        left: 1ch;
+        left: 8px;
         content: 'Incorrect';
     }
 
@@ -215,15 +227,15 @@
 .atom-quiz__answer__reveal-text {
     display: none;
     color: colour(neutral-1);
-    margin-top: $gs-baseline;
-    @include fs-bodyCopy(1);
+    @include fs-textSans(1);
 
     .atom-quiz--is-results & {
         display: block;
     }
 
-    .atom-quiz__answer--selected & {
-        color: #ffffff;
+    .atom-quiz__answer__icon--image + & {
+        padding-top: $gs-baseline;
+        min-height: $gs-baseline * 2;
     }
 }
 
