@@ -7,10 +7,21 @@
         </h3>
     </header>
 
-    <div class="gimbap-wrap__body">
-        <a class="gimbap gimbap--tone-<%=offer1tone%>"
+    <div class="gimbap-wrap__body gimbap-wrap__body--2x1x1">
+        <a class="gimbap gimbap--tone-<%=offer1tone%> gimbap--has-author"
            href="<%=clickMacro%><%=offer1url%>"
            data-link-name="<%=offer1title%>">
+           <picture>
+               <!--[if IE 9]><video style="display: none;"><![endif]-->
+               <source media="(min-width: 980px) and (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi)" sizes="216px" srcset="https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/contributor/2016/2/1/1454322787885/Lucia-Graves-L.png?w=216&amp;q=20&amp;auto=format&amp;usm=12&amp;fit=max&amp;dpr=1.3&amp;s=00f83ee95adf6ef7afd2aae4590a9def 216w">
+               <source media="(min-width: 980px)" sizes="216px" srcset="https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/contributor/2016/2/1/1454322787885/Lucia-Graves-L.png?w=216&amp;q=55&amp;auto=format&amp;usm=12&amp;fit=max&amp;s=7db7cade87052fa0b611f53dd6fd87cb 216w">
+               <source media="(min-width: 740px) and (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi)" sizes="216px" srcset="https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/contributor/2016/2/1/1454322787885/Lucia-Graves-L.png?w=216&amp;q=20&amp;auto=format&amp;usm=12&amp;fit=max&amp;dpr=1.3&amp;s=00f83ee95adf6ef7afd2aae4590a9def 216w">
+               <source media="(min-width: 740px)" sizes="216px" srcset="https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/contributor/2016/2/1/1454322787885/Lucia-Graves-L.png?w=216&amp;q=55&amp;auto=format&amp;usm=12&amp;fit=max&amp;s=7db7cade87052fa0b611f53dd6fd87cb 216w">
+               <source media="(min-width: 0px) and (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi)" sizes="115px" srcset="https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/contributor/2016/2/1/1454322787885/Lucia-Graves-L.png?w=115&amp;q=20&amp;auto=format&amp;usm=12&amp;fit=max&amp;dpr=1.3&amp;s=1300ce36046fee2eea9589ffbcb4ec49 115w">
+               <source media="(min-width: 0px)" sizes="115px" srcset="https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/contributor/2016/2/1/1454322787885/Lucia-Graves-L.png?w=115&amp;q=55&amp;auto=format&amp;usm=12&amp;fit=max&amp;s=bcd42c88f3c0e736b668e09117414dec 115w">
+               <!--[if IE 9]></video><![endif]-->
+               <img class="gimbap__author" alt="">
+            </picture>
             <h3 class="gimbap__title gimbap__title--quoted"><%=inlineQuote%>If you want to keep something like this going, you have to support it</h3>
             <p class="gimbap__cta" href="" title="" data-link-name="">Aisha Gani Support the Guardian <span class="gimbap__arrow"><%=arrowRight%></span></p>
             <div class="gimbap__logo"><%=logoguardian%><%=logomasterclasses%></div>

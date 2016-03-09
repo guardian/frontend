@@ -1,7 +1,7 @@
 .gimbap {
-    display: flex;
-    flex-direction: column;
-    padding: $gs-gutter / 3;
+    display: block;
+    padding: $gs-gutter / 3 $gs-gutter / 3 0;
+    position: relative;
 
     &:hover {
         text-decoration: none;
@@ -10,6 +10,36 @@
     svg {
         fill: currentColor;
     }
+}
+
+.gimbap--has-author {
+    padding-right: 110px;
+
+    @supports (shape-outside: circle()) {
+        padding-right: 0;
+
+        &::before {
+            content: '';
+            float: right;
+            shape-outside: polygon(100% 0, 100% 100%, calc(100% - 120px) 100%, calc(100% - 120px) calc(100% - 144px));
+            width: 100%;
+            /* this will make sure the component has enough space for the picture*/
+            padding-top: 40%;
+
+            @include mq($until: tablet) {
+                padding-top: 72%;
+            }
+        }
+    }
+}
+
+.gimbap__author {
+    /* If only there was a 'float: bottom right' rule */
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: gs-height(4);
+    margin-right: -30px;
 }
 
 .gimbap__title {
@@ -45,12 +75,9 @@
 }
 
 .gimbap__logo {
-    text-align: right;
     line-height: 0;
-    margin-top: auto;
 
     svg {
-        width: 40%;
         fill: #ffffff;
     }
 }
@@ -156,6 +183,9 @@
 .gimbap-wrap__body--1x2x1 > .gimbap:nth-child(2),
 .gimbap-wrap__body--1x1x2 > .gimbap:nth-child(3) {
     @include mq(tablet) {
+        flex: 0 0 calc(66.67% - 20px);
+    }
+    @include mq(desktop) {
         flex: 0 0 calc(50% - 20px);
     }
 }
@@ -163,6 +193,12 @@
 .gimbap-wrap__body--2x1x1,
 .gimbap-wrap__body--1x2x1,
 .gimbap-wrap__body--1x1x2 {
+    @include mq(tablet, desktop) {
+        > .gimbap:nth-child(n+3) {
+            display: none;
+        }
+    }
+
     @include mq(desktop) {
         > .gimbap:nth-child(n+4) {
             display: none;
