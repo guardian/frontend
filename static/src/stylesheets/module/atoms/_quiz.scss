@@ -16,6 +16,7 @@
     // Overrides capi styling for figure elements in _from-content-api.scss.
     & figure.element {
         margin: 0;
+        transition: opacity 100ms;
     }
 }
 
@@ -73,7 +74,7 @@
 // [type=radio] + label
 .atom-quiz__answer__item {
     background-color: colour(neutral-8);
-    transition: background-color 40ms;
+    transition: background-color 100ms;
     display: block;
     position: relative;
     cursor: pointer;
@@ -83,26 +84,16 @@
         cursor: default;
     }
 
-    // show a fake, stylised radio button on personality quiz answers
-    .atom-quiz--personality &:before {
-        content: '';
-        height: 1em;
-        width: 1em;
-        border-radius: 1em;
-        display: inline-block;
-        position: absolute;
-        left: 1em;
-        top: 1em;
-        box-shadow: 0px 0px 0px 1px colour(neutral-3);
-        transition: background-color 40ms, box-shadow 20ms;
-    }
-
     // hightlight for when answer is selected, but in unknown state (gold)
     // i.e. awaiting round trip
     // [type=radio]:checked + label
     :checked + & {
         cursor: default; // make it look un-clickable
         background-color: colour(comment-main-2);
+
+        .element-image {
+            opacity: .8;
+        }
 
         &:before {
             background-color: colour(neutral-1);
@@ -128,6 +119,10 @@
     color: #ffffff;
     background-color: colour(quiz-incorrect);
 
+    .element-image {
+        opacity: .8;
+    }
+
     .atom-quiz__answer__icon {
         display: inline-block;
     }
@@ -135,6 +130,10 @@
 
 @mixin atom-quiz__answer__item--selected--is-correct {
     background-color: colour(quiz-correct);
+
+    .element-image {
+        opacity: 1;
+    }
 
     .atom-quiz__answer__reveal-text {
         color: #ffffff;
@@ -146,6 +145,10 @@
 
 @mixin atom-quiz__answer__item--is-correct {
     background-color: fade-out(colour(quiz-correct), .4);
+
+    .element-image {
+        opacity: .8;
+    }
 }
 
 // correct/incorrect highlighting
@@ -170,6 +173,34 @@
 .atom-quiz__answer__item--text {
     padding: $gs-baseline $gs-gutter;
 
+    // show a fake, stylised radio button on personality quiz answers
+    .atom-quiz--personality &:before {
+        content: '';
+        height: 1em;
+        width: 1em;
+        border-radius: 1em;
+        display: inline-block;
+        position: absolute;
+        left: 1em;
+        top: 1em;
+        box-shadow: 0px 0px 0px 1px colour(neutral-3);
+        transition: background-color 100ms, box-shadow 50ms;
+    }
+
+    :checked + &:before {
+        background-color: colour(neutral-1);
+        box-shadow: 0px 0px 0px 1px colour(neutral-1),
+            inset 0px 0px 0px 3px colour(comment-main-2);
+    }
+
+    // highlight state (darker grey)
+    .atom-quiz--is-not-results :not(:checked) + &:hover:before,
+    .atom-quiz--is-not-results :not(:checked):focus + &:before {
+        background-color: colour(neutral-2);
+        box-shadow: 0px 0px 0px 1px colour(neutral-2),
+            inset 0px 0px 0px 3px colour(neutral-4);
+    }
+
     // don't show the fake radio button on a personality quiz results page
     .atom-quiz--is-results &:before {
         display: none;
@@ -183,6 +214,10 @@
 .atom-quiz__answer__item--image {
     padding: $gs-gutter * .5;
     box-sizing: border-box;
+
+    &:before {
+        display: none; // hide the fake radio button on personality quizzes
+    }
 
     .atom-quiz__answer:nth-child(odd) & {
         margin-right: $gs-baseline * .25; // keeping spacing the same around all edges
