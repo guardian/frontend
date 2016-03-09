@@ -76,9 +76,14 @@ define([
         }
     }
 
+    function preprocessGimbap(tpl) {
+        tpl.params.headless = tpl.params.headless === 'true';
+    }
+
     return {
         'manual-inline': preprocessManualInline,
         'manual-single': preprocessManualSingle,
-        'manual-multiple': preprocessManualMultiple
+        'manual-multiple': preprocessManualMultiple,
+        'gimbap': preprocessGimbap
     };
 });
