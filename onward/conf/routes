@@ -73,3 +73,9 @@ GET        /info/tech-feedback/*path                  controllers.TechFeedbackCo
 GET        /most-read-mf2.json                        controllers.MostPopularController.renderPopularMicroformat2()
 GET        /related-mf2/*path.json                    controllers.RelatedController.renderMf2(path)
 GET        /series-mf2/*path.json                     controllers.SeriesController.renderMf2SeriesStories(path)
+
+GET        /404-test/series/experience                controllers.SeriesController.renderSeries404Test(name = "experience")
+GET        /404-test/series/alanis                    controllers.SeriesController.renderSeries404Test(name = "alanis")
+GET        /404-test/series/blind-date                controllers.SeriesController.renderSeries404Test(name = "blind-date")
+GET        /404-test/series/what-im-really-thinking   controllers.SeriesController.renderSeries404Test(name = "what-im-really-thinking")
+GET        /404-test/series/yotam                     controllers.SeriesController.renderSeries404Test(name = "yotam")
