@@ -30,7 +30,8 @@
     }
 
     .email-sub__description {
-        @include fs-textSans(2)
+        @include fs-textSans(2);
+        color: colour(neutral-1);
     }
 }
 
@@ -44,28 +45,18 @@
     .email-sub__description {
         background-color: transparent;
         border-top: 0 none;
-        color: #ffffff;
         min-height: 20px; // Min-height required to avoid some of the layout thrashing from loading in an iframe
     }
 }
 
 // TONE SPECIFIC MODS
 
-@each $tone-class, $tone-brightness, $tone-colour-background, $tone-colour-accent, $tone-colour-headline, $tone-colour-description in $tones {
+@each $tone-class, $tone-colour-background, $tone-colour-accent, $tone-colour-headline in $tones {
     .email-sub--tone-#{$tone-class} {
-        .email-sub__header {
-            background-color: $tone-colour-background;
-        }
 
         @if ($tone-colour-headline) {
             .email-sub__heading {
                 color: $tone-colour-headline;
-            }
-        }
-
-        @if ($tone-colour-description) {
-            .email-sub__description {
-                color: $tone-colour-description;
             }
         }
     }
