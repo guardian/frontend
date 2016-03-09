@@ -95,7 +95,7 @@ define([
                             var relatedContentSection = document.getElementById('related-content');
                             if (relatedContentSection) {
                                 fastdom.write(function () {
-                                    $('.fc-container__header__title', relatedContentSection).textContent = 'people who have read this also read';
+                                    $('.fc-container__header__title', relatedContentSection)[0].textContent = 'people who have read this also read';
                                 });
                             }
                         }
