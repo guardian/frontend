@@ -29,7 +29,7 @@ case object MoneyTalks extends EmailContent {
 case object PovertyMatters extends EmailContent {
   val name = "Poverty Matters"
   val banner = "poverty-matters.png"
-  def test(c: ContentType) = c.tags.blogs.exists(_.id == "global-development/poverty-matters")
+  def test(c: ContentType) = c.tags.series.exists(_.id == "global-development/series/poverty-matters")
 }
 
 case object TheBreakdown extends EmailContent {
