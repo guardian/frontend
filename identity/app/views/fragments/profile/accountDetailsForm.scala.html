@@ -85,6 +85,12 @@
         <div class="fieldset__fields">
             <ul class="u-unstyled">
 
+                @select(
+                    accountDetailsForm("title"),
+                    List(("Mr", "Mr"), ("Mrs", "Mrs"), ("Ms", "Ms"), ("Miss", "Miss"), ("Dr", "Dr"), ("Prof", "Prof"), ("Rev", "Rev")),
+                    ('_label, "Title"),
+                    ('_default, "")
+                )
                 @inputField(Input(accountDetailsForm("firstName"), ('_label, "First name"), Symbol("data-test-id") -> "first-name"))
                 @inputField(Input(accountDetailsForm("secondName"), ('_label, "Last name"), Symbol("data-test-id") -> "last-name"))
                 @select(
