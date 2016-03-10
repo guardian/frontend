@@ -3,8 +3,8 @@ package commercial.feeds
 import common.ExecutionContexts
 import conf.Configuration
 import model.commercial.books.{BestsellersAgent, Book}
-import model.commercial.jobs.{Job, JobsAgent}
 import model.commercial.events.{Masterclass, MasterclassAgent}
+import model.commercial.jobs.{Job, JobsAgent}
 import model.commercial.soulmates.{Member, SoulmatesAgent}
 import model.commercial.travel.{TravelOffer, TravelOffersAgent}
 
@@ -59,7 +59,7 @@ object FeedParser {
     Configuration.commercial.masterclassesToken map { accessToken =>
       new FeedParser[Masterclass] {
 
-        val feedMetaData = MasterclassesFeedMetaData(accessToken, Map.empty)
+        val feedMetaData = EventsFeedMetaData("masterclasses", accessToken)
 
         def parse(feedContent: => Option[String]) = MasterclassAgent.refresh(feedMetaData, feedContent)
       }

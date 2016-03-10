@@ -1,9 +1,8 @@
 package model.commercial.events
 
-import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
+import model.commercial.events.Eventbrite.EBEvent
+import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.libs.json._
-import play.api.test.Helpers._
-import play.api.test.FakeApplication
 import test.ConfiguredTestSuite
 
 @DoNotDiscover class EventbriteMasterClassFeedParsingTest extends FlatSpec with Matchers with ConfiguredTestSuite {
@@ -197,7 +196,7 @@ import test.ConfiguredTestSuite
   "MasterClassFeedParser" should "parse out a list of Event JsValues" in {
     val eventBriteFeed: JsValue = Json.parse(rawEventBriteFeed)
 
-    val events: Seq[Event] = EventbriteApi.parsePageOfEvents(eventBriteFeed)
+    val events: Seq[EBEvent] = Eventbrite.Helper.parsePageOfEvents(eventBriteFeed)
 
     events.size should be (3)
   }

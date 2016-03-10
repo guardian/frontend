@@ -22,7 +22,7 @@
             </div>
             <div class="commercial__body">
                 <ul class="lineitems">
-                    @masterclasses.take(4).map { masterclass =>
+                    @masterclasses.map { masterclass =>
                         <li class="lineitem">
                             <a class="lineitem__link" href="@clickMacro@masterclass.guardianUrl" data-link-name="merchandising-masterclasses-s-v@{version}_@{date}-@{relevance}-@masterclass.name">
                                 @masterclass.mainPicture.map{ picture =>

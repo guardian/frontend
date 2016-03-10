@@ -50,15 +50,15 @@ object MasterclassAgent extends ExecutionContexts with Logging {
       }
     }
 
-    val futureParsedFeed = EventbriteApi.parseEvents(feedMetaData, feedContent)
+    val futureParsedFeed = Eventbrite.Helper.parsePagesOfEvents(feedMetaData, feedContent)
     futureParsedFeed map { feed =>
 
-      val masterclasses: Seq[Masterclass] = feed.contents map { event => Masterclass(event) }
+      val masterclasses: Seq[Masterclass] = feed.contents flatMap { event => Masterclass(event) }
       updateAvailableMasterclasses(masterclasses)
     }
 
     val masterclassesWithImagesAndTags = addImagesFromContentApi(populateKeywordIds(availableMasterclasses.filter(_.isOpen)))
-    masterclassesWithImagesAndTags map { updateAvailableMasterclasses(_) }
+    masterclassesWithImagesAndTags map { updateAvailableMasterclasses }
 
     for {
       feed <- futureParsedFeed
