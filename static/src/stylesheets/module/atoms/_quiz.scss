@@ -215,6 +215,16 @@
     padding: $gs-gutter * .5;
     box-sizing: border-box;
 
+    // allow IE to handle images in labels
+    &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
     &:before {
         display: none; // hide the fake radio button on personality quizzes
     }
