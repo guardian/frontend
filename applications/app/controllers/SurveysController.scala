@@ -11,17 +11,21 @@ object SurveysController extends Controller {
     webTitle = "You’ve found our ‘Remind me’ prototype"
   )
   def render404TestNextInSeries(seriesName: String) = Action { implicit request =>
-    val maybeSurveyId: Option[String] = Map(
-      "experience" -> "guardian-reminder-experience",
-      "alanis"-> "guardian-reminder-alanis",
-      "blind-date" -> "guardian-reminder-blinddate",
-      "what-im-really-thinking" -> "guardian-reminder-whatimreallythinking",
-      "yotam" -> "guardian-reminder-yotam"
-    ).get(seriesName)
-    Cached(60) {
-      maybeSurveyId
-        .map(id => s"https://www.surveymonkey.co.uk/r/${id}")
-        .map(url => Ok(views.html.surveys404TestNextInSeries(url, metaData))).getOrElse(NotFound)
+    if (conf.switches.Switches.ABNextInSeries.isSwitchedOn) {
+      val maybeSurveyId: Option[String] = Map(
+        "experience" -> "guardian-reminder-experience",
+        "alanis" -> "guardian-reminder-alanis",
+        "blind-date" -> "guardian-reminder-blinddate",
+        "what-im-really-thinking" -> "guardian-reminder-whatimreallythinking",
+        "yotam" -> "guardian-reminder-yotam"
+      ).get(seriesName)
+      Cached(60) {
+        maybeSurveyId
+          .map(id => s"https://www.surveymonkey.co.uk/r/${id}")
+          .map(url => Ok(views.html.surveys404TestNextInSeries(url, metaData))).getOrElse(NotFound)
+      }
+    } else {
+      NotFound
     }
   }
 }
