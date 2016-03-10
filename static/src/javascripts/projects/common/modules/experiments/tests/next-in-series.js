@@ -23,26 +23,26 @@ define([
         {
             id: 'experience',
             pageId: 'lifeandstyle/2016/mar/11/i-fought-off-mountain-lion-experience',
-            title: '‘I lost three limbs to meningitis aged 54’',
-            trail: '‘When I looked down after the first operation, I thought that I looked like a drawing of a body with the feet and half the calves rubbed out...’'
+            title: 'I lost three limbs to meningitis aged 54',
+            trail: 'When I looked down after the first operation, I thought that I looked like a drawing of a body with the feet and half the calves rubbed out...'
         },
         {
             id: 'blind-date',
             pageId: 'lifeandstyle/2016/mar/12/ross-hoping-for-vin-diesel-meets-charles-blind-date',
             title: 'Will Zak and Mimi hit it off?',
-            trail: '‘I used the wrong fork for the starter and dropped my knife’'
+            trail: 'I used the wrong fork for the starter and dropped my knife'
         },
         {
             id: 'alanis',
             pageId: 'lifeandstyle/2016/mar/11/ask-alanis-best-friends-secrets',
-            title: '‘Dear Alanis, my accidental email has created a family rift’',
-            trail: '‘Although I sent a grovelling apology I’m wondering if she’ll speak to me again. What can I do?’'
+            title: 'Dear Alanis, my accidental email has created a family rift',
+            trail: 'Although I sent a grovelling apology I’m wondering if she’ll speak to me again. What can I do?'
         },
         {
             id: 'what-im-really-thinking',
             pageId: 'lifeandstyle/2016/mar/12/mother-of-baby-with-disabilities-what-im-really-thinking',
             title: 'What I’m Really Thinking: the independent cafe barista',
-            trail: '‘I wonder if they realise the cost of their coffee is half what I get paid per hour...’'
+            trail: 'I wonder if they realise the cost of their coffee is half what I get paid per hour...'
         },
         {
             id: 'yotam',
