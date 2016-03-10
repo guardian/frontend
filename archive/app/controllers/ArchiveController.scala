@@ -43,7 +43,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
         case NewspaperPage(paper, date, book)       =>  Cached(300)(Redirect(s"${LinkTo(paper)}/$book/$date/all", 301))
 
           // edge cache test
-        case "automated-test/strict-transport-security" => Cached(300)(Ok("<h1>test</h1>").withHeaders("Strict-Transport-Security" -> "max-age=0"))
+        case "automated-test/strict-transport-security" => Cached(300)(Ok("<h1>test</h1>").withHeaders("Strict-Transport-Security" -> "max-age=0", "X-Test-Response" -> "true"))
 
         case _ =>
           log404(request)
