@@ -18,7 +18,7 @@ define([
 
     var $articleBody = $('.content__article-body');
 
-    var path = '/404-test/series/';
+    var path = '/surveys/404-test/next-in-series/';
     var allSeries = [
         {
             name: 'Experience',

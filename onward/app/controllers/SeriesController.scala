@@ -32,26 +32,6 @@ object SeriesController extends Controller with Logging with Paging with Executi
     }
   }
 
-  val metaData = MetaData.make(
-    id = "series-404-test",
-    section = "",
-    analyticsName = "series-404-test",
-    webTitle = "You’ve found our ‘Remind me’ prototype"
-  )
-  def renderSeries404Test(name: String) = Action { implicit request =>
-    val maybeSurveyId: Option[String] = name match {
-      case "experience" => Some("guardian-reminder-experience")
-      case "alanis" => Some("guardian-reminder-alanis")
-      case "blind-date" => Some("guardian-reminder-blinddate")
-      case "what-im-really-thinking" => Some("guardian-reminder-whatimreallythinking")
-      case "yotam" => Some("guardian-reminder-yotam")
-      case _ => None
-    }
-    maybeSurveyId
-      .map(id => s"https://www.surveymonkey.co.uk/r/${id}")
-      .map(url => Ok(views.html.series404Test(url, metaData))).getOrElse(NotFound)
-  }
-
   def renderMf2SeriesStories(seriesId:String) = Action.async { implicit request =>
     lookup(Edition(request), seriesId) map { series =>
       Cached(15.minutes)(
