@@ -78,7 +78,9 @@ define([
                 zoneId : 157046,
                 visitor : {geo : 'us'},
                 // Lets us target advert inventory
-                inventory : config.page.section,
+                inventory : {
+                    section : config.page.section
+                },
                 // Lets us report on targeting
                 keyword : config.page.section
             }
