@@ -374,7 +374,7 @@
 
 // when the whole form is valid (i.e all fields have an answer),
 // show the results
-.atom-quiz--knowledge:valid .atom-quiz__end-message {
+.atom-quiz--instant-reveal:valid .atom-quiz__end-message {
     display: block;
 }
 
