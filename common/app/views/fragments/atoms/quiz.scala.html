@@ -32,7 +32,7 @@
 
         @question.imageMedia.map { image =>
             <div class="atom-quiz__question-image">
-                @fragments.img(image, widthsByBreakpoint = BodyMedia.inline)
+                @fragments.img(image.imageMedia, widthsByBreakpoint = BodyMedia.inline, image_figureClasses = image.imageClasses)
             </div>
         }
 
@@ -67,7 +67,7 @@
         @if(hasImage) {
             <label for="answer-@{answer.id}" class="atom-quiz__answer__image">
                 @answer.imageMedia.map { image =>
-                    @fragments.img(image, widthsByBreakpoint = BodyMedia.inline)
+                    @fragments.img(image.imageMedia, widthsByBreakpoint = BodyMedia.inline, image_figureClasses = image.imageClasses)
                 }
             </label>
         }
@@ -91,7 +91,7 @@
         @if(hasImage) {
             <div class="atom-quiz__answer__image">
                 @answer.imageMedia.map { image =>
-                    @fragments.img(image, widthsByBreakpoint = BodyMedia.inline)
+                    @fragments.img(image.imageMedia, widthsByBreakpoint = BodyMedia.inline, image_figureClasses = image.imageClasses)
                 }
 
                 @renderAnswerSvg(question, answer, maybeUserAnswer, "atom-quiz__answer__icon--image")

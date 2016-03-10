@@ -1,19 +1,18 @@
 package pagepresser
 
 import com.netaporter.uri.Uri.parse
-import common.Logging
-import org.jsoup.Jsoup
+import common.{ExecutionContexts, Logging}
 import org.jsoup.nodes.Document
 
 import scala.collection.JavaConversions._
-import scala.io.Source
+import scala.concurrent.Future
 
-abstract class HtmlCleaner extends Logging {
+abstract class HtmlCleaner extends Logging with ExecutionContexts {
   def canClean(document: Document): Boolean
 
-  def clean(document: Document): Document
+  def clean(document: Document): Future[Document]
 
-  protected def universalClean(document: Document): Document = {
+  protected def universalClean(document: Document): Future[Unit] = {
     removeAds(document)
     removeByClass(document, "top-search-box")
     removeByClass(document, "share-links")
@@ -22,6 +21,7 @@ abstract class HtmlCleaner extends Logging {
     removeByClass(document, "initially-off")
     removeByClass(document, "comment-count")
     replaceLinks(document)
+    ComboCleaner(document)
   }
 
   def replaceLinks(document: Document): Document = {

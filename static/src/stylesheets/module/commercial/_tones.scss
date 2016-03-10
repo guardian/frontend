@@ -154,3 +154,11 @@
     guss-colour(paidfor-background, $frontend-palette),
     $backgroundColour: #ebebeb
 );
+
+.commercial--tone-paidfor [class*="tone-"] {
+    color: inherit;
+
+    > .fc-item__container:before {
+        background-color: guss-colour(paidfor-background, $frontend-palette);
+    }
+}
