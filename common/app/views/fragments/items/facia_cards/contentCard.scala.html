@@ -20,9 +20,7 @@
             data-discussion-closed="@item.discussionSettings.isClosedForComments"
             data-discussion-url="@item.header.url.get(request)#comments"
         }
-    data-link-name="@item.analyticsPrefix | card-@{
-        index + 1
-    }"
+    data-link-name="@item.analyticsPrefix | card-@{ index + 1 }"
     data-item-visibility="@visibilityDataAttribute"
     data-test-id="facia-card"
         @item.id.map { id => data-id="@id" }
