@@ -29,10 +29,14 @@ object ABHeadlinesTestVariant extends TestDefinition(
   Nil,
   "headlines-ab-variant",
   "To test how much of a difference changing a headline makes (variant group)",
-  new LocalDate(2015, 9, 30)
+  new LocalDate(2016, 3, 30)
   ) {
   override def isParticipating(implicit request: RequestHeader): Boolean = {
-      request.headers.get("X-GU-hlt").contains("hlt-A") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
+//    println(s"got header : ${request.headers.get("X-GU-hlt").contains("hlt-A")}")
+//    println(s"switch is on ? ${switch.isSwitchedOn}")
+//    println(s"server side tests are on! ${ServerSideTests.isSwitchedOn}")
+
+    request.headers.get("X-GU-hlt").contains("hlt-A") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
     }
 }
 
@@ -40,7 +44,7 @@ object ABHeadlinesTestControl extends TestDefinition(
   Nil,
   "headlines-ab-control",
   "To test how much of a difference changing a headline makes (control group)",
-  new LocalDate(2015, 9, 30)
+  new LocalDate(2016, 3, 30)
   ) {
   override def isParticipating(implicit request: RequestHeader): Boolean = {
       request.headers.get("X-GU-hlt").contains("hlt-B") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
@@ -56,7 +60,7 @@ object ActiveTests extends Tests {
           .map{ test => Some(s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}""")}
 
     val configEntries = List(InternationalEditionVariant(request).map{ international => s""""internationalEditionVariant" : "$international" """}) ++
-      List(ActiveTests.getParticipatingTest(request).map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""})
+      List(ActiveTests.getParticipatingTest(request).map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""}) ++
       headlineTests
     configEntries.flatten.mkString(",")
   }
