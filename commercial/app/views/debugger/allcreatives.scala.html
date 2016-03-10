@@ -169,11 +169,11 @@
                     });
 
                     var blendedStyle = document.getElementById('blended-style'),
-                        gimbap       = document.getElementById('gimbap'),
-                        styleClasses = ['gimbap-wrap--normal', 'gimbap-wrap--reversed-out'];
+                        styleClasses = ['gimbap-style--normal', 'gimbap-style--reversed-out'];
                     bean.on(blendedStyle, 'change', function () {
+                        var gimbap = document.querySelector('.gimbap-wrap');
                         styleClasses.forEach(function(c) { gimbap.classList.remove(c); });
-                        gimbap.classList.add('gimbap-wrap--' + blendedStyle.value);
+                        gimbap.classList.add('gimbap-style--' + blendedStyle.value);
                     });
 
                     let blendedLayout = document.getElementById('blended-layout'),
