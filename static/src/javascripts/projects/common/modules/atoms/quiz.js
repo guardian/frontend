@@ -10,7 +10,7 @@ define([
     return {
         handleCompletion: function () {
             if (!!HTMLFormElement.prototype.checkValidity) {
-                var $quiz = $('.js-atom-quiz:invalid');
+                var $quiz = $('.js-atom-quiz');
                 if ($quiz.length > 0) {
                     bean.on(document, 'click', Array.prototype.slice.call($quiz), function (e) {
                         var quiz = e.currentTarget;
