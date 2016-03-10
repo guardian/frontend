@@ -120,6 +120,7 @@ GET         /deploys-radiator                                                   
 # Redirects
 GET         /redirects                                                                              controllers.admin.RedirectController.redirect()
 POST        /redirect-post                                                                          controllers.admin.RedirectController.redirectPost()
+POST        /redirect-batch-post                                                                    controllers.admin.RedirectController.redirectBatchPost()
 
 # Sport troubleshooter
 GET         /troubleshoot/football                                                                  controllers.admin.SportTroubleshooterController.renderFootballTroubleshooter()
