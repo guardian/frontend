@@ -79,31 +79,6 @@ define([
     function show(edition, message) {
         var data = defaults({ linkHref: formatEndpointUrl(edition, message) }, message.data, defaultData);
 
-        // Four cases (for a given edition, say UK):
-        // (a) has never closed any membership banner
-        // (b) has closed only 'membership-message-uk'
-        // (c) has closed only 'membership-message-uk-redisplayed'
-        //     (can't occur for US)
-        // (d) has closed both 'membership-messaged-uk' and 'membership-message-uk-redisplayed'
-
-        // once I make this change, what will the behaviour be?
-        // (a) =>
-        //   current => they see banner. closed once, it will reappear. closed again, it will not.
-        //   new     => they see banner. closed once, it will not reappear.
-        // (b) =>
-        //   current => they see banner (r). closed once, it will reappear.
-        //   new     => they will not see banner (since they've already closed it)
-        // (c) PROBLEMATIC =>
-        //   current => they do not see banner.
-        //   new     => they see banner. closed once, it will not reappear.
-        // (d) =>
-        //   current => they do not see banner.
-        //   new     => they do not see banner.
-
-        // Switching between editions, no history is preserved
-        // (e.g. if I've closed the banner only on the UK edition,
-        //       I will see it on the US & International editions)
-
         return new Message(message.code, {
             pinOnHide: false,
             siteMessageLinkName: 'membership message',
