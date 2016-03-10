@@ -27,23 +27,6 @@
     @if(!maybeResults) {
         <button class="button button--xlarge button--primary" type="submit">Submit answers</button>
     }
-    <script>
-    (function (document) {
-        try {
-            var quiz = document.querySelector('.js-atom-quiz:invalid');
-            quiz.addEventListener('click', function () {
-                if (quiz.checkValidity()) {
-                    var el = null, bucket = quiz.querySelectorAll(':checked + .atom-quiz__answer__item--is-correct').length;
-                    do {
-                        el = quiz.querySelector('.js-atom-quiz__bucket-message--' + bucket);
-                        el && (el.style.display = 'block');
-                        bucket--;
-                    } while (!el && bucket >= 0);
-                }
-            }, true);
-        } catch (e) {};
-    })(document);
-    </script>
 </form>
 
 @renderQuestion(question: Question, field: play.api.data.Field, maybeUserAnswer: Option[Answer]) = {
