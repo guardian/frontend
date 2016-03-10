@@ -67,8 +67,8 @@ object RedirectController  extends Controller with Logging {
       source.getLines().map { line =>
         if (line.nonEmpty) {
           val fromAndTo = line.split("\t")
-          val from = fromAndTo(0)
-          val to = fromAndTo(1)
+          val from = fromAndTo(0).trim
+          val to = fromAndTo(1).trim
           try {
             Redirects.set(from, to)
             s"$from -> $to"
