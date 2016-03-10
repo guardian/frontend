@@ -141,7 +141,7 @@
                 You got&hellip; <span class="atom-quiz__score" data-question-count="@{quiz.content.questions.length}"></span>
             </div>
             @quiz.content.resultGroups.map { resultGroup =>
-                <div class="atom-quiz__bucket-message js-atom-quiz__bucket-message--@{resultGroup.minScore}">@resultGroup.title</div>
+                <div class="atom-quiz__bucket-message js-atom-quiz__bucket-message--@{resultGroup.minScore}" style="display:none">@resultGroup.title</div>
             }
         }
         <div class="atom-quiz__share">
