@@ -18,8 +18,10 @@ object SurveysController extends Controller {
       "what-im-really-thinking" -> "guardian-reminder-whatimreallythinking",
       "yotam" -> "guardian-reminder-yotam"
     ).get(seriesName)
-    maybeSurveyId
-      .map(id => s"https://www.surveymonkey.co.uk/r/${id}")
-      .map(url => Ok(views.html.surveys404TestNextInSeries(url, metaData))).getOrElse(NotFound)
+    Cached(60) {
+      maybeSurveyId
+        .map(id => s"https://www.surveymonkey.co.uk/r/${id}")
+        .map(url => Ok(views.html.surveys404TestNextInSeries(url, metaData))).getOrElse(NotFound)
+    }
   }
 }
