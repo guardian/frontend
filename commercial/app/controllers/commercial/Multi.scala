@@ -78,13 +78,13 @@ object Multi
           MasterclassAgent.specificMasterclasses(Seq(eventBriteId)).headOption orElse {
             MasterclassAgent.masterclassesTargetedAt(segment).headOption
           } map {
-            views.html.masterClasses.masterClassFragment(_, clickMacro)
+            views.html.masterclasses.masterclassFragment(_, clickMacro)
           }
         }
       case ("masterclasses", _) =>
         Future.successful {
           MasterclassAgent.masterclassesTargetedAt(segment).headOption map {
-            views.html.masterClasses.masterClassFragment(_, clickMacro)
+            views.html.masterclasses.masterclassFragment(_, clickMacro)
           }
         }
       case ("soulmates", _) =>

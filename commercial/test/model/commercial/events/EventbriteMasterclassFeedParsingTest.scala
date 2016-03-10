@@ -5,7 +5,7 @@ import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.libs.json._
 import test.ConfiguredTestSuite
 
-@DoNotDiscover class EventbriteMasterClassFeedParsingTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class EventbriteMasterclassFeedParsingTest extends FlatSpec with Matchers with ConfiguredTestSuite {
   val rawEventBriteFeed = """{ "events" : [ { "event" : { "background_color" : "FFFFFF",
                             |            "box_background_color" : "FFFFFF",
                             |            "box_border_color" : "D5D5D3",

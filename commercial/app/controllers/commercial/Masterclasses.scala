@@ -7,7 +7,7 @@ import play.api.mvc._
 
 import scala.concurrent.Future
 
-object MasterClasses extends Controller with implicits.Requests {
+object Masterclasses extends Controller with implicits.Requests {
 
   implicit val codec = Codec.utf_8
 
@@ -19,7 +19,7 @@ object MasterClasses extends Controller with implicits.Requests {
           val clickMacro = request.getParameter("clickMacro")
           val omnitureId = request.getParameter("omnitureId")
 
-          jsonFormat.result(views.html.masterClasses.masterClasses(masterclasses take 4, omnitureId, clickMacro))
+          jsonFormat.result(views.html.masterclasses.masterclasses(masterclasses take 4, omnitureId, clickMacro))
         }
       }
     }

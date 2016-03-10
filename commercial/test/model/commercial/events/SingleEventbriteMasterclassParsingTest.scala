@@ -4,7 +4,7 @@ import model.commercial.events.Eventbrite._
 import org.scalatest.{FlatSpec, Matchers, OptionValues}
 import play.api.libs.json._
 
-class SingleEventbriteMasterClassParsingTest extends FlatSpec with Matchers with OptionValues {
+class SingleEventbriteMasterclassParsingTest extends FlatSpec with Matchers with OptionValues {
 
   "MasterClass companion object" should
     "not create a masterclass object if there isn't at link to the Guardian with the words 'Click here'" in {
