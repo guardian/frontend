@@ -28,18 +28,12 @@ object ABHeadlines extends ExecutionContexts with Logging {
   private def getHeadline(id: String): Option[String] = agent.get().get(id)
 
   def refresh(): Unit = if (ABHeadlinesTestVariant.switch.isSwitchedOn) {
-    println(s"spreadseed Id: ${Configuration.headlines.spreadsheet}")
-    val spreadsheet = service.getFeed(spreadsheetUrl, classOf[WorksheetFeed])
-    println(s"spreadsheet entries are ${spreadsheet.getEntries}")
     Future {
       blocking {
         val spreadsheet = service.getFeed(spreadsheetUrl, classOf[WorksheetFeed])
-        println(s"spreadsheet entries are ${spreadsheet.getEntries}")
         spreadsheet.getEntries.headOption.foreach { worksheet =>
           val feed = service.getFeed(worksheet.getCellFeedUrl, classOf[CellFeed])
           val cells = feed.getEntries
-          println(s"Cells are : ${cells}")
-
           if (cells.length == 5) {  //if it is a different value someone has messed with the spreadsheet
           val testHeadline = cells(3).getCell.getValue -> cells(4).getCell.getValue
             agent.send(Map(testHeadline))
@@ -53,15 +47,9 @@ object ABHeadlines extends ExecutionContexts with Logging {
   }
 
   def upgrade(item: ContentCard)(implicit request: RequestHeader): ContentCard = {
-    log.info(s"trying to upgrade item in AB test ?")
-    println(s"is participating ? : ${ABHeadlinesTestVariant.isParticipating}")
-    println(s"I is on US front ? : ${isUsFront(request)}")
-
-    val contentItem = inHeadlineChangedVariant(item)
+    inHeadlineChangedVariant(item)
       .orElse(inControlGroup(item))
       .getOrElse(item)
-
-    contentItem
   }
 
   private def inControlGroup(item: ContentCard)(implicit request: RequestHeader): Option[ContentCard] = {
@@ -69,7 +57,6 @@ object ABHeadlines extends ExecutionContexts with Logging {
       .filter(const(ABHeadlinesTestControl.isParticipating))
       .filter(const(isUsFront(request)))
       .flatMap { id =>
-        println("in control group ??")
         getHeadline(id).map { newHeadline =>
           val newUrl = EditionalisedLink(s"${item.header.url.baseUrl}#headline-control")
           item.copy(
@@ -80,23 +67,17 @@ object ABHeadlines extends ExecutionContexts with Logging {
   }
 
   private def inHeadlineChangedVariant(item: ContentCard)(implicit request: RequestHeader): Option[ContentCard] = {
-    val itemOpt = item.id
+    item.id
       .filter(const(ABHeadlinesTestVariant.isParticipating))
       .filter(const(isUsFront(request)))
       .flatMap { id =>
         getHeadline(id).map { newHeadline =>
-          println(s"in variant group with id: ${id}")
-          println(s"spreadsheet data is: ${agent.get()}")
-          println(s"got headline: ${newHeadline}")
           val newUrl = EditionalisedLink(s"${item.header.url.baseUrl}#headline-variant")
           item.copy(
             header = item.header.copy(headline = newHeadline, url = newUrl)
           )
         }
       }
-    itemOpt.map(println(_))
-
-    itemOpt
   }
 
   private def isUsFront(req: RequestHeader) = req.path == "/us"

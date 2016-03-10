@@ -362,7 +362,7 @@ define([
                 });
             },
             headlinesTestAnalytics: function () {
-                 HeadlinesTestAnalytics.go();
+                HeadlinesTestAnalytics.go();
             }
         };
 

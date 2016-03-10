@@ -30,16 +30,17 @@
         @item.shortUrl.map { shortUrl => data-loyalty-short-url="@shortUrl" }>
 
         @if(!item.hasInlineSnapHtml) {
-            @container()
+            @container(item)
         }
         @if(item.hasInlineSnapHtml) {
             @item.snapStuff.map { snap => @snap.embedHtml.map(Html(_)) }
         }
 
     </div>
+
 }
 
-@container() = {
+@container(item: layout.ContentCard) = {
     <div class="fc-item__container">
         @if(item.snapStuff.map(_.snapType).contains(FrontendLatestSnap)) {
             @kicker(item.header, List("fc-item__kicker--dreamsnap", "fc-item__kicker--dreamsnap-list"))
@@ -178,3 +179,4 @@
         <a @Html(item.header.url.hrefWithRel) class="u-faux-block-link__overlay js-headline-text" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(item.header.headline)</a>
     </div>
 }
+

@@ -32,10 +32,6 @@ object ABHeadlinesTestVariant extends TestDefinition(
   new LocalDate(2016, 3, 30)
   ) {
   override def isParticipating(implicit request: RequestHeader): Boolean = {
-//    println(s"got header : ${request.headers.get("X-GU-hlt").contains("hlt-A")}")
-//    println(s"switch is on ? ${switch.isSwitchedOn}")
-//    println(s"server side tests are on! ${ServerSideTests.isSwitchedOn}")
-
     request.headers.get("X-GU-hlt").contains("hlt-A") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
     }
 }
