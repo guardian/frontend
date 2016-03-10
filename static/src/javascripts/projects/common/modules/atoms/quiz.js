@@ -9,7 +9,7 @@ define([
 ) {
     return {
         handleCompletion: function () {
-            if (!!HTMLFormElement.prototype.checkValidity) {
+            if (HTMLFormElement.prototype.checkValidity) {
                 var $quiz = $('.js-atom-quiz');
                 if ($quiz.length > 0) {
                     bean.on(document, 'click', Array.prototype.slice.call($quiz), function (e) {
@@ -30,9 +30,9 @@ define([
                                 bucket--;
                             } while (bucket >= 0);
                         }
-                    })
+                    });
                 }
             }
         }
-    }
-})
+    };
+});
