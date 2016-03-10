@@ -180,7 +180,7 @@
                         gimbapBody    = null,
                         layoutClasses = ['1x1x1x1', '2x1x1', '1x2x1', '1x1x2'].map(layout => 'gimbap-wrap__body--' + layout);
                     bean.on(blendedLayout, 'change', () => {
-                        gimbap = gimbap || document.getElementById('gimbap').querySelector('.gimbap-wrap');
+                        var gimbap = document.querySelector('.gimbap-wrap');
                         gimbapBody = gimbapBody || gimbap.querySelector('.gimbap-wrap__body');
                         layoutClasses.forEach(function(c) { gimbapBody.classList.remove(c); });
                         gimbapBody.classList.add('gimbap-wrap__body--' + blendedLayout.value);

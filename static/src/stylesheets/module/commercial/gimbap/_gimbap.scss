@@ -1,3 +1,15 @@
+$gimbap-membership-text: #ff5b3a;
+$gimbap-membership-reversed: #69d1ca;
+
+$gimbap-masterclasses-text: #ffb202;
+$gimbap-masterclasses-reversed: #ffb202;
+
+$gimbap-soulmates-text: #995490;
+$gimbap-soulmates-reversed: #995490;
+
+$gimbap-jobs-text: #42bfda;
+$gimbap-jobs-reversed: #42bfda;
+
 .gimbap {
     display: flex;
     flex-direction: column;
@@ -114,7 +126,7 @@
 
     .gimbap-style--normal & {
         .logo--part1 {
-            fill: #ff9580;
+            fill: $gimbap-membership-reversed;
         }
 
         .logo--part2 {
@@ -299,7 +311,6 @@
     margin: 0;
 }
 
-
 .gimbap-style--normal {
     background: #f5f5f5;
 
@@ -307,35 +318,30 @@
         filter: brightness(.5);
     }
 
-    .gimbap-style--tone-membership { background: #f5edeb; color: #ff937d; }
-    .gimbap-style--tone-masterclasses { background: #f5f1e9; color: #ffb202; }
-    .gimbap-style--tone-soulmates { background: #f0edf0; color: #996b93; }
-    .gimbap-style--tone-jobs { background: #ecf2f3; color: #42bfda; }
+    .gimbap-style--tone-membership { background: lighten(red, 47%); color: $gimbap-membership-text; }
+    .gimbap-style--tone-masterclasses { background: lighten($gimbap-masterclasses-reversed, 47%); color: $gimbap-masterclasses-text; }
+    .gimbap-style--tone-soulmates { background: lighten($gimbap-soulmates-reversed, 47%); color: $gimbap-soulmates-text; }
+    .gimbap-style--tone-jobs { background: lighten($gimbap-jobs-reversed, 40%); color: $gimbap-jobs-text; }
 }
 
 .gimbap-style--reversed-out {
     background: #f5f5f5;
 
     .gimbap__cta {
-        color: rgba(0, 0, 0, .8);
+        color: rgba(0, 0, 0, .65);
     }
 
-    .gimbap-style--tone-membership { background: #69d1ca; }
-    .gimbap-style--tone-masterclasses { background: #ffb202; }
-    .gimbap-style--tone-soulmates { background: #995490; }
-    .gimbap-style--tone-jobs { background: #42fbda; }
+    .gimbap-style--tone-membership { background: $gimbap-membership-reversed; }
+    .gimbap-style--tone-masterclasses { background: $gimbap-masterclasses-reversed; }
+    .gimbap-style--tone-soulmates { background: $gimbap-soulmates-reversed; }
+    .gimbap-style--tone-jobs { background: $gimbap-jobs-reversed; }
 }
 
-.gimbap-wrap--membership { background: #69d1ca; }
-.gimbap-wrap--masterclasses { background: #ffb202; }
-.gimbap-wrap--soulmates { background: #995490; }
-.gimbap-wrap--jobs { background: #42bfda; }
-
-.gimbap-wrap--reversed-out,
-.gimbap-wrap--membership,
-.gimbap-wrap--masterclasses,
-.gimbap-wrap--soulmates,
-.gimbap-wrap--jobs {
+.gimbap-style--reversed-out,
+.gimbap-style--membership,
+.gimbap-style--masterclasses,
+.gimbap-style--soulmates,
+.gimbap-style--jobs {
     .gimbap {
         color: #ffffff;
     }
