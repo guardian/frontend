@@ -1,6 +1,7 @@
 .gimbap {
-    display: block;
-    padding: $gs-gutter / 3 $gs-gutter / 3 0;
+    display: flex;
+    flex-direction: column;
+    padding: $gs-gutter / 3 $gs-gutter / 3;
     position: relative;
 
     &:hover {
@@ -61,6 +62,7 @@
 .gimbap__title {
     @include fs-headline(4);
 
+    align-self: flex-start;
     margin-bottom: $gs-baseline;
 }
 
@@ -74,6 +76,9 @@
 
 .gimbap__cta {
     @include fs-headline(2);
+
+    align-self: flex-start;
+    flex-grow: 1;
 }
 
 .gimbap__arrow {
@@ -92,7 +97,9 @@
 }
 
 .gimbap__logo {
+    align-self: flex-end;
     line-height: 0;
+    text-align: right;
 
     svg {
         fill: #ffffff;
@@ -112,6 +119,52 @@
 
         .logo--part2 {
             fill: #000000;
+        }
+    }
+}
+
+.gimbap__logo--masterclasses-horizontal {
+    .logo--part1,
+    .logo--part2 {
+        fill: #ffffff;
+    }
+
+    .gimbap-style--normal & {
+        .logo--part1 {
+            fill: #000000;
+        }
+
+        .logo--part2 {
+            fill: #FFB202;
+        }
+    }
+}
+
+.gimbap__logo--jobs-horizontal {
+    .logo--part1,
+    .logo--part2 {
+        fill: #ffffff;
+    }
+
+    .gimbap-style--normal & {
+        .logo--part1 {
+            fill: #000000;
+        }
+
+        .logo--part2 {
+            fill: #42BFDA;
+        }
+    }
+}
+
+.gimbap__logo--soulmates {
+    svg {
+        fill: #ffffff;
+    }
+
+    .gimbap-style--normal & {
+        svg {
+            fill: #995490;
         }
     }
 }

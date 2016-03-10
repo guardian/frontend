@@ -55,7 +55,9 @@ define([
         this.params.logosoulmates = svgs('logosoulmates');
         this.params.logosoulmatesjoin = svgs('logosoulmatesjoin');
         this.params.logomembership = svgs('logomembershipwhite');
+        this.params.logomasterclasseshorizontal = svgs('logomasterclasseshorizontal');
         this.params.logomembershiphorizontal = svgs('logomembershiphorizontal');
+        this.params.logojobshorizontal = svgs('logojobshorizontal');
         this.params.logojobs = svgs('logojobs');
         this.params.logomasterclasses = svgs('logomasterclasses');
         this.params.arrowRight = svgs('arrowRight', ['i-right']);
