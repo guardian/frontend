@@ -357,7 +357,7 @@
     }
 
     // if its correct, override style and increment correct result counter
-    :checked + .atom-quiz__answer__item.atom-quiz__answer__item--is-correct {
+    :checked + .atom-quiz__answer__item--is-correct {
         @include atom-quiz__answer__item--selected--is-correct;
         counter-increment: quiz-score;
     }
