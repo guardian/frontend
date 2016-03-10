@@ -384,7 +384,7 @@ trait FeatureSwitches {
     "archive-service-resolves-r1-urls",
     "When ON, the archive service can resolve un-normalisd R1 paths from the redirects table.",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 30), //Wednesday
+    sellByDate = new LocalDate(2016, 4, 28), //Thursday
     exposeClientSide = false
   )
 }
