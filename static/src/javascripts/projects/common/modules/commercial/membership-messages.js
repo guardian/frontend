@@ -33,7 +33,9 @@ define([
     var messages = {
         UK: {
             campaign:      'MEMBERSHIP_SUPPORTER_BANNER_UK',
-            code:          'membership-message-uk',
+            // increment the number at the end of the code to redisplay banners
+            // to everyone who has previously closed them
+            code:          'membership-message-uk-1',
             minVisited:    10,
             data: {
                 messageText: [
@@ -66,6 +68,15 @@ define([
         }
     };
 
+    var colours = {
+     // 0: 'purple',
+        1: 'vibrant-blue',
+        2: 'yellow',
+        3: 'teal',
+        4: 'orange',
+        5: 'light-blue'
+    };
+
     function checkWeCanShowMessage(message) {
         return commercialFeatures.async.membershipMessages.then(function (canShow) {
             return canShow && message.minVisited <= (storage.local.get('gu.alreadyVisited') || 0);
@@ -78,12 +89,19 @@ define([
 
     function show(edition, message) {
         var data = defaults({ linkHref: formatEndpointUrl(edition, message) }, message.data, defaultData);
+        // Rotate through six different colours on successive page views
+        var colour = storage.local.get('gu.alreadyVisited') % 6;
+        var cssModifierClass = 'membership-message';
+
+        if (colour) {
+            cssModifierClass += ('-' + colours[colour]);
+        }
 
         return new Message(message.code, {
             pinOnHide: false,
             siteMessageLinkName: 'membership message',
             siteMessageCloseBtn: 'hide',
-            cssModifierClass: 'membership-message'
+            cssModifierClass: cssModifierClass
         }).show(template(messageTemplate, data));
     }
 
