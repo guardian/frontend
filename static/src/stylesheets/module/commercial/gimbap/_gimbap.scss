@@ -99,6 +99,23 @@
     }
 }
 
+.gimbap__logo--membership-horizontal {
+    .logo--part1,
+    .logo--part2 {
+        fill: #ffffff;
+    }
+
+    .gimbap-style--normal & {
+        .logo--part1 {
+            fill: #ff9580;
+        }
+
+        .logo--part2 {
+            fill: #000000;
+        }
+    }
+}
+
 .gimbap-wrap {
     padding: 0 $gs-gutter / 2 $gs-baseline;
     position: relative;
@@ -230,30 +247,30 @@
 }
 
 
-.gimbap-wrap--normal {
+.gimbap-style--normal {
     background: #f5f5f5;
 
     .gimbap__cta {
         filter: brightness(.5);
     }
 
-    .gimbap--tone-membership { background: #f5edeb; color: #ff937d; }
-    .gimbap--tone-masterclasses { background: #f5f1e9; color: #ffb202; }
-    .gimbap--tone-soulmates { background: #f0edf0; color: #996b93; }
-    .gimbap--tone-jobs { background: #ecf2f3; color: #42bfda; }
+    .gimbap-style--tone-membership { background: #f5edeb; color: #ff937d; }
+    .gimbap-style--tone-masterclasses { background: #f5f1e9; color: #ffb202; }
+    .gimbap-style--tone-soulmates { background: #f0edf0; color: #996b93; }
+    .gimbap-style--tone-jobs { background: #ecf2f3; color: #42bfda; }
 }
 
-.gimbap-wrap--reversed-out {
+.gimbap-style--reversed-out {
     background: #f5f5f5;
 
     .gimbap__cta {
         color: rgba(0, 0, 0, .8);
     }
 
-    .gimbap--tone-membership { background: #69d1ca; }
-    .gimbap--tone-masterclasses { background: #ffb202; }
-    .gimbap--tone-soulmates { background: #995490; }
-    .gimbap--tone-jobs { background: #42bfda; }
+    .gimbap-style--tone-membership { background: #69d1ca; }
+    .gimbap-style--tone-masterclasses { background: #ffb202; }
+    .gimbap-style--tone-soulmates { background: #995490; }
+    .gimbap-style--tone-jobs { background: #42fbda; }
 }
 
 .gimbap-wrap--membership { background: #69d1ca; }

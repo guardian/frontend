@@ -102,7 +102,7 @@ object SeoOptimisedContentImage extends Profile(width = Some(460))
 // Just degrade the image quality without adjusting the width/height
 object Naked extends Profile(None, None)
 
-object ImgSrc extends Logging {
+object ImgSrc extends Logging with implicits.Strings {
 
   private lazy val imageHost = Configuration.images.path
 
@@ -121,7 +121,7 @@ object ImgSrc extends Logging {
 
   def apply(url: String, imageType: ElementProfile): String = {
     try {
-      val uri = new URI(url.trim)
+      val uri = new URI(url.trim.encodeURI)
 
       val isSupportedImage = supportedImages.exists(extension => uri.getPath.toLowerCase.endsWith(extension))
 

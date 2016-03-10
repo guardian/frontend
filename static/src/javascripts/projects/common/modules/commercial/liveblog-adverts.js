@@ -103,6 +103,7 @@ define([
                     if (displaySlot) {
                         dfp.addSlot($adSlot);
                     } else {
+                        // todo - When this is deleted, is dfp.refreshSlot redundant?
                         dfp.refreshSlot($adSlot);
                     }
                     reset();

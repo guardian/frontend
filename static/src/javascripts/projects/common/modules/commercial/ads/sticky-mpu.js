@@ -26,7 +26,9 @@ define([
             return fastdom.write(function () {
                 $adSlot.parent().css('height', (articleBodyOffset + mpuHeight) + 'px');
             }).then(function () {
-                return new Sticky($adSlot[0]).init();
+                //if there is a sticky 'paid by' band move the sticky mpu down so it will be always visible
+                var options = config.page.isAdvertisementFeature ? {top: 43} : {};
+                return new Sticky($adSlot[0], options).init();
             });
         });
     }

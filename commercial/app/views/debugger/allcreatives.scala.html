@@ -159,11 +159,10 @@
                             .addClass('commercial--tone-' + $palette.val());
                     });
 
-                    let blendedStyle = document.getElementById('blended-style'),
-                        gimbap       = null,
-                        styleClasses = ['normal', 'reversed-out', 'membership', 'soulmates', 'masterclasses', 'jobs'].map(tone => 'gimbap-wrap--' + tone);
-                    bean.on(blendedStyle, 'change', () => {
-                        gimbap = gimbap || document.getElementById('gimbap').querySelector('.gimbap-wrap');
+                    var blendedStyle = document.getElementById('blended-style'),
+                        gimbap       = document.getElementById('gimbap'),
+                        styleClasses = ['gimbap-wrap--normal', 'gimbap-wrap--reversed-out'];
+                    bean.on(blendedStyle, 'change', function () {
                         styleClasses.forEach(function(c) { gimbap.classList.remove(c); });
                         gimbap.classList.add('gimbap-wrap--' + blendedStyle.value);
                     });

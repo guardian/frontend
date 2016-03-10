@@ -193,6 +193,10 @@
 
 .commercial__show-mores {
     margin-top: $gs-baseline / 2;
+
+    > .fc-slice-wrapper {
+        margin: 0;
+    }
 }
 
 /* Badges
@@ -215,13 +219,14 @@
         margin: 0;
     }
 
-    .ad-slot--paid-for-badge .ad-slot--paid-for-badge__link {
+    .ad-slot--paid-for-badge__link {
         margin: 0;
         float: none;
-    }
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 0; // remove whitespace on inline-block children
 
-    .ad-slot--paid-for-badge__link:after {
-        content: none;
+        &::after { content: none; }
     }
 
     .ad-slot.ad-slot--paid-for-badge--front {
@@ -241,26 +246,9 @@
         vertical-align: middle;
     }
 
-    .ad-slot--paid-for-badge__link {
-        display: inline-block;
-        vertical-align: middle;
-        max-width: $gs-baseline * 6;
-        height: $gs-baseline * 3;
-        font-size: 0; // remove whitespace on inline-block children
-    }
-
     .ad-slot--paid-for-badge__logo {
-        max-width: 100%;
-        max-height: 100%;
-        vertical-align: middle;
-        display: inline-block;
-    }
-
-    .ad-slot--paid-for-badge__link:before {
-        content: '';
-        height: 100%;
-        vertical-align: middle;
-        display: inline-block;
+        max-width: none;
+        max-height: $gs-baseline * 5;
     }
 }
 
@@ -272,7 +260,7 @@
         position: relative;
         // reserve space in-flow for absolutely positioned badge
         // baseline * 3 from the height of the element, plus baseline / 2 for its bottom margin
-        padding-bottom: $gs-baseline * 3.5;
+        padding-bottom: $gs-baseline * 5;
     }
 
     .ad-slot--paid-for-badge {

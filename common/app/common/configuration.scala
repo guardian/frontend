@@ -185,6 +185,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     private lazy val scheme = configuration.getStringProperty("amp.scheme").getOrElse("")
     lazy val host = configuration.getStringProperty("amp.host").getOrElse("")
     lazy val baseUrl = scheme + host
+    lazy val corsOrigins: Seq[String] = configuration.getStringProperty("amp.cors.origin").map(_.split(",")
+      .map(_.trim).toSeq).getOrElse(Nil)
   }
 
   object id {
