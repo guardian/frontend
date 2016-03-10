@@ -98,15 +98,6 @@
                     <option value="jobs">Jobs</option>
                 </select>
             </dd>
-            <dt>Gimbap layout</dt>
-            <dd>
-                <select id="blended-layout">
-                    <option>1x1x1x1</option>
-                    <option selected>2x1x1</option>
-                    <option>1x2x1</option>
-                    <option>1x1x2</option>
-                </select>
-            </dd>
         </dl>
     </div>
 
@@ -175,16 +166,6 @@
                         gimbap = gimbap || document.getElementById('gimbap').querySelector('.gimbap-wrap');
                         styleClasses.forEach(function(c) { gimbap.classList.remove(c); });
                         gimbap.classList.add('gimbap-wrap--' + blendedStyle.value);
-                    });
-
-                    let blendedLayout = document.getElementById('blended-layout'),
-                        gimbapBody    = null,
-                        layoutClasses = ['1x1x1x1', '2x1x1', '1x2x1', '1x1x2'].map(layout => 'gimbap-wrap__body--' + layout);
-                    bean.on(blendedLayout, 'change', () => {
-                        gimbap = gimbap || document.getElementById('gimbap').querySelector('.gimbap-wrap');
-                        gimbapBody = gimbapBody || gimbap.querySelector('.gimbap-wrap__body');
-                        layoutClasses.forEach(function(c) { gimbapBody.classList.remove(c); });
-                        gimbapBody.classList.add('gimbap-wrap__body--' + blendedLayout.value);
                     });
 
                     let blendedHeadless = document.getElementById('blended-headless'),
@@ -807,7 +788,33 @@
                 ("omnitureId", "[%OmnitureID%]"),
                 ("clickMacro", "%%CLICK_URL_ESC%%")
             ))
-        ),
+        )
+    ).map { component =>
+        <div class="fc-container__inner">
+            <h2 class="test-page-head">
+                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=@component("creativeId")">
+                    Merchandising: manual @component("type")
+                </a>
+            </h2>
+        </div>
+        <div id="@component("id")" class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--@component("type")-manual"></div>
+        <script>
+            @component("args") match {
+                case args: JsObject => {
+                    loadCommercial(function () {
+                        require(['common/modules/commercial/creatives/template'])
+                            .then(function (Template) {
+                                new Template(document.querySelector('#@component("id")'), @Html(Json.stringify(args)))
+                                    .create();
+                        });
+                    });
+                }
+                case _ => { }
+            }
+        </script>
+    }
+
+    @Seq(
         Map(
             ("id", "gimbap"),
             ("type", "gimbap"),
@@ -853,16 +860,32 @@
                     Merchandising: manual @component("type")
                 </a>
             </h2>
+            <form>
+                <label>Layout:
+                    <select id="gimbap-layout">
+                        <option>1x1x1x1</option>
+                        <option selected>2x1x1</option>
+                        <option>1x2x1</option>
+                        <option>1x1x2</option>
+                    </select>
+                </label>
+            </form>
         </div>
         <div id="@component("id")" class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--@component("type")-manual"></div>
         <script>
+            'use strict';
             @component("args") match {
                 case args: JsObject => {
                     loadCommercial(function () {
-                        require(['common/modules/commercial/creatives/template'])
-                            .then(function (Template) {
-                                new Template(document.querySelector('#@component("id")'), @Html(Json.stringify(args)))
-                                    .create();
+                        require(['bean', 'common/modules/commercial/creatives/template'])
+                            .then(function (bean, Template) {
+                                let container = document.querySelector('#@component("id")')
+                                document.querySelector('#gimbap-layout').addEventListener('change', (event) => {
+                                    container.innerHTML = '';
+                                    new Template(document.querySelector('#@component("id")'), @Html(Json.stringify(args))).create();
+                                });
+
+                                bean.fire(document.querySelector('#gimbap-layout'), 'change');
                         });
                     });
                 }
