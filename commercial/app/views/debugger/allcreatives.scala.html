@@ -80,18 +80,29 @@
                     <option value="soulmates">Soulmates</option>
                 </select>
             </dd>
-            <dt>Blended component style</dt>
+            <dt>Gimbap headless</dt>
+            <dd>
+                <select id="blended-headless">
+                    <option value="false" selected>False</option>
+                    <option value="true">True</option>
+                </select>
+            </dd>
+            <dt>Gimbap style</dt>
             <dd>
                 <select id="blended-style">
                     <option value="normal" selected>Normal</option>
                     <option value="reversed-out">Reversed out</option>
+                    <option value="membership">Membership</option>
+                    <option value="masterclasses">Masterclasses</option>
+                    <option value="soulmates">Soulmates</option>
+                    <option value="jobs">Jobs</option>
                 </select>
             </dd>
-            <dt>Blended component layout</dt>
+            <dt>Gimbap layout</dt>
             <dd>
                 <select id="blended-layout">
-                    <option selected>1x1x1x1</option>
-                    <option>2x1x1</option>
+                    <option>1x1x1x1</option>
+                    <option selected>2x1x1</option>
                     <option>1x2x1</option>
                     <option>1x1x2</option>
                 </select>
@@ -112,6 +123,7 @@
                     bean,
                     $
                 ) {
+                    'use strict';
                     var $switchFronts   = $('#switchFronts'),
                         $switchArticles = $('#switchArticles'),
                         $rhColumn = $('.content__secondary-column');
@@ -158,19 +170,35 @@
 
                     var blendedStyle = document.getElementById('blended-style'),
                         gimbap       = document.getElementById('gimbap'),
-                        styleClasses = ['gimbap-style--normal', 'gimbap-style--reversed-out'];
+                        styleClasses = ['gimbap-wrap--normal', 'gimbap-wrap--reversed-out'];
                     bean.on(blendedStyle, 'change', function () {
                         styleClasses.forEach(function(c) { gimbap.classList.remove(c); });
-                        gimbap.classList.add('gimbap-style--' + blendedStyle.value);
+                        gimbap.classList.add('gimbap-wrap--' + blendedStyle.value);
                     });
 
-                    var blendedLayout = document.getElementById('blended-layout'),
+                    let blendedLayout = document.getElementById('blended-layout'),
                         gimbapBody    = null,
-                        layoutClasses = ['gimbap-wrap__body--1x1x1x1', 'gimbap-wrap__body--2x1x1', 'gimbap-wrap__body--1x2x1', 'gimbap-wrap__body--1x1x2'];
-                    bean.on(blendedLayout, 'change', function () {
+                        layoutClasses = ['1x1x1x1', '2x1x1', '1x2x1', '1x1x2'].map(layout => 'gimbap-wrap__body--' + layout);
+                    bean.on(blendedLayout, 'change', () => {
+                        gimbap = gimbap || document.getElementById('gimbap').querySelector('.gimbap-wrap');
                         gimbapBody = gimbapBody || gimbap.querySelector('.gimbap-wrap__body');
                         layoutClasses.forEach(function(c) { gimbapBody.classList.remove(c); });
                         gimbapBody.classList.add('gimbap-wrap__body--' + blendedLayout.value);
+                    });
+
+                    let blendedHeadless = document.getElementById('blended-headless'),
+                        gimbapHead    = null,
+                        gimbapHeadParent = null;
+                    bean.on(blendedHeadless, 'change', () => {
+                        gimbap = gimbap || document.getElementById('gimbap').querySelector('.gimbap-wrap');
+                        gimbapHead = gimbapHead || gimbap.querySelector('.gimbap-wrap__header');
+                        gimbapHeadParent = gimbapHeadParent || gimbapHead.parentNode;
+                        if (blendedHeadless.value === 'true') {
+                            gimbapHeadParent.removeChild(gimbapHead);
+                        } else {
+                            gimbapHeadParent.insertBefore(gimbapHead, gimbapHeadParent.firstChild);
+                        }
+
                     });
                 });
         });
@@ -785,12 +813,10 @@
             ("creativeId", "10025847"),
             ("args", Json.obj(
                 ("creative", "gimbap"),
-                ("base__url", "https://memebrship.theguardian.com"),
-                ("viewalltext", "Become a Supporter"),
-                ("title", "Events for foodies from Guardian Live"),
-                ("offeramount", "offer-amount"),
-                ("relevance", "high"),
                 ("style", "normal"),
+                ("headless", "false"),
+                ("base__url", "https://memebrship.theguardian.com"),
+                ("title", "Events for foodies from Guardian Live"),
                 ("offer1title", "Offer 1 Title"),
                 ("offer1tone", "membership"),
                 ("offer1linktext", "Offer 1 Link Text"),
