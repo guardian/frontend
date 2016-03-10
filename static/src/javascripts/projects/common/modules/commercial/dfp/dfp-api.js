@@ -24,6 +24,7 @@ define([
     'common/modules/commercial/dfp/ophan-tracking',
     'common/modules/commercial/dfp/breakout-iframe',
     'common/modules/commercial/survey/survey-simple',
+    'common/modules/commercial/dfp/PrebidService',
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
     'common/modules/analytics/beacon',
@@ -31,7 +32,6 @@ define([
     'common/views/svgs',
     'lodash/functions/once',
     'lodash/objects/forOwn',
-    'lodash/collections/forEach',
     'lodash/objects/keys',
     'lodash/functions/debounce',
     'lodash/objects/defaults',
@@ -70,6 +70,7 @@ define([
     ophanTracking,
     breakoutIFrame,
     SurveySimple,
+    PrebidService,
     geoMostPopular,
     ab,
     beacon,
@@ -77,7 +78,6 @@ define([
     svgs,
     once,
     forOwn,
-    forEach,
     keys,
     debounce,
     defaults,
@@ -124,6 +124,7 @@ define([
     var slotsToRefresh       = [];
     var creativeIDs          = [];
     var hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
+    var prebidService        = null;
 
     var callbacks = {
         '300,251': function (event, $adSlot) {
@@ -159,6 +160,7 @@ define([
     var recordFirstAdRendered = once(function () {
         beacon.beaconCounts('ad-render');
     });
+    var prebidEnabled = ab.isInVariant('HeaderBiddingUs', 'variant');
 
     /**
      * Initial commands
@@ -184,7 +186,7 @@ define([
         var sponsorshipIds = ['#dfp-ad--adbadge', '#dfp-ad--spbadge', '#dfp-ad--fobadge', '#dfp-ad--adbadge1', '#dfp-ad--spbadge1', '#dfp-ad--fobadge1', '#dfp-ad--adbadge2', '#dfp-ad--spbadge2', '#dfp-ad--fobadge2', '#dfp-ad--adbadge3', '#dfp-ad--spbadge3', '#dfp-ad--fobadge3', '#dfp-ad--adbadge4', '#dfp-ad--spbadge4', '#dfp-ad--fobadge4', '#dfp-ad--adbadge5', '#dfp-ad--spbadge5', '#dfp-ad--fobadge5'],
             sponsorshipIdsReturned = [];
 
-        forEach(sponsorshipIds, function (value) {
+        sponsorshipIds.forEach(function (value) {
             if ($(value).length) {
                 sponsorshipIdsReturned.push(value);
             }
@@ -198,7 +200,7 @@ define([
 
         if (detect.adblockInUseSync() && sponsorshipIdsFound.length) {
             idleFastdom.write(function () {
-                forEach(sponsorshipIdsFound, function (value) {
+                sponsorshipIdsFound.forEach(function (value) {
                     var sponsorshipIdFoundEl = $(value),
                         sponsorshipIdClasses = sponsorshipIdFoundEl.attr('class').replace('ad-slot ', ''),
                         sponsorshipBadge = '<div class="' + sponsorshipIdClasses + '">' + sponsorshipIdFoundEl.html() + '</div>';
@@ -262,8 +264,8 @@ define([
         googletag.enableServices();
         // as this is an single request call, only need to make a single display call (to the first ad
         // slot)
-        googletag.display(keys(adverts).shift());
-        displayed = true;
+        var firstAd = getAdvertArray()[0];
+        loadSlot(firstAd);
     }
 
     function displayLazyAds() {
@@ -308,6 +310,10 @@ define([
             require(['js!googletag.js']);
         }
 
+        if (prebidEnabled) {
+            prebidService = new PrebidService();
+        }
+
         window.googletag.cmd.push = raven.wrap({ deep: true }, window.googletag.cmd.push);
 
         window.googletag.cmd.push(function () {
@@ -329,7 +335,7 @@ define([
         showSponsorshipPlaceholder();
     }
 
-    function defineSlot($adSlot) {
+    function defineSlot($adSlot, sizes) {
         var slotTarget     = $adSlot.data('slot-target') || $adSlot.data('name'),
             adUnitOverride = urlUtils.getUrlVars()['ad-unit'],
             // if ?ad-unit=x, use that
@@ -343,7 +349,7 @@ define([
         if ($adSlot.data('out-of-page')) {
             slot = googletag.defineOutOfPageSlot(adUnit, id);
         } else {
-            sizeMapping = defineSlotSizes($adSlot);
+            sizeMapping = buildSizeMapping(sizes);
             // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
             size = uniq(
                 flatten(sizeMapping, true, function (map) { return map[1]; }),
@@ -448,7 +454,7 @@ define([
         idleFastdom.write(function () {
             if (shouldRenderLabel($adSlot)) {
                 $adSlot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
-            } else if (ab.getParticipations().CommercialComponentsDismiss && ab.getParticipations().CommercialComponentsDismiss.variant === 'dismiss') {
+            } else if (ab.isInVariant('CommercialComponentsDismiss', 'dismiss') && contains(['dfp-ad--merchandising', 'dfp-ad--merchandising-high', 'dfp-ad--im'], $adSlot.attr('id'))) {
                 var survey = new SurveySimple();
                 var crossIcon = svgs('crossIcon');
 
@@ -471,34 +477,40 @@ define([
         if (adverts.length === 0) {
             disableLazyLoad();
         } else {
-            var scrollTop = window.pageYOffset,
-                viewportHeight = bonzo.viewport().height,
-                scrollBottom = scrollTop + viewportHeight,
-                depth = 0.5;
+            var scrollTop = window.pageYOffset;
+            var viewportHeight = bonzo.viewport().height;
+            var scrollBottom = scrollTop + viewportHeight;
+            var depth = 0.5;
 
-            chain(adverts).and(keys).and(filter, function (adSlotId) {
-                return !adverts[adSlotId].isLoading &&
-                       !adverts[adSlotId].isRendered &&
-                       // if the position of the ad is above the viewport - offset (half screen size)
-                    scrollBottom > document.getElementById(adSlotId).getBoundingClientRect().top + scrollTop - viewportHeight * depth;
-            }).and(forEach, function (slot) {
-                loadSlot(slot);
+            var advertsToLoad = getAdvertArray().filter(function (advert) {
+                return !advert.isRendered
+                    && !advert.isLoading
+                    // if the position of the ad is above the viewport - offset (half screen size)
+                    && (scrollBottom > document.getElementById(advert.adSlotId).getBoundingClientRect().top + scrollTop - viewportHeight * depth);
             });
+            advertsToLoad.forEach(loadSlot);
         }
     }
 
     function instantLoad() {
-        chain(adverts).and(keys).and(forEach, function (adSlotId) {
-            if (contains(['dfp-ad--pageskin-inread', 'dfp-ad--merchandising-high', 'dfp-ad--im'], adSlotId)) {
-                loadSlot(adSlotId);
+        getAdvertArray().forEach(function (advert) {
+            if (contains(['dfp-ad--pageskin-inread', 'dfp-ad--merchandising-high', 'dfp-ad--im'], advert.adSlotId)) {
+                loadSlot(advert);
             }
         });
     }
 
-    function loadSlot(adSlotId) {
-        adverts[adSlotId].isLoading = true;
-        googletag.display(adSlotId);
-        displayed = true;
+    function loadSlot(advert) {
+        advert.isLoading = true;
+
+        if (shouldPrebidAdvert(advert)) {
+            prebidService.loadAdvert(advert).then(function onDisplay() {
+                displayed = true;
+            });
+        } else {
+            googletag.display(advert.adSlotId);
+            displayed = true;
+        }
     }
 
     function removeSlot(adSlotId) {
@@ -604,14 +616,13 @@ define([
      * If it has been defined, then we add that size to the size mapping.
      *
      */
-    function defineSlotSizes($adSlot) {
+    function buildSizeMapping(sizes) {
         var mapping = googletag.sizeMapping();
 
-        forEach(detect.breakpoints, function (breakpointInfo) {
-            // turn breakpoint name into attribute style (lowercase, hyphenated)
-            var attr  = $adSlot.data(breakpointNameToAttribute(breakpointInfo.name));
-            if (attr) {
-                mapping.addSize([breakpointInfo.width, 0], createSizeMapping(attr));
+        detect.breakpoints.forEach(function (breakpoint) {
+            var sizesForBreakpoint = sizes[breakpoint.name];
+            if (sizesForBreakpoint) {
+                mapping.addSize([breakpoint.width, 0], sizesForBreakpoint);
             }
         });
 
@@ -649,11 +660,12 @@ define([
         var $adSlot = bonzo(adSlot),
             slotId = $adSlot.attr('id'),
             displayAd = function ($adSlot) {
-                adverts[slotId] = new Advert($adSlot);
+                var advert = new Advert($adSlot);
+                adverts[slotId] = advert;
                 if (shouldLazyLoad()) {
                     enableLazyLoad();
                 } else {
-                    loadSlot(slotId);
+                    loadSlot(advert);
                 }
             };
         if (displayed && !adverts[slotId]) { // dynamically add ad slot
@@ -669,20 +681,49 @@ define([
     }
 
     function refreshSlot($adSlot) {
-        var slot = adverts[$adSlot.attr('id')].slot;
-        if (slot) {
-            googletag.pubads().refresh([slot]);
+        var advert = adverts[$adSlot.attr('id')];
+        if (shouldPrebidAdvert(advert)) {
+            prebidService.loadAdvert(advert);
+        } else {
+            googletag.pubads().refresh([advert.slot]);
         }
     }
 
     function Advert($adSlot) {
         this.isRendered = false;
         this.isLoading = false;
-        this.slot = defineSlot($adSlot);
+        this.adSlotId = $adSlot.attr('id');
+        this.sizes = getAdBreakpointSizes($adSlot);
+        this.slot = defineSlot($adSlot, this.sizes);
+    }
+
+    function getAdBreakpointSizes($adSlot) {
+        var sizes = {};
+        detect.breakpoints.forEach(function (breakpoint) {
+            var data = $adSlot.data(breakpointNameToAttribute(breakpoint.name));
+            if (data) {
+                sizes[breakpoint.name] = createSizeMapping(data);
+            }
+        });
+        return sizes;
+    }
+
+    function shouldPrebidAdvert(advert) {
+        var excludedSlotIds = [
+            'dfp-ad--pageskin-inread',
+            'dfp-ad--merchandising-high'
+        ];
+        return prebidEnabled && shouldLazyLoad() && !contains(excludedSlotIds, advert.adSlotId);
     }
 
     function getAdverts() {
         return adverts;
+    }
+
+    function getAdvertArray() {
+        return Object.keys(adverts).map(function (key) {
+            return adverts[key];
+        });
     }
 
     /**

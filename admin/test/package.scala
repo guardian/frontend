@@ -1,4 +1,5 @@
 package test
+
 import org.scalatest.Suites
 
 class AdminTestSuite extends Suites (
@@ -7,7 +8,10 @@ class AdminTestSuite extends Suites (
   new football.TablesControllerTest,
   new indexes.TagPagesTest,
   new services.AdminHealthCheckTest,
-  new pagepresser.HtmlCleanerTest  ) with SingleServerSuite {
+  new pagepresser.HtmlCleanerTest,
+  new controllers.admin.DeploysRadiatorControllerTest
+) with SingleServerSuite {
 
   override lazy val port: Int = controllers.HealthCheck.testPort
 }
+

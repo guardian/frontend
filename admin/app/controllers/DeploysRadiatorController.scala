@@ -6,7 +6,7 @@ import controllers.AuthLogging
 import implicits.Requests
 import model.NoCache
 import play.api.libs.json._
-import play.api.libs.ws.WS
+import play.api.libs.ws.{WSResponse, WS}
 import play.api.mvc.{Results, Result, Controller}
 import play.api.Play.current
 import play.api.libs.concurrent.Execution.Implicits._
@@ -70,7 +70,7 @@ object BuildJson {
   implicit val format = Json.format[BuildJson]
 }
 
-object DeploysRadiatorController extends Controller with Logging with AuthLogging with Requests{
+trait DeploysRadiatorController extends Controller with Logging with AuthLogging with Requests{
   //
   // API types
   //
@@ -106,17 +106,21 @@ object DeploysRadiatorController extends Controller with Logging with AuthLoggin
     }
   }
 
+  protected def GET(url: String, queryString: Map[String, String] = Map.empty, headers: Map[String, String] = Map.empty): Future[WSResponse] = {
+    WS.url(url).withQueryString(queryString.toSeq: _*).withHeaders(headers.toSeq: _*).withRequestTimeout(10000).get()
+  }
+
   def getRiffRaffDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String]): Future[ApiResponse[JsValue]] = {
     val url = s"${Configuration.riffraff.url}/api/history"
 
-    WS.url(url)
-      .withQueryString(
+    GET(url,
+      queryString = Map(
         "key" -> Configuration.riffraff.apiKey,
         "pageSize" -> pageSize.getOrElse(""),
         "projectName" -> projectName.getOrElse(""),
-        "stage" -> stage.getOrElse(""))
-      .get()
-      .map { response =>
+        "stage" -> stage.getOrElse("")
+      )
+    ).map { response =>
       response.status match {
         case 200 => Right(response.json)
         case statusCode => Left(ApiErrors(List(ApiError(
@@ -138,15 +142,14 @@ object DeploysRadiatorController extends Controller with Logging with AuthLoggin
     val apiPath = "/guestAuth/app/rest"
     val url = s"${Configuration.teamcity.host}${apiPath}/builds/number:$number,state:any,canceled(any)"
 
-    WS.url(url)
-      .withHeaders("Accept" -> "application/json")
-      .withQueryString("fields" -> List(
+    GET(url,
+      queryString = Map("fields" -> List(
         "number", "buildType(name,projectName)",
         "revisions(revision(version))", "changes(change(username,comment,version))",
         "artifact-dependencies(build(number))"
-      ).mkString(","))
-      .get()
-      .map { response =>
+      ).mkString(",")),
+      headers = Map("Accept" -> "application/json")
+      ).map { response =>
         response.status match {
           case 200 => Right(response.json)
           case statusCode => Left(ApiErrors(List(ApiError(
@@ -211,3 +214,5 @@ object DeploysRadiatorController extends Controller with Logging with AuthLoggin
   }
 
 }
+
+object DeploysRadiatorController extends DeploysRadiatorController
