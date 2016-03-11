@@ -18,7 +18,8 @@ define([
     'common/modules/article/space-filler',
     'common/modules/analytics/omniture',
     'common/utils/robust',
-    'common/modules/user-prefs'
+    'common/modules/user-prefs',
+    'common/utils/storage'
 ], function (
     $,
     bean,
@@ -39,7 +40,8 @@ define([
     spaceFiller,
     omniture,
     robust,
-    userPrefs
+    userPrefs,
+    storage
 ) {
 
     var insertBottomOfArticle = function () {
@@ -179,6 +181,9 @@ define([
             var currentListPrefs = userPrefs.get('email-sign-up-' + formType);
             return currentListPrefs && currentListPrefs.indexOf(id) > -1;
         },
+        userHasSeenThisSession = function () {
+            return storage.session.get('email-sign-up-seen');
+        },
         addListToPage = function (listConfig) {
             if (listConfig) {
                 var iframe = bonzo.create(template(iframeTemplate, listConfig))[0],
@@ -202,6 +207,7 @@ define([
                     });
                 }
 
+                storage.session.set('email-sign-up-seen', 'true');
             }
         },
         canRunHelpers = {
@@ -269,7 +275,11 @@ define([
 
     return {
         init: function () {
-            if (!emailInserted && !config.page.isFront && config.switches.emailInArticle) {
+            if (!emailInserted &&
+                !config.page.isFront &&
+                config.switches.emailInArticle &&
+                storage.session.isAvailable &&
+                !userHasSeenThisSession()) {
                 // Get the user's current subscriptions
                 Id.getUserEmailSignUps()
                     .then(buildUserSubscriptions)
