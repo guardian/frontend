@@ -12,6 +12,7 @@ define([
     'common/utils/config',
     'lodash/collections/every',
     'lodash/collections/find',
+    'lodash/collections/some',
     'text!common/views/email/iframe.html',
     'common/utils/template',
     'common/modules/article/space-filler',
@@ -32,6 +33,7 @@ define([
     config,
     every,
     find,
+    some,
     iframeTemplate,
     template,
     spaceFiller,
@@ -207,12 +209,18 @@ define([
                 // Compare page keywords with passed in array
                 return !!intersection(keywords, keyword).length;
             },
-            userReferredFromFront: function () {
-                var host = window.location.host,
-                    escapedHost = host.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'), // Escape anything that will mess up the regex
-                    urlRegex = new RegExp('^https?:\/\/' + escapedHost + '\/(uk\/|us\/|au\/|international\/)?([a-z-])+$', 'gi');
+            userReferredFromNetworkFront: function () {
+                // Check whether the referring url ends in the edition
+                var networkFront = ["uk", "us", "au", "international"],
+                    originPathName = document.referrer.split(/\?|#/)[0];
 
-                return urlRegex.test(document.referrer);
+                if (originPathName) {
+                    return some(networkFront, function(frontName){
+                        return originPathName.substr(originPathName.lastIndexOf("/")+1) === frontName;
+                    });
+                }
+
+                return false;
             },
             pageHasBlanketBlacklist: function () {
                 // Prevent the blanket emails from ever showing on certain keywords or sections
@@ -249,12 +257,12 @@ define([
             morningMailUk: function () {
                 return (config.page.edition === 'UK' || config.page.edition === 'INT') &&
                         !canRunHelpers.pageHasBlanketBlacklist() &&
-                        canRunHelpers.userReferredFromFront() &&
+                        canRunHelpers.userReferredFromNetworkFront() &&
                         canRunHelpers.allowedArticleStructure();
             },
             theGuardianToday: function () {
                 return !canRunHelpers.pageHasBlanketBlacklist() &&
-                        canRunHelpers.userReferredFromFront() &&
+                        canRunHelpers.userReferredFromNetworkFront() &&
                         canRunHelpers.allowedArticleStructure();
             }
         };
