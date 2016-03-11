@@ -69,7 +69,7 @@ define([
 
     function PrebidAdUnit(advert) {
         this.code = advert.adSlotId;
-        this.sizes = getAllValidSlotSizes(advert);
+        this.sizes = getMatchingTrialSizes(advert);
         this.bids = [{
             bidder : 'rubicon',
             params : {
@@ -85,17 +85,24 @@ define([
         }];
     }
 
-    function getAllValidSlotSizes(advert) {
-        var sizesForAllBreakpoints = concatAll(values(advert.sizes));
-        return uniq(sizesForAllBreakpoints, arrayValue);
+    function getMatchingTrialSizes(advert) {
+        // For the purpose of the US trial, we will only be bidding for leaderboard ads (728x90) and single-size MPUs (300x250)
+        var trialSizes = [[728,90], [300,250]];
+        var advertSizes = concatAll(values(advert.sizes));
+
+        return trialSizes.filter(function (trialSize) {
+            return advertSizes.some(function (advertSize) {
+                return sizesMatch(trialSize, advertSize);
+            });
+        });
 
         function concatAll(arrays) {
             return Array.prototype.concat.apply([], arrays);
         }
 
-        function arrayValue(array) {
-            // Gets array value to test non-referential equality
-            return array.toString();
+        function sizesMatch(a, b) {
+            // Compare by value rather than referential equality
+            return a.toString() === b.toString();
         }
     }
 
