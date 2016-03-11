@@ -195,12 +195,12 @@ define([
             },
             userReferredFromNetworkFront: function () {
                 // Check whether the referring url ends in the edition
-                var networkFront = ["uk", "us", "au", "international"],
+                var networkFront = ['uk', 'us', 'au', 'international'],
                     originPathName = document.referrer.split(/\?|#/)[0];
 
                 if (originPathName) {
-                    return some(networkFront, function(frontName){
-                        return originPathName.substr(originPathName.lastIndexOf("/")+1) === frontName;
+                    return some(networkFront, function (frontName) {
+                        return originPathName.substr(originPathName.lastIndexOf('/') + 1) === frontName;
                     });
                 }
 
