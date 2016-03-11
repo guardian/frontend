@@ -134,8 +134,6 @@ define([
         var pageYOffset = state.scrollCoords[1];
         var userHasScrolledPastHeader = pageYOffset > state.headerHeight;
 
-        console.log("Ad height is " + state.adHeight);
-
         els.$adBanner.css({
             'position': userHasScrolledPastHeader ? 'absolute' : 'fixed',
             'top': userHasScrolledPastHeader ? state.headerHeight : '',
@@ -163,18 +161,13 @@ define([
             });
         });
 
-        var dispatchNewAdHeight = function (adHeight) {
+        var dispatchNewAdHeight = function () {
+        getLatestAdHeight().then(function (adHeight) {
             dispatch({ type: 'NEW_AD_HEIGHT', adHeight: adHeight });
-        };
+        });
 
-        topAdRenderedPromise.then(getLatestAdHeight).then(function (adHeight) {
-            console.log("Top banner sent " + adHeight);
-            return adHeight;
-        }).then(dispatchNewAdHeight);
-        newRubiconAdHeightPromise.then(function (adHeight) {
-            console.log("Rubicon sent " + adHeight);
-            return adHeight;
-        }).then(dispatchNewAdHeight);
+        topAdRenderedPromise.then(dispatchNewAdHeight);
+        newRubiconAdHeightPromise.then(dispatchNewAdHeight);
 
         $adBanner[0].addEventListener('transitionend', function (event) {
             // Protect against any other events which have bubbled
@@ -193,7 +186,6 @@ define([
                     scrollCoords: action.scrollCoords
                 });
             case 'NEW_AD_HEIGHT':
-                console.log("Dispatching new height " + action.adHeight);
                 var scrollIsAtTop = previousState.scrollCoords[1] === 0;
                 var previousAdHeight = previousState.adHeight;
                 var adHeight = action.adHeight;
