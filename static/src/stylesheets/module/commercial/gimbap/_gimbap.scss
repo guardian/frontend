@@ -83,6 +83,11 @@ $gimbap-jobs-reversed: #42bfda;
         width: 1.2em;
         height: .75em;
         opacity: .8;
+
+        .gimbap:only-child > & {
+            width: .9em;
+            height: .55em;
+        }
     }
 }
 
@@ -126,7 +131,7 @@ $gimbap-jobs-reversed: #42bfda;
 
     .gimbap-style--normal & {
         .logo--part1 {
-            fill: $gimbap-membership-reversed;
+            fill: $gimbap-membership-text;
         }
 
         .logo--part2 {
@@ -232,6 +237,26 @@ $gimbap-jobs-reversed: #42bfda;
             width: calc(50% - 650px);
         }
     }
+
+    > .inline-marque-36 {
+        display: none;
+
+        @include mq(desktop) {
+            display: block;
+            position: absolute;
+            left: calc(50% - 570px);
+            top: $gs-baseline / 3 * 10;
+            margin-left: $gs-gutter;
+
+            &:first-child {
+                top: $gs-baseline / 3 * 7;
+            }
+        }
+
+        @include mq(wide) {
+            left: calc(50% - 650px);
+        }
+    }
 }
 
 .gimbap-wrap__header {
@@ -275,6 +300,12 @@ $gimbap-jobs-reversed: #42bfda;
     @include mq(wide) {
         margin-left: 240px;
         width: 960px;
+    }
+
+    /* this is ugly but that's the price to pay when
+       decoration elements pollute the DOM */
+    .gimbap-wrap > .inline-marque-36:first-child + & {
+        padding-top: $gs-baseline;
     }
 }
 
@@ -335,6 +366,13 @@ $gimbap-jobs-reversed: #42bfda;
     .gimbap-style--tone-masterclasses { background: $gimbap-masterclasses-reversed; }
     .gimbap-style--tone-soulmates { background: $gimbap-soulmates-reversed; }
     .gimbap-style--tone-jobs { background: $gimbap-jobs-reversed; }
+}
+
+.gimbap-style--normal,
+.gimbap-style--reversed-out {
+    > .inline-marque-36 > svg {
+        fill: guss-colour(news-support-2, $pasteup-palette);
+    }
 }
 
 .gimbap-style--reversed-out,

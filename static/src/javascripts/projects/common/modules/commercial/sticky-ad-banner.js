@@ -162,10 +162,10 @@ define([
         });
 
         var dispatchNewAdHeight = function () {
-            getLatestAdHeight().then(function (adHeight) {
-                dispatch({ type: 'NEW_AD_HEIGHT', adHeight: adHeight });
-            });
-        };
+        getLatestAdHeight().then(function (adHeight) {
+            dispatch({ type: 'NEW_AD_HEIGHT', adHeight: adHeight });
+        });
+
         topAdRenderedPromise.then(dispatchNewAdHeight);
         newRubiconAdHeightPromise.then(dispatchNewAdHeight);
 
