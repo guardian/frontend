@@ -9,11 +9,11 @@ class SingleEventbriteMasterclassParsingTest extends FlatSpec with Matchers with
   "MasterClass companion object" should
     "not create a masterclass object if there isn't at link to the Guardian with the words 'Click here'" in {
     val event = Json.parse(Fixtures.jsonWithNoLink).as[EBEvent]
-    event shouldBe 'empty
+    Masterclass(event) shouldBe 'empty
   }
 
   "MasterClass companion object" should "return an appropriate MasterClass" in {
-    val masterclass = Masterclass((Json.parse(Fixtures.json)).as[EBEvent]).get
+    val masterclass = Masterclass(Json.parse(Fixtures.json).as[EBEvent]).get
 
     masterclass.name should be("Travel writing weekend")
     masterclass shouldBe 'open
@@ -30,7 +30,7 @@ class SingleEventbriteMasterclassParsingTest extends FlatSpec with Matchers with
   }
 
   "MasterClass companion object" should "handle classes with 2 tickets as a range" in {
-    val masterclass = Masterclass((Json.parse(Fixtures.jsonWith2Tickets)).as[EBEvent]).get
+    val masterclass = Masterclass(Json.parse(Fixtures.jsonWith2Tickets).as[EBEvent]).get
 
     masterclass.name should be("Travel writing weekend")
     masterclass shouldBe 'open
@@ -38,15 +38,15 @@ class SingleEventbriteMasterclassParsingTest extends FlatSpec with Matchers with
     masterclass.ratioTicketsLeft should be (0.5)
   }
 
-  "Generated masterclass object" should "have a desription text that is truncated to 250 chars" in {
-    val masterclass = Masterclass((Json.parse(Fixtures.json)).as[EBEvent]).get
+  "Generated masterclass object" should "have a description text that is truncated to 250 chars" in {
+    val masterclass = Masterclass(Json.parse(Fixtures.json).as[EBEvent]).get
 
     masterclass.name should be("Travel writing weekend")
     masterclass.truncatedFirstParagraph should be ("Everybody loves a good, juicy murder. So it's little wonder crime fiction is one of the UK's bestselling literary genres. Whether your tastes tend toward the gritty Jack Reacher procedural or the witty Father Brown whimsical, over the course of a ...")
   }
 
   "apply" should "produce a masterclass with one price if its second price is not visible" in {
-    val masterclass = Masterclass((Json.parse(Fixtures.jsonWithInvisiblePrice)).as[EBEvent]).get
+    val masterclass = Masterclass(Json.parse(Fixtures.jsonWithInvisiblePrice).as[EBEvent]).get
     masterclass.tickets should have length 1
   }
 }
