@@ -485,6 +485,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object NewsAlert {
     lazy val apiKey = configuration.getStringProperty("news-alert.api.key")
   }
+
+  object DeploysNotify {
+    lazy val apiKey = configuration.getStringProperty("deploys-notify.api.key")
+  }
 }
 
 object ManifestData {
