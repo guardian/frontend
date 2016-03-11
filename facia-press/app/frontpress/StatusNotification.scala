@@ -8,6 +8,7 @@ import com.amazonaws.services.kinesis.AmazonKinesisAsyncClient
 import com.amazonaws.services.kinesis.model.{PutRecordRequest, PutRecordResult}
 import com.gu.facia.api.ApiError
 import conf.Configuration
+import conf.switches.Switches.FaciaPressStatusNotifications
 import play.api.Logger
 import play.api.libs.json.Json
 
@@ -53,15 +54,17 @@ object StatusNotification {
     ))}
 
   def putMessage(message: StatusNotificationMessage): Unit = {
-    Configuration.faciatool.frontPressStatusNotificationStream match {
-      case Some(streamName) =>
-        client.putRecordAsync(
-          new PutRecordRequest()
-            .withStreamName(streamName)
-            .withPartitionKey(partitionKey)
-            .withData(ByteBuffer.wrap(Json.toJson(message).toString.getBytes("UTF-8"))),
-          KinesisLoggingAsyncHandler)
-      case None => Logger.info("Kinesis status notification not configured.")
+    if (FaciaPressStatusNotifications.isSwitchedOn) {
+      Configuration.faciatool.frontPressStatusNotificationStream match {
+        case Some(streamName) =>
+          client.putRecordAsync(
+            new PutRecordRequest()
+              .withStreamName(streamName)
+              .withPartitionKey(partitionKey)
+              .withData(ByteBuffer.wrap(Json.toJson(message).toString.getBytes("UTF-8"))),
+            KinesisLoggingAsyncHandler)
+        case None => Logger.info("Kinesis status notification not configured.")
+      }
     }
   }
 }
