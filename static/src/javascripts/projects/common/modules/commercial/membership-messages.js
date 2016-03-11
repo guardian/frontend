@@ -69,7 +69,6 @@ define([
     };
 
     var colours = {
-     // 0: 'purple',
         1: 'vibrant-blue',
         2: 'yellow',
         3: 'teal',
