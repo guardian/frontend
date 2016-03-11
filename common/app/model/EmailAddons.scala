@@ -29,7 +29,7 @@ case object MoneyTalks extends EmailContent {
 case object PovertyMatters extends EmailContent {
   val name = "Poverty Matters"
   val banner = "poverty-matters.png"
-  def test(c: ContentType) = c.tags.blogs.exists(_.id == "global-development/poverty-matters")
+  def test(c: ContentType) = c.tags.series.exists(_.id == "global-development/series/poverty-matters")
 }
 
 case object TheBreakdown extends EmailContent {
@@ -56,9 +56,24 @@ case object MorningBriefing extends EmailContent {
   def test(c: ContentType) = c.tags.series.exists(_.id == "world/series/guardian-morning-briefing")
 }
 
+case object TheUSMinute extends EmailContent {
+  val name = "The campaign minute 2016"
+  val banner = "the-us-minute.png"
+  def test(c: ContentType) = c.tags.series.exists(_.id == "us-news/series/the-campaign-minute-2016")
+}
+
 object EmailAddons {
   private val defaultBanner = "generic.png"
-  private val allEmails     = Seq(ArtWeekly, GreenLight, MoneyTalks, PovertyMatters, TheBreakdown, TheFiver, TheSpin, MorningBriefing)
+  private val allEmails     = Seq(
+    ArtWeekly,
+    GreenLight,
+    MoneyTalks,
+    PovertyMatters,
+    TheBreakdown,
+    TheFiver,
+    TheSpin,
+    MorningBriefing,
+    TheUSMinute)
 
   implicit class EmailContentType(c: ContentType) {
     val email = allEmails.find(_.test(c))

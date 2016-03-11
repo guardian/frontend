@@ -22,6 +22,8 @@ define([
                 membershipText: 'Become a Member',
                 signupLink: '/commercial/survey-simple-sign-up',
                 membershipLink: '/commercial/survey-simple-membership',
+                signupDataLink: 'signup',
+                membershipDataLink: 'membership',
                 arrowWhiteRight: svgs('arrowWhiteRight'),
                 marque36icon: svgs('marque36icon'),
                 crossIcon: svgs('crossIcon'),
