@@ -1,5 +1,6 @@
 package form
 
+import model.Titles
 import play.api.data.Forms._
 import com.gu.identity.model.{UserDates, PrivateFields, User}
 import idapiclient.UserUpdate
@@ -10,12 +11,11 @@ object AccountDetailsMapping extends UserFormMapping[AccountFormData] with Addre
   override val messagesApi = applicationMessagesApi
 
   private val genders = List("Male", "Female", "Transgender", "unknown", "")
-  private val titles = List("", "Mr", "Mrs", "Ms", "Miss", "Dr", "Prof", "Rev")
 
   protected lazy val formMapping = {
     mapping(
       ("primaryEmailAddress", idEmail),
-      ("title", comboList(titles)),
+      ("title", comboList(Titles.titles)),
       ("firstName",  textField),
       ("secondName", textField),
       ("gender", comboList(genders)),
