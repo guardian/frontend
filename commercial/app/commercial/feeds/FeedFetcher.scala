@@ -43,8 +43,7 @@ class EventbriteMultiPageFeedFetcher(override val feedMetaData: EventsFeedMetaDa
     val duration = responses.foldLeft(0 milliseconds)(
       (result, current: FetchResponse) => result + Duration(current.duration.toMillis, MILLISECONDS))
 
-    val contents = JsArray()
-    responses foreach { response => contents.append(Json.parse(response.feed.content)) }
+    val contents = responses.foldLeft(JsArray())((result: JsArray, current: FetchResponse) => result :+ Json.parse(current.feed.content))
 
     FetchResponse(
       Feed(
@@ -65,7 +64,7 @@ class EventbriteMultiPageFeedFetcher(override val feedMetaData: EventsFeedMetaDa
           val subsequentFetches = Future.traverse(2 to pageCount)(fetchPage)
 
           subsequentFetches map { fetches =>
-            combineFetchResponses(initialFetch +: fetches.toSeq)
+            combineFetchResponses((initialFetch +: fetches.toSeq).seq)
           }
         }
       } else Future.failed(SwitchOffException(feedMetaData.switch.name))
