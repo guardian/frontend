@@ -123,6 +123,11 @@
     color: guss-colour(guardian-brand, $pasteup-palette);
     display: block;
     padding-left: $gs-baseline / 3;
+    position: relative;
+}
+
+.email-sub__small--is-hidden {
+    display: none;
 }
 
 .email-sub__message {
@@ -362,3 +367,17 @@
     }
 }
 
+// A/B Test - Marketing Emails
+$mark-input-dim: 15px;
+
+.email-sub__small--mark {
+    padding-left: $mark-input-dim + $gs-gutter/2;
+}
+
+.email-sub__mark-input {
+    height: $mark-input-dim;
+    width: $mark-input-dim;
+    left: 0;
+    position: absolute;
+    top: 0;
+}
