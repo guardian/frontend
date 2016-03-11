@@ -19,7 +19,8 @@ object StatusNotificationMessage {
 case class StatusNotificationMessage(
   status: String,
   front: String,
-  isLive: Boolean
+  isLive: Boolean,
+  message: Option[String]
 )
 
 object StatusNotification {
@@ -41,16 +42,18 @@ object StatusNotification {
 
   def notifyFailedJob(front: String, isLive: Boolean, reason: ApiError) = {
     putMessage(StatusNotificationMessage(
-      status = s"Error: ${reason.cause} ${reason.message}",
+      status = "error",
       front = front,
-      isLive = isLive
+      isLive = isLive,
+      message = Some(s"${reason.cause} ${reason.message}")
     ))}
 
   def notifyCompleteJob(front: String, isLive: Boolean) = {
     putMessage(StatusNotificationMessage(
       status = "ok",
       front = front,
-      isLive = isLive
+      isLive = isLive,
+      message = None
     ))}
 
   def putMessage(message: StatusNotificationMessage): Unit = {
