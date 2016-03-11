@@ -30,6 +30,7 @@ define([
     forEach
 ) {
     var modules = [
+        ['cm-dfp', dfp.init ],
         ['cm-articleAsideAdverts', articleAsideAdverts.init],
         ['cm-articleBodyAdverts', articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
@@ -56,7 +57,7 @@ define([
 
             Promise.all(modulePromises).then(function () {
                 robust.catchErrorsAndLogAll([
-                    ['cm-dfp', dfp.init],
+                    ['cm-adverts', dfp.load],
                     // TODO does dfp return a promise?
                     ['cm-ready', function () {
                         mediator.emit('page:commercial:ready');

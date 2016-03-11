@@ -1,7 +1,6 @@
 // Be wary of renaming this file; some titles, like 'dfp.js',
 // can trigger adblocker rules, and make the module fail to load in dev.
 
-/* global googletag: false */
 define([
     'bean',
     'bonzo',
@@ -125,6 +124,7 @@ define([
     var creativeIDs          = [];
     var hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
     var prebidService        = null;
+    var googletag;
 
     var callbacks = {
         '300,251': function (event, $adSlot) {
@@ -303,33 +303,41 @@ define([
     }
 
     function setupAdvertising() {
-        // if we don't already have googletag, create command queue and load it async
-        if (!window.googletag) {
-            window.googletag = { cmd: [] };
-            // load the library asynchronously
-            require(['js!googletag.js']);
-        }
+        return new Promise(function (resolve) {
+            // if we don't already have googletag, create command queue and load it async
+            if (!window.googletag) {
+                window.googletag = googletag = { cmd: [] };
+                // load the library asynchronously
+                require(['js!googletag.js']);
+            } else {
+                googletag = window.googletag;
+            }
 
-        if (prebidEnabled) {
-            prebidService = new PrebidService();
-        }
+            if (prebidEnabled) {
+                prebidService = new PrebidService();
+            }
 
-        window.googletag.cmd.push = raven.wrap({ deep: true }, window.googletag.cmd.push);
+            googletag.cmd.push = raven.wrap({ deep: true }, googletag.cmd.push);
 
-        window.googletag.cmd.push(function () {
-            renderStartTime = new Date().getTime();
+            googletag.cmd.push(function () {
+                renderStartTime = new Date().getTime();
+            });
+            googletag.cmd.push(setListeners);
+            googletag.cmd.push(setPageTargeting);
+            googletag.cmd.push(resolve);
         });
-        window.googletag.cmd.push(setListeners);
-        window.googletag.cmd.push(setPageTargeting);
-        window.googletag.cmd.push(defineAdverts);
+    }
+
+    function loadAdvertising() {
+        googletag.cmd.push(defineAdverts);
 
         if (shouldLazyLoad()) {
-            window.googletag.cmd.push(displayLazyAds);
+            googletag.cmd.push(displayLazyAds);
         } else {
-            window.googletag.cmd.push(displayAds);
+            googletag.cmd.push(displayAds);
         }
         // anything we want to happen after displaying ads
-        window.googletag.cmd.push(postDisplay);
+        googletag.cmd.push(postDisplay);
 
         // show sponsorship placeholder if adblock detected
         showSponsorshipPlaceholder();
@@ -649,11 +657,16 @@ define([
      */
     function init() {
         if (commercialFeatures.dfpAdvertising) {
-            setupAdvertising();
+            return setupAdvertising();
         } else {
-            $(adSlotSelector).remove();
+            return fastdom.write(function () {
+                $(adSlotSelector).remove();
+            });
         }
-        return dfp;
+    }
+
+    function load() {
+        return commercialFeatures.dfpAdvertising ? loadAdvertising() : Promise.resolve();
     }
 
     function addSlot(adSlot) {
@@ -731,6 +744,7 @@ define([
      */
     var dfp = {
         init:           init,
+        load:           load,
         addSlot:        addSlot,
         refreshSlot:    refreshSlot,
 
