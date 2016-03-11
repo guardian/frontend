@@ -33,8 +33,7 @@ define([
 
     modules = {
         initAdverts: function () {
-            var isAdsEnabled = config.switches.viewability && config.switches.liveblogAdverts;
-            return isAdsEnabled ? liveblogAdverts.init() : null;
+            return config.switches.liveblogAdverts ? liveblogAdverts.init() : null;
         },
 
         affixTimeline: function () {
