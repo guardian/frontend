@@ -59,7 +59,7 @@ object StatusNotification {
           new PutRecordRequest()
             .withStreamName(streamName)
             .withPartitionKey(partitionKey)
-            .withData(ByteBuffer.wrap(Json.toJson(message).toString.getBytes)),
+            .withData(ByteBuffer.wrap(Json.toJson(message).toString.getBytes("UTF-8"))),
           KinesisLoggingAsyncHandler)
       case None => Logger.info("Kinesis status notification not configured.")
     }
