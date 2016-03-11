@@ -1,16 +1,12 @@
 package model.commercial.events
 
 import commercial.feeds.{FeedMetaData, ParsedFeed}
-import common.{AkkaAgent, ExecutionContexts, Logging}
+import common.{ExecutionContexts, Logging}
 import model.commercial._
 
 import scala.concurrent.Future
 
-object MasterclassAgent extends ExecutionContexts with Logging {
-
-  private lazy val masterclassAgent = AkkaAgent[Seq[Masterclass]](Nil)
-
-  def availableMasterclasses: Seq[Masterclass] = masterclassAgent.get
+object MasterclassAgent extends MerchandiseAgent[Masterclass] with ExecutionContexts with Logging {
 
   def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[Masterclass]] = {
 
@@ -39,32 +35,21 @@ object MasterclassAgent extends ExecutionContexts with Logging {
       Future.sequence(futureMasterclasses)
     }
 
-    def updateAvailableMasterclasses(masterclasses: Seq[Masterclass]): Future[Seq[Masterclass]] = {
-      masterclassAgent.alter { oldMasterclasses =>
-        if (masterclasses.nonEmpty) {
-          masterclasses
-        } else {
-          log.warn("Using old merchandise as there is no fresh merchandise")
-          oldMasterclasses
-        }
-      }
-    }
-
     val futureParsedFeed = Eventbrite.Helper.parsePagesOfEvents(feedMetaData, feedContent)
-    futureParsedFeed map { feed =>
+    futureParsedFeed flatMap { feed =>
 
       val masterclasses: Seq[Masterclass] = feed.contents flatMap { event => Masterclass(event) }
-      updateAvailableMasterclasses(masterclasses)
+      updateAvailableMerchandise(masterclasses)
+
+      val masterclassesWithImages = addImagesFromContentApi(populateKeywordIds(available.filter(_.isOpen)))
+      masterclassesWithImages map { updates =>
+        updateAvailableMerchandise(updates)
+        ParsedFeed(updates, feed.parseDuration)
+      }
     }
-
-    val masterclassesWithImagesAndTags = addImagesFromContentApi(populateKeywordIds(availableMasterclasses.filter(_.isOpen)))
-    masterclassesWithImagesAndTags map { updateAvailableMasterclasses }
-
-    for {
-      feed <- futureParsedFeed
-      masterclasses <- masterclassesWithImagesAndTags
-    } yield ParsedFeed(masterclasses, feed.parseDuration)
   }
+
+  def availableMasterclasses: Seq[Masterclass] = available
 
   def masterclassesTargetedAt(segment: Segment) = {
 
@@ -74,8 +59,8 @@ object MasterclassAgent extends ExecutionContexts with Logging {
 
     def subList(masterclasses: Seq[Masterclass]): Seq[Masterclass] = masterclasses take 4
 
-    lazy val defaultClasses = subList(availableMasterclasses.sortBy(startDateSort))
-    val targeted = availableMasterclasses filter { masterclass =>
+    lazy val defaultClasses = subList(available.sortBy(startDateSort))
+    val targeted = available filter { masterclass =>
       Keyword.idSuffixesIntersect(keywords, masterclass.keywordIdSuffixes)
     }
 
@@ -85,7 +70,7 @@ object MasterclassAgent extends ExecutionContexts with Logging {
 
   def specificMasterclasses(eventBriteIds: Seq[String]): Seq[Masterclass] = {
     for {
-      masterclass <- availableMasterclasses
+      masterclass <- available
       eventId <- eventBriteIds
       if masterclass.id == eventId
     } yield {
