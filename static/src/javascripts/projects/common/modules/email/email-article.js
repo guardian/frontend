@@ -12,12 +12,14 @@ define([
     'common/utils/config',
     'lodash/collections/every',
     'lodash/collections/find',
+    'lodash/collections/some',
     'text!common/views/email/iframe.html',
     'common/utils/template',
     'common/modules/article/space-filler',
     'common/modules/analytics/omniture',
     'common/utils/robust',
-    'common/modules/user-prefs'
+    'common/modules/user-prefs',
+    'common/utils/storage'
 ], function (
     $,
     bean,
@@ -32,12 +34,14 @@ define([
     config,
     every,
     find,
+    some,
     iframeTemplate,
     template,
     spaceFiller,
     omniture,
     robust,
-    userPrefs
+    userPrefs,
+    storage
 ) {
 
     var insertBottomOfArticle = function () {
@@ -79,28 +83,6 @@ define([
                 description: 'Sign up to the Fiver, our daily email on the world of football',
                 successHeadline: 'Thank you for signing up',
                 successDescription: 'You\'ll receive the Fiver daily, around 5pm.',
-                modClass: 'end-article',
-                insertMethod: insertBottomOfArticle
-            },
-            morningMailUk: {
-                listId: '3640',
-                listName: 'morningMailUk',
-                campaignCode: 'morning_mail_uk_article_signup',
-                headline: 'Ever wanted someone to brief you on the day\'s news?',
-                description: 'For the next two weeks we\'ll be trialling a new morning briefing email. We\'re collecting feedback - and if we continue the email, you\'ll be among the first to receive it',
-                successHeadline: 'Thank you!',
-                successDescription: 'We\'ll send you your briefing every morning.',
-                modClass: 'end-article',
-                insertMethod: insertBottomOfArticle
-            },
-            morningMailUkSeries: {
-                listId: '3640',
-                listName: 'morningMailUkSeries',
-                campaignCode: 'morning_mail_uk_series_article_signup',
-                headline: 'The morning briefing - start the day one step ahead',
-                description: 'Sign up and we\'ll give you a leg-up on the day\'s big stories. We\'re collecting feedback for the next two weeks - and if we continue the email, you\'ll be the first to receive it.',
-                successHeadline: 'Thank you!',
-                successDescription: 'We\'ll send you your briefing every morning.',
                 modClass: 'end-article',
                 insertMethod: insertBottomOfArticle
             },
@@ -177,6 +159,9 @@ define([
             var currentListPrefs = userPrefs.get('email-sign-up-' + formType);
             return currentListPrefs && currentListPrefs.indexOf(id) > -1;
         },
+        userHasSeenThisSession = function () {
+            return storage.session.get('email-sign-up-seen');
+        },
         addListToPage = function (listConfig) {
             if (listConfig) {
                 var iframe = bonzo.create(template(iframeTemplate, listConfig))[0],
@@ -200,6 +185,7 @@ define([
                     });
                 }
 
+                storage.session.set('email-sign-up-seen', 'true');
             }
         },
         canRunHelpers = {
@@ -207,12 +193,18 @@ define([
                 // Compare page keywords with passed in array
                 return !!intersection(keywords, keyword).length;
             },
-            userReferredFromFront: function () {
-                var host = window.location.host,
-                    escapedHost = host.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'), // Escape anything that will mess up the regex
-                    urlRegex = new RegExp('^https?:\/\/' + escapedHost + '\/(uk\/|us\/|au\/|international\/)?([a-z-])+$', 'gi');
+            userReferredFromNetworkFront: function () {
+                // Check whether the referring url ends in the edition
+                var networkFront = ['uk', 'us', 'au', 'international'],
+                    originPathName = document.referrer.split(/\?|#/)[0];
 
-                return urlRegex.test(document.referrer);
+                if (originPathName) {
+                    return some(networkFront, function (frontName) {
+                        return originPathName.substr(originPathName.lastIndexOf('/') + 1) === frontName;
+                    });
+                }
+
+                return false;
             },
             pageHasBlanketBlacklist: function () {
                 // Prevent the blanket emails from ever showing on certain keywords or sections
@@ -242,26 +234,21 @@ define([
                 return canRunHelpers.keywordExists(['Football']) &&
                         canRunHelpers.allowedArticleStructure();
             },
-            morningMailUkSeries: function () {
-                return config.page.seriesId === 'world/series/guardian-morning-briefing' &&
-                        canRunHelpers.allowedArticleStructure();
-            },
-            morningMailUk: function () {
-                return (config.page.edition === 'UK' || config.page.edition === 'INT') &&
-                        !canRunHelpers.pageHasBlanketBlacklist() &&
-                        canRunHelpers.userReferredFromFront() &&
-                        canRunHelpers.allowedArticleStructure();
-            },
             theGuardianToday: function () {
-                return !canRunHelpers.pageHasBlanketBlacklist() &&
-                        canRunHelpers.userReferredFromFront() &&
+                return config.switches.emailInArticleGtoday &&
+                        !canRunHelpers.pageHasBlanketBlacklist() &&
+                        canRunHelpers.userReferredFromNetworkFront() &&
                         canRunHelpers.allowedArticleStructure();
             }
         };
 
     return {
         init: function () {
-            if (!emailInserted && !config.page.isFront && config.switches.emailInArticle) {
+            if (!emailInserted &&
+                !config.page.isFront &&
+                config.switches.emailInArticle &&
+                storage.session.isAvailable &&
+                !userHasSeenThisSession()) {
                 // Get the user's current subscriptions
                 Id.getUserEmailSignUps()
                     .then(buildUserSubscriptions)
