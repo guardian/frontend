@@ -22,7 +22,8 @@ define([
 
     var membershipEndpoints = {
         UK:   'https://membership.theguardian.com/supporter',
-        US:   'https://membership.theguardian.com/us/supporter'
+        US:   'https://membership.theguardian.com/us/supporter',
+        INT:   'https://membership.theguardian.com/supporter'
     };
 
     var defaultData = {
@@ -50,6 +51,18 @@ define([
                 messageText: 'Support open, independent journalism. Become a Supporter for just $4.99 per month',
                 linkText: 'Find out more'
             }
+        },
+        INT: {
+            campaign:      'MEMBERSHIP_SUPPORTER_BANNER_INT',
+            code:          'membership-message-int',
+            minVisited:    10,
+            data: {
+                messageText: [
+                    'Support Guardian journalism and our coverage of critical, under-reported stories from around the world.',
+                    'Become a Supporter for just $49/€49 per year.'
+                ].join(' '),
+                linkText: 'Find out more'
+            }
         }
     };
 
@@ -64,24 +77,13 @@ define([
     }
 
     function show(edition, message) {
-        var originalMessage;
-
         var data = defaults({ linkHref: formatEndpointUrl(edition, message) }, message.data, defaultData);
-
-        originalMessage = new Message(message.code);
-
-        // Allow tracking to distinguish banners that have been re-displayed
-        // after closing from those that have only been displayed once.
-        if (originalMessage.hasSeen()) {
-            message.code += '-redisplayed';
-            message.campaign += '_REDISPLAYED';
-            message.data.linkHref = formatEndpointUrl(edition, message);
-        }
 
         return new Message(message.code, {
             pinOnHide: false,
             siteMessageLinkName: 'membership message',
-            siteMessageCloseBtn: 'hide'
+            siteMessageCloseBtn: 'hide',
+            cssModifierClass: 'membership-message'
         }).show(template(messageTemplate, data));
     }
 
@@ -98,6 +100,7 @@ define([
     }
 
     return {
-        init: init
+        init: init,
+        messages: messages
     };
 });
