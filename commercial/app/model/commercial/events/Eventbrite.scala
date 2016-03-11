@@ -16,20 +16,22 @@ import scala.util.control.NonFatal
 object Eventbrite extends ExecutionContexts with Logging {
 
   case class EBResponse(pagination: EBPagination, events: Seq[EBEvent])
+
   object EBResponse {
     implicit val ebResponseReads: Reads[EBResponse] = (
       (JsPath \ "pagination").read[EBPagination] and
         (JsPath \ "events").read[Seq[EBEvent]]
-      )(EBResponse.apply _)
+      ) (EBResponse.apply _)
   }
 
   case class EBPagination(pageNumber: Int, pageCount: Int)
+
   object EBPagination {
 
     implicit val readsPagination: Reads[EBPagination] = (
       (JsPath \ "page_number").read[Int] and
         (JsPath \ "page_count").read[Int]
-      )(EBPagination.apply _)
+      ) (EBPagination.apply _)
   }
 
   case class EBEvent(id: String,
@@ -42,9 +44,9 @@ object Eventbrite extends ExecutionContexts with Logging {
                      venue: EBVenue,
                      tickets: Seq[EBTicket],
                      capacity: Int
-                     )
+                    )
 
-  object EBEvent{
+  object EBEvent {
 
     def apply(id: String,
               name: String,
@@ -83,7 +85,7 @@ object Eventbrite extends ExecutionContexts with Logging {
         (JsPath \ "venue").read[EBVenue] and
         (JsPath \ "ticket_classes").read[Seq[Option[EBTicket]]] and
         (JsPath \ "capacity").read[Int]
-      )(EBEvent.apply(_: String, _: String, _: DateTime, _:String, _: String, _: String, _: EBVenue, _: Seq[Option[EBTicket]], _:Int))
+      ) (EBEvent.apply(_: String, _: String, _: DateTime, _: String, _: String, _: String, _: EBVenue, _: Seq[Option[EBTicket]], _: Int))
 
     def buildEventWithImageSrc(event: EBEvent, src: String) = {
       new EBEvent(
@@ -103,7 +105,7 @@ object Eventbrite extends ExecutionContexts with Logging {
 
   case class EBTicket(price: Double, quantityTotal: Int, quantitySold: Int, donationEvent: Boolean)
 
-  object EBTicket{
+  object EBTicket {
 
     def buildTicket(hidden: Boolean, donation: Boolean, valuePence: Double, quantityTotal: Int, quantitySold: Int): Option[EBTicket] = {
       if (hidden) {
@@ -119,59 +121,67 @@ object Eventbrite extends ExecutionContexts with Logging {
         (JsPath \ "cost" \ "value").read[Double].orElse(Reads.pure(0.00)) and
         (JsPath \ "quantity_total").read[Int] and
         (JsPath \ "quantity_sold").read[Int]
-      )(EBTicket.buildTicket _)
+      ) (EBTicket.buildTicket _)
   }
 
-  case class EBVenue(name: Option[String] = None,
-                     address: Option[String] = None,
-                     address2: Option[String] = None,
-                     city: Option[String] = None,
-                     country: Option[String] = None,
-                     postcode: Option[String] = None) {
+  case class EBVenue(name: Option[String],
+                     address: Option[String],
+                     address2: Option[String],
+                     city: Option[String],
+                     country: Option[String],
+                     postcode: Option[String]) {
 
     val description = Seq(name, city orElse country).flatten mkString ", "
   }
 
   object EBVenue {
 
-    implicit val venueReads: Reads[EBVenue] = (
-      (JsPath \ "name").readNullable[String] and
-        (JsPath \ "address" \ "address_1").readNullable[String] and
-        (JsPath \ "address" \ "address_2").readNullable[String] and
-        (JsPath \ "address" \ "city").readNullable[String] and
-        (JsPath \ "address" \ "country").readNullable[String] and
-        (JsPath \ "address" \ "postal_code").readNullable[String]
-      )(EBVenue.apply _)
+    implicit val venueReads: Reads[EBVenue] = {
+
+      def captureEmptyString(x: Reads[Option[String]]): Reads[Option[String]] = {
+        x map (el => if (el.getOrElse("").length == 0) None else el)
+      }
+
+      (
+        captureEmptyString((JsPath \ "name").readNullable[String]) and
+          captureEmptyString((JsPath \ "address" \ "address_1").readNullable[String]) and
+          captureEmptyString((JsPath \ "address" \ "address_2").readNullable[String]) and
+          captureEmptyString((JsPath \ "address" \ "city").readNullable[String]) and
+          captureEmptyString((JsPath \ "address" \ "country").readNullable[String]) and
+          captureEmptyString((JsPath \ "address" \ "postal_code").readNullable[String])
+        ) (EBVenue.apply _)
+    }
   }
 
-  object Helper {
+    object Helper {
 
-    def parsePageOfEvents(json: JsValue): Seq[EBEvent] = {
+      def parsePageOfEvents(json: JsValue): Seq[EBEvent] = {
 
-      val response: EBResponse = json.as[EBResponse]
-      response.events.filter(_.startDate.isAfter(now.plusWeeks(2)))
-    }
+        val response: EBResponse = json.as[EBResponse]
+        response.events.filter(_.startDate.isAfter(now.plusWeeks(2)))
+      }
 
-    def parsePagesOfEvents(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[EBEvent]] = {
+      def parsePagesOfEvents(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[EBEvent]] = {
 
-      feedMetaData.switch.isGuaranteedSwitchedOn flatMap { switchedOn =>
-        if (switchedOn) {
-          val start = currentTimeMillis
-          feedContent map { body =>
-            val JsArray(pages) = Json.parse(body).as[JsArray]
-            Future(ParsedFeed(
-              pages flatMap parsePageOfEvents,
-              Duration(currentTimeMillis - start, MILLISECONDS))
-            )
-          } getOrElse {
-            Future.failed(MissingFeedException(feedMetaData.name))
+        feedMetaData.switch.isGuaranteedSwitchedOn flatMap { switchedOn =>
+          if (switchedOn) {
+            val start = currentTimeMillis
+            feedContent map { body =>
+              val JsArray(pages) = Json.parse(body).as[JsArray]
+              Future(ParsedFeed(
+                pages flatMap parsePageOfEvents,
+                Duration(currentTimeMillis - start, MILLISECONDS))
+              )
+            } getOrElse {
+              Future.failed(MissingFeedException(feedMetaData.name))
+            }
+          } else {
+            Future.failed(SwitchOffException(feedMetaData.switch.name))
           }
-        } else {
-          Future.failed(SwitchOffException(feedMetaData.switch.name))
+        } recoverWith {
+          case NonFatal(e) => Future.failed(e)
         }
-      } recoverWith {
-        case NonFatal(e) => Future.failed(e)
       }
     }
+
   }
-}
