@@ -80,13 +80,6 @@
                     <option value="soulmates">Soulmates</option>
                 </select>
             </dd>
-            <dt>Gimbap headless</dt>
-            <dd>
-                <select id="blended-headless">
-                    <option value="false" selected>False</option>
-                    <option value="true">True</option>
-                </select>
-            </dd>
             <dt>Gimbap style</dt>
             <dd>
                 <select id="blended-style">
@@ -160,26 +153,12 @@
                     });
 
                     var blendedStyle = document.getElementById('blended-style'),
-                        gimbap       = document.getElementById('gimbap'),
-                        styleClasses = ['gimbap-wrap--normal', 'gimbap-wrap--reversed-out'];
+                        gimbap       = null,
+                        styleClasses = ['normal', 'reversed-out', 'membership', 'masterclasses', 'jobs', 'soulmates'].map(tone => 'gimbap-style--' + tone);
                     bean.on(blendedStyle, 'change', function () {
+                        gimbap = document.getElementById('gimbap').querySelector('.gimbap-wrap');
                         styleClasses.forEach(function(c) { gimbap.classList.remove(c); });
-                        gimbap.classList.add('gimbap-wrap--' + blendedStyle.value);
-                    });
-
-                    let blendedHeadless = document.getElementById('blended-headless'),
-                        gimbapHead    = null,
-                        gimbapHeadParent = null;
-                    bean.on(blendedHeadless, 'change', () => {
-                        gimbap = gimbap || document.getElementById('gimbap').querySelector('.gimbap-wrap');
-                        gimbapHead = gimbapHead || gimbap.querySelector('.gimbap-wrap__header');
-                        gimbapHeadParent = gimbapHeadParent || gimbapHead.parentNode;
-                        if (blendedHeadless.value === 'true') {
-                            gimbapHeadParent.removeChild(gimbapHead);
-                        } else {
-                            gimbapHeadParent.insertBefore(gimbapHead, gimbapHeadParent.firstChild);
-                        }
-
+                        gimbap.classList.add('gimbap-style--' + blendedStyle.value);
                     });
                 });
         });
@@ -862,10 +841,9 @@
             <form>
                 <label>Layout:
                     <select id="gimbap-layout">
-                        <option>1x1x1x1</option>
-                        <option selected>2x1x1</option>
-                        <option>1x2x1</option>
-                        <option>1x1x2</option>
+                        <option selected>1x1x1x1</option>
+                        <option>2x1x1</option>
+                        <option>1</option>
                     </select>
                 </label>
             </form>
@@ -878,13 +856,14 @@
                     loadCommercial(function () {
                         require(['bean', 'common/modules/commercial/creatives/template'])
                             .then(function (bean, Template) {
-                                let container = document.querySelector('#@component("id")')
-                                document.querySelector('#gimbap-layout').addEventListener('change', (event) => {
+                                let container = document.querySelector('#@component("id")');
+                                let layout = document.getElementById('gimbap-layout');
+                                layout.addEventListener('change', (event) => {
                                     container.innerHTML = '';
-                                    new Template(document.querySelector('#@component("id")'), @Html(Json.stringify(args))).create();
+                                    new Template(container, Object.assign({}, @Html(Json.stringify(args)), { layout: layout.value })).create();
                                 });
 
-                                bean.fire(document.querySelector('#gimbap-layout'), 'change');
+                                bean.fire(layout, 'change');
                         });
                     });
                 }

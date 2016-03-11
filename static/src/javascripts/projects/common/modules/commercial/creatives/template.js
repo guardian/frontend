@@ -17,7 +17,9 @@ define([
     'text!common/views/commercial/creatives/manual-inline.html',
     'text!common/views/commercial/creatives/manual-multiple.html',
     'text!common/views/commercial/creatives/manual-single.html',
-    'text!common/views/commercial/creatives/gimbap.html'
+    'text!common/views/commercial/creatives/gimbap-layout-1x1x1x1.html',
+    'text!common/views/commercial/creatives/gimbap-layout-2x1x1.html',
+    'text!common/views/commercial/creatives/gimbap-layout-1.html'
 ], function (
     Promise,
     $,
@@ -72,7 +74,7 @@ define([
 
     Template.prototype.create = function () {
         return new Promise(function (resolve) {
-            require(['text!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
+            require(['text!common/views/commercial/creatives/' + this.params.creative + (this.params.creative === 'gimbap' ? '-layout-' + this.params.layout : '') + '.html'], function (creativeTpl) {
                 if (templatePreprocessor[this.params.creative]) {
                     templatePreprocessor[this.params.creative](this);
                 }

@@ -69,6 +69,11 @@
         width: 1.2em;
         height: .75em;
         opacity: .8;
+
+        .gimbap:only-child > & {
+            width: .9em;
+            height: .55em;
+        }
     }
 }
 
@@ -167,6 +172,27 @@
             width: calc(50% - 650px);
         }
     }
+
+
+    > .inline-marque-36 {
+        display: none;
+
+        @include mq(desktop) {
+            display: block;
+            position: absolute;
+            left: calc(50% - 570px);
+            top: $gs-baseline / 3 * 10;
+            margin-left: $gs-gutter;
+
+            &:first-child {
+                top: $gs-baseline / 3 * 7;
+            }
+        }
+
+        @include mq(wide) {
+            left: calc(50% - 650px);
+        }
+    }
 }
 
 .gimbap-wrap__header {
@@ -210,6 +236,12 @@
     @include mq(wide) {
         margin-left: 240px;
         width: 960px;
+    }
+
+    /* this is ugly but that's the price to pay when
+       decoration elements pollute the DOM */
+    .gimbap-wrap > .inline-marque-36:first-child + & {
+        padding-top: $gs-baseline;
     }
 }
 
@@ -273,16 +305,23 @@
     .gimbap-style--tone-jobs { background: #42fbda; }
 }
 
-.gimbap-wrap--membership { background: #69d1ca; }
-.gimbap-wrap--masterclasses { background: #ffb202; }
-.gimbap-wrap--soulmates { background: #995490; }
-.gimbap-wrap--jobs { background: #42bfda; }
+.gimbap-style--membership { background: #69d1ca; }
+.gimbap-style--masterclasses { background: #ffb202; }
+.gimbap-style--soulmates { background: #995490; }
+.gimbap-style--jobs { background: #42bfda; }
 
-.gimbap-wrap--reversed-out,
-.gimbap-wrap--membership,
-.gimbap-wrap--masterclasses,
-.gimbap-wrap--soulmates,
-.gimbap-wrap--jobs {
+.gimbap-style--normal,
+.gimbap-style--reversed-out {
+    > .inline-marque-36 > svg {
+        fill: guss-colour(news-support-2, $pasteup-palette);
+    }
+}
+
+.gimbap-style--reversed-out,
+.gimbap-style--membership,
+.gimbap-style--masterclasses,
+.gimbap-style--soulmates,
+.gimbap-style--jobs {
     .gimbap {
         color: #ffffff;
     }
