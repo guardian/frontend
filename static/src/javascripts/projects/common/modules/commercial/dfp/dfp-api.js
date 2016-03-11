@@ -693,15 +693,6 @@ define([
         }
     }
 
-    function refreshSlot($adSlot) {
-        var advert = adverts[$adSlot.attr('id')];
-        if (shouldPrebidAdvert(advert)) {
-            prebidService.loadAdvert(advert);
-        } else {
-            googletag.pubads().refresh([advert.slot]);
-        }
-    }
-
     function Advert($adSlot) {
         this.isRendered = false;
         this.isLoading = false;
@@ -746,7 +737,6 @@ define([
         init:           init,
         load:           load,
         addSlot:        addSlot,
-        refreshSlot:    refreshSlot,
 
         // Used privately but exposed only for unit testing
         getAdverts:     getAdverts,

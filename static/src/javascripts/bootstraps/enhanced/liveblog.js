@@ -1,16 +1,10 @@
 define([
-    'bean',
-    'bonzo',
-    'qwery',
-    'fastdom',
-    'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
     'common/modules/accessibility/helpers',
     'common/modules/article/rich-links',
     'common/modules/commercial/liveblog-adverts',
-    'common/modules/commercial/liveblog-dynamic-adverts',
     'common/modules/experiments/affix',
     'common/modules/ui/autoupdate',
     'common/modules/ui/notification-counter',
@@ -19,18 +13,12 @@ define([
     'bootstraps/enhanced/trail',
     'common/utils/robust'
 ], function (
-    bean,
-    bonzo,
-    qwery,
-    fastdom,
-    $,
     config,
     detect,
     mediator,
     accessibility,
     richLinks,
     liveblogAdverts,
-    liveblogDynamicAdverts,
     Affix,
     AutoUpdate,
     NotificationCounter,
@@ -45,25 +33,19 @@ define([
 
     modules = {
         initAdverts: function () {
-            if (config.switches.liveblogDynamicAdverts) {
-                liveblogDynamicAdverts.init();
-            } else if (config.switches.liveblogAdverts) {
-                liveblogAdverts.init();
-            }
+            return config.switches.liveblogAdverts ? liveblogAdverts.init() : null;
         },
 
         affixTimeline: function () {
             var topMarker;
             if (detect.isBreakpoint({ min: 'desktop' }) && config.page.keywordIds.indexOf('football/football') < 0 && config.page.keywordIds.indexOf('sport/rugby-union') < 0) {
-                topMarker = qwery('.js-top-marker')[0];
-                /*eslint-disable no-new*/
+                topMarker = document.querySelector('.js-top-marker');
                 new Affix({
-                    element: qwery('.js-live-blog__timeline-container')[0],
+                    element: document.querySelector('.js-live-blog__timeline-container'),
                     topMarker: topMarker,
-                    bottomMarker: qwery('.js-bottom-marker')[0],
-                    containerElement: qwery('.js-live-blog__key-events')[0]
+                    bottomMarker: document.querySelector('.js-bottom-marker'),
+                    containerElement: document.querySelector('.js-live-blog__key-events')
                 });
-                /*eslint-enable no-new*/
             }
         },
 

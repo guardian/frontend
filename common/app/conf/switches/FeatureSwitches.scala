@@ -377,4 +377,24 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2016, 4, 5), //Tuesday
     exposeClientSide = false
   )
+  
+  // Owner: Dotcom loyalty
+  val EmailInArticleGtodaySwitch = Switch(
+    "Feature",
+    "email-in-article-gtoday",
+    "When ON, the email sign-up form will show the Guardian today email sign-up on articles",
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  // Owner: Dotcom health (R2/R1 decommissioning)
+  val ArchiveResolvesR1UrlsInRedirectTableSwitch = Switch(
+    "Feature",
+    "archive-service-resolves-r1-urls",
+    "When ON, the archive service can resolve un-normalisd R1 paths from the redirects table.",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 4, 28), //Thursday
+    exposeClientSide = false
+  )
 }
