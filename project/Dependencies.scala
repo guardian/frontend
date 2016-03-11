@@ -7,7 +7,7 @@ object Dependencies {
   val identityLibVersion = "3.51"
   val seleniumVersion = "2.44.0"
   val slf4jVersion = "1.7.5"
-  val awsVersion = "1.10.37"
+  val awsVersion = "1.10.60"
 
   val akkaAgent = "com.typesafe.akka" %% "akka-agent" % "2.3.4"
   val akkaContrib = "com.typesafe.akka" %% "akka-contrib" % "2.3.5"

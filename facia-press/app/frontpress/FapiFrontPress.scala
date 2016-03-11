@@ -2,27 +2,24 @@ package frontpress
 
 import com.amazonaws.services.s3.AmazonS3Client
 import com.gu.contentapi.client.GuardianContentClient
-import com.gu.contentapi.client.model.{SearchQuery, ItemQuery, ItemResponse}
+import com.gu.contentapi.client.model.{ItemQuery, ItemResponse, SearchQuery}
 import com.gu.facia.api.contentapi.ContentApi.{AdjustItemQuery, AdjustSearchQuery}
 import com.gu.facia.api.models.Collection
 import com.gu.facia.api.{FAPI, Response}
 import com.gu.facia.client.{AmazonSdkS3Client, ApiClient}
 import common.FaciaPressMetrics.{ContentApiSeoRequestFailure, ContentApiSeoRequestSuccess}
 import common._
-import conf.{Configuration, LiveContentApi}
 import conf.switches.Switches.FaciaInlineEmbeds
+import conf.{Configuration, LiveContentApi}
 import contentapi.{CircuitBreakingContentApiClient, QueryDefaults}
+import model._
 import model.facia.PressedCollection
 import model.pressed._
-import model._
-import org.apache.commons.lang.exception.ExceptionUtils
+import play.api.Play.current
 import play.api.libs.json._
 import play.api.libs.ws.WS
-import play.api.Play.current
 import services.{ConfigAgent, S3FrontsApi}
-import views.support.{Item460, Item140, Naked}
 
-import scala.collection.JavaConversions._
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
 
@@ -52,7 +49,11 @@ object LiveFapiFrontPress extends FapiFrontPress {
   def pressByPathId(path: String): Future[Unit] =
     getPressedFrontForPath(path)
       .map { pressedFront => S3FrontsApi.putLiveFapiPressedJson(path, Json.stringify(Json.toJson(pressedFront)))}
-      .asFuture.map(_.fold(e => throw new RuntimeException(s"${e.cause} ${e.message}"), _ => ()))
+      .asFuture.map(_.fold(
+        e => {
+          StatusNotification.notifyFailedJob(path, isLive = true, e)
+          throw new RuntimeException(s"${e.cause} ${e.message}")},
+        _ => StatusNotification.notifyCompleteJob(path, isLive = true)))
 
   def collectionContentWithSnaps(
     collection: Collection,
@@ -74,7 +75,12 @@ object DraftFapiFrontPress extends FapiFrontPress {
   def pressByPathId(path: String): Future[Unit] =
     getPressedFrontForPath(path)
       .map { pressedFront => S3FrontsApi.putDraftFapiPressedJson(path, Json.stringify(Json.toJson(pressedFront)))}
-      .asFuture.map(_.fold(e => throw new RuntimeException(s"${e.cause} ${e.message}"), _ => ()))
+      .asFuture.map(_.fold(
+        e => {
+          StatusNotification.notifyFailedJob(path, isLive = false, e)
+          throw new RuntimeException(s"${e.cause} ${e.message}")
+        },
+        _ => StatusNotification.notifyCompleteJob(path, isLive = false)))
 
   def collectionContentWithSnaps(
     collection: Collection,
