@@ -4,7 +4,7 @@ define([
     'helpers/fixtures',
     'common/utils/$'
 ], function (
-    liveblogDynamicAdverts,
+    liveblogAdverts,
     mediator,
     fixtures,
     $
@@ -47,11 +47,11 @@ define([
         });
 
         it('should exist', function () {
-            expect(liveblogDynamicAdverts).toBeDefined();
+            expect(liveblogAdverts).toBeDefined();
         });
 
         it('should insert ads every 5th block', function () {
-            liveblogDynamicAdverts.init().then(function () {
+            liveblogAdverts.init().then(function () {
                 slotsCounter = body.querySelectorAll('.ad-slot').length;
                 var candidates = document.querySelectorAll('.js-liveblog-body > *:nth-child(1+5n)');
                 var allSlots =
