@@ -86,28 +86,6 @@ define([
                 modClass: 'end-article',
                 insertMethod: insertBottomOfArticle
             },
-            morningMailUk: {
-                listId: '3640',
-                listName: 'morningMailUk',
-                campaignCode: 'morning_mail_uk_article_signup',
-                headline: 'Ever wanted someone to brief you on the day\'s news?',
-                description: 'For the next two weeks we\'ll be trialling a new morning briefing email. We\'re collecting feedback - and if we continue the email, you\'ll be among the first to receive it',
-                successHeadline: 'Thank you!',
-                successDescription: 'We\'ll send you your briefing every morning.',
-                modClass: 'end-article',
-                insertMethod: insertBottomOfArticle
-            },
-            morningMailUkSeries: {
-                listId: '3640',
-                listName: 'morningMailUkSeries',
-                campaignCode: 'morning_mail_uk_series_article_signup',
-                headline: 'The morning briefing - start the day one step ahead',
-                description: 'Sign up and we\'ll give you a leg-up on the day\'s big stories. We\'re collecting feedback for the next two weeks - and if we continue the email, you\'ll be the first to receive it.',
-                successHeadline: 'Thank you!',
-                successDescription: 'We\'ll send you your briefing every morning.',
-                modClass: 'end-article',
-                insertMethod: insertBottomOfArticle
-            },
             theGuardianToday: {
                 listId: (function () {
                     switch (config.page.edition) {
@@ -254,16 +232,6 @@ define([
             },
             theFiver: function () {
                 return canRunHelpers.keywordExists(['Football']) &&
-                        canRunHelpers.allowedArticleStructure();
-            },
-            morningMailUkSeries: function () {
-                return config.page.seriesId === 'world/series/guardian-morning-briefing' &&
-                        canRunHelpers.allowedArticleStructure();
-            },
-            morningMailUk: function () {
-                return (config.page.edition === 'UK' || config.page.edition === 'INT') &&
-                        !canRunHelpers.pageHasBlanketBlacklist() &&
-                        canRunHelpers.userReferredFromNetworkFront() &&
                         canRunHelpers.allowedArticleStructure();
             },
             theGuardianToday: function () {
