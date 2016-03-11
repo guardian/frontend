@@ -235,7 +235,8 @@ define([
                         canRunHelpers.allowedArticleStructure();
             },
             theGuardianToday: function () {
-                return !canRunHelpers.pageHasBlanketBlacklist() &&
+                return config.switches.emailInArticleGtoday &&
+                        !canRunHelpers.pageHasBlanketBlacklist() &&
                         canRunHelpers.userReferredFromNetworkFront() &&
                         canRunHelpers.allowedArticleStructure();
             }
