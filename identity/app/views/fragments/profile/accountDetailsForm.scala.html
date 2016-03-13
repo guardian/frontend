@@ -87,7 +87,7 @@
 
                 @select(
                     accountDetailsForm("title"),
-                    Titles.titles.filterNot(_ == "").map { item => (item,item)},
+                    Titles.titles.map { item => (item,item)},
                     ('_label, "Title"),
                     ('_default, "")
                 )

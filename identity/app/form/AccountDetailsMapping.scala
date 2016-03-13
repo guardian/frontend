@@ -15,7 +15,7 @@ object AccountDetailsMapping extends UserFormMapping[AccountFormData] with Addre
   protected lazy val formMapping = {
     mapping(
       ("primaryEmailAddress", idEmail),
-      ("title", comboList(Titles.titles)),
+      ("title", comboList("" :: Titles.titles)),
       ("firstName",  textField),
       ("secondName", textField),
       ("gender", comboList(genders)),
