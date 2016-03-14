@@ -22,7 +22,7 @@ final case class Quiz(
   path: String,
   quizType: String,
   content: QuizContent,
-  revealAtEnd: Boolean = false
+  revealAtEnd: Boolean
 ) extends Atom
 
 object Atoms extends common.Logging {
