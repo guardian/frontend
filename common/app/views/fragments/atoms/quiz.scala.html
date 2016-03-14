@@ -25,7 +25,7 @@
         )
     }
     @renderFooter(maybeResults)
-    @if(!maybeResults.isEmpty) {
+    @if(maybeResults.isEmpty) {
         <button class="button button--xlarge button--primary" type="submit">Submit answers</button>
     }
 </form>
