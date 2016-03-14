@@ -97,7 +97,9 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
     for {
       figure <- body.getElementsByTag("figure")
       image <- figure.getElementsByTag("img").headOption
-      if !figure.hasClass("element-comment") && !figure.hasClass("element-witness")
+      if !(figure.hasClass("element-comment") ||
+           figure.hasClass("element-witness") ||
+           figure.hasClass("element-atom"))
       container <- findContainerFromId(figure.attr("data-media-id"), image.attr("src"))
       image <- container.images.largestImage
     }{
