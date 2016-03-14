@@ -122,6 +122,30 @@ define([
             detect.adblockInUseSync();
     }
 
+    function checkEmailSignup() {
+        return new Promise(function(resolve) {
+            if (config.switches.emailInArticleOutbrain &&
+                emailRunChecks.getEmailInserted() &&
+                emailRunChecks.getEmailShown() === 'theGuardianToday') {
+                // The Guardian today email is already there
+                // so load the merchandising component
+                resolve('merchandising');
+            } else if (config.switches.emailInArticleOutbrain && emailRunChecks.allEmailCanRun()) {
+                // We need to check the user's email subscriptions
+                // so we don't insert the sign-up if they've already subscribed.
+                // This is an async API request and returns a promise.
+                emailRunChecks.getUserEmailSubscriptions().then(function () {
+                    // Check if the Guardian today list can run, if it can then load
+                    // the merchandising (non-compliant) version of Outbrain
+                    emailRunChecks.listCanRun('theGuardianToday') ? resolve('merchandising') : resolve();
+                });
+            } else {
+                resolve();
+            }
+        });
+
+    }
+
     function init() {
         if (commercialFeatures.outbrain &&
             !config.page.isFront &&
@@ -130,8 +154,10 @@ define([
         ) {
             // if there is no merch component, load the outbrain widget right away
             if (loadInstantly()) {
-                module.load();
-                return Promise.resolve(true);
+                return checkEmailSignup().then(function(widgetType) {
+                    widgetType ? module.load(widgetType) : module.load();
+                    return Promise.resolve(true)
+                });
             }
 
             return trackAd('dfp-ad--merchandising-high').then(function (isHiResLoaded) {
@@ -152,28 +178,9 @@ define([
                         module.load('merchandising');
                     }
                 } else {
-                    if (config.switches.emailInArticleOutbrain &&
-                        emailRunChecks.getEmailInserted() &&
-                        emailRunChecks.getEmailShown() === 'theGuardianToday') {
-                        // The Guardian today email is already there
-                        // so load the merchandising component
-                        module.load('merchandising');
-                    } else if (config.switches.emailInArticleOutbrain && emailRunChecks.allEmailCanRun()) {
-                        // We need to check the user's email subscriptions
-                        // so we don't insert the sign-up if they've already subscribed.
-                        // This is an async API request and returns a promise.
-                        emailRunChecks.getUserEmailSubscriptions().then(function () {
-                            // Check if the Guardian today list can run, if it can then load
-                            // the merchandising (non-compliant) version of Outbrain
-                            if (emailRunChecks.listCanRun('theGuardianToday')) {
-                                module.load('merchandising');
-                            } else {
-                                module.load();
-                            }
-                        });
-                    } else {
-                        module.load();
-                    }
+                   checkEmailSignup().then(function(widgetType){
+                       widgetType ? module.load(widgetType) : module.load();
+                   });
                 }
             });
         }
