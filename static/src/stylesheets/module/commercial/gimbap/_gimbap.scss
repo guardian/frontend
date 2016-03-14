@@ -25,24 +25,14 @@ $gimbap-jobs-reversed: #42bfda;
     }
 }
 
-.gimbap--has-author {
-    padding-right: 110px;
-
-    @supports (shape-outside: circle()) {
-        padding-right: 0;
-
-        &::before {
-            content: '';
-            float: right;
-            shape-outside: polygon(100% 0, 100% 100%, calc(100% - 120px) 100%, calc(100% - 120px) calc(100% - 144px));
-            width: 100%;
-            /* this will make sure the component has enough space for the picture*/
-            padding-top: 40%;
-
-            @include mq($until: tablet) {
-                padding-top: 72%;
-            }
-        }
+.gimbap__title--has-author {
+    &:before {
+        content: '';
+        float: right;
+        shape-outside: polygon(70% 0%, 100% 150%, 0 100%);
+        float: right;
+        width: 40%;
+        min-height: 120px;
     }
 }
 
@@ -121,6 +111,10 @@ $gimbap-jobs-reversed: #42bfda;
     svg {
         fill: #ffffff;
     }
+}
+
+.gimbap__logo--has-author {
+    align-self: flex-start;
 }
 
 .gimbap__logo--membership-horizontal {
