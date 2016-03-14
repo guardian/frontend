@@ -70,10 +70,10 @@ define([
 
     var colours = {
         1: 'vibrant-blue',
-        2: 'yellow',
-        3: 'teal',
-        4: 'orange',
-        5: 'light-blue'
+        2: 'orange',
+        3: 'light-blue',
+        4: 'deep-purple',
+        5: 'teal'
     };
 
     function checkWeCanShowMessage(message) {
@@ -92,6 +92,7 @@ define([
         var colour = storage.local.get('gu.alreadyVisited') % 6;
         var cssModifierClass = 'membership-message';
 
+        // 0 leaves it as the default colour set by the base class
         if (colour) {
             cssModifierClass += ('-' + colours[colour]);
         }

@@ -458,29 +458,40 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 /**
  * Membership messages
  */
+@mixin site-message-dark-text {
+    &,
+    .site-message__actions,
+    .site-message__actions__item,
+    path,
+    button,
+    a {
+        color: #333333;
+        fill: #333333;
+        border-color: #333333;
+    }
+}
 .site-message--adblock-message,
 .site-message--membership-message {
     background: colour(membership-default);
 }
-.site-message--membership-message-yellow {
-    background: #fff200;
-    color: #333333;
+.site-message--membership-message-deep-purple {
+    background: #7d0068;
 }
 .site-message--membership-message-orange {
     background: #ffbb00;
-    color: #333333;
+    @include site-message-dark-text;
 }
 .site-message--membership-message-vibrant-blue {
     background: #4bc6df;
-    color: #333333;
+    @include site-message-dark-text;
 }
 .site-message--membership-message-light-blue {
     background: #aad8f1;
-    color: #333333;
+    @include site-message-dark-text;
 }
 .site-message--membership-message-teal {
     background: #69d1ca;
-    color: #333333;
+    @include site-message-dark-text;
 }
 
 
