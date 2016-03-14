@@ -36,6 +36,10 @@ define([
         merchandising: {
             widget: '.js-container--commercial',
             container: '.js-outbrain-container'
+        },
+        email: {
+            widget: '.js-outbrain',
+            container: '.js-outbrain-container'
         }
     };
 
@@ -123,13 +127,13 @@ define([
     }
 
     function checkEmailSignup() {
-        return new Promise(function(resolve) {
+        return new Promise(function (resolve) {
             if (config.switches.emailInArticleOutbrain &&
                 emailRunChecks.getEmailInserted() &&
                 emailRunChecks.getEmailShown() === 'theGuardianToday') {
                 // The Guardian today email is already there
                 // so load the merchandising component
-                resolve('merchandising');
+                resolve('email');
             } else if (config.switches.emailInArticleOutbrain && emailRunChecks.allEmailCanRun()) {
                 // We need to check the user's email subscriptions
                 // so we don't insert the sign-up if they've already subscribed.
@@ -137,7 +141,7 @@ define([
                 emailRunChecks.getUserEmailSubscriptions().then(function () {
                     // Check if the Guardian today list can run, if it can then load
                     // the merchandising (non-compliant) version of Outbrain
-                    emailRunChecks.listCanRun('theGuardianToday') ? resolve('merchandising') : resolve();
+                    emailRunChecks.listCanRun('theGuardianToday') ? resolve('email') : resolve();
                 });
             } else {
                 resolve();
@@ -154,9 +158,9 @@ define([
         ) {
             // if there is no merch component, load the outbrain widget right away
             if (loadInstantly()) {
-                return checkEmailSignup().then(function(widgetType) {
+                return checkEmailSignup().then(function (widgetType) {
                     widgetType ? module.load(widgetType) : module.load();
-                    return Promise.resolve(true)
+                    return Promise.resolve(true);
                 });
             }
 
@@ -178,9 +182,9 @@ define([
                         module.load('merchandising');
                     }
                 } else {
-                   checkEmailSignup().then(function(widgetType){
-                       widgetType ? module.load(widgetType) : module.load();
-                   });
+                    checkEmailSignup().then(function (widgetType) {
+                        widgetType ? module.load(widgetType) : module.load();
+                    });
                 }
             });
         }

@@ -29,6 +29,12 @@ define([
             mobile:  { code: 'MB_10' },
             desktop: { code: 'AR_28' },
             tablet:  { code: 'MB_11' }
+        },
+
+        email: {
+            mobile:  { code: 'MB_10' },
+            desktop: { code: 'AR_28' },
+            tablet:  { code: 'MB_11' }
         }
     };
 
