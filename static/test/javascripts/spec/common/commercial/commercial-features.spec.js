@@ -264,6 +264,10 @@ define(['helpers/injector'], function (Injector) {
 
         });
 
+        describe('Comment adverts', function () {
+            // add implementation
+        });
+
         describe('Membership messages', function () {
             it('Displays messages by default', function (done) {
                 features = new CommercialFeatures;
