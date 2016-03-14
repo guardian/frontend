@@ -39,10 +39,10 @@ define([
             minVisited:    10,
             data: {
                 messageText: [
-                    'Thank you for reading the Guardian.',
-                    'Help keep our journalism fearless and independent by becoming a Supporter for just £5 a month.'
+                    'Support Guardian journalism and our coverage of critical, under-reported stories from around the world.',
+                    'Become a Supporter for just £49 per year.'
                 ].join(' '),
-                linkText: 'Join'
+                linkText: 'Find out more'
             }
         },
         US: {
