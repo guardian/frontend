@@ -32,23 +32,23 @@ define([
         userListSubsChecked = false,
         userListSubs = [];
 
-    function pageHasBlanketBlacklist () {
+    function pageHasBlanketBlacklist() {
         // Prevent the blanket emails from ever showing on certain keywords or sections
         return page.keywordExists(['US elections 2016', 'Football']) ||
             config.page.section === 'film' ||
             config.page.seriesId === 'world/series/guardian-morning-briefing';
     }
 
-    function userHasRemoved (id, formType) {
+    function userHasRemoved(id, formType) {
         var currentListPrefs = userPrefs.get('email-sign-up-' + formType);
         return currentListPrefs && currentListPrefs.indexOf(id) > -1;
     }
 
-    function userHasSeenThisSession () {
+    function userHasSeenThisSession() {
         return !!storage.session.get('email-sign-up-seen');
     }
 
-    function buildUserSubscriptions (response) {
+    function buildUserSubscriptions(response) {
         if (response && response.status !== 'error' && response.result && response.result.subscriptions) {
             userListSubs = map(response.result.subscriptions, 'listId');
             userListSubsChecked = true;
@@ -57,7 +57,7 @@ define([
         return userListSubs;
     }
 
-    function userReferredFromNetworkFront () {
+    function userReferredFromNetworkFront() {
         // Check whether the referring url ends in the edition
         var networkFront = ['uk', 'us', 'au', 'international'],
             originPathName = document.referrer.split(/\?|#/)[0];
@@ -71,11 +71,11 @@ define([
         return false;
     }
 
-    function isParagraph ($el) {
+    function isParagraph($el) {
         return $el.nodeName && $el.nodeName === 'P';
     }
 
-    function allowedArticleStructure () {
+    function allowedArticleStructure() {
         var $articleBody = $('.js-article__body');
 
         if ($articleBody.length) {
@@ -106,23 +106,23 @@ define([
 
     // Public
 
-    function setEmailInserted () {
+    function setEmailInserted() {
         emailInserted = true;
     }
 
-    function getEmailInserted () {
+    function getEmailInserted() {
         return emailInserted;
     }
 
-    function setEmailShown (emailName) {
+    function setEmailShown(emailName) {
         emailShown = emailName;
     }
 
-    function getEmailShown () {
+    function getEmailShown() {
         return emailShown;
     }
 
-    function allEmailCanRun () {
+    function allEmailCanRun() {
         var browser = detect.getUserAgent.browser,
             version = detect.getUserAgent.version;
 
@@ -132,10 +132,10 @@ define([
             config.switches.emailInArticle &&
             storage.session.isAvailable() &&
             !userHasSeenThisSession() &&
-            !(browser === 'MSIE' && contains(['7','8','9'], version + ''))
+            !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
     }
 
-    function getUserEmailSubscriptions () {
+    function getUserEmailSubscriptions() {
         if (userListSubsChecked) {
             return Promise.resolve(userListSubs);
         } else {
@@ -147,7 +147,7 @@ define([
         }
     }
 
-    function listCanRun (listConfig) {
+    function listCanRun(listConfig) {
         if (listConfig.listName &&
             canRunList[listConfig.listName]() &&
             !contains(userListSubs, listConfig.listId) &&
@@ -165,5 +165,5 @@ define([
         allEmailCanRun: allEmailCanRun,
         getUserEmailSubscriptions: getUserEmailSubscriptions,
         listCanRun: listCanRun
-    }
+    };
 });

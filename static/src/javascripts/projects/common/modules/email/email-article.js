@@ -147,7 +147,7 @@ define([
             if (emailRunChecks.allEmailCanRun()) {
                 // First we need to check the user's email subscriptions
                 // so we don't insert the sign-up if they've already subscribed
-                emailRunChecks.getUserEmailSubscriptions().then(function(){
+                emailRunChecks.getUserEmailSubscriptions().then(function () {
                     // Get the first list that is allowed on this page
                     addListToPage(find(listConfigs, emailRunChecks.listCanRun));
                 }).catch(function (error) {

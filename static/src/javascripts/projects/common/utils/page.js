@@ -70,7 +70,7 @@ define([
         return isit(vis, yes, no, el);
     }
 
-   function keywordExists(keyword) {
+    function keywordExists(keyword) {
         var keywords = config.page.keywords ? config.page.keywords.split(',') : '';
         // Compare page keywords with passed in array
         return !!intersection(keywords, keyword).length;

@@ -162,7 +162,7 @@ define([
                         // We need to check the user's email subscriptions
                         // so we don't insert the sign-up if they've already subscribed.
                         // This is an async API request and returns a promise.
-                        emailRunChecks.getUserEmailSubscriptions().then(function() {
+                        emailRunChecks.getUserEmailSubscriptions().then(function () {
                             // Check if the Guardian today list can run, if it can then load
                             // the merchandising (non-compliant) version of Outbrain
                             if (emailRunChecks.listCanRun('theGuardianToday')) {
@@ -170,7 +170,7 @@ define([
                             } else {
                                 module.load();
                             }
-                        })
+                        });
                     } else {
                         module.load();
                     }
