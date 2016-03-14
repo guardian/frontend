@@ -152,11 +152,13 @@ define([
                         module.load('merchandising');
                     }
                 } else {
-                    if (emailRunChecks.getEmailInserted() && emailRunChecks.getEmailShown() === 'theGuardianToday') {
+                    if (config.switches.emailInArticleOutbrain &&
+                        emailRunChecks.getEmailInserted() &&
+                        emailRunChecks.getEmailShown() === 'theGuardianToday') {
                         // The Guardian today email is already there
                         // so load the merchandising component
                         module.load('merchandising');
-                    } else if (emailRunChecks.allEmailCanRun()) {
+                    } else if (config.switches.emailInArticleOutbrain && emailRunChecks.allEmailCanRun()) {
                         // We need to check the user's email subscriptions
                         // so we don't insert the sign-up if they've already subscribed.
                         // This is an async API request and returns a promise.
