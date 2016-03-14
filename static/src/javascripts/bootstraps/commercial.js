@@ -12,6 +12,7 @@ define([
     'common/modules/commercial/slice-adverts',
     'common/modules/commercial/third-party-tags',
     'common/modules/commercial/paidfor-band',
+    'common/modules/commercial/sponsorship',
     'lodash/collections/forEach'
 ], function (
     Promise,
@@ -26,19 +27,17 @@ define([
     topBannerBelowContainer,
     sliceAdverts,
     thirdPartyTags,
-    paidforBand,
-    forEach
+    paidforBand
 ) {
     var modules = [
         ['cm-dfp', dfp.init ],
+        ['cm-thirdPartyTags', thirdPartyTags.init],
         ['cm-articleAsideAdverts', articleAsideAdverts.init],
         ['cm-articleBodyAdverts', articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
         ['cm-frontCommercialComponents', frontCommercialComponents.init],
         ['cm-topBannerBelowContainer', topBannerBelowContainer.init],
-        ['cm-thirdPartyTags', thirdPartyTags.init],
-        ['cm-badges', badges.init],
-        ['cm-paidforBand', paidforBand.init]
+        ['cm-badges', badges.init]
     ];
 
     return {
@@ -49,7 +48,7 @@ define([
 
             var modulePromises = [];
 
-            forEach(modules, function (pair) {
+            modules.forEach(function (pair) {
                 robust.catchErrorsAndLog(pair[0], function () {
                     modulePromises.push(pair[1]());
                 });
@@ -58,12 +57,9 @@ define([
             Promise.all(modulePromises).then(function () {
                 robust.catchErrorsAndLogAll([
                     ['cm-adverts', dfp.load],
-                    // TODO does dfp return a promise?
-                    ['cm-ready', function () {
-                        mediator.emit('page:commercial:ready');
-                    }]
-                ]);
-            });
+                    ['cm-sponsorship', sponsorship.init]);
+            })
+            .then(paidforBand.init);
         }
     };
 
