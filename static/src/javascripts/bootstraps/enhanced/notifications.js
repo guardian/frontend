@@ -43,7 +43,7 @@ define([
 
         getPushSubscription: function () {
 
-            console.log("++ Strapped 2");
+            console.log("++ Strapped 4");
             navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
                 reg = serviceWorkerRegistration;
                 serviceWorkerRegistration.pushManager.getSubscription().then(function (pushSubscription) {

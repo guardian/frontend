@@ -1,4 +1,5 @@
 @()
+@import conf.Static
 
 /*eslint quotes: [2, "single"], curly: [2, "multi-line"], strict: 0*/
 /*eslint-env browser*/
@@ -9,6 +10,7 @@
 // Offline page
 //
 
+console.log("++ Started tHE mo-FO");
 
 var staticCacheName = 'static';
 
@@ -146,10 +148,15 @@ self.addEventListener('activate', function(event) {
 });
 
 self.addEventListener('push', function(event) {
+
+    console.log("+++ Bojo Wotcher: I'll nail the fucker .. One Day");
     event.waitUntil(
         self.registration.pushManager.getSubscription().then(function (sub) {
             var gcmInd = sub.endpoint.substring(sub.endpoint.lastIndexOf('/') + 1);
-            var endpoint = '/notification/message/' + gcmInd;
+
+            // @Txt(Configuration.Notifications.latestMessageUrl)
+            var endpoint = '@{JavaScript(Configuration.Notifications.latestMessageUrl)}/' + gcmInd;
+            console.log("End: " + endpoint);
             fetch(endpoint, {
                 method: 'get',
                 headers: {
@@ -159,21 +166,52 @@ self.addEventListener('push', function(event) {
             }).then(function (response) {
                return response.json();
             })
-            .then(function (data) {
+            .then(function (json) {
 
-               if(data.status === "")
-                    var messages = data.messages;
+                console.log("++ Data: " + JSON.stringify(json));
+
+               if(json.status === "ok")
+                    var messages = json.messages;
 
                     messages.forEach( function(message) {
+                        var data = {topic: message.topic}
                         self.registration.showNotification(message.title, {
                             body: message.body,
                             icon: '@{JavaScript(Static("images/favicons/114x114.png").path)}',
-                            tag: message.title
+                            tag: message.title,
+                            data: data
                         });
                     });
                 })
 
         })
     );
+});
 
+self.addEventListener('notificationclick', function(event){
+    console.log("Notification click: tag:-- " + JSON.stringify(event.notification.data));
+    event.notification.close();
+    var url = '@{JavaScript(Configuration.javascript.pageData.get("guardian.page.host").getOrElse("https://www.theguardian.com"))}/' + event.notification.data.topic ;
+    console.log("Notification click: url:-- " + url);
+
+    event.waitUntil(
+        clients.matchAll({type: 'window'})
+            .then(function (windowClients) {
+                console.log("++ Then: " + windowClients.length )
+                for(var i = 0; i < windowClients.length; i++) {
+                    var client = windowClients[i];
+                    console.log("++ Client " + client.url)
+                    if(client.uri === url && 'focus' in client) {
+                        console.log("++ In focus")
+                        return client.focus()
+                    }
+
+                    if(clients.openWindow) {
+                        console.log("Open window");
+                        return clients.openWindow(url);
+                    }
+                }
+
+        })
+    );
 });

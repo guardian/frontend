@@ -17,9 +17,6 @@ case class TestMessage(gcmBrowserId: String, title: String, body: String)
 
 object NotificationsController extends Controller with ExecutionContexts with Logging {
 
-  val gcmAuthKey = Configuration.notifications.gcmAuthorinzationKey
-  val headers = Seq("Content-Type" -> "application/json", "Authorization" -> s"key=$gcmAuthKey")
-
   val form = Form(mapping(
     "notificationTopicId" -> nonEmptyText,
     "gcmBrowserId" -> nonEmptyText

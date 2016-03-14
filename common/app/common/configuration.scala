@@ -423,9 +423,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     def mandatoryCredentials: AWSCredentialsProvider = credentials.getOrElse(throw new BadConfigurationException("AWS credentials are not configured"))
     val credentials: Option[AWSCredentialsProvider] = {
       val provider = new AWSCredentialsProviderChain(
-        new ProfileCredentialsProvider("frontend"),
         new EnvironmentVariableCredentialsProvider(),
         new SystemPropertiesCredentialsProvider(),
+        new ProfileCredentialsProvider("frontend"),
         new InstanceProfileCredentialsProvider
       )
 
@@ -441,7 +441,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
           // We really, really want to ensure that PROD is configured before saying a box is OK
           if (Play.isProd) throw ex
           // this means that on dev machines you only need to configure keys if you are actually going to use them
-          println("++ This is happening")
           None
       }
     }
@@ -486,16 +485,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val apiKey = configuration.getStringProperty("news-alert.api.key")
   }
 
-  object notifications {
-    lazy val gcmAuthorinzationKey = configuration.getMandatoryStringProperty("gcm.authorization.key")
-  }
-
-  object redis {
-     lazy val messageCacheHost = configuration.getMandatoryStringProperty("redis.message.cache.host")
-     lazy val messageCachePort: Int =
-       Try(configuration.getMandatoryStringProperty("redis.message.cache.port"))
-       .map(_.toInt)
-       .getOrElse(throw new RuntimeException("Cant convert redismessagecacheport to an integer"))
+  object Notifications {
+    lazy val latestMessageUrl = configuration.getMandatoryStringProperty("notifications.latest_message.url")
   }
 }
 
