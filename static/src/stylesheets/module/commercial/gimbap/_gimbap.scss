@@ -152,7 +152,7 @@ $gimbap-jobs-reversed: #42bfda;
         }
 
         .logo--part2 {
-            fill: #ffb202;
+            fill: $gimbap-masterclasses-text;
         }
     }
 }
@@ -169,7 +169,7 @@ $gimbap-jobs-reversed: #42bfda;
         }
 
         .logo--part2 {
-            fill: #42bfda;
+            fill: $gimbap-jobs-text;
         }
     }
 }
@@ -181,7 +181,7 @@ $gimbap-jobs-reversed: #42bfda;
 
     .gimbap-style--normal & {
         svg {
-            fill: #995490;
+            fill: $gimbap-soulmates-text;
         }
     }
 }
@@ -349,7 +349,7 @@ $gimbap-jobs-reversed: #42bfda;
         filter: brightness(.5);
     }
 
-    .gimbap-style--tone-membership { background: lighten($gimbap-membership-reversed, 47%); color: $gimbap-membership-text; }
+    .gimbap-style--tone-membership { background: lighten($gimbap-membership-text, 35%); color: $gimbap-membership-text; }
     .gimbap-style--tone-masterclasses { background: lighten($gimbap-masterclasses-reversed, 47%); color: $gimbap-masterclasses-text; }
     .gimbap-style--tone-soulmates { background: lighten($gimbap-soulmates-reversed, 47%); color: $gimbap-soulmates-text; }
     .gimbap-style--tone-jobs { background: lighten($gimbap-jobs-reversed, 40%); color: $gimbap-jobs-text; }
