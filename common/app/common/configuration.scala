@@ -374,6 +374,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object faciatool {
     lazy val frontPressCronQueue = configuration.getStringProperty("frontpress.sqs.cron_queue_url")
     lazy val frontPressToolQueue = configuration.getStringProperty("frontpress.sqs.tool_queue_url")
+    lazy val frontPressStatusNotificationStream = configuration.getStringProperty("frontpress.kinesis.status_notification_stream")
 
     lazy val configBeforePressTimeout: Int = 1000
 
@@ -487,6 +488,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object Notifications {
     lazy val latestMessageUrl = configuration.getMandatoryStringProperty("notifications.latest_message.url")
+  }
+
+  object DeploysNotify {
+    lazy val apiKey = configuration.getStringProperty("deploys-notify.api.key")
   }
 }
 

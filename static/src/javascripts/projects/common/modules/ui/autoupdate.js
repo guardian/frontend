@@ -131,10 +131,8 @@ define([
                     var updateText = (count > 1) ? ' new updates' : ' new update';
                     $toastButton.removeClass('toast__button--closed').addClass('toast__button--open');
                     $toastText.html(count + updateText);
-                    $toastSpaceReserver.addClass('toast__space-reserver--open');
                 } else {
                     $toastButton.removeClass('toast__button--open').removeClass('loading').addClass('toast__button--closed');
-                    $toastSpaceReserver.removeClass('toast__space-reserver--open');
                 }
             });
         };
@@ -208,7 +206,6 @@ define([
         // Cache selectors
         var $liveblogBody = $('.js-liveblog-body');
         var $toastButton = $('.toast__button');
-        var $toastSpaceReserver = $('.toast__space-reserver');
         var $toastText = $('.toast__text', this.$toastButton);
         var toastContainer = qwery('.toast__container')[0];
 

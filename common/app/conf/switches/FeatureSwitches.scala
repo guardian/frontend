@@ -35,7 +35,7 @@ trait FeatureSwitches {
   val PlistaForOutbrainAU = Switch(
     "Feature",
     "plista-for-outbrain-au",
-    "Enable the Plista content recommendation widget to replace that of Outbrain for AU edition. For CODE environment only.",
+    "Enable the Plista content recommendation widget to replace that of Outbrain for AU edition.",
     safeState = Off,
     sellByDate = new LocalDate(2016, 4, 6),
     exposeClientSide = true
@@ -376,6 +376,16 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = new LocalDate(2016, 4, 5), //Tuesday
     exposeClientSide = false
+  )
+
+  // Owner: Dotcom loyalty
+  val EmailInArticleGtodaySwitch = Switch(
+    "Feature",
+    "email-in-article-gtoday",
+    "When ON, the email sign-up form will show the Guardian today email sign-up on articles",
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
   )
 
   // Owner: Dotcom health (R2/R1 decommissioning)
