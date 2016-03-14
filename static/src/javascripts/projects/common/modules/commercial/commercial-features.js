@@ -47,7 +47,7 @@ define([
 
         var switches = config.switches;
 
-        var wideLiveBlog = (isLiveBlog && detect.getBreakpoint() === 'wide');
+        var isWidePage = detect.getBreakpoint() === 'wide';
 
         // Feature switches
 
@@ -114,7 +114,7 @@ define([
             config.switches.discussion &&
             config.page.commentable &&
             identityApi.isUserLoggedIn() &&
-            (wideLiveBlog || !isLiveBlog);
+            (isLiveBlog ? isWidePage : true);
 
         this.async = {
             membershipMessages : detect.adblockInUse.then(function (adblockUsed) {
