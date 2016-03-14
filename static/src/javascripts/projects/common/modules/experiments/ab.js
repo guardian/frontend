@@ -12,6 +12,7 @@ define([
     'common/modules/experiments/tests/article-video-autoplay',
     'common/modules/experiments/tests/next-in-series',
     'common/modules/experiments/tests/article-related-content-display-as-recommendation',
+    'common/modules/experiments/tests/adblocking-response',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -35,6 +36,7 @@ define([
     ArticleVideoAutoplay,
     NextInSeries,
     RelatedContentDisplayAsRecommendation,
+    AdblockingResponse,
     flatten,
     forEach,
     keys,
@@ -53,7 +55,8 @@ define([
         new HeaderBiddingUS(),
         new ArticleVideoAutoplay(),
         new NextInSeries(),
-        new RelatedContentDisplayAsRecommendation()
+        new RelatedContentDisplayAsRecommendation(),
+        new AdblockingResponse()
     ]);
 
     var participationsKey = 'gu.ab.participations';

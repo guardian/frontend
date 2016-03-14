@@ -13,17 +13,18 @@ define([
     svgs,
     surveySimpleTemplate
 ) {
-    var surveySimple = function () {
+    var surveySimple = function (config) {
+        this.config = config || {};
         this.bannerTmpl = template(surveySimpleTemplate,
             {
-                surveyHeader: 'Personalise your Guardian',
-                surveyText: 'To remove all messages from this particular Guardian service simply sign up to the Guardian. To choose exactly which other commercial messages you\'d like to see from the Guardian, or not, become a Member from £5 a month.',
-                signupText: 'Sign-up now',
-                membershipText: 'Become a Member',
-                signupLink: '/commercial/survey-simple-sign-up',
-                membershipLink: '/commercial/survey-simple-membership',
-                signupDataLink: 'signup',
-                membershipDataLink: 'membership',
+                surveyHeader: this.config.surveyHeader,
+                surveyText: this.config.surveyText,
+                signupText: this.config.signupText,
+                membershipText: this.config.membershipText,
+                signupLink: this.config.signupLink,
+                membershipLink: this.config.membershipLink,
+                signupDataLink: this.config.signupDataLink,
+                membershipDataLink: this.config.membershipDataLink,
                 arrowWhiteRight: svgs('arrowWhiteRight'),
                 marque36icon: svgs('marque36icon'),
                 crossIcon: svgs('crossIcon'),
@@ -35,9 +36,11 @@ define([
         fastdom.write(function () {
             $(document.body).append(this.bannerTmpl);
 
-            bean.on(document, 'click', $('.js-survey-close'), function () {
-                $('.js-survey-overlay').addClass('u-h');
-            });
+            if (this.config.showCloseBtn) {
+                bean.on(document, 'click', $('.js-survey-close'), function () {
+                    $('.js-survey-overlay').addClass('u-h');
+                });
+            }
         }.bind(this));
     };
 
