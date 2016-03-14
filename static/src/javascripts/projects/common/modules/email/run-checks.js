@@ -28,6 +28,7 @@ define([
     Promise
 ) {
     var emailInserted = false,
+        emailShown,
         userListSubsChecked = false,
         userListSubs = [];
 
@@ -109,6 +110,18 @@ define([
         emailInserted = true;
     }
 
+    function getEmailInserted () {
+        return emailInserted;
+    }
+
+    function setEmailShown (emailName) {
+        emailShown = emailName;
+    }
+
+    function getEmailShown () {
+        return emailShown;
+    }
+
     function allEmailCanRun () {
         var browser = detect.getUserAgent.browser,
             version = detect.getUserAgent.version;
@@ -145,7 +158,10 @@ define([
     }
 
     return {
+        setEmailShown: setEmailShown,
+        getEmailShown: getEmailShown,
         setEmailInserted: setEmailInserted,
+        getEmailInserted: getEmailInserted,
         allEmailCanRun: allEmailCanRun,
         getUserEmailSubscriptions: getUserEmailSubscriptions,
         listCanRun: listCanRun

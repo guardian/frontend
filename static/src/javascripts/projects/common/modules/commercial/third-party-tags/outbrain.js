@@ -9,7 +9,8 @@ define([
     'common/modules/identity/api',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/third-party-tags/outbrain-codes',
-    'text!common/views/commercial/outbrain.html'
+    'text!common/views/commercial/outbrain.html',
+    'common/modules/email/run-checks'
 ], function (
     Promise,
     fastdom,
@@ -21,7 +22,8 @@ define([
     identity,
     commercialFeatures,
     getCode,
-    outbrainStr
+    outbrainStr,
+    emailRunChecks
 ) {
     var outbrainUrl = '//widgets.outbrain.com/outbrain.js';
     var outbrainTpl = template(outbrainStr);
@@ -150,7 +152,26 @@ define([
                         module.load('merchandising');
                     }
                 } else {
-                    module.load();
+                    if (emailRunChecks.getEmailInserted() && emailRunChecks.getEmailShown() === 'theGuardianToday') {
+                        // The Guardian today email is already there
+                        // so load the merchandising component
+                        module.load('merchandising');
+                    } else if (emailRunChecks.allEmailCanRun()) {
+                        // We need to check the user's email subscriptions
+                        // so we don't insert the sign-up if they've already subscribed.
+                        // This is an async API request and returns a promise.
+                        emailRunChecks.getUserEmailSubscriptions().then(function() {
+                            // Check if the Guardian today list can run, if it can then load
+                            // the merchandising (non-compliant) version of Outbrain
+                            if (emailRunChecks.listCanRun('theGuardianToday')) {
+                                module.load('merchandising');
+                            } else {
+                                module.load();
+                            }
+                        })
+                    } else {
+                        module.load();
+                    }
                 }
             });
         }

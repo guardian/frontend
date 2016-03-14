@@ -127,12 +127,14 @@ define([
 
                         omniture.trackLinkImmediate('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
                         emailRunChecks.setEmailInserted();
+                        emailRunChecks.setEmailShown(listConfig.listName);
                     });
                 } else {
                     spaceFiller.fillSpace(getSpacefinderRules(), function (paras) {
                         $iframeEl.insertBefore(paras[0]);
                         omniture.trackLinkImmediate('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
                         emailRunChecks.setEmailInserted();
+                        emailRunChecks.setEmailShown(listConfig.listName);
                     });
                 }
 
