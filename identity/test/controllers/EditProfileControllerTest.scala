@@ -163,6 +163,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
       FakeCSRFRequest ()
         .withFormUrlEncodedBody (
         ("primaryEmailAddress", primaryEmailAddress),
+        ("title", testTitle),
         ("firstName", firstName),
         ("secondName", secondName),
         ("gender", gender),
@@ -185,6 +186,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
       FakeCSRFRequest ()
         .withFormUrlEncodedBody (
         ("primaryEmailAddress", primaryEmailAddress),
+        ("title", testTitle),
         ("firstName", firstName),
         ("secondName", secondName),
         ("gender", gender),
@@ -205,6 +207,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
       FakeCSRFRequest ()
         .withFormUrlEncodedBody (
           ("primaryEmailAddress", primaryEmailAddress),
+          ("title", testTitle),
           ("firstName", firstName),
           ("secondName", secondName),
           ("gender", gender),
@@ -226,6 +229,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
       FakeCSRFRequest ()
         .withFormUrlEncodedBody (
         ("primaryEmailAddress", primaryEmailAddress),
+        ("title", testTitle),
         ("firstName", firstName),
         ("secondName", secondName),
         ("gender", gender),
@@ -354,7 +358,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
         val userUpdate = userUpdateCapture.getValue
 
         userUpdate.primaryEmailAddress.value should equal(primaryEmailAddress)
-        userUpdate.privateFields.value.title.value should equal(Some(testTitle))
+        userUpdate.privateFields.value.title.value should equal(testTitle)
         userUpdate.privateFields.value.firstName.value should equal(firstName)
         userUpdate.privateFields.value.secondName.value should equal(secondName)
         userUpdate.privateFields.value.gender.value should equal(gender)
