@@ -41,7 +41,7 @@ object MasterclassAgent extends MerchandiseAgent[Masterclass] with ExecutionCont
       val masterclasses: Seq[Masterclass] = feed.contents flatMap { event => Masterclass(event) }
       updateAvailableMerchandise(masterclasses)
 
-      val masterclassesWithImages = addImagesFromContentApi(populateKeywordIds(available.filter(_.isOpen)))
+      val masterclassesWithImages = addImagesFromContentApi(populateKeywordIds(masterclasses.filter(_.isOpen)))
       masterclassesWithImages map { updates =>
         updateAvailableMerchandise(updates)
         ParsedFeed(updates, feed.parseDuration)

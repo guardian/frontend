@@ -103,15 +103,15 @@ object Eventbrite extends ExecutionContexts with Logging {
     }
   }
 
-  case class EBTicket(price: Double, quantityTotal: Int, quantitySold: Int, donationEvent: Boolean)
+  case class EBTicket(price: Double, quantityTotal: Int, quantitySold: Int)
 
   object EBTicket {
 
     def buildTicket(hidden: Boolean, donation: Boolean, valuePence: Double, quantityTotal: Int, quantitySold: Int): Option[EBTicket] = {
-      if (hidden) {
+      if (hidden || donation) {
         None
       } else {
-        Some(EBTicket(valuePence / 100, quantityTotal, quantitySold, donation))
+        Some(EBTicket(valuePence / 100, quantityTotal, quantitySold))
       }
     }
 
