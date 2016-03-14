@@ -1,7 +1,9 @@
 define([
+    'common/utils/detect',
     'common/utils/fastdom-promise',
     'lodash/utilities/identity'
 ], function (
+    detect,
     fastdom,
     identity
 ) {
@@ -24,7 +26,7 @@ define([
         }
 
         var sponsorshipContainers = getSponsorshipContainers();
-        if( ! sponsorshipContainers.length ) {
+        if (!sponsorshipContainers.length) {
             return;
         }
 
@@ -49,4 +51,4 @@ define([
     return {
         init: init
     };
-})
+});

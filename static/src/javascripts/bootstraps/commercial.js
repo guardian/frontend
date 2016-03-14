@@ -12,8 +12,7 @@ define([
     'common/modules/commercial/slice-adverts',
     'common/modules/commercial/third-party-tags',
     'common/modules/commercial/paidfor-band',
-    'common/modules/commercial/sponsorship',
-    'lodash/collections/forEach'
+    'common/modules/commercial/dfp/sponsorship'
 ], function (
     Promise,
     config,
@@ -27,10 +26,11 @@ define([
     topBannerBelowContainer,
     sliceAdverts,
     thirdPartyTags,
-    paidforBand
+    paidforBand,
+    sponsorship
 ) {
     var modules = [
-        ['cm-dfp', dfp.init ],
+        ['cm-dfp', dfp.init],
         ['cm-thirdPartyTags', thirdPartyTags.init],
         ['cm-articleAsideAdverts', articleAsideAdverts.init],
         ['cm-articleBodyAdverts', articleBodyAdverts.init],
@@ -57,7 +57,8 @@ define([
             Promise.all(modulePromises).then(function () {
                 robust.catchErrorsAndLogAll([
                     ['cm-adverts', dfp.load],
-                    ['cm-sponsorship', sponsorship.init]);
+                    ['cm-sponsorship', sponsorship.init]
+                ]);
             })
             .then(paidforBand.init);
         }

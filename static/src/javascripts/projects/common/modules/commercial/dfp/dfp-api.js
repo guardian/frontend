@@ -619,7 +619,7 @@ define([
         if (commercialFeatures.dfpAdvertising) {
             return setupAdvertising();
         } else {
-            return fastdom.write(function () {
+            return idleFastdom.write(function () {
                 $(adSlotSelector).remove();
             });
         }
