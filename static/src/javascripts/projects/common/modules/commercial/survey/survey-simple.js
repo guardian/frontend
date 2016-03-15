@@ -25,6 +25,7 @@ define([
                 membershipLink: this.config.membershipLink,
                 signupDataLink: this.config.signupDataLink,
                 membershipDataLink: this.config.membershipDataLink,
+                showCloseBtn: this.config.showCloseBtn,
                 arrowWhiteRight: svgs('arrowWhiteRight'),
                 marque36icon: svgs('marque36icon'),
                 crossIcon: svgs('crossIcon'),
