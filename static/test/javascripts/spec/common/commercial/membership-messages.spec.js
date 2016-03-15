@@ -57,14 +57,14 @@ define([
 
         function expectMessageToBeShown(done) {
             membershipMessages.init().then(function () {
-                var message = document.querySelector('.js-site-message.site-message--membership-message');
+                var message = document.querySelector('.js-site-message');
                 expect(message).not.toBeNull();
             }).then(done);
         }
 
         function expectMessageNotToBeShown(done) {
             membershipMessages.init().then(function () {
-                var message = document.querySelector('.js-site-message.site-message--membership-message');
+                var message = document.querySelector('.js-site-message');
                 expect(message).toBeNull();
             }).then(done);
         }
