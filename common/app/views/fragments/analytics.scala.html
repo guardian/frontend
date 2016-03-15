@@ -7,14 +7,12 @@
 @import conf.switches.Switches.BritishCouncilBeacon
 @import common.InlineJs
 
-@if(NonBlockingOmniture.isSwitchedOn) {
-    @fragments.omnitureScript(Some(page.metadata))
+@fragments.omnitureScript(Some(page.metadata))
 
-    <script>
-        // analytics code
-        @InlineJs(templates.inlineJS.blocking.js.analytics().body, "analytics.js")
-    </script>
-}
+<script>
+    // analytics code
+    @InlineJs(templates.inlineJS.nonBlocking.js.analytics().body, "analytics.js")
+</script>
 
 @defining(s"${request.host}${request.path}") { path =>
 

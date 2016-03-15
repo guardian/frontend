@@ -164,12 +164,12 @@ try {
             return tag.join(',');
         }
 
-        @*
+        /*
           eVar1 contains today's date
           in the Omniture backend it only ever holds the first
           value a user gets, so in effect it is the first time
           we saw this user
-        *@
+        */
         s.eVar1 = now.getFullYear() + '/' + pad(now.getMonth() + 1, 2) + '/' + pad(now.getDate(), 2);
 
         s.prop7     = webPublicationDate ? new Date(webPublicationDate).toISOString().substr(0, 10).replace(/-/g, '/') : '';
@@ -191,11 +191,11 @@ try {
 
 
         var checkForPageViewInterval = setInterval(function () {
-            @*
+            /*
                 s_i_guardiangu-network is a globally defined Image() object created by Omniture
                 It does not sit in the DOM tree, and seems to be the only surefire way
                 to check if the intial beacon has been successfully sent
-            *@
+            */
             var img = window['s_i_' + window.s_account.split(',').join('_')];
             if (typeof (img) !== 'undefined' && (img.complete === true || img.width + img.height > 0)) {
                 clearInterval(checkForPageViewInterval);
