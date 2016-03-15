@@ -28,7 +28,7 @@ object DynamoDbStore extends Logging with ExecutionContexts {
     client.updateItemFuture(updateItemRequest) onFailure {
       case t: Throwable =>
         val message = t.getMessage
-        log.error(s"Unable to record missing video encoding with Dynamo DB $message")
+        log.error(s"Unable to Subscribe $gcmBrowserId to $notificationTopicId: $message")
     }
   }
 
@@ -44,7 +44,7 @@ object DynamoDbStore extends Logging with ExecutionContexts {
     client.deleteItemFuture(deleteItemRequest) onFailure {
       case t: Throwable =>
         val message = t.getMessage
-        log.error(s"Unable to delete item from subscription $message")
+        log.error(s"Unable to unsubscribe $gcmBrowserId to $notificationTopicId: $message")
     }
   }
 }
