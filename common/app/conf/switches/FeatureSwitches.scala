@@ -388,6 +388,17 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  // Owner: Dotcom loyalty
+  val EmailInArticleOutbrainSwitch = Switch(
+    "Feature",
+    "email-in-article-outbrain",
+    "When ON, we will check whether email sign-up will be shown and, if so, the outbrain non-compliant merchandising widget will be shown",
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+
   // Owner: Dotcom health (R2/R1 decommissioning)
   val ArchiveResolvesR1UrlsInRedirectTableSwitch = Switch(
     "Feature",
