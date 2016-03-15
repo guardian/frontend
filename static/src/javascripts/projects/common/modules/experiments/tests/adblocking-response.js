@@ -38,7 +38,7 @@ define([
             id: 'variantA',
             test: function () {
                 //TODO check also if not a subscriber
-                if (detect.adblockInUse.then(function (adblockUsed) {
+                detect.getFfOrGenericAdbockInstalled.then(function (adblockUsed) {
                     if (adblockUsed && !config.page.isFront && !userFeatures.isPayingMember()) {
                         var surveyOverlay = new SurveySimple({
                             surveyHeader: 'You appear to have an adblocker installed',
@@ -54,7 +54,7 @@ define([
                         surveyOverlay.attach();
                         surveyOverlay.show();
                     }
-                }));
+                });
             }
         }, {
             id: 'variantB',
