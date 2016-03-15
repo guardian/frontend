@@ -286,20 +286,24 @@ define([
 
             googletag.cmd.push = raven.wrap({ deep: true }, googletag.cmd.push);
 
-            googletag.cmd.push(function () {
-                renderStartTime = new Date().getTime();
-            });
-            googletag.cmd.push(setListeners);
-            googletag.cmd.push(setPageTargeting);
-            googletag.cmd.push(resolve);
+            googletag.cmd.push(
+                function () {
+                    renderStartTime = new Date().getTime();
+                },
+                setListeners,
+                setPageTargeting,
+                resolve
+            );
         });
     }
 
     function loadAdvertising() {
-        googletag.cmd.push(defineAdverts);
-        googletag.cmd.push(shouldLazyLoad() ? displayLazyAds : displayAds);
-        // anything we want to happen after displaying ads
-        googletag.cmd.push(postDisplay);
+        googletag.cmd.push(
+            defineAdverts,
+            shouldLazyLoad() ? displayLazyAds : displayAds,
+            // anything we want to happen after displaying ads
+            postDisplay
+        );
     }
 
     function defineSlot($adSlot, sizes) {

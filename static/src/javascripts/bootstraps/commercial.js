@@ -57,7 +57,10 @@ define([
             Promise.all(modulePromises).then(function () {
                 robust.catchErrorsAndLogAll([
                     ['cm-adverts', dfp.load],
-                    ['cm-sponsorship', sponsorship.init]
+                    ['cm-sponsorship', sponsorship.init],
+                    ['cm-ready', function () {
+                        mediator.emit('page:commercial:ready');
+                    }]
                 ]);
             })
             .then(paidforBand.init);

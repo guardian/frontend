@@ -303,7 +303,7 @@ define([
                     window.googletag.cmd.forEach(function (func) { func(); });
                     expect(window.googletag.setTargeting).toHaveBeenCalledWith('k', ['china']);
                 });
-                window.googletag.cmd.forEach(function (func) { func(); });                
+                window.googletag.cmd.forEach(function (func) { func(); });
             });
 
         });
