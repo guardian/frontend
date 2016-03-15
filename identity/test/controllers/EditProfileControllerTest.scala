@@ -134,6 +134,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
   "Given the submitAccountForm method is called" - {
     object FakeRequestAccountData {
       val primaryEmailAddress = "john.smith@bobmail.com"
+      val testTitle = "Mr"
       val firstName = "John"
       val secondName = "Smith"
       val gender = "Male"
@@ -162,6 +163,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
       FakeCSRFRequest ()
         .withFormUrlEncodedBody (
         ("primaryEmailAddress", primaryEmailAddress),
+        ("title", testTitle),
         ("firstName", firstName),
         ("secondName", secondName),
         ("gender", gender),
@@ -184,6 +186,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
       FakeCSRFRequest ()
         .withFormUrlEncodedBody (
         ("primaryEmailAddress", primaryEmailAddress),
+        ("title", testTitle),
         ("firstName", firstName),
         ("secondName", secondName),
         ("gender", gender),
@@ -204,6 +207,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
       FakeCSRFRequest ()
         .withFormUrlEncodedBody (
           ("primaryEmailAddress", primaryEmailAddress),
+          ("title", testTitle),
           ("firstName", firstName),
           ("secondName", secondName),
           ("gender", gender),
@@ -225,6 +229,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
       FakeCSRFRequest ()
         .withFormUrlEncodedBody (
         ("primaryEmailAddress", primaryEmailAddress),
+        ("title", testTitle),
         ("firstName", firstName),
         ("secondName", secondName),
         ("gender", gender),
@@ -267,6 +272,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
       val updatedUser = user.copy(
         primaryEmailAddress = primaryEmailAddress,
         privateFields = PrivateFields(
+          title = Some(testTitle),
           firstName = Some(firstName),
           secondName = Some(secondName),
           gender = Some(gender),
@@ -327,6 +333,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
       val updatedUser = user.copy(
         primaryEmailAddress = primaryEmailAddress,
         privateFields = PrivateFields(
+          title = Some(testTitle),
           firstName = Some(firstName),
           secondName = Some(secondName),
           gender = Some(gender),
@@ -351,6 +358,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
         val userUpdate = userUpdateCapture.getValue
 
         userUpdate.primaryEmailAddress.value should equal(primaryEmailAddress)
+        userUpdate.privateFields.value.title.value should equal(testTitle)
         userUpdate.privateFields.value.firstName.value should equal(firstName)
         userUpdate.privateFields.value.secondName.value should equal(secondName)
         userUpdate.privateFields.value.gender.value should equal(gender)
@@ -370,6 +378,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
       val updatedUser = user.copy(
         primaryEmailAddress = primaryEmailAddress,
         privateFields = PrivateFields(
+          title = Some(testTitle),
           firstName = Some(firstName),
           secondName = Some(secondName),
           gender = Some(gender),
@@ -401,6 +410,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
         val userUpdate = userUpdateCapture.getValue
 
         userUpdate.primaryEmailAddress.value should equal(primaryEmailAddress)
+        userUpdate.privateFields.value.title.value should equal(testTitle)
         userUpdate.privateFields.value.firstName.value should equal(firstName)
         userUpdate.privateFields.value.secondName.value should equal(secondName)
         userUpdate.privateFields.value.gender.value should equal(gender)
