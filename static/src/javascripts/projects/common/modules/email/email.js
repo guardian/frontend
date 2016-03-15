@@ -15,6 +15,7 @@ define([
     'common/views/svgs',
     'text!common/views/email/submissionResponse.html',
     'text!common/views/ui/close-button.html',
+    'text!common/views/email/mark-checkbox.html',
     'common/utils/robust',
     'common/utils/detect',
     'common/modules/identity/api',
@@ -38,6 +39,7 @@ define([
     svgs,
     successHtml,
     closeHtml,
+    markHtml,
     robust,
     detect,
     Id,
@@ -266,11 +268,9 @@ define([
                     }
 
                     if (showMarketingCheckbox && (showCheckedMarketing || showUncheckedMarketing)) {
-                        var marketingText = 'Support the Guardian and sign up to news, updates and offers. No junk mail, just the latest from us.';
-
+                        $('.js-email-sub__small', el).after(template(markHtml, {}));
                         $(el).addClass('email-sub__form--has-mark');
                         $('.js-email-sub__small', el).addClass('email-sub__small--is-hidden');
-                        $('.js-email-sub__small--mark', el).removeClass('email-sub__small--is-hidden').append(marketingText);
                         if (showCheckedMarketing) {
                             $('.js-email-sub__mark-input', el).attr('checked', 'checked').val('checked');
                         }
