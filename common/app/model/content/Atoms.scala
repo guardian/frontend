@@ -21,7 +21,8 @@ final case class Quiz(
   title: String,
   path: String,
   quizType: String,
-  content: QuizContent
+  content: QuizContent,
+  revealAtEnd: Boolean
 ) extends Atom
 
 object Atoms extends common.Logging {
@@ -46,7 +47,7 @@ object Quiz extends common.Logging {
   implicit val assetFormat = Json.format[Asset]
   implicit val imageFormat = Json.format[Image]
 
-  private def transformAssets(quizAsset: Option[atomapi.quiz.Asset]): Option[ImageMedia] = quizAsset.flatMap { asset =>
+  private def transformAssets(quizAsset: Option[atomapi.quiz.Asset]): Option[QuizImageMedia] = quizAsset.flatMap { asset =>
     val parseResult = Json.parse(asset.data).validate[Image]
     parseResult match {
       case parsed: JsSuccess[Image] => {
@@ -63,7 +64,7 @@ object Quiz extends common.Logging {
           mimeType = plainAsset.mimeType,
           url = plainAsset.secureUrl.orElse(plainAsset.url))
         }
-        if (assets.nonEmpty) Some(ImageMedia(allImages = assets)) else None
+        if (assets.nonEmpty) Some(QuizImageMedia(ImageMedia(allImages = assets))) else None
       }
       case error: JsError => {
         log.warn("Quiz atoms: asset json read errors: " + JsError.toFlatForm(error).toString())
@@ -120,7 +121,8 @@ object Quiz extends common.Logging {
       path = path,
       title = quiz.title,
       quizType = quiz.quizType,
-      content = content
+      content = content,
+      revealAtEnd = quiz.revealAtEnd
     )
   }
 }

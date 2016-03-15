@@ -30,10 +30,7 @@ object RelatedContent {
       packages.flatMap { p =>
         p.articles.map(_.content)
       }
-    } match {
-      case Some(packagesContent) if packagesContent.nonEmpty => packagesContent
-      case _ => response.storyPackage // Fallback to old 'storyPackage' field if no 'packages'
-    }
+    }.getOrElse(List.empty)
 
     val items = storyPackagesContent.map { item =>
       val frontendContent = Content(item)

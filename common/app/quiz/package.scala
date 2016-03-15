@@ -11,7 +11,7 @@ package object quiz {
     id: String,
     text: String,
     answers: Seq[Answer],
-    imageMedia: Option[model.ImageMedia])
+    imageMedia: Option[QuizImageMedia])
 
   case class Answer(
     id: String,
@@ -19,7 +19,21 @@ package object quiz {
     revealText: Option[String],
     weight: Int,
     buckets: Seq[String],
-    imageMedia: Option[model.ImageMedia])
+    imageMedia: Option[QuizImageMedia])
+
+  case class QuizImageMedia(
+    imageMedia: model.ImageMedia
+  ) {
+    val imageClasses: Option[(model.ImageAsset, String)] = {
+      imageMedia.masterImage.map { master =>
+        val orientationClass = master.orientation match {
+          case views.support.Portrait => "img--portrait"
+          case _ => "img--landscape"
+        }
+        (master, orientationClass)
+      }
+    }
+  }
 
   case class ResultGroup(
     id: String,

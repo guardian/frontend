@@ -3,7 +3,7 @@
 @import views.html.fragments.form.{inputField, textareaField}
 @import form.IdFormHelpers._
 @import form.Input
-@import model.{Countries, CountryCodes}
+@import model.{Countries, CountryCodes, Titles}
 @import org.joda.time.DateTime.now
 @import helper._
 <form class="form js-account-details-form" novalidate action="@idUrlBuilder.buildUrl("/account/edit", idRequest)" role="main" method="post">
@@ -85,6 +85,12 @@
         <div class="fieldset__fields">
             <ul class="u-unstyled">
 
+                @select(
+                    accountDetailsForm("title"),
+                    Titles.titles.map { item => (item,item)},
+                    ('_label, "Title"),
+                    ('_default, "")
+                )
                 @inputField(Input(accountDetailsForm("firstName"), ('_label, "First name"), Symbol("data-test-id") -> "first-name"))
                 @inputField(Input(accountDetailsForm("secondName"), ('_label, "Last name"), Symbol("data-test-id") -> "last-name"))
                 @select(

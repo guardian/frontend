@@ -51,4 +51,13 @@ trait FaciaSwitches {
     exposeClientSide = false
   )
 
+  val FaciaPressStatusNotifications = Switch(
+    "Facia",
+    "facia-press-status-notifications",
+    "If this is switched off, facia press will not send status notification on kinesis",
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
 }

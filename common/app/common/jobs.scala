@@ -9,10 +9,13 @@ import scala.collection.mutable
 import play.api.Play
 import Play.current
 
+import scala.concurrent.Future
+import scala.util.{Failure, Success}
+
 object Jobs extends Logging {
   implicit val global = scala.concurrent.ExecutionContext.global
   private val scheduler = StdSchedulerFactory.getDefaultScheduler()
-  private val jobs = mutable.Map[String, () => Unit]()
+  private val jobs = mutable.Map[String, () => Future[Unit]]()
   private val outstanding = akka.agent.Agent(Map[String,Int]().withDefaultValue(0))
 
   class FunctionJob extends Job {
@@ -24,11 +27,13 @@ object Jobs extends Logging {
       } else {
         log.info(s"Running job: $name")
         outstanding.send(map => map.updated(name, map(name) + 1))
-        try {
-          f()
-        } finally {
-          outstanding.send(map => map.updated(name, map(name) - 1))
-          log.info(s"Finished job: $name")
+        f().onComplete {
+          case Success(_) =>
+            outstanding.send(map => map.updated(name, map(name) - 1))
+            log.info(s"Finished job: $name")
+          case Failure(t) =>
+            outstanding.send(map => map.updated(name, map(name) - 1))
+            log.error(s"An error has occured during job $name", t)
         }
       }
     }
@@ -51,7 +56,7 @@ object Jobs extends Logging {
     // want to check in
     if (!Play.isTest) {
       log.info(s"Scheduling $name")
-      jobs.put(name, () => block)
+      jobs.put(name, () => Future(block))// TODO make a version to take a future
 
       scheduler.scheduleJob(
         JobBuilder.newJob(classOf[FunctionJob]).withIdentity(name).build(),
@@ -64,7 +69,7 @@ object Jobs extends Logging {
     if (!Play.isTest) {
       val schedule = DailyTimeIntervalScheduleBuilder.dailyTimeIntervalSchedule().withIntervalInMinutes(intervalInMinutes)
       log.info(s"Scheduling $name to run every $intervalInMinutes minutes")
-      jobs.put(name, () => block)
+      jobs.put(name, () => Future(block))// TODO make a version to take a future
 
       scheduler.scheduleJob(
         JobBuilder.newJob(classOf[FunctionJob]).withIdentity(name).build(),
@@ -73,7 +78,7 @@ object Jobs extends Logging {
     }
   }
 
-  def scheduleEveryNSeconds(name: String, intervalInSeconds: Int)(block: => Unit): Unit = {
+  def scheduleEveryNSeconds(name: String, intervalInSeconds: Int)(block: => Future[Unit]): Unit = {
     if (!Play.isTest) {
       val schedule = DailyTimeIntervalScheduleBuilder.dailyTimeIntervalSchedule().withIntervalInSeconds(intervalInSeconds)
       log.info(s"Scheduling $name to run every $intervalInSeconds minutes")
