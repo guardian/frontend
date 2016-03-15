@@ -43,6 +43,8 @@ define([
         }
     };
 
+    var emailSignupPromise;
+
     function build(codes, breakpoint) {
         var html = outbrainTpl({ widgetCode: codes.code || codes.image });
         if (breakpoint !== 'mobile' && codes.text) {
@@ -127,27 +129,30 @@ define([
     }
 
     function checkEmailSignup() {
-        return new Promise(function (resolve) {
-            if (config.switches.emailInArticleOutbrain &&
-                emailRunChecks.getEmailInserted() &&
-                emailRunChecks.getEmailShown() === 'theGuardianToday') {
-                // The Guardian today email is already there
-                // so load the merchandising component
-                resolve('email');
-            } else if (config.switches.emailInArticleOutbrain && emailRunChecks.allEmailCanRun()) {
-                // We need to check the user's email subscriptions
-                // so we don't insert the sign-up if they've already subscribed.
-                // This is an async API request and returns a promise.
-                emailRunChecks.getUserEmailSubscriptions().then(function () {
-                    // Check if the Guardian today list can run, if it can then load
-                    // the merchandising (non-compliant) version of Outbrain
-                    emailRunChecks.listCanRun('theGuardianToday') ? resolve('email') : resolve();
-                });
-            } else {
-                resolve();
-            }
-        });
+        if (!emailSignupPromise) {
+            emailSignupPromise = new Promise(function (resolve) {
+                if (config.switches.emailInArticleOutbrain &&
+                    emailRunChecks.getEmailInserted() &&
+                    emailRunChecks.getEmailShown() === 'theGuardianToday') {
+                    // The Guardian today email is already there
+                    // so load the merchandising component
+                    resolve('email');
+                } else if (config.switches.emailInArticleOutbrain && emailRunChecks.allEmailCanRun()) {
+                    // We need to check the user's email subscriptions
+                    // so we don't insert the sign-up if they've already subscribed.
+                    // This is an async API request and returns a promise.
+                    emailRunChecks.getUserEmailSubscriptions().then(function () {
+                        // Check if the Guardian today list can run, if it can then load
+                        // the merchandising (non-compliant) version of Outbrain
+                        emailRunChecks.listCanRun('theGuardianToday') ? resolve('email') : resolve();
+                    });
+                } else {
+                    resolve();
+                }
+            });
+        }
 
+        return emailSignupPromise;
     }
 
     function init() {
