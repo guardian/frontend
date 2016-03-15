@@ -174,7 +174,7 @@ self.addEventListener('push', function(event) {
                     var messages = json.messages;
 
                     messages.forEach( function(message) {
-                        var data = {topic: message.topic}
+                        var data = {topic: message.topic};
                         self.registration.showNotification(message.title, {
                             body: message.body,
                             icon: '@{JavaScript(Static("images/favicons/114x114.png").path)}',
@@ -189,29 +189,30 @@ self.addEventListener('push', function(event) {
 });
 
 self.addEventListener('notificationclick', function(event){
-    console.log("Notification click: tag:-- " + JSON.stringify(event.notification.data));
-    event.notification.close();
-    var url = '@{JavaScript(Configuration.javascript.pageData.get("guardian.page.host").getOrElse("https://www.theguardian.com"))}/' + event.notification.data.topic ;
-    console.log("Notification click: url:-- " + url);
 
-    event.waitUntil(
-        clients.matchAll({type: 'window'})
-            .then(function (windowClients) {
-                console.log("++ Then: " + windowClients.length )
-                for(var i = 0; i < windowClients.length; i++) {
-                    var client = windowClients[i];
-                    console.log("++ Client " + client.url)
-                    if(client.uri === url && 'focus' in client) {
-                        console.log("++ In focus")
-                        return client.focus()
+        console.log("Notification click: tag:-- " + JSON.stringify(event.notification.data));
+        event.notification.close();
+        var url = '@{JavaScript(Configuration.javascript.pageData.get("guardian.page.host").getOrElse("https://www.theguardian.com"))}/' + event.notification.data.topic ;
+        console.log("Notification click: url:-- " + url);
+
+        event.waitUntil(
+            clients.matchAll({
+                    type: 'window'
+                })
+                .then(function(windowClients) {
+                    console.log("++ Clients: " + windowClients.length);
+                    for (var i = 0; i < windowClients.length; i++) {
+                        var client = windowClients[i];
+                        console.log("++ Client: " + i + " " +JSON.stringify(client[i]));
+                        if (client.url === url && 'focus' in client) {
+                            console.log("URL equals");
+                            return client.focus();
+                        }
                     }
-
-                    if(clients.openWindow) {
-                        console.log("Open window");
+                    if (clients.openWindow) {
+                        console.log("Open Window");
                         return clients.openWindow(url);
                     }
-                }
-
-        })
-    );
+                })
+        );
 });
