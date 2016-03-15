@@ -587,12 +587,7 @@ $timeline-width: 15px;
     padding-bottom: $gs-baseline;
     text-align: center;
     transition: transform .3s ease-in-out;
-    transform: translateY((-1) * $gs-baseline * 5);
     width: 100%;
-
-    .toast__space-reserver--open & {
-        transform: translateY(0);
-    }
 
     @include mq(desktop) {
         width: gs-span(8);

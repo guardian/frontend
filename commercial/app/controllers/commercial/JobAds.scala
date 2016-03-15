@@ -1,9 +1,10 @@
 package controllers.commercial
 
-import model.commercial.jobs.{Job, JobsAgent}
-import model.{NoCache, Cached}
+import model.commercial.jobs.JobsAgent
+import model.{Cached, NoCache}
 import performance.MemcachedAction
 import play.api.mvc._
+
 import scala.concurrent.Future
 
 object JobAds extends Controller with implicits.Requests {
@@ -18,7 +19,11 @@ object JobAds extends Controller with implicits.Requests {
           val clickMacro = request.getParameter("clickMacro")
           val omnitureId = request.getParameter("omnitureId")
 
-          jsonFormat.result(views.html.jobs.jobs(jobs.take(2), omnitureId, clickMacro))
+          if(conf.switches.Switches.v2JobsTemplate.isSwitchedOn) {
+            jsonFormat.result(views.html.jobs.jobsV2(jobs.take(2), omnitureId, clickMacro))
+          } else {
+            jsonFormat.result(views.html.jobs.jobs(jobs.take(2), omnitureId, clickMacro))
+          }
         }
       }
     }

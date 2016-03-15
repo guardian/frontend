@@ -33,39 +33,46 @@ define([
 ) {
     function showAdblockMessage() {
         var adblockLink = 'https://membership.theguardian.com/supporter',
-            message = sample([
-                {
-                    id: 'monthly',
-                    messageText: 'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way? Become a Supporter from just £5 per month',
+            messages = {
+                UK: {
+                    campaign: 'ADB_UK',
+                    messageText: [
+                        'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way?',
+                        'Become a Supporter for less than £1 per week'
+                    ].join(' '),
                     linkText: 'Find out more'
                 },
-                {
-                    id: 'annual',
-                    messageText: 'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way? Become a Supporter for just £50 per a year',
+                US: {
+                    campaign: 'ADB_US',
+                    messageText: [
+                        'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way?',
+                        'Become a Supporter for less than $1 per week'
+                    ].join(' '),
                     linkText: 'Find out more'
                 },
-                {
-                    id: 'weekly',
-                    messageText: 'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way? Become a Supporter for less than £1 per week',
+                INT: {
+                    campaign: 'ADB_INT',
+                    messageText: [
+                        'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way?',
+                        'Become a Supporter for less than $1/€1 per week'
+                    ].join(' '),
                     linkText: 'Find out more'
-                },
-                {
-                    id: 'no-price',
-                    messageText: 'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way?',
-                    linkText: 'Become a supporter today'
                 }
-            ]);
+            },
+            message = messages[config.page.edition];
 
-        new Message('adblock-message', {
-            pinOnHide: false,
-            siteMessageLinkName: 'adblock message variant ' + message.id,
-            siteMessageCloseBtn: 'hide'
-        }).show(template(messageTemplate, {
-            linkHref: adblockLink + '?INTCMP=adb-mv-' + message.id,
-            messageText: message.messageText,
-            linkText: message.linkText,
-            arrowWhiteRight: svgs('arrowWhiteRight')
-        }));
+        if (message) {
+            new Message('adblock-message', {
+                pinOnHide: false,
+                siteMessageLinkName: 'adblock',
+                siteMessageCloseBtn: 'hide'
+            }).show(template(messageTemplate, {
+                linkHref: adblockLink + '?INTCMP=' + message.campaign,
+                messageText: message.messageText,
+                linkText: message.linkText,
+                arrowWhiteRight: svgs('arrowWhiteRight')
+            }));
+        }
     }
 
     function showAdblockBanner() {
