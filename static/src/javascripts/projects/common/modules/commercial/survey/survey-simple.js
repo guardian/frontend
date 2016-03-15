@@ -44,5 +44,11 @@ define([
         }.bind(this));
     };
 
+    surveySimple.prototype.show = function () {
+        fastdom.write(function () {
+            $('.js-survey-overlay').removeClass('u-h');
+        });
+    };
+
     return surveySimple;
 });

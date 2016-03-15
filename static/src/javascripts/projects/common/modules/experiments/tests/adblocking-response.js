@@ -1,10 +1,12 @@
 define([
+    'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
     'lodash/collections/contains',
     'common/modules/commercial/user-features',
     'common/modules/commercial/survey/survey-simple'
 ], function (
+    $,
     config,
     detect,
     contains,
@@ -37,17 +39,19 @@ define([
             test: function () {
                 //TODO check also if not a subscriber
                 if (detect.adblockInUseSync() && !config.page.isFront && !userFeatures.isPayingMember()) {
-                    new SurveySimple({
-                        surveyHeader: 'Personalise your Guardian',
-                        surveyText:'To remove all messages from this particular Guardian service simply sign up to the Guardian. To choose exactly which other commercial messages you\'d like to see from the Guardian, or not, become a Member from £5 a month.',
-                        signupText: 'Sign-up now',
+                    var surveyOverlay = new SurveySimple({
+                        surveyHeader: 'You appear to have an adblocker installed',
+                        surveyText:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis et quam auctor, efficitur velit nec, ullamcorper elit. Sed ac pharetra mauris. Curabitur blandit est vel commodo lobortis. Curabitur ullamcorper ante in massa maximus pharetra. Aliquam erat volutpat. In sed arcu velit. Vivamus nisl eros, venenatis ac imperdiet nec, lobortis sed lorem. Vestibulum et dictum eros, et finibus dui.',
+                        signupText: 'Whitelist',
                         membershipText: 'Become a Member',
                         signupLink: '/commercial/survey-simple-sign-up',
                         membershipLink: '/commercial/survey-simple-membership',
-                        signupDataLink: 'signup',
-                        membershipDataLink: 'membership',
+                        signupDataLink: 'adblock whitelist',
+                        membershipDataLink: 'adblock membership',
                         showCloseBtn: false
-                    }).attach();
+                    });
+                    surveyOverlay.attach();
+                    surveyOverlay.show();
                 }
             }
         }, {
