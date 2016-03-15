@@ -152,36 +152,27 @@ object Eventbrite extends ExecutionContexts with Logging {
         ) (EBVenue.apply _)
     }
   }
+  def parsePagesOfEvents(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[EBEvent]] = {
 
-    object Helper {
+    feedMetaData.switch.isGuaranteedSwitchedOn flatMap { switchedOn =>
+      if (switchedOn) {
+        val start = currentTimeMillis
+        feedContent map { body =>
+          val responses = Json.parse(body).as[Seq[EBResponse]]
+          val events = responses flatMap {_.events} filter {_.startDate.isAfter(now.plusWeeks(2))}
 
-      def parsePageOfEvents(json: JsValue): Seq[EBEvent] = {
-
-        val response: EBResponse = json.as[EBResponse]
-        response.events.filter(_.startDate.isAfter(now.plusWeeks(2)))
-      }
-
-      def parsePagesOfEvents(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[EBEvent]] = {
-
-        feedMetaData.switch.isGuaranteedSwitchedOn flatMap { switchedOn =>
-          if (switchedOn) {
-            val start = currentTimeMillis
-            feedContent map { body =>
-              val JsArray(pages) = Json.parse(body).as[JsArray]
-              Future(ParsedFeed(
-                pages flatMap parsePageOfEvents,
-                Duration(currentTimeMillis - start, MILLISECONDS))
-              )
-            } getOrElse {
-              Future.failed(MissingFeedException(feedMetaData.name))
-            }
-          } else {
-            Future.failed(SwitchOffException(feedMetaData.switch.name))
-          }
-        } recoverWith {
-          case NonFatal(e) => Future.failed(e)
+          Future(ParsedFeed(
+            events,
+            Duration(currentTimeMillis - start, MILLISECONDS))
+          )
+        } getOrElse {
+          Future.failed(MissingFeedException(feedMetaData.name))
         }
+      } else {
+        Future.failed(SwitchOffException(feedMetaData.switch.name))
       }
+    } recoverWith {
+      case NonFatal(e) => Future.failed(e)
     }
-
   }
+}

@@ -35,7 +35,7 @@ object MasterclassAgent extends MerchandiseAgent[Masterclass] with ExecutionCont
       Future.sequence(futureMasterclasses)
     }
 
-    val futureParsedFeed = Eventbrite.Helper.parsePagesOfEvents(feedMetaData, feedContent)
+    val futureParsedFeed = Eventbrite.parsePagesOfEvents(feedMetaData, feedContent)
     futureParsedFeed flatMap { feed =>
 
       val masterclasses: Seq[Masterclass] = feed.contents flatMap { event => Masterclass(event) }
