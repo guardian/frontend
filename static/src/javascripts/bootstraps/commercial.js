@@ -58,12 +58,12 @@ define([
                 robust.catchErrorsAndLogAll([
                     ['cm-adverts', dfp.load],
                     ['cm-sponsorship', sponsorship.init],
+                    ['cm-paidforBand', paidforBand.init],
                     ['cm-ready', function () {
                         mediator.emit('page:commercial:ready');
                     }]
                 ]);
-            })
-            .then(paidforBand.init);
+            });
         }
     };
 
