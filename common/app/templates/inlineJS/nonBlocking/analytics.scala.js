@@ -4,19 +4,13 @@
 
 try {
 
-    (function (window, document) {
+    (function(){
 
-        var config  = window.guardian.config,
-            isEmbed = !!window.guardian.isEmbed,
+        var config  = guardian.config,
+            isEmbed = !!guardian.isEmbed,
             tpA     = s.getTimeParting('n', '+0'),
-            now     = new Date(),
+            now      = new Date(),
             webPublicationDate = config.page.webPublicationDate;
-
-        var R2_STORAGE_KEY = 's_ni', // DO NOT CHANGE THIS, ITS IS SHARED WITH R2. BAD THINGS WILL HAPPEN!
-            NG_STORAGE_KEY = 'gu.analytics.referrerVars',
-            standardProps = 'channel,prop1,prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop37,prop38,prop47,' +
-                'prop51,prop61,prop64,prop65,prop74,prop40,prop63,eVar7,eVar37,eVar38,eVar39,eVar50,eVar24,eVar60,eVar51,' +
-                'eVar31,eVar18,eVar32,eVar40,list1,list2,list3,events';
 
         var getChannel = function () {
             if (config.page.contentType === 'Network Front') {
@@ -27,27 +21,7 @@ try {
             return config.page.section || '';
         };
 
-        // helper
-        function forEach(array, callback, scope) {
-            var data = [], dataLength = data.length;
-            for (var i = 0; i < dataLength; i++) {
-                data.push(callback.call(scope, i, array[i]));
-            }
-            return data;
-        }
-
-        // helper - this only works for string arrays
-        function uniq(array) {
-            var data = [], dataLength = data.length;
-            for (var i = 0; i < dataLength; i++) {
-                if(data.indexOf(array[i]) == -1) {
-                    data.push(array[i]);
-                }
-            }
-            return data;
-        }
-
-        // http://www.electrictoolbox.com/pad-number-zeroes-javascript/
+        @* http://www.electrictoolbox.com/pad-number-zeroes-javascript/ *@
         var pad = function (number, length) {
             var str = '' + number;
             while (str.length < length) {
@@ -59,7 +33,7 @@ try {
         s.trackingServer = 'hits.theguardian.com';
         s.trackingServerSecure = 'hits-secure.theguardian.com';
 
-        // Omniture library version
+        /* Omniture library version */
         s.prop62    = 'Guardian JS-1.4.1 20140914';
 
         // http://www.scribd.com/doc/42029685/15/cookieDomainPeriods
@@ -69,9 +43,13 @@ try {
 
         s.ce = 'UTF-8';
         s.pageName  = config.page.analyticsName;
+
         s.prop1     = config.page.headline || '';
+
         s.prop3     = config.page.publication || '';
+
         s.prop6     = config.page.author || '';
+
         s.prop13    = config.page.seriesTags || '';
 
         // getting clientWidth causes a reflow, so avoid using if possible
@@ -88,6 +66,7 @@ try {
         s.prop5     = config.page.trackingIds || '';
 
         s.prop25    = config.page.blogs || '';
+
         s.channel   = getChannel();
 
         if (isEmbed) {
@@ -126,7 +105,7 @@ try {
         s.eVar50 = s.getValOnce(s.eVar50, 's_intcampaign', 0);
 
         // the operating system
-        s.eVar58 = window.navigator.platform || 'unknown';
+        s.eVar58 = navigator.platform || 'unknown';
 
         // the number of Guardian links inside the body
         if (config.page.inBodyInternalLinkCount) {
@@ -149,14 +128,10 @@ try {
 
         s.prop56    = guardian.isEnhanced ? 'Javascript' : 'Partial Javascript';
 
-        // Set Time Parting Day and Hour Combination - 0 = GMT
+        /* Set Time Parting Day and Hour Combination - 0 = GMT */
         s.prop20    = tpA[2] + ':' + tpA[1];
         s.eVar20    = 'D=c20';
 
-        // eVar1 contains today's date
-        // in the Omniture backend it only ever holds the first
-        // value a user gets, so in effect it is the first time
-        // we saw this user
         try {
             var participationsKey = 'gu.ab.participations';
             var participations = window.localStorage.getItem(participationsKey);
@@ -189,14 +164,14 @@ try {
             return tag.join(',');
         }
 
-        @*
+        /*
           eVar1 contains today's date
           in the Omniture backend it only ever holds the first
           value a user gets, so in effect it is the first time
           we saw this user
-        *@
-
+        */
         s.eVar1 = now.getFullYear() + '/' + pad(now.getMonth() + 1, 2) + '/' + pad(now.getDate(), 2);
+
         s.prop7     = webPublicationDate ? new Date(webPublicationDate).toISOString().substr(0, 10).replace(/-/g, '/') : '';
 
         if (webPublicationDate) {
@@ -207,55 +182,20 @@ try {
 
         s.prop47    = config.page.edition || '';
 
-        if (config.user) {
-            s.prop2 = s.eVar2 = 'GUID:' + config.user.id;
-            s.prop31 = s.eVar31 = 'registered user';
-        } else {
-            s.prop31 = s.eVar31 = 'guest user';
-        }
+        @*
+            this makes the call to Omniture.
+            `s.t()` records a page view so should only be called once
+        *@
 
-        /* can this go ?? */
-        // s.prop40    = detect.adblockInUse() || detect.getFirefoxAdblockPlusInstalled();
-
-        // Retrieve navigation interaction data
-        var ni;
-        try {
-            ni = window.sessionStorage.getItem(NG_STORAGE_KEY);
-        } catch (e) {
-            ni = null;
-        }
-
-        if (ni) {
-            var d = new Date().getTime();
-            if (d - ni.time < 60 * 1000) { // One minute
-                this.s.eVar24 = ni.pageName;
-                this.s.eVar37 = ni.tag;
-            }
-            try {
-                window.sessionStorage.removeItem(R2_STORAGE_KEY);
-                window.sessionStorage.removeItem(NG_STORAGE_KEY);
-            } catch (e) {}
-        }
-
-        // Sponsored content
-        s.prop38 = uniq(forEach([].slice.call(document.querySelectorAll('[data-sponsorship]')), function (index, node) {
-            var sponsorshipType = node.getAttribute('data-sponsorship');
-            var maybeSponsor = node.getAttribute('data-sponsor');
-            var sponsor = maybeSponsor ? maybeSponsor : 'unknown';
-            return sponsorshipType + ':' + sponsor;
-        })).toString();
-
-        s.linkTrackVars = standardProps;
-        s.linkTrackEvents = 'None';
-
-        // this makes the call to Omniture.
-        // `s.t()` records a page view so should only be called once
         s.t();
 
+
         var checkForPageViewInterval = setInterval(function () {
-            // s_i_guardiangu-network is a globally defined Image() object created by Omniture
-            // It does not sit in the DOM tree, and seems to be the only surefire way
-            // to check if the intial beacon has been successfully sent
+            /*
+                s_i_guardiangu-network is a globally defined Image() object created by Omniture
+                It does not sit in the DOM tree, and seems to be the only surefire way
+                to check if the intial beacon has been successfully sent
+            */
             var img = window['s_i_' + window.s_account.split(',').join('_')];
             if (typeof (img) !== 'undefined' && (img.complete === true || img.width + img.height > 0)) {
                 clearInterval(checkForPageViewInterval);
@@ -271,7 +211,7 @@ try {
         }, 10000);
 
 
-    })(window, document);
+    })();
 
 } catch(e) {
     (new Image()).src = '@{Configuration.debug.beaconUrl}/count/omniture-pageview-error.gif';
