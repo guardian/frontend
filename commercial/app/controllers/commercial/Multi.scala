@@ -103,7 +103,11 @@ object Multi
       val content = contents.flatten
       if (requestedContent.nonEmpty && content.size == requestedContent.size) {
         Cached(componentMaxAge) {
-          jsonFormat.result(views.html.multi(content, omnitureId))
+          if(conf.switches.Switches.v2BlendedTemplate.isSwitchedOn) {
+            jsonFormat.result(views.html.multiV2(content, omnitureId))
+          } else {
+            jsonFormat.result(views.html.multi(content, omnitureId))
+          }
         }
       } else {
         NoCache(jsonFormat.nilResult)

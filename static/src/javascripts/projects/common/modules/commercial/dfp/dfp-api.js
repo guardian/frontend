@@ -32,7 +32,6 @@ define([
     'common/views/svgs',
     'lodash/functions/once',
     'lodash/objects/forOwn',
-    'lodash/collections/forEach',
     'lodash/objects/keys',
     'lodash/functions/debounce',
     'lodash/objects/defaults',
@@ -79,7 +78,6 @@ define([
     svgs,
     once,
     forOwn,
-    forEach,
     keys,
     debounce,
     defaults,
@@ -188,7 +186,7 @@ define([
         var sponsorshipIds = ['#dfp-ad--adbadge', '#dfp-ad--spbadge', '#dfp-ad--fobadge', '#dfp-ad--adbadge1', '#dfp-ad--spbadge1', '#dfp-ad--fobadge1', '#dfp-ad--adbadge2', '#dfp-ad--spbadge2', '#dfp-ad--fobadge2', '#dfp-ad--adbadge3', '#dfp-ad--spbadge3', '#dfp-ad--fobadge3', '#dfp-ad--adbadge4', '#dfp-ad--spbadge4', '#dfp-ad--fobadge4', '#dfp-ad--adbadge5', '#dfp-ad--spbadge5', '#dfp-ad--fobadge5'],
             sponsorshipIdsReturned = [];
 
-        forEach(sponsorshipIds, function (value) {
+        sponsorshipIds.forEach(function (value) {
             if ($(value).length) {
                 sponsorshipIdsReturned.push(value);
             }
@@ -202,7 +200,7 @@ define([
 
         if (detect.adblockInUseSync() && sponsorshipIdsFound.length) {
             idleFastdom.write(function () {
-                forEach(sponsorshipIdsFound, function (value) {
+                sponsorshipIdsFound.forEach(function (value) {
                     var sponsorshipIdFoundEl = $(value),
                         sponsorshipIdClasses = sponsorshipIdFoundEl.attr('class').replace('ad-slot ', ''),
                         sponsorshipBadge = '<div class="' + sponsorshipIdClasses + '">' + sponsorshipIdFoundEl.html() + '</div>';
@@ -682,15 +680,6 @@ define([
         }
     }
 
-    function refreshSlot($adSlot) {
-        var advert = adverts[$adSlot.attr('id')];
-        if (shouldPrebidAdvert(advert)) {
-            prebidService.loadAdvert(advert);
-        } else {
-            googletag.pubads().refresh([advert.slot]);
-        }
-    }
-
     function Advert($adSlot) {
         this.isRendered = false;
         this.isLoading = false;
@@ -734,7 +723,6 @@ define([
     var dfp = {
         init:           init,
         addSlot:        addSlot,
-        refreshSlot:    refreshSlot,
 
         // Used privately but exposed only for unit testing
         getAdverts:     getAdverts,
