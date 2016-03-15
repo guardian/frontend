@@ -17,7 +17,7 @@ define([
     }
 
     return {
-        go: function () {
+        init: function () {
             var hash = window.location.hash;
 
             if (window.location.pathname === '/us') {

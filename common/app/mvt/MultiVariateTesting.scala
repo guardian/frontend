@@ -32,7 +32,7 @@ object ABHeadlinesTestVariant extends TestDefinition(
   new LocalDate(2016, 3, 30)
   ) {
   override def isParticipating(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-hlt").contains("hlt-A") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
+    request.headers.get("X-GU-hlt").contains("hlt-V") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
     }
 }
 
@@ -43,7 +43,7 @@ object ABHeadlinesTestControl extends TestDefinition(
   new LocalDate(2016, 3, 30)
   ) {
   override def isParticipating(implicit request: RequestHeader): Boolean = {
-      request.headers.get("X-GU-hlt").contains("hlt-B") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
+      request.headers.get("X-GU-hlt").contains("hlt-C") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
     }
 }
 
@@ -53,11 +53,12 @@ object ActiveTests extends Tests {
   def getJavascriptConfig(implicit request: RequestHeader): String = {
 
     val headlineTests = List(ABHeadlinesTestControl, ABHeadlinesTestVariant).filter(_.isParticipating)
-          .map{ test => Some(s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}""")}
+
 
     val configEntries = List(InternationalEditionVariant(request).map{ international => s""""internationalEditionVariant" : "$international" """}) ++
-      List(ActiveTests.getParticipatingTest(request).map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""}) ++
+      ActiveTests.getParticipatingTest(request).toList ++
       headlineTests
+        .map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""}
     configEntries.flatten.mkString(",")
   }
 }

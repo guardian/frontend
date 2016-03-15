@@ -35,7 +35,7 @@ object ABHeadlines extends ExecutionContexts with Logging {
           val feed = service.getFeed(worksheet.getCellFeedUrl, classOf[CellFeed])
           val cells = feed.getEntries
           if (cells.length == 5) {  //if it is a different value someone has messed with the spreadsheet
-          val testHeadline = cells(3).getCell.getValue -> cells(4).getCell.getValue
+            val testHeadline = cells(3).getCell.getValue -> cells(4).getCell.getValue
             agent.send(Map(testHeadline))
           } else {
             agent.send(Map.empty[String, String])
@@ -89,6 +89,7 @@ trait ABHeadlinesLifecycle extends GlobalSettings {
 
   override def onStart(app: play.api.Application) {
     super.onStart(app)
+    //runs once a minute
     Jobs.schedule(ABHeadlinesJob, "0 * * * * ?") {
       ABHeadlines.refresh()
     }
