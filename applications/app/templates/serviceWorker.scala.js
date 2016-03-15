@@ -10,8 +10,6 @@
 // Offline page
 //
 
-console.log("++ Started tHE mo-FO");
-
 var staticCacheName = 'static';
 
 var getISODate = function () {
@@ -90,7 +88,6 @@ var isCacheUpdated = function () {
 };
 
 self.addEventListener('install', function (event) {
-    console.log("On install");
     event.waitUntil(updateCache());
 });
 
@@ -144,7 +141,6 @@ this.addEventListener('fetch', function (event) {
 });
 
 self.addEventListener('activate', function(event) {
-   console.log('Actrivated', event);
 });
 
 self.addEventListener('push', function(event) {
@@ -168,8 +164,6 @@ self.addEventListener('push', function(event) {
             })
             .then(function (json) {
 
-                console.log("++ Data: " + JSON.stringify(json));
-
                if(json.status === "ok")
                     var messages = json.messages;
 
@@ -190,27 +184,21 @@ self.addEventListener('push', function(event) {
 
 self.addEventListener('notificationclick', function(event){
 
-        console.log("Notification click: tag:-- " + JSON.stringify(event.notification.data));
         event.notification.close();
         var url = '@{JavaScript(Configuration.javascript.pageData.get("guardian.page.host").getOrElse("https://www.theguardian.com"))}/' + event.notification.data.topic ;
-        console.log("Notification click: url:-- " + url);
 
         event.waitUntil(
             clients.matchAll({
                     type: 'window'
                 })
                 .then(function(windowClients) {
-                    console.log("++ Clients: " + windowClients.length);
                     for (var i = 0; i < windowClients.length; i++) {
                         var client = windowClients[i];
-                        console.log("++ Client: " + i + " " +JSON.stringify(client[i]));
                         if (client.url === url && 'focus' in client) {
-                            console.log("URL equals");
                             return client.focus();
                         }
                     }
                     if (clients.openWindow) {
-                        console.log("Open Window");
                         return clients.openWindow(url);
                     }
                 })

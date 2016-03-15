@@ -36,14 +36,12 @@ define([
     without
 ) {
     var modules, reg, sub,
-        isSubscribed = false,
-        subscribeButton;
+        isSubscribed = false;
 
     modules = {
 
         getPushSubscription: function () {
 
-            console.log("++ Strapped 4");
             navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
                 reg = serviceWorkerRegistration;
                 serviceWorkerRegistration.pushManager.getSubscription().then(function (pushSubscription) {

@@ -131,7 +131,6 @@ define([
                 bootstrapContext('preferences', preferences);
             });
         }
-        console.log("++ HELLO");
 
         // use a #force-sw hasz\h fragment to force service worker registration for local dev
         if ((window.location.protocol === 'https:' && config.page.section !== 'identity') || window.location.hash === '#force-sw') {
