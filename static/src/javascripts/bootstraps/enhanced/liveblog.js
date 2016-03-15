@@ -71,7 +71,6 @@ define([
     };
 
     function ready() {
-
         robust.catchErrorsAndLogAll([
             ['lb-a11y',       modules.accessibility],
             ['lb-adverts',    modules.initAdverts],

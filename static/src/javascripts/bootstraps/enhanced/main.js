@@ -38,7 +38,6 @@ define([
         userTiming.mark('App Begin');
         bootstrapContext('common', common);
 
-
         // Front
         if (config.page.isFront) {
             require(['bootstraps/enhanced/facia'], function (facia) {
@@ -132,7 +131,7 @@ define([
             });
         }
 
-        // use a #force-sw hasz\h fragment to force service worker registration for local dev
+        // use a #force-sw hash fragment to force service worker registration for local dev
         if ((window.location.protocol === 'https:' && config.page.section !== 'identity') || window.location.hash === '#force-sw') {
             var navigator = window.navigator;
             if (navigator && navigator.serviceWorker) {

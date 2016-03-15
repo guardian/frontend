@@ -25,11 +25,11 @@ object NotificationsController extends Controller with ExecutionContexts with Lo
   def saveSubscription() = Action.async { implicit request =>
     form.bindFromRequest.fold(
       errors => {
-        Future.successful(BadRequest)
+        Future.successful(NoCache(BadRequest))
       },
       data => {
         DynamoDbStore.addItemToSubcription(data.gcmBrowserId, data.notificationTopicId)
-        Future.successful(Ok)
+        Future.successful(NoCache(Ok))
       }
     )
   }
@@ -37,11 +37,11 @@ object NotificationsController extends Controller with ExecutionContexts with Lo
   def deleteSubscription() = Action.async { implicit request =>
     form.bindFromRequest.fold(
       errors => {
-        Future.successful(BadRequest)
+        Future.successful(NoCache(BadRequest))
       },
       data => {
         DynamoDbStore.deleteItemFromSubcription(data.gcmBrowserId, data.notificationTopicId)
-        Future.successful(Ok)
+        Future.successful(NoCache(Ok))
       }
     )
   }

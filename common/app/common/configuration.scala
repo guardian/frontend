@@ -488,6 +488,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object Notifications {
     lazy val latestMessageUrl = configuration.getMandatoryStringProperty("notifications.latest_message.url")
+    lazy val notificationSubscriptionTable = configuration.getMandatoryStringProperty("notifications.subscriptions_table")
   }
 
   object DeploysNotify {

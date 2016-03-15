@@ -11,7 +11,7 @@ import awswrappers.dynamodb._
 
 
 object DynamoDbStore extends Logging with ExecutionContexts {
-  val tableName = "frontend-notifications"
+  val tableName = Configuration.Notifications.notificationSubscriptionTable
 
   private val client = new AmazonDynamoDBAsyncClient(Configuration.aws.credentials.get)
   client.setRegion(Region.getRegion(Regions.EU_WEST_1))

@@ -145,14 +145,11 @@ self.addEventListener('activate', function(event) {
 
 self.addEventListener('push', function(event) {
 
-    console.log("+++ Bojo Wotcher: I'll nail the fucker .. One Day");
     event.waitUntil(
         self.registration.pushManager.getSubscription().then(function (sub) {
             var gcmInd = sub.endpoint.substring(sub.endpoint.lastIndexOf('/') + 1);
 
-            // @Txt(Configuration.Notifications.latestMessageUrl)
             var endpoint = '@{JavaScript(Configuration.Notifications.latestMessageUrl)}/' + gcmInd;
-            console.log("End: " + endpoint);
             fetch(endpoint, {
                 method: 'get',
                 headers: {
@@ -185,7 +182,7 @@ self.addEventListener('push', function(event) {
 self.addEventListener('notificationclick', function(event){
 
         event.notification.close();
-        var url = '@{JavaScript(Configuration.javascript.pageData.get("guardian.page.host").getOrElse("https://www.theguardian.com"))}/' + event.notification.data.topic ;
+        var url = '@{JavaScript(Configuration.javascript.pageData.get("guardian.page.host").getOrElse("https://www.theguardian.com"))}/' + event.notification.data.topic + "?CMP=not_b-webalert";
 
         event.waitUntil(
             clients.matchAll({

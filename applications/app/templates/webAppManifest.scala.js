@@ -14,11 +14,12 @@
         "src": "@{JavaScript(Static("images/favicons/114x114.png").path)}"
     }
     ],
+    "start_url": "/uk?INTCMP=webapp",
+    "display": "browser",
+    "orientation": "portrait",
     "gcm_sender_id":"660236028602",
     "gcm_user_visible_only":true,
     "permissisons" : [
-     "gcm",
-     "identity",
-     "instanceid"
+     "gcm"
      ]
 }
