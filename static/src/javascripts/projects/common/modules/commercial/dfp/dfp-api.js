@@ -457,7 +457,7 @@ define([
             } else if (ab.isInVariant('CommercialComponentsDismiss', 'dismiss') && contains(['dfp-ad--merchandising', 'dfp-ad--merchandising-high', 'dfp-ad--im'], $adSlot.attr('id'))) {
                 var survey = new SurveySimple({
                     surveyHeader: 'Personalise your Guardian',
-                    surveyText:'To remove all messages from this particular Guardian service simply sign up to the Guardian. To choose exactly which other commercial messages you\'d like to see from the Guardian, or not, become a Member from £5 a month.',
+                    surveyText: 'To remove all messages from this particular Guardian service simply sign up to the Guardian. To choose exactly which other commercial messages you\'d like to see from the Guardian, or not, become a Member from £5 a month.',
                     signupText: 'Sign-up now',
                     membershipText: 'Become a Member',
                     signupLink: '/commercial/survey-simple-sign-up',
