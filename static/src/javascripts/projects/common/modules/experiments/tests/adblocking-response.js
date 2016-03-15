@@ -38,21 +38,23 @@ define([
             id: 'variantA',
             test: function () {
                 //TODO check also if not a subscriber
-                if (detect.adblockInUseSync() && !config.page.isFront && !userFeatures.isPayingMember()) {
-                    var surveyOverlay = new SurveySimple({
-                        surveyHeader: 'You appear to have an adblocker installed',
-                        surveyText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis et quam auctor, efficitur velit nec, ullamcorper elit. Sed ac pharetra mauris. Curabitur blandit est vel commodo lobortis. Curabitur ullamcorper ante in massa maximus pharetra. Aliquam erat volutpat. In sed arcu velit. Vivamus nisl eros, venenatis ac imperdiet nec, lobortis sed lorem. Vestibulum et dictum eros, et finibus dui.',
-                        signupText: 'Whitelist',
-                        membershipText: 'Become a Member',
-                        signupLink: '/commercial/survey-simple-sign-up',
-                        membershipLink: '/commercial/survey-simple-membership',
-                        signupDataLink: 'adblock whitelist',
-                        membershipDataLink: 'adblock membership',
-                        showCloseBtn: false
-                    });
-                    surveyOverlay.attach();
-                    surveyOverlay.show();
-                }
+                if (detect.adblockInUse.then(function (adblockUsed) {
+                    if (adblockUsed && !config.page.isFront && !userFeatures.isPayingMember()) {
+                        var surveyOverlay = new SurveySimple({
+                            surveyHeader: 'You appear to have an adblocker installed',
+                            surveyText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis et quam auctor, efficitur velit nec, ullamcorper elit. Sed ac pharetra mauris. Curabitur blandit est vel commodo lobortis. Curabitur ullamcorper ante in massa maximus pharetra. Aliquam erat volutpat. In sed arcu velit. Vivamus nisl eros, venenatis ac imperdiet nec, lobortis sed lorem. Vestibulum et dictum eros, et finibus dui.',
+                            signupText: 'Whitelist',
+                            membershipText: 'Become a Member',
+                            signupLink: '/commercial/survey-simple-sign-up',
+                            membershipLink: '/commercial/survey-simple-membership',
+                            signupDataLink: 'adblock whitelist',
+                            membershipDataLink: 'adblock membership',
+                            showCloseBtn: false
+                        });
+                        surveyOverlay.attach();
+                        surveyOverlay.show();
+                    }
+                }));
             }
         }, {
             id: 'variantB',
