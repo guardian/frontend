@@ -18,7 +18,7 @@ define([
         this.start = '2016-03-21';
         this.expiry = '2016-03-31';
         this.author = 'Zofia Korcz';
-        this.description = 'Adblocking respoonse test';
+        this.description = 'Adblocking response test';
         this.audience = 0;
         this.audienceOffset = 0;
         this.successMeasure = 'Adblock users will either become a paid member or turn off the adblock.';
