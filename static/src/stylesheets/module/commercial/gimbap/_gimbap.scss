@@ -1,5 +1,5 @@
-$gimbap-membership-text: #ff5b3a;
-$gimbap-membership-reversed: #69d1ca;
+$gimbap-members-text: #ff5b3a;
+$gimbap-members-reversed: #69d1ca;
 
 $gimbap-masterclasses-text: #ffb202;
 $gimbap-masterclasses-reversed: #ffb202;
@@ -62,7 +62,7 @@ $gimbap-jobs-reversed: #42bfda;
 }
 
 .gimbap__title {
-    @include fs-headline(4);
+    @include fs-headline(5);
 
     align-self: flex-start;
     margin-bottom: $gs-baseline;
@@ -117,7 +117,7 @@ $gimbap-jobs-reversed: #42bfda;
     align-self: flex-start;
 }
 
-.gimbap__logo--membership-horizontal {
+.gimbap__logo--members-horizontal {
     .logo--part1,
     .logo--part2 {
         fill: #ffffff;
@@ -125,7 +125,7 @@ $gimbap-jobs-reversed: #42bfda;
 
     .gimbap-style--normal & {
         .logo--part1 {
-            fill: $gimbap-membership-text;
+            fill: $gimbap-members-text;
         }
 
         .logo--part2 {
@@ -168,7 +168,7 @@ $gimbap-jobs-reversed: #42bfda;
     }
 }
 
-.gimbap__logo--soulmates {
+.gimbap__logo--soulmates-horizontal {
     svg {
         fill: #ffffff;
     }
@@ -343,34 +343,34 @@ $gimbap-jobs-reversed: #42bfda;
         filter: brightness(.5);
     }
 
-    .gimbap-style--tone-membership { background: lighten($gimbap-membership-text, 35%); color: $gimbap-membership-text; }
+    .gimbap-style--tone-members { background: lighten($gimbap-members-text, 35%); color: $gimbap-members-text; }
     .gimbap-style--tone-masterclasses { background: lighten($gimbap-masterclasses-reversed, 47%); color: $gimbap-masterclasses-text; }
     .gimbap-style--tone-soulmates { background: lighten($gimbap-soulmates-reversed, 47%); color: $gimbap-soulmates-text; }
     .gimbap-style--tone-jobs { background: lighten($gimbap-jobs-reversed, 40%); color: $gimbap-jobs-text; }
 }
 
-.gimbap-style--reversed-out {
+.gimbap-style--reversed {
     background: #f5f5f5;
 
     .gimbap__cta {
         color: rgba(0, 0, 0, .65);
     }
 
-    .gimbap-style--tone-membership { background: $gimbap-membership-reversed; }
+    .gimbap-style--tone-members { background: $gimbap-members-reversed; }
     .gimbap-style--tone-masterclasses { background: $gimbap-masterclasses-reversed; }
     .gimbap-style--tone-soulmates { background: $gimbap-soulmates-reversed; }
     .gimbap-style--tone-jobs { background: $gimbap-jobs-reversed; }
 }
 
 .gimbap-style--normal,
-.gimbap-style--reversed-out {
+.gimbap-style--reversed {
     > .inline-marque-36 > svg {
         fill: guss-colour(news-support-2, $pasteup-palette);
     }
 }
 
-.gimbap-style--reversed-out,
-.gimbap-style--membership,
+.gimbap-style--reversed,
+.gimbap-style--members,
 .gimbap-style--masterclasses,
 .gimbap-style--soulmates,
 .gimbap-style--jobs {

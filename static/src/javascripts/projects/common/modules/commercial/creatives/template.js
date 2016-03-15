@@ -57,8 +57,9 @@ define([
         this.params.logosoulmates = svgs('logosoulmates');
         this.params.logosoulmatesjoin = svgs('logosoulmatesjoin');
         this.params.logomembership = svgs('logomembershipwhite');
+        this.params.logosoulmateshorizontal = svgs('logosoulmates');
         this.params.logomasterclasseshorizontal = svgs('logomasterclasseshorizontal');
-        this.params.logomembershiphorizontal = svgs('logomembershiphorizontal');
+        this.params.logomembershorizontal = svgs('logomembershiphorizontal');
         this.params.logojobshorizontal = svgs('logojobshorizontal');
         this.params.logojobs = svgs('logojobs');
         this.params.logomasterclasses = svgs('logomasterclasses');
@@ -67,6 +68,17 @@ define([
         this.params.inlineQuote = svgs('quoteIcon');
         this.params.marque36iconCreativeMarque = svgs('marque36icon', ['creative__marque']);
         this.params.logoFeatureLabel = 'Paid for by';
+
+        this.mapGimbapLogos();
+    };
+
+    Template.prototype.mapGimbapLogos = function() {
+        if (this.params.creative === 'gimbap') {
+            this.params.offer1logo = this.params['logo' + this.params.offer1tone + 'horizontal'];
+            this.params.offer2logo = this.params['logo' + this.params.offer2tone + 'horizontal'];
+            this.params.offer3logo = this.params['logo' + this.params.offer3tone + 'horizontal'];
+            this.params.offer4logo = this.params['logo' + this.params.offer4tone + 'horizontal'];
+        }
     };
 
     Template.prototype.postLoadEvents = {
