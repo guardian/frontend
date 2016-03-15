@@ -6,7 +6,6 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.json.{Json, JsBoolean, JsString, JsValue}
 import views.support.{Naked, ImgSrc}
-import scala.collection.JavaConversions._
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 
 /**
@@ -24,17 +23,24 @@ object Trail {
       .orElse(elements.videos.headOption.map(_.images))
       .orElse(elements.thumbnail.map(_.images))
 
-    // Try to take the biggest 5:3 image. At render-time, the image resizing service will size the image according to card width.
+    // Try to take the master 5:3 image. At render-time, the image resizing service will size the image according to card width.
     // Filtering the list images here means that facia-press does not need to slim down the Trail object.
     trailImageMedia.flatMap { imageMedia =>
       val filteredTrailImages = imageMedia.allImages.filter { image =>
         IsRatio(5, 3, image.width, image.height)
       }
 
+      val masterTrailImage = filteredTrailImages.find(_.isMaster).map { master =>
+        ImageMedia.make(List(master))
+      }
+
       // If there isn't a 5:3 image, no ImageMedia object will be created.
-      filteredTrailImages.sortBy(-_.width).headOption.map { bestImage =>
+      val largestTrailImage = filteredTrailImages.sortBy(-_.width).headOption.map { bestImage =>
         ImageMedia.make(List(bestImage))
       }
+
+      // Choose the master 5:3 image, or the largest 5:3 image.
+      masterTrailImage.orElse(largestTrailImage)
     }
   }
 
