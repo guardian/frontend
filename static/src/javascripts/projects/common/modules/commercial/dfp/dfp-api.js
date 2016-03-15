@@ -296,8 +296,7 @@ define([
     }
 
     function loadAdvertising() {
-        defineAdverts();
-
+        googletag.cmd.push(defineAdverts);
         googletag.cmd.push(shouldLazyLoad() ? displayLazyAds : displayAds);
         // anything we want to happen after displaying ads
         googletag.cmd.push(postDisplay);
@@ -616,13 +615,11 @@ define([
      * Public functions
      */
     function init() {
-        if (commercialFeatures.dfpAdvertising) {
-            return setupAdvertising();
-        } else {
-            return fastdom.write(function () {
+        return commercialFeatures.dfpAdvertising ?
+            setupAdvertising() :
+            fastdom.write(function () {
                 $(adSlotSelector).remove();
             });
-        }
     }
 
     function load() {
