@@ -18,7 +18,6 @@
 .email-sub__form {
     @include clearfix();
     @include fs-textSans(3);
-    padding: $gs-baseline 0 0;
 
     * {
         box-sizing: border-box;
@@ -245,6 +244,7 @@
 
 // IN-ARTICLE (COMPOSER) PAGE MODS
 .email-sub--article {
+    border-top: 1px dotted colour(neutral-4);
     padding: $gs-gutter / 4;
 
     @include mq($from: phablet) {
@@ -257,7 +257,7 @@
 
     .email-sub__message__headline,
     .email-sub__message__description {
-        color: #ffffff;
+        color: colour(neutral-1);
     }
 
     .email-sub__small {
@@ -343,7 +343,6 @@
 
 
     .email-sub--tone-#{$tone-class} {
-        border-top: 1px solid $tone-colour-accent;
 
         .email-sub__close-icon svg {
             fill: $tone-colour-accent;
@@ -361,13 +360,6 @@
             }
         }
 
-
-        .email-sub__message__headline,
-        .email-sub__message__description {
-            color: colour(neutral-1);
-        }
-
-
         .email-sub__submit-input {
             background-color: $tone-colour-accent;
             border-color: $tone-colour-accent;
@@ -375,7 +367,7 @@
 
             &:hover,
             &:focus {
-                color: colour(neutral-1);
+                background-color: darken($tone-colour-accent, 10%);
             }
         }
 

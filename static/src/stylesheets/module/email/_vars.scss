@@ -7,12 +7,12 @@ $icon-padding: $icon-size + ($gs-gutter / 2);
 $rounded-adjustment: .66em;
 
 $tones: (
-    (analysis, colour(analysis-accent), colour(neutral-2)),
-    (comment, colour(comment-accent), colour(neutral-1)),
-    (feature, colour(feature-accent), colour(feature-default)),
-    (live, colour(live-accent), colour(live-default)),
-    (media, colour(media-default), colour(media-background)),
+    (analysis, colour(analysis-accent), colour(news-default)),
+    (comment, colour(comment-support-4), colour(comment-support-4)),
+    (feature, colour(feature-default), colour(feature-accent)),
+    (live, colour(live-default), colour(live-accent)),
+    (media, colour(neutral-1), colour(neutral-1)),
     (news, colour(news-default), colour(news-default)),
     (review, colour(review-background), darken(colour(review-background), 10%)),
-    (special-feature, colour(news-support-1), colour(news-support-6))
+    (special-feature, colour(news-support-6), colour(news-support-6))
 );

@@ -1,6 +1,5 @@
 .email-sub__heading {
     @include fs-headline(3, $size-only: true);
-    padding-left: $gs-baseline / 3;
 }
 
 .email-sub__heading-emph {
@@ -11,7 +10,6 @@
     border-top: 3px solid $form-secondary-colour;
     color: $form-primary-colour;
     background-color: guss-colour(guardian-brand, $pasteup-palette);
-    padding: 0 0 0 $gs-baseline / 3;
 }
 
 .email-sub__description-emph {
@@ -26,12 +24,13 @@
     @include fs-headline(2);
 
     .email-sub__heading {
-        margin: $gs-baseline / 2 0 $gs-baseline;
+        margin-bottom: $gs-baseline;
     }
 
     .email-sub__description {
-        @include fs-textSans(2);
-        color: colour(neutral-1);
+        @include fs-textSans(3);
+        color: colour(neutral-2);
+        margin-bottom: $gs-baseline;
     }
 }
 
