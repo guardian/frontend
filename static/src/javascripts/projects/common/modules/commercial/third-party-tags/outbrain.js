@@ -65,7 +65,7 @@ define([
         });
         widgetHtml = build(widgetCodes, breakpoint);
         return fastdom.write(function () {
-            if (slot !== 'defaults') {
+            if (slot === 'merchandising') {
                 $(selectors[slot].widget).replaceWith($outbrain[0]);
             }
             $container.append(widgetHtml);
