@@ -35,7 +35,7 @@ object Trail {
       }
 
       // If there isn't a 5:3 image, no ImageMedia object will be created.
-      val largestTrailImage = filteredTrailImages.sortBy(-_.width).headOption.map { bestImage =>
+      lazy val largestTrailImage = filteredTrailImages.sortBy(-_.width).headOption.map { bestImage =>
         ImageMedia.make(List(bestImage))
       }
 
