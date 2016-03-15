@@ -15,7 +15,7 @@ define([
     'common/utils/url',
     'common/utils/user-timing',
     'common/utils/sha1',
-    'common/utils/fastdom-idle',
+    'common/utils/fastdom-promise',
     'common/utils/cookies',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
@@ -61,7 +61,7 @@ define([
     urlUtils,
     userTiming,
     sha1,
-    idleFastdom,
+    fastdom,
     cookies,
     stickyMpu,
     buildPageTargeting,
@@ -150,7 +150,7 @@ define([
         '300,1050': function () {
             // remove geo most popular
             geoMostPopular.whenRendered.then(function (geoMostPopular) {
-                idleFastdom.write(function () {
+                fastdom.write(function () {
                     bonzo(geoMostPopular.elem).remove();
                 });
             });
@@ -204,7 +204,7 @@ define([
             // filter out (and remove) hidden ads
             }).and(filter, function ($adSlot) {
                 if (shouldFilterAdSlot($adSlot)) {
-                    idleFastdom.write(function () {
+                    fastdom.write(function () {
                         $adSlot.remove();
                     });
                     return false;
@@ -367,7 +367,7 @@ define([
             // remove any placeholder ad content
             $placeholder = $('.ad-slot__content--placeholder', $adSlot);
             $adSlotContent = $('div', $adSlot);
-            idleFastdom.write(function () {
+            fastdom.write(function () {
                 $placeholder.remove();
                 $adSlotContent.addClass('ad-slot__content');
             });
@@ -385,18 +385,18 @@ define([
                 }
 
                 if ($adSlot.hasClass('ad-slot--container-inline') && $adSlot.hasClass('ad-slot--not-mobile')) {
-                    idleFastdom.write(function () {
+                    fastdom.write(function () {
                         $adSlot.parent().css('display', 'flex');
                     });
                 } else if (!($adSlot.hasClass('ad-slot--top-above-nav') && size === '1,1')) {
-                    idleFastdom.write(function () {
+                    fastdom.write(function () {
                         $adSlot.parent().css('display', 'block');
                     });
                 }
 
                 if (($adSlot.hasClass('ad-slot--top-banner-ad') && size === '88,70')
                 || ($adSlot.hasClass('ad-slot--commercial-component') && size === '88,88')) {
-                    idleFastdom.write(function () {
+                    fastdom.write(function () {
                         $adSlot.addClass('ad-slot__fluid250');
                     });
                 }
@@ -419,7 +419,7 @@ define([
     }
 
     function addLabel($adSlot) {
-        idleFastdom.write(function () {
+        fastdom.write(function () {
             if (shouldRenderLabel($adSlot)) {
                 $adSlot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
             } else if (ab.isInVariant('CommercialComponentsDismiss', 'dismiss') && contains(['dfp-ad--merchandising', 'dfp-ad--merchandising-high', 'dfp-ad--im'], $adSlot.attr('id'))) {
@@ -483,7 +483,7 @@ define([
 
     function removeSlot(adSlotId) {
         delete adverts[adSlotId];
-        idleFastdom.write(function () {
+        fastdom.write(function () {
             $('#' + adSlotId).remove();
         });
     }
@@ -619,7 +619,7 @@ define([
         if (commercialFeatures.dfpAdvertising) {
             return setupAdvertising();
         } else {
-            return idleFastdom.write(function () {
+            return fastdom.write(function () {
                 $(adSlotSelector).remove();
             });
         }
