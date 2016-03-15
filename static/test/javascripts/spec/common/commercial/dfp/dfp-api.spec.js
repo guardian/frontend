@@ -152,7 +152,7 @@ define([
             });
 
             it('hides all ad slots', function (done) {
-                dfp.init().then(function () {;
+                dfp.init().then(function () {
                     var remainingAdSlots = document.querySelectorAll('.js-ad-slot');
                     expect(remainingAdSlots.length).toBe(0);
                     done();
@@ -161,7 +161,7 @@ define([
         });
 
         it('should get the slots', function (done) {
-            var promise = dfp.init().then(dfp.load).then(function () {
+            dfp.init().then(dfp.load).then(function () {
                 window.googletag.cmd.forEach(function (func) { func(); });
                 expect(Object.keys(dfp.getAdverts()).length).toBe(4);
                 done();
@@ -183,8 +183,8 @@ define([
             window.googletag.cmd.forEach(function (func) { func(); });
         });
 
-        it('should set listeners', function () {
-            dfp.init().then(function () {;
+        it('should set listeners', function (done) {
+            dfp.init().then(function () {
                 expect(window.googletag.pubads().addEventListener).toHaveBeenCalledWith('slotRenderEnded');
                 done();
             });
@@ -229,7 +229,7 @@ define([
 
         it('should be able to create "out of page" ad slot', function (done) {
             $('.js-ad-slot').first().attr('data-out-of-page', true);
-            dfp.init().then(dfp.load).then(function () {;
+            dfp.init().then(dfp.load).then(function () {
                 window.googletag.cmd.forEach(function (func) { func(); });
                 expect(window.googletag.defineOutOfPageSlot).toHaveBeenCalledWith('/123456/theguardian.com/front', 'dfp-ad-html-slot');
                 done();
