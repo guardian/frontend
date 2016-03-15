@@ -114,7 +114,7 @@ define([
             config.switches.discussion &&
             config.page.commentable &&
             identityApi.isUserLoggedIn() &&
-            (isLiveBlog ? isWidePage : true);
+            (!isLiveBlog || isWidePage);
 
         this.async = {
             membershipMessages : detect.adblockInUse.then(function (adblockUsed) {
