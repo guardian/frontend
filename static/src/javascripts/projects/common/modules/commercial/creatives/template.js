@@ -69,7 +69,7 @@ define([
         this.mapGimbap();
     };
 
-    Template.prototype.mapGimbap = function() {
+    Template.prototype.mapGimbap = function () {
         if (this.params.creative === 'gimbap') {
 
             // Make sure we include right logo to the right card
@@ -85,7 +85,7 @@ define([
             this.params.marque36icon = svgs('marque36icon', ['gimbap__mainlogo']);
 
             // Include quotes into title only if it is allowed in DFP line item
-            this.params.inlineQuote = svgs('quoteIcon',['gimbap__quote']);
+            this.params.inlineQuote = svgs('quoteIcon', ['gimbap__quote']);
             this.params.offer1HasQuotes = (this.params.offer1quotes.indexOf('yes') !== -1) ? this.params.inlineQuote : '';
             this.params.offer2HasQuotes = (this.params.offer2quotes.indexOf('yes') !== -1) ? this.params.inlineQuote : '';
             this.params.offer3HasQuotes = (this.params.offer3quotes.indexOf('yes') !== -1) ? this.params.inlineQuote : '';
