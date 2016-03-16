@@ -4,6 +4,6 @@
 
 @containerWrapper(Seq("books"), "bookshop")(HtmlFormat.empty)(HtmlFormat.empty)(HtmlFormat.empty)(HtmlFormat.empty) {
 
-    @books map bookCard(_, omnitureId, clickMacro)
+    @books.map { book => @bookCard(book, omnitureId, clickMacro) }
 
 }
