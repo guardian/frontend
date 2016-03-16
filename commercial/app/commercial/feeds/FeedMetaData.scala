@@ -51,10 +51,10 @@ case class BestsellersFeedMetaData(domain: String) extends FeedMetaData {
   override val responseEncoding = utf8
 }
 
-case class MasterclassesFeedMetaData(accessToken: String, override val parameters: Map[String, String])
+case class EventsFeedMetaData(feedName: String, accessToken: String, override val parameters: Map[String, String] = Map.empty)
   extends FeedMetaData {
 
-  val name = "masterclasses"
+  val name = feedName
   val url = "https://www.eventbriteapi.com/v3/users/me/owned_events/"
   val baseParameters = Map(
     "token" -> accessToken,

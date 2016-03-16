@@ -3,7 +3,7 @@ package commercial
 import commercial.feeds._
 import common.{AkkaAsync, ExecutionContexts, Jobs, Logging}
 import model.commercial.jobs.Industries
-import model.commercial.masterclasses.MasterClassTagsAgent
+import model.commercial.events.MasterclassTagsAgent
 import model.commercial.money.BestBuysAgent
 import model.commercial.travel.Countries
 import model.diagnostics.CloudWatch
@@ -111,8 +111,8 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
 
     AkkaAsync {
 
-      MasterClassTagsAgent.refresh() onFailure {
-        case NonFatal(e) => log.warn(s"Failed to refresh master class tags: ${e.getMessage}")
+      MasterclassTagsAgent.refresh() onFailure {
+        case NonFatal(e) => log.warn(s"Failed to refresh masterclass tags: ${e.getMessage}")
       }
 
       Countries.refresh() onFailure {

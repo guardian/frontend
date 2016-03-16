@@ -1,4 +1,4 @@
-package model.commercial.masterclasses
+package model.commercial.events
 
 object Fixtures {
 
@@ -46,7 +46,8 @@ object Fixtures {
                |            "price" : "400.00",
                |            "start_date" : "2013-02-15 12:20:00",
                |            "type" : 0,
-               |            "hidden" : false
+               |            "hidden" : false,
+               |            "donation" : false
                |          }
                |  ],
                |  "timezone" : "Europe/London",
@@ -117,7 +118,8 @@ object Fixtures {
                            |            "price" : "400.00",
                            |            "start_date" : "2013-02-15 12:20:00",
                            |            "type" : 0,
-                           |            "hidden" : false
+                           |            "hidden" : false,
+                           |            "donation" : false
                            |          },
                            |          { "currency" : "GBP",
                            |            "description" : "",
@@ -132,7 +134,8 @@ object Fixtures {
                            |            "price" : "400.00",
                            |            "start_date" : "2013-02-15 12:20:00",
                            |            "type" : 0,
-                           |            "hidden" : false
+                           |            "hidden" : false,
+                           |            "donation" : false
                            |          } ],
                            |  "timezone" : "Europe/London",
                            |  "timezone_offset" : "GMT+0100",
@@ -184,21 +187,33 @@ object Fixtures {
                          |  "status" : "Live",
                          |  "tags" : "travel, travel writing, masterclasses, short course, ",
                          |  "text_color" : "005580",
-                         |  "tickets" : [ { "ticket" : { "currency" : "GBP",
-                         |            "description" : "",
-                         |            "display_price" : "400.00",
-                         |            "end_date" : "2013-04-20 09:30:00",
-                         |            "id" : 12319,
-                         |            "quantity_total" : 100,
-                         |            "quantity_sold" : 50,
-                         |            "max" : 36,
-                         |            "min" : 1,
-                         |            "name" : "Travel writing weekend",
-                         |            "price" : "400.00",
-                         |            "start_date" : "2013-02-15 12:20:00",
-                         |            "type" : 0,
-                         |            "visible" : "true"
-                         |          } } ],
+                         |  "ticket_classes" : [
+                         |    {
+                         |    "actual_cost" :
+                         |        {
+                         |        "currency" : "GBP",
+                         |        "value": 43166
+                         |        },
+                         |    "actual_fee": {
+                         |      "currency" : "GBP",
+                         |      "value": 6135
+                         |      },
+                         |    "description" : "",
+                         |    "display_price" : "400.00",
+                         |    "end_date" : "2013-04-20 09:30:00",
+                         |    "id" : 12319,
+                         |    "quantity_total" : 100,
+                         |    "quantity_sold" : 50,
+                         |    "max" : 36,
+                         |    "min" : 1,
+                         |    "name" : "Travel writing weekend",
+                         |    "price" : "400.00",
+                         |    "start_date" : "2013-02-15 12:20:00",
+                         |    "type" : 0,
+                         |    "visible" : true,
+                         |    "hidden": false,
+                         |    "donation": false
+                         |  } ],
                          |  "timezone" : "Europe/London",
                          |  "timezone_offset" : "GMT+0100",
                          |  "name" : {"text" : "Travel writing weekend"},
@@ -263,7 +278,8 @@ object Fixtures {
                                  |            "cost" : {"value" : 40000},
                                  |            "start_date" : "2013-02-15 12:20:00",
                                  |            "type" : 0,
-                                 |            "hidden" : false
+                                 |            "hidden" : false,
+                                 |            "donation" : false
                                  |          },
                                  |          { "currency" : "GBP",
                                  |            "description" : "",
@@ -278,7 +294,8 @@ object Fixtures {
                                  |            "cost" : {"value" : 40000},
                                  |            "start_date" : "2013-02-15 12:20:00",
                                  |            "type" : 0,
-                                 |            "hidden" : true
+                                 |            "hidden" : true,
+                                 |            "donation" : false
                                  |          } ],
                                  |  "timezone" : "Europe/London",
                                  |  "timezone_offset" : "GMT+0100",
@@ -299,4 +316,7 @@ object Fixtures {
                                  |      "region" : ""
                                  |    }
                                  |}""".stripMargin
-}
+
+
+  lazy val rawEventBriteFeed =   scala.io.Source.fromFile("commercial/test/model/commercial/events/masterclasses_full_page.json").getLines.mkString
+  }
