@@ -1,0 +1,29 @@
+@(metaData: model.MetaData)(implicit request: RequestHeader)
+
+    @main(model.SimplePage(metaData)) { } {
+        <div class="l-side-margins">
+            <div class="live-events-survey-wrapper" data-link-name="live events survey page">
+                <div class="live-events-survey-wrapper-inner">
+                    <h1>Enter subscriber number</h1>
+                    <p class="standfirst">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus metus massa, convallis eget pellentesque sollicitudin, rhoncus vitae sem. Cras non lorem sit amet orci pellentesque tincidunt ut eget tellus. Donec et orci dictum, aliquam sapien eget, porta felis. Integer ut feugiat odio. Sed vulputate nisi tortor, nec semper enim posuere sed. Nullam eu maximus arcu. Donec rutrum ex a dignissim dapibus.</p>
+                    <div class="subscriber-number">
+                        <form class="subscriber-number-form js-subscriber-number-form">
+                            <input type="text" name="number" id="number" class="input-number"/>
+                            <button type="submit" name="submit" class="button--primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="footer-area">
+                    <div class="live-events-survey-wrapper-inner">
+                        <ul class="u-unstyled l-row l-row--cols-2">
+                            <li class="l-row__item l-row__item--span-1">
+                                <p>Link to your previously requested page:</p>
+
+                                <a href="https://membership.theguardian.com?INTCMP=DISMISS_COMMERCIAL_SURVEY_MEMBERSHIP" class="button button--secondary button--small" data-link-name="read more about the guardian members">Article title@fragments.inlineSvg("arrow-right", "icon")</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }

@@ -271,4 +271,18 @@
 
     }
 
+    .subscriber-number-form {
+        .input-number {
+            width: 100%;
+            padding: 10px;
+        }
+
+        .button--primary {
+            display: block;
+            margin-top: 10px;
+            font-size: 20px;
+            padding: 5px;
+        }
+    }
+
 }

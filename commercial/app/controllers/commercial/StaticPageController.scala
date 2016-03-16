@@ -25,6 +25,17 @@ case class StaticSurveyMembershipPage() extends StandalonePage {
   )
 }
 
+case class SubscriberNumberPage() extends StandalonePage {
+  override val metadata: MetaData = MetaData.make(
+    id = "subscriber-number-page",
+    webTitle = "Subscriber number form",
+    section = "global",
+    contentType = "noadblock",
+    analyticsName = "subscriber-number-page",
+    shouldGoogleIndex = false
+  )
+}
+
 object StaticPageController extends Controller {
 
   def renderSurveySimpleSignupPage() = Action { implicit request =>
@@ -33,5 +44,9 @@ object StaticPageController extends Controller {
 
   def renderSurveySimpleMembershipPage() = Action { implicit request =>
     Cached(60)(Ok(views.html.static.surveySimplePage(StaticSurveyMembershipPage().metadata)))
+  }
+
+  def renderSubscriberNumberPage() = Action { implicit request =>
+    Cached(60)(Ok(views.html.static.subscriberNumberPage(SubscriberNumberPage().metadata)))
   }
 }

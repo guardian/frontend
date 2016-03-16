@@ -27,6 +27,7 @@ define([
     'common/modules/commercial/user-features',
     'common/modules/discussion/comment-count',
     'common/modules/experiments/ab',
+    'common/modules/experiments/subscriber-number-form',
     'common/modules/identity/autosignin',
     'common/modules/identity/cookierefresh',
     'common/modules/navigation/navigation',
@@ -82,6 +83,7 @@ define([
     userFeatures,
     CommentCount,
     ab,
+    subscriberNumberForm,
     AutoSignin,
     CookieRefresh,
     navigation,
@@ -178,6 +180,10 @@ define([
 
             showAdblockMessage: function () {
                 donotUseAdblock.init();
+            },
+
+            initSubscriberNumberForm: function () {
+                subscriberNumberForm.init();
             },
 
             logLiveStats: function () {
@@ -393,6 +399,7 @@ define([
                 ['c-tag-links', modules.showMoreTagsLink],
                 ['c-smart-banner', smartAppBanner.init],
                 ['c-adblock', modules.showAdblockMessage],
+                ['c-subscriber-number-form', modules.initSubscriberNumberForm],
                 ['c-log-stats', modules.logLiveStats],
                 ['c-cookies', modules.cleanupCookies],
                 ['c-overlay', modules.initOpenOverlayOnClick],
