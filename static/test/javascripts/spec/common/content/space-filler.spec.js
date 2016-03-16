@@ -1,7 +1,9 @@
 define([
-    'helpers/injector'
+    'helpers/injector',
+    'Promise'
 ], function (
-    Injector
+    Injector,
+    Promise
 ) {
     var injector = new Injector();
 

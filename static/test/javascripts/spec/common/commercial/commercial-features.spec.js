@@ -1,4 +1,4 @@
-define(['helpers/injector'], function (Injector) {
+define(['helpers/injector', 'Promise'], function (Injector, Promise) {
     var injector = new Injector();
 
     describe('Commercial features', function () {
