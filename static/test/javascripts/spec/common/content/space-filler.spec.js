@@ -1,9 +1,7 @@
 define([
-    'helpers/injector',
-    'Promise'
+    'helpers/injector'
 ], function (
-    Injector,
-    Promise
+    Injector
 ) {
     var injector = new Injector();
 
@@ -11,6 +9,7 @@ define([
         var spaceFiller,
             spaceFinder,
             raven,
+            Promise,
             mockRules = {},
             mockSpacefinderResult,
             mockException = new Error('Mock writer exception');
@@ -19,14 +18,16 @@ define([
             injector.require([
                 'common/modules/article/space-filler',
                 'common/modules/article/spacefinder',
-                'raven'
+                'raven',
+                'Promise'
             ], function () {
                 spaceFiller = arguments[0];
                 spaceFinder = arguments[1];
                 raven = arguments[2];
+                Promise = arguments[3];
 
                 spyOn(spaceFinder, 'findSpace').and.callFake(function () {
-                    return new Promise.resolve(mockSpacefinderResult);
+                    return Promise.resolve(mockSpacefinderResult);
                 });
 
                 spyOn(raven, 'captureException');
