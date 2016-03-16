@@ -66,7 +66,7 @@ $gimbap-jobs-reversed: #42bfda;
 
     font-weight: 500;
     align-self: flex-start;
-    margin-bottom: $gs-baseline;
+    margin-bottom: $gs-baseline / 2;
 }
 
 .gimbap__quote {
@@ -96,6 +96,7 @@ $gimbap-jobs-reversed: #42bfda;
     vertical-align: middle;
     width: $gs-baseline * 2;
     height: $gs-baseline * 2;
+    margin-left: $gs-gutter / 4;
     background-color: rgba(255, 255, 255, .4);
 
     svg {
@@ -182,6 +183,35 @@ $gimbap-jobs-reversed: #42bfda;
     }
 }
 
+.gimbap__mainlogo {
+    display: none;
+
+    .gimbap-style--normal &,
+    .gimbap-style--reversed & {
+        svg {
+            width: 42px;
+            height: 42px;
+            fill: guss-colour(guardian-brand, $pasteup-palette);
+        }
+    }
+
+    @include mq(wide) {
+        display: block;
+        position: absolute;
+        left: calc(50% - 570px);
+        top: $gs-baseline / 3 * 10;
+        margin-left: $gs-gutter;
+
+        &:first-child {
+            top: $gs-baseline / 3 * 7;
+        }
+    }
+
+    @include mq(wide) {
+        left: calc(50% - 650px);
+    }
+}
+
 .gimbap-wrap {
     padding: 0 $gs-gutter / 2 $gs-baseline;
     position: relative;
@@ -233,26 +263,10 @@ $gimbap-jobs-reversed: #42bfda;
             width: calc(50% - 650px);
         }
     }
+}
 
-    > .inline-marque-36 {
-        display: none;
-
-        @include mq(wide) {
-            display: block;
-            position: absolute;
-            left: calc(50% - 570px);
-            top: $gs-baseline / 3 * 10;
-            margin-left: $gs-gutter;
-
-            &:first-child {
-                top: $gs-baseline / 3 * 7;
-            }
-        }
-
-        @include mq(wide) {
-            left: calc(50% - 650px);
-        }
-    }
+.gimbap-wrap__box {
+    border-top: 1px solid colour(news-accent);
 }
 
 .gimbap-wrap__header {
@@ -362,13 +376,6 @@ $gimbap-jobs-reversed: #42bfda;
     .gimbap-style--tone-masterclasses { background: $gimbap-masterclasses-reversed; }
     .gimbap-style--tone-soulmates { background: $gimbap-soulmates-reversed; }
     .gimbap-style--tone-jobs { background: $gimbap-jobs-reversed; }
-}
-
-.gimbap-style--normal,
-.gimbap-style--reversed {
-    > .inline-marque-36 > svg {
-        fill: guss-colour(guardian-brand, $pasteup-palette);
-    }
 }
 
 .gimbap-style--reversed,

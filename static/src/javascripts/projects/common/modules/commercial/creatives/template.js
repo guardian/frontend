@@ -81,6 +81,9 @@ define([
             // Show arrows?
             this.params.arrowRight = (this.params.linksWithArrows.indexOf('yes') !== -1) ? svgs('arrowRight', ['gimbap__arrow']) : '';
 
+            // Add class to logo because why not
+            this.params.marque36icon = svgs('marque36icon', ['gimbap__mainlogo']);
+
             // Include quotes into title only if it is allowed in DFP line item
             this.params.inlineQuote = svgs('quoteIcon',['gimbap__quote']);
             this.params.offer1HasQuotes = (this.params.offer1quotes.indexOf('yes') !== -1) ? this.params.inlineQuote : '';
