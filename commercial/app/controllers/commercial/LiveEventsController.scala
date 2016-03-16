@@ -21,8 +21,15 @@ object LiveEventsController
           val clickMacro = request.getParameter("clickMacro")
           val omnitureId = request.getParameter("omnitureId")
           val selectedLiveEvents = LiveEventAgent.specificLiveEvents(specificIds)
-          jsonFormat.result(views.html.liveevents.liveEvent(selectedLiveEvents.head
-          , omnitureId, clickMacro))
+
+          selectedLiveEvents.headOption match {
+            case Some(event) =>
+              jsonFormat.result(views.html.liveevents.liveEvent(
+                event,
+                omnitureId,
+                clickMacro))
+            case None => NoCache(jsonFormat.nilResult)
+          }
       }
     } getOrElse {
       Future.successful(NoCache(jsonFormat.nilResult))

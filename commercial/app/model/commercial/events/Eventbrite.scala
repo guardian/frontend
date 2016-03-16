@@ -188,8 +188,6 @@ object Eventbrite extends ExecutionContexts with Logging {
     }
 
     lazy val ratioTicketsLeft = 1 - (tickets.map(_.quantitySold).sum.toDouble / tickets.map(_.quantityTotal).sum)
-
-
   }
 
   trait EBEventHandler {
@@ -197,5 +195,3 @@ object Eventbrite extends ExecutionContexts with Logging {
     lazy val isOpen = { status == "live" }
   }
 }
-
-

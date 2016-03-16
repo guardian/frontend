@@ -304,6 +304,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
     lazy val masterclassesToken = configuration.getStringProperty("masterclasses.token")
     lazy val liveEventsToken = configuration.getStringProperty("live-events.token")
+    lazy val liveEventsImagesUrl = "https://membership.theguardian.com/events.json"
     lazy val jobsUrlTemplate = configuration.getStringProperty("jobs.api.url.template")
     lazy val mortgagesUrl = configuration.getStringProperty("lc.mortgages.api.url")
     lazy val moneyUrl = configuration.getStringProperty("moneysupermarket.api.url")

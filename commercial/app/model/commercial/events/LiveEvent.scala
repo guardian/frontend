@@ -2,6 +2,19 @@ package model.commercial.events
 
 import model.commercial.events.Eventbrite._
 import org.joda.time.DateTime
+import play.api.libs.functional.syntax._
+import play.api.libs.json.{JsPath, Reads}
+
+case class LiveEventImage(id: String, mainImageUrl: String)
+object LiveEventImage{
+
+  implicit val liveEventImageReads: Reads[LiveEventImage] = (
+    (JsPath \ "id").read[String] and
+      (JsPath \ "mainImageUrl").read[String]
+    )(LiveEventImage.apply _)
+
+}
+
 
 case class LiveEvent(id: String,
                      name: String,
@@ -15,7 +28,13 @@ case class LiveEvent(id: String,
 
 object LiveEvent {
 
-  def apply(event: EBEvent): LiveEvent = {
+  def apply(event: EBEvent, maybeEventImage: Option[LiveEventImage] = None): LiveEvent = {
+
+    val maybeImageUrl =
+      maybeEventImage match {
+        case Some(eventImage) => Some(eventImage.mainImageUrl)
+        case None => None
+      }
 
     new LiveEvent(
       id = event.id,
@@ -26,7 +45,7 @@ object LiveEvent {
       status = event.status,
       venue = event.venue,
       tickets = event.tickets,
-      imageUrl = None
+      imageUrl = maybeImageUrl
     )
   }
 }
