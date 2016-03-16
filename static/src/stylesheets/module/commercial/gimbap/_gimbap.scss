@@ -235,7 +235,7 @@ $gimbap-jobs-reversed: #42bfda;
     > .inline-marque-36 {
         display: none;
 
-        @include mq(desktop) {
+        @include mq(leftCol) {
             display: block;
             position: absolute;
             left: calc(50% - 570px);
