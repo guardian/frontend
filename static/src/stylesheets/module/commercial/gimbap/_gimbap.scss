@@ -13,7 +13,7 @@ $gimbap-jobs-reversed: #42bfda;
 .gimbap {
     display: flex;
     flex-direction: column;
-    padding: $gs-gutter / 3;
+    padding: $gs-gutter / 2;
     position: relative;
 
     &:hover {
@@ -64,6 +64,7 @@ $gimbap-jobs-reversed: #42bfda;
 .gimbap__title {
     @include fs-headline(5);
 
+    font-weight: 500;
     align-self: flex-start;
     margin-bottom: $gs-baseline;
 }
@@ -71,7 +72,7 @@ $gimbap-jobs-reversed: #42bfda;
 .gimbap__title--quoted {
     svg {
         width: 1.2em;
-        height: .75em;
+        height: .67em;
         opacity: .8;
 
         .gimbap:only-child > & {
@@ -170,6 +171,7 @@ $gimbap-jobs-reversed: #42bfda;
 
 .gimbap__logo--soulmates-horizontal {
     svg {
+        height: 16px; /* "Make your own magic" */
         fill: #ffffff;
     }
 
