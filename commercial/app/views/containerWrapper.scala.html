@@ -1,7 +1,20 @@
-@(innards:Html)
+@(classNames: Seq[String],
+  headerTitle: String,
+  headerClassName: Option[String] = None,
+  bodyClassName: Option[String] = None)(kicker: Html)(blurb: Html)(stamp: Html)(innards: Html)
 
-<p>before innards goes here</p>
-
-@innards
-
-<p>after innards goes here</p>
+<aside class="adverts @classNames map s"adverts--_"">
+    <header class="adverts__header @headerClassName">
+        @if(kicker.body.nonEmpty) {
+            <div class="adverts__kicker">@kicker</div>
+        }
+        <h1 class="adverts__title">@headerTitle</h1>
+        @if(blurb.body.nonEmpty) {
+            <div class="adverts__blurb">@blurb</div>
+        }
+        @stamp
+    </header>
+    <div class="adverts__body @bodyClassName">
+        @innards
+    </div>
+</aside>
