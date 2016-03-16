@@ -71,11 +71,17 @@ define([
 
     Template.prototype.mapGimbap = function() {
         if (this.params.creative === 'gimbap') {
+
+            // Make sure we include right logo to the right card
             this.params.offer1logo = this.params['logo' + this.params.offer1tone + 'horizontal'];
             this.params.offer2logo = this.params['logo' + this.params.offer2tone + 'horizontal'];
             this.params.offer3logo = this.params['logo' + this.params.offer3tone + 'horizontal'];
             this.params.offer4logo = this.params['logo' + this.params.offer4tone + 'horizontal'];
 
+            // Show arrows?
+            this.params.arrowRight = (this.params.linksWithArrows.indexOf('yes') !== -1) ? svgs('arrowRight', ['gimbap__arrow']) : '';
+
+            // Include quotes into title only if it is allowed in DFP line item
             this.params.inlineQuote = svgs('quoteIcon',['gimbap__quote']);
             this.params.offer1HasQuotes = (this.params.offer1quotes.indexOf('yes') !== -1) ? this.params.inlineQuote : '';
             this.params.offer2HasQuotes = (this.params.offer2quotes.indexOf('yes') !== -1) ? this.params.inlineQuote : '';
