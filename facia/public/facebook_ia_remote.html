@@ -12,93 +12,36 @@
     <script>
         (function () {
 
-            var script = document.createElement("script");
-            script.id = "ad-slot-id";
+            function parseParameters() {
+                var script = document.createElement("script");
+                script.id = "ad-slot-id";
 
-            var args = window.location.search.substr(1).split('&');
+                var args = window.location.hash.substr(1).split('&');
 
-            for (var i = 0; i < args.length; ++i) {
-                var arg = args[i].split("=");
-                var argName = arg[0];
-                var argValue = decodeURIComponent(arg[1]);
+                for (var i = 0; i < args.length; ++i) {
+                    var arg = args[i].split("=");
+                    var argName = arg[0];
+                    var argValue = decodeURIComponent(arg[1]);
 
-                var currValue = script.getAttribute(argName);
-                if (currValue) {
-                    script.setAttribute(argName, currValue + "," + argValue);
-                } else {
-                    script.setAttribute(argName, argValue);
+                    var currValue = script.getAttribute(argName);
+                    if (currValue) {
+                        script.setAttribute(argName, currValue + "," + argValue);
+                    } else {
+                        script.setAttribute(argName, argValue);
+                    }
                 }
-            }
+                document.getElementsByTagName("div")[0].appendChild(script);
 
-            document.getElementsByTagName("div")[0].appendChild(script);
+                return document.querySelectorAll("script[id$='" + script.id + "']");
+            }
 
             var networkId = "59666047";
 
-            var scripts = document.querySelectorAll("script[id$='" + script.id + "']");
+            var scripts = parseParameters();
 
             var slot = scripts[scripts.length - 1];
 
             var slotName = "ad-slot-" + scripts.length;
-
-            var buildTargetSize = function (size) {
-                var formatted = size.replace(/\s*,\s*/g, "],[").replace(/\s*x\s*/g, ",");
-                return "[[" + formatted + "]]";
-            };
-
-            var buildCustomTargeting = function () {
-                var attr, i, key, len, match, value;
-                var targeting = "";
-                var ref = slot.attributes;
-                for (i = 0, len = ref.length; i < len; i++) {
-                    attr = ref[i];
-                    match = attr.name.match(/^data-ad-target-(.+)$/);
-                    if (match != null) {
-                        key = match[1];
-                        value = attr.value.replace(/\s*,\s*/g, "','");
-                        targeting += ".setTargeting('" + key + "',['" + value + "'])";
-                    }
-                }
-                return targeting;
-            };
-
-            var pageLevelCodePart1 = "var googletag = googletag || {}; googletag.cmd = googletag.cmd || []; (function() { var gads = document.createElement(\"script\"); gads.async = true; gads.type = \"text/javascript\"; var useSSL = \"https:\" == document.location.protocol; gads.src = (useSSL ? \"https:\" : \"http:\") + \"//www.googletagservices.com/tag/js/gpt.js\"; var node = document.getElementsByTagName(\"script\")[0]; node.parentNode.insertBefore(gads, node); })();";
-
-            var pageLevelCodePart2 = "googletag.cmd.push(function() { googletag.pubads().enableAsyncRendering(); googletag.pubads().collapseEmptyDivs(); googletag.enableServices(); });";
-
-            var buildSlotDeclaration = function (size) {
-                var adUnitName = slot.getAttribute("data-ad-unit");
-                return "googletag.cmd.push(function() { googletag.defineSlot('/" + networkId + "/" + adUnitName + "', " + (buildTargetSize(size)) + ", '" + slotName + "')" + (buildCustomTargeting()) + ".addService(googletag.pubads()); });";
-            };
-
-            var buildSlotCode = function () {
-                return "googletag.cmd.push(function() { googletag.display('" + slotName + "'); });";
-            };
-
-            var insertScript = function (content) {
-                var script = document.createElement("script");
-                slot.parentElement.appendChild(script);
-                script.type = "text/javascript";
-                return script.text = content;
-            };
-
-            var insertAdConfig = function () {
-                var isFirstAd = scripts.length === 1;
-                if (isFirstAd) {
-                    insertScript(pageLevelCodePart1);
-                    insertScript(pageLevelCodePart2);
-                }
-                var size = slot.getAttribute("data-ad-size");
-                return insertScript(buildSlotDeclaration(size));
-            };
-
-            var insertAd = function () {
-                var slotDiv = document.createElement("div");
-                slotDiv.setAttribute("id", slotName);
-                slot.parentElement.appendChild(slotDiv);
-                return insertScript(buildSlotCode());
-            };
-
-            // Krux
 
             var guardian = {} ;
 
@@ -143,23 +86,80 @@
                 document.body.appendChild(krux);
             }
 
-            function attachKruxSegments() {
-                if (localStorage.getItem('kxsegs') !== null) {
-                    var kxSegList = localStorage.getItem('kxsegs').split(',');
-                    console.log(kxSegList);
-                    if (kxSegList.length > 0) {
-                        guardian.krux = kxSegList;
+            function buildTargetSize(size) {
+                var formatted = size.replace(/\s*,\s*/g, "],[").replace(/\s*x\s*/g, ",");
+                return "[[" + formatted + "]]";
+            }
+
+            function buildCustomTargeting() {
+                var attr, i, key, len, match, value;
+                var targeting = "";
+                var ref = slot.attributes;
+                for (i = 0, len = ref.length; i < len; i++) {
+                    attr = ref[i];
+                    match = attr.name.match(/^data-ad-target-(.+)$/);
+                    if (match != null) {
+                        key = match[1];
+                        value = attr.value.replace(/\s*,\s*/g, "','");
+                        targeting += ".setTargeting('" + key + "',['" + value + "'])";
                     }
                 }
-                else {
-                    console.log('No krux segments.')
+                return targeting;
+            }
+
+            function buildSegments() {
+                var filling, kruxSegments, output, ref;
+                var targeting = "";
+                kruxSegments = (ref = localStorage.getItem('kxsegs')) != null ? ref : "";
+                console.log(kruxSegments);
+                if (kruxSegments !== "") {
+                    filling = kruxSegments.split(',').join("','");
+                    output = "['" + filling + "']";
+                    targeting += ".setTargeting('x', " + output + ")";
                 }
+                return targeting;
+            }
+
+            var pageLevelCodePart1 = "var googletag = googletag || {}; googletag.cmd = googletag.cmd || []; (function() { var gads = document.createElement(\"script\"); gads.async = true; gads.type = \"text/javascript\"; var useSSL = \"https:\" == document.location.protocol; gads.src = (useSSL ? \"https:\" : \"http:\") + \"//www.googletagservices.com/tag/js/gpt.js\"; var node = document.getElementsByTagName(\"script\")[0]; node.parentNode.insertBefore(gads, node); })();";
+
+            var pageLevelCodePart2 = "googletag.cmd.push(function() { googletag.pubads().enableAsyncRendering(); googletag.pubads().collapseEmptyDivs(); googletag.enableServices(); });";
+
+            function buildSlotDeclaration(size) {
+                var adUnitName = slot.getAttribute("data-ad-unit");
+                return "googletag.cmd.push(function() { googletag.defineSlot('/" + networkId + "/" + adUnitName + "', " + (buildTargetSize(size)) + ", '" + slotName + "')" + (buildCustomTargeting()) + (buildSegments()) + ".addService(googletag.pubads()); });";
+            }
+
+            function buildSlotCode() {
+                return "googletag.cmd.push(function() { googletag.display('" + slotName + "'); });";
+            }
+
+            function insertScript(content) {
+                var script = document.createElement("script");
+                slot.parentElement.appendChild(script);
+                script.type = "text/javascript";
+                return script.text = content;
+            }
+
+            function insertAdConfig() {
+                var isFirstAd = scripts.length === 1;
+                if (isFirstAd) {
+                    insertScript(pageLevelCodePart1);
+                    insertScript(pageLevelCodePart2);
+                }
+                var size = slot.getAttribute("data-ad-size");
+                return insertScript(buildSlotDeclaration(size));
+            }
+
+            function insertAd() {
+                var slotDiv = document.createElement("div");
+                slotDiv.setAttribute("id", slotName);
+                slot.parentElement.appendChild(slotDiv);
+                return insertScript(buildSlotCode());
             }
 
             function init(){
                 exposeMetaDataForKrux();
                 loadKrux();
-                attachKruxSegments();
 
                 insertAdConfig();
                 insertAd();
