@@ -3,6 +3,17 @@
   omnitureId: Option[String],
   clickMacro: Option[String])(implicit request: RequestHeader)
 
-@containerWrapper(Seq(), "")(HtmlFormat.empty)(HtmlFormat.empty)(HtmlFormat.empty)(HtmlFormat.empty) {
+@defining("http://jobs.theguardian.com/") { case (jobsHost) =>
+
+@containerWrapper(Seq("jobs"), "jobs")(HtmlFormat.empty)(HtmlFormat.empty)(HtmlFormat.empty)(HtmlFormat.empty) {
+    <ul class="jobs-sectors">
+        @for((uri, category) <- jobCategories) {
+            <li><a href="@clickMacro@jobsHost@uri">@category</a></li>
+        }
+    </ul>
+
+    @jobs map jobCard
+
+}
 
 }
