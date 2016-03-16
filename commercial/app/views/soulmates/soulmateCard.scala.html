@@ -1,0 +1,11 @@
+@(soulmate: model.commercial.soulmates.Member,
+  omnitureId: Option[String],
+  clickMacro: Option[String])
+
+<a class="advert advert--soulmate" href="@clickMacro@soulmate.profileUrl" data-link-name="">
+    <h2 class="advert__title" itemprop="name">@soulmate.username</h2>
+    <div class="advert__image-container">
+        <img class="advert__image" src="@soulmate.profilePhoto">
+    </div>
+    <div class="advert__meta">@soulmate.age, @soulmate.location</div>
+</a>
