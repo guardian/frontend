@@ -1,10 +1,10 @@
 @(classNames: Seq[String],
   headerTitle: String,
-  headerClassName: Option[String] = None,
-  bodyClassName: Option[String] = None)(kicker: Html)(blurb: Html)(stamp: Html)(innards: Html)
+  headerClassNames: Option[Seq[String]] = None,
+  bodyClassNames: Option[Seq[String]] = None)(kicker: Html)(blurb: Html)(ctas: Html)(stamp: Html)(innards: Html)
 
 <aside class="adverts @classNames map s"adverts--_"">
-    <header class="adverts__header @headerClassName">
+    <header class="adverts__header @headerClassNames map { _ map { s"adverts__header--_" }}">
         @if(kicker.body.nonEmpty) {
             <div class="adverts__kicker">@kicker</div>
         }
@@ -12,9 +12,14 @@
         @if(blurb.body.nonEmpty) {
             <div class="adverts__blurb">@blurb</div>
         }
-        @stamp
+        @if(ctas.body.nonEmpty) {
+            <div class="adverts__ctas">@ctas</div>
+        }
+        @if(stamp.body.nonEmpty) {
+            <div class="adverts__stamp">@blurb</div>
+        }
     </header>
-    <div class="adverts__body @bodyClassName">
+    <div class="adverts__body @bodyClassNames map { _ map { s"adverts__header--_" }}">
         @innards
     </div>
 </aside>

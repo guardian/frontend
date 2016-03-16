@@ -2,7 +2,7 @@
   omnitureId: Option[String],
   clickMacro: Option[String])(implicit request: RequestHeader)
 
-@containerWrapper(Seq("books"), "bookshop")(HtmlFormat.empty)(HtmlFormat.empty)(HtmlFormat.empty) {
+@containerWrapper(Seq("books"), "bookshop")(HtmlFormat.empty)(HtmlFormat.empty)(HtmlFormat.empty)(HtmlFormat.empty) {
 
     @books map bookCard(_, omnitureId, clickMacro)
 
