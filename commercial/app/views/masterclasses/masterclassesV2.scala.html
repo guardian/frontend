@@ -2,8 +2,10 @@
   omnitureId: Option[String],
   clickMacro: Option[String])(implicit request: RequestHeader)
 
-@containerWrapper(Seq(), "")(HtmlFormat.empty)(HtmlFormat.empty)(HtmlFormat.empty)(HtmlFormat.empty) {
+@containerWrapper(Seq("masterclasses"), "masterclasses")(HtmlFormat.empty){
+    Courses from the Guardian
+}(HtmlFormat.empty)(HtmlFormat.empty) {
 
-
+    @events map eventCard
 
 }
