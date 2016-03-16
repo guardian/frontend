@@ -43,33 +43,31 @@
 
             var slotName = "ad-slot-" + scripts.length;
 
-            var guardian = {} ;
+            var config = {} ;
 
             function toTitleCase(str) {
                 return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
             }
 
             function exposeMetaDataForKrux() {
-                guardian = {
-                    'config' : {
-                        'pageId' : slot.getAttribute("url"),
-                        'edition' : toTitleCase(slot.getAttribute("edition")),
-                        'seriesId' : slot.getAttribute("se"),
-                        'contentType' : toTitleCase(slot.getAttribute("ct")),
-                        'keywordIds' : slot.getAttribute("keywordIds"),
-                        'keywords' : slot.getAttribute("k").split(',').map(function (x) { return toTitleCase(x)}),
-                        'authorIds' : slot.getAttribute("authorIds"),
-                        'blogIds' : slot.getAttribute("bl"),
-                        'referrer' : 'facebook-ia',
-                        'section' : slot.getAttribute("section")
-                    }
+                config = {
+                    'pageId' : slot.getAttribute("url"),
+                    'edition' : toTitleCase(slot.getAttribute("edition")),
+                    'seriesId' : slot.getAttribute("se"),
+                    'contentType' : toTitleCase(slot.getAttribute("ct")),
+                    'keywordIds' : slot.getAttribute("keywordIds"),
+                    'keywords' : slot.getAttribute("k").split(',').map(function (x) { return toTitleCase(x)}),
+                    'authorIds' : slot.getAttribute("authorIds"),
+                    'blogIds' : slot.getAttribute("bl"),
+                    'referrer' : 'facebook-ia',
+                    'section' : slot.getAttribute("section")
                 };
             }
 
             function loadKrux() {
                 var krux = document.createElement('script');
                 krux.setAttribute("class", "kxct");
-                krux.setAttribute("data-id", "KS_cfybw");
+                krux.setAttribute("data-id", "J_RxuxWJ");
                 krux.setAttribute("data-timing", "async");
                 krux.setAttribute("data-version", "1.9");
                 krux.setAttribute("type", "text/javascript");
@@ -79,7 +77,7 @@
                     "var k=document.createElement('script');k.type='text/javascript';k.async=true; " +
                     "var m,src=(m=location.href.match(/\bkxsrc=([^&]+)/))&&decodeURIComponent(m[1]); " +
                     "k.src = /^https?:\\/\\/([a-z0-9_\\-\\.]+\\.)?krxd\\.net(:\\d{1,5})?\\//i.test(src) ? src : src === 'disable' ? '' : " +
-                    "(location.protocol==='https:'?'https:':'http:')+'//cdn.krxd.net/controltag?confid=KS_cfybw' ; " +
+                    "(location.protocol==='https:'?'https:':'http:')+'//cdn.krxd.net/controltag?confid=J_RxuxWJ' ; " +
                     "var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(k,s); }());";
 
                 document.body.appendChild(krux);
