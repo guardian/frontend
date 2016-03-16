@@ -50,8 +50,8 @@
             }
 
             function exposeMetaDataForKrux() {
-                guardian = { 'config' : {
-                    'page' : {
+                guardian = {
+                    'config' : {
                         'pageId' : slot.getAttribute("url"),
                         'edition' : toTitleCase(slot.getAttribute("edition")),
                         'seriesId' : slot.getAttribute("se"),
@@ -63,7 +63,6 @@
                         'referrer' : 'facebook-ia',
                         'section' : slot.getAttribute("section")
                     }
-                }
                 };
             }
 
@@ -156,7 +155,7 @@
                 return insertScript(buildSlotCode());
             }
 
-            function init(){
+            function init() {
                 exposeMetaDataForKrux();
                 loadKrux();
 
