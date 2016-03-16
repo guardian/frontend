@@ -202,13 +202,6 @@ define([
                     });
                 }
             },
-            setTone: function ($el) {
-                if ($el.hasClass('js-email-sub--article')) {
-                    fastdom.write(function () {
-                        $el.addClass('email-sub--tone-' + config.page.cardStyle);
-                    });
-                }
-            },
             freezeHeight: function ($wrapper, reset) {
                 var wrapperHeight,
                     getHeight = function () {
@@ -345,7 +338,6 @@ define([
                 // from the data attributes on the iframe (eg: allowing us to set them from composer)
                 if (isIframed) {
                     ui.updateForm(rootEl, $el, analytics);
-                    ui.setTone($el);
                 }
 
                 // Ensure our form is the right height, both in iframe and outside
