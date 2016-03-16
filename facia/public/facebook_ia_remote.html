@@ -111,7 +111,6 @@
                 var filling, kruxSegments, output, ref;
                 var targeting = "";
                 kruxSegments = (ref = localStorage.getItem('kxsegs')) != null ? ref : "";
-                console.log(kruxSegments);
                 if (kruxSegments !== "") {
                     filling = kruxSegments.split(',').join("','");
                     output = "['" + filling + "']";
