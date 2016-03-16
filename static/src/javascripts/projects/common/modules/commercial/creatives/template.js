@@ -63,19 +63,24 @@ define([
         this.params.logomasterclasses = svgs('logomasterclasses');
         this.params.arrowRight = svgs('arrowRight', ['i-right']);
         this.params.logoguardian = svgs('logoguardian');
-        this.params.inlineQuote = svgs('quoteIcon');
         this.params.marque36iconCreativeMarque = svgs('marque36icon', ['creative__marque']);
         this.params.logoFeatureLabel = 'Paid for by';
 
-        this.mapGimbapLogos();
+        this.mapGimbap();
     };
 
-    Template.prototype.mapGimbapLogos = function() {
+    Template.prototype.mapGimbap = function() {
         if (this.params.creative === 'gimbap') {
             this.params.offer1logo = this.params['logo' + this.params.offer1tone + 'horizontal'];
             this.params.offer2logo = this.params['logo' + this.params.offer2tone + 'horizontal'];
             this.params.offer3logo = this.params['logo' + this.params.offer3tone + 'horizontal'];
             this.params.offer4logo = this.params['logo' + this.params.offer4tone + 'horizontal'];
+
+            this.params.inlineQuote = svgs('quoteIcon',['gimbap__quote']);
+            this.params.offer1HasQuotes = (this.params.offer1quotes.indexOf('yes') !== -1) ? this.params.inlineQuote : '';
+            this.params.offer2HasQuotes = (this.params.offer2quotes.indexOf('yes') !== -1) ? this.params.inlineQuote : '';
+            this.params.offer3HasQuotes = (this.params.offer3quotes.indexOf('yes') !== -1) ? this.params.inlineQuote : '';
+            this.params.offer4HasQuotes = (this.params.offer4quotes.indexOf('yes') !== -1) ? this.params.inlineQuote : '';
         }
     };
 
