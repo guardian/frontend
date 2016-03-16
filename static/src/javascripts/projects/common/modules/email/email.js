@@ -15,11 +15,13 @@ define([
     'common/views/svgs',
     'text!common/views/email/submissionResponse.html',
     'text!common/views/ui/close-button.html',
+    'text!common/views/email/mark-checkbox.html',
     'common/utils/robust',
     'common/utils/detect',
     'common/modules/identity/api',
     'common/modules/user-prefs',
-    'lodash/arrays/uniq'
+    'lodash/arrays/uniq',
+    'common/modules/experiments/ab'
 ], function (
     formInlineLabels,
     bean,
@@ -37,11 +39,13 @@ define([
     svgs,
     successHtml,
     closeHtml,
+    markHtml,
     robust,
     detect,
     Id,
     userPrefs,
-    uniq
+    uniq,
+    ab
 ) {
     var omniture;
 
@@ -80,7 +84,8 @@ define([
             form: 'js-email-sub__form',
             inlineLabel: 'js-email-sub__inline-label',
             textInput: 'js-email-sub__text-input',
-            listIdHiddenInput: 'js-email-sub__listid-input'
+            listIdHiddenInput: 'js-email-sub__listid-input',
+            markCheckbox: 'js-email-sub__mark-input'
         },
         messages = {
             defaultSuccessHeadline: 'Thank you for subscribing',
@@ -158,7 +163,9 @@ define([
 
                 return function (event) {
                     var emailAddress = $('.' + classes.textInput, $form).val(),
-                        listId = $('.' + classes.listIdHiddenInput, $form).val();
+                        listId = $('.' + classes.listIdHiddenInput, $form).val(),
+                        markCheckbox = $('.' + classes.markCheckbox, $form)[0].checked ? 'marketing allowed' : 'marketing disallowed',
+                        analyticsInfo;
 
                     event.preventDefault();
 
@@ -169,10 +176,20 @@ define([
                                     '&campaignCode=' + formData.campaignCode +
                                     '&referrer=' + formData.referrer;
 
+                        analyticsInfo = 'rtrt | email form inline | '
+                                        + analytics.formType + ' | '
+                                        + analytics.listId + ' | '
+                                        + analytics.signedIn + ' | '
+                                        + '%action%';
+
+                        if (formData.inMarkAbTest) {
+                            analyticsInfo += ' | ' + markCheckbox;
+                        }
+
                         state.submitting = true;
 
                         return getOmniture().then(function (omniture) {
-                            omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | ' + analytics.signedIn + ' | subscribe clicked');
+                            omniture.trackLinkImmediate(analyticsInfo.replace('%action%', 'subscribe clicked'));
 
                             return ajax({
                                 url: url,
@@ -183,12 +200,12 @@ define([
                                 }
                             })
                             .then(function () {
-                                omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | ' + analytics.signedIn + ' | subscribe successful');
+                                omniture.trackLinkImmediate(analyticsInfo.replace('%action%', 'subscribe successful'));
                             })
                             .then(handleSubmit(true, $form))
                             .catch(function (error) {
                                 robust.log('c-email', error);
-                                omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | ' + analytics.signedIn + ' | error');
+                                omniture.trackLinkImmediate(analyticsInfo.replace('%action%', 'error'));
                                 handleSubmit(false, $form)();
                             });
                         });
@@ -223,7 +240,10 @@ define([
                     formSuccessDesc = (opts && opts.formSuccessDesc) || formData.formSuccessDesc,
                     removeComforter = (opts && opts.removeComforter) || formData.removeComforter || false,
                     formModClass = (opts && opts.formModClass) || formData.formModClass || false,
-                    formCloseButton = (opts && opts.formCloseButton) || formData.formCloseButton || false;
+                    formCloseButton = (opts && opts.formCloseButton) || formData.formCloseButton || false,
+                    showMarketingCheckbox = (opts && opts.showMarketingCheckbox) || formData.showMarketingCheckbox || false,
+                    showCheckedMarketing = ab.isInVariant('EmailSignupMarketingCheckbox', 'marketing-default-checked'),
+                    showUncheckedMarketing = ab.isInVariant('EmailSignupMarketingCheckbox', 'marketing-default-unchecked');
 
                 Id.getUserFromApi(function (userFromId) {
                     ui.updateFormForLoggedIn(userFromId, el);
@@ -246,6 +266,15 @@ define([
                         $(el).addClass('email-sub--' + formModClass);
                     }
 
+                    if (showMarketingCheckbox && (showCheckedMarketing || showUncheckedMarketing)) {
+                        $('.js-email-sub__small', el).after(template(markHtml, {}));
+                        $(el).addClass('email-sub__form--has-mark');
+                        $('.js-email-sub__small', el).addClass('email-sub__small--is-hidden');
+                        if (showCheckedMarketing) {
+                            $('.js-email-sub__mark-input', el).attr('checked', 'checked').val('checked');
+                        }
+                    }
+
                     if (formCloseButton) {
                         var closeButtonTemplate = {
                             closeIcon: svgs('closeCentralIcon')
@@ -263,7 +292,8 @@ define([
                     campaignCode: formCampaignCode,
                     referrer: window.location.href,
                     customSuccessHeadline: formSuccessHeadline,
-                    customSuccessDesc: formSuccessDesc
+                    customSuccessDesc: formSuccessDesc,
+                    inMarkAbTest: showCheckedMarketing || showUncheckedMarketing
                 });
 
             },

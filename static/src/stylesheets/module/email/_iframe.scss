@@ -98,7 +98,7 @@ body {
 
 // Above Phablet
 @include mq($from: 606px) {
-    .email-sub__form--article, {
+    .email-sub__form--article {
         .email-sub__form-wrapper {
             line-height: 3;
         }
@@ -110,6 +110,21 @@ body {
         .email-sub__submit-input {
             width: auto;
         }
+
+        .email-sub__small {
+            display: inline-block;
+            margin-left: $gs-gutter;
+            width: gs-span(3);
+        }
+
+        .email-sub__small--is-hidden {
+            display: none;
+        }
+
+    }
+
+    .email-sub__form--has-mark .email-sub__small {
+        width: gs-span(4);
     }
 }
 
