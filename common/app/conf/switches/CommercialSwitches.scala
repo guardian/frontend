@@ -149,10 +149,10 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val MasterclassFeedSwitch = Switch(
+  val EventsFeedSwitch = Switch(
     "Commercial",
-    "gu-masterclasses",
-    "If this switch is on, commercial components will be fed by masterclass feed.",
+    "gu-events",
+    "If this switch is on, commercial components will be fed by masterclass and live-events feeds.",
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
