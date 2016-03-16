@@ -1,7 +1,19 @@
 @(components: Seq[Html], omnitureId: Option[String])(implicit request: RequestHeader)
 
-@containerWrapper(Seq(), "")(HtmlFormat.empty)(HtmlFormat.empty)(HtmlFormat.empty)(HtmlFormat.empty) {
+@containerWrapper(Seq("multi"), "across the guardian")(HtmlFormat.empty)(HtmlFormat.empty)(HtmlFormat.empty)(HtmlFormat.empty) {
 
-
+@* LET'S WAIT UNTIL ALL SINGLE TYPE COMPONENTS ARE DONE
+    @components map { component =>
+        component match {
+            case _: Video { itemCard(_) }
+            case _: Audio { itemCard(_) }
+            case _: Gallery { itemCard(_) }
+            case _: Book { bookCard(_) }
+            case _: Member { soulmateCard(_) }
+            case _: Masterclass { masterclassCard(_) }
+            case _: TravelOffer { travelCard(_) }
+        }
+    }
+*@
 
 }
