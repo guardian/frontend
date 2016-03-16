@@ -1,0 +1,12 @@
+.adverts--books {
+    .advert__image {
+        max-height: $gs-baseline * 11;
+    }
+}
+
+.adverts--tone-books {
+
+    > .adverts__header{
+        background: guss-colour(features-main-1, $pasteup-palette);
+    }
+}

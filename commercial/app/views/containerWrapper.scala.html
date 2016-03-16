@@ -3,8 +3,8 @@
   headerClassNames: Option[Seq[String]] = None,
   bodyClassNames: Option[Seq[String]] = None)(kicker: Html)(blurb: Html)(ctas: Html)(stamp: Html)(innards: Html)
 
-<aside class="adverts @classNames.map(c => s"adverts--$c")">
-    <header class="adverts__header @headerClassNames.map(_.map(c => s"adverts__header--$c"))">
+<aside class="adverts @classNames.map(c => s"adverts--$c").mkString(" ")">
+    <header class="adverts__header @headerClassNames.map(_.map(c => s"adverts__header--$c").mkString(" "))">
         @if(kicker.body.nonEmpty) {
             <div class="adverts__kicker">@kicker</div>
         }
@@ -19,7 +19,7 @@
             <div class="adverts__stamp">@blurb</div>
         }
     </header>
-    <div class="adverts__body @bodyClassNames.map(_.map(c => s"adverts__body--$c"))">
+    <div class="adverts__body adverts__row @bodyClassNames.map(_.map(c => s"adverts__body--$c").mkString(" "))">
         @innards
     </div>
 </aside>

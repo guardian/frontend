@@ -1,0 +1,21 @@
+.advert {
+    box-sizing: border-box;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+
+    > *:not(.advert__image-container) {
+        padding-left: $gs-gutter / 4;
+        padding-right: $gs-gutter / 4;
+    }
+
+}
+
+.advert__image-container {
+    order: -1;
+}
+
+.advert__image {
+    max-width: 100%;
+    height: auto;
+}
