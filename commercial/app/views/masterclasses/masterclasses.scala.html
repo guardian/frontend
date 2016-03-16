@@ -1,4 +1,4 @@
-@(events: Seq[model.commercial.masterclasses.MasterClass], omnitureId: Option[String], clickMacro: Option[String])(implicit request: RequestHeader)
+@(masterclasses: Seq[model.commercial.events.Masterclass], omnitureId: Option[String], clickMacro: Option[String])(implicit request: RequestHeader)
 
 @import conf.Configuration
 
@@ -22,22 +22,22 @@
             </div>
             <div class="commercial__body">
                 <ul class="lineitems">
-                    @events.take(4).map { event =>
+                    @masterclasses.map { masterclass =>
                         <li class="lineitem">
-                            <a class="lineitem__link" href="@clickMacro@event.eventBriteEvent.guardianUrl" data-link-name="merchandising-masterclasses-s-v@{version}_@{date}-@{relevance}-@event.eventBriteEvent.name">
-                                @event.mainPicture.map{ picture =>
+                            <a class="lineitem__link" href="@clickMacro@masterclass.guardianUrl" data-link-name="merchandising-masterclasses-s-v@{version}_@{date}-@{relevance}-@masterclass.name">
+                                @masterclass.mainPicture.map{ picture =>
                                     @Item300.bestFor(picture.images).map{ url => <div class="lineitem__image-crop"><img class="lineitem__image" src="@url" alt=""/></div> }
                                 }
-                                <h4 class="lineitem__title">@event.eventBriteEvent.name</h4>
+                                <h4 class="lineitem__title">@masterclass.name</h4>
                                 <p class="lineitem__meta">
-                                    <span class="lineitem__meta__strong">@event.eventBriteEvent.readableDate &#20; <span class="commercial--tone__highlight">@event.eventBriteEvent.displayPrice</span></span><br/>
-                                    @event.eventBriteEvent.venue.description
-                                    @if(event.eventBriteEvent.ratioTicketsLeft <= 0.1){
+                                    <span class="lineitem__meta__strong">@masterclass.readableDate &#20; <span class="commercial--tone__highlight">@masterclass.displayPrice</span></span><br/>
+                                    @masterclass.venue.description
+                                    @if(masterclass.ratioTicketsLeft <= 0.1){
                                         <br><span class="lineitem__scarcity">Last few tickets remaining</span>
                                     }
                                 </p>
                             </a>
-                            <a class="lineitem__cta button button--primary button--small" href="@clickMacro@event.eventBriteEvent.guardianUrl" data-link-name="merchandising-masterclasses-s-v@{version}_@{date}-@{relevance}-@event.eventBriteEvent.name">
+                            <a class="lineitem__cta button button--primary button--small" href="@clickMacro@masterclass.guardianUrl" data-link-name="merchandising-masterclasses-s-v@{version}_@{date}-@{relevance}-@masterclass.name">
                                 Book now@fragments.inlineSvg("arrow-right", "icon", List("i-right", "i-arrow-black"))
                             </a>
                         </li>

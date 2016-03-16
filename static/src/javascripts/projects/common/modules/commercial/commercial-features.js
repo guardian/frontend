@@ -4,6 +4,7 @@ define([
     'common/utils/detect',
     'common/utils/robust',
     'common/modules/commercial/user-features',
+    'common/modules/identity/api',
     'common/modules/user-prefs'
 ], function (
     location,
@@ -11,6 +12,7 @@ define([
     detect,
     robust,
     userFeatures,
+    identityApi,
     userPrefs
 ) {
     // Having a constructor means we can easily re-instantiate the object in a test
@@ -44,6 +46,8 @@ define([
             config.page.section === 'identity'; // needed for pages under profile.* subdomain
 
         var switches = config.switches;
+
+        var isWidePage = detect.getBreakpoint() === 'wide';
 
         // Feature switches
 
@@ -101,6 +105,16 @@ define([
             externalAdvertising &&
             !sensitiveContent &&
             switches.outbrain;
+
+        this.commentAdverts =
+            this.dfpAdvertising &&
+            switches.standardAdverts &&
+            !isMinuteArticle &&
+            config.switches.viewability &&
+            config.switches.discussion &&
+            config.page.commentable &&
+            identityApi.isUserLoggedIn() &&
+            (!isLiveBlog || isWidePage);
 
         this.async = {
             membershipMessages : detect.adblockInUse.then(function (adblockUsed) {

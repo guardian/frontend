@@ -2,7 +2,7 @@ package commercial
 
 import common.{Jobs, Logging}
 import model.commercial.jobs.Industries
-import model.commercial.masterclasses.MasterClassTagsAgent
+import model.commercial.events.MasterclassTagsAgent
 import model.commercial.money.BestBuysAgent
 import model.commercial.travel.Countries
 
@@ -30,7 +30,7 @@ object MasterClassTagsRefresh extends RefreshJob {
 
   val name: String = "MasterClassTags"
 
-  def refresh() = MasterClassTagsAgent.refresh()
+  def refresh() = MasterclassTagsAgent.refresh()
 }
 
 object CountriesRefresh extends RefreshJob {
