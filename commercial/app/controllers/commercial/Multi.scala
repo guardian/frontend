@@ -3,7 +3,7 @@ package controllers.commercial
 import common.ExecutionContexts
 import model.commercial.books.BestsellersAgent
 import model.commercial.jobs.JobsAgent
-import model.commercial.masterclasses.MasterClassAgent
+import model.commercial.events.MasterclassAgent
 import model.commercial.soulmates.SoulmatesAgent
 import model.commercial.travel.TravelOffersAgent
 import model.{Cached, NoCache}
@@ -75,16 +75,16 @@ object Multi
         }
       case ("masterclasses", eventBriteId) if eventBriteId.nonEmpty =>
         Future.successful {
-          MasterClassAgent.specificClasses(Seq(eventBriteId)).headOption orElse {
-            MasterClassAgent.masterclassesTargetedAt(segment).headOption
+          MasterclassAgent.specificMasterclasses(Seq(eventBriteId)).headOption orElse {
+            MasterclassAgent.masterclassesTargetedAt(segment).headOption
           } map {
-            views.html.masterClasses.masterClassFragment(_, clickMacro)
+            views.html.masterclasses.masterclassFragment(_, clickMacro)
           }
         }
       case ("masterclasses", _) =>
         Future.successful {
-          MasterClassAgent.masterclassesTargetedAt(segment).headOption map {
-            views.html.masterClasses.masterClassFragment(_, clickMacro)
+          MasterclassAgent.masterclassesTargetedAt(segment).headOption map {
+            views.html.masterclasses.masterclassFragment(_, clickMacro)
           }
         }
       case ("soulmates", _) =>
