@@ -1,0 +1,43 @@
+@(item: model.ContentType,
+  omnitureId: Option[String],
+  clickMacro: Option[String])(implicit request: RequestHeader)
+
+@import views.support.ImgSrc
+@import views.html.fragments.inlineSvg
+
+<a class="advert @item match {
+        case _: Video => { advert--video }
+        case _: Audio => { advert--audio }
+        case _: Gallery => { advert--gallery }
+        case _ => { }
+    }" href="@clickMacro@item.metadata.webUrl" data-link-name="">
+    <h2 class="advert__title">
+        @insertItemMediaIcon(item)
+        @item.metadata.webTitle
+    </h2>
+    @item.trail.trailPicture.map { trailPictureContainer =>
+        <div class="advert__image-container">
+            <img class="advert__image" src="@ImgSrc.getFallbackUrl(trailPictureContainer)">
+        </div>
+    }
+    <div class="advert__meta">
+        <time datetime="@item.trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
+            data-timestamp="@item.trail.webPublicationDate.getMillis"
+            data-relativeformat="short">
+            <span class="u-h">Published: </span>
+            @Format(item.trail.webPublicationDate, "d MMM y")
+        </time>
+    </div>
+    <span class="u-faux-block-link__overlay" data-link-name="">
+        @item.metadata.webTitle
+    </span>
+</a>
+
+@insertItemMediaIcon(item : model.ContentType) = @{
+    item match {
+        case _: Video => fragments.inlineSvg("video-icon", "icon")
+        case _: Audio => fragments.inlineSvg("volume-high", "icon")
+        case _: Gallery => fragments.inlineSvg("camera", "icon")
+        case _ => ""
+    }
+}

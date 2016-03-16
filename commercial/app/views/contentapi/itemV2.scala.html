@@ -8,11 +8,29 @@
   optCapiReadMoreText: Option[String],
   optSponsorType: Option[String],
   optSponsorLabel: Option[String],
-  optClickMacro: Option[String],
-  optOmnitureId: Option[String])(implicit request: RequestHeader)
+  clickMacro: Option[String],
+  omnitureId: Option[String])(implicit request: RequestHeader)
 
-@containerWrapper(Seq(), "")(HtmlFormat.empty)(HtmlFormat.empty)(HtmlFormat.empty)(HtmlFormat.empty) {
+@import views.html.fragments.inlineSvg
 
+@containerWrapper(Seq("capi"), optCapiLink.getOrElse("Paid content")){
 
+    @fragments.commercial.paidForMeta()
+
+}(HtmlFormat.empty)(HtmlFormat.empty){
+
+    <a @if(Edition(request).id == "AU") {
+            href="@LinkTo("/guardian-labs-australia")"
+        } else {
+            href="@LinkTo("/guardian-labs")"
+        }
+        >
+        @inlineSvg("glabs-logo", "logo")
+        <span class='u-h'>Guardian Labs</span>
+    </a>
+    
+} {
+
+    @itemCard(item, omnitureId, clickMacro)
 
 }
