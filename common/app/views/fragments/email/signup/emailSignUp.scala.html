@@ -8,18 +8,19 @@
     formImage: String = "")(implicit request: RequestHeader)
 
 @import common.LinkTo
+@import controllers.ListIds._
 
 @listIdTones = @{ Map[Int, String] (
-    2313 -> "comment", // Best of opinion
-    218 -> "feature", // The Fiver
-    217 -> "media", // Media briefing
-    3322 -> "feature", // The long read
-    219 -> "feature", // The breakdown
-    220 -> "feature", // The Spin
-    40 -> "review", // Close Up
-    1950 -> "media", // Film Today
-    248 -> "feature", // Observer Food Monthly
-    2635 -> "media" // First dog on the moon
+    theBestOfOpinion -> "comment",
+    theFiver -> "feature",
+    mediaBriefing -> "media",
+    theLongRead -> "feature",
+    theBreakdown -> "feature",
+    theSpin -> "feature",
+    closeUp -> "review",
+    filmToday -> "media",
+    theObserverFoodMonthly -> "feature",
+    firstDogOnTheMoon -> "media"
 )}
 
 @formId = @{ componentClass + "-email-sub-form" }
