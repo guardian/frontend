@@ -5,6 +5,8 @@ define([
     React,
     accessibility
 ) {
+    var DOM_ID = 'js-accessibility-preferences';
+
     function init(callback) {
         var BinaryToggle = React.createClass({
             render: function () {
@@ -82,13 +84,13 @@ define([
 
         React.render(
             React.createElement(Accessibility),
-            document.getElementById(module.DOM_ID),
+            document.getElementById(DOM_ID),
             callback
         );
     }
 
     var module = {
-        DOM_ID: 'js-accessibility-preferences',
+        DOM_ID: DOM_ID,
         init: init
     };
     return module;
