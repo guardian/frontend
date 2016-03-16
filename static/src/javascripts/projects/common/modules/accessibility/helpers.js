@@ -8,9 +8,11 @@ define([
     $
 ) {
     function shouldHideFlashingElements(callback) {
+        console.log('allow elements', accessibility.isOn('flashing-elements'));
+        //
         if (!accessibility.isOn('flashing-elements')) {
             fastdom.write(function () {
-                $('.js-flashing-image').remove();
+                $('body').addClass('disable-flashing-elements');
                 if (callback) {
                     callback();
                 }
