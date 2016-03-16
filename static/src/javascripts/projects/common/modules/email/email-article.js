@@ -2,46 +2,34 @@ define([
     'common/utils/$',
     'bean',
     'bonzo',
-    'common/modules/identity/api',
     'fastdom',
     'common/modules/email/email',
-    'common/utils/detect',
-    'lodash/collections/contains',
-    'lodash/arrays/intersection',
-    'lodash/collections/map',
     'common/utils/config',
-    'lodash/collections/every',
-    'lodash/collections/find',
-    'lodash/collections/some',
     'text!common/views/email/iframe.html',
     'common/utils/template',
     'common/modules/article/space-filler',
     'common/modules/analytics/omniture',
     'common/utils/robust',
-    'common/modules/user-prefs',
-    'common/utils/storage'
+    'common/modules/email/run-checks',
+    'common/utils/page',
+    'common/utils/storage',
+    'lodash/collections/find'
 ], function (
     $,
     bean,
     bonzo,
-    Id,
     fastdom,
     email,
-    detect,
-    contains,
-    intersection,
-    map,
     config,
-    every,
-    find,
-    some,
     iframeTemplate,
     template,
     spaceFiller,
     omniture,
     robust,
-    userPrefs,
-    storage
+    emailRunChecks,
+    page,
+    storage,
+    find
 ) {
 
     var insertBottomOfArticle = function () {
@@ -109,12 +97,6 @@ define([
                 insertMethod: insertBottomOfArticle
             }
         },
-        emailInserted = false,
-        userListSubscriptions = [],
-        keywords = config.page.keywords ? config.page.keywords.split(',') : '',
-        isParagraph = function ($el) {
-            return $el.nodeName && $el.nodeName === 'P';
-        },
         getSpacefinderRules = function () {
             return {
                 bodySelector: '.js-article__body',
@@ -131,37 +113,6 @@ define([
                 }
             };
         },
-        buildUserSubscriptions = function (response) {
-            if (response && response.status !== 'error' && response.result && response.result.subscriptions) {
-                userListSubscriptions = map(response.result.subscriptions, 'listId');
-            }
-
-            // Get the first list that is allowed on this page
-            addListToPage(find(listConfigs, listCanRun));
-        },
-        listCanRun = function (listConfig) {
-            var browser = detect.getUserAgent.browser,
-                version = detect.getUserAgent.version;
-
-            // Check our lists canRun method and
-            // make sure that the user isn't already subscribed to this email and
-            // don't show on IE 7,8,9 for now
-            if (!config.page.shouldHideAdverts &&
-                listConfig.listName &&
-                canRunList[listConfig.listName]() &&
-                !contains(userListSubscriptions, listConfig.listId) &&
-                !userHasRemoved(listConfig.listId, 'article') &&
-                !(browser === 'MSIE' && contains(['7','8','9'], version + ''))) {
-                return listConfig;
-            }
-        },
-        userHasRemoved = function (id, formType) {
-            var currentListPrefs = userPrefs.get('email-sign-up-' + formType);
-            return currentListPrefs && currentListPrefs.indexOf(id) > -1;
-        },
-        userHasSeenThisSession = function () {
-            return storage.session.get('email-sign-up-seen');
-        },
         addListToPage = function (listConfig) {
             if (listConfig) {
                 var iframe = bonzo.create(template(iframeTemplate, listConfig))[0],
@@ -175,86 +126,33 @@ define([
                         listConfig.insertMethod()($iframeEl);
 
                         omniture.trackLinkImmediate('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
-                        emailInserted = true;
+                        emailRunChecks.setEmailInserted();
+                        emailRunChecks.setEmailShown(listConfig.listName);
                     });
                 } else {
                     spaceFiller.fillSpace(getSpacefinderRules(), function (paras) {
                         $iframeEl.insertBefore(paras[0]);
                         omniture.trackLinkImmediate('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
-                        emailInserted = true;
+                        emailRunChecks.setEmailInserted();
+                        emailRunChecks.setEmailShown(listConfig.listName);
                     });
                 }
 
                 storage.session.set('email-sign-up-seen', 'true');
             }
-        },
-        canRunHelpers = {
-            keywordExists: function (keyword) {
-                // Compare page keywords with passed in array
-                return !!intersection(keywords, keyword).length;
-            },
-            userReferredFromNetworkFront: function () {
-                // Check whether the referring url ends in the edition
-                var networkFront = ['uk', 'us', 'au', 'international'],
-                    originPathName = document.referrer.split(/\?|#/)[0];
-
-                if (originPathName) {
-                    return some(networkFront, function (frontName) {
-                        return originPathName.substr(originPathName.lastIndexOf('/') + 1) === frontName;
-                    });
-                }
-
-                return false;
-            },
-            pageHasBlanketBlacklist: function () {
-                // Prevent the blanket emails from ever showing on certain keywords or sections
-                return canRunHelpers.keywordExists(['US elections 2016', 'Football']) ||
-                        config.page.section === 'film' ||
-                        config.page.seriesId === 'world/series/guardian-morning-briefing';
-            },
-            allowedArticleStructure: function () {
-                var $articleBody = $('.js-article__body');
-
-                if ($articleBody.length) {
-                    var allArticleEls = $('> *', $articleBody);
-                    return every([].slice.call(allArticleEls, allArticleEls.length - 3), isParagraph);
-                } else {
-                    return false;
-                }
-            }
-        },
-        canRunList = {
-            theCampaignMinute: function () {
-                return config.page.isMinuteArticle && canRunHelpers.keywordExists(['US elections 2016']);
-            },
-            theFilmToday: function () {
-                return config.page.section === 'film';
-            },
-            theFiver: function () {
-                return canRunHelpers.keywordExists(['Football']) &&
-                        canRunHelpers.allowedArticleStructure();
-            },
-            theGuardianToday: function () {
-                return config.switches.emailInArticleGtoday &&
-                        !canRunHelpers.pageHasBlanketBlacklist() &&
-                        canRunHelpers.userReferredFromNetworkFront() &&
-                        canRunHelpers.allowedArticleStructure();
-            }
         };
 
     return {
         init: function () {
-            if (!emailInserted &&
-                !config.page.isFront &&
-                config.switches.emailInArticle &&
-                storage.session.isAvailable &&
-                !userHasSeenThisSession()) {
-                // Get the user's current subscriptions
-                Id.getUserEmailSignUps()
-                    .then(buildUserSubscriptions)
-                    .catch(function (error) {
-                        robust.log('c-email', error);
-                    });
+            if (emailRunChecks.allEmailCanRun()) {
+                // First we need to check the user's email subscriptions
+                // so we don't insert the sign-up if they've already subscribed
+                emailRunChecks.getUserEmailSubscriptions().then(function () {
+                    // Get the first list that is allowed on this page
+                    addListToPage(find(listConfigs, emailRunChecks.listCanRun));
+                }).catch(function (error) {
+                    robust.log('c-email', error);
+                });
             }
         }
     };

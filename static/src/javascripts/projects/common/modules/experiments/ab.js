@@ -12,6 +12,7 @@ define([
     'common/modules/experiments/tests/article-video-autoplay',
     'common/modules/experiments/tests/next-in-series',
     'common/modules/experiments/tests/article-related-content-display-as-recommendation',
+    'common/modules/experiments/tests/email-signup-marketing-checkbox',
     'common/modules/experiments/tests/adblocking-response',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
@@ -36,6 +37,7 @@ define([
     ArticleVideoAutoplay,
     NextInSeries,
     RelatedContentDisplayAsRecommendation,
+    EmailSignupMarketingCheckbox,
     AdblockingResponse,
     flatten,
     forEach,
@@ -56,6 +58,7 @@ define([
         new ArticleVideoAutoplay(),
         new NextInSeries(),
         new RelatedContentDisplayAsRecommendation(),
+        new EmailSignupMarketingCheckbox(),
         new AdblockingResponse()
     ]);
 
