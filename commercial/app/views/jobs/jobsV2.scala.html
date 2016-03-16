@@ -1,3 +1,10 @@
 @(jobs: Seq[model.commercial.jobs.Job],
+  jobCategories: Map[String,String],
   omnitureId: Option[String],
   clickMacro: Option[String])(implicit request: RequestHeader)
+
+@containerWrapper {
+
+@jobs map jobCard
+
+}
