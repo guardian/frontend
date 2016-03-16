@@ -87,6 +87,7 @@ $gimbap-jobs-reversed: #42bfda;
 
     align-self: flex-start;
     flex-grow: 1;
+    font-weight: 500;
 }
 
 .gimbap__arrow {
@@ -189,8 +190,8 @@ $gimbap-jobs-reversed: #42bfda;
     .gimbap-style--normal &,
     .gimbap-style--reversed & {
         svg {
-            width: 42px;
-            height: 42px;
+            width: 39px;
+            height: 39px;
             fill: guss-colour(guardian-brand, $pasteup-palette);
         }
     }
@@ -359,10 +360,10 @@ $gimbap-jobs-reversed: #42bfda;
         filter: brightness(.5);
     }
 
-    .gimbap-style--tone-members { background: lighten($gimbap-members-text, 35%); color: $gimbap-members-text; }
-    .gimbap-style--tone-masterclasses { background: lighten($gimbap-masterclasses-reversed, 47%); color: $gimbap-masterclasses-text; }
-    .gimbap-style--tone-soulmates { background: lighten($gimbap-soulmates-reversed, 47%); color: $gimbap-soulmates-text; }
-    .gimbap-style--tone-jobs { background: lighten($gimbap-jobs-reversed, 40%); color: $gimbap-jobs-text; }
+    .gimbap-style--tone-members { background: lighten($gimbap-members-text, 36%); color: $gimbap-members-text; }
+    .gimbap-style--tone-masterclasses { background: lighten($gimbap-masterclasses-reversed, 49%); color: $gimbap-masterclasses-text; }
+    .gimbap-style--tone-soulmates { background: lighten($gimbap-soulmates-reversed, 49%); color: $gimbap-soulmates-text; }
+    .gimbap-style--tone-jobs { background: lighten($gimbap-jobs-reversed, 42%); color: $gimbap-jobs-text; }
 }
 
 .gimbap-style--reversed {
