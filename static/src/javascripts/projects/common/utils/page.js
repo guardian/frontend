@@ -2,12 +2,14 @@ define([
     'common/utils/$',
     'common/utils/config',
     'lodash/objects/assign',
-    'lodash/collections/find'
+    'lodash/collections/find',
+    'lodash/arrays/intersection'
 ], function (
     $,
     config,
     assign,
-    find
+    find,
+    intersection
 ) {
 
     function isit(isTrue, yes, no, arg) {
@@ -68,13 +70,20 @@ define([
         return isit(vis, yes, no, el);
     }
 
+    function keywordExists(keyword) {
+        var keywords = config.page.keywords ? config.page.keywords.split(',') : '';
+        // Compare page keywords with passed in array
+        return !!intersection(keywords, keyword).length;
+    }
+
     return {
         isMatch: isMatch,
         isCompetition: isCompetition,
         isClockwatch: isClockwatch,
         isLiveClockwatch: isLiveClockwatch,
         isFootballStatsPage: isFootballStatsPage,
-        belowArticleVisible: belowArticleVisible
+        belowArticleVisible: belowArticleVisible,
+        keywordExists: keywordExists
     };
 
 }); // define

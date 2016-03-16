@@ -3,7 +3,7 @@
 ## How are trail pictures picked in Frontend?
 
 Use the rules below like a filter to narrow down the content api response into a list of candidate images.
-From the candidate images, choose the largest 5:3 image, or simply the largest one if a 5:3 wasn't found.
+From the candidate images, choose the master 5:3 image, or simply the largest 5:3 if a master wasn't found.
 
 ### Default rules
 1. Use the trail pic (known in content api as 'image element with thumbnail relation'), if it contains an image with width >= 460.
