@@ -26,6 +26,10 @@ object Cached extends implicits.Dates {
     if (cacheableStatusCodes.exists(_ == result.header.status)) cacheHeaders(page.metadata.cacheSeconds, result) else result
   }
 
+  // Use this when you are sure your result needs caching headers, even though the result status isn't
+  // conventionally cacheable. Typically we only cache 200 and 404 responses.
+  def explicitlyCache(seconds: Int)(result: Result): Result = cacheHeaders(seconds, result)
+
   private def cacheHeaders(seconds: Int, result: Result) = {
     val now = DateTime.now
     val expiresTime = now + seconds.seconds

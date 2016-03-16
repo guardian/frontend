@@ -19,7 +19,7 @@ object ShortUrlsController extends Controller with Logging with ExecutionContext
       response.content.map(_.id).map { id =>
         Redirect(LinkTo(s"/$id"), queryString)
       }.getOrElse(NotFound)
-    }.recover(convertApiExceptionsWithoutEither).map(Cached(60))
+    }.recover(convertApiExceptionsWithoutEither).map(Cached.explicitlyCache(1800))
   }
 
   def fetchCampaignAndRedirectShortCode(shortUrl: String, campaignCode: String) = Action.async { implicit request =>
