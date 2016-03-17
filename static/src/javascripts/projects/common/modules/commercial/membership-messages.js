@@ -7,7 +7,8 @@ define([
     'common/views/svgs',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/user-features',
-    'lodash/objects/defaults'
+    'lodash/objects/defaults',
+    'Promise'
 ], function (
     config,
     storage,
@@ -17,7 +18,8 @@ define([
     svgs,
     commercialFeatures,
     userFeatures,
-    defaults
+    defaults,
+    Promise
 ) {
 
     var membershipEndpoints = {
