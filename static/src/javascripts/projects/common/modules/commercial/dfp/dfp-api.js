@@ -736,7 +736,7 @@ define([
      */
     var dfp = {
         init:           init,
-        load:           load,
+        loadAds:        load,
         addSlot:        addSlot,
 
         // Used privately but exposed only for unit testing

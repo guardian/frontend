@@ -161,7 +161,7 @@ define([
         });
 
         it('should get the slots', function (done) {
-            dfp.init().then(dfp.load).then(function () {
+            dfp.init().then(dfp.loadAds).then(function () {
                 window.googletag.cmd.forEach(function (func) { func(); });
                 expect(Object.keys(dfp.getAdverts()).length).toBe(4);
                 done();
@@ -171,7 +171,7 @@ define([
 
         it('should not get hidden ad slots', function (done) {
             $('.js-ad-slot').first().css('display', 'none');
-            dfp.init().then(dfp.load).then(function () {
+            dfp.init().then(dfp.loadAds).then(function () {
                 window.googletag.cmd.forEach(function (func) { func(); });
                 var slots = dfp.getAdverts();
                 expect(Object.keys(slots).length).toBe(3);
@@ -192,7 +192,7 @@ define([
         });
 
         it('should define slots', function (done) {
-            dfp.init().then(dfp.load).then(function () {
+            dfp.init().then(dfp.loadAds).then(function () {
                 window.googletag.cmd.forEach(function (func) { func(); });
 
                 [
@@ -216,7 +216,7 @@ define([
         });
 
         it('should display ads', function (done) {
-            dfp.init().then(dfp.load).then(function () {
+            dfp.init().then(dfp.loadAds).then(function () {
                 window.googletag.cmd.forEach(function (func) { func(); });
                 expect(window.googletag.pubads().enableSingleRequest).toHaveBeenCalled();
                 expect(window.googletag.pubads().collapseEmptyDivs).toHaveBeenCalled();
@@ -229,7 +229,7 @@ define([
 
         it('should be able to create "out of page" ad slot', function (done) {
             $('.js-ad-slot').first().attr('data-out-of-page', true);
-            dfp.init().then(dfp.load).then(function () {
+            dfp.init().then(dfp.loadAds).then(function () {
                 window.googletag.cmd.forEach(function (func) { func(); });
                 expect(window.googletag.defineOutOfPageSlot).toHaveBeenCalledWith('/123456/theguardian.com/front', 'dfp-ad-html-slot');
                 done();
@@ -243,7 +243,7 @@ define([
             fakeEventOne.creativeId = '1';
             fakeEventTwo.creativeId = '2';
 
-            dfp.init().then(dfp.load).then(function () {
+            dfp.init().then(dfp.loadAds).then(function () {
                 window.googletag.cmd.forEach(function (func) { func(); });
                 window.googletag.pubads().listener(fakeEventOne);
                 window.googletag.pubads().listener(fakeEventTwo);
@@ -299,7 +299,7 @@ define([
 
             it('should send container level keywords', function () {
                 $('.js-ad-slot').first().attr('data-keywords', 'country/china');
-                dfp.init().then(dfp.load).then(function () {
+                dfp.init().then(dfp.loadAds).then(function () {
                     window.googletag.cmd.forEach(function (func) { func(); });
                     expect(window.googletag.setTargeting).toHaveBeenCalledWith('k', ['china']);
                 });

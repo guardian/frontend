@@ -54,7 +54,7 @@ define([
 
             Promise.all(modulePromises).then(function () {
                 robust.catchErrorsAndLogAll([
-                    ['cm-adverts', dfp.load],
+                    ['cm-adverts', dfp.loadAds],
                     ['cm-paidforBand', paidforBand.init],
                     ['cm-ready', function () {
                         mediator.emit('page:commercial:ready');
