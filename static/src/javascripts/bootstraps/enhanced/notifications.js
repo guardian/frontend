@@ -35,33 +35,71 @@ define([
     uniq,
     without
 ) {
-    var modules, reg, sub,
-        isSubscribed = false;
+    var modules, isSubscribed = false;
 
     modules = {
 
+        getReg: function () {
+            console.log("++  Reg");
+            return navigator.serviceWorker.ready;
+        },
+
+        getSub: function () {
+            return modules.getReg().then(function (reg) {
+                console.log("++ Sub");
+                return reg.pushManager.getSubscription();
+            });
+        },
+
+
         getPushSubscription: function () {
+           modules.getReg().then(
+               function(){
+                   console.log("Got Reg");
+                   modules.configureSubscribeTemplate();
+               }
+           );
+        },
+
+        xcxxxgetPushSubscription: function () {
+
+            console.log("+++++++++++++++ WOTCHA!");
+            modules.getSub().then(function (pushSubscription) {
+                console.log("+++++++++++++++ WOTCHA!  = Sub");
+                if (pushSubscription) {
+                    console.log("+++++++++++++++ Sub");
+                    modules.configureSubscribeTemplate();
+                } else {
+                    console.log("+++++++++++++++ No Sub");
+                    modules.subscribe();
+                }
+            });
+        },
+
+        /*
+        getPushSubscriptionOld: function () {
 
             navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
                 reg = serviceWorkerRegistration;
                 serviceWorkerRegistration.pushManager.getSubscription().then(function (pushSubscription) {
 
                     if (pushSubscription) {
-                        sub = pushSubscription;
                         modules.configureSubscribeTemplate();
                     } else {
-                        reg.pushManager.subscribe({userVisibleOnly: true}).then(
-                            function (pushSubscription) {
-                                sub = pushSubscription;
-                                modules.configureSubscribeTemplate();
-                            }
-                        );
+                            reg.pushManager.subscribe({userVisibleOnly: true}).then(
+                                function (pushSubscription) {
+                                    sub = pushSubscription;
+                                    modules.configureSubscribeTemplate();
+                                }
+                            );
                     }
                 });
             });
-        },
+        }*/
+
 
         configureSubscribeTemplate: function () {
+            console.log("++ CONF");
             var subscribed = modules.checkSubscriptions(),
                 hasNoSubscriptions = modules.subscriptionsEmpty(),
                 src = template(subscribeTemplate, {
@@ -88,56 +126,51 @@ define([
             if (subscribed) {
                 subscribeLink.addClass('notifications-subscribe-link--has-subscriptions');
             }
-            subscribeButton[0].textContent = subscribed ?  'Following story' : 'Follow story';
+            subscribeButton[0].textContent = subscribed ?  'Unfollow' : 'Follow story';
         },
 
         buttonHandler: function () {
             if (isSubscribed) {
-                modules.stopFollowingThis();
+                modules.unFollow().then(modules.unSubscribe);
             } else {
-                modules.subscribe();
+                modules.subscribe().then(modules.follow);
             }
         },
 
         subscribe: function () {
-            if (modules.subscriptionsEmpty()) {
-                reg.pushManager.subscribe({userVisibleOnly: true}).then(function (pushSubscription) {
-                    sub = pushSubscription;
-                    modules.followThis();
+            console.log("++++ Gettin la Sub");
+            return modules.getReg().then(function(reg) {
+                return modules.getSub().then(function (sub) {
+                    if (sub) {
+                        console.log("++ Old Sub: " + JSON.stringify(sub));
+                        return sub;
+                    } else {
+                        console.log("++ Reg");
+                        return reg.pushManager.subscribe({userVisibleOnly: true});
+                    }
                 });
-            } else {
-                modules.followThis();
-            }
+            });
         },
 
-
-        unSubscribe: function () {
-            if (modules.subscriptionsEmpty()) {
-                sub.unsubscribe().then(function () {
-                }).catch(function (error) {
-                    robust.log('07cm-frontendNotificatons', error);
-                });
-            }
-        },
 
         subscriptionsEmpty: function () {
-            var subscriptions = userPrefs.get('subscriptions') || [];
+            var subscriptions = modules.getSubscriptions();
             return subscriptions.length ? false : true;
         },
 
         checkSubscriptions: function () {
-            var subscriptions = userPrefs.get('subscriptions') || [];
+            var subscriptions = modules.getSubscriptions();
             return some(subscriptions, function (sub) {
                 return sub == config.page.pageId;
             });
         },
 
-        followThis: function () {
+        follow: function () {
             var endpoint = '/notification/store';
 
             modules.updateSubscription(endpoint).then(
                 function () {
-                    var subscriptions = userPrefs.get('subscriptions') || [];
+                    var subscriptions = modules.getSubscriptions();
                     subscriptions.push(config.page.pageId);
                     userPrefs.set('subscriptions', uniq(subscriptions));
                     modules.setSubscriptionStatus(true);
@@ -145,32 +178,47 @@ define([
             );
         },
 
-        stopFollowingThis: function () {
-
-            var endpoint = '/notification/delete';
-            modules.updateSubscription(endpoint).then(
+        unFollow: function () {
+            var notificationsEndpoint = '/notification/delete';
+            modules.updateSubscription(notificationsEndpoint).then(
                 function () {
-                    var subscriptions = userPrefs.get('subscriptions') || [],
+                    var subscriptions = modules.getSubscriptions(),
                         newSubscriptions = without(subscriptions, config.page.pageId);
                     userPrefs.set('subscriptions', uniq(newSubscriptions));
                     modules.setSubscriptionStatus(false);
-                    if (modules.subscriptionsEmpty()) {
-                        modules.unSubscribe();
-                    }
                 }
             );
         },
 
-        updateSubscription: function (endpoint) {
+        unSubscribe: function () {
+            if (modules.subscriptionsEmpty()) {
+                modules.getSub().then(function(sub){
+                    sub.unsubscribe().catch(function (error) {
+                        robust.log('07cm-frontendNotificatons', error);
+                    });
+                });
+            }
+        },
 
-            var gcmBrowserId = sub.endpoint.substring(sub.endpoint.lastIndexOf('/') + 1),
-                request =  ajax({
-                url: endpoint,
-                method: 'POST',
-                contentType: 'application/x-www-form-urlencoded',
-                data: {gcmBrowserId: gcmBrowserId, notificationTopicId: config.page.pageId }
+        updateSubscription: function (notificationsEndpoint) {
+
+            return modules.getSub().then(function(sub) {
+                var endpoint = sub.endpoint;
+                console.log("++ Endpoint! " + endpoint.substring(endpoint.lastIndexOf('/') + 1));
+
+                var gcmBrowserId = endpoint.substring(endpoint.lastIndexOf('/') + 1),
+                    request = ajax({
+                        url: notificationsEndpoint,
+                        method: 'POST',
+                        contentType: 'application/x-www-form-urlencoded',
+                        data: {gcmBrowserId: gcmBrowserId, notificationTopicId: config.page.pageId}
+                    });
+                return request;
             });
-            return request;
+        },
+
+        getSubscriptions: function () {
+            return userPrefs.get('subscriptions') || [];
         }
     };
 
