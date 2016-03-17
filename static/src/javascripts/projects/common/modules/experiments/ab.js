@@ -14,6 +14,7 @@ define([
     'common/modules/experiments/tests/next-in-series',
     'common/modules/experiments/tests/article-related-content-display-as-recommendation',
     'common/modules/experiments/tests/email-signup-marketing-checkbox',
+    'common/modules/experiments/tests/adblocking-response',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -39,6 +40,7 @@ define([
     NextInSeries,
     RelatedContentDisplayAsRecommendation,
     EmailSignupMarketingCheckbox,
+    AdblockingResponse,
     flatten,
     forEach,
     keys,
@@ -59,7 +61,8 @@ define([
         new ArticleVideoAutoplay(),
         new NextInSeries(),
         new RelatedContentDisplayAsRecommendation(),
-        new EmailSignupMarketingCheckbox()
+        new EmailSignupMarketingCheckbox(),
+        new AdblockingResponse()
     ]);
 
     var participationsKey = 'gu.ab.participations';
