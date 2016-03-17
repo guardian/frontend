@@ -399,5 +399,4 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2016, 4, 28), //Thursday
     exposeClientSide = false
   )
-
 }
