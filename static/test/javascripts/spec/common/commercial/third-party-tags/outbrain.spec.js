@@ -5,12 +5,14 @@ define([
     'fastdom',
     'helpers/injector',
     'helpers/fixtures',
-    'common/utils/$'
+    'common/utils/$',
+    'Promise'
 ], function (
     fastdom,
     Injector,
     fixtures,
-    $
+    $,
+    Promise
 ) {
     var fixturesConfig = {
             id: 'outbrain',
