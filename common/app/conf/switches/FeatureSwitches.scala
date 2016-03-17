@@ -50,6 +50,15 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  val TriggerForeseeFromAdServerSwitch = Switch(
+    "Feature",
+    "trigger-foresee-from-adserver",
+    "When ON, the foresee survey is opened by adserver logic",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 5, 1), // This switch can be removed if the adserver trigger system is stable.
+    exposeClientSide = true
+  )
+
   val GeoMostPopular = Switch(
     "Feature",
     "geo-most-popular",
@@ -409,12 +418,4 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val TriggerForeseeFromAdServerSwitch = Switch(
-    "Feature",
-    "trigger-foresee-from-adserver",
-    "When ON, the foresee survey is opened by adserver logic",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 1), // This switch can be removed if the adserver trigger system is stable.
-    exposeClientSide = true
-  )
 }
