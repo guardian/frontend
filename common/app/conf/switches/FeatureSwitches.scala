@@ -408,4 +408,13 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2016, 4, 28), //Thursday
     exposeClientSide = false
   )
+
+  val TriggerForeseeFromAdServerSwitch = Switch(
+    "Feature",
+    "trigger-foresee-from-adserver",
+    "When ON, the foresee survey is opened by adserver logic",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 5, 1), // This switch can be removed if the adserver trigger system is stable.
+    exposeClientSide = true
+  )
 }

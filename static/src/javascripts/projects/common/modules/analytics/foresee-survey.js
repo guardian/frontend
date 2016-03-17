@@ -20,13 +20,14 @@ define([
             sample = Math.random() <= sampleRate,
             hasForcedOptIn = /forceForesee/.test(location.hash);
 
-        // the Foresee code is large, we only want to load it in when necessary.
-        if (!Cookie.get('GU_TEST') && !isNetworkFront && !isProfilePage && (window.openForeseeWhenReady || sample || hasForcedOptIn)) {
-            openForesee();
-        }
-
-        if (window.guardian) {
-            window.guardian.openForesee = openForesee;
+        if (!config.switches.triggerForeseeFromAdserver) {
+            // the Foresee code is large, we only want to load it in when necessary.
+            if (!Cookie.get('GU_TEST') && !isNetworkFront && !isProfilePage && (window.openForeseeWhenReady || sample || hasForcedOptIn)) {
+                openForesee();
+            }
+        } else if (window.guardian) {
+                window.guardian.openForesee = openForesee;
+            }
         }
     }
 
