@@ -51,8 +51,8 @@ define([
         };
     }
 
-    return {
-        init: init
+    return function () {
+        init();
     };
 
 });

@@ -182,10 +182,6 @@ define([
                 donotUseAdblock.init();
             },
 
-            initSubscriberNumberForm: function () {
-                subscriberNumberForm.init();
-            },
-
             logLiveStats: function () {
                 liveStats.log();
             },
@@ -399,7 +395,7 @@ define([
                 ['c-tag-links', modules.showMoreTagsLink],
                 ['c-smart-banner', smartAppBanner.init],
                 ['c-adblock', modules.showAdblockMessage],
-                ['c-subscriber-number-form', modules.initSubscriberNumberForm],
+                ['c-subscriber-number-form', subscriberNumberForm],
                 ['c-log-stats', modules.logLiveStats],
                 ['c-cookies', modules.cleanupCookies],
                 ['c-overlay', modules.initOpenOverlayOnClick],
