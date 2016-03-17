@@ -34,14 +34,17 @@ $base-size: $gs-baseline / 2;
 @mixin button-colour(
     $fill-colour,
     $text-colour,
-    $hover-colour,
-    $hover-border: $hover-colour,
     $border-color: $fill-colour
 ) {
     color: $text-colour;
     background-color: $fill-colour;
     border-color: $border-color;
+}
 
+@mixin button-hover-colour(
+    $hover-colour,
+    $hover-border: $hover-colour
+) {
     &:hover,
     &:focus,
     &:active {

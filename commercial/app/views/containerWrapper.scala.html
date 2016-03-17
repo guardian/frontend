@@ -1,13 +1,9 @@
 @(classNames: Seq[String],
-  headerTitle: String,
   headerClassNames: Option[Seq[String]] = None,
-  bodyClassNames: Option[Seq[String]] = None)(kicker: Html)(blurb: Html)(ctas: Html)(stamp: Html)(innards: Html)
+  bodyClassNames: Option[Seq[String]] = None)(headerTitle: Html)(blurb: Html)(ctas: Html)(stamp: Html)(innards: Html)
 
 <aside class="adverts @classNames.map(c => s"adverts--$c").mkString(" ")">
     <header class="adverts__header @headerClassNames.map(_.map(c => s"adverts__header--$c").mkString(" "))">
-        @if(kicker.body.nonEmpty) {
-            <div class="adverts__kicker">@kicker</div>
-        }
         <h1 class="adverts__title">@headerTitle</h1>
         @if(blurb.body.nonEmpty) {
             <div class="adverts__blurb">@blurb</div>

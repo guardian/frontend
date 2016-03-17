@@ -22,6 +22,7 @@
         margin-top: $gs-baseline;
         margin-bottom: $gs-baseline;
     }
+
 }
 
 .adverts--legacy {
@@ -38,12 +39,20 @@
         }
 
         .adverts__ctas {
-            margin: 0 (-1 * $gs-gutter / 2);
+            margin-left: (-1 * $gs-gutter / 2);
+            margin-right: (-1 * $gs-gutter / 2);
         }
     }
 
     > .adverts__header {
         padding-bottom: $gs-baseline;
+        padding-top: $gs-baseline;
+
+        .inline-logo-guardian {
+            @include mq(leftCol) {
+                display: none;
+            }
+        }
     }
 
     > .adverts__body {
@@ -55,6 +64,20 @@
         }
         @include mq(desktop) {
             max-width: gs-span(12);
+        }
+    }
+
+    .adverts__logo {
+        display: flex;
+        flex-direction: column;
+
+        > * + * {
+            margin-top: $gs-baseline / 2;
+        }
+
+        svg {
+            display: block;
+            fill: #fff;
         }
     }
 

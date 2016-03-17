@@ -43,7 +43,9 @@
         .button--primary {
             @include button-colour(
                 $accentColour,
-                $accentTextColour,
+                $accentTextColour
+            )
+            @include button-hover-colour(
                 darken($accentColour, 5%)
             )
         }

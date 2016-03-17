@@ -2,9 +2,20 @@
     box-sizing: border-box;
     color: inherit;
     display: flex;
+    align-items: flex-start;
     flex-direction: column;
     font-size: .75rem;
     line-height: 1rem;
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+
+        .advert__title {
+            text-decoration: underline;
+            text-decoration-skip: ink;
+        }
+    }
 }
 
 .advert__title {
