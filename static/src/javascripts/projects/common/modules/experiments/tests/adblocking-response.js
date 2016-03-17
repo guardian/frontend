@@ -42,7 +42,7 @@ define([
                 detect.getFfOrGenericAdbockInstalled.then(function (adblockUsed) {
                     if (adblockUsed && !config.page.isFront &&
                         !userFeatures.isPayingMember() &&
-                        config.page.webTitle !== "Subscriber number form" &&
+                        config.page.webTitle !== 'Subscriber number form' &&
                         !storage.local.get('gu.subscriber')) {
                         var surveyOverlay = new SurveySimple({
                             surveyHeader: 'You appear to have an adblocker installed',
