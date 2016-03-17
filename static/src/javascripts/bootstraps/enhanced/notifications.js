@@ -102,9 +102,10 @@ define([
             console.log("++ CONF");
             var subscribed = modules.checkSubscriptions(),
                 hasNoSubscriptions = modules.subscriptionsEmpty(),
+                handler = subscribed ? modules.unSubscribeHandler : modules.subscribeHandler,
                 src = template(subscribeTemplate, {
                     className: hasNoSubscriptions ? '' : 'notifications-subscribe-link--has-subscriptions',
-                    text: subscribed ? 'Following story' : 'Follow story',
+                    text: subscribed ? 'Unfollow' : 'Follow story',
                     imgMobile: svgs('notificationsExplainerMobile', ['mobile-only', 'notification-explainer']),
                     imgDesktop: svgs('notificationsExplainerDesktop', ['hide-on-mobile', 'notification-explainer'])
                 });
@@ -114,26 +115,54 @@ define([
                 mediator.emit('page:notifications:ready');
             });
 
+            bean.one(document.body, 'click', '.js-notifications-subscribe-link', handler);
+
+/*
             bean.on(document.body, 'click', '.js-notifications-subscribe-link', function () {
                 modules.buttonHandler();
             });
+*/
         },
 
         setSubscriptionStatus: function (subscribed) {
             var subscribeButton = $('.js-notifications-subscribe-link'),
-                subscribeLink = $('.notifications-subscribe-link--follow');
+                subscribeLink = $('.notifications-subscribe-link--follow'),
+                handler = subscribed ? modules.unSubscribeHandler : modules.subscribeHandler;
             isSubscribed = subscribed;
             if (subscribed) {
                 subscribeLink.addClass('notifications-subscribe-link--has-subscriptions');
             }
             subscribeButton[0].textContent = subscribed ?  'Unfollow' : 'Follow story';
+            bean.one(document.body, 'click', '.js-notifications-subscribe-link', handler);
         },
 
+        subscribeHandler: function() {
+            console.log("++ Subscibe");
+            modules.subscribe().then(
+                function () {
+                    console.log("Subscribed");
+                    modules.follow()
+                });
+        },
+
+        unSubscribeHandler: function() {
+            console.log("++ UnSubscibe");
+            modules.unFollow().then(modules.unSubscribe);
+        },
+
+
+
         buttonHandler: function () {
+            console.log("++ HANDLE!");
             if (isSubscribed) {
                 modules.unFollow().then(modules.unSubscribe);
             } else {
-                modules.subscribe().then(modules.follow);
+                modules.subscribe().then(
+                function() {
+                    console.log("Subscribed");
+                    isSubscribed = true;
+                    modules.follow()
+                });
             }
         },
 
@@ -179,8 +208,9 @@ define([
         },
 
         unFollow: function () {
+            console.log("++ Unfollow");
             var notificationsEndpoint = '/notification/delete';
-            modules.updateSubscription(notificationsEndpoint).then(
+            return modules.updateSubscription(notificationsEndpoint).then(
                 function () {
                     var subscriptions = modules.getSubscriptions(),
                         newSubscriptions = without(subscriptions, config.page.pageId);
