@@ -30,7 +30,7 @@ case class SubscriberNumberPage() extends StandalonePage {
     id = "subscriber-number-page",
     webTitle = "Subscriber number form",
     section = "global",
-    contentType = "noadblock",
+    contentType = GuardianContentTypes.NetworkFront,
     analyticsName = "subscriber-number-page",
     shouldGoogleIndex = false
   )
