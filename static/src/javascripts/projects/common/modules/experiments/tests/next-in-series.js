@@ -5,13 +5,12 @@ define([
     $,
     find
 ) {
-    var path = '/surveys/404-test/next-in-series/';
     var render = function (state) {
         return '<div class="next-in-series-test">' +
             '<h3>Coming up next week</h3>' +
             '<h4>' + state.title + '</h4>' +
             '<p class="next-in-series-test__teaser">' + state.trail + '</p>' +
-            '<a href="' + path + state.id + '"' +
+            '<a href="' + state.link + '"' +
                 ' data-link-name="next in series | remind me"' +
                 ' class="button button--large next-in-series-test__remind-me-link">Remind me</a>' +
         '</div>';
@@ -19,36 +18,35 @@ define([
 
     var $articleBody = $('.content__article-body');
 
+    var path = '/surveys/404-test/next-in-series/';
     var allSeries = [
         {
-            id: 'experience',
-            pageId: 'lifeandstyle/2016/mar/11/i-fought-off-mountain-lion-experience',
-            title: 'I lost three limbs to meningitis aged 54',
-            trail: 'When I looked down after the first operation, I thought that I looked like a drawing of a body with the feet and half the calves rubbed out...'
+            name: 'Experience',
+            pageId: 'lifeandstyle/2016/mar/04/experience-my-head-was-crushed-by-a-rock-thrown-at-my-car',
+            title: 'I fought off a mountain lion',
+            trail: 'Its ears were slanted in attack position, its teeth yellow splinters buried in black gums…',
+            link: path + 'experience'
         },
         {
-            id: 'blind-date',
-            pageId: 'lifeandstyle/2016/mar/12/ross-hoping-for-vin-diesel-meets-charles-blind-date',
-            title: 'Will Zak and Mimi hit it off?',
-            trail: 'I used the wrong fork for the starter and dropped my knife'
+            name: 'Blind Date',
+            pageId: 'lifeandstyle/2016/mar/05/blind-date-valerio-matt',
+            title: 'Will Charles and Ross hit it off?',
+            trail: 'What was I hoping for? Vin Diesel',
+            link: path + 'blind-date'
         },
         {
-            id: 'alanis',
-            pageId: 'lifeandstyle/2016/mar/11/ask-alanis-best-friends-secrets',
-            title: 'Dear Alanis, my accidental email has created a family rift',
-            trail: 'Although I sent a grovelling apology I’m wondering if she’ll speak to me again. What can I do?'
+            name: 'Alanis',
+            pageId: 'lifeandstyle/2016/mar/04/ask-alanis-morissette-husband-or-son',
+            title: 'Dear Alanis, My friends share my secrets with their partners. What do I do?',
+            trail: 'Suddenly my secrets are not so safe, and it leaves me feeling vulnerable',
+            link: path + 'alanis'
         },
         {
-            id: 'what-im-really-thinking',
-            pageId: 'lifeandstyle/2016/mar/12/mother-of-baby-with-disabilities-what-im-really-thinking',
-            title: 'What I’m Really Thinking: the independent cafe barista',
-            trail: 'I wonder if they realise the cost of their coffee is half what I get paid per hour...'
-        },
-        {
-            id: 'yotam',
-            pageId: 'lifeandstyle/2016/mar/12/merguez-recipes-kebab-potato-bake-scotch-egg-yotam-ottolenghi',
-            title: 'Yotam Ottolenghi’s chorizo recipes',
-            trail: 'Salty, spicy, smoky and fatty: chorizo adds oomph to any dish'
+            name: 'What I’m Really Thinking',
+            pageId: 'lifeandstyle/2016/mar/05/what-really-thinking-theme-park-costume-character',
+            title: 'What I’m Really Thinking: the mother of a baby with disabilities',
+            trail: 'Normal now means a routine of tube-feeding, tracheostomy care, physiotherapy, overnight shifts and endless logistics…',
+            link: path + 'what-im-really-thinking'
         }
     ];
 
