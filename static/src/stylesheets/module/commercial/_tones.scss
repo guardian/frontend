@@ -44,10 +44,10 @@
             @include button-colour(
                 $accentColour,
                 $accentTextColour
-            )
+            );
             @include button-hover-colour(
                 darken($accentColour, 5%)
-            )
+            );
         }
         .tabs__tab--selected {
             border-color: $accentColour;
