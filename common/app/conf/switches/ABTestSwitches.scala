@@ -54,7 +54,7 @@ trait ABTestSwitches {
     "ab-article-related-content-display-as-recommendation",
     "Display related content as people who read this also read",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 16),
+    sellByDate = new LocalDate(2016, 3, 18),
     exposeClientSide = true
   )
 
