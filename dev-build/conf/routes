@@ -300,9 +300,10 @@ GET            /commercial/capi-single-merch.json                               
 GET            /commercial/capi-single-merch                                                                                     controllers.commercial.ContentApiOffersController.itemHtml
 GET            /commercial/paid.json                                                                                             controllers.commercial.PaidContentCardController.cardJson
 GET            /commercial/paid                                                                                                  controllers.commercial.PaidContentCardController.cardHtml
-GET        /commercial/survey-simple-sign-up                             controllers.commercial.StaticPageController.renderSurveySimpleSignupPage()
-GET        /commercial/survey-simple-membership                          controllers.commercial.StaticPageController.renderSurveySimpleMembershipPage()
-GET            /commercial/multi.json                                                                                                   controllers.commercial.Multi.renderMulti
+GET            /commercial/survey-simple-sign-up                                                                                 controllers.commercial.StaticPageController.renderSurveySimpleSignupPage()
+GET            /commercial/survey-simple-membership                                                                              controllers.commercial.StaticPageController.renderSurveySimpleMembershipPage()
+GET            /commercial/multi.json                                                                                            controllers.commercial.Multi.renderMulti
+GET            /commercial/subscriber-number                                                                                controllers.commercial.StaticPageController.renderSubscriberNumberPage()
 
 # Commercial Admin
 GET            /admin/commercial                                                                                                 controllers.admin.CommercialController.renderCommercialMenu()
@@ -319,8 +320,8 @@ POST           /admin/commercial/adops/takeovers-empty-mpus/create              
 POST           /admin/commercial/adops/takeovers-empty-mpus/remove                                                               controllers.admin.commercial.TakeoverWithEmptyMPUsController.remove(url)
 
 # Breaking News
-GET             /news-alert/alerts                                                                                               controllers.NewsAlertController.alerts()
-POST            /news-alert/alert                                                                                                controllers.NewsAlertController.create()
+GET            /news-alert/alerts                                                                                                controllers.NewsAlertController.alerts()
+POST           /news-alert/alert                                                                                                 controllers.NewsAlertController.create()
 
 # dev-build only
 GET            /commercial/magento/token                                                                                         controllers.commercial.magento.AccessTokenGenerator.generate
