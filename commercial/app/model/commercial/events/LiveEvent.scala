@@ -16,7 +16,7 @@ object LiveEventImage{
 }
 
 
-case class LiveEvent(id: String,
+case class LiveEvent(eventId: String,
                      name: String,
                      date: DateTime,
                      eventUrl: String,
@@ -37,7 +37,7 @@ object LiveEvent {
       }
 
     new LiveEvent(
-      id = event.id,
+      eventId = event.id,
       name = event.name,
       date = event.startDate,
       eventUrl = event.url,

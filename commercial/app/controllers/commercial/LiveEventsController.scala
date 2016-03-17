@@ -1,6 +1,6 @@
 package controllers.commercial
 
-import common.{ExecutionContexts, Logging}
+import common.{ExecutionContexts}
 import model.NoCache
 import model.commercial.events.LiveEventAgent
 import performance.MemcachedAction
@@ -11,8 +11,6 @@ import scala.concurrent.Future
 object LiveEventsController
   extends Controller
   with ExecutionContexts
-  with Logging
-  with implicits.Collections
   with implicits.Requests {
 
   def renderEvent = MemcachedAction { implicit request =>
@@ -20,9 +18,9 @@ object LiveEventsController
         Future {
           val clickMacro = request.getParameter("clickMacro")
           val omnitureId = request.getParameter("omnitureId")
-          val selectedLiveEvents = LiveEventAgent.specificLiveEvents(specificIds)
+          val selectedLiveEvents = LiveEventAgent.specificLiveEvent(eventId)
 
-          selectedLiveEvents.headOption match {
+          selectedLiveEvents match {
             case Some(event) =>
               jsonFormat.result(views.html.liveevents.liveEvent(
                 event,
