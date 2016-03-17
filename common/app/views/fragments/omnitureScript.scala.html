@@ -15,6 +15,7 @@
     try {
         @Html(Static.js.omnitureJs)
     } catch (e) {
+        console.error('Caught error.', e.stack);
         (new Image()).src = '@{Configuration.debug.beaconUrl}/count/omniture-library-error.gif';
     }
 </script>
