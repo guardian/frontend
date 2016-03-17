@@ -32,6 +32,11 @@ body {
 */
 .email-sub__form--footer {
     padding: 0;
+
+    .email-sub__text-input {
+        margin-bottom: $gs-baseline;
+    }
+
 }
 
 .email-sub__form--article {
@@ -68,6 +73,15 @@ body {
         .email-sub__submit-input--solo {
             border-radius: 1000px;
         }
+
+        .email-sub__small--mark {
+            clear: left;
+            display: inline-block;
+        }
+    }
+
+    .email-sub--article.email-sub__form--has-mark .email-sub__text-input {
+        margin-bottom: $gs-baseline;
     }
 
     .email-sub__form--footer,
@@ -121,6 +135,9 @@ body {
             display: none;
         }
 
+        .email-sub__form--has-mark & .email-sub__text-input {
+            margin-bottom: 0;
+        }
     }
 
     .email-sub__form--has-mark .email-sub__small {

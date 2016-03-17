@@ -144,7 +144,7 @@ define([
                     emailRunChecks.getUserEmailSubscriptions().then(function () {
                         // Check if the Guardian today list can run, if it can then load
                         // the merchandising (non-compliant) version of Outbrain
-                        emailRunChecks.listCanRun('theGuardianToday') ? resolve('email') : resolve();
+                        emailRunChecks.listCanRun({listName: 'theGuardianToday', listId: 37 }) ? resolve('email') : resolve();
                     });
                 } else {
                     resolve();
