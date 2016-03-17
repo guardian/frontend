@@ -13,6 +13,7 @@ define([
     'common/modules/article/chapters',
     'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
+    'common/modules/atoms/quiz',
     'bootstraps/enhanced/article-liveblog-common',
     'bootstraps/enhanced/trail'
 ], function (
@@ -29,6 +30,7 @@ define([
     chapters,
     ab,
     geoMostPopular,
+    quiz,
     articleLiveblogCommon,
     trail
 ) {
@@ -71,6 +73,7 @@ define([
         chapters.init();
         openModule.init();
         mediator.emit('page:article:ready');
+        quiz.handleCompletion();
     };
 
     return {

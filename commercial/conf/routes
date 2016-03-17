@@ -14,7 +14,7 @@ GET        /commercial/travel/offers.json                                control
 GET        /commercial/jobs.json                                         controllers.commercial.JobAds.renderJobs
 
 # Masterclass merchandising components
-GET        /commercial/masterclasses.json                                controllers.commercial.MasterClasses.renderMasterclasses
+GET        /commercial/masterclasses.json                                controllers.commercial.Masterclasses.renderMasterclasses
 
 # Soulmates merchandising components
 GET        /commercial/soulmates/$subgroup<\w+>.json                     controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
@@ -30,6 +30,9 @@ GET        /commercial/money/loans/:loanType                             control
 # Book merchandising components
 GET        /commercial/books/book.json                                   controllers.commercial.BookOffersController.renderBook
 GET        /commercial/books/books.json                                  controllers.commercial.BookOffersController.renderBooks
+
+# Live events merchandising components
+GET        /commercial/liveevents/event.json                             controllers.commercial.LiveEventsController.renderEvent
 
 # Multiple offer merchandising components
 GET        /commercial/multi.json                                        controllers.commercial.Multi.renderMulti

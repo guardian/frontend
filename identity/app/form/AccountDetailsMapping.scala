@@ -1,5 +1,6 @@
 package form
 
+import model.Titles
 import play.api.data.Forms._
 import com.gu.identity.model.{UserDates, PrivateFields, User}
 import idapiclient.UserUpdate
@@ -14,7 +15,8 @@ object AccountDetailsMapping extends UserFormMapping[AccountFormData] with Addre
   protected lazy val formMapping = {
     mapping(
       ("primaryEmailAddress", idEmail),
-      ("firstName", textField),
+      ("title", comboList("" :: Titles.titles)),
+      ("firstName",  textField),
       ("secondName", textField),
       ("gender", comboList(genders)),
       "birthDate" -> dateMapping,
@@ -28,6 +30,7 @@ object AccountDetailsMapping extends UserFormMapping[AccountFormData] with Addre
   protected def fromUser(user: User) = AccountFormData(user)
 
   protected lazy val contextMap = Map(
+    ("privateFields.title", "title"),
     ("privateFields.firstName", "firstName"),
     ("privateFields.secondName", "secondName"),
     ("privateFields.gender", "gender"),
@@ -54,6 +57,7 @@ trait AccountDetailsMapping {
 
 case class AccountFormData(
   primaryEmailAddress: String,
+  title: String,
   firstName: String,
   secondName: String,
   gender: String,
@@ -68,6 +72,7 @@ case class AccountFormData(
     primaryEmailAddress = toUpdate(primaryEmailAddress, Some(currentUser.primaryEmailAddress)),
     dates = Some(UserDates(birthDate = birthDate.dateTime)),
     privateFields = Some(PrivateFields(
+      title = toUpdate(title, currentUser.privateFields.title),
       firstName = toUpdate(firstName, currentUser.privateFields.firstName),
       secondName = toUpdate(secondName, currentUser.privateFields.secondName),
       gender = toUpdate(gender, currentUser.privateFields.gender),
@@ -92,6 +97,7 @@ object AccountFormData {
 
   def apply(user: User): AccountFormData = AccountFormData(
     primaryEmailAddress = user.primaryEmailAddress,
+    title = user.privateFields.title getOrElse "",
     firstName = user.privateFields.firstName getOrElse "",
     secondName = user.privateFields.secondName getOrElse "",
     gender = user.privateFields.gender getOrElse "unknown",

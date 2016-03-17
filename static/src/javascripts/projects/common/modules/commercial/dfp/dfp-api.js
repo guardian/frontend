@@ -31,9 +31,7 @@ define([
     'common/views/svgs',
     'lodash/functions/once',
     'lodash/objects/forOwn',
-    'lodash/objects/keys',
     'lodash/functions/debounce',
-    'lodash/objects/defaults',
     'lodash/collections/contains',
     'lodash/arrays/uniq',
     'lodash/arrays/flatten',
@@ -42,7 +40,6 @@ define([
     'lodash/arrays/zipObject',
     'lodash/collections/filter',
     'common/utils/chain',
-    'lodash/objects/omit',
     'lodash/collections/find',
     'lodash/arrays/last',
     'lodash/arrays/intersection',
@@ -77,9 +74,7 @@ define([
     svgs,
     once,
     forOwn,
-    keys,
     debounce,
-    defaults,
     contains,
     uniq,
     flatten,
@@ -88,7 +83,6 @@ define([
     zipObject,
     filter,
     chain,
-    omit,
     find,
     last,
     intersection,
@@ -462,7 +456,17 @@ define([
             if (shouldRenderLabel($adSlot)) {
                 $adSlot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
             } else if (ab.isInVariant('CommercialComponentsDismiss', 'dismiss') && contains(['dfp-ad--merchandising', 'dfp-ad--merchandising-high', 'dfp-ad--im'], $adSlot.attr('id'))) {
-                var survey = new SurveySimple();
+                var survey = new SurveySimple({
+                    surveyHeader: 'Personalise your Guardian',
+                    surveyText: 'To remove all messages from this particular Guardian service simply sign up to the Guardian. To choose exactly which other commercial messages you\'d like to see from the Guardian, or not, become a Member from £5 a month.',
+                    signupText: 'Sign-up now',
+                    membershipText: 'Become a Member',
+                    signupLink: '/commercial/survey-simple-sign-up',
+                    membershipLink: '/commercial/survey-simple-membership',
+                    signupDataLink: 'signup',
+                    membershipDataLink: 'membership',
+                    showCloseBtn: true
+                });
                 var crossIcon = svgs('crossIcon');
 
                 survey.attach();

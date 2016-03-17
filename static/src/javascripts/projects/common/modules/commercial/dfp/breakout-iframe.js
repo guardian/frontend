@@ -34,7 +34,6 @@ define([
         return new Promise(function (resolve, reject) {
             /*eslint-disable no-eval*/
             var $iFrame = bonzo(iFrame);
-            var $iFrameParent = bonzo(iFrame.parentNode);
             var iFrameBody = iFrame.contentDocument.body;
             var $breakoutEl;
 
@@ -45,16 +44,11 @@ define([
             $breakoutEl = $('.breakout__html, .breakout__script', iFrameBody);
 
             if ($breakoutEl.hasClass('breakout__html')) {
-                fastdom.write(function () {
+                resolve(fastdom.write(function () {
                     $iFrame.hide();
                     $breakoutEl.detach();
-                    $iFrameParent.append($breakoutEl[0].children);
-                }).then(function () {
-                    var $responsiveAds = $('.ad--responsive', $iFrameParent[0]);
-                    resolve(fastdom.write(function () {
-                        $responsiveAds.addClass('ad--responsive--open');
-                    }));
-                });
+                    $slot.append($breakoutEl[0].innerHTML);
+                }));
             } else if ($breakoutEl.hasClass('breakout__script')) {
                 fastdom.write(function () {
                     $iFrame.hide();
