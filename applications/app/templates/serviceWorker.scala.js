@@ -147,11 +147,10 @@ self.addEventListener('push', function(event) {
 
     event.waitUntil(
         self.registration.pushManager.getSubscription().then(function (sub) {
-            var gcmInd = sub.endpoint.substring(sub.endpoint.lastIndexOf('/') + 1);
+            var gcmBrowserId = sub.endpoint.substring(sub.endpoint.lastIndexOf('/') + 1);
 
-            var endpoint = '@{JavaScript(Configuration.Notifications.latestMessageUrl)}/' + gcmInd;
+            var endpoint = '@{JavaScript(Configuration.Notifications.latestMessageUrl)}/' + gcmBrowserId;
             fetch(endpoint, {
-                method: 'get',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -181,23 +180,23 @@ self.addEventListener('push', function(event) {
 
 self.addEventListener('notificationclick', function(event){
 
-        event.notification.close();
-        var url = '@{JavaScript(Configuration.javascript.pageData.get("guardian.page.host").getOrElse("https://www.theguardian.com"))}/' + event.notification.data.topic + "?CMP=not_b-webalert";
+    event.notification.close();
+    var url = '@{JavaScript(Configuration.site.host)}/' + event.notification.data.topic + "?CMP=not_b-webalert";
 
-        event.waitUntil(
-            clients.matchAll({
-                    type: 'window'
-                })
-                .then(function(windowClients) {
-                    for (var i = 0; i < windowClients.length; i++) {
-                        var client = windowClients[i];
-                        if (client.url === url && 'focus' in client) {
-                            return client.focus();
-                        }
+    event.waitUntil(
+        clients.matchAll({
+                type: 'window'
+            })
+            .then(function(windowClients) {
+                for (var i = 0; i < windowClients.length; i++) {
+                    var client = windowClients[i];
+                    if (client.url === url && 'focus' in client) {
+                        return client.focus();
                     }
-                    if (clients.openWindow) {
-                        return clients.openWindow(url);
-                    }
-                })
-        );
+                }
+                if (clients.openWindow) {
+                    return clients.openWindow(url);
+                }
+            })
+    );
 });
