@@ -47,4 +47,4 @@ GET        /commercial/paid                                              control
 # Static pages
 GET        /commercial/survey-simple-sign-up                             controllers.commercial.StaticPageController.renderSurveySimpleSignupPage()
 GET        /commercial/survey-simple-membership                          controllers.commercial.StaticPageController.renderSurveySimpleMembershipPage()
-GET        /commercial/subscriber-number-page                            controllers.commercial.StaticPageController.renderSubscriberNumberPage()
+GET        /commercial/subscriber-number                            controllers.commercial.StaticPageController.renderSubscriberNumberPage()

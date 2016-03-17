@@ -8,16 +8,18 @@ define([
     storage
 ) {
     function init() {
-        var $subscriberNumberForm = $('.js-subscriber-number-form')[0];
+        var $form = $('.js-subscriber-number-form')[0];
 
-        if (!$subscriberNumberForm) {
+        if (!$form) {
             return;
         }
 
-        bean.on($subscriberNumberForm, 'submit', submitForm($subscriberNumberForm));
+        bean.on($form, 'submit', function (event) {
+            submitForm($form, event);
+        });
     }
 
-    function correctNumber($numberInput, $correctNumberInfo, $incorrectNumberInfo) {
+    function onCorrectNumber($numberInput, $correctNumberInfo, $incorrectNumberInfo) {
         storage.local.set('gu.subscriber', true);
         $correctNumberInfo.removeClass('u-h');
         $incorrectNumberInfo.addClass('u-h');
@@ -25,7 +27,7 @@ define([
         $numberInput.removeClass('incorrect');
     }
 
-    function incorrectNumber($numberInput, $correctNumberInfo, $incorrectNumberInfo) {
+    function onIncorrectNumber($numberInput, $correctNumberInfo, $incorrectNumberInfo) {
         storage.local.set('gu.subscriber', false);
         $incorrectNumberInfo.removeClass('u-h');
         $correctNumberInfo.addClass('u-h');
@@ -33,22 +35,20 @@ define([
         $numberInput.removeClass('correct');
     }
 
-    function submitForm($form) {
-        return function (event) {
-            var $numberInput = $('.input-number', $form),
-                numberVal = $numberInput.val(),
-                subscriber = /^(?=\d{8}$)(00)\d+/.test(numberVal), //8 digit number starting with 00
-                $correctNumberInfo = $('.js-subscriber-number-correct'),
-                $incorrectNumberInfo = $('.js-subscriber-number-incorrect');
+    function submitForm($form, event) {
+        event.preventDefault();
 
-            event.preventDefault();
+        var $numberInput = $('.input-number', $form),
+            numberVal = $numberInput.val(),
+            isSubscriber = /^(?=\d{8}$)(00)\d+/.test(numberVal), //8 digit number starting with 00
+            $correctNumberInfo = $('.js-subscriber-number-correct'),
+            $incorrectNumberInfo = $('.js-subscriber-number-incorrect');
 
-            if (subscriber) {
-                correctNumber($numberInput, $correctNumberInfo, $incorrectNumberInfo);
-            } else {
-                incorrectNumber($numberInput, $correctNumberInfo, $incorrectNumberInfo);
-            }
-        };
+        if (isSubscriber) {
+            onCorrectNumber($numberInput, $correctNumberInfo, $incorrectNumberInfo);
+        } else {
+            onIncorrectNumber($numberInput, $correctNumberInfo, $incorrectNumberInfo);
+        }
     }
 
     return function () {

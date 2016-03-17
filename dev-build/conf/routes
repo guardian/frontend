@@ -302,7 +302,7 @@ GET            /commercial/paid                                                 
 GET            /commercial/survey-simple-sign-up                                                                                 controllers.commercial.StaticPageController.renderSurveySimpleSignupPage()
 GET            /commercial/survey-simple-membership                                                                              controllers.commercial.StaticPageController.renderSurveySimpleMembershipPage()
 GET            /commercial/multi.json                                                                                            controllers.commercial.Multi.renderMulti
-GET            /commercial/subscriber-number-page                                                                                controllers.commercial.StaticPageController.renderSubscriberNumberPage()
+GET            /commercial/subscriber-number                                                                                controllers.commercial.StaticPageController.renderSubscriberNumberPage()
 
 # Commercial Admin
 GET            /admin/commercial                                                                                                 controllers.admin.CommercialController.renderCommercialMenu()
