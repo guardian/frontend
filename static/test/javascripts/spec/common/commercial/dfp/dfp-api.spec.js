@@ -24,13 +24,11 @@ define([
             fixturesConfig = {
                 id: 'article',
                 fixtures: [
-                    // jscs:disable disallowMultipleLineStrings
                     '<div id="dfp-ad-html-slot" class="js-ad-slot" data-name="html-slot" data-mobile="300,50"></div>\
                     <div id="dfp-ad-script-slot" class="js-ad-slot" data-name="script-slot" data-mobile="300,50|320,50" data-refresh="false"></div>\
                     <div id="dfp-ad-already-labelled" class="js-ad-slot ad-label--showing" data-name="already-labelled" data-mobile="300,50|320,50"  data-tablet="728,90"></div>\
                     <div id="dfp-ad-dont-label" class="js-ad-slot" data-label="false" data-name="dont-label" data-mobile="300,50|320,50"  data-tablet="728,90" data-desktop="728,90|900,250|970,250"></div>\
                     <div id="dfp-ad-gu-style" data-name="gu-style" data-mobile="300,250" data-desktop="300,250"></div>'
-                    // jscs:enable disallowMultipleLineStrings
                 ]
             },
             makeFakeEvent = function (id, isEmpty) {
@@ -123,11 +121,9 @@ define([
                     enableServices: sinon.spy(),
                     display: sinon.spy()
                 };
-                //jscs:disable disallowEmptyBlocks
                 ophanTracking.trackPerformance = function () {
                     // noop
                 };
-                //jscs:enable disallowEmptyBlocks
 
                 commercialFeatures.dfpAdvertising = true;
 
