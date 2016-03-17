@@ -1,9 +1,11 @@
 define([
     'bean',
-    'common/utils/$'
+    'common/utils/$',
+    'common/utils/storage'
 ], function (
     bean,
-    $
+    $,
+    storage
 ) {
     function init() {
         var $subscriberNumberForm = $('.js-subscriber-number-form')[0];
@@ -13,6 +15,22 @@ define([
         }
 
         bean.on($subscriberNumberForm, 'submit', submitForm($subscriberNumberForm));
+    }
+
+    function correctNumber($numberInput, $correctNumberInfo, $incorrectNumberInfo) {
+        storage.local.set('gu.subscriber', true);
+        $correctNumberInfo.removeClass('u-h');
+        $incorrectNumberInfo.addClass('u-h');
+        $numberInput.addClass('correct');
+        $numberInput.removeClass('incorrect');
+    }
+
+    function incorrectNumber($numberInput, $correctNumberInfo, $incorrectNumberInfo) {
+        storage.local.set('gu.subscriber', false);
+        $incorrectNumberInfo.removeClass('u-h');
+        $correctNumberInfo.addClass('u-h');
+        $numberInput.addClass('incorrect');
+        $numberInput.removeClass('correct');
     }
 
     function submitForm($form) {
@@ -26,15 +44,9 @@ define([
             event.preventDefault();
 
             if (subscriber) {
-                $correctNumberInfo.removeClass('u-h');
-                $incorrectNumberInfo.addClass('u-h');
-                $numberInput.addClass('correct');
-                $numberInput.removeClass('incorrect');
+                correctNumber($numberInput, $correctNumberInfo, $incorrectNumberInfo);
             } else {
-                $incorrectNumberInfo.removeClass('u-h');
-                $correctNumberInfo.addClass('u-h');
-                $numberInput.addClass('incorrect');
-                $numberInput.removeClass('correct');
+                incorrectNumber($numberInput, $correctNumberInfo, $incorrectNumberInfo);
             }
         };
     }
