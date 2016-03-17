@@ -35,9 +35,7 @@ define([
     uniq,
     without
 ) {
-    var modules;
-
-    modules = {
+    var modules = {
 
         getReg: function () {
             return navigator.serviceWorker.ready;
@@ -45,16 +43,6 @@ define([
 
         getSub: function () {
             return modules.getReg().then(function (reg) {return reg.pushManager.getSubscription();});
-        },
-
-
-        getPushSubscription: function () {
-           modules.getReg().then(
-               function(){
-                   console.log("Got Reg");
-                   modules.configureSubscribeTemplate();
-               }
-           );
         },
 
         configureSubscribeTemplate: function () {
@@ -83,20 +71,21 @@ define([
             if (subscribed) {
                 subscribeLink.addClass('notifications-subscribe-link--has-subscriptions');
             }
+
             subscribeButton[0].textContent = subscribed ?  'Unfollow' : 'Follow story';
             bean.one(document.body, 'click', '.js-notifications-subscribe-link', handler);
         },
 
-        subscribeHandler: function() {
-            modules.subscribe().then(modules.follow());
+        subscribeHandler: function () {
+            modules.subscribe().then(modules.follow);
         },
 
-        unSubscribeHandler: function() {
+        unSubscribeHandler: function () {
             modules.unFollow().then(modules.unSubscribe);
         },
 
         subscribe: function () {
-            return modules.getReg().then(function(reg) {
+            return modules.getReg().then(function (reg) {
                 return modules.getSub().then(function (sub) {
                     if (sub) {
                         return sub;
@@ -104,18 +93,6 @@ define([
                         return reg.pushManager.subscribe({userVisibleOnly: true});
                     }
                 });
-            });
-        },
-
-        subscriptionsEmpty: function () {
-            var subscriptions = modules.getSubscriptions();
-            return subscriptions.length ? false : true;
-        },
-
-        checkSubscriptions: function () {
-            var subscriptions = modules.getSubscriptions();
-            return some(subscriptions, function (sub) {
-                return sub == config.page.pageId;
             });
         },
 
@@ -132,8 +109,17 @@ define([
             );
         },
 
+        unSubscribe: function () {
+            if (modules.subscriptionsEmpty()) {
+                modules.getSub().then(function (sub) {
+                    sub.unsubscribe().catch(function (error) {
+                        robust.log('07cm-frontendNotificatons', error);
+                    });
+                });
+            }
+        },
+
         unFollow: function () {
-            console.log("++ Unfollow");
             var notificationsEndpoint = '/notification/delete';
             return modules.updateSubscription(notificationsEndpoint).then(
                 function () {
@@ -145,22 +131,10 @@ define([
             );
         },
 
-        unSubscribe: function () {
-            if (modules.subscriptionsEmpty()) {
-                modules.getSub().then(function(sub){
-                    sub.unsubscribe().catch(function (error) {
-                        robust.log('07cm-frontendNotificatons', error);
-                    });
-                });
-            }
-        },
-
         updateSubscription: function (notificationsEndpoint) {
-            return modules.getSub().then(function(sub) {
-                var endpoint = sub.endpoint;
-                console.log("++ Endpoint! " + endpoint.substring(endpoint.lastIndexOf('/') + 1));
-
-                var gcmBrowserId = endpoint.substring(endpoint.lastIndexOf('/') + 1),
+            return modules.getSub().then(function (sub) {
+                var endpoint = sub.endpoint,
+                    gcmBrowserId = endpoint.substring(endpoint.lastIndexOf('/') + 1),
                     request = ajax({
                         url: notificationsEndpoint,
                         method: 'POST',
@@ -173,6 +147,18 @@ define([
 
         getSubscriptions: function () {
             return userPrefs.get('subscriptions') || [];
+        },
+
+        subscriptionsEmpty: function () {
+            var subscriptions = modules.getSubscriptions();
+            return subscriptions.length ? false : true;
+        },
+
+        checkSubscriptions: function () {
+            var subscriptions = modules.getSubscriptions();
+            return some(subscriptions, function (sub) {
+                return sub == config.page.pageId;
+            });
         }
     };
 
