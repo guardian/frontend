@@ -41,24 +41,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val ForeseeSwitch = Switch(
-    "Feature",
-    "foresee",
-    "Enable Foresee surveys for a sample of our audience",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val TriggerForeseeFromAdServerSwitch = Switch(
-    "Feature",
-    "trigger-foresee-from-adserver",
-    "When ON, the foresee survey is opened by adserver logic",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 1), // This switch can be removed if the adserver trigger system is stable.
-    exposeClientSide = true
-  )
-
   val GeoMostPopular = Switch(
     "Feature",
     "geo-most-popular",
