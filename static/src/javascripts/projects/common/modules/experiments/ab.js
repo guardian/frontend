@@ -10,7 +10,6 @@ define([
     'common/modules/experiments/tests/identity-register-membership-standfirst',
     'common/modules/experiments/tests/header-bidding-us',
     'common/modules/experiments/tests/article-video-autoplay',
-    'common/modules/experiments/tests/next-in-series',
     'common/modules/experiments/tests/article-related-content-display-as-recommendation',
     'common/modules/experiments/tests/email-signup-marketing-checkbox',
     'common/modules/experiments/tests/adblocking-response',
@@ -35,7 +34,6 @@ define([
     IdentityRegisterMembershipStandfirst,
     HeaderBiddingUS,
     ArticleVideoAutoplay,
-    NextInSeries,
     RelatedContentDisplayAsRecommendation,
     EmailSignupMarketingCheckbox,
     AdblockingResponse,
@@ -56,7 +54,6 @@ define([
         new IdentityRegisterMembershipStandfirst(),
         new HeaderBiddingUS(),
         new ArticleVideoAutoplay(),
-        new NextInSeries(),
         new RelatedContentDisplayAsRecommendation(),
         new EmailSignupMarketingCheckbox(),
         new AdblockingResponse()
