@@ -20,6 +20,7 @@
 
     .advert {
         margin-top: $gs-baseline;
+        margin-bottom: $gs-baseline;
     }
 }
 
@@ -35,6 +36,34 @@
         > .adverts__body {
             flex: 1;
         }
+
+        .adverts__ctas {
+            margin: 0 (-1 * $gs-gutter / 2);
+        }
+    }
+
+    > .adverts__header {
+        padding-bottom: $gs-baseline;
+    }
+
+    > .adverts__body {
+        @include mq(mobileLandscape) {
+            max-width: gs-span(8);
+        }
+        @include mq(tablet) {
+            max-width: gs-span(9);
+        }
+        @include mq(desktop) {
+            max-width: gs-span(12);
+        }
+    }
+
+    .advert {
+        position: relative;
+    }
+
+    .advert + .advert {
+        border-left: 1px solid colour(neutral-4);
     }
 }
 
@@ -47,8 +76,22 @@
     }
 }
 
+.adverts__ctas,
 .adverts__stamp {
     margin-top: auto;
+}
+
+.adverts__ctas {
+    display: flex;
+    flex-direction: column;
+
+    > * + * {
+        margin-top: $gs-baseline / 2;
+    }
+}
+
+.adverts__ctas + .adverts__stamp {
+    margin-top: 0;
 }
 
 .adverts__body {
@@ -71,9 +114,12 @@
             margin: 0 $gs-gutter / 2;
             flex: 1;
         }
-    }
 
-    @include mq(wide) {
+        .adverts--legacy & > * {
+            margin-left: 0;
+            margin-right: 0;
+            padding: 0 $gs-gutter / 2;
+        }
     }
 
 }

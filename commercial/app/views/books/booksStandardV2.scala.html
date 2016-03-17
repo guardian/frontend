@@ -2,7 +2,16 @@
   omnitureId: Option[String],
   clickMacro: Option[String])(implicit request: RequestHeader)
 
-@containerWrapper(Seq("legacy", "books", "tone-books"), "bookshop")(HtmlFormat.empty)(HtmlFormat.empty)(HtmlFormat.empty)(HtmlFormat.empty) {
+@containerWrapper(Seq("legacy", "books", "tone-books"), "bookshop")(HtmlFormat.empty)(HtmlFormat.empty){
+
+    @searchFormV2()
+
+    <a class="button button--tertiary button--large" href="@clickMacro@Configuration.commercial.books_url" data-link-name="">
+        @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
+        Visit <span class="hide-on-mobile-inline">book</span>shop
+    </a>
+
+}(HtmlFormat.empty) {
 
     @books.map { book => @bookCard(book, omnitureId, clickMacro) }
 

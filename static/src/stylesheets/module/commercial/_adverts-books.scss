@@ -2,11 +2,29 @@
     .advert__image {
         max-height: $gs-baseline * 11;
     }
+
+    .search__input {
+        box-sizing: border-box;
+        border-radius: 18px;
+        @include fs-textSans(2);
+        background-color: rgba(#ffffff, .9);
+        border: 0;
+        width: 100%;
+        height: $gs-row-height;
+        padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline/4 $gs-baseline*3;
+    }
 }
 
 .adverts--tone-books {
-
-    > .adverts__header{
+    > .adverts__header {
         background: guss-colour(features-main-1, $pasteup-palette);
+        color: #fff;
+        fill: #fff;
+    }
+}
+
+.advert--book {
+    .advert__meta[itemprop="author"] {
+        margin-bottom: 1em;
     }
 }

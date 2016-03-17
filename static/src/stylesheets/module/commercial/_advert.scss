@@ -3,12 +3,13 @@
     color: inherit;
     display: flex;
     flex-direction: column;
+    font-size: .75rem;
+    line-height: 1rem;
+}
 
-    > *:not(.advert__image-container) {
-        padding-left: $gs-gutter / 4;
-        padding-right: $gs-gutter / 4;
-    }
-
+.advert__title {
+    font-size: 1rem;
+    line-height: 1.25;
 }
 
 .advert__image-container {
@@ -18,4 +19,13 @@
 .advert__image {
     max-width: 100%;
     height: auto;
+}
+
+.advert__meta {
+    @include f-textSans;
+    color: colour(neutral-2);
+}
+
+.advert__more {
+    margin-top: $gs-baseline/2;
 }
