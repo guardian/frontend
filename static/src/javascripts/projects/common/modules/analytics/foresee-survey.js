@@ -26,8 +26,7 @@ define([
                 openForesee();
             }
         } else if (window.guardian) {
-                window.guardian.openForesee = openForesee;
-            }
+            window.guardian.openForesee = openForesee;
         }
     }
 
