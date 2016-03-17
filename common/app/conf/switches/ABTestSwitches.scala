@@ -76,4 +76,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABAdblockingResponse = Switch(
+    "A/B Tests",
+    "ab-adblocking-response",
+    "Adblocking respoonse test",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 3, 31),
+    exposeClientSide = true
+  )
+
 }
