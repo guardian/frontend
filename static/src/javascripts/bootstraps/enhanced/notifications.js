@@ -35,20 +35,16 @@ define([
     uniq,
     without
 ) {
-    var modules, isSubscribed = false;
+    var modules;
 
     modules = {
 
         getReg: function () {
-            console.log("++  Reg");
             return navigator.serviceWorker.ready;
         },
 
         getSub: function () {
-            return modules.getReg().then(function (reg) {
-                console.log("++ Sub");
-                return reg.pushManager.getSubscription();
-            });
+            return modules.getReg().then(function (reg) {return reg.pushManager.getSubscription();});
         },
 
 
@@ -61,45 +57,7 @@ define([
            );
         },
 
-        xcxxxgetPushSubscription: function () {
-
-            console.log("+++++++++++++++ WOTCHA!");
-            modules.getSub().then(function (pushSubscription) {
-                console.log("+++++++++++++++ WOTCHA!  = Sub");
-                if (pushSubscription) {
-                    console.log("+++++++++++++++ Sub");
-                    modules.configureSubscribeTemplate();
-                } else {
-                    console.log("+++++++++++++++ No Sub");
-                    modules.subscribe();
-                }
-            });
-        },
-
-        /*
-        getPushSubscriptionOld: function () {
-
-            navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
-                reg = serviceWorkerRegistration;
-                serviceWorkerRegistration.pushManager.getSubscription().then(function (pushSubscription) {
-
-                    if (pushSubscription) {
-                        modules.configureSubscribeTemplate();
-                    } else {
-                            reg.pushManager.subscribe({userVisibleOnly: true}).then(
-                                function (pushSubscription) {
-                                    sub = pushSubscription;
-                                    modules.configureSubscribeTemplate();
-                                }
-                            );
-                    }
-                });
-            });
-        }*/
-
-
         configureSubscribeTemplate: function () {
-            console.log("++ CONF");
             var subscribed = modules.checkSubscriptions(),
                 hasNoSubscriptions = modules.subscriptionsEmpty(),
                 handler = subscribed ? modules.unSubscribeHandler : modules.subscribeHandler,
@@ -116,19 +74,12 @@ define([
             });
 
             bean.one(document.body, 'click', '.js-notifications-subscribe-link', handler);
-
-/*
-            bean.on(document.body, 'click', '.js-notifications-subscribe-link', function () {
-                modules.buttonHandler();
-            });
-*/
         },
 
         setSubscriptionStatus: function (subscribed) {
             var subscribeButton = $('.js-notifications-subscribe-link'),
                 subscribeLink = $('.notifications-subscribe-link--follow'),
                 handler = subscribed ? modules.unSubscribeHandler : modules.subscribeHandler;
-            isSubscribed = subscribed;
             if (subscribed) {
                 subscribeLink.addClass('notifications-subscribe-link--has-subscriptions');
             }
@@ -137,50 +88,24 @@ define([
         },
 
         subscribeHandler: function() {
-            console.log("++ Subscibe");
-            modules.subscribe().then(
-                function () {
-                    console.log("Subscribed");
-                    modules.follow()
-                });
+            modules.subscribe().then(modules.follow());
         },
 
         unSubscribeHandler: function() {
-            console.log("++ UnSubscibe");
             modules.unFollow().then(modules.unSubscribe);
         },
 
-
-
-        buttonHandler: function () {
-            console.log("++ HANDLE!");
-            if (isSubscribed) {
-                modules.unFollow().then(modules.unSubscribe);
-            } else {
-                modules.subscribe().then(
-                function() {
-                    console.log("Subscribed");
-                    isSubscribed = true;
-                    modules.follow()
-                });
-            }
-        },
-
         subscribe: function () {
-            console.log("++++ Gettin la Sub");
             return modules.getReg().then(function(reg) {
                 return modules.getSub().then(function (sub) {
                     if (sub) {
-                        console.log("++ Old Sub: " + JSON.stringify(sub));
                         return sub;
                     } else {
-                        console.log("++ Reg");
                         return reg.pushManager.subscribe({userVisibleOnly: true});
                     }
                 });
             });
         },
-
 
         subscriptionsEmpty: function () {
             var subscriptions = modules.getSubscriptions();
@@ -231,7 +156,6 @@ define([
         },
 
         updateSubscription: function (notificationsEndpoint) {
-
             return modules.getSub().then(function(sub) {
                 var endpoint = sub.endpoint;
                 console.log("++ Endpoint! " + endpoint.substring(endpoint.lastIndexOf('/') + 1));
@@ -253,6 +177,6 @@ define([
     };
 
     return {
-        init: modules.getPushSubscription()
+        init: modules.configureSubscribeTemplate()
     };
 });
