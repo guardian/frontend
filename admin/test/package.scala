@@ -9,7 +9,8 @@ class AdminTestSuite extends Suites (
   new indexes.TagPagesTest,
   new services.AdminHealthCheckTest,
   new pagepresser.HtmlCleanerTest,
-  new controllers.admin.DeploysRadiatorControllerTest
+  new controllers.admin.DeploysRadiatorControllerTest,
+  new controllers.admin.DeploysNotifyControllerTest
 ) with SingleServerSuite {
 
   override lazy val port: Int = controllers.HealthCheck.testPort

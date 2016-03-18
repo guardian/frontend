@@ -63,7 +63,11 @@ object BookOffersController
             case Some("prominent") =>
               jsonFormat.result(views.html.books.booksProminent(someBooks, omnitureId, clickMacro))
             case _ =>
-              jsonFormat.result(views.html.books.booksStandard(someBooks, omnitureId, clickMacro))
+              if (conf.switches.Switches.v2BooksTemplate.isSwitchedOn) {
+                jsonFormat.result(views.html.books.booksStandardV2(someBooks, omnitureId, clickMacro))
+              } else {
+                jsonFormat.result(views.html.books.booksStandard(someBooks, omnitureId, clickMacro))
+              }
           }
         }
     }

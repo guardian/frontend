@@ -54,7 +54,7 @@ trait ABTestSwitches {
     "ab-article-related-content-display-as-recommendation",
     "Display related content as people who read this also read",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 16),
+    sellByDate = new LocalDate(2016, 3, 18),
     exposeClientSide = true
   )
 
@@ -64,6 +64,24 @@ trait ABTestSwitches {
     "Auction adverts on the client before calling DFP (US edition only)",
     safeState = Off,
     sellByDate = new LocalDate(2016, 4, 20),
+    exposeClientSide = true
+  )
+
+  val ABEmailSignupMarketingCheckbox = Switch(
+    "A/B Tests",
+    "ab-email-signup-marketing-checkbox",
+    "Test marketing checkbox in email sign-up",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 3, 23),
+    exposeClientSide = true
+  )
+
+  val ABAdblockingResponse = Switch(
+    "A/B Tests",
+    "ab-adblocking-response",
+    "Adblocking respoonse test",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 3, 31),
     exposeClientSide = true
   )
 

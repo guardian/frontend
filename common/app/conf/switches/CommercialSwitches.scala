@@ -68,15 +68,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val LiveblogDynamicAdvertsSwitch = Switch(
-    "Commercial",
-    "liveblog-dynamic-adverts",
-    "Dynamically insert inline adverts on liveblogs",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 15),
-    exposeClientSide = true
-  )
-
   val AudienceScienceSwitch = Switch(
     "Commercial",
     "audience-science",
@@ -158,10 +149,10 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val MasterclassFeedSwitch = Switch(
+  val EventsFeedSwitch = Switch(
     "Commercial",
-    "gu-masterclasses",
-    "If this switch is on, commercial components will be fed by masterclass feed.",
+    "gu-events",
+    "If this switch is on, commercial components will be fed by masterclass and live-events feeds.",
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -226,7 +217,7 @@ trait CommercialSwitches {
     "fixed-top-above-nav",
     "Fixes size of top-above-nav ad slot on fronts.",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 16),
+    sellByDate = new LocalDate(2016, 4, 13),
     exposeClientSide = false
   )
 
@@ -257,4 +248,93 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
+  val v2JobsTemplate = Switch(
+    "Commercial",
+    "v2-jobs-template",
+    "Jobs component using template v2",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 4, 13),
+    exposeClientSide = false
+  )
+
+  val v2MasterclassesTemplate = Switch(
+    "Commercial",
+    "v2-masterclasses-template",
+    "Masterclasses component using template v2",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 4, 13),
+    exposeClientSide = false
+  )
+
+  val v2BooksTemplate = Switch(
+    "Commercial",
+    "v2-books-template",
+    "Books component using template v2",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 4, 13),
+    exposeClientSide = false
+  )
+
+  val v2TravelTemplate = Switch(
+    "Commercial",
+    "v2-travel-template",
+    "Travel component using template v2",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 4, 13),
+    exposeClientSide = false
+  )
+
+  val v2SoulmatesTemplate = Switch(
+    "Commercial",
+    "v2-soulmates-template",
+    "Soulmates component using template v2",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 4, 13),
+    exposeClientSide = false
+  )
+
+  val v2BlendedTemplate = Switch(
+    "Commercial",
+    "v2-blended-template",
+    "Blended component using template v2",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 4, 13),
+    exposeClientSide = false
+  )
+
+  val v2ManualSingleTemplate = Switch(
+    "Commercial",
+    "v2-manual-single-template",
+    "Manual single component using template v2",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 4, 13),
+    exposeClientSide = false
+  )
+
+  val v2ManualMultipleTemplate = Switch(
+    "Commercial",
+    "v2-manual-multiple-template",
+    "Manual multiple component using template v2",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 4, 13),
+    exposeClientSide = false
+  )
+
+  val v2CapiSingleTemplate = Switch(
+    "Commercial",
+    "v2-capi-single-template",
+    "Capi single component using template v2",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 4, 13),
+    exposeClientSide = false
+  )
+
+  val v2CapiMultipleTemplate = Switch(
+    "Commercial",
+    "v2-capi-multiple-template",
+    "Capi multiple component using template v2",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 4, 13),
+    exposeClientSide = false
+  )
 }

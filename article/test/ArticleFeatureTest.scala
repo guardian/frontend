@@ -371,18 +371,6 @@ import collection.JavaConversions._
       StandardAdvertsSwitch.switchOff()
     }
 
-    scenario("Direct link to paragraph") {
-
-      Given("I have clicked a direct link to paragrah 16 on the article 'Eurozone crisis live: Fitch downgrades Greece on euro exit fears'")
-
-      goTo("/business/2012/may/17/eurozone-crisis-cameron-greece-euro-exit#block-16") { browser =>
-        import browser._
-
-        Then("I should see paragraph 16")
-        findFirst("#block-16").getText should startWith("11.31am: Vince Cable, the business secretary")
-      }
-    }
-
     scenario("Video as main element should act as main media") {
       Given("I am on an article with a main video")
       goTo("/politics/2014/may/16/nigel-farage-lbc-interview-key-moments") { browser =>

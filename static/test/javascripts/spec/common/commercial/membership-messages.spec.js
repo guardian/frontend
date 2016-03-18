@@ -3,17 +3,21 @@ define([
     'fastdom',
     'qwery',
     'common/utils/$',
+    'common/modules/user-prefs',
     'helpers/fixtures',
     'helpers/injector',
-    'Promise'
+    'Promise',
+    'common/modules/ui/message'
 ], function (
     bonzo,
     fastdom,
     qwery,
     $,
+    userPrefs,
     fixtures,
     Injector,
-    Promise
+    Promise,
+    Message
 ) {
     var commercialFeatures, membershipMessages,
         showMembershipMessages, alreadyVisited, storage, config;
@@ -51,6 +55,30 @@ define([
             });
         });
 
+        function expectMessageToBeShown(done) {
+            membershipMessages.init().then(function () {
+                var message = document.querySelector('.js-site-message');
+                expect(message).not.toBeNull();
+                expect(message.className).toContain('membership-message');
+                expect(message.className).not.toContain('is-hidden');
+            }).then(done);
+        }
+
+        function expectMessageNotToBeShown(done) {
+            membershipMessages.init().then(function () {
+                var message = document.querySelector('.js-site-message');
+                expect(message).toBeNull();
+            }).then(done);
+        }
+
+        function expectMessageNotToBeVisible(done) {
+            membershipMessages.init().then(function () {
+                var message = document.querySelector('.js-site-message');
+                expect(message.className).toContain('is-hidden');
+                expect(message.className).not.toContain('membership-message');
+            }).then(done);
+        }
+
         describe('If user already member', function () {
             beforeEach(function (done) {
                 showMembershipMessages = commercialFeatures.async.membershipMessages;
@@ -65,12 +93,7 @@ define([
                 storage.local.set('gu.alreadyVisited', alreadyVisited);
             });
 
-            it('should not show any messages even to engaged readers', function (done) {
-                membershipMessages.init().then(function () {
-                    var message = document.querySelector('.js-site-message.site-message--banner');
-                    expect(message).toBeNull();
-                }).then(done);
-            });
+            it('should not show any messages even to engaged readers', expectMessageNotToBeShown);
         });
 
         describe('If user not member', function () {
@@ -79,6 +102,7 @@ define([
                 alreadyVisited = storage.local.get('gu.alreadyVisited');
                 commercialFeatures.async.membershipMessages = Promise.resolve(true);
                 fixtures.render(conf);
+                storage.local.set('gu.alreadyVisited', 10);
                 done();
             });
 
@@ -91,22 +115,33 @@ define([
             describe('of the UK edition', function () {
                 it('should show a message to engaged readers', function (done) {
                     config.page = { edition: 'UK' };
-                    storage.local.set('gu.alreadyVisited', 10);
-                    membershipMessages.init().then(function () {
-                        var message = document.querySelector('.js-site-message.site-message--membership-message-uk');
-                        expect(message).not.toBeNull();
-                    }).then(done);
+                    expectMessageToBeShown(done);
                 });
             });
 
             describe('of the US edition', function () {
                 it('should show a message to engaged readers', function (done) {
                     config.page = { edition: 'US' };
-                    storage.local.set('gu.alreadyVisited', 10);
-                    membershipMessages.init().then(function () {
-                        var message = document.querySelector('.js-site-message.site-message--membership-message-us');
-                        expect(message).not.toBeNull();
-                    }).then(done);
+                    expectMessageToBeShown(done);
+                });
+            });
+
+            describe('of the International edition', function () {
+                it('should show a message to engaged readers', function (done) {
+                    config.page = { edition: 'INT' };
+                    expectMessageToBeShown(done);
+                });
+            });
+
+            describe('but has already closed a message', function () {
+                it('should not redisplay that message', function (done) {
+                    var edition = 'UK';
+                    var message = new Message(membershipMessages.messages[edition].code);
+                    message.acknowledge();
+
+                    config.page = { edition: edition };
+
+                    expectMessageNotToBeVisible(done);
                 });
             });
         });

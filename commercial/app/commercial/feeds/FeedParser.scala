@@ -3,8 +3,8 @@ package commercial.feeds
 import common.ExecutionContexts
 import conf.Configuration
 import model.commercial.books.{BestsellersAgent, Book}
+import model.commercial.events.{LiveEvent, LiveEventAgent, Masterclass, MasterclassAgent}
 import model.commercial.jobs.{Job, JobsAgent}
-import model.commercial.masterclasses.{MasterClass, MasterClassAgent}
 import model.commercial.soulmates.{Member, SoulmatesAgent}
 import model.commercial.travel.{TravelOffer, TravelOffersAgent}
 
@@ -55,13 +55,24 @@ object FeedParser {
     }
   }
 
-  private val masterclasses: Option[FeedParser[MasterClass]] = {
+  private val masterclasses: Option[FeedParser[Masterclass]] = {
     Configuration.commercial.masterclassesToken map { accessToken =>
-      new FeedParser[MasterClass] {
+      new FeedParser[Masterclass] {
 
-        val feedMetaData = MasterclassesFeedMetaData(accessToken, Map.empty)
+        val feedMetaData = EventsFeedMetaData("masterclasses", accessToken)
 
-        def parse(feedContent: => Option[String]) = MasterClassAgent.refresh(feedMetaData, feedContent)
+        def parse(feedContent: => Option[String]) = MasterclassAgent.refresh(feedMetaData, feedContent)
+      }
+    }
+  }
+
+  private val liveEvents: Option[FeedParser[LiveEvent]] = {
+    Configuration.commercial.liveEventsToken map { accessToken =>
+      new FeedParser[LiveEvent] {
+
+        val feedMetaData = EventsFeedMetaData("live-events", accessToken)
+
+        def parse(feedContent: => Option[String]) = LiveEventAgent.refresh(feedMetaData, feedContent)
       }
     }
   }
@@ -77,7 +88,7 @@ object FeedParser {
     }
   }
 
-  val all = soulmates ++ Seq(jobs, bestsellers, masterclasses, travelOffers).flatten
+  val all = soulmates ++ Seq(jobs, bestsellers, masterclasses, liveEvents, travelOffers).flatten
 }
 
 case class ParsedFeed[+T](contents: Seq[T], parseDuration: Duration)
