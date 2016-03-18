@@ -226,7 +226,7 @@ define([
 
     function shouldRunTest(id, variant) {
         var test = getTest(id);
-        return test && isParticipating(test) && ab.getTestVariantId(id) === variant && testCanBeRun(test);
+        return test && isParticipating(test) && getTestVariantId(id) === variant && testCanBeRun(test);
     }
 
     function getVariant(test, variantId) {

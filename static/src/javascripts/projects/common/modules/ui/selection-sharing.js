@@ -45,6 +45,25 @@ define([
         emailHrefTemplate = 'mailto:?subject=<%=subject%>&body=%E2%80%9C<%=selection%>%E2%80%9D <%=url%>',
         validAncestors = ['js-article__body', 'content__standfirst', 'block', 'caption--main', 'content__headline'],
 
+    isValidSelection = function (range) {
+        // commonAncestorContainer is buggy, can't use it here.
+        return some(validAncestors, function (className) {
+            return $.ancestor(range.startContainer, className) && $.ancestor(range.endContainer, className);
+        });
+    },
+
+    hideSelection = function () {
+        if ($selectionSharing.hasClass('selection-sharing--active')) {
+            $selectionSharing.removeClass('selection-sharing--active');
+        }
+    },
+
+    showSelection = function () {
+        if (!$selectionSharing.hasClass('selection-sharing--active')) {
+            $selectionSharing.addClass('selection-sharing--active');
+        }
+    },
+
     updateSelection = function () {
 
         var selection = window.getSelection && document.createRange && window.getSelection(),
@@ -95,18 +114,6 @@ define([
         }
     },
 
-    hideSelection = function () {
-        if ($selectionSharing.hasClass('selection-sharing--active')) {
-            $selectionSharing.removeClass('selection-sharing--active');
-        }
-    },
-
-    showSelection = function () {
-        if (!$selectionSharing.hasClass('selection-sharing--active')) {
-            $selectionSharing.addClass('selection-sharing--active');
-        }
-    },
-
     onMouseDown = function (event) {
         if (!$.ancestor(event.target, 'social__item')) {
             hideSelection();
@@ -126,13 +133,6 @@ define([
             bean.on(document.body, 'mousedown', debounce(onMouseDown, 50));
             mediator.on('window:resize', throttle(updateSelection, 50));
         }
-    },
-
-    isValidSelection = function (range) {
-        // commonAncestorContainer is buggy, can't use it here.
-        return some(validAncestors, function (className) {
-            return $.ancestor(range.startContainer, className) && $.ancestor(range.endContainer, className);
-        });
     };
 
     return {

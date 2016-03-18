@@ -382,63 +382,6 @@ define([
         return slot;
     }
 
-    function parseAd(event) {
-        var size,
-            adSlotId = event.slot.getSlotElementId(),
-            $adSlot,
-            $placeholder,
-            $adSlotContent;
-
-        if (event.isEmpty) {
-            removeSlot(adSlotId);
-        } else {
-            $adSlot = $('#' + adSlotId);
-
-            // Store ads IDs for technical feedback
-            creativeIDs.push(event.creativeId);
-
-            // remove any placeholder ad content
-            $placeholder = $('.ad-slot__content--placeholder', $adSlot);
-            $adSlotContent = $('div', $adSlot);
-            fastdom.write(function () {
-                $placeholder.remove();
-                $adSlotContent.addClass('ad-slot__content');
-            });
-
-            // Check if creative is a new gu style creative and place labels accordingly
-            dfp.checkForBreakout($adSlot).then(function (adType) {
-                if (adType !== 'gu-style') {
-                    addLabel($adSlot);
-                }
-
-                size = event.size.join(',');
-                // is there a callback for this size
-                if (callbacks[size]) {
-                    callbacks[size](event, $adSlot);
-                }
-
-                if ($adSlot.hasClass('ad-slot--container-inline') && $adSlot.hasClass('ad-slot--not-mobile')) {
-                    fastdom.write(function () {
-                        $adSlot.parent().css('display', 'flex');
-                    });
-                } else if (!($adSlot.hasClass('ad-slot--top-above-nav') && size === '1,1')) {
-                    fastdom.write(function () {
-                        $adSlot.parent().css('display', 'block');
-                    });
-                }
-
-                if (($adSlot.hasClass('ad-slot--top-banner-ad') && size === '88,70')
-                || ($adSlot.hasClass('ad-slot--commercial-component') && size === '88,88')) {
-                    fastdom.write(function () {
-                        $adSlot.addClass('ad-slot__fluid250');
-                    });
-                }
-            });
-        }
-
-        allAdsRendered(adSlotId);
-    }
-
     function allAdsRendered(adSlotId) {
         if (adverts[adSlotId] && !adverts[adSlotId].isRendered) {
             adverts[adSlotId].isLoading = false;
@@ -658,13 +601,6 @@ define([
     /**
      * Public functions
      */
-    function init() {
-        return commercialFeatures.dfpAdvertising ?
-            setupAdvertising() :
-            fastdom.write(function () {
-                $(adSlotSelector).remove();
-            });
-    }
 
     function load() {
         return commercialFeatures.dfpAdvertising ? loadAdvertising() : Promise.resolve();
@@ -755,6 +691,71 @@ define([
             hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
         }
     };
+
+    function parseAd(event) {
+        var size,
+            adSlotId = event.slot.getSlotElementId(),
+            $adSlot,
+            $placeholder,
+            $adSlotContent;
+
+        if (event.isEmpty) {
+            removeSlot(adSlotId);
+        } else {
+            $adSlot = $('#' + adSlotId);
+
+            // Store ads IDs for technical feedback
+            creativeIDs.push(event.creativeId);
+
+            // remove any placeholder ad content
+            $placeholder = $('.ad-slot__content--placeholder', $adSlot);
+            $adSlotContent = $('div', $adSlot);
+            fastdom.write(function () {
+                $placeholder.remove();
+                $adSlotContent.addClass('ad-slot__content');
+            });
+
+            // Check if creative is a new gu style creative and place labels accordingly
+            dfp.checkForBreakout($adSlot).then(function (adType) {
+                if (adType !== 'gu-style') {
+                    addLabel($adSlot);
+                }
+
+                size = event.size.join(',');
+                // is there a callback for this size
+                if (callbacks[size]) {
+                    callbacks[size](event, $adSlot);
+                }
+
+                if ($adSlot.hasClass('ad-slot--container-inline') && $adSlot.hasClass('ad-slot--not-mobile')) {
+                    fastdom.write(function () {
+                        $adSlot.parent().css('display', 'flex');
+                    });
+                } else if (!($adSlot.hasClass('ad-slot--top-above-nav') && size === '1,1')) {
+                    fastdom.write(function () {
+                        $adSlot.parent().css('display', 'block');
+                    });
+                }
+
+                if (($adSlot.hasClass('ad-slot--top-banner-ad') && size === '88,70')
+                || ($adSlot.hasClass('ad-slot--commercial-component') && size === '88,88')) {
+                    fastdom.write(function () {
+                        $adSlot.addClass('ad-slot__fluid250');
+                    });
+                }
+            });
+        }
+
+        allAdsRendered(adSlotId);
+    }
+
+    function init() {
+        return commercialFeatures.dfpAdvertising ?
+            setupAdvertising() :
+            fastdom.write(function () {
+                $(adSlotSelector).remove();
+            });
+    }
 
     return dfp;
 
