@@ -70,6 +70,8 @@ object Dependencies {
   val jerseyClient = "com.sun.jersey" % "jersey-client" % "1.19"
   val w3cSac = "org.w3c.css" % "sac" % "1.3"
   val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "7.2.4"
+  val logback = "net.logstash.logback" % "logstash-logback-encoder" % "4.6"
+  val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.2.0"
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.5"

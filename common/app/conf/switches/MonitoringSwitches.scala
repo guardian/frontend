@@ -51,4 +51,13 @@ trait MonitoringSwitches {
     exposeClientSide = true
   )
 
+  val LogstashLogging = Switch(
+    "Monitoring",
+    "logstash-logging",
+    "Enables sending logs to Logstash",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
 }

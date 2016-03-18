@@ -1,4 +1,5 @@
 import common.{CloudWatchApplicationMetrics, ContentApiMetrics}
+import common.Logback.Logstash
 import conf.{Filters, SwitchboardLifecycle}
 import contentapi.SectionsLookUpLifecycle
 import dev.DevParametersLifecycle
@@ -13,7 +14,8 @@ object Global extends WithFilters(Filters.common: _*)
   with CloudWatchApplicationMetrics
   with SurgingContentAgentLifecycle
   with SectionsLookUpLifecycle
-  with SwitchboardLifecycle {
+  with SwitchboardLifecycle
+  with Logstash {
   override lazy val applicationName = "frontend-rss"
 
   override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ++ List(
