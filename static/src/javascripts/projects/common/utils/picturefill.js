@@ -166,9 +166,7 @@ define([
                 media = parsedSize.media;
 
                 if (!length) {
-                    // jscs:disable disallowKeywords
                     continue;
-                    // jscs:enable disallowKeywords
                 }
                 // if there is no media query or it matches, choose this as our winning length
                 if ((!media || pf.matchesMedia(media)) &&
@@ -427,9 +425,7 @@ define([
 
                 // ignore non-element nodes
                 if (source.nodeType !== 1) {
-                    // jscs:disable disallowKeywords
                     continue;
-                    // jscs:enable disallowKeywords
                 }
 
                 // Hitting the `img` element that started everything stops the search for `sources`.
@@ -440,9 +436,7 @@ define([
 
                 // ignore non-`source` nodes
                 if (source.nodeName.toUpperCase() !== "SOURCE") {
-                    // jscs:disable disallowKeywords
                     continue;
-                    // jscs:enable disallowKeywords
                 }
                 // if it's a source element that has the `src` property set, throw a warning in the console
                 if (source.getAttribute("src") !== null && typeof console !== undefined) {
@@ -453,9 +447,7 @@ define([
 
                 // if source does not have a srcset attribute, skip
                 if (!source.getAttribute("srcset")) {
-                    // jscs:disable disallowKeywords
                     continue;
-                    // jscs:enable disallowKeywords
                 }
 
                 // if there's no media specified, OR w.matchMedia is supported
@@ -491,9 +483,7 @@ define([
 
                     // immediately skip non-`img` nodes
                     if (element.nodeName.toUpperCase() !== 'IMG') {
-                        // jscs:disable disallowKeywords
                         continue;
-                        // jscs:enable disallowKeywords
                     }
 
                     // expando for caching data on the img
@@ -505,9 +495,7 @@ define([
                     // `options.reevaluate` is set to true (this, for example,
                     // is set to true when running `picturefill` on `resize`).
                     if (!options.reevaluate && element[ pf.ns ].evaluated) {
-                        // jscs:disable disallowKeywords
                         continue;
-                        // jscs:enable disallowKeywords
                     }
 
                     // if `img` is in a `picture` element
@@ -525,9 +513,7 @@ define([
                         // remove the evaluated attr and skip for now ( the pending test will
                         // rerun picturefill on this element when complete)
                         if (firstMatch === false) {
-                            // jscs:disable disallowKeywords
                             continue;
-                            // jscs:enable disallowKeywords
                         }
                     } else {
                         firstMatch = undefined;

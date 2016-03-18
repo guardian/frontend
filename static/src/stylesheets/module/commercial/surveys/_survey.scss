@@ -44,9 +44,9 @@
         @include mq(tablet) {
             left: 50%;
             top: percentage(1/5);
-            width: $gs-column-width * 8;
+            width: $gs-column-width * 10;
             height: auto;
-            margin-left: -$gs-column-width * 3;
+            margin-left: -$gs-column-width * 5;
         }
 
     }

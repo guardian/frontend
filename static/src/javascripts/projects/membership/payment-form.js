@@ -16,7 +16,6 @@ define([
     stripeErrorMessages
 ) {
     //TODO-benc this work needs to be swapped out for the form.js work found on membership coming up in a separate PR
-    /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
     'use strict';
 
     var sharedConfig = {

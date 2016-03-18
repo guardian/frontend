@@ -1,6 +1,5 @@
 /*global FB:false*/
 /*global guardian*/
-/* jscs:disable disallowDanglingUnderscores */
 define(function () {
 
     var scriptId = 'facebook-jssdk';
