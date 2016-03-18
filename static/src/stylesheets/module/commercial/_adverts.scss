@@ -210,11 +210,11 @@
     background: #eaeaea;
 
     > .adverts__header .button {
-        color: #fff;
+        color: #ffffff;
     }
 
     .adverts__blurb {
-        color: #fff;
+        color: #ffffff;
         @include fs-headline(1);
 
         @include mq(leftCol) {
