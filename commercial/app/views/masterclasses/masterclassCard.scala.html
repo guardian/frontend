@@ -1,8 +1,11 @@
 @(event: model.commercial.events.Masterclass,
+  version: String,
+  date: String,
+  relevance: String,
   omnitureId: Option[String],
   clickMacro: Option[String])
 
-<a class="advert advert--masterclass" href="@clickMacro@event.url" data-link-name="">
+<a class="advert advert--masterclass" href="@clickMacro@event.url" data-link-name="merchandising-masterclasses-s-v@{version}_@{date}-@{relevance}-@event.name">
     <h2 class="advert__title">@event.name</h2>
     @event.mainPicture.map { picture =>
         @Item300.bestFor(picture.images).map { url =>
