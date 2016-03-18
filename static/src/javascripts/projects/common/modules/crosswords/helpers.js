@@ -31,6 +31,9 @@ define([
     some,
     chain
 ) {
+    var isAcross = function (clue) {
+        return clue.direction === 'across';
+    };
     var getLastCellInClue = function (clue) {
         var ax = {
             'true': 'x',
@@ -139,20 +142,6 @@ define([
         return contains(otherClue.group, clue.id);
     };
 
-    var checkClueHasBeenAnswered = function (grid, entry) {
-        return every(cellsForEntry(entry), function (position) {
-            return (/^[A-Z]$/.test(grid[position.x][position.y].value));
-        });
-    };
-
-    var isAcross = function (clue) {
-        return clue.direction === 'across';
-    };
-
-    var otherDirection = function (direction) {
-        return direction === 'across' ? 'down' : 'across';
-    };
-
     var cellsForEntry = function (entry) {
         return isAcross(entry) ? map(range(entry.position.x, entry.position.x + entry.length), function (x) {
             return {
@@ -167,6 +156,16 @@ define([
         });
     };
 
+    var checkClueHasBeenAnswered = function (grid, entry) {
+        return every(cellsForEntry(entry), function (position) {
+            return (/^[A-Z]$/.test(grid[position.x][position.y].value));
+        });
+    };
+
+    var otherDirection = function (direction) {
+        return direction === 'across' ? 'down' : 'across';
+    };
+
     var cellsForClue = function (entries, clue) {
         if (clueIsInGroup(clue)) {
             var entriesForClue = getGroupEntriesForClue(entries, clue.group);
@@ -178,8 +177,25 @@ define([
         }
     };
 
+    /** Hash key for the cell at x, y in the clue map */
+    var clueMapKey = function (x, y) {
+        return x + '_' + y;
+    };
+
     var cluesFor = function (clueMap, x, y) {
         return clueMap[clueMapKey(x, y)];
+    };
+
+    var getClearableCellsForEntry = function (grid, clueMap, entries, entry) {
+        var direction = entry.direction === 'across' ? 'down' : 'across';
+        return filter(cellsForEntry(entry), function (cell) {
+            var clues = cluesFor(clueMap, cell.x, cell.y);
+            var otherClue = clues[direction];
+            if (otherClue) {
+                return cluesAreInGroup(entry, otherClue) || !checkClueHasBeenAnswered(grid, otherClue);
+            }
+            return true;
+        });
     };
 
     var getClearableCellsForClue = function (grid, clueMap, entries, clue) {
@@ -193,18 +209,6 @@ define([
         } else {
             return getClearableCellsForEntry(grid, clueMap, entries, clue);
         }
-    };
-
-    var getClearableCellsForEntry = function (grid, clueMap, entries, entry) {
-        var direction = entry.direction === 'across' ? 'down' : 'across';
-        return filter(cellsForEntry(entry), function (cell) {
-            var clues = cluesFor(clueMap, cell.x, cell.y);
-            var otherClue = clues[direction];
-            if (otherClue) {
-                return cluesAreInGroup(entry, otherClue) || !checkClueHasBeenAnswered(grid, otherClue);
-            }
-            return true;
-        });
     };
 
     /**
@@ -235,11 +239,6 @@ define([
         });
 
         return grid;
-    };
-
-    /** Hash key for the cell at x, y in the clue map */
-    var clueMapKey = function (x, y) {
-        return x + '_' + y;
     };
 
     /** A map for looking up clues that a given cell relates to */

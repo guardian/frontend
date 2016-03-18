@@ -436,6 +436,10 @@ CommentBox.prototype.formatComment = function(formatStyle) {
     var cursorPositionStart = commentBody.selectionStart;
     var selectedText = commentBody.value.substring(commentBody.selectionStart, commentBody.selectionEnd);
 
+    var selectNewText = function(newText) {
+        commentBody.setSelectionRange(cursorPositionStart, cursorPositionStart + newText.length);
+    };
+
     var formatSelection = function(startTag, endTag) {
         var newText = startTag + selectedText + endTag;
 
@@ -460,10 +464,6 @@ CommentBox.prototype.formatComment = function(formatStyle) {
 
         commentBody.value = commentBody.value.substring(0, commentBody.selectionStart) +
             newText + commentBody.value.substring(commentBody.selectionEnd);
-    };
-
-    var selectNewText = function(newText) {
-        commentBody.setSelectionRange(cursorPositionStart, cursorPositionStart + newText.length);
     };
 
     switch(formatStyle) {

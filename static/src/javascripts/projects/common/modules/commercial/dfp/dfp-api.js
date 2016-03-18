@@ -1,7 +1,6 @@
 // Be wary of renaming this file; some titles, like 'dfp.js',
 // can trigger adblocker rules, and make the module fail to load in dev.
 
-/* global googletag: false */
 define([
     'bean',
     'bonzo',
@@ -16,7 +15,7 @@ define([
     'common/utils/url',
     'common/utils/user-timing',
     'common/utils/sha1',
-    'common/utils/fastdom-idle',
+    'common/utils/fastdom-promise',
     'common/utils/cookies',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
@@ -59,7 +58,7 @@ define([
     urlUtils,
     userTiming,
     sha1,
-    idleFastdom,
+    fastdom,
     cookies,
     stickyMpu,
     buildPageTargeting,
@@ -119,6 +118,7 @@ define([
     var creativeIDs          = [];
     var hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
     var prebidService        = null;
+    var googletag;
 
     var callbacks = {
         '300,251': function (event, $adSlot) {
@@ -144,7 +144,7 @@ define([
         '300,1050': function () {
             // remove geo most popular
             geoMostPopular.whenRendered.then(function (geoMostPopular) {
-                idleFastdom.write(function () {
+                fastdom.write(function () {
                     bonzo(geoMostPopular.elem).remove();
                 });
             });
@@ -193,7 +193,7 @@ define([
         var sponsorshipIdsFound = isSponsorshipContainerTest();
 
         if (detect.adblockInUseSync() && sponsorshipIdsFound.length) {
-            idleFastdom.write(function () {
+            fastdom.write(function () {
                 sponsorshipIdsFound.forEach(function (value) {
                     var sponsorshipIdFoundEl = $(value),
                         sponsorshipIdClasses = sponsorshipIdFoundEl.attr('class').replace('ad-slot ', ''),
@@ -231,7 +231,7 @@ define([
             // filter out (and remove) hidden ads
             }).and(filter, function ($adSlot) {
                 if (shouldFilterAdSlot($adSlot)) {
-                    idleFastdom.write(function () {
+                    fastdom.write(function () {
                         $adSlot.remove();
                     });
                     return false;
@@ -297,33 +297,40 @@ define([
     }
 
     function setupAdvertising() {
-        // if we don't already have googletag, create command queue and load it async
-        if (!window.googletag) {
-            window.googletag = { cmd: [] };
-            // load the library asynchronously
-            require(['js!googletag.js']);
-        }
+        return new Promise(function (resolve) {
+            // if we don't already have googletag, create command queue and load it async
+            if (!window.googletag) {
+                window.googletag = googletag = { cmd: [] };
+                // load the library asynchronously
+                require(['js!googletag.js']);
+            } else {
+                googletag = window.googletag;
+            }
 
-        if (prebidEnabled) {
-            prebidService = new PrebidService();
-        }
+            if (prebidEnabled) {
+                prebidService = new PrebidService();
+            }
 
-        window.googletag.cmd.push = raven.wrap({ deep: true }, window.googletag.cmd.push);
+            googletag.cmd.push = raven.wrap({ deep: true }, googletag.cmd.push);
 
-        window.googletag.cmd.push(function () {
-            renderStartTime = new Date().getTime();
+            googletag.cmd.push(
+                function () {
+                    renderStartTime = new Date().getTime();
+                },
+                setListeners,
+                setPageTargeting,
+                resolve
+            );
         });
-        window.googletag.cmd.push(setListeners);
-        window.googletag.cmd.push(setPageTargeting);
-        window.googletag.cmd.push(defineAdverts);
+    }
 
-        if (shouldLazyLoad()) {
-            window.googletag.cmd.push(displayLazyAds);
-        } else {
-            window.googletag.cmd.push(displayAds);
-        }
-        // anything we want to happen after displaying ads
-        window.googletag.cmd.push(postDisplay);
+    function loadAdvertising() {
+        googletag.cmd.push(
+            defineAdverts,
+            shouldLazyLoad() ? displayLazyAds : displayAds,
+            // anything we want to happen after displaying ads
+            postDisplay
+        );
 
         // show sponsorship placeholder if adblock detected
         showSponsorshipPlaceholder();
@@ -375,63 +382,6 @@ define([
         return slot;
     }
 
-    function parseAd(event) {
-        var size,
-            adSlotId = event.slot.getSlotElementId(),
-            $adSlot,
-            $placeholder,
-            $adSlotContent;
-
-        if (event.isEmpty) {
-            removeSlot(adSlotId);
-        } else {
-            $adSlot = $('#' + adSlotId);
-
-            // Store ads IDs for technical feedback
-            creativeIDs.push(event.creativeId);
-
-            // remove any placeholder ad content
-            $placeholder = $('.ad-slot__content--placeholder', $adSlot);
-            $adSlotContent = $('div', $adSlot);
-            idleFastdom.write(function () {
-                $placeholder.remove();
-                $adSlotContent.addClass('ad-slot__content');
-            });
-
-            // Check if creative is a new gu style creative and place labels accordingly
-            dfp.checkForBreakout($adSlot).then(function (adType) {
-                if (adType !== 'gu-style') {
-                    addLabel($adSlot);
-                }
-
-                size = event.size.join(',');
-                // is there a callback for this size
-                if (callbacks[size]) {
-                    callbacks[size](event, $adSlot);
-                }
-
-                if ($adSlot.hasClass('ad-slot--container-inline') && $adSlot.hasClass('ad-slot--not-mobile')) {
-                    idleFastdom.write(function () {
-                        $adSlot.parent().css('display', 'flex');
-                    });
-                } else if (!($adSlot.hasClass('ad-slot--top-above-nav') && size === '1,1')) {
-                    idleFastdom.write(function () {
-                        $adSlot.parent().css('display', 'block');
-                    });
-                }
-
-                if (($adSlot.hasClass('ad-slot--top-banner-ad') && size === '88,70')
-                || ($adSlot.hasClass('ad-slot--commercial-component') && size === '88,88')) {
-                    idleFastdom.write(function () {
-                        $adSlot.addClass('ad-slot__fluid250');
-                    });
-                }
-            });
-        }
-
-        allAdsRendered(adSlotId);
-    }
-
     function allAdsRendered(adSlotId) {
         if (adverts[adSlotId] && !adverts[adSlotId].isRendered) {
             adverts[adSlotId].isLoading = false;
@@ -445,7 +395,7 @@ define([
     }
 
     function addLabel($adSlot) {
-        idleFastdom.write(function () {
+        fastdom.write(function () {
             if (shouldRenderLabel($adSlot)) {
                 $adSlot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
             } else if (ab.isInVariant('CommercialComponentsDismiss', 'dismiss') && contains(['dfp-ad--merchandising', 'dfp-ad--merchandising-high', 'dfp-ad--im'], $adSlot.attr('id'))) {
@@ -519,7 +469,7 @@ define([
 
     function removeSlot(adSlotId) {
         delete adverts[adSlotId];
-        idleFastdom.write(function () {
+        fastdom.write(function () {
             $('#' + adSlotId).remove();
         });
     }
@@ -651,13 +601,9 @@ define([
     /**
      * Public functions
      */
-    function init() {
-        if (commercialFeatures.dfpAdvertising) {
-            setupAdvertising();
-        } else {
-            $(adSlotSelector).remove();
-        }
-        return dfp;
+
+    function load() {
+        return commercialFeatures.dfpAdvertising ? loadAdvertising() : Promise.resolve();
     }
 
     function addSlot(adSlot) {
@@ -726,6 +672,7 @@ define([
      */
     var dfp = {
         init:           init,
+        loadAds:        load,
         addSlot:        addSlot,
 
         // Used privately but exposed only for unit testing
@@ -744,6 +691,71 @@ define([
             hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
         }
     };
+
+    function parseAd(event) {
+        var size,
+            adSlotId = event.slot.getSlotElementId(),
+            $adSlot,
+            $placeholder,
+            $adSlotContent;
+
+        if (event.isEmpty) {
+            removeSlot(adSlotId);
+        } else {
+            $adSlot = $('#' + adSlotId);
+
+            // Store ads IDs for technical feedback
+            creativeIDs.push(event.creativeId);
+
+            // remove any placeholder ad content
+            $placeholder = $('.ad-slot__content--placeholder', $adSlot);
+            $adSlotContent = $('div', $adSlot);
+            fastdom.write(function () {
+                $placeholder.remove();
+                $adSlotContent.addClass('ad-slot__content');
+            });
+
+            // Check if creative is a new gu style creative and place labels accordingly
+            dfp.checkForBreakout($adSlot).then(function (adType) {
+                if (adType !== 'gu-style') {
+                    addLabel($adSlot);
+                }
+
+                size = event.size.join(',');
+                // is there a callback for this size
+                if (callbacks[size]) {
+                    callbacks[size](event, $adSlot);
+                }
+
+                if ($adSlot.hasClass('ad-slot--container-inline') && $adSlot.hasClass('ad-slot--not-mobile')) {
+                    fastdom.write(function () {
+                        $adSlot.parent().css('display', 'flex');
+                    });
+                } else if (!($adSlot.hasClass('ad-slot--top-above-nav') && size === '1,1')) {
+                    fastdom.write(function () {
+                        $adSlot.parent().css('display', 'block');
+                    });
+                }
+
+                if (($adSlot.hasClass('ad-slot--top-banner-ad') && size === '88,70')
+                || ($adSlot.hasClass('ad-slot--commercial-component') && size === '88,88')) {
+                    fastdom.write(function () {
+                        $adSlot.addClass('ad-slot__fluid250');
+                    });
+                }
+            });
+        }
+
+        allAdsRendered(adSlotId);
+    }
+
+    function init() {
+        return commercialFeatures.dfpAdvertising ?
+            setupAdvertising() :
+            fastdom.write(function () {
+                $(adSlotSelector).remove();
+            });
+    }
 
     return dfp;
 

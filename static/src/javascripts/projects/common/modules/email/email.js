@@ -69,6 +69,33 @@ define([
         });
     }
 
+    var state = {
+        submitting: false
+    };
+
+    var messages = {
+        defaultSuccessHeadline: 'Thank you for subscribing',
+        defaultSuccessDesc: ''
+    };
+
+    var updateForm = {
+        replaceContent: function (isSuccess, $form) {
+            var formData = $form.data('formData'),
+                submissionMessage = {
+                    statusClass: (isSuccess) ? 'email-sub__message--success' : 'email-sub__message--failure',
+                    submissionHeadline: (isSuccess) ? formData.customSuccessHeadline || messages.defaultSuccessHeadline : 'Something went wrong',
+                    submissionMessage: (isSuccess) ? formData.customSuccessDesc || messages.defaultSuccessDesc : 'Please try again.',
+                    submissionIcon: (isSuccess) ? svgs('tick') : svgs('crossIcon')
+                },
+                submissionHtml = template(successHtml, submissionMessage);
+
+            fastdom.write(function () {
+                $form.addClass('email-sub__form--is-hidden');
+                $form.after(submissionHtml);
+            });
+        }
+    };
+
     function handleSubmit(isSuccess, $form) {
         return function () {
             updateForm.replaceContent(isSuccess, $form);
@@ -76,57 +103,13 @@ define([
         };
     }
 
-    var state = {
-            submitting: false
-        },
-        classes = {
+    var classes = {
             wrapper: 'js-email-sub',
             form: 'js-email-sub__form',
             inlineLabel: 'js-email-sub__inline-label',
             textInput: 'js-email-sub__text-input',
             listIdHiddenInput: 'js-email-sub__listid-input',
             markCheckbox: 'js-email-sub__mark-input'
-        },
-        messages = {
-            defaultSuccessHeadline: 'Thank you for subscribing',
-            defaultSuccessDesc: ''
-        },
-        setup = function (rootEl, thisRootEl, isIframed) {
-            $('.' + classes.inlineLabel, thisRootEl).each(function (el) {
-                formInlineLabels.init(el, {
-                    textInputClass: '.js-email-sub__text-input',
-                    labelClass: '.js-email-sub__label',
-                    hiddenLabelClass: 'email-sub__label--is-hidden',
-                    labelEnabledClass: 'email-sub__inline-label--enabled'
-                });
-            });
-
-            $('.' + classes.wrapper, thisRootEl).each(function (el) {
-                var $el = $(el),
-                    freezeHeight = ui.freezeHeight($el, false),
-                    freezeHeightReset = ui.freezeHeight($el, true),
-                    $formEl = $('.' + classes.form, el),
-                    analytics = {
-                        formType: $formEl.data('email-form-type'),
-                        listId: $formEl.data('email-list-id'),
-                        signedIn: (Id.isUserLoggedIn()) ? 'user signed-in' : 'user not signed-in'
-                    };
-
-                formSubmission.bindSubmit($formEl, analytics);
-
-                // If we're in an iframe, we should check whether we need to add a title and description
-                // from the data attributes on the iframe (eg: allowing us to set them from composer)
-                if (isIframed) {
-                    ui.updateForm(rootEl, $el, analytics);
-                }
-
-                // Ensure our form is the right height, both in iframe and outside
-                (isIframed) ? ui.setIframeHeight(rootEl, freezeHeight).call() : freezeHeight.call();
-
-                mediator.on('window:resize',
-                    debounce((isIframed) ? ui.setIframeHeight(rootEl, freezeHeightReset) : freezeHeightReset, 500)
-                );
-            });
         },
         removeAndRemember = function (e, data) {
             var iframe = data[0],
@@ -142,93 +125,6 @@ define([
                 omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | ' + analytics.signedIn + ' | form hidden');
             });
 
-        },
-        formSubmission = {
-            bindSubmit: function ($form, analytics) {
-                var url = '/email';
-                bean.on($form[0], 'submit', this.submitForm($form, url, analytics));
-            },
-            submitForm: function ($form, url, analytics) {
-                /**
-                 * simplistic email address validation to prevent misfired
-                 * omniture events
-                 *
-                 * @param  {String} emailAddress
-                 * @return {Boolean}
-                 */
-                function validate(emailAddress) {
-                    return typeof emailAddress === 'string' &&
-                           emailAddress.indexOf('@') > -1;
-                }
-
-                return function (event) {
-                    var emailAddress = $('.' + classes.textInput, $form).val(),
-                        listId = $('.' + classes.listIdHiddenInput, $form).val(),
-                        markCheckbox = $('.' + classes.markCheckbox, $form)[0].checked ? 'marketing allowed' : 'marketing disallowed',
-                        analyticsInfo;
-
-                    event.preventDefault();
-
-                    if (!state.submitting && validate(emailAddress)) {
-                        var formData = $form.data('formData'),
-                            data =  'email=' + encodeURIComponent(emailAddress) +
-                                    '&listId=' + listId +
-                                    '&campaignCode=' + formData.campaignCode +
-                                    '&referrer=' + formData.referrer;
-
-                        analyticsInfo = 'rtrt | email form inline | '
-                                        + analytics.formType + ' | '
-                                        + analytics.listId + ' | '
-                                        + analytics.signedIn + ' | '
-                                        + '%action%';
-
-                        if (formData.inMarkAbTest) {
-                            analyticsInfo += ' | ' + markCheckbox;
-                        }
-
-                        state.submitting = true;
-
-                        return getOmniture().then(function (omniture) {
-                            omniture.trackLinkImmediate(analyticsInfo.replace('%action%', 'subscribe clicked'));
-
-                            return ajax({
-                                url: url,
-                                method: 'post',
-                                data: data,
-                                headers: {
-                                    'Accept': 'application/json'
-                                }
-                            })
-                            .then(function () {
-                                omniture.trackLinkImmediate(analyticsInfo.replace('%action%', 'subscribe successful'));
-                            })
-                            .then(handleSubmit(true, $form))
-                            .catch(function (error) {
-                                robust.log('c-email', error);
-                                omniture.trackLinkImmediate(analyticsInfo.replace('%action%', 'error'));
-                                handleSubmit(false, $form)();
-                            });
-                        });
-                    }
-                };
-            }
-        },
-        updateForm = {
-            replaceContent: function (isSuccess, $form) {
-                var formData = $form.data('formData'),
-                    submissionMessage = {
-                        statusClass: (isSuccess) ? 'email-sub__message--success' : 'email-sub__message--failure',
-                        submissionHeadline: (isSuccess) ? formData.customSuccessHeadline || messages.defaultSuccessHeadline : 'Something went wrong',
-                        submissionMessage: (isSuccess) ? formData.customSuccessDesc || messages.defaultSuccessDesc : 'Please try again.',
-                        submissionIcon: (isSuccess) ? svgs('tick') : svgs('crossIcon')
-                    },
-                    submissionHtml = template(successHtml, submissionMessage);
-
-                fastdom.write(function () {
-                    $form.addClass('email-sub__form--is-hidden');
-                    $form.after(submissionHtml);
-                });
-            }
         },
         ui = {
             updateForm: function (thisRootEl, el, analytics, opts) {
@@ -308,13 +204,6 @@ define([
             },
             freezeHeight: function ($wrapper, reset) {
                 var wrapperHeight,
-                    resetHeight = function () {
-                        fastdom.write(function () {
-                            $wrapper.css('min-height', '');
-                            getHeight();
-                            setHeight();
-                        });
-                    },
                     getHeight = function () {
                         fastdom.read(function () {
                             wrapperHeight = $wrapper[0].clientHeight;
@@ -323,6 +212,13 @@ define([
                     setHeight = function () {
                         fastdom.defer(function () {
                             $wrapper.css('min-height', wrapperHeight);
+                        });
+                    },
+                    resetHeight = function () {
+                        fastdom.write(function () {
+                            $wrapper.css('min-height', '');
+                            getHeight();
+                            setHeight();
                         });
                     };
 
@@ -344,6 +240,113 @@ define([
                     });
                 };
             }
+        },
+        formSubmission = {
+            bindSubmit: function ($form, analytics) {
+                var url = '/email';
+                bean.on($form[0], 'submit', this.submitForm($form, url, analytics));
+            },
+            submitForm: function ($form, url, analytics) {
+                /**
+                 * simplistic email address validation to prevent misfired
+                 * omniture events
+                 *
+                 * @param  {String} emailAddress
+                 * @return {Boolean}
+                 */
+                function validate(emailAddress) {
+                    return typeof emailAddress === 'string' &&
+                           emailAddress.indexOf('@') > -1;
+                }
+
+                return function (event) {
+                    var emailAddress = $('.' + classes.textInput, $form).val(),
+                        listId = $('.' + classes.listIdHiddenInput, $form).val(),
+                        markCheckbox = $('.' + classes.markCheckbox, $form)[0].checked ? 'marketing allowed' : 'marketing disallowed',
+                        analyticsInfo;
+
+                    event.preventDefault();
+
+                    if (!state.submitting && validate(emailAddress)) {
+                        var formData = $form.data('formData'),
+                            data =  'email=' + encodeURIComponent(emailAddress) +
+                                    '&listId=' + listId +
+                                    '&campaignCode=' + formData.campaignCode +
+                                    '&referrer=' + formData.referrer;
+
+                        analyticsInfo = 'rtrt | email form inline | '
+                                        + analytics.formType + ' | '
+                                        + analytics.listId + ' | '
+                                        + analytics.signedIn + ' | '
+                                        + '%action%';
+
+                        if (formData.inMarkAbTest) {
+                            analyticsInfo += ' | ' + markCheckbox;
+                        }
+
+                        state.submitting = true;
+
+                        return getOmniture().then(function (omniture) {
+                            omniture.trackLinkImmediate(analyticsInfo.replace('%action%', 'subscribe clicked'));
+
+                            return ajax({
+                                url: url,
+                                method: 'post',
+                                data: data,
+                                headers: {
+                                    'Accept': 'application/json'
+                                }
+                            })
+                            .then(function () {
+                                omniture.trackLinkImmediate(analyticsInfo.replace('%action%', 'subscribe successful'));
+                            })
+                            .then(handleSubmit(true, $form))
+                            .catch(function (error) {
+                                robust.log('c-email', error);
+                                omniture.trackLinkImmediate(analyticsInfo.replace('%action%', 'error'));
+                                handleSubmit(false, $form)();
+                            });
+                        });
+                    }
+                };
+            }
+        },
+        setup = function (rootEl, thisRootEl, isIframed) {
+            $('.' + classes.inlineLabel, thisRootEl).each(function (el) {
+                formInlineLabels.init(el, {
+                    textInputClass: '.js-email-sub__text-input',
+                    labelClass: '.js-email-sub__label',
+                    hiddenLabelClass: 'email-sub__label--is-hidden',
+                    labelEnabledClass: 'email-sub__inline-label--enabled'
+                });
+            });
+
+            $('.' + classes.wrapper, thisRootEl).each(function (el) {
+                var $el = $(el),
+                    freezeHeight = ui.freezeHeight($el, false),
+                    freezeHeightReset = ui.freezeHeight($el, true),
+                    $formEl = $('.' + classes.form, el),
+                    analytics = {
+                        formType: $formEl.data('email-form-type'),
+                        listId: $formEl.data('email-list-id'),
+                        signedIn: (Id.isUserLoggedIn()) ? 'user signed-in' : 'user not signed-in'
+                    };
+
+                formSubmission.bindSubmit($formEl, analytics);
+
+                // If we're in an iframe, we should check whether we need to add a title and description
+                // from the data attributes on the iframe (eg: allowing us to set them from composer)
+                if (isIframed) {
+                    ui.updateForm(rootEl, $el, analytics);
+                }
+
+                // Ensure our form is the right height, both in iframe and outside
+                (isIframed) ? ui.setIframeHeight(rootEl, freezeHeight).call() : freezeHeight.call();
+
+                mediator.on('window:resize',
+                    debounce((isIframed) ? ui.setIframeHeight(rootEl, freezeHeightReset) : freezeHeightReset, 500)
+                );
+            });
         };
 
     return {
