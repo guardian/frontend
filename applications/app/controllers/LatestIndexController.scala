@@ -17,8 +17,7 @@ object LatestIndexController extends Controller with ExecutionContexts with impl
       index.page match {
         case tag: Tag if tag.isSeries || tag.isBlog => index.trails.headOption.map(latest => {
           if (request.isEmail) {
-            request.campaignCode.map(code => Redirect(latest.metadata.url + "/email", Map("CMP" -> Seq(code))))
-              .getOrElse(Found(latest.metadata.url + "/email"))
+            Redirect(latest.metadata.url + "/email", request.campaignCode.fold(Map[String, Seq[String]]())(c => Map("CMP" -> Seq(c))))
           }
           else Found(latest.metadata.url)
         }).getOrElse(NotFound)
