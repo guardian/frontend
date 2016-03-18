@@ -53,13 +53,17 @@ object ActiveTests extends Tests {
   def getJavascriptConfig(implicit request: RequestHeader): String = {
 
     val headlineTests = List(ABHeadlinesTestControl, ABHeadlinesTestVariant).filter(_.isParticipating)
+                          .map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""}
 
+    val internationalEditionTests = List(InternationalEditionVariant(request)
+                                      .map{ international => s""""internationalEditionVariant" : "$international" """}).flatten
 
-    val configEntries = List(InternationalEditionVariant(request).map{ international => s""""internationalEditionVariant" : "$international" """}) ++
-      ActiveTests.getParticipatingTest(request).toList ++
-      headlineTests
-        .map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""}
-    configEntries.flatten.mkString(",")
+    val activeTest = List(ActiveTests.getParticipatingTest(request)
+                        .map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""}).flatten
+
+    val configEntries = activeTest ++ internationalEditionTests ++ headlineTests
+
+    configEntries.mkString(",")
   }
 }
 
