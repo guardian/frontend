@@ -135,7 +135,13 @@ define([
         if ((window.location.protocol === 'https:' && config.page.section !== 'identity') || window.location.hash === '#force-sw') {
             var navigator = window.navigator;
             if (navigator && navigator.serviceWorker) {
-                navigator.serviceWorker.register('/service-worker.js');
+                navigator.serviceWorker.register('/service-worker.js').then(function () {
+                   if (detect.getUserAgent.browser === 'Chrome' && config.page.contentType === 'LiveBlog' && config.page.isLive) {
+                       require(['bootstraps/enhanced/notifications'], function (notifications) {
+                           bootstrapContext('notifications', notifications);
+                       });
+                   }
+               });
             }
         }
 

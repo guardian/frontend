@@ -346,6 +346,11 @@ GET            /sitemaps/news.xml                                               
 GET            /sitemaps/video.xml                                                                                               controllers.SiteMapController.renderVideoSiteMap()
 GET            /offline-page.json                                                                                                controllers.WebAppController.offlinePage()
 GET            /service-worker.js                                                                                                controllers.WebAppController.serviceWorker()
+
+#Notifications Store
+POST           /notification/store                                                                                               controllers.NotificationsController.saveSubscription()
+POST           /notification/delete                                                                                              controllers.NotificationsController.deleteSubscription()
+
 GET            /2015-06-24-manifest.json                                                                                         controllers.WebAppController.manifest()
 GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()
 GET            /embed/video/*path                                                                                                controllers.EmbedController.render(path)

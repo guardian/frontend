@@ -31,6 +31,15 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABLiveBlogChromeNotifications = Switch(
+    "A/B Tests",
+    "ab-live-blog-chrome-notifications",
+    "Live blog chrome notifications",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 5, 2),
+    exposeClientSide = true
+  )
+
   val ABArticleVideoAutoplay = Switch(
     "A/B Tests",
     "ab-article-video-autoplay",
