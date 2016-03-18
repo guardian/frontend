@@ -691,7 +691,6 @@
     .tonal__standfirst {
         background-color: transparent;
         padding: $gs-baseline 0 $gs-baseline*2;
-        min-height: $gs-baseline*8;
 
         .content__standfirst {
             color: colour(neutral-1);
@@ -741,9 +740,18 @@
             }
         }
 
+        // On video, standfirsts are injected twice - once in their usual location, another time as a replacement for the body
+        // We want to hide the first instance and style the latter
         &.content--media--video {
+
+            // Original standfirst
             .content__head .tonal__standfirst {
                 display: none;
+            }
+
+            // Pseudo-body standfirst
+            .content__main .tonal__standfirst {
+                min-height: $gs-baseline*8;
             }
         }
 
