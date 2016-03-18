@@ -49,7 +49,6 @@ define([
         });
 
         describe('Targeting', function () {
-            // jscs:disable requireDotNotation
             var targeting;
 
             beforeEach(function () {
@@ -88,7 +87,6 @@ define([
                     ).toBe('0.85');
                 });
             });
-            // jscs:enable
         });
     });
 

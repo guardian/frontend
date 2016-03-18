@@ -104,7 +104,6 @@ define([
     // End A/B test
 
     function getAdUrl() {
-        // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
         var queryParams = {
             ad_rule:                 1,
             correlator:              new Date().getTime(),

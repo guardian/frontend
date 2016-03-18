@@ -1,4 +1,3 @@
-/* jscs:disable disallowDanglingUnderscores */
 define([
     'common/utils/fastdom-promise',
     'qwery',

@@ -5,7 +5,6 @@ define([
 ) {
     // We make a new chainable with each operation to prevent mutations and
     // thus allow multiple usages of a given chainable.
-    /* jscs:disable disallowDanglingUnderscores */
 
     var createObject = function (prototype) {
         if (Object.create) {
@@ -38,7 +37,6 @@ define([
         // Override prototype method
         valueOf: function () { return this.value(); }
     };
-    /* jscs:enable disallowDanglingUnderscores */
 
     // Add array methods to chainable
 
