@@ -206,6 +206,19 @@
 /* Theming */
 .adverts--legacy {
     background: #eaeaea;
+
+    .adverts__blurb {
+        color: #fff;
+        @include fs-headline(1);
+
+        @include mq(leftCol) {
+            @include fs-headline(2);
+        }
+    }
+
+    .button {
+        margin-right: 0;
+    }
 }
 
 .adverts--framed {
@@ -269,3 +282,4 @@
 }
 
 @import '_adverts-books';
+@import '_adverts-masterclasses';

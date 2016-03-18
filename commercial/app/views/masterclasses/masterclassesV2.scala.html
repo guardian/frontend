@@ -24,6 +24,6 @@
 
 }(HtmlFormat.empty) {
 
-    @events map eventCard
+    @events.map { event => @masterclassCard(event, omnitureId, clickMacro) }
 
 }
