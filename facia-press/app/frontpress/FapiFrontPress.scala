@@ -12,6 +12,7 @@ import common._
 import conf.switches.Switches.FaciaInlineEmbeds
 import conf.{Configuration, LiveContentApi}
 import contentapi.{CircuitBreakingContentApiClient, QueryDefaults}
+import fronts.FrontsApi
 import model._
 import model.facia.PressedCollection
 import model.pressed._
@@ -38,13 +39,11 @@ private case class ContentApiClientWithTarget(override val apiKey: String, overr
 
 object LiveFapiFrontPress extends FapiFrontPress {
   val apiKey: String = Configuration.contentApi.key.getOrElse("facia-press")
-  val stage: String = Configuration.facia.stage.toUpperCase
-  val bucket: String = Configuration.aws.bucket
   val targetUrl: String = Configuration.contentApi.contentApiLiveHost
 
   override implicit val capiClient: GuardianContentClient = new ContentApiClientWithTarget(apiKey, targetUrl)
-  private val amazonS3Client = new AmazonS3Client()
-  implicit val apiClient: ApiClient = ApiClient(bucket, stage, AmazonSdkS3Client(amazonS3Client))
+
+  implicit val apiClient: ApiClient = FrontsApi.amazonClient
 
   def pressByPathId(path: String): Future[Unit] =
     getPressedFrontForPath(path)
