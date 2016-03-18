@@ -2,7 +2,6 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/modules/accessibility/helpers',
     'common/modules/article/rich-links',
     'common/modules/commercial/liveblog-adverts',
     'common/modules/experiments/affix',
@@ -16,7 +15,6 @@ define([
     config,
     detect,
     mediator,
-    accessibility,
     richLinks,
     liveblogAdverts,
     Affix,
@@ -63,16 +61,12 @@ define([
                 },
                 60000
             );
-        },
-
-        accessibility: function () {
-            accessibility.shouldHideFlashingElements();
         }
+
     };
 
     function ready() {
         robust.catchErrorsAndLogAll([
-            ['lb-a11y',       modules.accessibility],
             ['lb-adverts',    modules.initAdverts],
             ['lb-autoupdate', modules.createAutoUpdate],
             ['lb-timeline',   modules.affixTimeline],

@@ -73,10 +73,10 @@ define([
                             label: [
                                 React.DOM.strong({
                                     key: 'label'
-                                }, 'Flashing elements.'),
+                                }, 'Allow flashing elements'),
                                 this.state['flashing-elements'] ?
-                                    ' Disable any element or image that flashes or animates.' :
-                                    ' Elements disabled. Check to enable elements or images that flash or animate.'
+                                    ' Untick this to disable flashing and moving elements' :
+                                    ' Tick this to enable flashing or moving elements.'
                             ],
                             enabled: this.state['flashing-elements'],
                             handleChange: this.toggle.bind(this, 'flashing-elements')
