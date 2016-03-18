@@ -55,7 +55,9 @@
     .button--primary {
         @include button-colour(
             colour(news-support-2),
-            #ffffff,
+            #ffffff
+        );
+        @include button-hover-colour(
             mix(colour(news-support-2), colour(neutral-1), 60%)
         );
     }
