@@ -690,7 +690,6 @@
 
     .tonal__standfirst {
         background-color: transparent;
-        padding: $gs-baseline 0 $gs-baseline*2;
 
         .content__standfirst {
             color: colour(neutral-1);
@@ -751,6 +750,7 @@
 
             // Pseudo-body standfirst
             .content__main .tonal__standfirst {
+                padding: $gs-baseline 0 $gs-baseline*2;
                 min-height: $gs-baseline*8;
             }
         }
