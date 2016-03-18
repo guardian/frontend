@@ -2,11 +2,13 @@
   omnitureId: Option[String],
   clickMacro: Option[String])(implicit request: RequestHeader)
 
-@containerWrapper(Seq("soulmates"), "Soulmates")(HtmlFormat.empty){
+@containerWrapper(Seq("legacy", "soulmates", "tone-soulmates"))(HtmlFormat.empty){
+
     Meet someone <em>worth</em> meeting
+
 }(HtmlFormat.empty)(HtmlFormat.empty) {
 
-    @members map soulmateCard
+    @members.map { member => @soulmateCard(member, omnitureId, clickMacro) }
 
     <form class="search" action="@Configuration.commercial.soulmates_url/find" method="get">
         <label for="my_gender" class="search__dropdown">I am a
