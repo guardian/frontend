@@ -85,7 +85,7 @@
         position: relative;
     }
 
-    .advert + .advert {
+    * + .advert {
         border-left: 1px solid colour(neutral-4);
     }
 }
@@ -159,10 +159,12 @@
     }
 }
 
-.adverts__row--1x1 {
-    > * {
-        flex-basis: calc(50% - #{$gs-gutter});
-    }
+.adverts__row--2x1x1 > *:nth-child(1),
+.adverts__row--1x2x1 > *:nth-child(2),
+.adverts__row--1x1x2 > *:nth-child(3),
+.adverts__row--1x1 > * {
+    flex-basis: calc(50% - #{$gs-gutter});
+    flex-grow: 0;
 }
 
 .adverts__column {
@@ -206,6 +208,10 @@
 /* Theming */
 .adverts--legacy {
     background: #eaeaea;
+
+    > .adverts__header .button {
+        color: #fff;
+    }
 
     .adverts__blurb {
         color: #fff;
@@ -283,3 +289,4 @@
 
 @import '_adverts-books';
 @import '_adverts-masterclasses';
+@import '_adverts-jobs';

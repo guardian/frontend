@@ -1,6 +1,7 @@
 @(classNames: Seq[String],
   headerClassNames: Option[Seq[String]] = None,
-  bodyClassNames: Option[Seq[String]] = None)(headerTitle: Html)(blurb: Html)(ctas: Html)(stamp: Html)(innards: Html)
+  bodyClassNames: Option[Seq[String]] = None,
+  rowLayout: Option[String] = None)(headerTitle: Html)(blurb: Html)(ctas: Html)(stamp: Html)(innards: Html)
 
 <aside class="adverts @classNames.map(c => s"adverts--$c").mkString(" ")">
     <header class="adverts__header @headerClassNames.map(_.map(c => s"adverts__header--$c").mkString(" "))">
@@ -15,7 +16,10 @@
             <div class="adverts__stamp">@blurb</div>
         }
     </header>
-    <div class="adverts__body adverts__row @bodyClassNames.map(_.map(c => s"adverts__body--$c").mkString(" "))">
+    <div class="adverts__body adverts__row
+        @bodyClassNames.map(_.map(c => s"adverts__body--$c").mkString(" "))
+        @rowLayout.map(l => s"adverts__row--$l").getOrElse("")
+        ">
         @innards
     </div>
 </aside>

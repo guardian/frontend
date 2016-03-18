@@ -1,0 +1,54 @@
+.adverts--jobs {
+    .advert__image-container {
+        height: $gs-baseline * 10;
+    }
+
+    .advert__image {
+        max-height: 100%;
+    }
+
+    .jobs-sectors {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+        list-style: none;
+        margin-top: $gs-baseline;
+        margin-bottom: $gs-baseline;
+
+        > li {
+            border-top: 1px solid colour(neutral-4);
+            flex-basis: calc(50% - (#{$gs-gutter / 4}));
+        }
+
+        a {
+            display: block;
+            padding: $gs-baseline / 1.5 0;
+        }
+    }
+
+    .job-sector__all {
+        font-weight: bold;
+
+        &::after {
+            content: ' »';
+        }
+    }
+}
+
+.adverts--tone-jobs {
+    > .adverts__header {
+        background: guss-colour(news-support-2, $pasteup-palette);
+
+        .button {
+            // color: guss-colour(multimedia-main-2, $pasteup-palette);
+            // border-color: fade-out(guss-colour(multimedia-main-2, $pasteup-palette), .7);
+
+            &:hover,
+            &:focus,
+            &:active {
+                // border-color: guss-colour(multimedia-main-2, $pasteup-palette);
+            }
+        }
+    }
+
+}
