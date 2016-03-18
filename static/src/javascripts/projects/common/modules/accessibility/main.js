@@ -3,16 +3,18 @@ define([
 ], function (
     userPrefs
 ) {
+    var KEY_PREFIX = 'accessibility';
+
     function saveState(state) {
         for (var key in state) {
             if (state.hasOwnProperty(key)) {
-                userPrefs.set(module.KEY_PREFIX + '.' + key, state[key]);
+                userPrefs.set(KEY_PREFIX + '.' + key, state[key]);
             }
         }
     }
 
     function getStoredValue(key) {
-        var stored = userPrefs.get(module.KEY_PREFIX + '.' + key);
+        var stored = userPrefs.get(KEY_PREFIX + '.' + key);
         // Defaults to true
         return stored === false ? false : true;
     }
@@ -22,7 +24,7 @@ define([
     }
 
     var module = {
-        KEY_PREFIX: 'accessibility',
+        KEY_PREFIX: KEY_PREFIX,
         saveState: saveState,
         isOn: isOn
     };

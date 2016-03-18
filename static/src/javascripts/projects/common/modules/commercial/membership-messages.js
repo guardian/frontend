@@ -7,7 +7,8 @@ define([
     'common/views/svgs',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/user-features',
-    'lodash/objects/defaults'
+    'lodash/objects/defaults',
+    'Promise'
 ], function (
     config,
     storage,
@@ -17,7 +18,8 @@ define([
     svgs,
     commercialFeatures,
     userFeatures,
-    defaults
+    defaults,
+    Promise
 ) {
 
     var membershipEndpoints = {
@@ -33,14 +35,16 @@ define([
     var messages = {
         UK: {
             campaign:      'MEMBERSHIP_SUPPORTER_BANNER_UK',
-            code:          'membership-message-uk',
+            // increment the number at the end of the code to redisplay banners
+            // to everyone who has previously closed them
+            code:          'membership-message-uk-1',
             minVisited:    10,
             data: {
                 messageText: [
-                    'Thank you for reading the Guardian.',
-                    'Help keep our journalism fearless and independent by becoming a Supporter for just £5 a month.'
+                    'Support Guardian journalism and our coverage of critical, under-reported stories from around the world.',
+                    'Become a Supporter for just £49 per year.'
                 ].join(' '),
-                linkText: 'Join'
+                linkText: 'Find out more'
             }
         },
         US: {
@@ -66,6 +70,14 @@ define([
         }
     };
 
+    var colours = {
+        1: 'vibrant-blue',
+        2: 'orange',
+        3: 'light-blue',
+        4: 'deep-purple',
+        5: 'teal'
+    };
+
     function checkWeCanShowMessage(message) {
         return commercialFeatures.async.membershipMessages.then(function (canShow) {
             return canShow && message.minVisited <= (storage.local.get('gu.alreadyVisited') || 0);
@@ -78,12 +90,20 @@ define([
 
     function show(edition, message) {
         var data = defaults({ linkHref: formatEndpointUrl(edition, message) }, message.data, defaultData);
+        // Rotate through six different colours on successive page views
+        var colour = storage.local.get('gu.alreadyVisited') % 6;
+        var cssModifierClass = 'membership-message';
+
+        // 0 leaves it as the default colour set by the base class
+        if (colour) {
+            cssModifierClass += ('-' + colours[colour]);
+        }
 
         return new Message(message.code, {
             pinOnHide: false,
             siteMessageLinkName: 'membership message',
             siteMessageCloseBtn: 'hide',
-            cssModifierClass: 'membership-message'
+            cssModifierClass: cssModifierClass
         }).show(template(messageTemplate, data));
     }
 

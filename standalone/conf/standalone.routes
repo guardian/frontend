@@ -24,7 +24,7 @@ GET        /commercial/travel/offers.json                                       
 GET        /commercial/jobs.json                                                               controllers.commercial.JobAds.renderJobs
 
 # Masterclasses
-GET        /commercial/masterclasses.json                                                      controllers.commercial.MasterClasses.renderMasterclasses
+GET        /commercial/masterclasses.json                                                      controllers.commercial.Masterclasses.renderMasterclasses
 
 # Soulmates
 GET        /commercial/soulmates/$subgroup<\w+>.json                                           controllers.commercial.SoulmatesController.renderSoulmates(subgroup)

@@ -57,15 +57,25 @@ define([
 
         function expectMessageToBeShown(done) {
             membershipMessages.init().then(function () {
-                var message = document.querySelector('.js-site-message.site-message--membership-message');
+                var message = document.querySelector('.js-site-message');
                 expect(message).not.toBeNull();
+                expect(message.className).toContain('membership-message');
+                expect(message.className).not.toContain('is-hidden');
             }).then(done);
         }
 
         function expectMessageNotToBeShown(done) {
             membershipMessages.init().then(function () {
-                var message = document.querySelector('.js-site-message.site-message--membership-message');
+                var message = document.querySelector('.js-site-message');
                 expect(message).toBeNull();
+            }).then(done);
+        }
+
+        function expectMessageNotToBeVisible(done) {
+            membershipMessages.init().then(function () {
+                var message = document.querySelector('.js-site-message');
+                expect(message.className).toContain('is-hidden');
+                expect(message.className).not.toContain('membership-message');
             }).then(done);
         }
 
@@ -131,7 +141,7 @@ define([
 
                     config.page = { edition: edition };
 
-                    expectMessageNotToBeShown(done);
+                    expectMessageNotToBeVisible(done);
                 });
             });
         });
