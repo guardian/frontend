@@ -36,7 +36,7 @@ trait ABTestSwitches {
     "ab-live-blog-chrome-notifications",
     "Live blog chrome notifications",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 1),
+    sellByDate = new LocalDate(2016, 5, 2),
     exposeClientSide = true
   )
 
