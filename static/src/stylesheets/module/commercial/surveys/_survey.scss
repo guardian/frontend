@@ -42,9 +42,9 @@
         box-sizing: border-box;
 
         @include mq(tablet) {
-            left: 50%;
+            left: 42%;
             top: percentage(1/5);
-            width: $gs-column-width * 8;
+            width: $gs-column-width * 10;
             height: auto;
             margin-left: -$gs-column-width * 3;
         }
