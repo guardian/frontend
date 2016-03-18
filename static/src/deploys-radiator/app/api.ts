@@ -7,8 +7,6 @@ import {
 } from './model';
 import { List } from 'immutable';
 
-const { fetch } = window;
-
 const apiPath = '/deploys-radiator/api';
 export const getDeploys = (stage: string): Promise<List<DeployRecord>> => (
     fetch(`${apiPath}/deploys?projectName=dotcom:&stage=${stage}&pageSize=200`, { credentials: 'same-origin' })
