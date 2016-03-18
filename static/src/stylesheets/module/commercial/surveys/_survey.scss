@@ -271,4 +271,28 @@
 
     }
 
+    .subscriber-number-form {
+        .input-number {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            border: #000000 1px solid;
+
+            &.correct {
+                border-color: colour(success);
+            }
+            &.incorrect {
+                border-color: colour(error);
+            }
+        }
+
+        .button--primary {
+            display: block;
+            margin: 10px auto;
+            font-size: 20px;
+            padding: 5px;
+            width: 100%;
+        }
+    }
+
 }
