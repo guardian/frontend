@@ -174,7 +174,7 @@ $gimbap-jobs-reversed: #42bfda;
 
 .gimbap__logo--soulmates-horizontal {
     svg {
-        height: 16px; /* "Make your own magic" */
+        width: 85px; /* "Make your own magic" */
         fill: #ffffff;
     }
 
@@ -321,6 +321,10 @@ $gimbap-jobs-reversed: #42bfda;
     }
 }
 
+.gimbap-wrap__body--1x1x1x1 > .gimbap {
+    flex: calc(25% - 20px);
+}
+
 .gimbap-wrap__body--2x1x1 > .gimbap:first-child,
 .gimbap-wrap__body--1x2x1 > .gimbap:nth-child(2),
 .gimbap-wrap__body--1x1x2 > .gimbap:nth-child(3) {
@@ -350,13 +354,11 @@ $gimbap-jobs-reversed: #42bfda;
 
 .gimbap-wrap__title {
     font: 900 1.375rem/2.25rem "Guardian Egyptian Web","Guardian Text Egyptian Web",Georgia,serif;
-    color: #00456e;
+    color: guss-colour(guardian-brand-dark, $pasteup-palette);;
     margin: 0;
 }
 
 .gimbap-style--normal {
-    background: #f5f5f5;
-
     .gimbap__cta {
         filter: brightness(.5);
     }
@@ -368,8 +370,6 @@ $gimbap-jobs-reversed: #42bfda;
 }
 
 .gimbap-style--reversed {
-    background: #f5f5f5;
-
     .gimbap__cta {
         color: rgba(0, 0, 0, .65);
     }
