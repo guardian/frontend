@@ -10,6 +10,7 @@ define([
     'common/utils/user-timing',
     './common',
     './sport',
+    './notifications',
 
     'enhanced-common'
 ], function (
@@ -23,7 +24,8 @@ define([
     mediator,
     userTiming,
     common,
-    sport
+    sport,
+    notifications
 ) {
     return function () {
         var bootstrapContext = function (featureName, bootstrap) {
@@ -137,9 +139,7 @@ define([
             if (navigator && navigator.serviceWorker) {
                 navigator.serviceWorker.register('/service-worker.js').then(function () {
                    if (detect.getUserAgent.browser === 'Chrome' && config.page.contentType === 'LiveBlog' && config.page.isLive) {
-                       require(['bootstraps/enhanced/notifications'], function (notifications) {
-                           bootstrapContext('notifications', notifications);
-                       });
+                       bootstrapContext('notifications', notifications);
                    }
                });
             }
