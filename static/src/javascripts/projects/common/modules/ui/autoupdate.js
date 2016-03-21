@@ -89,10 +89,12 @@ define([
             fastdom.write(function () {
                 if (count > 0) {
                     var updateText = (count > 1) ? ' new updates' : ' new update';
-                    $toastButton.removeClass('toast__button--closed').addClass('toast__button--open');
+                    $toastButton.removeClass('toast__button--closed');
+                    $(toastContainer).addClass('toast__container--open');
                     $toastText.html(count + updateText);
                 } else {
-                    $toastButton.removeClass('toast__button--open').removeClass('loading').addClass('toast__button--closed');
+                    $toastButton.removeClass('loading').addClass('toast__button--closed');
+                    $(toastContainer).removeClass('toast__container--open');
                 }
             });
         };
@@ -210,9 +212,7 @@ define([
 
         fastdom.write(function () {
             // Enables the animations for injected blocks
-            $('.js-article__container').addClass('toast-enabled');
             $liveblogBody.addClass('autoupdate--has-animation');
-            $('.js-live-toolbar').remove(); // only necessary in the AB test
         });
     };
 });
