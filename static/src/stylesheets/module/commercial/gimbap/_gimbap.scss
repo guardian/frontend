@@ -11,10 +11,12 @@ $gimbap-jobs-text: #42bfda;
 $gimbap-jobs-reversed: #42bfda;
 
 .gimbap {
+    width: 100%;
     display: flex;
     flex-direction: column;
     padding: $gs-gutter / 2;
     position: relative;
+    box-sizing: border-box;
 
     &:hover {
         text-decoration: none;
@@ -65,9 +67,11 @@ $gimbap-jobs-reversed: #42bfda;
 .gimbap__title {
     @include fs-headline(5);
 
+    width: 100%;
     font-weight: 500;
     align-self: flex-start;
     margin-bottom: $gs-baseline / 2;
+    word-wrap: break-word;
 }
 
 .gimbap__quote {
@@ -89,6 +93,9 @@ $gimbap-jobs-reversed: #42bfda;
     align-self: flex-start;
     flex-grow: 1;
     font-weight: 500;
+    word-wrap: break-word;
+    width: 100%;
+
 }
 
 .gimbap__arrow {
@@ -283,6 +290,8 @@ $gimbap-jobs-reversed: #42bfda;
 }
 
 .gimbap-wrap__body {
+    display: block;
+
     @include mq(mobile, tablet) {
         > .gimbap + .gimbap {
             margin-top: $gs-baseline;
@@ -300,8 +309,14 @@ $gimbap-jobs-reversed: #42bfda;
     }
 
     @include mq(tablet) {
-        display: flex;
         padding: 0 $gs-gutter / 2;
+
+        .has-flex & {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-items: stretch;
+        }
 
         > .gimbap {
             flex: 1;
