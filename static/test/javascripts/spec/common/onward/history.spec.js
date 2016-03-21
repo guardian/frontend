@@ -176,5 +176,50 @@ define([
                 hist.getPopular()[1][0]
             ).toEqual('less/visited');
         });
+
+        it('should calculate series summary', function() {
+            var pages = [
+                {
+                    pageId: '111',
+                    section: 'a/series/b',
+                    sectionName: 'A series (two views)'
+                },
+                {
+                    pageId: '112',
+                    section: 'a/series/b',
+                    sectionName: 'A series (two views)'
+                },
+                {
+                    pageId: '222',
+                    section: 'g/series/h',
+                    sectionName: 'Another series'
+                },
+                {
+                    pageId: '333',
+                    section: 'j/series/k',
+                    sectionName: 'A different series'
+                },
+                {
+                    pageId: '444',
+                    section: 'x/series/y',
+                    sectionName: 'A really different series'
+                },
+                {
+                    pageId: '555',
+                    section: 'a/sport/z',
+                    sectionName: 'Not a series'
+                }
+            ];
+
+            var expected = {
+                'a/series/b': 2,
+                'g/series/h': 1,
+                'j/series/k': 1,
+                'x/series/y': 1
+            }
+
+            pages.forEach(function (page, i) { hist.logSummary(page, today + i); });
+            expect(hist.seriesSummary()).toEqual(expected);
+        })
     });
 });
