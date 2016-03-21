@@ -37,7 +37,6 @@ define([
     'lodash/arrays/flatten',
     'lodash/collections/every',
     'lodash/collections/map',
-    'lodash/arrays/zipObject',
     'lodash/collections/filter',
     'common/utils/chain',
     'lodash/collections/find',
@@ -80,7 +79,6 @@ define([
     flatten,
     every,
     map,
-    zipObject,
     filter,
     chain,
     find,
@@ -226,21 +224,26 @@ define([
      * attributes on the element.
      */
     function defineAdverts() {
-        adverts = chain(qwery(adSlotSelector)).and(map, function (adSlot) {
-                return bonzo(adSlot);
-            // filter out (and remove) hidden ads
-            }).and(filter, function ($adSlot) {
-                if (shouldFilterAdSlot($adSlot)) {
-                    fastdom.write(function () {
-                        $adSlot.remove();
-                    });
-                    return false;
-                } else {
-                    return true;
-                }
-            }).and(map, function ($adSlot) {
-                return [$adSlot.attr('id'), new Advert($adSlot)];
-            }).and(zipObject).valueOf();
+        var $adSlots = qwery(adSlotSelector).map(bonzo);
+
+        var activeSlots = $adSlots.filter(function ($adSlot) {
+            if (shouldFilterAdSlot($adSlot)) {
+                fastdom.write(function () {
+                    $adSlot.remove();
+                });
+                return false;
+            } else {
+                return true;
+            }
+        });
+
+        var advertArray = activeSlots.map(function ($adSlot) {
+            return new Advert($adSlot);
+        });
+
+        advertArray.forEach(function (advert) {
+            adverts[advert.adSlotId] = advert;
+        });
     }
 
     function setPublisherProvidedId() {
