@@ -120,6 +120,10 @@
 
         .text-link {
             color: #ffffff;
+            text-decoration: underline;
+            &:hover {
+                text-decoration: none;
+            }
         }
     }
 
