@@ -160,6 +160,6 @@ define([
     };
 
     return {
-        init: modules.configureSubscribeTemplate()
+        init: modules.configureSubscribeTemplate
     };
 });
