@@ -1,13 +1,11 @@
 define([
     'common/utils/$',
     'common/utils/config',
-    'common/utils/detect',
-    'common/utils/mediator'
+    'common/utils/detect'
 ], function (
     $,
     config,
-    detect,
-    mediator
+    detect
 ) {
     return function () {
 
