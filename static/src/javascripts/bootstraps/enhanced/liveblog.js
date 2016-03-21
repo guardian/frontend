@@ -8,6 +8,7 @@ define([
     'common/modules/ui/autoupdate',
     'common/modules/ui/notification-counter',
     'common/modules/ui/relativedates',
+    'common/modules/experiments/ab',
     'bootstraps/enhanced/article-liveblog-common',
     'bootstraps/enhanced/trail',
     'bootstraps/enhanced/notifications',
@@ -22,6 +23,7 @@ define([
     AutoUpdate,
     NotificationCounter,
     RelativeDates,
+    ab,
     articleLiveblogCommon,
     trail,
     notifications,
@@ -66,8 +68,10 @@ define([
         },
 
         initNotifications: function() {
-            if ((window.location.protocol === 'https:' ||  window.location.hash === '#force-sw') && detect.getUserAgent.browser === 'Chrome' && config.page.isLive) {
-                notifications.init();
+            if (ab.isInVariant('LiveBlogChromeNotifications', 'control')
+                && (window.location.protocol === 'https:' ||  window.location.hash === '#force-sw')
+                && detect.getUserAgent.browser === 'Chrome' && config.page.isLive) {
+                    notifications.init();
             }
         }
 
