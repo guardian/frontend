@@ -25,7 +25,7 @@ define([
         this.audienceOffset = 0;
         this.successMeasure = 'Adblock users will either become a paid member or turn off the adblock.';
         this.audienceCriteria = 'All users with adblockers turned on.';
-        this.dataLinkNames = 'adblock whitelist A, adblock membership A, subscriber number A, adblock whitelist B, adblock membership B, subscriber number B';
+        this.dataLinkNames = 'adblock response overlay: adblock whitelist A, adblock membership A, subscriber number A, adblock whitelist B, adblock membership B, subscriber number B, subscriber number page: user help email';
         this.idealOutcome = 'Adblock users will either become a paid member or turn off the adblock.';
 
         this.canRun = function () {
@@ -45,8 +45,10 @@ define([
                         config.page.webTitle !== 'Subscriber number form' &&
                         !storage.local.get('gu.subscriber')) {
                         var surveyOverlay = new SurveySimple({
-                            surveyHeader: 'You appear to have an adblocker installed',
-                            surveyText: 'Fearless, quality journalism is not free. Advertising revenue helps to sustain the Guardian\'s future and independence in perpetuity. To continue enjoying the Guardian, please support us in one of the following ways:',
+                            surveyHeader: 'You appear to have an ad blocker enabled on theguardian.com',
+                            surveyText: 'Fearless, quality journalism is not free. Advertising revenue helps to sustain the Guardian\'s future and independence in perpetuity. To continue enjoying the Guardian, please either disable your ad blocker on theguardian.com' + '<a class=\"text-link\" href=\"http://www.theguardian.com\" target=\"_blank\" data-link-name=\"adblock whitelist A\">  (click here to find out how) </a>' + 'or support us by becoming a paid member of the Guardian for as little as £5 a month.',
+                            surveyTextMembership: 'If you are already a paid member of the Guardian, please ' + '<a class=\"text-link\" href=\"https://membership.theguardian.com/?INTCMP=ADB_RESP_A\" target=\"_blank\" data-link-name=\"adblock membership A\">sign in here</a>.',
+                            surveyTextSubscriber: 'If you subscribe to the Guardian, ' + '<a class=\"text-link\" href=\"/commercial/subscriber-number" target=\"_blank\" data-link-name=\"adblock subscriber A\">please click here.</a>',
                             signupText: 'Whitelist',
                             membershipText: 'Become a Member',
                             signupLink: '/commercial/survey-simple-sign-up',
@@ -75,7 +77,9 @@ define([
                             surveyHeader: 'We need to talk about adblocking.',
                             surveyText: 'It looks like you’re trying to browse The Guardian with an adblocker installed.',
                             surveyTextSecond: 'We understand people can find adverts distracting and intrusive. We understand that readers have a choice how they read the news, and where they read it from. But without funding, the Guardian has no way to survive independently.',
-                            surveyTextThird: 'Before continuing, please support us in one of two ways - either by disabling your adblocker for this website, or by becoming a Guardian member, at as little as £5 a month.',
+                            surveyTextThird: 'To continue enjoying our journalism, please support us in one of two ways - either by disabling your ad blocker for theguardian.com' + '<a class=\"text-link\" href=\"http://www.theguardian.com\" target=\"_blank\" data-link-name=\"adblock whitelist B\">  (click here to find out how) </a>' +', or by becoming a Guardian member for as little as £5 a month.',
+                            surveyTextMembership: 'If you are already a paid member of the Guardian, please ' + '<a class=\"text-link\" href=\"https://membership.theguardian.com/?INTCMP=ADB_RESP_B\" target=\"_blank\" data-link-name=\"adblock membership B\">sign in here</a>.',
+                            surveyTextSubscriber: 'If you subscribe to the Guardian, ' + '<a class=\"text-link\" href=\"/commercial/subscriber-number" target=\"_blank\" data-link-name=\"adblock subscriber B\">please click here.</a>',
                             signupText: 'Whitelist',
                             membershipText: 'Become a Member',
                             signupLink: '/commercial/survey-simple-sign-up',

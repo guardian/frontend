@@ -116,7 +116,16 @@
         @include fs-bodyCopy(1);
         font-size: 12px;
         line-height: 120%;
-        margin: 0 $gs-gutter $gs-column-width/2 0;
+        margin: 0 $gs-gutter $gs-column-width/4 0;
+
+        .text-link {
+            color: #ffffff;
+        }
+    }
+
+    .survey-links {
+        overflow: hidden;
+        margin-bottom: $gs-column-width/4;
     }
 
     .survey-link {
