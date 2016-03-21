@@ -94,7 +94,7 @@ define([
         ],
         summaryPeriodDays = 30,
         forgetUniquesAfter = 10,
-        historySize = 50,
+        historySize = 100,
 
         storageKeyHistory = 'gu.history',
         storageKeySummary = 'gu.history.summary',
