@@ -4,7 +4,7 @@
 Tests are failing because of mis pressed data committed
 * delete data/pressedPage/*
 * check your frontend.properties facia stage is DEV (*not* prod!)
-* check you are using your own switches file not the prod or code one
+* check you are using your own switches file not the prod or code one. To do this, create your own properties file in the the S3 bucket named "aws-frontend-store". Add it to your frontend.properties like this: `switches.key=DEV/config/switches-nbaltazar.properties`
 * set up your own sns queue in AWS and add to frontend.properties something like this: frontpress.sqs.tool_queue_url=https://sqs.eu-west-1.amazonaws.com/<id-here>/facia-tool-queue-<your name here>
 * run admin locally
 * turn on facia-press-on-demand switch
