@@ -21,6 +21,8 @@ define([
                 surveyText: this.config.surveyText,
                 surveyTextSecond: this.config.surveyTextSecond,
                 surveyTextThird: this.config.surveyTextThird,
+                surveyTextMembership: this.config.surveyTextMembership,
+                surveyTextSubscriber: this.config.surveyTextSubscriber,
                 signupText: this.config.signupText,
                 membershipText: this.config.membershipText,
                 signupLink: this.config.signupLink,
