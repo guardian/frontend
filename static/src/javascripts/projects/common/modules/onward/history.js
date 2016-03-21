@@ -92,9 +92,9 @@ define([
                 indexInRecord: 2
             }
         ],
-        summaryPeriodDays = 30,
+        summaryPeriodDays = 90,
         forgetUniquesAfter = 10,
-        historySize = 100,
+        historySize = 50,
 
         storageKeyHistory = 'gu.history',
         storageKeySummary = 'gu.history.summary',
