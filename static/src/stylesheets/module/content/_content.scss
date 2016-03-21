@@ -473,8 +473,7 @@
     border-bottom: 1px dotted colour(neutral-5);
 
     @include mq(leftCol) {
-        position: absolute;
-        top: 0;
+        float: left;
         border-top: 0;
         border-bottom: 0;
         margin-left: ($left-column + $gs-gutter)*-1;
