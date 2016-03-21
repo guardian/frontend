@@ -1,6 +1,10 @@
 @charset 'UTF-8';
 
-@import '_facia-content';
+@import '_vars';
+@import '_mixins';
+@import '_extends-only';
+
+@import '_common';
 
 @import 'module/_popup';
 
