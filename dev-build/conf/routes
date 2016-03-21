@@ -303,6 +303,9 @@ GET            /commercial/paid.json                                            
 GET            /commercial/paid                                                                                                  controllers.commercial.PaidContentCardController.cardHtml
 GET            /commercial/multi.json                                                                                            controllers.commercial.Multi.renderMulti
 GET            /commercial/subscriber-number                                                                                controllers.commercial.StaticPageController.renderSubscriberNumberPage()
+GET            /commercial/guardian-explain                                                                                      controllers.commercial.StaticPageController.renderGuardianExplainPage()
+GET            /commercial/guardian-explore                                                                                      controllers.commercial.StaticPageController.renderGuardianExplorePage()
+GET            /commercial/guardian-experience                                                                                   controllers.commercial.StaticPageController.renderGuardianExperiencePage()
 
 # Commercial Admin
 GET            /admin/commercial                                                                                                 controllers.admin.CommercialController.renderCommercialMenu()

@@ -85,4 +85,12 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABMembership = Switch(
+    "A/B Tests",
+    "ab-membership",
+    "Membership propositions",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 4, 30),
+    exposeClientSide = true
+  )
 }
