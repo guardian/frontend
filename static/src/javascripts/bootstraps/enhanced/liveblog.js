@@ -10,6 +10,7 @@ define([
     'common/modules/ui/relativedates',
     'bootstraps/enhanced/article-liveblog-common',
     'bootstraps/enhanced/trail',
+    'bootstraps/enhanced/notifications',
     'common/utils/robust'
 ], function (
     config,
@@ -23,6 +24,7 @@ define([
     RelativeDates,
     articleLiveblogCommon,
     trail,
+    notifications,
     robust
 ) {
     'use strict';
@@ -61,6 +63,12 @@ define([
                 },
                 60000
             );
+        },
+
+        initNotifications: function() {
+            if ((window.location.protocol === 'https:' ||  window.location.hash === '#force-sw') && detect.getUserAgent.browser === 'Chrome' && config.page.isLive) {
+                notifications.init();
+            }
         }
 
     };
@@ -71,6 +79,7 @@ define([
             ['lb-autoupdate', modules.createAutoUpdate],
             ['lb-timeline',   modules.affixTimeline],
             ['lb-timestamp',  modules.keepTimestampsCurrent],
+            ['lb-notifications',  modules.initNotifications],
             ['lb-richlinks',  richLinks.upgradeRichLinks]
         ]);
 

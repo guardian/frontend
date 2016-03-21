@@ -1,4 +1,4 @@
-<div class="survey-overlay-simple js-survey-overlay u-h" data-link-name="survey overlay simple" role="dialog" aria-label="take part in our survey">
+<div class="survey-overlay-simple js-survey-overlay u-h" data-link-name="adblock response overlay" role="dialog" aria-label="take part in our survey">
     <div class="survey-container">
         <% if (showCloseBtn) { %>
         <div class="survey-close js-survey-close">
@@ -8,9 +8,11 @@
             </button>
         </div>
         <% } %>
+        <% if (marque36icon) { %>
         <div class="survey-logo">
             <%=marque36icon%>
         </div>
+        <% } %>
         <div class="survey-icon">
             <%=surveyOverlaySimple%>
         </div>
@@ -32,18 +34,21 @@
                     <%=surveyTextThird%>
                 </p>
                 <% } %>
+                <div class="survey-links">
+                    <div class="survey-link">
+                        <a class="survey-link__takepart" href="<%=membershipLink%>" target="_blank" data-link-name="<%=membershipDataLink%>"><%=membershipText%><%=arrowWhiteRight%></a>
+                    </div>
+                    <div class="survey-link">
+                        <a class="survey-link__takepart" href="<%=signupLink%>" target="_blank" data-link-name="<%=signupDataLink%>"><%=signupText%><%=arrowWhiteRight%></a>
+                    </div>
+                </div>
+                <p class="survey-text__info">
+                    <%=surveyTextMembership%>
+                </p>
+                <p class="survey-text__info">
+                    <%=surveyTextSubscriber%>
+                </p>
             </div>
-            <div class="survey-link">
-                <a class="survey-link__takepart" href="<%=signupLink%>" target="_blank" data-link-name="simple survey <%=signupDataLink%>"><%=signupText%><%=arrowWhiteRight%></a>
-            </div>
-            <div class="survey-link">
-                <a class="survey-link__takepart" href="<%=membershipLink%>" target="_blank" data-link-name="simple survey <%=membershipDataLink%>"><%=membershipText%><%=arrowWhiteRight%></a>
-            </div>
-            <% if (subscriberLink) { %>
-            <div class="survey-link">
-                <a class="survey-link__takepart" href="<%=subscriberLink%>" target="_blank" data-link-name="simple survey <%=subscriberDataLink%>"><%=subscriberText%><%=arrowWhiteRight%></a>
-            </div>
-            <% } %>
         </div>
     </div>
 </div>

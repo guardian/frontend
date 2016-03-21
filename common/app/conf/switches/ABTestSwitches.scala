@@ -58,12 +58,12 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABRelatedContentDisplayAsRecommendation = Switch(
+  val ABPeopleWhoReadThisAlsoReadVariants = Switch(
     "A/B Tests",
-    "ab-article-related-content-display-as-recommendation",
-    "Display related content as people who read this also read",
+    "ab-people-who-read-this-also-read-variants",
+    "Display people who read this also read with different variants",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 18),
+    sellByDate = new LocalDate(2016, 3, 30),
     exposeClientSide = true
   )
 
