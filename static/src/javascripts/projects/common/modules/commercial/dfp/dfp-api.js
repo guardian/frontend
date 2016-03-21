@@ -227,6 +227,7 @@ define([
         var $adSlots = qwery(adSlotSelector).map(bonzo);
 
         var activeSlots = $adSlots.filter(function ($adSlot) {
+            // filter out (and remove) hidden ads
             if (shouldFilterAdSlot($adSlot)) {
                 fastdom.write(function () {
                     $adSlot.remove();
