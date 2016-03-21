@@ -216,10 +216,10 @@ define([
                 'g/series/h': 1,
                 'j/series/k': 1,
                 'x/series/y': 1
-            }
+            };
 
             pages.forEach(function (page, i) { hist.logSummary(page, today + i); });
             expect(hist.seriesSummary()).toEqual(expected);
-        })
+        });
     });
 });
