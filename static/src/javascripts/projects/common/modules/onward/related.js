@@ -1,7 +1,6 @@
 define([
     'bonzo',
     'qwery',
-    'fastdom',
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
@@ -14,7 +13,6 @@ define([
 ], function (
     bonzo,
     qwery,
-    fastdom,
     $,
     config,
     mediator,
@@ -78,27 +76,29 @@ define([
 
                 container.setAttribute('data-component', componentName);
 
-                relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json';
+                if (ab.isInVariant('PeopleWhoReadThisAlsoReadVariants', 'people-who-read-this-also-read-thirty-minutes')) {
+                    relatedUrl = popularInTag || '/people-who-read/thirtyMinutes/' + config.page.pageId + '.json';
 
-                if (opts.excludeTags && opts.excludeTags.length) {
-                    relatedUrl += '?' + map(opts.excludeTags, function (tag) {
-                        return 'exclude-tag=' + tag;
-                    }).join('&');
+                } else if (ab.isInVariant('PeopleWhoReadThisAlsoReadVariants', 'people-who-read-this-also-read-three-hours')) {
+                    relatedUrl = popularInTag || '/people-who-read/threeHours/' + config.page.pageId + '.json';
+
+                } else if (ab.isInVariant('PeopleWhoReadThisAlsoReadVariants', 'people-who-read-this-also-read-twenty-four-hours')) {
+                    relatedUrl = popularInTag || '/people-who-read/twentyFourHours/' + config.page.pageId + '.json';
+
+                } else {
+                    relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json';
+
+                    if (opts.excludeTags && opts.excludeTags.length) {
+                        relatedUrl += '?' + map(opts.excludeTags, function (tag) {
+                                return 'exclude-tag=' + tag;
+                            }).join('&');
+                    }
                 }
 
                 lazyload({
                     url: relatedUrl,
                     container: container,
                     success: function () {
-
-                        if (ab.isInVariant('ArticleRelatedContentDisplayAsRecommendation', 'people-who-read-this-also-read-title')) {
-                            var relatedContentSection = document.getElementById('related-content');
-                            if (relatedContentSection) {
-                                fastdom.write(function () {
-                                    $('.fc-container__header__title', relatedContentSection)[0].textContent = 'people who have read this also read';
-                                });
-                            }
-                        }
 
                         var relatedContainer = container.querySelector('.related-content');
 
