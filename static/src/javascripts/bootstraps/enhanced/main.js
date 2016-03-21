@@ -10,7 +10,6 @@ define([
     'common/utils/user-timing',
     './common',
     './sport',
-    './notifications',
 
     'enhanced-common'
 ], function (
@@ -24,8 +23,7 @@ define([
     mediator,
     userTiming,
     common,
-    sport,
-    notifications
+    sport
 ) {
     return function () {
         var bootstrapContext = function (featureName, bootstrap) {
@@ -137,11 +135,7 @@ define([
         if ((window.location.protocol === 'https:' && config.page.section !== 'identity') || window.location.hash === '#force-sw') {
             var navigator = window.navigator;
             if (navigator && navigator.serviceWorker) {
-                navigator.serviceWorker.register('/service-worker.js').then(function () {
-                   if (detect.getUserAgent.browser === 'Chrome' && config.page.contentType === 'LiveBlog' && config.page.isLive) {
-                       bootstrapContext('notifications', notifications);
-                   }
-               });
+                navigator.serviceWorker.register('/service-worker.js');
             }
         }
 
