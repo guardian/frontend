@@ -30,11 +30,7 @@ define([
         this.variants = [
             {
                 id: 'control',
-                test: function () {
-                    mediator.on('page:notifications:ready', function () {
-                        $('.js-notification-link').removeClass('hidden-notifications-link');
-                    });
-                }
+                test: function () {}
             }
         ];
     };

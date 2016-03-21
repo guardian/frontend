@@ -58,7 +58,6 @@ define([
 
             fastdom.write(function () {
                 $('.js-liveblog-body').prepend(src);
-                mediator.emit('page:notifications:ready');
             });
 
             bean.one(document.body, 'click', '.js-notifications-subscribe-link', handler);
