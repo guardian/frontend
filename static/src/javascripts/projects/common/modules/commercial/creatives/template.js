@@ -66,30 +66,11 @@ define([
         this.params.marque36iconCreativeMarque = svgs('marque36icon', ['creative__marque']);
         this.params.logoFeatureLabel = 'Paid for by';
 
-        this.mapGimbap();
-    };
-
-    Template.prototype.mapGimbap = function () {
+        // Special icons treatment for Gimbap
         if (this.params.creative === 'gimbap') {
-
-            // Make sure we include right logo to the right card
-            this.params.offer1logo = this.params['logo' + this.params.offer1tone + 'horizontal'];
-            this.params.offer2logo = this.params['logo' + this.params.offer2tone + 'horizontal'];
-            this.params.offer3logo = this.params['logo' + this.params.offer3tone + 'horizontal'];
-            this.params.offer4logo = this.params['logo' + this.params.offer4tone + 'horizontal'];
-
-            // Show arrows?
-            this.params.arrowRight = (this.params.linksWithArrows.indexOf('yes') !== -1) ? svgs('arrowRight', ['gimbap__arrow']) : '';
-
-            // Add class to logo because why not
             this.params.marque36icon = svgs('marque36icon', ['gimbap__mainlogo']);
-
-            // Include quotes into title only if it is allowed in DFP line item
             this.params.inlineQuote = svgs('quoteIcon', ['gimbap__quote']);
-            this.params.offer1HasQuotes = (this.params.offer1quotes.indexOf('yes') !== -1) ? this.params.inlineQuote : '';
-            this.params.offer2HasQuotes = (this.params.offer2quotes.indexOf('yes') !== -1) ? this.params.inlineQuote : '';
-            this.params.offer3HasQuotes = (this.params.offer3quotes.indexOf('yes') !== -1) ? this.params.inlineQuote : '';
-            this.params.offer4HasQuotes = (this.params.offer4quotes.indexOf('yes') !== -1) ? this.params.inlineQuote : '';
+            this.params.arrowRight = (this.params.linksWithArrows.indexOf('yes') !== -1) ? svgs('arrowRight', ['gimbap__arrow']) : '';
         }
     };
 

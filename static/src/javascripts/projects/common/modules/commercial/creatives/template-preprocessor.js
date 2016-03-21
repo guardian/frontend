@@ -78,6 +78,18 @@ define([
 
     function preprocessGimbap(tpl) {
         tpl.params.headless = tpl.params.headless === 'true';
+
+        // Make sure we include right logo to the right card
+        tpl.params.offer1logo = tpl.params['logo' + tpl.params.offer1tone + 'horizontal'];
+        tpl.params.offer2logo = tpl.params['logo' + tpl.params.offer2tone + 'horizontal'];
+        tpl.params.offer3logo = tpl.params['logo' + tpl.params.offer3tone + 'horizontal'];
+        tpl.params.offer4logo = tpl.params['logo' + tpl.params.offer4tone + 'horizontal'];
+
+        // Include quotes into title only if it is allowed in DFP line item
+        tpl.params.offer1HasQuotes = (tpl.params.offer1quotes.indexOf('yes') !== -1) ? tpl.params.inlineQuote : '';
+        tpl.params.offer2HasQuotes = (tpl.params.offer2quotes.indexOf('yes') !== -1) ? tpl.params.inlineQuote : '';
+        tpl.params.offer3HasQuotes = (tpl.params.offer3quotes.indexOf('yes') !== -1) ? tpl.params.inlineQuote : '';
+        tpl.params.offer4HasQuotes = (tpl.params.offer4quotes.indexOf('yes') !== -1) ? tpl.params.inlineQuote : '';
     }
 
     return {

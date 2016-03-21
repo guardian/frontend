@@ -226,7 +226,6 @@ $gimbap-jobs-reversed: #42bfda;
     position: relative;
 
     @include mq(tablet) {
-        max-width: 740px;
         padding: 0 calc(50% - 370px) $gs-baseline;
 
         &::before,
@@ -244,7 +243,6 @@ $gimbap-jobs-reversed: #42bfda;
     }
 
     @include mq(desktop) {
-        max-width: 980px;
         padding: 0 calc(50% - 490px) $gs-baseline;
 
         &::before,
@@ -254,7 +252,6 @@ $gimbap-jobs-reversed: #42bfda;
     }
 
     @include mq(leftCol) {
-        max-width: 1140px;
         padding: 0 calc(50% - 570px) $gs-baseline;
 
         &::before,
@@ -264,7 +261,6 @@ $gimbap-jobs-reversed: #42bfda;
     }
 
     @include mq(wide) {
-        max-width: 1300px;
         padding: 0 calc(50% - 650px) $gs-baseline;
 
         &::before,
