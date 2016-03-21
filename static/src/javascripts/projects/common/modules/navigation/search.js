@@ -74,7 +74,6 @@ define([
         };
 
         this.load = function () {
-            /* jscs:disable disallowDanglingUnderscores */
             var s,
                 x;
 

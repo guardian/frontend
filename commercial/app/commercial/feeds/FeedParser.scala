@@ -3,7 +3,7 @@ package commercial.feeds
 import common.ExecutionContexts
 import conf.Configuration
 import model.commercial.books.{BestsellersAgent, Book}
-import model.commercial.events.{Masterclass, MasterclassAgent}
+import model.commercial.events.{LiveEvent, LiveEventAgent, Masterclass, MasterclassAgent}
 import model.commercial.jobs.{Job, JobsAgent}
 import model.commercial.soulmates.{Member, SoulmatesAgent}
 import model.commercial.travel.{TravelOffer, TravelOffersAgent}
@@ -66,6 +66,17 @@ object FeedParser {
     }
   }
 
+  private val liveEvents: Option[FeedParser[LiveEvent]] = {
+    Configuration.commercial.liveEventsToken map { accessToken =>
+      new FeedParser[LiveEvent] {
+
+        val feedMetaData = EventsFeedMetaData("live-events", accessToken)
+
+        def parse(feedContent: => Option[String]) = LiveEventAgent.refresh(feedMetaData, feedContent)
+      }
+    }
+  }
+
   private val travelOffers: Option[FeedParser[TravelOffer]] = {
     Configuration.commercial.traveloffers_url map { url =>
       new FeedParser[TravelOffer] {
@@ -77,7 +88,7 @@ object FeedParser {
     }
   }
 
-  val all = soulmates ++ Seq(jobs, bestsellers, masterclasses, travelOffers).flatten
+  val all = soulmates ++ Seq(jobs, bestsellers, masterclasses, liveEvents, travelOffers).flatten
 }
 
 case class ParsedFeed[+T](contents: Seq[T], parseDuration: Duration)

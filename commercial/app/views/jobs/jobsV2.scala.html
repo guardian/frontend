@@ -3,8 +3,6 @@
   omnitureId: Option[String],
   clickMacro: Option[String])(implicit request: RequestHeader)
 
-@containerWrapper {
-
-@jobs map jobCard
+@containerWrapper(Seq(), "")(HtmlFormat.empty)(HtmlFormat.empty)(HtmlFormat.empty)(HtmlFormat.empty) {
 
 }

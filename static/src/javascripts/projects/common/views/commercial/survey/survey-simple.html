@@ -1,11 +1,13 @@
 <div class="survey-overlay-simple js-survey-overlay u-h" data-link-name="survey overlay simple" role="dialog" aria-label="take part in our survey">
     <div class="survey-container">
+        <% if (showCloseBtn) { %>
         <div class="survey-close js-survey-close">
             <button class="site-message__close-btn js-site-message-close" data-link-name="hide survey message">
                 <span class="u-h">Close</span>
                 <%=crossIcon%>
             </button>
         </div>
+        <% } %>
         <div class="survey-logo">
             <%=marque36icon%>
         </div>
@@ -20,6 +22,16 @@
                 <p class="survey-text__info">
                     <%=surveyText%>
                 </p>
+                <% if (surveyTextSecond) { %>
+                <p class="survey-text__info">
+                    <%=surveyTextSecond%>
+                </p>
+                <% } %>
+                <% if (surveyTextThird) { %>
+                <p class="survey-text__info">
+                    <%=surveyTextThird%>
+                </p>
+                <% } %>
             </div>
             <div class="survey-link">
                 <a class="survey-link__takepart" href="<%=signupLink%>" target="_blank" data-link-name="simple survey <%=signupDataLink%>"><%=signupText%><%=arrowWhiteRight%></a>
@@ -27,6 +39,11 @@
             <div class="survey-link">
                 <a class="survey-link__takepart" href="<%=membershipLink%>" target="_blank" data-link-name="simple survey <%=membershipDataLink%>"><%=membershipText%><%=arrowWhiteRight%></a>
             </div>
+            <% if (subscriberLink) { %>
+            <div class="survey-link">
+                <a class="survey-link__takepart" href="<%=subscriberLink%>" target="_blank" data-link-name="simple survey <%=subscriberDataLink%>"><%=subscriberText%><%=arrowWhiteRight%></a>
+            </div>
+            <% } %>
         </div>
     </div>
 </div>

@@ -125,7 +125,7 @@
 
 @import 'icons/_global-icons-sprite';
 @import 'icons/_global-icons-svg';
-@import 'module/icons';
+@import 'module/_icons';
 
 /* ==========================================================================
    Commercial modules
@@ -141,4 +141,5 @@
 @import 'module/_tag-list';
 @import 'module/_childrens-books-site';
 @import 'module/email/_main';
-@import 'module/content/article-test';
+@import 'module/content/_article-test';
+@import 'module/_accessibility';

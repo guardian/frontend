@@ -22,15 +22,17 @@ define([
     'common/modules/analytics/scrollDepth',
     'common/modules/analytics/css-logging',
     'common/modules/analytics/simple-metrics',
+    'common/modules/analytics/headlines-test-analytics',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/commercial/donot-use-adblock',
     'common/modules/commercial/user-features',
     'common/modules/discussion/comment-count',
     'common/modules/experiments/ab',
+    'common/modules/experiments/subscriber-number-form',
     'common/modules/identity/autosignin',
     'common/modules/identity/cookierefresh',
     'common/modules/navigation/navigation',
-    'common/modules/commercial/sticky-ad-banner',
+    'common/modules/commercial/sticky-top-banner',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/onward/history',
@@ -77,11 +79,13 @@ define([
     ScrollDepth,
     logCss,
     simpleMetrics,
+    HeadlinesTestAnalytics,
     userAdTargeting,
     donotUseAdblock,
     userFeatures,
     CommentCount,
     ab,
+    subscriberNumberForm,
     AutoSignin,
     CookieRefresh,
     navigation,
@@ -358,6 +362,9 @@ define([
                         email.init(el);
                     });
                 });
+            },
+            headlinesTestAnalytics: function () {
+                HeadlinesTestAnalytics.init();
             }
         };
 
@@ -393,6 +400,7 @@ define([
                 ['c-tag-links', modules.showMoreTagsLink],
                 ['c-smart-banner', smartAppBanner.init],
                 ['c-adblock', modules.showAdblockMessage],
+                ['c-subscriber-number-form', subscriberNumberForm],
                 ['c-log-stats', modules.logLiveStats],
                 ['c-cookies', modules.cleanupCookies],
                 ['c-overlay', modules.initOpenOverlayOnClick],
@@ -406,7 +414,8 @@ define([
                 ['c-save-for-later', modules.saveForLater],
                 ['c-show-membership-messages', modules.showMembershipMessages],
                 ['c-email', modules.initEmail],
-                ['c-user-features', userFeatures.refresh]
+                ['c-user-features', userFeatures.refresh],
+                ['c-headlines-test-analytics', modules.headlinesTestAnalytics]
             ]), function (fn) {
                 fn();
             });
