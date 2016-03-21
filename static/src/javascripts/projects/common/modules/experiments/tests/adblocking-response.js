@@ -21,8 +21,8 @@ define([
         this.expiry = '2016-03-31';
         this.author = 'Zofia Korcz';
         this.description = 'Adblocking response test';
-        this.audience = 0;
-        this.audienceOffset = 0;
+        this.audience = 0.09;
+        this.audienceOffset = 0.01;
         this.successMeasure = 'Adblock users will either become a paid member or turn off the adblock.';
         this.audienceCriteria = 'All users with adblockers turned on.';
         this.dataLinkNames = 'adblock response overlay: adblock whitelist A, adblock membership A, subscriber number A, user help email A, adblock whitelist B, adblock membership B, subscriber number B, user help email B, subscriber number page: user help email';
