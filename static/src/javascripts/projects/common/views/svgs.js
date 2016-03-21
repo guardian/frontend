@@ -37,6 +37,8 @@ define([
     'inlineSvg!svgs/logo/membership-logo',
     'inlineSvg!svgs/commercial/logo-membership',
     'inlineSvg!svgs/commercial/adblock-coins',
+    'inlineSvg!svgs/notifications-explainer-mobile',
+    'inlineSvg!svgs/notifications-explainer-desktop',
     'inlineSvg!svgs/commercial/adblock-coins-us',
     'lodash/objects/isArray'
 ], function (
@@ -74,6 +76,8 @@ define([
     membershipLogoWhite,
     membershipLogo,
     adblockCoins,
+    notificationsExplainerMobile,
+    notificationsExplainerDesktop,
     adblockCoinsUS,
     isArray
 ) {
@@ -112,6 +116,8 @@ define([
         adblockCoinsUk: adblockCoins,
         adblockCoinsUs: adblockCoinsUS,
         logomembership: membershipLogo,
+        notificationsExplainerMobile: notificationsExplainerMobile,
+        notificationsExplainerDesktop: notificationsExplainerDesktop,
         logomembershipwhite: membershipLogoWhite
     };
 
