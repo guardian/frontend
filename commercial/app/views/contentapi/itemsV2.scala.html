@@ -11,9 +11,11 @@
 
 @import views.html.fragments.inlineSvg
 
-@containerWrapper(Seq("capi"), optCapiTitle.getOrElse("Paid content")){
+@defining(("1_0", "2014-08-14")) { case (version, date) =>
+@containerWrapper(Seq("legacy", "capi", "tone-capi")){
 
-    @fragments.commercial.paidForMeta()
+    @* @fragments.commercial.paidForMeta() *@
+    optCapiTitle.getOrElse("Paid content")
 
 }(HtmlFormat.empty)(HtmlFormat.empty){
 
@@ -29,6 +31,7 @@
 
 } {
 
-    @items map itemCard(_, omnitureId, clickMacro)
+    @items.map { item => @itemCard(item, version, date, clickMacro) }
 
+}
 }

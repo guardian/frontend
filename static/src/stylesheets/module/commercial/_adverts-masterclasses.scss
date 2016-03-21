@@ -1,0 +1,47 @@
+.adverts--masterclasses {
+}
+
+.adverts--tone-masterclasses {
+    > .adverts__header {
+        background: guss-colour(multimedia-main-1, $pasteup-palette);
+
+        .button {
+            color: guss-colour(multimedia-main-2, $pasteup-palette);
+            border-color: fade-out(guss-colour(multimedia-main-2, $pasteup-palette), .7);
+
+            &:hover,
+            &:focus,
+            &:active {
+                border-color: guss-colour(multimedia-main-2, $pasteup-palette);
+            }
+        }
+    }
+
+    .inline-commercial-brand svg {
+        fill: guss-colour(multimedia-main-2, $pasteup-palette);
+    }
+}
+
+.advert--masterclass {
+    .advert__meta[itemprop="author"] {
+        margin-bottom: 1em;
+    }
+
+    .button {
+        @include button-colour(
+            guss-colour(multimedia-main-2, $pasteup-palette),
+            colour(neutral-1)
+        );
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+        .button {
+            @include button-colour(
+                darken(guss-colour(multimedia-main-2, $pasteup-palette), 5%),
+                colour(neutral-1)
+            );
+        }
+    }
+}

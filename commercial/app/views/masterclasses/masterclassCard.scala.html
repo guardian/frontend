@@ -1,0 +1,27 @@
+@(event: model.commercial.events.Masterclass,
+  version: String,
+  date: String,
+  relevance: String,
+  omnitureId: Option[String],
+  clickMacro: Option[String])
+
+<a class="advert advert--masterclass" href="@clickMacro@event.url" data-link-name="merchandising-masterclasses-s-v@{version}_@{date}-@{relevance}-@event.name">
+    <h2 class="advert__title">@event.name</h2>
+    @event.mainPicture.map { picture =>
+        @Item300.bestFor(picture.images).map { url =>
+            <div class="advert__image-container">
+                <img class="advert__image" src="@url">
+            </div>
+        }
+    }
+    <div class="advert__meta">
+        <strong>@event.readableDate</strong> &#20; <span class="commercial--tone__highlight">@event.displayPrice</span></span><br/>
+        @event.venue.description
+        @if(event.ratioTicketsLeft <= 0.1){
+            <br><span class="lineitem__scarcity">Last few tickets remaining</span>
+        }
+    </div>
+    <span class="advert__more button button--primary button--small" data-link-name="">
+        Book now @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
+    </span>
+</a>

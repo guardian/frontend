@@ -11,19 +11,18 @@ object JobAds extends Controller with implicits.Requests {
 
   implicit val codec = Codec.utf_8
 
-  val jobCategories = Map(
-    "arts" -> "Arts",
-    "graduate" -> "Graduate",
-    "social-care" -> "Social care",
-    "charity" -> "Charity",
-    "health" -> "Health",
-    "higher-education" -> "Higher education",
-    "environment" -> "Environment",
-    "housing" -> "Housing",
-    "schools" -> "Schools",
-    "government" -> "Government",
-    "media" -> "Media",
-    "" -> "All sectors »"
+  val jobCategories = Seq(
+    Seq("arts", "Arts"),
+    Seq("graduate", "Graduate"),
+    Seq("social-care", "Social care"),
+    Seq("charity", "Charity"),
+    Seq("health", "Health"),
+    Seq("higher-education", "Higher education"),
+    Seq("environment", "Environment"),
+    Seq("housing", "Housing"),
+    Seq("schools", "Schools"),
+    Seq("government", "Government"),
+    Seq("media", "Media")
   )
 
   def renderJobs = MemcachedAction { implicit request =>

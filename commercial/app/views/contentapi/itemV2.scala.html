@@ -13,9 +13,10 @@
 
 @import views.html.fragments.inlineSvg
 
-@containerWrapper(Seq("capi"), optCapiLink.getOrElse("Paid content")){
+@containerWrapper(Seq("legacy", "capi" "tone-capi")){
 
-    @fragments.commercial.paidForMeta()
+    @* @fragments.commercial.paidForMeta() *@
+    optCapiLink.getOrElse("Paid content")
 
 }(HtmlFormat.empty)(HtmlFormat.empty){
 
@@ -28,7 +29,7 @@
         @inlineSvg("glabs-logo", "logo")
         <span class='u-h'>Guardian Labs</span>
     </a>
-    
+
 } {
 
     @itemCard(item, omnitureId, clickMacro)
