@@ -5,7 +5,6 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/commercial-components-dismiss',
     'common/modules/experiments/tests/fronts-on-articles2',
     'common/modules/experiments/tests/identity-register-membership-standfirst',
     'common/modules/experiments/tests/live-blog-chrome-notifications',
@@ -31,7 +30,6 @@ define([
     mediator,
     store,
     mvtCookie,
-    CommercialComponentsDismiss,
     FrontsOnArticles2,
     IdentityRegisterMembershipStandfirst,
     LiveBlogChromeNotifications,
@@ -53,7 +51,6 @@ define([
 ) {
 
     var TESTS = flatten([
-        new CommercialComponentsDismiss(),
         new FrontsOnArticles2(),
         new IdentityRegisterMembershipStandfirst(),
         new LiveBlogChromeNotifications(),
