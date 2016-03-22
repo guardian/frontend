@@ -71,7 +71,6 @@ trait Index extends ConciergeRepository with QueryDefaults {
       trails match {
         case Nil => Right(NotFound)
         case head :: _ =>
-          //we can use .head here as the query is guaranteed to return the 2 tags
           val tag1 = findTag(head.item, firstTag)
           val tag2 = findTag(head.item, secondTag)
           if (tag1.isDefined && tag2.isDefined) {
