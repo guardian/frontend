@@ -8,7 +8,6 @@ define([
     'common/utils/storage',
     'common/utils/ajax',
     'common/utils/template',
-    'common/utils/mediator',
     'common/utils/robust',
     'common/views/svgs',
     'common/modules/user-prefs',
@@ -26,7 +25,6 @@ define([
     storage,
     ajax,
     template,
-    mediator,
     robust,
     svgs,
     userPrefs,
@@ -58,7 +56,6 @@ define([
 
             fastdom.write(function () {
                 $('.js-liveblog-body').prepend(src);
-                mediator.emit('page:notifications:ready');
             });
 
             bean.one(document.body, 'click', '.js-notifications-subscribe-link', handler);
@@ -163,6 +160,6 @@ define([
     };
 
     return {
-        init: modules.configureSubscribeTemplate()
+        init: modules.configureSubscribeTemplate
     };
 });

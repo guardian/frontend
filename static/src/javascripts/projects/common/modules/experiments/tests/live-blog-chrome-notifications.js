@@ -1,13 +1,11 @@
 define([
     'common/utils/$',
     'common/utils/config',
-    'common/utils/detect',
-    'common/utils/mediator'
+    'common/utils/detect'
 ], function (
     $,
     config,
-    detect,
-    mediator
+    detect
 ) {
     return function () {
 
@@ -30,11 +28,7 @@ define([
         this.variants = [
             {
                 id: 'control',
-                test: function () {
-                    mediator.on('page:notifications:ready', function () {
-                        $('.js-notification-link').removeClass('hidden-notifications-link');
-                    });
-                }
+                test: function () {}
             }
         ];
     };
