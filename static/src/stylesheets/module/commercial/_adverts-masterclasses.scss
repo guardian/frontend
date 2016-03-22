@@ -23,10 +23,6 @@
 }
 
 .advert--masterclass {
-    .advert__meta[itemprop="author"] {
-        margin-bottom: 1em;
-    }
-
     .button {
         @include button-colour(
             guss-colour(multimedia-main-2, $pasteup-palette),
