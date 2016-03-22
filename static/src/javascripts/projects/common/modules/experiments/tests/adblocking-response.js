@@ -39,7 +39,7 @@ define([
         }, {
             id: 'variantA',
             test: function () {
-                detect.getFfOrGenericAdbockInstalled.then(function (adblockUsed) {
+                detect.adblockInUse.then(function (adblockUsed) {
                     if (adblockUsed && !config.page.isFront &&
                         !userFeatures.isPayingMember() &&
                         config.page.webTitle !== 'Subscriber number form' &&
@@ -69,7 +69,7 @@ define([
         }, {
             id: 'variantB',
             test: function () {
-                detect.getFfOrGenericAdbockInstalled.then(function (adblockUsed) {
+                detect.adblockInUse.then(function (adblockUsed) {
                     if (adblockUsed && !config.page.isFront &&
                         !userFeatures.isPayingMember() &&
                         config.page.webTitle !== 'Subscriber number form' &&
