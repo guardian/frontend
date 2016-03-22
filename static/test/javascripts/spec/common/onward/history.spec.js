@@ -177,7 +177,7 @@ define([
             ).toEqual('less/visited');
         });
 
-        it('should calculate series summary', function() {
+        describe('series summary', function() {
             var pages = [
                 {
                     pageId: '111',
@@ -211,15 +211,24 @@ define([
                 }
             ];
 
-            var expected = {
-                'a/series/b': 2,
-                'g/series/h': 1,
-                'j/series/k': 1,
-                'x/series/y': 1
-            };
+            beforeEach(function() {
+                pages.forEach(function (page, i) {
+                    hist.logSummary(page, today + i);
+                });
+            });
 
-            pages.forEach(function (page, i) { hist.logSummary(page, today + i); });
-            expect(hist.seriesSummary()).toEqual(expected);
+            it('should calculate series summary', function() {
+                expect(hist.seriesSummary()).toEqual({
+                    'a/series/b': 2,
+                    'g/series/h': 1,
+                    'j/series/k': 1,
+                    'x/series/y': 1
+                });
+            });
+
+            it('should calculate most viewed series', function() {
+                expect(hist.mostViewedSeries()).toEqual('a/series/b');
+            });
         });
     });
 });
