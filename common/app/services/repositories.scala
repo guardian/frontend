@@ -74,10 +74,12 @@ trait Index extends ConciergeRepository with QueryDefaults {
           //we can use .head here as the query is guaranteed to return the 2 tags
           val tag1 = findTag(head.item, firstTag)
           val tag2 = findTag(head.item, secondTag)
-
-          val page = new TagCombiner(s"$leftSide+$rightSide", tag1, tag2, pagination(response))
-
-          Left(IndexPage(page, contents = trails, tags = Tags(Nil), date = DateTime.now, tzOverride = None))
+          if (tag1.isDefined && tag2.isDefined) {
+            val page = new TagCombiner(s"$leftSide+$rightSide", tag1.get, tag2.get, pagination(response))
+            Left(IndexPage(page, contents = trails, tags = Tags(Nil), date = DateTime.now, tzOverride = None))
+          } else {
+            Right(NotFound)
+          }
       }
     }
 
@@ -91,7 +93,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
   private def findTag(trail: ContentType, tagId: String) = trail.content.tags.tags.filter(tag =>
     tagId.contains(tag.id))
     .sortBy(tag => tagId.replace(tag.id, "")) //effectively sorts by best match
-    .head
+    .headOption
 
 
   private def pagination(response: ItemResponse) = Some(Pagination(
