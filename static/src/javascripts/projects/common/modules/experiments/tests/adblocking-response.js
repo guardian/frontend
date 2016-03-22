@@ -30,7 +30,7 @@ define([
 
         this.canRun = function () {
             return contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint())
-                && config.page.edition === 'UK';
+                && config.page.edition === 'UK' && detect.getUserAgent.browser !== 'Firefox';
         };
 
         this.variants = [{
