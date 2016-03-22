@@ -65,13 +65,6 @@ define([
         this.params.logoguardian = svgs('logoguardian');
         this.params.marque36iconCreativeMarque = svgs('marque36icon', ['creative__marque']);
         this.params.logoFeatureLabel = 'Paid for by';
-
-        // Special icons treatment for Gimbap
-        if (this.params.creative === 'gimbap') {
-            this.params.marque36icon = svgs('marque36icon', ['gimbap__mainlogo']);
-            this.params.inlineQuote = svgs('quoteIcon', ['gimbap__quote']);
-            this.params.arrowRight = (this.params.linksWithArrows.indexOf('yes') !== -1) ? svgs('arrowRight', ['gimbap__arrow']) : '';
-        }
     };
 
     Template.prototype.postLoadEvents = {

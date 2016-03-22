@@ -1,4 +1,5 @@
 define([
+    'common/views/svgs',
     'common/utils/template',
     'text!common/views/commercial/creatives/manual-inline-button.html',
     'text!common/views/commercial/creatives/manual-single-button.html',
@@ -6,6 +7,7 @@ define([
 
     'text!common/views/commercial/creatives/manual-title.html'
 ], function (
+    svgs,
     template,
     manualInlineButtonStr,
     manualSingleButtonStr,
@@ -90,6 +92,10 @@ define([
         tpl.params.offer2HasQuotes = (tpl.params.offer2quotes.indexOf('yes') !== -1) ? tpl.params.inlineQuote : '';
         tpl.params.offer3HasQuotes = (tpl.params.offer3quotes.indexOf('yes') !== -1) ? tpl.params.inlineQuote : '';
         tpl.params.offer4HasQuotes = (tpl.params.offer4quotes.indexOf('yes') !== -1) ? tpl.params.inlineQuote : '';
+
+        tpl.params.marque36icon = svgs('marque36icon', ['gimbap__mainlogo']);
+        tpl.params.inlineQuote = svgs('quoteIcon', ['gimbap__quote']);
+        tpl.params.arrowRight = (tpl.params.linksWithArrows.indexOf('yes') !== -1) ? svgs('arrowRight', ['gimbap__arrow']) : '';
     }
 
     return {
