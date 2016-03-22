@@ -583,7 +583,6 @@ $timeline-width: 15px;
 }
 
 .toast__container {
-    z-index: $zindex-content;
     padding-bottom: $gs-baseline;
     text-align: center;
     transition: transform .3s ease-in-out;
@@ -608,6 +607,10 @@ $timeline-width: 15px;
     @include mq(wide) {
         width: gs-span(8);
     }
+}
+
+.toast__container--open {
+    z-index: $zindex-content;
 }
 
 .toast__button {

@@ -44,6 +44,8 @@ trait Requests {
     lazy val isXmlHttpRequest: Boolean = r.headers.get("X-Requested-With").contains("XMLHttpRequest")
 
     lazy val isCrosswordFront: Boolean = r.path.endsWith("/crosswords")
+
+    lazy val campaignCode: Option[String] = r.getQueryString("CMP")
   }
 }
 

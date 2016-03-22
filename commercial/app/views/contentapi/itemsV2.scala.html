@@ -3,14 +3,51 @@
   optCapiTitle: Option[String],
   optCapiLink: Option[String],
   optCapiAbout: Option[String],
-  optClickMacro: Option[String],
-  optOmnitureId: Option[String],
+  clickMacro: Option[String],
+  omnitureId: Option[String],
   optCapiAdFeature: Option[String],
   optSponsorType: Option[String],
   optSponsorLabel: Option[String])(implicit request: RequestHeader)
 
-@containerWrapper(Seq(), "")(HtmlFormat.empty)(HtmlFormat.empty)(HtmlFormat.empty)(HtmlFormat.empty) {
+@import views.html.fragments.inlineSvg
 
+@containerWrapper(Seq("legacy", "capi", "tone-capi"),
+                  omnitureId.map(id => s"merchandising | capi | multiple ${id}"),
+                  optBadge = Some(badge),
+                  optKicker = Some(fragments.commercial.paidForMeta()),
+                  optStamp = Some(stamp)){
 
+    @optCapiLink.map { linkUrl =>
+        <a href="@clickMacro@linkUrl" class="adverts__logo u-text-hyphenate" data-link-name="header link">@optCapiTitle</a>
+    }.getOrElse {
+        <span class="u-text-hyphenate">@optCapiTitle</span>
+    }
+
+}{
+
+    @items.map { item => @itemCard(item, clickMacro) }
+
+}
+
+@stamp = {
+
+    <a @if(Edition(request).id == "AU") {
+            href="@LinkTo("/guardian-labs-australia")"
+        } else {
+            href="@LinkTo("/guardian-labs")"
+        }
+        >
+        @inlineSvg("glabs-logo", "logo")
+        <span class='u-h'>Guardian Labs</span>
+    </a>
+
+}
+
+@badge = {
+
+    @optSponsorLabel
+    <a href="@clickMacro@optCapiLink" data-link-name="logo link">
+        @for(logoUrl <- optLogo) {<img class="adverts__badge__logo" src="@logoUrl" alt="">}
+    </a>
 
 }

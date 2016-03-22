@@ -149,10 +149,10 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val MasterclassFeedSwitch = Switch(
+  val EventsFeedSwitch = Switch(
     "Commercial",
-    "gu-masterclasses",
-    "If this switch is on, commercial components will be fed by masterclass feed.",
+    "gu-events",
+    "If this switch is on, commercial components will be fed by masterclass and live-events feeds.",
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -333,6 +333,15 @@ trait CommercialSwitches {
     "Commercial",
     "v2-capi-multiple-template",
     "Capi multiple component using template v2",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 4, 13),
+    exposeClientSide = false
+  )
+
+  val v2FixedTemplate = Switch(
+    "Commercial",
+    "v2-fixed-template",
+    "Fixed paid front templates using template v2",
     safeState = Off,
     sellByDate = new LocalDate(2016, 4, 13),
     exposeClientSide = false
