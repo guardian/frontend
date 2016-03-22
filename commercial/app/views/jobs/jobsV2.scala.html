@@ -1,8 +1,37 @@
 @(jobs: Seq[model.commercial.jobs.Job],
-  jobCategories: Map[String,String],
+  jobCategories: Seq[Seq[String]],
   omnitureId: Option[String],
   clickMacro: Option[String])(implicit request: RequestHeader)
 
-@containerWrapper(Seq(), "")(HtmlFormat.empty)(HtmlFormat.empty)(HtmlFormat.empty)(HtmlFormat.empty) {
+@containerWrapper(Seq("legacy", "jobs", "tone-jobs"),
+                  omnitureId.map(id => s"merchandising | jobs | ${id}"),
+                  rowLayout = Some("2x1x1"),
+                  optActions = Some(actions)){
+
+    <a class="adverts__logo" href="@{clickMacro}http://jobs.theguardian.com/" data-link-name="merchandising-jobs-v0_2_2014-04-30-low-browse-all-jobs">
+        @fragments.inlineSvg("marque-54", "icon")
+        @fragments.inlineSvg("logo-guardian", "logo")
+        @fragments.inlineSvg("logo-jobs", "commercial", List("inline-commercial-brand"))
+        <span class="u-h">The Guardian Jobs</span>
+    </a>
+
+}{
+    <ul class="jobs-sectors">
+        @for(sector <- jobCategories) {
+            <li><a href="@{clickMacro}http://jobs.theguardian.com/@{sector(0)}" data-link-name="merchandising-jobs-v0_2_2014-04-30-low-sector-@{sector(0)}">@sector(1)</a></li>
+        }
+        <li><a class="job-sector__all" href="@{clickMacro}http://jobs.theguardian.com/" data-link-name="merchandising-jobs-v0_2_2014-04-30-low-sector-all">All sectors</a></li>
+    </ul>
+
+    @jobs.map { job => @jobCard(job, clickMacro) }
+
+}
+
+@actions = {
+
+    <a class="button button--tertiary button--large" href="@{clickMacro}http://jobs.theguardian.com/" data-link-name="merchandising-jobs-v0_2_2014-04-30-low-browse-all-jobs">
+        @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
+        Browse <span class="hide-on-mobile-inline">all</span> jobs
+    </a>
 
 }

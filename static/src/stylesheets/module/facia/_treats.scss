@@ -53,9 +53,11 @@
     @include button-colour(
         #ffffff,
         colour(news-default),
-        #ffffff,
-        darken(colour(neutral-3), 10%),
         colour(news-accent)
+    );
+    @include button-hover-colour(
+        #ffffff,
+        darken(colour(neutral-3), 10%)
     );
 
     &:hover,
