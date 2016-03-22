@@ -37,7 +37,6 @@ class PressedCollectionContainerTest extends FlatSpec with Matchers {
       updatedEmail = None,
       href = pressedConfig.href,
       description = pressedConfig.description,
-      apiQuery = None,
       collectionType = pressedConfig.collectionType,
       groups = pressedConfig.groups,
       uneditable = pressedConfig.uneditable,
