@@ -2,8 +2,16 @@
     display: none;
 }
 
+.from-content-api .notifications-subscribe-link__headline {
+    @include fs-header(3);
+}
+
 .notifications-link {
     margin-bottom: $gs-baseline / 2;
+
+    .button--follow {
+        margin-bottom: $gs-baseline;
+    }
 }
 
 
