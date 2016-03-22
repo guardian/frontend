@@ -31,6 +31,15 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABLiveBlogChromeNotifications = Switch(
+    "A/B Tests",
+    "ab-live-blog-chrome-notifications",
+    "Live blog chrome notifications",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 5, 2),
+    exposeClientSide = true
+  )
+
   val ABArticleVideoAutoplay = Switch(
     "A/B Tests",
     "ab-article-video-autoplay",
@@ -49,12 +58,12 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABRelatedContentDisplayAsRecommendation = Switch(
+  val ABPeopleWhoReadThisAlsoReadVariants = Switch(
     "A/B Tests",
-    "ab-article-related-content-display-as-recommendation",
-    "Display related content as people who read this also read",
+    "ab-people-who-read-this-also-read-variants",
+    "Display people who read this also read with different variants",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 18),
+    sellByDate = new LocalDate(2016, 3, 30),
     exposeClientSide = true
   )
 
