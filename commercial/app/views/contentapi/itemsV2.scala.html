@@ -12,10 +12,14 @@
 @import views.html.fragments.inlineSvg
 
 @defining(("1_0", "2014-08-14")) { case (version, date) =>
-@containerWrapper(Seq("legacy", "capi", "tone-capi")){
+@containerWrapper(Seq("legacy", "capi", "tone-capi"), optBadge = Some(badge)){
 
     @* @fragments.commercial.paidForMeta() *@
-    optCapiTitle.getOrElse("Paid content")
+    @optCapiLink.map { linkUrl =>
+        <a href="@clickMacro@linkUrl" class="adverts__logo u-text-hyphenate" data-link-name="header link">@optCapiTitle</a>
+    }.getOrElse {
+        <span class="u-text-hyphenate">@optCapiTitle</span>
+    }
 
 }(HtmlFormat.empty)(HtmlFormat.empty){
 
@@ -34,4 +38,13 @@
     @items.map { item => @itemCard(item, version, date, clickMacro) }
 
 }
+}
+
+@badge = {
+
+    @optSponsorLabel
+    <a href="@clickMacro@optCapiLink" data-link-name="logo link">
+        @for(logoUrl <- optLogo) {<img class="adverts__badge__logo" src="@logoUrl" alt="">}
+    </a>
+
 }

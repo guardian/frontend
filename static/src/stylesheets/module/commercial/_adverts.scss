@@ -57,13 +57,14 @@
 
     > .adverts__body {
         @include mq(mobileLandscape) {
-            max-width: gs-span(8);
+            box-sizing: border-box;
+            max-width: gs-span(8) + (2 * $gs-gutter);
         }
         @include mq(tablet) {
-            max-width: gs-span(9);
+            max-width: gs-span(9) + (2 * $gs-gutter);
         }
         @include mq(desktop) {
-            max-width: gs-span(12);
+            max-width: gs-span(12) + (2 * $gs-gutter);
         }
     }
 
@@ -87,6 +88,36 @@
 
     * + .advert {
         border-left: 1px solid colour(neutral-4);
+    }
+}
+
+.adverts--legacy-single {
+    .advert {
+        flex-basis: calc(75% - #{$gs-gutter});
+        flex-grow: 0;
+    }
+
+    .advert__image-container {
+        @include mq(tablet) {
+            position: absolute;
+            left: $gs-gutter / 2;
+            top: 0;
+            width: $gs-gutter*11;
+        }
+    }
+
+    .adverts__row > .button {
+        position: absolute;
+        top: $gs-baseline;
+        right: $gs-gutter / 2;
+    }
+
+    .advert__title,
+    .advert__meta,
+    .advert__standfirst {
+        margin-left: $gs-gutter * 11;
+        padding-left: $gs-gutter / 2;
+        padding-right: $gs-gutter / 2;
     }
 }
 
@@ -150,12 +181,14 @@
 .adverts__row--1x1x1x1 {
     > * {
         flex-basis: calc(25% - #{$gs-gutter});
+        flex-grow: 0;
     }
 }
 
 .adverts__row--1x1x1 {
     > * {
         flex-basis: calc(33.33% - #{$gs-gutter});
+        flex-grow: 0;
     }
 }
 
@@ -177,13 +210,16 @@
 }
 
 .adverts__badge {
-    position: absolute;
-    right: $gs-gutter;
-    bottom: $gs-baseline;
+    @include fs-textSans(1);
+    color: colour(neutral-2);
+    font-weight: bold;
+    padding-right: $gs-gutter;
+    text-align: right;
 }
 
 .adverts__badge__logo {
-    max-height: 60px;
+    max-height: $gs-baseline * 5;
+    margin-left: $gs-gutter / 2;
     vertical-align: middle;
 }
 
@@ -291,3 +327,4 @@
 @import '_adverts-masterclasses';
 @import '_adverts-jobs';
 @import '_adverts-soulmates';
+@import '_adverts-capi';

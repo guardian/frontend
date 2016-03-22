@@ -13,10 +13,15 @@
 
 @import views.html.fragments.inlineSvg
 
-@containerWrapper(Seq("legacy", "capi" "tone-capi")){
+@defining(("1_0", "2014-08-14")) { case (version, date) =>
+@containerWrapper(Seq("legacy", "legacy-single", "capi", "tone-capi"), optBadge = Some(badge)){
 
     @* @fragments.commercial.paidForMeta() *@
-    optCapiLink.getOrElse("Paid content")
+    @optCapiLink.map { linkUrl =>
+        <a href="@clickMacro@linkUrl" class="adverts__logo u-text-hyphenate" data-link-name="header link">@optCapiTitle</a>
+    }.getOrElse {
+        <span class="u-text-hyphenate">@optCapiTitle</span>
+    }
 
 }(HtmlFormat.empty)(HtmlFormat.empty){
 
@@ -32,6 +37,22 @@
 
 } {
 
-    @itemCard(item, omnitureId, clickMacro)
+    @itemCard(item, version, date, clickMacro)
+
+    @for(moreButton <- optCapiReadMoreText) {
+        <a href="@clickMacro@optCapiReadMoreUrl" class="hide-on-mobile button button--primary button--large" data-link-name="merchandising-single-more">
+            @moreButton
+            @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
+        </a>
+    }
+}
+}
+
+@badge = {
+
+    @optSponsorLabel
+    <a href="@clickMacro@optCapiLink" data-link-name="logo link">
+        @for(logoUrl <- optLogo) {<img class="adverts__badge__logo" src="@logoUrl" alt="">}
+    </a>
 
 }

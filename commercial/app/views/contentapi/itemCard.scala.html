@@ -1,16 +1,17 @@
 @(item: model.ContentType,
-  omnitureId: Option[String],
+  version: String,
+  date: String,
   clickMacro: Option[String])(implicit request: RequestHeader)
 
 @import views.support.ImgSrc
 @import views.html.fragments.inlineSvg
 
-<a class="advert @item match {
+<a class="advert advert--capi @item match {
         case _: Video => { advert--video }
         case _: Audio => { advert--audio }
         case _: Gallery => { advert--gallery }
         case _ => { }
-    }" href="@clickMacro@item.metadata.webUrl" data-link-name="">
+    }" href="@clickMacro@item.metadata.webUrl" data-link-name="merchandising-capi-v@{version}_@{date}-@item.metadata.webTitle">
     <h2 class="advert__title">
         @insertItemMediaIcon(item)
         @item.metadata.webTitle
@@ -20,6 +21,9 @@
             <img class="advert__image" src="@ImgSrc.getFallbackUrl(trailPictureContainer)">
         </div>
     }
+    @item.fields.trailText.map { trailText =>
+        <p class="advert__standfirst">@Html(trailText)</p>
+    }
     <div class="advert__meta">
         <time datetime="@item.trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
             data-timestamp="@item.trail.webPublicationDate.getMillis"
@@ -28,9 +32,6 @@
             @Format(item.trail.webPublicationDate, "d MMM y")
         </time>
     </div>
-    <span class="u-faux-block-link__overlay" data-link-name="">
-        @item.metadata.webTitle
-    </span>
 </a>
 
 @insertItemMediaIcon(item : model.ContentType) = @{
