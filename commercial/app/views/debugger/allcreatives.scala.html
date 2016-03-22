@@ -80,12 +80,15 @@
                     <option value="soulmates">Soulmates</option>
                 </select>
             </dd>
-            <dt>Component in the RH column</dt>
+            <dt>Gimbap style</dt>
             <dd>
-                <select class="rh-column-component">
+                <select id="blended-style">
+                    <option value="normal" selected>Normal</option>
+                    <option value="reversed-out">Reversed out</option>
+                    <option value="membership">Membership</option>
+                    <option value="masterclasses">Masterclasses</option>
                     <option value="soulmates">Soulmates</option>
                     <option value="jobs">Jobs</option>
-                    <option value="membership">Membership</option>
                 </select>
             </dd>
         </dl>
@@ -104,6 +107,7 @@
                     bean,
                     $
                 ) {
+                    'use strict';
                     var $switchFronts   = $('#switchFronts'),
                         $switchArticles = $('#switchArticles'),
                         $rhColumn = $('.content__secondary-column');
@@ -148,9 +152,13 @@
                             .addClass('commercial--tone-' + $palette.val());
                     });
 
-                    var $rhComponent = $('.rh-column-component');
-                    bean.on($rhComponent[0], 'change', function () {
-                        showRHColumn($rhComponent.val());
+                    var blendedStyle = document.getElementById('blended-style'),
+                        gimbap       = null,
+                        styleClasses = ['normal', 'reversed-out', 'membership', 'masterclasses', 'jobs', 'soulmates'].map(tone => 'gimbap-style--' + tone);
+                    bean.on(blendedStyle, 'change', function () {
+                        gimbap = document.getElementById('gimbap').querySelector('.gimbap-wrap');
+                        styleClasses.forEach(function(c) { gimbap.classList.remove(c); });
+                        gimbap.classList.add('gimbap-style--' + blendedStyle.value);
                     });
                 });
         });
@@ -792,6 +800,81 @@
                             .then(function (Template) {
                                 new Template(document.querySelector('#@component("id")'), @Html(Json.stringify(args)))
                                     .create();
+                        });
+                    });
+                }
+                case _ => { }
+            }
+        </script>
+    }
+
+    @Seq(
+        Map(
+            ("id", "gimbap"),
+            ("type", "gimbap"),
+            ("creativeId", "10025847"),
+            ("args", Json.obj(
+                ("creative", "gimbap"),
+                ("layout", "1x1x1x1"),
+                ("style", "normal"),
+                ("linksWithArrows", "yes"),
+                ("offer1tone", "members"),
+                ("offer1quotes", "yes"),
+                ("offer1url", "https://memebrship.theguardian.com"),
+                ("offer1title", "If you want to keep something like this going, you have to support it"),
+                ("offer1subtitle", "Aisha Gani Support the Guardian"),
+                ("offer2tone", "masterclasses"),
+                ("offer2quotes", "no"),
+                ("offer2url", "https://memebrship.theguardian.com"),
+                ("offer2title", "Start your novel and get it published"),
+                ("offer2subtitle", "Writing & Publishing courses"),
+                ("offer3tone", "soulmates"),
+                ("offer3quotes", "yes"),
+                ("offer3url", "https://memebrship.theguardian.com"),
+                ("offer3title", "Met someone wonderful. Thank you!"),
+                ("offer3subtitle", "Kim12 quit in January. Find your soulmate"),
+                ("offer4tone", "jobs"),
+                ("offer4quotes", "no"),
+                ("offer4url", "https://memebrship.theguardian.com"),
+                ("offer4title", "Has your job changed from what you signed up to do?"),
+                ("offer4subtitle", "How to negotiate a pay rise"),
+                ("omnitureId", "[%OmnitureID%]"),
+                ("clickMacro", "%%CLICK_URL_ESC%%")
+            ))
+        )
+    ).map { component =>
+        <div class="fc-container__inner">
+            <h2 class="test-page-head">
+                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=@component("creativeId")">
+                    Merchandising: manual @component("type")
+                </a>
+            </h2>
+            <form>
+                <label>Layout:
+                    <select id="gimbap-layout">
+                        <option selected>1x1x1x1</option>
+                        <option>2x1x1</option>
+                        <option>1</option>
+                    </select>
+                </label>
+            </form>
+        </div>
+        <div id="@component("id")" class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--@component("type")-manual"></div>
+        <script>
+            'use strict';
+            @component("args") match {
+                case args: JsObject => {
+                    loadCommercial(function () {
+                        require(['bean', 'common/modules/commercial/creatives/template'])
+                            .then(function (bean, Template) {
+                                let container = document.querySelector('#@component("id")');
+                                let layout = document.getElementById('gimbap-layout');
+                                layout.addEventListener('change', (event) => {
+                                    container.innerHTML = '';
+                                    new Template(container, Object.assign({}, @Html(Json.stringify(args)), { layout: layout.value })).create();
+                                });
+
+                                bean.fire(layout, 'change');
                         });
                     });
                 }
