@@ -48,6 +48,4 @@ GET        /commercial/paid.json                                         control
 GET        /commercial/paid                                              controllers.commercial.PaidContentCardController.cardHtml
 
 # Static pages
-GET        /commercial/survey-simple-sign-up                             controllers.commercial.StaticPageController.renderSurveySimpleSignupPage()
-GET        /commercial/survey-simple-membership                          controllers.commercial.StaticPageController.renderSurveySimpleMembershipPage()
 GET        /commercial/subscriber-number                            controllers.commercial.StaticPageController.renderSubscriberNumberPage()

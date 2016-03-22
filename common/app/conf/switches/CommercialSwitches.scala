@@ -337,4 +337,13 @@ trait CommercialSwitches {
     sellByDate = new LocalDate(2016, 4, 13),
     exposeClientSide = false
   )
+
+  val v2FixedTemplate = Switch(
+    "Commercial",
+    "v2-fixed-template",
+    "Fixed paid front templates using template v2",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 4, 13),
+    exposeClientSide = false
+  )
 }
