@@ -1,10 +1,12 @@
 define([
     'common/modules/commercial/liveblog-adverts',
+    'common/modules/commercial/commercial-features',
     'common/utils/mediator',
     'helpers/fixtures',
     'common/utils/$'
 ], function (
     liveblogAdverts,
+    commercialFeatures,
     mediator,
     fixtures,
     $
@@ -38,6 +40,7 @@ define([
             $style = $.create('<style type="text/css"></style>')
                 .html('.block{ height: 1200px }')
                 .appendTo('head');
+            commercialFeatures.liveblogAdverts = true;
             done();
         });
 
