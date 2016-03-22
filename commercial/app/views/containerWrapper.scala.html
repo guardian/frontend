@@ -1,20 +1,19 @@
 @( classNames: Seq[String]
  , rowLayout: Option[String] = None
+ , optKicker: Option[Html] = None
+ , optBlurb: Option[Html] = None
+ , optActions: Option[Html] = None
+ , optStamp: Option[Html] = None
  , optBadge: Option[Html] = None
- )(headerTitle: Html)(blurb: Html)(ctas: Html)(stamp: Html)(innards: Html)
+ )(title: Html)(innards: Html)
 
 <aside class="adverts @classNames.map(c => s"adverts--$c").mkString(" ")" data-link-name="">
     <header class="adverts__header">
-        <h1 class="adverts__title">@headerTitle</h1>
-        @if(blurb.body.nonEmpty) {
-            <div class="adverts__blurb">@blurb</div>
-        }
-        @if(ctas.body.nonEmpty) {
-            <div class="adverts__ctas">@ctas</div>
-        }
-        @if(stamp.body.nonEmpty) {
-            <div class="adverts__stamp">@stamp</div>
-        }
+        @for(kicker   <- optKicker)  {<div class="adverts__kicker">@kicker</div>}
+        <h1 class="adverts__title">@title</h1>
+        @for(blurb    <- optBlurb)   {<div class="adverts__blurb">@blurb</div>}
+        @for(actions  <- optActions) {<div class="adverts__ctas">@actions</div>}
+        @for(stamp    <- optStamp)   {<div class="adverts__stamp">@stamp</div>}
     </header>
     @optBadge.map { badge =>
         <div class="adverts__body">

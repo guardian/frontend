@@ -86,11 +86,6 @@
 }
 
 .advert--soulmate {
-    /* some profiles can have very long usernames (size matters!) */
-    .advert__title {
-        word-break: break-word;
-    }
-
     .advert__image {
         max-height: 7 * $gs-baseline;
     }

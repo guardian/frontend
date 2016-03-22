@@ -3,65 +3,72 @@
   clickMacro: Option[String])(implicit request: RequestHeader)
 
 @defining(("2_2", "2014-03-28")) { case (version, date) =>
-@containerWrapper(Seq("legacy", "soulmates", "tone-soulmates")){
+    @containerWrapper( Seq("legacy", "soulmates", "tone-soulmates")
+                     , optBlurb = Some(blurb)
+                     , optActions = Some(actions(version, date))
+                     ){
 
-    <a class="adverts__logo" href="@clickMacro@Configuration.commercial.soulmates_url" data-link-name="merchandising-soulmates-v@{version}_@{date}-join-now">
-        @fragments.inlineSvg("marque-54", "icon")
-        @fragments.inlineSvg("logo-soulmates", "commercial")
-        <span class="u-h">The Guardian</span> <span class="u-h">Soulmates</span>
-    </a>
+        <a class="adverts__logo" href="@clickMacro@Configuration.commercial.soulmates_url" data-link-name="merchandising-soulmates-v@{version}_@{date}-join-now">
+            @fragments.inlineSvg("marque-54", "icon")
+            @fragments.inlineSvg("logo-soulmates", "commercial")
+            <span class="u-h">The Guardian</span> <span class="u-h">Soulmates</span>
+        </a>
 
-}{
+    }{
+
+        @members.map { member => @soulmateCard(member, version, date, omnitureId, clickMacro) }
+        <form class="search" action="@Configuration.commercial.soulmates_url/find" method="get">
+            <div class="search__field">
+                <label for="my_gender" class="search__label">I am a</label>
+                <select id="my_gender" name="my_gender" class="search__dropdown">
+                    @Seq("woman", "man").map { myGender =>
+                        <option value="@myGender.capitalize"@if(myGender == "man"){ selected="selected"}>@myGender</option>
+                    }
+                </select>
+            </div>
+            <div class="search__field">
+                <label for="match_gender" class="search__label">Seeking</label>
+                <select id="match_gender" name="match_gender" class="search__dropdown">
+                    @Map("Woman" -> "women", "Man" -> "men", "../../../public" -> "men & women").map { case (matchGenderValue, matchGenderName) =>
+                        <option value="@matchGenderValue">@matchGenderName</option>
+                    }
+                </select>
+            </div>
+            <div class="search__field">
+                <label for="age_min" class="search__label">Aged from</label>
+                <select id="age_min" name="age_min" class="search__dropdown">
+                    @for(ageMin <- 18 to 99) {
+                        <option@if(ageMin == 25){ selected="selected"}>@ageMin</option>
+                    }
+                </select>
+            </div>
+            <div class="search__field">
+                <label for="age_max" class="search__label">To</label>
+                <select id="age_max" name="age_max" class="search__dropdown">
+                    @for(ageMax <- 18 to 99) {
+                        <option@if(ageMax == 45){ selected="selected"}>@ageMax</option>
+                    }
+                </select>
+            </div>
+            <button type="submit" class="search__submit button button--tone-media button--small" data-link-name="merchandising-soulmates-v@{version}_@{date}-find-a-soulmate">
+                Find a soulmate @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
+            </button>
+        </form>
+
+    }
+}
+
+@blurb = {
 
     Meet someone <em>worth</em> meeting
 
-}{
+}
+
+@actions(version: String, date: String) = {
 
     <a class="button" href="@clickMacro@Configuration.commercial.soulmates_url" data-link-name="merchandising-soulmates-v@{version}_@{date}-join-now">
         @fragments.inlineSvg("soulmates-join", "commercial")
         Join now
     </a>
 
-}(HtmlFormat.empty) {
-
-    @members.map { member => @soulmateCard(member, version, date, omnitureId, clickMacro) }
-    <form class="search" action="@Configuration.commercial.soulmates_url/find" method="get">
-        <div class="search__field">
-            <label for="my_gender" class="search__label">I am a</label>
-            <select id="my_gender" name="my_gender" class="search__dropdown">
-                @Seq("woman", "man").map { myGender =>
-                    <option value="@myGender.capitalize"@if(myGender == "man"){ selected="selected"}>@myGender</option>
-                }
-            </select>
-        </div>
-        <div class="search__field">
-            <label for="match_gender" class="search__label">Seeking</label>
-            <select id="match_gender" name="match_gender" class="search__dropdown">
-                @Map("Woman" -> "women", "Man" -> "men", "../../../public" -> "men & women").map { case (matchGenderValue, matchGenderName) =>
-                    <option value="@matchGenderValue">@matchGenderName</option>
-                }
-            </select>
-        </div>
-        <div class="search__field">
-            <label for="age_min" class="search__label">Aged from</label>
-            <select id="age_min" name="age_min" class="search__dropdown">
-                @for(ageMin <- 18 to 99) {
-                    <option@if(ageMin == 25){ selected="selected"}>@ageMin</option>
-                }
-            </select>
-        </div>
-        <div class="search__field">
-            <label for="age_max" class="search__label">To</label>
-            <select id="age_max" name="age_max" class="search__dropdown">
-                @for(ageMax <- 18 to 99) {
-                    <option@if(ageMax == 45){ selected="selected"}>@ageMax</option>
-                }
-            </select>
-        </div>
-        <button type="submit" class="search__submit button button--tone-media button--small" data-link-name="merchandising-soulmates-v@{version}_@{date}-find-a-soulmate">
-            Find a soulmate @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
-        </button>
-    </form>
-
-}
 }
