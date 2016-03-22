@@ -2,7 +2,7 @@
   omnitureId: Option[String],
   clickMacro: Option[String])(implicit request: RequestHeader)
 
-@containerWrapper(Nil){
+@containerWrapper(Nil, omnitureId.map(id => s"commercial-low | travel | ${id}")){
 
 }{
 

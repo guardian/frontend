@@ -3,6 +3,7 @@
   clickMacro: Option[String])(implicit request: RequestHeader)
 
 @containerWrapper( Seq("legacy", "masterclasses", "tone-masterclasses")
+                 , omnitureId.map(id => s"commercial-low | masterclasses | ${id}")
                  , optBlurb = Some(Html("Courses from the Guardian"))
                  , optActions = Some(actions)
                  ){

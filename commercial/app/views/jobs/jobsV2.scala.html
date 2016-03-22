@@ -4,6 +4,7 @@
   clickMacro: Option[String])(implicit request: RequestHeader)
 
 @containerWrapper( Seq("legacy", "jobs", "tone-jobs")
+                 , omnitureId.map(id => s"merchandising | jobs | ${id}")
                  , rowLayout = Some("2x1x1")
                  , optActions = Some(actions)
                  ){

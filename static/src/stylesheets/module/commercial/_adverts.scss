@@ -58,13 +58,13 @@
     > .adverts__body {
         @include mq(mobileLandscape) {
             box-sizing: border-box;
-            max-width: gs-span(8) + (2 * $gs-gutter);
+            max-width: gs-span(8) + ($gs-gutter * 2);
         }
         @include mq(tablet) {
-            max-width: gs-span(9) + (2 * $gs-gutter);
+            max-width: gs-span(9) + ($gs-gutter * 2);
         }
         @include mq(desktop) {
-            max-width: gs-span(12) + (2 * $gs-gutter);
+            max-width: gs-span(12) + ($gs-gutter * 2);
         }
     }
 

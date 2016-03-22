@@ -3,6 +3,7 @@
   clickMacro: Option[String])(implicit request: RequestHeader)
 
 @containerWrapper( Seq("legacy", "soulmates", "tone-soulmates")
+                 , omnitureId.map(id => s"commercial | soulmates | ${id}")
                  , optBlurb = Some(blurb)
                  , optActions = Some(actions)
                  ){

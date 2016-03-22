@@ -45,7 +45,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 1px solid #e6e1c3;
+        border-bottom: 1px solid guss-colour(soulmates-border-colour, $frontend-palette);
         padding-bottom: $gs-baseline / 2;
         margin-bottom: $gs-baseline / 2;
     }

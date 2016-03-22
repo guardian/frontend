@@ -1,4 +1,5 @@
 @( classNames: Seq[String]
+ , dataLinkName: Option[String]
  , rowLayout: Option[String] = None
  , optKicker: Option[Html] = None
  , optBlurb: Option[Html] = None
@@ -7,7 +8,7 @@
  , optBadge: Option[Html] = None
  )(title: Html)(innards: Html)
 
-<aside class="adverts @classNames.map(c => s"adverts--$c").mkString(" ")" data-link-name="">
+<aside class="adverts @classNames.map(c => s"adverts--$c").mkString(" ")" data-link-name="@dataLinkName">
     <header class="adverts__header">
         @for(kicker   <- optKicker)  {<div class="adverts__kicker">@kicker</div>}
         <h1 class="adverts__title">@title</h1>

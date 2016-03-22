@@ -14,6 +14,7 @@
 @import views.html.fragments.inlineSvg
 
 @containerWrapper( Seq("legacy", "legacy-single", "capi", "tone-capi")
+                 , omnitureId.map(id => s"merchandising | capi | single ${id}")
                  , optBadge = Some(badge)
                  , optKicker = Some(fragments.commercial.paidForMeta())
                  , optStamp = Some(stamp)
