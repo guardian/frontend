@@ -3,6 +3,7 @@
 @import model.pressed.CuratedContent
 @import views.support.ContentOldAgeDescriber
 @import views.support.TrailCssClasses
+@import conf.Configuration.site.host
 
 <div class="fc-container__inner">
     <div class="fc-container__header__title">
@@ -50,6 +51,6 @@
                 </time>
             </aside>
         </div>
-        <a href="@content.header.url" class="fc-item__link">@content.header.headline</a>
+        <a href="@{host}@content.header.url" class="fc-item__link">@content.header.headline</a>
     </div>
 }

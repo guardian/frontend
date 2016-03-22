@@ -3,10 +3,7 @@
  Description: Loads our commercial components
  */
 define([
-    'bean',
-    'bonzo',
     'fastdom',
-    'raven',
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
@@ -14,90 +11,68 @@ define([
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
     'lodash/objects/isArray',
-    'lodash/collections/map',
     'lodash/objects/pick',
-    'lodash/collections/size',
     'lodash/objects/merge',
-    'lodash/objects/pairs',
-    'common/utils/chain'
+    'lodash/collections/map',
+    'lodash/collections/reduce'
 ], function (
-    bean,
-    bonzo,
     fastdom,
-    raven,
     $,
     config,
     mediator,
-    LazyLoad,
+    lazyload,
     Tabs,
     Toggles,
     isArray,
-    map,
     pick,
-    size,
     merge,
-    pairs,
-    chain
+    map,
+    reduce
 ) {
+    var urlBuilders = {
+        bestbuy:        defaultUrlBuilder('money/bestbuys'),
+        soulmates:      defaultUrlBuilder('soulmates/mixed'),
+        soulmatesTest:  defaultUrlBuilder('soulmates-test/mixed'),
+        capiSingle:     defaultUrlBuilder('capi-single'),
+        capi:           defaultUrlBuilder('capi'),
+        paidforCard:    defaultUrlBuilder('paid'),
+        books:          complexUrlBuilder('books/books', 'isbns'),
+        jobs:           complexUrlBuilder('jobs', 'jobIds', true),
+        masterclasses:  complexUrlBuilder('masterclasses', 'ids', true),
+        liveevents:     complexUrlBuilder('liveevents/event', 'id', true),
+        travel:         complexUrlBuilder('travel/offers', '', true),
+        multi:          complexUrlBuilder('multi', '', true),
+        book:           bookUrlBuilder('books/book'),
+        soulmatesGroup: soulmatesGroupUrlBuilder('soulmates/')
+    };
 
-    var constructQuery = function (params) {
-            return chain(params).and(pairs).and(map, function (param) {
-                    var key    = param[0],
-                        values = isArray(param[1]) ? param[1] : [param[1]];
-                    return map(values, function (value) {
-                        return [key, '=', encodeURIComponent(value)].join('');
-                    }).join('&');
-                }).join('&').value();
-        },
-        getKeywords = function () {
-            var keywords = (config.page.keywordIds) ?
-                map(config.page.keywordIds.split(','), function (keywordId) {
-                    return keywordId.split('/').pop();
-                }) :
-                config.page.pageId.split('/').pop();
-            return {
-                k: keywords
-            };
-        },
-        buildComponentUrl = function (url, params) {
-            // filter out empty params
-            var filteredParams = pick(params || {}, function (v) {
-                    return isArray(v) ? v.length : v;
-                }),
-                query = size(filteredParams) ? '?' + constructQuery(filteredParams) : '';
-            return [config.page.ajaxUrl, '/commercial/', url, '.json', query].join('');
-        },
-        /**
-         * Loads commercial components.
-         * * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10023207
-         *
-         * @constructor
-         * @extends Component
-         * @param (Object=) adSlot
-         * @param {Object=} params
-         */
-        CommercialComponent = function (adSlot, params) {
-            this.params = params || {};
-            this.type   = this.params.type;
-            // remove type from params
-            delete this.params.type;
-            this.adSlot    = adSlot.length ? adSlot[0] : adSlot;
-            this.components = {
-                bestbuy:        buildComponentUrl('money/bestbuys', this.params),
-                book:           buildComponentUrl('books/book', merge({}, this.params, { t: config.page.isbn || this.params.isbn })),
-                books:          buildComponentUrl('books/books', merge({}, this.params, { t: this.params.isbns ? this.params.isbns.split(',') : [] })),
-                jobs:           buildComponentUrl('jobs', merge({}, this.params, { t: this.params.jobIds ? this.params.jobIds.split(',') : [] }, getKeywords())),
-                masterclasses:  buildComponentUrl('masterclasses', merge({}, this.params, { t: this.params.ids ? this.params.ids.split(',') : [] }, getKeywords())),
-                soulmates:      buildComponentUrl('soulmates/mixed', this.params),
-                soulmatesTest:  buildComponentUrl('soulmates-test/mixed', this.params),
-                soulmatesGroup: buildComponentUrl('soulmates/' + this.params.soulmatesFeedName, this.params),
-                travel:         buildComponentUrl('travel/offers', merge({}, this.params, getKeywords())),
-                multi:          buildComponentUrl('multi', merge({}, this.params, getKeywords())),
-                capiSingle:     buildComponentUrl('capi-single', this.params),
-                capi:           buildComponentUrl('capi', this.params),
-                paidforCard:    buildComponentUrl('paid', this.params)
-            };
+    function defaultUrlBuilder(url) {
+        return function (params) {
+            return buildComponentUrl(url, params);
         };
+    }
+
+    function bookUrlBuilder(url) {
+        return function (params) {
+            return buildComponentUrl(url, merge(params, { t: config.page.isbn || params.isbn }));
+        };
+    }
+
+    function soulmatesGroupUrlBuilder(url) {
+        return function (params) {
+            return buildComponentUrl(url + params.soulmatesFeedName, params);
+        };
+    }
+
+    function complexUrlBuilder(url, withSpecificId, withKeywords) {
+        return function (params) {
+            return buildComponentUrl(url, merge(
+                params,
+                withSpecificId && params[withSpecificId] ? { t: params[withSpecificId].split(',') } : {},
+                withKeywords ? getKeywords() : {}
+            ));
+        };
+    }
 
     function createToggle(el) {
         if (el.querySelector('.popup__toggle')) {
@@ -121,7 +96,84 @@ define([
         }
     }
 
+    function constructQuery(params) {
+        return reduce(params, function (result, value, key) {
+            var buildParam = function (value) {
+                return key + '=' + encodeURIComponent(value);
+            };
 
+            if (result !== '?') {
+                result += '&';
+            }
+
+            return result + (isArray(value) ? map(value, buildParam).join('&') : buildParam(value));
+        }, '?');
+    }
+
+    function buildComponentUrl(url, params) {
+        // filter out empty params
+        var filteredParams = pick(params, function (v) {
+            return isArray(v) ? v.length : v;
+        });
+        var query = Object.keys(filteredParams).length ? constructQuery(filteredParams) : '';
+        return config.page.ajaxUrl + '/commercial/' + url + '.json' + query;
+    }
+
+    function getKeywords() {
+        var keywords = config.page.keywordIds ?
+            map(config.page.keywordIds.split(','), getKeyword) :
+            getKeyword(config.page.pageId);
+        return {
+            k: keywords
+        };
+
+        function getKeyword(str) {
+            return str.substring(str.lastIndexOf('/') + 1);
+        }
+    }
+
+    /**
+     * Loads commercial components.
+     * * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10023207
+     *
+     * @constructor
+     * @extends Component
+     * @param (Object=) adSlot
+     * @param {Object=} params
+     */
+    function CommercialComponent(adSlot, params) {
+        this.params = params || {};
+        this.type = this.params.type;
+        // remove type from params
+        this.params.type = null;
+        this.adSlot = adSlot.length ? adSlot[0] : adSlot;
+        this.url = urlBuilders[this.type](this.params);
+    }
+
+    CommercialComponent.prototype.create = function () {
+        lazyload({
+            url: this.url,
+            container: this.adSlot,
+            success: onSuccess.bind(this),
+            error: onError.bind(this)
+        });
+
+        return this;
+
+        function onSuccess() {
+            if (this.postLoadEvents[this.type]) {
+                this.postLoadEvents[this.type](this.adSlot);
+            }
+
+            mediator.emit('modules:commercial:creatives:commercial-component:loaded');
+        }
+
+        function onError() {
+            fastdom.write(function () {
+                this.adSlot.style.display = 'none';
+            }, this);
+        }
+    };
 
     CommercialComponent.prototype.postLoadEvents = {
         bestbuy: function (el) {
@@ -133,25 +185,6 @@ define([
             adjustMostPopHeight(el);
             createToggle(el);
         }
-    };
-
-    CommercialComponent.prototype.create = function () {
-        new LazyLoad({
-            url: this.components[this.type],
-            container: this.adSlot,
-            success: function () {
-                if (this.postLoadEvents[this.type]) {
-                    this.postLoadEvents[this.type](this.adSlot);
-                }
-
-                mediator.emit('modules:commercial:creatives:commercial-component:loaded');
-            }.bind(this),
-            error: function () {
-                bonzo(this.adSlot).hide();
-            }.bind(this)
-        }).load();
-
-        return this;
     };
 
     return CommercialComponent;

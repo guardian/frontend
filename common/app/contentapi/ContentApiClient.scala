@@ -92,7 +92,7 @@ trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Log
     .showFields(trailFields)
     .showElements("all")
     .showReferences(references)
-    .showStoryPackage(true)
+    .showPackages(true)
     .showRights("syndicatable")
 
   //common fields that we use across most queries.

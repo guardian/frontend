@@ -1,0 +1,311 @@
+.survey-close {
+    position: absolute;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    top: 20px;
+    right: 20px;
+
+    svg {
+        margin-top: 5px;
+        width: 14px;
+        height: 14px;
+    }
+}
+
+.survey-overlay-simple {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, .8);
+    z-index: $zindex-overlay;
+    width: 100%;
+    height: 100%;
+
+
+    .site-message__close-btn {
+        @include mq($until: tablet) {
+            position: static;
+        }
+
+    }
+
+    .survey-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding: $gs-row-height $gs-column-width*.5;
+        background-color: #01558b;
+        color: #ffffff;
+        box-sizing: border-box;
+
+        @include mq(tablet) {
+            left: 50%;
+            top: percentage(1/5);
+            width: $gs-column-width * 10;
+            height: auto;
+            margin-left: -$gs-column-width * 5;
+        }
+
+    }
+
+    .survey-logo {
+        position: absolute;
+        bottom: 25px;
+        right: 20px;
+
+        svg {
+            fill: #ffffff;
+            width: 26px;
+        }
+    }
+
+    .survey-icon {
+        text-align: center;
+        margin-bottom: $gs-baseline;
+
+        svg {
+            width: 100px;
+            height: 100px;
+            margin-top: -20px;
+
+            @include mq(mobileLandscape) {
+                display: none;
+            }
+
+            @include mq(tablet) {
+                display: inline;
+                width: 150px;
+                height: 150px;
+            }
+
+        }
+    }
+
+    .survey-text__header {
+        @include fs-headline(4);
+        color: #ffffff;
+        font-weight: bold;
+        margin-bottom: $gs-column-width/2;
+
+        @include mq(mobileLandscape) {
+            @include fs-headline(5);
+            font-weight: bold;
+            margin: -27px 50px 0 0;
+        }
+
+        @include mq(tablet) {
+            margin: 0 0 $gs-column-width/2;
+        }
+    }
+
+    .survey-content {
+        position: absolute;
+        bottom: 35px;
+        padding-right: 30px;
+
+        @include mq(tablet) {
+            position: static;
+            padding: 0;
+        }
+    }
+
+    .survey-text__info {
+        @include fs-bodyCopy(1);
+        font-size: 12px;
+        line-height: 120%;
+        margin: 0 $gs-gutter $gs-column-width/4 0;
+
+        .text-link {
+            color: #ffffff;
+            text-decoration: underline;
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+
+    .survey-links {
+        overflow: hidden;
+        margin-bottom: $gs-column-width/4;
+    }
+
+    .survey-link {
+        @include clearfix;
+        @include circular;
+
+        padding-left: 10px;
+        margin-right: $gs-gutter / 2;
+        border: 1px solid rgba(#ffffff, .3);
+        float: left;
+
+        @include mq($until: mobile) {
+            margin-bottom: $gs-row-height / 4;
+        }
+    }
+
+    .survey-link__takepart {
+        color: #ffffff;
+        @include fs-textSans(2);
+        display: block;
+        float: left;
+        padding: 0 8px;
+        line-height: $gs-column-width/2;
+    }
+
+    .inline-arrow-white-right {
+        display: block;
+        float: right;
+        height: $gs-column-width/2;
+    }
+}
+
+.live-events-survey-wrapper {
+    .live-events-survey-wrapper-inner {
+        margin: 0 auto;
+        width: auto;
+        padding: 0 $gs-gutter $gs-gutter;
+
+        @include mq(tablet) {
+            margin: 0 auto;
+            width: $gs-column-width*8;
+            padding: $gs-gutter 0;
+        }
+    }
+
+    .inline-survey-thumbsup {
+        margin-bottom: $gs-gutter/2;
+        display: block;
+        padding-top: $gs-gutter;
+    }
+
+    .inline-survey-loudspeaker,
+    .inline-thankyou-email {
+        display: block;
+        text-align: center;
+        margin-top: $gs-gutter;
+
+        svg {
+            width: 100px;
+            height: 100px;
+        }
+    }
+
+    .inline-arrow-right {
+        float: right;
+        fill: #7d7d7d;
+
+    }
+
+    .inline-membership-logo {
+        margin: $gs-gutter 0;
+        display: block;
+        svg {
+            width: 100px;
+            height: 40px;
+
+            g,
+            path {
+                fill: #bf4181;
+            }
+        }
+        @include mq(tablet) {
+            margin: $gs-gutter*2 0 30px;
+        }
+    }
+
+    h1 {
+        @include fs-headline(4);
+        color: guss-colour(guardian-brand, $pasteup-palette);
+        font-weight: bold;
+        margin-bottom: $gs-gutter;
+
+        @include mq(tablet) {
+            @include fs-headline(6);
+            font-weight: bold;
+        }
+    }
+
+    h2 {
+        @include fs-header(4);
+        color: guss-colour(guardian-brand, $pasteup-palette);
+        margin-bottom: $gs-baseline/2;
+    }
+
+    p {
+        margin-bottom: $gs-baseline;
+        @include fs-bodyCopy(1);
+    }
+
+    .standfirst {
+        @include fs-bodyCopy(2);
+    }
+
+    .button--secondary {
+        border-color: #7d7d7d;
+        background-color: transparent;
+
+        &:hover {
+            background-color: guss-colour(neutral-7, $pasteup-palette);
+        }
+    }
+
+    .button--medium {
+        line-height: 32px;
+    }
+
+    .footer-area {
+        background-color: colour(neutral-5);
+
+        .adfreesurvey-wrapper-inner {
+            width: auto;
+            padding: $gs-gutter;
+            margin: 0 auto;
+
+            @include mq(tablet) {
+                width: $gs-column-width*10;
+                padding: $gs-gutter*2 0;
+            }
+        }
+
+        img {
+            display: block;
+        }
+
+        .l-row__item:last-child {
+            margin-top: $gs-gutter;
+
+            @include mq(tablet) {
+                margin-top: 0;
+            }
+        }
+
+    }
+
+    .subscriber-number-form {
+        .input-number {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            border: #000000 1px solid;
+
+            &.correct {
+                border-color: colour(success);
+            }
+            &.incorrect {
+                border-color: colour(error);
+            }
+        }
+
+        .button--primary {
+            display: block;
+            margin: 10px auto;
+            font-size: 20px;
+            padding: 5px;
+            width: 100%;
+        }
+    }
+
+}

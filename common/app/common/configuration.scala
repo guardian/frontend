@@ -185,6 +185,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     private lazy val scheme = configuration.getStringProperty("amp.scheme").getOrElse("")
     lazy val host = configuration.getStringProperty("amp.host").getOrElse("")
     lazy val baseUrl = scheme + host
+    lazy val corsOrigins: Seq[String] = configuration.getStringProperty("amp.cors.origin").map(_.split(",")
+      .map(_.trim).toSeq).getOrElse(Nil)
   }
 
   object id {
@@ -211,6 +213,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     object backends {
       lazy val mediaToken: String = configuration.getMandatoryStringProperty("images.media.token")
       lazy val staticToken: String = configuration.getMandatoryStringProperty("images.static.token")
+      lazy val uploadsToken: String = configuration.getMandatoryStringProperty("images.uploads.token")
     }
   }
 
@@ -300,6 +303,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val merchandisingFeedsLatest = s"$merchandisingFeedsRoot/latest"
 
     lazy val masterclassesToken = configuration.getStringProperty("masterclasses.token")
+    lazy val liveEventsToken = configuration.getStringProperty("live-events.token")
+    lazy val liveEventsImagesUrl = "https://membership.theguardian.com/events.json"
     lazy val jobsUrlTemplate = configuration.getStringProperty("jobs.api.url.template")
     lazy val mortgagesUrl = configuration.getStringProperty("lc.mortgages.api.url")
     lazy val moneyUrl = configuration.getStringProperty("moneysupermarket.api.url")
@@ -371,6 +376,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object faciatool {
     lazy val frontPressCronQueue = configuration.getStringProperty("frontpress.sqs.cron_queue_url")
     lazy val frontPressToolQueue = configuration.getStringProperty("frontpress.sqs.tool_queue_url")
+    lazy val frontPressStatusNotificationStream = configuration.getStringProperty("frontpress.kinesis.status_notification_stream")
 
     lazy val configBeforePressTimeout: Int = 1000
 
@@ -480,6 +486,15 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object NewsAlert {
     lazy val apiKey = configuration.getStringProperty("news-alert.api.key")
+  }
+
+  object Notifications {
+    lazy val latestMessageUrl = configuration.getMandatoryStringProperty("notifications.latest_message.url")
+    lazy val notificationSubscriptionTable = configuration.getMandatoryStringProperty("notifications.subscriptions_table")
+  }
+
+  object DeploysNotify {
+    lazy val apiKey = configuration.getStringProperty("deploys-notify.api.key")
   }
 }
 

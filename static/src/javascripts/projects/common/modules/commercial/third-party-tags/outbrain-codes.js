@@ -26,26 +26,15 @@ define([
         },
 
         merchandising: {
-            UK: {
-                mobile:  { code: 'MB_10' },
-                desktop: { code: 'AR_28' },
-                tablet:  { code: 'MB_11' }
-            },
-            US: {
-                mobile:  { code: 'CRMB_55' },
-                desktop: { code: 'CR_13' },
-                tablet:  { code: 'CRMB_56' }
-            },
-            AU: {
-                mobile:  { code: 'CRMB_57' },
-                desktop: { code: 'CR_14' },
-                tablet:  { code: 'CRMB_58' }
-            },
-            INT: {
-                mobile:  { code: 'CRMB_59' },
-                desktop: { code: 'CR_15' },
-                tablet:  { code: 'CRMB_60' }
-            }
+            mobile:  { code: 'MB_10' },
+            desktop: { code: 'AR_28' },
+            tablet:  { code: 'MB_11' }
+        },
+
+        email: {
+            mobile:  { code: 'MB_10' },
+            desktop: { code: 'AR_28' },
+            tablet:  { code: 'MB_11' }
         }
     };
 
@@ -53,7 +42,7 @@ define([
         if (!(data.slot in outbrainCodes) || data.slot === 'defaults') {
             return outbrainCodes.defaults[getSection(data.section)][data.breakpoint === 'wide' ? 'desktop' : data.breakpoint];
         } else {
-            return outbrainCodes.merchandising[data.edition][data.breakpoint === 'wide' ? 'desktop' : data.breakpoint];
+            return outbrainCodes.merchandising[data.breakpoint === 'wide' ? 'desktop' : data.breakpoint];
         }
     }
 

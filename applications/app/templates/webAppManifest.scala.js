@@ -17,6 +17,9 @@
     "start_url": "/uk?INTCMP=webapp",
     "display": "browser",
     "orientation": "portrait",
-    "gcm_sender_id":"713544253918",
-    "gcm_user_visible_only":true
+    "gcm_sender_id":"660236028602",
+    "gcm_user_visible_only":true,
+    "permissisons" : [
+     "gcm"
+     ]
 }

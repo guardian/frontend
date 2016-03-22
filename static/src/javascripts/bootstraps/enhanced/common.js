@@ -14,7 +14,6 @@ define([
     'common/utils/url',
     'common/utils/robust',
     'common/utils/storage',
-    'common/modules/analytics/foresee-survey',
     'common/modules/analytics/livestats',
     'common/modules/analytics/media-listener',
     'common/modules/analytics/omniture',
@@ -22,16 +21,17 @@ define([
     'common/modules/analytics/scrollDepth',
     'common/modules/analytics/css-logging',
     'common/modules/analytics/simple-metrics',
+    'common/modules/analytics/headlines-test-analytics',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/commercial/donot-use-adblock',
     'common/modules/commercial/user-features',
     'common/modules/discussion/comment-count',
     'common/modules/experiments/ab',
+    'common/modules/experiments/subscriber-number-form',
     'common/modules/identity/autosignin',
     'common/modules/identity/cookierefresh',
     'common/modules/navigation/navigation',
-    'common/modules/navigation/sticky',
-    'common/modules/navigation/newSticky',
+    'common/modules/commercial/sticky-top-banner',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/onward/history',
@@ -54,7 +54,6 @@ define([
     'common/modules/commercial/membership-messages',
     'common/modules/email/email',
     'common/modules/email/email-article',
-    'text!common/views/international-message.html',
     'bootstraps/enhanced/identity-common',
     'lodash/collections/forEach'
 ], function (
@@ -71,7 +70,6 @@ define([
     url,
     robust,
     storage,
-    Foresee,
     liveStats,
     mediaListener,
     omniture,
@@ -79,16 +77,17 @@ define([
     ScrollDepth,
     logCss,
     simpleMetrics,
+    HeadlinesTestAnalytics,
     userAdTargeting,
     donotUseAdblock,
     userFeatures,
     CommentCount,
     ab,
+    subscriberNumberForm,
     AutoSignin,
     CookieRefresh,
     navigation,
-    sticky,
-    newSticky,
+    stickyAdBanner,
     Profile,
     Search,
     history,
@@ -111,7 +110,6 @@ define([
     membershipMessages,
     email,
     emailArticle,
-    internationalMessage,
     identity,
     forEach
 ) {
@@ -137,21 +135,21 @@ define([
                 navigation.init();
             },
 
-            initialiseStickyHeader: function () {
+            initialiseStickyAdBanner: function () {
                 if (config.switches.viewability
-                    && !(config.switches.disableStickyNavOnMobile && detect.getBreakpoint() === 'mobile')
+                    && !(config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile')
                     && config.page.contentType !== 'Interactive'
                     && config.page.contentType !== 'Crossword'
-                    && (!config.switches.newCommercialContent || !config.page.isAdvertisementFeature)
-                    && config.page.pageId !== 'offline-page') {
-                    if (config.switches.removeStickyNav) {
-                        newSticky.initialise();
-                    } else {
-                        sticky.init();
-                    }
-                    config.page.hasStickyHeader = true;
+                    && !config.page.isImmersive
+                    && !config.page.isUsMinute
+                    && !config.page.isAdvertisementFeature
+                    && config.page.pageId !== 'offline-page'
+                    && !config.page.shouldHideAdverts
+                    && config.page.section !== 'childrens-books-site') {
+                    stickyAdBanner.initialise();
+                    config.page.hasStickyAdBanner = true;
                 } else {
-                    config.page.hasStickyHeader = false;
+                    config.page.hasStickyAdBanner = false;
                 }
             },
 
@@ -251,12 +249,6 @@ define([
                 }
             },
 
-            runForseeSurvey: function () {
-                if (config.switches.foresee) {
-                    Foresee.load();
-                }
-            },
-
             startRegister: function () {
                 if (!config.page.isSSL) {
                     register.initialise();
@@ -324,14 +316,6 @@ define([
                 };
             },
 
-            internationalSignposting: function () {
-                if (config.page.edition === 'INT' && config.page.pageId === 'international') {
-                    new Message('international-with-survey-new', {
-                        pinOnHide: true
-                    }).show(template(internationalMessage, {}));
-                }
-            },
-
             initPinterest: function () {
                 if (/Article|LiveBlog|Gallery|Video/.test(config.page.contentType)) {
                     pinterest();
@@ -370,6 +354,9 @@ define([
                         email.init(el);
                     });
                 });
+            },
+            headlinesTestAnalytics: function () {
+                HeadlinesTestAnalytics.init();
             }
         };
 
@@ -392,7 +379,7 @@ define([
                 ['c-tabs', modules.showTabs],
                 ['c-top-nav', modules.initialiseTopNavItems],
                 ['c-init-nav', modules.initialiseNavigation],
-                ['c-sticky-header', modules.initialiseStickyHeader],
+                ['c-sticky-ad-banner', modules.initialiseStickyAdBanner],
                 ['c-toggles', modules.showToggles],
                 ['c-dates', modules.showRelativeDates],
                 ['c-clickstream', modules.initClickstream],
@@ -400,11 +387,11 @@ define([
                 ['c-sign-in', modules.initAutoSignin],
                 ['c-id-cookie-refresh', modules.idCookieRefresh],
                 ['c-history-nav', modules.showHistoryInMegaNav],
-                ['c-forsee', modules.runForseeSurvey],
                 ['c-start-register', modules.startRegister],
                 ['c-tag-links', modules.showMoreTagsLink],
                 ['c-smart-banner', smartAppBanner.init],
                 ['c-adblock', modules.showAdblockMessage],
+                ['c-subscriber-number-form', subscriberNumberForm],
                 ['c-log-stats', modules.logLiveStats],
                 ['c-cookies', modules.cleanupCookies],
                 ['c-overlay', modules.initOpenOverlayOnClick],
@@ -414,12 +401,12 @@ define([
                 ['c-tech-feedback', techFeedback],
                 ['c-media-listeners', mediaListener],
                 ['c-accessibility-prefs', accessibilityPrefs],
-                ['c-international-signposting', modules.internationalSignposting],
                 ['c-pinterest', modules.initPinterest],
                 ['c-save-for-later', modules.saveForLater],
                 ['c-show-membership-messages', modules.showMembershipMessages],
                 ['c-email', modules.initEmail],
-                ['c-user-features', userFeatures.refresh]
+                ['c-user-features', userFeatures.refresh],
+                ['c-headlines-test-analytics', modules.headlinesTestAnalytics]
             ]), function (fn) {
                 fn();
             });

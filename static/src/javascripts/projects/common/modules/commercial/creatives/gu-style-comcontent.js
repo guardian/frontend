@@ -30,13 +30,12 @@ define([
     GustyleComcontent.prototype.create = function () {
         var externalLinkIcon = svgs('externalLink', ['gu-external-icon']),
             templateOptions = {
-                clickMacro: this.params.clickMacro,
-                gustyleClass: (this.params.adVariant === 'content') ?
-                        'gu-comcontent' : 'gu-display',
-                standFirst: (this.params.adVariant === 'content') ?
-                        '<p class="gu-text">' + this.params.articleText + '</p>' : '',
-                noteOrLink: (this.params.adVariant === 'content') ?
-                        '<span class="gu-note">Brought to you by:</span>' : '<a href="' + this.params.articleUrl + '" class="button button--tertiary button--medium">' + this.params.linkLabel + ' ' + externalLinkIcon + '</a>'
+                articleContentColor: 'gu-display__content-color--' + this.params.articleContentColor,
+                articleContentPosition: 'gu-display__content-position--' + this.params.articleContentPosition,
+                articleHeaderFontSize: 'gu-display__content-size--' + this.params.articleHeaderFontSize,
+                articleTextFontSize: 'gu-display__content-size--' + this.params.articleTextFontSize,
+                brandLogoPosition: 'gu-display__logo-pos--' + this.params.brandLogoPosition,
+                externalLinkIcon: externalLinkIcon
             };
 
         $.create(template(gustyleComcontentTpl, { data: merge(this.params, templateOptions) })).appendTo(this.$adSlot);

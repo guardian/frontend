@@ -86,7 +86,7 @@ The AMD module must return an object with the following properties,
 - `expiry`: The date on which this test is due to stop running.
 - `author`: The author of the test. They have responsibility for fixing and removing the test.
 - `description`: A plain English summary of the test.
-- `audience`: The ratio of people who you want in the test (Eg, 0.2 = 20%), who will then be split 50/50 between the control and variant.
+- `audience`: The ratio of people who you want in the test (Eg, 0.2 = 20%), who will then be split equally between the variants defined in the test.
 - `audienceOffset`: All users are given a permanent, unique hash that is a number between 0 and 1. `audienceOffset` allows you to specify the range of
   users you want to test. For example, an `audienceOffset` value of `0.5` and an `audience` of `0.1` means user with a hash between 0.5 and 0.6 will
   be opted in to the test. This helps to avoid overlapping tests.
@@ -122,8 +122,7 @@ define([
 ### Detecting a user's bucket
 You can use this code to check anywhere in your JS whether you're in a test bucket.
 ```
-if (ab.testCanBeRun('FaciaSlideshow') &&
-    ab.getTestVariantId('FaciaSlideshow') === 'slideshow') {
+if (ab.isInVariant('FaciaSlideshow', 'variant')) {
     ///...
 }
 ```

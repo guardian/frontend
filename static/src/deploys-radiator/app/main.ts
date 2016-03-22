@@ -5,7 +5,7 @@
 /// <reference path="../manual-typings/custom-window.d.ts" />
 /// <reference path="../jspm_packages/npm/monapt@0.5.0/dist/monapt.d.ts" />
 
-import { diff, patch, h, create } from 'virtual-dom';
+import { VPatch, diff, patch, h, create } from 'virtual-dom';
 import {
     Deploy, DeployRecord, createDeployRecord,
     Build, BuildRecord, createBuildRecord,
@@ -30,11 +30,11 @@ const ih =
     );
 
 let currentTree = h('div', {}, []);
-let rootNode = create(currentTree);
+let rootNode: Element = create(currentTree);
 document.body.appendChild(rootNode);
 
 const updateDom = (newTree: VirtualDOM.VNode): void => {
-    const patches = diff(currentTree, newTree);
+    const patches: VPatch[] = diff(currentTree, newTree);
     rootNode = patch(rootNode, patches);
     currentTree = newTree;
 };
@@ -175,7 +175,11 @@ const renderPage: (
     ) => {
         const isInSync = oldestProdDeploy.build === latestCodeDeploy.build;
         return h('.row#root', {}, [
-            h('h1', `Status: ${isInSync ? 'in sync. Ship it!' : 'out of sync.'}`),
+            h('h1', [
+                `Status: ${isInSync ? 'in sync. Ship it!' : 'out of sync.'}`,
+                ' ',
+                `Last updated: ${new Date().toISOString()}`
+            ]),
             h('hr', {}, []),
             exp(commits.size > 0) && h('.col', [
                 h('h1', [
@@ -313,9 +317,15 @@ const run = (): Promise<void> => {
 
 const intervalSeconds = 10;
 const wait = (): Promise<{}> => new Promise(resolve => setTimeout(resolve, intervalSeconds * 1000));
+interface Error {
+    stack: string;
+}
 const update = (): Promise<void> => {
     return run()
-        .then(wait, wait)
+        .then(wait, (error: Error) => {
+            console.error('Handled promise rejection.', error.stack);
+            return wait();
+        })
         .then(update);
 };
 update();

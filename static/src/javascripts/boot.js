@@ -70,9 +70,15 @@ define([
 
 
 
-    var shouldRunEnhance = guardian.isModernBrowser;
+    var shouldRunEnhance = guardian.isEnhanced;
+    var shouldRunCommercial = guardian.isModernBrowser;
 
-    var commercialResponsesPromise = preFetchModules(['bootstraps/commercial']);
+    var commercialResponsesPromise = (
+        shouldRunCommercial
+            ? preFetchModules(['bootstraps/commercial'])
+            : Promise.resolve()
+    );
+
     var enhancedModuleIds = [
         'enhanced-vendor',
         'bootstraps/enhanced/main'

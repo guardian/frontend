@@ -35,7 +35,7 @@ try {
                 }
             }
         }
-    })(guardian.isModernBrowser && 'atob' in window, document, window);
+    })(guardian.isEnhanced && 'atob' in window, document, window);
 } catch (e) {
     @if(play.Play.isDev) {throw (e)}
 }

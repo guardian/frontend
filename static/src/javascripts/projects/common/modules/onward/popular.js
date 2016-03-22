@@ -33,6 +33,7 @@ define([
         mediator.emit('register:begin', 'popular-in-section');
         this.hasSection = config.page && config.page.section && !contains(sectionsWithoutPopular, config.page.section);
         this.endpoint = '/most-read' + (this.hasSection ? '/' + config.page.section : '') + '.json';
+        this.$mpu = null;
     }
 
     Component.define(MostPopular);
@@ -49,8 +50,6 @@ define([
         if (commercialFeatures.popularContentMPU && !this.mobileMaximumSlotsReached()) {
             var $mpuEl = $('.js-fc-slice-mpu-candidate', this.elem);
             this.$mpu = $mpuEl.append(createAdSlot('mostpop', 'container-inline'));
-        } else {
-            this.$mpu = undefined;
         }
     };
 

@@ -2,7 +2,6 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-GET            /surveys/*file                                                                                                    dev.DevAssetsController.surveys(file)
 GET            /commercial/test-page                                                                                             controllers.commercial.CreativeTestPage.allComponents(k: List[String])
 
 # For dev machines
@@ -105,6 +104,7 @@ GET            /top-stories.json                                                
 GET            /top-stories/trails.json                                                                                          controllers.TopStoriesController.renderTrails()
 GET            /related/*path.json                                                                                               controllers.RelatedController.render(path)
 GET            /related/*path                                                                                                    controllers.RelatedController.renderHtml(path)
+GET            /people-who-read/:testVariant/*path.json                                                                          controllers.RelatedController.renderPeopleWhoRead(path, testVariant)
 GET            /popular-in-tag/*tag.json                                                                                         controllers.PopularInTag.render(tag)
 
 GET            /preference/edition/:edition                                                                                      controllers.ChangeEditionController.render(edition)
@@ -281,11 +281,12 @@ GET            /admin/football/api/squad/:teamId                                
 # Commercial
 GET            /commercial/travel/offers.json                                                                                    controllers.commercial.TravelOffers.renderTravel
 GET            /commercial/jobs.json                                                                                             controllers.commercial.JobAds.renderJobs
-GET            /commercial/masterclasses.json                                                                                    controllers.commercial.MasterClasses.renderMasterclasses
+GET            /commercial/masterclasses.json                                                                                    controllers.commercial.Masterclasses.renderMasterclasses
 GET            /commercial/soulmates/$subgroup<\w+>.json                                                                         controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
 GET            /commercial/soulmates-test/$subgroup<\w+>.json                                                                    controllers.commercial.SoulmatesController.renderSoulmatesTest(subgroup)
 GET            /commercial/books/book.json                                                                                       controllers.commercial.BookOffersController.renderBook
 GET            /commercial/books/books.json                                                                                      controllers.commercial.BookOffersController.renderBooks
+GET            /commercial/liveevents/event.json                                  controllers.commercial.LiveEventsController.renderEvent
 GET            /commercial/money/bestbuys.json                                                                                   controllers.commercial.MoneyOffers.renderBestBuys
 GET            /commercial/money/savings/:savingsType                                                                            controllers.commercial.MoneyOffers.savings(savingsType)
 GET            /commercial/money/current-accounts/:currentAccountType                                                            controllers.commercial.MoneyOffers.currentAccounts(currentAccountType)
@@ -299,13 +300,16 @@ GET            /commercial/capi-single-merch.json                               
 GET            /commercial/capi-single-merch                                                                                     controllers.commercial.ContentApiOffersController.itemHtml
 GET            /commercial/paid.json                                                                                             controllers.commercial.PaidContentCardController.cardJson
 GET            /commercial/paid                                                                                                  controllers.commercial.PaidContentCardController.cardHtml
+GET            /commercial/survey-simple-sign-up                                                                                 controllers.commercial.StaticPageController.renderSurveySimpleSignupPage()
+GET            /commercial/survey-simple-membership                                                                              controllers.commercial.StaticPageController.renderSurveySimpleMembershipPage()
+GET            /commercial/multi.json                                                                                            controllers.commercial.Multi.renderMulti
+GET            /commercial/subscriber-number                                                                                controllers.commercial.StaticPageController.renderSubscriberNumberPage()
 
 # Commercial Admin
 GET            /admin/commercial                                                                                                 controllers.admin.CommercialController.renderCommercialMenu()
 GET            /commercialtools/adunits/toapprove                                                                                controllers.admin.CommercialAdUnitController.renderToApprove()
 POST           /commercialtools/adunits/toapprove                                                                                controllers.admin.CommercialAdUnitController.approve()
 GET            /admin/commercial/fluid250                                                                                        controllers.admin.CommercialController.renderFluidAds()
-GET            /commercial/multi.json                                                                                            controllers.commercial.Multi.renderMulti
 GET            /admin/commercial/dfp/flush/view                                                                                  controllers.admin.commercial.DfpDataController.renderCacheFlushPage()
 GET            /admin/commercial/dfp/flush                                                                                       controllers.admin.commercial.DfpDataController.flushCache()
 GET            /admin/commercial/radiator                                                                                        controllers.admin.CommercialController.renderCommercialRadiator()
@@ -316,8 +320,8 @@ POST           /admin/commercial/adops/takeovers-empty-mpus/create              
 POST           /admin/commercial/adops/takeovers-empty-mpus/remove                                                               controllers.admin.commercial.TakeoverWithEmptyMPUsController.remove(url)
 
 # Breaking News
-GET             /news-alert/alerts                                                                                               controllers.NewsAlertController.alerts()
-POST            /news-alert/alert                                                                                                controllers.NewsAlertController.create()
+GET            /news-alert/alerts                                                                                                controllers.NewsAlertController.alerts()
+POST           /news-alert/alert                                                                                                 controllers.NewsAlertController.create()
 
 # dev-build only
 GET            /commercial/magento/token                                                                                         controllers.commercial.magento.AccessTokenGenerator.generate
@@ -327,9 +331,12 @@ GET            /commercial/magento/books                                        
 # AMP
 GET            /most-read-mf2.json                                                                                               controllers.MostPopularController.renderPopularMicroformat2()
 GET            /related-mf2/*path.json                                                                                           controllers.RelatedController.renderMf2(path)
-GET            /container-mf2/:num/:offset/:section.json                                                                         controllers.FaciaController.frontContainersMf2EditionRedirect(num, offset, section)
-GET            /container-mf2/:num/:offset/:section/:edition.json                                                                controllers.FaciaController.renderSomeFrontContainersMf2(num, offset, section, edition)
 GET            /series-mf2/*path.json                                                                                            controllers.SeriesController.renderMf2SeriesStories(path)
+
+GET            /container/count/:count/offset/:offset/mf2.json                                                                   controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section = "", edition = "")
+GET            /container/count/:count/offset/:offset/section/:section/mf2.json                                                  controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section, edition = "")
+GET            /container/count/:count/offset/:offset/edition/:edition/mf2.json                                                  controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section = "", edition)
+GET            /container/count/:count/offset/:offset/section/:section/edition/:edition/mf2.json                                 controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section, edition)
 
 # Onward journeys
 GET            /series/*path.json                                                                                                controllers.SeriesController.renderSeriesStories(path)
@@ -339,6 +346,11 @@ GET            /sitemaps/news.xml                                               
 GET            /sitemaps/video.xml                                                                                               controllers.SiteMapController.renderVideoSiteMap()
 GET            /offline-page.json                                                                                                controllers.WebAppController.offlinePage()
 GET            /service-worker.js                                                                                                controllers.WebAppController.serviceWorker()
+
+#Notifications Store
+POST           /notification/store                                                                                               controllers.NotificationsController.saveSubscription()
+POST           /notification/delete                                                                                              controllers.NotificationsController.deleteSubscription()
+
 GET            /2015-06-24-manifest.json                                                                                         controllers.WebAppController.manifest()
 GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()
 GET            /embed/video/*path                                                                                                controllers.EmbedController.render(path)
@@ -348,6 +360,7 @@ GET            /index/contributors                                              
 GET            /index/contributors/*contributor                                                                                  controllers.TagIndexController.contributor(contributor)
 GET            /$shortCode<p/[\w]+>                                                                                              controllers.ShortUrlsController.redirectShortUrl(shortCode)
 GET            /$shortCode<p/[\w]+>/:campaignCode                                                                                controllers.ShortUrlsController.fetchCampaignAndRedirectShortCode(shortCode, campaignCode)
+POST           /atom/quiz/:id/*path                                                                                              controllers.QuizController.submit(id,path)
 
 # Newspaper pages
 GET            /theguardian                                                                                                      controllers.NewspaperController.latestGuardianNewspaper()

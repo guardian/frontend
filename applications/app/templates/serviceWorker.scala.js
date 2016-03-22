@@ -1,4 +1,5 @@
 @()
+@import conf.Static
 
 /*eslint quotes: [2, "single"], curly: [2, "multi-line"], strict: 0*/
 /*eslint-env browser*/
@@ -90,6 +91,13 @@ self.addEventListener('install', function (event) {
     event.waitUntil(updateCache());
 });
 
+var needCredentialsWorkaround = function (url) {
+    var whitelist = ['https://discussion.theguardian.com/discussion-api'];
+    return whitelist.some(function (entry) {
+        return new RegExp('^' + entry).test(url);
+    });
+};
+
 this.addEventListener('fetch', function (event) {
     var request = event.request;
 
@@ -124,9 +132,71 @@ this.addEventListener('fetch', function (event) {
         event.respondWith(
             caches.match(request)
                 .then(function (response) {
-                    return response || fetch(request);
+                    // Workaround Firefox bug which drops cookies
+                    // https://github.com/guardian/frontend/issues/12012
+                    return response || fetch(request, needCredentialsWorkaround(request.url) ? { credentials: 'include' } : {});
                 })
         );
     }
 });
 
+self.addEventListener('activate', function(event) {
+});
+
+self.addEventListener('push', function(event) {
+
+    event.waitUntil(
+        self.registration.pushManager.getSubscription().then(function (sub) {
+            var gcmBrowserId = sub.endpoint.substring(sub.endpoint.lastIndexOf('/') + 1);
+
+            var endpoint = '@{JavaScript(Configuration.Notifications.latestMessageUrl)}/' + gcmBrowserId;
+            fetch(endpoint, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (response) {
+               return response.json();
+            })
+            .then(function (json) {
+
+               if(json.status === "ok")
+                    var messages = json.messages;
+
+                    messages.forEach( function(message) {
+                        var data = {topic: message.topic};
+                        self.registration.showNotification(message.title, {
+                            body: message.body,
+                            icon: '@{JavaScript(Static("images/favicons/114x114.png").path)}',
+                            tag: message.title,
+                            data: data
+                        });
+                    });
+                })
+
+        })
+    );
+});
+
+self.addEventListener('notificationclick', function(event){
+
+    event.notification.close();
+    var url = '@{JavaScript(Configuration.site.host)}/' + event.notification.data.topic + "?CMP=not_b-webalert";
+
+    event.waitUntil(
+        clients.matchAll({
+                type: 'window'
+            })
+            .then(function(windowClients) {
+                for (var i = 0; i < windowClients.length; i++) {
+                    var client = windowClients[i];
+                    if (client.url === url && 'focus' in client) {
+                        return client.focus();
+                    }
+                }
+                if (clients.openWindow) {
+                    return clients.openWindow(url);
+                }
+            })
+    );
+});

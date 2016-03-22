@@ -191,4 +191,15 @@
         background-color: unset;
     }
 
+    &.tonal--tone-media .tonal__standfirst a {
+        color: colour(news-default);
+    }
+
+    &.tonal--tone-media .tonal__standfirst {
+        .bullet:before,
+        ul>li:before {
+            background-color: colour(neutral-1);
+        }
+    }
+
 }

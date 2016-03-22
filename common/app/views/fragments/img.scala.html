@@ -67,28 +67,30 @@
 }
 
 @lightbox(imageHtml: => Html) =  {
-
-    @lightboxIndex.map { index =>
-        <a href="#img-@index" class="article__img-container js-gallerythumbs" data-link-name="Launch Article Lightbox" data-is-ajax>
+    @if(amp) {
+        @imageHtml
+    } else {
+        @lightboxIndex.map { index =>
+            <a href="#img-@index" class="article__img-container js-gallerythumbs" data-link-name="Launch Article Lightbox" data-is-ajax>
                 @imageHtml
                 @fragments.inlineSvg("expand-image", "icon", List("centered-icon rounded-icon article__fullscreen modern-visible"))
-        </a>
-        @shareInfo.map { case (shareLinks, contentType) =>
-            @share.blockLevelSharing(s"img-$index", shareLinks, contentType)
-        }
-    }.getOrElse {
-        @imageHtml
-    }
+            </a>
 
+            @shareInfo.map { case (shareLinks, contentType) =>
+                @share.blockLevelSharing(s"img-$index", shareLinks, contentType)
+            }
+        }.getOrElse {
+            @imageHtml
+        }
+    }
 }
 
 @image(picture: model.ImageMedia, widths: WidthsByBreakpoint, imageOption: Option[ImageAsset], isMain: Boolean) = {
 
 @if(amp) {
+
     @picture.largestImage.map { largestImage =>
-        <amp-img src="@ImgSrc.getFallbackUrl(picture)"
-        srcset="@ImgSrc.srcset(picture, widths)"
-        sizes="@widths.sizes"
+        <amp-img src="@ImgSrc.getAmpImageUrl(picture)"
         layout="responsive"
         width="@largestImage.width"
         height="@largestImage.height"
@@ -109,6 +111,9 @@
         @* IE 9 needs this workaround as per https://scottjehl.github.io/picturefill/ *@
         <!--[if IE 9]><video style="display: none;"><![endif]-->
         @widths.breakpoints.map { breakpointWidth =>
+            <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi)"
+                    sizes="@breakpointWidth.width"
+                    srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(picture), hidpi = true)" />
             <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px)"
                     sizes="@breakpointWidth.width"
                     srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(picture))" />

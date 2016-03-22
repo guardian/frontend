@@ -44,7 +44,7 @@
 }
 
 .tonal--tone-review .tonal__standfirst,
-.tone-review--item {
+.fc-item.tone-review {
     background-color: #7d7569;
 }
 
@@ -73,7 +73,7 @@
 }
 
 .tonal--tone-live .tonal__header,
-.fc-item.tone-live--item {
+.fc-item.tone-live {
     background-color: #b51800;
 }
 
@@ -82,7 +82,7 @@
 }
 
 .tonal--tone-special-report .tonal__header,
-.fc-item.tone-special-report--item,
+.fc-item.tone-special-report,
 .fc-item.tone-special-report {
     background-color: #63717a;
 }
@@ -148,7 +148,7 @@
 }
 
 .tonal--tone-feature .tonal__header .content__section-label__link,
-.fc-item.tone-live--item .fc-item__meta,
+.fc-item.tone-live .fc-item__meta,
 .fc-item.tone-feature .fc-item__meta  {
     color: #fdadba;
 }
@@ -204,10 +204,10 @@
 .tonal--tone-live .tonal__header .content__section-label__link,
 .tonal--tone-letters .tonal__standfirst,
 .tonal--tone-letters .tonal__standfirst .content__standfirst,
-.tone-media--item .fc-item__title,
-.tone-review--item .fc-item__title,
-.tone-live--item .fc-item__title,
-.tone-special-report--item .fc-item__title,
+.tone-media .fc-item__title,
+.tone-review .fc-item__title,
+.tone-live .fc-item__title,
+.tone-special-report .fc-item__title,
 .tone-special-report .fc-item__title {
     color: #fff;
 }
@@ -254,19 +254,18 @@ color: #21a2bc;
     color: #63717a;
 }
 
-.inline-tone-fill,
-.meta__twitter svg,
-.meta__email svg {
+.tonal--tone-news .inline-tone-fill {
     fill: #005689;
 }
 
 .tonal--tone-comment .inline-tone-fill,
 .tonal--tone-letters .inline-tone-fill {
+    /* letters & comment */
     fill: #e6711b;
 }
 
 .tonal--tone-feature .inline-tone-fill {
-    /* feature-default */
+    /* feature */
     fill: #951c55;
 }
 
@@ -301,17 +300,13 @@ color: #21a2bc;
     fill: #63717a;
 }
 
-.fc-item.tone-media--item .fc-item__header svg,
-.fc-item.tone-review--item .fc-item__header svg{
+.fc-item.tone-media .fc-item__header svg,
+.fc-item.tone-review .fc-item__header svg{
     fill: #fb0;
     margin-right: .1em;
 }
 
-.inline-quote svg {
-    fill: #767676;
-}
-
-.fc-item.tone-live--item .fc-item__meta svg,
+.fc-item.tone-live .fc-item__meta svg,
 .fc-item.tone-feature .fc-item__meta svg{
     fill: #fdadba;
 }
@@ -333,17 +328,17 @@ color: #21a2bc;
     color: #fff;
 }
 
-.fc-item.tone-review--item .fc-item__meta,
-.fc-item.tone-special-report--item .fc-item__meta,
+.fc-item.tone-review .fc-item__meta,
+.fc-item.tone-special-report .fc-item__meta,
 .fc-item.tone-special-report .fc-item__meta{
     color: #dcdcdc;
 }
 
-.fc-item.tone-special-report--item {
+.fc-item.tone-special-report {
     border-top-color: #aad8f1;
 }
 
-.fc-item.tone-live--item,
+.fc-item.tone-live,
 .fc-item.tone-feature {
     border-top-color: #fdadba;
 }
@@ -356,11 +351,11 @@ color: #21a2bc;
     border-top-color: #e6711b;
 }
 
-.fc-item.tone-review--item,
-.fc-item.tone-media--item {
+.fc-item.tone-review,
+.fc-item.tone-media {
     border-top-color: #fb0;
 }
 
-.fc-item.tone-media--item {
+.fc-item.tone-media {
     background-color: #333;
 }

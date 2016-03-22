@@ -14,7 +14,7 @@ GET        /commercial/travel/offers.json                                control
 GET        /commercial/jobs.json                                         controllers.commercial.JobAds.renderJobs
 
 # Masterclass merchandising components
-GET        /commercial/masterclasses.json                                controllers.commercial.MasterClasses.renderMasterclasses
+GET        /commercial/masterclasses.json                                controllers.commercial.Masterclasses.renderMasterclasses
 
 # Soulmates merchandising components
 GET        /commercial/soulmates/$subgroup<\w+>.json                     controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
@@ -31,6 +31,9 @@ GET        /commercial/money/loans/:loanType                             control
 GET        /commercial/books/book.json                                   controllers.commercial.BookOffersController.renderBook
 GET        /commercial/books/books.json                                  controllers.commercial.BookOffersController.renderBooks
 
+# Live events merchandising components
+GET        /commercial/liveevents/event.json                             controllers.commercial.LiveEventsController.renderEvent
+
 # Multiple offer merchandising components
 GET        /commercial/multi.json                                        controllers.commercial.Multi.renderMulti
 
@@ -43,3 +46,8 @@ GET        /commercial/capi-single-merch.json                            control
 GET        /commercial/capi-single-merch                                 controllers.commercial.ContentApiOffersController.itemHtml
 GET        /commercial/paid.json                                         controllers.commercial.PaidContentCardController.cardJson
 GET        /commercial/paid                                              controllers.commercial.PaidContentCardController.cardHtml
+
+# Static pages
+GET        /commercial/survey-simple-sign-up                             controllers.commercial.StaticPageController.renderSurveySimpleSignupPage()
+GET        /commercial/survey-simple-membership                          controllers.commercial.StaticPageController.renderSurveySimpleMembershipPage()
+GET        /commercial/subscriber-number                            controllers.commercial.StaticPageController.renderSubscriberNumberPage()

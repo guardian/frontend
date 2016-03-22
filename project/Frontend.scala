@@ -26,8 +26,6 @@ object Frontend extends Build with Prototypes {
       contentApiClient,
       faciaScalaClient,
       filters,
-      flexibleContentBlockToText,
-      flexibleContentBodyParser,
       googleSheetsApi,
       guardianConfiguration,
       jacksonCore,
@@ -127,7 +125,11 @@ object Frontend extends Build with Prototypes {
     RoutesKeys.routesImport += "org.joda.time.LocalDate"
   )
 
-  val faciaPress = application("facia-press").dependsOn(commonWithTests)
+  val faciaPress = application("facia-press").dependsOn(commonWithTests).settings(
+    libraryDependencies ++= Seq(
+      awsKinesis
+    )
+  )
 
   val identity = application("identity").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(

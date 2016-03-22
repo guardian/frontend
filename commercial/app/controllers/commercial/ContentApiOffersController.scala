@@ -8,7 +8,6 @@ import play.api.mvc._
 
 import scala.concurrent.Future
 import scala.util.control.NonFatal
-import conf.switches.Switches.NewCommercialContent
 
 object ContentApiOffersController extends Controller with ExecutionContexts with implicits.Requests with Logging {
 
@@ -18,15 +17,11 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
     "foundation-supported" -> "fc-container--foundation-supported"
   )
 
-  private val sponsorTypeToLabel = {if (NewCommercialContent.isSwitchedOn) Map(
+  private val sponsorTypeToLabel = Map(
     "sponsored" -> "Supported by",
     "advertisement-feature" -> "Paid for by",
     "foundation-supported" -> "Supported by"
-  ) else {Map(
-    "sponsored" -> "Sponsored by",
-    "advertisement-feature" -> "Brought to you by",
-    "foundation-supported" -> "Supported by"
-  )}}
+  )
 
   private def renderItems(format: Format, isMulti: Boolean) = MemcachedAction { implicit request =>
 
@@ -71,9 +66,65 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
       case Nil => NoCache(format.nilResult)
       case contents => Cached(componentMaxAge) {
         if (isMulti) {
-          format.result(views.html.contentapi.items(contents, optLogo, optCapiTitle, optCapiLink, optCapiAbout, optClickMacro, optOmnitureId, optCapiAdFeature, optSponsorType, optSponsorLabel))
+          if(conf.switches.Switches.v2CapiMultipleTemplate.isSwitchedOn) {
+            format.result(views.html.contentapi.itemsV2(
+              contents,
+              optLogo,
+              optCapiTitle,
+              optCapiLink,
+              optCapiAbout,
+              optClickMacro,
+              optOmnitureId,
+              optCapiAdFeature,
+              optSponsorType,
+              optSponsorLabel)
+            )
+          } else {
+            format.result(views.html.contentapi.items(
+              contents,
+              optLogo,
+              optCapiTitle,
+              optCapiLink,
+              optCapiAbout,
+              optClickMacro,
+              optOmnitureId,
+              optCapiAdFeature,
+              optSponsorType,
+              optSponsorLabel)
+            )
+          }
         } else {
-          format.result(views.html.contentapi.item(contents.head, optLogo, optCapiTitle, optCapiLink, optCapiAbout, optCapiButtonText, optCapiReadMoreUrl, optCapiReadMoreText, optSponsorType, optSponsorLabel, optClickMacro, optOmnitureId))
+          if(conf.switches.Switches.v2CapiSingleTemplate.isSwitchedOn) {
+            format.result(views.html.contentapi.itemV2(
+              contents.head,
+              optLogo,
+              optCapiTitle,
+              optCapiLink,
+              optCapiAbout,
+              optCapiButtonText,
+              optCapiReadMoreUrl,
+              optCapiReadMoreText,
+              optSponsorType,
+              optSponsorLabel,
+              optClickMacro,
+              optOmnitureId)
+            )
+          } else {
+            format.result(views.html.contentapi.item(
+              contents.head,
+              optLogo,
+              optCapiTitle,
+              optCapiLink,
+              optCapiAbout,
+              optCapiButtonText,
+              optCapiReadMoreUrl,
+              optCapiReadMoreText,
+              optSponsorType,
+              optSponsorLabel,
+              optClickMacro,
+              optOmnitureId)
+            )
+          }
         }
       }
     }

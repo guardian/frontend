@@ -150,7 +150,7 @@
     @include mq(tablet) {
         display: table-cell;
         vertical-align: middle;
-        min-width: $gs-column-width * 2;
+        min-width: 135px;
         margin-top: 0;
     }
 }
@@ -458,14 +458,42 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 /**
  * Membership messages
  */
+@mixin site-message-dark-text {
+    &,
+    .site-message__actions,
+    .site-message__actions__item,
+    path,
+    button,
+    a {
+        color: #333333;
+        fill: #333333;
+        border-color: #333333;
+    }
+}
 .site-message--adblock-message,
-.site-message--membership-message,
-.site-message--membership-message-uk,
-.site-message--membership-message-uk-redisplayed,
-.site-message--membership-message-us,
-.site-message--membership-message-us-redisplayed {
+.site-message--membership-message {
     background: colour(membership-default);
 }
+.site-message--membership-message-deep-purple {
+    background: #7d0068;
+}
+.site-message--membership-message-orange {
+    background: #ffbb00;
+    @include site-message-dark-text;
+}
+.site-message--membership-message-vibrant-blue {
+    background: #4bc6df;
+    @include site-message-dark-text;
+}
+.site-message--membership-message-light-blue {
+    background: #aad8f1;
+    @include site-message-dark-text;
+}
+.site-message--membership-message-teal {
+    background: #69d1ca;
+    @include site-message-dark-text;
+}
+
 
 
 
@@ -488,6 +516,15 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     text-align: center;
     padding-top: 5px;
     display: block;
+
+    .inline-adblock-coins-us, .inline-adblock-coins {
+        display: block;
+        line-height: 0;
+    }
+
+    svg {
+        height: 72px;
+    }
 }
 
 .adblock-sticky__coin-membership-logo {

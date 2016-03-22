@@ -3,7 +3,7 @@ package controllers.commercial
 import common.ExecutionContexts
 import model.commercial.books.BestsellersAgent
 import model.commercial.jobs.JobsAgent
-import model.commercial.masterclasses.MasterClassAgent
+import model.commercial.events.MasterclassAgent
 import model.commercial.soulmates.SoulmatesAgent
 import model.commercial.travel.TravelOffersAgent
 import model.{Cached, NoCache}
@@ -33,7 +33,9 @@ object Multi
     val eventualContent = componentsAndSpecificIds map {
       case ("jobs", jobId) if jobId.nonEmpty =>
         Future.successful {
-          JobsAgent.specificJobs(Seq(jobId)).headOption map {
+          JobsAgent.specificJobs(Seq(jobId)).headOption orElse {
+            JobsAgent.jobsTargetedAt(segment).headOption
+          } map {
             views.html.jobs.jobFragment(_, clickMacro)
           }
         }
@@ -45,8 +47,10 @@ object Multi
         }
       case ("books", isbn) if isbn.nonEmpty =>
         BestsellersAgent.getSpecificBooks(Seq(isbn)) map { books =>
-          books.headOption map { book =>
-            views.html.books.bookFragment(book, clickMacro)
+          books.headOption orElse {
+            BestsellersAgent.bestsellersTargetedAt(segment).headOption
+          } map {
+            views.html.books.bookFragment(_, clickMacro)
           }
         }
       case ("books", _) =>
@@ -57,7 +61,9 @@ object Multi
         }
       case ("travel", travelId) if travelId.nonEmpty =>
         Future.successful {
-          TravelOffersAgent.specificTravelOffers(Seq(travelId)).headOption map {
+          TravelOffersAgent.specificTravelOffers(Seq(travelId)).headOption orElse {
+            TravelOffersAgent.offersTargetedAt(segment).headOption
+          } map {
             views.html.travel.travelFragment(_, clickMacro)
           }
         }
@@ -69,14 +75,16 @@ object Multi
         }
       case ("masterclasses", eventBriteId) if eventBriteId.nonEmpty =>
         Future.successful {
-          MasterClassAgent.specificClasses(Seq(eventBriteId)).headOption map {
-            views.html.masterClasses.masterClassFragment(_, clickMacro)
+          MasterclassAgent.specificMasterclasses(Seq(eventBriteId)).headOption orElse {
+            MasterclassAgent.masterclassesTargetedAt(segment).headOption
+          } map {
+            views.html.masterclasses.masterclassFragment(_, clickMacro)
           }
         }
       case ("masterclasses", _) =>
         Future.successful {
-          MasterClassAgent.masterclassesTargetedAt(segment).headOption map {
-            views.html.masterClasses.masterClassFragment(_, clickMacro)
+          MasterclassAgent.masterclassesTargetedAt(segment).headOption map {
+            views.html.masterclasses.masterclassFragment(_, clickMacro)
           }
         }
       case ("soulmates", _) =>
@@ -95,7 +103,11 @@ object Multi
       val content = contents.flatten
       if (requestedContent.nonEmpty && content.size == requestedContent.size) {
         Cached(componentMaxAge) {
-          jsonFormat.result(views.html.multi(content, omnitureId))
+          if(conf.switches.Switches.v2BlendedTemplate.isSwitchedOn) {
+            jsonFormat.result(views.html.multiV2(content, omnitureId))
+          } else {
+            jsonFormat.result(views.html.multi(content, omnitureId))
+          }
         }
       } else {
         NoCache(jsonFormat.nilResult)

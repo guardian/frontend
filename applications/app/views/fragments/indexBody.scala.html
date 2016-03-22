@@ -1,6 +1,5 @@
 @(index: services.IndexPage)(implicit request: RequestHeader)
 @import common.{Edition, PagePaths}
-@import conf.switches.Switches
 @import model.FrontProperties.empty
 @import services.IndexPage
 @import views.html.fragments.containers.facia_cards.{container, containerScaffold}
@@ -22,9 +21,7 @@
                     index.commercial.isAdvertisementFeature ||
                     index.commercial.isFoundationSupported
                 ),
-                "fc-container--advertisement-feature" -> index.commercial.isAdvertisementFeature,
-                "paid-content--advertisement-feature" ->
-                    (Switches.NewCommercialContent.isSwitchedOn && index.commercial.isAdvertisementFeature)
+                "fc-container--advertisement-feature paid-content--advertisement-feature" -> index.commercial.isAdvertisementFeature
             ), "u-cf index-page"
         )"
         data-link-name="Front | @request.path"
@@ -36,7 +33,7 @@
         }
         role="main">
 
-        @if(Switches.NewCommercialContent.isSwitchedOn && index.commercial.isAdvertisementFeature) {
+        @if(index.commercial.isAdvertisementFeature) {
             @fragments.guBand()
         }
 
