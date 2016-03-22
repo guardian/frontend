@@ -2,10 +2,9 @@
   omnitureId: Option[String],
   clickMacro: Option[String])(implicit request: RequestHeader)
 
-@containerWrapper( Seq("legacy", "books", "tone-books")
-                 , omnitureId.map(id => s"merchandising | books standard | ${id}")
-                 , optActions = Some(actions)
-                 ){
+@containerWrapper(Seq("legacy", "books", "tone-books"),
+                  omnitureId.map(id => s"merchandising | books standard | ${id}"),
+                  optActions = Some(actions)){
 
     <a class="adverts__logo" href="@{clickMacro}http://www.guardianbookshop.co.uk/" data-link-name="merchandising-bookshop-v2_0_2014-10-15-medium-visit-shop">
         @fragments.inlineSvg("marque-54", "icon")

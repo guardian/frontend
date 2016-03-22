@@ -11,12 +11,11 @@
 
 @import views.html.fragments.inlineSvg
 
-@containerWrapper( Seq("legacy", "capi", "tone-capi")
-                 , omnitureId.map(id => s"merchandising | capi | multiple ${id}")
-                 , optBadge = Some(badge)
-                 , optKicker = Some(fragments.commercial.paidForMeta())
-                 , optStamp = Some(stamp)
-                 ){
+@containerWrapper(Seq("legacy", "capi", "tone-capi"),
+                  omnitureId.map(id => s"merchandising | capi | multiple ${id}"),
+                  optBadge = Some(badge),
+                  optKicker = Some(fragments.commercial.paidForMeta()),
+                  optStamp = Some(stamp)){
 
     @optCapiLink.map { linkUrl =>
         <a href="@clickMacro@linkUrl" class="adverts__logo u-text-hyphenate" data-link-name="header link">@optCapiTitle</a>
