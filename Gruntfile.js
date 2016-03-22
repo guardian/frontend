@@ -86,7 +86,7 @@ module.exports = function (grunt) {
     /**
      * Validate tasks
      */
-    grunt.registerTask('validate:css', ['compile:images', 'sass:compile', 'sass:compileStyleguide']);
+    grunt.registerTask('validate:css', ['compile:images', 'sass:compile']);
     grunt.registerTask('validate:sass', ['scsslint']);
     grunt.registerTask('validate:js', function (app) {
         var target = (app) ? ':' + app : '';
@@ -104,7 +104,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration']);
     grunt.registerTask('compile:css', function (fullCompile) {
-        grunt.task.run(['clean:css', 'mkdir:css', 'compile:images', 'sass:compile', 'sass:compileStyleguide']);
+        grunt.task.run(['clean:css', 'mkdir:css', 'compile:images', 'sass:compile']);
 
         if (options.isDev) {
             grunt.task.run(['replace:cssSourceMaps', 'copy:css']);
