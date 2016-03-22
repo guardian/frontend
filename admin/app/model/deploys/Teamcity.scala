@@ -17,9 +17,11 @@ object Commit {
       (__ \ "comment").read[String]
     )(Commit.apply _)
 }
+// TODO: Rename projectName to projectName (dotcom) and buildTypeName (master)
 case class TeamCityBuild(number: String,
                          id: Int,
                          status: String,
+                         state: String,
                          projectName: String,
                          parentNumber: Option[String],
                          revision: String,
@@ -36,6 +38,7 @@ object TeamCityBuild {
     (__ \ "number").read[String] and
       (__ \ "id").read[Int] and
       (__ \ "status").read[String] and
+      (__ \ "state").read[String] and
       (__ \ "buildType").read(
         (__ \ "projectName").read[String] and
           (__ \ "name").read[String]
@@ -53,20 +56,56 @@ trait TeamcityService {
 
   val httpClient: HttpClient
 
+  val apiPath = "/guestAuth/app/rest"
+
+  val buildFields: String = List(
+    "id", "number", "buildType(name,projectName)", "status", "state",
+    "revisions(revision(version))", "changes(change(username,comment,version))",
+    "artifact-dependencies(build(number))"
+  ).mkString(",");
+
   def getTeamCityBuild(number: String): Future[ApiResponse[TeamCityBuild]] = {
     val apiPath = "/guestAuth/app/rest"
+    // state:any needed for running
     val url = s"${Configuration.teamcity.internalHost}${apiPath}/builds/number:$number,state:any,canceled(any)"
 
     httpClient.GET(url,
-      queryString = Map("fields" -> List(
-        "id", "number", "buildType(name,projectName)", "status",
-        "revisions(revision(version))", "changes(change(username,comment,version))",
-        "artifact-dependencies(build(number))").mkString(",")),
+      queryString = Map("fields" -> buildFields),
       headers = Map("Accept" -> "application/json")
     ).map { response =>
       response.status match {
         case 200 => response.json.validate[TeamCityBuild] match {
           case JsSuccess(build, _) => Right(build)
+          case JsError(error) => Left(ApiErrors(List(ApiError("Invalid JSON from Teamcity API", 500))))
+        }
+        case statusCode => Left(ApiErrors(List(ApiError(s"Invalid status code from TeamCity: $statusCode", 500))))
+      }
+    }
+  }
+
+  def getTeamCityBuilds(maybeProjectName: Option[String], maybeBuildTypeName: Option[String], maybePageSize: Option[Int]): Future[ApiResponse[List[TeamCityBuild]]] = {
+    val url = s"${Configuration.teamcity.host}${apiPath}/builds"
+
+    val locator: String = {
+      List(
+        maybeProjectName.map(id => s"project:(id:$id)"),
+        maybeBuildTypeName.map(name => s"buildType:(name:$name)"),
+        Some("state:any"),
+        Some("canceled(any)"),
+        maybePageSize.map(pageSize => s"count:${pageSize.toString}")
+      ).flatten.mkString(",")
+    }
+
+    val queryString = Map("locator" -> locator, "fields" -> s"build(${buildFields})")
+
+    httpClient.GET(url,
+      queryString = queryString,
+      headers = Map("Accept" -> "application/json")
+    ).map { response =>
+      val apiJsonBuild = (response.json \ "build")
+      response.status match {
+        case 200 => apiJsonBuild.validate[List[TeamCityBuild]] match {
+          case JsSuccess(builds, _) => Right(builds)
           case JsError(error) => Left(ApiErrors(List(ApiError("Invalid JSON from Teamcity API", 500))))
         }
         case statusCode => Left(ApiErrors(List(ApiError(s"Invalid status code from TeamCity: $statusCode", 500))))

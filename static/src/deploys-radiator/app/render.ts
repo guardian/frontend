@@ -1,13 +1,12 @@
 import { h } from 'virtual-dom';
 import {
     DeployGroupRecord, DeployRecord, Deploy, GitHubCommit,
-    createDeployGroupRecord
+    createDeployGroupRecord, BuildRecord
 } from './model';
 import { List, Map, Record, Iterable } from 'immutable';
-import { Option } from 'monapt';
 import { hasDeployStarted, getStartedDeploysFor, getMostRecentDeploys } from './model-helpers';
-
-const headOption = <A>(array: Array<A>): Option<A> => Option(array[0]);
+import { Option } from 'monapt';
+import { headOption } from './helpers';
 
 // https://github.com/Matt-Esch/virtual-dom/issues/276
 const ih =
@@ -106,7 +105,6 @@ const renderGroupDeployListNode = (deploys: List<DeployRecord>) => {
                                         h('a', {
                                             href: createRiffRaffDeployLink(deploy.uuid),
                                             title: previousBuild ? `Previous build: ${previousBuild.build}` : ''
-
                                         }, deploy.projectName)
                                     ]);
                                 })
@@ -124,12 +122,14 @@ const renderPage: (
     deploysPair: [ List<DeployRecord>, List<DeployRecord> ],
     // TODO: Use tuple instead
     deployPair: Array<DeployRecord>,
-    commits: List<GitHubCommit>
+    commits: List<GitHubCommit>,
+    maybeLatestBuild: Option<BuildRecord>
 ) => VirtualDOM.VNode =
     (
         [ codeDeploys, prodDeploys ],
         [ latestCodeDeploy, oldestProdDeploy ],
-        commits
+        commits,
+        maybeLatestBuild
     ) => {
         const isInSync = oldestProdDeploy.build === latestCodeDeploy.build;
         return h('.row#root', {}, [
@@ -137,6 +137,9 @@ const renderPage: (
                 `Status: ${isInSync ? 'in sync. Ship it!' : 'out of sync.'}`
             ]),
             h('hr', {}, []),
+            maybeLatestBuild
+                .map(latestBuild => h('h2', {}, `Latest build: ${latestBuild.number}, ${latestBuild.state}, ${latestBuild.status}`))
+                .getOrElse(() => undefined),
             exp(commits.size > 0) && h('.col', [
                 h('h1', [
                     'Difference (',

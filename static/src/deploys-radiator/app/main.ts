@@ -7,9 +7,11 @@
 import { VPatch, diff, patch, h, create } from 'virtual-dom';
 import { List, Map, Record, Iterable } from 'immutable';
 import renderPage from './render';
-import { getDeploys, getBuild, getDifference } from './api';
-import { DeployRecord } from './model';
+import { getDeploys, getBuild, getDifference, getBuilds } from './api';
+import { DeployRecord, BuildRecord } from './model';
 import { getMostRecentDeploys } from './model-helpers';
+import { headOption } from './helpers';
+import { Option } from 'monapt';
 
 let currentTree = h('div', {}, []);
 let rootNode: Element = create(currentTree);
@@ -71,8 +73,10 @@ const run = (): Promise<void> => {
         getDifference(prodBuild.revision, codeBuild.revision).then(gitHubCommits => gitHubCommits.reverse().toList())
     ));
 
-    return Promise.all([ deploysPromise, latestDeploysPromise, differencePromise ])
-        .then(([ deploysPair, deployPair, commits ]) => renderPage(deploysPair, deployPair, commits))
+    const latestBuildPromise: Promise<Option<BuildRecord>> = getBuilds().then(builds => headOption(builds.toJS()));
+
+    return Promise.all([ deploysPromise, latestDeploysPromise, differencePromise, latestBuildPromise ])
+        .then(([ deploysPair, deployPair, commits, latestBuild ]) => renderPage(deploysPair, deployPair, commits, latestBuild))
         .then(updateDom);
 };
 

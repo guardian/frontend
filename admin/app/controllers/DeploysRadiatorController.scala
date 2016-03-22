@@ -22,6 +22,10 @@ trait DeploysRadiatorController extends Controller with Logging with AuthLogging
     teamcity.getTeamCityBuild(number).map(ApiResults(_))
   }
 
+  def getBuilds(maybeProjectName: Option[String], maybeBuildTypeName: Option[String], maybePageSize: Option[Int]) = AuthActions.AuthActionTest.async {
+    teamcity.getTeamCityBuilds(maybeProjectName, maybeBuildTypeName, maybePageSize).map(ApiResults(_))
+  }
+
   def renderDeploysRadiator() = AuthActions.AuthActionTest {
     NoCache(Ok(views.html.deploysRadiator.main()))
   }

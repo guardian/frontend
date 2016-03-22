@@ -1,7 +1,7 @@
 import {
     DeployRecord, createDeployRecord,
     BuildRecord, createBuildRecord,
-    DeploysJson, BuildJson,
+    DeploysJson, BuildJson, BuildsJson, BuildJsonResponse,
     GitHubCompareJson, GitHubCommitJson, GitHubCommit,
     GitHubErrorJson
 } from './model';
@@ -20,16 +20,27 @@ export const getDeploys = (stage: string): Promise<List<DeployRecord>> => (
         }))))
 );
 
+const buildJsonResponseToBuild = (buildJsonResponse: BuildJsonResponse): BuildRecord => createBuildRecord({
+    number: Number(buildJsonResponse.number),
+    projectName: buildJsonResponse.projectName,
+    status: buildJsonResponse.status,
+    state: buildJsonResponse.state,
+    revision: buildJsonResponse.revision,
+    commits: buildJsonResponse.commits
+});
+
 export const getBuild = (build: number): Promise<BuildRecord> => (
     fetch(`${apiPath}/builds/${build}`, { credentials: 'same-origin' })
         .then((response): Promise<BuildJson> => response.json())
-        .then(build => build.response)
-        .then(build => createBuildRecord({
-            number: Number(build.number),
-            projectName: build.projectName,
-            revision: build.revision,
-            commits: build.commits
-        }))
+        .then(buildJson => buildJson.response)
+        .then(buildJsonResponseToBuild)
+);
+
+export const getBuilds = (): Promise<List<BuildRecord>> => (
+    fetch(`${apiPath}/builds?projectName=dotcom&buildTypeName=master&pageSize=5`, { credentials: 'same-origin' })
+        .then((response): Promise<BuildsJson> => response.json())
+        .then(buildsJson => buildsJson.response)
+        .then(buildsJsonResponse => List(buildsJsonResponse.map(buildJsonResponseToBuild)))
 );
 
 const gitHubApiHost = 'https://api.github.com';
