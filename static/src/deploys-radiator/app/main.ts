@@ -1,5 +1,4 @@
 /// <reference path="../typings/tsd.d.ts" />
-/// <reference path="../manual-typings/es6-promise.d.ts" />
 /// <reference path="../manual-typings/vdom-virtualize.d.ts" />
 /// <reference path="../manual-typings/immutable.d.ts" />
 /// <reference path="../manual-typings/custom-window.d.ts" />
@@ -42,7 +41,7 @@ const run = (): Promise<void> => {
     const filterWhitelisted = (deploys: List<DeployRecord>) => deploys
         .filter(deploy => serverWhitelist.contains(deploy.projectName))
         .toList();
-    const deploysPromise = Promise.all([
+    const deploysPromise: Promise<[List<DeployRecord>, List<DeployRecord>]> = Promise.all([
         getDeploys('CODE').then(filterWhitelisted),
         getDeploys('PROD').then(filterWhitelisted)
     ]);

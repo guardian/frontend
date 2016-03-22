@@ -35,7 +35,7 @@ export const getBuild = (build: number): Promise<BuildRecord> => (
 const gitHubApiHost = 'https://api.github.com';
 export const getDifference = (base: string, head: string): Promise<List<GitHubCommit>> => (
     fetch(`${gitHubApiHost}/repos/guardian/frontend/compare/${base}...${head}`, { headers: { 'Authorization': `token ${window.gitHubAccessToken}` } })
-        .then(response => {
+        .then((response: Response): Promise<List<GitHubCommit>> => {
             if (response.ok) {
                 return response.clone().json<GitHubCompareJson>()
                     .then(json => json.commits)
@@ -49,7 +49,9 @@ export const getDifference = (base: string, head: string): Promise<List<GitHubCo
                     ))));
             } else {
                 return response.clone().json<GitHubErrorJson>()
-                    .then(json => Promise.reject(new Error(json.message)));
+                    // We need to re-assert the type for rejected promises
+                    // https://github.com/Microsoft/TypeScript/issues/7588
+                    .then(json => Promise.reject<List<GitHubCommit>>(new Error('foo')));
             }
         })
 );
