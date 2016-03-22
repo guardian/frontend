@@ -10,7 +10,6 @@ define([
     'common/modules/experiments/tests/live-blog-chrome-notifications',
     'common/modules/experiments/tests/header-bidding-us',
     'common/modules/experiments/tests/article-video-autoplay',
-    'common/modules/experiments/tests/next-in-series',
     'common/modules/experiments/tests/email-signup-marketing-checkbox-v2',
     'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/people-who-read-this-also-read-variants',
@@ -35,7 +34,6 @@ define([
     LiveBlogChromeNotifications,
     HeaderBiddingUS,
     ArticleVideoAutoplay,
-    NextInSeries,
     EmailSignupMarketingCheckboxV2,
     AdblockingResponse,
     PeopleWhoReadThisAlsoReadVariants,
@@ -56,7 +54,6 @@ define([
         new LiveBlogChromeNotifications(),
         new HeaderBiddingUS(),
         new ArticleVideoAutoplay(),
-        new NextInSeries(),
         new AdblockingResponse(),
         new EmailSignupMarketingCheckboxV2(),
         new PeopleWhoReadThisAlsoReadVariants()
