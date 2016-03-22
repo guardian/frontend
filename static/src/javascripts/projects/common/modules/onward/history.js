@@ -153,6 +153,12 @@ define([
             .value();
     }
 
+    function mostViewedSeries() {
+        return reduce(seriesSummary(), function (best, views, tag, summary) {
+            return views > (summary[best] || 0) ? tag : best;
+        }, '');
+    }
+
     function deleteFromSummary(tag) {
         var summary = getSummary();
 
@@ -433,6 +439,7 @@ define([
         isRevisit: isRevisit,
         reset: reset,
         seriesSummary: seriesSummary,
+        mostViewedSeries: mostViewedSeries,
 
         test: {
             getSummary: getSummary,
