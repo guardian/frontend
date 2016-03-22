@@ -1,4 +1,3 @@
-/* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
 define([
     'common/utils/$',
     'common/utils/config',

@@ -44,9 +44,9 @@
         @include mq(tablet) {
             left: 50%;
             top: percentage(1/5);
-            width: $gs-column-width * 8;
+            width: $gs-column-width * 10;
             height: auto;
-            margin-left: -$gs-column-width * 3;
+            margin-left: -$gs-column-width * 5;
         }
 
     }
@@ -116,7 +116,20 @@
         @include fs-bodyCopy(1);
         font-size: 12px;
         line-height: 120%;
-        margin: 0 $gs-gutter $gs-column-width/2 0;
+        margin: 0 $gs-gutter $gs-column-width/4 0;
+
+        .text-link {
+            color: #ffffff;
+            text-decoration: underline;
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+
+    .survey-links {
+        overflow: hidden;
+        margin-bottom: $gs-column-width/4;
     }
 
     .survey-link {
@@ -269,6 +282,30 @@
             }
         }
 
+    }
+
+    .subscriber-number-form {
+        .input-number {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            border: #000000 1px solid;
+
+            &.correct {
+                border-color: colour(success);
+            }
+            &.incorrect {
+                border-color: colour(error);
+            }
+        }
+
+        .button--primary {
+            display: block;
+            margin: 10px auto;
+            font-size: 20px;
+            padding: 5px;
+            width: 100%;
+        }
     }
 
 }

@@ -7,7 +7,6 @@ import services.{Archive, DynamoDB, Googlebot404Count, Destination}
 import java.net.URLDecoder
 import model.Cached
 import scala.concurrent.Future
-import conf.switches.Switches.ArchiveResolvesR1UrlsInRedirectTableSwitch
 
 object ArchiveController extends Controller with Logging with ExecutionContexts {
 
@@ -57,7 +56,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html
   def normalise(path: String, zeros: String = ""): String = {
     val normalised = path match {
-      case R1ArtifactUrl(path, artifactOrContextId, extension) if ArchiveResolvesR1UrlsInRedirectTableSwitch.isSwitchedOff =>
+      case R1ArtifactUrl(path, artifactOrContextId, extension) =>
         val normalisedUrl = s"www.theguardian.com/$path/0,,$artifactOrContextId,$zeros.html"
         Some(normalisedUrl)
       case ShortUrl(path) =>

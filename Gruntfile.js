@@ -90,7 +90,6 @@ module.exports = function (grunt) {
     grunt.registerTask('validate:sass', ['scsslint']);
     grunt.registerTask('validate:js', function (app) {
         var target = (app) ? ':' + app : '';
-        grunt.task.run(['jscs' + target]);
         grunt.task.run(['eslint' + target]);
     });
     grunt.registerTask('validate', function (app) {

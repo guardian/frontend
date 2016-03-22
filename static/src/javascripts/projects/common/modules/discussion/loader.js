@@ -218,7 +218,7 @@ Loader.prototype.initToolbar = function() {
         var updateLabelText = function (prefValue) {
             $timestampsLabel.text(prefValue ? 'Relative' : 'Absolute');
         };
-        updateLabelText(prefValue);
+        updateLabelText(undefined);
 
         var PREF_RELATIVE_TIMESTAMPS = 'discussion.enableRelativeTimestamps';
         // Default to true
