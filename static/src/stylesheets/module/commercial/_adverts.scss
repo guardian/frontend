@@ -304,28 +304,6 @@
     }
 }
 
-.adverts--tone-paid-content {
-
-    > .adverts__header {
-        background: #69d1ca;
-    }
-
-    .advert {
-        border-top: 1px solid #69d1ca;
-        background: #cccccc;
-    }
-
-    .adverts__more > summary {
-        border-color: #69d1ca;
-        background: #69d1ca;
-    }
-
-    .adverts__more[open] > summary {
-        background: none;
-        color: inherit;
-    }
-}
-
 @import '_adverts-books';
 @import '_adverts-masterclasses';
 @import '_adverts-jobs';
