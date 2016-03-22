@@ -18,7 +18,7 @@
     <div class="advert__meta" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
         @book.price.map { price => RRP £@("%.2f".format(price))<br> }
         @book.offerPrice.map { price =>
-            <strong class="commercial--tone__highlight">Our price: <span itemprop="price">£@("%.2f".format(price))</span></strong>
+            <strong>Our price: <span itemprop="price">£@("%.2f".format(price))</span></strong>
             <meta itemprop="priceCurrency" content="GBP">
         }
     </div>
