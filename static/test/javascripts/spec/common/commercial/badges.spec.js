@@ -18,7 +18,6 @@ define([
         var fixturesConfig = {
                 id: 'badges',
                 fixtures: [
-                    // jscs:disable disallowMultipleLineStrings
                     '<div class="facia-container">\
                         <div class="container">\
                             <div class="js-container__header"></div>\
@@ -27,7 +26,6 @@ define([
                             <div class="js-container__header"></div>\
                         </div>\
                     </div>'
-                    // jscs:enable disallowMultipleLineStrings
                 ]
             },
             preBadges = function (sponsorship, sponsor) {

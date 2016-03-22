@@ -20,7 +20,10 @@ define([
     'lodash/objects/keys',
     'lodash/objects/assign',
     'lodash/collections/reduce',
+    'lodash/collections/contains',
     'lodash/objects/isArray',
+    'lodash/objects/pick',
+    'lodash/objects/mapValues',
     'lodash/collections/map',
     'common/utils/chain',
     'lodash/arrays/compact',
@@ -46,7 +49,10 @@ define([
     keys,
     assign,
     reduce,
+    contains,
     isArray,
+    pick,
+    mapValues,
     map,
     chain,
     compact,
@@ -86,7 +92,7 @@ define([
                 indexInRecord: 2
             }
         ],
-        summaryPeriodDays = 30,
+        summaryPeriodDays = 90,
         forgetUniquesAfter = 10,
         historySize = 50,
 
@@ -132,6 +138,19 @@ define([
             }
         }
         return summaryCache;
+    }
+
+    function seriesSummary() {
+        function views(item) {
+            return reduce(item, function (acc, record) {
+                return acc + record[1];
+            }, 0);
+        }
+
+        return chain(getSummary().tags)
+            .and(pick, function(v, k) { return contains(k, 'series'); })
+            .and(mapValues, function(tag) { return views(tag[1]) + views(tag[2]); })
+            .value();
     }
 
     function deleteFromSummary(tag) {
@@ -413,11 +432,13 @@ define([
         deleteFromSummary: deleteFromSummary,
         isRevisit: isRevisit,
         reset: reset,
+        seriesSummary: seriesSummary,
 
         test: {
             getSummary: getSummary,
             getHistory: getHistory,
-            pruneSummary: pruneSummary
+            pruneSummary: pruneSummary,
+            seriesSummary: seriesSummary
         }
     };
 });

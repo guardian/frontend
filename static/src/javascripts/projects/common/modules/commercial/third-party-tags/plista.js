@@ -70,6 +70,11 @@ define([
         });
     }
 
+    var module = {
+        load: load,
+        init: init
+    };
+
     function init() {
         if (shouldServe()) {
             if (loadInstantly()) {
@@ -83,11 +88,6 @@ define([
             }
         }
     }
-
-    var module = {
-        load: load,
-        init: init
-    };
 
     return module;
 });

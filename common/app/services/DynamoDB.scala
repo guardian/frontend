@@ -35,6 +35,7 @@ trait DynamoDB extends Logging with ExecutionContexts {
         request.addHeader("Content-Type", "application/x-amz-json-1.0")
         request.addHeader("x-amz-target", xAmzTarget)
         request.setContent(new StringInputStream(bodyContent))
+        signer.setServiceName("dynamodb")
         signer.sign(request, credentialsProvider.getCredentials)
         request.getHeaders.toSeq
       }
