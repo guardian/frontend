@@ -38,17 +38,5 @@
 .adverts--tone-jobs {
     > .adverts__header {
         background: guss-colour(news-support-2, $pasteup-palette);
-
-        .button {
-            // color: guss-colour(multimedia-main-2, $pasteup-palette);
-            // border-color: fade-out(guss-colour(multimedia-main-2, $pasteup-palette), .7);
-
-            &:hover,
-            &:focus,
-            &:active {
-                // border-color: guss-colour(multimedia-main-2, $pasteup-palette);
-            }
-        }
     }
-
 }

@@ -21,7 +21,7 @@
     }
 
     * + .advert {
-        border-left-color: #c4c4c4;
+        border-left-color: guss-colour(paid-article-subheader-bg, $frontend-palette);
     }
 }
 
@@ -47,7 +47,7 @@
         margin-bottom: .5em;
 
         > .inline-icon svg {
-            fill: #767676;
+            fill: guss-colour(paid-article-icon, $frontend-palette);
             width: 1.1em;
             height: .75em;
             margin-right: .3em;
