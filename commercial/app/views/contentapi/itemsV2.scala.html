@@ -11,24 +11,22 @@
 
 @import views.html.fragments.inlineSvg
 
-@defining(("1_0", "2014-08-14")) { case (version, date) =>
-    @containerWrapper( Seq("legacy", "capi", "tone-capi")
-                     , optBadge = Some(badge)
-                     , optKicker = Some(fragments.commercial.paidForMeta())
-                     , optStamp = Some(stamp)
-                     ){
+@containerWrapper( Seq("legacy", "capi", "tone-capi")
+                 , optBadge = Some(badge)
+                 , optKicker = Some(fragments.commercial.paidForMeta())
+                 , optStamp = Some(stamp)
+                 ){
 
-        @optCapiLink.map { linkUrl =>
-            <a href="@clickMacro@linkUrl" class="adverts__logo u-text-hyphenate" data-link-name="header link">@optCapiTitle</a>
-        }.getOrElse {
-            <span class="u-text-hyphenate">@optCapiTitle</span>
-        }
-
-    }{
-
-        @items.map { item => @itemCard(item, version, date, clickMacro) }
-
+    @optCapiLink.map { linkUrl =>
+        <a href="@clickMacro@linkUrl" class="adverts__logo u-text-hyphenate" data-link-name="header link">@optCapiTitle</a>
+    }.getOrElse {
+        <span class="u-text-hyphenate">@optCapiTitle</span>
     }
+
+}{
+
+    @items.map { item => @itemCard(item, clickMacro) }
+
 }
 
 @stamp = {

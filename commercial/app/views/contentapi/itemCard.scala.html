@@ -1,6 +1,4 @@
 @(item: model.ContentType,
-  version: String,
-  date: String,
   clickMacro: Option[String])(implicit request: RequestHeader)
 
 @import views.support.ImgSrc
@@ -11,7 +9,7 @@
         case _: Audio => { advert--audio }
         case _: Gallery => { advert--gallery }
         case _ => { }
-    }" href="@clickMacro@item.metadata.webUrl" data-link-name="merchandising-capi-v@{version}_@{date}-@item.metadata.webTitle">
+    }" href="@clickMacro@item.metadata.webUrl" data-link-name="merchandising-capi-v1_0_2014-08-14-@item.metadata.webTitle">
     <h2 class="advert__title">
         @insertItemMediaIcon(item)
         @item.metadata.webTitle

@@ -1,10 +1,7 @@
 @(book: model.commercial.books.Book,
-  version: String,
-  date: String,
-  omnitureId: Option[String],
   clickMacro: Option[String])
 
-<a class="advert advert--book" href="@clickMacro@book.buyUrl" data-link-name="merchandising-bookshop-v@{version}_@{date}-medium-@{book.isbn}-@{book.author}-@{book.title}" itemscope itemtype="http://schema.org/Book">
+<a class="advert advert--book" href="@clickMacro@book.buyUrl" data-link-name="merchandising-bookshop-v2_0_2014-10-15-medium-@{book.isbn}-@{book.author}-@{book.title}" itemscope itemtype="http://schema.org/Book">
     <meta itemprop="isbn" content="@{book.isbn}">
     <h2 class="advert__title" itemprop="name">@book.title</h2>
     @book.jacketUrl.map { url =>

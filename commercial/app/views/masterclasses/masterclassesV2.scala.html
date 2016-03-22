@@ -2,31 +2,27 @@
   omnitureId: Option[String],
   clickMacro: Option[String])(implicit request: RequestHeader)
 
-@defining(("1_0", "2014-05-23")) { case (version, date) =>
-    @containerWrapper( Seq("legacy", "masterclasses", "tone-masterclasses")
-                     , optBlurb = Some(Html("Courses from the Guardian"))
-                     , optActions = Some(actions(version, date))
-                     ){
+@containerWrapper( Seq("legacy", "masterclasses", "tone-masterclasses")
+                 , optBlurb = Some(Html("Courses from the Guardian"))
+                 , optActions = Some(actions)
+                 ){
 
-        <a class="adverts__logo" href="@clickMacro@Configuration.commercial.masterclasses_url" data-link-name="merchandising-masterclasses-s-v@{version}_@{date}-low-browse-all-masterclasses">
-            @fragments.inlineSvg("marque-54", "icon")
-            @fragments.inlineSvg("logo-guardian", "logo")
-            @fragments.inlineSvg("logo-masterclasses", "commercial", List("inline-commercial-brand"))
-            <span class="u-h">The Guardian Masterclasses</span>
-        </a>
+    <a class="adverts__logo" href="@clickMacro@Configuration.commercial.masterclasses_url" data-link-name="merchandising-masterclasses-s-v1_0_2014-05-23-low-browse-all-masterclasses">
+        @fragments.inlineSvg("marque-54", "icon")
+        @fragments.inlineSvg("logo-guardian", "logo")
+        @fragments.inlineSvg("logo-masterclasses", "commercial", List("inline-commercial-brand"))
+        <span class="u-h">The Guardian Masterclasses</span>
+    </a>
 
-    }{
+}{
 
-        @events.map { event => @masterclassCard(event, version, date, omnitureId, clickMacro) }
-
-    }
-
+    @events.map { event => @masterclassCard(event, clickMacro) }
 
 }
 
-@actions(version: String, date: String) = {
+@actions = {
 
-    <a class="button button--tertiary button--large" href="@clickMacro@Configuration.commercial.masterclasses_url/masterclasses-calendar" data-link-name="merchandising-masterclasses-s-v@{version}_@{date}-low-browse-all-masterclasses">
+    <a class="button button--tertiary button--large" href="@clickMacro@Configuration.commercial.masterclasses_url/masterclasses-calendar" data-link-name="merchandising-masterclasses-s-v1_0_2014-05-23-low-browse-all-masterclasses">
         @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
         View <span class="hide-on-mobile-inline">all</span> courses
     </a>
