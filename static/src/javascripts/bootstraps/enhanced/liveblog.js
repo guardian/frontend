@@ -35,7 +35,7 @@ define([
 
     modules = {
         initAdverts: function () {
-            return config.switches.liveblogAdverts ? liveblogAdverts.init() : null;
+            return liveblogAdverts.init();
         },
 
         affixTimeline: function () {
