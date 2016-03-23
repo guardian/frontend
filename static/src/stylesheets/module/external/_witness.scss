@@ -19,9 +19,9 @@
     padding: $gs-baseline $gs-gutter/2 ($gs-baseline/3)*4;
 }
 .element-witness figcaption {
-    margin: ($gs-baseline/3)*4 0 0;
     // Make it look like the body copy
     @include fs-bodyCopy(2);
+    margin: ($gs-baseline/3)*4 0 0;
     color: colour(neutral-1);
 
     &:before {
@@ -36,10 +36,10 @@
     max-width: 100%;
 }
 .element-witness--metadata {
+    @include fs-textSans(3);
     border-top: 1px solid colour(neutral-5);
     padding: $gs-baseline $gs-gutter/2;
     background: colour(neutral-7);
-    @include fs-textSans(3);
     color: colour(neutral-2-contrasted) !important;
 
     img {
@@ -47,8 +47,8 @@
     }
 }
 .element-witness--source {
-    padding-left: $gs-gutter/2;
     @include fs-textSans(3);
+    padding-left: $gs-gutter/2;
     color: colour(neutral-2);
 }
 .element-witness--author-name {
@@ -112,8 +112,8 @@
     }
 
     .element-witness--source & {
-        color: colour(news-support-2);
         @include font($f-serif-text, 700, 16, 16);
+        color: colour(news-support-2);
     }
 
 }
