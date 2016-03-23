@@ -34,11 +34,7 @@ rules:
   no-color-keyword: 1
   no-css-comments: 0
   no-debug: 1
-  no-duplicate-properties:
-    - 1
-    - exclude:
-        - static/src/stylesheets/base/_type.scss
-        - static/src/stylesheets/_mixins.scss
+  no-duplicate-properties: 1
   no-empty-rulesets: 0
   no-invalid-hex: 1
   no-mergeable-selectors: 0
@@ -91,5 +87,3 @@ rules:
   nesting-depth:
     - 1
     - max-depth: 4
-    - exclude:
-      - static/src/stylesheets/inline/story-package.scss
