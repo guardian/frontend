@@ -10,10 +10,10 @@ $gimbap-soulmates-reversed: #995490;
 $gimbap-jobs-text: #42bfda;
 $gimbap-jobs-reversed: #42bfda;
 
+$gimbap-width-quarter: calc(25% - 20px);
+
 .gimbap {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+    display: block;
     padding: $gs-gutter / 2;
     position: relative;
     box-sizing: border-box;
@@ -25,6 +25,32 @@ $gimbap-jobs-reversed: #42bfda;
 
     svg {
         fill: currentColor;
+    }
+
+    @include mq(mobile, tablet) {
+        margin-top: $gs-baseline;
+
+        &:nth-child(n+3) {
+            display: none;
+        }
+    }
+
+    @include mq(tablet) {
+        float: left;
+        width: $gimbap-width-quarter;
+        margin: 0 $gs-gutter / 2;
+
+        .has-flex & {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+        }
+    }
+
+    @include mq(tablet, desktop) {
+        &:nth-child(n+4) {
+            display: none;
+        }
     }
 }
 
@@ -182,6 +208,7 @@ $gimbap-jobs-reversed: #42bfda;
 .gimbap__logo--soulmates-horizontal {
     svg {
         width: 85px; /* "Make your own magic" */
+        height: 18px;
         fill: #ffffff;
     }
 
@@ -287,22 +314,7 @@ $gimbap-jobs-reversed: #42bfda;
 
 .gimbap-wrap__body {
     display: block;
-
-    @include mq(mobile, tablet) {
-        > .gimbap + .gimbap {
-            margin-top: $gs-baseline;
-        }
-
-        > .gimbap:nth-child(n+3) {
-            display: none;
-        }
-    }
-
-    @include mq(tablet, desktop) {
-        > .gimbap:nth-child(n+4) {
-            display: none;
-        }
-    }
+    overflow: hidden;
 
     @include mq(tablet) {
         padding: 0 $gs-gutter / 2;
@@ -312,11 +324,6 @@ $gimbap-jobs-reversed: #42bfda;
             flex-direction: row;
             flex-wrap: nowrap;
             align-items: stretch;
-        }
-
-        > .gimbap {
-            flex: 1;
-            margin: 0 $gs-gutter / 2;
         }
     }
 
@@ -333,17 +340,29 @@ $gimbap-jobs-reversed: #42bfda;
 }
 
 .gimbap-wrap__body--1x1x1x1 > .gimbap {
-    flex: calc(25% - 20px);
+    @include mq(tablet) {
+        .has-flex & { 
+            flex: $gimbap-width-quarter;
+        }
+    }
 }
 
 .gimbap-wrap__body--2x1x1 > .gimbap:first-child,
 .gimbap-wrap__body--1x2x1 > .gimbap:nth-child(2),
 .gimbap-wrap__body--1x1x2 > .gimbap:nth-child(3) {
     @include mq(tablet) {
-        flex: 0 0 calc(66.67% - 20px);
+        width: calc(66.67% - 20px);
+
+        .has-flex & {
+            flex: 2;
+        }
     }
     @include mq(desktop) {
-        flex: 0 0 calc(50% - 20px);
+        width: calc(50% - 20px);
+
+        .has-flex & {
+            flex: 2;
+        }
     }
 }
 
