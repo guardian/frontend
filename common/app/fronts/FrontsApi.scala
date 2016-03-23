@@ -8,7 +8,7 @@ import services.AwsEndpoints
 
 object FrontsApi extends ExecutionContexts {
   val amazonClient: ApiClient = {
-    val client = new AmazonS3Client(Configuration.aws.credentials.get)
+    val client = new AmazonS3Client(Configuration.aws.mandatoryCredentials)
     client.setEndpoint(AwsEndpoints.s3)
     ApiClient("aws-frontend-store", Configuration.facia.stage.toUpperCase, AmazonSdkS3Client(client))
   }
