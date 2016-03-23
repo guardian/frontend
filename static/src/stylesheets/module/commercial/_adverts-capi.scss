@@ -1,7 +1,4 @@
 .adverts--capi {
-    .advert__image {
-        max-height: $gs-baseline * 11;
-    }
 }
 
 .adverts--tone-capi {
@@ -20,7 +17,7 @@
         text-align: right;
     }
 
-    * + .advert {
+    .adverts__row > * + * {
         border-left-color: guss-colour(paid-article-subheader-bg, $frontend-palette);
     }
 }
@@ -67,4 +64,23 @@
         }
     }
 
+    &:not(.advert--landscape){
+        > .advert__image-container {
+            width: 100%;
+        }
+
+        .advert__image {
+            min-height: $gs-baseline * 11;
+            width: 100%;
+        }
+    }
+
+    &.advert--landscape {
+        background-clip: border-box;
+        border-top: 1px solid guss-colour(paid-article-brand, $frontend-palette);
+
+        > .advert__image-container {
+            border-top: 0;
+        }
+    }
 }

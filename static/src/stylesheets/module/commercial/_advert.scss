@@ -39,3 +39,29 @@
 .advert__more {
     margin-top: $gs-baseline / 2;
 }
+
+.advert--landscape {
+    $headline-size: 2;
+    $text-lines-per-media-object: 4;
+    $media-ratio: 5 / 3;
+    $item-vertical-padding: $gs-baseline / 4;
+    $estimate-item-min-height: (($item-vertical-padding * 2) + get-line-height(headline, $headline-size) * $text-lines-per-media-object);
+    $image-width: normalize-width($estimate-item-min-height * $media-ratio);
+    $item-min-height: $image-width / $media-ratio;
+    $mobile-media-padding: ($gs-baseline / 3);
+
+    min-height: $item-min-height;
+    position: relative;
+    padding-left: $image-width + $gs-gutter / 2;
+
+    > .advert__image-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: $image-width;
+    }
+
+    > .advert__standfirst {
+        display: none;
+    }
+}

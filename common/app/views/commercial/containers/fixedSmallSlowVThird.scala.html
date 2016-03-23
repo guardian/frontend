@@ -1,0 +1,8 @@
+@(containerModel: common.commercial.ContainerModel)
+
+<div class="adverts__row adverts__row--1x1x2">
+    @containerModel.content.cardContents.take(2).map(card => views.html.commercial.cards.itemCard(card))
+    <div class="adverts__column">
+        @containerModel.content.cardContents.drop(2).take(3).map(card => views.html.commercial.cards.itemCard(card, optClassNames = Some(Seq("landscape"))))
+    </div>
+</div>

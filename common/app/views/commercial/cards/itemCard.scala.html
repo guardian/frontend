@@ -1,0 +1,22 @@
+@(item: common.commercial.CardContent,
+  optClassNames: Option[Seq[String]] = None,
+  optSponsorship: Option[String] = None,
+  optSponsor: Option[String] = None,
+  optKeywords: Option[String] = None)
+
+<a href="@item.targetUrl" class="advert advert--capi
+    @optClassNames.map { classNames => @classNames.map(c => s"advert--$c").mkString(" ")}
+    "
+    @for(sponsorship <- optSponsorship){data-sponsorship="@sponsorship"}
+    @for(sponsor     <- optSponsor)    {data-sponsor="@sponsor"}
+    @for(keywords    <- optKeywords)   {data-keywords="@keywords"}
+    >
+    <h2 class="advert__title">@item.headline</h2>
+    <div class="advert__image-container">
+        <img class="advert__image" src="@item.imageUrl">
+    </div>
+    @for(description <- item.description) {
+        <div class="advert__standfirst">@Html(description)</div>
+    }
+    @for(sponsorship <- optSponsorship){<div class="advert__badge js-badge"></div>}
+</a>

@@ -1,0 +1,12 @@
+@(containerModel: common.commercial.ContainerModel)
+
+<div class="adverts__row">
+    @for(card <- containerModel.content.cardContents.take(4);
+         sponsorData <- card.sponsorData
+         ) {
+        @views.html.commercial.cards.itemCard(card,
+                                              optSponsorship = Some(sponsorData.sponsorshipType),
+                                              optSponsor = sponsorData.sponsor,
+                                              optKeywords = sponsorData.keywordId)
+    }
+</div>

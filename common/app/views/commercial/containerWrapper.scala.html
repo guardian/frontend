@@ -1,5 +1,5 @@
 @(classNames: Seq[String],
-  dataLinkName: Option[String],
+  dataLinkName: Option[String] = None,
   rowLayout: Option[String] = None,
   optKicker: Option[Html] = None,
   optBlurb: Option[Html] = None,
@@ -8,7 +8,7 @@
   optBadge: Option[Html] = None
  )(title: Html)(innards: Html)
 
-<aside class="adverts @classNames.map(c => s"adverts--$c").mkString(" ")" data-link-name="@dataLinkName">
+<aside class="adverts @classNames.map(c => s"adverts--$c").mkString(" ")" @for(dln <- dataLinkName){data-link-name="@dln"}>
     <header class="adverts__header">
         @for(kicker   <- optKicker)  {<div class="adverts__kicker">@kicker</div>}
         <h1 class="adverts__title">@title</h1>
@@ -16,17 +16,7 @@
         @for(actions  <- optActions) {<div class="adverts__ctas">@actions</div>}
         @for(stamp    <- optStamp)   {<div class="adverts__stamp">@stamp</div>}
     </header>
-    @optBadge.map { badge =>
-        <div class="adverts__body">
-            <div class="adverts__row @rowLayout.map(l => s"adverts__row--$l").getOrElse("")">
-                @innards
-            </div>
-            <div class="adverts__badge">@badge</div>
-        </div>
-    }.getOrElse {
-        <div class="adverts__body adverts__row @rowLayout.map(l => s"adverts__row--$l").getOrElse("")">
-            @innards
-        </div>
-    }
-
+    <div class="adverts__body">
+        @innards
+    </div>
 </aside>

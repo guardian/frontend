@@ -1,0 +1,5 @@
+@(containerModel: common.commercial.ContainerModel)
+
+<div class="adverts__row">
+    @containerModel.content.cardContents.take(1).map(card => views.html.commercial.cards.itemCard(card))
+</div>

@@ -17,12 +17,6 @@
     @include mq(wide) {
         padding: 0 calc(50% - 650px);
     }
-
-    .advert {
-        margin-top: $gs-baseline;
-        margin-bottom: $gs-baseline;
-    }
-
 }
 
 .adverts--legacy {
@@ -87,7 +81,7 @@
         position: relative;
     }
 
-    * + .advert {
+    .adverts__row > * + * {
         border-left: 1px solid colour(neutral-4);
     }
 }
@@ -131,6 +125,19 @@
     }
 }
 
+.adverts__kicker {
+    .paidfor-meta__label {
+        padding-left: 0;
+    }
+    .paidfor-label .popup__toggle {
+        border: 0;
+    }
+}
+
+.adverts__title {
+    @include fs-headline(4, true);
+}
+
 .adverts__ctas,
 .adverts__stamp {
     margin-top: auto;
@@ -165,7 +172,7 @@
 
     @include mq(tablet) {
         display: flex;
-        padding: 0 $gs-gutter / 2;
+        padding: $gs-baseline $gs-gutter / 2 0;
 
         > * {
             margin: 0 $gs-gutter / 2;
@@ -173,6 +180,7 @@
         }
 
         .adverts--legacy & > * {
+            box-sizing: content-box;
             margin-left: 0;
             margin-right: 0;
             padding: 0 $gs-gutter / 2;
@@ -181,26 +189,16 @@
 
 }
 
-.adverts__row--1x1x1x1 {
-    > * {
-        flex-basis: calc(25% - #{$gs-gutter});
-        flex-grow: 0;
-    }
-}
-
-.adverts__row--1x1x1 {
-    > * {
-        flex-basis: calc(33.33% - #{$gs-gutter});
-        flex-grow: 0;
-    }
-}
-
-.adverts__row--2x1x1 > *:nth-child(1),
-.adverts__row--1x2x1 > *:nth-child(2),
-.adverts__row--1x1x2 > *:nth-child(3),
+.adverts__row--2x1x1 > :nth-child(1),
+.adverts__row--1x2x1 > :nth-child(2),
+.adverts__row--1x1x2 > :nth-child(3),
 .adverts__row--1x1 > * {
-    flex-basis: calc(50% - #{$gs-gutter});
-    flex-grow: 0;
+    flex-grow: 2;
+}
+
+.adverts__row--3x1 > :nth-child(1),
+.adverts__row--1x3 > :nth-child(2) {
+    flex-grow: 3;
 }
 
 .adverts__column {
@@ -209,6 +207,10 @@
 
     > .advert {
         flex: 1;
+    }
+
+    > * + * {
+        margin-top: $gs-baseline;
     }
 }
 
