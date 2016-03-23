@@ -85,12 +85,13 @@ const renderGroupDeployListNode = (deploys: List<DeployRecord>) => {
     const currentDeployGroupNodes = createDeployGroup(currentDeploys)
         .map(renderGroupDeployNodes)
         .toList();
+    const notRunningDeploysGroup = createDeployGroup(notRunningDeploys);
 
     return h('div', {}, [
         ih('ul', { className: 'deploys' }, currentDeployGroupNodes),
         exp(notRunningDeploys.size > 0) && [
             h('h2', 'Queue'),
-            ih('ul', {}, createDeployGroup(notRunningDeploys)
+            ih('ul', {}, notRunningDeploysGroup
                 .map((groupDeploys, deployGroup) => (
                     h('li', [
                         h('strong', [
