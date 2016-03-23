@@ -1,12 +1,15 @@
-.paidfor-popup {
+.popup--paidfor {
     background: guss-colour(neutral-1, $pasteup-palette);
     box-shadow: none;
-    color: #ffffff;
-    transform: translate(-50%, 0);
     left: 50%;
     top: 100%;
-    width: 240px;
     padding: 16px;
+}
+
+.paidfor-popup {
+    color: #ffffff;
+    transform: translate(-50%, 0);
+    width: 240px;
     border-radius: 4px;
     font-weight: 700;
     z-index: 32000;
