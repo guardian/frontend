@@ -82,8 +82,5 @@ rules:
   nesting-depth:
     - 1
     - max-depth: 4
-    - exclude: # Exclude if forced to break the inception rule to style third party components
-      - static/src/stylesheets/module/content/_live-blog.scss
-      - static/src/stylesheets/module/_discussion.scss
-      - static/src/stylesheets/module/commercial/_travel.scss
+    - exclude:
       - static/src/stylesheets/inline/story-package.scss
