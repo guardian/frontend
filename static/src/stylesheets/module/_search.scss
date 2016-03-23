@@ -78,8 +78,7 @@ td.gsc-search-button {
     overflow: visible !important;
     text-decoration: none !important;
 }
-
-// Add space between pagination links to make them more touch friendly
+/*Add space between pagination links to make them more touch friendly*/
 .gsc-results .gsc-cursor-box {
     margin: 0 0 ($gs-baseline/3)*4 !important;
 }
@@ -125,10 +124,10 @@ td.gsc-search-button {
 .gsc-url-top {
     display: none !important;
 }
-// Make titles look like story headlines
+/* Make titles look like story headlines*/
 .gsc-thumbnail-inside a.gs-title {
-    display: block;
     @include fs-headline(2);
+    display: block;
     padding-bottom: 10px;
 }
 .gs-webResult.gs-result a.gs-title,

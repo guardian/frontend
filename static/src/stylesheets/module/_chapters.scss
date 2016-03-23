@@ -78,8 +78,8 @@
 }
 
 .chapters__link {
+    @include fs-textSans(3);
     position: relative;
     display: block;
     padding-bottom: $gs-baseline;
-    @include fs-textSans(3);
 }

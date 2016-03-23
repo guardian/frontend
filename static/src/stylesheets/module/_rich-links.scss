@@ -34,9 +34,9 @@
         }
 
         &:before {
+            @include fs-textSans(1);
             content: 'More on this topic';
             display: block;
-            @include fs-textSans(1);
             color: colour(neutral-2);
             padding: $gs-baseline/4 0;
         }
@@ -57,18 +57,16 @@
 //----------------------------------
 
 .rich-link {
+    @include stars();
     margin: 0;
     position: relative;
     overflow: hidden;
-
-    @include stars();
 
     .stars {
         padding-top: $gs-baseline / 4;
     }
 
     a {
-        color: colour(neutral-1);
         color: inherit;
     }
 }
