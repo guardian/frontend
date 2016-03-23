@@ -146,11 +146,15 @@ define([
         });
     }
 
-    // show an alert
-    function alert(alerts) {
-        // only ever show one alert at a time
-        var alert = first(alerts);
+    // don't show alerts if they're over a certain age
+    function pickNewest(alerts) {
+        return alerts.sort(function (a, b) {
+            return b.frontPublicationDate - a.frontPublicationDate;
+        })[0];
+    }
 
+    // show an alert
+    function alert(alert) {
         if (alert) {
             var $body = bonzo(document.body);
             var $breakingNews = bonzo(qwery('.js-breaking-news-placeholder'));
@@ -216,6 +220,7 @@ define([
                 .then(pruneKnownAlertIDs)
                 .then(filterAlertsByDismissed)
                 .then(filterAlertsByAge)
+                .then(pickNewest)
                 .then(alert);
         } else {
             return Promise.reject('cannot dismiss');
