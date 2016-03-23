@@ -4,6 +4,7 @@ define([
     'common/utils/$',
     'fastdom',
     'qwery',
+    'Promise',
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/storage',
@@ -23,6 +24,7 @@ define([
     $,
     fastdom,
     qwery,
+    Promise,
     ajax,
     config,
     storage,
@@ -49,8 +51,7 @@ define([
         //     alertID: true, <- dismissed/visited
         //     alertID: false <- seen, but not dismissed/visited
         // }
-        knownAlertIDsStorageKey = 'gu.breaking-news.hidden',
-        knownAlertIDs = storage.local.get(knownAlertIDsStorageKey) || {};
+        knownAlertIDsStorageKey = 'gu.breaking-news.hidden';
 
     function storeKnownAlertIDs() {
         storage.local.set(knownAlertIDsStorageKey, knownAlertIDs);
@@ -175,11 +176,12 @@ define([
                     }
                     $body.append($spectre);
                     $breakingNews.removeClass('breaking-news--hidden');
+                    markAlertAsSeen(alert.id);
                 });
-                markAlertAsSeen(alert.id);
                 omniture.trackLink(this, trackingMessage);
             }, alertDelay);
         }
+        return alert;
     }
 
     function renderAlert(alert) {
@@ -206,13 +208,17 @@ define([
 
     return function () {
         if (userCanDismissAlerts()) {
-            fetchBreakingNews()
+            knownAlertIDs = storage.local.get(knownAlertIDsStorageKey) || {};
+
+            return fetchBreakingNews()
                 .then(parseResponse)
                 .then(getRelevantAlerts)
                 .then(pruneKnownAlertIDs)
                 .then(filterAlertsByDismissed)
                 .then(filterAlertsByAge)
                 .then(alert);
+        } else {
+            return Promise.reject('cannot dismiss');
         }
     };
 });
