@@ -1,9 +1,10 @@
 package common.commercial
 
+import conf.switches.Switches
 import model.ImageOverride
 import model.facia.PressedCollection
 import model.pressed.PressedContent
-import views.support.{CardWithSponsorDataAttributes, ImgSrc, SponsorDataAttributes}
+import views.support.{CardWithSponsorDataAttributes, Commercial, ImgSrc, SponsorDataAttributes}
 
 case class ContainerModel(
                            id: String,
@@ -30,7 +31,7 @@ case class CardContent(
                         imageUrl: Option[String],
                         targetUrl: String,
                         sponsorData: Option[SponsorDataAttributes]
-)
+                      )
 
 object CardContent {
 
@@ -49,12 +50,20 @@ object CardContent {
       }
     }
 
+    val sponsorData = {
+      if (Switches.cardsDecidePaidContainerBranding.isSwitchedOn) {
+        CardWithSponsorDataAttributes.sponsorDataAttributes(content)
+      } else {
+        None
+      }
+    }
+
     CardContent(
       headline = header.headline,
       description = content.card.trailText,
       imageUrl,
       targetUrl = header.url,
-      sponsorData = CardWithSponsorDataAttributes.sponsorDataAttributes(content)
+      sponsorData
     )
   }
 }
@@ -65,8 +74,16 @@ object ContainerModel {
 
     val cardContents = collection.curatedPlusBackfillDeduplicated map CardContent.fromPressedContent
 
-    val singleSponsorContainer = !cardContents.isEmpty && cardContents.forall(card => card.sponsorData == cardContents.head.sponsorData)
-    val maybeSponsorDataAttributes = if (singleSponsorContainer) cardContents.head.sponsorData else None
+    val sponsorData = {
+      if (Switches.cardsDecidePaidContainerBranding.isSwitchedOn) {
+        val singleSponsorContainer = {
+          cardContents.nonEmpty && cardContents.forall(card => card.sponsorData == cardContents.head.sponsorData)
+        }
+        if (singleSponsorContainer) cardContents.head.sponsorData else None
+      } else {
+        Commercial.container.mkSponsorDataAttributes(collection.config)
+      }
+    }
 
     val content = ContainerContent(
       title = collection.displayName,
@@ -76,7 +93,7 @@ object ContainerModel {
     )
 
     val metaData = ContainerMetaData(
-      sponsorData = maybeSponsorDataAttributes,
+      sponsorData,
       hideShowMore = collection.config.hideShowMore,
       layoutName = collection.collectionType)
 

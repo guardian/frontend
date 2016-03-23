@@ -346,4 +346,13 @@ trait CommercialSwitches {
     sellByDate = new LocalDate(2016, 4, 13),
     exposeClientSide = false
   )
+
+  val cardsDecidePaidContainerBranding = Switch(
+    "Commercial",
+    "cards-decide-paid-container-branding",
+    "If on, the cards will decide the branding of their container",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 4, 13),
+    exposeClientSide = false
+  )
 }
