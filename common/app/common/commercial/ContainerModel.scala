@@ -16,13 +16,14 @@ case class ContainerContent(
                              title: String,
                              description: Option[String],
                              targetUrl: Option[String],
-                             cardContents: Seq[CardContent]
+                             initialCardContents: Seq[CardContent],
+                             extraCardContents: Seq[CardContent]
                            )
 
 case class ContainerMetaData(
-                              sponsorData: Option[SponsorDataAttributes],
                               layoutName: String,
-                              hideShowMore: Boolean
+                              hideShowMore: Boolean,
+                              sponsorData: Option[SponsorDataAttributes]
                             )
 
 case class CardContent(
@@ -73,29 +74,59 @@ object ContainerModel {
   def fromPressedCollection(collection: PressedCollection): ContainerModel = {
 
     val cardContents = collection.curatedPlusBackfillDeduplicated map CardContent.fromPressedContent
+    val layoutName = collection.collectionType
+    val hideShowMore = collection.config.hideShowMore
 
-    val sponsorData = {
-      if (Switches.cardsDecidePaidContainerBranding.isSwitchedOn) {
-        val singleSponsorContainer = {
-          cardContents.nonEmpty && cardContents.forall(card => card.sponsorData == cardContents.head.sponsorData)
-        }
-        if (singleSponsorContainer) cardContents.head.sponsorData else None
-      } else {
-        Commercial.container.mkSponsorDataAttributes(collection.config)
+    val content = {
+
+      val maxInitialSize = layoutName match {
+        case "fixed/large/slow-XIV" => 6
+        case "fixed/medium/fast-XI" => 3
+        case "fixed/medium/fast-XII" => 4
+        case "fixed/medium/slow-VI" => 6
+        case "fixed/medium/slow-VII" => 7
+        case "fixed/small/fast-VIII" => 8
+        case "fixed/small/slow-I" => 1
+        case "fixed/small/slow-III" => 3
+        case "fixed/small/slow-IV" => 4
+        case "fixed/small/slow-V-half" => 5
+        case "fixed/small/slow-V-third" => 5
+        case _ => cardContents.size
       }
+
+      val extraCardContents = {
+        if (hideShowMore) Nil
+        else cardContents.drop(maxInitialSize)
+      }
+
+      ContainerContent(
+        title = collection.displayName,
+        description = collection.description,
+        targetUrl = collection.href,
+        initialCardContents = cardContents.take(maxInitialSize),
+        extraCardContents
+      )
     }
 
-    val content = ContainerContent(
-      title = collection.displayName,
-      description = collection.description,
-      targetUrl = collection.href,
-      cardContents
-    )
+    val metaData = {
 
-    val metaData = ContainerMetaData(
-      sponsorData,
-      hideShowMore = collection.config.hideShowMore,
-      layoutName = collection.collectionType)
+      val sponsorData = {
+        if (Switches.cardsDecidePaidContainerBranding.isSwitchedOn) {
+          val singleSponsorContainer = {
+            cardContents.nonEmpty && cardContents.forall(card => card.sponsorData == cardContents.head.sponsorData)
+          }
+          if (singleSponsorContainer) cardContents.head.sponsorData else None
+        } else {
+          Commercial.container.mkSponsorDataAttributes(collection.config)
+        }
+      }
+
+      ContainerMetaData(
+        layoutName,
+        hideShowMore,
+        sponsorData
+      )
+    }
 
     ContainerModel(id = collection.id, content, metaData)
   }
