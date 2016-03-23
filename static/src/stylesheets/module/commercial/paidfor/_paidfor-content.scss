@@ -96,10 +96,10 @@
 }
 
 .paidfor-brand {
+    @include f-textSans;
     color: #767676;
     text-align: right;
     font-size: get-font-size(data, 3);
-    @include f-textSans;
 
     img {
         vertical-align: middle;
@@ -148,8 +148,8 @@
 }
 
 .paidfor-band__inner {
+    @include content-gutter();
     display: flex;
     justify-content: space-between;
     box-sizing: border-box;
-    @include content-gutter();
 }

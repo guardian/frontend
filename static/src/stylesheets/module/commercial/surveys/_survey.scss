@@ -147,8 +147,8 @@
     }
 
     .survey-link__takepart {
-        color: #ffffff;
         @include fs-textSans(2);
+        color: #ffffff;
         display: block;
         float: left;
         padding: 0 8px;
@@ -235,8 +235,8 @@
     }
 
     p {
-        margin-bottom: $gs-baseline;
         @include fs-bodyCopy(1);
+        margin-bottom: $gs-baseline;
     }
 
     .standfirst {
