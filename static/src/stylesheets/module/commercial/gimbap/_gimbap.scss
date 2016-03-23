@@ -10,6 +10,8 @@ $gimbap-soulmates-reversed: #995490;
 $gimbap-jobs-text: #42bfda;
 $gimbap-jobs-reversed: #42bfda;
 
+$gimbap-width-quarter: calc(25% - 20px);
+
 .gimbap {
     display: block;
     padding: $gs-gutter / 2;
@@ -35,6 +37,7 @@ $gimbap-jobs-reversed: #42bfda;
 
     @include mq(tablet) {
         float: left;
+        width: $gimbap-width-quarter;
         margin: 0 $gs-gutter / 2;
 
         .has-flex & {
@@ -338,10 +341,8 @@ $gimbap-jobs-reversed: #42bfda;
 
 .gimbap-wrap__body--1x1x1x1 > .gimbap {
     @include mq(tablet) {
-        width: calc(25% - 20px);
-
         .has-flex & { 
-            flex: calc(25% - 20px);
+            flex: $gimbap-width-quarter;
         }
     }
 }
@@ -350,10 +351,18 @@ $gimbap-jobs-reversed: #42bfda;
 .gimbap-wrap__body--1x2x1 > .gimbap:nth-child(2),
 .gimbap-wrap__body--1x1x2 > .gimbap:nth-child(3) {
     @include mq(tablet) {
-        flex: 0 0 calc(66.67% - 20px);
+        width: calc(66.67% - 20px);
+
+        .has-flex & {
+            flex: 2;
+        }
     }
     @include mq(desktop) {
-        flex: 0 0 calc(50% - 20px);
+        width: calc(50% - 20px);
+
+        .has-flex & {
+            flex: 2;
+        }
     }
 }
 
