@@ -36,7 +36,7 @@ module.exports = function (grunt) {
         jitGrunt: {
             staticMappings: {
                 replace: 'grunt-text-replace',
-                scsslint: 'grunt-scss-lint',
+                sasslint: 'grunt-sass-lint',
                 cssmetrics: 'grunt-css-metrics',
                 assetmonitor: 'grunt-asset-monitor',
                 /*eslint-disable camelcase*/
@@ -87,7 +87,7 @@ module.exports = function (grunt) {
      * Validate tasks
      */
     grunt.registerTask('validate:css', ['compile:images', 'sass:compile']);
-    grunt.registerTask('validate:sass', ['scsslint']);
+    grunt.registerTask('validate:sass', ['sasslint']);
     grunt.registerTask('validate:js', function (app) {
         var target = (app) ? ':' + app : '';
         grunt.task.run(['eslint' + target]);
