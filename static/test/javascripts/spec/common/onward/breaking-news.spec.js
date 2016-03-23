@@ -34,7 +34,7 @@ define([
                     headline: sAge + options.collection + ' ' + type + ' headline',
                     trailText: options.collection + ' ' + type + ' trailText',
                     id: options.collection + '_' + type,
-                    frontPublicationDate: minutesAgo(options.age)
+                    frontPublicationDate: Date.now() - (1000 * 60 * options.age)
                 }]
             };
         }
@@ -63,10 +63,6 @@ define([
                     console.log(e);
                 });
             });
-        }
-
-        function minutesAgo(minutes) {
-            return Date.now() - (1000 * 60 * minutes);
         }
 
         beforeAll(function () {
@@ -102,12 +98,11 @@ define([
         });
 
         describe('user can dismiss alerts', function () {
-            beforeEach(function (done) {
+            beforeEach(function () {
                 storage.local.set(knownAlertIDsStorageKey, {
                     'uk_known': false,
                     'uk_dismissed': true
                 });
-                setTimeout(done, 100);
             });
 
             it('should try and fetch the json', function (done) {
