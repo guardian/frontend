@@ -47,8 +47,18 @@ object ABHeadlinesTestControl extends TestDefinition(
     }
 }
 
+object SeriesOnwardPosition extends TestDefinition(
+  List(Variant2, Variant3, Variant4, Variant5, Variant6), // 5% of our audience
+  "series-onward-position",
+  "Test engagement with the series onward container positioned as the first thing after the article",
+  new LocalDate(2016, 4, 11)) {
+    def isParticipating(request: RequestHeader, content: model.ContentType): Boolean = {
+      content.tags.series.nonEmpty && super.isParticipating(request)
+    }
+}
+
 object ActiveTests extends Tests {
-  val tests: Seq[TestDefinition] = List(CMTopBannerPosition, ABHeadlinesTestControl, ABHeadlinesTestVariant)
+  val tests: Seq[TestDefinition] = List(CMTopBannerPosition, ABHeadlinesTestControl, ABHeadlinesTestVariant, SeriesOnwardPosition)
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
 
