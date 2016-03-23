@@ -250,7 +250,7 @@ category: Common
     min-height: ($gs-baseline/3)*40;
 }
 
-.submit-input {
+@mixin submit-input--behaviour {
     background: $pasteup-forms-submit-background;
     border: 0 none;
     color: #ffffff;
@@ -259,7 +259,6 @@ category: Common
     font-size: 14px;
     margin: 0 $gs-gutter 0 0;
     min-width: gs-span(2);
-    padding: 11px $gs-gutter/2;
     outline: none;
     text-align: center;
 
@@ -271,6 +270,14 @@ category: Common
     &:active {
         background: $pasteup-forms-submit-background-active;
     }
+}
+
+.submit-input {
+    @include submit-input--behaviour;
+    padding: 11px $gs-gutter/2;
+}
+.submit-input--behaviour {
+    @include submit-input--behaviour;
 }
 
 .submit-input[disabled] {
