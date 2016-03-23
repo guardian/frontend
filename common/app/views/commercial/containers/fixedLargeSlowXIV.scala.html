@@ -1,22 +1,22 @@
 @(containerModel: common.commercial.ContainerModel)
 
 <div class="adverts__row adverts__row--3x1">
-    @containerModel.content.cardContents.take(2).map(card => views.html.commercial.cards.itemCard(card))
+    @containerModel.content.initialCardContents.take(2).map(card => views.html.commercial.cards.itemCard(card))
 </div>
 <div class="adverts__row adverts__row--1x1x1x1">
-    @containerModel.content.cardContents.drop(2).take(4).map(card => views.html.commercial.cards.itemCard(card))
+    @containerModel.content.initialCardContents.drop(2).take(4).map(card => views.html.commercial.cards.itemCard(card))
 </div>
 <div class="adverts__row adverts__row--1x1x1x1">
     <div class="adverts__column">
-        @containerModel.content.cardContents.drop(6).take(2).map(card => views.html.commercial.cards.itemSmallCard(card))
+        @containerModel.content.initialCardContents.drop(6).take(2).map(card => views.html.commercial.cards.itemSmallCard(card))
     </div>
     <div class="adverts__column">
-        @containerModel.content.cardContents.drop(8).take(2).map(card => views.html.commercial.cards.itemSmallCard(card))
+        @containerModel.content.initialCardContents.drop(8).take(2).map(card => views.html.commercial.cards.itemSmallCard(card))
     </div>
     <div class="adverts__column">
-        @containerModel.content.cardContents.drop(10).take(2).map(card => views.html.commercial.cards.itemSmallCard(card))
+        @containerModel.content.initialCardContents.drop(10).take(2).map(card => views.html.commercial.cards.itemSmallCard(card))
     </div>
     <div class="adverts__column">
-        @containerModel.content.cardContents.drop(12).take(2).map(card => views.html.commercial.cards.itemSmallCard(card))
+        @containerModel.content.initialCardContents.drop(12).take(2).map(card => views.html.commercial.cards.itemSmallCard(card))
     </div>
 </div>

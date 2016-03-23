@@ -1,8 +1,8 @@
 @(containerModel: common.commercial.ContainerModel)
 
 <div class="adverts__row adverts__row--2x1x1">
-    @containerModel.content.cardContents.take(3).map(card => views.html.commercial.cards.itemCard(card))
+    @containerModel.content.initialCardContents.take(3).map(card => views.html.commercial.cards.itemCard(card))
 </div>
 <div class="adverts__row adverts__row--1x1x1x1">
-    @containerModel.content.cardContents.drop(3).take(4).map(card => views.html.commercial.cards.itemCard(card))
+    @containerModel.content.initialCardContents.drop(3).take(4).map(card => views.html.commercial.cards.itemCard(card))
 </div>

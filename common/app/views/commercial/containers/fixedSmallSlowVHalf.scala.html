@@ -2,7 +2,7 @@
 
 <div class="adverts__row adverts__row--1x1">
     <div class="adverts__column">
-        @containerModel.content.cardContents.take(4).map(card => views.html.commercial.cards.itemCard(card, optClassNames = Some(Seq("landscape"))))
+        @containerModel.content.initialCardContents.take(4).map(card => views.html.commercial.cards.itemCard(card, optClassNames = Some(Seq("landscape"))))
     </div>
-    @containerModel.content.cardContents.drop(4).take(1).map(card => views.html.commercial.cards.itemCard(card))
+    @containerModel.content.initialCardContents.drop(4).take(1).map(card => views.html.commercial.cards.itemCard(card))
 </div>
