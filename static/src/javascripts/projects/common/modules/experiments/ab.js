@@ -5,15 +5,14 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/commercial-components-dismiss',
     'common/modules/experiments/tests/fronts-on-articles2',
     'common/modules/experiments/tests/identity-register-membership-standfirst',
+    'common/modules/experiments/tests/live-blog-chrome-notifications',
     'common/modules/experiments/tests/header-bidding-us',
     'common/modules/experiments/tests/article-video-autoplay',
-    'common/modules/experiments/tests/next-in-series',
-    'common/modules/experiments/tests/article-related-content-display-as-recommendation',
-    'common/modules/experiments/tests/email-signup-marketing-checkbox',
+    'common/modules/experiments/tests/email-signup-marketing-checkbox-v2',
     'common/modules/experiments/tests/adblocking-response',
+    'common/modules/experiments/tests/people-who-read-this-also-read-variants',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -30,15 +29,14 @@ define([
     mediator,
     store,
     mvtCookie,
-    CommercialComponentsDismiss,
     FrontsOnArticles2,
     IdentityRegisterMembershipStandfirst,
+    LiveBlogChromeNotifications,
     HeaderBiddingUS,
     ArticleVideoAutoplay,
-    NextInSeries,
-    RelatedContentDisplayAsRecommendation,
-    EmailSignupMarketingCheckbox,
+    EmailSignupMarketingCheckboxV2,
     AdblockingResponse,
+    PeopleWhoReadThisAlsoReadVariants,
     flatten,
     forEach,
     keys,
@@ -51,15 +49,14 @@ define([
 ) {
 
     var TESTS = flatten([
-        new CommercialComponentsDismiss(),
         new FrontsOnArticles2(),
         new IdentityRegisterMembershipStandfirst(),
+        new LiveBlogChromeNotifications(),
         new HeaderBiddingUS(),
         new ArticleVideoAutoplay(),
-        new NextInSeries(),
-        new RelatedContentDisplayAsRecommendation(),
-        new EmailSignupMarketingCheckbox(),
-        new AdblockingResponse()
+        new AdblockingResponse(),
+        new EmailSignupMarketingCheckboxV2(),
+        new PeopleWhoReadThisAlsoReadVariants()
     ]);
 
     var participationsKey = 'gu.ab.participations';

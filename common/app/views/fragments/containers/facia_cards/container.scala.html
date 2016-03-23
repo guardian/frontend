@@ -1,18 +1,29 @@
-@(containerDefinition: layout.FaciaContainer,
-  frontProperties: model.FrontProperties = model.FrontProperties.empty,
-  isPaidFront: Boolean = false)(implicit request: RequestHeader)
-
+@import common.commercial.ContainerModel
 @import common.dfp.{Keyword, Series}
 @import conf.switches.Switches
 @import layout.MetaDataHeader
 @import slices.{CommercialContainerType, Dynamic, Fixed, MostPopular, NavList, NavMediaList, SingleCampaign}
-@import views.html.fragments.containers.facia_cards.{commercialContainer, containerMetaData, mostPopularContainer, navListContainer, navMediaListContainer, standardContainer}
-@import views.support.{Commercial, GetClasses, RenderClasses}
+@import views.html.commercial.containers.commercialContainerV2
+@import views.html.fragments.containers.facia_cards._
+@import views.support.{Commercial, GetClasses}
+@(containerDefinition: layout.FaciaContainer,
+  frontProperties: model.FrontProperties = model.FrontProperties.empty,
+  isPaidFront: Boolean = false,
+  maybeContainerModel: Option[ContainerModel] = None)(implicit request: RequestHeader)
 
 @renderCommercialContainer(containerType: CommercialContainerType) = {
-    <div class="fc-container__inner--full-span fc-container__inner--paidfor fc-container__inner">
-    @commercialContainer(containerType, containerDefinition, frontProperties)
-    </div>
+    @(Switches.v2FixedTemplate.isSwitchedOn, maybeContainerModel) match {
+        case (true, Some(containerModel)) => {
+            <div class="fc-container__inner">
+            @commercialContainerV2(containerModel)
+            </div>
+        }
+        case _ => {
+            <div class="fc-container__inner--full-span fc-container__inner--paidfor fc-container__inner">
+            @commercialContainer(containerType, containerDefinition, frontProperties)
+            </div>
+        }
+    }
 }
 
 @defining((containerDefinition.displayName, containerDefinition.faciaComponentName)) { case (title, componentName) =>
@@ -24,7 +35,7 @@
     }
 
     @containerDefinition.container match {
-        case _: MostPopular if isPaidFront => {}
+        case _: model.MostPopular if isPaidFront => {}
         case _ => {
         <section id="@componentName"
         class="@GetClasses.forContainerDefinition(containerDefinition)"

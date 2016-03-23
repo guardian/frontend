@@ -25,15 +25,55 @@ object CMTopBannerPosition extends TestDefinition(
   new LocalDate(2016, 3, 31)
 )
 
+object ABHeadlinesTestVariant extends TestDefinition(
+  Nil,
+  "headlines-ab-variant",
+  "To test how much of a difference changing a headline makes (variant group)",
+  new LocalDate(2016, 3, 30)
+  ) {
+  override def isParticipating(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-hlt").contains("hlt-V") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
+    }
+}
+
+object ABHeadlinesTestControl extends TestDefinition(
+  Nil,
+  "headlines-ab-control",
+  "To test how much of a difference changing a headline makes (control group)",
+  new LocalDate(2016, 3, 30)
+  ) {
+  override def isParticipating(implicit request: RequestHeader): Boolean = {
+      request.headers.get("X-GU-hlt").contains("hlt-C") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
+    }
+}
+
+object SeriesOnwardPosition extends TestDefinition(
+  List(Variant2, Variant3, Variant4, Variant5, Variant6), // 5% of our audience
+  "series-onward-position",
+  "Test engagement with the series onward container positioned as the first thing after the article",
+  new LocalDate(2016, 4, 11)) {
+    def isParticipating(request: RequestHeader, content: model.ContentType): Boolean = {
+      content.tags.series.nonEmpty && super.isParticipating(request)
+    }
+}
+
 object ActiveTests extends Tests {
-  val tests: Seq[TestDefinition] = List(CMTopBannerPosition)
+  val tests: Seq[TestDefinition] = List(CMTopBannerPosition, ABHeadlinesTestControl, ABHeadlinesTestVariant, SeriesOnwardPosition)
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
 
-    val configEntries = List(InternationalEditionVariant(request).map{ international => s""""internationalEditionVariant" : "$international" """}) ++
-      List(ActiveTests.getParticipatingTest(request).map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""})
+    val headlineTests = List(ABHeadlinesTestControl, ABHeadlinesTestVariant).filter(_.isParticipating)
+                          .map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""}
 
-    configEntries.flatten.mkString(",")
+    val internationalEditionTests = List(InternationalEditionVariant(request)
+                                      .map{ international => s""""internationalEditionVariant" : "$international" """}).flatten
+
+    val activeTest = List(ActiveTests.getParticipatingTest(request)
+                        .map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""}).flatten
+
+    val configEntries = activeTest ++ internationalEditionTests ++ headlineTests
+
+    configEntries.mkString(",")
   }
 }
 

@@ -1,0 +1,15 @@
+@(job: model.commercial.jobs.Job,
+  clickMacro: Option[String])
+
+<a class="advert advert--job" href="@clickMacro@job.listingUrl" data-link-name="merchandising-jobs-v0_2_2014-04-30-low-job-@{job.id}">
+    <h2 class="advert__title" itemprop="name">@job.title</h2>
+    <div class="advert__image-container">
+        <img class="advert__image" src="@job.recruiterLogoUrl">
+    </div>
+    <div class="advert__meta">
+        <strong>@job.recruiterName</strong>
+    </div>
+    <div class="advert__meta">
+        @job.locationDescription - @job.shortSalaryDescription
+    </div>
+</a>

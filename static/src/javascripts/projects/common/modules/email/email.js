@@ -138,8 +138,8 @@ define([
                     formModClass = (opts && opts.formModClass) || formData.formModClass || false,
                     formCloseButton = (opts && opts.formCloseButton) || formData.formCloseButton || false,
                     showMarketingCheckbox = (opts && opts.showMarketingCheckbox) || formData.showMarketingCheckbox || false,
-                    showCheckedMarketing = ab.isInVariant('EmailSignupMarketingCheckbox', 'marketing-default-checked'),
-                    showUncheckedMarketing = ab.isInVariant('EmailSignupMarketingCheckbox', 'marketing-default-unchecked');
+                    showCheckedMarketing = ab.isInVariant('EmailSignupMarketingCheckboxV2', 'marketing-default-checked'),
+                    showUncheckedMarketing = ab.isInVariant('EmailSignupMarketingCheckboxV2', 'marketing-default-unchecked');
 
                 Id.getUserFromApi(function (userFromId) {
                     ui.updateFormForLoggedIn(userFromId, el);
@@ -262,7 +262,8 @@ define([
                 return function (event) {
                     var emailAddress = $('.' + classes.textInput, $form).val(),
                         listId = $('.' + classes.listIdHiddenInput, $form).val(),
-                        markCheckbox = $('.' + classes.markCheckbox, $form)[0].checked ? 'marketing allowed' : 'marketing disallowed',
+                        $markCheckbox = $('.' + classes.markCheckbox, $form),
+                        markCheckbox = $markCheckbox.length && $markCheckbox[0].checked ? 'marketing allowed' : 'marketing disallowed',
                         analyticsInfo;
 
                     event.preventDefault();

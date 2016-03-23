@@ -8,8 +8,10 @@ define([
     'common/modules/ui/autoupdate',
     'common/modules/ui/notification-counter',
     'common/modules/ui/relativedates',
+    'common/modules/experiments/ab',
     'bootstraps/enhanced/article-liveblog-common',
     'bootstraps/enhanced/trail',
+    'bootstraps/enhanced/notifications',
     'common/utils/robust'
 ], function (
     config,
@@ -21,8 +23,10 @@ define([
     AutoUpdate,
     NotificationCounter,
     RelativeDates,
+    ab,
     articleLiveblogCommon,
     trail,
+    notifications,
     robust
 ) {
     'use strict';
@@ -31,7 +35,7 @@ define([
 
     modules = {
         initAdverts: function () {
-            return config.switches.liveblogAdverts ? liveblogAdverts.init() : null;
+            return liveblogAdverts.init();
         },
 
         affixTimeline: function () {
@@ -61,6 +65,14 @@ define([
                 },
                 60000
             );
+        },
+
+        initNotifications: function() {
+            if (ab.isInVariant('LiveBlogChromeNotifications', 'control')
+                && (window.location.protocol === 'https:' ||  window.location.hash === '#force-sw')
+                && detect.getUserAgent.browser === 'Chrome' && config.page.isLive) {
+                    notifications.init();
+            }
         }
 
     };
@@ -71,6 +83,7 @@ define([
             ['lb-autoupdate', modules.createAutoUpdate],
             ['lb-timeline',   modules.affixTimeline],
             ['lb-timestamp',  modules.keepTimestampsCurrent],
+            ['lb-notifications',  modules.initNotifications],
             ['lb-richlinks',  richLinks.upgradeRichLinks]
         ]);
 

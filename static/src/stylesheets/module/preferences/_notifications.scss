@@ -1,43 +1,18 @@
-.notifications-preferences-overlay {
+.notifications-subscribe-link--has-subscriptions {
     display: none;
-
-    // Shown with JS
-    position: fixed;
-    background-color: colour(live-support-2);
-    top: 0;
-    bottom: 0;
-    z-index: 100;
-    left: 0;
-    right: 0;
-    color: #ffffff;
 }
 
-.notifications-preferences-overlay__body {
-    max-width: gs-span(6);
-    margin: gs-height(3) auto 0;
-    padding: 0 $gs-gutter;
+.from-content-api .notifications-subscribe-link__headline {
+    @include fs-header(3);
 }
 
-.notifications-preferences-overlay__cta {
-    @include fs-header(5);
-    padding-top: $gs-baseline / 2;
-}
+.notifications-link {
+    margin-bottom: $gs-baseline / 2;
 
-.notifications-preferences-overlay__button {
-    &:before {
-        content: '\2018';
-    }
-    &:after {
-        content: '\2019';
+    .button--follow {
+        margin-bottom: $gs-baseline;
     }
 }
 
-.notifications-preferences-overlay__aside {
-    @include fs-data(1);
-    padding-top: $gs-baseline * 2;
 
-    a {
-        color: #ffffff;
-        text-decoration: underline;
-    }
-}
+

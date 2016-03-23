@@ -14,7 +14,6 @@ define([
     'common/utils/url',
     'common/utils/robust',
     'common/utils/storage',
-    'common/modules/analytics/foresee-survey',
     'common/modules/analytics/livestats',
     'common/modules/analytics/media-listener',
     'common/modules/analytics/omniture',
@@ -22,6 +21,7 @@ define([
     'common/modules/analytics/scrollDepth',
     'common/modules/analytics/css-logging',
     'common/modules/analytics/simple-metrics',
+    'common/modules/analytics/headlines-test-analytics',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/commercial/donot-use-adblock',
     'common/modules/commercial/user-features',
@@ -70,7 +70,6 @@ define([
     url,
     robust,
     storage,
-    Foresee,
     liveStats,
     mediaListener,
     omniture,
@@ -78,6 +77,7 @@ define([
     ScrollDepth,
     logCss,
     simpleMetrics,
+    HeadlinesTestAnalytics,
     userAdTargeting,
     donotUseAdblock,
     userFeatures,
@@ -249,12 +249,6 @@ define([
                 }
             },
 
-            runForseeSurvey: function () {
-                if (config.switches.foresee) {
-                    Foresee.load();
-                }
-            },
-
             startRegister: function () {
                 if (!config.page.isSSL) {
                     register.initialise();
@@ -360,6 +354,9 @@ define([
                         email.init(el);
                     });
                 });
+            },
+            headlinesTestAnalytics: function () {
+                HeadlinesTestAnalytics.init();
             }
         };
 
@@ -390,7 +387,6 @@ define([
                 ['c-sign-in', modules.initAutoSignin],
                 ['c-id-cookie-refresh', modules.idCookieRefresh],
                 ['c-history-nav', modules.showHistoryInMegaNav],
-                ['c-forsee', modules.runForseeSurvey],
                 ['c-start-register', modules.startRegister],
                 ['c-tag-links', modules.showMoreTagsLink],
                 ['c-smart-banner', smartAppBanner.init],
@@ -409,7 +405,8 @@ define([
                 ['c-save-for-later', modules.saveForLater],
                 ['c-show-membership-messages', modules.showMembershipMessages],
                 ['c-email', modules.initEmail],
-                ['c-user-features', userFeatures.refresh]
+                ['c-user-features', userFeatures.refresh],
+                ['c-headlines-test-analytics', modules.headlinesTestAnalytics]
             ]), function (fn) {
                 fn();
             });
