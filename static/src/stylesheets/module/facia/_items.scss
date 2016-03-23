@@ -107,7 +107,7 @@
             }
         }
 
-        &[class*="fc-item--has-sublinks"] {
+        &[class*='fc-item--has-sublinks'] {
             .has-flex-wrap &.fc-item--has-cutout {
                 .fc-item__header {
                     padding-right: 0;
@@ -140,7 +140,7 @@
             }
         }
 
-        &[class*="fc-item--has-sublinks"] {
+        &[class*='fc-item--has-sublinks'] {
             .fc-item__standfirst,
             .fc-item__media-wrapper {
                 display: none;

@@ -35,10 +35,10 @@ $text-size:               14px;
 $pagination-icon-spacing: 10px;
 
 .pagination {
-    width: auto;
-    text-align: right;
     @include f-textSans;
     @include font-size($text-size, 48px);
+    width: auto;
+    text-align: right;
 }
 
 .pagination--full {
