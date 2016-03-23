@@ -209,13 +209,12 @@
     }
 }
 .user-profile__about {
+    @include fs-textSans(2);
     clear: both;
     margin-top: $gs-baseline;
-    @include fs-textSans(2);
 
     @include mq(tablet) {
         margin-left: $gs-gutter*3.5;
-        margin-top: $gs-baseline;
         max-width: gs-span(6);
         clear: none;
         margin-top: 0;
@@ -235,16 +234,16 @@
 }
 .user-profile__last-seen,
 .user-profile__web-page {
-    display: block;
     @include fs-textSans(1);
+    display: block;
     color: colour(neutral-2-contrasted);
     font-weight: normal;
 }
 .user-profile__web-page {
+    @include ellipsis();
     display: block;
     margin-bottom: $gs-baseline/3;
     max-width: 100%;
-    @include ellipsis();
     word-break: break-all;
 }
 
@@ -326,8 +325,8 @@
     margin-bottom: $gs-baseline;
 
     @include mq(desktop) {
-        box-sizing: border-box;
         @include fs-headline(3, true);
+        box-sizing: border-box;
         float: left;
         padding-right: $gs-gutter;
         width: gs-span(4);
