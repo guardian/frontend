@@ -69,7 +69,6 @@ figure.element-table {
 .player-card__stat-name, .player-card__stat-value {
     font-size: 0.8125rem;
     line-height: 1.125rem;
-
 }
 
 .player-card__position {
@@ -102,6 +101,15 @@ figure.element-table {
     border-top: 0.0625rem solid #eaeaea;
 }
 
+.match-summary__team--home {
+    text-align: right;
+    margin-right: 15px;
+}
+
+.match-summary__team--away {
+    margin-left: 15px;
+}
+
 .match-summary .match-summary__status {
     display: none;
 }
@@ -122,48 +130,41 @@ figure.element-table {
     font-weight: bold;
 }
 
+.match-summary__teams {
+    display: flex;
+}
+
 .match-summary__team {
     margin-bottom: 0.75rem;
     min-height: 44px;
+    flex: 1;
+    vertical-align: top;
+}
+
+.team__main {
+    display: flex;
+    align-items: center;
+}
+
+.match-summary__team--away .team__main {
+    justify-content: flex-start;
+     flex-direction: row-reverse;
 }
 
 .team__crest {
-    margin-right: 1.25rem;
-    float: left;
+    flex: 1;
     width: auto;
 }
 
 .team__crest__img-container {
-    display: table-cell;
     vertical-align: middle;
 }
 
-.match-summary .team__info {
-    line-height: 1.75rem;
-    position: relative;
-    margin-left: 3.375rem;
-}
-
-.team__name {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    margin: 0;
-    padding-right: 2.5rem;
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-weight: 400;
-    font-size: 1.5rem;
-}
-
 .team__score {
-    position: absolute;
-    right: 0;
-    top: 0;
     font-weight: 400;
-    font-size: 1.5rem;
+    font-size: 3rem;
+    min-width: 1.2em;
+    position: relative;
 }
 
 .team__scorers {
@@ -174,5 +175,32 @@ figure.element-table {
 
 .team__scorers dd {
     padding: 0;
-    margin: 0 3.5rem 0 0.625rem;
+    margin: 0;
+}
+
+.match-summary .team__info {
+    line-height: 1.75rem;
+    position: relative;
+}
+
+.match-summary .team__heading {
+    margin-top: 0;
+}
+
+.team__name {
+    margin: 0;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 400;
+    font-size: 1.5rem;
+}
+
+.match-summary__team--home .team__score::after {
+    content: '\2013';
+    position: absolute;
+    text-align: center;
+    right: -30px;
+    width: 30px;
 }
