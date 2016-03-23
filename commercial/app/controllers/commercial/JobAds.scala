@@ -1,6 +1,6 @@
 package controllers.commercial
 
-import model.commercial.jobs.JobsAgent
+import model.commercial.jobs.{JobSector, JobsAgent}
 import model.{Cached, NoCache}
 import performance.MemcachedAction
 import play.api.mvc._
@@ -11,18 +11,18 @@ object JobAds extends Controller with implicits.Requests {
 
   implicit val codec = Codec.utf_8
 
-  val jobCategories = Seq(
-    Seq("arts", "Arts"),
-    Seq("graduate", "Graduate"),
-    Seq("social-care", "Social care"),
-    Seq("charity", "Charity"),
-    Seq("health", "Health"),
-    Seq("higher-education", "Higher education"),
-    Seq("environment", "Environment"),
-    Seq("housing", "Housing"),
-    Seq("schools", "Schools"),
-    Seq("government", "Government"),
-    Seq("media", "Media")
+  val jobSectors = Seq(
+    JobSector("arts", "Arts"),
+    JobSector("graduate", "Graduate"),
+    JobSector("social-care", "Social care"),
+    JobSector("charity", "Charity"),
+    JobSector("health", "Health"),
+    JobSector("higher-education", "Higher education"),
+    JobSector("environment", "Environment"),
+    JobSector("housing", "Housing"),
+    JobSector("schools", "Schools"),
+    JobSector("government", "Government"),
+    JobSector("media", "Media")
   )
 
   def renderJobs = MemcachedAction { implicit request =>
@@ -34,7 +34,7 @@ object JobAds extends Controller with implicits.Requests {
           val omnitureId = request.getParameter("omnitureId")
 
           if(conf.switches.Switches.v2JobsTemplate.isSwitchedOn) {
-            jsonFormat.result(views.html.jobs.jobsV2(jobs.take(2), jobCategories, omnitureId, clickMacro))
+            jsonFormat.result(views.html.jobs.jobsV2(jobs.take(2), jobSectors, omnitureId, clickMacro))
           } else {
             jsonFormat.result(views.html.jobs.jobs(jobs.take(2), omnitureId, clickMacro))
           }

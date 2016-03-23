@@ -18,7 +18,6 @@ object Metric extends Logging {
     // page views
     ("pv", CountMetric("kpis-page-views")),            // raw page views - simple <img> in body, no javascript involved
     ("pva", CountMetric("kpis-analytics-page-views")), // page view fires after analytics
-    ("omniture-library-error", CountMetric("omniture-library-error")),
     ("omniture-pageview-error", CountMetric("omniture-pageview-error")),
 
     ("ads-blocked", CountMetric("ads-blocked")),

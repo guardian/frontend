@@ -13,15 +13,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABNextInSeries = Switch(
-    "A/B Tests",
-    "ab-next-in-series",
-    "Show next in series",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 23),
-    exposeClientSide = true
-  )
-
   val ABIdentityRegisterMembershipStandfirst = Switch(
     "A/B Tests",
     "ab-identity-register-membership-standfirst",
@@ -37,15 +28,6 @@ trait ABTestSwitches {
     "Live blog chrome notifications",
     safeState = Off,
     sellByDate = new LocalDate(2016, 5, 2),
-    exposeClientSide = true
-  )
-
-  val ABArticleVideoAutoplay = Switch(
-    "A/B Tests",
-    "ab-article-video-autoplay",
-    "Autoplay embedded videos in article",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 23),
     exposeClientSide = true
   )
 
@@ -67,12 +49,12 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABEmailSignupMarketingCheckbox = Switch(
+  val ABEmailSignupMarketingCheckboxV2 = Switch(
     "A/B Tests",
-    "ab-email-signup-marketing-checkbox",
+    "ab-email-signup-marketing-checkbox-v2",
     "Test marketing checkbox in email sign-up",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 23),
+    sellByDate = new LocalDate(2016, 3, 29),
     exposeClientSide = true
   )
 
