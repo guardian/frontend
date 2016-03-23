@@ -16,8 +16,7 @@ define([
     'lodash/objects/isArray',
     'lodash/objects/has',
     'lodash/arrays/flatten',
-    'lodash/objects/pick',
-    'lodash/arrays/first'
+    'lodash/objects/pick'
 ], function (
     bean,
     bonzo,
@@ -36,8 +35,7 @@ define([
     isArray,
     has,
     flatten,
-    pick,
-    first
+    pick
 ) {
     var supportedSections = {
             'sport': 'sport',
@@ -51,7 +49,8 @@ define([
         //     alertID: true, <- dismissed/visited
         //     alertID: false <- seen, but not dismissed/visited
         // }
-        knownAlertIDsStorageKey = 'gu.breaking-news.hidden';
+        knownAlertIDsStorageKey = 'gu.breaking-news.hidden',
+        knownAlertIDs;
 
     function storeKnownAlertIDs() {
         storage.local.set(knownAlertIDsStorageKey, knownAlertIDs);

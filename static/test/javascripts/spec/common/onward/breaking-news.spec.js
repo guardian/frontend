@@ -1,3 +1,4 @@
+/*eslint no-console: 0*/
 define([
     'common/utils/config',
     'helpers/injector',
@@ -35,7 +36,7 @@ define([
                     id: options.collection + '_' + type,
                     frontPublicationDate: minutesAgo(options.age)
                 }]
-            }
+            };
         }
 
         function mockBreakingNewsWith(collections) {
@@ -81,7 +82,7 @@ define([
         describe('user cannot dismiss alerts', function () {
             beforeEach(function () {
                 sinon.stub(storage.local, 'isAvailable').returns(false);
-            })
+            });
 
             it('should not try and fetch the json', function (done) {
                 mockBreakingNewsWith([]).then(function () {
@@ -97,16 +98,16 @@ define([
 
             afterEach(function () {
                 storage.local.isAvailable.restore();
-            })
+            });
         });
 
         describe('user can dismiss alerts', function () {
             beforeEach(function (done) {
                 storage.local.set(knownAlertIDsStorageKey, {
-                    uk_known: false,
-                    uk_dismissed: true
+                    'uk_known': false,
+                    'uk_dismissed': true
                 });
-                setTimeout(done, 100)
+                setTimeout(done, 100);
             });
 
             it('should try and fetch the json', function (done) {
@@ -178,7 +179,7 @@ define([
                     alertThatIs('unknown', {collection: 'uk'})
                 ];
                 mockBreakingNewsWith(collections).then(function (alert) {
-                    expect(alert).not.toBeUndefined()
+                    expect(alert).not.toBeUndefined();
                     done();
                 }, function (e) {
                     fail(e);
@@ -191,7 +192,7 @@ define([
                     alertThatIs('unknown', {collection: 'us'})
                 ];
                 mockBreakingNewsWith(collections).then(function (alert) {
-                    expect(alert).toBeUndefined()
+                    expect(alert).toBeUndefined();
                     done();
                 }, function (e) {
                     fail(e);
@@ -275,7 +276,7 @@ define([
                 expect(storage.local.get(knownAlertIDsStorageKey).uk_known).not.toBeUndefined();
                 expect(storage.local.get(knownAlertIDsStorageKey).uk_dismissed).not.toBeUndefined();
 
-                mockBreakingNewsWith(collections).then(function (alert) {
+                mockBreakingNewsWith(collections).then(function () {
                     expect(storage.local.get(knownAlertIDsStorageKey).uk_known).not.toBeUndefined();
                     expect(storage.local.get(knownAlertIDsStorageKey).uk_dismissed).toBeUndefined();
                     done();
