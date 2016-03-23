@@ -2,6 +2,7 @@ files:
   include: '**/*.s+(a|c)ss'
   ignore:
     - 'static/src/stylesheets/components/**/*.scss'
+    - 'static/src/stylesheets/icons/**/*.scss'
 options:
   formatter: compact
   merge-default-rules: false
