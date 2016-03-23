@@ -1,3 +1,15 @@
+// TODO: No recent deploys of router so it doesn't appear!! Increase history
+// size or filter exact matches only
+// TODO: Deal with error JSON
+// TODO: Show status if updates fail
+// TODO: Show build ID beside merge commits.
+// - We currently only request the build for the most recent CODE/PROD deploys.
+// We would have to request all builds in the range
+// http://teamcity.gu-web.net:8111/guestAuth/app/rest/buildTypes/id:dotcom_master/builds?locator=sinceBuild:(number:1205),untilBuild:(number:1209)&fields=build(number,buildType(name,projectName),revisions(revision(version)),changes(change(username,comment,version)),artifact-dependencies(build(number)))
+// TODO: Show failed deploys. Update status to say so
+// TODO: Show upcoming deploys? Flow chart?
+// Draw out requests
+
 /// <reference path="../typings/tsd.d.ts" />
 /// <reference path="../manual-typings/vdom-virtualize.d.ts" />
 /// <reference path="../manual-typings/immutable.d.ts" />
