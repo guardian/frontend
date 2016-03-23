@@ -45,7 +45,7 @@ rules:
   no-misspelled-properties:
     - 1
     - extra-properties:
-        - will-change
+        - overflow-scrolling
   no-trailing-zero: 1
   no-url-protocols: 0
 
