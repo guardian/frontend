@@ -4,8 +4,8 @@
     border-top: 1px dotted guss-colour(neutral-3, $pasteup-palette);
 
     h3 {
-        color: colour(neutral-2);
         @include fs-textSans(5);
+        color: colour(neutral-2);
     }
 
     h4 {

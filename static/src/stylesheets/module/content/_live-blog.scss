@@ -7,7 +7,6 @@ $block-padding-right: $gs-gutter;
    ========================================================================== */
 .content__main-column--liveblog {
     @include mq(desktop) {
-        max-width: gs-span(8);
         margin-left: $right-column + $gs-gutter;
         margin-right: 0;
         max-width: none;
@@ -78,10 +77,10 @@ $block-padding-right: $gs-gutter;
    ========================================================================== */
 .timestamp,
 .published-time {
+    @include font($f-sans-serif-text, bold, 13, 20);
     display: block;
     padding: $gs-baseline/3 0;
     margin-top: ($gs-baseline/3)*2;
-    @include font($f-sans-serif-text, bold, 13, 20);
 
     time {
         display: inline-block;
@@ -95,12 +94,13 @@ $block-padding-right: $gs-gutter;
     position: relative;
 
     &.published-time {
-        margin: 0;
         @include fs-textSans(2);
+        margin: 0;
         font-weight: bold;
     }
 
     .live-pulse-icon--red {
+        @include circular;
         $size: 12px;
         display: inline-block;
         content: '';
@@ -109,15 +109,14 @@ $block-padding-right: $gs-gutter;
         height: $size;
         margin-bottom: -1px;
         margin-right: 3px;
-        @include circular;
         animation: live-pulse 2s infinite;
     }
 
     .block-time__absolute {
+        @include fs-textSans(1);
         display: inline-block;
         margin-left: $gs-gutter/4;
         color: colour(neutral-2);
-        @include fs-textSans(1);
         font-weight: normal;
     }
 
@@ -194,8 +193,8 @@ $block-padding-right: $gs-gutter;
 }
 
 .notify__btn {
-    text-align: left;
     @include fs-textSans(3);
+    text-align: left;
     font-weight: bold;
     color: colour(live-default);
 }
@@ -422,6 +421,7 @@ $block-padding-right: $gs-gutter;
 }
 .tweet,
 .from-content-api blockquote.tweet {
+    @include fs-textSans(3);
     display: inline-block;
     border-left-width: 0;
     padding: $gs-baseline/2 0 0;
@@ -429,7 +429,6 @@ $block-padding-right: $gs-gutter;
     margin-left: $gs-gutter/2;
     margin-right: $gs-gutter/2;
     font-style: normal;
-    @include fs-textSans(3);
 
     &:first-child {
         margin-top: $gs-baseline/2;
@@ -723,6 +722,7 @@ $timeline-width: 15px;
         border-left: 1px solid colour(neutral-5);
 
         &:before {
+            @include circular;
             display: block;
             position: absolute;
             content: ' ';
@@ -730,7 +730,6 @@ $timeline-width: 15px;
             left: ($timeline-width/2)*-1;
             width: $timeline-width;
             height: $timeline-width;
-            @include circular;
             background-color: colour(neutral-3);
         }
 
@@ -754,9 +753,9 @@ $timeline-width: 15px;
     }
 }
 .timeline__date {
+    @include fs-textSans(2);
     display: table-cell;
     width: gs-span(1);
-    @include fs-textSans(2);
     font-weight: bold;
 
     .block-time__absolute,
@@ -772,8 +771,8 @@ $timeline-width: 15px;
     }
 }
 .timeline__title {
-    display: table-cell;
     @include fs-textSans(3);
+    display: table-cell;
     border-color: colour(neutral-8);
 
     .timeline__link:hover & {

@@ -97,8 +97,7 @@
 
         &:before {
             background-color: colour(neutral-1);
-            box-shadow: 0px 0px 0px 1px colour(neutral-1),
-                inset 0px 0px 0px 3px colour(comment-main-2);
+            box-shadow: 0px 0px 0px 1px colour(neutral-1), inset 0px 0px 0px 3px colour(comment-main-2);
         }
     }
 
@@ -109,8 +108,7 @@
 
         &:before {
             background-color: colour(neutral-2);
-            box-shadow: 0px 0px 0px 1px colour(neutral-2),
-                inset 0px 0px 0px 3px colour(neutral-4);
+            box-shadow: 0px 0px 0px 1px colour(neutral-2), inset 0px 0px 0px 3px colour(neutral-4);
         }
     }
 }
@@ -189,16 +187,14 @@
 
     :checked + &:before {
         background-color: colour(neutral-1);
-        box-shadow: 0px 0px 0px 1px colour(neutral-1),
-            inset 0px 0px 0px 3px colour(comment-main-2);
+        box-shadow: 0px 0px 0px 1px colour(neutral-1), inset 0px 0px 0px 3px colour(comment-main-2);
     }
 
     // highlight state (darker grey)
     .atom-quiz--is-not-results :not(:checked) + &:hover:before,
     .atom-quiz--is-not-results :not(:checked):focus + &:before {
         background-color: colour(neutral-2);
-        box-shadow: 0px 0px 0px 1px colour(neutral-2),
-            inset 0px 0px 0px 3px colour(neutral-4);
+        box-shadow: 0px 0px 0px 1px colour(neutral-2), inset 0px 0px 0px 3px colour(neutral-4);
     }
 
     // don't show the fake radio button on a personality quiz results page
@@ -270,9 +266,9 @@
 }
 
 .atom-quiz__answer__reveal-text {
+    @include fs-textSans(1);
     display: none;
     color: colour(neutral-1);
-    @include fs-textSans(1);
 
     .atom-quiz--is-results & {
         display: block;
