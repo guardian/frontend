@@ -4,30 +4,12 @@
 @import views.html.commercial.containers._
 @import views.html.fragments.inlineSvg
 
-@views.html.commercial.containerWrapper(Seq("legacy", "capi", "tone-capi"),
-                  optKicker = Some(fragments.commercial.paidForMeta()),
-                  optStamp = Some(stamp),
-                  optSponsorship = containerModel.metaData.sponsorData match {
-                      case Some(data) => Some(data.sponsorshipType)
-                      case _ => None
-                  },
-                  optSponsor = containerModel.metaData.sponsorData match {
-                      case Some(data) => data.sponsor
-                      case _ => None
-                  },
-                  optKeywords = containerModel.metaData.sponsorData match {
-                      case Some(data) => data.keywordId
-                      case _ => None
-                  },
-                  optSeries = containerModel.metaData.sponsorData match {
-                      case Some(data) => data.seriesId
-                      case _ => None
-                  },
-                  optBadge = containerModel.metaData.sponsorData match {
-                      case Some(_) => Some(Html(" "))
-                      case _ => None
-                  }
-                  ){
+@views.html.commercial.containerWrapper(
+    Seq("legacy", "capi", "tone-capi"),
+    optKicker = Some(fragments.commercial.paidForMeta()),
+    optStamp = Some(stamp),
+    optBranding = containerModel.metaData.sponsorData
+){
 
     <a class="adverts__logo u-text-hyphenate" href="@containerModel.content.targetUrl">@containerModel.content.title</a>
 

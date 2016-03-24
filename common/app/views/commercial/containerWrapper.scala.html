@@ -1,10 +1,8 @@
+@import views.support.SponsorDataAttributes
 @(classNames: Seq[String],
   dataLinkName: Option[String] = None,
   rowLayout: Option[String] = None,
-  optSponsorship: Option[String] = None,
-  optSponsor: Option[String] = None,
-  optKeywords: Option[String] = None,
-  optSeries: Option[String] = None,
+  optBranding: Option[SponsorDataAttributes] = None,
   optKicker: Option[Html] = None,
   optBlurb: Option[Html] = None,
   optActions: Option[Html] = None,
@@ -14,11 +12,13 @@
 
 <aside class="adverts @classNames.map(c => s"adverts--$c").mkString(" ")"
     @for(dln <- dataLinkName){data-link-name="@dln"}
-    @for(sponsorship <- optSponsorship){data-sponsorship="@sponsorship"}
-    @for(sponsor     <- optSponsor)    {data-sponsor="@sponsor"}
-    @for(keywords    <- optKeywords)   {data-keywords="@keywords"}
-    @for(series      <- optSeries)     {data-series="@series"}
-    >
+    @for(branding <- optBranding){
+        data-sponsorship="@branding.sponsorshipType"
+        @for(sponsor <- branding.sponsor){ data-sponsor="@sponsor" }
+        @for(keywordId <- branding.keywordId){ data-keywords="@keywordId" }
+        @for(seriesId <- branding.seriesId){ data-series="@seriesId"}
+    }
+>
     <header class="adverts__header">
         @for(kicker   <- optKicker)  {<div class="adverts__kicker">@kicker</div>}
         <h1 class="adverts__title">@title</h1>
@@ -28,6 +28,6 @@
     </header>
     <div class="adverts__body">
         @innards
-        @for(badge        <- optBadge)   {<div class="adverts__badge js-badge">@badge</div>}
+        @if(optBranding.nonEmpty){ <div class="js-badge-placeholder"></div> }
     </div>
 </aside>
