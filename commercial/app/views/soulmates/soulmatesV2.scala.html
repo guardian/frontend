@@ -2,6 +2,10 @@
   omnitureId: Option[String],
   clickMacro: Option[String])(implicit request: RequestHeader)
 
+@import conf.Configuration
+@import views.html.commercial.containerWrapper
+@import views.html.soulmates.{soulmateCard, soulmateForm}
+
 @containerWrapper(Seq("legacy", "soulmates", "tone-soulmates"),
                   omnitureId.map(id => s"commercial | soulmates | ${id}"),
                   optBlurb = Some(blurb),

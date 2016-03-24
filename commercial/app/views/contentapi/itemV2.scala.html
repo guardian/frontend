@@ -11,6 +11,8 @@
   clickMacro: Option[String],
   omnitureId: Option[String])(implicit request: RequestHeader)
 
+@import views.html.commercial.containerWrapper
+@import views.html.contentapi.itemCard
 @import views.html.fragments.inlineSvg
 
 @containerWrapper(Seq("legacy", "legacy-single", "capi", "tone-capi"),

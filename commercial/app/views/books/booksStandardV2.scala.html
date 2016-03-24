@@ -2,6 +2,10 @@
   omnitureId: Option[String],
   clickMacro: Option[String])(implicit request: RequestHeader)
 
+@import conf.Configuration
+@import views.html.books.{bookCard, searchFormV2}
+@import views.html.commercial.containerWrapper
+
 @containerWrapper(Seq("legacy", "books", "tone-books"),
                   omnitureId.map(id => s"merchandising | books standard | ${id}"),
                   optActions = Some(actions)){
