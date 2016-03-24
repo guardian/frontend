@@ -1,9 +1,11 @@
 @import model.commercial.jobs.{Job, JobSector}
-@import views.html.jobs.jobCard
 @(jobs: Seq[Job],
   jobSectors: Seq[JobSector],
   omnitureId: Option[String],
   clickMacro: Option[String])(implicit request: RequestHeader)
+
+@import views.html.commercial.containerWrapper
+@import views.html.jobs.jobCard
 
 @containerWrapper(Seq("legacy", "jobs", "tone-jobs"),
                   omnitureId.map(id => s"merchandising | jobs | ${id}"),

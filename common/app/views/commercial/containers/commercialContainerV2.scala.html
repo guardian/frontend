@@ -1,31 +1,17 @@
 @(containerModel: common.commercial.ContainerModel)(implicit request: RequestHeader)
 
+@import common.{Edition, LinkTo}
+@import views.html.commercial.containerWrapper
+@import views.html.commercial.containers._
 @import views.html.fragments.inlineSvg
 
-@views.html.commercial.containerWrapper(Seq("legacy", "capi", "tone-capi"),
-                  optKicker = Some(fragments.commercial.paidForMeta()),
-                  optStamp = Some(stamp),
-                  optSponsorship = containerModel.metaData.sponsorData match {
-                      case Some(data) => Some(data.sponsorshipType)
-                      case _ => None
-                  },
-                  optSponsor = containerModel.metaData.sponsorData match {
-                      case Some(data) => data.sponsor
-                      case _ => None
-                  },
-                  optKeywords = containerModel.metaData.sponsorData match {
-                      case Some(data) => data.keywordId
-                      case _ => None
-                  },
-                  optSeries = containerModel.metaData.sponsorData match {
-                      case Some(data) => data.seriesId
-                      case _ => None
-                  },
-                  optBadge = containerModel.metaData.sponsorData match {
-                      case Some(_) => Some(Html(" "))
-                      case _ => None
-                  }
-                  ){
+@containerWrapper(
+    Seq("legacy", "capi", "tone-capi"),
+    optKicker = Some(fragments.commercial.paidForMeta()),
+    optStamp = Some(stamp),
+    optBranding = containerModel.metaData.sponsorData,
+    optBadge = Some(logoSlot)
+){
 
     <a class="adverts__logo u-text-hyphenate" href="@containerModel.content.targetUrl">@containerModel.content.title</a>
 
@@ -48,27 +34,25 @@
         }
     }
 
-    @if(!containerModel.metaData.hideShowMore){
+    @if(!containerModel.metaData.hideShowMore && containerModel.content.extraCardContents.nonEmpty){
         <details class="adverts__more">
             <summary class="button button--medium button--primary button--show-more">
                 @fragments.inlineSvg("plus", "icon")
                 @fragments.inlineSvg("minus", "icon")
                 More @containerModel.content.title
             </summary>
-            @if(containerModel.content.extraCardContents.length > 0) {
-                @defining(Math.max(1, Math.floor(containerModel.content.extraCardContents.length / 3).toInt)) { length =>
-                    <div class="adverts__row">
-                        <div class="adverts__column">
-                            @containerModel.content.extraCardContents.take(length).map(card => views.html.commercial.cards.itemSmallCard(card))
-                        </div>
-                        <div class="adverts__column">
-                            @containerModel.content.extraCardContents.drop(length).take(length).map(card => views.html.commercial.cards.itemSmallCard(card))
-                        </div>
-                        <div class="adverts__column">
-                            @containerModel.content.extraCardContents.drop(length * 2).take(length).map(card => views.html.commercial.cards.itemSmallCard(card))
-                        </div>
+            @defining(Math.max(1, Math.floor(containerModel.content.extraCardContents.length / 3).toInt)) { length =>
+                <div class="adverts__row">
+                    <div class="adverts__column">
+                        @containerModel.content.extraCardContents.take(length).map(card => views.html.commercial.cards.itemSmallCard(card))
                     </div>
-                }
+                    <div class="adverts__column">
+                        @containerModel.content.extraCardContents.slice(length, length * 2).map(card => views.html.commercial.cards.itemSmallCard(card))
+                    </div>
+                    <div class="adverts__column">
+                        @containerModel.content.extraCardContents.slice(length * 2, length * 3).map(card => views.html.commercial.cards.itemSmallCard(card))
+                    </div>
+                </div>
             }
         </details>
     }
@@ -87,3 +71,5 @@
     </a>
 
 }
+
+@logoSlot = {<div class="js-badge-placeholder"></div>}
