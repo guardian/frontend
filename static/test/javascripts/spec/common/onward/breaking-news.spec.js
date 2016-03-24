@@ -52,13 +52,16 @@ define([
                         webTitle: 'Breaking News',
                         collections: collections
                     })]);
-                    breakingNews().then(function(result) {
+                    Promise.resolve().then(function () {
+                        return breakingNews();
+                    }).then(function(result) {
                         // make sure the DOM has finished updating
                         requestAnimationFrame(function () {
                             resolve(result);
                         });
-                    }, reject);
-                    server.restore();
+                    }).catch(reject).then(function () {
+                        server.restore();
+                    });
                 }, function (e) {
                     console.log(e);
                 });
