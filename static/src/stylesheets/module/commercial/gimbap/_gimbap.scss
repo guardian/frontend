@@ -60,7 +60,7 @@ $gimbap-width-quarter: calc(25% - 20px);
         shape-outside: polygon(100% -20%, 100% 140%, 10% 140%, 10% 50%);
         float: right;
         width: 40%;
-        min-height: 160px;
+        min-height: 220px;
 
         @include mq(tablet) {
             min-height: 120px;
