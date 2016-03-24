@@ -2,7 +2,7 @@
     padding-top: $gs-baseline / 4;
     padding-bottom: $gs-baseline / 4;
     border-top: 1px dotted guss-colour(neutral-3, $pasteup-palette);
-    background-image: url("https://uploads.guim.co.uk/2016/03/24/seal2.png");
+    background-image: url('https://uploads.guim.co.uk/2016/03/24/seal2.png');
     background-repeat: no-repeat;
     background-position: bottom right;
     padding-right: 92px;
@@ -12,8 +12,8 @@
     }
 
     h3 {
-        color: colour(neutral-2);
         @include fs-textSans(5);
+        color: colour(neutral-2);
     }
 
     h4 {
