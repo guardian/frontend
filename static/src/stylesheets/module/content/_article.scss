@@ -10,6 +10,10 @@
         margin-left: 0;
         margin-right: 0;
     }
+    @include mq(leftCol) {
+        width: 100%;
+        float: right;
+    }
 }
 
 .content__main-column--article {
