@@ -9,7 +9,8 @@
     Seq("legacy", "capi", "tone-capi"),
     optKicker = Some(fragments.commercial.paidForMeta()),
     optStamp = Some(stamp),
-    optBranding = containerModel.metaData.sponsorData
+    optBranding = containerModel.metaData.sponsorData,
+    optBadge = Some(logoSlot)
 ){
 
     <a class="adverts__logo u-text-hyphenate" href="@containerModel.content.targetUrl">@containerModel.content.title</a>
@@ -70,3 +71,5 @@
     </a>
 
 }
+
+@logoSlot = {<div class="js-badge-placeholder"></div>}
