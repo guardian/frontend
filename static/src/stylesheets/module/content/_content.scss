@@ -467,12 +467,14 @@
 
 .content__meta-container {
     min-height: gs-height(1);
+    position: relative;
     margin-bottom: $gs-baseline;
     border-top: 1px dotted colour(neutral-5);
     border-bottom: 1px dotted colour(neutral-5);
 
     @include mq(leftCol) {
-        float: left;
+        position: absolute;
+        top: 0;
         border-top: 0;
         border-bottom: 0;
         margin-left: ($left-column + $gs-gutter)*-1;
