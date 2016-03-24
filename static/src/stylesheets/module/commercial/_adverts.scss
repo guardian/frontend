@@ -135,6 +135,7 @@
     .advert {
         flex-basis: calc(75% - #{$gs-gutter});
         flex-grow: 0;
+        margin: 0;
     }
 
     .advert__image-container {

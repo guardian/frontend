@@ -1,7 +1,7 @@
 @(item: model.ContentType,
   clickMacro: Option[String] = None)(implicit request: RequestHeader)
 
-<a class="advert advert--large advert--capi advert--landscape @item match {
+<a class="advert advert--large advert--capi advert--landscape advert--large--inverse @item match {
       case _: Video => { advert--video }
       case _: Audio => { advert--audio }
       case _: Gallery => { advert--gallery }
