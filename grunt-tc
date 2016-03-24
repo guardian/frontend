@@ -4,21 +4,4 @@ set -o xtrace
 set -o nounset
 set -o errexit
 
-# Try newer ruby for newer sass
-eval "$(rbenv init -)"
-rbenv install -s 2.1.2
-rbenv local 2.1.2
-
-ruby --version
-
-# Add bundler to the local ruby and rehash paths to pick it up
-gem install bundler
-rbenv rehash
-
-export PATH=dev/gems/bin:$PATH
-
-# `without` is a remembered option - this can be removed once it's been deleted from all boxes
-bundle config --delete without
-bundle install --binstubs dev/gems/bin --path dev/gems
-
 grunt --stack --no-color "$@"

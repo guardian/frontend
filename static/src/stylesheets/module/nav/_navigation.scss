@@ -95,7 +95,7 @@ $c-navigation-expandable-background: colour(neutral-1);
     font-weight: 500;
 
     // Restore opentype kerning settings in WebKit / Blink
-    -webkit-font-feature-settings: "kern" 1;
+    -webkit-font-feature-settings: 'kern' 1;
 
     a {
         &,
@@ -282,26 +282,24 @@ $c-navigation-expandable-background: colour(neutral-1);
     background-repeat: no-repeat;
     background-size: cover;
 }
+
 .top-navigation__icon--home {
+    @include mq-list((-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi), (min-resolution: 1.3dppx)) {
+        background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNSAxOCI+PHBhdGggZD0ibTggMC0xIDAtNyA3IDAgMTAgMSAxIDQgMCAwLTcgNSAwIDAgNyA0IDAgMS0xIDAtMTB6IiBmaWxsPSIjZmZmIiAvPjwvc3ZnPg==');
+    }
     width: 15px;
     height: 18px;
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAASCAQAAAAul0yEAAAAO0lEQVQoz9XPsQ0AIAwDwYzuzZ8iQjIQUiLh9r5xhA0BinqInDqsggX34EAPSpzBFTOg3Su2o3+wGtYAGI94niPCbrMAAAAASUVORK5CYII=');
     margin-bottom: -3px;
-
-    @media (-webkit-min-device-pixel-ratio: 1.3),
-           (min-resolution: 124.8dpi),
-           (min-resolution: 1.3dppx) {
-        background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNSAxOCI+PHBhdGggZD0ibTggMC0xIDAtNyA3IDAgMTAgMSAxIDQgMCAwLTcgNSAwIDAgNyA0IDAgMS0xIDAtMTB6IiBmaWxsPSIjZmZmIiAvPjwvc3ZnPg==');
-    }
 }
 
 /* Global navigation
    ========================================================================== */
 
 .global-navigation {
+    @include clearfix;
     background: $c-global-navigation-background;
     clear: both;
-    @include clearfix;
 
     @include mq($until: tablet) {
         line-height: 28px;
@@ -638,12 +636,12 @@ $c-navigation-expandable-background: colour(neutral-1);
 
 // TODO: Move
 .navigation-toggle {
+    @include fs-header(1);
     z-index: 4; /* ensure it is higher than .top-navigation__action */
     position: absolute;
     right: 0;
     top: 0;
     box-sizing: border-box;
-    @include fs-header(1);
     line-height: $navigation-height;
     padding: 0 $gs-gutter / 2;
     background: $c-navigation-toggle-background;

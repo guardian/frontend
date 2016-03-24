@@ -46,7 +46,7 @@
                                       data-test-id="sign-in-name">sign in</span>
                             </a>
                             <div class="js-profile-popup">
-                                <ul class="popup popup__group popup--profile is-off" data-link-name="Sub Sections" data-test-id="popup-profile">
+                                <ul class="popup popup--default popup__group popup--profile is-off" data-link-name="Sub Sections" data-test-id="popup-profile">
                                     @if(conf.switches.Switches.SaveForLaterSwitch.isSwitchedOn) {
                                         <li class="popup__item">
                                             <a href="@Configuration.id.url/saved-for-later" class="brand-bar__item--action brand-bar__item--saved-for-later" data-link-name="Saved for Later">
@@ -87,7 +87,7 @@
                 </div>
             </div>
 
-            <div class="popup popup--search is-off"><div class="js-search-placeholder"></div></div>
+            <div class="popup popup--default popup--search is-off"><div class="js-search-placeholder"></div></div>
 
             <div class="l-header-main">
                 @if((page.metadata.section == "observer" && page.metadata.isFront) || page.metadata.id == "theobserver") {
@@ -117,6 +117,11 @@
                             <!--[if (lt IE 9)&(!IEMobile)]>
                                 <span class="inline-logo inline-guardian-logo-320"></span>
                             <![endif]-->
+                        }
+                        @if(Edition(request) == Uk) {
+                        <object class="hide-on-mobile hide-on-slim-header">
+                            <a class="logo__tagline" href="/culture/2016/mar/22/the-guardian-named-website-of-the-year-at-press-awards" data-link-name="website of the year">website of the year</a>
+                        </object>
                         }
                     </a>
                 }

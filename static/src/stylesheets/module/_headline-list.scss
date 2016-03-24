@@ -34,10 +34,10 @@
 }
 
 .headline-list__count {
+    @include font($f-serif-headline, 200, 44px);
     float: left;
     width: gs-span(1);
     color: colour(neutral-4);
-    @include font($f-serif-headline, 200, 44px);
 
     @include mq(mobile) {
         width: gs-span(1) - $gs-gutter / 2;
@@ -45,10 +45,10 @@
 }
 
 .headline-list__link {
+    @include fs-headline(2);
     display: block;
     overflow: hidden;
     color: colour(neutral-1);
-    @include fs-headline(2);
     font-weight: 500;
 
     .headline-list__text {

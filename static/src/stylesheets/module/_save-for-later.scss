@@ -34,8 +34,8 @@ $sfl-button-height: 30px;
 
 // size etc
 .save-for-later__button {
-    font-size: get-font-size(textSans, 1);
     @include button-height($sfl-button-height);
+    font-size: get-font-size(textSans, 1);
     border: 0;
     background-color: transparent;
     padding: 0;

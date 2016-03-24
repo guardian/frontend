@@ -31,12 +31,12 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABArticleVideoAutoplay = Switch(
+  val ABBolivianWrestlingAutoplay = Switch(
     "A/B Tests",
-    "ab-article-video-autoplay",
-    "Autoplay embedded videos in article",
+    "ab-bolivian-wrestling-autoplay",
+    "Autoplay Bolivian Wrestling",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 23),
+    sellByDate = new LocalDate(2016, 3, 31),
     exposeClientSide = true
   )
 

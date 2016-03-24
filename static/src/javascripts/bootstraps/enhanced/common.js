@@ -14,6 +14,7 @@ define([
     'common/utils/url',
     'common/utils/robust',
     'common/utils/storage',
+    'common/modules/analytics/foresee-survey',
     'common/modules/analytics/livestats',
     'common/modules/analytics/media-listener',
     'common/modules/analytics/omniture',
@@ -70,6 +71,7 @@ define([
     url,
     robust,
     storage,
+    Foresee,
     liveStats,
     mediaListener,
     omniture,
@@ -249,6 +251,12 @@ define([
                 }
             },
 
+            runForseeSurvey: function () {
+                if (config.switches.foresee) {
+                    Foresee.load();
+                }
+            },
+
             startRegister: function () {
                 if (!config.page.isSSL) {
                     register.initialise();
@@ -387,6 +395,7 @@ define([
                 ['c-sign-in', modules.initAutoSignin],
                 ['c-id-cookie-refresh', modules.idCookieRefresh],
                 ['c-history-nav', modules.showHistoryInMegaNav],
+                ['c-forsee', modules.runForseeSurvey],
                 ['c-start-register', modules.startRegister],
                 ['c-tag-links', modules.showMoreTagsLink],
                 ['c-smart-banner', smartAppBanner.init],
