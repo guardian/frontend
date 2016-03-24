@@ -82,8 +82,8 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|picture|graphic)/.*>.json       
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|picture|graphic)/.*>            controllers.ImageContentController.render(path)
 
 # Audio and Video paths
-GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                   controllers.MediaController.renderJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>/info.json              controllers.MediaController.renderInfoJson(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                   controllers.MediaController.renderJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>                        controllers.MediaController.render(path)
 
 
