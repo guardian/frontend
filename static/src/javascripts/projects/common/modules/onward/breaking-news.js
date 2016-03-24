@@ -145,7 +145,7 @@ define([
         });
     }
 
-    // don't show alerts if they're over a certain age
+    // we only show one alert at a time, pick the youngest available
     function pickNewest(alerts) {
         return alerts.sort(function (a, b) {
             return b.frontPublicationDate - a.frontPublicationDate;
