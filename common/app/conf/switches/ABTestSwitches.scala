@@ -49,9 +49,9 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABHeaderBiddingUSAll = Switch(
+  val ABHeaderBiddingUS = Switch(
     "A/B Tests",
-    "ab-header-bidding-us-all",
+    "ab-header-bidding-us",
     "Auction adverts on the client before calling DFP (US edition only)",
     safeState = Off,
     sellByDate = new LocalDate(2016, 4, 20),
