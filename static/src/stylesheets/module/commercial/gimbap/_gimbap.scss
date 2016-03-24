@@ -41,7 +41,6 @@ $gimbap-width-quarter: calc(25% - 20px);
         margin: 0 $gs-gutter / 2;
 
         .has-flex & {
-            display: flex;
             flex: 1;
             flex-direction: column;
         }
@@ -54,14 +53,26 @@ $gimbap-width-quarter: calc(25% - 20px);
     }
 }
 
-.gimbap__title--has-author {
+.gimbap--has-author {
     &:before {
         content: '';
         float: right;
-        shape-outside: polygon(70% 0%, 100% 150%, 0 100%);
+        shape-outside: polygon(100% -20%, 100% 140%, 10% 140%, 10% 50%);
         float: right;
         width: 40%;
-        min-height: 120px;
+        min-height: 160px;
+
+        @include mq(tablet) {
+            min-height: 120px;
+        }
+    }
+
+    .gimbap__logo {
+        text-align: left;
+        
+        .has-flex & {
+            align-self: flex-start;
+        }
     }
 }
 
@@ -148,10 +159,6 @@ $gimbap-width-quarter: calc(25% - 20px);
     svg {
         fill: #ffffff;
     }
-}
-
-.gimbap__logo--has-author {
-    align-self: flex-start;
 }
 
 .gimbap__logo--members-horizontal {

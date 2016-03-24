@@ -97,6 +97,9 @@ define([
         tpl.params.offer2HasQuotes = (tpl.params.offer2quotes.indexOf('yes') !== -1) ? tpl.params.inlineQuote : '';
         tpl.params.offer3HasQuotes = (tpl.params.offer3quotes.indexOf('yes') !== -1) ? tpl.params.inlineQuote : '';
         tpl.params.offer4HasQuotes = (tpl.params.offer4quotes.indexOf('yes') !== -1) ? tpl.params.inlineQuote : '';
+
+        // Test for Author image
+        tpl.params.hasAuthorImage = typeof tpl.params.offer1authorimage && tpl.params.offer1authorimage.length > 0;
     }
 
     return {
