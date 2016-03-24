@@ -9,6 +9,7 @@ define([
     'common/modules/experiments/tests/identity-register-membership-standfirst',
     'common/modules/experiments/tests/live-blog-chrome-notifications',
     'common/modules/experiments/tests/header-bidding-us',
+    'common/modules/experiments/tests/article-video-autoplay',
     'common/modules/experiments/tests/email-signup-marketing-checkbox-v2',
     'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/people-who-read-this-also-read-variants',
@@ -32,6 +33,7 @@ define([
     IdentityRegisterMembershipStandfirst,
     LiveBlogChromeNotifications,
     HeaderBiddingUS,
+    ArticleVideoAutoplay,
     EmailSignupMarketingCheckboxV2,
     AdblockingResponse,
     PeopleWhoReadThisAlsoReadVariants,
@@ -51,6 +53,7 @@ define([
         new IdentityRegisterMembershipStandfirst(),
         new LiveBlogChromeNotifications(),
         new HeaderBiddingUS(),
+        new ArticleVideoAutoplay(),
         new AdblockingResponse(),
         new EmailSignupMarketingCheckboxV2(),
         new PeopleWhoReadThisAlsoReadVariants()
