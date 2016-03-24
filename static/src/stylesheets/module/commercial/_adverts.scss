@@ -20,11 +20,17 @@
 }
 
 .adverts--legacy {
-    @include mq(desktop) {
+    @include mq($until: tablet) {
+        padding: 0;
+    }
+
+    @include mq(leftCol) {
         display: flex;
 
         > .adverts__header {
             box-sizing: border-box;
+            padding-bottom: $gs-baseline;
+            padding-top: $gs-baseline;
             width: 240px;
         }
 
@@ -39,17 +45,24 @@
     }
 
     > .adverts__header {
-        padding-bottom: $gs-baseline;
-        padding-top: $gs-baseline;
-
         .inline-logo-guardian {
             @include mq(leftCol) {
                 display: none;
             }
         }
+
+        @include mq($until: mobileLandscape) {
+            padding: $gs-baseline / 2 $gs-gutter / 2;
+        }
+
+        @include mq(mobileLandscape, leftCol) {
+            padding: $gs-baseline / 2 $gs-gutter;
+        }
     }
 
     > .adverts__body {
+        padding: $gs-baseline $gs-gutter / 2;
+
         @include mq(mobileLandscape) {
             box-sizing: border-box;
             max-width: gs-span(8) + ($gs-gutter * 2);
@@ -59,6 +72,9 @@
         }
         @include mq(desktop) {
             max-width: gs-span(12) + ($gs-gutter * 2);
+        }
+        @include mq(leftCol) {
+            padding: 0;
         }
     }
 
@@ -83,6 +99,24 @@
 
     .adverts__row > * + * {
         // border-left: 1px solid colour(neutral-4);
+    }
+
+    .adverts__row {
+        @include mq(mobileLandscape) {
+            display: flex;
+
+            > * {
+                margin: 0 $gs-gutter / 2;
+            }
+        }
+
+        @include mq(mobileLandscape, $until: tablet) {
+            flex-flow: row wrap;
+
+            > * {
+                flex-basis: calc(50% - #{$gs-gutter});
+            }
+        }
     }
 }
 
@@ -163,7 +197,7 @@
 }
 
 .adverts__row {
-    @include mq(mobile, tablet) {
+    @include mq($until: tablet) {
         /* http://alistapart.com/article/axiomatic-css-and-lobotomized-owls */
         > * + * {
             margin-top: $gs-baseline;
@@ -175,7 +209,6 @@
         padding: $gs-baseline $gs-gutter / 2 0;
 
         > * {
-            margin: 0 $gs-gutter / 2;
             flex: 1;
         }
 

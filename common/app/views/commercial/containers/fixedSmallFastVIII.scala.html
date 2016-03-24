@@ -2,10 +2,10 @@
 
 <div class="adverts__row">
     @containerModel.content.initialCardContents.take(2).map(card => views.html.commercial.cards.itemCard(card))
-    <div class="adverts__column">
+    <div class="adverts__column hide-until-tablet">
         @containerModel.content.initialCardContents.drop(2).take(3).map(card => views.html.commercial.cards.itemSmallCard(card))
     </div>
-    <div class="adverts__column">
+    <div class="adverts__column hide-until-tablet">
         @containerModel.content.initialCardContents.drop(5).take(3).map(card => views.html.commercial.cards.itemSmallCard(card))
     </div>
 </div>

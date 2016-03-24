@@ -1,7 +1,7 @@
 @(containerModel: common.commercial.ContainerModel)
 
 <div class="adverts__row">
-    @for(card <- containerModel.content.initialCardContents.take(4);
+    @for(card <- containerModel.content.initialCardContents;
          sponsorData <- card.sponsorData
          ) {
         @views.html.commercial.cards.itemCard(card,

@@ -2,7 +2,8 @@
 
 <div class="adverts__row">
     <div class="adverts__column">
-        @containerModel.content.initialCardContents.take(4).map(card => views.html.commercial.cards.itemLargeCard(card, optClassNames = Some(Seq("large--inverse", "large--thumbnail"))))
+        @containerModel.content.initialCardContents.take(2).map(card => views.html.commercial.cards.itemLargeCard(card, optAdvertClassNames = Some(Seq("large--inverse", "large--thumbnail"))))
+        @containerModel.content.initialCardContents.drop(2).take(2).map(card => views.html.commercial.cards.itemLargeCard(card, optAdvertClassNames = Some(Seq("large--inverse", "large--thumbnail")), optClassNames = Some(Seq("hide-until-tablet"))))
     </div>
-    @containerModel.content.initialCardContents.drop(4).take(1).map(card => views.html.commercial.cards.itemCard(card))
+    @containerModel.content.initialCardContents.drop(4).take(1).map(card => views.html.commercial.cards.itemCard(card, optClassNames = Some(Seq("hide-until-tablet"))))
 </div>

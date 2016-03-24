@@ -1,9 +1,10 @@
 @(containerModel: common.commercial.ContainerModel)
 
 <div class="adverts__row adverts__row--2x1x1">
-    @containerModel.content.initialCardContents.take(3).map(card => views.html.commercial.cards.itemCard(card))
+    @containerModel.content.initialCardContents.take(2).map(card => views.html.commercial.cards.itemCard(card))
+    @containerModel.content.initialCardContents.drop(2).take(1).map(card => views.html.commercial.cards.itemCard(card, optClassNames = Some(Seq("hide-until-tablet"))))
 </div>
-<div class="adverts__row">
+<div class="adverts__row hide-until-tablet">
     <div class="adverts__column">
         @containerModel.content.initialCardContents.drop(3).take(2).map(card => views.html.commercial.cards.itemSmallCard(card))
     </div>

@@ -28,6 +28,13 @@
         .inline-icon {
             fill: colour(neutral-2);
         }
+
+        @include mq(leftCol) {
+            float: left;
+            & + * {
+                clear: left;
+            }
+        }
     }
 
     .adverts__more[open] > summary {
@@ -39,11 +46,8 @@
 
 .advert--capi {
     background: colour(paid-article-subheader);
+    border-top: 1px solid guss-colour(paid-article-brand, $frontend-palette);
     @include f-textSans;
-
-    > .advert__image-container {
-        border-top: 1px solid guss-colour(paid-article-brand, $frontend-palette);
-    }
 
     .advert__title,
     .advert__meta,
@@ -89,8 +93,4 @@
         }
     }
 
-    &.advert--small,
-    &.advert--large > .advert__text {
-        border-top: 1px solid guss-colour(paid-article-brand, $frontend-palette);
-    }
 }

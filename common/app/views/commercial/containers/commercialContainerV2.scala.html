@@ -9,7 +9,6 @@
     Seq("legacy", "capi", "tone-capi"),
     optKicker = Some(fragments.commercial.paidForMeta()),
     optStamp = Some(stamp),
-    optBranding = containerModel.metaData.sponsorData,
     optBadge = Some(logoSlot)
 ){
 
@@ -29,6 +28,7 @@
         case "fixed/medium/fast-XI"          => { @fixedMediumFastXI(containerModel) }
         case "fixed/medium/fast-XII"         => { @fixedMediumFastXII(containerModel) }
         case "fixed/large/slow-XIV"          => { @fixedLargeSlowXIV(containerModel) }
+        case "commercial/multi-campaign"     => { @multiCampaign(containerModel) }
         case _ => {
             <p>@containerModel.metaData.layoutName</p>
         }

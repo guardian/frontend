@@ -4,6 +4,6 @@
     @containerModel.content.initialCardContents.take(1).map(card => views.html.commercial.cards.itemLargeCard(card, Some(Seq("large--1x2"))))
     @containerModel.content.initialCardContents.drop(1).take(1).map(card => views.html.commercial.cards.itemCard(card))
 </div>
-<div class="adverts__row">
+<div class="adverts__row hide-until-tablet">
     @containerModel.content.initialCardContents.drop(2).take(4).map(card => views.html.commercial.cards.itemCard(card))
 </div>
