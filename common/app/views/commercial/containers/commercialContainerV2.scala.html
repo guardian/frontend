@@ -1,10 +1,11 @@
 @(containerModel: common.commercial.ContainerModel)(implicit request: RequestHeader)
 
 @import common.{Edition, LinkTo}
+@import views.html.commercial.containerWrapper
 @import views.html.commercial.containers._
 @import views.html.fragments.inlineSvg
 
-@views.html.commercial.containerWrapper(
+@containerWrapper(
     Seq("legacy", "capi", "tone-capi"),
     optKicker = Some(fragments.commercial.paidForMeta()),
     optStamp = Some(stamp),
