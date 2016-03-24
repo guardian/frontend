@@ -10,6 +10,8 @@ GET        /_healthcheck                                                        
 GET        /sitemaps/news.xml                                                   controllers.SiteMapController.renderNewsSiteMap()
 GET        /sitemaps/video.xml                                                  controllers.SiteMapController.renderVideoSiteMap()
 
+GET        /surveys/*file                                                       controllers.Assets.at(path="/public/surveys", file)
+
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id.svg       controllers.CrosswordPageController.thumbnail(crosswordType: String, id: Int)
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
@@ -82,6 +84,7 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|picture|graphic)/.*>.json       
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|picture|graphic)/.*>            controllers.ImageContentController.render(path)
 
 # Audio and Video paths
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>/info.json              controllers.MediaController.renderInfoJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                   controllers.MediaController.renderJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>                        controllers.MediaController.render(path)
 

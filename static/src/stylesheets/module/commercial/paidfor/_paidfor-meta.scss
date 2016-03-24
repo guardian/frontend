@@ -1,7 +1,7 @@
 .paidfor-meta {
+    @include f-textSans;
     background: guss-colour(paidfor-background, $frontend-palette);
     font-size: get-font-size(data, 3);
-    @include f-textSans;
 }
 
 

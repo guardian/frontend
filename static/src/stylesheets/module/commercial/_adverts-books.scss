@@ -9,9 +9,9 @@
         }
 
         .search__input {
+            @include fs-textSans(2);
             box-sizing: border-box;
             border-radius: 18px;
-            @include fs-textSans(2);
             background-color: rgba(#ffffff, .9);
             border: 0;
             width: 100%;
@@ -68,7 +68,7 @@
 }
 
 .advert--book {
-    .advert__meta[itemprop="author"] {
+    .advert__meta[itemprop='author'] {
         margin-bottom: 1em;
     }
 

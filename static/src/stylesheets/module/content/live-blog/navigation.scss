@@ -3,8 +3,8 @@
     // then the children are floated
     @include clearfix;
     // If we do support flexbox
-    display: flex;
     @include fs-textSans(3);
+    display: flex;
 }
 
 .liveblog-navigation__detail {

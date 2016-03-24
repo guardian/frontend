@@ -55,7 +55,7 @@ define([
                 });
 
             fastdom.write(function () {
-                $('.js-liveblog-body').prepend(src);
+                $('.js-notifications').prepend(src);
             });
 
             bean.one(document.body, 'click', '.js-notifications-subscribe-link', handler);

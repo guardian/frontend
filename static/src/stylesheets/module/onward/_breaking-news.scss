@@ -59,9 +59,9 @@ $breaking-news-close-icon-width: 32px;
 }
 
 .breaking-news__item-content {
+    @include gs-container;
     box-sizing: border-box;
     padding: ($gs-baseline * .5) 0 $gs-baseline ($gs-gutter + $breaking-news-icon-width);
-    @include gs-container;
 
     @include mq(wide) {
         .has-page-skin & {

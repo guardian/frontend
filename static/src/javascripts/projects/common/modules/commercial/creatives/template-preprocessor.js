@@ -81,6 +81,11 @@ define([
     function preprocessGimbap(tpl) {
         tpl.params.headless = tpl.params.headless === 'true';
 
+        // SVGs
+        tpl.params.marque36icon = svgs('marque36icon', ['gimbap__mainlogo']);
+        tpl.params.inlineQuote = svgs('quoteIcon', ['gimbap__quote']);
+        tpl.params.arrowRight = (tpl.params.linksWithArrows.indexOf('yes') !== -1) ? svgs('arrowRight', ['gimbap__arrow']) : '';
+
         // Make sure we include right logo to the right card
         tpl.params.offer1logo = tpl.params['logo' + tpl.params.offer1tone + 'horizontal'];
         tpl.params.offer2logo = tpl.params['logo' + tpl.params.offer2tone + 'horizontal'];
@@ -92,10 +97,6 @@ define([
         tpl.params.offer2HasQuotes = (tpl.params.offer2quotes.indexOf('yes') !== -1) ? tpl.params.inlineQuote : '';
         tpl.params.offer3HasQuotes = (tpl.params.offer3quotes.indexOf('yes') !== -1) ? tpl.params.inlineQuote : '';
         tpl.params.offer4HasQuotes = (tpl.params.offer4quotes.indexOf('yes') !== -1) ? tpl.params.inlineQuote : '';
-
-        tpl.params.marque36icon = svgs('marque36icon', ['gimbap__mainlogo']);
-        tpl.params.inlineQuote = svgs('quoteIcon', ['gimbap__quote']);
-        tpl.params.arrowRight = (tpl.params.linksWithArrows.indexOf('yes') !== -1) ? svgs('arrowRight', ['gimbap__arrow']) : '';
     }
 
     return {

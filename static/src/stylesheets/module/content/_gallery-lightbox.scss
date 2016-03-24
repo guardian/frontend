@@ -140,13 +140,13 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
    ========================================================================== */
 
 .gallery-lightbox__info {
+    @include fs-textSans(3);
     white-space: normal;
     position: absolute;
     z-index: 5;
     color: colour(neutral-8);
     box-sizing: border-box;
     word-wrap: break-word;
-    @include fs-textSans(3);
     width: 100%;
     bottom: 0;
     background-color: rgba(51, 51, 51, .9);
@@ -184,8 +184,8 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 
 .gallery-lightbox__img-caption {
     > strong:first-child {
-        display: block;
         @include fs-headline(3);
+        display: block;
         margin-top: 2px;
         box-sizing: border-box;
         padding-right: $gs-gutter*2;
@@ -328,8 +328,8 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 }
 
 .gallery-lightbox__progress {
-    color: colour(neutral-3);
     @include fs-textSans(1);
+    color: colour(neutral-3);
     display: none;
 }
 

@@ -76,9 +76,5 @@ bower_components
 # Scala test framework #
 local.conf
 
-# Generared styleguide files #
-docs/styleguide/*.html
-docs/styleguide/assets/css
-
 #Node Version Manager
 .nvmrc
