@@ -61,8 +61,6 @@
     }
 
     > .adverts__body {
-        padding: $gs-baseline $gs-gutter / 2;
-
         @include mq(mobileLandscape) {
             box-sizing: border-box;
             max-width: gs-span(8) + ($gs-gutter * 2);
@@ -72,9 +70,6 @@
         }
         @include mq(desktop) {
             max-width: gs-span(12) + ($gs-gutter * 2);
-        }
-        @include mq(leftCol) {
-            padding: 0;
         }
     }
 
@@ -98,10 +93,22 @@
     }
 
     .adverts__row > * + * {
-        // border-left: 1px solid colour(neutral-4);
+        position: relative;
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: $gs-gutter / -2;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: colour(neutral-4);
+        }
     }
 
     .adverts__row {
+        padding: $gs-baseline $gs-gutter / 2;
+
         @include mq(mobileLandscape) {
             display: flex;
 
@@ -116,6 +123,10 @@
             > * {
                 flex-basis: calc(50% - #{$gs-gutter});
             }
+        }
+
+        @include mq(desktop) {
+            padding-bottom: 0;
         }
     }
 }
@@ -223,17 +234,19 @@
 
 }
 
-.adverts__row--2x1x1 > :nth-child(1),
-.adverts__row--1x2x1 > :nth-child(2),
-.adverts__row--1x1x2 > :nth-child(3) {
-    flex-basis: calc(50% - #{$gs-gutter});
-    flex-grow: 0;
-}
+@include mq(tablet) {
+    .adverts__row--2x1x1 > :nth-child(1),
+    .adverts__row--1x2x1 > :nth-child(2),
+    .adverts__row--1x1x2 > :nth-child(3) {
+        flex-basis: calc(50% - #{$gs-gutter});
+        flex-grow: 0;
+    }
 
-.adverts__row--3x1 > :nth-child(1),
-.adverts__row--1x3 > :nth-child(2) {
-    flex-basis: calc(75% - #{$gs-gutter});
-    flex-grow: 0;
+    .adverts__row--3x1 > :nth-child(1),
+    .adverts__row--1x3 > :nth-child(2) {
+        flex-basis: calc(75% - #{$gs-gutter});
+        flex-grow: 0;
+    }
 }
 
 .adverts__column {
@@ -246,6 +259,12 @@
 
     > * + * {
         margin-top: $gs-baseline;
+    }
+
+    & + &:not(:nth-child(2n)) {
+        @include mq($until: leftCol) {
+            margin-top: $gs-baseline;
+        }
     }
 }
 
@@ -264,7 +283,9 @@
 }
 
 .adverts__more {
-    margin: $gs-baseline 0;
+    @include mq(leftCol) {
+        margin: $gs-baseline 0;
+    }
 
     > summary {
         cursor: pointer;
@@ -345,6 +366,53 @@
         }
     }
 }
+
+/* Let's remove this shit when we revamp badges: */
+.adverts {
+    .ad-slot--paid-for-badge--front {
+        border: 0;
+        clear: none;
+        float: none;
+        min-height: 0;
+        overflow: visible;
+        margin: 0;
+        padding: 0;
+        position: static;
+        width: auto;
+
+        &::before,
+        &::after {
+            content: none;
+        }
+    }
+
+    .ad-slot--paid-for-badge .ad-slot--paid-for-badge__inner {
+        overflow: visible;
+    }
+
+    .ad-slot--paid-for-badge .ad-slot--paid-for-badge__header {
+        clear: none;
+        display: inline;
+        overflow: visible;
+    }
+
+    .ad-slot--paid-for-badge .ad-slot--paid-for-badge__link {
+        display: inline-block;
+        float: none;
+        clear: none;
+    }
+
+    .ad-slot--paid-for-badge .ad-slot--paid-for-badge__logo {
+        display: inline-block;
+        margin-left: $gs-gutter / 2;
+        vertical-align: middle;
+    }
+
+    .ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link:after {
+        content: none;
+    }
+}
+/* /remove */
 
 @import '_adverts-books';
 @import '_adverts-masterclasses';

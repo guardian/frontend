@@ -73,35 +73,24 @@ define([
     };
 
     Template.prototype.create = function () {
-        if (config.switches.v2FixedTemplate && 'logo-ad-feature' === this.params.creative) {
-            if (templatePreprocessor[this.params.creative]) {
-                templatePreprocessor[this.params.creative](this);
-            }
+        return new Promise(function (resolve) {
+            require(['text!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
+                if (templatePreprocessor[this.params.creative]) {
+                    templatePreprocessor[this.params.creative](this);
+                }
 
-            var creativeHtml = 'Paid for by <a href="' + this.params.clickMacro + this.params.logoUrl + '"><img class="adverts__badge__logo" src="' + this.params.logoImage + '" alt=""></a>';
-            return fastdom.write(function () {
-                this.$adSlot.html(creativeHtml);
-            }, this);
-        } else {
-            return new Promise(function (resolve) {
-                require(['text!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
-                    if (templatePreprocessor[this.params.creative]) {
-                        templatePreprocessor[this.params.creative](this);
+                var creativeHtml = template(creativeTpl, this.params);
+                var $ad = $.create(creativeHtml);
+
+                resolve(fastdom.write(function () {
+                    $ad.appendTo(this.$adSlot);
+                    if (this.postLoadEvents[this.params.creative]) {
+                        this.postLoadEvents[this.params.creative]($ad[0]);
                     }
-
-                    var creativeHtml = template(creativeTpl, this.params);
-                    var $ad = $.create(creativeHtml);
-
-                    resolve(fastdom.write(function () {
-                        $ad.appendTo(this.$adSlot);
-                        if (this.postLoadEvents[this.params.creative]) {
-                            this.postLoadEvents[this.params.creative]($ad[0]);
-                        }
-                        return $ad;
-                    }, this));
-                }.bind(this));
+                    return $ad;
+                }, this));
             }.bind(this));
-        }
+        }.bind(this));
     };
 
     return Template;

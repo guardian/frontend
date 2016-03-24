@@ -99,31 +99,23 @@ define([
                 );
             }));
 
-            if (!config.switches.v2FixedTemplate) {
-                sponsoredContainersPromise = sponsoredFrontPromise.then(function () {
-                    return Promise.all(map($('.js-sponsored-container'), function (container) {
-                        if (qwery('.ad-slot--paid-for-badge', container).length === 0) {
-                            var $container = bonzo(container);
+            sponsoredContainersPromise = sponsoredFrontPromise.then(function () {
+                return Promise.all(map($('.js-sponsored-container'), function (container) {
+                    if (qwery('.ad-slot--paid-for-badge', container).length === 0) {
+                        var $container = bonzo(container);
 
-                            return renderAd(
-                                container,
-                                $container.data('sponsorship'),
-                                {
-                                    sponsor:  $container.data('sponsor'),
-                                    series:   $container.data('series'),
-                                    keywords: $container.data('keywords')
-                                }
-                            );
-                        }
-                    }));
-                });
-            } else {
-                sponsoredContainersPromise = sponsoredFrontPromise.then(function () {
-                    return qwery('.adverts[data-sponsorship], .advert[data-sponsorship]').map(function (container) {
-                        return renderBadge(container);
-                    });
-                });
-            }
+                        return renderAd(
+                            container,
+                            $container.data('sponsorship'),
+                            {
+                                sponsor:  $container.data('sponsor'),
+                                series:   $container.data('series'),
+                                keywords: $container.data('keywords')
+                            }
+                        );
+                    }
+                }));
+            });
 
             return sponsoredContainersPromise;
         },
@@ -162,30 +154,6 @@ define([
             }
 
         };
-
-    function renderBadge(container) {
-        var badgeConfig = badgesConfig[container.getAttribute('data-sponsorship')];
-        var slotTarget  = badgeConfig.namePrefix + 'badge';
-        var name        = slotTarget + (++badgeConfig.count);
-        var adSlot      = createAdSlot(
-            name,
-            null,
-            container.getAttribute('data-series'),
-            container.getAttribute('data-keywords'),
-            slotTarget
-        );
-
-        var sponsor = container.getAttribute('data-sponsor');
-        if (sponsor) {
-            adSlot.insertAdjacentHTML('afterbegin', badgeConfig.header + ' ' + sponsor);
-        }
-
-        var badge = container.querySelector('.js-badge');
-        return fastdom.write(function () {
-            badge.appendChild(adSlot);
-            return adSlot;
-        });
-    }
 
     return badges;
 

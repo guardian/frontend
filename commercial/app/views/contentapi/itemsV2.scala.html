@@ -26,8 +26,10 @@
 
 }{
 
-    @items.map { item => @itemCard(item, clickMacro) }
-
+    <div class="adverts__row">
+        @items.map { item => @itemCard(item, clickMacro) }
+    </div>
+    
 }
 
 @stamp = {
