@@ -10,10 +10,6 @@
 
     .from-content-api {
         max-width: gs-span(8);
-
-        @include mq(leftCol) {
-            clear: right;
-        }
     }
 }
 
