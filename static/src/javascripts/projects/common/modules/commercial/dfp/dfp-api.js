@@ -152,7 +152,7 @@ define([
     var recordFirstAdRendered = once(function () {
         beacon.beaconCounts('ad-render');
     });
-    var prebidEnabled = ab.isInVariant('HeaderBiddingUs', 'variant');
+    var prebidEnabled = ab.isInVariant('HeaderBiddingUsAll', 'variant');
 
     /**
      * Initial commands
