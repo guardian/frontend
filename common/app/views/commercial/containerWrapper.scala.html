@@ -28,6 +28,6 @@
     </header>
     <div class="adverts__body">
         @innards
-        @if(optBranding.nonEmpty){ <div class="js-badge-placeholder"></div> }
+        @for(badge        <- optBadge)   {<div class="adverts__badge js-badge">@badge</div>}
     </div>
 </aside>
