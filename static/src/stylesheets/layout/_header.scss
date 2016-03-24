@@ -36,7 +36,7 @@ $c-guardian-services-action: #ffffff;
     }
 
     .hide-on-slim-header {
-        display: none;
+        display: none !important;
     }
 
     .show-on-slim-header {
@@ -52,6 +52,15 @@ $c-guardian-services-action: #ffffff;
     svg {
         width: 160px;
         height: 30px;
+    }
+
+    .logo__tagline {
+        @include fs-textSans(1);
+        position: absolute;
+        top: 48px;
+        right: 2px;
+        color: #aad8f1; // To match custom colour of 'the' in logotype. Shouldn't be used elsewhere
+        font-weight: bold;
     }
 
     @include mq(mobileLandscape) {

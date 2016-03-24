@@ -13,11 +13,11 @@
 }
 
 .score-summary {
-    margin: $gs-baseline 0 (-$gs-baseline/2);
     @include fs-headline(3, true);
+    margin: $gs-baseline 0 (-$gs-baseline/2);
 
     @include mq(tablet) {
-        margin: $gs-baseline/2 0 0;
         @include fs-headline(5, true);
+        margin: $gs-baseline/2 0 0;
     }
 }

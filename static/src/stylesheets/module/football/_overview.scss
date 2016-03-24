@@ -9,7 +9,6 @@
 
         @include mq(tablet) {
             padding-left: $gs-gutter/2;
-            display: inline-block;
             display: flex;
             @supports not (flex-wrap: wrap) {
                 display: inline-block;

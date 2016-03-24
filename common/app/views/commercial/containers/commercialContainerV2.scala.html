@@ -7,7 +7,7 @@
         <p>@description</p>
     }
 
-    @for(card <- containerModel.content.cardContents) {
+    @for(card <- containerModel.content.initialCardContents) {
         <div
             @if(containerModel.metaData.sponsorData == None) {
                 @for(sponsorData <- card.sponsorData) {

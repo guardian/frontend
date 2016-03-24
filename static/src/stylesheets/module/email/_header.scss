@@ -20,8 +20,8 @@
 // LANDING AND IN-ARTICLE (COMPOSER) PAGE MODS
 .email-sub__header--landing,
 .email-sub__header--article {
-    background-color: $form-primary-colour;
     @include fs-headline(2);
+    background-color: $form-primary-colour;
 
     .email-sub__heading {
         margin-bottom: $gs-baseline;
@@ -65,8 +65,8 @@
 // FOOTER MODS
 .email-sub__header--footer {
     .email-sub__heading {
-        color: #ffffff;
         @include fs-textSans(3);
+        color: #ffffff;
         margin-bottom: $gs-baseline;
     }
 }

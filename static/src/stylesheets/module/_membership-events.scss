@@ -21,8 +21,8 @@
     }
 
     span {
-        display: block;
         @include fs-textSans(1);
+        display: block;
         color: colour(neutral-2);
         padding: $gs-baseline/4 0;
     }

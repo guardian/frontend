@@ -41,6 +41,15 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  val ForeseeSwitch = Switch(
+    "Feature",
+    "foresee",
+    "Enable Foresee surveys for a sample of our audience",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val GeoMostPopular = Switch(
     "Feature",
     "geo-most-popular",

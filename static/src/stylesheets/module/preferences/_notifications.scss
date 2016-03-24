@@ -2,11 +2,13 @@
     display: none;
 }
 
-.from-content-api .notifications-subscribe-link__headline {
+.notifications-subscribe-link__headline {
     @include fs-header(3);
+    margin: 0;
 }
 
 .notifications-link {
+    margin-top: $gs-baseline;
     margin-bottom: $gs-baseline / 2;
 
     .button--follow {
