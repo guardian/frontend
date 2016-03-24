@@ -78,7 +78,7 @@
         }
     }
 
-    &:not(.advert--landscape){
+    &:not(.advert--landscape) {
         > .advert__image-container {
             width: 100%;
         }
