@@ -9,6 +9,7 @@
 //
 // Offline page
 //
+"use strict";
 
 var staticCacheName = 'static';
 
@@ -161,16 +162,13 @@ self.addEventListener('push', function(event) {
             .then(function (json) {
 
                if(json.status === "ok")
-                    var messages = json.messages;
-
-                    messages.forEach( function(message) {
-                        var data = {topic: message.topic};
-                        self.registration.showNotification(message.title, {
-                            body: message.body,
-                            icon: '@{JavaScript(Static("images/favicons/114x114.png").path)}',
-                            tag: message.title,
-                            data: data
-                        });
+                    var message = json.messages.slice(-1)[0];
+                    var data = {topic: message.topic};
+                    return self.registration.showNotification(message.title, {
+                        body: message.body,
+                        icon: '@{JavaScript(Static("images/favicons/114x114.png").path)}',
+                        tag: message.title,
+                        data: data
                     });
                 })
 
