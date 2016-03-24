@@ -89,8 +89,8 @@
     margin-bottom: 0;
 
     > strong:first-child {
-        display: block;
         @include fs-headline(2);
+        display: block;
         margin-bottom: $gs-baseline/2;
 
         & + br {

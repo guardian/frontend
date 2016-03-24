@@ -3,6 +3,7 @@ import common.dfp.FaciaDfpAgentLifecycle
 import conf.{Filters, SwitchboardLifecycle}
 import crosswords.TodaysCrosswordGridLifecycle
 import dev.DevParametersLifecycle
+import headlines.ABHeadlinesLifecycle
 import metrics.FrontendMetric
 import ophan.SurgingContentAgentLifecycle
 import play.api.mvc.WithFilters
@@ -16,7 +17,8 @@ object Global extends WithFilters(Filters.common: _*)
   with SurgingContentAgentLifecycle
   with IndexListingsLifecycle
   with TodaysCrosswordGridLifecycle
-  with SwitchboardLifecycle {
+  with SwitchboardLifecycle
+  with ABHeadlinesLifecycle {
 
 override lazy val applicationName = "frontend-facia"
 

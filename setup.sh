@@ -111,18 +111,6 @@ install_grunt() {
   fi
 }
 
-install_ruby() {
-  if linux && ! installed ruby; then
-    sudo apt-get install -y ruby1.9.1-full
-  fi
-}
-
-install_bundler() {
-  if ! installed bundle; then
-    sudo gem install bundler
-  fi
-}
-
 install_gcc() {
   if ! installed g++; then
     if linux; then
@@ -169,8 +157,6 @@ main() {
   install_node
   install_gcc
   install_grunt
-  install_ruby
-  install_bundler
   install_libpng
   install_dependencies
   compile

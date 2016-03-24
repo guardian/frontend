@@ -202,8 +202,8 @@
 }
 
 .share-modal__close {
-    border: 1px solid colour(neutral-2);
     @include circular;
+    border: 1px solid colour(neutral-2);
     width: 40px;
     height: 40px;
     padding: 0;

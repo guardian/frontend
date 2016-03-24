@@ -13,15 +13,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABNextInSeries = Switch(
-    "A/B Tests",
-    "ab-next-in-series",
-    "Show next in series",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 23),
-    exposeClientSide = true
-  )
-
   val ABIdentityRegisterMembershipStandfirst = Switch(
     "A/B Tests",
     "ab-identity-register-membership-standfirst",
@@ -31,30 +22,21 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABArticleVideoAutoplay = Switch(
+  val ABLiveBlogChromeNotifications = Switch(
     "A/B Tests",
-    "ab-article-video-autoplay",
-    "Autoplay embedded videos in article",
+    "ab-live-blog-chrome-notifications",
+    "Live blog chrome notifications",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 23),
+    sellByDate = new LocalDate(2016, 5, 2),
     exposeClientSide = true
   )
 
-  val ABCommercialComponentsDismiss = Switch(
+  val ABPeopleWhoReadThisAlsoReadVariants = Switch(
     "A/B Tests",
-    "ab-commercial-components-dismiss",
-    "Survey possibility of dismiss option for commercial components",
+    "ab-people-who-read-this-also-read-variants",
+    "Display people who read this also read with different variants",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 5),
-    exposeClientSide = true
-  )
-
-  val ABRelatedContentDisplayAsRecommendation = Switch(
-    "A/B Tests",
-    "ab-article-related-content-display-as-recommendation",
-    "Display related content as people who read this also read",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 16),
+    sellByDate = new LocalDate(2016, 3, 30),
     exposeClientSide = true
   )
 
@@ -67,12 +49,12 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABEmailSignupMarketingCheckbox = Switch(
+  val ABEmailSignupMarketingCheckboxV2 = Switch(
     "A/B Tests",
-    "ab-email-signup-marketing-checkbox",
+    "ab-email-signup-marketing-checkbox-v2",
     "Test marketing checkbox in email sign-up",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 23),
+    sellByDate = new LocalDate(2016, 3, 29),
     exposeClientSide = true
   )
 

@@ -40,6 +40,7 @@
 }
 
 .ad-slot__label {
+    @include font-size(12, 20);
     height: $mpu-ad-label-height;
     background-color: colour(neutral-8);
     margin: 0 auto;
@@ -49,7 +50,6 @@
     text-align: right;
     box-sizing: border-box;
     font-family: $f-sans-serif-text;
-    @include font-size(12, 20);
 
     .ad-slot--dark & {
         color: colour(neutral-3);
@@ -106,10 +106,10 @@
         }
     }
 
-     /*
-      * Sometimes we have ads which needs to be allowed to escape container in the top slot (for example video ads)
-      * We are giving this ad priority 5 so it will go over everything except lightbox
-      */
+    /*
+     * Sometimes we have ads which needs to be allowed to escape container in the top slot (for example video ads)
+     * We are giving this ad priority 5 so it will go over everything except lightbox
+     */
     .ad-slot {
         overflow: visible;
         z-index: $zindex-popover;
@@ -362,10 +362,10 @@
 }
 .ad-slot--sponsored__label,
 .ad-slot--sponsored__help {
+    @include fs-textSans(3);
     float: left;
     clear: left;
     padding-left: $gs-gutter/2;
-    @include fs-textSans(3);
 }
 .ad-slot--sponsored__label {
     margin-bottom: $gs-baseline/3;
@@ -653,31 +653,6 @@
             &.ad--responsive--open {
                 height: 250px;
             }
-        }
-    }
-}
-
-.ad-slot--dismiss {
-    background-color: #eaeaea;
-    padding: 3px 10px;
-    cursor: pointer;
-    color: #6e6e6e;
-    font-family: $f-sans-serif-text;
-    @include font-size(12, 20);
-    float: right;
-
-    &:hover {
-        background-color: darken(#eaeaea, 15%);
-    }
-
-    .inline-icon {
-        fill: #6e6e6e;
-        margin-left: 5px;
-        vertical-align: middle;
-
-        svg {
-            width: 10px;
-            height: 10px;
         }
     }
 }

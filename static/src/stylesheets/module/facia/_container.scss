@@ -134,9 +134,9 @@ $header-image-size-desktop: 100px;
 .fc-container__header__title,
 .fc-container__header__title--sticky,
 .container__title {
+    @include fs-header(4);
     position: relative;
     padding-bottom: $gs-baseline/3;
-    @include fs-header(4);
     line-height: get-line-height(header, 2);
     color: guss-colour(guardian-brand-dark, $pasteup-palette);
 
@@ -312,8 +312,8 @@ $header-image-size-desktop: 100px;
 }
 
 .fc-today {
-    display: none;
     @include fs-headline(2);
+    display: none;
 
     @include mq(tablet) {
         display: block;
@@ -358,13 +358,13 @@ $header-image-size-desktop: 100px;
 }
 
 .fc-container__updated {
+    @include fs-headline(1);
     display: block;
     position: absolute;
     right: 0;
     bottom: 0;
     padding-bottom: $gs-baseline / 2;
     color: colour(neutral-2);
-    @include fs-headline(1);
 
     @include mq(leftCol) {
         position: static;
@@ -428,6 +428,7 @@ $header-image-size-desktop: 100px;
 }
 
 .fc-container__toggle {
+    @include fs-textSans(3);
     min-height: gs-height(1);
     min-width: gs-span(1);
     position: absolute;
@@ -435,7 +436,6 @@ $header-image-size-desktop: 100px;
     right: 0;
     border: 0;
     background-color: transparent;
-    @include fs-textSans(3);
     color: #ffffff;
 
     .inline-icon {
@@ -517,11 +517,10 @@ $header-image-size-desktop: 100px;
 }
 
 .fc-date-headline {
+    @include fs-headline(2);
     color: colour(neutral-1);
     display: block;
     padding-bottom: $gs-baseline / 2;
-
-    @include fs-headline(2);
 }
 
 .fc-container--tag {
@@ -593,9 +592,8 @@ $header-image-size-desktop: 100px;
 }
 
 .index-page-header__description {
-    color: colour(neutral-2);
-
     @include fs-headline(2);
+    color: colour(neutral-2);
 
     @include mq(leftCol) {
         float: left;

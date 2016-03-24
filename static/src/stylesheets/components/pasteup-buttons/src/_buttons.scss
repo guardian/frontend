@@ -101,104 +101,116 @@ Show more button:
 .button--primary {
     @include button-colour(
         guss-colour(guardian-brand, $pasteup-palette),
-        #ffffff,
-        darken(guss-colour(guardian-brand, $pasteup-palette), 10%)
+        #ffffff
     );
+    @include button-hover-colour(darken(guss-colour(guardian-brand, $pasteup-palette), 10%));
 }
 .button--secondary {
     @include button-colour(
         guss-colour(neutral-7, $pasteup-palette),
-        guss-colour(neutral-1, $pasteup-palette),
-        darken(guss-colour(neutral-7, $pasteup-palette), 10%)
+        guss-colour(neutral-1, $pasteup-palette)
     );
+    @include button-hover-colour(darken(guss-colour(neutral-7, $pasteup-palette), 10%));
 }
 .button--tertiary {
     @include button-colour(
         transparent,
         guss-colour(neutral-1, $pasteup-palette),
-        transparent,
-        darken(guss-colour(neutral-3, $pasteup-palette), 10%),
         guss-colour(neutral-4, $pasteup-palette)
+    );
+    @include button-hover-colour(
+        transparent,
+        darken(guss-colour(neutral-3, $pasteup-palette), 10%)
     );
 }
 .button--tone-media {
     @include button-colour(
         guss-colour(multimedia-support-4, $pasteup-palette),
-        #ffffff,
-        guss-colour(neutral-2, $pasteup-palette)
+        #ffffff
     );
+    @include button-hover-colour(guss-colour(neutral-2, $pasteup-palette));
 }
 .button--tone-media-variant {
     @include button-colour(
         guss-colour(multimedia-main-1, $pasteup-palette),
         #ffffff,
-        guss-colour(multimedia-main-1, $pasteup-palette),
-        guss-colour(neutral-3, $pasteup-palette),
         guss-colour(neutral-2, $pasteup-palette)
+    );
+    @include button-hover-colour(
+        guss-colour(multimedia-main-1, $pasteup-palette),
+        guss-colour(neutral-3, $pasteup-palette)
     );
 }
 .button--tone-news {
     @include button-colour(
         guss-colour(neutral-7, $pasteup-palette),
-        guss-colour(news-main-1, $pasteup-palette),
-        darken(guss-colour(neutral-7, $pasteup-palette), 10%)
+        guss-colour(news-main-1, $pasteup-palette)
     );
+    @include button-hover-colour(darken(guss-colour(neutral-7, $pasteup-palette), 10%));
 }
 .button--tone-news-variant {
     @include button-colour(
         #ffffff,
         guss-colour(news-main-1, $pasteup-palette),
-        #ffffff,
-        darken(guss-colour(neutral-3, $pasteup-palette), 10%),
         guss-colour(neutral-4, $pasteup-palette)
+    );
+    @include button-hover-colour(
+        #ffffff,
+        darken(guss-colour(neutral-3, $pasteup-palette), 10%)
     );
 }
 .button--tone-feature {
     @include button-colour(
         guss-colour(neutral-7, $pasteup-palette),
-        guss-colour(features-support-1, $pasteup-palette),
-        darken(guss-colour(neutral-7, $pasteup-palette), 10%)
+        guss-colour(features-support-1, $pasteup-palette)
     );
+    @include button-hover-colour(darken(guss-colour(neutral-7, $pasteup-palette), 10%));
 }
 .button--tone-feature-variant {
     @include button-colour(
         #ffffff,
         guss-colour(features-support-1, $pasteup-palette),
-        #ffffff,
-        darken(guss-colour(neutral-3, $pasteup-palette), 10%),
         guss-colour(neutral-4, $pasteup-palette)
+    );
+    @include button-hover-colour(
+        #ffffff,
+        darken(guss-colour(neutral-3, $pasteup-palette), 10%)
     );
 }
 .button--tone-comment {
     @include button-colour(
         guss-colour(neutral-7, $pasteup-palette),
-        guss-colour(comment-main-1, $pasteup-palette),
-        darken(guss-colour(neutral-7, $pasteup-palette), 10%)
+        guss-colour(comment-main-1, $pasteup-palette)
     );
+    @include button-hover-colour(darken(guss-colour(neutral-7, $pasteup-palette), 10%));
 }
 .button--tone-comment-variant {
     @include button-colour(
         #ffffff,
         guss-colour(comment-main-1, $pasteup-palette),
-        #ffffff,
-        darken(guss-colour(neutral-3, $pasteup-palette), 10%),
         guss-colour(neutral-4, $pasteup-palette)
+    );
+    @include button-hover-colour(
+        #ffffff,
+        darken(guss-colour(neutral-3, $pasteup-palette), 10%)
     );
 }
 .button--tone-live {
     @include button-colour(
         guss-colour(neutral-6, $pasteup-palette),
-        guss-colour(neutral-1, $pasteup-palette),
-        darken(guss-colour(neutral-6, $pasteup-palette), 10%)
+        guss-colour(neutral-1, $pasteup-palette)
     );
+    @include button-hover-colour(darken(guss-colour(neutral-6, $pasteup-palette), 10%));
 }
 .button--tone-live-variant {
     @include button-colour(
         guss-colour(neutral-8, $pasteup-palette),
         guss-colour(neutral-1, $pasteup-palette),
-        guss-colour(neutral-8, $pasteup-palette),
-        darken(guss-colour(neutral-3, $pasteup-palette), 10%),
         guss-colour(neutral-3, $pasteup-palette)
+    );
+    @include button-hover-colour(
+        guss-colour(neutral-8, $pasteup-palette),
+        darken(guss-colour(neutral-3, $pasteup-palette), 10%)
     );
 }
 .button--xlarge {
@@ -257,9 +269,10 @@ $show-more-icon-spacing: $base-size + 1;
     @include button-colour(
         transparent,
         guss-colour(news-main-2, $pasteup-palette),
-        transparent,
-        darken(guss-colour(news-main-2, $pasteup-palette), 10%),
         guss-colour(news-main-2, $pasteup-palette)
     );
-
+    @include button-hover-colour(
+        transparent,
+        darken(guss-colour(news-main-2, $pasteup-palette), 10%)
+    );
 }

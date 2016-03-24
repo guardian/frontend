@@ -1,0 +1,70 @@
+.adverts--capi {
+    .advert__image {
+        max-height: $gs-baseline * 11;
+    }
+}
+
+.adverts--tone-capi {
+    background-color: colour(paid-article);
+
+    > .adverts__header {
+        @include f-headlineSans;
+        background: guss-colour(paidfor-background, $frontend-palette);
+    }
+
+    .adverts__logo {
+        color: #ffffff;
+    }
+
+    .adverts__stamp {
+        text-align: right;
+    }
+
+    * + .advert {
+        border-left-color: guss-colour(paid-article-subheader-bg, $frontend-palette);
+    }
+}
+
+.advert--capi {
+    @include f-textSans;
+    background: colour(paid-article-subheader);
+    background-clip: content-box;
+
+    > .advert__title,
+    > .advert__meta,
+    > .advert__standfirst {
+        padding-left: $gs-gutter / 4;
+        padding-right: $gs-gutter / 4;
+    }
+
+    > .advert__image-container {
+        border-top: 1px solid guss-colour(paid-article-brand, $frontend-palette);
+    }
+
+    > .advert__title {
+        @include f-headlineSans;
+        font-weight: 400;
+        margin-bottom: .5em;
+
+        > .inline-icon svg {
+            fill: guss-colour(paid-article-icon, $frontend-palette);
+            width: 1.1em;
+            height: .75em;
+            margin-right: .3em;
+        }
+    }
+
+    > .advert__meta {
+        margin-top: auto;
+        margin-bottom: $gs-baseline / 4;
+    }
+
+    .adverts--legacy-single & {
+        background: none;
+
+        .advert__image-container {
+            border-top: 0;
+        }
+    }
+
+}

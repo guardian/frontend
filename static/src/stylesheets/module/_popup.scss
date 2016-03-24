@@ -268,7 +268,6 @@ $control-offset: 36 + $gs-gutter/2;
 
     @include mq(tablet) {
         right: auto;
-        min-height: auto;
         width: gs-span(8) + $gs-gutter;
         min-height: 68px;
         left: $gs-gutter/2;

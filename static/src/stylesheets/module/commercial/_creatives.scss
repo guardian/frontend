@@ -144,6 +144,7 @@
     }
 
     .ad-exp__open-chevron {
+        @include fs-textSans(1);
         position: absolute;
         z-index: 11;
         bottom: -10px;
@@ -159,7 +160,6 @@
         text-align: center;
         outline: none;
         height: 39px;
-        @include fs-textSans(1);
         border-radius: $gs-gutter $gs-gutter 0 0;
         box-shadow: 0 0 1px 0px #ffffff inset, 0 0 1px 0px #ffffff;
 
@@ -283,6 +283,7 @@
     }
 
     .ad-exp__open-chevron {
+        @include fs-textSans(1);
         position: absolute;
         z-index: 11;
         bottom: -10px;
@@ -298,7 +299,6 @@
         text-align: center;
         outline: none;
         height: 39px;
-        @include fs-textSans(1);
         border-radius: $gs-gutter $gs-gutter 0 0;
         box-shadow: 0 0 1px 0px #ffffff inset, 0 0 1px 0px #ffffff;
 
@@ -672,8 +672,8 @@
     }
     .creative__logo-text,
     .creative__logo-info {
-        margin-left: $gs-gutter;
         @include fs-textSans(1);
+        margin-left: $gs-gutter;
         float: left;
         color: colour(neutral-2-contrasted);
     }

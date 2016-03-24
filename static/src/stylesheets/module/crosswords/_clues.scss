@@ -12,8 +12,8 @@
 }
 
 .crossword__clue {
-    position: relative;
     @include fs-textSans(4);
+    position: relative;
     padding: $gs-baseline * .25 $gs-baseline;
     margin: $gs-baseline * .25 0;
     display: block;

@@ -26,8 +26,8 @@ h2.open__head { // element selector here in order to override .from-content-api 
 }
 
 .open__body {
-    margin-bottom: $gs-baseline*1.5;
     @include fs-bodyCopy(1);
+    margin-bottom: $gs-baseline*1.5;
     color: colour(neutral-2);
 }
 

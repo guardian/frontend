@@ -41,15 +41,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val ForeseeSwitch = Switch(
-    "Feature",
-    "foresee",
-    "Enable Foresee surveys for a sample of our audience",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val GeoMostPopular = Switch(
     "Feature",
     "geo-most-popular",
@@ -398,14 +389,4 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-
-  // Owner: Dotcom health (R2/R1 decommissioning)
-  val ArchiveResolvesR1UrlsInRedirectTableSwitch = Switch(
-    "Feature",
-    "archive-service-resolves-r1-urls",
-    "When ON, the archive service can resolve un-normalisd R1 paths from the redirects table.",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 28), //Thursday
-    exposeClientSide = false
-  )
 }

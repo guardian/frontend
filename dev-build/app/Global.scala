@@ -12,6 +12,7 @@ import ophan.SurgingContentAgentLifecycle
 import play.api.mvc.{EssentialAction, EssentialFilter, RequestHeader, WithFilters}
 import rugby.conf.RugbyLifecycle
 import services.ConfigAgentLifecycle
+import headlines.ABHeadlinesLifecycle
 
 // obviously this is only for devbuild and should never end up in one of our
 // prod projects
@@ -73,7 +74,8 @@ object Global extends WithFilters(DevJsonExtensionFilter :: DevCacheWarningFilte
   with FootballLifecycle
   with CricketLifecycle
   with RugbyLifecycle
-  with CorsErrorHandler {
+  with CorsErrorHandler
+  with ABHeadlinesLifecycle {
   override val allowedParams: Seq[String] =
     CanonicalLink.significantParams ++ commercialParams ++ insignificantParams ++ Seq("query")
 }

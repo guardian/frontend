@@ -2,6 +2,7 @@ package controllers
 
 import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
+import com.gu.facia.client.models.Backfill
 import common._
 import conf.LiveContentApi
 import conf.LiveContentApi.getResponse
@@ -9,14 +10,14 @@ import implicits.Requests
 import layout.{CollectionEssentials, DescriptionMetaHeader, FaciaContainer}
 import model._
 import model.pressed.CollectionConfig
-import play.api.libs.json.{Json, JsArray}
+import play.api.libs.json.{JsArray, Json}
 import play.api.mvc.{Action, Controller, RequestHeader}
-import services.{CollectionConfigWithId, FaciaContentConvert}
+import services.CollectionConfigWithId
 import slices.Fixed
 import views.support.FaciaToMicroFormat2Helpers._
-import scala.concurrent.duration._
 
 import scala.concurrent.Future
+import scala.concurrent.duration._
 
 case class Series(id: String, tag: Tag, trails: RelatedContent) {
   lazy val displayName = tag.id match {
@@ -87,7 +88,9 @@ object SeriesController extends Controller with Logging with Paging with Executi
 
 
     val config = CollectionConfig.empty.copy(
-      apiQuery = Some(series.id), displayName = displayName, href = Some(series.id)
+      backfill = Some(Backfill(`type` = "capi", query = series.id)),
+      displayName = displayName,
+      href = Some(series.id)
     )
 
     val response = () => views.html.fragments.containers.facia_cards.container(
