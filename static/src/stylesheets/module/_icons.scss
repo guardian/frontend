@@ -18,10 +18,10 @@ figcaption:before {
 }
 
 .caption--img:before {
+    @include icon(image);
     content: '';
     vertical-align: top;
     margin-top: 1px;
-    @include icon(image);
 }
 
 .centered-icon {

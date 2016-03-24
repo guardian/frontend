@@ -56,12 +56,12 @@
     }
 
     .nav__link {
+        @include fs-header(1);
         display: block;
         padding: 3px 0 ($gs-baseline/3)*4;
         border-top: 1px solid lighten(colour(neutral-4), 8%);
         height: auto;
         background-color: transparent;
-        @include fs-header(1);
         -webkit-font-smoothing: subpixel-antialiased;
         text-decoration: none;
 

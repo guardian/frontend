@@ -18,8 +18,8 @@
 // to context matching).
 
 .brand-bar__item {
-    user-select: none;
     @include fs-bodyHeading(1);
+    user-select: none;
     float: left;
     color: $c-guardian-services-action;
     height: $headerHeight;

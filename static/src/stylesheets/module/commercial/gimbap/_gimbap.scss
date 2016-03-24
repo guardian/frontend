@@ -57,7 +57,6 @@ $gimbap-width-quarter: calc(25% - 20px);
 .gimbap__title--has-author {
     &:before {
         content: '';
-        float: right;
         shape-outside: polygon(70% 0%, 100% 150%, 0 100%);
         float: right;
         width: 40%;
@@ -383,7 +382,7 @@ $gimbap-width-quarter: calc(25% - 20px);
 }
 
 .gimbap-wrap__title {
-    font: 900 1.375rem/2.25rem "Guardian Egyptian Web","Guardian Text Egyptian Web",Georgia,serif;
+    font: 900 1.375rem/2.25rem 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;
     color: guss-colour(guardian-brand-dark, $pasteup-palette);;
     margin: 0;
 }

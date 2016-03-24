@@ -75,9 +75,9 @@
 
     .commercial__meta,
     .rich-link__meta {
+        @include f-textSans;
         color: colour(neutral-2);
         font-size: get-font-size(data, 3);
-        @include f-textSans;
         text-align: right;
     }
 

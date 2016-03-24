@@ -1,4 +1,5 @@
 .search-tool__input {
+    @include ellipsis();
     display: block;
     position: relative;
     z-index: 4;
@@ -6,7 +7,6 @@
     border: 0;
     border-bottom: 1px solid transparent; // To allow for focus state
     padding: 0;
-    @include ellipsis();
 
     &:focus {
         outline: 0;
@@ -40,13 +40,13 @@
 }
 
 .search-tool__link {
+    @include fs-headline(2);
     box-sizing: border-box;
     color: colour(neutral-1);
     padding-top: $gs-baseline / 3;
     padding-bottom: $gs-baseline;
     width: 100%;
     display: block;
-    @include fs-headline(2);
 
     @include mq(tablet, leftCol) {
         padding-left: $gs-gutter / 4;
@@ -66,8 +66,8 @@
 }
 
 .search-tool__meta {
+    @include fs-textSans(2);
     color: colour(neutral-2);
     display: block;
-    @include fs-textSans(2);
     line-height: 16px;
 }
