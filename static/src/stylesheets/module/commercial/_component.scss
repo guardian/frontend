@@ -155,9 +155,9 @@
     padding-top: $gs-baseline/2;
 }
 .commercial__search__input {
+    @include fs-textSans(2);
     box-sizing: border-box;
     border-radius: 18px;
-    @include fs-textSans(2);
     background-color: rgba(#ffffff, .9);
     border: 0;
     width: 100%;
@@ -236,8 +236,8 @@
     margin-bottom: $gs-gutter;
 }
 .commercial__desc {
-    color: #ffffff;
     @include fs-headline(1);
+    color: #ffffff;
     margin-top: $gs-baseline*-1.5;
     margin-bottom: 0;
 

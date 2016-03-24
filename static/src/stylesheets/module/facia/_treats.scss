@@ -30,6 +30,16 @@
     @include fs-textSans(1);
     @include button-height($base-size * 4);
     @include circular;
+    @include ellipsis();
+    @include button-colour(
+        #ffffff,
+        colour(news-default),
+        colour(news-accent)
+    );
+    @include button-hover-colour(
+        #ffffff,
+        darken(colour(neutral-3), 10%)
+    );
     box-sizing: border-box;
     display: inline-block;
     vertical-align: top;
@@ -37,7 +47,6 @@
     font-weight: 700;
     border-width: 1px;
     border-style: solid;
-    @include ellipsis();
     text-decoration: none;
     max-width: gs-span(4);
     line-height: $gs-baseline * 2 - 2px;
@@ -49,16 +58,6 @@
     @include mq(wide) {
         max-width: $left-column-wide;
     }
-
-    @include button-colour(
-        #ffffff,
-        colour(news-default),
-        colour(news-accent)
-    );
-    @include button-hover-colour(
-        #ffffff,
-        darken(colour(neutral-3), 10%)
-    );
 
     &:hover,
     &:focus,

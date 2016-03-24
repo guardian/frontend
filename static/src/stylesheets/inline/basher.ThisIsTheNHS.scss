@@ -38,9 +38,9 @@ $c-accent: colour(multimedia-main-2);
 }
 
 .this-is-the-nhs__title-line {
+    @include f-headline;
     position: absolute;
     z-index: 8;
-    @include f-headline;
     font-weight: 200;
     font-size: 62px;
     line-height: 1.5;
@@ -104,10 +104,10 @@ $c-accent: colour(multimedia-main-2);
 }
 
 .this-is-the-nhs__description {
+    @include fs-header(1);
     position: absolute;
     top: 0;
     max-width: gs-span(4);
-    @include fs-header(1);
     color: #ffffff;
     margin: 0 $gs-gutter / 2;
     letter-spacing: -.2px;
@@ -117,8 +117,8 @@ $c-accent: colour(multimedia-main-2);
     }
 
     @include mq(tablet) {
-        max-width: gs-span(5);
         @include fs-header(3);
+        max-width: gs-span(5);
     }
 
     @include mq(desktop, leftCol) {

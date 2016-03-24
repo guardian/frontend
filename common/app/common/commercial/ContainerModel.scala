@@ -27,6 +27,7 @@ case class ContainerMetaData(
                             )
 
 case class CardContent(
+                        icon: Option[String],
                         headline: String,
                         description: Option[String],
                         imageUrl: Option[String],
@@ -51,20 +52,24 @@ object CardContent {
       }
     }
 
-    val sponsorData = {
-      if (Switches.cardsDecidePaidContainerBranding.isSwitchedOn) {
-        CardWithSponsorDataAttributes.sponsorDataAttributes(content)
-      } else {
-        None
-      }
-    }
-
     CardContent(
+      icon = {
+        if (header.isVideo) Some("video-icon")
+        else if (header.isGallery) Some("camera")
+        else if (header.isAudio) Some("volume-high")
+        else None
+      },
       headline = header.headline,
       description = content.card.trailText,
       imageUrl,
       targetUrl = header.url,
-      sponsorData
+      sponsorData = {
+        if (Switches.cardsDecidePaidContainerBranding.isSwitchedOn) {
+          CardWithSponsorDataAttributes.sponsorDataAttributes(content)
+        } else {
+          None
+        }
+      }
     )
   }
 }
@@ -94,17 +99,15 @@ object ContainerModel {
         case _ => cardContents.size
       }
 
-      val extraCardContents = {
-        if (hideShowMore) Nil
-        else cardContents.drop(maxInitialSize)
-      }
-
       ContainerContent(
         title = collection.displayName,
         description = collection.description,
         targetUrl = collection.href,
         initialCardContents = cardContents.take(maxInitialSize),
-        extraCardContents
+        extraCardContents = {
+          if (hideShowMore) Nil
+          else cardContents.drop(maxInitialSize)
+        }
       )
     }
 

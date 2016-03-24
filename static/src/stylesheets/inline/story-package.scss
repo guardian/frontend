@@ -168,11 +168,9 @@
                 }
             }
 
-            .fc-slice__item:first-of-type {
-                [class*="fc-item--has-sublinks"] {
-                    .fc-item__standfirst {
-                        display: none;
-                    }
+            .fc-slice__item:first-of-type [class*='fc-item--has-sublinks'] {
+                .fc-item__standfirst {
+                    display: none;
                 }
             }
 
@@ -194,7 +192,7 @@
             }
 
             // Only allows one sublink on each item in the right col
-            &[class*="fc-item--has-sublinks"] {
+            &[class*='fc-item--has-sublinks'] {
                 .fc-sublink:nth-of-type(n+2) {
                     display: none;
                 }

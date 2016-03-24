@@ -295,8 +295,8 @@
     }
 
     .adverts__blurb {
-        color: #ffffff;
         @include fs-headline(1);
+        color: #ffffff;
 
         @include mq(leftCol) {
             @include fs-headline(2);

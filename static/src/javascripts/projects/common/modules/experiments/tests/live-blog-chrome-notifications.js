@@ -17,6 +17,7 @@ define([
         this.audience = 0.0;
         this.audienceOffset = 0.0;
         this.successMeasure = '';
+        this.showForSensitive = true;
         this.audienceCriteria = 'Internal use only ap';
         this.dataLinkNames = '';
         this.idealOutcome = '';

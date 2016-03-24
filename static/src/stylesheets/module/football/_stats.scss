@@ -51,8 +51,8 @@
 
 .goal-attempts__off-target,
 .goal-attempts__on-target {
-    box-sizing: border-box;
     @include fs-header(2);
+    box-sizing: border-box;
     padding: $gs-baseline*1.5 ($gs-gutter/5)*2;
     font-weight: 900;
     margin: 0;
@@ -107,8 +107,8 @@
 }
 
 .bar-fight__bar {
-    box-sizing: border-box;
     @include fs-header(2);
+    box-sizing: border-box;
     line-height: $gs-baseline*1.5;
     padding: $gs-baseline/4 ($gs-gutter/4)+3 0;
     background-color: colour(status-neutral);
