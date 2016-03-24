@@ -6,6 +6,7 @@
     flex-direction: column;
     font-size: .75rem;
     line-height: 1rem;
+    padding-bottom: $gs-baseline / 2;
 
     &:hover,
     &:focus {
@@ -24,9 +25,11 @@
 
 .advert__image-container {
     order: -1;
+    margin-bottom: $gs-baseline / 2;
 }
 
 .advert__image {
+    display: block;
     max-width: 100%;
     height: auto;
 }
@@ -40,28 +43,61 @@
     margin-top: $gs-baseline / 2;
 }
 
-.advert--landscape {
-    $headline-size: 2;
-    $text-lines-per-media-object: 4;
-    $media-ratio: 5 / 3;
-    $item-vertical-padding: $gs-baseline / 4;
-    $estimate-item-min-height: (($item-vertical-padding * 2) + get-line-height(headline, $headline-size) * $text-lines-per-media-object);
-    $image-width: normalize-width($estimate-item-min-height * $media-ratio);
-    $item-min-height: $image-width / $media-ratio;
-    $mobile-media-padding: ($gs-baseline / 3);
+.advert--small > .advert__title {
+    padding-top: $gs-baseline / 2;
+}
 
-    min-height: $item-min-height;
-    position: relative;
-    padding-left: $image-width + $gs-gutter / 2;
+.advert--large {
+    flex-direction: row;
+    align-items: stretch;
+    padding-bottom: 0;
+
+    > .advert__text {
+        flex: 1;
+        padding: $gs-baseline / 2 $gs-gutter / 2 $gs-baseline / 2 0;
+    }
 
     > .advert__image-container {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: $image-width;
+        order: 0;
+        margin-bottom: 0;
+        margin-left: $gs-gutter / 2;
     }
 
-    > .advert__standfirst {
-        display: none;
+    .advert__image {
+        width: 100%;
     }
+}
+
+.advert--large--inverse {
+    flex-direction: row-reverse;
+
+    > .advert__text {
+        padding: $gs-baseline / 2 0 $gs-baseline / 2 $gs-gutter / 2;
+    }
+
+    > .advert__image-container {
+        margin-left: 0;
+        margin-right: $gs-gutter / 2;
+    }
+}
+
+.advert--large--thumbnail {
+    .advert__image-container {
+        $line-height: 20px;
+        $image-height: $line-height * 4 + $gs-baseline;
+        $ratio: 5 / 3;
+        width: $image-height * $ratio;
+    }
+
+    .advert__text {
+        padding-left: 0;
+    }
+}
+
+.advert--large--1x3 > .advert__image-container {
+    flex-basis: calc(75% - #{$gs-gutter / 2});
+}
+
+.advert--large--1x2 > .advert__image-container {
+    flex-basis: calc(66.67% - #{$gs-gutter / 2});
 }

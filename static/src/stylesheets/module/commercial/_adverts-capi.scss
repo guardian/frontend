@@ -2,7 +2,7 @@
 }
 
 .adverts--tone-capi {
-    background-color: colour(paid-article);
+    background-color: colour(neutral-6);
 
     > .adverts__header {
         @include f-headlineSans;
@@ -20,25 +20,39 @@
     .adverts__row > * + * {
         border-left-color: guss-colour(paid-article-subheader-bg, $frontend-palette);
     }
+
+    .adverts__more > summary {
+        background: guss-colour(paidfor-background, $frontend-palette);
+        border-color: guss-colour(paidfor-background, $frontend-palette);
+
+        .inline-icon {
+            fill: colour(neutral-2);
+        }
+    }
+
+    .adverts__more[open] > summary {
+        background: none;
+        border-color: colour(neutral-4);
+        color: colour(neutral-1);
+    }
 }
 
 .advert--capi {
     background: colour(paid-article-subheader);
-    background-clip: content-box;
     @include f-textSans;
-
-    > .advert__title,
-    > .advert__meta,
-    > .advert__standfirst {
-        padding-left: $gs-gutter / 4;
-        padding-right: $gs-gutter / 4;
-    }
 
     > .advert__image-container {
         border-top: 1px solid guss-colour(paid-article-brand, $frontend-palette);
     }
 
-    > .advert__title {
+    .advert__title,
+    .advert__meta,
+    .advert__standfirst {
+        padding-left: $gs-gutter / 4;
+        padding-right: $gs-gutter / 4;
+    }
+
+    .advert__title {
         @include f-headlineSans;
         font-weight: 400;
         margin-bottom: .5em;
@@ -75,12 +89,8 @@
         }
     }
 
-    &.advert--landscape {
-        background-clip: border-box;
+    &.advert--small,
+    &.advert--large > .advert__text {
         border-top: 1px solid guss-colour(paid-article-brand, $frontend-palette);
-
-        > .advert__image-container {
-            border-top: 0;
-        }
     }
 }

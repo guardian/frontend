@@ -1,15 +1,17 @@
 @(item: common.commercial.CardContent,
   optSponsorship: Option[String] = None,
   optSponsor: Option[String] = None,
-  optKeywords: Option[String] = None)
+  optKeywords: Option[String] = None,
+  optSeries: Option[String] = None)
 
 @import views.support.ImgSrc
 @import views.html.fragments.inlineSvg
 
-<a href="@item.targetUrl" class="advert advert--capi"
+<a href="@item.targetUrl" class="advert advert--small advert--capi"
     @for(sponsorship <- optSponsorship){data-sponsorship="@sponsorship"}
     @for(sponsor     <- optSponsor)    {data-sponsor="@sponsor"}
     @for(keywords    <- optKeywords)   {data-keywords="@keywords"}
+    @for(series      <- optSeries)     {data-series="@series"}
     >
     <p class="advert__title">@item.headline</p>
     @for(sponsorship <- optSponsorship){<div class="advert__badge js-badge"></div>}

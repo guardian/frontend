@@ -5,7 +5,7 @@
   optKeywords: Option[String] = None,
   optSeries: Option[String] = None)
 
-<a href="@item.targetUrl" class="advert advert--capi
+<a href="@item.targetUrl" class="advert advert--large advert--capi advert--landscape
     @optClassNames.map { classNames => @classNames.map(c => s"advert--$c").mkString(" ")}
     "
     @for(sponsorship <- optSponsorship){data-sponsorship="@sponsorship"}
@@ -13,12 +13,14 @@
     @for(keywords    <- optKeywords)   {data-keywords="@keywords"}
     @for(series      <- optSeries)     {data-series="@series"}
     >
-    <h2 class="advert__title">@item.headline</h2>
+    <div class="advert__text">
+        <h2 class="advert__title">@item.headline</h2>
+        @for(description <- item.description) {
+            <div class="advert__standfirst">@Html(description)</div>
+        }
+        @for(sponsorship <- optSponsorship){<div class="advert__badge js-badge"></div>}
+    </div>
     <div class="advert__image-container">
         <img class="advert__image" src="@item.imageUrl">
     </div>
-    @for(description <- item.description) {
-        <div class="advert__standfirst">@Html(description)</div>
-    }
-    @for(sponsorship <- optSponsorship){<div class="advert__badge js-badge"></div>}
 </a>

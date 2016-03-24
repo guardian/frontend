@@ -344,7 +344,7 @@ trait CommercialSwitches {
     "Fixed paid front templates using template v2",
     safeState = Off,
     sellByDate = new LocalDate(2016, 4, 13),
-    exposeClientSide = false
+    exposeClientSide = true
   )
 
   val cardsDecidePaidContainerBranding = Switch(
