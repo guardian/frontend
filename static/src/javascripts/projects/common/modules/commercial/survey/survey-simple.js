@@ -21,24 +21,14 @@ define([
         this.config = config || {};
         this.id = this.config.id;
         this.prefs = 'overlay-messages';
-        this.closePermanently = this.config.showCloseBtn || false;
+        this.closePermanently = this.config.closePermanently || false;
         this.bannerTmpl = template(surveySimpleTemplate,
             {
                 surveyHeader: this.config.surveyHeader,
                 surveyText: this.config.surveyText,
-                surveyTextSecond: this.config.surveyTextSecond,
-                surveyTextThird: this.config.surveyTextThird,
-                surveyTextMembership: this.config.surveyTextMembership,
-                surveyTextSubscriber: this.config.surveyTextSubscriber,
-                signupText: this.config.signupText,
-                membershipText: this.config.membershipText,
-                signupLink: this.config.signupLink,
-                membershipLink: this.config.membershipLink,
-                signupDataLink: this.config.signupDataLink,
-                membershipDataLink: this.config.membershipDataLink,
-                subscriberLink: this.config.subscriberLink,
-                subscriberText: this.config.subscriberText,
-                subscriberDataLink: this.config.subscriberDataLink,
+                buttonText: this.config.buttonText,
+                buttonLink: this.config.buttonLink,
+                buttonDataLink: this.config.membershipDataLink,
                 showCloseBtn: this.config.showCloseBtn,
                 closePermanently: this.config.showCloseBtn || false,
                 arrowWhiteRight: svgs('arrowWhiteRight'),
@@ -56,10 +46,10 @@ define([
                 if (this.config.showCloseBtn) {
                     bean.on(document, 'click', $('.js-survey-close'), function () {
                         $('.js-survey-overlay').addClass('u-h');
+                        if (this.closePermanently) {
+                            this.remember();
+                        }
                     });
-                    if (this.config.closePermanently) {
-                        this.remember();
-                    }
                 }
             }.bind(this));
         }
