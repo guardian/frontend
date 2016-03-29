@@ -26,9 +26,9 @@
 }
 
 .advert--capi {
+    @include f-textSans;
     background: colour(paid-article-subheader);
     background-clip: content-box;
-    @include f-textSans;
 
     > .advert__title,
     > .advert__meta,

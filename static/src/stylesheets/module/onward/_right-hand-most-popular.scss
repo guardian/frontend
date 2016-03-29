@@ -15,10 +15,10 @@
 }
 
 .right-most-popular-item__headline {
-    color: colour(neutral-1);
-    margin-bottom: 0;
     @include fs-headline(2);
     @include text-clamp(4);
+    color: colour(neutral-1);
+    margin-bottom: 0;
 }
 
 .right-most-popular-item__url {

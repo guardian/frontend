@@ -1,6 +1,7 @@
 package test
 
 import org.scalatest.Suites
+import pagepresser.InteractiveHtmlCleanerTest
 
 class AdminTestSuite extends Suites (
   new football.PlayerControllerTest,
@@ -9,6 +10,7 @@ class AdminTestSuite extends Suites (
   new indexes.TagPagesTest,
   new services.AdminHealthCheckTest,
   new pagepresser.HtmlCleanerTest,
+  new pagepresser.InteractiveHtmlCleanerTest,
   new controllers.admin.DeploysRadiatorControllerTest,
   new controllers.admin.DeploysNotifyControllerTest
 ) with SingleServerSuite {

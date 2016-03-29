@@ -36,15 +36,16 @@ $stickyClueHeight: $stickyClueVerticalPadding * 2 + ($stickyClueLineHeight * $st
     }
 
     &.is-fixed {
-        position: fixed;
         // When the element is out of the document flow, we must manually offset
         // for the page gutter
         @include content-gutter();
+        position: fixed;
     }
 
 }
 
 .crossword__sticky-clue {
+    @include fs-textSans(3);
     background: #ffffff;
     height: $stickyClueHeight;
     border-bottom: 1px solid #000000;
@@ -53,7 +54,6 @@ $stickyClueHeight: $stickyClueVerticalPadding * 2 + ($stickyClueLineHeight * $st
     box-sizing: border-box;
     padding-top: $stickyClueVerticalPadding;
     padding-bottom: $stickyClueVerticalPadding;
-    @include fs-textSans(3);
     display: table;
     width: 100%;
 }

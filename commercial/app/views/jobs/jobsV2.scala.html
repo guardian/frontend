@@ -1,5 +1,7 @@
-@(jobs: Seq[model.commercial.jobs.Job],
-  jobCategories: Seq[Seq[String]],
+@import model.commercial.jobs.{Job, JobSector}
+@import views.html.jobs.jobCard
+@(jobs: Seq[Job],
+  jobSectors: Seq[JobSector],
   omnitureId: Option[String],
   clickMacro: Option[String])(implicit request: RequestHeader)
 
@@ -17,8 +19,8 @@
 
 }{
     <ul class="jobs-sectors">
-        @for(sector <- jobCategories) {
-            <li><a href="@{clickMacro}http://jobs.theguardian.com/@{sector(0)}" data-link-name="merchandising-jobs-v0_2_2014-04-30-low-sector-@{sector(0)}">@sector(1)</a></li>
+        @for(sector <- jobSectors) {
+            <li><a href="@{clickMacro}http://jobs.theguardian.com/@{sector.path}" data-link-name="merchandising-jobs-v0_2_2014-04-30-low-sector-@{sector.path}">@{sector.name}</a></li>
         }
         <li><a class="job-sector__all" href="@{clickMacro}http://jobs.theguardian.com/" data-link-name="merchandising-jobs-v0_2_2014-04-30-low-sector-all">All sectors</a></li>
     </ul>

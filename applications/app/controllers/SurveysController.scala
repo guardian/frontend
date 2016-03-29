@@ -13,11 +13,7 @@ object SurveysController extends Controller {
   def render404TestNextInSeries(seriesName: String) = Action { implicit request =>
     if (conf.switches.Switches.ABNextInSeries.isSwitchedOn) {
       val maybeSurveyId: Option[String] = Map(
-        "experience" -> "guardian-reminder-experience",
-        "alanis" -> "guardian-reminder-alanis",
-        "blind-date" -> "guardian-reminder-blinddate",
-        "what-im-really-thinking" -> "guardian-reminder-whatimreallythinking",
-        "yotam" -> "guardian-reminder-yotam"
+        "experience" -> "7WNLHSS"
       ).get(seriesName)
       Cached(60) {
         maybeSurveyId

@@ -10,8 +10,6 @@ import org.joda.time.format.ISODateTimeFormat
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
 
-import scala.annotation.tailrec
-
 case class CustomTarget(name: String, op: String, values: Seq[String]) {
 
   def isPositive(targetName: String) = name == targetName && op == "IS"
@@ -411,7 +409,8 @@ case class GuCreative(
   lastModified: DateTime,
   args: Map[String, String],
   templateId: Option[Long],
-  snippet: Option[String]
+  snippet: Option[String],
+  previewUrl: Option[String]
 )
 
 object GuCreative {
@@ -434,7 +433,8 @@ object GuCreative {
         "lastModified" -> creative.lastModified,
         "args" -> creative.args,
         "templateId" -> creative.templateId,
-        "snippet" -> creative.snippet
+        "snippet" -> creative.snippet,
+        "previewUrl" -> creative.previewUrl
       )
     }
   }
@@ -445,7 +445,8 @@ object GuCreative {
       (JsPath \ "lastModified").read[DateTime] and
       (JsPath \ "args").read[Map[String, String]] and
       (JsPath \ "templateId").readNullable[Long] and
-      (JsPath \ "snippet").readNullable[String]
+      (JsPath \ "snippet").readNullable[String] and
+      (JsPath \ "previewUrl").readNullable[String]
     ) (GuCreative.apply _)
 }
 
@@ -456,20 +457,7 @@ case class GuCreativeTemplate(id: Long,
                               snippet: String,
                               creatives: Seq[GuCreative]) {
 
-  val example: Option[String] = creatives.headOption map { creative =>
-
-    @tailrec
-    def replaceParameters(html: String, args: Seq[(String, String)]): String = {
-      if (args.isEmpty) html
-      else {
-        val (key, value) = args.head
-        val encodedValue = URLEncoder.encode(value, "utf-8")
-        replaceParameters(html.replace(s"[%$key%]", value).replace(s"[%URI_ENCODE:$key%]", encodedValue), args.tail)
-      }
-    }
-
-    replaceParameters(snippet, creative.args.toSeq)
-  }
+  val examplePreviewUrl: Option[String] = creatives.headOption flatMap { creative => creative.previewUrl }
 
   lazy val isForApps: Boolean = name.startsWith("apps - ") || name.startsWith("as ") || name.startsWith("qc ")
 }
