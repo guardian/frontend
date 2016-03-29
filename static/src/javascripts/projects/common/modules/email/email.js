@@ -103,7 +103,8 @@ define([
             wrapper: 'js-email-sub',
             form: 'js-email-sub__form',
             inlineLabel: 'js-email-sub__inline-label',
-            textInput: 'js-email-sub__text-input'
+            textInput: 'js-email-sub__text-input',
+            listIdHiddenInput: 'js-email-sub__listid-input'
         },
         removeAndRemember = function (e, data) {
             var iframe = data[0],
