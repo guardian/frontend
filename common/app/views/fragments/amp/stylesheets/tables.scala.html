@@ -103,13 +103,8 @@ figure.element-table {
     border-top: 0.0625rem solid #eaeaea;
 }
 
-.match-summary__team--home {
-    text-align: right;
-    margin-right: 15px;
-}
-
 .match-summary__team--away {
-    margin-left: 15px;
+    text-align: right;
 }
 
 .match-summary .match-summary__status {
@@ -144,30 +139,19 @@ figure.element-table {
     vertical-align: top;
 }
 
-.team__main {
-    display: flex;
-    align-items: center;
-}
-
-.match-summary__team--away .team__main {
-    justify-content: flex-start;
-    flex-direction: row-reverse;
-}
-
-.team__crest {
-    flex: 1;
-    width: auto;
-}
-
-.team__crest__img-container {
-    vertical-align: middle;
-}
-
 .team__score {
     font-weight: 400;
-    font-size: 3rem;
     min-width: 1.2em;
-    position: relative;
+    position: absolute;
+    top: 0;
+}
+
+.match-summary__team--home .team__score {
+    right: 0;
+}
+
+.match-summary__team--away .team__score {
+    left: 0;
 }
 
 .team__scorers {
@@ -211,6 +195,6 @@ figure.element-table {
     content: '\2013';
     position: absolute;
     text-align: center;
-    right: -30px;
+    right: -15px;
     width: 30px;
 }
