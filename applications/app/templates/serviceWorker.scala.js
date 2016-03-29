@@ -157,25 +157,23 @@ self.addEventListener('push', function(event) {
                     'Content-Type': 'application/json'
                 }
             }).then(function (response) {
-               return response.json();
-            })
-            .then(function (json) {
+               return response.json().then(function(json){
+                   if(json.status === "ok" && json.messages.length > 0) {
+                       /* Client returns current messages for a given browserid ( which are then deleted ) We want the latest one.
+                        If we loop displaying all of them the promise doesn't resolved and a 'website being updated in the background' message is displayed
+                        */
+                       var message = json.messages.slice(-1)[0];
+                       var data = {topic: message.topic};
+                       return self.registration.showNotification(message.title, {
+                           body: message.body,
+                           icon: '@{JavaScript(Static("images/favicons/114x114.png").path)}',
+                           tag: message.title,
+                           data: data
+                       });
+                   }
 
-               if(json.status === "ok" && json.messages.length > 0) {
-                   /* Client returns current messages for a given browserid ( which are then deleted ) We want the latest one.
-                    If we loop displaying all of them the promise doesn't resolved and a 'website being updated in the background' message is displayed
-                    */
-                   var message = json.messages.slice(-1)[0];
-                   var data = {topic: message.topic};
-                   return self.registration.showNotification(message.title, {
-                       body: message.body,
-                       icon: '@{JavaScript(Static("images/favicons/114x114.png").path)}',
-                       tag: message.title,
-                       data: data
-                   });
-               }
+               });
             })
-
         })
     );
 });
