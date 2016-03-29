@@ -124,7 +124,8 @@ define([
         },
         '300,250': function (event, $adSlot) {
             if (config.switches.viewability && $adSlot.hasClass('ad-slot--right')) {
-                if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
+                var mobileAdSizes = $adSlot.attr('data-mobile');
+                if (mobileAdSizes && mobileAdSizes.indexOf('300,251') > -1) {
                     stickyMpu($adSlot);
                 }
             }
