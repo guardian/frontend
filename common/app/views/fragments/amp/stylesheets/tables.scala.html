@@ -1,3 +1,7 @@
+.score-container {
+    margin-bottom: 12px;
+}
+
 figure.element-table {
     margin: 0 0.1rem 0 1.25rem;
     float: right;
@@ -195,6 +199,13 @@ figure.element-table {
     text-overflow: ellipsis;
     font-weight: 400;
     font-size: 1.5rem;
+}
+
+@@media (max-width: 500px) {
+    .team__name {
+        width: 100%;
+        font-size: 1rem;
+    }
 }
 
 .match-summary__team--home .team__score::after {

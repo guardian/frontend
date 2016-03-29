@@ -2,7 +2,7 @@
 @import conf.Configuration
 
 @* must be served by localhost, not thegulocal *@
-<amp-list layout="fixed-height" height="184" src="@Configuration.amp.baseUrl/@path" class="onward-list">
+<amp-list layout="fixed-height" height="184" src="@Configuration.amp.baseUrl/@path" class="score-container onward-list">
     <template type="amp-mustache">
         <div class="match-summary">
 
@@ -79,7 +79,7 @@
         </div>
 
     </template>
-    <div overflow class="cta cta--medium cta--show-more">
+    <div overflow class="cta cta--medium cta--show-more cta--show-more__unindent">
         @fragments.inlineSvg("plus", "icon")
         See scorers
     </div>
