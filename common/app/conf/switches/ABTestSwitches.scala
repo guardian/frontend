@@ -90,7 +90,7 @@ trait ABTestSwitches {
     "ab-membership",
     "Membership propositions",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 30),
+    sellByDate = new LocalDate(2016, 5, 2),
     exposeClientSide = true
   )
 }
