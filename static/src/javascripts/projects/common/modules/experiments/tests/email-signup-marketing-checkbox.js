@@ -7,12 +7,12 @@ define([
 ) {
     return function () {
 
-        this.id = 'EmailSignupMarketingCheckboxV2';
+        this.id = 'EmailSignupMarketingCheckbox';
         this.start = '2016-03-09';
-        this.expiry = '2016-03-29';
+        this.expiry = '2016-03-23';
         this.author = 'Gareth Trufitt';
         this.description = 'Testing how the marketing checkbox affects engagement and sign-ups';
-        this.audience = 0.15;
+        this.audience = 0.01;
         this.audienceOffset = 0.3;
         this.successMeasure = 'Sign-ups to email when the checkbox is shown and the difference made to checked/un-checked checkbox';
         this.audienceCriteria = 'All users who see the email sign-up';

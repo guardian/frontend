@@ -67,12 +67,12 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABEmailSignupMarketingCheckboxV2 = Switch(
+  val ABEmailSignupMarketingCheckbox = Switch(
     "A/B Tests",
-    "ab-email-signup-marketing-checkbox-v2",
+    "ab-email-signup-marketing-checkbox",
     "Test marketing checkbox in email sign-up",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 29),
+    sellByDate = new LocalDate(2016, 3, 23),
     exposeClientSide = true
   )
 
