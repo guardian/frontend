@@ -262,8 +262,7 @@ define([
                 return function (event) {
                     var emailAddress = $('.' + classes.textInput, $form).val(),
                         listId = $('.' + classes.listIdHiddenInput, $form).val(),
-                        $markCheckbox = $('.' + classes.markCheckbox, $form),
-                        markCheckbox = $markCheckbox.length && $markCheckbox[0].checked ? 'marketing allowed' : 'marketing disallowed',
+                        markCheckbox = $('.' + classes.markCheckbox, $form)[0].checked ? 'marketing allowed' : 'marketing disallowed',
                         analyticsInfo;
 
                     event.preventDefault();
