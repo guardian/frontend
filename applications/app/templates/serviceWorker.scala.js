@@ -13,6 +13,8 @@
 
 var staticCacheName = 'static';
 
+console.log("++GET TROSAS")
+
 var getISODate = function () {
     return new Date().toISOString().split('T')[0];
 };
@@ -151,7 +153,7 @@ self.addEventListener('push', function(event) {
             var gcmBrowserId = sub.endpoint.substring(sub.endpoint.lastIndexOf('/') + 1);
 
             var endpoint = '@{JavaScript(Configuration.Notifications.latestMessageUrl)}/' + gcmBrowserId;
-            fetch(endpoint, {
+            return fetch(endpoint, {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -172,8 +174,8 @@ self.addEventListener('push', function(event) {
                            tag: message.title,
                            data: data
                        });
-                   }
-                })
+                }
+            })
 
         })
     );
