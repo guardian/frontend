@@ -11,7 +11,6 @@ define([
     'common/modules/experiments/tests/header-bidding-us',
     'common/modules/experiments/tests/next-in-series',
     'common/modules/experiments/tests/bolivian-wrestling-autoplay',
-    'common/modules/experiments/tests/email-signup-marketing-checkbox-v2',
     'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/people-who-read-this-also-read-variants',
     'common/modules/experiments/tests/membership',
@@ -37,7 +36,6 @@ define([
     HeaderBiddingUS,
     NextInSeries,
     BolivianWrestlingAutoplay,
-    EmailSignupMarketingCheckboxV2,
     AdblockingResponse,
     PeopleWhoReadThisAlsoReadVariants,
     Membership,
@@ -60,7 +58,6 @@ define([
         new NextInSeries(),
         new BolivianWrestlingAutoplay(),
         new AdblockingResponse(),
-        new EmailSignupMarketingCheckboxV2(),
         new PeopleWhoReadThisAlsoReadVariants(),
         new Membership()
     ]);
