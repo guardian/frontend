@@ -2,7 +2,7 @@
 @import common.dfp.{Keyword, Series}
 @import conf.switches.Switches
 @import layout.MetaDataHeader
-@import slices.{CommercialContainerType, Dynamic, Fixed, MostPopular, NavList, NavMediaList, SingleCampaign}
+@import slices.{CommercialContainerType, Dynamic, Fixed, MostPopular, Video, NavList, NavMediaList, SingleCampaign}
 @import views.html.commercial.containers.commercialContainerV2
 @import views.html.fragments.containers.facia_cards._
 @import views.support.{Commercial, GetClasses}
@@ -77,6 +77,12 @@
                 case NavList => {
                     <div class="fc-container__inner">
                         @navListContainer(containerDefinition, frontProperties)
+                    </div>
+                }
+
+                case Video => {
+                    <div class="fc-container__inner">
+                        @videoContainer(containerDefinition, frontProperties)
                     </div>
                 }
 

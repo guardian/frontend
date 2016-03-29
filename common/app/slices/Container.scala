@@ -11,7 +11,7 @@ object Container extends Logging {
     ("dynamic/slow", Dynamic(DynamicSlow)),
     ("dynamic/package", Dynamic(DynamicPackage)),
     ("dynamic/slow-mpu", Dynamic(DynamicSlowMPU(omitMPU = false))),
-    ("nav/list", NavList),
+    ("nav/list", Video),
     ("nav/media-list", NavMediaList),
     ("news/most-popular", MostPopular)
   ) ++
@@ -41,7 +41,7 @@ object Container extends Logging {
   }
 
   def showToggle(container: Container) = container match {
-    case NavList | NavMediaList => false
+    case NavList | NavMediaList | Video => false
     case _ => true
   }
 
@@ -59,4 +59,5 @@ case class Fixed(get: ContainerDefinition) extends Container
 case object NavList extends Container
 case object NavMediaList extends Container
 case object MostPopular extends Container
+case object Video extends Container
 case class Commercial(get: CommercialContainerType) extends Container

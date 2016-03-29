@@ -1,0 +1,18 @@
+@(collectionDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit requestHeader: RequestHeader)
+
+@import common.LinkTo
+@import views.html.fragments.containers.facia_cards.containerHeader
+@import model.SupportedUrl
+
+<div class="fc-container__body">
+    <div class="fc-slice-wrapper">
+        <ul class="u-unstyled fc-slice fc-slice--video">
+        @collectionDefinition.collectionEssentials.items.zipWithIndex.map { case (item, index) =>
+            <li class="fc-slice__item--video">
+                <a class= href="@LinkTo(SupportedUrl.fromFaciaContent(item))" data-link-name=" | article | @index">@item.header.headline</a>
+            </li>
+            @item
+        }
+        </ul>
+    </div>
+</div>
