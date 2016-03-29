@@ -726,7 +726,7 @@ define([
                         $adSlot.addClass('ad-slot__fluid250');
                     });
                 }
-            });
+            }).catch(raven.captureException)
         }
 
         allAdsRendered(adSlotId);
