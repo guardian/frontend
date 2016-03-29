@@ -13,8 +13,6 @@
 
 var staticCacheName = 'static';
 
-console.log("++GET TROSAS")
-
 var getISODate = function () {
     return new Date().toISOString().split('T')[0];
 };
