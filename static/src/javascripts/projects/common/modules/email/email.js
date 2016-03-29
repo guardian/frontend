@@ -170,8 +170,7 @@ define([
                     campaignCode: formCampaignCode,
                     referrer: window.location.href,
                     customSuccessHeadline: formSuccessHeadline,
-                    customSuccessDesc: formSuccessDesc,
-                    inMarkAbTest: showCheckedMarketing || showUncheckedMarketing
+                    customSuccessDesc: formSuccessDesc
                 });
 
             },
