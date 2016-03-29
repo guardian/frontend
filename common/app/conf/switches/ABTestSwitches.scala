@@ -76,4 +76,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABLoyalAdblockingSurvey = Switch(
+    "A/B Tests",
+    "ab-loyal-adblocking-survey",
+    "An adblock ongoing survey for all loyal users",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 5, 31),
+    exposeClientSide = true
+  )
+
 }

@@ -3,18 +3,25 @@ define([
     'fastdom',
     'common/utils/$',
     'common/utils/template',
+    'common/modules/user-prefs',
     'common/views/svgs',
-    'text!common/views/commercial/survey/survey-simple.html'
+    'text!common/views/commercial/survey/survey-simple.html',
+    'lodash/arrays/uniq'
 ], function (
     bean,
     fastdom,
     $,
     template,
+    userPrefs,
     svgs,
-    surveySimpleTemplate
+    surveySimpleTemplate,
+    uniq
 ) {
     var surveySimple = function (config) {
         this.config = config || {};
+        this.id = this.config.id;
+        this.prefs = 'overlay-messages';
+        this.closePermanently = this.config.showCloseBtn || false;
         this.bannerTmpl = template(surveySimpleTemplate,
             {
                 surveyHeader: this.config.surveyHeader,
@@ -33,6 +40,7 @@ define([
                 subscriberText: this.config.subscriberText,
                 subscriberDataLink: this.config.subscriberDataLink,
                 showCloseBtn: this.config.showCloseBtn,
+                closePermanently: this.config.showCloseBtn || false,
                 arrowWhiteRight: svgs('arrowWhiteRight'),
                 marque36icon: svgs('marque36icon'),
                 crossIcon: svgs('crossIcon'),
@@ -41,15 +49,31 @@ define([
     };
 
     surveySimple.prototype.attach = function () {
-        fastdom.write(function () {
-            $(document.body).append(this.bannerTmpl);
+        if (!this.hasSeen()) {
+            fastdom.write(function () {
+                $(document.body).append(this.bannerTmpl);
 
-            if (this.config.showCloseBtn) {
-                bean.on(document, 'click', $('.js-survey-close'), function () {
-                    $('.js-survey-overlay').addClass('u-h');
-                });
-            }
-        }.bind(this));
+                if (this.config.showCloseBtn) {
+                    bean.on(document, 'click', $('.js-survey-close'), function () {
+                        $('.js-survey-overlay').addClass('u-h');
+                    });
+                    if (this.config.closePermanently) {
+                        this.remember();
+                    }
+                }
+            }.bind(this));
+        }
+    };
+
+    surveySimple.prototype.hasSeen = function () {
+        var messageStates = userPrefs.get(this.prefs);
+        return messageStates && messageStates.indexOf(this.id) > -1;
+    };
+
+    surveySimple.prototype.remember = function () {
+        var messageStates = userPrefs.get(this.prefs) || [];
+        messageStates.push(this.id);
+        userPrefs.set(this.prefs, uniq(messageStates));
     };
 
     surveySimple.prototype.show = function () {
