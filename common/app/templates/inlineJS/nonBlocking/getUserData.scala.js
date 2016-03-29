@@ -5,7 +5,7 @@ try {
     ((isVeryModern, document, window) => {
         if (isVeryModern) {
             function decodeBase64(str) {
-                return decodeURIComponent(encodeURIComponent(atob(str.replace(/-/g, '+').replace(/_/g, '/').replace(/,/g, '='))));
+                return decodeURIComponent(escape(atob(str.replace(/-/g, '+').replace(/_/g, '/').replace(/,/g, '='))));
             }
 
             // Short version of cookie.get(), inspired by Google Analytics' code
