@@ -18,6 +18,11 @@ $gimbap-width-quarter: calc(25% - 20px);
     position: relative;
     box-sizing: border-box;
 
+    .has-flex & {
+        display: flex;
+        flex-direction: column;
+    }
+
     &:hover {
         text-decoration: none;
         filter: brightness(.95);
@@ -42,7 +47,6 @@ $gimbap-width-quarter: calc(25% - 20px);
 
         .has-flex & {
             flex: 1;
-            flex-direction: column;
         }
     }
 
@@ -53,16 +57,28 @@ $gimbap-width-quarter: calc(25% - 20px);
     }
 }
 
-.gimbap--has-author {
-    &:before {
-        content: '';
-        shape-outside: polygon(70% 0%, 100% 150%, 0 100%);
-        float: right;
-        width: 40%;
-        min-height: 220px;
+%gimbap-author-shape {
+    content: '';
+    float: right;
+    width: 40%;
+}
 
-        @include mq(tablet) {
+.gimbap--has-author {
+    .gimbap__title {
+        &:before {
+            @extend %gimbap-author-shape;
+
+            shape-outside: polygon(70% 0%, 100% 150%, 0 100%);
             min-height: 120px;
+        }
+    }
+
+    .gimbap__cta {
+        &:before {
+            @extend %gimbap-author-shape;
+
+            shape-outside: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+            min-height: 50px;
         }
     }
 
@@ -347,7 +363,7 @@ $gimbap-width-quarter: calc(25% - 20px);
 
 .gimbap-wrap__body--1x1x1x1 > .gimbap {
     @include mq(tablet) {
-        .has-flex & { 
+        .has-flex & {
             flex: $gimbap-width-quarter;
         }
     }
@@ -365,10 +381,6 @@ $gimbap-width-quarter: calc(25% - 20px);
     }
     @include mq(desktop) {
         width: calc(50% - 20px);
-
-        .has-flex & {
-            flex: 2;
-        }
     }
 }
 
