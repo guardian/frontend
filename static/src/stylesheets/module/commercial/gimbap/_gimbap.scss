@@ -56,12 +56,7 @@ $gimbap-width-quarter: calc(25% - 20px);
 .gimbap--has-author {
     &:before {
         content: '';
-<<<<<<< HEAD
-        float: right;
-        shape-outside: polygon(100% -20%, 100% 140%, 10% 140%, 10% 50%);
-=======
         shape-outside: polygon(70% 0%, 100% 150%, 0 100%);
->>>>>>> master
         float: right;
         width: 40%;
         min-height: 220px;
