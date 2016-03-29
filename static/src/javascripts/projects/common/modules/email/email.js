@@ -19,8 +19,7 @@ define([
     'common/utils/detect',
     'common/modules/identity/api',
     'common/modules/user-prefs',
-    'lodash/arrays/uniq',
-    'common/modules/experiments/ab'
+    'lodash/arrays/uniq'
 ], function (
     formInlineLabels,
     bean,
@@ -42,8 +41,7 @@ define([
     detect,
     Id,
     userPrefs,
-    uniq,
-    ab
+    uniq
 ) {
     var omniture;
 
@@ -105,9 +103,7 @@ define([
             wrapper: 'js-email-sub',
             form: 'js-email-sub__form',
             inlineLabel: 'js-email-sub__inline-label',
-            textInput: 'js-email-sub__text-input',
-            listIdHiddenInput: 'js-email-sub__listid-input',
-            markCheckbox: 'js-email-sub__mark-input'
+            textInput: 'js-email-sub__text-input'
         },
         removeAndRemember = function (e, data) {
             var iframe = data[0],
@@ -134,10 +130,7 @@ define([
                     formSuccessDesc = (opts && opts.formSuccessDesc) || formData.formSuccessDesc,
                     removeComforter = (opts && opts.removeComforter) || formData.removeComforter || false,
                     formModClass = (opts && opts.formModClass) || formData.formModClass || false,
-                    formCloseButton = (opts && opts.formCloseButton) || formData.formCloseButton || false,
-                    showMarketingCheckbox = (opts && opts.showMarketingCheckbox) || formData.showMarketingCheckbox || false,
-                    showCheckedMarketing = ab.isInVariant('EmailSignupMarketingCheckbox', 'marketing-default-checked'),
-                    showUncheckedMarketing = ab.isInVariant('EmailSignupMarketingCheckbox', 'marketing-default-unchecked');
+                    formCloseButton = (opts && opts.formCloseButton) || formData.formCloseButton || false;
 
                 Id.getUserFromApi(function (userFromId) {
                     ui.updateFormForLoggedIn(userFromId, el);
@@ -158,17 +151,6 @@ define([
 
                     if (formModClass) {
                         $(el).addClass('email-sub--' + formModClass);
-                    }
-
-                    if (showMarketingCheckbox && (showCheckedMarketing || showUncheckedMarketing)) {
-                        var marketingText = 'Support the Guardian and sign up to news, updates and offers. No junk mail, just the latest from us.';
-
-                        $(el).addClass('email-sub__form--has-mark');
-                        $('.js-email-sub__small', el).addClass('email-sub__small--is-hidden');
-                        $('.js-email-sub__small--mark', el).removeClass('email-sub__small--is-hidden').append(marketingText);
-                        if (showCheckedMarketing) {
-                            $('.js-email-sub__mark-input', el).attr('checked', 'checked').val('checked');
-                        }
                     }
 
                     if (formCloseButton) {
@@ -262,7 +244,6 @@ define([
                 return function (event) {
                     var emailAddress = $('.' + classes.textInput, $form).val(),
                         listId = $('.' + classes.listIdHiddenInput, $form).val(),
-                        markCheckbox = $('.' + classes.markCheckbox, $form)[0].checked ? 'marketing allowed' : 'marketing disallowed',
                         analyticsInfo;
 
                     event.preventDefault();
@@ -279,10 +260,6 @@ define([
                                         + analytics.listId + ' | '
                                         + analytics.signedIn + ' | '
                                         + '%action%';
-
-                        if (formData.inMarkAbTest) {
-                            analyticsInfo += ' | ' + markCheckbox;
-                        }
 
                         state.submitting = true;
 

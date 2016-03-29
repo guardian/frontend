@@ -134,15 +134,8 @@ body {
         .email-sub__small--is-hidden {
             display: none;
         }
-
-        .email-sub__form--has-mark & .email-sub__text-input {
-            margin-bottom: 0;
-        }
     }
 
-    .email-sub__form--has-mark .email-sub__small {
-        width: gs-span(4);
-    }
 }
 
 /**

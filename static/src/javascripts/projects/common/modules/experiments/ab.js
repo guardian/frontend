@@ -11,7 +11,6 @@ define([
     'common/modules/experiments/tests/header-bidding-us',
     'common/modules/experiments/tests/article-video-autoplay',
     'common/modules/experiments/tests/next-in-series',
-    'common/modules/experiments/tests/email-signup-marketing-checkbox',
     'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/people-who-read-this-also-read-variants',
     'lodash/arrays/flatten',
@@ -36,7 +35,6 @@ define([
     HeaderBiddingUS,
     ArticleVideoAutoplay,
     NextInSeries,
-    EmailSignupMarketingCheckbox,
     AdblockingResponse,
     PeopleWhoReadThisAlsoReadVariants,
     flatten,
@@ -58,7 +56,6 @@ define([
         new ArticleVideoAutoplay(),
         new NextInSeries(),
         new AdblockingResponse(),
-        new EmailSignupMarketingCheckbox(),
         new PeopleWhoReadThisAlsoReadVariants()
     ]);
 
