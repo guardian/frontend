@@ -236,7 +236,7 @@ define([
             endSlateUri = $el.attr('data-end-slate'),
             embedPath = $el.attr('data-embed-path'),
             // we need to look up the embedPath for main media videos
-            canonicalUrl = $el.attr('data-canonical-url') || '/' + embedPath,
+            canonicalUrl = $el.attr('data-canonical-url') || (embedPath ? '/' + embedPath : null),
             techPriority = techOrder(el),
             withPreroll = shouldPreroll && !blockVideoAds,
             player,
