@@ -34,7 +34,7 @@ define([
                 };
                                getCookieStub = sinon.stub();
                                getCookieStub.withArgs('GU_U').returns(
-                                   'WyIyMzEwOTU5IiwiamdvcnJpZUBnbWFpbC5jb20iLCJBbcOpbGllIErDtHNlIiwiNTM0IiwxMzgyOTUzMDMxNTkxLDFd' +
+                                   'WyIyMzEwOTU5IiwiamdvcnJpZUBnbWFpbC5jb20iLCJBbSVDMyVBOWxpZSBKJUMzJUI0c2UiLCI1MzQiLDEzODI5NTMwMzE1OTEsMV0' +
                                    '.MC0CFBsFwIEITO91EGONK4puyO2ZgGQcAhUAqRa7PVDCoAjrbnJNYYvMFec4fAY'
                                );
                                cookies.get = getCookieStub;
