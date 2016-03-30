@@ -1,7 +1,7 @@
 package conf
 
 import com.gu.conf.ConfigurationFactory
-import conf.Configuration.OAuthCredentials
+import conf.Configuration.OAuthCredentialsWithMultipleCallbacks
 
 case class OmnitureCredentials(userName: String, secret: String)
 
@@ -42,12 +42,11 @@ object AdminConfiguration {
     lazy val appName = configuration.getStringProperty("api.dfp.applicationName")
   }
 
-  lazy val oauthCredentials: Option[OAuthCredentials] =
+  lazy val oauthCredentials: Option[OAuthCredentialsWithMultipleCallbacks] =
       for {
         oauthClientId <- configuration.getStringProperty("admin.oauth.clientid")
         oauthSecret <- configuration.getStringProperty("admin.oauth.secret")
-        oauthCallback <- configuration.getStringProperty("admin.oauth.callback")
-      } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
+      } yield OAuthCredentialsWithMultipleCallbacks(oauthClientId, oauthSecret, configuration.getStringPropertiesSplitByComma("admin.oauth.callbacks"))
 
   lazy val omnitureCredentials: Option[OmnitureCredentials] =
     for {
