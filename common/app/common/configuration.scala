@@ -19,6 +19,7 @@ class BadConfigurationException(msg: String) extends RuntimeException(msg)
 class GuardianConfiguration(val application: String, val webappConfDirectory: String = "env") extends Logging {
 
   case class OAuthCredentials(oauthClientId: String, oauthSecret: String, oauthCallback: String)
+  case class OAuthCredentialsWithMultipleCallbacks(oauthClientId: String, oauthSecret: String, authorizedOauthCallbacks: List[String])
 
   protected val configuration = ConfigurationFactory.getNonLoggingConfiguration(application, webappConfDirectory)
 
