@@ -76,15 +76,25 @@ define([
                 });
 
                 it('Caps price values at $20', function () {
-                    expect(
-                        getPriceBucket({cpm: 28.61})
-                    ).toBe('20.00');
+                    expect(getPriceBucket({cpm: 28.61})).toBe('20.00');
                 });
 
-                it('Values under $1 are floored to 5 cent segments', function () {
-                    expect(
-                        getPriceBucket({cpm: 0.89})
-                    ).toBe('0.85');
+                it('Floors values from $5 to $19.99 to the nearest 50c', function () {
+                    expect(getPriceBucket({cpm: 5.00})).toBe('5.00');
+                    expect(getPriceBucket({cpm: 5.49})).toBe('5.00');
+                    expect(getPriceBucket({cpm: 5.50})).toBe('5.50');
+                });
+
+                it('Floors values from $1 to $4.99 to the nearest 10c', function () {
+                    expect(getPriceBucket({cpm: 1.00})).toBe('1.00');
+                    expect(getPriceBucket({cpm: 1.09})).toBe('1.00');
+                    expect(getPriceBucket({cpm: 1.10})).toBe('1.10');
+                });
+
+                it('Floors values under $1 to the nearest 5c', function () {
+                    expect(getPriceBucket({cpm: 0.00})).toBe('0.00');
+                    expect(getPriceBucket({cpm: 0.04})).toBe('0.00');
+                    expect(getPriceBucket({cpm: 0.05})).toBe('0.05');
                 });
             });
         });
