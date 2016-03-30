@@ -5,7 +5,9 @@ import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
+import conf.switches.Switches._
 import cricketPa.CricketTeams
+import model.CacheTime._
 import model.liveblog.BodyBlock
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import ophan.SurgingContentAgent
@@ -200,13 +202,7 @@ object MetaData {
       membershipAccess = apiContent.fields.flatMap(_.membershipAccess.map(_.name)),
       analyticsName = s"GFE:$section:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section,
-      description = apiContent.fields.flatMap(_.trailText),
-      cacheSeconds = {
-        if (fields.isLive) 5
-        else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 1.hour) 10
-        else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 24.hours) 30
-        else 300
-      }
+      description = apiContent.fields.flatMap(_.trailText)
     )
   }
 }
@@ -226,7 +222,6 @@ final case class MetaData (
   contentType: String = "",
   hasHeader: Boolean = true,
   schemaType: Option[String] = None, // Must be one of... http://schema.org/docs/schemas.html
-  cacheSeconds: Int = 60,
   openGraphImages: Seq[String] = Seq(),
   membershipAccess: Option[String] = None,
   isFront: Boolean = false,
@@ -331,15 +326,29 @@ object Page {
   }
 }
 
-// A Page is something that has metadata, and anything with Metadata can be rendered.
+// A Page is something that has metadata and a cache time, and therefore can be rendered.
 trait Page {
- def metadata: MetaData
+  def metadata: MetaData
+  def cacheTime: CacheTime
+  def longCacheable: Boolean = false
+
 }
 
 // ContentPage objects use data from a ContentApi item to populate metadata.
 trait ContentPage extends Page {
   def item: ContentType
   final override val metadata = item.metadata
+
+  override def cacheTime =
+    if (item.fields.lastModified > DateTime.now (item.fields.lastModified.getZone) - 1.hour) RecentlyUpdated
+    else if (item.fields.lastModified > DateTime.now (item.fields.lastModified.getZone) - 24.hours) LastDayUpdated
+    else NotRecentlyUpdated
+
+  override def longCacheable: Boolean =
+    item match {
+      case article: Article => true
+      case _ => false
+    }
 
   // The order of construction is important, overrides must come last.
   def getJavascriptConfig: Map[String, JsValue] =
@@ -368,6 +377,8 @@ case class SimpleContentPage(content: ContentType) extends ContentPage {
 
 // StandalonePage objects manage their own metadata.
 trait StandalonePage extends Page {
+
+  override val cacheTime = Default
 
   // These methods are part of StandalonePage, not MetaData. In the scenario below, the page's config
   // is wholly made from the metadata object. But pages made from ContentPage use several objects

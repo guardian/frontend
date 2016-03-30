@@ -1,12 +1,23 @@
 package model
 
-import conf.switches.Switches.DoubleCacheTimesSwitch
+import conf.switches.Switches._
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.mvc.{Request, Action, Result}
 import scala.concurrent.Future
 import scala.concurrent.duration.Duration
 import scala.concurrent.ExecutionContext.Implicits.global
+
+case class CacheTime(cacheSeconds: Int, longCacheSeconds: Int)
+object CacheTime {
+
+  object LiveBlogActive extends CacheTime(5, 5)
+  object RecentlyUpdated extends CacheTime(10, 300)
+  object LastDayUpdated extends CacheTime(30, 1200)
+  object NotRecentlyUpdated extends CacheTime(300, 1800)
+  object Default extends CacheTime(60, 60)
+
+}
 
 object Cached extends implicits.Dates {
 
@@ -23,7 +34,12 @@ object Cached extends implicits.Dates {
   }
 
   def apply(page: Page)(result: Result): Result = {
-    if (cacheableStatusCodes.exists(_ == result.header.status)) cacheHeaders(page.metadata.cacheSeconds, result) else result
+    val cacheSeconds =
+      if (page.longCacheable && LongCacheSwitch.isSwitchedOn)
+        page.cacheTime.longCacheSeconds
+      else
+        page.cacheTime.cacheSeconds
+    if (cacheableStatusCodes.exists(_ == result.header.status)) cacheHeaders(cacheSeconds, result) else result
   }
 
   // Use this when you are sure your result needs caching headers, even though the result status isn't
