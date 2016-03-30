@@ -207,6 +207,13 @@ define([
                 cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at', 'gu_adfree_user']);
             },
 
+            cleanupLocalStorage : function () {
+                var deprecatedKeys = [
+                    'gu.subscriber'
+                ];
+                forEach(deprecatedKeys, storage.remove);
+            },
+
             updateHistory: function () {
                 if (config.page.contentType !== 'Network Front') {
                     history.logSummary(config.page);
@@ -400,6 +407,7 @@ define([
                 ['c-adblock', modules.showAdblockMessage],
                 ['c-log-stats', modules.logLiveStats],
                 ['c-cookies', modules.cleanupCookies],
+                ['c-localStorage', modules.cleanupLocalStorage],
                 ['c-overlay', modules.initOpenOverlayOnClick],
                 ['c-css-logging', modules.runCssLogging],
                 ['c-public-api', modules.initPublicApi],
