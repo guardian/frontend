@@ -1,5 +1,6 @@
 artifacts.zip
 /dist
+/data
 
 frontend-article.properties
 frontend-core-navigation.properties
