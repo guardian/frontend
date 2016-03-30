@@ -1,4 +1,4 @@
-@(player: model.VideoPlayer, enhance: Boolean, showEndSlate: Boolean = true, amp: Boolean = false)
+@(player: model.VideoPlayer, enhance: Boolean, showEndSlate: Boolean = true, amp: Boolean = false, showPoster: Boolean = true)
 
 @import conf.Static
 @import views.support.RenderClasses
@@ -38,7 +38,7 @@
             ))" data-title="@player.title"
                 data-auto-play="@player.autoPlay"
                 data-show-end-slate="@(player.showEndSlate && showEndSlate)"
-                poster="@player.poster"
+                @if(showPoster) { poster="@player.poster" }
                 data-duration="@player.video.videos.duration.toString()"
                 data-media-id="@player.video.properties.id"
                 data-end-slate="@player.endSlatePath"
