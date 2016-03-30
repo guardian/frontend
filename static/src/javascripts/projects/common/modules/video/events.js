@@ -61,6 +61,7 @@ define([
                     id: id,
                     eventType: event.type
                 };
+                console.log(eventObject);
                 ophan.record(eventObject);
             });
         }
