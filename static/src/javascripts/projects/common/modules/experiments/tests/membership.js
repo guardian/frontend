@@ -10,8 +10,8 @@ define([
     return function () {
 
         this.id = 'Membership';
-        this.start = '2016-03-21';
-        this.expiry = '2016-04-01';
+        this.start = '2016-03-29';
+        this.expiry = '2016-04-05';
         this.author = 'Joseph Smith';
         this.description = '404 test to determine interest in three possible membership propositions';
         this.audience = 0.12;
