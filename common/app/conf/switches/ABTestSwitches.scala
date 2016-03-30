@@ -13,6 +13,15 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABNextInSeries = Switch(
+    "A/B Tests",
+    "ab-next-in-series",
+    "Show next in series",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 4, 5),
+    exposeClientSide = true
+  )
+
   val ABIdentityRegisterMembershipStandfirst = Switch(
     "A/B Tests",
     "ab-identity-register-membership-standfirst",
@@ -58,15 +67,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABEmailSignupMarketingCheckboxV2 = Switch(
-    "A/B Tests",
-    "ab-email-signup-marketing-checkbox-v2",
-    "Test marketing checkbox in email sign-up",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 29),
-    exposeClientSide = true
-  )
-
   val ABAdblockingResponse = Switch(
     "A/B Tests",
     "ab-adblocking-response",
@@ -76,4 +76,12 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABMembership = Switch(
+    "A/B Tests",
+    "ab-membership",
+    "Membership propositions",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 5, 2),
+    exposeClientSide = true
+  )
 }
