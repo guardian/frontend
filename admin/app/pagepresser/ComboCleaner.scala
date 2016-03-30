@@ -8,8 +8,9 @@ import scala.collection.JavaConversions._
 import scala.concurrent.Future
 
 object ComboCleaner extends ExecutionContexts with Logging {
+  val fakeCacheBustId = "6d5811c93d9b815024b5a6c3ec93a54be18e52f0"
 
-  def apply(document: Document): Future[Unit] = {
+  def apply(document: Document, useMicroApp: Boolean = false): Future[Unit] = {
     import play.api.Play.current
 
     def inlineMicroApp(cacheBustId: String, path: String, extension: String): Future[Option[Element]] = {
@@ -37,6 +38,7 @@ object ComboCleaner extends ExecutionContexts with Logging {
 
         val combinerRegex = """//combo.guim.co.uk/(\w+)/(.+)(\.\w+)$""".r("cacheBustId", "paths", "extension")
         val microAppRegex = """^m-(\d+)~(.+)""".r
+        val numbersOnlyRegEx = """\d+""".r
 
         val href = el.attr("href")
 
@@ -47,14 +49,18 @@ object ComboCleaner extends ExecutionContexts with Logging {
           val extension = combiner.group("extension")
           val paths = combiner.group("paths").split('+')
           val futures = paths.map { path =>
-            if (microAppRegex.findFirstIn(path).isDefined) {
+            if (useMicroApp && microAppRegex.findFirstIn(path).isDefined) {
               // get the content and inline it
               val future = inlineMicroApp(cacheBustId, path, extension).map(_.map { element=>
                 el.after(element)
               })
               future
             } else {
-              val newPath = s"//static.guim.co.uk/static/$cacheBustId/$path$extension"
+              val newPath = if(numbersOnlyRegEx.findFirstMatchIn(cacheBustId).isDefined) {
+                s"//static.guim.co.uk/static/$fakeCacheBustId/$path$extension"
+              } else {
+                s"//static.guim.co.uk/static/$cacheBustId/$path$extension"
+              }
               val newEl = el.clone.attr("href", newPath)
               el.after(newEl)
               Future.successful(())

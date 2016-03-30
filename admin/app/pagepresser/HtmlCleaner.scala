@@ -8,6 +8,8 @@ import scala.collection.JavaConversions._
 import scala.concurrent.Future
 
 abstract class HtmlCleaner extends Logging with ExecutionContexts {
+  val fakeCacheBustId = "6d5811c93d9b815024b5a6c3ec93a54be18e52f0"
+
   def canClean(document: Document): Boolean
 
   def clean(document: Document): Future[Document]
@@ -21,7 +23,34 @@ abstract class HtmlCleaner extends Logging with ExecutionContexts {
     removeByClass(document, "initially-off")
     removeByClass(document, "comment-count")
     replaceLinks(document)
+    repairStaticLinks(document)
     ComboCleaner(document)
+  }
+
+  def repairStaticLinks(document: Document): Document = {
+    val staticCssRegex = """//static.guim.co.uk/static/(\w+)/(.+)(\.\w+)$""".r("cacheBustId", "paths", "extension")
+    val numbersOnlyRegEx = """\d+""".r
+    document.getAllElements.filter { el =>
+      el.hasAttr("href") && el.attr("href").contains("static")
+    }.foreach { el =>
+      val staticLink = staticCssRegex.findFirstMatchIn(el.attr("href"))
+      staticLink.foreach { link =>
+        val cacheBustId = link.group("cacheBustId")
+        val extension = link.group("extension")
+        val paths = link.group("paths").split('+')
+        paths.map { path =>
+          val newPath = if(numbersOnlyRegEx.findFirstMatchIn(cacheBustId).isDefined) {
+            s"//static.guim.co.uk/static/$fakeCacheBustId/$path$extension"
+          } else {
+            s"//static.guim.co.uk/static/$cacheBustId/$path$extension"
+          }
+          val newEl = el.clone.attr("href", newPath)
+          el.after(newEl)
+        }
+      }
+      el.remove()
+    }
+    document
   }
 
   def replaceLinks(document: Document): Document = {
