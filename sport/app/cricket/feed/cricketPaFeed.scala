@@ -89,7 +89,7 @@ object PaFeed extends ExecutionContexts with Logging {
     val requestDate = dateFormat.parseLocalDate(date)
 
     val matchObjects = for {
-      day <- 0 until 5
+      day <- 0 until 1 // quick fix (March 30th). TODO: implement real fix
       date <- Some(dateFormat.print(requestDate.minusDays(day)))
     } yield {
       CricketStatsJob.getMatch(team, date)
