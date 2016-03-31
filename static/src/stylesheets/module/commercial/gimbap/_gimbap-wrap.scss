@@ -207,3 +207,26 @@ $gimbap-width-quarter: calc(25% - 20px);
         }
     }
 }
+
+.gimbap-wrap-style--tone-jobs {
+    &:before,
+    &:after {
+        background-color: $gimbap-jobs;
+        opacity: .12;
+    }
+
+    .gimbap-wrap__box {
+        border-color: $gimbap-jobs;
+    }
+
+    .gimbap-wrap__link,
+    .gimbap-wrap__message {
+        color: $gimbap-jobs;
+    }
+
+    .gimbap-wrap__mainlogo {
+        svg {
+            fill: $gimbap-jobs;
+        }
+    }
+}

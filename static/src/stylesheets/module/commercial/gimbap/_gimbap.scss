@@ -297,3 +297,17 @@
         }
     }
 }
+
+.gimbap-simple--tone-jobs {
+    .gimbap__cta--simple {
+        color: $gimbap-jobs-light;
+    }
+
+    .gimbap__arrow {
+        background-color: $gimbap-jobs;
+
+        svg {
+            fill: #000000;
+        }
+    }
+}

@@ -884,14 +884,13 @@
         </script>
     }
 
-    @Seq(
+     @Seq(
         Map(
-            ("id", "gimbap-simple"),
-            ("type", "gimbap simple"),
+            ("id", "gimbap-simple-masterclasses"),
+            ("type", "gimbap simple masterclasses"),
             ("creativeId", "10025847"),
             ("args", Json.obj(
                 ("creative", "gimbap-simple"),
-                ("layout", "1x1x1x1"),
                 ("linksWithArrows", "yes"),
                 ("componenttone", "masterclasses"),
                 ("componentheadline", "masterclasses"),
@@ -919,13 +918,6 @@
                     Merchandising: manual @component("type")
                 </a>
             </h2>
-            <form>
-                <label>Layout:
-                    <select id="gimbap-simple-layout">
-                        <option selected>1x1x1x1</option>
-                    </select>
-                </label>
-            </form>
         </div>
         <div id="@component("id")" class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--@component("type")-manual"></div>
         <script>
@@ -936,13 +928,61 @@
                         require(['bean', 'common/modules/commercial/creatives/template'])
                             .then(function (bean, Template) {
                                 let container = document.querySelector('#@component("id")');
-                                let layout = document.getElementById('gimbap-simple-layout');
-                                layout.addEventListener('change', (event) => {
-                                    container.innerHTML = '';
-                                    new Template(container, Object.assign({}, @Html(Json.stringify(args)), { layout: layout.value })).create();
-                                });
+                                new Template(container, Object.assign({}, @Html(Json.stringify(args)))).create();
+                        });
+                    });
+                }
+                case _ => { }
+            }
+        </script>
+    }
 
-                                bean.fire(layout, 'change');
+    @Seq(
+        Map(
+            ("id", "gimbap-simple-jobs"),
+            ("type", "gimbap simple jobs"),
+            ("creativeId", "10025847"),
+            ("args", Json.obj(
+                ("creative", "gimbap-simple"),
+                ("linksWithArrows", "yes"),
+                ("componenttone", "jobs"),
+                ("componentheadline", "jobs"),
+                ("componentmessage", "New jobs led by award-winning Guardian professionals now booking"),
+                ("offer1url", "https://memebrship.theguardian.com"),
+                ("offer1title", "Business courses"),
+                ("offer1image", "http://www.catgifpage.com/gifs/247.gif"),
+                ("offer2url", "https://memebrship.theguardian.com"),
+                ("offer2title", "Hournalism courses"),
+                ("offer2image", "http://www.catgifpage.com/gifs/247.gif"),
+                ("offer3url", "https://memebrship.theguardian.com"),
+                ("offer3title", "Writing courses"),
+                ("offer3image", "http://www.catgifpage.com/gifs/247.gif"),
+                ("offer4url", "https://memebrship.theguardian.com"),
+                ("offer4title", "Culture courses"),
+                ("offer4image", "http://www.catgifpage.com/gifs/247.gif"),
+                ("omnitureId", "[%OmnitureID%]"),
+                ("clickMacro", "%%CLICK_URL_ESC%%")
+            ))
+        )
+    ).map { component =>
+        <div class="fc-container__inner">
+            <h2 class="test-page-head">
+                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=@component("creativeId")">
+                    Merchandising: manual @component("type")
+                </a>
+            </h2>
+            
+        </div>
+        <div id="@component("id")" class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--@component("type")-manual"></div>
+        <script>
+            'use strict';
+            @component("args") match {
+                case args: JsObject => {
+                    loadCommercial(function () {
+                        require(['bean', 'common/modules/commercial/creatives/template'])
+                            .then(function (bean, Template) {
+                                let container = document.querySelector('#@component("id")');
+                                new Template(container, Object.assign({}, @Html(Json.stringify(args)))).create();
                         });
                     });
                 }

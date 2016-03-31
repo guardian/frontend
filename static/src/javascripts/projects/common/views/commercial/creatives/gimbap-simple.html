@@ -6,10 +6,10 @@
                     <%=componentheadline%>
                 </a>
             </h3>
-            <p class="gimbap-wrap__message"><%=componentmessage%></p>
+            <p class="gimbap-wrap__message"><% if (showGuardian) { %>guardian<% } %><%=componentmessage%></p>
         </header>
         <%=marque36icon%>
-        <div class="gimbap-wrap__body gimbap-wrap__body--<%=layout%>">
+        <div class="gimbap-wrap__body">
             <a class="gimbap gimbap--simple gimbap-simple--tone-<%=componenttone%>"
                href="<%=clickMacro%><%=offer1url%>"
                data-link-name="<%=offer1title%>">
