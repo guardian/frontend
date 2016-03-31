@@ -30,7 +30,6 @@ define([
                 buttonLink: this.config.buttonLink,
                 buttonDataLink: this.config.membershipDataLink,
                 showCloseBtn: this.config.showCloseBtn,
-                closePermanently: this.config.showCloseBtn || false,
                 arrowWhiteRight: svgs('arrowWhiteRight'),
                 marque36icon: svgs('marque36icon'),
                 crossIcon: svgs('crossIcon'),
@@ -49,7 +48,7 @@ define([
                         if (this.closePermanently) {
                             this.remember();
                         }
-                    });
+                    }.bind(this));
                 }
             }.bind(this));
         }
