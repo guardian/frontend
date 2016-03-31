@@ -21,7 +21,7 @@ define([
         this.config = config || {};
         this.id = this.config.id;
         this.prefs = 'overlay-messages';
-        this.closePermanently = this.config.closePermanently || false;
+        this.shouldClosePermanently = this.config.shouldClosePermanently || false;
         this.bannerTmpl = template(surveySimpleTemplate,
             {
                 surveyHeader: this.config.surveyHeader,
@@ -45,8 +45,8 @@ define([
                 if (this.config.showCloseBtn) {
                     bean.on(document, 'click', $('.js-survey-close'), function () {
                         $('.js-survey-overlay').addClass('u-h');
-                        if (this.closePermanently) {
-                            this.remember();
+                        if (this.shouldClosePermanently) {
+                            this.closePermanently();
                         }
                     }.bind(this));
                 }
@@ -59,7 +59,7 @@ define([
         return messageStates && messageStates.indexOf(this.id) > -1;
     };
 
-    surveySimple.prototype.remember = function () {
+    surveySimple.prototype.closePermanently = function () {
         var messageStates = userPrefs.get(this.prefs) || [];
         messageStates.push(this.id);
         userPrefs.set(this.prefs, uniq(messageStates));

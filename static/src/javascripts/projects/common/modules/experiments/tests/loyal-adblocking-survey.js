@@ -49,7 +49,7 @@ define([
                             buttonLink: getSurveyLink(adblockUsed),
                             buttonDataLink: 'take part btn',
                             showCloseBtn: true,
-                            closePermanently: true
+                            shouldClosePermanently: true
                         });
                         surveyOverlay.attach();
                         surveyOverlay.show();
