@@ -44,9 +44,9 @@
         @include mq(tablet) {
             left: 50%;
             top: percentage(1/5);
-            width: $gs-column-width * 8;
+            width: $gs-column-width * 10;
             height: auto;
-            margin-left: -$gs-column-width * 4;
+            margin-left: -$gs-column-width * 5;
         }
 
     }
@@ -114,7 +114,7 @@
 
     .survey-text__info {
         @include fs-bodyCopy(1);
-        font-size: 12px;
+        font-size: 14px;
         line-height: 120%;
         margin: 0 $gs-gutter $gs-column-width/4 0;
 
@@ -129,7 +129,7 @@
 
     .survey-links {
         overflow: hidden;
-        margin-bottom: $gs-column-width/4;
+        margin: $gs-column-width/2 0 $gs-column-width/4;
     }
 
     .survey-link {
