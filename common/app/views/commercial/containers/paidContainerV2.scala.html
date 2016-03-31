@@ -1,16 +1,16 @@
 @(containerModel: common.commercial.ContainerModel)
 
 <div data-id="@containerModel.id">
-    <p>A <em>@containerModel.metaData.layoutName</em> container</p>
+    <p>A <em>@containerModel.layoutName</em> container</p>
     <h1><a href="@containerModel.content.targetUrl">@containerModel.content.title</a></h1>
     @for(description <- containerModel.content.description) {
         <p>@description</p>
     }
 
-    @for(card <- containerModel.content.initialCardContents) {
+    @for(card <- containerModel.content.initialCards) {
         <div
-            @if(containerModel.metaData.sponsorData == None) {
-                @for(sponsorData <- card.sponsorData) {
+            @if(containerModel.branding.isEmpty) {
+                @for(sponsorData <- card.branding) {
                     @for(sponsor <- sponsorData.sponsor) {
                         data-sponsor="@sponsor"
                     }
