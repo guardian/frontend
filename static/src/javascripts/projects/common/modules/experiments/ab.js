@@ -159,6 +159,38 @@ define([
         return tag.join(',');
     }
 
+    function getAbLoggableObject() {
+        var abLogObject = {};
+
+        try {
+            forEach(getActiveTests(), function (test) {
+                if (isParticipating(test) && testCanBeRun(test)) {
+                    var variant = getTestVariantId(test.id);
+                    if (variant && variant !== 'notintest') {
+                        abLogObject['ab' + test.id] = variant;
+                    }
+                }
+            });
+            forEach(getServerSideTests(), function (testName) {
+                abLogObject['ab' + testName] = 'inTest';
+            });
+        } catch (error) {
+            // Encountering an error should invalidate the logging process.
+            abLogObject = {};
+            reportError(error, false);
+        }
+
+        return abLogObject;
+    }
+
+    function trackEvent() {
+        require(['ophan/ng'], function (ophan) {
+            ophan.record({
+                abTestRegister: getAbLoggableObject()
+            });
+        });
+    }
+
     // Finds variant in specific tests and runs it
     function run(test) {
         if (isParticipating(test) && testCanBeRun(test)) {
@@ -169,7 +201,7 @@ define([
                 var success = variant.success || noop;
 
                 variant.test();
-                success(ab.trackEvent);
+                success(trackEvent);
             } else if (variantId === 'notintest' && test.notInTest) {
                 test.notInTest();
             }
@@ -291,14 +323,6 @@ define([
             });
         },
 
-        trackEvent: function () {
-            require(['ophan/ng'], function (ophan) {
-                ophan.record({
-                    abTestRegister: ab.getAbLoggableObject()
-                });
-            });
-        },
-
         isEventApplicableToAnActiveTest: function (event) {
             var participations = keys(getParticipations());
             return some(participations, function (id) {
@@ -326,34 +350,12 @@ define([
                 }).valueOf();
         },
 
-        getAbLoggableObject: function () {
-            var abLogObject = {};
-
-            try {
-                forEach(getActiveTests(), function (test) {
-                    if (isParticipating(test) && testCanBeRun(test)) {
-                        var variant = getTestVariantId(test.id);
-                        if (variant && variant !== 'notintest') {
-                            abLogObject['ab' + test.id] = variant;
-                        }
-                    }
-                });
-                forEach(getServerSideTests(), function (testName) {
-                    abLogObject['ab' + testName] = 'inTest';
-                });
-            } catch (error) {
-                // Encountering an error should invalidate the logging process.
-                abLogObject = {};
-                reportError(error, false);
-            }
-
-            return abLogObject;
-        },
-
+        getAbLoggableObject: getAbLoggableObject,
         getParticipations: getParticipations,
         isParticipating: isParticipating,
         getTest: getTest,
         makeOmnitureTag: makeOmnitureTag,
+        trackEvent: trackEvent,
         getExpiredTests: getExpiredTests,
         getActiveTests: getActiveTests,
         getTestVariantId: getTestVariantId,
