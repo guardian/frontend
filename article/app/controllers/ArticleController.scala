@@ -186,9 +186,9 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
         case (minute: Article, None) if minute.isUSMinute =>
           Left(MinutePage(minute, RelatedContent(minute, response)))
         case (liveBlog: Article, None) if liveBlog.isLiveBlog =>
-          john(liveBlog, response, None)
+          createLiveBlogModel(liveBlog, response, None)
         case (liveBlog: Article, Some(Some(requiredBlockId))) if liveBlog.isLiveBlog =>
-          john(liveBlog, response, Some(requiredBlockId))
+          createLiveBlogModel(liveBlog, response, Some(requiredBlockId))
         case (article: Article, None) =>
           Left(ArticlePage(article, RelatedContent(article, response)))
         case _ =>
@@ -199,7 +199,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
     content
   }
 
-  def john(liveBlog: Article, response: ItemResponse, maybeRequiredBlockId: Option[String]) = {
+  def createLiveBlogModel(liveBlog: Article, response: ItemResponse, maybeRequiredBlockId: Option[String]) = {
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
     val liveBlogPageModel = LiveBlogPageModel(
       pageSize = pageSize,
