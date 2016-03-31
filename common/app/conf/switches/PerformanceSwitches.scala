@@ -60,6 +60,15 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
+  val CircuitBreakerSwitch = Switch(
+    "Performance",
+    "circuit-breaker",
+    "If this switch is switched on then the Content API circuit breaker will be operational",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
   val AutoRefreshSwitch = Switch(
     "Performance",
     "auto-refresh",

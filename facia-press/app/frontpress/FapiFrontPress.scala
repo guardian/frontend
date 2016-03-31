@@ -10,7 +10,7 @@ import com.gu.facia.client.{AmazonSdkS3Client, ApiClient}
 import common._
 import conf.switches.Switches.FaciaInlineEmbeds
 import conf.{Configuration, LiveContentApi}
-import contentapi.{ContentApiClient, QueryDefaults}
+import contentapi.{CircuitBreakingContentApiClient, QueryDefaults}
 import fronts.FrontsApi
 import model._
 import model.facia.PressedCollection
@@ -23,7 +23,7 @@ import services.{ConfigAgent, S3FrontsApi}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
 
-private case class ContentApiClientWithTarget(override val apiKey: String, override val targetUrl: String) extends GuardianContentClient(apiKey) with ContentApiClient {
+private case class ContentApiClientWithTarget(override val apiKey: String, override val targetUrl: String) extends GuardianContentClient(apiKey) with CircuitBreakingContentApiClient {
   lazy val httpTimingMetric = ContentApiMetrics.ElasticHttpTimingMetric
   lazy val httpTimeoutMetric = ContentApiMetrics.ElasticHttpTimeoutCountMetric
 

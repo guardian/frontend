@@ -1,9 +1,11 @@
 package contentapi
 
+import akka.actor.ActorSystem
 import com.gu.contentapi.client.ContentApiClientLogic
 import com.gu.contentapi.client.model.ErrorResponse
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
-import scala.concurrent.Future
+import conf.switches.Switches
+import scala.concurrent.{ExecutionContext, Future}
 import common._
 import model.{Content, Trail}
 import org.joda.time.DateTime
@@ -12,6 +14,8 @@ import conf.Configuration.contentApi
 import com.gu.contentapi.client.model.{SearchQuery, ItemQuery, ItemResponse}
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration.{Duration, MILLISECONDS}
+import akka.pattern.{CircuitBreakerOpenException, CircuitBreaker}
 
 trait QueryDefaults extends implicits.Collections {
   // NOTE - do NOT add body to this list
@@ -102,7 +106,42 @@ trait ContentApiClient extends ContentApiClientLogic with ApiQueryDefaults with 
   override val apiKey = contentApi.key.getOrElse("")
 }
 
-class LiveContentApiClient extends ContentApiClient {
+trait CircuitBreakingContentApiClient extends ContentApiClient {
+  private final val circuitBreakerActorSystem = ActorSystem("content-api-client-circuit-breaker")
+
+  /** Read this:
+    *
+    * http://doc.akka.io/docs/akka/snapshot/common/circuitbreaker.html
+    */
+  private final val circuitBreaker = new CircuitBreaker(
+    scheduler = circuitBreakerActorSystem.scheduler,
+    maxFailures = contentApi.circuitBreakerErrorThreshold,
+    callTimeout = Duration(contentApi.timeout, MILLISECONDS),
+    resetTimeout = Duration(contentApi.circuitBreakerResetTimeout, MILLISECONDS)
+  )
+
+  circuitBreaker.onOpen({
+    log.error("Reached error threshold for Content API Client circuit breaker - breaker is OPEN!")
+  })
+
+  circuitBreaker.onHalfOpen({
+    log.info("Reset timeout finished. Entered half open state for Content API Client circuit breaker.")
+  })
+
+  circuitBreaker.onClose({
+    log.info("Content API Client looks healthy again, circuit breaker is closed.")
+  })
+
+  override def fetch(url: String)(implicit executionContext: ExecutionContext) = {
+    if (Switches.CircuitBreakerSwitch.isSwitchedOn) {
+      circuitBreaker.withCircuitBreaker(super.fetch(url)(executionContext))
+    } else {
+      super.fetch(url)
+    }
+  }
+}
+
+class LiveContentApiClient extends CircuitBreakingContentApiClient {
   lazy val httpTimingMetric = ContentApiMetrics.ElasticHttpTimingMetric
   lazy val httpTimeoutMetric = ContentApiMetrics.ElasticHttpTimeoutCountMetric
   override val targetUrl = contentApi.contentApiLiveHost
