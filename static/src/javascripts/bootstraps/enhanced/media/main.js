@@ -11,7 +11,6 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/url',
-    'common/utils/ajax',
     'common/modules/analytics/beacon',
     'common/modules/commercial/build-page-targeting',
     'common/modules/commercial/commercial-features',
@@ -38,7 +37,6 @@ define([
     detect,
     mediator,
     urlUtils,
-    ajax,
     beacon,
     buildPageTargeting,
     commercialFeatures,
@@ -235,27 +233,11 @@ define([
             showEndSlate = $el.attr('data-show-end-slate') === 'true',
             endSlateUri = $el.attr('data-end-slate'),
             embedPath = $el.attr('data-embed-path'),
-            // we need to look up the embedPath for main media videos
-            canonicalUrl = $el.attr('data-canonical-url') || '/' + embedPath,
             techPriority = techOrder(el),
             withPreroll = shouldPreroll && !blockVideoAds,
             player,
             mouseMoveIdle,
-            playerSetupComplete,
-            isPlayerExpired;
-
-        isPlayerExpired = new Promise(function(resolve) {
-            // We only have the canonical URL in videos embedded in articles / main media.
-            if (!canonicalUrl) {
-                resolve(false);
-            } else {
-                ajax({
-                    url: canonicalUrl + '/info.json'
-                }).then(function(videoInfo) {
-                    resolve(videoInfo.expired);
-                });
-            }
-        });
+            playerSetupComplete;
 
         player = createVideoPlayer(el, {
             techOrder: techPriority,
@@ -274,141 +256,126 @@ define([
             }
         });
 
-        isPlayerExpired.then(function(expired) {
-            if (expired) {
-                player.ready(function() {
-                    player.error({
-                        code: 0,
-                        type: 'Video Expired',
-                        message: 'This video has been removed. This could be because it launched early, ' +
-                                 'our rights have expired, there was a legal issue, or for another reason.'
-                    });
-                    player.bigPlayButton.dispose();
-                    player.errorDisplay.open();
-                });
-            } else {
-                // Location of this is important.
-                events.bindErrorHandler(player);
-                player.guMediaType = mediaType;
+        // Location of this is important.
+        events.bindErrorHandler(player);
+        player.guMediaType = mediaType;
 
-                playerSetupComplete = new Promise(function (resolve) {
-                    player.ready(function () {
-                        var vol;
+        playerSetupComplete = new Promise(function (resolve) {
+            player.ready(function () {
+                var vol;
 
-                        deferToAnalytics(function () {
-                            events.initOmnitureTracking(player);
-                            events.initOphanTracking(player, mediaId);
+                deferToAnalytics(function () {
+                    events.initOmnitureTracking(player);
+                    events.initOphanTracking(player, mediaId);
 
-                            events.bindGlobalEvents(player);
-                            events.bindContentEvents(player);
-                            if (withPreroll) {
-                                events.bindPrerollEvents(player);
-                            }
-                        });
-
-                        initLoadingSpinner(player);
-                        upgradeVideoPlayerAccessibility(player);
-                        supportedBrowsers(player);
-
-                        player.one('playing', function (e) {
-                            if (isFlash(e)) {
-                                beacon.counts('video-tech-flash');
-                            } else {
-                                beacon.counts('video-tech-html5');
-                            }
-                        });
-
-                        // unglitching the volume on first load
-                        vol = player.volume();
-                        if (vol) {
-                            player.volume(0);
-                            player.volume(vol);
-                        }
-
-                        player.persistvolume({namespace: 'gu.vjs'});
-
-                        // preroll for videos only
-                        if (mediaType === 'video') {
-                            player.fullscreener();
-
-                            if (showEndSlate && detect.isBreakpoint({ min: 'desktop' })) {
-                                initEndSlate(player, endSlateUri);
-                            }
-
-                            if (withPreroll) {
-                                raven.wrap(
-                                    { tags: { feature: 'media' } },
-                                    function () {
-                                        player.adSkipCountdown(15);
-                                        player.ima({
-                                            id: mediaId,
-                                            adTagUrl: getAdUrl(),
-                                            prerollTimeout: 1000
-                                        });
-                                        player.ima.requestAds();
-
-                                        // Video analytics event.
-                                        player.trigger(events.constructEventName('preroll:request', player));
-                                        resolve();
-                                    }
-                                )();
-                            } else {
-                                resolve();
-                            }
-
-                            if (ab.isInVariant('BolivianWrestlingAutoplay', 'autoplay')) {
-                                // Annoyingly we pass the `parentNode` as the video is absolutely positioned.
-                                var parentNode = player.el().parentNode;
-                                var firstAutoplay = true;
-                                var elementInView = ElementViewable(parentNode, parentNode.clientHeight * (3 / 4), function () {
-                                    if (firstAutoplay) {
-                                        player.volume(0);
-                                        firstAutoplay = false;
-                                    }
-                                    player.play();
-                                });
-                                elementInView.on('viewenter', function autoplayInView() {
-                                    if (firstAutoplay) {
-                                        player.volume(0);
-                                        firstAutoplay = false;
-                                    }
-                                    player.play();
-                                });
-                                elementInView.on('viewexit', function autoStopInView() {
-                                    player.pause();
-                                });
-                            }
-
-                        } else {
-                            player.playlist({
-                                mediaType: 'audio',
-                                continuous: false
-                            });
-                            resolve();
-                        }
-
-                        // built in vjs-user-active is buggy so using custom implementation
-                        player.on('mousemove', function () {
-                            clearTimeout(mouseMoveIdle);
-                            fastdom.write(function () {
-                                player.addClass('vjs-mousemoved');
-                            });
-
-
-                            mouseMoveIdle = setTimeout(function () {
-                                fastdom.write(function () {
-                                    player.removeClass('vjs-mousemoved');
-                                });
-                            }, 500);
-                        });
-                    });
-                });
-
-                playerSetupComplete.then(function () {
-                    if (autoplay) {
-                        player.play();
+                    events.bindGlobalEvents(player);
+                    events.bindContentEvents(player);
+                    if (withPreroll) {
+                        events.bindPrerollEvents(player);
                     }
                 });
+
+                initLoadingSpinner(player);
+                upgradeVideoPlayerAccessibility(player);
+                supportedBrowsers(player);
+
+                player.one('playing', function (e) {
+                    if (isFlash(e)) {
+                        beacon.counts('video-tech-flash');
+                    } else {
+                        beacon.counts('video-tech-html5');
+                    }
+                });
+
+                // unglitching the volume on first load
+                vol = player.volume();
+                if (vol) {
+                    player.volume(0);
+                    player.volume(vol);
+                }
+
+                player.persistvolume({namespace: 'gu.vjs'});
+
+                // preroll for videos only
+                if (mediaType === 'video') {
+                    player.fullscreener();
+
+                    if (showEndSlate && detect.isBreakpoint({ min: 'desktop' })) {
+                        initEndSlate(player, endSlateUri);
+                    }
+
+                    if (withPreroll) {
+                        raven.wrap(
+                            { tags: { feature: 'media' } },
+                            function () {
+                                player.adSkipCountdown(15);
+                                player.ima({
+                                    id: mediaId,
+                                    adTagUrl: getAdUrl(),
+                                    prerollTimeout: 1000
+                                });
+                                player.ima.requestAds();
+
+                                // Video analytics event.
+                                player.trigger(events.constructEventName('preroll:request', player));
+                                resolve();
+                            }
+                        )();
+                    } else {
+                        resolve();
+                    }
+
+                    if (ab.isInVariant('BolivianWrestlingAutoplay', 'autoplay')) {
+                        // Annoyingly we pass the `parentNode` as the video is absolutely positioned.
+                        var parentNode = player.el().parentNode;
+                        var firstAutoplay = true;
+                        var elementInView = ElementViewable(parentNode, parentNode.clientHeight * (3 / 4), function () {
+                            if (firstAutoplay) {
+                                player.volume(0);
+                                firstAutoplay = false;
+                            }
+                            player.play();
+                        });
+                        elementInView.on('viewenter', function autoplayInView() {
+                            if (firstAutoplay) {
+                                player.volume(0);
+                                firstAutoplay = false;
+                            }
+                            player.play();
+                        });
+                        elementInView.on('viewexit', function autoStopInView() {
+                            player.pause();
+                        });
+                    }
+
+                } else {
+                    player.playlist({
+                        mediaType: 'audio',
+                        continuous: false
+                    });
+                    resolve();
+                }
+
+                // built in vjs-user-active is buggy so using custom implementation
+                player.on('mousemove', function () {
+                    clearTimeout(mouseMoveIdle);
+                    fastdom.write(function () {
+                        player.addClass('vjs-mousemoved');
+                    });
+
+
+                    mouseMoveIdle = setTimeout(function () {
+                        fastdom.write(function () {
+                            player.removeClass('vjs-mousemoved');
+                        });
+                    }, 500);
+                });
+            });
+        });
+
+        playerSetupComplete.then(function () {
+            if (autoplay) {
+                player.play();
             }
         });
     }
@@ -485,7 +452,7 @@ define([
     }
 
     function init() {
-        // The `hasMultipleVideosInPage` flag is temporary until the # will be fixed
+        // The `hasMultipleVideosInPage` flag is temporary until the #10034 will be fixed
         var shouldPreroll = commercialFeatures.videoPreRolls &&
             !config.page.hasMultipleVideosInPage &&
             !config.page.isAdvertisementFeature;
