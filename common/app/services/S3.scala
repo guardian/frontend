@@ -248,7 +248,7 @@ trait SecureS3Request extends implicits.Dates with Logging {
 object SecureS3Request extends SecureS3Request
 
 object S3Archive extends S3 {
- override lazy val bucket = "aws-frontend-archive"
+ override lazy val bucket = if (Configuration.environment.isNonProd) "aws-frontend-archive-code" else "aws-frontend-archive"
  def getHtml(path: String) = get(path)
 }
 

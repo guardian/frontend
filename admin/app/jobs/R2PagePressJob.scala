@@ -1,7 +1,5 @@
 package jobs
 
-import java.net.{InetAddress, URL}
-
 import com.amazonaws.regions.{Region, Regions}
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
 import com.amazonaws.services.sqs.model.ReceiveMessageRequest
@@ -20,7 +18,6 @@ import model.R2PressMessage
 import implicits.R2PressNotification.pressMessageFormatter
 
 import scala.concurrent.Future
-import scala.io.Source
 
 object R2PagePressJob extends ExecutionContexts with Logging {
   private val waitTimeSeconds = Configuration.r2Press.pressQueueWaitTimeInSeconds
@@ -141,13 +138,8 @@ object R2PagePressJob extends ExecutionContexts with Logging {
       val r2HeaderName = Configuration.r2Press.header.name.getOrElse("")
       val r2HeaderValue = Configuration.r2Press.header.value.getOrElse("")
 
-//      val wSRequest = if(R2HeadersRequiredForPagePressingSwitch.isSwitchedOn) WS.url(urlIn).withHeaders((r2HeaderName, r2HeaderValue))
-//                      else WS.url(urlIn)
-      val urlSplitEx = """^(http[s]?://)(www.theguardian.com)(.*)$""".r("proto", "host", "path")
-      val path = urlSplitEx.findFirstMatchIn(urlIn).map(_.group("path")).getOrElse("")
-      val localUrl = s"http://32574.gnm.int:8080/pages/Guardian$path"
-
-      val wsRequest = WS.url(localUrl)
+      val wsRequest = if(R2HeadersRequiredForPagePressingSwitch.isSwitchedOn) WS.url(urlIn).withHeaders((r2HeaderName, r2HeaderValue))
+                      else WS.url(urlIn)
 
       log.info(s"Calling ${wsRequest.uri}")
 

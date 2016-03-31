@@ -9,6 +9,8 @@ import scala.concurrent.Future
 
 abstract class HtmlCleaner extends Logging with ExecutionContexts {
   val fakeCacheBustId = "6d5811c93d9b815024b5a6c3ec93a54be18e52f0"
+  lazy val staticRegEx = """//static.guim.co.uk/static/(\w+)/(.+)(\.\w+)$""".r("cacheBustId", "paths", "extension")
+  lazy val nonDigitRegEx = """\D+""".r
 
   def canClean(document: Document): Boolean
 
@@ -24,27 +26,51 @@ abstract class HtmlCleaner extends Logging with ExecutionContexts {
     removeByClass(document, "comment-count")
     replaceLinks(document)
     repairStaticLinks(document)
+    repairStaticSources(document)
     ComboCleaner(document)
   }
 
   def repairStaticLinks(document: Document): Document = {
-    val staticCssRegex = """//static.guim.co.uk/static/(\w+)/(.+)(\.\w+)$""".r("cacheBustId", "paths", "extension")
-    val numbersOnlyRegEx = """\d+""".r
     document.getAllElements.filter { el =>
-      el.hasAttr("href") && el.attr("href").contains("static")
+      el.hasAttr("href") && el.attr("href").contains("/static/")
     }.foreach { el =>
-      val staticLink = staticCssRegex.findFirstMatchIn(el.attr("href"))
+      val staticLink = staticRegEx.findFirstMatchIn(el.attr("href"))
       staticLink.foreach { link =>
         val cacheBustId = link.group("cacheBustId")
         val extension = link.group("extension")
         val paths = link.group("paths").split('+')
         paths.map { path =>
-          val newPath = if(numbersOnlyRegEx.findFirstMatchIn(cacheBustId).isDefined) {
+          val newPath = if(nonDigitRegEx.findFirstMatchIn(cacheBustId).isEmpty) {
             s"//static.guim.co.uk/static/$fakeCacheBustId/$path$extension"
           } else {
             s"//static.guim.co.uk/static/$cacheBustId/$path$extension"
           }
           val newEl = el.clone.attr("href", newPath)
+          el.after(newEl)
+        }
+      }
+      el.remove()
+    }
+    document
+  }
+
+  def repairStaticSources(document: Document): Document = {
+    val elementsWithSrc = document.getAllElements.filter { el =>
+      el.hasAttr("src") && el.attr("src").contains("/static/")
+    }
+    elementsWithSrc.foreach { el =>
+      val staticSrc = staticRegEx.findFirstMatchIn(el.attr("src"))
+      staticSrc.foreach { src =>
+        val cacheBustId = src.group("cacheBustId")
+        val extension = src.group("extension")
+        val paths = src.group("paths").split('+')
+        paths.map { path =>
+          val newPath = if (nonDigitRegEx.findFirstMatchIn(cacheBustId).isEmpty) {
+            s"//static.guim.co.uk/static/$fakeCacheBustId/$path$extension"
+          } else {
+            s"//static.guim.co.uk/static/$cacheBustId/$path$extension"
+          }
+          val newEl = el.clone.attr("src", newPath)
           el.after(newEl)
         }
       }
