@@ -64,6 +64,10 @@ define([
                         var el = $.create(render(series));
                         el.insertAfter($articleBody);
                     }
+                },
+
+                success: function(complete) {
+                    bean.on($('.next-in-series-test__remind-me-link'), 'click', complete));
                 }
             }
         ];

@@ -21,6 +21,7 @@ define([
     'lodash/collections/map',
     'lodash/collections/find',
     'lodash/objects/pick',
+    'lodash/utilities/noop',
     'common/utils/chain'
 ], function (
     reportError,
@@ -45,6 +46,7 @@ define([
     map,
     find,
     pick,
+    noop,
     chain
 ) {
 
@@ -164,7 +166,10 @@ define([
                 variantId = participations[test.id].variant;
             var variant = getVariant(test, variantId);
             if (variant) {
+                var success = variant.success || noop;
+
                 variant.test();
+                success(ab.trackEvent);
             } else if (variantId === 'notintest' && test.notInTest) {
                 test.notInTest();
             }
