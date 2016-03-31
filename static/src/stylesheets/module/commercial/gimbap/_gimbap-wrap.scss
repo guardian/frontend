@@ -140,6 +140,17 @@ $gimbap-width-quarter: calc(25% - 20px);
     }
 }
 
+.gimbap-wrap__body--simple {
+    padding: 0;
+
+    .has-flex & {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: stretch;
+    }
+}
+
 .gimbap-wrap__body--1x1x1x1 > .gimbap {
     @include mq(tablet) {
         .has-flex & {

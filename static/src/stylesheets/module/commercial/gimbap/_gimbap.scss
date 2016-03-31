@@ -44,6 +44,18 @@
 }
 
 .gimbap--simple {
+    float: left;
+    width: $gimbap-width-quarter;
+    margin-left: $gs-gutter;
+
+    &:first-child {
+        margin-left: 0;
+    }
+
+    .has-flex & {
+        flex: 1;
+    }
+
     padding: 0;
     position: relative;
 }
