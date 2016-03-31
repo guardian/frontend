@@ -29,7 +29,7 @@
     @containerDefinition.container match {
         case _: model.MostPopular if isPaidFront => {}
 
-        case _: Dynamic | _: Fixed if Switches.v2FixedTemplate.isSwitchedOn && shouldRenderAsPaidContainer(isPaidFront, containerDefinition) => {
+        case _: Dynamic | _: Fixed if Switches.v2PaidContainerTemplate.isSwitchedOn && shouldRenderAsPaidContainer(isPaidFront, containerDefinition) => {
             @maybeContainerModel match {
                 case Some(containerModel) => { @paidContainerV2(containerModel) }
                 case None => {}
