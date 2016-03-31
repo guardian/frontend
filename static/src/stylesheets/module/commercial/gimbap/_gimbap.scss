@@ -1,17 +1,3 @@
-$gimbap-members-text: #ff5b3a;
-$gimbap-members-reversed: #69d1ca;
-
-$gimbap-masterclasses-text: #ffb202;
-$gimbap-masterclasses-reversed: #ffb202;
-
-$gimbap-soulmates-text: #995490;
-$gimbap-soulmates-reversed: #995490;
-
-$gimbap-jobs-text: #42bfda;
-$gimbap-jobs-reversed: #42bfda;
-
-$gimbap-width-quarter: calc(25% - 20px);
-
 .gimbap {
     display: block;
     padding: $gs-gutter / 2;
@@ -55,6 +41,11 @@ $gimbap-width-quarter: calc(25% - 20px);
             display: none;
         }
     }
+}
+
+.gimbap--simple {
+    padding: 0;
+    position: relative;
 }
 
 %gimbap-author-shape {
@@ -147,7 +138,18 @@ $gimbap-width-quarter: calc(25% - 20px);
     font-weight: 500;
     word-wrap: break-word;
     width: 100%;
+}
 
+.gimbap__cta--simple {
+    @include fs-headline(3);
+
+    position: absolute;
+    top: 55%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
 .gimbap__arrow {
@@ -155,14 +157,23 @@ $gimbap-width-quarter: calc(25% - 20px);
 
     display: inline-block;
     vertical-align: middle;
-    width: $gs-baseline * 2;
-    height: $gs-baseline * 2;
     margin-left: $gs-gutter / 4;
     background-color: rgba(255, 255, 255, .4);
 
+    &,
     svg {
         width: $gs-baseline * 2;
         height: $gs-baseline * 2;
+    }
+}
+
+.gimbap__arrow--simple {
+    vertical-align: bottom;
+
+    &,
+    svg {
+        width: 22px;
+        height: 22px;
     }
 }
 
@@ -241,171 +252,6 @@ $gimbap-width-quarter: calc(25% - 20px);
     }
 }
 
-.gimbap__mainlogo {
-    display: none;
-
-    .gimbap-style--normal &,
-    .gimbap-style--reversed & {
-        svg {
-            width: 39px;
-            height: 39px;
-            fill: guss-colour(guardian-brand, $pasteup-palette);
-        }
-    }
-
-    @include mq(wide) {
-        display: block;
-        position: absolute;
-        left: calc(50% - 570px);
-        top: $gs-baseline / 3 * 10;
-        margin-left: $gs-gutter;
-
-        &:first-child {
-            top: $gs-baseline / 3 * 7;
-        }
-    }
-
-    @include mq(wide) {
-        left: calc(50% - 650px);
-    }
-}
-
-.gimbap-wrap {
-    padding: 0 $gs-gutter / 2 $gs-baseline;
-    position: relative;
-
-    @include mq(tablet) {
-        padding: 0 calc(50% - 370px) $gs-baseline;
-
-        &::before,
-        &::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: calc(50% - 370px);
-            background: rgba(51, 51, 51, .06);
-        }
-
-        &::before { left: 0; }
-        &::after { right: 0; }
-    }
-
-    @include mq(desktop) {
-        padding: 0 calc(50% - 490px) $gs-baseline;
-
-        &::before,
-        &::after {
-            width: calc(50% - 490px);
-        }
-    }
-
-    @include mq(leftCol) {
-        padding: 0 calc(50% - 570px) $gs-baseline;
-
-        &::before,
-        &::after {
-            width: calc(50% - 570px);
-        }
-    }
-
-    @include mq(wide) {
-        padding: 0 calc(50% - 650px) $gs-baseline;
-
-        &::before,
-        &::after {
-            width: calc(50% - 650px);
-        }
-    }
-}
-
-.gimbap-wrap__box {
-    border-top: 1px solid colour(news-accent);
-}
-
-.gimbap-wrap__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    @include mq(tablet) {
-        padding: 0 $gs-gutter;
-    }
-
-}
-
-.gimbap-wrap__body {
-    display: block;
-    overflow: hidden;
-
-    @include mq(tablet) {
-        padding: 0 $gs-gutter / 2;
-
-        .has-flex & {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
-            align-items: stretch;
-        }
-    }
-
-    @include mq(wide) {
-        margin-left: 240px;
-        width: 960px;
-    }
-
-    /* this is ugly but that's the price to pay when
-       decoration elements pollute the DOM */
-    .gimbap-wrap > .inline-marque-36:first-child + & {
-        padding-top: $gs-baseline;
-    }
-}
-
-.gimbap-wrap__body--1x1x1x1 > .gimbap {
-    @include mq(tablet) {
-        .has-flex & {
-            flex: $gimbap-width-quarter;
-        }
-    }
-}
-
-.gimbap-wrap__body--2x1x1 > .gimbap:first-child,
-.gimbap-wrap__body--1x2x1 > .gimbap:nth-child(2),
-.gimbap-wrap__body--1x1x2 > .gimbap:nth-child(3) {
-    @include mq(tablet) {
-        width: calc(66.67% - 20px);
-
-        .has-flex & {
-            flex: 2;
-        }
-    }
-    @include mq(desktop) {
-        width: calc(50% - 20px);
-    }
-}
-
-.gimbap-wrap__body--2x1x1,
-.gimbap-wrap__body--1x2x1,
-.gimbap-wrap__body--1x1x2 {
-    @include mq(tablet, desktop) {
-        > .gimbap:nth-child(n+3) {
-            display: none;
-        }
-    }
-
-    @include mq(desktop) {
-        > .gimbap:nth-child(n+4) {
-            display: none;
-        }
-    }
-}
-
-.gimbap-wrap__title {
-    font: 900 1.375rem/2.25rem 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;
-    color: guss-colour(guardian-brand-dark, $pasteup-palette);;
-    margin: 0;
-}
-
 .gimbap-style--normal {
     .gimbap__cta {
         filter: brightness(.5);
@@ -435,5 +281,19 @@ $gimbap-width-quarter: calc(25% - 20px);
 .gimbap-style--jobs {
     .gimbap {
         color: #ffffff;
+    }
+}
+
+.gimbap-simple--tone-masterclasses {
+    .gimbap__cta--simple {
+        color: $gimbap-masterclasses;
+    }
+
+    .gimbap__arrow {
+        background-color: $gimbap-masterclasses;
+
+        svg {
+            fill: #000000;
+        }
     }
 }

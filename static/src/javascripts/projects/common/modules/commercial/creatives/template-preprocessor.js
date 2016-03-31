@@ -82,7 +82,7 @@ define([
         tpl.params.headless = tpl.params.headless === 'true';
 
         // SVGs
-        tpl.params.marque36icon = svgs('marque36icon', ['gimbap__mainlogo']);
+        tpl.params.marque36icon = svgs('marque36icon', ['gimbap-wrap__mainlogo']);
         tpl.params.inlineQuote = svgs('quoteIcon', ['gimbap__quote']);
         tpl.params.arrowRight = (tpl.params.linksWithArrows.indexOf('yes') !== -1) ? svgs('arrowRight', ['gimbap__arrow']) : '';
 
@@ -104,10 +104,17 @@ define([
                                         && tpl.params.layout !== '1x1x1x1';
     }
 
+    function preprocessGimbapSimple(tpl) {
+        // SVGs
+        tpl.params.marque36icon = svgs('marque36icon', ['gimbap-wrap__mainlogo']);
+        tpl.params.arrowRight = (tpl.params.linksWithArrows.indexOf('yes') !== -1) ? svgs('arrowRight', ['gimbap__arrow', 'gimbap__arrow--simple']) : '';
+    }
+
     return {
         'manual-inline': preprocessManualInline,
         'manual-single': preprocessManualSingle,
         'manual-multiple': preprocessManualMultiple,
-        'gimbap': preprocessGimbap
+        'gimbap': preprocessGimbap,
+        'gimbap-simple': preprocessGimbapSimple
     };
 });
