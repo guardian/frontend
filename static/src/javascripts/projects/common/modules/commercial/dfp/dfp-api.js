@@ -22,7 +22,6 @@ define([
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/dfp/ophan-tracking',
     'common/modules/commercial/dfp/breakout-iframe',
-    'common/modules/commercial/survey/survey-simple',
     'common/modules/commercial/dfp/PrebidService',
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
@@ -64,7 +63,6 @@ define([
     commercialFeatures,
     ophanTracking,
     breakoutIFrame,
-    SurveySimple,
     PrebidService,
     geoMostPopular,
     ab,
@@ -124,7 +122,8 @@ define([
         },
         '300,250': function (event, $adSlot) {
             if (config.switches.viewability && $adSlot.hasClass('ad-slot--right')) {
-                if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
+                var mobileAdSizes = $adSlot.attr('data-mobile');
+                if (mobileAdSizes && mobileAdSizes.indexOf('300,251') > -1) {
                     stickyMpu($adSlot);
                 }
             }
@@ -152,7 +151,7 @@ define([
     var recordFirstAdRendered = once(function () {
         beacon.beaconCounts('ad-render');
     });
-    var prebidEnabled = ab.isInVariant('HeaderBiddingUsAll', 'variant');
+    var prebidEnabled = ab.isInVariant('HeaderBiddingUs', 'variant');
 
     /**
      * Initial commands
@@ -726,7 +725,7 @@ define([
                         $adSlot.addClass('ad-slot__fluid250');
                     });
                 }
-            });
+            }).catch(raven.captureException);
         }
 
         allAdsRendered(adSlotId);

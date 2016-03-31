@@ -338,10 +338,10 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val v2FixedTemplate = Switch(
+  val v2PaidContainerTemplate = Switch(
     "Commercial",
-    "v2-fixed-template",
-    "Fixed paid front templates using template v2",
+    "v2-paid-container-template",
+    "Paid containers using template v2",
     safeState = Off,
     sellByDate = new LocalDate(2016, 4, 13),
     exposeClientSide = false

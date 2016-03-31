@@ -1,14 +1,15 @@
 @(page: model.ContentPage)
 
-@import views.support.StripHtmlTags
+@import views.support.StripHtmlTagsAndUnescapeEntities
 
 <!--
 %%[
     Var @@subject, @@intro
-    Set @@subject = "@page.item.trail.headline"
+    Set @@subject = "@Html(StripHtmlTagsAndUnescapeEntities(page.item.trail.headline))"
+
 
     @page.item.trail.fields.trailText.map { byline =>
-        Set @@intro = "@StripHtmlTags(byline)"
+    Set @@intro = "@Html(StripHtmlTagsAndUnescapeEntities(byline))"
     }
 ]%%
 -->

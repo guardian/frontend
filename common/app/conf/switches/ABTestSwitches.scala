@@ -13,6 +13,15 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABNextInSeries = Switch(
+    "A/B Tests",
+    "ab-next-in-series",
+    "Show next in series",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 4, 5),
+    exposeClientSide = true
+  )
+
   val ABIdentityRegisterMembershipStandfirst = Switch(
     "A/B Tests",
     "ab-identity-register-membership-standfirst",
@@ -45,34 +54,25 @@ trait ABTestSwitches {
     "ab-people-who-read-this-also-read-variants",
     "Display people who read this also read with different variants",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 30),
+    sellByDate = new LocalDate(2016, 4, 14),
     exposeClientSide = true
   )
 
-  val ABHeaderBiddingUSAll = Switch(
+  val ABHeaderBiddingUS = Switch(
     "A/B Tests",
-    "ab-header-bidding-us-all",
+    "ab-header-bidding-us",
     "Auction adverts on the client before calling DFP (US edition only)",
     safeState = Off,
     sellByDate = new LocalDate(2016, 4, 20),
     exposeClientSide = true
   )
 
-  val ABEmailSignupMarketingCheckboxV2 = Switch(
+  val ABMembership = Switch(
     "A/B Tests",
-    "ab-email-signup-marketing-checkbox-v2",
-    "Test marketing checkbox in email sign-up",
+    "ab-membership",
+    "Membership propositions",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 29),
-    exposeClientSide = true
-  )
-
-  val ABAdblockingResponse = Switch(
-    "A/B Tests",
-    "ab-adblocking-response",
-    "Adblocking respoonse test",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 31),
+    sellByDate = new LocalDate(2016, 5, 2),
     exposeClientSide = true
   )
 
