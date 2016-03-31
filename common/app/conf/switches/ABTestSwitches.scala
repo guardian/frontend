@@ -54,7 +54,7 @@ trait ABTestSwitches {
     "ab-people-who-read-this-also-read-variants",
     "Display people who read this also read with different variants",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 30),
+    sellByDate = new LocalDate(2016, 3, 31),
     exposeClientSide = true
   )
 
