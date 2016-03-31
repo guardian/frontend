@@ -43,8 +43,7 @@ define([
     function sendEvent() {
         require(['ophan/ng'], function (ophan) {
             ophan.record({
-                register: register,
-                abTestRegister: ab.getAbLoggableObject()
+                register: register
             });
         });
     }
