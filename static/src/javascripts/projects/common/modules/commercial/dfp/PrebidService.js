@@ -114,7 +114,7 @@ define([
                 alwaysUseBid : false,
                 adserverTargeting : [{
                     key : 'hb_pb',
-                    val : cpmToPriceBucket
+                    val : getBidCpm
                 }, {
                     key : 'hb_adid',
                     val : function getBidAdId(bidResponse) {
@@ -130,25 +130,32 @@ define([
         };
     }
 
-    function cpmToPriceBucket(bidResponse) {
+    function getBidCpm(bidResponse) {
         var cpm = parseFloat(bidResponse.cpm);
+        var bucket;
 
         if (cpm >= 20.00) {
-            return '20.00';
+            bucket = 20;
         } else if (cpm >= 5.00) {
-            return bidResponse.pbLg; // .50 increments
+            bucket = priceToNearestBucket(cpm, 0.50);
         } else if (cpm >= 1.00) {
-            return bidResponse.pbMg; // .10 increments
+            bucket = priceToNearestBucket(cpm, 0.10);
         } else {
-            return toFiveCentBucket(cpm).toString();
+            bucket = priceToNearestBucket(cpm, 0.05);
         }
 
-        function toFiveCentBucket(dollars) {
-            // Use cents to avoid float manipulation
-            var cents = dollars * 100;
-            var fiveCents = Math.floor(cents / 5);
-            return (fiveCents * 5) / 100;
-        }
+        return bucket.toFixed(2);
+    }
+
+    function priceToNearestBucket(price, bucket) {
+        // Work in minor units (cents, pence) to avoid float manipulation
+        price = price * 100;
+        bucket = bucket * 100;
+
+        var bucketCount = Math.floor(price / bucket);
+        var bucketValue = bucketCount * bucket;
+
+        return bucketValue / 100;
     }
 
     function logError(e) {

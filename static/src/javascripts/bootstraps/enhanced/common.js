@@ -28,7 +28,6 @@ define([
     'common/modules/commercial/user-features',
     'common/modules/discussion/comment-count',
     'common/modules/experiments/ab',
-    'common/modules/experiments/subscriber-number-form',
     'common/modules/identity/autosignin',
     'common/modules/identity/cookierefresh',
     'common/modules/navigation/navigation',
@@ -85,7 +84,6 @@ define([
     userFeatures,
     CommentCount,
     ab,
-    subscriberNumberForm,
     AutoSignin,
     CookieRefresh,
     navigation,
@@ -207,6 +205,13 @@ define([
 
             cleanupCookies: function () {
                 cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at', 'gu_adfree_user']);
+            },
+
+            cleanupLocalStorage : function () {
+                var deprecatedKeys = [
+                    'gu.subscriber'
+                ];
+                forEach(deprecatedKeys, storage.remove);
             },
 
             updateHistory: function () {
@@ -400,9 +405,9 @@ define([
                 ['c-tag-links', modules.showMoreTagsLink],
                 ['c-smart-banner', smartAppBanner.init],
                 ['c-adblock', modules.showAdblockMessage],
-                ['c-subscriber-number-form', subscriberNumberForm],
                 ['c-log-stats', modules.logLiveStats],
                 ['c-cookies', modules.cleanupCookies],
+                ['c-localStorage', modules.cleanupLocalStorage],
                 ['c-overlay', modules.initOpenOverlayOnClick],
                 ['c-css-logging', modules.runCssLogging],
                 ['c-public-api', modules.initPublicApi],
