@@ -54,7 +54,7 @@ trait ABTestSwitches {
     "ab-people-who-read-this-also-read-variants",
     "Display people who read this also read with different variants",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 30),
+    sellByDate = new LocalDate(2016, 3, 31),
     exposeClientSide = true
   )
 
@@ -67,22 +67,12 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABEmailSignupMarketingCheckboxV2 = Switch(
+  val ABMembership = Switch(
     "A/B Tests",
-    "ab-email-signup-marketing-checkbox-v2",
-    "Test marketing checkbox in email sign-up",
+    "ab-membership",
+    "Membership propositions",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 29),
+    sellByDate = new LocalDate(2016, 5, 2),
     exposeClientSide = true
   )
-
-  val ABAdblockingResponse = Switch(
-    "A/B Tests",
-    "ab-adblocking-response",
-    "Adblocking respoonse test",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 31),
-    exposeClientSide = true
-  )
-
 }

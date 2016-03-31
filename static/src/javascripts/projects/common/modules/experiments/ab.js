@@ -11,9 +11,8 @@ define([
     'common/modules/experiments/tests/header-bidding-us',
     'common/modules/experiments/tests/next-in-series',
     'common/modules/experiments/tests/bolivian-wrestling-autoplay',
-    'common/modules/experiments/tests/email-signup-marketing-checkbox-v2',
-    'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/people-who-read-this-also-read-variants',
+    'common/modules/experiments/tests/membership',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -36,9 +35,8 @@ define([
     HeaderBiddingUS,
     NextInSeries,
     BolivianWrestlingAutoplay,
-    EmailSignupMarketingCheckboxV2,
-    AdblockingResponse,
     PeopleWhoReadThisAlsoReadVariants,
+    Membership,
     flatten,
     forEach,
     keys,
@@ -57,9 +55,8 @@ define([
         new HeaderBiddingUS(),
         new NextInSeries(),
         new BolivianWrestlingAutoplay(),
-        new AdblockingResponse(),
-        new EmailSignupMarketingCheckboxV2(),
-        new PeopleWhoReadThisAlsoReadVariants()
+        new PeopleWhoReadThisAlsoReadVariants(),
+        new Membership()
     ]);
 
     var participationsKey = 'gu.ab.participations';

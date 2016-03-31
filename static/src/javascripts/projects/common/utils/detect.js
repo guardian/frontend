@@ -385,10 +385,6 @@ define([
         return adBlockers.ffAdblockPlus;
     });
 
-    var getFfOrGenericAdbockInstalled = getAdBlockers.then(function (adBlockers) {
-        return adBlockers.generic || adBlockers.ffAdblockPlus;
-    });
-
     function getReferrer() {
         return document.referrer || '';
     }
@@ -422,7 +418,6 @@ define([
         getFirefoxAdblockPlusInstalledSync: getFirefoxAdblockPlusInstalledSync,
         adblockInUse: adblockInUse,
         getFirefoxAdblockPlusInstalled: getFirefoxAdblockPlusInstalled,
-        getFfOrGenericAdbockInstalled: getFfOrGenericAdbockInstalled,
         getReferrer: getReferrer
     };
     return detect;
