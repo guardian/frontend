@@ -1,6 +1,6 @@
 package views.support.commercial
 
-import common.commercial.{CardContent, ContainerContent, ContainerModel}
+import common.commercial._
 import org.scalatest.{FlatSpec, Matchers}
 import play.api.test.FakeRequest
 import views.support.SponsorDataAttributes
@@ -21,25 +21,45 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers {
     description = None,
     imageUrl = None,
     targetUrl = "",
+    group = None,
     branding
   )
 
-  def mkContainerModel(branding: Option[SponsorDataAttributes] = None) = {
+  def mkContainerModel(isDynamic: Boolean = false, branding: Option[SponsorDataAttributes] = None) = {
 
     def mkContainerContent() = ContainerContent(
       title = "container-title",
       description = None,
       targetUrl = None,
-      initialCards = Seq(
-        mkCardContent(1),
-        mkCardContent(2),
-        mkCardContent(3),
-        mkCardContent(4),
-        mkCardContent(5),
-        mkCardContent(6),
-        mkCardContent(7)
-      ),
-      showMoreCards = Nil
+      fixed = {
+        if (isDynamic) {
+          FixedContent(Nil)
+        } else {
+          FixedContent(initialCards = Seq(
+            mkCardContent(1),
+            mkCardContent(2),
+            mkCardContent(3),
+            mkCardContent(4),
+            mkCardContent(5),
+            mkCardContent(6),
+            mkCardContent(7),
+            mkCardContent(8),
+            mkCardContent(9)
+          ))
+        }
+      },
+      dynamic = {
+        if (isDynamic) {
+          DynamicContent(
+            hugeCards = Seq(mkCardContent(1), mkCardContent(2), mkCardContent(3)),
+            veryBigCards = Seq(mkCardContent(4), mkCardContent(5), mkCardContent(6)),
+            bigCards = Seq(mkCardContent(7), mkCardContent(8), mkCardContent(9))
+          )
+        } else {
+          DynamicContent(Nil, Nil, Nil)
+        }
+      },
+      showMoreCards = Seq(mkCardContent(10), mkCardContent(11))
     )
 
     ContainerModel(
@@ -70,5 +90,16 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers {
     )(request = FakeRequest().withHeaders("X-Gu-Edition" -> "US"))
     code shouldBe
       "Labs front container | US | front-id | container-6 | container-title | card-sponsor | card-3 | headline-3"
+  }
+
+  it should "populate tracking code when dynamic container has individual branding" in {
+    val code = TrackingCodeBuilder.mkInteractionTrackingCode(
+      frontId = "front-id",
+      containerIndex = 2,
+      container = mkContainerModel(branding = Some(mkBranding("sponsor-name"))),
+      card = mkCardContent(5)
+    )(request = FakeRequest().withHeaders("X-Gu-Edition" -> "US"))
+    code shouldBe
+      "Labs front container | US | front-id | container-3 | container-title | sponsor-name | card-5 | headline-5"
   }
 }
