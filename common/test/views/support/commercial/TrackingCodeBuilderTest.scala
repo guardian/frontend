@@ -58,17 +58,17 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers {
       card = mkCardContent(5)
     )(request = FakeRequest().withHeaders("X-Gu-Edition" -> "US"))
     code shouldBe
-      "Labs front container | US | front-id | container-2 | container-title | sponsor-name | card-5 | headline-5"
+      "Labs front container | US | front-id | container-3 | container-title | sponsor-name | card-5 | headline-5"
   }
 
   it should "populate tracking code when card has individual branding" in {
     val code = TrackingCodeBuilder.mkInteractionTrackingCode(
       frontId = "front-id",
-      containerIndex = 2,
+      containerIndex = 5,
       container = mkContainerModel(),
       card = mkCardContent(3, branding = Some(mkBranding("card-sponsor")))
     )(request = FakeRequest().withHeaders("X-Gu-Edition" -> "US"))
     code shouldBe
-      "Labs front container | US | front-id | container-2 | container-title | card-sponsor | card-3 | headline-3"
+      "Labs front container | US | front-id | container-6 | container-title | card-sponsor | card-3 | headline-3"
   }
 }
