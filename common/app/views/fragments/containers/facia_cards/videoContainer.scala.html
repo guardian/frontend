@@ -15,7 +15,6 @@
             @if(item.header.isVideo) {
                 <li class="fc-slice__item--video">
                     @item.properties.maybeContent.map { content => 
-
                         @defining(VideoPlayer(
                             content.elements.mainVideo.get,
                             Video640,
@@ -30,7 +29,6 @@
                                     @video(player, false, false)
                                 </div>
                             </div>
-
                             @content.elements.mainVideo.map { video =>
                                 <div class="fc-item__video-fallback media__placeholder--active js-video-placeholder gu-media__fallback">
                                     <div class="@RenderClasses("fc-item__video-play", "media__placeholder--hidden", "vjs-big-play-button", "js-video-play-button")"><span class="vjs-control-text"></span></div>
