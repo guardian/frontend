@@ -1,5 +1,6 @@
-@(messageType: controllers.cache.ImageDecacheController.MessageType = controllers.cache.ImageDecacheController.DefaultMessage, image: String = "", originImage: Option[String] = None)
 @import controllers.cache.ImageDecacheController
+
+@(messageType: ImageDecacheController.MessageType = ImageDecacheController.DefaultMessage, image: String = "", originImage: Option[String] = None)(implicit request: RequestHeader)
 
 @admin_main("Clear image", "PROD", isAuthed = true) {
 

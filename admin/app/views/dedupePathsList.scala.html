@@ -1,4 +1,4 @@
-@(environment: String, paths: List[String])
+@(environment: String, paths: List[String])(implicit request: RequestHeader)
 
 @admin_main("What is Deduped?", environment, isAuthed = true) {
 

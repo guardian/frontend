@@ -17,7 +17,7 @@ object OAuthLoginController extends Controller with ExecutionContexts {
   val forbiddenNoCredentials = Forbidden("You do not have OAuth credentials set")
 
   // this is the only place we use LoginAuthAction - to prevent authentication redirect loops
-  def login = Action { request =>
+  def login = Action { implicit request =>
     val error = request.flash.get("error")
     Ok(views.html.auth.login(error, "Test"))
   }
