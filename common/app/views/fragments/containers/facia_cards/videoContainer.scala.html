@@ -1,18 +1,41 @@
-@(collectionDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit requestHeader: RequestHeader)
+@(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit requestHeader: RequestHeader)
 
 @import common.LinkTo
-@import views.html.fragments.containers.facia_cards.containerHeader
-@import model.SupportedUrl
+@import model.VideoPlayer
+@import views.support.Video640
+@import views.html.fragments.items.facia_cards.item
+@import views.html.fragments.media.video
 
 <div class="fc-container__body">
     <div class="fc-slice-wrapper">
         <ul class="u-unstyled fc-slice fc-slice--video">
-        @collectionDefinition.collectionEssentials.items.zipWithIndex.map { case (item, index) =>
-            <li class="fc-slice__item--video">
-                <a class= href="@LinkTo(SupportedUrl.fromFaciaContent(item))" data-link-name=" | article | @index">@item.header.headline</a>
-            </li>
-            @item
+
+        @containerDefinition.collectionEssentials.items.zipWithIndex.map { case (item, index) =>
+            @if(item.header.isVideo) {
+
+                <li class="fc-slice__item--video">
+                    @item.properties.maybeContent.map { content => 
+                        @defining(VideoPlayer(
+                            content.elements.mainVideo.get,
+                            Video640,
+                            item.header.headline,
+                            autoPlay = false,
+                            showControlsAtStart = false,
+                            SupportedUrl.fromFaciaContent(item),
+                            Some(false)
+                        )) { player =>
+                            <div class="fc-item__media-wrapper u-faux-block-link__promote media__container--hidden js-video-player">
+                                <div class="fc-item__video-container">
+                                    @video(player, false, false)
+                                </div>
+                            </div>
+                        }
+                    }
+                    <a class="" href="@LinkTo(SupportedUrl.fromFaciaContent(item))" data-link-name=" | article | @index">@item.header.headline</a>
+                </li>
+            }
         }
+
         </ul>
     </div>
 </div>
