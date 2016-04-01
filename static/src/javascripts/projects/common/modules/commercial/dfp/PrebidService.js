@@ -136,6 +136,8 @@ define([
 
         if (cpm >= 20.00) {
             bucket = 20;
+        } else if (cpm >= 10.00) {
+            bucket = priceToNearestBucket(cpm, 1.00);
         } else if (cpm >= 5.00) {
             bucket = priceToNearestBucket(cpm, 0.50);
         } else if (cpm >= 1.00) {
