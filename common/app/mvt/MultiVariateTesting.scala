@@ -22,14 +22,14 @@ object CMTopBannerPosition extends TestDefinition(
   List(Variant1),
   "cm-top-banner-position",
   "Test viewability and revenue changes when top banner is moved below first container on fronts and removed from articles",
-  new LocalDate(2016, 3, 31)
+  new LocalDate(2016, 4, 28)
 )
 
 object ABHeadlinesTestVariant extends TestDefinition(
   Nil,
   "headlines-ab-variant",
   "To test how much of a difference changing a headline makes (variant group)",
-  new LocalDate(2016, 3, 30)
+  new LocalDate(2016, 4, 29)
   ) {
   override def isParticipating(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-hlt").contains("hlt-V") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
@@ -40,7 +40,7 @@ object ABHeadlinesTestControl extends TestDefinition(
   Nil,
   "headlines-ab-control",
   "To test how much of a difference changing a headline makes (control group)",
-  new LocalDate(2016, 3, 30)
+  new LocalDate(2016, 4, 29)
   ) {
   override def isParticipating(implicit request: RequestHeader): Boolean = {
       request.headers.get("X-GU-hlt").contains("hlt-C") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn

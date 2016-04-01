@@ -5,7 +5,7 @@ define([
     return function () {
         this.id = 'PeopleWhoReadThisAlsoReadVariants';
         this.start = '2016-03-21';
-        this.expiry = '2016-03-31';
+        this.expiry = '2016-04-14';
         this.author = 'Luke Taylor';
         this.description = 'Display people who read this also read with different variants.';
         this.audience = .35;
