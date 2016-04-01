@@ -12,6 +12,7 @@ case class CardContent(
                         description: Option[String],
                         imageUrl: Option[String],
                         targetUrl: String,
+                        group: Option[DynamicGroup],
                         branding: Option[SponsorDataAttributes]
                       )
 
@@ -44,6 +45,12 @@ object CardContent {
       description = content.card.trailText,
       imageUrl,
       targetUrl = header.url,
+      group = content.card.group match {
+        case "3" => Some(HugeGroup)
+        case "2" => Some(VeryBigGroup)
+        case "1" => Some(BigGroup)
+        case _ => None
+      },
       branding = {
         if (Switches.cardsDecidePaidContainerBranding.isSwitchedOn) {
           CardWithSponsorDataAttributes.sponsorDataAttributes(content)
@@ -54,3 +61,11 @@ object CardContent {
     )
   }
 }
+
+sealed trait DynamicGroup
+
+case object HugeGroup extends DynamicGroup
+
+case object VeryBigGroup extends DynamicGroup
+
+case object BigGroup extends DynamicGroup

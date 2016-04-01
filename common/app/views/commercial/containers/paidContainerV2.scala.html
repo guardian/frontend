@@ -7,7 +7,7 @@
         <p>@description</p>
     }
 
-    @for(card <- containerModel.content.initialCards) {
+    @for(card <- containerModel.content.fixed.initialCards) {
         <div
             @if(containerModel.branding.isEmpty) {
                 @for(sponsorData <- card.branding) {
@@ -27,5 +27,77 @@
             <img src="@card.imageUrl" />
         </div>
     }
+
+    <div>
+    <h3>huge</h3>
+    @for(card <- containerModel.content.dynamic.hugeCards) {
+        <div
+            @if(containerModel.branding.isEmpty) {
+                @for(sponsorData <- card.branding) {
+                    @for(sponsor <- sponsorData.sponsor) {
+                        data-sponsor="@sponsor"
+                    }
+                    data-sponsorship="@sponsorData.sponsorshipType"
+                    @for(keywords <- sponsorData.keywordId) {
+                        data-keywords="@keywords" }
+                }
+            }
+        >
+            <p><a href="@card.targetUrl">@Html(card.headline)</a></p>
+            @for(description <- card.description) {
+                <p>@Html(description)</p>
+            }
+            <img src="@card.imageUrl" />
+        </div>
+    }
+    </div>
+
+    <div>
+    <h3>very big</h3>
+    @for(card <- containerModel.content.dynamic.veryBigCards) {
+        <div
+            @if(containerModel.branding.isEmpty) {
+                @for(sponsorData <- card.branding) {
+                    @for(sponsor <- sponsorData.sponsor) {
+                        data-sponsor="@sponsor"
+                    }
+                    data-sponsorship="@sponsorData.sponsorshipType"
+                    @for(keywords <- sponsorData.keywordId) {
+                        data-keywords="@keywords" }
+                }
+            }
+        >
+            <p><a href="@card.targetUrl">@Html(card.headline)</a></p>
+            @for(description <- card.description) {
+                <p>@Html(description)</p>
+            }
+            <img src="@card.imageUrl" />
+        </div>
+    }
+    </div>
+
+    <div>
+    <h3>big</h3>
+    @for(card <- containerModel.content.dynamic.bigCards) {
+        <div
+            @if(containerModel.branding.isEmpty) {
+                @for(sponsorData <- card.branding) {
+                    @for(sponsor <- sponsorData.sponsor) {
+                        data-sponsor="@sponsor"
+                    }
+                    data-sponsorship="@sponsorData.sponsorshipType"
+                    @for(keywords <- sponsorData.keywordId) {
+                        data-keywords="@keywords" }
+                }
+            }
+        >
+            <p><a href="@card.targetUrl">@Html(card.headline)</a></p>
+            @for(description <- card.description) {
+                <p>@Html(description)</p>
+            }
+            <img src="@card.imageUrl" />
+        </div>
+    }
+    </div>
 
 </div>
