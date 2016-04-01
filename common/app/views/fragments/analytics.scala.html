@@ -1,7 +1,7 @@
 @(page: model.Page)( implicit request:RequestHeader)
 @import conf.Configuration
 @import common.AnalyticsHost
-@import views.support.{OmnitureAnalyticsData, OmnitureAnalyticsAccount}
+@import views.support.{OmnitureAnalyticsData, GoogleAnalyticsAccount}
 @import conf.Static
 @import conf.switches.Switches.NonBlockingOmniture
 @import conf.switches.Switches.BritishCouncilBeacon
@@ -56,6 +56,29 @@
 </noscript>
 
 <img src="@Configuration.debug.beaconUrl/count/pv.gif" alt="" style="display : none ;" rel="nofollow"/>
+
+@if(GoogleAnalyticsAccount.shouldTrack(page)) {
+    <script>
+
+        @* e.g. for one in every 10 mpage views *@
+        if (Math.floor(Math.random() * @GoogleAnalyticsAccount.sampleSize) === 0) {
+
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+            ga('create', '@GoogleAnalyticsAccount.account', 'auto');
+            ga('send', 'pageview');
+
+        }
+
+    </script>
+
+    @*
+        If at some point in the future this goes live, somebody think of "noscript" for Google Analytics
+    *@
+}
 
 @if(BritishCouncilBeacon.isSwitchedOn && page.metadata.url.contains("british-council-partner-zone")) {
     <img alt="DCSIMG" id="DCSIMG" width="1" height="1"
