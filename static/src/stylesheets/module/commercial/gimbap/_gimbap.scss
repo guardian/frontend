@@ -20,6 +20,7 @@ $gimbap-width-quarter: calc(25% - 20px);
     padding: $gs-gutter / 2;
     position: relative;
     box-sizing: border-box;
+    color: #ffffff;
 
     .has-flex & {
         display: flex;
@@ -464,16 +465,5 @@ $gimbap-width-quarter: calc(25% - 20px);
                 fill: rgba(0, 0, 0, .65);
             }
         }
-    }
-}
-
-.gimbap-style--reversed,
-.gimbap-style--members,
-.gimbap-style--masterclasses,
-.gimbap-style--soulmates,
-.gimbap-style--jobs,
-.gimbap-style--bookshop {
-    .gimbap {
-        color: #ffffff;
     }
 }
