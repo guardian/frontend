@@ -13,6 +13,7 @@ define([
     'common/modules/experiments/tests/bolivian-wrestling-autoplay',
     'common/modules/experiments/tests/people-who-read-this-also-read-variants',
     'common/modules/experiments/tests/membership',
+    'common/modules/experiments/tests/loyal-adblocking-survey',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -37,6 +38,7 @@ define([
     BolivianWrestlingAutoplay,
     PeopleWhoReadThisAlsoReadVariants,
     Membership,
+    LoyalAdblockingSurvey,
     flatten,
     forEach,
     keys,
@@ -56,7 +58,8 @@ define([
         new NextInSeries(),
         new BolivianWrestlingAutoplay(),
         new PeopleWhoReadThisAlsoReadVariants(),
-        new Membership()
+        new Membership(),
+        new LoyalAdblockingSurvey()
     ]);
 
     var participationsKey = 'gu.ab.participations';
