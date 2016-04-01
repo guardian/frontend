@@ -30,8 +30,8 @@ object Dependencies {
   val dispatch = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3"
   val dispatchTest = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3" % Test
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.24"
-  val faciaFapiScalaClient = "com.gu" %% "fapi-client" % "1.2.0"
-  val faciaScalaClient = "com.gu" %% "facia-json" % "1.2.0"
+  val faciaFapiScalaClient = "com.gu" %% "fapi-client" % "1.3.0"
+  val faciaScalaClient = "com.gu" %% "facia-json" % "1.3.0"
   val googleSheetsApi = "com.google.gdata" % "core" % "1.47.1"
   val guardianConfiguration = "com.gu" %% "configuration" % "4.1"
   val guice = "com.google.inject" % "guice" % "3.0"
