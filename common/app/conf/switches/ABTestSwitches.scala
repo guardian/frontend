@@ -45,7 +45,7 @@ trait ABTestSwitches {
     "ab-bolivian-wrestling-autoplay",
     "Autoplay Bolivian Wrestling",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 31),
+    sellByDate = new LocalDate(2016, 4, 12),
     exposeClientSide = true
   )
 
