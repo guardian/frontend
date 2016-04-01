@@ -11,7 +11,7 @@ class CardContentTest extends FlatSpec with Matchers with OptionValues {
     body = "kicker!!!"
   )
 
-  it should "populate kicker field" in {
+  "fromPressedContent" should "populate kicker" in {
     val pressedContent = mkPressedContent(1, kicker = Some(mkKicker()))
     val card = CardContent.fromPressedContent(pressedContent)
     card.kicker.value shouldBe "kicker!!!"
