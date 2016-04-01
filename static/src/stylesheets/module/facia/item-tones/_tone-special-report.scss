@@ -15,7 +15,7 @@
 
     .rich-link__container:before,
     .fc-item__container:before {
-        background-color: colour(news-support-1);
+        background-color: colour(special-report-accent);
     }
 
     &,
@@ -34,7 +34,7 @@
     .fc-item__byline,
     .rich-link__read-more-text,
     .fc-save-for-later--is-saved {
-        color: colour(news-support-1);
+        color: colour(special-report-accent);
     }
 
     .fc-save-for-later {
@@ -54,7 +54,7 @@
     }
 
     .rich-link__arrow-icon {
-        fill: colour(news-support-1);
+        fill: colour(special-report-accent);
     }
 
     .fc-item__kicker:after,
