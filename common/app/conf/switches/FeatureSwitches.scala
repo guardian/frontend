@@ -26,7 +26,7 @@ trait FeatureSwitches {
   val OutbrainSwitch = Switch(
     "Feature",
     "outbrain",
-    "Enable the Outbrain content recommendation widget.",
+    "Enable the Outbrain content recommendation widget on web and AMP.",
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
@@ -35,7 +35,7 @@ trait FeatureSwitches {
   val PlistaForOutbrainAU = Switch(
     "Feature",
     "plista-for-outbrain-au",
-    "Enable the Plista content recommendation widget to replace that of Outbrain for AU edition.",
+    "Enable the Plista content recommendation widget to replace that of Outbrain for AU edition (for web only).",
     safeState = Off,
     sellByDate = new LocalDate(2016, 4, 6),
     exposeClientSide = true
