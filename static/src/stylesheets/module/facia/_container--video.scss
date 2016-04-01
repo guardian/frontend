@@ -1,3 +1,7 @@
 .fc-container--video {
     background-color: colour(media-background);
+
+    .fc-item__image-container {
+        display: block;
+    }
 }
