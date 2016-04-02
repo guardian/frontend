@@ -11,7 +11,7 @@ trait ABTestSwitches {
     safeState = Off,
     // extending this as it is causing my build problems
     // but it is not my switch - GK
-    sellByDate = new LocalDate(2016, 4, 10),
+    sellByDate = new LocalDate(2016, 4, 11),
     exposeClientSide = true
   )
 
