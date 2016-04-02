@@ -6,7 +6,7 @@ import com.google.javascript.jscomp._
 import conf.switches.Switches
 import play.api.{Application, Play}
 import play.twirl.api.Html
-import play.twirl.api.JavaScriptFormat.Appendable
+import play.twirl.api.JavaScriptFormat.{Appendable => Javascript}
 
 import scala.collection.concurrent.TrieMap
 import scala.util.Try
@@ -114,5 +114,5 @@ object InlineJs {
   }
 
   def apply(codeToCompile: String, fileName: String = "input.js")(implicit application: Application): Html = withFileNameHint(codeToCompile, fileName)
-  def apply(codeToCompile: Appendable, fileName: String)(implicit application: Application): Html = this(codeToCompile.body, fileName)
+  def apply(codeToCompile: Javascript, fileName: String)(implicit application: Application): Html = this(codeToCompile.body, fileName)
 }
