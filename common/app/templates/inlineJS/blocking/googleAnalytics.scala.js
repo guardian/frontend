@@ -10,7 +10,7 @@ try {
     We are more interested in "users" than in raw page views.
     *@
     if (window.localStorage) {
-        var gaStorageKey = 'gu_ga_participation';
+        var gaStorageKey = 'gu.ga.participation';
         gaParticipation = window.localStorage.getItem(gaStorageKey) || gaParticipation;
         window.localStorage.setItem(gaStorageKey, gaParticipation);
     }
