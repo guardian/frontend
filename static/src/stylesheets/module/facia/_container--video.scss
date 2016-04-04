@@ -24,7 +24,7 @@ $video-width-desktop: 700px;
 }
 
 .video-title {
-    color: red;
+    color: colour(media-default);
     display: block;
     margin-bottom: $gs-baseline;
 }

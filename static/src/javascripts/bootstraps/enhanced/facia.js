@@ -18,6 +18,7 @@ define([
     'facia/modules/ui/live-blog-updates',
     'facia/modules/ui/snaps',
     'facia/modules/ui/sponsorship',
+    'facia/modules/ui/video-container',
     'facia/modules/onwards/weather',
     'lodash/functions/partial',
     'lodash/collections/forEach'
@@ -41,6 +42,7 @@ define([
     liveblogUpdates,
     snaps,
     sponsorship,
+    videoContainer,
     weather,
     partial,
     forEach
@@ -109,12 +111,14 @@ define([
                 ['f-lazy-load-containers', lazyLoadContainers],
                 ['f-stocks', stocks],
                 ['f-sponsorship', sponsorship],
+                ['f-video-container', videoContainer],
                 ['f-weather', modules.showWeather],
                 ['f-live-blog-updates', modules.showLiveblogUpdates],
                 ['f-finished', modules.finished]
             ]), function (fn) {
                 fn();
             });
+            videoContainer;
         };
 
     return {
