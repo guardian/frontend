@@ -13,7 +13,8 @@
     </li>
 </div>
 
-<div class="video-playlist video-playlist--0 js-video-playlist">
+<div class="video-playlist video-playlist--0 js-video-playlist"
+     data-number-of-videos="@(containerDefinition.collectionEssentials.items.zipWithIndex.length - 1)">
     <div class="video-playlist__control video-playlist__control--prev js-video-playlist-prev">
         @fragments.inlineSvg("chevron-left", "icon", Seq("video-playlist__icon"))
     </div>

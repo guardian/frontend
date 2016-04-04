@@ -10,7 +10,13 @@ define([
     $
 ) {
 
-    var containerPos = 0;
+    var containerPos = 0,
+        numberOfVideos;
+
+    function init() {
+        numberOfVideos = $(".js-video-playlist").attr("data-number-of-videos");
+        bindEvents();
+    }
 
     function bindEvents() {
         bean.on(document, 'click', $('.js-video-playlist-next'), function () {
@@ -30,10 +36,16 @@ define([
             containerPos = containerPos - 1;
         }
 
+        if (containerPos > numberOfVideos) {
+            containerPos = numberOfVideos;
+        } else if (containerPos < 0) {
+            containerPos = 0;
+        }
+
         $('.js-video-playlist').addClass('video-playlist--' + containerPos);
     }
 
     return function () {
-        bindEvents();
+        init();
     };
 });
