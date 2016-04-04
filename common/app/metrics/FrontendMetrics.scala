@@ -9,7 +9,7 @@ import org.joda.time.DateTime
 import scala.util.Try
 
 sealed trait DataPoint {
-  val value: Long
+  val value: Double
   val time: Option[DateTime]
 }
 
@@ -26,14 +26,14 @@ case class FrontendStatisticSet(
   unit: StandardUnit) {
 
   lazy val sampleCount: Double = datapoints.size
-  lazy val maximum: Double = Try(datapoints.maxBy(_.value).value).getOrElse(0L).toDouble
-  lazy val minimum: Double = Try(datapoints.minBy(_.value).value).getOrElse(0L).toDouble
+  lazy val maximum: Double = Try(datapoints.maxBy(_.value).value).getOrElse(0.0d)
+  lazy val minimum: Double = Try(datapoints.minBy(_.value).value).getOrElse(0.0d)
   lazy val sum: Double = datapoints.map(_.value).sum
   lazy val average: Double =
     Try(sum / sampleCount).toOption.getOrElse(0L)
 }
 
-case class TimingDataPoint(value: Long, time: Option[DateTime] = None) extends DataPoint
+case class TimingDataPoint(value: Double, time: Option[DateTime] = None) extends DataPoint
 
 case class TimingMetric(override val name: String, description: String) extends FrontendMetric {
 
@@ -44,40 +44,43 @@ case class TimingMetric(override val name: String, description: String) extends 
 
   def recordDuration(durationInMillis: Long): Unit = {
     timeInMillis.addAndGet(durationInMillis)
-    currentCount.incrementAndGet
+    currentCount.incrementAndGet()
   }
 
-  override def getAndResetDataPoints: List[DataPoint] = List(TimingDataPoint(Try(timeInMillis.getAndSet(0) / currentCount.getAndSet(0)).getOrElse(0L)))
+  override def getAndResetDataPoints: List[DataPoint] = List(
+    TimingDataPoint(Try {
+      timeInMillis.getAndSet(0L).toDouble / currentCount.getAndSet(0L).toDouble
+    }.getOrElse(0.0d))
+  )
   override def isEmpty: Boolean = currentCount.get() == 0L
 }
 
-case class GaugeDataPoint(value: Long, time: Option[DateTime] = None) extends DataPoint
+case class GaugeDataPoint(value: Double, time: Option[DateTime] = None) extends DataPoint
 
 case class GaugeMetric(
   override val name: String,
   description: String,
   override val metricUnit: StandardUnit = StandardUnit.Megabytes,
-  get: () => Long) extends FrontendMetric {
+  get: () => Double) extends FrontendMetric {
 
   override def getAndResetDataPoints: List[DataPoint] = List(GaugeDataPoint(get()))
   override def isEmpty: Boolean = false
 }
 
-case class CountDataPoint(value: Long, time: Option[DateTime] = None) extends DataPoint
+case class CountDataPoint(value: Double, time: Option[DateTime] = None) extends DataPoint
 
 case class CountMetric(override val name: String, description: String) extends FrontendMetric {
   private val count: AtomicLong = new AtomicLong(0L)
   override val metricUnit = StandardUnit.Count
 
-  override def getAndResetDataPoints: List[DataPoint] = List(CountDataPoint(count.getAndSet(0L)))
+  override def getAndResetDataPoints: List[DataPoint] = List(CountDataPoint(count.getAndSet(0L).toDouble))
 
   override def isEmpty: Boolean = count.get() == 0L
 
-  def record(): Unit = count.incrementAndGet()
-  def increment(): Unit = record()
+  def increment(): Unit = count.incrementAndGet()
 }
 
-case class DurationDataPoint(value: Long, time: Option[DateTime] = None) extends DataPoint
+case class DurationDataPoint(value: Double, time: Option[DateTime] = None) extends DataPoint
 
 case class DurationMetric(override val name: String, override val metricUnit: StandardUnit) extends FrontendMetric {
 
@@ -91,7 +94,7 @@ case class DurationMetric(override val name: String, override val metricUnit: St
 
   private def record(dataPoint: DurationDataPoint): Unit = dataPoints.alter(dataPoint :: _)
 
-  def recordDuration(timeInMillis: Long): Unit = record(DurationDataPoint(timeInMillis, Option(DateTime.now)))
+  def recordDuration(timeInMillis: Double): Unit = record(DurationDataPoint(timeInMillis, Option(DateTime.now)))
 
   override def isEmpty: Boolean = dataPoints.get().isEmpty
 }
