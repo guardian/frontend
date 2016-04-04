@@ -51,7 +51,7 @@
                         }
                         @select(
                             accountDetailsForm("telephoneNumber.countryCode"),
-                            options(CountryCodes.gu.toSeq ++ CountryCodes.other.toSeq.sortBy(_._2):_*),
+                            options(CountryCodes.ordered: _*),
                             ('_label, ""),
                             ('_showConstraints, false),
                             ('_default, ""),

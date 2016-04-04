@@ -2,13 +2,13 @@ package model
 
 object CountryCodes {
 
-  lazy val gu = Map(
+  lazy val gu = List(
     ("44", "United Kingdom +44"),
     ("1", "United States of America +1"),
     ("61", "Australia +61")
   )
 
-  lazy val other = Map(
+  lazy val other = List(
    ("93", "Afghanistan +93"),
    ("355", "Albania +355"),
    ("213", "Algeria +213"),
@@ -240,4 +240,7 @@ object CountryCodes {
    ("260", "Zambia +260"),
    ("263", "Zimbabwe +263")
   )
+
+  lazy val ordered = gu ++ other
+
 }
