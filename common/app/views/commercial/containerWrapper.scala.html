@@ -2,7 +2,6 @@
 @(classNames: Seq[String],
   dataLinkName: Option[String] = None,
   rowLayout: Option[String] = None,
-  optBranding: Option[SponsorDataAttributes] = None,
   optKicker: Option[Html] = None,
   optBlurb: Option[Html] = None,
   optActions: Option[Html] = None,
@@ -12,13 +11,7 @@
 
 <aside class="adverts @classNames.map(c => s"adverts--$c").mkString(" ")"
     @for(dln <- dataLinkName){data-link-name="@dln"}
-    @for(branding <- optBranding){
-        data-sponsorship="@branding.sponsorshipType"
-        @for(sponsor <- branding.sponsor){ data-sponsor="@sponsor" }
-        @for(keywordId <- branding.keywordId){ data-keywords="@keywordId" }
-        @for(seriesId <- branding.seriesId){ data-series="@seriesId"}
-    }
->
+    >
     <header class="adverts__header">
         @for(kicker   <- optKicker)  {<div class="adverts__kicker">@kicker</div>}
         <h1 class="adverts__title">@title</h1>
