@@ -7,6 +7,11 @@
 @import views.html.fragments.items.elements.facia_cards.itemImage
 @import views.html.fragments.media.video
 
+<div class="fc-container__inner">
+    <li class="video-title fc-container__header__title">
+        <a href="@containerDefinition.href">@containerDefinition.displayName</a>
+    </li>
+</div>
 
 <ul class="u-unstyled video-playlist video-playlist--0">
     <div class="video-playlist__control video-playlist__control--prev js-video-playlist-prev">
@@ -17,9 +22,6 @@
         @fragments.inlineSvg("chevron-right", "icon", Seq("video-playlist__icon"))
     </div>
 
-    <li class="video-playlist__item video-playlist__item--title">
-        <a href="@containerDefinition.href">@containerDefinition.displayName</a>
-    </li>
     @containerDefinition.collectionEssentials.items.zipWithIndex.map { case (item, index) =>
         @if(item.header.isVideo) {
             <li class="video-playlist__item video-playlist__item--@index">
