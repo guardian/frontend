@@ -27,7 +27,7 @@ $video-width-desktop: 700px;
     top: 0;
     bottom: 0;
     width: 15%;
-    background-color: rgba(0,0,0,0.3);
+    background-color: rgba(0, 0, 0, .3);
     z-index: 2;
 }
 
@@ -84,7 +84,6 @@ $video-width-desktop: 700px;
 
 .video-playlist__item--title {
     width: gs-span(3);
-    background-color: red;
     display: none;
 
     a {
