@@ -36,7 +36,7 @@
         transform: translateY(-50%);
         left: 7.5%;
         right: 7.5%;
-        max-height: 85%;
+        max-height: 90%;
         padding: $gs-row-height $gs-column-width*.5;
         background-color: #01558b;
         color: #ffffff;
@@ -92,7 +92,7 @@
         margin-bottom: $gs-column-width/2;
 
         @include mq(mobile) {
-            margin-bottom: 0;
+            margin-bottom: $gs-column-width/4;
         }
 
         @include mq(mobileLandscape) {
