@@ -27,7 +27,7 @@ trait ABTestSwitches {
     "ab-identity-register-membership-standfirst",
     "Membership registration page variant for Identity",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 1),
+    sellByDate = new LocalDate(2016, 5, 4),
     exposeClientSide = true
   )
 
@@ -45,7 +45,7 @@ trait ABTestSwitches {
     "ab-bolivian-wrestling-autoplay",
     "Autoplay Bolivian Wrestling",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 31),
+    sellByDate = new LocalDate(2016, 4, 12),
     exposeClientSide = true
   )
 
@@ -54,7 +54,7 @@ trait ABTestSwitches {
     "ab-people-who-read-this-also-read-variants",
     "Display people who read this also read with different variants",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 30),
+    sellByDate = new LocalDate(2016, 4, 14),
     exposeClientSide = true
   )
 
@@ -67,24 +67,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABEmailSignupMarketingCheckboxV2 = Switch(
-    "A/B Tests",
-    "ab-email-signup-marketing-checkbox-v2",
-    "Test marketing checkbox in email sign-up",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 29),
-    exposeClientSide = true
-  )
-
-  val ABAdblockingResponse = Switch(
-    "A/B Tests",
-    "ab-adblocking-response",
-    "Adblocking respoonse test",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 31),
-    exposeClientSide = true
-  )
-
   val ABMembership = Switch(
     "A/B Tests",
     "ab-membership",
@@ -93,4 +75,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 5, 2),
     exposeClientSide = true
   )
+
+  val ABLoyalAdblockingSurvey = Switch(
+    "A/B Tests",
+    "ab-loyal-adblocking-survey",
+    "An adblock ongoing survey for all loyal users",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 5, 31),
+    exposeClientSide = true
+  )
+
 }

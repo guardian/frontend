@@ -11,9 +11,12 @@
         <%}%>
         <%=marque36icon%>
         <div class="gimbap-wrap__body gimbap-wrap__body--<%=layout%>">
-            <a class="gimbap gimbap-style--tone-<%=offer1tone%>"
+            <a class="gimbap gimbap-style--tone-<%=offer1tone%><% if (hasAuthorImage) { %> gimbap--has-author<% } %>"
                href="<%=clickMacro%><%=offer1url%>"
                data-link-name="<%=offer1title%>">
+                <% if (hasAuthorImage) { %>
+                <img class="gimbap__author" src="<%=offer1authorimage%>" alt="" />
+                <% } %>
                 <h3 class="gimbap__title"><%=offer1HasQuotes%><%=offer1title%></h3>
                 <p class="gimbap__cta"><%=offer1subtitle%><%=arrowRight%></p>
                 <div class="gimbap__logo gimbap__logo--<%=offer1tone%>-horizontal"><%=offer1logo%></div>

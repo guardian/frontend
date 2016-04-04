@@ -27,7 +27,7 @@ case class CommercialPage() extends StandalonePage {
 
 object CommercialController extends Controller with Logging with AuthLogging with ExecutionContexts {
 
-  def renderCommercialMenu() = AuthActions.AuthActionTest { request =>
+  def renderCommercialMenu() = AuthActions.AuthActionTest { implicit request =>
     NoCache(Ok(views.html.commercial.commercialMenu(environment.stage)))
   }
 

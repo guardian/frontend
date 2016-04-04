@@ -48,7 +48,6 @@ GET        /commercial/paid.json                                         control
 GET        /commercial/paid                                              controllers.commercial.PaidContentCardController.cardHtml
 
 # Static pages
-GET        /commercial/subscriber-number                                 controllers.commercial.StaticPageController.renderSubscriberNumberPage()
 GET        /commercial/guardian-explain                                  controllers.commercial.StaticPageController.renderGuardianExplainPage()
 GET        /commercial/guardian-explore                                  controllers.commercial.StaticPageController.renderGuardianExplorePage()
 GET        /commercial/guardian-experience                               controllers.commercial.StaticPageController.renderGuardianExperiencePage()

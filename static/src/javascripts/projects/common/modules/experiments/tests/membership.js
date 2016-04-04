@@ -10,12 +10,12 @@ define([
     return function () {
 
         this.id = 'Membership';
-        this.start = '2016-03-21';
-        this.expiry = '2016-04-01';
+        this.start = '2016-03-29';
+        this.expiry = '2016-04-05';
         this.author = 'Joseph Smith';
         this.description = '404 test to determine interest in three possible membership propositions';
-        this.audience = 0.0;
-        this.audienceOffset = 0.0;
+        this.audience = 0.12;
+        this.audienceOffset = 0.6;
         this.successMeasure = 'Users will show strong preference for one of the three membership propositions';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = 'membership 2.0 test explore, membership 2.0 test explained, membership 2.0 test experience';

@@ -81,7 +81,7 @@ object Commercial {
 
   object container {
 
-    def shouldRenderAsCommercialContainer(isPaidFront: Boolean, container: FaciaContainer): Boolean = {
+    def shouldRenderAsPaidContainer(isPaidFront: Boolean, container: FaciaContainer): Boolean = {
       !isPaidFront && container.commercialOptions.isPaidContainer
     }
 
