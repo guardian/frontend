@@ -21,6 +21,10 @@ $video-width-desktop: 700px;
     .u-responsive-ratio {
         padding-bottom: 56.3%;
     }
+
+    .media__container--active {
+        z-index: 5;
+    }
 }
 
 .video-title {
@@ -105,4 +109,18 @@ $video-width-desktop: 700px;
 
 .video-playlist__item--0 {
     margin-left: 15%;
+}
+
+.video-playlist__title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    @include fs-headline(3);
+    font-weight: 500;
+    background-color: rgba(0, 0, 0, .5);
+    white-space: normal;
+    padding: $gs-baseline/4 $gs-gutter/4 $gs-baseline;
+    color: #ffffff;
+    min-width: 100%;
 }
