@@ -6,7 +6,6 @@ import com.amazonaws.services.sqs.model.ReceiveMessageRequest
 import common._
 import conf.Configuration
 import conf.switches.Switches.R2PagePressServiceSwitch
-import conf.switches.Switches.R2HeadersRequiredForPagePressingSwitch
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import pagepresser.{SimpleHtmlCleaner, InteractiveHtmlCleaner, PollsHtmlCleaner}
@@ -135,11 +134,8 @@ object R2PagePressJob extends ExecutionContexts with Logging {
     val urlIn = message.url
 
     if (urlIn.nonEmpty) {
-      val r2HeaderName = Configuration.r2Press.header.name.getOrElse("")
-      val r2HeaderValue = Configuration.r2Press.header.value.getOrElse("")
 
-      val wsRequest = if(R2HeadersRequiredForPagePressingSwitch.isSwitchedOn) WS.url(urlIn).withHeaders((r2HeaderName, r2HeaderValue))
-                      else WS.url(urlIn)
+      val wsRequest = WS.url(urlIn)
 
       log.info(s"Calling ${wsRequest.uri}")
 

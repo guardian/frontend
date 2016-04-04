@@ -322,16 +322,6 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val R2HeadersRequiredForPagePressingSwitch = Switch(
-    "Feature",
-    "r2-headers-page-press-service",
-    "When ON, the R2 page press service will hit the R2 page, when turned off it will hit Dotcom",
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
-
   val EmailInArticleSwitch = Switch(
     "Feature",
     "email-in-article",
