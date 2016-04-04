@@ -1,5 +1,5 @@
 @import conf.switches.Switch
-@(env: String, switch: Switch, lastModified: Long)(implicit flash: Flash)
+@(env: String, switch: Switch, lastModified: Long)(implicit flash: Flash, request: RequestHeader)
 
 @import controllers.admin.routes.UncachedAssets
 
