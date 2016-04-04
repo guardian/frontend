@@ -1,11 +1,93 @@
+$video-width-desktop: 700px;
+
 .fc-container--video {
     background-color: colour(media-background);
+    padding-bottom: 0;
+    margin-bottom: $gs-baseline;
 
     .fc-item__image-container {
         display: block;
     }
 
-    .fc-container__inner {
-        padding: 0;
+    .u-responsive-ratio {
+        padding-bottom: 56.3%;
+    }
+}
+
+.video-playlist {
+    position: relative;
+    margin: 0;
+    font-size: 0; // to remove spacing between inline-blocked children
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.video-playlist__control {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 15%;
+    background-color: rgba(0,0,0,0.3);
+    z-index: 2;
+}
+
+.video-playlist__control--prev {
+    left: 0;
+
+    .video-playlist__icon {
+        right: $gs-gutter;
+    }
+}
+
+.video-playlist__control--next {
+    right: 0;
+
+    .video-playlist__icon {
+        left: $gs-gutter;
+    }
+}
+
+.video-playlist__icon {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 30px;
+    height: 30px;
+    margin: auto;
+    border-radius: 50%;
+    background-color: colour(media-default);
+    text-align: center;
+
+    svg {
+        fill: colour(media-background);
+        width: 9px;
+        height: 30px;
+    }
+}
+
+.video-playlist__item {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 39.375%; // To keep with 16:9 ratio
+    width: 70%;
+    height: 0;
+
+    @include mq(desktop) {
+        width: $video-width-desktop;
+        height: $video-width-desktop / 16 * 9;
+    }
+}
+
+.video-playlist__item--0 {
+    margin-left: 15%;
+}
+
+.video-playlist__item--title {
+    width: gs-span(3);
+    background-color: red;
+    display: none;
+
+    a {
+        position: absolute;
     }
 }

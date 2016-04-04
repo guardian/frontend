@@ -8,13 +8,21 @@
 @import views.html.fragments.media.video
 
 
-<ul class="u-unstyled fc-slice fc-slice--video">
-    <li class="">
+<ul class="u-unstyled video-playlist video-playlist--0">
+    <div class="video-playlist__control video-playlist__control--prev js-video-playlist-prev">
+        @fragments.inlineSvg("chevron-left", "icon", Seq("video-playlist__icon"))
+
+    </div>
+    <div class="video-playlist__control video-playlist__control--next js-video-playlist-next">
+        @fragments.inlineSvg("chevron-right", "icon", Seq("video-playlist__icon"))
+    </div>
+
+    <li class="video-playlist__item video-playlist__item--title">
         <a href="@containerDefinition.href">@containerDefinition.displayName</a>
     </li>
     @containerDefinition.collectionEssentials.items.zipWithIndex.map { case (item, index) =>
         @if(item.header.isVideo) {
-            <li class="fc-slice__item--video">
+            <li class="video-playlist__item video-playlist__item--@index">
                 @item.properties.maybeContent.map { content => 
                     @defining(VideoPlayer(
                         content.elements.mainVideo.get,
@@ -43,7 +51,6 @@
                         }
                     }
                 }
-                <a class="" href="@LinkTo(SupportedUrl.fromFaciaContent(item))" data-link-name=" | article | @index">@item.header.headline</a>
             </li>
         }
     }
