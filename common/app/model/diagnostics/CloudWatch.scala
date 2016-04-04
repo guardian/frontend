@@ -6,7 +6,7 @@ import com.amazonaws.services.cloudwatch.model._
 import common.Logging
 import conf.Configuration
 import conf.Configuration._
-import metrics.{FrontendStatisticSet, DataPoint, FrontendMetric}
+import metrics.{FrontendStatisticSet, FrontendMetric}
 import services.AwsEndpoints
 
 import scala.collection.JavaConversions._
@@ -38,19 +38,18 @@ trait CloudWatch extends Logging {
   case class AsyncHandlerForMetric(frontendStatisticSets: List[FrontendStatisticSet]) extends LoggingAsyncHandler {
     override def onError(exception: Exception) = {
       log.warn(s"Failed to put ${frontendStatisticSets.size} metrics: $exception")
-      log.warn(s"Failed to put ${frontendStatisticSets.map(_.metric.name).mkString(",")}")
-      frontendStatisticSets.foreach { _.reset() }
+      log.warn(s"Failed to put ${frontendStatisticSets.map(_.name).mkString(",")}")
       super.onError(exception)
     }
     override def onSuccess(request: PutMetricDataRequest, result: Void ) = {
       log.info(s"Successfully put ${frontendStatisticSets.size} metrics")
-      log.info(s"Successfully put ${frontendStatisticSets.map(_.metric.name).mkString(",")}")
+      log.info(s"Successfully put ${frontendStatisticSets.map(_.name).mkString(",")}")
 
       super.onSuccess(request, result)
     }
   }
 
-  def put(namespace: String, metrics: Map[String, Double], dimensions: Seq[Dimension]): Any = {
+  /*def put(namespace: String, metrics: Map[String, Double], dimensions: Seq[Dimension]): Any = {
     val request = new PutMetricDataRequest().
       withNamespace(namespace).
       withMetricData(metrics.map{ case (name, count) =>
@@ -68,7 +67,7 @@ trait CloudWatch extends Logging {
     put(namespace, metrics, Seq(stageDimension))
 
   def putWithDimensions(namespace: String, metrics: Map[String, Double], dimensions: Seq[Dimension]): Unit =
-    put(namespace, metrics, Seq(stageDimension) ++ dimensions)
+    put(namespace, metrics, Seq(stageDimension) ++ dimensions)*/
 
 
   def putMetricsWithStage(metrics: List[FrontendMetric], applicationDimension: Dimension): Unit =
@@ -82,15 +81,18 @@ trait CloudWatch extends Logging {
       metricGroup <- metrics.filterNot(_.isEmpty).grouped(20)
     } {
       val metricsAsStatistics: List[FrontendStatisticSet] =
-        metricGroup.map( metric => FrontendStatisticSet(metric, metric.getAndResetDataPoints))
+        metricGroup.map( metric => FrontendStatisticSet(
+          metric.getAndResetDataPoints,
+          metric.name,
+          metric.metricUnit))
       val request = new PutMetricDataRequest()
         .withNamespace(metricNamespace)
         .withMetricData {
           for(metricStatistic <- metricsAsStatistics) yield {
             new MetricDatum()
               .withStatisticValues(frontendMetricToStatisticSet(metricStatistic))
-              .withUnit(metricStatistic.metric.metricUnit)
-              .withMetricName(metricStatistic.metric.name)
+              .withUnit(metricStatistic.unit)
+              .withMetricName(metricStatistic.name)
               .withDimensions(dimensions)
           }
         }
