@@ -4,12 +4,13 @@ import org.joda.time.LocalDate
 
 trait ABTestSwitches {
 
+  // Owner: Dotcom Reach
   val ABFrontsOnArticles2 = Switch(
     "A/B Tests",
     "ab-fronts-on-articles2",
     "Injects fronts on articles for the test",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 1),
+    sellByDate = new LocalDate(2016, 7, 5),
     exposeClientSide = true
   )
 

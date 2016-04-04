@@ -172,6 +172,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object teamcity {
     lazy val host = configuration.getMandatoryStringProperty("teamcity.host")
+    lazy val internalHost = configuration.getMandatoryStringProperty("teamcity.internalhost")
   }
 
   object ajax {
