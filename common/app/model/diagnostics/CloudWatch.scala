@@ -70,13 +70,11 @@ trait CloudWatch extends Logging {
     put(namespace, metrics, Seq(stageDimension) ++ dimensions)*/
 
 
-  def putMetricsWithStage(metrics: List[FrontendMetric], applicationDimension: Dimension): Unit =
-    putMetrics("Application", metrics, List(stageDimension, applicationDimension))
+  def putMetrics(metricNamespace: String, metrics: List[FrontendMetric], dimensions: List[Dimension]): Unit =
+    putMetricsWithStage(metricNamespace, metrics, dimensions :+ stageDimension)
 
-  def putSystemMetricsWithStage(metrics: List[FrontendMetric], applicationDimension: Dimension): Unit =
-    putMetrics("ApplicationSystemMetrics", metrics, List(stageDimension, applicationDimension))
 
-  def putMetrics(metricNamespace: String, metrics: List[FrontendMetric], dimensions: List[Dimension]): Unit = {
+  private def putMetricsWithStage(metricNamespace: String, metrics: List[FrontendMetric], dimensions: List[Dimension]): Unit = {
     for {
       metricGroup <- metrics.filterNot(_.isEmpty).grouped(20)
     } {
