@@ -78,6 +78,7 @@ case class CountMetric(override val name: String, description: String) extends F
   override def isEmpty: Boolean = count.get() == 0L
 
   def increment(): Unit = count.incrementAndGet()
+  def add(value: Long): Unit =  count.addAndGet(value)
 }
 
 case class DurationDataPoint(value: Double, time: Option[DateTime] = None) extends DataPoint
