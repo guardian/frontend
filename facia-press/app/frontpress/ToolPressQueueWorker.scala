@@ -4,7 +4,7 @@ import com.amazonaws.regions.{Region, Regions}
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
 import common._
 import conf.Configuration
-import metrics._
+import FaciaPressMetrics._
 import org.joda.time.DateTime
 import services._
 

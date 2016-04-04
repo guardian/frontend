@@ -1,7 +1,6 @@
 import common._
 import conf.{Configuration => GuardianConfiguration, SwitchboardLifecycle}
 import frontpress.{FrontPressCron, ToolPressQueueWorker}
-import metrics._
 import play.api.GlobalSettings
 import services.ConfigAgentLifecycle
 
@@ -18,10 +17,10 @@ object Global extends GlobalSettings
     ContentApiMetrics.ElasticHttpTimeoutCountMetric,
     ContentApiMetrics.ContentApi404Metric,
     ContentApiMetrics.ContentApiErrorMetric,
-    UkPressLatencyMetric,
-    UsPressLatencyMetric,
-    AuPressLatencyMetric,
-    AllFrontsPressLatencyMetric
+    FaciaPressMetrics.UkPressLatencyMetric,
+    FaciaPressMetrics.UsPressLatencyMetric,
+    FaciaPressMetrics.AuPressLatencyMetric,
+    FaciaPressMetrics.AllFrontsPressLatencyMetric
   )
 
   override def onStart(app: play.api.Application) {
