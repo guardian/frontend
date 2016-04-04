@@ -24,17 +24,27 @@ $video-width-desktop: 700px;
 }
 
 .video-title {
-    color: colour(media-default);
+    color: red;
     display: block;
     margin-bottom: $gs-baseline;
 }
 
 .video-playlist {
     position: relative;
+    overflow: hidden;
+}
+
+@for $i from 0 through 20 {
+    .video-playlist--#{$i} .video-playlist__inner {
+        transform: translateX(-70% * $i);
+    }
+}
+
+.video-playlist__inner {
     margin: 0;
     font-size: 0; // to remove spacing between inline-blocked children
     white-space: nowrap;
-    overflow: hidden;
+    transition: transform .2s ease-out;
 }
 
 .video-playlist__control {
@@ -95,10 +105,4 @@ $video-width-desktop: 700px;
 
 .video-playlist__item--0 {
     margin-left: 15%;
-}
-
-@for $i from 0 through 20 {
-    .video-playlist--#{$i} {
-        transform: translateX(-70% * $i);
-    }
 }

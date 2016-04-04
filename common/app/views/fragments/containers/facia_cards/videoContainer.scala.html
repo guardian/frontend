@@ -13,47 +13,48 @@
     </li>
 </div>
 
-<ul class="u-unstyled video-playlist video-playlist--0">
+<div class="video-playlist video-playlist--0">
     <div class="video-playlist__control video-playlist__control--prev js-video-playlist-prev">
         @fragments.inlineSvg("chevron-left", "icon", Seq("video-playlist__icon"))
-
     </div>
     <div class="video-playlist__control video-playlist__control--next js-video-playlist-next">
         @fragments.inlineSvg("chevron-right", "icon", Seq("video-playlist__icon"))
     </div>
 
-    @containerDefinition.collectionEssentials.items.zipWithIndex.map { case (item, index) =>
-        @if(item.header.isVideo) {
-            <li class="video-playlist__item video-playlist__item--@index">
-                @item.properties.maybeContent.map { content => 
-                    @defining(VideoPlayer(
-                        content.elements.mainVideo.get,
-                        Video640,
-                        item.header.headline,
-                        autoPlay = false,
-                        showControlsAtStart = false,
-                        SupportedUrl.fromFaciaContent(item),
-                        Some(false)
-                    )) { player =>
-                        <div class="fc-item__media-wrapper u-faux-block-link__promote media__container--hidden js-video-player">
-                            <div class="fc-item__video-container">
-                                @video(player, false, false)
-                            </div>
-                        </div>
-
-                        @content.elements.mainVideo.map { video =>
-                            <div class="fc-item__video-fallback media__placeholder--active js-video-placeholder gu-media__fallback">
-                                <div class="@RenderClasses("fc-item__video-play", "media__placeholder--hidden", "vjs-big-play-button", "js-video-play-button")"><span class="vjs-control-text"></span></div>
-                                <div class="fc-item__media-wrapper">
-                                    <div class="fc-item__image-container u-responsive-ratio inlined-image">
-                                        <img src="@Video700.bestFor(video.images)" />
-                                    </div>
+    <ul class="u-unstyled video-playlist__inner">
+        @containerDefinition.collectionEssentials.items.zipWithIndex.map { case (item, index) =>
+            @if(item.header.isVideo) {
+                <li class="video-playlist__item video-playlist__item--@index">
+                    @item.properties.maybeContent.map { content => 
+                        @defining(VideoPlayer(
+                            content.elements.mainVideo.get,
+                            Video640,
+                            item.header.headline,
+                            autoPlay = false,
+                            showControlsAtStart = false,
+                            SupportedUrl.fromFaciaContent(item),
+                            Some(false)
+                        )) { player =>
+                            <div class="fc-item__media-wrapper u-faux-block-link__promote media__container--hidden js-video-player">
+                                <div class="fc-item__video-container">
+                                    @video(player, false, false)
                                 </div>
                             </div>
+
+                            @content.elements.mainVideo.map { video =>
+                                <div class="fc-item__video-fallback media__placeholder--active js-video-placeholder gu-media__fallback">
+                                    <div class="@RenderClasses("fc-item__video-play", "media__placeholder--hidden", "vjs-big-play-button", "js-video-play-button")"><span class="vjs-control-text"></span></div>
+                                    <div class="fc-item__media-wrapper">
+                                        <div class="fc-item__image-container u-responsive-ratio inlined-image">
+                                            <img src="@Video700.bestFor(video.images)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            }
                         }
                     }
-                }
-            </li>
+                </li>
+            }
         }
-    }
-</ul>
+    </ul>
+</div>
