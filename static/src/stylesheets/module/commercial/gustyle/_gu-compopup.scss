@@ -1,6 +1,6 @@
 .gu-compopup {
-    @include f-textSans;
     @extend %gu-style-box;
+    @include f-textSans;
 
     width: 80%;
     top: 44px;

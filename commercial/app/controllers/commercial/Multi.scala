@@ -30,73 +30,144 @@ object Multi
 
       val omnitureId = request.getParameter("omnitureId")
 
-    val eventualContent = componentsAndSpecificIds map {
-      case ("jobs", jobId) if jobId.nonEmpty =>
-        Future.successful {
-          JobsAgent.specificJobs(Seq(jobId)).headOption orElse {
-            JobsAgent.jobsTargetedAt(segment).headOption
-          } map {
-            views.html.jobs.jobFragment(_, clickMacro)
+      var eventualContent = if(conf.switches.Switches.v2BlendedTemplate.isSwitchedOn) {
+          componentsAndSpecificIds map {
+            case ("jobs", jobId) if jobId.nonEmpty =>
+              Future.successful {
+                JobsAgent.specificJobs(Seq(jobId)).headOption orElse {
+                  JobsAgent.jobsTargetedAt(segment).headOption
+                } map {
+                  views.html.jobs.jobCard(_, clickMacro)
+                }
+              }
+            case ("jobs", _) =>
+              Future.successful {
+                JobsAgent.jobsTargetedAt(segment).headOption map {
+                  views.html.jobs.jobCard(_, clickMacro)
+                }
+              }
+            case ("books", isbn) if isbn.nonEmpty =>
+              BestsellersAgent.getSpecificBooks(Seq(isbn)) map { books =>
+                books.headOption orElse {
+                  BestsellersAgent.bestsellersTargetedAt(segment).headOption
+                } map {
+                  views.html.books.bookCard(_, clickMacro)
+                }
+              }
+            case ("books", _) =>
+              Future.successful {
+                BestsellersAgent.bestsellersTargetedAt(segment).headOption map {
+                  views.html.books.bookCard(_, clickMacro)
+                }
+              }
+            case ("travel", travelId) if travelId.nonEmpty =>
+              Future.successful {
+                TravelOffersAgent.specificTravelOffers(Seq(travelId)).headOption orElse {
+                  TravelOffersAgent.offersTargetedAt(segment).headOption
+                } map {
+                  views.html.travel.travelCard(_, clickMacro)
+                }
+              }
+            case ("travel", _) =>
+              Future.successful {
+                TravelOffersAgent.offersTargetedAt(segment).headOption map {
+                  views.html.travel.travelCard(_, clickMacro)
+                }
+              }
+            case ("masterclasses", eventBriteId) if eventBriteId.nonEmpty =>
+              Future.successful {
+                MasterclassAgent.specificMasterclasses(Seq(eventBriteId)).headOption orElse {
+                  MasterclassAgent.masterclassesTargetedAt(segment).headOption
+                } map {
+                  views.html.masterclasses.masterclassCard(_, clickMacro)
+                }
+              }
+            case ("masterclasses", _) =>
+              Future.successful {
+                MasterclassAgent.masterclassesTargetedAt(segment).headOption map {
+                  views.html.masterclasses.masterclassCard(_, clickMacro)
+                }
+              }
+            case ("soulmates", _) =>
+              Future.successful {
+                for {
+                  woman <- SoulmatesAgent.womenAgent.sample().headOption
+                  man <- SoulmatesAgent.menAgent.sample().headOption
+                } yield {
+                  views.html.soulmates.soulmateCard(woman, clickMacro) + views.html.soulmates.soulmateCard(man, clickMacro)
+                }
+              }
+            case _ => Future.successful(None)
           }
+    } else {
+        componentsAndSpecificIds map {
+          case ("jobs", jobId) if jobId.nonEmpty =>
+            Future.successful {
+              JobsAgent.specificJobs(Seq(jobId)).headOption orElse {
+                JobsAgent.jobsTargetedAt(segment).headOption
+              } map {
+                views.html.jobs.jobFragment(_, clickMacro)
+              }
+            }
+          case ("jobs", _) =>
+            Future.successful {
+              JobsAgent.jobsTargetedAt(segment).headOption map {
+                views.html.jobs.jobFragment(_, clickMacro)
+              }
+            }
+          case ("books", isbn) if isbn.nonEmpty =>
+            BestsellersAgent.getSpecificBooks(Seq(isbn)) map { books =>
+              books.headOption orElse {
+                BestsellersAgent.bestsellersTargetedAt(segment).headOption
+              } map {
+                views.html.books.bookFragment(_, clickMacro)
+              }
+            }
+          case ("books", _) =>
+            Future.successful {
+              BestsellersAgent.bestsellersTargetedAt(segment).headOption map {
+                views.html.books.bookFragment(_, clickMacro)
+              }
+            }
+          case ("travel", travelId) if travelId.nonEmpty =>
+            Future.successful {
+              TravelOffersAgent.specificTravelOffers(Seq(travelId)).headOption orElse {
+                TravelOffersAgent.offersTargetedAt(segment).headOption
+              } map {
+                views.html.travel.travelFragment(_, clickMacro)
+              }
+            }
+          case ("travel", _) =>
+            Future.successful {
+              TravelOffersAgent.offersTargetedAt(segment).headOption map {
+                views.html.travel.travelFragment(_, clickMacro)
+              }
+            }
+          case ("masterclasses", eventBriteId) if eventBriteId.nonEmpty =>
+            Future.successful {
+              MasterclassAgent.specificMasterclasses(Seq(eventBriteId)).headOption orElse {
+                MasterclassAgent.masterclassesTargetedAt(segment).headOption
+              } map {
+                views.html.masterclasses.masterclassFragment(_, clickMacro)
+              }
+            }
+          case ("masterclasses", _) =>
+            Future.successful {
+              MasterclassAgent.masterclassesTargetedAt(segment).headOption map {
+                views.html.masterclasses.masterclassFragment(_, clickMacro)
+              }
+            }
+          case ("soulmates", _) =>
+            Future.successful {
+              for {
+                woman <- SoulmatesAgent.womenAgent.sample().headOption
+                man <- SoulmatesAgent.menAgent.sample().headOption
+              } yield {
+                views.html.soulmates.soulmateFragment(Random.shuffle(Seq(woman, man)), clickMacro)
+              }
+            }
+          case _ => Future.successful(None)
         }
-      case ("jobs", _) =>
-        Future.successful {
-          JobsAgent.jobsTargetedAt(segment).headOption map {
-            views.html.jobs.jobFragment(_, clickMacro)
-          }
-        }
-      case ("books", isbn) if isbn.nonEmpty =>
-        BestsellersAgent.getSpecificBooks(Seq(isbn)) map { books =>
-          books.headOption orElse {
-            BestsellersAgent.bestsellersTargetedAt(segment).headOption
-          } map {
-            views.html.books.bookFragment(_, clickMacro)
-          }
-        }
-      case ("books", _) =>
-        Future.successful {
-          BestsellersAgent.bestsellersTargetedAt(segment).headOption map {
-            views.html.books.bookFragment(_, clickMacro)
-          }
-        }
-      case ("travel", travelId) if travelId.nonEmpty =>
-        Future.successful {
-          TravelOffersAgent.specificTravelOffers(Seq(travelId)).headOption orElse {
-            TravelOffersAgent.offersTargetedAt(segment).headOption
-          } map {
-            views.html.travel.travelFragment(_, clickMacro)
-          }
-        }
-      case ("travel", _) =>
-        Future.successful {
-          TravelOffersAgent.offersTargetedAt(segment).headOption map {
-            views.html.travel.travelFragment(_, clickMacro)
-          }
-        }
-      case ("masterclasses", eventBriteId) if eventBriteId.nonEmpty =>
-        Future.successful {
-          MasterclassAgent.specificMasterclasses(Seq(eventBriteId)).headOption orElse {
-            MasterclassAgent.masterclassesTargetedAt(segment).headOption
-          } map {
-            views.html.masterclasses.masterclassFragment(_, clickMacro)
-          }
-        }
-      case ("masterclasses", _) =>
-        Future.successful {
-          MasterclassAgent.masterclassesTargetedAt(segment).headOption map {
-            views.html.masterclasses.masterclassFragment(_, clickMacro)
-          }
-        }
-      case ("soulmates", _) =>
-        Future.successful {
-          for {
-            woman <- SoulmatesAgent.womenAgent.sample().headOption
-            man <- SoulmatesAgent.menAgent.sample().headOption
-          } yield {
-            views.html.soulmates.soulmateFragment(Random.shuffle(Seq(woman, man)), clickMacro)
-          }
-        }
-      case _ => Future.successful(None)
     }
 
     Future.sequence(eventualContent) map { contents =>

@@ -4,17 +4,20 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/commercial/dfp/dfp-api',
+    'common/modules/commercial/commercial-features',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/article/space-filler'
-
+    'common/modules/article/space-filler',
+    'Promise'
 ], function (
     bonzo,
     fastdom,
     config,
     mediator,
     dfp,
+    commercialFeatures,
     createAdSlot,
-    spaceFiller
+    spaceFiller,
+    Promise
 ) {
     var INTERVAL = 5;      // number of posts between ads
     var OFFSET = 1.5;      // ratio of the screen height from which ads are loaded
@@ -85,6 +88,10 @@ define([
     }
 
     function init() {
+        if (!commercialFeatures.liveblogAdverts) {
+            return null;
+        }
+
         return fastdom.read(function () {
             return windowHeight = document.documentElement.clientHeight;
         })

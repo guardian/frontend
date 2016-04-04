@@ -7,6 +7,7 @@ import conf.LiveContentApi.getResponse
 import conf._
 import conf.switches.Switches
 import model._
+import play.api.libs.json.{Format, JsObject, Json}
 import play.api.mvc._
 import views.support.RenderOtherStatus
 
@@ -20,6 +21,15 @@ object MediaController extends Controller with RendersItemResponse with Logging 
 
   def renderJson(path: String) = render(path)
   def render(path: String) = Action.async { implicit request => renderItem(path) }
+
+  def renderInfoJson(path: String) = Action.async { implicit request =>
+    lookup(path) map {
+      case Left(model)  => MediaInfo(expired = false)
+      case Right(other) => MediaInfo(expired = true)
+    } map { mediaInfo =>
+      JsonComponent(Json.toJson(mediaInfo).as[JsObject])
+    }
+  }
 
   private def lookup(path: String)(implicit request: RequestHeader) = {
     val edition = Edition(request)
@@ -53,4 +63,9 @@ object MediaController extends Controller with RendersItemResponse with Logging 
 
   private def isSupported(c: ApiContent) = c.isVideo || c.isAudio
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
+}
+
+case class MediaInfo(expired: Boolean)
+object MediaInfo {
+  implicit val jsonFormats: Format[MediaInfo] = Json.format[MediaInfo]
 }

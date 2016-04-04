@@ -34,7 +34,7 @@ x x x x x x x x
             padding-bottom: gs-height(3);
         }
 
-        &[class*="fc-item--has-sublinks"] {
+        &[class*='fc-item--has-sublinks'] {
             .fc-item__container {
                 @include mq(desktop) {
                     padding-bottom: 0;

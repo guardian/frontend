@@ -1,7 +1,11 @@
 package services
 
+import com.gu.contentapi.client.model.v1.Content
+import com.gu.contentapi.client.parser.JsonParser
 import common.Edition
 import model.{RelatedContentItem, RelatedContent}
+import org.json4s.native.JsonMethods
+import play.api.libs.ws.WS
 import scala.concurrent.Future
 import conf.LiveContentApi
 import feed.MostReadAgent
@@ -37,6 +41,29 @@ trait Related extends ConciergeRepository {
     }
   }
 
+  def peopleWhoRead(path: String, testVariant: String): Future[RelatedContent] = {
+
+    import play.api.Play.current
+    implicit val formats = JsonParser.formats
+
+    val capiRecommenderUrl = s"https://recommend.capi.gutools.co.uk/recommendations/$testVariant/$path"
+
+    WS.url(capiRecommenderUrl).withRequestTimeout(2000).get() map { response =>
+      response.status match {
+        case 200 =>
+          JsonMethods.parse(response.body).extractOpt[RecommendedContentResponse] map { recommendedContentResponse =>
+            val relatedContentItems = recommendedContentResponse.items map(rc => RelatedContentItem(rc.content))
+            RelatedContent(relatedContentItems)
+          } getOrElse RelatedContent(Nil)
+
+        case _ =>
+          RelatedContent(Nil)
+      }
+    }
+
+  }
+
+
   def getPopularInTag(edition: Edition, tag: String, excludeTags: Seq[String] = Nil): Future[RelatedContent] = {
 
     val tags = (tag +: excludeTags.map(t => s"-$t")).mkString(",")
@@ -58,3 +85,6 @@ trait Related extends ConciergeRepository {
     trails
   }
 }
+
+case class RecommendedContent(score: Double, commonUniques: Int, totalUniques: Int, content: Content)
+case class RecommendedContentResponse(items: List[RecommendedContent])

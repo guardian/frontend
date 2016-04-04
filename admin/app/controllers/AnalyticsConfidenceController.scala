@@ -6,7 +6,7 @@ import tools._
 import controllers.AuthLogging
 
 object AnalyticsConfidenceController extends Controller with Logging with AuthLogging with ExecutionContexts {
-  def renderConfidence() = AuthActions.AuthActionTest.async { request =>
+  def renderConfidence() = AuthActions.AuthActionTest.async { implicit request =>
     for {
       omniture <- CloudWatch.omnitureConfidence
       ophan <- CloudWatch.ophanConfidence

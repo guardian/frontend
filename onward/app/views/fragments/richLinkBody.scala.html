@@ -10,7 +10,7 @@
         <span class="rich-link__kicker">Analysis</span>
     }
     @if(content.tags.isLiveBlog && content.fields.isLive) {
-        <span class="rich-link__kicker"><span class="rich-link__live live-pulse-icon">Live</span></span>
+        <span class="rich-link__kicker"><span class="rich-link__live live-pulse-icon js-flashing-image"></span>Live</span>
     }
     @if(content.tags.isPodcast) {
         @content.content.seriesTag.map { series => <span class="rich-link__kicker">@series.metadata.webTitle</span> }

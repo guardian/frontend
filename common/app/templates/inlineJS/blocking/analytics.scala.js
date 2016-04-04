@@ -63,7 +63,7 @@ try {
         // Previous Content type
         s.prop70    = s.getPreviousValue(s.prop9, "s_prev_ct");
         s.prop10    = config.page.tones || '';
-        s.prop5     = config.page.trackingIds || '';
+        s.prop5     = config.page.trackingNames || '';
 
         s.prop25    = config.page.blogs || '';
 

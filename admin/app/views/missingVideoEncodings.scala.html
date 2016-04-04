@@ -1,6 +1,6 @@
 @import jobs.MissingEncoding
 
-@(env: String, encodingData: List[MissingEncoding])
+@(env: String, encodingData: List[MissingEncoding])(implicit request: RequestHeader)
 
     @admin_main("Videos with missing encodings", env, isAuthed = true )  {
 

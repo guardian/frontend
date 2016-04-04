@@ -1,17 +1,16 @@
 package model.pressed
 
-import com.gu.facia.api.{utils => fapiutils}
-import com.gu.facia.api.{models => fapi}
-import com.gu.facia.client.models.CollectionConfigJson
-import fapiutils.FaciaContentUtils
-import model.{SupportedUrl, ContentType}
+import com.gu.facia.api.utils.FaciaContentUtils
+import com.gu.facia.api.{models => fapi, utils => fapiutils}
+import com.gu.facia.client.models.{Backfill, CollectionConfigJson}
+import model.{ContentType, SupportedUrl}
 import org.joda.time.DateTime
 
 object CollectionConfig {
   def make(config: fapi.CollectionConfig): CollectionConfig = {
     CollectionConfig(
       displayName = config.displayName,
-      apiQuery = config.apiQuery,
+      backfill = config.backfill,
       collectionType = config.collectionType,
       href = config.href,
       description = config.description,
@@ -36,7 +35,7 @@ object CollectionConfig {
 }
 final case class CollectionConfig(
   displayName: Option[String],
-  apiQuery: Option[String],
+  backfill: Option[Backfill],
   collectionType: String,
   href: Option[String],
   description: Option[String],

@@ -29,9 +29,9 @@ $football-crest--large: 60px;
 }
 
 .team__info {
+    @include fs-headline(5);
     position: relative;
     margin-left: $gs-gutter/2 + $football-crest--small;
-    @include fs-headline(5);
 
     @include mq(mobileLandscape) {
         @include fs-headline(7, true);
@@ -68,10 +68,10 @@ $football-crest--large: 60px;
 }
 
 .team__name {
+    @include ellipsis();
     box-sizing: border-box;
     padding-right: $gs-gutter*2;
     display: block;
-    @include ellipsis();
 }
 
 .team__score {
@@ -109,13 +109,13 @@ $football-crest--large: 60px;
 }
 
 .status__time {
+    @include fs-textSans(2);
     box-sizing: border-box;
     display: inline-block;
     height: $football-crest--small;
     width: $football-crest--small;
     border-radius: 24px;
     border: 2px dotted colour(neutral-2);
-    @include fs-textSans(2);
     line-height: $football-crest--small - 3; // account for the border
     text-align: center;
 }

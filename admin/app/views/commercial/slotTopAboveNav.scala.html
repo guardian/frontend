@@ -1,5 +1,5 @@
 @import common.dfp.LineItemReport
-@(env: String, slotReport: LineItemReport)
+@(env: String, slotReport: LineItemReport)(implicit request: RequestHeader)
 
 @views.html.commercial.commercialMain(env, "Desktop Top-Above-Nav Slot") {
     <h4>Rules:</h4>

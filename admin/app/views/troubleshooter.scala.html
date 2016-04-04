@@ -1,4 +1,4 @@
-@(loadbalancers: Seq[tools.LoadBalancer])
+@(loadbalancers: Seq[tools.LoadBalancer])(implicit request: RequestHeader)
 @import tools.LoadBalancer
 
 @admin_main("Troubleshooting", "PROD", isAuthed = true) {

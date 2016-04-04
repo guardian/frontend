@@ -53,6 +53,12 @@ define([
         return html;
     }
 
+    var module = {
+        load: load,
+        tracking: tracking,
+        init: init
+    };
+
     function load(target) {
         var slot          = target in selectors ? target : 'defaults';
         var $outbrain     = $(selectors.outbrain.widget);
@@ -196,12 +202,6 @@ define([
 
         return Promise.resolve(true);
     }
-
-    var module = {
-        load: load,
-        tracking: tracking,
-        init: init
-    };
 
     return module;
 });

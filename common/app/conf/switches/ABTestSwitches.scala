@@ -4,12 +4,13 @@ import org.joda.time.LocalDate
 
 trait ABTestSwitches {
 
+  // Owner: Dotcom Reach
   val ABFrontsOnArticles2 = Switch(
     "A/B Tests",
     "ab-fronts-on-articles2",
     "Injects fronts on articles for the test",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 1),
+    sellByDate = new LocalDate(2016, 7, 5),
     exposeClientSide = true
   )
 
@@ -18,7 +19,7 @@ trait ABTestSwitches {
     "ab-next-in-series",
     "Show next in series",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 23),
+    sellByDate = new LocalDate(2016, 4, 5),
     exposeClientSide = true
   )
 
@@ -27,34 +28,34 @@ trait ABTestSwitches {
     "ab-identity-register-membership-standfirst",
     "Membership registration page variant for Identity",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 1),
+    sellByDate = new LocalDate(2016, 5, 4),
     exposeClientSide = true
   )
 
-  val ABArticleVideoAutoplay = Switch(
+  val ABLiveBlogChromeNotifications = Switch(
     "A/B Tests",
-    "ab-article-video-autoplay",
-    "Autoplay embedded videos in article",
+    "ab-live-blog-chrome-notifications",
+    "Live blog chrome notifications",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 23),
+    sellByDate = new LocalDate(2016, 5, 2),
     exposeClientSide = true
   )
 
-  val ABCommercialComponentsDismiss = Switch(
+  val ABBolivianWrestlingAutoplay = Switch(
     "A/B Tests",
-    "ab-commercial-components-dismiss",
-    "Survey possibility of dismiss option for commercial components",
+    "ab-bolivian-wrestling-autoplay",
+    "Autoplay Bolivian Wrestling",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 5),
+    sellByDate = new LocalDate(2016, 4, 12),
     exposeClientSide = true
   )
 
-  val ABRelatedContentDisplayAsRecommendation = Switch(
+  val ABPeopleWhoReadThisAlsoReadVariants = Switch(
     "A/B Tests",
-    "ab-article-related-content-display-as-recommendation",
-    "Display related content as people who read this also read",
+    "ab-people-who-read-this-also-read-variants",
+    "Display people who read this also read with different variants",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 16),
+    sellByDate = new LocalDate(2016, 4, 14),
     exposeClientSide = true
   )
 
@@ -67,21 +68,21 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABEmailSignupMarketingCheckbox = Switch(
+  val ABMembership = Switch(
     "A/B Tests",
-    "ab-email-signup-marketing-checkbox",
-    "Test marketing checkbox in email sign-up",
+    "ab-membership",
+    "Membership propositions",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 23),
+    sellByDate = new LocalDate(2016, 5, 2),
     exposeClientSide = true
   )
 
-  val ABAdblockingResponse = Switch(
+  val ABLoyalAdblockingSurvey = Switch(
     "A/B Tests",
-    "ab-adblocking-response",
-    "Adblocking respoonse test",
+    "ab-loyal-adblocking-survey",
+    "An adblock ongoing survey for all loyal users",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 31),
+    sellByDate = new LocalDate(2016, 5, 31),
     exposeClientSide = true
   )
 
