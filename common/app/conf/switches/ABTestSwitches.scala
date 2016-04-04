@@ -41,15 +41,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABBolivianWrestlingAutoplay = Switch(
-    "A/B Tests",
-    "ab-bolivian-wrestling-autoplay",
-    "Autoplay Bolivian Wrestling",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 12),
-    exposeClientSide = true
-  )
-
   val ABPeopleWhoReadThisAlsoReadVariants = Switch(
     "A/B Tests",
     "ab-people-who-read-this-also-read-variants",
