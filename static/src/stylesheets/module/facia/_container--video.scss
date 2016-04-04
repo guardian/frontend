@@ -41,6 +41,10 @@ $video-width-desktop: 700px;
 @for $i from 0 through 20 {
     .video-playlist--#{$i} .video-playlist__inner {
         transform: translateX(-70% * $i);
+
+        @include mq(desktop) {
+            transform: translateX(-$video-width-desktop * $i);
+        }
     }
 }
 
@@ -58,10 +62,22 @@ $video-width-desktop: 700px;
     width: 15%;
     background-color: rgba(0, 0, 0, .3);
     z-index: 2;
+
+    @include mq(desktop) {
+        width: gs-span(2);
+    }
 }
 
 .video-playlist__control--prev {
     left: 0;
+
+    @include mq(leftCol) {
+        width: gs-span(2) + $gs-gutter * 2;
+    }
+
+    @include mq(wide) {
+        width: gs-span(3) + $gs-gutter * 2;
+    }
 
     .video-playlist__icon {
         right: $gs-gutter;
@@ -70,6 +86,14 @@ $video-width-desktop: 700px;
 
 .video-playlist__control--next {
     right: 0;
+
+    @include mq(leftCol) {
+        width: gs-span(3) + $gs-gutter * 2;
+    }
+
+    @include mq(wide) {
+        width: gs-span(4) + $gs-gutter * 2;
+    }
 
     .video-playlist__icon {
         left: $gs-gutter;
@@ -103,12 +127,24 @@ $video-width-desktop: 700px;
 
     @include mq(desktop) {
         width: $video-width-desktop;
-        height: $video-width-desktop / 16 * 9;
+        padding-bottom: $video-width-desktop / 16 * 9;
     }
 }
 
 .video-playlist__item--0 {
     margin-left: 15%;
+
+    @include mq(desktop) {
+        margin-left: gs-span(2);
+    }
+
+    @include mq(leftCol) {
+        margin-left: gs-span(2) + $gs-gutter * 2;
+    }
+
+    @include mq(wide) {
+        margin-left: gs-span(3) + $gs-gutter * 2;
+    }
 }
 
 .video-playlist__title {
