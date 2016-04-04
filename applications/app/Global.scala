@@ -1,10 +1,10 @@
 import common.dfp.DfpAgentLifecycle
-import common.{CloudWatchApplicationMetrics, ContentApiMetrics}
+import common.{CloudWatchApplicationMetrics, ContentApiMetrics, EmailSubsciptionMetrics}
 import conf.{CorsErrorHandler, Filters, SwitchboardLifecycle}
 import contentapi.SectionsLookUpLifecycle
 import dev.DevParametersLifecycle
 import jobs.SiteMapLifecycle
-import metrics.{FrontendMetric, EmailSubsciptionMetrics}
+import metrics.FrontendMetric
 import ophan.SurgingContentAgentLifecycle
 import play.api.mvc.WithFilters
 import services.{ConfigAgentLifecycle, IndexListingsLifecycle}
