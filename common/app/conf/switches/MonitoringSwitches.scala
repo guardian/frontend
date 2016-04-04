@@ -24,15 +24,6 @@ trait MonitoringSwitches {
     exposeClientSide = true
   )
 
-  val MetricsSwitch = Switch(
-    "Monitoring",
-    "enable-metrics-non-prod",
-    "If this switch is on, then metrics will be pushed to cloudwatch on DEV and CODE",
-    safeState = Off,
-    never,
-    exposeClientSide = false
-  )
-
   val ScrollDepthSwitch = Switch(
     "Monitoring",
     "scroll-depth",
