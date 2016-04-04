@@ -4,14 +4,13 @@ import org.joda.time.LocalDate
 
 trait ABTestSwitches {
 
+  // Owner: Dotcom Reach
   val ABFrontsOnArticles2 = Switch(
     "A/B Tests",
     "ab-fronts-on-articles2",
     "Injects fronts on articles for the test",
     safeState = Off,
-    // extending this as it is causing my build problems
-    // but it is not my switch - GK
-    sellByDate = new LocalDate(2016, 4, 11),
+    sellByDate = new LocalDate(2016, 7, 5),
     exposeClientSide = true
   )
 
