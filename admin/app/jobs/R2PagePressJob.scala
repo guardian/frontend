@@ -84,11 +84,11 @@ object R2PagePressJob extends ExecutionContexts with Logging {
   private def parseAndClean(originalDocSource: String): Future[String] = {
     val cleaners = Seq(PollsHtmlCleaner, InteractiveHtmlCleaner, SimpleHtmlCleaner)
     val archiveDocument = Jsoup.parse(originalDocSource)
-    cleaners.filter(_.canClean(archiveDocument))
+    val doc = cleaners.filter(_.canClean(archiveDocument))
       .map(_.clean(archiveDocument))
       .headOption
-      .getOrElse(Future.successful(archiveDocument))
-      .map((doc: Document) => doc.toString /* *cries* only use toString if you already know they type*/)
+      .getOrElse(archiveDocument)
+    Future.successful(doc.toString)
   }
 
   private def S3ArchivePutAndCheck(pressUrl: String, cleanedHtml: String) = {
