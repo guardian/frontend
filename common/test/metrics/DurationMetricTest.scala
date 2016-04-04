@@ -43,7 +43,7 @@ class DurationMetricTest extends FlatSpec with Matchers with ExecutionContexts{
     durationMetric.recordDuration(1000)
     durationMetric.recordDuration(1000)
     durationMetric.recordDuration(1000)
-    durationMetric.putDataPoints(List(metricOne, metricTwo, metricThree, metricFour))
+    List(metricOne, metricTwo, metricThree, metricFour).map(durationMetric.record)
 
     Await.result(durationMetric.getDataFuture, 10.seconds)
 
