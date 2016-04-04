@@ -177,7 +177,8 @@ object EmailSubsciptionMetrics {
 
 trait CloudWatchApplicationMetrics extends GlobalSettings {
   val applicationMetricsNamespace: String = "Application"
-  val applicationDimension: Dimension = new Dimension().withName("ApplicationName").withValue(applicationName)
+  val applicationDimension = List(new Dimension().withName("ApplicationName").withValue(applicationName))
+
   def applicationName: String
   def applicationMetrics: List[FrontendMetric] = Nil
 
@@ -207,7 +208,7 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
   private def report() {
     val allMetrics: List[FrontendMetric] = this.systemMetrics ::: this.applicationMetrics
     if (Configuration.environment.isNonProd) {
-      CloudWatch.putMetricsWithStage(allMetrics, applicationDimension)
+      CloudWatch.putMetrics(applicationMetricsNamespace, allMetrics, applicationDimension)
     }
   }
 
