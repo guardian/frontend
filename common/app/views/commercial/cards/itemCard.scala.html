@@ -1,6 +1,7 @@
 @(item: common.commercial.CardContent,
   optAdvertClassNames: Option[Seq[String]] = None,
   optClassNames: Option[Seq[String]] = None,
+  optImgRatio: Option[String] = None,
   optSponsorship: Option[String] = None,
   optSponsor: Option[String] = None,
   optKeywords: Option[String] = None,
@@ -16,7 +17,7 @@
     @for(series      <- optSeries)     {data-series="@series"}
     >
     <h2 class="advert__title">@item.headline</h2>
-    <div class="advert__image-container">
+    <div class="advert__image-container @for(imgRatio <- optImgRatio){u-responsive-ratio u-responsive-ratio--@imgRatio}">
         <img class="advert__image" src="@item.imageUrl">
     </div>
     @for(description <- item.description) {
