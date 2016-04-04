@@ -15,6 +15,7 @@ define([
     'common/modules/commercial/creatives/fluid250',
     'common/modules/commercial/creatives/fluid250GoogleAndroid',
     'common/modules/commercial/creatives/foundation-funded-logo',
+    'common/modules/commercial/creatives/full-width-250',
     'common/modules/commercial/creatives/scrollable-mpu',
     'common/modules/commercial/creatives/scrollable-mpu-v2',
     'common/modules/commercial/creatives/template'

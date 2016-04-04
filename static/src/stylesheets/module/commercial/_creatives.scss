@@ -730,6 +730,40 @@
 
 }
 
+.ad-slot--full-width-250 {
+    /* Set size */
+    &.ad-slot--dfp {
+        margin: 0;
+        padding: 0;
+
+        width: 100%;
+        height: 100%;
+        min-height: 250px;
+    }
+
+    /* Allow child to stretch */
+    position: relative;
+
+    .content .gs-container & {
+        // Negate padding to display flush with viewport
+        margin-left: -10px;
+        margin-right: -10px;
+        width: auto;
+    }
+}
+
+.creative--full-width-250 {
+    color: #f0f0f0;
+    background: #303030;
+
+    /* Stretch to parent */
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
 @keyframes textanimation {
     0% {
         background-position: 0 -250px;
