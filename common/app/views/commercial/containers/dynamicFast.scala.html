@@ -1,0 +1,9 @@
+@(containerModel: common.commercial.ContainerModel)
+
+<div class="adverts__row">
+    @containerModel.content.dynamic.hugeCards.take(1).map(card => views.html.commercial.cards.itemCard(card, optImgRatio = Some("letterbox")))
+</div>
+
+<div class="adverts__row">
+    @containerModel.content.dynamic.veryBigCards.take(4).map(card => views.html.commercial.cards.itemCard(card))
+</div>

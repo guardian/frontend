@@ -1,0 +1,10 @@
+@(containerModel: common.commercial.ContainerModel)
+
+<div class="adverts__row">
+    <div class="adverts__column">
+        @containerModel.content.dynamic.bigCards.take(4).map(card => views.html.commercial.cards.itemCard(card))
+    </div>
+    <div class="adverts__column">
+        @containerModel.content.dynamic.bigCards.drop(4).take(4).map(card => views.html.commercial.cards.itemCard(card))
+    </div>
+</div>
