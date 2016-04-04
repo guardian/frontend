@@ -7,8 +7,6 @@
 @import views.html.fragments.items.elements.facia_cards.itemImage
 @import views.html.fragments.media.video
 
-<div class="fc-container__body">
-    <div class="fc-slice-wrapper">
         <ul class="u-unstyled fc-slice fc-slice--video">
         @containerDefinition.collectionEssentials.items.zipWithIndex.map { case (item, index) =>
             @if(item.header.isVideo) {
@@ -46,5 +44,4 @@
         }
 
         </ul>
-    </div>
-</div>
+        
