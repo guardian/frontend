@@ -97,7 +97,7 @@ $gimbap-width-quarter: calc(25% - 20px);
         @include fs-headline(1);
 
         display: block;
-        width: $gimbap-wrap-left-space-leftCol - 20px;
+        width: $gimbap-wrap-left-space-leftCol - 30px;
         position: absolute;
         left: $gs-gutter;
         top: $gimbap-wrap-mainlogo-top * 2.3;
@@ -112,6 +112,7 @@ $gimbap-width-quarter: calc(25% - 20px);
 .gimbap-wrap__body {
     display: block;
     overflow: hidden;
+    padding: 0;
 
     @include mq(tablet) {
         padding: 0 $gs-gutter / 2;
@@ -126,7 +127,6 @@ $gimbap-width-quarter: calc(25% - 20px);
 
     @include mq(leftCol) {
         margin-left: $gimbap-wrap-left-space-leftCol;
-        width: 980px;
     }
 
     @include mq(wide) {
@@ -141,8 +141,6 @@ $gimbap-width-quarter: calc(25% - 20px);
 }
 
 .gimbap-wrap__body--simple {
-    padding: 0;
-
     .has-flex & {
         display: flex;
         flex-direction: row;

@@ -3,6 +3,7 @@
     padding: $gs-gutter / 2;
     position: relative;
     box-sizing: border-box;
+    color: #ffffff;
 
     .has-flex & {
         display: flex;
@@ -46,11 +47,7 @@
 .gimbap--simple {
     float: left;
     width: $gimbap-width-quarter;
-    margin-left: $gs-gutter;
-
-    &:first-child {
-        margin-left: 0;
-    }
+    max-height: 205px;
 
     .has-flex & {
         flex: 1;
@@ -58,6 +55,15 @@
 
     padding: 0;
     position: relative;
+
+    @include mq($until: tablet) {
+        margin-left: $gs-gutter;
+        max-height: 100%;
+
+        &:first-child {
+            margin-left: 0;
+        }
+    }
 }
 
 %gimbap-author-shape {
@@ -87,7 +93,7 @@
 
     .gimbap__logo {
         text-align: left;
-        
+
         .has-flex & {
             align-self: flex-start;
         }
@@ -108,6 +114,12 @@
             width: 13em;
         }
     }
+}
+
+.gimbap__image {
+    width: 100%;
+    display: block;
+    margin: auto;
 }
 
 .gimbap__author {
@@ -153,7 +165,7 @@
 }
 
 .gimbap__cta--simple {
-    @include fs-headline(3);
+    @include fs-headline(1);
 
     position: absolute;
     top: 55%;
@@ -162,6 +174,12 @@
     text-align: center;
     font-weight: bold;
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+
+    @include mq(tablet) {
+        @include fs-headline(3);
+
+        font-weight: bold;
+    }
 }
 
 .gimbap__arrow {
@@ -264,6 +282,26 @@
     }
 }
 
+.gimbap__logo--bookshop-horizontal {
+  .logo--part1 {
+    fill: #bdbdbd;
+  }
+
+  .logo--part2 {
+    fill: #ffffff;
+  }
+
+  .gimbap-style--normal & {
+    .logo--part1 {
+      fill: #6d7173;
+    }
+
+    .logo--part2 {
+      fill: $gimbap-bookshop-reversed;
+    }
+  }
+}
+
 .gimbap-style--normal {
     .gimbap__cta {
         filter: brightness(.5);
@@ -273,6 +311,7 @@
     .gimbap-style--tone-masterclasses { background: lighten($gimbap-masterclasses-reversed, 49%); color: $gimbap-masterclasses-text; }
     .gimbap-style--tone-soulmates { background: lighten($gimbap-soulmates-reversed, 49%); color: $gimbap-soulmates-text; }
     .gimbap-style--tone-jobs { background: lighten($gimbap-jobs-reversed, 42%); color: $gimbap-jobs-text; }
+    .gimbap-style--tone-bookshop { background: lighten($gimbap-bookshop-reversed, 70%); color: $gimbap-bookshop-reversed; }
 }
 
 .gimbap-style--reversed {
@@ -284,17 +323,23 @@
     .gimbap-style--tone-masterclasses { background: $gimbap-masterclasses-reversed; }
     .gimbap-style--tone-soulmates { background: $gimbap-soulmates-reversed; }
     .gimbap-style--tone-jobs { background: $gimbap-jobs-reversed; }
-}
+    .gimbap-style--tone-bookshop {
+        background: $gimbap-bookshop-reversed;
 
-.gimbap-style--reversed,
-.gimbap-style--members,
-.gimbap-style--masterclasses,
-.gimbap-style--soulmates,
-.gimbap-style--jobs {
-    .gimbap {
-        color: #ffffff;
+        .gimbap__cta {
+          color: $gimbap-bookshop-text;
+        }
+
+        .gimbap__arrow {
+            background-color: $gimbap-bookshop-text;
+
+            svg {
+                fill: rgba(0, 0, 0, .65);
+            }
+        }
     }
 }
+
 
 .gimbap-simple--tone-masterclasses {
     .gimbap__cta--simple {

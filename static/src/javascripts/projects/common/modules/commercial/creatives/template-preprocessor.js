@@ -99,7 +99,7 @@ define([
         tpl.params.offer4HasQuotes = (tpl.params.offer4quotes.indexOf('yes') !== -1) ? tpl.params.inlineQuote : '';
 
         // Test for Author image
-        tpl.params.hasAuthorImage = typeof tpl.params.offer1authorimage 
+        tpl.params.hasAuthorImage = tpl.params.offer1authorimage 
                                         && tpl.params.offer1authorimage.length > 0 
                                         && tpl.params.layout !== '1x1x1x1';
     }
@@ -108,8 +108,6 @@ define([
         // SVGs
         tpl.params.marque36icon = svgs('marque36icon', ['gimbap-wrap__mainlogo']);
         tpl.params.arrowRight = (tpl.params.linksWithArrows.indexOf('yes') !== -1) ? svgs('arrowRight', ['gimbap__arrow', 'gimbap__arrow--simple']) : '';
-
-        tpl.params.showGuardian = tpl.params.componenttone === 'jobs';
     }
 
     return {
