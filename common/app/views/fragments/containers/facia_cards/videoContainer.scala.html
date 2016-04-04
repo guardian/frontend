@@ -7,41 +7,41 @@
 @import views.html.fragments.items.elements.facia_cards.itemImage
 @import views.html.fragments.media.video
 
-        <ul class="u-unstyled fc-slice fc-slice--video">
-        @containerDefinition.collectionEssentials.items.zipWithIndex.map { case (item, index) =>
-            @if(item.header.isVideo) {
-                <li class="fc-slice__item--video">
-                    @item.properties.maybeContent.map { content => 
-                        @defining(VideoPlayer(
-                            content.elements.mainVideo.get,
-                            Video640,
-                            item.header.headline,
-                            autoPlay = false,
-                            showControlsAtStart = false,
-                            SupportedUrl.fromFaciaContent(item),
-                            Some(false)
-                        )) { player =>
-                            <div class="fc-item__media-wrapper u-faux-block-link__promote media__container--hidden js-video-player">
-                                <div class="fc-item__video-container">
-                                    @video(player, false, false)
-                                </div>
+<ul class="u-unstyled fc-slice fc-slice--video">
+    <li class="">
+        <a href="@containerDefinition.href">@containerDefinition.displayName</a>
+    </li>
+    @containerDefinition.collectionEssentials.items.zipWithIndex.map { case (item, index) =>
+        @if(item.header.isVideo) {
+            <li class="fc-slice__item--video">
+                @item.properties.maybeContent.map { content => 
+                    @defining(VideoPlayer(
+                        content.elements.mainVideo.get,
+                        Video640,
+                        item.header.headline,
+                        autoPlay = false,
+                        showControlsAtStart = false,
+                        SupportedUrl.fromFaciaContent(item),
+                        Some(false)
+                    )) { player =>
+                        <div class="fc-item__media-wrapper u-faux-block-link__promote media__container--hidden js-video-player">
+                            <div class="fc-item__video-container">
+                                @video(player, false, false)
                             </div>
-                            @content.elements.mainVideo.map { video =>
-                                <div class="fc-item__video-fallback media__placeholder--active js-video-placeholder gu-media__fallback">
-                                    <div class="@RenderClasses("fc-item__video-play", "media__placeholder--hidden", "vjs-big-play-button", "js-video-play-button")"><span class="vjs-control-text"></span></div>
-                                    @itemImage(
-                                        video.images,
-                                        true
-                                    )
-                                </div>
-                            }
+                        </div>
+                        @content.elements.mainVideo.map { video =>
+                            <div class="fc-item__video-fallback media__placeholder--active js-video-placeholder gu-media__fallback">
+                                <div class="@RenderClasses("fc-item__video-play", "media__placeholder--hidden", "vjs-big-play-button", "js-video-play-button")"><span class="vjs-control-text"></span></div>
+                                @itemImage(
+                                    video.images,
+                                    true
+                                )
+                            </div>
                         }
                     }
-
-                    <a class="" href="@LinkTo(SupportedUrl.fromFaciaContent(item))" data-link-name=" | article | @index">@item.header.headline</a>
-                </li>
-            }
+                }
+                <a class="" href="@LinkTo(SupportedUrl.fromFaciaContent(item))" data-link-name=" | article | @index">@item.header.headline</a>
+            </li>
         }
-
-        </ul>
-        
+    }
+</ul>
