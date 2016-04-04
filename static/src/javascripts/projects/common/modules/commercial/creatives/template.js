@@ -59,6 +59,7 @@ define([
         this.params.logomasterclasseshorizontal = svgs('logomasterclasseshorizontal');
         this.params.logomembershorizontal = svgs('logomembershiphorizontal');
         this.params.logojobshorizontal = svgs('logojobshorizontal');
+        this.params.logobookshophorizontal = svgs('logobookshophorizontal');
         this.params.logojobs = svgs('logojobs');
         this.params.logomasterclasses = svgs('logomasterclasses');
         this.params.arrowRight = svgs('arrowRight', ['i-right']);
