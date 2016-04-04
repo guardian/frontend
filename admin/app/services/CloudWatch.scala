@@ -21,20 +21,6 @@ trait CloudWatch extends Logging with ExecutionContexts {
     client
   }
 
-  def put(namespage: String, statistics: List[FastlyStatistic]) {
-    // CloudWatch limits to 20 metric values per request
-    (statistics grouped 20) foreach { batch =>
-      val request = new PutMetricDataRequest().
-        withNamespace(namespage).
-        withMetricData(batch map { _.metric })
-
-      cloudwatch.putMetricDataFuture(request) onFailure {
-        case error: Exception =>
-          log.info(s"CloudWatch PutMetricDataRequest error: ${error.getMessage}}")
-      }
-    }
-  }
-
   private def sanityData(metric: String) = {
     val ftr = cloudwatch.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
       .withStartTime(new DateTime().minusMinutes(15).toDate)
