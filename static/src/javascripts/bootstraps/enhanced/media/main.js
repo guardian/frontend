@@ -50,7 +50,7 @@ define([
     ab
 ) {
     // For the A/B test
-    var abVideoAutoplay = ab.testCanBeRun('ArticleVideoAutoplay');
+    var abVideoAutoplay = ab.testCanBeRun('BolivianWrestlingAutoplay');
     function elementIsInView(el, offset) {
         var viewportHeight = window.innerHeight;
         var rect = el.getBoundingClientRect();
@@ -104,7 +104,6 @@ define([
     // End A/B test
 
     function getAdUrl() {
-        // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
         var queryParams = {
             ad_rule:                 1,
             correlator:              new Date().getTime(),
@@ -326,7 +325,7 @@ define([
                         resolve();
                     }
 
-                    if (ab.isInVariant('ArticleVideoAutoplay', 'autoplay')) {
+                    if (ab.isInVariant('BolivianWrestlingAutoplay', 'autoplay')) {
                         // Annoyingly we pass the `parentNode` as the video is absolutely positioned.
                         var parentNode = player.el().parentNode;
                         var firstAutoplay = true;

@@ -1,4 +1,3 @@
-// jscs: disable requireCapitalizedConstructors
 // This is the equivalent of the old waitsFor/runs syntax
 // which was removed from Jasmine 2
 window.waitsForAndRuns = function (escapeFunction, runFunction, escapeTime) {

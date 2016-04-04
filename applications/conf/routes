@@ -10,7 +10,7 @@ GET        /_healthcheck                                                        
 GET        /sitemaps/news.xml                                                   controllers.SiteMapController.renderNewsSiteMap()
 GET        /sitemaps/video.xml                                                  controllers.SiteMapController.renderVideoSiteMap()
 
-GET        /surveys/404-test/next-in-series/$seriesName<experience|alanis|blind-date|what-im-really-thinking|yotam> controllers.SurveysController.render404TestNextInSeries(seriesName: String)
+GET        /surveys/404-test/next-in-series/$seriesName<experience> controllers.SurveysController.render404TestNextInSeries(seriesName: String)
 GET        /surveys/*file                                                       controllers.Assets.at(path="/public/surveys", file)
 
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
@@ -22,6 +22,10 @@ GET        /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|prize|eve
 # Crosswords search
 GET            /crosswords/search                                                                                                controllers.CrosswordSearchController.search()
 GET            /crosswords/lookup                                                                                                controllers.CrosswordSearchController.lookup()
+
+#Notifications Store
+POST           /notification/store                                              controllers.NotificationsController.saveSubscription()
+POST           /notification/delete                                             controllers.NotificationsController.deleteSubscription()
 
 # Email paths
 GET        /email                                                               controllers.EmailSignupController.renderPage()
@@ -36,6 +40,7 @@ GET        /index/contributors                                                  
 GET        /index/contributors/*contributor                                     controllers.TagIndexController.contributor(contributor)
 
 GET        /embed/video/*path                                                   controllers.EmbedController.render(path)
+
 
 # Preferences
 GET        /preferences                                                         controllers.PreferencesController.indexPrefs()
@@ -80,6 +85,7 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|picture|graphic)/.*>.json       
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|picture|graphic)/.*>            controllers.ImageContentController.render(path)
 
 # Audio and Video paths
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>/info.json              controllers.MediaController.renderInfoJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                   controllers.MediaController.renderJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>                        controllers.MediaController.render(path)
 

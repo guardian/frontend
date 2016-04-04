@@ -22,6 +22,7 @@ define([
     'common/modules/analytics/scrollDepth',
     'common/modules/analytics/css-logging',
     'common/modules/analytics/simple-metrics',
+    'common/modules/analytics/headlines-test-analytics',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/commercial/donot-use-adblock',
     'common/modules/commercial/user-features',
@@ -30,7 +31,7 @@ define([
     'common/modules/identity/autosignin',
     'common/modules/identity/cookierefresh',
     'common/modules/navigation/navigation',
-    'common/modules/commercial/sticky-ad-banner',
+    'common/modules/commercial/sticky-top-banner',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/onward/history',
@@ -77,6 +78,7 @@ define([
     ScrollDepth,
     logCss,
     simpleMetrics,
+    HeadlinesTestAnalytics,
     userAdTargeting,
     donotUseAdblock,
     userFeatures,
@@ -203,6 +205,13 @@ define([
 
             cleanupCookies: function () {
                 cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at', 'gu_adfree_user']);
+            },
+
+            cleanupLocalStorage : function () {
+                var deprecatedKeys = [
+                    'gu.subscriber'
+                ];
+                forEach(deprecatedKeys, storage.remove);
             },
 
             updateHistory: function () {
@@ -358,6 +367,9 @@ define([
                         email.init(el);
                     });
                 });
+            },
+            headlinesTestAnalytics: function () {
+                HeadlinesTestAnalytics.init();
             }
         };
 
@@ -395,6 +407,7 @@ define([
                 ['c-adblock', modules.showAdblockMessage],
                 ['c-log-stats', modules.logLiveStats],
                 ['c-cookies', modules.cleanupCookies],
+                ['c-localStorage', modules.cleanupLocalStorage],
                 ['c-overlay', modules.initOpenOverlayOnClick],
                 ['c-css-logging', modules.runCssLogging],
                 ['c-public-api', modules.initPublicApi],
@@ -406,7 +419,8 @@ define([
                 ['c-save-for-later', modules.saveForLater],
                 ['c-show-membership-messages', modules.showMembershipMessages],
                 ['c-email', modules.initEmail],
-                ['c-user-features', userFeatures.refresh]
+                ['c-user-features', userFeatures.refresh],
+                ['c-headlines-test-analytics', modules.headlinesTestAnalytics]
             ]), function (fn) {
                 fn();
             });

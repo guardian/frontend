@@ -207,7 +207,7 @@ final case class Content(
     // Tracking tags are used for things like commissioning desks.
     val trackingMeta = tags.tracking match {
       case Nil => None
-      case trackingTags => Some("trackingIds", JsString(trackingTags.map(_.id).mkString(",")))
+      case trackingTags => Some("trackingNames", JsString(trackingTags.map(_.name).mkString(",")))
     }
 
     val articleMeta = if (tags.isUSMinuteSeries) {

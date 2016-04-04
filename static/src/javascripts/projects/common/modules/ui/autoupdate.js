@@ -43,6 +43,26 @@ define([
 ) {
 
     return function (opts) {
+        var options = assign({
+            'toastOffsetTop': 12, // pixels from the top
+            'minUpdateDelay': (detect.isBreakpoint({ min: 'desktop' }) ? 10 : 30) * 1000, // 10 or 30 seconds minimum, depending on breakpoint
+            'maxUpdateDelay': 20 * 60 * 1000, // 20 mins
+            'backoffMultiplier': 0.75 // increase or decrease the back off rate by modifying this
+        }, opts);
+
+        // Cache selectors
+        var $liveblogBody = $('.js-liveblog-body');
+        var $toastButton = $('.toast__button');
+        var $toastText = $('.toast__text', this.$toastButton);
+        var toastContainer = qwery('.toast__container')[0];
+
+        // Warning: these are re-assigned over time
+        var newBlocks;
+        var currentUpdateDelay = options.minUpdateDelay;
+        var latestBlockId = 'block-' + $liveblogBody.data('most-recent-block');
+        var updating = false;
+
+
         var updateDelay = function (delay) {
             var newDelay;
             if (detect.pageVisible()) {
@@ -58,6 +78,60 @@ define([
         };
         var isLivePage = window.location.search.indexOf('?page=') === -1;
 
+        var revealInjectedElements = function () {
+            fastdom.write(function () {
+                $('.autoupdate--hidden', $liveblogBody).addClass('autoupdate--highlight').removeClass('autoupdate--hidden');
+                mediator.emit('modules:autoupdate:unread', 0);
+            });
+        };
+
+        var toastButtonRefresh = function (count) {
+            fastdom.write(function () {
+                if (count > 0) {
+                    var updateText = (count > 1) ? ' new updates' : ' new update';
+                    $toastButton.removeClass('toast__button--closed');
+                    $(toastContainer).addClass('toast__container--open');
+                    $toastText.html(count + updateText);
+                } else {
+                    $toastButton.removeClass('loading').addClass('toast__button--closed');
+                    $(toastContainer).removeClass('toast__container--open');
+                }
+            });
+        };
+
+        var injectNewBlocks = function () {
+            if (!updating && newBlocks) {
+                updating = true;
+                // Clean up blocks before insertion
+                var resultHtml = $.create('<div>' + newBlocks + '</div>')[0];
+                var elementsToAdd;
+
+                fastdom.write(function () {
+                    bonzo(resultHtml.children).addClass('autoupdate--hidden');
+                    elementsToAdd = toArray(resultHtml.children);
+
+                    // Insert new blocks and animate
+                    $liveblogBody.prepend(elementsToAdd);
+
+                    if (detect.pageVisible()) {
+                        revealInjectedElements();
+                    }
+
+                    toastButtonRefresh(0);
+
+                    mediator.emit('modules:autoupdate:updates', elementsToAdd.length);
+
+                    latestBlockId = $('.block').first().attr('id');
+
+                    newBlocks = '';
+
+                    RelativeDates.init();
+                    twitter.enhanceTweets();
+                }).then(function () {
+                    updating = false;
+                });
+            }
+        };
 
         var setUpListeners = function () {
             bean.on(document.body, 'click', '.toast__button', function () {
@@ -125,82 +199,9 @@ define([
             });
         };
 
-        var toastButtonRefresh = function (count) {
-            fastdom.write(function () {
-                if (count > 0) {
-                    var updateText = (count > 1) ? ' new updates' : ' new update';
-                    $toastButton.removeClass('toast__button--closed').addClass('toast__button--open');
-                    $toastText.html(count + updateText);
-                } else {
-                    $toastButton.removeClass('toast__button--open').removeClass('loading').addClass('toast__button--closed');
-                }
-            });
-        };
-
-        var injectNewBlocks = function () {
-            if (!updating && newBlocks) {
-                updating = true;
-                // Clean up blocks before insertion
-                var resultHtml = $.create('<div>' + newBlocks + '</div>')[0];
-                var elementsToAdd;
-
-                fastdom.write(function () {
-                    bonzo(resultHtml.children).addClass('autoupdate--hidden');
-                    elementsToAdd = toArray(resultHtml.children);
-
-                    // Insert new blocks and animate
-                    $liveblogBody.prepend(elementsToAdd);
-
-                    if (detect.pageVisible()) {
-                        revealInjectedElements();
-                    }
-
-                    toastButtonRefresh(0);
-
-                    mediator.emit('modules:autoupdate:updates', elementsToAdd.length);
-
-                    latestBlockId = $('.block').first().attr('id');
-
-                    newBlocks = '';
-
-                    RelativeDates.init();
-                    twitter.enhanceTweets();
-                }).then(function () {
-                    updating = false;
-                });
-            }
-        };
-
-        var revealInjectedElements = function () {
-            fastdom.write(function () {
-                $('.autoupdate--hidden', $liveblogBody).addClass('autoupdate--highlight').removeClass('autoupdate--hidden');
-                mediator.emit('modules:autoupdate:unread', 0);
-            });
-        };
-
         //
         // init
         //
-
-        var options = assign({
-            'toastOffsetTop': 12, // pixels from the top
-            'minUpdateDelay': (detect.isBreakpoint({ min: 'desktop' }) ? 10 : 30) * 1000, // 10 or 30 seconds minimum, depending on breakpoint
-            'maxUpdateDelay': 20 * 60 * 1000, // 20 mins
-            'backoffMultiplier': 0.75 // increase or decrease the back off rate by modifying this
-        }, opts);
-
-        var newBlocks;
-        var currentUpdateDelay = options.minUpdateDelay;
-        var latestBlockId;
-        var updating = false;
-
-        // Cache selectors
-        var $liveblogBody = $('.js-liveblog-body');
-        var $toastButton = $('.toast__button');
-        var $toastText = $('.toast__text', this.$toastButton);
-        var toastContainer = qwery('.toast__container')[0];
-
-        latestBlockId = 'block-' + $liveblogBody.data('most-recent-block');
 
         new NotificationCounter().init();
         new Sticky(toastContainer, { top: options.toastOffsetTop, emitMessage: true, containInParent: false }).init();
@@ -211,9 +212,7 @@ define([
 
         fastdom.write(function () {
             // Enables the animations for injected blocks
-            $('.js-article__container').addClass('toast-enabled');
             $liveblogBody.addClass('autoupdate--has-animation');
-            $('.js-live-toolbar').remove(); // only necessary in the AB test
         });
     };
 });

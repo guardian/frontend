@@ -1,8 +1,7 @@
 @(offer: model.commercial.travel.TravelOffer,
-  omnitureId: Option[String],
   clickMacro: Option[String])
 
-<a class="advert advert--travel" href="@clickMacro@offer.offerUrl" data-link-name="">
+<a class="advert advert--travel" href="@clickMacro@offer.offerUrl" data-link-name="merchandising-travel-v2_1_2014-07-04-low-@{offer.title}">
     <h2 class="advert__title" itemprop="name">@offer.title</h2>
     <div class="advert__image-container">
         <img class="advert__image" src="@offer.imageUrl">

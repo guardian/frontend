@@ -39,8 +39,8 @@ class BreakingNewsTest extends WordSpec with Matchers {
           |"content": [
           |{
           |"uid": "$randomUid",
-          |"headline": "$title",
-          |"message": "$message",
+          |"title": "$title",
+          |"headline": "$message",
           |"thumbnail": "$thumbnailUrl",
           |"shortUrl": "$link",
           |"id": "$id",
@@ -64,8 +64,8 @@ class BreakingNewsTest extends WordSpec with Matchers {
           |"content": [
           |{
           |"uid": "$randomUid",
-          |"headline": "$title",
-          |"message": "$message",
+          |"title": "$title",
+          |"headline": "$message",
           |"thumbnail": "$thumbnailUrl",
           |"shortUrl": "$link",
           |"id": "$id",

@@ -116,6 +116,10 @@ define([
             identityApi.isUserLoggedIn() &&
             (!isLiveBlog || isWidePage);
 
+        this.liveblogAdverts =
+            this.dfpAdvertising &&
+            switches.liveblogAdverts;
+
         this.async = {
             membershipMessages : detect.adblockInUse.then(function (adblockUsed) {
                 return !adblockUsed &&

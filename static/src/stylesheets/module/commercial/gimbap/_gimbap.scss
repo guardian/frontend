@@ -1,0 +1,469 @@
+$gimbap-members-text: #ff5b3a;
+$gimbap-members-reversed: #69d1ca;
+
+$gimbap-masterclasses-text: #ffb202;
+$gimbap-masterclasses-reversed: #ffb202;
+
+$gimbap-soulmates-text: #995490;
+$gimbap-soulmates-reversed: #995490;
+
+$gimbap-jobs-text: #42bfda;
+$gimbap-jobs-reversed: #42bfda;
+
+$gimbap-bookshop-text: #c783c7;
+$gimbap-bookshop-reversed: #701e6e;
+
+$gimbap-width-quarter: calc(25% - 20px);
+
+.gimbap {
+    display: block;
+    padding: $gs-gutter / 2;
+    position: relative;
+    box-sizing: border-box;
+    color: #ffffff;
+
+    .has-flex & {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &:hover {
+        text-decoration: none;
+        filter: brightness(.95);
+    }
+
+    svg {
+        fill: currentColor;
+    }
+
+    @include mq(mobile, tablet) {
+        margin-top: $gs-baseline;
+
+        &:nth-child(n+3) {
+            display: none;
+        }
+    }
+
+    @include mq(tablet) {
+        float: left;
+        width: $gimbap-width-quarter;
+        margin: 0 $gs-gutter / 2;
+
+        .has-flex & {
+            flex: 1;
+        }
+    }
+
+    @include mq(tablet, desktop) {
+        &:nth-child(n+4) {
+            display: none;
+        }
+    }
+}
+
+%gimbap-author-shape {
+    content: '';
+    float: right;
+    width: 40%;
+}
+
+.gimbap--has-author {
+    .gimbap__title {
+        &:before {
+            @extend %gimbap-author-shape;
+
+            shape-outside: polygon(70% 0%, 100% 150%, 0 100%);
+            min-height: 120px;
+        }
+    }
+
+    .gimbap__cta {
+        &:before {
+            @extend %gimbap-author-shape;
+
+            shape-outside: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+            min-height: 50px;
+        }
+    }
+
+    .gimbap__logo {
+        text-align: left;
+        
+        .has-flex & {
+            align-self: flex-start;
+        }
+    }
+}
+
+.gimbap:only-child {
+    &.gimbap--has-author::before {
+        padding-top: 30%;
+    }
+
+    .gimbap__title {
+        @include fs-headline(4);
+
+        @include mq(desktop) {
+            font-size: 48px;
+            line-height: 50px;
+            width: 13em;
+        }
+    }
+}
+
+.gimbap__author {
+    /* If only there was a 'float: bottom right' rule */
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: gs-height(4);
+    margin-right: -30px;
+}
+
+.gimbap__title {
+    @include fs-headline(5);
+
+    width: 100%;
+    font-weight: 500;
+    align-self: flex-start;
+    margin-bottom: $gs-baseline / 2;
+    word-wrap: break-word;
+}
+
+.gimbap__quote {
+    svg {
+        width: 1.2em;
+        height: .67em;
+        opacity: .8;
+
+        .gimbap:only-child > & {
+            width: .9em;
+            height: .55em;
+        }
+    }
+}
+
+.gimbap__cta {
+    @include fs-headline(2);
+
+    align-self: flex-start;
+    flex-grow: 1;
+    font-weight: 500;
+    word-wrap: break-word;
+    width: 100%;
+
+}
+
+.gimbap__arrow {
+    @include circular;
+
+    display: inline-block;
+    vertical-align: middle;
+    width: $gs-baseline * 2;
+    height: $gs-baseline * 2;
+    margin-left: $gs-gutter / 4;
+    background-color: rgba(255, 255, 255, .4);
+
+    svg {
+        width: $gs-baseline * 2;
+        height: $gs-baseline * 2;
+    }
+}
+
+.gimbap__logo {
+    align-self: flex-end;
+    line-height: 0;
+    text-align: right;
+
+    svg {
+        fill: #ffffff;
+    }
+}
+
+.gimbap__logo--members-horizontal {
+    .logo--part1,
+    .logo--part2 {
+        fill: #ffffff;
+    }
+
+    .gimbap-style--normal & {
+        .logo--part1 {
+            fill: $gimbap-members-text;
+        }
+
+        .logo--part2 {
+            fill: #000000;
+        }
+    }
+}
+
+.gimbap__logo--masterclasses-horizontal {
+    .logo--part1,
+    .logo--part2 {
+        fill: #ffffff;
+    }
+
+    .gimbap-style--normal & {
+        .logo--part1 {
+            fill: #000000;
+        }
+
+        .logo--part2 {
+            fill: $gimbap-masterclasses-text;
+        }
+    }
+}
+
+.gimbap__logo--jobs-horizontal {
+    .logo--part1,
+    .logo--part2 {
+        fill: #ffffff;
+    }
+
+    .gimbap-style--normal & {
+        .logo--part1 {
+            fill: #000000;
+        }
+
+        .logo--part2 {
+            fill: $gimbap-jobs-text;
+        }
+    }
+}
+
+.gimbap__logo--soulmates-horizontal {
+    svg {
+        width: 85px; /* "Make your own magic" */
+        height: 18px;
+        fill: #ffffff;
+    }
+
+    .gimbap-style--normal & {
+        svg {
+            fill: $gimbap-soulmates-text;
+        }
+    }
+}
+
+.gimbap__logo--bookshop-horizontal {
+    .logo--part1 {
+        fill: #bdbdbd;
+    }
+
+    .logo--part2 {
+        fill: #ffffff;
+    }
+
+    .gimbap-style--normal & {
+        .logo--part1 {
+            fill: #6d7173;
+        }
+
+        .logo--part2 {
+            fill: $gimbap-bookshop-reversed;
+        }
+    }
+}
+
+.gimbap__mainlogo {
+    display: none;
+
+    .gimbap-style--normal &,
+    .gimbap-style--reversed & {
+        svg {
+            width: 39px;
+            height: 39px;
+            fill: guss-colour(guardian-brand, $pasteup-palette);
+        }
+    }
+
+    @include mq(wide) {
+        display: block;
+        position: absolute;
+        left: calc(50% - 570px);
+        top: $gs-baseline / 3 * 10;
+        margin-left: $gs-gutter;
+
+        &:first-child {
+            top: $gs-baseline / 3 * 7;
+        }
+    }
+
+    @include mq(wide) {
+        left: calc(50% - 650px);
+    }
+}
+
+.gimbap-wrap {
+    padding: 0 $gs-gutter / 2 $gs-baseline;
+    position: relative;
+
+    @include mq(tablet) {
+        padding: 0 calc(50% - 370px) $gs-baseline;
+
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: calc(50% - 370px);
+            background: rgba(51, 51, 51, .06);
+        }
+
+        &::before { left: 0; }
+        &::after { right: 0; }
+    }
+
+    @include mq(desktop) {
+        padding: 0 calc(50% - 490px) $gs-baseline;
+
+        &::before,
+        &::after {
+            width: calc(50% - 490px);
+        }
+    }
+
+    @include mq(leftCol) {
+        padding: 0 calc(50% - 570px) $gs-baseline;
+
+        &::before,
+        &::after {
+            width: calc(50% - 570px);
+        }
+    }
+
+    @include mq(wide) {
+        padding: 0 calc(50% - 650px) $gs-baseline;
+
+        &::before,
+        &::after {
+            width: calc(50% - 650px);
+        }
+    }
+}
+
+.gimbap-wrap__box {
+    border-top: 1px solid colour(news-accent);
+}
+
+.gimbap-wrap__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @include mq(tablet) {
+        padding: 0 $gs-gutter;
+    }
+
+}
+
+.gimbap-wrap__body {
+    display: block;
+    overflow: hidden;
+
+    @include mq(tablet) {
+        padding: 0 $gs-gutter / 2;
+
+        .has-flex & {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-items: stretch;
+        }
+    }
+
+    @include mq(wide) {
+        margin-left: 240px;
+        width: 960px;
+    }
+
+    /* this is ugly but that's the price to pay when
+       decoration elements pollute the DOM */
+    .gimbap-wrap > .inline-marque-36:first-child + & {
+        padding-top: $gs-baseline;
+    }
+}
+
+.gimbap-wrap__body--1x1x1x1 > .gimbap {
+    @include mq(tablet) {
+        .has-flex & {
+            flex: $gimbap-width-quarter;
+        }
+    }
+}
+
+.gimbap-wrap__body--2x1x1 > .gimbap:first-child,
+.gimbap-wrap__body--1x2x1 > .gimbap:nth-child(2),
+.gimbap-wrap__body--1x1x2 > .gimbap:nth-child(3) {
+    @include mq(tablet) {
+        width: calc(66.67% - 20px);
+
+        .has-flex & {
+            flex: 2;
+        }
+    }
+    @include mq(desktop) {
+        width: calc(50% - 20px);
+    }
+}
+
+.gimbap-wrap__body--2x1x1,
+.gimbap-wrap__body--1x2x1,
+.gimbap-wrap__body--1x1x2 {
+    @include mq(tablet, desktop) {
+        > .gimbap:nth-child(n+3) {
+            display: none;
+        }
+    }
+
+    @include mq(desktop) {
+        > .gimbap:nth-child(n+4) {
+            display: none;
+        }
+    }
+}
+
+.gimbap-wrap__title {
+    font: 900 1.375rem/2.25rem 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;
+    color: guss-colour(guardian-brand-dark, $pasteup-palette);;
+    margin: 0;
+}
+
+.gimbap-style--normal {
+    .gimbap__cta {
+        filter: brightness(.5);
+    }
+
+    .gimbap-style--tone-members { background: lighten($gimbap-members-text, 36%); color: $gimbap-members-text; }
+    .gimbap-style--tone-masterclasses { background: lighten($gimbap-masterclasses-reversed, 49%); color: $gimbap-masterclasses-text; }
+    .gimbap-style--tone-soulmates { background: lighten($gimbap-soulmates-reversed, 49%); color: $gimbap-soulmates-text; }
+    .gimbap-style--tone-jobs { background: lighten($gimbap-jobs-reversed, 42%); color: $gimbap-jobs-text; }
+    .gimbap-style--tone-bookshop { background: lighten($gimbap-bookshop-reversed, 70%); color: $gimbap-bookshop-reversed; }
+}
+
+.gimbap-style--reversed {
+    .gimbap__cta {
+        color: rgba(0, 0, 0, .65);
+    }
+
+    .gimbap-style--tone-members { background: $gimbap-members-reversed; }
+    .gimbap-style--tone-masterclasses { background: $gimbap-masterclasses-reversed; }
+    .gimbap-style--tone-soulmates { background: $gimbap-soulmates-reversed; }
+    .gimbap-style--tone-jobs { background: $gimbap-jobs-reversed; }
+    .gimbap-style--tone-bookshop {
+        background: $gimbap-bookshop-reversed;
+
+        .gimbap__cta {
+            color: $gimbap-bookshop-text;
+        }
+
+        .gimbap__arrow {
+            background-color: $gimbap-bookshop-text;
+
+            svg {
+                fill: rgba(0, 0, 0, .65);
+            }
+        }
+    }
+}

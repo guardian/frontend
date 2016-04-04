@@ -22,33 +22,9 @@ define([
     var allSeries = [
         {
             id: 'experience',
-            pageId: 'lifeandstyle/2016/mar/11/i-fought-off-mountain-lion-experience',
-            title: 'I lost three limbs to meningitis aged 54',
-            trail: 'When I looked down after the first operation, I thought that I looked like a drawing of a body with the feet and half the calves rubbed out...'
-        },
-        {
-            id: 'blind-date',
-            pageId: 'lifeandstyle/2016/mar/12/ross-hoping-for-vin-diesel-meets-charles-blind-date',
-            title: 'Will Zak and Mimi hit it off?',
-            trail: 'I used the wrong fork for the starter and dropped my knife'
-        },
-        {
-            id: 'alanis',
-            pageId: 'lifeandstyle/2016/mar/11/ask-alanis-best-friends-secrets',
-            title: 'Dear Alanis, my accidental email has created a family rift',
-            trail: 'Although I sent a grovelling apology I’m wondering if she’ll speak to me again. What can I do?'
-        },
-        {
-            id: 'what-im-really-thinking',
-            pageId: 'lifeandstyle/2016/mar/12/mother-of-baby-with-disabilities-what-im-really-thinking',
-            title: 'What I’m Really Thinking: the independent cafe barista',
-            trail: 'I wonder if they realise the cost of their coffee is half what I get paid per hour...'
-        },
-        {
-            id: 'yotam',
-            pageId: 'lifeandstyle/2016/mar/12/merguez-recipes-kebab-potato-bake-scotch-egg-yotam-ottolenghi',
-            title: 'Yotam Ottolenghi’s chorizo recipes',
-            trail: 'Salty, spicy, smoky and fatty: chorizo adds oomph to any dish'
+            pageId: 'lifeandstyle/2016/mar/25/i-paid-to-have-my-daughter-kidnapped-experience',
+            title: 'I was attacked by a seal',
+            trail: '‘It rolled on top of me, pushing me under water. I was trapped under a mountain of blubber and muscle…’'
         }
     ];
 
@@ -59,8 +35,8 @@ define([
 
     return function () {
         this.id = 'NextInSeries';
-        this.start = '2016-03-07';
-        this.expiry = '2016-03-23';
+        this.start = '2016-03-24';
+        this.expiry = '2016-04-05';
         this.author = 'Oliver Ash';
         this.description = 'Show next in series';
         this.audience = 1;

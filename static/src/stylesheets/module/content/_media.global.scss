@@ -84,16 +84,16 @@
 }
 .content__headline:before {
     .content--media--audio & {
-        width: .8em;
         @include icon(volume-high-white, $with-width: false);
+        width: .8em;
     }
     .content--media--video & {
         content: none;
     }
     .content--gallery &,
     .content--image & {
-        width: .9em;
         @include icon(camera-white-large, $with-width: false);
+        width: .9em;
     }
 }
 .content--media--video .inline-video-icon {

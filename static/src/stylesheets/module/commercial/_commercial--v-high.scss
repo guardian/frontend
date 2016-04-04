@@ -13,11 +13,8 @@
     .lineitem__image {
         float: none;
         margin-top: (-$gs-baseline/2);
-        margin-left: 0;
         margin-left: calc(-1 * #{$gs-gutter/4});
-        margin-right: 0;
         margin-right: calc(-1 * #{$gs-gutter/4});
-        width: 100%;
         width: calc(100% + #{$gs-gutter/2});
     }
 

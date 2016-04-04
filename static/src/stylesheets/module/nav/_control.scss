@@ -10,13 +10,13 @@ $control-size: 36px;
    ========================================================================== */
 
 .control__info {
+    @include ellipsis();
     display: none;
     height: 30px;
     line-height: $control-size;
     margin-left: $gs-gutter/2;
     max-width: 140px;
     vertical-align: top;
-    @include ellipsis();
     float: left;
     text-align: left;
 
@@ -69,9 +69,9 @@ $control-size: 36px;
 }
 
 .control__icon-wrapper--text {
+    @include circular;
     line-height: $control-size;
     border-color: transparent;
-    @include circular;
 
     @include mq(mobile) {
         display: none;

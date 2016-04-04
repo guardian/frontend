@@ -1,4 +1,5 @@
 define([
+    'common/views/svgs',
     'common/utils/template',
     'text!common/views/commercial/creatives/manual-inline-button.html',
     'text!common/views/commercial/creatives/manual-single-button.html',
@@ -6,6 +7,7 @@ define([
 
     'text!common/views/commercial/creatives/manual-title.html'
 ], function (
+    svgs,
     template,
     manualInlineButtonStr,
     manualSingleButtonStr,
@@ -76,9 +78,36 @@ define([
         }
     }
 
+    function preprocessGimbap(tpl) {
+        tpl.params.headless = tpl.params.headless === 'true';
+
+        // SVGs
+        tpl.params.marque36icon = svgs('marque36icon', ['gimbap__mainlogo']);
+        tpl.params.inlineQuote = svgs('quoteIcon', ['gimbap__quote']);
+        tpl.params.arrowRight = (tpl.params.linksWithArrows.indexOf('yes') !== -1) ? svgs('arrowRight', ['gimbap__arrow']) : '';
+
+        // Make sure we include right logo to the right card
+        tpl.params.offer1logo = tpl.params['logo' + tpl.params.offer1tone + 'horizontal'];
+        tpl.params.offer2logo = tpl.params['logo' + tpl.params.offer2tone + 'horizontal'];
+        tpl.params.offer3logo = tpl.params['logo' + tpl.params.offer3tone + 'horizontal'];
+        tpl.params.offer4logo = tpl.params['logo' + tpl.params.offer4tone + 'horizontal'];
+
+        // Include quotes into title only if it is allowed in DFP line item
+        tpl.params.offer1HasQuotes = (tpl.params.offer1quotes.indexOf('yes') !== -1) ? tpl.params.inlineQuote : '';
+        tpl.params.offer2HasQuotes = (tpl.params.offer2quotes.indexOf('yes') !== -1) ? tpl.params.inlineQuote : '';
+        tpl.params.offer3HasQuotes = (tpl.params.offer3quotes.indexOf('yes') !== -1) ? tpl.params.inlineQuote : '';
+        tpl.params.offer4HasQuotes = (tpl.params.offer4quotes.indexOf('yes') !== -1) ? tpl.params.inlineQuote : '';
+
+        // Test for Author image
+        tpl.params.hasAuthorImage = tpl.params.offer1authorimage 
+                                        && tpl.params.offer1authorimage.length > 0 
+                                        && tpl.params.layout !== '1x1x1x1';
+    }
+
     return {
         'manual-inline': preprocessManualInline,
         'manual-single': preprocessManualSingle,
-        'manual-multiple': preprocessManualMultiple
+        'manual-multiple': preprocessManualMultiple,
+        'gimbap': preprocessGimbap
     };
 });

@@ -3,35 +3,52 @@ package controllers.commercial
 import model.{MetaData, GuardianContentTypes, Cached, StandalonePage}
 import play.api.mvc.{Action, Controller}
 
-case class StaticSurveySignupPage() extends StandalonePage {
+// These are three new membership proposition variants for testing
+case class StaticGuardianExplainPage() extends StandalonePage {
   override val metadata: MetaData = MetaData.make(
-  	id = "survey-simple-sign-up",
-  	webTitle = "Survey Simple Sign up",
+    id = "guardian-explain",
+    webTitle = "Guardian Explain",
     section = "global",
     contentType = GuardianContentTypes.Interactive,
-    analyticsName = "survey-simple-sign-up",
+    analyticsName = "guardian-explain",
     shouldGoogleIndex = false
   )
 }
 
-case class StaticSurveyMembershipPage() extends StandalonePage {
+case class StaticGuardianExplorePage() extends StandalonePage {
   override val metadata: MetaData = MetaData.make(
-    id = "survey-simple-membership",
-    webTitle = "Survey Simple Membership",
+    id = "guardian-explore",
+    webTitle = "Guardian Explore",
     section = "global",
     contentType = GuardianContentTypes.Interactive,
-    analyticsName = "survey-simple-membership",
+    analyticsName = "guardian-explore",
+    shouldGoogleIndex = false
+  )
+}
+
+case class StaticGuardianExperiencePage() extends StandalonePage {
+  override val metadata: MetaData = MetaData.make(
+    id = "guardian-experience",
+    webTitle = "Guardian Experience",
+    section = "global",
+    contentType = GuardianContentTypes.Interactive,
+    analyticsName = "guardian-experience",
     shouldGoogleIndex = false
   )
 }
 
 object StaticPageController extends Controller {
 
-  def renderSurveySimpleSignupPage() = Action { implicit request =>
-    Cached(60)(Ok(views.html.static.surveySimplePage(StaticSurveySignupPage().metadata)))
+  // Membership Tests
+  def renderGuardianExplainPage() = Action { implicit request =>
+    Cached(60)(Ok(views.html.static.guardianExplainPage(StaticGuardianExplainPage().metadata)))
   }
 
-  def renderSurveySimpleMembershipPage() = Action { implicit request =>
-    Cached(60)(Ok(views.html.static.surveySimplePage(StaticSurveyMembershipPage().metadata)))
+  def renderGuardianExplorePage() = Action { implicit request =>
+    Cached(60)(Ok(views.html.static.guardianExplorePage(StaticGuardianExplorePage().metadata)))
+  }
+
+  def renderGuardianExperiencePage() = Action { implicit request =>
+    Cached(60)(Ok(views.html.static.guardianExperiencePage(StaticGuardianExperiencePage().metadata)))
   }
 }

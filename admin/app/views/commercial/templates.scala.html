@@ -1,4 +1,4 @@
-@(env: String, templates: Seq[dfp.GuCreativeTemplate])(implicit request: RequestHeader)
+@(env: String, templates: Seq[common.dfp.GuCreativeTemplate])(implicit request: RequestHeader)
 @import tools.DfpLink
 @import model.{SimplePage, MetaData}
 
@@ -15,11 +15,20 @@
                     All unarchived custom creative templates are shown.</p>
             </div>
 
+            <div class="facia-container__inner">
+                <h2>Creative Templates: Contents</h2>
+                <ul>
+                    @for(template <- templates) {
+                    <li><a href="#@template.name">@template.name</a></li>
+                    }
+                </ul>
+            </div>
+
             <ul class="u-unstyled">
                 @for(template <- templates) {
-                    <li class="container__border">
+                    <li class="container__border" >
                         <div class="facia-container__inner">
-                            <h2>
+                            <h2 id="@template.name">
                                 @template.name (<a href="@DfpLink.creativeTemplate(template.id)">@template.id</a>)
                             </h2>
                             <p>@{template.description}</p>
@@ -27,7 +36,7 @@
                                 <p><b>This template is not in use.</b></p>
                             }
                             @if(template.creatives.nonEmpty){
-                                <p>Creatives built from this template:</p>
+                                <p>Creatives built from this template (see preview <a href="@template.examplePreviewUrl">here</a>):</p>
                                 <ul>
                                     @for(creative <- template.creatives){
                                         <li>@{creative.name} (<a href="@DfpLink.creative(creative.id)">@{creative.id}</a>)</li>
@@ -35,11 +44,6 @@
                                 </ul>
                             }
                         </div>
-                        @for(example <- template.example) {
-                            <h3 class="facia-container__inner">Example</h3>
-                            TODO
-                            @Html(example)
-                        }
                     </li>
                 }
             </ul>

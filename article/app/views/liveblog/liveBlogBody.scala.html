@@ -36,7 +36,7 @@
                         @fragments.standfirst(article)
 
                         <div class="content__updated-container content__updated-container--liveblog">
-                            @if(article.fields.isLive) {<span class="blog__live live-pulse-icon js-flashing-image">LIVE</span> }Updated <time class="js-timestamp" datetime="@article.fields.lastModified" data-relativeformat="med"></time>
+                            @if(article.fields.isLive) {<span class="blog__live live-pulse-icon flashing-image">LIVE</span> }Updated <time class="js-timestamp" datetime="@article.fields.lastModified" data-relativeformat="med"></time>
                         </div>
                     </div>
                 </div>
@@ -51,6 +51,8 @@
                     @fragments.mainMedia(article)
 
                     @fragments.witnessCallToAction(article.content)
+
+                    @fragments.liveNotificationsCallToActionPlaceHolder()
 
                     <div class="blog__left-col">
 

@@ -5,15 +5,15 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/commercial-components-dismiss',
     'common/modules/experiments/tests/fronts-on-articles2',
     'common/modules/experiments/tests/identity-register-membership-standfirst',
+    'common/modules/experiments/tests/live-blog-chrome-notifications',
     'common/modules/experiments/tests/header-bidding-us',
-    'common/modules/experiments/tests/article-video-autoplay',
     'common/modules/experiments/tests/next-in-series',
-    'common/modules/experiments/tests/article-related-content-display-as-recommendation',
-    'common/modules/experiments/tests/email-signup-marketing-checkbox',
-    'common/modules/experiments/tests/adblocking-response',
+    'common/modules/experiments/tests/bolivian-wrestling-autoplay',
+    'common/modules/experiments/tests/people-who-read-this-also-read-variants',
+    'common/modules/experiments/tests/membership',
+    'common/modules/experiments/tests/loyal-adblocking-survey',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -30,15 +30,15 @@ define([
     mediator,
     store,
     mvtCookie,
-    CommercialComponentsDismiss,
     FrontsOnArticles2,
     IdentityRegisterMembershipStandfirst,
+    LiveBlogChromeNotifications,
     HeaderBiddingUS,
-    ArticleVideoAutoplay,
     NextInSeries,
-    RelatedContentDisplayAsRecommendation,
-    EmailSignupMarketingCheckbox,
-    AdblockingResponse,
+    BolivianWrestlingAutoplay,
+    PeopleWhoReadThisAlsoReadVariants,
+    Membership,
+    LoyalAdblockingSurvey,
     flatten,
     forEach,
     keys,
@@ -51,15 +51,15 @@ define([
 ) {
 
     var TESTS = flatten([
-        new CommercialComponentsDismiss(),
         new FrontsOnArticles2(),
         new IdentityRegisterMembershipStandfirst(),
+        new LiveBlogChromeNotifications(),
         new HeaderBiddingUS(),
-        new ArticleVideoAutoplay(),
         new NextInSeries(),
-        new RelatedContentDisplayAsRecommendation(),
-        new EmailSignupMarketingCheckbox(),
-        new AdblockingResponse()
+        new BolivianWrestlingAutoplay(),
+        new PeopleWhoReadThisAlsoReadVariants(),
+        new Membership(),
+        new LoyalAdblockingSurvey()
     ]);
 
     var participationsKey = 'gu.ab.participations';
@@ -223,7 +223,7 @@ define([
 
     function shouldRunTest(id, variant) {
         var test = getTest(id);
-        return test && isParticipating(test) && ab.getTestVariantId(id) === variant && testCanBeRun(test);
+        return test && isParticipating(test) && getTestVariantId(id) === variant && testCanBeRun(test);
     }
 
     function getVariant(test, variantId) {

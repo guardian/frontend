@@ -17,8 +17,8 @@
     // taking it off child elements and moving it here for DRY.
     // the intention is to move this to the global .gs-container definition
     // which requires the padding to be removed from all child elements
-    box-sizing: border-box;
     @include content-gutter();
+    box-sizing: border-box;
 }
 
 .content__main-column {
@@ -352,11 +352,11 @@
         }
 
         > li:before {
+            @include fs-header(1, true);
             position: absolute;
             left: -16px;
             content: counter(li);
             counter-increment: li;
-            @include fs-header(1, true);
             color: colour(neutral-3);
 
             @include mq(tablet) {
@@ -369,10 +369,10 @@
 }
 
 .content__dateline {
+    @include fs-textSans(1);
     position: relative;
     color: colour(neutral-2);
     box-sizing: border-box;
-    @include fs-textSans(1);
     padding-top: $gs-baseline / 6;
     margin-bottom: $gs-baseline / 2;
 
@@ -430,12 +430,12 @@
 }
 
 .content__meta-container .byline-img {
+    @include circular;
     position: relative;
     width: gs-span(1);
     height: 60px; //Intentionally off grid
     margin: $gs-baseline/2 0;
     overflow: hidden;
-    @include circular;
     background-color: colour(neutral-7);
 
     // fixes for webkit not properly scaling/clipping the child element (still broken on some android browsers...)
@@ -525,8 +525,8 @@
 }
 
 .byline {
-    margin-bottom: 0;
     @include fs-bodyHeading(1);
+    margin-bottom: 0;
     padding-top: $gs-baseline/3;
     line-height: 20px;
     color: colour(neutral-2);
@@ -574,10 +574,10 @@
 }
 
 .drop-cap {
+    @include f-headline;
     float: left;
     display: inline-block;
     text-transform: uppercase;
-    @include f-headline;
     font-weight: 200;
     box-sizing: border-box;
     height: 2*get-line-height(bodyCopy, 2);
@@ -590,9 +590,9 @@
     }
 
     .drop-cap__inner {
+        @include font-size(52px, 40px);
         display: inline-block;
         vertical-align: text-top;
-        @include font-size(52px, 40px);
 
         @include mq(tablet) {
             @include font-size(84px, 68px);
@@ -601,11 +601,10 @@
 }
 
 .commentcount {
-    display: none;
     @include fs-textSans(1);
+    display: none;
 
     i {
-        vertical-align: bottom;
         margin-right: 3px;
         vertical-align: -4px;
     }
@@ -690,8 +689,8 @@
 
     .tonal__standfirst {
         background-color: transparent;
-        padding: $gs-baseline 0 $gs-baseline*2;
         min-height: $gs-baseline*8;
+        padding: $gs-baseline 0 $gs-baseline*2;
 
         .content__standfirst {
             color: colour(neutral-1);
@@ -741,7 +740,8 @@
             }
         }
 
-        &.content--media--audio,
+        // On video, standfirsts are injected twice - once in their usual location, another time as a replacement for the body
+        // We want to hide the first instance and style the latter
         &.content--media--video {
             .content__head .tonal__standfirst {
                 display: none;
@@ -1037,11 +1037,11 @@
 }
 
 .meta__bio {
+    @include fs-headline(1);
     margin-bottom: $gs-baseline;
     padding-top: $gs-baseline/2;
 
     color: colour(neutral-2);
-    @include fs-headline(1);
 
     @include mq($until: leftCol) {
         display: none;

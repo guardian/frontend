@@ -345,6 +345,11 @@ define([
         return window.guardian.isEnhanced;
     }
 
+    var createSacrificialAd = memoize(function () {
+        var sacrificialAd = $.create('<div class="ad_unit" style="position: absolute; height: 10px; top: 0; left: 0; z-index: -1;">&nbsp;</div>');
+        sacrificialAd.appendTo(document.body);
+        return sacrificialAd;
+    });
     // sync adblock detection is deprecated.
     // it will be removed once sticky nav and omniture top up call are both removed
     // this is soon - it's not worth refactoring them when they're off soon
@@ -358,12 +363,6 @@ define([
     var getFirefoxAdblockPlusInstalledSync = memoize(function () {
         var adUnitMozBinding = createSacrificialAd().css('-moz-binding');
         return !!adUnitMozBinding && adUnitMozBinding.match('elemhidehit') !== null;
-    });
-
-    var createSacrificialAd = memoize(function () {
-        var sacrificialAd = $.create('<div class="ad_unit" style="position: absolute; height: 10px; top: 0; left: 0; z-index: -1;">&nbsp;</div>');
-        sacrificialAd.appendTo(document.body);
-        return sacrificialAd;
     });
     // end sync adblock detection
 
@@ -384,10 +383,6 @@ define([
     /** Includes Firefox Adblock Plus users who whitelist the Guardian domain */
     var getFirefoxAdblockPlusInstalled = getAdBlockers.then(function (adBlockers) {
         return adBlockers.ffAdblockPlus;
-    });
-
-    var getFfOrGenericAdbockInstalled = getAdBlockers.then(function (adBlockers) {
-        return adBlockers.generic || adBlockers.ffAdblockPlus;
     });
 
     function getReferrer() {
@@ -423,7 +418,6 @@ define([
         getFirefoxAdblockPlusInstalledSync: getFirefoxAdblockPlusInstalledSync,
         adblockInUse: adblockInUse,
         getFirefoxAdblockPlusInstalled: getFirefoxAdblockPlusInstalled,
-        getFfOrGenericAdbockInstalled: getFfOrGenericAdbockInstalled,
         getReferrer: getReferrer
     };
     return detect;

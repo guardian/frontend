@@ -52,7 +52,6 @@ head {
     }
 }
 body:after {
-    content: 'mobile';
     @include u-h;
 
     @include mq(mobileLandscape) {
@@ -70,15 +69,18 @@ body:after {
     @include mq(wide) {
         content: 'wide';
     }
+
+    content: 'mobile';
 }
 
 .dateline {
-    color: colour(neutral-2);
     @include fs-textSans(2);
 
     @include mq(tablet) {
         @include fs-textSans(3, true);
     }
+
+    color: colour(neutral-2);
 
     i {
         vertical-align: baseline;

@@ -15,13 +15,11 @@ define([
     'common/views/svgs',
     'text!common/views/email/submissionResponse.html',
     'text!common/views/ui/close-button.html',
-    'text!common/views/email/mark-checkbox.html',
     'common/utils/robust',
     'common/utils/detect',
     'common/modules/identity/api',
     'common/modules/user-prefs',
-    'lodash/arrays/uniq',
-    'common/modules/experiments/ab'
+    'lodash/arrays/uniq'
 ], function (
     formInlineLabels,
     bean,
@@ -39,13 +37,11 @@ define([
     svgs,
     successHtml,
     closeHtml,
-    markHtml,
     robust,
     detect,
     Id,
     userPrefs,
-    uniq,
-    ab
+    uniq
 ) {
     var omniture;
 
@@ -69,6 +65,33 @@ define([
         });
     }
 
+    var state = {
+        submitting: false
+    };
+
+    var messages = {
+        defaultSuccessHeadline: 'Thank you for subscribing',
+        defaultSuccessDesc: ''
+    };
+
+    var updateForm = {
+        replaceContent: function (isSuccess, $form) {
+            var formData = $form.data('formData'),
+                submissionMessage = {
+                    statusClass: (isSuccess) ? 'email-sub__message--success' : 'email-sub__message--failure',
+                    submissionHeadline: (isSuccess) ? formData.customSuccessHeadline || messages.defaultSuccessHeadline : 'Something went wrong',
+                    submissionMessage: (isSuccess) ? formData.customSuccessDesc || messages.defaultSuccessDesc : 'Please try again.',
+                    submissionIcon: (isSuccess) ? svgs('tick') : svgs('crossIcon')
+                },
+                submissionHtml = template(successHtml, submissionMessage);
+
+            fastdom.write(function () {
+                $form.addClass('email-sub__form--is-hidden');
+                $form.after(submissionHtml);
+            });
+        }
+    };
+
     function handleSubmit(isSuccess, $form) {
         return function () {
             updateForm.replaceContent(isSuccess, $form);
@@ -76,58 +99,12 @@ define([
         };
     }
 
-    var state = {
-            submitting: false
-        },
-        classes = {
+    var classes = {
             wrapper: 'js-email-sub',
             form: 'js-email-sub__form',
             inlineLabel: 'js-email-sub__inline-label',
             textInput: 'js-email-sub__text-input',
-            listIdHiddenInput: 'js-email-sub__listid-input',
-            markCheckbox: 'js-email-sub__mark-input'
-        },
-        messages = {
-            defaultSuccessHeadline: 'Thank you for subscribing',
-            defaultSuccessDesc: ''
-        },
-        setup = function (rootEl, thisRootEl, isIframed) {
-            $('.' + classes.inlineLabel, thisRootEl).each(function (el) {
-                formInlineLabels.init(el, {
-                    textInputClass: '.js-email-sub__text-input',
-                    labelClass: '.js-email-sub__label',
-                    hiddenLabelClass: 'email-sub__label--is-hidden',
-                    labelEnabledClass: 'email-sub__inline-label--enabled'
-                });
-            });
-
-            $('.' + classes.wrapper, thisRootEl).each(function (el) {
-                var $el = $(el),
-                    freezeHeight = ui.freezeHeight($el, false),
-                    freezeHeightReset = ui.freezeHeight($el, true),
-                    $formEl = $('.' + classes.form, el),
-                    analytics = {
-                        formType: $formEl.data('email-form-type'),
-                        listId: $formEl.data('email-list-id'),
-                        signedIn: (Id.isUserLoggedIn()) ? 'user signed-in' : 'user not signed-in'
-                    };
-
-                formSubmission.bindSubmit($formEl, analytics);
-
-                // If we're in an iframe, we should check whether we need to add a title and description
-                // from the data attributes on the iframe (eg: allowing us to set them from composer)
-                if (isIframed) {
-                    ui.updateForm(rootEl, $el, analytics);
-                    ui.setTone($el);
-                }
-
-                // Ensure our form is the right height, both in iframe and outside
-                (isIframed) ? ui.setIframeHeight(rootEl, freezeHeight).call() : freezeHeight.call();
-
-                mediator.on('window:resize',
-                    debounce((isIframed) ? ui.setIframeHeight(rootEl, freezeHeightReset) : freezeHeightReset, 500)
-                );
-            });
+            listIdHiddenInput: 'js-email-sub__listid-input'
         },
         removeAndRemember = function (e, data) {
             var iframe = data[0],
@@ -143,6 +120,108 @@ define([
                 omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | ' + analytics.signedIn + ' | form hidden');
             });
 
+        },
+        ui = {
+            updateForm: function (thisRootEl, el, analytics, opts) {
+                var formData = $(thisRootEl).data(),
+                    formTitle = (opts && opts.formTitle) || formData.formTitle || false,
+                    formDescription = (opts && opts.formDescription) || formData.formDescription || false,
+                    formCampaignCode = (opts && opts.formCampaignCode) || formData.formCampaignCode || '',
+                    formSuccessHeadline = (opts && opts.formSuccessHeadline) || formData.formSuccessHeadline,
+                    formSuccessDesc = (opts && opts.formSuccessDesc) || formData.formSuccessDesc,
+                    removeComforter = (opts && opts.removeComforter) || formData.removeComforter || false,
+                    formModClass = (opts && opts.formModClass) || formData.formModClass || false,
+                    formCloseButton = (opts && opts.formCloseButton) || formData.formCloseButton || false;
+
+                Id.getUserFromApi(function (userFromId) {
+                    ui.updateFormForLoggedIn(userFromId, el);
+                });
+
+                fastdom.write(function () {
+                    if (formTitle) {
+                        $('.js-email-sub__heading', el).text(formTitle);
+                    }
+
+                    if (formDescription) {
+                        $('.js-email-sub__description', el).text(formDescription);
+                    }
+
+                    if (removeComforter) {
+                        $('.js-email-sub__small', el).remove();
+                    }
+
+                    if (formModClass) {
+                        $(el).addClass('email-sub--' + formModClass);
+                    }
+
+                    if (formCloseButton) {
+                        var closeButtonTemplate = {
+                            closeIcon: svgs('closeCentralIcon')
+                        },
+                        closeButtonHtml = template(closeHtml, closeButtonTemplate);
+
+                        el.append(closeButtonHtml);
+
+                        bean.on(el[0], 'click', '.js-email-sub--close', removeAndRemember, [thisRootEl, analytics]);
+                    }
+                });
+
+                // Cache data on the form element
+                $('.js-email-sub__form', el).data('formData', {
+                    campaignCode: formCampaignCode,
+                    referrer: window.location.href,
+                    customSuccessHeadline: formSuccessHeadline,
+                    customSuccessDesc: formSuccessDesc
+                });
+
+            },
+            updateFormForLoggedIn: function (userFromId, el) {
+                if (userFromId && userFromId.primaryEmailAddress) {
+                    fastdom.write(function () {
+                        $('.js-email-sub__inline-label', el).addClass('email-sub__inline-label--is-hidden');
+                        $('.js-email-sub__submit-input', el).addClass('email-sub__submit-input--solo');
+                        $('.js-email-sub__text-input', el).val(userFromId.primaryEmailAddress);
+                    });
+                }
+            },
+            freezeHeight: function ($wrapper, reset) {
+                var wrapperHeight,
+                    getHeight = function () {
+                        fastdom.read(function () {
+                            wrapperHeight = $wrapper[0].clientHeight;
+                        });
+                    },
+                    setHeight = function () {
+                        fastdom.defer(function () {
+                            $wrapper.css('min-height', wrapperHeight);
+                        });
+                    },
+                    resetHeight = function () {
+                        fastdom.write(function () {
+                            $wrapper.css('min-height', '');
+                            getHeight();
+                            setHeight();
+                        });
+                    };
+
+                return function () {
+                    if (reset) {
+                        resetHeight();
+                    } else {
+                        getHeight();
+                        setHeight();
+                    }
+                };
+            },
+            setIframeHeight: function (iFrameEl, callback) {
+                return function () {
+                    fastdom.write(function () {
+                        iFrameEl.height = '';
+                        iFrameEl.height = iFrameEl.contentWindow.document.body.clientHeight + 'px';
+                        callback.call();
+                    });
+                };
+            }
         },
         formSubmission = {
             bindSubmit: function ($form, analytics) {
@@ -165,7 +244,6 @@ define([
                 return function (event) {
                     var emailAddress = $('.' + classes.textInput, $form).val(),
                         listId = $('.' + classes.listIdHiddenInput, $form).val(),
-                        markCheckbox = $('.' + classes.markCheckbox, $form)[0].checked ? 'marketing allowed' : 'marketing disallowed',
                         analyticsInfo;
 
                     event.preventDefault();
@@ -182,10 +260,6 @@ define([
                                         + analytics.listId + ' | '
                                         + analytics.signedIn + ' | '
                                         + '%action%';
-
-                        if (formData.inMarkAbTest) {
-                            analyticsInfo += ' | ' + markCheckbox;
-                        }
 
                         state.submitting = true;
 
@@ -214,144 +288,42 @@ define([
                 };
             }
         },
-        updateForm = {
-            replaceContent: function (isSuccess, $form) {
-                var formData = $form.data('formData'),
-                    submissionMessage = {
-                        statusClass: (isSuccess) ? 'email-sub__message--success' : 'email-sub__message--failure',
-                        submissionHeadline: (isSuccess) ? formData.customSuccessHeadline || messages.defaultSuccessHeadline : 'Something went wrong',
-                        submissionMessage: (isSuccess) ? formData.customSuccessDesc || messages.defaultSuccessDesc : 'Please try again.',
-                        submissionIcon: (isSuccess) ? svgs('tick') : svgs('crossIcon')
-                    },
-                    submissionHtml = template(successHtml, submissionMessage);
-
-                fastdom.write(function () {
-                    $form.addClass('email-sub__form--is-hidden');
-                    $form.after(submissionHtml);
+        setup = function (rootEl, thisRootEl, isIframed) {
+            $('.' + classes.inlineLabel, thisRootEl).each(function (el) {
+                formInlineLabels.init(el, {
+                    textInputClass: '.js-email-sub__text-input',
+                    labelClass: '.js-email-sub__label',
+                    hiddenLabelClass: 'email-sub__label--is-hidden',
+                    labelEnabledClass: 'email-sub__inline-label--enabled'
                 });
-            }
-        },
-        ui = {
-            updateForm: function (thisRootEl, el, analytics, opts) {
-                var formData = $(thisRootEl).data(),
-                    formTitle = (opts && opts.formTitle) || formData.formTitle || false,
-                    formDescription = (opts && opts.formDescription) || formData.formDescription || false,
-                    formCampaignCode = (opts && opts.formCampaignCode) || formData.formCampaignCode || '',
-                    formSuccessHeadline = (opts && opts.formSuccessHeadline) || formData.formSuccessHeadline,
-                    formSuccessDesc = (opts && opts.formSuccessDesc) || formData.formSuccessDesc,
-                    removeComforter = (opts && opts.removeComforter) || formData.removeComforter || false,
-                    formModClass = (opts && opts.formModClass) || formData.formModClass || false,
-                    formCloseButton = (opts && opts.formCloseButton) || formData.formCloseButton || false,
-                    showMarketingCheckbox = (opts && opts.showMarketingCheckbox) || formData.showMarketingCheckbox || false,
-                    showCheckedMarketing = ab.isInVariant('EmailSignupMarketingCheckbox', 'marketing-default-checked'),
-                    showUncheckedMarketing = ab.isInVariant('EmailSignupMarketingCheckbox', 'marketing-default-unchecked');
+            });
 
-                Id.getUserFromApi(function (userFromId) {
-                    ui.updateFormForLoggedIn(userFromId, el);
-                });
-
-                fastdom.write(function () {
-                    if (formTitle) {
-                        $('.js-email-sub__heading', el).text(formTitle);
-                    }
-
-                    if (formDescription) {
-                        $('.js-email-sub__description', el).text(formDescription);
-                    }
-
-                    if (removeComforter) {
-                        $('.js-email-sub__small', el).remove();
-                    }
-
-                    if (formModClass) {
-                        $(el).addClass('email-sub--' + formModClass);
-                    }
-
-                    if (showMarketingCheckbox && (showCheckedMarketing || showUncheckedMarketing)) {
-                        $('.js-email-sub__small', el).after(template(markHtml, {}));
-                        $(el).addClass('email-sub__form--has-mark');
-                        $('.js-email-sub__small', el).addClass('email-sub__small--is-hidden');
-                        if (showCheckedMarketing) {
-                            $('.js-email-sub__mark-input', el).attr('checked', 'checked').val('checked');
-                        }
-                    }
-
-                    if (formCloseButton) {
-                        var closeButtonTemplate = {
-                            closeIcon: svgs('closeCentralIcon')
-                        },
-                        closeButtonHtml = template(closeHtml, closeButtonTemplate);
-
-                        el.append(closeButtonHtml);
-
-                        bean.on(el[0], 'click', '.js-email-sub--close', removeAndRemember, [thisRootEl, analytics]);
-                    }
-                });
-
-                // Cache data on the form element
-                $('.js-email-sub__form', el).data('formData', {
-                    campaignCode: formCampaignCode,
-                    referrer: window.location.href,
-                    customSuccessHeadline: formSuccessHeadline,
-                    customSuccessDesc: formSuccessDesc,
-                    inMarkAbTest: showCheckedMarketing || showUncheckedMarketing
-                });
-
-            },
-            updateFormForLoggedIn: function (userFromId, el) {
-                if (userFromId && userFromId.primaryEmailAddress) {
-                    fastdom.write(function () {
-                        $('.js-email-sub__inline-label', el).addClass('email-sub__inline-label--is-hidden');
-                        $('.js-email-sub__submit-input', el).addClass('email-sub__submit-input--solo');
-                        $('.js-email-sub__text-input', el).val(userFromId.primaryEmailAddress);
-                    });
-                }
-            },
-            setTone: function ($el) {
-                if ($el.hasClass('js-email-sub--article')) {
-                    fastdom.write(function () {
-                        $el.addClass('email-sub--tone-' + config.page.cardStyle);
-                    });
-                }
-            },
-            freezeHeight: function ($wrapper, reset) {
-                var wrapperHeight,
-                    resetHeight = function () {
-                        fastdom.write(function () {
-                            $wrapper.css('min-height', '');
-                            getHeight();
-                            setHeight();
-                        });
-                    },
-                    getHeight = function () {
-                        fastdom.read(function () {
-                            wrapperHeight = $wrapper[0].clientHeight;
-                        });
-                    },
-                    setHeight = function () {
-                        fastdom.defer(function () {
-                            $wrapper.css('min-height', wrapperHeight);
-                        });
+            $('.' + classes.wrapper, thisRootEl).each(function (el) {
+                var $el = $(el),
+                    freezeHeight = ui.freezeHeight($el, false),
+                    freezeHeightReset = ui.freezeHeight($el, true),
+                    $formEl = $('.' + classes.form, el),
+                    analytics = {
+                        formType: $formEl.data('email-form-type'),
+                        listId: $formEl.data('email-list-id'),
+                        signedIn: (Id.isUserLoggedIn()) ? 'user signed-in' : 'user not signed-in'
                     };
 
-                return function () {
-                    if (reset) {
-                        resetHeight();
-                    } else {
-                        getHeight();
-                        setHeight();
-                    }
-                };
-            },
-            setIframeHeight: function (iFrameEl, callback) {
-                return function () {
-                    fastdom.write(function () {
-                        iFrameEl.height = '';
-                        iFrameEl.height = iFrameEl.contentWindow.document.body.clientHeight + 'px';
-                        callback.call();
-                    });
-                };
-            }
+                formSubmission.bindSubmit($formEl, analytics);
+
+                // If we're in an iframe, we should check whether we need to add a title and description
+                // from the data attributes on the iframe (eg: allowing us to set them from composer)
+                if (isIframed) {
+                    ui.updateForm(rootEl, $el, analytics);
+                }
+
+                // Ensure our form is the right height, both in iframe and outside
+                (isIframed) ? ui.setIframeHeight(rootEl, freezeHeight).call() : freezeHeight.call();
+
+                mediator.on('window:resize',
+                    debounce((isIframed) ? ui.setIframeHeight(rootEl, freezeHeightReset) : freezeHeightReset, 500)
+                );
+            });
         };
 
     return {

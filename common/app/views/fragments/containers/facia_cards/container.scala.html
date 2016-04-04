@@ -1,13 +1,16 @@
-@(containerDefinition: layout.FaciaContainer,
-  frontProperties: model.FrontProperties = model.FrontProperties.empty,
-  isPaidFront: Boolean = false)(implicit request: RequestHeader)
-
+@import common.commercial.ContainerModel
 @import common.dfp.{Keyword, Series}
 @import conf.switches.Switches
 @import layout.MetaDataHeader
 @import slices.{CommercialContainerType, Dynamic, Fixed, MostPopular, NavList, NavMediaList, SingleCampaign}
-@import views.html.fragments.containers.facia_cards.{commercialContainer, containerMetaData, mostPopularContainer, navListContainer, navMediaListContainer, standardContainer}
-@import views.support.{Commercial, GetClasses, RenderClasses}
+@import views.html.commercial.containers.paidContainerV2
+@import views.html.fragments.containers.facia_cards._
+@import views.support.Commercial.container.shouldRenderAsPaidContainer
+@import views.support.GetClasses
+@(containerDefinition: layout.FaciaContainer,
+  frontProperties: model.FrontProperties = model.FrontProperties.empty,
+  isPaidFront: Boolean = false,
+  maybeContainerModel: Option[ContainerModel] = None)(implicit request: RequestHeader)
 
 @renderCommercialContainer(containerType: CommercialContainerType) = {
     <div class="fc-container__inner--full-span fc-container__inner--paidfor fc-container__inner">
@@ -24,7 +27,15 @@
     }
 
     @containerDefinition.container match {
-        case _: MostPopular if isPaidFront => {}
+        case _: model.MostPopular if isPaidFront => {}
+
+        case _: Dynamic | _: Fixed if Switches.v2PaidContainerTemplate.isSwitchedOn && shouldRenderAsPaidContainer(isPaidFront, containerDefinition) => {
+            @maybeContainerModel match {
+                case Some(containerModel) => { @paidContainerV2(containerModel) }
+                case None => {}
+            }
+        }
+
         case _ => {
         <section id="@componentName"
         class="@GetClasses.forContainerDefinition(containerDefinition)"
@@ -53,7 +64,7 @@
 
             @containerDefinition.container match {
 
-                case Fixed(definition) if Commercial.container.shouldRenderAsCommercialContainer(isPaidFront, containerDefinition) => {
+                case Fixed(definition) if shouldRenderAsPaidContainer(isPaidFront, containerDefinition) => {
                     @renderCommercialContainer(SingleCampaign(definition))
                 }
 

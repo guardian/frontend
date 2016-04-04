@@ -10,8 +10,8 @@ $disc-avatar-size: 44px;
    ========================================================================== */
 
 .disc-comment {
-    padding-bottom: $gs-baseline/2;
     @include fs-textSans(4);
+    padding-bottom: $gs-baseline/2;
 
     @include mq(activityLeftCol) {
         &:first-of-type {
@@ -20,8 +20,8 @@ $disc-avatar-size: 44px;
     }
 }
 .disc-comment__meta {
-    margin-bottom: $gs-baseline*1.5;
     @include fs-textSans(1);
+    margin-bottom: $gs-baseline*1.5;
     color: colour(neutral-2-contrasted);
 
     @include mq(activityLeftCol) {
@@ -29,8 +29,8 @@ $disc-avatar-size: 44px;
     }
 }
 .disc-comment__date-published {
-    display: block;
     @include fs-textSans(1);
+    display: block;
 }
 .disc-comment__permalink {
     color: colour(neutral-2);
@@ -51,9 +51,9 @@ $disc-avatar-size: 44px;
     }
 }
 .disc-comment__recommend-button {
+    @include circular;
     display: inline-block;
     vertical-align: middle;
-    @include circular;
     height: 19px;
     width: 18px;
     background-color: colour(neutral-2-contrasted);
@@ -81,8 +81,8 @@ $disc-avatar-size: 44px;
     }
 }
 .disc-comment__view-discussion {
-    display: inline-block;
     @include fs-textSans(2);
+    display: inline-block;
 }
 
 
@@ -93,9 +93,9 @@ $disc-avatar-size: 44px;
     @include fs-textSans(4);
 }
 .disc-profile__avatar {
+    @include circular;
     float: left;
     overflow: hidden;
-    @include circular;
     height: $disc-avatar-size;
     width: $disc-avatar-size;
 }
