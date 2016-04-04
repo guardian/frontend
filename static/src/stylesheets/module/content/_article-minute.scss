@@ -571,8 +571,12 @@ $minute-layout-margin-nudge: gs-span(1);
                     width: 100%;
                 }
 
-                .gu-image {
+                .element--inline__outer {
                     height: 100vh;
+                }
+
+                .gu-image {
+                    height: 100%;
                     width: 100vw;
                     object-fit: cover;
                 }
