@@ -5,7 +5,6 @@ import common.{ExecutionContexts, Logging}
 import org.jsoup.nodes.Document
 
 import scala.collection.JavaConversions._
-import scala.concurrent.Future
 
 abstract class HtmlCleaner extends Logging with ExecutionContexts {
   val fakeCacheBustId = "6d5811c93d9b815024b5a6c3ec93a54be18e52f0"
@@ -13,10 +12,9 @@ abstract class HtmlCleaner extends Logging with ExecutionContexts {
   lazy val nonDigitRegEx = """\D+""".r
 
   def canClean(document: Document): Boolean
+  def clean(document: Document): Document
 
-  def clean(document: Document): Future[Document]
-
-  protected def universalClean(document: Document): Future[Unit] = {
+  protected def universalClean(document: Document): Document = {
     removeAds(document)
     removeByClass(document, "top-search-box")
     removeByClass(document, "share-links")
@@ -27,7 +25,7 @@ abstract class HtmlCleaner extends Logging with ExecutionContexts {
     replaceLinks(document)
     repairStaticLinks(document)
     repairStaticSources(document)
-    ComboCleaner(document)
+    deComboLinks(document)
   }
 
   def repairStaticLinks(document: Document): Document = {
@@ -186,6 +184,35 @@ abstract class HtmlCleaner extends Logging with ExecutionContexts {
 
   def removeByTagName(document: Document, tagName: String): Document = {
     document.getElementsByTag(tagName).foreach(_.remove())
+    document
+  }
+
+  def deComboLinks(document: Document): Document = {
+    document.getAllElements.filter { el =>
+      el.hasAttr("href") && el.attr("href").contains("combo.guim.co.uk")
+    }.foreach { el =>
+
+      val combinerRegex = """//combo.guim.co.uk/(\w+)/(.+)(\.\w+)$""".r("cacheBustId", "paths", "extension")
+      val microAppRegex = """^m-(\d+)~(.+)""".r
+      val href = el.attr("href")
+      val combiner = combinerRegex.findFirstMatchIn(href)
+
+      combiner.foreach { combiner =>
+        val cacheBustId = combiner.group("cacheBustId")
+        val extension = combiner.group("extension")
+        val paths = combiner.group("paths").split('+')
+        paths.map { path =>
+          val newPath = if(nonDigitRegEx.findFirstMatchIn(cacheBustId).isEmpty) {
+            s"//static.guim.co.uk/static/$fakeCacheBustId/$path$extension"
+          } else {
+            s"//static.guim.co.uk/static/$cacheBustId/$path$extension"
+          }
+          val newEl = el.clone.attr("href", newPath)
+          el.after(newEl)
+        }
+        el.remove()
+      }
+    }
     document
   }
 }
