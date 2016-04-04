@@ -1,6 +1,6 @@
 @(containerModel: common.commercial.ContainerModel)
 
 <div class="adverts__row">
-    @containerModel.content.initialCardContents.take(2).map(card => views.html.commercial.cards.itemCard(card))
-    @containerModel.content.initialCardContents.drop(2).take(2).map(card => views.html.commercial.cards.itemCard(card, optClassNames = Some(Seq("hide-until-tablet"))))
+    @containerModel.content.fixed.initialCards.take(2).map(card => views.html.commercial.cards.itemCard(card))
+    @containerModel.content.fixed.initialCards.drop(2).take(2).map(card => views.html.commercial.cards.itemCard(card, optClassNames = Some(Seq("hide-until-tablet"))))
 </div>

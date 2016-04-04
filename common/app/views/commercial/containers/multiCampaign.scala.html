@@ -1,8 +1,8 @@
 @(containerModel: common.commercial.ContainerModel)
 
 <div class="adverts__row">
-    @for(card <- containerModel.content.initialCardContents;
-         sponsorData <- card.sponsorData
+    @for(card <- containerModel.content.fixed.initialCards;
+         sponsorData <- card.branding
          ) {
         @views.html.commercial.cards.itemCard(card,
                                               optSponsorship = Some(sponsorData.sponsorshipType),

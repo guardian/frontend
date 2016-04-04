@@ -1,8 +1,8 @@
 @(containerModel: common.commercial.ContainerModel)
 
 <div class="adverts__row adverts__row--1x1x2">
-    @containerModel.content.initialCardContents.take(2).map(card => views.html.commercial.cards.itemCard(card))
+    @containerModel.content.fixed.initialCards.take(2).map(card => views.html.commercial.cards.itemCard(card))
     <div class="adverts__column hide-until-tablet">
-        @containerModel.content.initialCardContents.drop(2).take(3).map(card => views.html.commercial.cards.itemLargeCard(card, Some(Seq("large--inverse", "large--thumbnail"))))
+        @containerModel.content.fixed.initialCards.drop(2).take(3).map(card => views.html.commercial.cards.itemLargeCard(card, Some(Seq("large--inverse", "large--thumbnail"))))
     </div>
 </div>
