@@ -14,7 +14,7 @@ define([
         numberOfVideos;
 
     function init() {
-        numberOfVideos = $(".js-video-playlist").attr("data-number-of-videos");
+        numberOfVideos = $('.js-video-playlist').attr('data-number-of-videos');
         bindEvents();
     }
 
