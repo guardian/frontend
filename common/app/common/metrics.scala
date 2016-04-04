@@ -6,8 +6,8 @@ import java.util.concurrent.atomic.AtomicLong
 
 import com.amazonaws.services.cloudwatch.model.{Dimension, StandardUnit}
 import conf.Configuration
-import conf.switches.Switches
-import metrics.{CountMetric, FrontendMetric, FrontendTimingMetric, GaugeMetric}
+
+import metrics._
 import model.diagnostics.CloudWatch
 import play.api.{GlobalSettings, Application => PlayApp}
 
@@ -32,69 +32,87 @@ object SystemMetrics extends implicits.Numbers {
     }
   }
 
-
   lazy val garbageCollectors: Seq[GcRateMetric] = ManagementFactory.getGarbageCollectorMXBeans.map(new GcRateMetric(_))
-
 
   // divide by 1048576 to convert bytes to MB
 
-  object MaxHeapMemoryMetric extends GaugeMetric("max-heap-memory", "Max heap memory (MB)",
-    () => ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getMax / 1048576
+  val MaxHeapMemoryMetric = GaugeMetric(
+    name = "max-heap-memory",
+    description = "Max heap memory (MB)",
+    get = () => ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getMax / 1048576
   )
 
-  object UsedHeapMemoryMetric extends GaugeMetric("used-heap-memory", "Used heap memory (MB)",
-    () => ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getUsed / 1048576
+  object UsedHeapMemoryMetric extends GaugeMetric(
+    name ="used-heap-memory",
+    description = "Used heap memory (MB)",
+    get = () => ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getUsed / 1048576
   )
 
-  object MaxNonHeapMemoryMetric extends GaugeMetric("max-non-heap-memory", "Max non heap memory (MB)",
-    () => ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getMax / 1048576
+  val MaxNonHeapMemoryMetric = GaugeMetric(
+    name = "max-non-heap-memory",
+    description = "Max non heap memory (MB)",
+    get = () => ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getMax / 1048576
   )
 
-  object UsedNonHeapMemoryMetric extends GaugeMetric("used-non-heap-memory", "Used non heap memory (MB)",
-    () => ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getUsed / 1048576
+  val UsedNonHeapMemoryMetric = GaugeMetric(
+    name = "used-non-heap-memory",
+    description = "Used non heap memory (MB)",
+    get = () => ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getUsed / 1048576
   )
 
-  object AvailableProcessorsMetric extends GaugeMetric("available-processors", "Available processors",
-    () => ManagementFactory.getOperatingSystemMXBean.getAvailableProcessors
+  val AvailableProcessorsMetric = GaugeMetric(
+    name = "available-processors",
+    description = "Available processors",
+    get = () => ManagementFactory.getOperatingSystemMXBean.getAvailableProcessors
   )
 
-  object FreeDiskSpaceMetric extends GaugeMetric("free-disk-space", "Free disk space (MB)",
-    () => new File("/").getUsableSpace / 1048576
+  val FreeDiskSpaceMetric = GaugeMetric(
+    name = "free-disk-space",
+    description = "Free disk space (MB)",
+    get = () => new File("/").getUsableSpace / 1048576
   )
 
-  object TotalDiskSpaceMetric extends GaugeMetric("total-disk-space", "Total disk space (MB)",
-    () => new File("/").getTotalSpace / 1048576
+  val TotalDiskSpaceMetric = GaugeMetric(
+    name = "total-disk-space",
+    description = "Total disk space (MB)",
+    get = () => new File("/").getTotalSpace / 1048576
   )
 
-  object ThreadCountMetric extends GaugeMetric("thread-count", "Thread Count",
-    () => ManagementFactory.getThreadMXBean.getThreadCount,
-    StandardUnit.Count
+  val ThreadCountMetric = GaugeMetric(
+    name = "thread-count",
+    description = "Thread Count",
+    get = () => ManagementFactory.getThreadMXBean.getThreadCount,
+    metricUnit = StandardUnit.Count
   )
 
   // yeah, casting to com.sun.. ain't too pretty
-  object TotalPhysicalMemoryMetric extends GaugeMetric("total-physical-memory", "Total physical memory",
-    () => ManagementFactory.getOperatingSystemMXBean match {
+  val TotalPhysicalMemoryMetric = GaugeMetric(
+    name = "total-physical-memory", description = "Total physical memory",
+    get = () => ManagementFactory.getOperatingSystemMXBean match {
       case b: com.sun.management.OperatingSystemMXBean => b.getTotalPhysicalMemorySize
       case _ => -1
     }
   )
 
-  object FreePhysicalMemoryMetric extends GaugeMetric("free-physical-memory", "Free physical memory",
-    () => ManagementFactory.getOperatingSystemMXBean match {
+  val FreePhysicalMemoryMetric = GaugeMetric(
+    name = "free-physical-memory", description = "Free physical memory",
+    get = () => ManagementFactory.getOperatingSystemMXBean match {
       case b: com.sun.management.OperatingSystemMXBean => b.getFreePhysicalMemorySize
       case _ => -1
     }
   )
 
-  object OpenFileDescriptorsMetric extends GaugeMetric("open-file-descriptors", "Open file descriptors",
-    () => ManagementFactory.getOperatingSystemMXBean match {
+  val OpenFileDescriptorsMetric = GaugeMetric(
+    name = "open-file-descriptors", description = "Open file descriptors",
+    get = () => ManagementFactory.getOperatingSystemMXBean match {
       case b: com.sun.management.UnixOperatingSystemMXBean => b.getOpenFileDescriptorCount
       case _ => -1
     }
   )
 
-  object MaxFileDescriptorsMetric extends GaugeMetric("max-file-descriptors", "Max file descriptors",
-    () => ManagementFactory.getOperatingSystemMXBean match {
+  val MaxFileDescriptorsMetric = GaugeMetric(
+    name = "max-file-descriptors", description = "Max file descriptors",
+    get = () => ManagementFactory.getOperatingSystemMXBean match {
       case b: com.sun.management.UnixOperatingSystemMXBean => b.getMaxFileDescriptorCount
       case _ => -1
     }
@@ -105,39 +123,56 @@ object SystemMetrics extends implicits.Numbers {
     case _ => -1 // dev machines do not have a build number
   }
 
-  object BuildNumberMetric extends GaugeMetric("build-number", "Build number",
-    () => buildNumber,
-    StandardUnit.None
+  val BuildNumberMetric = GaugeMetric(
+    name = "build-number",
+    description = "Build number",
+    get = () => buildNumber,
+    metricUnit = StandardUnit.None
   )
 }
 
 object ContentApiMetrics {
-  object ElasticHttpTimingMetric extends FrontendTimingMetric(
+  val ElasticHttpTimingMetric = TimingMetric(
     "elastic-content-api-call-latency",
     "Elastic outgoing requests to content api"
   )
 
-  object ElasticHttpTimeoutCountMetric extends CountMetric(
+  val ElasticHttpTimeoutCountMetric = CountMetric(
     "elastic-content-api-timeouts",
     "Elastic Content api calls that timeout"
   )
 
-  object ContentApiErrorMetric extends CountMetric(
+  val ContentApiErrorMetric = CountMetric(
     "content-api-errors",
     "Number of times the Content API returns errors (not counting when circuit breaker is on)"
   )
 
-  object ContentApi404Metric extends CountMetric(
+  val ContentApi404Metric = CountMetric(
     "content-api-404",
     "Number of times the Content API has responded with a 404"
   )
 }
 
 object FaciaPressMetrics {
-  object FrontPressCronSuccess extends CountMetric(
+  val FrontPressCronSuccess = CountMetric(
     "front-press-cron-success",
     "Number of times facia-tool cron job has successfully pressed"
   )
+
+  val UkPressLatencyMetric = DurationMetric("uk-press-latency", StandardUnit.Milliseconds)
+  val UsPressLatencyMetric = DurationMetric("us-press-latency", StandardUnit.Milliseconds)
+  val AuPressLatencyMetric = DurationMetric("au-press-latency", StandardUnit.Milliseconds)
+  val AllFrontsPressLatencyMetric = DurationMetric("front-press-latency", StandardUnit.Milliseconds)
+}
+
+object EmailSubsciptionMetrics {
+  val AllEmailSubmission = CountMetric("all-email-submission", "Any request to the submit email endpoint")
+  val EmailSubmission = CountMetric("email-submission", "Successful POST to the email API Gateway")
+  val NotAccepted = CountMetric("email-submission-not-accepted", "Any request with the wrong MIME type")
+  val EmailFormError = CountMetric("email-submission-form-error", "Email submission form error")
+  val APIHTTPError = CountMetric("email-api-http-error", "Non-200/201 response from email subscription API")
+  val APINetworkError = CountMetric("email-api-network-error", "Email subscription API network failure")
+  val ListIDError = CountMetric("email-list-id-error", "Invalid list ID in email subscription")
 }
 
 trait CloudWatchApplicationMetrics extends GlobalSettings {
@@ -160,18 +195,18 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
     SystemMetrics.ThreadCountMetric
   ) ++ SystemMetrics.garbageCollectors.flatMap{ gc => List(
       GaugeMetric(s"${gc.name}-gc-count-per-min" , "Used heap memory (MB)",
-        () => gc.gcCount.toLong,
-        StandardUnit.Count
+        StandardUnit.Count,
+        () => gc.gcCount.toLong
       ),
       GaugeMetric(s"${gc.name}-gc-time-per-min", "Used heap memory (MB)",
-        () => gc.gcTime.toLong,
-        StandardUnit.Count
+        StandardUnit.Count,
+        () => gc.gcTime.toLong
       )
     )}
 
   private def report() {
     val allMetrics: List[FrontendMetric] = this.systemMetrics ::: this.applicationMetrics
-    if (Configuration.environment.isNonProd && Switches.MetricsSwitch.isSwitchedOn) {
+    if (Configuration.environment.isNonProd) {
       CloudWatch.putMetricsWithStage(allMetrics, applicationDimension)
     }
   }
