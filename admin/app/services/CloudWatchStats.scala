@@ -9,10 +9,9 @@ import controllers.HealthCheck
 import org.joda.time.DateTime
 import awswrappers.cloudwatch._
 
-import scala.collection.JavaConversions._
 import scala.concurrent.Future
 
-trait CloudWatch extends Logging with ExecutionContexts {
+object CloudWatchStats extends Logging with ExecutionContexts {
   val stage = new Dimension().withName("Stage").withValue(environment.stage)
 
   lazy val cloudwatch = {
@@ -51,5 +50,3 @@ trait CloudWatch extends Logging with ExecutionContexts {
 
   def pageViewsHavingAnAd: Future[GetMetricStatisticsResult] = sanityData("first-ad-rendered")
 }
-
-object CloudWatch extends CloudWatch
