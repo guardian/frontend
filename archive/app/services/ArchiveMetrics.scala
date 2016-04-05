@@ -7,10 +7,10 @@ import play.api.{GlobalSettings, Application => PlayApp}
 
 trait ArchiveMetrics extends GlobalSettings {
 
+  val Googlebot404Count = CountMetric("googlebot-404s", "Googlebot 404s")
+
   private def report() {
-    CloudWatch.put("ArchiveMetrics", Map(
-      Googlebot404Count.name -> Googlebot404Count.getAndReset
-    ))
+    CloudWatch.putMetrics("ArchiveMetrics", List(Googlebot404Count), List.empty)
   }
 
   override def onStart(app: PlayApp) {
@@ -28,5 +28,3 @@ trait ArchiveMetrics extends GlobalSettings {
   }
 
 }
-
-object Googlebot404Count extends CountMetric("googlebot-404s", "Googlebot 404s")

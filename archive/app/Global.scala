@@ -1,3 +1,5 @@
+package app
+
 import common.CloudWatchApplicationMetrics
 import conf.{SwitchboardLifecycle, CorsErrorHandler, Filters}
 import dev.DevParametersLifecycle
