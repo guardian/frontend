@@ -29,7 +29,6 @@
         @containerDefinition.collectionEssentials.items.zipWithIndex.map { case (item, index) =>
             @if(item.header.isVideo) {
                 <li class="video-playlist__item video-playlist__item--@index">
-                    <h2 class="video-playlist__title" href="@LinkTo(SupportedUrl.fromFaciaContent(item))" data-link-name=" | article | @index">@item.header.headline.replace(" – video", "")</h2>
                     @item.properties.maybeContent.map { content => 
                         @defining(VideoPlayer(
                             content.elements.mainVideo.get,
@@ -58,6 +57,7 @@
                             }
                         }
                     }
+                    <h2 class="video-playlist__title" href="@LinkTo(SupportedUrl.fromFaciaContent(item))" data-link-name=" | article | @index">@item.header.headline.replace(" – video", "")</h2>
                 </li>
             }
         }

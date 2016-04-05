@@ -149,9 +149,10 @@ $video-width-desktop: 700px;
 .video-playlist__item {
     position: relative;
     display: inline-block;
+    vertical-align: top;
     padding-bottom: 39.375%; // To keep with 16:9 ratio
     width: 70%;
-    height: 0;
+    height: 120px;
 
     @include mq(desktop) {
         width: $video-width-desktop;
@@ -201,10 +202,6 @@ $video-width-desktop: 700px;
 
 .video-playlist__title {
     @include fs-headline(3);
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
     font-weight: 500;
     background-color: rgba(0, 0, 0, .5);
     white-space: normal;
@@ -216,5 +213,9 @@ $video-width-desktop: 700px;
 
     @include mq(desktop) {
         opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
     }
 }
