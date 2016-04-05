@@ -2,6 +2,7 @@ package jobs
 
 import java.util.concurrent.atomic.AtomicLong
 
+import com.amazonaws.services.cloudwatch.model.StandardUnit
 import common.{ExecutionContexts, Logging}
 import metrics.GaugeMetric
 import model.diagnostics.CloudWatch
@@ -20,6 +21,7 @@ object AnalyticsSanityCheckJob extends ExecutionContexts with Logging {
   val omnitureConversionRate = GaugeMetric(
     name = "omniture-percent-conversion",
     description = "The percentage of raw page views that contain a recorded Omniture page view",
+    metricUnit = StandardUnit.Percent,
     get = () => {
       omniturePageViews.get.toDouble / rawPageViews.get.toDouble * 100.0d
     }
@@ -28,6 +30,7 @@ object AnalyticsSanityCheckJob extends ExecutionContexts with Logging {
   val ophanConversionRate = GaugeMetric(
     name = "ophan-percent-conversion",
     description = "The percentage of raw page views that contain a recorded Ophan page view",
+    metricUnit = StandardUnit.Percent,
     get = () => {
       ophanPageViews.get.toDouble / rawPageViews.get.toDouble * 100.0d
     }
