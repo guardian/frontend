@@ -61,6 +61,11 @@ $video-width-desktop: 700px;
     }
 }
 
+.video-playlist--0 .video-playlist__control--prev,
+.video-playlist--end .video-playlist__control--next {
+    opacity: .2;
+}
+
 .video-playlist__inner {
     margin: 0;
     font-size: 0; // to remove spacing between inline-blocked children
@@ -192,7 +197,7 @@ $video-width-desktop: 700px;
     font-weight: 500;
     background-color: rgba(0, 0, 0, .5);
     white-space: normal;
-    padding: $gs-baseline/4 $gs-gutter/4 $gs-baseline;
+    padding: $gs-baseline/4 $gs-gutter/4 $gs-baseline * 2;
     box-sizing: border-box;
     color: #ffffff;
     min-width: 100%;

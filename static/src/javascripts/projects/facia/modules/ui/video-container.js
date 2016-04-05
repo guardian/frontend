@@ -28,7 +28,7 @@ define([
     }
 
     function moveCarousel(direction) {
-        $('.js-video-playlist').removeClass('video-playlist--' + containerPos);
+        $('.js-video-playlist').removeClass('video-playlist--end video-playlist--' + containerPos);
 
         if (direction === 'next') {
             containerPos++;
@@ -36,8 +36,9 @@ define([
             containerPos = containerPos - 1;
         }
 
-        if (containerPos > numberOfVideos) {
+        if (containerPos >= numberOfVideos) {
             containerPos = numberOfVideos;
+            $('.js-video-playlist').addClass('video-playlist--end');
         } else if (containerPos < 0) {
             containerPos = 0;
         }
