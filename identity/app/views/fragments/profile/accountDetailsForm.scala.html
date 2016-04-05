@@ -51,7 +51,7 @@
                         }
                         @select(
                             accountDetailsForm("telephoneNumber.countryCode"),
-                            options(CountryCodes.ordered: _*),
+                            CountryCodes.codes.map { item => (item.toString, "+" + item.toString)},
                             ('_label, ""),
                             ('_showConstraints, false),
                             ('_default, ""),
