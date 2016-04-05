@@ -1,9 +1,11 @@
+package app
+
 import commercial.CommercialLifecycle
 import common._
 import conf.{CorsErrorHandler, Filters, SwitchboardLifecycle}
 import dev.DevParametersLifecycle
+import metrics.MetricUploader
 import play.api.mvc.WithFilters
-import play.api.{Application => PlayApp}
 
 object Global extends WithFilters(Filters.common: _*)
   with CommercialLifecycle
@@ -12,4 +14,6 @@ object Global extends WithFilters(Filters.common: _*)
   with CloudWatchApplicationMetrics
   with CorsErrorHandler {
   override lazy val applicationName = "frontend-commercial"
+
+  val commercialMetrics = MetricUploader("Commercial")
 }

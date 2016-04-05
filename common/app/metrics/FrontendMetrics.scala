@@ -5,6 +5,7 @@ import java.util.concurrent.atomic.AtomicLong
 import akka.agent.Agent
 import com.amazonaws.services.cloudwatch.model.StandardUnit
 import common.AkkaAgent
+import model.diagnostics.CloudWatch
 import org.joda.time.DateTime
 import scala.util.Try
 
@@ -31,6 +32,38 @@ case class FrontendStatisticSet(
   lazy val sum: Double = datapoints.map(_.value).sum
   lazy val average: Double =
     Try(sum / sampleCount).toOption.getOrElse(0L)
+}
+
+
+case class SimpleDataPoint(value: Double, sampleTime: DateTime) extends DataPoint {
+  override val time = Some(sampleTime)
+}
+
+final case class SimpleMetric(override val name: String, val datapoint: SimpleDataPoint) extends FrontendMetric {
+  override val metricUnit: StandardUnit = StandardUnit.Count
+  override val getAndResetDataPoints: List[DataPoint] = List(datapoint)
+  override val isEmpty = false
+}
+
+// MetricUploader is a class to allow basic putting of metrics. Why does it exist? Because if we provide
+// access to cloudwatch directly, then we start to measure everything, and never remove unused metrics.
+// Also, MetricUploader will upload in batches.
+final case class MetricUploader(namespace: String) {
+
+  private val datapoints: Agent[List[SimpleMetric]] = AkkaAgent(List.empty)
+
+  def put(metrics: Map[String, Double]) = {
+    val timedMetrics = metrics.map { case (key, value) =>
+      SimpleMetric(name = key, SimpleDataPoint(value, DateTime.now))
+    }
+    datapoints.send(_ ++ timedMetrics)
+  }
+
+  def upload():Unit = {
+    val points = datapoints.get()
+    datapoints.alter(_.diff(points))
+    CloudWatch.putMetrics(namespace, points, List.empty)
+  }
 }
 
 case class TimingDataPoint(value: Double, time: Option[DateTime] = None) extends DataPoint
