@@ -8,14 +8,17 @@ import scala.concurrent.Future
 import scala.concurrent.duration.Duration
 import scala.concurrent.ExecutionContext.Implicits.global
 
-case class CacheTime(cacheSeconds: Int, longCacheSeconds: Int)
+case class CacheTime(cacheSeconds: Int)
 object CacheTime {
 
-  object LiveBlogActive extends CacheTime(5, 5)
-  object RecentlyUpdated extends CacheTime(10, 300)
-  object LastDayUpdated extends CacheTime(30, 1200)
-  object NotRecentlyUpdated extends CacheTime(300, 1800)
-  object Default extends CacheTime(60, 60)
+  object LiveBlogActive extends CacheTime(5)
+  object RecentlyUpdated extends CacheTime(10)
+  object LastDayUpdated extends CacheTime(30)
+  object NotRecentlyUpdated extends CacheTime(300)
+  object Default extends CacheTime(60)
+  object RecentlyUpdatedPurgable extends CacheTime(300)
+  object LastDayUpdatedPurgable extends CacheTime(1200)
+  object NotRecentlyUpdatedPurgable extends CacheTime(1800)
 
 }
 
@@ -26,7 +29,7 @@ object Cached extends implicits.Dates {
   private val tenDaysInSeconds = 864000
 
   def apply(seconds: Int)(result: Result): Result = {
-    if (cacheableStatusCodes.exists(_ == result.header.status)) cacheHeaders(seconds, result) else result
+    if (cacheableStatusCodes.contains(result.header.status)) cacheHeaders(seconds, result) else result
   }
 
   def apply(duration: Duration)(result: Result): Result = {
@@ -34,12 +37,8 @@ object Cached extends implicits.Dates {
   }
 
   def apply(page: Page)(result: Result): Result = {
-    val cacheSeconds =
-      if (page.longCacheable && LongCacheSwitch.isSwitchedOn)
-        page.cacheTime.longCacheSeconds
-      else
-        page.cacheTime.cacheSeconds
-    if (cacheableStatusCodes.exists(_ == result.header.status)) cacheHeaders(cacheSeconds, result) else result
+    val cacheSeconds = page.metadata.cacheTime.cacheSeconds
+    if (cacheableStatusCodes.contains(result.header.status)) cacheHeaders(cacheSeconds, result) else result
   }
 
   // Use this when you are sure your result needs caching headers, even though the result status isn't

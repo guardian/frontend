@@ -109,6 +109,7 @@ object MetaDataFormat {
         part2.contentType,
         part2.hasHeader,
         part2.schemaType,
+        CacheTime.Default,
         part2.openGraphImages,
         part2.membershipAccess,
         part2.isFront,

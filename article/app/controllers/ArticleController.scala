@@ -9,6 +9,7 @@ import conf._
 import conf.switches.Switches
 import conf.switches.Switches.LongCacheSwitch
 import model._
+import org.scala_tools.time.Imports._
 import model.liveblog.{BodyBlock, KeyEventData}
 import org.joda.time.DateTime
 import performance.MemcachedAction
@@ -27,9 +28,7 @@ trait PageWithStoryPackage extends ContentPage {
 }
 
 case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
-case class LiveBlogPage(article: Article, pageModel: LiveBlogPageModel[BodyBlock], related: RelatedContent) extends PageWithStoryPackage {
-  override def cacheTime = if (!pageModel.currentPage.isArchivePage && article.fields.isLive) CacheTime.LiveBlogActive else super.cacheTime
-}
+case class LiveBlogPage(article: Article, pageModel: LiveBlogPageModel[BodyBlock], related: RelatedContent) extends PageWithStoryPackage
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
 object ArticleController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
@@ -210,7 +209,26 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
     )
     liveBlogPageModel match {
       case Some(pageModel) =>
-        Left(LiveBlogPage(liveBlog, pageModel, RelatedContent(liveBlog, response)))
+
+        val cacheTime =
+          if (!pageModel.currentPage.isArchivePage && liveBlog.fields.isLive) liveBlog.metadata.cacheTime
+          else {
+            if (LongCacheSwitch.isSwitchedOn) {
+              if (liveBlog.fields.lastModified > DateTime.now(liveBlog.fields.lastModified.getZone) - 1.hour) CacheTime.RecentlyUpdatedPurgable
+              else if (liveBlog.fields.lastModified > DateTime.now(liveBlog.fields.lastModified.getZone) - 24.hours) CacheTime.LastDayUpdatedPurgable
+              else CacheTime.NotRecentlyUpdatedPurgable
+            } else {
+              if (liveBlog.fields.lastModified > DateTime.now(liveBlog.fields.lastModified.getZone) - 1.hour) CacheTime.RecentlyUpdated
+              else if (liveBlog.fields.lastModified > DateTime.now(liveBlog.fields.lastModified.getZone) - 24.hours) CacheTime.LastDayUpdated
+              else CacheTime.NotRecentlyUpdated
+            }
+          }
+
+        val liveBlogCache = liveBlog.copy(
+          content = liveBlog.content.copy(
+            metadata = liveBlog.content.metadata.copy(
+              cacheTime = cacheTime)))
+        Left(LiveBlogPage(liveBlogCache, pageModel, RelatedContent(liveBlog, response)))
       case None => Right(NotFound)
     }
 

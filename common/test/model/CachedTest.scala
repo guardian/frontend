@@ -4,7 +4,6 @@ import com.gu.contentapi.client.model.v1.{Content => ApiContent, ContentFields}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
 import conf.switches.Switches
 import conf.switches.Switches.DoubleCacheTimesSwitch
-import model.CacheTime.LiveBlogActive
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import org.scalatest.{FlatSpec, Matchers}
@@ -15,11 +14,8 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
   "Cached" should "cache live content for 5 seconds" in {
     Switches.DoubleCacheTimesSwitch.switchOff()
 
-    val liveContent = new Page {
-      override def metadata: MetaData = MetaData("","","","","","","")
-
-      override def cacheTime: CacheTime = LiveBlogActive
-    }
+    val modified = new DateTime(2001, 5, 20, 12, 3, 4, 555)
+    val liveContent = content(lastModified = modified, live = true)
 
     val result = Cached(liveContent)(Ok("foo"))
     val headers = result.header.headers
@@ -31,7 +27,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
     Switches.DoubleCacheTimesSwitch.switchOff()
 
     val modifiedAlmost1HourAgo = DateTime.now - 58.minutes
-    val liveContent = content(lastModified = modifiedAlmost1HourAgo)
+    val liveContent = content(lastModified = modifiedAlmost1HourAgo, live = false)
 
     val result = Cached(liveContent)(Ok("foo"))
     val headers = result.header.headers
@@ -43,7 +39,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
     Switches.DoubleCacheTimesSwitch.switchOff()
 
     val modifiedLongAgo = DateTime.now - 25.hours
-    val liveContent = content(lastModified = modifiedLongAgo)
+    val liveContent = content(lastModified = modifiedLongAgo, live = false)
 
     val result = Cached(liveContent)(Ok("foo"))
     val headers = result.header.headers
@@ -70,7 +66,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
 
     DoubleCacheTimesSwitch.switchOn()
 
-    val liveContent = content(lastModified = DateTime.now)
+    val liveContent = content(lastModified = DateTime.now, live = false)
 
     val result = Cached(liveContent)(Ok("foo"))
     val headers = result.header.headers
@@ -103,7 +99,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
     headers("Cache-Control") should equal (headers("Surrogate-Control"))
   }
 
-  private def content(lastModified: DateTime) = {
+  private def content(lastModified: DateTime, live: Boolean) = {
     val content = Content(ApiContent(id = "foo/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
@@ -113,7 +109,8 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
       apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
       elements = None,
       fields = Some(ContentFields(
-        lastModified = Some(lastModified.toCapiDateTime)))
+        lastModified = Some(lastModified.toCapiDateTime),
+        liveBloggingNow = Some(live)))
     ))
     model.SimpleContentPage(content)
   }
