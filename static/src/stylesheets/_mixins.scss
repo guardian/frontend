@@ -140,13 +140,13 @@
 
     i,
     .i {
+        @include icon($name);
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
         margin: auto;
-        @include icon($name);
     }
 }
 
@@ -216,7 +216,7 @@
         @if map-has-key($pasteup-palette, $color) {
             @return guss-colour($color, $pasteup-palette);
         } @else {
-            @warn "#{$color} not found in either frontend or pasteup palette";
+            @warn '#{$color} not found in either frontend or pasteup palette';
             @return false;
         }
     }

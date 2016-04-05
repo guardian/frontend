@@ -105,7 +105,6 @@
 }
 
 .d2-body {
-    clear: both;
-
     @include d-comment__body;
+    clear: both;
 }

@@ -2,6 +2,7 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+GET            /surveys/*file                                                                                                    dev.DevAssetsController.surveys(file)
 GET            /commercial/test-page                                                                                             controllers.commercial.CreativeTestPage.allComponents(k: List[String])
 
 # For dev machines
@@ -301,7 +302,9 @@ GET            /commercial/capi-single-merch                                    
 GET            /commercial/paid.json                                                                                             controllers.commercial.PaidContentCardController.cardJson
 GET            /commercial/paid                                                                                                  controllers.commercial.PaidContentCardController.cardHtml
 GET            /commercial/multi.json                                                                                            controllers.commercial.Multi.renderMulti
-GET            /commercial/subscriber-number                                                                                controllers.commercial.StaticPageController.renderSubscriberNumberPage()
+GET            /commercial/guardian-explain                                                                                      controllers.commercial.StaticPageController.renderGuardianExplainPage()
+GET            /commercial/guardian-explore                                                                                      controllers.commercial.StaticPageController.renderGuardianExplorePage()
+GET            /commercial/guardian-experience                                                                                   controllers.commercial.StaticPageController.renderGuardianExperiencePage()
 
 # Commercial Admin
 GET            /admin/commercial                                                                                                 controllers.admin.CommercialController.renderCommercialMenu()
@@ -411,6 +414,7 @@ GET            /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>                          
 GET            /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>.json                                                    controllers.ImageContentController.renderJson(path)
 GET            /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>                                                         controllers.ImageContentController.render(path)
 
+GET            /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>/info.json                                                           controllers.MediaController.renderInfoJson(path)
 GET            /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                                                                controllers.MediaController.renderJson(path)
 GET            /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>                                                                     controllers.MediaController.render(path)
 

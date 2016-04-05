@@ -100,7 +100,7 @@ Media list item. Looks a bit like this:
         }
     }
 
-    &[class*="fc-item--has-sublinks"] .fc-item__media-wrapper {
+    &[class*='fc-item--has-sublinks'] .fc-item__media-wrapper {
         position: relative;
         float: left;
     }
@@ -125,7 +125,7 @@ Media list item. Looks a bit like this:
     }
 
     .fc-item__footer--vertical,
-    &[class*="fc-item--has-sublinks"] .fc-item__meta {
+    &[class*='fc-item--has-sublinks'] .fc-item__meta {
         margin-left: 0 - $image-width - $mobile-media-padding;
     }
 

@@ -65,12 +65,12 @@ category: Common
 
     a,
     .tab__link {
+        @include fs-headline(2);
         display: block;
         box-sizing: border-box;
         min-height: $gs-row-height;
         padding: $gs-baseline/3 8px 0;
         background-color: colour(neutral-6);
-        @include fs-headline(2);
         text-align: left;
         text-decoration: none;
 

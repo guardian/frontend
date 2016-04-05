@@ -155,8 +155,8 @@
     }
 
     .summary-header {
-        display: block;
         @include fs-textSans(4);
+        display: block;
         color: #ffffff;
         height: 30px;
         padding: 0 0 0 $gs-baseline;

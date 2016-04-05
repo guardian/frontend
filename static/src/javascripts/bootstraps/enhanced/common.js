@@ -14,6 +14,7 @@ define([
     'common/utils/url',
     'common/utils/robust',
     'common/utils/storage',
+    'common/modules/analytics/foresee-survey',
     'common/modules/analytics/livestats',
     'common/modules/analytics/media-listener',
     'common/modules/analytics/omniture',
@@ -27,7 +28,6 @@ define([
     'common/modules/commercial/user-features',
     'common/modules/discussion/comment-count',
     'common/modules/experiments/ab',
-    'common/modules/experiments/subscriber-number-form',
     'common/modules/identity/autosignin',
     'common/modules/identity/cookierefresh',
     'common/modules/navigation/navigation',
@@ -70,6 +70,7 @@ define([
     url,
     robust,
     storage,
+    Foresee,
     liveStats,
     mediaListener,
     omniture,
@@ -83,7 +84,6 @@ define([
     userFeatures,
     CommentCount,
     ab,
-    subscriberNumberForm,
     AutoSignin,
     CookieRefresh,
     navigation,
@@ -207,6 +207,13 @@ define([
                 cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at', 'gu_adfree_user']);
             },
 
+            cleanupLocalStorage : function () {
+                var deprecatedKeys = [
+                    'gu.subscriber'
+                ];
+                forEach(deprecatedKeys, storage.remove);
+            },
+
             updateHistory: function () {
                 if (config.page.contentType !== 'Network Front') {
                     history.logSummary(config.page);
@@ -246,6 +253,12 @@ define([
             checkIframe: function () {
                 if (window.self !== window.top) {
                     $('html').addClass('iframed');
+                }
+            },
+
+            runForseeSurvey: function () {
+                if (config.switches.foresee) {
+                    Foresee.load();
                 }
             },
 
@@ -387,13 +400,14 @@ define([
                 ['c-sign-in', modules.initAutoSignin],
                 ['c-id-cookie-refresh', modules.idCookieRefresh],
                 ['c-history-nav', modules.showHistoryInMegaNav],
+                ['c-forsee', modules.runForseeSurvey],
                 ['c-start-register', modules.startRegister],
                 ['c-tag-links', modules.showMoreTagsLink],
                 ['c-smart-banner', smartAppBanner.init],
                 ['c-adblock', modules.showAdblockMessage],
-                ['c-subscriber-number-form', subscriberNumberForm],
                 ['c-log-stats', modules.logLiveStats],
                 ['c-cookies', modules.cleanupCookies],
+                ['c-localStorage', modules.cleanupLocalStorage],
                 ['c-overlay', modules.initOpenOverlayOnClick],
                 ['c-css-logging', modules.runCssLogging],
                 ['c-public-api', modules.initPublicApi],

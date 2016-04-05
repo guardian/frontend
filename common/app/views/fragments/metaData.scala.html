@@ -77,6 +77,17 @@
 <meta name="theme-color" content="#005689">
 <meta name="msapplication-TileImage" content="@Static("images/favicons/windows_tile_144_b.png")" />
 
+@*
+ * This referrer policy preserves URLs in the Referrer header when navigating
+ * from HTTPS->HTTP.
+ *
+ * We need it for tracking to work properly while we do section-by-section
+ * rollout of HTTPS.
+ *
+ * See https://www.w3.org/TR/referrer-policy/#referrer-policy-state-unsafe-url
+*@
+<meta name="referrer" content="unsafe-url">
+
 @* https://support.google.com/plus/answer/1713826 *@
 <link rel="publisher" href="https://plus.google.com/113000071431138202574" />
 

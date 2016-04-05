@@ -11,7 +11,7 @@
         padding-top: $gs-baseline / 2;
     }
 
-/*  Header
+    /* Header
     ========================================================================== */
     .content__head {
         position: relative;
@@ -156,7 +156,7 @@
         }
     }
 
-/*  Meta
+    /* Meta
     ========================================================================== */
     .content__meta-container--immersive {
         position: relative;
@@ -170,11 +170,11 @@
         }
 
         .content__dateline {
+            @include fs-textSans(3);
             min-height: 0;
             border: 0;
             padding: 0;
             padding-right: $gs-gutter / 2 - 4px;
-            @include fs-textSans(3);
 
             @include mq(tablet, leftCol) {
                 margin-bottom: $gs-gutter;
@@ -309,7 +309,7 @@
         }
     }
 
-/*  Body
+    /* Body
     ========================================================================== */
     .drop-cap {
         height: 7.25em;

@@ -47,8 +47,8 @@
         }
     }
     .lineitem__title {
-        color: colour(neutral-1);
         @include fs-header(1);
+        color: colour(neutral-1);
         font-weight: 500;
         padding-top: 2px;
     }

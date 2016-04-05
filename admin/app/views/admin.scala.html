@@ -1,5 +1,6 @@
+@(env: String)(implicit request: RequestHeader)
+
 @import conf.switches.Switches.R2PagePressServiceSwitch
-@(env: String)
 @admin_main("Frontend Admin", env, isAuthed = true) {
     <div class="row">
 

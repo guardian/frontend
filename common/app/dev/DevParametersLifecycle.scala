@@ -19,6 +19,7 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
     "view",
     "_edition", //allows us to spoof edition in tests
     "c", // used for counts in the Diagnostics server
+    "build", // used by Forsee surveys
     "shortUrl", // Used by series component in onwards journeys
     "switchesOn", // turn switches on for non-prod, http requests
     "switchesOff", // turn switches off for non-prod, http requests
