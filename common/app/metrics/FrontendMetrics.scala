@@ -99,3 +99,22 @@ final case class DurationMetric(override val name: String, override val metricUn
 
   override def isEmpty: Boolean = dataPoints.get().isEmpty
 }
+
+case class SampledDataPoint(value: Double, sampleTime: DateTime) extends DataPoint {
+  override val time = Some(sampleTime)
+}
+
+final case class SamplerMetric(override val name: String, override val metricUnit: StandardUnit) extends FrontendMetric {
+
+  private val dataPoints: Agent[List[SampledDataPoint]] = AkkaAgent(List[SampledDataPoint]())
+
+  override def getAndResetDataPoints: List[DataPoint] = {
+    val points = dataPoints.get()
+    dataPoints.alter(_.diff(points))
+    points
+  }
+
+  def recordSample(sampleValue: Double, sampleTime: DateTime) = dataPoints.alter(SampledDataPoint(sampleValue, sampleTime) :: _)
+
+  override def isEmpty: Boolean = dataPoints.get().isEmpty
+}
