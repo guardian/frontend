@@ -61,7 +61,11 @@
 
 @if(GoogleAnalyticsSwitch.isSwitchedOn) {
     <script id='google_analytics'>
-        @InlineJs(googleAnalytics(page), "googleAnalytics.js")
+        @*
+        Note, you cannot @InlineJs(...) this
+        InlineJS should only be used for fragments that do not take parameters due to the way memoization happens.
+        *@
+        @Html(googleAnalytics(page).body)
     </script>
 
     @*
