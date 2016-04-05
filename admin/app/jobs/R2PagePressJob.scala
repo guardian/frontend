@@ -7,7 +7,6 @@ import common._
 import conf.Configuration
 import conf.switches.Switches.R2PagePressServiceSwitch
 import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
 import pagepresser.{SimpleHtmlCleaner, InteractiveHtmlCleaner, PollsHtmlCleaner}
 import play.api.libs.json._
 import play.api.libs.ws.WS

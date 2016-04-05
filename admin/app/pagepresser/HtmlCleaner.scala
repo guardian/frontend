@@ -3,11 +3,12 @@ package pagepresser
 import com.netaporter.uri.Uri.parse
 import common.{ExecutionContexts, Logging}
 import org.jsoup.nodes.Document
+import conf.Configuration
 
 import scala.collection.JavaConversions._
 
 abstract class HtmlCleaner extends Logging with ExecutionContexts {
-  val fakeCacheBustId = "6d5811c93d9b815024b5a6c3ec93a54be18e52f0"
+  val fallbackCacheBustId = Configuration.r2Press.fallbackCachebustId
   lazy val staticRegEx = """//static.guim.co.uk/static/(\w+)/(.+)(\.\w+)$""".r("cacheBustId", "paths", "extension")
   lazy val nonDigitRegEx = """\D+""".r
 
@@ -39,7 +40,7 @@ abstract class HtmlCleaner extends Logging with ExecutionContexts {
         val paths = link.group("paths").split('+')
         paths.map { path =>
           val newPath = if(nonDigitRegEx.findFirstMatchIn(cacheBustId).isEmpty) {
-            s"//static.guim.co.uk/static/$fakeCacheBustId/$path$extension"
+            s"//static.guim.co.uk/static/$fallbackCacheBustId/$path$extension"
           } else {
             s"//static.guim.co.uk/static/$cacheBustId/$path$extension"
           }
@@ -64,7 +65,7 @@ abstract class HtmlCleaner extends Logging with ExecutionContexts {
         val paths = src.group("paths").split('+')
         paths.map { path =>
           val newPath = if (nonDigitRegEx.findFirstMatchIn(cacheBustId).isEmpty) {
-            s"//static.guim.co.uk/static/$fakeCacheBustId/$path$extension"
+            s"//static.guim.co.uk/static/$fallbackCacheBustId/$path$extension"
           } else {
             s"//static.guim.co.uk/static/$cacheBustId/$path$extension"
           }
@@ -203,7 +204,7 @@ abstract class HtmlCleaner extends Logging with ExecutionContexts {
         val paths = combiner.group("paths").split('+')
         paths.map { path =>
           val newPath = if(nonDigitRegEx.findFirstMatchIn(cacheBustId).isEmpty) {
-            s"//static.guim.co.uk/static/$fakeCacheBustId/$path$extension"
+            s"//static.guim.co.uk/static/$fallbackCacheBustId/$path$extension"
           } else {
             s"//static.guim.co.uk/static/$cacheBustId/$path$extension"
           }
