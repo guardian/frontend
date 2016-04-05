@@ -130,7 +130,7 @@ define([
                         expect(storage.local.get(knownAlertIDsStorageKey).uk_unknown).toBe(false);
                         done();
                     }, 3000);
-                }).then(done).catch(done.fail);
+                }).catch(done.fail);
             });
 
             it('should show a known alert immediately', function (done) {
