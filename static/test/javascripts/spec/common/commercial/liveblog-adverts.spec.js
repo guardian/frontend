@@ -53,7 +53,7 @@ define([
             expect(liveblogAdverts).toBeDefined();
         });
 
-        it('should insert ads every 5th block', function (done) {
+        xit('should insert ads every 5th block', function (done) {
             liveblogAdverts.init().then(function () {
                 slotsCounter = body.querySelectorAll('.ad-slot').length;
                 var candidates = document.querySelectorAll('.js-liveblog-body > *:nth-child(1+5n)');
