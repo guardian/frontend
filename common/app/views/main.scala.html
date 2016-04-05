@@ -78,19 +78,9 @@
 
         @fragments.footer(page)
 
-        @if(NonBlockingOmniture.isSwitchedOn) {
+        @fragments.inlineJSNonBlocking()
 
-            @fragments.inlineJSNonBlocking()
-
-            @fragments.analytics(page)
-
-        } else {
-
-            @fragments.analytics(page)
-
-            @fragments.inlineJSNonBlocking()
-
-        }
+        @fragments.analytics(page)
 
         @fragments.commercial.pageSkin()
 
