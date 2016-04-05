@@ -36,7 +36,7 @@ define([
     return function () {
         this.id = 'NextInSeries';
         this.start = '2016-03-24';
-        this.expiry = '2016-04-05';
+        this.expiry = '2016-04-12';
         this.author = 'Oliver Ash';
         this.description = 'Show next in series';
         this.audience = 1;

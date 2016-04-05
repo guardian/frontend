@@ -3,7 +3,7 @@
     hitMissCharts: Seq[tools.AwsLineChart],
     cost: tools.MaximumMetric,
     switches: Seq[conf.switches.Switch],
-    env: String)
+    env: String)(implicit request: RequestHeader)
 
 @import org.joda.time.{DateTime, Days}
 

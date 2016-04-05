@@ -28,11 +28,11 @@ object PreviewContentApi extends CircuitBreakingContentApiClient {
 
 object TroubleshooterController extends Controller with Logging with AuthLogging with ExecutionContexts {
 
-  def index() = AuthActions.AuthActionTest{ request =>
+  def index() = AuthActions.AuthActionTest{ implicit request =>
     NoCache(Ok(views.html.troubleshooter(LoadBalancer.all.filter(_.testPath.isDefined))))
   }
 
-  def test(id: String, testPath: String) = AuthActions.AuthActionTest.async{ request =>
+  def test(id: String, testPath: String) = AuthActions.AuthActionTest.async{ implicit request =>
 
     val loadBalancers = LoadBalancer.all.filter(_.testPath.isDefined)
 

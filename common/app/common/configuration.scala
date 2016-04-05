@@ -19,6 +19,7 @@ class BadConfigurationException(msg: String) extends RuntimeException(msg)
 class GuardianConfiguration(val application: String, val webappConfDirectory: String = "env") extends Logging {
 
   case class OAuthCredentials(oauthClientId: String, oauthSecret: String, oauthCallback: String)
+  case class OAuthCredentialsWithMultipleCallbacks(oauthClientId: String, oauthSecret: String, authorizedOauthCallbacks: List[String])
 
   protected val configuration = ConfigurationFactory.getNonLoggingConfiguration(application, webappConfDirectory)
 
@@ -171,6 +172,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object teamcity {
     lazy val host = configuration.getMandatoryStringProperty("teamcity.host")
+    lazy val internalHost = configuration.getMandatoryStringProperty("teamcity.internalhost")
   }
 
   object ajax {

@@ -4,12 +4,13 @@ import org.joda.time.LocalDate
 
 trait ABTestSwitches {
 
+  // Owner: Dotcom Reach
   val ABFrontsOnArticles2 = Switch(
     "A/B Tests",
     "ab-fronts-on-articles2",
     "Injects fronts on articles for the test",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 1),
+    sellByDate = new LocalDate(2016, 7, 5),
     exposeClientSide = true
   )
 
@@ -18,7 +19,7 @@ trait ABTestSwitches {
     "ab-next-in-series",
     "Show next in series",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 5),
+    sellByDate = new LocalDate(2016, 4, 12),
     exposeClientSide = true
   )
 
@@ -27,7 +28,7 @@ trait ABTestSwitches {
     "ab-identity-register-membership-standfirst",
     "Membership registration page variant for Identity",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 1),
+    sellByDate = new LocalDate(2016, 5, 4),
     exposeClientSide = true
   )
 
@@ -40,21 +41,12 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABBolivianWrestlingAutoplay = Switch(
-    "A/B Tests",
-    "ab-bolivian-wrestling-autoplay",
-    "Autoplay Bolivian Wrestling",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 31),
-    exposeClientSide = true
-  )
-
   val ABPeopleWhoReadThisAlsoReadVariants = Switch(
     "A/B Tests",
     "ab-people-who-read-this-also-read-variants",
     "Display people who read this also read with different variants",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 30),
+    sellByDate = new LocalDate(2016, 4, 14),
     exposeClientSide = true
   )
 
@@ -67,30 +59,22 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABEmailSignupMarketingCheckboxV2 = Switch(
-    "A/B Tests",
-    "ab-email-signup-marketing-checkbox-v2",
-    "Test marketing checkbox in email sign-up",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 29),
-    exposeClientSide = true
-  )
-
-  val ABAdblockingResponse = Switch(
-    "A/B Tests",
-    "ab-adblocking-response",
-    "Adblocking respoonse test",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 31),
-    exposeClientSide = true
-  )
-
   val ABMembership = Switch(
     "A/B Tests",
     "ab-membership",
     "Membership propositions",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 30),
+    sellByDate = new LocalDate(2016, 5, 2),
     exposeClientSide = true
   )
+
+  val ABLoyalAdblockingSurvey = Switch(
+    "A/B Tests",
+    "ab-loyal-adblocking-survey",
+    "An adblock ongoing survey for all loyal users",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 5, 31),
+    exposeClientSide = true
+  )
+
 }

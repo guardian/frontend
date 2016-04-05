@@ -9,7 +9,7 @@ import tools.Store
 
 object SlotController extends Controller {
 
-  def viewSlot(slotName: String) = AuthActions.AuthActionTest {
+  def viewSlot(slotName: String) = AuthActions.AuthActionTest { implicit request =>
     val maybeResult = for {
       jsonString <- Store.getSlotTakeoversReport(slotName)
       report = Json.parse(jsonString).as[LineItemReport]

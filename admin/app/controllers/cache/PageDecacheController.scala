@@ -16,11 +16,11 @@ import scala.concurrent.Future.successful
 
 object PageDecacheController extends Controller with Logging with AuthLogging with ExecutionContexts {
 
-  def renderPageDecacheForm() = AuthActions.AuthActionTest { request =>
+  def renderPageDecacheForm() = AuthActions.AuthActionTest { implicit request =>
     NoCache(Ok(views.html.cache.pageDecacheForm()))
   }
 
-  def decache() = AuthActions.AuthActionTest.async { request =>
+  def decache() = AuthActions.AuthActionTest.async { implicit request =>
     getSubmittedUrl(request).map(new URI(_)).map{ urlToDecache =>
 
       CdnPurge.hard(SurrogateKey(urlToDecache.getPath))

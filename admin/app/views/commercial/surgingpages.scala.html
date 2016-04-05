@@ -1,4 +1,4 @@
-@(env: String, surgingContent: ophan.SurgingContent)
+@(env: String, surgingContent: ophan.SurgingContent)(implicit request: RequestHeader)
 @import _root_.dfp.printLondonTime
 
 @admin_main("Commercial", env, isAuthed = true, hasCharts = true) {
