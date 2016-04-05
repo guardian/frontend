@@ -114,7 +114,7 @@
 
     .survey-text__info {
         @include fs-bodyCopy(1);
-        font-size: 12px;
+        font-size: 14px;
         line-height: 120%;
         margin: 0 $gs-gutter $gs-column-width/4 0;
 
@@ -129,7 +129,7 @@
 
     .survey-links {
         overflow: hidden;
-        margin-bottom: $gs-column-width/4;
+        margin: $gs-column-width/2 0 $gs-column-width/4;
     }
 
     .survey-link {
@@ -160,152 +160,4 @@
         float: right;
         height: $gs-column-width/2;
     }
-}
-
-.live-events-survey-wrapper {
-    .live-events-survey-wrapper-inner {
-        margin: 0 auto;
-        width: auto;
-        padding: 0 $gs-gutter $gs-gutter;
-
-        @include mq(tablet) {
-            margin: 0 auto;
-            width: $gs-column-width*8;
-            padding: $gs-gutter 0;
-        }
-    }
-
-    .inline-survey-thumbsup {
-        margin-bottom: $gs-gutter/2;
-        display: block;
-        padding-top: $gs-gutter;
-    }
-
-    .inline-survey-loudspeaker,
-    .inline-thankyou-email {
-        display: block;
-        text-align: center;
-        margin-top: $gs-gutter;
-
-        svg {
-            width: 100px;
-            height: 100px;
-        }
-    }
-
-    .inline-arrow-right {
-        float: right;
-        fill: #7d7d7d;
-
-    }
-
-    .inline-membership-logo {
-        margin: $gs-gutter 0;
-        display: block;
-        svg {
-            width: 100px;
-            height: 40px;
-
-            g,
-            path {
-                fill: #bf4181;
-            }
-        }
-        @include mq(tablet) {
-            margin: $gs-gutter*2 0 30px;
-        }
-    }
-
-    h1 {
-        @include fs-headline(4);
-        color: guss-colour(guardian-brand, $pasteup-palette);
-        font-weight: bold;
-        margin-bottom: $gs-gutter;
-
-        @include mq(tablet) {
-            @include fs-headline(6);
-            font-weight: bold;
-        }
-    }
-
-    h2 {
-        @include fs-header(4);
-        color: guss-colour(guardian-brand, $pasteup-palette);
-        margin-bottom: $gs-baseline/2;
-    }
-
-    p {
-        @include fs-bodyCopy(1);
-        margin-bottom: $gs-baseline;
-    }
-
-    .standfirst {
-        @include fs-bodyCopy(2);
-    }
-
-    .button--secondary {
-        border-color: #7d7d7d;
-        background-color: transparent;
-
-        &:hover {
-            background-color: guss-colour(neutral-7, $pasteup-palette);
-        }
-    }
-
-    .button--medium {
-        line-height: 32px;
-    }
-
-    .footer-area {
-        background-color: colour(neutral-5);
-
-        .adfreesurvey-wrapper-inner {
-            width: auto;
-            padding: $gs-gutter;
-            margin: 0 auto;
-
-            @include mq(tablet) {
-                width: $gs-column-width*10;
-                padding: $gs-gutter*2 0;
-            }
-        }
-
-        img {
-            display: block;
-        }
-
-        .l-row__item:last-child {
-            margin-top: $gs-gutter;
-
-            @include mq(tablet) {
-                margin-top: 0;
-            }
-        }
-
-    }
-
-    .subscriber-number-form {
-        .input-number {
-            width: 100%;
-            box-sizing: border-box;
-            padding: 10px;
-            border: #000000 1px solid;
-
-            &.correct {
-                border-color: colour(success);
-            }
-            &.incorrect {
-                border-color: colour(error);
-            }
-        }
-
-        .button--primary {
-            display: block;
-            margin: 10px auto;
-            font-size: 20px;
-            padding: 5px;
-            width: 100%;
-        }
-    }
-
 }

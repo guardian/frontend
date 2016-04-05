@@ -10,10 +10,9 @@ define([
     'common/modules/experiments/tests/live-blog-chrome-notifications',
     'common/modules/experiments/tests/header-bidding-us',
     'common/modules/experiments/tests/next-in-series',
-    'common/modules/experiments/tests/bolivian-wrestling-autoplay',
-    'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/people-who-read-this-also-read-variants',
     'common/modules/experiments/tests/membership',
+    'common/modules/experiments/tests/loyal-adblocking-survey',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -35,10 +34,9 @@ define([
     LiveBlogChromeNotifications,
     HeaderBiddingUS,
     NextInSeries,
-    BolivianWrestlingAutoplay,
-    AdblockingResponse,
     PeopleWhoReadThisAlsoReadVariants,
     Membership,
+    LoyalAdblockingSurvey,
     flatten,
     forEach,
     keys,
@@ -56,10 +54,9 @@ define([
         new LiveBlogChromeNotifications(),
         new HeaderBiddingUS(),
         new NextInSeries(),
-        new BolivianWrestlingAutoplay(),
-        new AdblockingResponse(),
         new PeopleWhoReadThisAlsoReadVariants(),
-        new Membership()
+        new Membership(),
+        new LoyalAdblockingSurvey()
     ]);
 
     var participationsKey = 'gu.ab.participations';

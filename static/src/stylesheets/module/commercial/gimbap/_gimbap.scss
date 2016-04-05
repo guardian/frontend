@@ -10,6 +10,9 @@ $gimbap-soulmates-reversed: #995490;
 $gimbap-jobs-text: #42bfda;
 $gimbap-jobs-reversed: #42bfda;
 
+$gimbap-bookshop-text: #c783c7;
+$gimbap-bookshop-reversed: #701e6e;
+
 $gimbap-width-quarter: calc(25% - 20px);
 
 .gimbap {
@@ -17,6 +20,12 @@ $gimbap-width-quarter: calc(25% - 20px);
     padding: $gs-gutter / 2;
     position: relative;
     box-sizing: border-box;
+    color: #ffffff;
+
+    .has-flex & {
+        display: flex;
+        flex-direction: column;
+    }
 
     &:hover {
         text-decoration: none;
@@ -41,9 +50,7 @@ $gimbap-width-quarter: calc(25% - 20px);
         margin: 0 $gs-gutter / 2;
 
         .has-flex & {
-            display: flex;
             flex: 1;
-            flex-direction: column;
         }
     }
 
@@ -54,13 +61,37 @@ $gimbap-width-quarter: calc(25% - 20px);
     }
 }
 
-.gimbap__title--has-author {
-    &:before {
-        content: '';
-        shape-outside: polygon(70% 0%, 100% 150%, 0 100%);
-        float: right;
-        width: 40%;
-        min-height: 120px;
+%gimbap-author-shape {
+    content: '';
+    float: right;
+    width: 40%;
+}
+
+.gimbap--has-author {
+    .gimbap__title {
+        &:before {
+            @extend %gimbap-author-shape;
+
+            shape-outside: polygon(70% 0%, 100% 150%, 0 100%);
+            min-height: 120px;
+        }
+    }
+
+    .gimbap__cta {
+        &:before {
+            @extend %gimbap-author-shape;
+
+            shape-outside: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+            min-height: 50px;
+        }
+    }
+
+    .gimbap__logo {
+        text-align: left;
+        
+        .has-flex & {
+            align-self: flex-start;
+        }
     }
 }
 
@@ -149,10 +180,6 @@ $gimbap-width-quarter: calc(25% - 20px);
     }
 }
 
-.gimbap__logo--has-author {
-    align-self: flex-start;
-}
-
 .gimbap__logo--members-horizontal {
     .logo--part1,
     .logo--part2 {
@@ -214,6 +241,26 @@ $gimbap-width-quarter: calc(25% - 20px);
     .gimbap-style--normal & {
         svg {
             fill: $gimbap-soulmates-text;
+        }
+    }
+}
+
+.gimbap__logo--bookshop-horizontal {
+    .logo--part1 {
+        fill: #bdbdbd;
+    }
+
+    .logo--part2 {
+        fill: #ffffff;
+    }
+
+    .gimbap-style--normal & {
+        .logo--part1 {
+            fill: #6d7173;
+        }
+
+        .logo--part2 {
+            fill: $gimbap-bookshop-reversed;
         }
     }
 }
@@ -340,7 +387,7 @@ $gimbap-width-quarter: calc(25% - 20px);
 
 .gimbap-wrap__body--1x1x1x1 > .gimbap {
     @include mq(tablet) {
-        .has-flex & { 
+        .has-flex & {
             flex: $gimbap-width-quarter;
         }
     }
@@ -358,10 +405,6 @@ $gimbap-width-quarter: calc(25% - 20px);
     }
     @include mq(desktop) {
         width: calc(50% - 20px);
-
-        .has-flex & {
-            flex: 2;
-        }
     }
 }
 
@@ -396,6 +439,7 @@ $gimbap-width-quarter: calc(25% - 20px);
     .gimbap-style--tone-masterclasses { background: lighten($gimbap-masterclasses-reversed, 49%); color: $gimbap-masterclasses-text; }
     .gimbap-style--tone-soulmates { background: lighten($gimbap-soulmates-reversed, 49%); color: $gimbap-soulmates-text; }
     .gimbap-style--tone-jobs { background: lighten($gimbap-jobs-reversed, 42%); color: $gimbap-jobs-text; }
+    .gimbap-style--tone-bookshop { background: lighten($gimbap-bookshop-reversed, 70%); color: $gimbap-bookshop-reversed; }
 }
 
 .gimbap-style--reversed {
@@ -407,14 +451,19 @@ $gimbap-width-quarter: calc(25% - 20px);
     .gimbap-style--tone-masterclasses { background: $gimbap-masterclasses-reversed; }
     .gimbap-style--tone-soulmates { background: $gimbap-soulmates-reversed; }
     .gimbap-style--tone-jobs { background: $gimbap-jobs-reversed; }
-}
+    .gimbap-style--tone-bookshop {
+        background: $gimbap-bookshop-reversed;
 
-.gimbap-style--reversed,
-.gimbap-style--members,
-.gimbap-style--masterclasses,
-.gimbap-style--soulmates,
-.gimbap-style--jobs {
-    .gimbap {
-        color: #ffffff;
+        .gimbap__cta {
+            color: $gimbap-bookshop-text;
+        }
+
+        .gimbap__arrow {
+            background-color: $gimbap-bookshop-text;
+
+            svg {
+                fill: rgba(0, 0, 0, .65);
+            }
+        }
     }
 }

@@ -11,7 +11,7 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
 
   val missingVideoEncodingDateTimeFormat = DateTimeFormat.forPattern("hh:mm::ss")
 
-  def renderVideoEncodingsDashboard() = AuthActions.AuthActionTest { request =>
+  def renderVideoEncodingsDashboard() = AuthActions.AuthActionTest { implicit request =>
 
     val videoEncodingsReport = jobs.VideoEncodingsJob.getReport("missing-encodings")
 

@@ -12,7 +12,7 @@ define([], function () {
 
         this.id = 'IdentityRegisterMembershipStandfirst';
         this.start = '2016-02-25';
-        this.expiry = '2016-04-01';
+        this.expiry = '2016-05-04';
         this.author = 'James Pamplin';
         this.description = 'Membership registration page variant for Identity';
         this.audience = 0.5;
