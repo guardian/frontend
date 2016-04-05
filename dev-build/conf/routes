@@ -12,8 +12,6 @@ GET            /assets/internal/*file                                           
 GET            /assets/*path                                                                                                     dev.DevAssetsController.at(path)
 
 # Diagnostics
-GET            /ab.gif                                                                                                           controllers.DiagnosticsController.ab
-GET            /js.gif                                                                                                           controllers.DiagnosticsController.js
 GET            /count/$prefix<.+>.gif                                                                                            controllers.DiagnosticsController.analytics(prefix)
 GET            /counts.gif                                                                                                       controllers.DiagnosticsController.analyticsCounts()
 POST           /css                                                                                                              controllers.DiagnosticsController.css
