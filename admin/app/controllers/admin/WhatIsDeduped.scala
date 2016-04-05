@@ -14,12 +14,12 @@ object WhatIsDeduped extends Controller with Logging with ExecutionContexts {
 
  import play.api.Play.current
 
-   def index() = AuthActions.AuthActionTest { request =>
+   def index() = AuthActions.AuthActionTest { implicit request =>
      val paths: List[String] = ConfigAgent.getPathIds.sorted
      Cached(60)(Ok(views.html.dedupePathsList(Configuration.environment.stage, paths)))
    }
 
-   def dedupedFor(path: String) = AuthActions.AuthActionTest.async {
+   def dedupedFor(path: String) = AuthActions.AuthActionTest.async { implicit request =>
      val domain = if (Play.isDev) "http://localhost:9000" else Configuration.ajax.url
      val url = s"$domain/$path/deduped.json"
      WS.url(url).get().map { response =>

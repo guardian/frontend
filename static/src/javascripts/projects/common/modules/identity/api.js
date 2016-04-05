@@ -69,10 +69,11 @@ define([
             var cookieData = cookies.get(Id.cookieName),
             userData = cookieData ? JSON.parse(Id.decodeBase64(cookieData.split('.')[0])) : null;
             if (userData) {
+                var displayName = decodeURIComponent(userData[2]);
                 userFromCookieCache = {
                     id: userData[0],
                     primaryEmailAddress: userData[1], // not sure where this is stored now - not in the cookie any more
-                    displayName: userData[2],
+                    displayName: displayName,
                     accountCreatedDate: userData[6],
                     emailVerified: userData[7],
                     rawResponse: cookieData
