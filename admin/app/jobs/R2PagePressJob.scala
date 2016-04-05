@@ -14,6 +14,7 @@ import services.{S3Archive, S3ArchiveOriginals, PagePresses}
 import play.api.Play.current
 import model.R2PressMessage
 import implicits.R2PressNotification.pressMessageFormatter
+import org.jsoup.nodes.Document
 
 import scala.concurrent.Future
 
@@ -83,7 +84,7 @@ object R2PagePressJob extends ExecutionContexts with Logging {
   private def parseAndClean(originalDocSource: String): Future[String] = {
     val cleaners = Seq(PollsHtmlCleaner, InteractiveHtmlCleaner, SimpleHtmlCleaner)
     val archiveDocument = Jsoup.parse(originalDocSource)
-    val doc = cleaners.filter(_.canClean(archiveDocument))
+    val doc: Document = cleaners.filter(_.canClean(archiveDocument))
       .map(_.clean(archiveDocument))
       .headOption
       .getOrElse(archiveDocument)
