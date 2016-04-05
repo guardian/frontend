@@ -60,22 +60,10 @@ object SystemMetrics extends implicits.Numbers {
     get = () => ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getUsed / 1048576
   )
 
-  val AvailableProcessorsMetric = GaugeMetric(
-    name = "available-processors",
-    description = "Available processors",
-    get = () => ManagementFactory.getOperatingSystemMXBean.getAvailableProcessors
-  )
-
   val FreeDiskSpaceMetric = GaugeMetric(
     name = "free-disk-space",
     description = "Free disk space (MB)",
     get = () => new File("/").getUsableSpace / 1048576
-  )
-
-  val TotalDiskSpaceMetric = GaugeMetric(
-    name = "total-disk-space",
-    description = "Total disk space (MB)",
-    get = () => new File("/").getTotalSpace / 1048576
   )
 
   val ThreadCountMetric = GaugeMetric(
@@ -98,22 +86,6 @@ object SystemMetrics extends implicits.Numbers {
     name = "free-physical-memory", description = "Free physical memory",
     get = () => ManagementFactory.getOperatingSystemMXBean match {
       case b: com.sun.management.OperatingSystemMXBean => b.getFreePhysicalMemorySize
-      case _ => -1
-    }
-  )
-
-  val OpenFileDescriptorsMetric = GaugeMetric(
-    name = "open-file-descriptors", description = "Open file descriptors",
-    get = () => ManagementFactory.getOperatingSystemMXBean match {
-      case b: com.sun.management.UnixOperatingSystemMXBean => b.getOpenFileDescriptorCount
-      case _ => -1
-    }
-  )
-
-  val MaxFileDescriptorsMetric = GaugeMetric(
-    name = "max-file-descriptors", description = "Max file descriptors",
-    get = () => ManagementFactory.getOperatingSystemMXBean match {
-      case b: com.sun.management.UnixOperatingSystemMXBean => b.getMaxFileDescriptorCount
       case _ => -1
     }
   )
@@ -187,12 +159,8 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
     SystemMetrics.UsedHeapMemoryMetric,
     SystemMetrics.TotalPhysicalMemoryMetric,
     SystemMetrics.FreePhysicalMemoryMetric,
-    SystemMetrics.AvailableProcessorsMetric,
     SystemMetrics.BuildNumberMetric,
     SystemMetrics.FreeDiskSpaceMetric,
-    SystemMetrics.TotalDiskSpaceMetric,
-    SystemMetrics.MaxFileDescriptorsMetric,
-    SystemMetrics.OpenFileDescriptorsMetric,
     SystemMetrics.ThreadCountMetric
   ) ++ SystemMetrics.garbageCollectors.flatMap{ gc => List(
       GaugeMetric(s"${gc.name}-gc-count-per-min" , "Used heap memory (MB)",
