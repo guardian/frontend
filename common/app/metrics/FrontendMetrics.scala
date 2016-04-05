@@ -35,7 +35,7 @@ case class FrontendStatisticSet(
 
 case class TimingDataPoint(value: Double, time: Option[DateTime] = None) extends DataPoint
 
-case class TimingMetric(override val name: String, description: String) extends FrontendMetric {
+final case class TimingMetric(override val name: String, description: String) extends FrontendMetric {
 
   override val metricUnit: StandardUnit = StandardUnit.Milliseconds
 
@@ -57,7 +57,7 @@ case class TimingMetric(override val name: String, description: String) extends 
 
 case class GaugeDataPoint(value: Double, time: Option[DateTime] = None) extends DataPoint
 
-case class GaugeMetric(
+final case class GaugeMetric(
   override val name: String,
   description: String,
   override val metricUnit: StandardUnit = StandardUnit.Megabytes,
@@ -69,7 +69,7 @@ case class GaugeMetric(
 
 case class CountDataPoint(value: Double, time: Option[DateTime] = None) extends DataPoint
 
-case class CountMetric(override val name: String, description: String) extends FrontendMetric {
+final case class CountMetric(override val name: String, description: String) extends FrontendMetric {
   private val count: AtomicLong = new AtomicLong(0L)
   override val metricUnit = StandardUnit.Count
 
@@ -83,7 +83,7 @@ case class CountMetric(override val name: String, description: String) extends F
 
 case class DurationDataPoint(value: Double, time: Option[DateTime] = None) extends DataPoint
 
-case class DurationMetric(override val name: String, override val metricUnit: StandardUnit) extends FrontendMetric {
+final case class DurationMetric(override val name: String, override val metricUnit: StandardUnit) extends FrontendMetric {
 
   private val dataPoints: Agent[List[DataPoint]] = AkkaAgent(List[DurationDataPoint]())
 

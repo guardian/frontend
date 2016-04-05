@@ -42,7 +42,7 @@ object SystemMetrics extends implicits.Numbers {
     get = () => ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getMax / 1048576
   )
 
-  object UsedHeapMemoryMetric extends GaugeMetric(
+  val UsedHeapMemoryMetric = GaugeMetric(
     name ="used-heap-memory",
     description = "Used heap memory (MB)",
     get = () => ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getUsed / 1048576
