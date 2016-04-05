@@ -71,17 +71,28 @@ $video-width-desktop: 700px;
     font-size: 0; // to remove spacing between inline-blocked children
     white-space: nowrap;
     transition: transform .4s ease-out;
+
+    @include mq($until: desktop) {
+        overflow-x: scroll;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 .video-playlist__control {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 15%;
-    z-index: 2;
+    display: none;
 
     @include mq(desktop) {
         width: gs-span(2);
+        position: absolute;
+        display: block;
+        top: 0;
+        bottom: 0;
+        z-index: 2;
     }
 }
 
@@ -148,8 +159,10 @@ $video-width-desktop: 700px;
     }
 
     .fc-item__video-fallback {
-        opacity: .3;
-        transition: opacity .4s ease-out;
+        @include mq(desktop) {
+            opacity: .3;
+            transition: opacity .4s ease-out;
+        }
     }
 }
 
@@ -177,8 +190,6 @@ $video-width-desktop: 700px;
 }
 
 .video-playlist__item--0 {
-    margin-left: 15%;
-
     @include mq(desktop) {
         margin-left: gs-span(2);
     }
@@ -201,6 +212,9 @@ $video-width-desktop: 700px;
     box-sizing: border-box;
     color: #ffffff;
     min-width: 100%;
-    opacity: 0;
     transition: opacity .4s ease-out;
+
+    @include mq(desktop) {
+        opacity: 0;
+    }
 }
