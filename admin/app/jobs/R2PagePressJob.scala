@@ -6,9 +6,7 @@ import com.amazonaws.services.sqs.model.ReceiveMessageRequest
 import common._
 import conf.Configuration
 import conf.switches.Switches.R2PagePressServiceSwitch
-import conf.switches.Switches.R2HeadersRequiredForPagePressingSwitch
 import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
 import pagepresser.{SimpleHtmlCleaner, InteractiveHtmlCleaner, PollsHtmlCleaner}
 import play.api.libs.json._
 import play.api.libs.ws.WS
@@ -16,6 +14,7 @@ import services.{S3Archive, S3ArchiveOriginals, PagePresses}
 import play.api.Play.current
 import model.R2PressMessage
 import implicits.R2PressNotification.pressMessageFormatter
+import org.jsoup.nodes.Document
 
 import scala.concurrent.Future
 
@@ -85,11 +84,11 @@ object R2PagePressJob extends ExecutionContexts with Logging {
   private def parseAndClean(originalDocSource: String): Future[String] = {
     val cleaners = Seq(PollsHtmlCleaner, InteractiveHtmlCleaner, SimpleHtmlCleaner)
     val archiveDocument = Jsoup.parse(originalDocSource)
-    cleaners.filter(_.canClean(archiveDocument))
+    val doc: Document = cleaners.filter(_.canClean(archiveDocument))
       .map(_.clean(archiveDocument))
       .headOption
-      .getOrElse(Future.successful(archiveDocument))
-      .map((doc: Document) => doc.toString /* *cries* only use toString if you already know they type*/)
+      .getOrElse(archiveDocument)
+    Future.successful(doc.toString)
   }
 
   private def S3ArchivePutAndCheck(pressUrl: String, cleanedHtml: String) = {
@@ -135,13 +134,12 @@ object R2PagePressJob extends ExecutionContexts with Logging {
     val urlIn = message.url
 
     if (urlIn.nonEmpty) {
-      val r2HeaderName = Configuration.r2Press.header.name.getOrElse("")
-      val r2HeaderValue = Configuration.r2Press.header.value.getOrElse("")
 
-      val wSRequest = if(R2HeadersRequiredForPagePressingSwitch.isSwitchedOn) WS.url(urlIn).withHeaders((r2HeaderName, r2HeaderValue))
-                      else WS.url(urlIn)
+      val wsRequest = WS.url(urlIn)
 
-      wSRequest.get().flatMap { response =>
+      log.info(s"Calling ${wsRequest.uri}")
+
+      wsRequest.get().flatMap { response =>
         response.status match {
           case 200 => {
             try {
@@ -174,8 +172,8 @@ object R2PagePressJob extends ExecutionContexts with Logging {
             }
           }
           case non200 => {
-            log.error(s"Unexpected response from $urlIn, status code: $non200")
-            Future.failed(new RuntimeException(s"Unexpected response from $urlIn, status code: $non200"))
+            log.error(s"Unexpected response from ${wsRequest.uri}, status code: $non200")
+            Future.failed(new RuntimeException(s"Unexpected response from ${wsRequest.uri}, status code: $non200"))
           }
         }
       }
