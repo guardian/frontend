@@ -49,30 +49,8 @@ trait CloudWatch extends Logging {
     }
   }
 
-  /*def put(namespace: String, metrics: Map[String, Double], dimensions: Seq[Dimension]): Any = {
-    val request = new PutMetricDataRequest().
-      withNamespace(namespace).
-      withMetricData(metrics.map{ case (name, count) =>
-      new MetricDatum()
-        .withValue(count)
-        .withMetricName(name)
-        .withUnit("Count")
-        .withDimensions(dimensions)
-    })
-
-    cloudwatch.foreach(_.putMetricDataAsync(request, LoggingAsyncHandler))
-  }
-
-  def put(namespace: String, metrics: Map[String, Double]): Unit =
-    put(namespace, metrics, Seq(stageDimension))
-
-  def putWithDimensions(namespace: String, metrics: Map[String, Double], dimensions: Seq[Dimension]): Unit =
-    put(namespace, metrics, Seq(stageDimension) ++ dimensions)*/
-
-
   def putMetrics(metricNamespace: String, metrics: List[FrontendMetric], dimensions: List[Dimension]): Unit =
     putMetricsWithStage(metricNamespace, metrics, dimensions :+ stageDimension)
-
 
   private def putMetricsWithStage(metricNamespace: String, metrics: List[FrontendMetric], dimensions: List[Dimension]): Unit = {
     for {
@@ -83,6 +61,7 @@ trait CloudWatch extends Logging {
           metric.getAndResetDataPoints,
           metric.name,
           metric.metricUnit))
+
       val request = new PutMetricDataRequest()
         .withNamespace(metricNamespace)
         .withMetricData {
