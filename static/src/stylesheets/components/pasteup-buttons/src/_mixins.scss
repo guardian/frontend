@@ -31,26 +31,17 @@ $base-size: $gs-baseline / 2;
     }
 }
 
-@mixin button-height-simple($button-size) {
-    height: $button-size;
-    padding: 0 ($button-size / 3);
-    line-height: $button-size - 2px; /* [1] */
-}
-
 @mixin button-colour(
     $fill-colour,
     $text-colour,
+    $hover-colour,
+    $hover-border: $hover-colour,
     $border-color: $fill-colour
 ) {
     color: $text-colour;
     background-color: $fill-colour;
     border-color: $border-color;
-}
 
-@mixin button-hover-colour(
-    $hover-colour,
-    $hover-border: $hover-colour
-) {
     &:hover,
     &:focus,
     &:active {
