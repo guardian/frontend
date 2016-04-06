@@ -1,3 +1,14 @@
+@mixin separator($colour, $left, $margin-left: 0) {
+    content: '';
+    position: absolute;
+    left: $left;
+    top: 0;
+    bottom: 0;
+    margin-left: $margin-left;
+    width: 1px;
+    background: $colour;
+}
+
 .adverts {
     padding: 0 $gs-gutter / 2;
     position: relative;
@@ -89,21 +100,8 @@
     }
 
     .advert {
+        border-top: 1px solid;
         position: relative;
-    }
-
-    .adverts__row > * + * {
-        position: relative;
-
-        &::before {
-            content: '';
-            position: absolute;
-            left: $gs-gutter / -2;
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            background: colour(neutral-4);
-        }
     }
 
     .adverts__row {
@@ -114,6 +112,14 @@
 
             > * {
                 margin: 0 $gs-gutter / 2;
+            }
+
+            > * + * {
+                position: relative;
+
+                &::before {
+                    @include separator(colour(neutral-4), $gs-gutter / -2);
+                }
             }
         }
 
@@ -127,6 +133,31 @@
 
         @include mq(desktop) {
             padding-bottom: 0;
+        }
+    }
+
+    .adverts__row--wrap {
+        position: relative;
+        padding-top: 0;
+
+        @include mq(mobileLandscape) {
+            > *::before {
+                content: none;
+            }
+
+            > :nth-child(3) ~ * {
+                margin-top: $gs-baseline;
+            }
+        }
+
+        @include mq(tablet) {
+            &::before {
+                @include separator(colour(neutral-4), calc((100% - #{$gs-gutter}) / 3), $gs-gutter / 2);
+            }
+
+            &::after {
+                @include separator(colour(neutral-4), calc((100% - #{$gs-gutter}) / 3 * 2), $gs-gutter / 2);
+            }
         }
     }
 }
@@ -227,11 +258,22 @@
 
 }
 
+.adverts__row--wrap {
+    @include mq(tablet) {
+        flex-wrap: wrap;
+
+        > * {
+            flex-grow: 0;
+            flex-basis: calc(33.33% - #{$gs-gutter});
+        }
+    }
+}
+
 @include mq(tablet) {
     .adverts__row--2x1x1 > :nth-child(1),
     .adverts__row--1x2x1 > :nth-child(2),
     .adverts__row--1x1x2 > :nth-child(3) {
-        flex-basis: calc(50% - #{$gs-gutter});
+        flex-basis: calc(50% - #{$gs-gutter} - 1px);
         flex-grow: 0;
     }
 

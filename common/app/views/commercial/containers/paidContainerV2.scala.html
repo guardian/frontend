@@ -20,7 +20,7 @@
         Seq("legacy", "capi", "tone-capi"),
         optKicker = Some(fragments.commercial.paidForMeta()),
         optStamp = Some(stamp),
-        optBadge = Some(logoSlot)
+        optBadge = if(containerModel.branding == None){ None } else { Some(logoSlot) }
     ){
 
         <a class="adverts__logo u-text-hyphenate" href="@containerModel.content.targetUrl">@containerModel.content.title</a>
@@ -55,19 +55,9 @@
                     @fragments.inlineSvg("minus", "icon")
                     More @containerModel.content.title
                 </summary>
-                @defining(Math.max(1, Math.floor(containerModel.content.showMoreCards.length / 3).toInt)) { length =>
-                    <div class="adverts__row">
-                        <div class="adverts__column">
-                            @containerModel.content.showMoreCards.take(length).map(card => views.html.commercial.cards.itemSmallCard(card, omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card)))
-                        </div>
-                        <div class="adverts__column">
-                            @containerModel.content.showMoreCards.slice(length, length * 2).map(card => views.html.commercial.cards.itemSmallCard(card, omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card)))
-                        </div>
-                        <div class="adverts__column">
-                            @containerModel.content.showMoreCards.slice(length * 2, length * 3).map(card => views.html.commercial.cards.itemSmallCard(card, omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card)))
-                        </div>
-                    </div>
-                }
+                <div class="adverts__row adverts__row--wrap">
+                    @containerModel.content.showMoreCards.map(card => views.html.commercial.cards.itemSmallCard(card, omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card)))
+                </div>
             </details>
         }
 

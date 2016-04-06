@@ -17,7 +17,9 @@
         text-align: right;
     }
 
-    .adverts__row > * + *::before {
+    .adverts__row > * + *::before,
+    .adverts__row--wrap::before,
+    .adverts__row--wrap::after {
         background: guss-colour(paid-article-subheader-bg, $frontend-palette);
     }
 
