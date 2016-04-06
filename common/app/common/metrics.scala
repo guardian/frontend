@@ -35,35 +35,36 @@ object SystemMetrics extends implicits.Numbers {
   lazy val garbageCollectors: Seq[GcRateMetric] = ManagementFactory.getGarbageCollectorMXBeans.map(new GcRateMetric(_))
 
   // divide by 1048576 to convert bytes to MB
+  private def asMb(bytes: Long): Long = bytes / 1048576
 
   val MaxHeapMemoryMetric = GaugeMetric(
     name = "max-heap-memory",
     description = "Max heap memory (MB)",
-    get = () => ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getMax / 1048576
+    get = () => asMb(ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getMax)
   )
 
   val UsedHeapMemoryMetric = GaugeMetric(
     name ="used-heap-memory",
     description = "Used heap memory (MB)",
-    get = () => ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getUsed / 1048576
+    get = () => asMb(ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getUsed)
   )
 
   val MaxNonHeapMemoryMetric = GaugeMetric(
     name = "max-non-heap-memory",
     description = "Max non heap memory (MB)",
-    get = () => ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getMax / 1048576
+    get = () => asMb(ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getMax)
   )
 
   val UsedNonHeapMemoryMetric = GaugeMetric(
     name = "used-non-heap-memory",
     description = "Used non heap memory (MB)",
-    get = () => ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getUsed / 1048576
+    get = () => asMb(ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getUsed)
   )
 
   val FreeDiskSpaceMetric = GaugeMetric(
     name = "free-disk-space",
     description = "Free disk space (MB)",
-    get = () => new File("/").getUsableSpace / 1048576
+    get = () => asMb(new File("/").getUsableSpace)
   )
 
   val ThreadCountMetric = GaugeMetric(
