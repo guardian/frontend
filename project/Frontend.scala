@@ -88,8 +88,6 @@ object Frontend extends Build with Prototypes {
     )
   )
 
-  val image = application("image")
-
   val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       scalaUri
@@ -211,7 +209,6 @@ object Frontend extends Build with Prototypes {
     article,
     applications,
     sport,
-    image,
     discussion,
     router,
     diagnostics,
