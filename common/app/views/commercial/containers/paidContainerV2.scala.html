@@ -8,7 +8,7 @@
 @import views.html.commercial.containers._
 @import views.html.fragments.inlineSvg
 
-<div data-id="@frontId" class="fc-container js-sponsored-container"
+<div data-id="@containerModel.id" class="fc-container js-sponsored-container"
     @for(branding <- containerModel.branding){
         data-sponsorship="@branding.sponsorshipType"
         @for(sponsor <- branding.sponsor){ data-sponsor="@sponsor" }
@@ -18,7 +18,7 @@
     >
     @containerWrapper(
         Seq("legacy", "capi", "tone-capi"),
-        optKicker = Some(fragments.commercial.paidForMeta()),
+        optKicker = Some(fragments.commercial.paidForMeta(Some(containerModel.id))),
         optStamp = Some(stamp),
         optBadge = if(containerModel.branding == None){ None } else { Some(logoSlot) }
     ){
