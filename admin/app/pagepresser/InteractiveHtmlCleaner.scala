@@ -13,11 +13,10 @@ object InteractiveHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
   }
 
   override def clean(document: Document) = {
-    universalClean(document).map { _ =>
-      removeScripts(document)
-      createSimplePageTracking(document)
-      removeByTagName(document, "noscript")
-    }
+    universalClean(document)
+    removeScripts(document)
+    createSimplePageTracking(document)
+    removeByTagName(document, "noscript")
   }
 
   override def extractOmnitureParams(document: Document) = {

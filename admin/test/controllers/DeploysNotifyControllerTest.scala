@@ -14,7 +14,7 @@ import scala.concurrent.Future
 
 @DoNotDiscover class DeploysNotifyControllerTest extends WordSpec with Matchers with ConfiguredTestSuite with ExecutionContexts {
 
-  val existingBuild = "1402"
+  val existingBuild = "1629"
   val fakeApiKey = "fake-api-key"
 
   val RecordingHttpClient = new HttpClient {

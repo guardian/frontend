@@ -1,4 +1,7 @@
-@(containerModel: common.commercial.ContainerModel)
+@import views.support.commercial.TrackingCodeBuilder.mkInteractionTrackingCode
+@(frontId: String,
+  containerIndex: Int,
+  containerModel: common.commercial.ContainerModel)(implicit request: RequestHeader)
 
 <div data-id="@containerModel.id">
     <p>A <em>@containerModel.layoutName</em> container</p>
@@ -20,11 +23,12 @@
                 }
             }
         >
+            <img src="@card.imageUrl" />
             <p><a href="@card.targetUrl">@Html(card.headline)</a></p>
             @for(description <- card.description) {
                 <p>@Html(description)</p>
             }
-            <img src="@card.imageUrl" />
+            <p>@mkInteractionTrackingCode(frontId, containerIndex, containerModel, card)</p>
         </div>
     }
 

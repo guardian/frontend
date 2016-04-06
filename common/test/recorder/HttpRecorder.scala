@@ -19,8 +19,6 @@ trait HttpRecorder[A] extends ExecutionContexts {
   final def load(url: String, headers: Map[String, String] = Map.empty)(fetch: => Future[A]):Future[A] = {
 
     val fileName = name(url, headers)
-    println(url)
-    println(fileName)
 
     // integration test environment
     // make sure people have checked in test files

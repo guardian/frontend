@@ -6,7 +6,7 @@ define([
     return function () {
         this.id = 'FrontsOnArticles2';
         this.start = '2015-12-08';
-        this.expiry = '2016-4-1';
+        this.expiry = '2016-7-5';
         this.author = 'Josh Holder';
         this.description = 'Inject fronts containers on articles';
         this.audience = 0.06;

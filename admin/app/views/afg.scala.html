@@ -1,4 +1,4 @@
-@(env: String, body: String)
+@(env: String, body: String)(implicit request: RequestHeader)
 
 @admin_main("Dashboard", env, isAuthed = true, hasCharts = true) {
 
