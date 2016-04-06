@@ -64,7 +64,6 @@
 
     svg {
         fill: currentColor;
-        width: auto;
         margin-right: 4px;
         vertical-align: middle;
         // Align with cap height instead of x height
@@ -204,6 +203,4 @@
     // Override a from _lists.scss
     color: #ffffff;
     padding: 2px;
-    // Override a from user agent stylesheet
-    display: inline-block;
 }
