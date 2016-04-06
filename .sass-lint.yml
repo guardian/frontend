@@ -7,6 +7,7 @@ files:
     # A fix will soon be published in sass-lint 1.6.0.
     - 'static/src/stylesheets/icons/**/*.scss'
     - 'static/src/stylesheets/module/commercial/_adverts-jobs.scss'
+    - 'static/src/stylesheets/module/commercial/_advert.scss'
     - 'static/src/stylesheets/module/commercial/_commercial--v-high.scss'
     - 'static/src/stylesheets/module/content/_article-minute.scss'
     - 'static/src/stylesheets/module/email/_form.scss'
