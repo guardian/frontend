@@ -120,7 +120,6 @@
     padding-left: $gs-gutter / 4;
 
     @include mq(tablet) {
-        .tone-comment--item &,
         .rich-link--has-byline-pic & {
             position: absolute;
             bottom: 0;
@@ -259,8 +258,7 @@
     }
 
     @include mq(tablet) {
-        .rich-link--has-byline-pic,
-        .tone-comment--item {
+        .rich-link--has-byline-pic {
             .rich-link__container {
                 padding-bottom: $gs-baseline * 10;
             }
@@ -269,8 +267,7 @@
 
     @include mq(leftCol) {
         &.element--supporting {
-            .rich-link--has-byline-pic,
-            .tone-comment--item {
+            .rich-link--has-byline-pic {
                 .rich-link__container {
                     padding-bottom: ($gs-baseline * 2) + 8;
                 }
