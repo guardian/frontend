@@ -258,20 +258,14 @@
     }
 
     @include mq(tablet) {
-        .rich-link--has-byline-pic {
-            .rich-link__container {
-                padding-bottom: $gs-baseline * 10;
-            }
+        .rich-link--has-byline-pic .rich-link__container {
+            padding-bottom: $gs-baseline * 10;
         }
     }
 
     @include mq(leftCol) {
-        &.element--supporting {
-            .rich-link--has-byline-pic {
-                .rich-link__container {
-                    padding-bottom: ($gs-baseline * 2) + 8;
-                }
-            }
+        &.element--supporting .rich-link--has-byline-pic .rich-link__container {
+            padding-bottom: ($gs-baseline * 2) + 8;
         }
     }
 
