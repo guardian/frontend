@@ -22,6 +22,7 @@ define([
     'lodash/collections/find',
     'lodash/objects/pick',
     'lodash/utilities/noop',
+    'lodash/objects/merge',
     'common/utils/chain'
 ], function (
     reportError,
@@ -47,6 +48,7 @@ define([
     find,
     pick,
     noop,
+    merge,
     chain
 ) {
 
@@ -167,12 +169,12 @@ define([
                 if (isParticipating(test) && testCanBeRun(test)) {
                     var variant = getTestVariantId(test.id);
                     if (variant && variant !== 'notintest') {
-                        abLogObject['ab' + test.id] = variant;
+                        merge(abLogObject, createAbObject(test.id, variant, 'false'));
                     }
                 }
             });
             forEach(getServerSideTests(), function (testName) {
-                abLogObject['ab' + testName] = 'inTest';
+                merge(abLogObject, createAbObject('ab' + testName, 'inTest', 'false'));
             });
         } catch (error) {
             // Encountering an error should invalidate the logging process.
@@ -183,12 +185,34 @@ define([
         return abLogObject;
     }
 
+    function createAbObject(id, variantName, complete) {
+        var abData = {};
+        abData['ab' + id] = {
+                'variantName' : variantName,
+                'complete' : complete
+        };
+        return abData;
+    }
+
     function trackEvent() {
+        recordOphanAbEvent(getAbLoggableObject());
+    }
+
+    function recordOphanAbEvent(data) {
         require(['ophan/ng'], function (ophan) {
             ophan.record({
-                abTestRegister: getAbLoggableObject()
+                abTestRegister: data
             });
         });
+    }
+
+    function recordTestComplete(test, variantId) {
+        var testName = test.id;
+        var data = createAbObject(testName, variantId, 'true');
+
+        return function() {
+            recordOphanAbEvent(data);
+        };
     }
 
     // Finds variant in specific tests and runs it
@@ -198,10 +222,10 @@ define([
                 variantId = participations[test.id].variant;
             var variant = getVariant(test, variantId);
             if (variant) {
-                var success = variant.success || noop;
-
                 variant.test();
-                success(trackEvent);
+
+                var onTestComplete = variant.success || noop;
+                onTestComplete(recordTestComplete(test, variantId));
             } else if (variantId === 'notintest' && test.notInTest) {
                 test.notInTest();
             }
