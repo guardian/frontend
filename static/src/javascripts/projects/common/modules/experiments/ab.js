@@ -286,6 +286,14 @@ define([
             });
         },
 
+        trackEvent: function () {
+            require(['ophan/ng'], function (ophan) {
+                ophan.record({
+                    abTestRegister: ab.getAbLoggableObject()
+                });
+            });
+        },
+
         isEventApplicableToAnActiveTest: function (event) {
             var participations = keys(getParticipations());
             return some(participations, function (id) {

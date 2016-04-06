@@ -96,20 +96,21 @@ object InlineJs {
   def withFileNameHint(codeToCompile: String, fileName: String)(implicit application: Application): Html = {
     if (codeToCompile.trim.nonEmpty) {
       if (Play.isDev) {
-        Html(JsMinifier.unsafeCompileWithWhitespaceOptimisation(codeToCompile, fileName))
+        Html(optimizeJs(codeToCompile, fileName))
       } else {
         val md5 = new String(MessageDigest.getInstance("MD5").digest(codeToCompile.getBytes))
-
-        lazy val compiledCode = if (Switches.InlineJSStandardOptimisation.isSwitchedOn) {
-          JsMinifier.unsafeCompileWithStandardOptimisation(codeToCompile, fileName)
-        } else {
-          JsMinifier.unsafeCompileWithWhitespaceOptimisation(codeToCompile, fileName)
-        }
-
-        Html(memoizedMap.getOrElseUpdate(md5, compiledCode))
+        Html(memoizedMap.getOrElseUpdate(md5, optimizeJs(codeToCompile, fileName)))
       }
     } else {
       Html(codeToCompile)
+    }
+  }
+
+  private def optimizeJs(codeToCompile: String, fileName: String): String = {
+    if (Switches.InlineJSStandardOptimisation.isSwitchedOn) {
+      JsMinifier.unsafeCompileWithStandardOptimisation(codeToCompile, fileName)
+    } else {
+      JsMinifier.unsafeCompileWithWhitespaceOptimisation(codeToCompile, fileName)
     }
   }
 

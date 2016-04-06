@@ -3,7 +3,6 @@ package controllers.commercial
 import common.{ExecutionContexts}
 import model.NoCache
 import model.commercial.events.LiveEventAgent
-import performance.MemcachedAction
 import play.api.mvc._
 
 import scala.concurrent.Future
@@ -13,7 +12,7 @@ object LiveEventsController
   with ExecutionContexts
   with implicits.Requests {
 
-  def renderEvent = MemcachedAction { implicit request =>
+  def renderEvent = Action.async { implicit request =>
     specificId map { eventId =>
         Future {
           val clickMacro = request.getParameter("clickMacro")

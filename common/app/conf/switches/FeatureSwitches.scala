@@ -37,7 +37,7 @@ trait FeatureSwitches {
     "plista-for-outbrain-au",
     "Enable the Plista content recommendation widget to replace that of Outbrain for AU edition (for web only).",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 6),
+    sellByDate = new LocalDate(2016, 5, 5),
     exposeClientSide = true
   )
 
@@ -205,15 +205,6 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val QuizScoresService = Switch(
-    "Feature",
-    "quiz-scores-service",
-    "If switched on, the diagnostics server will provide a service to store quiz results in memcached",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 11),
-    exposeClientSide = false
-  )
-
   val IdentityLogRegistrationsFromTor = Switch(
     "Feature",
     "id-log-tor-registrations",
@@ -331,16 +322,6 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val R2HeadersRequiredForPagePressingSwitch = Switch(
-    "Feature",
-    "r2-headers-page-press-service",
-    "When ON, the R2 page press service will hit the R2 page, when turned off it will hit Dotcom",
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
-
   val EmailInArticleSwitch = Switch(
     "Feature",
     "email-in-article",
@@ -374,7 +355,7 @@ trait FeatureSwitches {
     "force-schema-org-type-for-amp-articles",
     "When ON, all amplified articles have schema.org type set to 'NewsArticle' (which is the only type Google search carousel supports as of Feb 2015)",
     safeState = On,
-    sellByDate = new LocalDate(2016, 4, 5), //Tuesday
+    sellByDate = new LocalDate(2016, 4, 6),
     exposeClientSide = false
   )
 

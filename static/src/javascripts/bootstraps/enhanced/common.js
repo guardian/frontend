@@ -15,7 +15,6 @@ define([
     'common/utils/robust',
     'common/utils/storage',
     'common/modules/analytics/foresee-survey',
-    'common/modules/analytics/livestats',
     'common/modules/analytics/media-listener',
     'common/modules/analytics/omniture',
     'common/modules/analytics/register',
@@ -71,7 +70,6 @@ define([
     robust,
     storage,
     Foresee,
-    liveStats,
     mediaListener,
     omniture,
     register,
@@ -181,10 +179,6 @@ define([
 
             showAdblockMessage: function () {
                 donotUseAdblock.init();
-            },
-
-            logLiveStats: function () {
-                liveStats.log();
             },
 
             loadAnalytics: function () {
@@ -406,7 +400,6 @@ define([
                 ['c-tag-links', modules.showMoreTagsLink],
                 ['c-smart-banner', smartAppBanner.init],
                 ['c-adblock', modules.showAdblockMessage],
-                ['c-log-stats', modules.logLiveStats],
                 ['c-cookies', modules.cleanupCookies],
                 ['c-localStorage', modules.cleanupLocalStorage],
                 ['c-overlay', modules.initOpenOverlayOnClick],

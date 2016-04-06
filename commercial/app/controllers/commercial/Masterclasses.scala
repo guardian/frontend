@@ -2,7 +2,6 @@ package controllers.commercial
 
 import model.commercial.events.{Masterclass, MasterclassAgent}
 import model.{Cached, NoCache}
-import performance.MemcachedAction
 import play.api.mvc._
 
 import scala.concurrent.Future
@@ -11,7 +10,7 @@ object Masterclasses extends Controller with implicits.Requests {
 
   implicit val codec = Codec.utf_8
 
-  def renderMasterclasses = MemcachedAction { implicit request =>
+  def renderMasterclasses = Action.async { implicit request =>
     Future.successful {
 
       val selectedMasterclasses: Seq[Masterclass] = (MasterclassAgent.specificMasterclasses(specificIds) ++

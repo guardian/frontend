@@ -2,8 +2,6 @@ package controllers
 
 import common._
 import play.api.mvc._
-import model.diagnostics.javascript.JavaScript
-import model.diagnostics.abtests.AbTests
 import model.diagnostics.analytics.Analytics
 import model.diagnostics.css.Css
 import model.TinyResponse
@@ -16,16 +14,6 @@ object DiagnosticsController extends Controller with Logging {
   def acceptBeacon = Action { implicit request =>
     countsFromQueryString(request)
     TinyResponse.ok
-  }
-
-  def js = Action { implicit request =>
-    JavaScript.report(request)
-    TinyResponse.gif
-  }
-
-  def ab = Action { implicit request =>
-    AbTests.report(request.queryString)
-    TinyResponse.gif
   }
 
   def analytics(prefix: String) = Action { implicit request =>
