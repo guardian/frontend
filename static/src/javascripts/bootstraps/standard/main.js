@@ -118,6 +118,7 @@ define([
             if (guardian.isEnhanced) {
                 ab.segmentUser();
                 ab.run();
+                ab.trackEvent();
             }
         });
 

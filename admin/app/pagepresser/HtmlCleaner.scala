@@ -3,16 +3,19 @@ package pagepresser
 import com.netaporter.uri.Uri.parse
 import common.{ExecutionContexts, Logging}
 import org.jsoup.nodes.Document
+import conf.Configuration
 
 import scala.collection.JavaConversions._
-import scala.concurrent.Future
 
 abstract class HtmlCleaner extends Logging with ExecutionContexts {
+  val fallbackCacheBustId = Configuration.r2Press.fallbackCachebustId
+  lazy val staticRegEx = """//static.guim.co.uk/static/(\w+)/(.+)(\.\w+)$""".r("cacheBustId", "paths", "extension")
+  lazy val nonDigitRegEx = """\D+""".r
+
   def canClean(document: Document): Boolean
+  def clean(document: Document): Document
 
-  def clean(document: Document): Future[Document]
-
-  protected def universalClean(document: Document): Future[Unit] = {
+  protected def universalClean(document: Document): Document = {
     removeAds(document)
     removeByClass(document, "top-search-box")
     removeByClass(document, "share-links")
@@ -21,7 +24,58 @@ abstract class HtmlCleaner extends Logging with ExecutionContexts {
     removeByClass(document, "initially-off")
     removeByClass(document, "comment-count")
     replaceLinks(document)
-    ComboCleaner(document)
+    repairStaticLinks(document)
+    repairStaticSources(document)
+    deComboLinks(document)
+  }
+
+  def repairStaticLinks(document: Document): Document = {
+    document.getAllElements.filter { el =>
+      el.hasAttr("href") && el.attr("href").contains("/static/")
+    }.foreach { el =>
+      val staticLink = staticRegEx.findFirstMatchIn(el.attr("href"))
+      staticLink.foreach { link =>
+        val cacheBustId = link.group("cacheBustId")
+        val extension = link.group("extension")
+        val paths = link.group("paths").split('+')
+        paths.map { path =>
+          val newPath = if(nonDigitRegEx.findFirstMatchIn(cacheBustId).isEmpty) {
+            s"//static.guim.co.uk/static/$fallbackCacheBustId/$path$extension"
+          } else {
+            s"//static.guim.co.uk/static/$cacheBustId/$path$extension"
+          }
+          val newEl = el.clone.attr("href", newPath)
+          el.after(newEl)
+        }
+      }
+      el.remove()
+    }
+    document
+  }
+
+  def repairStaticSources(document: Document): Document = {
+    val elementsWithSrc = document.getAllElements.filter { el =>
+      el.hasAttr("src") && el.attr("src").contains("/static/")
+    }
+    elementsWithSrc.foreach { el =>
+      val staticSrc = staticRegEx.findFirstMatchIn(el.attr("src"))
+      staticSrc.foreach { src =>
+        val cacheBustId = src.group("cacheBustId")
+        val extension = src.group("extension")
+        val paths = src.group("paths").split('+')
+        paths.map { path =>
+          val newPath = if (nonDigitRegEx.findFirstMatchIn(cacheBustId).isEmpty) {
+            s"//static.guim.co.uk/static/$fallbackCacheBustId/$path$extension"
+          } else {
+            s"//static.guim.co.uk/static/$cacheBustId/$path$extension"
+          }
+          val newEl = el.clone.attr("src", newPath)
+          el.after(newEl)
+        }
+      }
+      el.remove()
+    }
+    document
   }
 
   def replaceLinks(document: Document): Document = {
@@ -131,6 +185,35 @@ abstract class HtmlCleaner extends Logging with ExecutionContexts {
 
   def removeByTagName(document: Document, tagName: String): Document = {
     document.getElementsByTag(tagName).foreach(_.remove())
+    document
+  }
+
+  def deComboLinks(document: Document): Document = {
+    document.getAllElements.filter { el =>
+      el.hasAttr("href") && el.attr("href").contains("combo.guim.co.uk")
+    }.foreach { el =>
+
+      val combinerRegex = """//combo.guim.co.uk/(\w+)/(.+)(\.\w+)$""".r("cacheBustId", "paths", "extension")
+      val microAppRegex = """^m-(\d+)~(.+)""".r
+      val href = el.attr("href")
+      val combiner = combinerRegex.findFirstMatchIn(href)
+
+      combiner.foreach { combiner =>
+        val cacheBustId = combiner.group("cacheBustId")
+        val extension = combiner.group("extension")
+        val paths = combiner.group("paths").split('+')
+        paths.map { path =>
+          val newPath = if(nonDigitRegEx.findFirstMatchIn(cacheBustId).isEmpty) {
+            s"//static.guim.co.uk/static/$fallbackCacheBustId/$path$extension"
+          } else {
+            s"//static.guim.co.uk/static/$cacheBustId/$path$extension"
+          }
+          val newEl = el.clone.attr("href", newPath)
+          el.after(newEl)
+        }
+        el.remove()
+      }
+    }
     document
   }
 }
