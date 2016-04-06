@@ -8,7 +8,7 @@
 @import views.html.commercial.containers._
 @import views.html.fragments.inlineSvg
 
-<div data-id="@frontId" class="fc-container"
+<div data-id="@frontId" class="fc-container js-sponsored-container"
     @for(branding <- containerModel.branding){
         data-sponsorship="@branding.sponsorshipType"
         @for(sponsor <- branding.sponsor){ data-sponsor="@sponsor" }
