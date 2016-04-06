@@ -1,7 +1,7 @@
 package services
 
 import common.{ Logging, ExecutionContexts }
-import conf.AdminConfiguration
+import conf.AdminConfiguration.fastly
 import com.amazonaws.services.cloudwatch.model.{ Dimension, MetricDatum }
 import org.joda.time.DateTime
 import play.api.libs.ws.WS
@@ -22,14 +22,15 @@ case class FastlyStatistic(service: String, region: String, timestamp: Long, nam
 object Fastly extends ExecutionContexts with Logging {
   import play.api.Play.current
 
-  private val regions = List("usa", "europe", "ausnz", "apac")
+  private val regions = List("usa", "europe", "ausnz")
 
   def apply(): Future[List[FastlyStatistic]] = {
 
     val futureResponses: Future[List[String]] = Future.sequence{
       regions map { region =>
-        val request = WS.url(s"https://api.fastly.com/stats?by=minute&from=45+minutes+ago&to=15+minutes+ago&region=${region}"
-        ).withHeaders("Fastly-Key" -> AdminConfiguration.fastly.key).withRequestTimeout(20000)
+        val request = WS.url(s"https://api.fastly.com/stats/service/${fastly.serviceId}?by=minute&from=45+minutes+ago&to=15+minutes+ago&region=$region")
+          .withHeaders("Fastly-Key" -> fastly.key)
+          .withRequestTimeout(20000)
 
         val response: Future[Option[String]] = request.get().map { resp => Some(resp.body) }.recover {
           case e: Throwable => {
@@ -46,22 +47,22 @@ object Fastly extends ExecutionContexts with Logging {
 
       responses flatMap { body =>
         val json: JsValue = Json.parse(body)
-        val services: List[JsValue] = (json \ "data").as[JsObject].values.toList
-        val blocks: List[JsObject] = services flatMap { _.as[JsArray].value } map { _.as[JsObject] }
+        val samples: List[JsObject] = (json \ "data").as[JsObject].values.toList.flatMap {_.as[JsArray].value} map {_.as[JsObject]}
         val region: String = (json \ "meta" \ "region").as[String]
 
-        log.info(s"Loaded ${blocks.size} Fastly statistics results for region: ${region}")
+        log.info(s"Loaded ${samples.size} Fastly statistics results for region: $region")
 
-        blocks flatMap { block =>
+        samples flatMap { block =>
           val service: String = (block \ "service_id").as[String]
           val timestamp: Long = (block \ "start_time").as[Long] * 1000
           val statistics: List[(String, JsValue)] = block.fieldSet.toList
 
           val filtered = statistics filter {
-            case ("service_id", _) => false
-            case ("start_time", _) => false
             case (_, JsNull) => false
-            case _ => true
+            case ("hits", _) => true
+            case ("miss", _) => true
+            case ("errors", _) => true
+            case _ => false
           }
 
           filtered map {

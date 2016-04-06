@@ -2,7 +2,6 @@ package controllers.admin
 
 import com.gu.googleauth.UserIdentity
 import common._
-import common.AdminMetrics.{ SwitchesUpdateCounter, SwitchesUpdateErrorCounter }
 import conf.switches.{SwitchState, Switches}
 import controllers.AuthLogging
 import conf.Configuration
@@ -34,7 +33,6 @@ object SwitchboardPlistaController extends Controller with AuthLogging with Logg
 
       val requester = UserIdentity.fromRequest(request).get.fullName
       Store.putSwitches(updates mkString "\n")
-      SwitchesUpdateCounter.increment()
 
       log.info("plista switches successfully updated")
 
@@ -50,7 +48,6 @@ object SwitchboardPlistaController extends Controller with AuthLogging with Logg
       Redirect("/dev/switchboard-plista")
       } catch { case e: Throwable =>
         log.error("exception saving plista switches", e)
-        SwitchesUpdateErrorCounter.increment()
 
         Redirect("/dev/switchboard-plista").flashing(
           "error" -> ("Error saving switches '%s'" format e.getMessage)

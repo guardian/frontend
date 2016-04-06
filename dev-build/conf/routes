@@ -12,8 +12,6 @@ GET            /assets/internal/*file                                           
 GET            /assets/*path                                                                                                     dev.DevAssetsController.at(path)
 
 # Diagnostics
-GET            /ab.gif                                                                                                           controllers.DiagnosticsController.ab
-GET            /js.gif                                                                                                           controllers.DiagnosticsController.js
 GET            /count/$prefix<.+>.gif                                                                                            controllers.DiagnosticsController.analytics(prefix)
 GET            /counts.gif                                                                                                       controllers.DiagnosticsController.analyticsCounts()
 POST           /css                                                                                                              controllers.DiagnosticsController.css
@@ -338,6 +336,8 @@ GET            /container/count/:count/offset/:offset/mf2.json                  
 GET            /container/count/:count/offset/:offset/section/:section/mf2.json                                                  controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section, edition = "")
 GET            /container/count/:count/offset/:offset/edition/:edition/mf2.json                                                  controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section = "", edition)
 GET            /container/count/:count/offset/:offset/section/:section/edition/:edition/mf2.json                                 controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section, edition)
+
+GET            /football-mf2/api/match-summary/:year/:month/:day/:home/:away.json                                                football.controllers.MoreOnMatchController.matchSummaryMf2(year, month, day, home, away)
 
 # Onward journeys
 GET            /series/*path.json                                                                                                controllers.SeriesController.renderSeriesStories(path)

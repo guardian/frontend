@@ -2,7 +2,6 @@ package controllers.commercial
 
 import model.commercial.jobs.{JobSector, JobsAgent}
 import model.{Cached, NoCache}
-import performance.MemcachedAction
 import play.api.mvc._
 
 import scala.concurrent.Future
@@ -25,7 +24,7 @@ object JobAds extends Controller with implicits.Requests {
     JobSector("media", "Media")
   )
 
-  def renderJobs = MemcachedAction { implicit request =>
+  def renderJobs = Action.async { implicit request =>
     Future.successful {
       (JobsAgent.specificJobs(specificIds) ++ JobsAgent.jobsTargetedAt(segment)).distinct match {
         case Nil => NoCache(jsonFormat.nilResult)

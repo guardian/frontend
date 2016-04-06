@@ -3,13 +3,12 @@ package controllers.commercial
 import common.{ExecutionContexts, Logging}
 import model.commercial.Lookup
 import model.{Cached, NoCache}
-import performance.MemcachedAction
 import play.api.mvc._
 import views.support.Item300
 
 object PaidContentCardController extends Controller with ExecutionContexts with implicits.Requests with Logging {
 
-  private def renderCard(format: Format) = MemcachedAction { implicit request =>
+  private def renderCard(format: Format) = Action.async { implicit request =>
 
     val shortUrl = request.getParameter("articleUrl")
 

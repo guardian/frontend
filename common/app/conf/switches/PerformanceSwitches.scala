@@ -60,33 +60,6 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
-  val MemcachedSwitch = Switch(
-    "Performance",
-    "memcached-action",
-    "If this switch is switched on then the MemcacheAction will be operational",
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val MemcachedFallbackSwitch = Switch(
-    "Performance",
-    "memcached-fallback",
-    "If this switch is switched on then the MemcachedFallback will be operational",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val IncludeBuildNumberInMemcachedKey = Switch(
-    "Performance",
-    "memcached-build-number",
-    "If this switch is switched on then the MemcacheFilter will include the build number in the cache key",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val AutoRefreshSwitch = Switch(
     "Performance",
     "auto-refresh",

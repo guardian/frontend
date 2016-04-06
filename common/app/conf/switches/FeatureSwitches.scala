@@ -205,15 +205,6 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val QuizScoresService = Switch(
-    "Feature",
-    "quiz-scores-service",
-    "If switched on, the diagnostics server will provide a service to store quiz results in memcached",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 11),
-    exposeClientSide = false
-  )
-
   val IdentityLogRegistrationsFromTor = Switch(
     "Feature",
     "id-log-tor-registrations",
@@ -364,7 +355,7 @@ trait FeatureSwitches {
     "force-schema-org-type-for-amp-articles",
     "When ON, all amplified articles have schema.org type set to 'NewsArticle' (which is the only type Google search carousel supports as of Feb 2015)",
     safeState = On,
-    sellByDate = new LocalDate(2016, 4, 5), //Tuesday
+    sellByDate = new LocalDate(2016, 4, 6),
     exposeClientSide = false
   )
 
