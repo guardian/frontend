@@ -3,7 +3,7 @@
 @import views.html.fragments.form.{inputField, textareaField}
 @import form.IdFormHelpers._
 @import form.Input
-@import model.{Countries, CountryCodes, Titles}
+@import model.{Countries, PhoneNumbers, Titles}
 @import org.joda.time.DateTime.now
 @import helper._
 <form class="form js-account-details-form" novalidate action="@idUrlBuilder.buildUrl("/account/edit", idRequest)" role="main" method="post">
@@ -51,7 +51,7 @@
                         }
                         @select(
                             accountDetailsForm("telephoneNumber.countryCode"),
-                            CountryCodes.codes.map { item => (item.toString, "+" + item.toString)},
+                            PhoneNumbers.countryCodes.map { item => (item.toString, "+" + item.toString)},
                             ('_label, ""),
                             ('_showConstraints, false),
                             ('_default, ""),
