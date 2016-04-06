@@ -12,7 +12,7 @@ import test.ConfiguredTestSuite
 
 @DoNotDiscover class DeploysRadiatorControllerTest extends WordSpec with Matchers with ConfiguredTestSuite with ExecutionContexts {
 
-  val existingBuild = "1402"
+  val existingBuild = "1621"
 
   val RecordingHttpClient = new HttpClient {
     override def GET(url: String, queryString: Map[String, String] = Map.empty, headers: Map[String, String] = Map.empty) = {
@@ -76,7 +76,7 @@ import test.ConfiguredTestSuite
       (jsonResponse \ "status").as[String] should be("ok")
       (jsonResponse \ "response" \ "number").as[String] should be(existingBuild)
       (jsonResponse \ "response" \ "projectName").as[String] should be("dotcom:master")
-      ((jsonResponse \ "response" \ "commits").as[JsArray]).value.size should be(9)
+      ((jsonResponse \ "response" \ "commits").as[JsArray]).value.size should be(7)
     }
   }
 

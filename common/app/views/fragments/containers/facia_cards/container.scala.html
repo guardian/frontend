@@ -9,6 +9,7 @@
 @import views.support.GetClasses
 @(containerDefinition: layout.FaciaContainer,
   frontProperties: model.FrontProperties = model.FrontProperties.empty,
+  frontId: Option[String] = None,
   isPaidFront: Boolean = false,
   maybeContainerModel: Option[ContainerModel] = None)(implicit request: RequestHeader)
 
@@ -31,7 +32,9 @@
 
         case _: Dynamic | _: Fixed if Switches.v2PaidContainerTemplate.isSwitchedOn && shouldRenderAsPaidContainer(isPaidFront, containerDefinition) => {
             @maybeContainerModel match {
-                case Some(containerModel) => { @paidContainerV2(containerModel) }
+                case Some(containerModel) => {
+                    @paidContainerV2(frontId.getOrElse(""), containerDefinition.index, containerModel)
+                }
                 case None => {}
             }
         }

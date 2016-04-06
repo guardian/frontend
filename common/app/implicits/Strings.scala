@@ -68,3 +68,5 @@ trait Strings {
     lazy val stringDecoded = URLDecoder.decode(s, "UTF-8")
   }
 }
+
+object Strings extends Strings

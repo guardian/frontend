@@ -65,6 +65,10 @@
 .fc-item--list-mobile {
     @include mq($until: tablet) {
         @include fc-item--list;
+
+        .fc-item__video-play {
+            display: none;
+        }
     }
 }
 

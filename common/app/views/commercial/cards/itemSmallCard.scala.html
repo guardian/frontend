@@ -1,4 +1,5 @@
 @(item: common.commercial.CardContent,
+  omnitureId: String,
   optAdvertClassNames: Option[Seq[String]] = None,
   optClassNames: Option[Seq[String]] = None,
   optSponsorship: Option[String] = None,
@@ -13,6 +14,7 @@
     @optAdvertClassNames.map { classNames => @classNames.map(c => s"advert--$c").mkString(" ")}
     @optClassNames.map { classNames => @classNames.mkString(" ")}
     "
+    data-link-name="@omnitureId"
     @for(sponsorship <- optSponsorship){data-sponsorship="@sponsorship"}
     @for(sponsor     <- optSponsor)    {data-sponsor="@sponsor"}
     @for(keywords    <- optKeywords)   {data-keywords="@keywords"}
