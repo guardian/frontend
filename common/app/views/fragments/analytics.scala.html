@@ -3,20 +3,18 @@
 @import common.AnalyticsHost
 @import views.support.OmnitureAnalyticsData
 @import conf.Static
-@import conf.switches.Switches.NonBlockingOmniture
 @import conf.switches.Switches.BritishCouncilBeacon
 @import conf.switches.Switches.GoogleAnalyticsSwitch
 @import common.InlineJs
-@import templates.inlineJS.blocking.js._
 
-@if(NonBlockingOmniture.isSwitchedOn) {
+
     @fragments.omnitureScript(Some(page.metadata))
 
     <script>
         // analytics code
-        @InlineJs(templates.inlineJS.blocking.js.analytics(), "analytics.js")
+    @InlineJs(templates.inlineJS.nonBlocking.js.analytics(), "analytics.js")
     </script>
-}
+
 
 @defining(s"${request.host}${request.path}") { path =>
 
@@ -65,7 +63,7 @@
         Note, you cannot @InlineJs(...) this
         InlineJS should only be used for fragments that do not take parameters due to the way memoization happens.
         *@
-        @Html(googleAnalytics(page).body)
+        @Html(templates.inlineJS.nonBlocking.js.googleAnalytics(page).body)
     </script>
 
     @*
