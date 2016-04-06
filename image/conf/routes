@@ -1,8 +1,0 @@
-# Routes
-# This file defines all application routes (Higher priority routes first)
-# ~~~~
-
-# Nb. changing these URLs will bust the image cache. Be very careful!
-
-GET     /                                                                       controllers.IndexController.index()
-
