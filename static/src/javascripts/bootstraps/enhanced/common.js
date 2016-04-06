@@ -145,7 +145,8 @@ define([
                     && !config.page.isAdvertisementFeature
                     && config.page.pageId !== 'offline-page'
                     && !config.page.shouldHideAdverts
-                    && config.page.section !== 'childrens-books-site') {
+                    && config.page.section !== 'childrens-books-site'
+                    && !config.tests.abNewHeaderVariant) {
                     stickyAdBanner.initialise();
                     config.page.hasStickyAdBanner = true;
                 } else {

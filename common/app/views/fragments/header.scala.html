@@ -5,132 +5,174 @@
 @import conf.Configuration
 @import views.support.URLEncode
 
-<header id="header"
-        class="l-header u-cf @if(page.metadata.hasSlimHeader) {l-header--is-slim l-header--no-navigation} js-header"
-        role="banner"
-        data-link-name="global navigation: header">
-    <div class="js-navigation-header navigation-container navigation-container--collapsed">
-        <div class="gs-container l-header__inner">
-            <div class="l-header-pre u-cf">
-                <div class="brand-bar">
-                    @if(Edition(request) == Uk) {
-                        <div class="brand-bar__item brand-bar__item--profile
-                                    brand-bar__item--has-control brand-bar__item--register
-                                    popup-container has-popup js-profile-register
-                                    hide-until-mobile-landscape">
-                            <a href="@Configuration.id.membershipUrl?INTCMP=DOTCOM_HEADER_BECOMEMEMBER"
-                                data-link-name="Register link"
-                                class="brand-bar__item--action">
-                                    @fragments.inlineSvg("profile-add-36", "icon", List("rounded-icon", "control__icon-wrapper"))
-                                <span class="brand-bar__item__badge control__icon-wrapper control__icon-wrapper--text">free</span>
-                                <span class="control__info js-control-info control__info--supporting">become a member</span>
-                            </a>
-                        </div>
-                    }
-                    @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
-                        <div class="brand-bar__item brand-bar__item--profile popup-container
-                                    has-popup js-profile-nav"
-                             data-component="identity-profile">
-                             <a href="@Configuration.id.url/signin?INTCMP=DOTCOM_HEADER_SIGNIN"
-                               data-link-name="User profile"
-                               data-toggle="popup--profile"
-                               data-toggle-signed-in="true"
-                               class="brand-bar__item--action popup__toggle"
-                               data-test-id="sign-in-link"
-                               aria-haspopup="true">
-                                @fragments.inlineSvg("profile-36", "icon", List("rounded-icon", "control__icon-wrapper"))
-                                @if(conf.switches.Switches.SaveForLaterSwitch.isSwitchedOn) {
-                                    @fragments.inlineSvg("bookmark", "icon", List("save-for-later__icon"))
-                                }
-                                <span class="js-profile-info control__info"
-                                      data-test-id="sign-in-name">sign in</span>
-                            </a>
-                            <div class="js-profile-popup">
-                                <ul class="popup popup--default popup__group popup--profile is-off" data-link-name="Sub Sections" data-test-id="popup-profile">
-                                    @if(conf.switches.Switches.SaveForLaterSwitch.isSwitchedOn) {
-                                        <li class="popup__item">
-                                            <a href="@Configuration.id.url/saved-for-later" class="brand-bar__item--action brand-bar__item--saved-for-later" data-link-name="Saved for Later">
-                                                Saved for later</a>
-                                        </li>
-                                    }
-                                    <li class="popup__item"><a class="brand-bar__item--action js-comment-activity u-h" data-link-name="Comment activity">Comment activity</a></li>
-                                    <li class="popup__item"><a href="@Configuration.id.url/public/edit" class="brand-bar__item--action" data-link-name="Edit profile">Edit profile</a></li>
-                                    <li class="popup__item"><a href="@Configuration.id.url/email-prefs" class="brand-bar__item--action" data-link-name="Email preferences">Email preferences</a></li>
-                                    <li class="popup__item"><a href="@Configuration.id.url/password/change" class="brand-bar__item--action" data-link-name="Change password">Change password</a></li>
-                                    <li class="popup__item"><a href="@Configuration.id.url/signout" class="brand-bar__item--action" data-link-name="Sign out">Sign out</a></li>
-                                </ul>
+@if(mvt.ABNewHeaderVariant.isParticipating) {
+    <header class="new-header" role="banner" data-link-name="global navigation: new header">
+        <div class="new-header__inner gs-container">
+            <a href="#" class="new-header__logo" tabindex="0">
+                <h1 class="u-h">The Guardian</h1>
+                @fragments.inlineSvg("guardian-logo-160", "logo")
+            </a>
+            <button class="new-header__edition-button">
+                <svg width="14" height="14" viewBox="0 0 14 14">
+                    <path d="M12.8 3.1l-.2.1-1.1.1-.3.5-.2-.1-.9-.8-.2-.4-.1-.5-.6-.5-.7-.1v.3l.6.6.3.4-.3.2-.3-.1-.4-.2v-.3L7.9 2l-.2.9-.6.1.1.5.7.1.1-.7.6.1.3.2h.5l.3.6.8.8-.1.3-.6-.1-1.2.6-.8 1-.1.5h-.3l-.6-.3-.5.3.1.6.2-.3H7v.5l.3.1.3.4.7-.2.6.1.7.2h.4l.6.7 1.2.7-.8 1.5-.8.4-.2.9-1.2.8-.1.5c3-.7 5.3-3.5 5.3-6.8 0-1.4-.4-2.8-1.2-3.9zm-5 7.6l-.5-1 .5-1-.5-.1-.5-.5-1.2-.3-.4-.8v.5H5L4 6.1V5l-.7-1.2-1.2.2h-.7L1 3.8l.5-.4-.5.1C.4 4.5 0 5.7 0 7c0 3.9 3.1 7 7 7 .3 0 .6 0 .9-.1l-.1-.8.3-1.3c0-.1-.3-1.1-.3-1.1zM2.6 2.3l1.2-.2.6-.3.7.2 1-.1.4-.6.5.1 1.2-.1.3-.4.5-.3.7.1h.3C9.1.2 8.1 0 7 0 4.8 0 2.9 1 1.6 2.5l1-.2zM7.3.7L8 .3l.5.3-.7.5h-.6L6.9.9l.4-.2zM5.2.8l.3.1.4-.1.2.4-1 .2-.4-.3.5-.3z"/>
+                </svg>
+                <span>UK Edition</span>
+            </button>
+            <nav class="new-header__nav">
+                <div class="new-header__nav__menu-button-and-user-button">
+                    <button class="new-header__nav__menu-button">
+                        <svg width="18" height="12" viewBox="0 0 18 12">
+                            <g>
+                                <rect width="18" height="2"></rect>
+                                <rect y="5" width="18" height="2"></rect>
+                                <rect y="10" width="18" height="2"></rect>
+                            </g>
+                        </svg>
+                        <span class="u-h">Menu</span>
+                    </button>
+                    <button class="new-header__nav__profile-button">
+                        @fragments.inlineSvg("profile-36", "icon")
+                        <span class="u-h">Profile</span>
+                    </button>
+                </div>
+                <ul class="new-header__nav__list">
+                    <li class="new-header__nav__list-item"><a class="new-header__nav__link" tabindex="0">news</a></li>
+                    <li class="new-header__nav__list-item"><a class="new-header__nav__link" tabindex="0">opinion</a></li>
+                    <li class="new-header__nav__list-item"><a class="new-header__nav__link" tabindex="0">sports</a></li>
+                    <li class="new-header__nav__list-item"><a class="new-header__nav__link" tabindex="0">arts</a></li>
+                    <li class="new-header__nav__list-item"><a class="new-header__nav__link" tabindex="0">life</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+} else {
+    <header id="header"
+            class="l-header u-cf @if(page.metadata.hasSlimHeader) {l-header--is-slim l-header--no-navigation} js-header"
+            role="banner"
+            data-link-name="global navigation: header">
+        <div class="js-navigation-header navigation-container navigation-container--collapsed">
+            <div class="gs-container l-header__inner">
+                <div class="l-header-pre u-cf">
+                    <div class="brand-bar">
+                        @if(Edition(request) == Uk) {
+                            <div class="brand-bar__item brand-bar__item--profile
+                                        brand-bar__item--has-control brand-bar__item--register
+                                        popup-container has-popup js-profile-register
+                                        hide-until-mobile-landscape">
+                                <a href="@Configuration.id.membershipUrl?INTCMP=DOTCOM_HEADER_BECOMEMEMBER"
+                                    data-link-name="Register link"
+                                    class="brand-bar__item--action">
+                                        @fragments.inlineSvg("profile-add-36", "icon", List("rounded-icon", "control__icon-wrapper"))
+                                    <span class="brand-bar__item__badge control__icon-wrapper control__icon-wrapper--text">free</span>
+                                    <span class="control__info js-control-info control__info--supporting">become a member</span>
+                                </a>
                             </div>
-                        </div>
-                    }
+                        }
+                        @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
+                            <div class="brand-bar__item brand-bar__item--profile popup-container
+                                        has-popup js-profile-nav"
+                                 data-component="identity-profile">
+                                 <a href="@Configuration.id.url/signin?INTCMP=DOTCOM_HEADER_SIGNIN"
+                                   data-link-name="User profile"
+                                   data-toggle="popup--profile"
+                                   data-toggle-signed-in="true"
+                                   class="brand-bar__item--action popup__toggle"
+                                   data-test-id="sign-in-link"
+                                   aria-haspopup="true">
+                                    @fragments.inlineSvg("profile-36", "icon", List("rounded-icon", "control__icon-wrapper"))
+                                    @if(conf.switches.Switches.SaveForLaterSwitch.isSwitchedOn) {
+                                        @fragments.inlineSvg("bookmark", "icon", List("save-for-later__icon"))
+                                    }
+                                    <span class="js-profile-info control__info"
+                                          data-test-id="sign-in-name">sign in</span>
+                                </a>
+                                <div class="js-profile-popup">
+                                    <ul class="popup popup--default popup__group popup--profile is-off" data-link-name="Sub Sections" data-test-id="popup-profile">
+                                        @if(conf.switches.Switches.SaveForLaterSwitch.isSwitchedOn) {
+                                            <li class="popup__item">
+                                                <a href="@Configuration.id.url/saved-for-later" class="brand-bar__item--action brand-bar__item--saved-for-later" data-link-name="Saved for Later">
+                                                    Saved for later</a>
+                                            </li>
+                                        }
+                                        <li class="popup__item"><a class="brand-bar__item--action js-comment-activity u-h" data-link-name="Comment activity">Comment activity</a></li>
+                                        <li class="popup__item"><a href="@Configuration.id.url/public/edit" class="brand-bar__item--action" data-link-name="Edit profile">Edit profile</a></li>
+                                        <li class="popup__item"><a href="@Configuration.id.url/email-prefs" class="brand-bar__item--action" data-link-name="Email preferences">Email preferences</a></li>
+                                        <li class="popup__item"><a href="@Configuration.id.url/password/change" class="brand-bar__item--action" data-link-name="Change password">Change password</a></li>
+                                        <li class="popup__item"><a href="@Configuration.id.url/signout" class="brand-bar__item--action" data-link-name="Sign out">Sign out</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        }
 
-                    <div class="brand-bar__item has-popup brand-bar__item--has-control
-                                popup-container brand-bar__item--subscribe desktop-only hide-on-slim-header"
-                         data-component="subscribe">
-                        <a href="@SubscribeLink(Edition(request))" class="brand-bar__item--action"
-                        data-link-name="@Edition(request).id.toLowerCase : topNav : subscribe">
-                            @fragments.inlineSvg("marque-36", "icon", List("rounded-icon", "control__icon-wrapper"))
-                            <span class="control__info">subscribe</span>
-                        </a>
-                    </div>
-
-                    @if(SearchSwitch.isSwitchedOn) {
-                        <div class="brand-bar__item has-popup popup-container brand-bar__item--search" data-component="search">
-                            <a href="https://www.google.co.uk/advanced_search?q=site:www.theguardian.com" data-is-ajax data-link-name="Search icon"
-                               class="brand-bar__item--action popup__toggle js-search-toggle" data-toggle="popup--search"
-                               aria-haspopup="true">
-                                @fragments.inlineSvg("search-36", "icon", List("rounded-icon", "control__icon-wrapper"))
-                                <span class="control__info">search</span>
+                        <div class="brand-bar__item has-popup brand-bar__item--has-control
+                                    popup-container brand-bar__item--subscribe desktop-only hide-on-slim-header"
+                             data-component="subscribe">
+                            <a href="@SubscribeLink(Edition(request))" class="brand-bar__item--action"
+                            data-link-name="@Edition(request).id.toLowerCase : topNav : subscribe">
+                                @fragments.inlineSvg("marque-36", "icon", List("rounded-icon", "control__icon-wrapper"))
+                                <span class="control__info">subscribe</span>
                             </a>
                         </div>
+
+                        @if(SearchSwitch.isSwitchedOn) {
+                            <div class="brand-bar__item has-popup popup-container brand-bar__item--search" data-component="search">
+                                <a href="https://www.google.co.uk/advanced_search?q=site:www.theguardian.com" data-is-ajax data-link-name="Search icon"
+                                   class="brand-bar__item--action popup__toggle js-search-toggle" data-toggle="popup--search"
+                                   aria-haspopup="true">
+                                    @fragments.inlineSvg("search-36", "icon", List("rounded-icon", "control__icon-wrapper"))
+                                    <span class="control__info">search</span>
+                                </a>
+                            </div>
+                        }
+                        @fragments.topNav.servicesLinks(page.metadata)
+                    </div>
+                </div>
+
+                <div class="popup popup--default popup--search is-off"><div class="js-search-placeholder"></div></div>
+
+                <div class="l-header-main">
+                    @if((page.metadata.section == "observer" && page.metadata.isFront) || page.metadata.id == "theobserver") {
+                        <a href="@LinkTo{@page.metadata.url}" data-link-name="site logo" id="logo" class="logo-wrapper logo-wrapper--observer" data-component="logo">
+                            @if(page.metadata.hasSlimHeader) {
+                                @fragments.inlineSvg("observer-logo-160", "logo")
+                            } else {
+                                <span class="u-h">The Observer</span>
+                                @fragments.inlineSvg("observer-logo-320", "logo")
+                            }
+                        </a>
+                    } else {
+                        <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="logo-wrapper" data-component="logo">
+                            <span class="u-h">The Guardian</span>
+                            @if(page.metadata.hasSlimHeader) {
+                                @* CRAZY HACK TO FIX IE8 RENDERING ISSUE WITH LOGO SVG MARKUP *@
+                                <!--[if (gt IE 8)|(IEMobile)]><!-->
+                                    @fragments.inlineSvg("guardian-logo-160", "logo")
+                                <!--<![endif]-->
+                                <!--[if (lt IE 9)&(!IEMobile)]>
+                                  <span class="inline-logo inline-guardian-logo-160"></span>
+                                <![endif]-->
+                            } else {
+                                <!--[if (gt IE 8)|(IEMobile)]><!-->
+                                    @fragments.inlineSvg("guardian-logo-320", "logo")
+                                <!--<![endif]-->
+                                <!--[if (lt IE 9)&(!IEMobile)]>
+                                    <span class="inline-logo inline-guardian-logo-320"></span>
+                                <![endif]-->
+                            }
+                            @if(Edition(request) == Uk) {
+                            <object class="hide-on-mobile hide-on-slim-header">
+                                <a class="logo__tagline" href="/culture/2016/mar/22/the-guardian-named-website-of-the-year-at-press-awards" data-link-name="website of the year">website of the year</a>
+                            </object>
+                            }
+                        </a>
                     }
-                    @fragments.topNav.servicesLinks(page.metadata)
+                    @if(page.metadata.hasSlimHeader) {
+                        @fragments.nav.navigationToggle()
+                    }
                 </div>
             </div>
-
-            <div class="popup popup--default popup--search is-off"><div class="js-search-placeholder"></div></div>
-
-            <div class="l-header-main">
-                @if((page.metadata.section == "observer" && page.metadata.isFront) || page.metadata.id == "theobserver") {
-                    <a href="@LinkTo{@page.metadata.url}" data-link-name="site logo" id="logo" class="logo-wrapper logo-wrapper--observer" data-component="logo">
-                        @if(page.metadata.hasSlimHeader) {
-                            @fragments.inlineSvg("observer-logo-160", "logo")
-                        } else {
-                            <span class="u-h">The Observer</span>
-                            @fragments.inlineSvg("observer-logo-320", "logo")
-                        }
-                    </a>
-                } else {
-                    <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="logo-wrapper" data-component="logo">
-                        <span class="u-h">The Guardian</span>
-                        @if(page.metadata.hasSlimHeader) {
-                            @* CRAZY HACK TO FIX IE8 RENDERING ISSUE WITH LOGO SVG MARKUP *@
-                            <!--[if (gt IE 8)|(IEMobile)]><!-->
-                                @fragments.inlineSvg("guardian-logo-160", "logo")
-                            <!--<![endif]-->
-                            <!--[if (lt IE 9)&(!IEMobile)]>
-                              <span class="inline-logo inline-guardian-logo-160"></span>
-                            <![endif]-->
-                        } else {
-                            <!--[if (gt IE 8)|(IEMobile)]><!-->
-                                @fragments.inlineSvg("guardian-logo-320", "logo")
-                            <!--<![endif]-->
-                            <!--[if (lt IE 9)&(!IEMobile)]>
-                                <span class="inline-logo inline-guardian-logo-320"></span>
-                            <![endif]-->
-                        }
-                        @if(Edition(request) == Uk) {
-                        <object class="hide-on-mobile hide-on-slim-header">
-                            <a class="logo__tagline" href="/culture/2016/mar/22/the-guardian-named-website-of-the-year-at-press-awards" data-link-name="website of the year">website of the year</a>
-                        </object>
-                        }
-                    </a>
-                }
-                @if(page.metadata.hasSlimHeader) {
-                    @fragments.nav.navigationToggle()
-                }
-            </div>
+            @fragments.nav.navigation(page)
         </div>
-        @fragments.nav.navigation(page)
-    </div>
 
-</header>
+    </header>
+}
