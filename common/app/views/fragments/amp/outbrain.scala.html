@@ -1,8 +1,8 @@
 @(page: model.Page)
-@import conf.switches.Switches.OutbrainOnAmp
+@import conf.switches.Switches.OutbrainSwitch
 @import views.support.URLEncode
 
-@if(OutbrainOnAmp.isSwitchedOn) {
+@if(OutbrainSwitch.isSwitchedOn) {
     @defining(page.metadata.webUrl) { htmlUrl =>
         <amp-iframe height=175
         sandbox="allow-scripts allow-same-origin allow-popups"

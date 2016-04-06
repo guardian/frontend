@@ -7,11 +7,9 @@ import common._
 import conf.LiveContentApi.getResponse
 import conf._
 import conf.switches.Switches
-import conf.switches.Switches.LongCacheSwitch
 import model._
 import model.liveblog.{BodyBlock, KeyEventData}
 import org.joda.time.DateTime
-import performance.MemcachedAction
 import play.api.libs.functional.syntax._
 import play.api.mvc._
 import play.api.libs.json.{Json, _}
@@ -133,14 +131,14 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   }
 
   def renderLiveBlog(path: String, page: Option[String] = None) =
-    LongCacheAction { implicit request =>
+    Action.async { implicit request =>
       mapModel(path, blocks = true) {// temporarily only ask for blocks too for things we know are new live blogs until until the migration is done and we can always use blocks
         render(path, _, page)
       }
     }
 
   def renderLiveBlogJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean]) = {
-    LongCacheAction { implicit request =>
+    Action.async { implicit request =>
       mapModel(path, blocks = true) { model =>
         (lastUpdate, rendered) match {
           case (Some(lastUpdate), _) => renderNewerUpdates(model, lastUpdate, isLivePage)
@@ -152,7 +150,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   }
 
   def renderJson(path: String) = {
-    LongCacheAction { implicit request =>
+    Action.async { implicit request =>
       mapModel(path) {
         render(path, _, None)
       }
@@ -160,7 +158,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   }
 
   def renderArticle(path: String) = {
-    LongCacheAction { implicit request =>
+    Action.async { implicit request =>
       mapModel(path, blocks = request.isEmail) {
         render(path, _, None)
       }
@@ -206,18 +204,6 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
     ModelOrResult(content, response)
   }
 
-}
-
-object LongCacheAction {
-  def apply(block: RequestHeader => Future[Result]): Action[AnyContent] = {
-    if (LongCacheSwitch.isSwitchedOn) Action.async { implicit request =>
-      // we cannot sensibly decache memcached (does not support surogate keys)
-      // so if we are doing the 'soft purge' don't memcache
-      block(request)
-    } else MemcachedAction { implicit request =>
-      block(request)
-    }
-  }
 }
 
 class PageParser extends RegexParsers {

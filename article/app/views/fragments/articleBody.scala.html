@@ -45,7 +45,7 @@
                 @fragments.guBand()
             }
 
-            @fragments.headTonal(article, article.commercial.isAdvertisementFeature)
+            @fragments.headTonal(article, article.commercial.isAdvertisementFeature, amp = amp)
 
             @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
                 @fragments.mainMedia(article, amp)

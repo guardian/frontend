@@ -106,7 +106,7 @@ case class SlackNotice(build: TeamCityBuild,
             "attachments" -> Seq(
               Json.obj(
                 "fallback" -> JsString(s"[${build.projectName}] ${buildLink} ${statusIcon} ${build.status} ($whoIsIn)"),
-                "title" -> JsString(s"[${build.projectName}] build #${build.id} ${build.status}"),
+                "title" -> JsString(s"[${build.projectName}] build #${build.number} ${build.status}"),
                 "color" -> JsString(color),
                 "title_link" -> JsString(build.link),
                 "text" -> JsString(whoIsIn)

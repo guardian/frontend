@@ -55,7 +55,7 @@ trait TeamcityService {
 
   def getTeamCityBuild(number: String): Future[ApiResponse[TeamCityBuild]] = {
     val apiPath = "/guestAuth/app/rest"
-    val url = s"${Configuration.teamcity.host}${apiPath}/builds/number:$number,state:any,canceled(any)"
+    val url = s"${Configuration.teamcity.internalHost}${apiPath}/builds/number:$number,state:any,canceled(any)"
 
     httpClient.GET(url,
       queryString = Map("fields" -> List(

@@ -2,14 +2,13 @@ package controllers.commercial
 
 import model.commercial.money._
 import model.{NoCache, Cached}
-import performance.MemcachedAction
 import play.api.mvc._
 import play.twirl.api.Html
 import scala.concurrent.Future
 
 object MoneyOffers extends Controller with implicits.Requests {
 
-  def renderBestBuys = MemcachedAction { implicit request =>
+  def renderBestBuys = Action.async { implicit request =>
     Future.successful {
       BestBuysAgent.adsTargetedAt(segment) match {
         case Some(bestBuys) => {
@@ -22,7 +21,7 @@ object MoneyOffers extends Controller with implicits.Requests {
     }
   }
 
-  def savings(savingsType: String) = MemcachedAction { implicit request =>
+  def savings(savingsType: String) = Action.async { implicit request =>
     Future.successful {
       SavingsPages.find(savingsType).fold(Cached(componentMaxAge)(NotFound)) { page =>
         val savings = BestBuysAgent.adsTargetedAt(segment).flatMap(_.savings.get(savingsType)).getOrElse(Nil)
@@ -31,7 +30,7 @@ object MoneyOffers extends Controller with implicits.Requests {
     }
   }
 
-  def currentAccounts(currentAccountType: String) = MemcachedAction { implicit request =>
+  def currentAccounts(currentAccountType: String) = Action.async { implicit request =>
     Future.successful {
       CurrentAccountsPages.find(currentAccountType).fold(Cached(componentMaxAge)(NotFound)) { page =>
         val currentAccounts = BestBuysAgent.adsTargetedAt(segment).flatMap(_.currentAccounts.get(currentAccountType))
@@ -41,7 +40,7 @@ object MoneyOffers extends Controller with implicits.Requests {
     }
   }
 
-  def creditCards(creditCardType: String) = MemcachedAction { implicit request =>
+  def creditCards(creditCardType: String) = Action.async { implicit request =>
     Future.successful {
       CreditCardsPages.find(creditCardType).fold(Cached(componentMaxAge)(NotFound)) { page =>
         val creditCards = BestBuysAgent.adsTargetedAt(segment).flatMap(_.creditCards.get(creditCardType)).getOrElse(Nil)
@@ -50,7 +49,7 @@ object MoneyOffers extends Controller with implicits.Requests {
     }
   }
 
-  def loans(loanType: String) = MemcachedAction { implicit request =>
+  def loans(loanType: String) = Action.async { implicit request =>
     Future.successful {
       LoansPages.find(loanType).fold(Cached(componentMaxAge)(NotFound)) { page =>
         val loans = BestBuysAgent.adsTargetedAt(segment).map(_.loans).getOrElse(Nil).filter(_.categoryName == page
@@ -61,7 +60,6 @@ object MoneyOffers extends Controller with implicits.Requests {
   }
 
 }
-
 
 sealed trait BestBuysRelevance {
   def view(bestBuys: BestBuys)(implicit request: RequestHeader): Html

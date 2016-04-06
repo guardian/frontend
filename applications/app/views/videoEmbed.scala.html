@@ -78,7 +78,8 @@
                                 || 'XDomainRequest' in window
                             )
                         ),
-                        config: @Html(templates.js.javaScriptConfig(model.SimpleContentPage(video)).body)
+                        config: @Html(templates.js.javaScriptConfig(model.SimpleContentPage(video)).body),
+                        adBlockers: {}
                     };
                     var docClass = document.documentElement.className;
 

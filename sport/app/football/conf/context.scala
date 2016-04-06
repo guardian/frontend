@@ -1,6 +1,5 @@
 package conf
 
-import common.PaMetrics._
 import common._
 import feed.Competitions
 import model.{TeamMap, LiveBlogAgent}
@@ -80,16 +79,10 @@ object FootballClient extends PaClient with Http with Logging with ExecutionCont
 
   private var _http: Http = new Http {
     override def GET(urlString: String): Future[pa.Response] = {
-        val start = System.currentTimeMillis()
+
         val promiseOfResponse = WS.url(urlString).withRequestTimeout(2000).get()
-        promiseOfResponse.onComplete( r => PaApiHttpTimingMetric.recordDuration(System.currentTimeMillis() - start))
 
         promiseOfResponse.map{ r =>
-
-          r.status match {
-            case 200 => PaApiHttpOkMetric.increment()
-            case _ => PaApiHttpErrorMetric.increment()
-          }
 
           //this feed has a funny character at the start of it http://en.wikipedia.org/wiki/Zero-width_non-breaking_space
           //I have reported to PA, but just trimming here so we can carry on development
@@ -110,7 +103,6 @@ object FootballClient extends PaClient with Http with Logging with ExecutionCont
   def logErrors[T]: PartialFunction[Throwable, T] = {
     case e: PaClientErrorsException =>
       log.error(s"Football Client errors: ${e.getMessage}")
-      PaApiErrorsMetric.increment()
       throw e
   }
 

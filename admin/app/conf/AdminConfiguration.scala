@@ -29,6 +29,7 @@ object AdminConfiguration {
 
   object fastly {
     lazy val key = configuration.getStringProperty("fastly.key").getOrElse(throw new RuntimeException("Fastly key not configured"))
+    lazy val serviceId = configuration.getStringProperty("fastly.serviceId").getOrElse(throw new RuntimeException("Fastly service id not configured"))
   }
 
   object imgix {

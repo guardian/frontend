@@ -15,21 +15,12 @@ trait MonitoringSwitches {
     exposeClientSide = true
   )
 
-  val DiagnosticsLogging = Switch(
+  val GoogleAnalyticsSwitch = Switch(
     "Monitoring",
-    "enable-diagnostics-logging",
-    "If this switch is on, then js error reports and requests sent to the Diagnostics servers will be logged.",
-    safeState = On,
-    never,
-    exposeClientSide = true
-  )
-
-  val MetricsSwitch = Switch(
-    "Monitoring",
-    "enable-metrics-non-prod",
-    "If this switch is on, then metrics will be pushed to cloudwatch on DEV and CODE",
+    "google-analytics",
+    "If this switch is on, then Google Analytics is enabled",
     safeState = Off,
-    never,
+    sellByDate = new LocalDate(2016, 8, 26),
     exposeClientSide = false
   )
 

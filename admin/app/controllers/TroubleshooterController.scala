@@ -1,6 +1,6 @@
 package controllers.admin
 
-import contentapi.CircuitBreakingContentApiClient
+import contentapi.ContentApiClient
 import play.api.mvc.Controller
 import common.{ContentApiMetrics, ExecutionContexts, Logging}
 import model.NoCache
@@ -20,7 +20,7 @@ object TestFailed{
   def apply(name: String, messages: String*) = EndpointStatus(name, false, messages:_*)
 }
 
-object PreviewContentApi extends CircuitBreakingContentApiClient {
+object PreviewContentApi extends ContentApiClient {
   lazy val httpTimingMetric = ContentApiMetrics.ElasticHttpTimingMetric
   lazy val httpTimeoutMetric = ContentApiMetrics.ElasticHttpTimeoutCountMetric
   override val targetUrl = AdminConfiguration.contentapi.previewHost
@@ -28,11 +28,11 @@ object PreviewContentApi extends CircuitBreakingContentApiClient {
 
 object TroubleshooterController extends Controller with Logging with AuthLogging with ExecutionContexts {
 
-  def index() = AuthActions.AuthActionTest{ request =>
+  def index() = AuthActions.AuthActionTest{ implicit request =>
     NoCache(Ok(views.html.troubleshooter(LoadBalancer.all.filter(_.testPath.isDefined))))
   }
 
-  def test(id: String, testPath: String) = AuthActions.AuthActionTest.async{ request =>
+  def test(id: String, testPath: String) = AuthActions.AuthActionTest.async{ implicit request =>
 
     val loadBalancers = LoadBalancer.all.filter(_.testPath.isDefined)
 

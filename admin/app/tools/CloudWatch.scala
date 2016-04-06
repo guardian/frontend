@@ -284,18 +284,6 @@ object CloudWatch extends Logging with ExecutionContexts {
     )
   }
 
-
-  def ratioConfidence = for {
-    metric <- withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
-      .withStartTime(new DateTime().minusWeeks(2).toDate)
-      .withEndTime(new DateTime().toDate)
-      .withPeriod(900)
-      .withStatistics("Average")
-      .withNamespace("Analytics")
-      .withMetricName("omniture-ophan-correlation")
-      .withDimensions(stage)))
-  } yield new AwsLineChart("omniture-ophan-correlation", Seq("Time", "%"), ChartFormat.SingleLineBlue, metric)
-
   def AbMetricNames() = {
     withErrorLogging(euWestClient.listMetricsFuture(new ListMetricsRequest()
       .withNamespace("AbTests")

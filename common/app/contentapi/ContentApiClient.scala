@@ -4,7 +4,6 @@ import akka.actor.ActorSystem
 import com.gu.contentapi.client.ContentApiClientLogic
 import com.gu.contentapi.client.model.ErrorResponse
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
-import common.ContentApiMetrics.ContentApiCircuitBreakerOnOpen
 import conf.switches.Switches
 import scala.concurrent.{ExecutionContext, Future}
 import common._
@@ -123,7 +122,6 @@ trait CircuitBreakingContentApiClient extends ContentApiClient {
 
   circuitBreaker.onOpen({
     log.error("Reached error threshold for Content API Client circuit breaker - breaker is OPEN!")
-    ContentApiCircuitBreakerOnOpen.increment()
   })
 
   circuitBreaker.onHalfOpen({
@@ -136,14 +134,7 @@ trait CircuitBreakingContentApiClient extends ContentApiClient {
 
   override def fetch(url: String)(implicit executionContext: ExecutionContext) = {
     if (Switches.CircuitBreakerSwitch.isSwitchedOn) {
-      val future = circuitBreaker.withCircuitBreaker(super.fetch(url)(executionContext))
-
-      future onFailure {
-        case e: CircuitBreakerOpenException =>
-          ContentApiMetrics.ContentApiCircuitBreakerRequestsMetric.record()
-      }
-
-      future
+      circuitBreaker.withCircuitBreaker(super.fetch(url)(executionContext))
     } else {
       super.fetch(url)
     }
