@@ -2,7 +2,7 @@
     position: relative;
 
     &:hover {
-        background: darken(colour(neutral-8), 4%);
+        background: darken(colour(neutral-6), 4%);
 
         @include mq(desktop) {
             .football-match__report {
@@ -10,7 +10,7 @@
 
                 a {
                     padding-left: $gs-gutter/2;
-                    background: darken(colour(neutral-8), 4%);
+                    background: darken(colour(neutral-6), 4%);
                 }
             }
         }

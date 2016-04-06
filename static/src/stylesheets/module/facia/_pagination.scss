@@ -43,7 +43,7 @@ $pagination-icon-spacing: 10px;
 
 .pagination--full {
     width: 100%;
-    border-top: 1px solid colour(neutral-5);
+    border-top: 1px solid colour(neutral-4);
 
     @include mq(leftCol) {
         float: right;

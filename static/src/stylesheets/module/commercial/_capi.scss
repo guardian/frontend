@@ -58,7 +58,7 @@
 }
 
 .fc-container--advertisement-feature {
-    background-color: colour(neutral-8);
+    background-color: colour(neutral-6);
 
     .fc-container__inner {
 
@@ -127,7 +127,7 @@
 
     .tone-media--item {
         .u-faux-block-link--hover {
-            background-color: colour(neutral-6);
+            background-color: colour(neutral-5);
 
             .u-faux-block-link__overlay {
                 color: colour(neutral-1);
@@ -142,7 +142,7 @@
 
     // Override story-package hover colours
     .fc-container--story-package .fc-item .u-faux-block-link--hover {
-        background-color: colour(neutral-6);
+        background-color: colour(neutral-5);
     }
 
     .headline-list__item:before {

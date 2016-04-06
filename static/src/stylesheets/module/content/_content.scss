@@ -87,7 +87,7 @@
 .content__hr {
     border: 0;
     margin: 0;
-    border-top: 1px dotted colour(neutral-5);
+    border-top: 1px dotted colour(neutral-4);
     padding-top: 5px;
 }
 
@@ -118,14 +118,14 @@
     padding-bottom: $gs-baseline/3;
 
     .content--media & a {
-        color: colour(neutral-5);
+        color: colour(neutral-4);
     }
 }
 
 .content__labels {
     box-sizing: border-box;
     padding: $gs-baseline/2 0;
-    border-bottom: 1px dotted colour(neutral-5);
+    border-bottom: 1px dotted colour(neutral-4);
     position: relative;
     z-index: 1; // bring-to-front fix to make it clickable
     overflow: hidden;
@@ -197,7 +197,7 @@
     @include fs-header(3);
     box-sizing: border-box;
     padding: $gs-baseline/2 0 $gs-baseline;
-    border-top: 1px dotted colour(neutral-5) !important; // Disable tone colour
+    border-top: 1px dotted colour(neutral-4) !important; // Disable tone colour
 }
 
 .content__headline {
@@ -405,7 +405,7 @@
         padding-top: $gs-baseline/6;
         padding-bottom: $gs-baseline;
         margin-bottom: 0;
-        border-top: 1px dotted colour(neutral-5);
+        border-top: 1px dotted colour(neutral-4);
     }
 }
 
@@ -435,7 +435,7 @@
     height: 60px; //Intentionally off grid
     margin: $gs-baseline/2 0;
     overflow: hidden;
-    background-color: colour(neutral-7);
+    background-color: colour(neutral-6);
 
     // fixes for webkit not properly scaling/clipping the child element (still broken on some android browsers...)
     -webkit-transform: translateZ(0);
@@ -468,8 +468,8 @@
     min-height: gs-height(1);
     position: relative;
     margin-bottom: $gs-baseline;
-    border-top: 1px dotted colour(neutral-5);
-    border-bottom: 1px dotted colour(neutral-5);
+    border-top: 1px dotted colour(neutral-4);
+    border-bottom: 1px dotted colour(neutral-4);
 
     @include mq(leftCol) {
         position: absolute;
@@ -538,7 +538,7 @@
     @include mq(leftCol) {
         clear: both;
         padding-top: $gs-baseline/6;
-        border-top: 1px dotted colour(neutral-5);
+        border-top: 1px dotted colour(neutral-4);
         box-sizing: border-box;
         padding-bottom: $gs-baseline;
         min-height: $gs-baseline*4;
@@ -637,7 +637,7 @@
             display: block;
             padding-top: $gs-baseline/3;
             margin-bottom: $gs-baseline;
-            border-top: 1px dotted colour(neutral-5);
+            border-top: 1px dotted colour(neutral-4);
         }
     }
 
@@ -646,7 +646,7 @@
 .content--advertisement-feature {
     &.content--article,
     &.content--interactive {
-        background-color: colour(neutral-8);
+        background-color: colour(neutral-6);
     }
     .content__standfirst,
     .content__dateline,
@@ -910,7 +910,7 @@
 }
 
 .meta__social {
-    border-top: 1px dotted colour(neutral-5);
+    border-top: 1px dotted colour(neutral-4);
     padding: 0;
     box-sizing: border-box;
 
@@ -1047,12 +1047,12 @@
     }
 
     .tonal--tone-media & {
-        color: colour(neutral-7);
+        color: colour(neutral-6);
     }
 
     .meta__author--comment & {
         padding-top: $gs-baseline/6;
-        border-top: 1px dotted colour(neutral-5);
+        border-top: 1px dotted colour(neutral-4);
     }
 
     .content__meta-container--twitter &,
@@ -1061,7 +1061,7 @@
     }
 
     .content__meta-container--tonal-header & {
-        border-top: 1px dotted colour(neutral-5);
+        border-top: 1px dotted colour(neutral-4);
         padding-top: $gs-baseline/6;
     }
 }
@@ -1071,7 +1071,7 @@
     line-height: 15px;
     color: colour(neutral-2);
     margin-bottom: 0;
-    border-top: 1px dotted colour(neutral-5);
+    border-top: 1px dotted colour(neutral-4);
     padding-top: $gs-baseline/6;
 
     .content__meta-container--bio & {

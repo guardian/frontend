@@ -73,7 +73,7 @@
 
 // [type=radio] + label
 .atom-quiz__answer__item {
-    background-color: colour(neutral-8);
+    background-color: colour(neutral-6);
     transition: background-color 100ms;
     display: block;
     position: relative;
@@ -283,7 +283,7 @@
 .atom-quiz__end-message {
     display: none;
     border-top: 1px solid colour(neutral-4);
-    background-color: colour(neutral-8);
+    background-color: colour(neutral-6);
     padding: $gs-baseline / 2 $gs-gutter * 2 / 3;
 
     .atom-quiz--is-results & {

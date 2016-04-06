@@ -158,7 +158,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    background-color: colour(neutral-8);
+    background-color: colour(neutral-6);
 }
 
 .share-modal__content {
@@ -323,7 +323,7 @@
 
     .fig--border {
         @include mq(leftCol) {
-            border-bottom: 1px dotted colour(neutral-5) !important;
+            border-bottom: 1px dotted colour(neutral-4) !important;
         }
 
         &.element--thumbnail {

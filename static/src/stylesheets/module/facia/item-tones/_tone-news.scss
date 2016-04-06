@@ -1,7 +1,7 @@
 .tone-news--item {
     &.fc-item,
     &.rich-link {
-        background-color: colour(neutral-8);
+        background-color: colour(neutral-6);
     }
 
     .rich-link__container:before,
@@ -17,11 +17,11 @@
     }
 
     .fc-save-for-later {
-        border-color: mix(#000000, colour(neutral-8), 10%);
+        border-color: mix(#000000, colour(neutral-6), 10%);
     }
 
     .fc-item__kicker--dreamsnap {
-        background-color: mix(#000000, colour(neutral-8), 10%);
+        background-color: mix(#000000, colour(neutral-6), 10%);
     }
 
     .fc-item__kicker--breaking-news {

@@ -7,7 +7,7 @@ $block-padding-right: $gs-gutter;
    ========================================================================== */
 
 .content--liveblog .content__main {
-    background-color: colour(neutral-8);
+    background-color: colour(neutral-6);
 }
 
 .content__main-column--liveblog {
@@ -40,7 +40,7 @@ $block-padding-right: $gs-gutter;
 
         .meta__numbers {
             position: static;
-            border-top: 1px dotted colour(neutral-5);
+            border-top: 1px dotted colour(neutral-4);
             border-bottom: 0;
         }
     }
@@ -50,7 +50,7 @@ $block-padding-right: $gs-gutter;
 
         @include mq(desktop) {
             padding-top: $gs-baseline/6;
-            border-top: 1px dotted colour(neutral-5);
+            border-top: 1px dotted colour(neutral-4);
         }
     }
 }
@@ -169,7 +169,7 @@ $block-padding-right: $gs-gutter;
     padding-bottom: $gs-baseline;
     background-color: #ffffff;
     border-top: 1px solid colour(neutral-3);
-    border-bottom: 1px solid colour(neutral-6);
+    border-bottom: 1px solid colour(neutral-5);
 }
 
 .block.is-key-event,
@@ -319,7 +319,7 @@ $block-padding-right: $gs-gutter;
                 background: none;
             }
             tr {
-                border-bottom: 1px solid darken(colour(neutral-8), 4%);
+                border-bottom: 1px solid darken(colour(neutral-6), 4%);
 
                 th:first-child,
                 td:first-child {
@@ -331,7 +331,7 @@ $block-padding-right: $gs-gutter;
                 }
             }
             thead {
-                border-top: 1px solid darken(colour(neutral-8), 4%);
+                border-top: 1px solid darken(colour(neutral-6), 4%);
             }
         }
 
@@ -365,7 +365,7 @@ $block-padding-right: $gs-gutter;
         > .element-image,
         > .element-video {
             clear: left;
-            border-bottom: 2px solid colour(neutral-8);
+            border-bottom: 2px solid colour(neutral-6);
             margin-bottom: $gs-baseline;
             padding-bottom: $gs-baseline/2;
 
@@ -531,7 +531,7 @@ $block-padding-right: $gs-gutter;
         margin: 0;
 
         @include mq($until: desktop) {
-            background-color: colour(neutral-8);
+            background-color: colour(neutral-6);
             padding: $gs-baseline $content-gutter;
         }
 
@@ -724,7 +724,7 @@ $timeline-width: 15px;
     @include mq(desktop) {
         position: relative;
         padding: 0 $gs-gutter $gs-baseline*2;
-        border-left: 1px solid colour(neutral-5);
+        border-left: 1px solid colour(neutral-4);
 
         &:before {
             @include circular;
@@ -778,7 +778,7 @@ $timeline-width: 15px;
 .timeline__title {
     @include fs-textSans(3);
     display: table-cell;
-    border-color: colour(neutral-8);
+    border-color: colour(neutral-6);
 
     .timeline__link:hover & {
         border-color: colour(neutral-2);
@@ -801,12 +801,12 @@ $timeline-width: 15px;
 
     .tone-news--item {
         .fc-item__content {
-            background-color: darken(colour(neutral-8), 3%);
+            background-color: darken(colour(neutral-6), 3%);
         }
 
         .u-faux-block-link--hover {
             .fc-item__content {
-                background-color: darken(colour(neutral-8), 8%);
+                background-color: darken(colour(neutral-6), 8%);
             }
         }
     }
@@ -827,7 +827,7 @@ $timeline-width: 15px;
     }
 
     .tabs__tab--selected {
-        border-bottom-color: colour(neutral-8) !important;
+        border-bottom-color: colour(neutral-6) !important;
     }
 
     .match-summary {
@@ -842,7 +842,7 @@ $timeline-width: 15px;
             margin: $gs-baseline/2 $gs-gutter/2 0;
 
             @include mq(mobileLandscape) {
-                border-left: 1px solid darken(colour(neutral-8), 4%);
+                border-left: 1px solid darken(colour(neutral-6), 4%);
                 margin-left: $gs-gutter;
                 margin-right: $gs-gutter;
                 padding-left: $gs-gutter;
@@ -861,11 +861,11 @@ $timeline-width: 15px;
 
     @include mq(desktop) {
         .tabs__container--multiple {
-            background-color: colour(neutral-8);
+            background-color: colour(neutral-6);
         }
 
         .tabs__tab--selected .tab__link {
-            background-color: colour(neutral-8);
+            background-color: colour(neutral-6);
         }
 
         .match-summary {
@@ -928,7 +928,7 @@ $timeline-width: 15px;
         background-color: #ffffff;
 
         .content__labels {
-            border-bottom-color: colour(neutral-5);
+            border-bottom-color: colour(neutral-4);
         }
         .content__section-label__link {
             color: colour(live-default);

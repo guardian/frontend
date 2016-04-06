@@ -42,10 +42,10 @@
 .ad-slot__label {
     @include font-size(12, 20);
     height: $mpu-ad-label-height;
-    background-color: colour(neutral-8);
+    background-color: colour(neutral-6);
     margin: 0 auto;
     padding: 0 ($gs-baseline/3)*2;
-    border-top: 1px solid colour(neutral-5);
+    border-top: 1px solid colour(neutral-4);
     color: colour(neutral-2-contrasted);
     text-align: right;
     box-sizing: border-box;
@@ -69,7 +69,7 @@
     display: none;
 }
 .top-banner-ad-container--desktop {
-    background-color: colour(neutral-8);
+    background-color: colour(neutral-6);
     display: none;
 
     .sticky-ad-banner & {
@@ -248,7 +248,7 @@
 }
 .ad-slot--inline,
 .ad-slot--container-inline {
-    background-color: colour(neutral-8);
+    background-color: colour(neutral-6);
 
     @include mq(tablet) {
         width: 300px;
@@ -312,7 +312,7 @@
     }
 }
 .ad-slot--liveblog-inline {
-    background-color: colour(neutral-6);
+    background-color: colour(neutral-5);
 
     .ad-slot__label {
         color: colour(neutral-2);
@@ -332,9 +332,9 @@
 .ad-slot--sponsored {
     min-height: 250px;
     box-sizing: border-box;
-    background-color: colour(neutral-8);
+    background-color: colour(neutral-6);
     overflow: hidden;
-    border-top: 1px solid colour(neutral-5);
+    border-top: 1px solid colour(neutral-4);
     padding-top: $gs-baseline/2;
 }
 .ad-slot--sponsored__article {
@@ -344,7 +344,7 @@
     min-height: gs-height(2);
     padding: 0 $gs-gutter/2 $gs-baseline/2 (gs-span(2) + $gs-gutter);
     margin-bottom: $gs-baseline/2;
-    border-bottom: 1px solid colour(neutral-5);
+    border-bottom: 1px solid colour(neutral-4);
 }
 .ad-slot--sponsored__image {
     position: absolute;
@@ -471,12 +471,12 @@
  }
 .ad-slot--paid-for-badge--article {
     padding-bottom: $gs-baseline * 2;
-    border-bottom: 1px dotted colour(neutral-5);
+    border-bottom: 1px dotted colour(neutral-4);
 
     @include mq(leftCol) {
         min-height: 0;
         border-bottom-width: 0;
-        border-top: 1px dotted colour(neutral-5);
+        border-top: 1px dotted colour(neutral-4);
     }
 
     @include mq(mobile, $until: leftCol) {
@@ -498,7 +498,7 @@
 .ad-slot--paid-for-badge--interactive {
     width: 140px;
     min-height: 135px;
-    border-top: 1px dotted colour(neutral-5);
+    border-top: 1px dotted colour(neutral-4);
 
     @include mq(desktop) {
         position: absolute;
@@ -540,7 +540,7 @@
             height: 0;
             width: $left-column + $gs-gutter;
             content: '';
-            border-bottom: 1px dotted colour(neutral-5);
+            border-bottom: 1px dotted colour(neutral-4);
             margin-top: $gs-gutter/4;
 
             @include mq(leftCol) {
@@ -576,7 +576,7 @@
         min-height: 0;
         margin-top: 4px;
         padding-top: 2px;
-        border-top: 1px dotted colour(neutral-5);
+        border-top: 1px dotted colour(neutral-4);
 
         .ad-slot--paid-for-badge__link {
             float: none;
@@ -607,7 +607,7 @@
     }
     @include mq($until: tablet) {
         clear: both;
-        border-top: 1px dotted colour(neutral-5);
+        border-top: 1px dotted colour(neutral-4);
 
         .fc-container--tag & {
             width: gs-span(2);

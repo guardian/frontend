@@ -4,7 +4,7 @@
 
     @include mq($until: desktop) {
         margin-top: -($gs-baseline / 1.5);
-        border-bottom: 1px dotted colour(neutral-6);
+        border-bottom: 1px dotted colour(neutral-5);
     }
 
     .content__main-column & {
@@ -25,7 +25,7 @@
 
     @include mq(desktop) {
         padding-top: $gs-baseline / 4;
-        border-top: 1px solid colour(neutral-6);
+        border-top: 1px solid colour(neutral-5);
     }
 }
 
@@ -74,7 +74,7 @@
 
 .chapters__list-item {
     padding-top: $gs-baseline / 4;
-    border-top: 1px dotted colour(neutral-5);
+    border-top: 1px dotted colour(neutral-4);
 }
 
 .chapters__link {

@@ -9,7 +9,7 @@
 // - "Contribute with…" cta: /lifeandstyle/the-running-blog/2013/aug/05/competition-win-gps-running-watch
 
 .element-witness {
-    border: 1px solid colour(neutral-5);
+    border: 1px solid colour(neutral-4);
     margin-bottom: ($gs-baseline/3)*5;
 }
 .element-witness--title {
@@ -37,9 +37,9 @@
 }
 .element-witness--metadata {
     @include fs-textSans(3);
-    border-top: 1px solid colour(neutral-5);
+    border-top: 1px solid colour(neutral-4);
     padding: $gs-baseline $gs-gutter/2;
-    background: colour(neutral-7);
+    background: colour(neutral-6);
     color: colour(neutral-2-contrasted) !important;
 
     img {

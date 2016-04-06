@@ -3,7 +3,7 @@
    ========================================================================== */
 $popup-anchor-arrow-size: 6px;
 $popup-top: $headerHeight + $gs-baseline/2 + 3;
-$c-popup-bg: colour(neutral-8);
+$c-popup-bg: colour(neutral-6);
 
 // Popups align with the label, so if there's a control icon, we need to account
 // for it. The number is derived from the icon size on the control.
@@ -176,7 +176,7 @@ $control-offset: 36 + $gs-gutter/2;
     line-height: 36px;
 
     a {
-        border-bottom: 1px solid colour(neutral-5);
+        border-bottom: 1px solid colour(neutral-4);
     }
 
     &:last-child {

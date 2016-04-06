@@ -2,13 +2,13 @@
 
 @include tone-content(
     analysis, // $tone
-    colour(neutral-7), // $tonal__header-background
+    colour(neutral-6), // $tonal__header-background
     colour(neutral-2), // $tonal__header-text
     colour(analysis-default), // $tonal__header-link
     400, // $tonal__headline-weight
     colour(analysis-default), // $tonal__headline-colour
     colour(analysis-accent), // $tonal__headline-accent
-    colour(neutral-8), // $tonal__standfirst-background
+    colour(neutral-6), // $tonal__standfirst-background
     colour(neutral-2), // $tonal__standfirst-text
     colour(analysis-default), // $tonal__standfirst-link
     #ffffff, // $tonal__article-background

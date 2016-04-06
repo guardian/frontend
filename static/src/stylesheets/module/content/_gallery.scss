@@ -85,7 +85,7 @@
 }
 
 .gallery2__caption {
-    color: colour(neutral-7);
+    color: colour(neutral-6);
     margin-bottom: 0;
 
     > strong:first-child {
@@ -99,11 +99,11 @@
     }
 
     a {
-        color: colour(neutral-7);
+        color: colour(neutral-6);
         border-bottom: 1px solid colour(neutral-2);
 
         &:hover {
-            border-bottom: 1px solid colour(neutral-7);
+            border-bottom: 1px solid colour(neutral-6);
             text-decoration: none;
         }
     }

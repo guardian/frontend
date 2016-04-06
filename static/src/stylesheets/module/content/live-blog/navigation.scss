@@ -125,16 +125,16 @@
 
 .liveblog-navigation__link--disabled {
     cursor: default;
-    color: colour(neutral-5);
-    border-color: colour(neutral-6);
+    color: colour(neutral-4);
+    border-color: colour(neutral-5);
 
     svg {
-        fill: colour(neutral-5);
+        fill: colour(neutral-4);
     }
 
     &:hover,
     &:active {
-        color: colour(neutral-5);
-        border-color: colour(neutral-6);
+        color: colour(neutral-4);
+        border-color: colour(neutral-5);
     }
 }

@@ -144,7 +144,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     white-space: normal;
     position: absolute;
     z-index: 5;
-    color: colour(neutral-8);
+    color: colour(neutral-6);
     box-sizing: border-box;
     word-wrap: break-word;
     width: 100%;
@@ -201,7 +201,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     }
 
     a {
-        color: colour(neutral-8);
+        color: colour(neutral-6);
         border-bottom: 1px solid colour(neutral-2);
         &:hover {
             color: #ffffff;
@@ -291,14 +291,14 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     }
 
     .gallery-lightbox__btn--info-button .gallery-lightbox__btn-body {
-        background: colour(neutral-7);
+        background: colour(neutral-6);
         i {
             @include icon(info-black);
         }
     }
 
     &.gallery-lightbox--hover .gallery-lightbox__btn--info-button:hover .gallery-lightbox__btn-body {
-        background: colour(neutral-8);
+        background: colour(neutral-6);
     }
 }
 
@@ -354,7 +354,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 }
 
 .gallery-lightbox__index {
-    color: colour(neutral-8);
+    color: colour(neutral-6);
 }
 
 /* Endslate
