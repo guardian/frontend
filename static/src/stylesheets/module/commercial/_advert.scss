@@ -95,17 +95,11 @@
         }
     }
 
-    /* There is a weird bug in sass-lint where the following two
-       rules trigger fatal errors. This is due to a bug in the AST.
-       Until it is solved, we just need to offset the computation
-       into a temporary var. */
-    $half-gutter: $gs-gutter / 2;
-
     .advert--large--1x3 > .advert__image-container {
-        flex-basis: calc(75% - #{$half-gutter});
+        flex-basis: calc(75% - #{$gs-gutter / 2});
     }
 
     .advert--large--1x2 > .advert__image-container {
-        flex-basis: calc(66.67% - #{$half-gutter});
+        flex-basis: calc(66.67% - #{$gs-gutter / 2});
     }
 }
