@@ -41,12 +41,6 @@ trait CloudWatch extends Logging {
       log.warn(s"Failed to put ${frontendStatisticSets.map(_.name).mkString(",")}")
       super.onError(exception)
     }
-    override def onSuccess(request: PutMetricDataRequest, result: Void ) = {
-      log.info(s"Successfully put ${frontendStatisticSets.size} metrics")
-      log.info(s"Successfully put ${frontendStatisticSets.map(_.name).mkString(",")}")
-
-      super.onSuccess(request, result)
-    }
   }
 
   def putMetrics(metricNamespace: String, metrics: List[FrontendMetric], dimensions: List[Dimension]): Unit = {
