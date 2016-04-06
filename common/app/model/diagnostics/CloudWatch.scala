@@ -49,8 +49,13 @@ trait CloudWatch extends Logging {
     }
   }
 
-  def putMetrics(metricNamespace: String, metrics: List[FrontendMetric], dimensions: List[Dimension]): Unit =
-    putMetricsWithStage(metricNamespace, metrics, dimensions :+ stageDimension)
+  def putMetrics(metricNamespace: String, metrics: List[FrontendMetric], dimensions: List[Dimension]): Unit = {
+    if (Configuration.environment.isNonProd) {
+      putMetricsWithStage(metricNamespace, metrics, dimensions :+ stageDimension)
+    } else {
+      log.info(s"cloudwatch logging suppressed outside Prod environment. namespace: $metricNamespace")
+    }
+  }
 
   private def putMetricsWithStage(metricNamespace: String, metrics: List[FrontendMetric], dimensions: List[Dimension]): Unit = {
     for {

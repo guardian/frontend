@@ -175,9 +175,8 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
 
   private def report() {
     val allMetrics: List[FrontendMetric] = this.systemMetrics ::: this.applicationMetrics
-    if (Configuration.environment.isNonProd) {
-      CloudWatch.putMetrics(applicationMetricsNamespace, allMetrics, applicationDimension)
-    }
+
+    CloudWatch.putMetrics(applicationMetricsNamespace, allMetrics, applicationDimension)
   }
 
   override def onStart(app: PlayApp) {
