@@ -40,7 +40,7 @@ object Tag {
       description = tag.description,
       pagination = pagination,
       isFront = true,
-      rssPath = Some(s"/id/rss"),
+      rssPath = Some(s"/${tag.id}/rss"),
       iosType = tag.sectionId match {
         case "crosswords" => None
         case _ => Some("list")
