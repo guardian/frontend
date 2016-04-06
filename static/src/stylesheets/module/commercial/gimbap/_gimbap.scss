@@ -48,6 +48,7 @@
     float: left;
     width: $gimbap-width-quarter;
     max-height: 205px;
+    background-color: #000000;
 
     .has-flex & {
         flex: 1;
@@ -63,6 +64,30 @@
         &:first-child {
             margin-left: 0;
         }
+    }
+}
+
+.gimbap__logo--simple {
+    &.gimbap__logo--members-horizontal {
+    
+    }
+
+    &.gimbap__logo--masterclasses-horizontal {
+        
+    }
+
+    &.gimbap__logo--jobs-horizontal {
+        svg {
+            width: 130px;
+        }
+    }
+
+    &.gimbap__logo--soulmates-horizontal {
+        
+    }
+
+    &.gimbap__logo--bookshop-horizontal {
+        
     }
 }
 
@@ -120,6 +145,7 @@
     width: 100%;
     display: block;
     margin: auto;
+    opacity: .9;
 }
 
 .gimbap__author {
@@ -218,53 +244,53 @@
 }
 
 .gimbap__logo--members-horizontal {
-    .logo--part1,
-    .logo--part2 {
-        fill: #ffffff;
+    .logo--part1 {
+        fill: $gimbap-members-text;
     }
 
-    .gimbap-style--normal & {
-        .logo--part1 {
-            fill: $gimbap-members-text;
-        }
+    .logo--part2 {
+        fill: #000000;
+    }
 
+    .gimbap-style--reversed & {
+        .logo--part1,
         .logo--part2 {
-            fill: #000000;
-        }
+            fill: #ffffff;
+        }   
     }
 }
 
 .gimbap__logo--masterclasses-horizontal {
-    .logo--part1,
-    .logo--part2 {
-        fill: #ffffff;
+    .logo--part1 {
+        fill: #000000;
     }
 
-    .gimbap-style--normal & {
-        .logo--part1 {
-            fill: #000000;
-        }
+    .logo--part2 {
+        fill: $gimbap-masterclasses-text;
+    }
 
+    .gimbap-style--reversed & {
+        .logo--part1,
         .logo--part2 {
-            fill: $gimbap-masterclasses-text;
-        }
+            fill: #ffffff;
+        }  
     }
 }
 
 .gimbap__logo--jobs-horizontal {
-    .logo--part1,
-    .logo--part2 {
-        fill: #ffffff;
+    .logo--part1 {
+        fill: #000000;
     }
 
-    .gimbap-style--normal & {
-        .logo--part1 {
-            fill: #000000;
-        }
+    .logo--part2 {
+        fill: $gimbap-jobs-text;
+    }
 
+    .gimbap-style--reversed & {
+        .logo--part1,
         .logo--part2 {
-            fill: $gimbap-jobs-text;
-        }
+            fill: #ffffff;
+        }    
     }
 }
 
@@ -272,26 +298,17 @@
     svg {
         width: 85px; /* "Make your own magic" */
         height: 18px;
-        fill: #ffffff;
+        fill: $gimbap-soulmates-text;
     }
 
-    .gimbap-style--normal & {
+    .gimbap-style--reversed & {
         svg {
-            fill: $gimbap-soulmates-text;
-        }
+            fill: #ffffff;
+        } 
     }
 }
 
 .gimbap__logo--bookshop-horizontal {
-  .logo--part1 {
-    fill: #bdbdbd;
-  }
-
-  .logo--part2 {
-    fill: #ffffff;
-  }
-
-  .gimbap-style--normal & {
     .logo--part1 {
       fill: #6d7173;
     }
@@ -299,7 +316,16 @@
     .logo--part2 {
       fill: $gimbap-bookshop-reversed;
     }
-  }
+
+    .gimbap-style--reversed & {
+        .logo--part1 {
+            fill: #bdbdbd;
+        }
+
+        .logo--part2 {
+            fill: #ffffff;
+        }
+    }
 }
 
 .gimbap-style--normal {

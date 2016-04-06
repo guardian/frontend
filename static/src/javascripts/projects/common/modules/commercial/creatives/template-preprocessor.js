@@ -108,6 +108,7 @@ define([
         // SVGs
         tpl.params.marque36icon = svgs('marque36icon', ['gimbap-wrap__mainlogo']);
         tpl.params.arrowRight = (tpl.params.linksWithArrows.indexOf('yes') !== -1) ? svgs('arrowRight', ['gimbap__arrow', 'gimbap__arrow--simple']) : '';
+        tpl.params.logo = tpl.params['logo' + tpl.params.componenttone + 'horizontal'];
     }
 
     return {
