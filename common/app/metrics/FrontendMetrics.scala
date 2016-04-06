@@ -7,6 +7,7 @@ import com.amazonaws.services.cloudwatch.model.StandardUnit
 import common.AkkaAgent
 import model.diagnostics.CloudWatch
 import org.joda.time.DateTime
+import scala.concurrent.Future
 import scala.util.Try
 
 sealed trait DataPoint {
@@ -120,13 +121,17 @@ final case class DurationMetric(override val name: String, override val metricUn
 
   private val dataPoints: Agent[List[DataPoint]] = AkkaAgent(List[DurationDataPoint]())
 
+  // For tests.
+  def getDataFuture: Future[List[DataPoint]] = dataPoints.future()
+
   override def getAndResetDataPoints: List[DataPoint] = {
     val points = dataPoints.get()
     dataPoints.alter(_.diff(points))
     points
   }
 
-  private def record(dataPoint: DurationDataPoint): Unit = dataPoints.alter(dataPoint :: _)
+  // Public for tests.
+  def record(dataPoint: DurationDataPoint): Unit = dataPoints.alter(dataPoint :: _)
 
   def recordDuration(timeInMillis: Double): Unit = record(DurationDataPoint(timeInMillis, Option(DateTime.now)))
 

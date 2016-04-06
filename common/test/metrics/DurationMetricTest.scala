@@ -2,7 +2,7 @@ package metrics
 
 import com.amazonaws.services.cloudwatch.model.StandardUnit
 import org.scalatest.{FlatSpec, Matchers}
-import scala.concurrent.{Await, Future}
+import scala.concurrent.Await
 import scala.concurrent.duration._
 import common.ExecutionContexts
 
@@ -23,12 +23,14 @@ class DurationMetricTest extends FlatSpec with Matchers with ExecutionContexts{
 
     Await.result(durationMetric.getDataFuture, 10.seconds)
 
-    durationMetric.getDataPoints.length should be (3)
-    durationMetric.getAndResetDataPoints.forall(_.value == 1000) should be (true)
+    val storedDatapoints = durationMetric.getAndResetDataPoints
+
+    storedDatapoints.length should be (3)
+    storedDatapoints.forall(_.value == 1000) should be (true)
 
     Await.result(durationMetric.getDataFuture, 10.seconds)
 
-    durationMetric.getDataPoints.length should be(0)
+    durationMetric.getAndResetDataPoints.length should be(0)
   }
 
   it should "add datapoints to the head of the list" in {
@@ -47,7 +49,7 @@ class DurationMetricTest extends FlatSpec with Matchers with ExecutionContexts{
 
     Await.result(durationMetric.getDataFuture, 10.seconds)
 
-    val dataPoints = durationMetric.getDataPoints
+    val dataPoints = durationMetric.getAndResetDataPoints
     dataPoints.length should be (7)
     dataPoints.splitAt(4)._1 should be (allMetrics)
   }
