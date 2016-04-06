@@ -205,15 +205,6 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val QuizScoresService = Switch(
-    "Feature",
-    "quiz-scores-service",
-    "If switched on, the diagnostics server will provide a service to store quiz results in memcached",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 11),
-    exposeClientSide = false
-  )
-
   val IdentityLogRegistrationsFromTor = Switch(
     "Feature",
     "id-log-tor-registrations",

@@ -1,13 +1,11 @@
 package controllers
 
-
 import common._
 import containers.Containers
 import model._
 import play.api.libs.json._
-import play.api.mvc.{ RequestHeader, Controller }
+import play.api.mvc.{ RequestHeader, Controller, Action }
 import services._
-import performance.MemcachedAction
 import views.support.FaciaToMicroFormat2Helpers.isCuratedContent
 import scala.concurrent.duration._
 
@@ -22,7 +20,7 @@ object RelatedController extends Controller with Related with Containers with Lo
 
   def renderHtml(path: String) = render(path)
   def renderMf2(path: String) = render(path, true)
-  def render(path: String, isMf2: Boolean = false) = MemcachedAction { implicit request =>
+  def render(path: String, isMf2: Boolean = false) = Action.async { implicit request =>
     val edition = Edition(request)
     val excludeTags = request.queryString.getOrElse("exclude-tag", Nil)
 
@@ -33,8 +31,7 @@ object RelatedController extends Controller with Related with Containers with Lo
     }
   }
 
-
-  def renderPeopleWhoRead(path: String, testVariant: String) = MemcachedAction { implicit request =>
+  def renderPeopleWhoRead(path: String, testVariant: String) = Action.async { implicit request =>
     peopleWhoRead(path, testVariant) map {
       case related if related.items.isEmpty => JsonNotFound()
       case trails => renderRelated(trails.items, "people who read this also read")

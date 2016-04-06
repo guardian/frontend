@@ -9,30 +9,15 @@ import controllers.HealthCheck
 import org.joda.time.DateTime
 import awswrappers.cloudwatch._
 
-import scala.collection.JavaConversions._
 import scala.concurrent.Future
 
-trait CloudWatch extends Logging with ExecutionContexts {
+object CloudWatchStats extends Logging with ExecutionContexts {
   val stage = new Dimension().withName("Stage").withValue(environment.stage)
 
   lazy val cloudwatch = {
     val client = new AmazonCloudWatchAsyncClient(Configuration.aws.mandatoryCredentials)
     client.setEndpoint(AwsEndpoints.monitoring)
     client
-  }
-
-  def put(namespage: String, statistics: List[FastlyStatistic]) {
-    // CloudWatch limits to 20 metric values per request
-    (statistics grouped 20) foreach { batch =>
-      val request = new PutMetricDataRequest().
-        withNamespace(namespage).
-        withMetricData(batch map { _.metric })
-
-      cloudwatch.putMetricDataFuture(request) onFailure {
-        case error: Exception =>
-          log.info(s"CloudWatch PutMetricDataRequest error: ${error.getMessage}}")
-      }
-    }
   }
 
   private def sanityData(metric: String) = {
@@ -65,5 +50,3 @@ trait CloudWatch extends Logging with ExecutionContexts {
 
   def pageViewsHavingAnAd: Future[GetMetricStatisticsResult] = sanityData("first-ad-rendered")
 }
-
-object CloudWatch extends CloudWatch

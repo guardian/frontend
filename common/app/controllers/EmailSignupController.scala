@@ -12,7 +12,7 @@ import play.api.libs.json._
 import play.api.mvc.Results._
 import play.api.data.format.Formats.stringFormat
 import play.api.mvc.{Result, Action, Controller}
-import metrics.EmailSubsciptionMetrics._
+import common.EmailSubsciptionMetrics._
 
 import scala.concurrent.Future
 import scala.concurrent.duration._

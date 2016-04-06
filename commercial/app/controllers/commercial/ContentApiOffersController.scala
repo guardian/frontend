@@ -3,7 +3,6 @@ package controllers.commercial
 import common.{ExecutionContexts, Logging}
 import model.commercial.{CapiAgent, Lookup}
 import model.{Cached, NoCache}
-import performance.MemcachedAction
 import play.api.mvc._
 
 import scala.concurrent.Future
@@ -23,7 +22,7 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
     "foundation-supported" -> "Supported by"
   )
 
-  private def renderItems(format: Format, isMulti: Boolean) = MemcachedAction { implicit request =>
+  private def renderItems(format: Format, isMulti: Boolean) = Action.async { implicit request =>
 
     val optKeyword = request.getParameter("k")
     val optLogo = request.getParameter("l")

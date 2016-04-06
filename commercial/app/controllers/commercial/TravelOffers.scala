@@ -2,14 +2,13 @@ package controllers.commercial
 
 import model.commercial.travel.TravelOffersAgent
 import model.{Cached, NoCache}
-import performance.MemcachedAction
 import play.api.mvc._
 
 import scala.concurrent.Future
 
 object TravelOffers extends Controller with implicits.Requests {
 
-  def renderTravel = MemcachedAction { implicit request =>
+  def renderTravel = Action.async { implicit request =>
     Future.successful {
       val travelOffers = (TravelOffersAgent.specificTravelOffers(specificIds) ++
                       TravelOffersAgent.offersTargetedAt(segment)).distinct
