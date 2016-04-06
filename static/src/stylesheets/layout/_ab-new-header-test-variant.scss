@@ -24,7 +24,6 @@
 
     @include mq(phablet) {
         align-items: center;
-        // TODO: Or increase padding on target areas instead?
         box-sizing: border-box;
         padding-right: ($gs-gutter / 2);
         padding-left: ($gs-gutter / 2);
