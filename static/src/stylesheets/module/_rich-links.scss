@@ -120,7 +120,7 @@
     padding-left: $gs-gutter / 4;
 
     @include mq(tablet) {
-        .tone-comment--item.rich-link--has-byline-pic & {
+        .rich-link--has-byline-pic & {
             position: absolute;
             bottom: 0;
         }
@@ -218,7 +218,7 @@
     margin: 5px $gs-gutter $gs-baseline 0;
     clear: both;
 
-    .tone-comment--item {
+    .rich-link--has-byline-pic {
         .rich-link__standfirst {
             display: none;
         }
@@ -257,13 +257,13 @@
     }
 
     @include mq(tablet) {
-        .rich-link--has-byline-pic.tone-comment--item .rich-link__container {
+        .rich-link--has-byline-pic .rich-link__container {
             padding-bottom: $gs-baseline * 10;
         }
     }
 
     @include mq(leftCol) {
-        &.element--supporting .rich-link--has-byline-pic.tone-comment--item .rich-link__container {
+        &.element--supporting .rich-link--has-byline-pic .rich-link__container {
             padding-bottom: ($gs-baseline * 2) + 8;
         }
     }
@@ -272,7 +272,7 @@
         margin-left: -1 * (gs-span(2) + $gs-gutter);
         &.element--supporting {
             width: gs-span(4);
-            .tone-comment--item {
+            .rich-link--has-byline-pic {
                 .rich-link__standfirst {
                     display: block;
                 }
