@@ -335,7 +335,7 @@ trait CommercialSwitches {
     "Paid containers using template v2",
     safeState = Off,
     sellByDate = new LocalDate(2016, 4, 13),
-    exposeClientSide = true
+    exposeClientSide = false
   )
 
   val cardsDecidePaidContainerBranding = Switch(
