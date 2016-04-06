@@ -58,15 +58,17 @@
 }
 
 .gimbap--reversed {
+    color: #ffffff;
+
     .gimbap__cta {
         color: rgba(0, 0, 0, .65);
     }
 
-    .gimbap--tone-members { background: $gimbap-members-reversed; }
-    .gimbap--tone-masterclasses { background: $gimbap-masterclasses-reversed; }
-    .gimbap--tone-soulmates { background: $gimbap-soulmates-reversed; }
-    .gimbap--tone-jobs { background: $gimbap-jobs-reversed; }
-    .gimbap--tone-bookshop {
+    &.gimbap--tone-members { background: $gimbap-members-reversed; }
+    &.gimbap--tone-masterclasses { background: $gimbap-masterclasses-reversed; }
+    &.gimbap--tone-soulmates { background: $gimbap-soulmates-reversed; }
+    &.gimbap--tone-jobs { background: $gimbap-jobs-reversed; }
+    &.gimbap--tone-bookshop {
         background: $gimbap-bookshop-reversed;
 
         .gimbap__cta {
@@ -234,6 +236,10 @@
 
     .gimbap--tone-soulmates & {
         color: lighten($gimbap-soulmates, 20%);
+
+        svg {
+            fill: #ffffff;
+        }
     }
 
     .gimbap--tone-members & {
@@ -241,7 +247,11 @@
     }
 
     .gimbap--tone-bookshop & {
-        color: lighten($gimbap-bookshop, 20%);
+        color: lighten($gimbap-bookshop, 40%);
+
+        svg {
+            fill: #ffffff;
+        }
     }
 }
 

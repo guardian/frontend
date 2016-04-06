@@ -197,6 +197,10 @@ $gimbap-width-quarter: calc(25% - 20px);
 .gimbap-wrap__logo {
     vertical-align: middle;
 
+    .inline-commercial {
+        height: 30px;
+    }
+
     svg {
         height: 30px;
     }
@@ -232,112 +236,36 @@ $gimbap-width-quarter: calc(25% - 20px);
     }
 }
 
-.gimbap-wrap--tone-masterclasses {
-    &:before,
-    &:after {
-        background-color: $gimbap-masterclasses;
-        opacity: .12;
-    }
+// Each branded component has different styling. Let's loop through them and create unique styles.
+$gimbap-tones: ('members', 'masterclasses', 'jobs', 'soulmates', 'bookshop');
+$gimbap-colors: (
+    'members': $gimbap-members,
+    'masterclasses': $gimbap-masterclasses,
+    'jobs': $gimbap-jobs,
+    'soulmates': $gimbap-soulmates,
+    'bookshop': $gimbap-bookshop
+);
 
-    .gimbap-wrap__box {
-        border-color: $gimbap-masterclasses;
-    }
-
-    .gimbap-wrap__message {
-        color: $gimbap-masterclasses;
-    }
-
-    .gimbap-wrap__mainlogo {
-        svg {
-            fill: $gimbap-masterclasses;
+@each $tone in $gimbap-tones {
+    .gimbap-wrap--tone-#{$tone} {
+        &:before,
+        &:after {
+            background-color: map-get($gimbap-colors, $tone);
+            opacity: .12;
         }
-    }
-}
 
-.gimbap-wrap--tone-jobs {
-    &:before,
-    &:after {
-        background-color: $gimbap-jobs;
-        opacity: .12;
-    }
-
-    .gimbap-wrap__box {
-        border-color: $gimbap-jobs;
-    }
-
-    .gimbap-wrap__message {
-        color: $gimbap-jobs;
-    }
-
-    .gimbap-wrap__mainlogo {
-        svg {
-            fill: $gimbap-jobs;
+        .gimbap-wrap__box {
+            border-color: map-get($gimbap-colors, $tone);
         }
-    }
-}
 
-.gimbap-wrap--tone-soulmates {
-    &:before,
-    &:after {
-        background-color: $gimbap-soulmates;
-        opacity: .12;
-    }
-
-    .gimbap-wrap__box {
-        border-color: $gimbap-soulmates;
-    }
-
-    .gimbap-wrap__message {
-        color: $gimbap-soulmates;
-    }
-
-    .gimbap-wrap__mainlogo {
-        svg {
-            fill: $gimbap-soulmates;
+        .gimbap-wrap__message {
+            color: map-get($gimbap-colors, $tone);
         }
-    }
-}
 
-.gimbap-wrap--tone-members {
-    &:before,
-    &:after {
-        background-color: $gimbap-members;
-        opacity: .12;
-    }
-
-    .gimbap-wrap__box {
-        border-color: $gimbap-members;
-    }
-
-    .gimbap-wrap__message {
-        color: $gimbap-members;
-    }
-
-    .gimbap-wrap__mainlogo {
-        svg {
-            fill: $gimbap-members;
+        .gimbap-wrap__mainlogo {
+            svg {
+                fill: map-get($gimbap-colors, $tone);
+            }
         }
-    }
-}
-
-.gimbap-wrap--tone-bookshop {
-    &:before,
-    &:after {
-        background-color: $gimbap-bookshop;
-        opacity: .12;
-    }
-
-    .gimbap-wrap__box {
-        border-color: $gimbap-bookshop;
-    }
-
-    .gimbap-wrap__message {
-        color: $gimbap-bookshop;
-    }
-
-    .gimbap-wrap__mainlogo {
-        svg {
-            fill: $gimbap-bookshop;
-        }
-    }
+    }    
 }
