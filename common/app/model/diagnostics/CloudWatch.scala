@@ -50,10 +50,10 @@ trait CloudWatch extends Logging {
   }
 
   def putMetrics(metricNamespace: String, metrics: List[FrontendMetric], dimensions: List[Dimension]): Unit = {
-    if (Configuration.environment.isNonProd) {
+    if (Configuration.environment.isProd) {
       putMetricsWithStage(metricNamespace, metrics, dimensions :+ stageDimension)
     } else {
-      log.info(s"cloudwatch logging suppressed outside Prod environment. namespace: $metricNamespace")
+      log.info(s"Logging suppressed outside Prod environment. namespace: $metricNamespace")
     }
   }
 
