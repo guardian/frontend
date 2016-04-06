@@ -194,7 +194,45 @@ $gimbap-width-quarter: calc(25% - 20px);
     margin: 0;
 }
 
-.gimbap-wrap-style--tone-masterclasses {
+.gimbap-wrap__logo {
+    vertical-align: middle;
+
+    svg {
+        height: 30px;
+    }
+}
+
+.gimbap-wrap__logo--masterclasses {
+    svg {
+        width: 210px;
+    }
+}
+
+.gimbap-wrap__logo--jobs {
+    svg {
+        width: 160px;
+    }
+}
+
+.gimbap-wrap__logo--soulmates {
+    svg {
+        width: 100px;
+    }
+}
+
+.gimbap-wrap__logo--members {
+    svg {
+        width: 200px;
+    }
+}
+
+.gimbap-wrap__logo--bookshop {
+    svg {
+        width: 190px;
+    }
+}
+
+.gimbap-wrap--tone-masterclasses {
     &:before,
     &:after {
         background-color: $gimbap-masterclasses;
@@ -205,7 +243,6 @@ $gimbap-width-quarter: calc(25% - 20px);
         border-color: $gimbap-masterclasses;
     }
 
-    .gimbap-wrap__link,
     .gimbap-wrap__message {
         color: $gimbap-masterclasses;
     }
@@ -217,7 +254,7 @@ $gimbap-width-quarter: calc(25% - 20px);
     }
 }
 
-.gimbap-wrap-style--tone-jobs {
+.gimbap-wrap--tone-jobs {
     &:before,
     &:after {
         background-color: $gimbap-jobs;
@@ -228,7 +265,6 @@ $gimbap-width-quarter: calc(25% - 20px);
         border-color: $gimbap-jobs;
     }
 
-    .gimbap-wrap__link,
     .gimbap-wrap__message {
         color: $gimbap-jobs;
     }
@@ -236,6 +272,72 @@ $gimbap-width-quarter: calc(25% - 20px);
     .gimbap-wrap__mainlogo {
         svg {
             fill: $gimbap-jobs;
+        }
+    }
+}
+
+.gimbap-wrap--tone-soulmates {
+    &:before,
+    &:after {
+        background-color: $gimbap-soulmates;
+        opacity: .12;
+    }
+
+    .gimbap-wrap__box {
+        border-color: $gimbap-soulmates;
+    }
+
+    .gimbap-wrap__message {
+        color: $gimbap-soulmates;
+    }
+
+    .gimbap-wrap__mainlogo {
+        svg {
+            fill: $gimbap-soulmates;
+        }
+    }
+}
+
+.gimbap-wrap--tone-members {
+    &:before,
+    &:after {
+        background-color: $gimbap-members;
+        opacity: .12;
+    }
+
+    .gimbap-wrap__box {
+        border-color: $gimbap-members;
+    }
+
+    .gimbap-wrap__message {
+        color: $gimbap-members;
+    }
+
+    .gimbap-wrap__mainlogo {
+        svg {
+            fill: $gimbap-members;
+        }
+    }
+}
+
+.gimbap-wrap--tone-bookshop {
+    &:before,
+    &:after {
+        background-color: $gimbap-bookshop;
+        opacity: .12;
+    }
+
+    .gimbap-wrap__box {
+        border-color: $gimbap-bookshop;
+    }
+
+    .gimbap-wrap__message {
+        color: $gimbap-bookshop;
+    }
+
+    .gimbap-wrap__mainlogo {
+        svg {
+            fill: $gimbap-bookshop;
         }
     }
 }

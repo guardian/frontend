@@ -92,6 +92,8 @@ define([
         tpl.params.offer3logo = tpl.params['logo' + tpl.params.offer3tone + 'horizontal'];
         tpl.params.offer4logo = tpl.params['logo' + tpl.params.offer4tone + 'horizontal'];
 
+        tpl.params.gimbapLogoStyle = (tpl.params.style === 'reversed') ? ' gimbap-logo--reversed': '';
+
         // Include quotes into title only if it is allowed in DFP line item
         tpl.params.offer1HasQuotes = (tpl.params.offer1quotes.indexOf('yes') !== -1) ? tpl.params.inlineQuote : '';
         tpl.params.offer2HasQuotes = (tpl.params.offer2quotes.indexOf('yes') !== -1) ? tpl.params.inlineQuote : '';
@@ -107,7 +109,7 @@ define([
     function preprocessGimbapSimple(tpl) {
         // SVGs
         tpl.params.marque36icon = svgs('marque36icon', ['gimbap-wrap__mainlogo']);
-        tpl.params.arrowRight = (tpl.params.linksWithArrows.indexOf('yes') !== -1) ? svgs('arrowRight', ['gimbap__arrow', 'gimbap__arrow--simple']) : '';
+        tpl.params.arrowRight = (tpl.params.linksWithArrows.indexOf('yes') !== -1) ? svgs('arrowRight', ['gimbap__arrow', 'gimbap__arrow--styled']) : '';
         tpl.params.logo = tpl.params['logo' + tpl.params.componenttone + 'horizontal'];
     }
 

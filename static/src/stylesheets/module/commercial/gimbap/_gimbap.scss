@@ -44,6 +44,46 @@
     }
 }
 
+/* GIMBAP - STYLING */
+.gimbap--tone-members { background: lighten($gimbap-members-text, 36%); color: $gimbap-members-text; }
+.gimbap--tone-masterclasses { background: lighten($gimbap-masterclasses-reversed, 49%); color: $gimbap-masterclasses-text; }
+.gimbap--tone-soulmates { background: lighten($gimbap-soulmates-reversed, 49%); color: $gimbap-soulmates-text; }
+.gimbap--tone-jobs { background: lighten($gimbap-jobs-reversed, 42%); color: $gimbap-jobs-text; }
+.gimbap--tone-bookshop { background: lighten($gimbap-bookshop-reversed, 70%); color: $gimbap-bookshop-reversed; }
+
+.gimbap--normal {
+    .gimbap__cta {
+        filter: brightness(.5);
+    }
+}
+
+.gimbap--reversed {
+    .gimbap__cta {
+        color: rgba(0, 0, 0, .65);
+    }
+
+    .gimbap--tone-members { background: $gimbap-members-reversed; }
+    .gimbap--tone-masterclasses { background: $gimbap-masterclasses-reversed; }
+    .gimbap--tone-soulmates { background: $gimbap-soulmates-reversed; }
+    .gimbap--tone-jobs { background: $gimbap-jobs-reversed; }
+    .gimbap--tone-bookshop {
+        background: $gimbap-bookshop-reversed;
+
+        .gimbap__cta {
+          color: $gimbap-bookshop-text;
+        }
+
+        .gimbap__arrow {
+            background-color: $gimbap-bookshop-text;
+
+            svg {
+                fill: rgba(0, 0, 0, .65);
+            }
+        }
+    }
+}
+
+/* GIMBAP VERSIONS */
 .gimbap--simple {
     float: left;
     width: $gimbap-width-quarter;
@@ -65,30 +105,9 @@
             margin-left: 0;
         }
     }
-}
 
-.gimbap__logo--simple {
-    &.gimbap__logo--members-horizontal {
-    
-    }
-
-    &.gimbap__logo--masterclasses-horizontal {
-        
-    }
-
-    &.gimbap__logo--jobs-horizontal {
-        svg {
-            width: 160px;
-            height: 40px;
-        }
-    }
-
-    &.gimbap__logo--soulmates-horizontal {
-        
-    }
-
-    &.gimbap__logo--bookshop-horizontal {
-        
+    @include mq(wide) {
+        max-height: 224px;
     }
 }
 
@@ -142,6 +161,7 @@
     }
 }
 
+/* GIMBAP OBJECTS */
 .gimbap__image {
     width: 100%;
     display: block;
@@ -207,6 +227,22 @@
 
         font-weight: bold;
     }
+
+    .gimbap--tone-jobs & {
+        color: $gimbap-jobs-light;
+    }
+
+    .gimbap--tone-soulmates & {
+        color: lighten($gimbap-soulmates, 20%);
+    }
+
+    .gimbap--tone-members & {
+        color: lighten($gimbap-members, 20%);
+    }
+
+    .gimbap--tone-bookshop & {
+        color: lighten($gimbap-bookshop, 20%);
+    }
 }
 
 .gimbap__arrow {
@@ -224,174 +260,33 @@
     }
 }
 
-.gimbap__arrow--simple {
+.gimbap__arrow--styled {
     vertical-align: bottom;
 
     &,
     svg {
         width: 22px;
         height: 22px;
-    }
-}
-
-.gimbap__logo {
-    align-self: flex-end;
-    line-height: 0;
-    text-align: right;
-
-    svg {
-        fill: #ffffff;
-    }
-}
-
-.gimbap__logo--members-horizontal {
-    .logo--part1 {
-        fill: $gimbap-members-text;
-    }
-
-    .logo--part2 {
         fill: #000000;
     }
 
-    .gimbap-style--reversed & {
-        .logo--part1,
-        .logo--part2 {
-            fill: #ffffff;
-        }   
-    }
-}
-
-.gimbap__logo--masterclasses-horizontal {
-    .logo--part1 {
-        fill: #000000;
-    }
-
-    .logo--part2 {
-        fill: $gimbap-masterclasses-text;
-    }
-
-    .gimbap-style--reversed & {
-        .logo--part1,
-        .logo--part2 {
-            fill: #ffffff;
-        }  
-    }
-}
-
-.gimbap__logo--jobs-horizontal {
-    .logo--part1 {
-        fill: #000000;
-    }
-
-    .logo--part2 {
-        fill: $gimbap-jobs-text;
-    }
-
-    .gimbap-style--reversed & {
-        .logo--part1,
-        .logo--part2 {
-            fill: #ffffff;
-        }    
-    }
-}
-
-.gimbap__logo--soulmates-horizontal {
-    svg {
-        width: 85px; /* "Make your own magic" */
-        height: 18px;
-        fill: $gimbap-soulmates-text;
-    }
-
-    .gimbap-style--reversed & {
-        svg {
-            fill: #ffffff;
-        } 
-    }
-}
-
-.gimbap__logo--bookshop-horizontal {
-    .logo--part1 {
-      fill: #6d7173;
-    }
-
-    .logo--part2 {
-      fill: $gimbap-bookshop-reversed;
-    }
-
-    .gimbap-style--reversed & {
-        .logo--part1 {
-            fill: #bdbdbd;
-        }
-
-        .logo--part2 {
-            fill: #ffffff;
-        }
-    }
-}
-
-.gimbap-style--normal {
-    .gimbap__cta {
-        filter: brightness(.5);
-    }
-
-    .gimbap-style--tone-members { background: lighten($gimbap-members-text, 36%); color: $gimbap-members-text; }
-    .gimbap-style--tone-masterclasses { background: lighten($gimbap-masterclasses-reversed, 49%); color: $gimbap-masterclasses-text; }
-    .gimbap-style--tone-soulmates { background: lighten($gimbap-soulmates-reversed, 49%); color: $gimbap-soulmates-text; }
-    .gimbap-style--tone-jobs { background: lighten($gimbap-jobs-reversed, 42%); color: $gimbap-jobs-text; }
-    .gimbap-style--tone-bookshop { background: lighten($gimbap-bookshop-reversed, 70%); color: $gimbap-bookshop-reversed; }
-}
-
-.gimbap-style--reversed {
-    .gimbap__cta {
-        color: rgba(0, 0, 0, .65);
-    }
-
-    .gimbap-style--tone-members { background: $gimbap-members-reversed; }
-    .gimbap-style--tone-masterclasses { background: $gimbap-masterclasses-reversed; }
-    .gimbap-style--tone-soulmates { background: $gimbap-soulmates-reversed; }
-    .gimbap-style--tone-jobs { background: $gimbap-jobs-reversed; }
-    .gimbap-style--tone-bookshop {
-        background: $gimbap-bookshop-reversed;
-
-        .gimbap__cta {
-          color: $gimbap-bookshop-text;
-        }
-
-        .gimbap__arrow {
-            background-color: $gimbap-bookshop-text;
-
-            svg {
-                fill: rgba(0, 0, 0, .65);
-            }
-        }
-    }
-}
-
-
-.gimbap-simple--tone-masterclasses {
-    .gimbap__cta--simple {
-        color: $gimbap-masterclasses;
-    }
-
-    .gimbap__arrow {
+    .gimbap--tone-masterclasses & {
         background-color: $gimbap-masterclasses;
-
-        svg {
-            fill: #000000;
-        }
-    }
-}
-
-.gimbap-simple--tone-jobs {
-    .gimbap__cta--simple {
-        color: $gimbap-jobs-light;
     }
 
-    .gimbap__arrow {
+    .gimbap--tone-jobs & {
         background-color: $gimbap-jobs;
+    }
 
-        svg {
-            fill: #000000;
-        }
+    .gimbap--tone-soulmates & {
+        background-color: $gimbap-soulmates;
+    }
+
+    .gimbap--tone-members & {
+        background-color: $gimbap-members;
+    }
+
+    .gimbap--tone-bookshop & {
+        background-color: $gimbap-bookshop;
     }
 }
