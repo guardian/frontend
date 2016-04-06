@@ -70,7 +70,7 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
           figure.getElementsByClass("u-responsive-ratio").headOption.map { outer => {
             figure.insertChildren(0, Seq(outer))
             outer.getElementsByClass("gu-image").headOption.map(image => image.addClass("js-is-fixed-height"))
-            outer.addClass("element--inline__outer")
+            outer.addClass("element--inline__image-wrapper")
           }}
           figure.getElementsByClass("article__img-container").headOption.map(container => container.remove())
         }
