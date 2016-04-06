@@ -38,12 +38,12 @@
 
         <div class="rich-link__header">
             <h1 class="rich-link__title">
-                @if( toneClass(content) == "tone-comment" ) {
+                @if( content.content.hasTonalHeaderByline ) {
                     @fragments.inlineSvg("quote", "icon")
                 }
                 <a class="rich-link__link">@Html(kicker.toString.replaceAll("^\\s+", "") + content.trail.headline)</a>
             </h1>
-            @if(!content.tags.isMedia && content.content.cardStyle == Comment) {
+            @if(!content.tags.isMedia && content.content.hasTonalHeaderByline) {
                 <div class="rich-link__byline">@content.trail.byline.map { byline => @Html(byline) }</div>
             }
             @content.content.starRating.map { stars => @fragments.items.elements.starRating(stars) }
