@@ -8,12 +8,12 @@
 @import common.InlineJs
 
 
-@fragments.omnitureScript(Some(page.metadata))
+    @fragments.omnitureScript(Some(page.metadata))
 
-<script>
-    // analytics code
+    <script>
+        // analytics code
     @InlineJs(templates.inlineJS.nonBlocking.js.analytics(), "analytics.js")
-</script>
+    </script>
 
 
 @defining(s"${request.host}${request.path}") { path =>
@@ -59,7 +59,11 @@
 
 @if(GoogleAnalyticsSwitch.isSwitchedOn) {
     <script id='google_analytics'>
-        @InlineJs(templates.inlineJS.nonBlocking.js.googleAnalytics(page), "googleAnalytics.js")
+        @*
+        Note, you cannot @InlineJs(...) this
+        InlineJS should only be used for fragments that do not take parameters due to the way memoization happens.
+        *@
+        @Html(templates.inlineJS.nonBlocking.js.googleAnalytics(page).body)
     </script>
 
     @*

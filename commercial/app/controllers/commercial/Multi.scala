@@ -7,7 +7,6 @@ import model.commercial.events.MasterclassAgent
 import model.commercial.soulmates.SoulmatesAgent
 import model.commercial.travel.TravelOffersAgent
 import model.{Cached, NoCache}
-import performance.MemcachedAction
 import play.api.mvc._
 
 import scala.concurrent.Future
@@ -19,7 +18,7 @@ object Multi
   with implicits.Collections
   with implicits.Requests {
 
-  def renderMulti() = MemcachedAction { implicit request =>
+  def renderMulti() = Action.async { implicit request =>
       val requestedContent = request.getParameters("components")
 
       val slotIds = request.getParameters("slotIds")

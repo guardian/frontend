@@ -34,6 +34,7 @@
                         @fragments.containers.facia_cards.container(
                             containerDefinition,
                             faciaPage.frontProperties,
+                            Some(faciaPage.id),
                             faciaPage.isAdvertisementFeature,
                             faciaPage.collections
                                 .find(_.id == containerDefinition.dataId)
