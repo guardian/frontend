@@ -159,6 +159,10 @@ $video-width-desktop: 700px;
         padding-bottom: $video-width-desktop / 16 * 9;
     }
 
+    @include mq(leftCol) {
+        height: 0;
+    }
+
     .fc-item__video-fallback {
         @include mq(desktop) {
             opacity: .3;
