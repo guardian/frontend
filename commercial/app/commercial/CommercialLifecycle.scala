@@ -24,7 +24,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
   private def recordEvent(feedName: String, eventName: String, maybeDuration: Option[Duration]): Unit = {
     val key = s"${feedName.toLowerCase.replaceAll("[\\s/]+", "-")}-$eventName-time"
     val duration = maybeDuration map (_.toMillis.toDouble) getOrElse -1d
-    app.Global.commercialMetrics.put(Map(s"$key" -> duration))
+    CommercialMetrics.metrics.put(Map(s"$key" -> duration))
   }
 
   override def onStart(application: PlayApp): Unit = {
@@ -106,7 +106,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
 
     Jobs.deschedule("cloudwatchUpload")
     Jobs.scheduleEveryNMinutes("cloudwatchUpload", 15) {
-      app.Global.commercialMetrics.upload()
+      CommercialMetrics.metrics.upload()
     }
 
     refreshJobs.zipWithIndex foreach {

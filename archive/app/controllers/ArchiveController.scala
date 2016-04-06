@@ -3,7 +3,7 @@ package controllers
 import campaigns.ShortCampaignCodes
 import common._
 import play.api.mvc._
-import services.{Archive, DynamoDB, Destination}
+import services.{Archive, DynamoDB, Destination, GoogleBotMetric}
 import java.net.URLDecoder
 import model.Cached
 import scala.concurrent.Future
@@ -144,7 +144,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
     request.headers.get("User-Agent").getOrElse("no user agent") match {
       case GoogleBot(_) =>
         log.warn(s"404,${RequestLog(request)}")
-        app.Global.Googlebot404Count.increment()
+        GoogleBotMetric.Googlebot404Count.increment()
       case _ =>
         log.info(s"404,${RequestLog(request)}")
     }

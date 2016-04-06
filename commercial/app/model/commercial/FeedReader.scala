@@ -24,7 +24,7 @@ object FeedReader extends Logging {
       def recordLoad(duration: Long): Unit = {
         val feedName = request.feedName.toLowerCase.replaceAll("\\s+", "-")
         val key = s"$feedName-feed-load-time"
-        app.Global.commercialMetrics.put(Map(s"$key" -> duration.toDouble))
+        CommercialMetrics.metrics.put(Map(s"$key" -> duration.toDouble))
       }
 
       val start = System.currentTimeMillis
