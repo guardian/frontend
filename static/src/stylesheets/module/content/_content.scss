@@ -696,6 +696,20 @@
         }
     }
 
+    .tone-news--item.rich-link {
+        background: colour(paid-article-subheader);
+    }
+
+    .rich-link__header,
+    .rich-link__read-more-text {
+        @include f-headlineSans;
+        font-size: get-font-size(header, 2);
+    }
+
+    .rich-link__header {
+        line-height: get-line-height(header, 1);
+    }
+
     .ad-slot__label,
     .ad-slot--inline {
         background-color: colour(paid-article-subheader);
