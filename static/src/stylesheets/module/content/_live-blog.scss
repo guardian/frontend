@@ -5,6 +5,11 @@ $block-padding-right: $gs-gutter;
 
 /* Layout
    ========================================================================== */
+
+.content--liveblog .content__main {
+    background-color: colour(neutral-8);
+}
+
 .content__main-column--liveblog {
     @include mq(desktop) {
         margin-left: $right-column + $gs-gutter;

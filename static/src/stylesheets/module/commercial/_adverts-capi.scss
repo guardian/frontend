@@ -1,11 +1,8 @@
 .adverts--capi {
-    .advert__image {
-        max-height: $gs-baseline * 11;
-    }
 }
 
 .adverts--tone-capi {
-    background-color: colour(paid-article);
+    background-color: colour(neutral-6);
 
     > .adverts__header {
         @include f-headlineSans;
@@ -20,28 +17,50 @@
         text-align: right;
     }
 
-    * + .advert {
-        border-left-color: guss-colour(paid-article-subheader-bg, $frontend-palette);
+    .adverts__row > * + *::before,
+    .adverts__row--wrap::before,
+    .adverts__row--wrap::after {
+        background: guss-colour(paid-article-subheader-bg, $frontend-palette);
+    }
+
+    .adverts__more > summary {
+        background: guss-colour(paidfor-background, $frontend-palette);
+        border-color: guss-colour(paidfor-background, $frontend-palette);
+
+        .inline-icon {
+            fill: colour(neutral-2);
+        }
+
+        @include mq(desktop) {
+            float: left;
+            margin-bottom: $gs-baseline;
+
+            & + * {
+                clear: left;
+            }
+        }
+    }
+
+    .adverts__more[open] > summary {
+        background: none;
+        border-color: colour(neutral-4);
+        color: colour(neutral-1);
     }
 }
 
 .advert--capi {
     @include f-textSans;
     background: colour(paid-article-subheader);
-    background-clip: content-box;
+    border-top: 1px solid guss-colour(paid-article-brand, $frontend-palette);
 
-    > .advert__title,
-    > .advert__meta,
-    > .advert__standfirst {
+    .advert__title,
+    .advert__meta,
+    .advert__standfirst {
         padding-left: $gs-gutter / 4;
         padding-right: $gs-gutter / 4;
     }
 
-    > .advert__image-container {
-        border-top: 1px solid guss-colour(paid-article-brand, $frontend-palette);
-    }
-
-    > .advert__title {
+    .advert__title {
         @include f-headlineSans;
         font-weight: 400;
         margin-bottom: .5em;
@@ -64,6 +83,17 @@
 
         .advert__image-container {
             border-top: 0;
+        }
+    }
+
+    &:not(.advert--landscape) {
+        > .advert__image-container {
+            width: 100%;
+        }
+
+        .advert__image {
+            min-height: $gs-baseline * 11;
+            width: 100%;
         }
     }
 

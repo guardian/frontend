@@ -9,6 +9,7 @@
   optSponsorType: Option[String],
   optSponsorLabel: Option[String])(implicit request: RequestHeader)
 
+@import views.html.commercial.containerWrapper
 @import views.html.fragments.inlineSvg
 
 @containerWrapper(Seq("legacy", "capi", "tone-capi"),
@@ -25,8 +26,10 @@
 
 }{
 
-    @items.map { item => @itemCard(item, clickMacro) }
-
+    <div class="adverts__row">
+        @items.map { item => @itemCard(item, clickMacro) }
+    </div>
+    
 }
 
 @stamp = {
