@@ -178,7 +178,7 @@ define([
                 var active = tests[0];
                 var server = tests[1];
 
-                if (isParticipating(active) && testCanBeRun(active)) {
+                if (active && isParticipating(active) && testCanBeRun(active)) {
                     var variant = getTestVariantId(active.id);
 
                     if (variant && variant !== 'notintest') {
