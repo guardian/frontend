@@ -1,6 +1,6 @@
 package controllers
 
-import _root_.liveblog.{BlockPage, FirstPage, LiveBlogPageModel}
+import _root_.liveblog.LiveBlogCurrentPage
 import com.gu.contentapi.client.model.ItemResponse
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import common._
@@ -8,12 +8,12 @@ import conf.LiveContentApi.getResponse
 import conf._
 import conf.switches.Switches
 import model._
-import org.scala_tools.time.Imports._
 import model.liveblog.{BodyBlock, KeyEventData}
 import org.joda.time.DateTime
+import org.scala_tools.time.Imports._
 import play.api.libs.functional.syntax._
-import play.api.mvc._
 import play.api.libs.json.{Json, _}
+import play.api.mvc._
 import views.support._
 
 import scala.concurrent.Future
@@ -26,7 +26,7 @@ trait PageWithStoryPackage extends ContentPage {
 }
 
 case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
-case class LiveBlogPage(article: Article, pageModel: LiveBlogPageModel[BodyBlock], related: RelatedContent) extends PageWithStoryPackage
+case class LiveBlogPage(article: Article, pageModel: LiveBlogCurrentPage, related: RelatedContent) extends PageWithStoryPackage
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
 object ArticleController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
@@ -182,9 +182,9 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       (content, page) match {
         case (minute: Article, None) if minute.isUSMinute =>
           Left(MinutePage(minute, RelatedContent(minute, response)))
-        case (liveBlog: Article, None) if liveBlog.isLiveBlog =>
+        case (liveBlog: Article, None/*no page param*/) if liveBlog.isLiveBlog =>
           createLiveBlogModel(liveBlog, response, None)
-        case (liveBlog: Article, Some(Some(requiredBlockId))) if liveBlog.isLiveBlog =>
+        case (liveBlog: Article, Some(Some(requiredBlockId))/*page param specified and valid format*/) if liveBlog.isLiveBlog =>
           createLiveBlogModel(liveBlog, response, Some(requiredBlockId))
         case (article: Article, None) =>
           Left(ArticlePage(article, RelatedContent(article, response)))
@@ -197,13 +197,13 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   }
 
   def createLiveBlogModel(liveBlog: Article, response: ItemResponse, maybeRequiredBlockId: Option[String]) = {
+    import conf.switches.Switches.LongCacheSwitch
+
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
-    val liveBlogPageModel = LiveBlogPageModel(
+    val liveBlogPageModel = LiveBlogCurrentPage(
       pageSize = pageSize,
-      liveBlog.content.fields.blocks
-    )(
-      maybeRequiredBlockId.map(blockId => block => blockId == block.id),
-      _.id
+      liveBlog.content.fields.blocks,
+      maybeRequiredBlockId
     )
     liveBlogPageModel match {
       case Some(pageModel) =>

@@ -3,7 +3,7 @@ package liveblog
 import controllers.ParseBlockId
 import org.scalatest.{FlatSpec, Matchers}
 
-class PageParserTest extends FlatSpec with Matchers {
+class ParseBlockIdTest extends FlatSpec with Matchers {
 
   it should "parse a with" in {
     val result = ParseBlockId("with:block-asdf")

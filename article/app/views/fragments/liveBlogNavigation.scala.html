@@ -1,7 +1,6 @@
-@import _root_.liveblog.LiveBlogPageModel
-@import model.liveblog.BodyBlock
+@import _root_.liveblog.LiveBlogCurrentPage
 @import model.Article
-@(article: Article, pageModel: LiveBlogPageModel[BodyBlock])
+@(article: Article, pageModel: LiveBlogCurrentPage)
 
 @pageModel.pagination.map { pagination =>
     <div id="liveblog-navigation" class="liveblog-navigation">

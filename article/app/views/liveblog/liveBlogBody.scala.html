@@ -1,4 +1,4 @@
-@import _root_.liveblog.LiveBlogPageModel
+@import _root_.liveblog.LiveBlogCurrentPage
 @import model.liveblog.BodyBlock
 @import model.liveblog.KeyEventData
 @(model: LiveBlogPage)(implicit request: RequestHeader)
@@ -64,7 +64,7 @@
                                 <div class="blog__timeline-container js-live-blog__timeline-container" data-component="timeline">
                                     @fragments.dropdown("Key events", Some("key-events"), true) {
                                         <ul class="timeline js-live-blog__timeline u-unstyled">
-                                            @views.html.liveblog.keyEvents("/" + article.metadata.id, KeyEventData(model.pageModel.allBlocks, timezone))
+                                            @views.html.liveblog.keyEvents("/" + article.metadata.id, KeyEventData(model.article.content.fields.blocks, timezone))
                                         </ul>
                                     }
                                 </div>
