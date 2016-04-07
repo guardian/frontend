@@ -14,11 +14,13 @@ define([
     'common/modules/experiments/tests/membership',
     'common/modules/experiments/tests/loyal-adblocking-survey',
     'lodash/arrays/flatten',
+    'lodash/arrays/zip',
     'lodash/collections/forEach',
     'lodash/objects/keys',
     'lodash/collections/some',
     'lodash/collections/filter',
     'lodash/collections/map',
+    'lodash/collections/reduce',
     'lodash/collections/find',
     'lodash/objects/pick',
     'lodash/utilities/noop',
@@ -40,11 +42,13 @@ define([
     Membership,
     LoyalAdblockingSurvey,
     flatten,
+    zip,
     forEach,
     keys,
     some,
     filter,
     map,
+    reduce,
     find,
     pick,
     noop,
@@ -161,37 +165,38 @@ define([
         return tag.join(',');
     }
 
-    function getAbLoggableObject() {
-        var abLogObject = {};
-
-        try {
-            forEach(getActiveTests(), function (test) {
-                if (isParticipating(test) && testCanBeRun(test)) {
-                    var variant = getTestVariantId(test.id);
-                    if (variant && variant !== 'notintest') {
-                        merge(abLogObject, createAbObject(test.id, variant, 'false'));
-                    }
-                }
-            });
-            forEach(getServerSideTests(), function (testName) {
-                merge(abLogObject, createAbObject('ab' + testName, 'inTest', 'false'));
-            });
-        } catch (error) {
-            // Encountering an error should invalidate the logging process.
-            abLogObject = {};
-            reportError(error, false);
-        }
-
-        return abLogObject;
+    function abData(variantName, complete) {
+        return {
+            'variantName': variantName,
+            'complete': complete
+        };
     }
 
-    function createAbObject(id, variantName, complete) {
-        var abData = {};
-        abData['ab' + id] = {
-                'variantName' : variantName,
-                'complete' : complete
-        };
-        return abData;
+    function getAbLoggableObject() {
+        try {
+            return reduce(zip(getActiveTests(), getServerSideTests()), function(log, tests) {
+                var active = tests[0];
+                var server = tests[1];
+
+                if (isParticipating(active) && testCanBeRun(active)) {
+                    var variant = getTestVariantId(active.id);
+
+                    if (variant && variant !== 'notintest') {
+                        log[active.id] = abData(variant, 'false');
+                    }
+                }
+
+                if (server) {
+                    log['ab' + server] = abData('inTest', 'false');
+                }
+
+                return log;
+            }, {});
+        } catch (error) {
+            // Encountering an error should invalidate the logging process.
+            reportError(error, false);
+            return {};
+        }
     }
 
     function trackEvent() {
@@ -207,8 +212,8 @@ define([
     }
 
     function recordTestComplete(test, variantId) {
-        var testName = test.id;
-        var data = createAbObject(testName, variantId, 'true');
+        var data = {};
+        data[test.id] = abData(variantId, 'true');
 
         return function() {
             recordOphanAbEvent(data);
