@@ -11,7 +11,8 @@ import model.{Content, Trail}
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import conf.Configuration.contentApi
-import com.gu.contentapi.client.model.{SearchQuery, ItemQuery, ItemResponse}
+import com.gu.contentapi.client.model.{SearchQuery, ItemQuery}
+import com.gu.contentapi.client.model.v1.ItemResponse
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.{Duration, MILLISECONDS}
@@ -48,11 +49,11 @@ trait QueryDefaults extends implicits.Collections {
       result.map { r =>
         val leadContentCutOff = DateTime.now.toLocalDate - leadContentMaxAge
 
-        val results = r.results.map(Content(_))
-        val editorsPicks = r.editorsPicks.map(Content(_))
+        val results = r.results.getOrElse(Nil).map(Content(_))
+        val editorsPicks = r.editorsPicks.getOrElse(Nil).map(Content(_))
 
         val leadContent = if (editorsPicks.isEmpty)
-            r.leadContent.filter(content => {
+            r.leadContent.getOrElse(Nil).filter(content => {
               content.webPublicationDate
                 .map(date => date.toJodaDateTime)
                 .map(_ >= leadContentCutOff.toDateTimeAtStartOfDay)
@@ -145,6 +146,7 @@ class LiveContentApiClient extends CircuitBreakingContentApiClient {
   lazy val httpTimingMetric = ContentApiMetrics.ElasticHttpTimingMetric
   lazy val httpTimeoutMetric = ContentApiMetrics.ElasticHttpTimeoutCountMetric
   override val targetUrl = contentApi.contentApiLiveHost
+  override val useThrift = false
 }
 
 object ErrorResponseHandler {

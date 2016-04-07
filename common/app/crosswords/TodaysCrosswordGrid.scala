@@ -1,6 +1,6 @@
 package crosswords
 
-import com.gu.contentapi.client.model.ItemResponse
+import com.gu.contentapi.client.model.v1.ItemResponse
 import common.{ExecutionContexts, Edition, AutoRefresh}
 import conf.LiveContentApi
 import org.joda.time.{DateTimeZone, DateTime}

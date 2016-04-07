@@ -1,8 +1,7 @@
 package services
 
 import com.gu.contentapi.client.GuardianContentApiError
-import com.gu.contentapi.client.model.v1.{Section => ApiSection}
-import com.gu.contentapi.client.model.{ItemResponse, SearchResponse}
+import com.gu.contentapi.client.model.v1.{Section => ApiSection, ItemResponse, SearchResponse}
 import common._
 import conf.LiveContentApi
 import conf.LiveContentApi.getResponse
@@ -142,9 +141,9 @@ trait Index extends ConciergeRepository with QueryDefaults {
 
   private def section(apiSection: ApiSection, response: ItemResponse) = {
     val section = Section.make(apiSection, pagination(response))
-    val editorsPicks = response.editorsPicks
+    val editorsPicks = response.editorsPicks.getOrElse(Nil)
     val editorsPicksIds = editorsPicks.map(_.id)
-    val latestContent = response.results.filterNot(c => editorsPicksIds contains c.id)
+    val latestContent = response.results.getOrElse(Nil).filterNot(c => editorsPicksIds contains c.id)
     val trails = (editorsPicks ++ latestContent).map(IndexPageItem(_))
     val commercial = Commercial.make(section)
 
@@ -154,14 +153,14 @@ trait Index extends ConciergeRepository with QueryDefaults {
   private def tag(response: ItemResponse, page: Int) = {
     val tag = response.tag map { Tag.make(_, pagination(response)) }
     val leadContentCutOff = DateTime.now - leadContentMaxAge
-    val editorsPicks = response.editorsPicks.map(IndexPageItem(_))
+    val editorsPicks = response.editorsPicks.getOrElse(Nil).map(IndexPageItem(_))
     val leadContent = if (editorsPicks.isEmpty && page == 1) //only promote lead content on first page
-      response.leadContent.take(1).map(IndexPageItem(_)).filter(_.item.trail.webPublicationDate > leadContentCutOff)
+      response.leadContent.getOrElse(Nil).take(1).map(IndexPageItem(_)).filter(_.item.trail.webPublicationDate > leadContentCutOff)
     else
       Nil
     val leadContentIds = leadContent.map(_.item.metadata.id)
 
-    val latest: Seq[IndexPageItem] = response.results.map(IndexPageItem(_)).filterNot(c => leadContentIds.contains(c.item.metadata.id))
+    val latest: Seq[IndexPageItem] = response.results.getOrElse(Nil).map(IndexPageItem(_)).filterNot(c => leadContentIds.contains(c.item.metadata.id))
     val allTrails = (leadContent ++ editorsPicks ++ latest).distinctBy(_.item.metadata.id)
     tag map { tag =>
       IndexPage(page = tag, contents = allTrails, tags = Tags(Seq(tag)), date = DateTime.now, tzOverride = None)

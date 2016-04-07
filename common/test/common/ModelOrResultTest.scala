@@ -1,7 +1,6 @@
 package common
 
-import com.gu.contentapi.client.model.v1.{Content, Section, Tag, TagType}
-import com.gu.contentapi.client.model.ItemResponse
+import com.gu.contentapi.client.model.v1.{Content, Section, Tag, TagType, ItemResponse}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
