@@ -293,12 +293,12 @@ define([
                 expect(window.googletag.pubads().setTargeting).toHaveBeenCalledWith('k', ['korea', 'ukraine']);
             });
 
-            it('should send container level keywords', function () {
+            it('should send container level keywords', function (done) {
                 $('.js-ad-slot').first().attr('data-keywords', 'country/china');
                 dfp.init().then(dfp.loadAds).then(function () {
                     window.googletag.cmd.forEach(function (func) { func(); });
                     expect(window.googletag.setTargeting).toHaveBeenCalledWith('k', ['china']);
-                });
+                }).then(done).catch(done.fail);
                 window.googletag.cmd.forEach(function (func) { func(); });
             });
 

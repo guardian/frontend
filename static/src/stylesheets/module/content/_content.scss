@@ -332,11 +332,10 @@
 
         > li {
             position: relative;
-            margin-bottom: $gs-baseline/3;
         }
 
         * {
-            margin-top: .6em;
+            margin-bottom: $gs-baseline / 2;
         }
     }
 
@@ -695,6 +694,20 @@
         .content__standfirst {
             color: colour(neutral-1);
         }
+    }
+
+    .tone-news--item.rich-link {
+        background: colour(paid-article-subheader);
+    }
+
+    .rich-link__header,
+    .rich-link__read-more-text {
+        @include f-headlineSans;
+        font-size: get-font-size(header, 2);
+    }
+
+    .rich-link__header {
+        line-height: get-line-height(header, 1);
     }
 
     .ad-slot__label,

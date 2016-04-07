@@ -1235,6 +1235,7 @@ $comment-recommend-button-size: 19px;
     }
 }
 .d-comment-box--expanded .d-comment-box__body {
+    margin-top: $gs-baseline / 6;
     height: gs-height(3);
 }
 .d-comment-box__add-comment {
@@ -1427,4 +1428,16 @@ $comment-recommend-button-size: 19px;
     &:hover {
         border-color: colour(guardian-brand);
     }
+}
+
+.d-comment-box__community-standards {
+    display: none;
+}
+
+.d-comment-box--expanded .d-comment-box__community-standards {
+    @include fs-textSans(1);
+    display: block;
+    background-color: colour(neutral-7);
+    padding: ($gs-baseline / 3) * 2 ($gs-gutter / 2);
+    margin-top: $gs-baseline / 2;
 }
