@@ -36,17 +36,6 @@ object ABHeadlinesTestVariant extends TestDefinition(
     }
 }
 
-object ABNewHeaderVariant extends TestDefinition(
-  variants = Nil,
-  name = "ab-new-header-variant",
-  description = "Feature switch (0% test) for the new header",
-  sellByDate = new LocalDate(2016, 6, 14)
-) {
-  override def isParticipating(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-new-header").contains("variant") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
-  }
-}
-
 object ABHeadlinesTestControl extends TestDefinition(
   Nil,
   "headlines-ab-control",
@@ -69,13 +58,11 @@ object SeriesOnwardPosition extends TestDefinition(
 }
 
 object ActiveTests extends Tests {
-  val tests: Seq[TestDefinition] = List(ABNewHeaderVariant, CMTopBannerPosition, ABHeadlinesTestControl, ABHeadlinesTestVariant, SeriesOnwardPosition)
+  val tests: Seq[TestDefinition] = List(CMTopBannerPosition, ABHeadlinesTestControl, ABHeadlinesTestVariant, SeriesOnwardPosition)
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
 
     val headlineTests = List(ABHeadlinesTestControl, ABHeadlinesTestVariant).filter(_.isParticipating)
-                          .map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""}
-    val newHeaderTests = List(ABNewHeaderVariant).filter(_.isParticipating)
                           .map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""}
 
     val internationalEditionTests = List(InternationalEditionVariant(request)
@@ -84,7 +71,7 @@ object ActiveTests extends Tests {
     val activeTest = List(ActiveTests.getParticipatingTest(request)
                         .map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""}).flatten
 
-    val configEntries = activeTest ++ internationalEditionTests ++ headlineTests ++ newHeaderTests
+    val configEntries = activeTest ++ internationalEditionTests ++ headlineTests
 
     configEntries.mkString(",")
   }
