@@ -9,7 +9,7 @@ trait ABTestSwitches {
     "dummy-test",
     "A do-nothing AA test, for the data team",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 7),
+    sellByDate = new LocalDate(2016, 5, 10),
     exposeClientSide = true
   )
 
