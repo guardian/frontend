@@ -2,7 +2,7 @@ define([
 ], function (
 ) {
     return function () {
-        this.id = 'AATest';
+        this.id = 'DummyTest';
         this.start = '2016-04-07';
         this.expiry = '2016-05-07';
         this.author = 'Stephan Fowler';
