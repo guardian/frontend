@@ -1,24 +1,31 @@
 define([
     'common/views/svgs',
     'common/utils/template',
+    'lodash/objects/assign',
     'text!common/views/commercial/creatives/manual-inline-button.html',
     'text!common/views/commercial/creatives/manual-single-button.html',
     'text!common/views/commercial/creatives/manual-multiple-button.html',
 
-    'text!common/views/commercial/creatives/manual-title.html'
+    'text!common/views/commercial/creatives/manual-title.html',
+
+    'text!common/views/commercial/creatives/gimbap/gimbap-simple-blob.html'
 ], function (
     svgs,
     template,
+    assign,
     manualInlineButtonStr,
     manualSingleButtonStr,
     manualMultipleButtonStr,
 
-    manualTitleStr
+    manualTitleStr,
+
+    gimbapSimpleStr
 ) {
     var manualInlineButtonTpl;
     var manualSingleButtonTpl;
     var manualMultipleButtonTpl;
     var manualTitleTpl;
+    var gimbapSimpleTpl;
 
     function preprocessManualInline(tpl) {
         if (!manualInlineButtonTpl) {
@@ -107,12 +114,24 @@ define([
     }
 
     function preprocessGimbapSimple(tpl) {
+        if (!gimbapSimpleTpl) {
+            gimbapSimpleTpl = template(gimbapSimpleStr);
+        }
         // SVGs
         tpl.params.marque36icon = svgs('marque36icon', ['gimbap-wrap__mainlogo']);
         tpl.params.arrowRight = (tpl.params.linksWithArrows.indexOf('yes') !== -1) ? svgs('arrowRight', ['gimbap__arrow', 'gimbap__arrow--styled']) : '';
         tpl.params.logo = tpl.params['logo' + tpl.params.componenttone + 'horizontal'];
 
         tpl.params.gimbapEffects = tpl.params.componenteffects === 'yes' ? ' ' + 'gimbap--effects' : '';
+
+        tpl.params.gimbapSimple = '';
+        for (var i = 1; i <= 4; i++) {
+            tpl.params.gimbapSimple += gimbapSimpleTpl(assign(tpl.params, {
+                offerurl: tpl.params['offer' + i + 'url'],
+                offertitle: tpl.params['offer' + i + 'title'],
+                offerimage: tpl.params['offer' + i + 'image']
+            }));
+        }
     }
 
     return {
