@@ -3,7 +3,7 @@
 @include tone-content(
     media, // $tone
     colour(media-background), // $tonal__header-background
-    colour(neutral-6), // $tonal__header-text
+    colour(neutral-5), // $tonal__header-text
     colour(media-default), // $tonal__header-link
     400, // $tonal__headline-weight
     #ffffff, // $tonal__headline-colour
@@ -17,7 +17,7 @@
 
 // Podcast and media tones share page styling
 .tonal--tone-media .tonal__main--tone-media {
-    color: colour(neutral-7);
+    color: colour(neutral-6);
     padding-top: 0;
 
     .byline,
@@ -33,7 +33,7 @@
     .ad-slot--paid-for-badge__help,
     .from-content-api,
     .meta__numbers .sharecount__value {
-        color: colour(neutral-7);
+        color: colour(neutral-6);
     }
 
     .byline,

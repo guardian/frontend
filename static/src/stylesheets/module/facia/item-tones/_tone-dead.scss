@@ -1,12 +1,12 @@
 .tone-dead--item {
     &.fc-item,
     &.rich-link {
-        background-color: colour(neutral-7);
+        background-color: colour(neutral-6);
     }
 
     .u-faux-block-link--hover,
     .fc-item__image-container {
-        background-color: darken(colour(neutral-6), 2%);
+        background-color: darken(colour(neutral-5), 2%);
     }
 
     .fc-item__container:before,
@@ -21,11 +21,11 @@
     }
 
     .fc-save-for-later {
-        border-color: mix(#000000, colour(neutral-7), 10%);
+        border-color: mix(#000000, colour(neutral-6), 10%);
     }
 
     .fc-item__kicker--dreamsnap {
-        background-color: mix(#000000, colour(neutral-7), 10%);
+        background-color: mix(#000000, colour(neutral-6), 10%);
     }
 
     .rich-link__read-more-text {

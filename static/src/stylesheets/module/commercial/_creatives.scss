@@ -23,7 +23,7 @@
         box-sizing: border-box;
     }
     .creative--scrollable-mpu-image {
-        border: 1px solid colour(neutral-5);
+        border: 1px solid colour(neutral-4);
         background: none 0 0 repeat;
 
         &.creative--scrollable-mpu-image-fixed {
@@ -650,7 +650,7 @@
 }
 
 .creative--ad-feature-mpu-large {
-    background-color: colour(neutral-8);
+    background-color: colour(neutral-6);
     padding: $gs-baseline / 2 0;
     overflow: hidden;
     max-height: 250px;
@@ -659,7 +659,7 @@
     .creative__article {
         display: block;
         padding: 0 $gs-gutter $gs-baseline / 2;
-        border-bottom: 1px solid colour(neutral-5);
+        border-bottom: 1px solid colour(neutral-4);
         color: colour(neutral-2-contrasted);
     }
     .creative__article__image {

@@ -1,9 +1,9 @@
 {
   "name": "frontend-common-css",
   "dependencies": {
-    "pasteup-forms": "~5.0.0",
-    "pasteup-palette": "~3.4.2",
-    "pasteup-buttons": "~0.5.0",
+    "pasteup-forms": "~7.0.0",
+    "pasteup-palette": "~4.0.0",
+    "pasteup-buttons": "~2.0.0",
     "guss-colours": "~3.0.0",
     "guss-grid-system": "~1.2.1",
     "guss-layout": "~1.3.3",

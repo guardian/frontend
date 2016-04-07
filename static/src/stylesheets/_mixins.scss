@@ -205,7 +205,7 @@
     }
 }
 
-@mixin column-rule($style: 1px solid colour(neutral-5)) {
+@mixin column-rule($style: 1px solid colour(neutral-4)) {
     column-rule: $style;
 }
 

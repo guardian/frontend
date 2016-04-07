@@ -16,7 +16,7 @@ $football-crest--large: 60px;
 .match-summary__teams {
     padding-top: $gs-baseline;
     position: relative;
-    border-top: 1px dotted colour(neutral-5);
+    border-top: 1px dotted colour(neutral-4);
     font-size: 0;
 
     @include mq(tablet) {
@@ -299,8 +299,8 @@ $football-crest--large: 60px;
 }
 
 .match-summary--report {
-    border-bottom: 1px solid colour(neutral-6);
-    border-top: 1px solid colour(neutral-6);
+    border-bottom: 1px solid colour(neutral-5);
+    border-top: 1px solid colour(neutral-5);
 
     .match-summary__status {
         display: none;

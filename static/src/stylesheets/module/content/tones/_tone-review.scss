@@ -3,7 +3,7 @@
 @include tone-content(
     review, // $tone
     darken(colour(review-background), 10%), // $tonal__header-background
-    colour(neutral-6), // $tonal__header-text
+    colour(neutral-5), // $tonal__header-text
     colour(review-accent), // $tonal__header-link
     200, // $tonal__headline-weight
     #ffffff, // $tonal__headline-colour

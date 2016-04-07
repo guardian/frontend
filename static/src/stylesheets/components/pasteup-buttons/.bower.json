@@ -1,7 +1,7 @@
 {
   "name": "pasteup-buttons",
   "description": "Button component in the Pasteup collection",
-  "version": "0.5.0",
+  "version": "2.0.0",
   "main": [
     "build/buttons.min.css",
     "src/_buttons.scss"
@@ -16,19 +16,19 @@
     "guss-grid-system": "~1.2.1",
     "guss-typography": "~3.1.0",
     "guss-webfonts": "~3.0.0",
-    "pasteup-palette": "~3.3.0",
+    "pasteup-palette": "~4.0.0",
     "sass-mq": "~3.0.0"
   },
   "devDependencies": {
     "Cortana": "~1.2.7"
   },
-  "_release": "0.5.0",
+  "_release": "2.0.0",
   "_resolution": {
     "type": "version",
-    "tag": "0.5.0",
-    "commit": "da2c0dde4845713eca5cae5e5eb096e664f4059c"
+    "tag": "2.0.0",
+    "commit": "00f791cf16612f0a0548144d2fb0abac42654b81"
   },
   "_source": "git://github.com/guardian/pasteup-buttons.git",
-  "_target": "~0.5.0",
+  "_target": "~2.0.0",
   "_originalSource": "pasteup-buttons"
 }

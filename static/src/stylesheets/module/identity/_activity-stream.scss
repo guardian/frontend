@@ -147,7 +147,7 @@
 
 .activity-stream__witness-meta {
     @include fs-textSans(1);
-    background-color: colour(neutral-8);
+    background-color: colour(neutral-6);
     border: 1px solid colour(neutral-4);
     border-top: 0;
     text-align: right;
@@ -164,7 +164,7 @@
     line-height: 14px;
 }
 .activity-stream__witness-content:hover {
-    background: colour(neutral-6);
+    background: colour(neutral-5);
     transition: .3s all;
 }
 .activity-stream__witness-text {

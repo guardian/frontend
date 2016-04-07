@@ -107,10 +107,10 @@ Show more button:
 }
 .button--secondary {
     @include button-colour(
-        guss-colour(neutral-7, $pasteup-palette),
+        guss-colour(neutral-6, $pasteup-palette),
         guss-colour(neutral-1, $pasteup-palette)
     );
-    @include button-hover-colour(darken(guss-colour(neutral-7, $pasteup-palette), 10%));
+    @include button-hover-colour(darken(guss-colour(neutral-6, $pasteup-palette), 10%));
 }
 .button--tertiary {
     @include button-colour(
@@ -143,10 +143,10 @@ Show more button:
 }
 .button--tone-news {
     @include button-colour(
-        guss-colour(neutral-7, $pasteup-palette),
+        guss-colour(neutral-6, $pasteup-palette),
         guss-colour(news-main-1, $pasteup-palette)
     );
-    @include button-hover-colour(darken(guss-colour(neutral-7, $pasteup-palette), 10%));
+    @include button-hover-colour(darken(guss-colour(neutral-6, $pasteup-palette), 10%));
 }
 .button--tone-news-variant {
     @include button-colour(
@@ -161,10 +161,10 @@ Show more button:
 }
 .button--tone-feature {
     @include button-colour(
-        guss-colour(neutral-7, $pasteup-palette),
+        guss-colour(neutral-6, $pasteup-palette),
         guss-colour(features-support-1, $pasteup-palette)
     );
-    @include button-hover-colour(darken(guss-colour(neutral-7, $pasteup-palette), 10%));
+    @include button-hover-colour(darken(guss-colour(neutral-6, $pasteup-palette), 10%));
 }
 .button--tone-feature-variant {
     @include button-colour(
@@ -179,10 +179,10 @@ Show more button:
 }
 .button--tone-comment {
     @include button-colour(
-        guss-colour(neutral-7, $pasteup-palette),
+        guss-colour(neutral-6, $pasteup-palette),
         guss-colour(comment-main-1, $pasteup-palette)
     );
-    @include button-hover-colour(darken(guss-colour(neutral-7, $pasteup-palette), 10%));
+    @include button-hover-colour(darken(guss-colour(neutral-6, $pasteup-palette), 10%));
 }
 .button--tone-comment-variant {
     @include button-colour(
@@ -197,19 +197,19 @@ Show more button:
 }
 .button--tone-live {
     @include button-colour(
-        guss-colour(neutral-6, $pasteup-palette),
+        guss-colour(neutral-5, $pasteup-palette),
         guss-colour(neutral-1, $pasteup-palette)
     );
-    @include button-hover-colour(darken(guss-colour(neutral-6, $pasteup-palette), 10%));
+    @include button-hover-colour(darken(guss-colour(neutral-5, $pasteup-palette), 10%));
 }
 .button--tone-live-variant {
     @include button-colour(
-        guss-colour(neutral-8, $pasteup-palette),
+        guss-colour(neutral-6, $pasteup-palette),
         guss-colour(neutral-1, $pasteup-palette),
         guss-colour(neutral-3, $pasteup-palette)
     );
     @include button-hover-colour(
-        guss-colour(neutral-8, $pasteup-palette),
+        guss-colour(neutral-6, $pasteup-palette),
         darken(guss-colour(neutral-3, $pasteup-palette), 10%)
     );
 }

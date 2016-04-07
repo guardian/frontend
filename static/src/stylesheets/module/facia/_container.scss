@@ -283,7 +283,7 @@ $header-image-size-desktop: 100px;
     }
 
     @include mq(leftCol) {
-        border-top: 1px dotted colour(neutral-5);
+        border-top: 1px dotted colour(neutral-4);
         padding-top: $gs-baseline / 2;
         margin-top: $gs-baseline;
         width: 100%;
@@ -527,7 +527,7 @@ $header-image-size-desktop: 100px;
     padding-bottom: 0;
 
     .fc-container__inner {
-        border-top: 1px solid colour(neutral-5);
+        border-top: 1px solid colour(neutral-4);
     }
 }
 

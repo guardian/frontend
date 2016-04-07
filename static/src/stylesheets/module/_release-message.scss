@@ -584,7 +584,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 .adblock-sticky__message {
     @include fs-headline(1);
     position: relative;
-    background: colour(neutral-8);
+    background: colour(neutral-6);
     display: block;
     color: #ffffff;
 

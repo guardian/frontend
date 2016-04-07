@@ -125,7 +125,7 @@ $ima-controls-height: 70px;
             top: 1.85em;
             border-style: solid;
             border-width: 1em 0 1em 2.4em;
-            border-color: transparent transparent transparent colour(neutral-7);
+            border-color: transparent transparent transparent colour(neutral-6);
             -moz-transform: scale(.99999); // fix for diagonal border aliasing in firefox
 
             @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
@@ -415,7 +415,7 @@ $ima-controls-height: 70px;
         content: '';
         left: 0;
         right: 0;
-        background-color: colour(neutral-7);
+        background-color: colour(neutral-6);
     }
 }
 
@@ -825,7 +825,7 @@ $ima-controls-height: 70px;
     margin: auto;
     box-sizing: border-box;
     background-color: rgba(25, 25, 25, .8);
-    color: colour(neutral-7);
+    color: colour(neutral-6);
     top: $gs-baseline*4;
     padding-top: $gs-gutter/4;
     max-width: gs-span(7);
@@ -966,7 +966,7 @@ $ima-controls-height: 70px;
 }
 .podcast-meta__item__link {
     @include fs-textSans(1);
-    color: colour(neutral-7);
+    color: colour(neutral-6);
 }
 
 /* Tech overrides
@@ -1075,7 +1075,7 @@ $ima-controls-height: 70px;
     .fc-item__action {
         display: block;
         padding-top: $gs-baseline;
-        color: colour(neutral-5);
+        color: colour(neutral-4);
 
         &:hover,
         &:focus {
@@ -1083,7 +1083,7 @@ $ima-controls-height: 70px;
         }
         &:visited,
         &:active {
-            color: darken(colour(neutral-5), 20%);
+            color: darken(colour(neutral-4), 20%);
         }
     }
 

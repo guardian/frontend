@@ -10,7 +10,7 @@
     padding-top: 15px;
     font-size: 14px;
     padding-left: 28px; // aligns with top level comment's body
-    border-left: 8px solid colour(neutral-5);
+    border-left: 8px solid colour(neutral-4);
 
     @include mq(tablet) {
         padding-left: 44px;

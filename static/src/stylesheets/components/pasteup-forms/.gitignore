@@ -1,6 +1,7 @@
 .DS_Store
 .grunt
 .sass-cache
+*.css.map
 
 bower_components
 docs

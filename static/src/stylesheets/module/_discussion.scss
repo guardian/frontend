@@ -327,7 +327,7 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .d-comment:target {
-    background-color: colour(neutral-7);
+    background-color: colour(neutral-6);
     &:before,
     &:after {
         content: '';
@@ -335,7 +335,7 @@ $avatarPadding: $gs-gutter / 2;
         height: 100%;
         width: .5 * $gs-gutter;
         top: -1px;
-        background-color: colour(neutral-7);
+        background-color: colour(neutral-6);
         border-style: solid;
         border-width: 1px 0;
         border-color: colour(neutral-4);
@@ -349,15 +349,15 @@ $avatarPadding: $gs-gutter / 2;
     &.d-comment--response {
         &:before,
         &:after {
-            border-color: colour(neutral-6);
+            border-color: colour(neutral-5);
         }
     }
 
     .d-comment-box__parent-comment-spout {
-        border-bottom-color: colour(neutral-5);
+        border-bottom-color: colour(neutral-4);
     }
     .d-comment-box__parent-comment {
-        background-color: colour(neutral-5);
+        background-color: colour(neutral-4);
     }
 }
 
@@ -656,7 +656,7 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-comment--response,
 .d-comment-box--response {
-    border-top: 1px solid colour(neutral-6);
+    border-top: 1px solid colour(neutral-5);
     margin-left: $gs-gutter * 1.5;
 
     @include mq(tablet) {
@@ -674,7 +674,7 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-show-more-replies {
     @include fs-textSans(2);
-    border-top: 1px dotted colour(neutral-5);
+    border-top: 1px dotted colour(neutral-4);
     padding: $gs-baseline 0;
 
     @include mq(tablet) {
@@ -728,7 +728,7 @@ $comment-recommend-button-size: 19px;
     width: $comment-recommend-button-size;
     height: $comment-recommend-button-size;
     display: inline-block;
-    background-color: colour(neutral-7);
+    background-color: colour(neutral-6);
     cursor: default;
     position: relative;
     top: 1px;
@@ -761,7 +761,7 @@ $comment-recommend-button-size: 19px;
     width: $comment-recommend-button-size;
     height: $comment-recommend-button-size;
     border-radius: 18px;
-    background-color: colour(neutral-7);
+    background-color: colour(neutral-6);
 }
 .d-comment__recommend-count {
     @include fs-textSans(1);
@@ -902,7 +902,7 @@ $comment-recommend-button-size: 19px;
     width: gs-span(4);
     color: colour(neutral-1);
     padding: $gs-baseline / 2 $gs-gutter / 2;
-    border: 2px solid colour(neutral-6);
+    border: 2px solid colour(neutral-5);
     background: #ffffff;
 }
 
@@ -1045,7 +1045,7 @@ $comment-recommend-button-size: 19px;
 
     .comment__inner {
         box-sizing: border-box;
-        background-color: colour(neutral-7);
+        background-color: colour(neutral-6);
         display: inline-block;
         padding: ($gs-baseline / 3) * 2 $gs-gutter / 2 $gs-baseline;
         max-width: $right-column;
@@ -1064,8 +1064,8 @@ $comment-recommend-button-size: 19px;
             border: solid transparent;
             height: 0;
             width: 0;
-            border-color: rgba(colour(neutral-7), 0);
-            border-top-color: colour(neutral-7);
+            border-color: rgba(colour(neutral-6), 0);
+            border-top-color: colour(neutral-6);
             border-width: 30px;
             left: 23px;
             margin-left: -30px;
@@ -1162,7 +1162,7 @@ $comment-recommend-button-size: 19px;
 }
 
 .d-comment-box--response {
-    border-top: 1px solid colour(neutral-5);
+    border-top: 1px solid colour(neutral-4);
     padding-top: $gs-baseline / 2;
 
     .d-comment-box__author-label {
@@ -1327,11 +1327,11 @@ $comment-recommend-button-size: 19px;
     margin-top: ($gs-baseline / 3) * 8;
 
     .clamp-fade {
-        @include simple-gradient(transparent, colour(neutral-7));
+        @include simple-gradient(transparent, colour(neutral-6));
     }
     .clamp-fade__content {
         border-top: 1px solid colour(neutral-3);
-        background: colour(neutral-7);
+        background: colour(neutral-6);
     }
 }
 .d-comment-box__preview-spout,
@@ -1341,14 +1341,14 @@ $comment-recommend-button-size: 19px;
     width: 0;
     height: 0;
     border-right: 16px solid transparent;
-    border-bottom: 16px solid colour(neutral-7);
+    border-bottom: 16px solid colour(neutral-6);
     margin-left: $gs-gutter * 2;
     border-right-style: inset;
 }
 .d-comment-box__parent-comment {
     @include fs-textSans(4);
     padding: $gs-baseline $gs-gutter;
-    background-color: colour(neutral-7);
+    background-color: colour(neutral-6);
 
     .d-comment-box__hide-parent {
         margin-left: 0;
@@ -1384,7 +1384,7 @@ $comment-recommend-button-size: 19px;
 }
 .d-comment-box__preview-block {
     display: block;
-    background-color: colour(neutral-7);
+    background-color: colour(neutral-6);
     padding: $gs-baseline $gs-gutter;
 }
 .d-comment-box__preview-body {
@@ -1416,7 +1416,7 @@ $comment-recommend-button-size: 19px;
 .d-comment-box__formatting-link {
     @include fs-textSans(2);
     display: inline-block;
-    border: 1px solid colour(neutral-5);
+    border: 1px solid colour(neutral-4);
     color: colour(neutral-2);
     text-align: center;
     cursor: pointer;
