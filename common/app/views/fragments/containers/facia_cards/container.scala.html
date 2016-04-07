@@ -19,6 +19,30 @@
     </div>
 }
 
+@renderBrandingDataAttributes() = {
+    @if(Switches.cardsDecidePaidContainerBranding.isSwitchedOn) {
+        @for(container <- maybeContainerModel) {
+            @for(branding <- container.branding) {
+                data-sponsor="@branding.sponsor"
+                @for(seriesId <- branding.seriesId) { data-series="@seriesId" }
+                @for(keywordId <- branding.keywordId) { data-keywords="@keywordId" }
+                data-sponsorship="@branding.sponsorshipType"
+            }
+        }
+    } else {
+        @for(sponsor <- containerDefinition.commercialOptions.sponsor) { data-sponsor="@sponsor"}
+        @for(tag <- containerDefinition.commercialOptions.sponsorshipTag) {
+            @tag.tagType match {
+                case Series => { data-series="@{ tag.tagId}"}
+                case Keyword => { data-keywords="@{ tag.tagId}"}
+            }
+        }
+        @containerDefinition.commercialOptions.sponsorshipType.map { sponsorshipType =>
+        data-sponsorship="@sponsorshipType"
+        }
+    }
+}
+
 @defining((containerDefinition.displayName, containerDefinition.faciaComponentName)) { case (title, componentName) =>
     @containerDefinition.customHeader.map {
         case header: MetaDataHeader => {
@@ -30,7 +54,16 @@
     @containerDefinition.container match {
         case _: model.MostPopular if isPaidFront => {}
 
-        case _: Dynamic | _: Fixed if Switches.v2PaidContainerTemplate.isSwitchedOn && shouldRenderAsPaidContainer(isPaidFront, containerDefinition) => {
+        case _: Fixed if Switches.v2FixedContainerTemplate.isSwitchedOn && shouldRenderAsPaidContainer(isPaidFront, containerDefinition) => {
+            @maybeContainerModel match {
+                case Some(containerModel) => {
+                    @paidContainerV2(frontId.getOrElse(""), containerDefinition.index, containerModel)
+                }
+                case None => {}
+            }
+        }
+
+        case _: Dynamic if Switches.v2DynamicContainerTemplate.isSwitchedOn && shouldRenderAsPaidContainer(isPaidFront, containerDefinition) => {
             @maybeContainerModel match {
                 case Some(containerModel) => {
                     @paidContainerV2(frontId.getOrElse(""), containerDefinition.index, containerModel)
@@ -41,19 +74,15 @@
 
         case _ => {
         <section id="@componentName"
-        class="@GetClasses.forContainerDefinition(containerDefinition)"
+        class="@GetClasses.forContainerDefinition(containerDefinition)
+        @if(Switches.cardsDecidePaidContainerBranding.isSwitchedOn){
+            @for(container <- maybeContainerModel){
+                @if(container.branding.isDefined){ js-sponsored-container }
+            }
+        }"
         data-link-name="container-@{containerDefinition.index + 1} | @componentName"
         data-id="@containerDefinition.dataId"
-            @for(sponsor <- containerDefinition.commercialOptions.sponsor) { data-sponsor="@sponsor" }
-            @for(tag <- containerDefinition.commercialOptions.sponsorshipTag) {
-                @tag.tagType match {
-                    case Series => { data-series="@{tag.tagId}" }
-                    case Keyword => { data-keywords="@{tag.tagId}" }
-                }
-            }
-            @containerDefinition.commercialOptions.sponsorshipType.map { sponsorshipType =>
-            data-sponsorship="@sponsorshipType"
-            }
+        @renderBrandingDataAttributes()
         data-component="@componentName"
         aria-expanded="true">
 

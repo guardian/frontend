@@ -1,8 +1,8 @@
 package common.commercial
 
 import conf.switches.Switches
-import model.ImageOverride
 import model.pressed.PressedContent
+import model.{ContentType, ImageOverride}
 import views.support.{CardWithSponsorDataAttributes, ImgSrc, SponsorDataAttributes}
 
 case class CardContent(
@@ -58,6 +58,28 @@ object CardContent {
           None
         }
       }
+    )
+  }
+
+  def fromContentItem(item: ContentType, clickMacro: Option[String]): CardContent = {
+    val tags = item.tags
+    CardContent(
+      icon = {
+        if (tags.isVideo) Some("video-icon")
+        else if (tags.isGallery) Some("camera")
+        else if (tags.isAudio) Some("volume-high")
+        else None
+      },
+      headline = item.trail.headline,
+      kicker = None,
+      description = item.fields.trailText,
+      imageUrl = item.trail.trailPicture flatMap ImgSrc.getFallbackUrl,
+      targetUrl = {
+        val url = item.metadata.url
+        clickMacro map { cm => s"$cm$url" } getOrElse url
+      },
+      group = None,
+      branding = None
     )
   }
 }
