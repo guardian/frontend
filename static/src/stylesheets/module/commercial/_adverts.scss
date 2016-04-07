@@ -111,6 +111,18 @@
 
             > * {
                 margin: 0 $gs-gutter / 2;
+
+                /* In Firefox, flex items have a min-width: auto, which prevents
+                   them from shrinking when they have an image larger than the
+                   size the item would normally fill. The only workaround to
+                   solve this is to overwrite min-width on the flex item.
+                   Additionnally, we put a max-width constraint on the container
+                   otherwise it will overflow.
+                   See https://bugzilla.mozilla.org/show_bug.cgi?id=1139931 */
+                min-width: 0;
+                > .advert__image-container {
+                    max-width: 100%;
+                }
             }
 
             > * + * {
