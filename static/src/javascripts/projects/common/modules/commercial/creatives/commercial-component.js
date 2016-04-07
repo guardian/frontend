@@ -81,17 +81,21 @@ define([
     }
 
     function adjustMostPopHeight(el) {
-        var height;
+        var adSlotHeight;
         var $adSlot = $(el);
         var $mostPopTabs = $('.js-most-popular-footer .tabs__pane');
+        var mostPopTabsHeight;
 
         if ($adSlot.hasClass('ad-slot--mostpop')) {
             fastdom.read(function () {
-                height = $adSlot.dim().height;
-            });
+                adSlotHeight = $adSlot.dim().height;
+                mostPopTabsHeight = $mostPopTabs.dim().height;
 
-            fastdom.write(function () {
-                $mostPopTabs.css('height', height);
+                if (adSlotHeight > mostPopTabsHeight) {
+                    fastdom.write(function () {
+                        $mostPopTabs.css('height', adSlotHeight);
+                    });
+                }
             });
         }
     }

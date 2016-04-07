@@ -11,6 +11,8 @@
   clickMacro: Option[String],
   omnitureId: Option[String])(implicit request: RequestHeader)
 
+@import views.html.commercial.containerWrapper
+@import views.html.contentapi.itemLargeCard
 @import views.html.fragments.inlineSvg
 
 @containerWrapper(Seq("legacy", "legacy-single", "capi", "tone-capi"),
@@ -27,14 +29,16 @@
 
 }{
 
-    @itemCard(item, clickMacro)
+    <div class="adverts__row">
+        @itemLargeCard(item, clickMacro)
 
-    @for(moreButton <- optCapiReadMoreText) {
-        <a href="@clickMacro@optCapiReadMoreUrl" class="hide-on-mobile button button--primary button--large" data-link-name="merchandising-single-more">
-            @moreButton
-            @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
-        </a>
-    }
+        @for(moreButton <- optCapiReadMoreText) {
+            <a href="@clickMacro@optCapiReadMoreUrl" class="hide-on-mobile button button--primary button--large" data-link-name="merchandising-single-more">
+                @moreButton
+                @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
+            </a>
+        }
+    </div>
 }
 
 @stamp = {

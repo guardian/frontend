@@ -8,7 +8,7 @@ import common.ContentApiMetrics.{ContentApiErrorMetric, ContentApi404Metric}
 import common.{Logging, ExecutionContexts}
 import conf.Configuration
 import conf.Configuration.contentApi.previewAuth
-import metrics.{CountMetric, FrontendTimingMetric}
+import metrics.{CountMetric, TimingMetric}
 import play.api.libs.ws.{WS, WSAuthScheme}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -21,7 +21,7 @@ trait Http {
   def GET(url: String, headers: Iterable[(String, String)]): Future[Response]
 }
 
-class WsHttp(val httpTimingMetric: FrontendTimingMetric, val httpTimeoutMetric: CountMetric)
+class WsHttp(val httpTimingMetric: TimingMetric, val httpTimeoutMetric: CountMetric)
   extends Http with ExecutionContexts with Logging {
 
   import java.lang.System.currentTimeMillis
@@ -70,7 +70,7 @@ class WsHttp(val httpTimingMetric: FrontendTimingMetric, val httpTimeoutMetric: 
 
 // allows us to inject a test Http
 trait DelegateHttp { self: ContentApiClientLogic =>
-  val httpTimingMetric: FrontendTimingMetric
+  val httpTimingMetric: TimingMetric
   val httpTimeoutMetric: CountMetric
 
   var _http: Http = new WsHttp(httpTimingMetric, httpTimeoutMetric)

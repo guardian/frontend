@@ -41,7 +41,6 @@ object Frontend extends Build with Prototypes {
       scalaCheck,
       scalajTime,
       scalaz,
-      shadeMemcached,
       snappyJava,
       ws,
       faciaFapiScalaClient,
@@ -88,8 +87,6 @@ object Frontend extends Build with Prototypes {
       "football.controllers._"
     )
   )
-
-  val image = application("image")
 
   val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
@@ -150,6 +147,7 @@ object Frontend extends Build with Prototypes {
   )
 
   val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common)
+      .settings(libraryDependencies ++= List(shadeMemcached))
 
   val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
 
@@ -211,7 +209,6 @@ object Frontend extends Build with Prototypes {
     article,
     applications,
     sport,
-    image,
     discussion,
     router,
     diagnostics,

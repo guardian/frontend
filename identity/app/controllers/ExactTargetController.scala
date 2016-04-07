@@ -9,7 +9,6 @@ import utils.SafeLogging
 import scala.collection.convert.wrapAsJava._
 import conf.IdentityConfiguration
 import play.api.libs.ws._
-import model.diagnostics.CloudWatch
 import exacttarget.{SubscriptionDef, DataExtId}
 
 @Singleton
@@ -23,11 +22,8 @@ class ExactTargetController @Inject()(
   import play.api.Play.current
   import authenticatedActions.authAction
 
-  def cloudWatchCount(id: String) { CloudWatch.put("ExactTarget", Map(id -> 1d)) }
-
   def subscribe(subscriptionDefId: String, returnUrl: String) = authAction.apply {
     implicit request =>
-      cloudWatchCount(s"sub-$subscriptionDefId-request")
 
       idRequestParser(request).returnUrl match {
         case Some(verifiedReturnUrl) =>
@@ -54,7 +50,6 @@ class ExactTargetController @Inject()(
                   subscriberNode =>
                     val statusCode = (subscriberNode \ "StatusCode").text.trim
                     val statusMessage = (subscriberNode \ "StatusMessage").text.trim
-                    cloudWatchCount(s"sub-$subscriptionDefId-et-api-response-$statusCode")
                     logger.info(s"CreateResponse - $statusCode : $statusMessage")
                 }
             }
