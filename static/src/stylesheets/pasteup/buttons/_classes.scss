@@ -1,6 +1,13 @@
 @import 'src';
 
 .button {
+    @include fs-textSans(2);
+    @include button-height($base-size * 5);
+    @include button-colour(
+        guss-colour(news-main-2, $pasteup-palette),
+        #ffffff,
+        guss-colour(news-main-1, $pasteup-palette)
+    );
     display: inline-block;
     vertical-align: top;
     width: auto;
@@ -13,13 +20,6 @@
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    @include fs-textSans(2);
-    @include button-height($base-size * 5);
-    @include button-colour(
-        guss-colour(news-main-2, $pasteup-palette),
-        #ffffff,
-        guss-colour(news-main-1, $pasteup-palette)
-    );
 
     &:hover,
     &:focus,
