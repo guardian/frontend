@@ -48,11 +48,11 @@ GET        /preferences                                                         
 GET        /crosswords/optin                                                    controllers.CrosswordPreferencesController.crosswordsOptIn
 GET        /crosswords/optout                                                   controllers.CrosswordPreferencesController.crosswordsOptOut
 
-GET        /https/optin                                                         controllers.HTTPSCookieController.optIn()
-GET        /https/optout                                                        controllers.HTTPSCookieController.optOut()
+GET        /https/optin                                                         controllers.OptInController.HTTPS.optIn()
+GET        /https/optout                                                        controllers.OptInController.HTTPS.optOut()
 
-GET        /new-header/optin                                                    controllers.NewHeaderCookieController.optIn()
-GET        /new-header/optout                                                   controllers.NewHeaderCookieController.optOut()
+GET        /new-header/optin                                                    controllers.OptInController.Header.optIn()
+GET        /new-header/optout                                                   controllers.OptInController.Header.optOut()
 
 # Web App paths
 GET        /offline-page.json                                                   controllers.WebAppController.offlinePage()
