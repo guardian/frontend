@@ -51,7 +51,7 @@
 .advert--capi {
     @include f-textSans;
     background: colour(paid-article-subheader);
-    border-top-color: guss-colour(paid-article-brand, $frontend-palette);
+    border-top: 1px solid guss-colour(paid-article-brand, $frontend-palette);
 
     .advert__title,
     .advert__meta,
