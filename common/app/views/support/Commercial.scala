@@ -34,8 +34,8 @@ object Commercial {
 
     def adSizes(metaData: MetaData, edition: Edition): Map[String, Seq[String]] = {
       Map(
-        "mobile" -> Seq("1,1", "88,70", "728,90"),
-        "desktop" -> Seq("1,1", "88,70", "728,90", "940,230", "900,250", "970,250")
+        "mobile" -> Seq("1,1", "88,70", "88,71", "728,90"),
+        "desktop" -> Seq("1,1", "88,70", "88,71", "728,90", "940,230", "900,250", "970,250")
       )
     }
 
