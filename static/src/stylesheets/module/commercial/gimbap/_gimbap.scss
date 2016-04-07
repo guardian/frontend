@@ -2,6 +2,7 @@
     display: block;
     padding: $gs-gutter / 2;
     position: relative;
+    overflow: hidden;
     box-sizing: border-box;
     color: #ffffff;
 
@@ -40,6 +41,18 @@
     @include mq(tablet, desktop) {
         &:nth-child(n+4) {
             display: none;
+        }
+    }
+}
+
+.gimbap--effects {
+    .gimbap__image {
+        transition: all 3.5s ease;
+    }
+
+    &:hover {
+        .gimbap__image {
+            transform: scale(1.25);
         }
     }
 }

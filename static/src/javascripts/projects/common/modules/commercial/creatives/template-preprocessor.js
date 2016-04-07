@@ -111,6 +111,8 @@ define([
         tpl.params.marque36icon = svgs('marque36icon', ['gimbap-wrap__mainlogo']);
         tpl.params.arrowRight = (tpl.params.linksWithArrows.indexOf('yes') !== -1) ? svgs('arrowRight', ['gimbap__arrow', 'gimbap__arrow--styled']) : '';
         tpl.params.logo = tpl.params['logo' + tpl.params.componenttone + 'horizontal'];
+
+        tpl.params.gimbapEffects = tpl.params.componenteffects === 'yes' ? ' ' + 'gimbap--effects' : '';
     }
 
     return {
