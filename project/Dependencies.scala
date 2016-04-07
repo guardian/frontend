@@ -8,6 +8,7 @@ object Dependencies {
   val seleniumVersion = "2.44.0"
   val slf4jVersion = "1.7.5"
   val awsVersion = "1.10.58"
+  val faciaVersion = "1.5.0"
 
   val akkaAgent = "com.typesafe.akka" %% "akka-agent" % "2.3.4"
   val akkaContrib = "com.typesafe.akka" %% "akka-contrib" % "2.3.5"
@@ -25,13 +26,13 @@ object Dependencies {
   val commonsHttpClient = "commons-httpclient" % "commons-httpclient" % "3.1"
   val commonsIo = "commons-io" % "commons-io" % "2.4"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.18"
-  val contentApiClient = "com.gu" %% "content-api-client" % "7.30"
+  val contentApiClient = "com.gu" %% "content-api-client" % "8.2"
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "2.8.0"
   val dispatch = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3"
   val dispatchTest = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3" % Test
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.24"
-  val faciaFapiScalaClient = "com.gu" %% "fapi-client" % "1.3.0"
-  val faciaScalaClient = "com.gu" %% "facia-json" % "1.3.0"
+  val faciaFapiScalaClient = "com.gu" %% "fapi-client" % faciaVersion
+  val faciaScalaClient = "com.gu" %% "facia-json" % faciaVersion
   val googleSheetsApi = "com.google.gdata" % "core" % "1.47.1"
   val guardianConfiguration = "com.gu" %% "configuration" % "4.1"
   val guice = "com.google.inject" % "guice" % "3.0"
