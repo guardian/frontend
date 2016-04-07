@@ -17,6 +17,8 @@
     // taking it off child elements and moving it here for DRY.
     // the intention is to move this to the global .gs-container definition
     // which requires the padding to be removed from all child elements
+
+    // You can break out of these margins with .content__mobile-full-width
     @include content-gutter();
     box-sizing: border-box;
 }
@@ -502,17 +504,16 @@
 }
 
 .content__mobile-full-width {
-    margin-left: -($gs-gutter/2);
-    margin-right: -($gs-gutter/2);
+
+    @include mq(mobile, tablet) {
+        width: auto;
+        margin-left: -($gs-gutter/2);
+        margin-right: -($gs-gutter/2);
+    }
 
     @include mq(mobileLandscape, tablet) {
         margin-left: -$gs-gutter;
         margin-right: -$gs-gutter;
-    }
-
-    @include mq(tablet) {
-        margin-left: 0;
-        margin-right: 0;
     }
 }
 

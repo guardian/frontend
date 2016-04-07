@@ -18,7 +18,7 @@ define([
 
     function renderContainer(div) {
         fastdom.write(function () {
-            div.addClass('ad-slot--full-width-250');
+            div.addClass('ad-slot--full-width-250 content__mobile-full-width');
         });
     }
 
