@@ -54,7 +54,7 @@
     @containerDefinition.container match {
         case _: model.MostPopular if isPaidFront => {}
 
-        case _: Fixed if Switches.v2FixedContainerTemplate.isSwitchedOn && shouldRenderAsPaidContainer(isPaidFront, containerDefinition) => {
+        case _: Fixed if Switches.v2FixedContainerTemplate.isSwitchedOn && shouldRenderAsPaidContainer(isPaidFront, containerDefinition, maybeContainerModel) => {
             @maybeContainerModel match {
                 case Some(containerModel) => {
                     @paidContainerV2(frontId.getOrElse(""), containerDefinition.index, containerModel)
@@ -63,7 +63,7 @@
             }
         }
 
-        case _: Dynamic if Switches.v2DynamicContainerTemplate.isSwitchedOn && shouldRenderAsPaidContainer(isPaidFront, containerDefinition) => {
+        case _: Dynamic if Switches.v2DynamicContainerTemplate.isSwitchedOn && shouldRenderAsPaidContainer(isPaidFront, containerDefinition, maybeContainerModel) => {
             @maybeContainerModel match {
                 case Some(containerModel) => {
                     @paidContainerV2(frontId.getOrElse(""), containerDefinition.index, containerModel)
@@ -96,7 +96,7 @@
 
             @containerDefinition.container match {
 
-                case Fixed(definition) if shouldRenderAsPaidContainer(isPaidFront, containerDefinition) => {
+                case Fixed(definition) if shouldRenderAsPaidContainer(isPaidFront, containerDefinition, maybeContainerModel) => {
                     @renderCommercialContainer(SingleCampaign(definition))
                 }
 
