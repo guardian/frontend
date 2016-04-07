@@ -150,17 +150,11 @@ $video-width-desktop: 700px;
     position: relative;
     display: inline-block;
     vertical-align: top;
-    padding-bottom: 39.375%; // To keep with 16:9 ratio
     width: 70%;
-    height: 120px;
+    background-color: colour(media-background);
 
     @include mq(desktop) {
         width: $video-width-desktop;
-        padding-bottom: $video-width-desktop / 16 * 9;
-    }
-
-    @include mq(leftCol) {
-        height: 0;
     }
 
     .fc-item__video-fallback {
@@ -207,7 +201,6 @@ $video-width-desktop: 700px;
 .video-playlist__title {
     @include fs-headline(3);
     font-weight: 500;
-    background-color: rgba(0, 0, 0, .5);
     white-space: normal;
     padding: $gs-baseline/4 $gs-gutter/4 $gs-baseline * 2;
     box-sizing: border-box;
@@ -221,5 +214,6 @@ $video-width-desktop: 700px;
         top: 0;
         left: 0;
         z-index: 2;
+        background-color: rgba(0, 0, 0, .5);
     }
 }
