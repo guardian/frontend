@@ -1,5 +1,3 @@
-@import _root_.liveblog.LiveBlogCurrentPage
-@import model.liveblog.BodyBlock
 @import model.liveblog.KeyEventData
 @(model: LiveBlogPage)(implicit request: RequestHeader)
 
@@ -64,7 +62,7 @@
                                 <div class="blog__timeline-container js-live-blog__timeline-container" data-component="timeline">
                                     @fragments.dropdown("Key events", Some("key-events"), true) {
                                         <ul class="timeline js-live-blog__timeline u-unstyled">
-                                            @views.html.liveblog.keyEvents("/" + article.metadata.id, KeyEventData(model.article.content.fields.blocks, timezone))
+                                            @views.html.liveblog.keyEvents("/" + article.metadata.id, KeyEventData(article.content.fields.blocks, timezone))
                                         </ul>
                                     }
                                 </div>
@@ -83,15 +81,15 @@
                                     </button>
                                 </div>
                             </div>
-                            @if(model.pageModel.currentPage.isArchivePage) {
-                                @fragments.liveBlogNavigation(article = article, model.pageModel)
+                            @if(model.currentPage.currentPage.isArchivePage) {
+                                @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
                             }
                             <div class="js-liveblog-body u-cf from-content-api js-blog-blocks blocks @if(article.fields.isLive) {live-blog}" data-most-recent-block="@article.mostRecentBlock" data-test-id="live-blog-blocks"
                                 itemprop="@if(article.tags.isReview) {reviewBody} else {articleBody}">
-                                @views.html.liveblog.liveBlogBlocks(model.pageModel.currentPage.blocks, article, timezone)
+                                @views.html.liveblog.liveBlogBlocks(model.currentPage.currentPage.blocks, article, timezone)
                             </div>
                             @* Remove LiveFilter and the fragment once Toast comes out of AB test status *@
-                            @fragments.liveBlogNavigation(article = article, model.pageModel)
+                            @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
                         </div>
 
                         @fragments.submeta(article)

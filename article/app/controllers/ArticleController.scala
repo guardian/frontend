@@ -26,7 +26,7 @@ trait PageWithStoryPackage extends ContentPage {
 }
 
 case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
-case class LiveBlogPage(article: Article, pageModel: LiveBlogCurrentPage, related: RelatedContent) extends PageWithStoryPackage
+case class LiveBlogPage(article: Article, currentPage: LiveBlogCurrentPage, related: RelatedContent) extends PageWithStoryPackage
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
 object ArticleController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
