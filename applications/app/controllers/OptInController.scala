@@ -1,32 +1,29 @@
 package controllers
 
 import model.Cached
-import play.api.mvc.{DiscardingCookie, Cookie, Action, Controller}
+import play.api.mvc.{Action, Controller, Cookie, DiscardingCookie}
+
 import scala.concurrent.duration._
 
 object OptInController extends Controller {
-  trait OptInFeature {
-    val CookieName: String
-    val lifetime: Int = 90.days.toSeconds.toInt
-
-    def optIn() = Action { implicit request =>
-      Cached(60)(SeeOther("/").withCookies(
-        Cookie(CookieName, "true", maxAge = Some(lifetime))
-      ))
+  case class OptInFeature(cookieName: String, lifetime: Int = 90.days.toSeconds.toInt) {
+    def opt(choice: String) = choice match {
+      case "in" => optIn()
+      case _ => optOut()
     }
 
-    def optOut(cookie: String) = Action { implicit request =>
-      Cached(60)(SeeOther("/").discardingCookies(
-        DiscardingCookie(cookie)
-      ))
+    private def optIn() = Cached(60)(SeeOther("/").withCookies(Cookie(cookieName, "true", maxAge = Some(lifetime))))
+    private def optOut() = Cached(60)(SeeOther("/").discardingCookies(DiscardingCookie(cookieName)))
+  }
+
+  def handle(feature: String, choice: String) = Action { implicit request =>
+    feature match {
+      case "https" => HTTPS.opt(choice)
+      case "header" => Header.opt(choice)
+      case _ => NotFound
     }
   }
 
-  object HTTPS extends OptInFeature {
-    val CookieName = "https_opt_in"
-  }
-
-  object Header extends OptInFeature {
-    val CookieName = "new_header_opt_in"
-  }
+  object HTTPS extends OptInFeature("https_opt_in")
+  object Header extends OptInFeature("new_header_opt_in")
 }
