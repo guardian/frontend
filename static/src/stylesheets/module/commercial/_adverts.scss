@@ -179,7 +179,8 @@
         flex-grow: 0;
     }
 
-    .advert__image-container {
+    .advert--inverse > .advert__image-container {
+        flex-basis: calc(33.33% - #{$gs-gutter / 2});
         margin-right: 0;
     }
 

@@ -31,7 +31,7 @@
 }{
 
     <div class="adverts__row">
-        @itemLargeCard(card, omnitureId)
+        @itemLargeCard(card, omnitureId, optAdvertClassNames = Some(Seq("inverse")))
 
         @for(moreButton <- optCapiReadMoreText) {
             <a href="@clickMacro@optCapiReadMoreUrl" class="hide-on-mobile button button--primary button--large" data-link-name="merchandising-single-more">
