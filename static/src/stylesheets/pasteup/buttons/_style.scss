@@ -1,68 +1,13 @@
-/*doc
----
-title: Buttons
-name: buttons
-category: Common
----
+@import 'src';
 
-Button styles can be applied to any element. Typically you'll want to use either a `<button>` or an `<a>` element:
-
-```html_example
-<button class="button">Push me</button>
-<a href="#" class="button">Link to somewhere</a>
-```
-There are 3 standard levels - `primary`, `secondary` and `tertiary`:
-
-```html_example
-<a href="#" class="button button--primary">Link to somewhere</a>
-<a href="#" class="button button--secondary">Link to somewhere</a>
-<a href="#" class="button button--tertiary">Link to somewhere</a>
-```
-Also available in the associated tones:
-
-```html_example
-<a href="#" class="button button--tone-media">Link to somewhere</a>
-<a href="#" class="button button--tone-news">Link to somewhere</a>
-<a href="#" class="button button--tone-feature">Link to somewhere</a>
-<a href="#" class="button button--tone-comment">Link to somewhere</a>
-<a href="#" class="button button--tone-live">Link to somewhere</a>
-```
-And a variant of that tone:
-
-```html_example
-<a href="#" class="button button--tone-media-variant">Link to somewhere</a>
-<a href="#" class="button button--tone-news-variant">Link to somewhere</a>
-<a href="#" class="button button--tone-feature-variant">Link to somewhere</a>
-<a href="#" class="button button--tone-comment-variant">Link to somewhere</a>
-<a href="#" class="button button--tone-live-variant">Link to somewhere</a>
-```
-
-They come in different sizes:
-
-```html_example
-<a href="#" class="button button--xlarge">Link to somewhere</a>
-<a href="#" class="button button--large">Link to somewhere</a>
-<a href="#" class="button button--medium">Link to somewhere</a>
-<a href="#" class="button button--small">Link to somewhere</a>
-<a href="#" class="button button--xsmall">Link to somewhere</a>
-```
-
-Show more button:
-
-```html_example
-<button class="button button--medium button--show-more button--tertiary">
-    <i class="i i-plus-neutral1"></i>View more stories
-</button>
-```
-*/
-
-@import 'mixins';
-
-/*
-    If we want to draw a circle, output a pixel value instead,
-    as older versions of WebKit do not support % in border-radius
-*/
 .button {
+    @include fs-textSans(2);
+    @include button-height($base-size * 5);
+    @include button-colour(
+        guss-colour(news-main-2, $pasteup-palette),
+        #ffffff,
+        guss-colour(news-main-1, $pasteup-palette)
+    );
     display: inline-block;
     vertical-align: top;
     width: auto;
@@ -75,13 +20,6 @@ Show more button:
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    @include fs-textSans(2);
-    @include button-height($base-size * 5);
-    @include button-colour(
-        guss-colour(news-main-2, $pasteup-palette),
-        #ffffff,
-        guss-colour(news-main-1, $pasteup-palette)
-    );
 
     &:hover,
     &:focus,
@@ -98,20 +36,27 @@ Show more button:
         float: right;
     }
 }
+
 .button--primary {
     @include button-colour(
         guss-colour(guardian-brand, $pasteup-palette),
         #ffffff
     );
-    @include button-hover-colour(darken(guss-colour(guardian-brand, $pasteup-palette), 10%));
+    @include button-hover-colour(
+        darken(guss-colour(guardian-brand, $pasteup-palette), 10%)
+    );
 }
+
 .button--secondary {
     @include button-colour(
         guss-colour(neutral-7, $pasteup-palette),
         guss-colour(neutral-1, $pasteup-palette)
     );
-    @include button-hover-colour(darken(guss-colour(neutral-7, $pasteup-palette), 10%));
+    @include button-hover-colour(
+        darken(guss-colour(neutral-7, $pasteup-palette), 10%)
+    );
 }
+
 .button--tertiary {
     @include button-colour(
         transparent,
@@ -123,12 +68,15 @@ Show more button:
         darken(guss-colour(neutral-3, $pasteup-palette), 10%)
     );
 }
+
 .button--tone-media {
     @include button-colour(
         guss-colour(multimedia-support-4, $pasteup-palette),
         #ffffff
     );
-    @include button-hover-colour(guss-colour(neutral-2, $pasteup-palette));
+    @include button-hover-colour(
+        guss-colour(neutral-2, $pasteup-palette)
+    );
 }
 .button--tone-media-variant {
     @include button-colour(
@@ -146,7 +94,9 @@ Show more button:
         guss-colour(neutral-7, $pasteup-palette),
         guss-colour(news-main-1, $pasteup-palette)
     );
-    @include button-hover-colour(darken(guss-colour(neutral-7, $pasteup-palette), 10%));
+    @include button-hover-colour(
+        darken(guss-colour(neutral-7, $pasteup-palette), 10%)
+    );
 }
 .button--tone-news-variant {
     @include button-colour(
@@ -164,7 +114,9 @@ Show more button:
         guss-colour(neutral-7, $pasteup-palette),
         guss-colour(features-support-1, $pasteup-palette)
     );
-    @include button-hover-colour(darken(guss-colour(neutral-7, $pasteup-palette), 10%));
+    @include button-hover-colour(
+        darken(guss-colour(neutral-7, $pasteup-palette), 10%)
+    );
 }
 .button--tone-feature-variant {
     @include button-colour(
@@ -182,7 +134,9 @@ Show more button:
         guss-colour(neutral-7, $pasteup-palette),
         guss-colour(comment-main-1, $pasteup-palette)
     );
-    @include button-hover-colour(darken(guss-colour(neutral-7, $pasteup-palette), 10%));
+    @include button-hover-colour(
+        darken(guss-colour(neutral-7, $pasteup-palette), 10%)
+    );
 }
 .button--tone-comment-variant {
     @include button-colour(
@@ -200,7 +154,9 @@ Show more button:
         guss-colour(neutral-6, $pasteup-palette),
         guss-colour(neutral-1, $pasteup-palette)
     );
-    @include button-hover-colour(darken(guss-colour(neutral-6, $pasteup-palette), 10%));
+    @include button-hover-colour(
+        darken(guss-colour(neutral-6, $pasteup-palette), 10%)
+    );
 }
 .button--tone-live-variant {
     @include button-colour(
