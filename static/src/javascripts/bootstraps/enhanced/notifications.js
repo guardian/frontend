@@ -12,6 +12,7 @@ define([
     'common/views/svgs',
     'common/modules/user-prefs',
     'text!common/views/ui/notifications-subscribe-link.html',
+    'text!common/views/ui/notifications-permission-denied-message.html',
     'lodash/collections/some',
     'lodash/arrays/uniq',
     'lodash/arrays/without'
@@ -29,6 +30,7 @@ define([
     svgs,
     userPrefs,
     subscribeTemplate,
+    permissionsTemplate,
     some,
     uniq,
     without
@@ -43,10 +45,34 @@ define([
             return modules.getReg().then(function (reg) {return reg.pushManager.getSubscription();});
         },
 
+/*
+        checkPermissions: function() {
+            console.log("++++ Handle permission");
+            return modules.getReg().then(function(reg){
+                console.log("Got Reg");
+                return modules.getSub().then(function(sub){
+                    console.log("Got Sub");
+                    if(sub) {
+                        console.log("+++++++++++++++ Have sub");
+                        modules.configureSubscribeTemplate();
+                    } else {
+                        console.log("Have not a sub");
+                        reg.pushManager.subscribe({userVisibleOnly: true}).then(function(sub) {
+                            modules.configureSubscribeTemplate();
+                        });
+                    }
+                })
+
+            });
+        },
+*/
+
         configureSubscribeTemplate: function () {
+            console.log("++ Template");
             var subscribed = modules.checkSubscriptions(),
                 hasNoSubscriptions = modules.subscriptionsEmpty(),
-                handler = subscribed ? modules.unSubscribeHandler : modules.subscribeHandler,
+                handler = subscribed ? modules.unSubscribeHandler : modules.subscribeHandler;
+
                 src = template(subscribeTemplate, {
                     className: hasNoSubscriptions ? '' : 'notifications-subscribe-link--has-subscriptions',
                     text: subscribed ? 'Unfollow' : 'Follow story',
@@ -61,6 +87,26 @@ define([
             bean.one(document.body, 'click', '.js-notifications-subscribe-link', handler);
         },
 
+        displayPermissiosMessage: function() {
+            console.log("++ CLick");
+            var src = template(permissionsTemplate,{closeIcon : svgs('closeCentralIcon')});
+            fastdom.write(function () {
+                console.log("++ Write: " + src );
+                $('.js-notifications').prepend(src);
+                console.log("++ Written");
+            });
+        },
+
+        handleAttemptedBlockedSubscribe: function() {
+            Notification.requestPermission().then(function(result){
+                if(result === 'denied') {
+                    console.log("++ More Deniel");
+
+                }
+                bean.one(document.body, 'click', '.js-notifications-subscribe-link', handler);
+            })
+        },
+
         setSubscriptionStatus: function (subscribed) {
             var subscribeButton = $('.js-notifications-subscribe-link'),
                 subscribeLink = $('.notifications-subscribe-link--follow'),
@@ -73,8 +119,14 @@ define([
             bean.one(document.body, 'click', '.js-notifications-subscribe-link', handler);
         },
 
+        //TODO ffs dont commit this
         subscribeHandler: function () {
-            modules.subscribe().then(modules.follow);
+            modules.subscribe().then(modules.follow)
+                .catch( function(err){
+                    if (Notification.permission === 'denied') {
+                        console.log("+++ Gotcha Now!");
+                    }
+                });
         },
 
         unSubscribeHandler: function () {
@@ -82,14 +134,21 @@ define([
         },
 
         subscribe: function () {
+            console.log("+ Subscribe");
+
             return modules.getReg().then(function (reg) {
+                if(reg) {
+                    console.log("+ Reggie Reggie");
+                } else {
+                    console.log("+ No Reggie");
+                }
                 return modules.getSub().then(function (sub) {
                     if (sub) {
                         return sub;
                     } else {
                         return reg.pushManager.subscribe({userVisibleOnly: true});
                     }
-                });
+                })
             });
         },
 
