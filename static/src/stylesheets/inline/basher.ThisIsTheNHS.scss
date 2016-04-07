@@ -1,6 +1,6 @@
 @import '../_vars';
 @import '../_mixins';
-@import '../pasteup/buttons/_src';
+@import '../pasteup/buttons/src';
 
 $c-background: colour(news-support-3);
 $c-blue: darken(colour(news-support-2), 10%);
