@@ -40,7 +40,7 @@ define([
         },
         inline1: {
             sizeMappings: {
-                mobile:             '1,1|300,250|123,250',
+                mobile:             '1,1|300,250|88,70',
                 'mobile-landscape': '1,1|300,250',
                 tablet:             '1,1|300,250'
             }
