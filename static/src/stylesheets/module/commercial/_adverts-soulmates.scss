@@ -33,7 +33,7 @@
     }
 
     .search {
-        margin: $gs-baseline 0;
+        margin: 0 0 $gs-baseline / 2;
 
         @include mq(tablet) {
             flex-basis: gs-span(3);

@@ -19,7 +19,7 @@ trait ABTestSwitches {
     "ab-next-in-series",
     "Show next in series",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 5),
+    sellByDate = new LocalDate(2016, 4, 12),
     exposeClientSide = true
   )
 
@@ -38,15 +38,6 @@ trait ABTestSwitches {
     "Live blog chrome notifications",
     safeState = Off,
     sellByDate = new LocalDate(2016, 5, 2),
-    exposeClientSide = true
-  )
-
-  val ABBolivianWrestlingAutoplay = Switch(
-    "A/B Tests",
-    "ab-bolivian-wrestling-autoplay",
-    "Autoplay Bolivian Wrestling",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 12),
     exposeClientSide = true
   )
 

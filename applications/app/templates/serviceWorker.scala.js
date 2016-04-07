@@ -165,7 +165,7 @@ self.addEventListener('push', function(event) {
                         If we loop displaying all of them the promise doesn't resolved and a 'website being updated in the background' message is displayed
                         */
                        var message = json.messages.slice(-1)[0];
-                       var data = {topic: message.topic};
+                       var data = {topic: message.topic, blockId: message.blockId};
                        return self.registration.showNotification(message.title, {
                            body: message.body,
                            icon: '@{JavaScript(Static("images/favicons/114x114.png").path)}',
@@ -182,7 +182,11 @@ self.addEventListener('push', function(event) {
 self.addEventListener('notificationclick', function(event){
 
     event.notification.close();
-    var url = '@{JavaScript(Configuration.site.host)}/' + event.notification.data.topic + "?CMP=not_b-webalert";
+    var url = '@{JavaScript(Configuration.site.host)}/'
+        + event.notification.data.topic
+        + "?page=with:block-" + event.notification.data.blockId
+        +  "&CMP=not_b-webalert"
+        + "#block-" + event.notification.data.blockId;
 
     event.waitUntil(
         clients.matchAll({

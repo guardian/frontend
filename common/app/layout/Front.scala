@@ -256,7 +256,12 @@ object FaciaContainer {
       case MostPopular => ContainerCommercialOptions.mostPopular(omitMPU)
       case Commercial(SingleCampaign(_)) => ContainerCommercialOptions.fromCollection(collectionEssentials)
       case Commercial(MultiCampaign(_)) => ContainerCommercialOptions.empty
-      case _ => ContainerCommercialOptions.fromConfig(config.config)
+      case _ =>
+        if (Switches.cardsDecidePaidContainerBranding.isSwitchedOn) {
+          ContainerCommercialOptions.empty
+        } else {
+          ContainerCommercialOptions.fromConfig(config.config)
+        }
     },
     config.config.description.map(DescriptionMetaHeader),
     None,

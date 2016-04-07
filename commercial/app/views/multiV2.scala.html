@@ -1,5 +1,7 @@
 @(components: Seq[Html], omnitureId: Option[String])(implicit request: RequestHeader)
 
+@import views.html.commercial.containerWrapper
+
 @containerWrapper(Seq("legacy", "blended"), omnitureId.map(id => s"creative | blended component | ${id}")){
 
 }{

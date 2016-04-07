@@ -405,10 +405,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val pressRateInSeconds = configuration.getIntegerProperty("admin.r2.page.press.rate.seconds").getOrElse(60)
     lazy val pressQueueWaitTimeInSeconds = configuration.getIntegerProperty("admin.r2.press.queue.wait.seconds").getOrElse(10)
     lazy val pressQueueMaxMessages = configuration.getIntegerProperty("admin.r2.press.queue.max.messages").getOrElse(10)
-    object header {
-      val name = configuration.getStringProperty("r2.presser.header.name")
-      val value = configuration.getStringProperty("r2.presser.header.value")
-    }
+    lazy val fallbackCachebustId = configuration.getStringProperty("admin.r2.press.fallback.cachebust.id").getOrElse("")
   }
 
   object memcached {
