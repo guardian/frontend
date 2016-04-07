@@ -48,11 +48,14 @@ GET        /preferences                                                         
 GET        /crosswords/optin                                                    controllers.CrosswordPreferencesController.crosswordsOptIn
 GET        /crosswords/optout                                                   controllers.CrosswordPreferencesController.crosswordsOptOut
 
-GET        /https/optin                                                         controllers.OptInController.HTTPS.optIn()
-GET        /https/optout                                                        controllers.OptInController.HTTPS.optOut()
+# opt-in/out routes: this format is deprecated in favour of /opt/<in|out>/<feature>
+# don't add any new ones!
+GET        /https/optin                                                         controllers.OptInController.handle(feature = "https", choice = "in")
+GET        /https/optout                                                        controllers.OptInController.handle(feature = "https", choice = "out")
+GET        /new-header/optin                                                    controllers.OptInController.handle(feature = "header", choice = "in")
+GET        /new-header/optout                                                   controllers.OptInController.handle(feature = "header", choice = "out")
 
-GET        /new-header/optin                                                    controllers.OptInController.Header.optIn()
-GET        /new-header/optout                                                   controllers.OptInController.Header.optOut()
+GET        /opt/$choice<in|out>/:feature                                        controllers.OptInController.handle(feature, choice)
 
 # Web App paths
 GET        /offline-page.json                                                   controllers.WebAppController.offlinePage()
