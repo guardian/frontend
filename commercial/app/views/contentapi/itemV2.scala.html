@@ -1,4 +1,9 @@
-@(item: model.ContentType,
+@import common.commercial.CardContent
+@import common.{Edition, LinkTo}
+@import views.html.commercial.cards.itemLargeCard
+@import views.html.commercial.containerWrapper
+@import views.html.fragments.inlineSvg
+@(card: CardContent,
   optLogo: Option[String],
   optCapiTitle: Option[String],
   optCapiLink: Option[String],
@@ -9,14 +14,10 @@
   optSponsorType: Option[String],
   optSponsorLabel: Option[String],
   clickMacro: Option[String],
-  omnitureId: Option[String])(implicit request: RequestHeader)
-
-@import views.html.commercial.containerWrapper
-@import views.html.contentapi.itemLargeCard
-@import views.html.fragments.inlineSvg
+  omnitureId: String)(implicit request: RequestHeader)
 
 @containerWrapper(Seq("legacy", "legacy-single", "capi", "tone-capi"),
-                  omnitureId.map(id => s"merchandising | capi | single ${id}"),
+                  Some(s"merchandising | capi | single $omnitureId"),
                   optBadge = Some(badge),
                   optKicker = Some(fragments.commercial.paidForMeta()),
                   optStamp = Some(stamp)){
@@ -30,7 +31,7 @@
 }{
 
     <div class="adverts__row">
-        @itemLargeCard(item, clickMacro)
+        @itemLargeCard(card, omnitureId)
 
         @for(moreButton <- optCapiReadMoreText) {
             <a href="@clickMacro@optCapiReadMoreUrl" class="hide-on-mobile button button--primary button--large" data-link-name="merchandising-single-more">
