@@ -46,6 +46,22 @@
         border-color: colour(neutral-4);
         color: colour(neutral-1);
     }
+
+    .button {
+        @include button-colour(
+            guss-colour(paid-article-brand, $frontend-palette),
+            null
+        );
+
+        &:hover,
+        &:focus,
+        &:active {
+            @include button-colour(
+                darken(guss-colour(paid-article-brand, $frontend-palette), 5%),
+                null
+            );
+        }
+    }
 }
 
 .advert--capi {
@@ -80,6 +96,11 @@
 
     .adverts--legacy-single & {
         background: none;
+        border-top: 0;
+
+        &::after {
+            background-color: guss-colour(paid-article-icon, $frontend-palette);
+        }
 
         .advert__image-container {
             border-top: 0;
