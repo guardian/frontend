@@ -52,7 +52,7 @@ object SeriesController extends Controller with Logging with Paging with Executi
       .showFields("all")
     ).map { response =>
         response.tag.flatMap { tag =>
-          val trails = response.results filterNot (isCurrentStory(_)) map (RelatedContentItem(_))
+          val trails = response.results.getOrElse(Nil) filterNot (isCurrentStory(_)) map (RelatedContentItem(_))
           if (!trails.isEmpty) {
             Some(Series(seriesId, Tag.make(tag,None), RelatedContent(trails)))
           } else { None }

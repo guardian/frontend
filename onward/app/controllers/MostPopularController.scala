@@ -106,7 +106,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
       .showMostViewed(true)
     ).map{response =>
       val heading = response.section.map(s => "in " + s.webTitle.toLowerCase).getOrElse("across the guardian")
-          val popular = response.mostViewed map { RelatedContentItem(_) } take 10
+          val popular = response.mostViewed.getOrElse(Nil) map { RelatedContentItem(_) } take 10
           if (popular.isEmpty) None else Some(MostPopular(heading, path, popular.map(_.faciaContent)))
     }
   }

@@ -73,7 +73,7 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
       .showTags("all")
       .showFields("all")
     ).map { response =>
-      response.results filter { content => !isCurrentStory(content) } map { result =>
+      response.results.getOrElse(Nil) filter { content => !isCurrentStory(content) } map { result =>
         Content(result)
       } collect {
         case v: Video => v

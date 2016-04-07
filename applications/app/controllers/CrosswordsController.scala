@@ -1,7 +1,6 @@
 package controllers
 
-import com.gu.contentapi.client.model.ItemResponse
-import com.gu.contentapi.client.model.v1.{Content => ApiContent, Crossword, Section => ApiSection}
+import com.gu.contentapi.client.model.v1.{Content => ApiContent, Crossword, Section => ApiSection, ItemResponse}
 import common.{Edition, ExecutionContexts, Logging}
 import conf.{LiveContentApi, Static}
 import crosswords.{AccessibleCrosswordRows, CrosswordPage, CrosswordSearchPage, CrosswordSvg}
@@ -121,7 +120,7 @@ object CrosswordSearchController extends CrosswordController {
         }
 
         LiveContentApi.getResponse(maybeSetter.showFields("all")).map { response =>
-          response.results match {
+          response.results.getOrElse(Nil) match {
             case Nil => noResults
 
             case results =>
