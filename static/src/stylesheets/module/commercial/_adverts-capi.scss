@@ -18,7 +18,7 @@
     }
 
     .adverts__row > * + *::before,
-    &.adverts--legacy-single .adverts__row > .advert::after,
+    .adverts__row--legacy > .advert::after,
     .adverts__row--wrap::before,
     .adverts__row--wrap::after {
         background: guss-colour(paid-article-subheader-bg, $frontend-palette);
