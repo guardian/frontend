@@ -2,7 +2,11 @@
 
 @import views.html.commercial.containerWrapper
 
-@containerWrapper(Seq("legacy", "blended"), omnitureId.map(id => s"creative | blended component | ${id}")){
+@containerWrapper(Seq("legacy", "blended", "tone-brand"),
+                  omnitureId.map(id => s"creative | blended component | ${id}"),
+                  optBlurb = Some(Html("from across the guardian"))){
+
+    @fragments.inlineSvg("marque-54", "icon")
 
 }{
 

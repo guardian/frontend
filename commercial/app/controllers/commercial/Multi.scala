@@ -36,13 +36,13 @@ object Multi
                 JobsAgent.specificJobs(Seq(jobId)).headOption orElse {
                   JobsAgent.jobsTargetedAt(segment).headOption
                 } map {
-                  views.html.jobs.jobCard(_, clickMacro)
+                  views.html.jobs.jobsBlended(_, clickMacro)
                 }
               }
             case ("jobs", _) =>
               Future.successful {
                 JobsAgent.jobsTargetedAt(segment).headOption map {
-                  views.html.jobs.jobCard(_, clickMacro)
+                  views.html.jobs.jobsBlended(_, clickMacro)
                 }
               }
             case ("books", isbn) if isbn.nonEmpty =>
@@ -50,13 +50,13 @@ object Multi
                 books.headOption orElse {
                   BestsellersAgent.bestsellersTargetedAt(segment).headOption
                 } map {
-                  views.html.books.bookCard(_, clickMacro)
+                  views.html.books.booksBlended(_, clickMacro)
                 }
               }
             case ("books", _) =>
               Future.successful {
                 BestsellersAgent.bestsellersTargetedAt(segment).headOption map {
-                  views.html.books.bookCard(_, clickMacro)
+                  views.html.books.booksBlended(_, clickMacro)
                 }
               }
             case ("travel", travelId) if travelId.nonEmpty =>
@@ -64,13 +64,13 @@ object Multi
                 TravelOffersAgent.specificTravelOffers(Seq(travelId)).headOption orElse {
                   TravelOffersAgent.offersTargetedAt(segment).headOption
                 } map {
-                  views.html.travel.travelCard(_, clickMacro)
+                  views.html.travel.travelBlended(_, clickMacro)
                 }
               }
             case ("travel", _) =>
               Future.successful {
                 TravelOffersAgent.offersTargetedAt(segment).headOption map {
-                  views.html.travel.travelCard(_, clickMacro)
+                  views.html.travel.travelBlended(_, clickMacro)
                 }
               }
             case ("masterclasses", eventBriteId) if eventBriteId.nonEmpty =>
@@ -78,13 +78,13 @@ object Multi
                 MasterclassAgent.specificMasterclasses(Seq(eventBriteId)).headOption orElse {
                   MasterclassAgent.masterclassesTargetedAt(segment).headOption
                 } map {
-                  views.html.masterclasses.masterclassCard(_, clickMacro)
+                  views.html.masterclasses.masterclassesBlended(_, clickMacro)
                 }
               }
             case ("masterclasses", _) =>
               Future.successful {
                 MasterclassAgent.masterclassesTargetedAt(segment).headOption map {
-                  views.html.masterclasses.masterclassCard(_, clickMacro)
+                  views.html.masterclasses.masterclassesBlended(_, clickMacro)
                 }
               }
             case ("soulmates", _) =>
@@ -93,7 +93,7 @@ object Multi
                   woman <- SoulmatesAgent.womenAgent.sample().headOption
                   man <- SoulmatesAgent.menAgent.sample().headOption
                 } yield {
-                  views.html.soulmates.soulmateCard(woman, clickMacro) + views.html.soulmates.soulmateCard(man, clickMacro)
+                  views.html.soulmates.soulmatesBlended(Random.shuffle(Seq(woman, man)), clickMacro)
                 }
               }
             case _ => Future.successful(None)
@@ -168,6 +168,8 @@ object Multi
           case _ => Future.successful(None)
         }
     }
+
+    println(eventualContent)
 
     Future.sequence(eventualContent) map { contents =>
       val content = contents.flatten

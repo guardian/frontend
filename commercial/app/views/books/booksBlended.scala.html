@@ -1,0 +1,14 @@
+@(book: model.commercial.books.Book, clickMacro: Option[String])
+
+<div class="advert__blended-container">
+    <div class="advert__blended-container__title">
+        <a href="@{clickMacro}http://www.guardianbookshop.co.uk/"
+            data-link-name="merchandising-hybrid-book-v2_0_2014-10-14-visit-shop">
+            @fragments.inlineSvg("logo-bookshop-26", "logo--tone-books")
+            <span class="u-h">Bookshop</span>
+        </a>
+    </div>
+    <div class="advert__blended-container__body">
+        @bookCard(book, clickMacro)
+    </div>
+</div>
