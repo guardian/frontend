@@ -6,7 +6,6 @@ import model.commercial.jobs.Industries
 import model.commercial.events.MasterclassTagsAgent
 import model.commercial.money.BestBuysAgent
 import model.commercial.travel.Countries
-import model.diagnostics.CloudWatch
 import play.api.{Application => PlayApp, GlobalSettings}
 
 import scala.concurrent.duration._
@@ -25,10 +24,10 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
   private def recordEvent(feedName: String, eventName: String, maybeDuration: Option[Duration]): Unit = {
     val key = s"${feedName.toLowerCase.replaceAll("[\\s/]+", "-")}-$eventName-time"
     val duration = maybeDuration map (_.toMillis.toDouble) getOrElse -1d
-    CloudWatch.put("Commercial", Map(s"$key" -> duration))
+    CommercialMetrics.metrics.put(Map(s"$key" -> duration))
   }
 
-  override def onStart(app: PlayApp): Unit = {
+  override def onStart(application: PlayApp): Unit = {
 
     def randomStartSchedule(minsLater: Int = 0) = s"0 ${Random.nextInt(15) + minsLater}/15 * * * ?"
 
@@ -83,7 +82,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       }
     }
 
-    super.onStart(app)
+    super.onStart(application)
 
     def mkJobName(feedName: String, task: String): String = s"${feedName.replaceAll("/", "-")}-$task-job"
 
@@ -103,6 +102,11 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       Jobs.scheduleEveryNMinutes(jobName, 15) {
         parseFeed(parser)
       }
+    }
+
+    Jobs.deschedule("cloudwatchUpload")
+    Jobs.scheduleEveryNMinutes("cloudwatchUpload", 15) {
+      CommercialMetrics.metrics.upload()
     }
 
     refreshJobs.zipWithIndex foreach {
@@ -145,6 +149,8 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     for (parser <- FeedParser.all) {
       Jobs.deschedule(s"${parser.feedMetaData.name}ParseJob")
     }
+
+    Jobs.deschedule("cloudwatchUpload")
 
     super.onStop(app)
   }

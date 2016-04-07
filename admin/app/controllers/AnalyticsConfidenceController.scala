@@ -10,11 +10,9 @@ object AnalyticsConfidenceController extends Controller with Logging with AuthLo
     for {
       omniture <- CloudWatch.omnitureConfidence
       ophan <- CloudWatch.ophanConfidence
-      ratio <- CloudWatch.ratioConfidence
     } yield {
       val omnitureAverage = omniture.dataset.flatMap(_.values.headOption).sum / omniture.dataset.length
       val ophanAverage = ophan.dataset.flatMap(_.values.headOption).sum / ophan.dataset.length
-      val ratioAverage = ratio.dataset.flatMap(_.values.headOption).sum / ratio.dataset.length
 
       val omnitureGraph = new AwsLineChart("Omniture confidence", Seq("Time", "%", "avg."), ChartFormat(Colour.`tone-comment-2`, Colour.success)) {
         override lazy val dataset = omniture.dataset.map{ point =>
@@ -28,13 +26,7 @@ object AnalyticsConfidenceController extends Controller with Logging with AuthLo
         }
       }
 
-      val ratioGraph = new AwsLineChart("Omniture to Ophan confidence", Seq("Time", "%", "avg."), ChartFormat(Colour.`tone-comment-3`, Colour.success)) {
-        override lazy val dataset = ratio.dataset.map{ point =>
-          point.copy(values =  point.values :+ ratioAverage)
-        }
-      }
-
-      Ok(views.html.lineCharts("PROD", Seq(omnitureGraph, ophanGraph, ratioGraph)))
+      Ok(views.html.lineCharts("PROD", Seq(omnitureGraph, ophanGraph)))
     }
   }
 }

@@ -24,24 +24,6 @@ trait MonitoringSwitches {
     exposeClientSide = false
   )
 
-  val DiagnosticsLogging = Switch(
-    "Monitoring",
-    "enable-diagnostics-logging",
-    "If this switch is on, then js error reports and requests sent to the Diagnostics servers will be logged.",
-    safeState = On,
-    never,
-    exposeClientSide = true
-  )
-
-  val MetricsSwitch = Switch(
-    "Monitoring",
-    "enable-metrics-non-prod",
-    "If this switch is on, then metrics will be pushed to cloudwatch on DEV and CODE",
-    safeState = Off,
-    never,
-    exposeClientSide = false
-  )
-
   val ScrollDepthSwitch = Switch(
     "Monitoring",
     "scroll-depth",

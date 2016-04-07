@@ -1,8 +1,7 @@
 package model.commercial.books
 
 import akka.pattern.CircuitBreaker
-import common.ExecutionContexts.memcachedExecutionContext
-import common.{ExecutionContexts, Logging}
+import common.Logging
 import conf.Configuration
 import conf.switches.Switches.BookLookupSwitch
 import model.commercial.{FeedParseException, FeedReadException, FeedReader, FeedRequest}
@@ -17,7 +16,9 @@ import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 
-object BookFinder extends ExecutionContexts with Logging {
+object BookFinder extends Logging {
+
+  private implicit lazy val executionContext = Akka.system.dispatchers.lookup("akka.actor.memcached")
 
   def findByIsbn(isbn: String,
                  cache: BookDataCache = MemcachedBookDataCache,
@@ -157,7 +158,7 @@ trait BookDataCache {
 
 object MemcachedBookDataCache extends BookDataCache with Logging with MemcachedCodecs {
 
-  private implicit lazy val executionContext = memcachedExecutionContext
+  private implicit lazy val executionContext = Akka.system.dispatchers.lookup("akka.actor.memcached")
   private implicit val stringCodec = StringBinaryCodec
 
   private lazy val maybeCache: Option[Memcached] = {
@@ -167,7 +168,7 @@ object MemcachedBookDataCache extends BookDataCache with Logging with MemcachedC
         addresses = host,
         keysPrefix = Some("model.commercial.book")
       )
-      Memcached(config, memcachedExecutionContext)
+      Memcached(config, executionContext)
     }
   }
 

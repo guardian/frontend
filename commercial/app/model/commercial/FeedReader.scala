@@ -2,7 +2,6 @@ package model.commercial
 
 import com.ning.http.client.{Response => AHCResponse}
 import common.Logging
-import model.diagnostics.CloudWatch
 import play.api.Play.current
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.{WS, WSSignatureCalculator}
@@ -25,7 +24,7 @@ object FeedReader extends Logging {
       def recordLoad(duration: Long): Unit = {
         val feedName = request.feedName.toLowerCase.replaceAll("\\s+", "-")
         val key = s"$feedName-feed-load-time"
-        CloudWatch.put("Commercial", Map(s"$key" -> duration.toDouble))
+        CommercialMetrics.metrics.put(Map(s"$key" -> duration.toDouble))
       }
 
       val start = System.currentTimeMillis

@@ -41,6 +41,7 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
         element
           .removeClass("gu-video")
           .addClass("js-gu-media--enhance gu-media gu-media--video")
+          .attr("preload", "none")
           .attr("data-canonical-url", canonicalUrl)
           .wrap("<div class=\"gu-media-wrapper gu-media-wrapper--video u-responsive-ratio u-responsive-ratio--hd\"></div>")
 
