@@ -8,7 +8,7 @@
     <div class="adverts__column hide-until-tablet">
         @containerModel.content.fixed.initialCards.drop(2).take(3).map(card => views.html.commercial.cards.itemLargeCard(
             card,
-            optAdvertClassNames = Some(Seq("large--inverse", "large--thumbnail")),
+            optAdvertClassNames = Some(Seq("inverse", "thumbnail")),
             omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card)
         ))
     </div>
