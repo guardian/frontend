@@ -181,7 +181,7 @@ object ContentApiClient extends ApiQueryDefaults {
     httpTimeoutMetric = ContentApiMetrics.HttpTimeoutCountMetric,
     targetUrl = contentApi.contentApiHost,
     apiKey = contentApi.key.getOrElse(""),
-    useThrift = false)
+    useThrift = true)
 
   private def getClient: CircuitBreakingContentApiClient = {
     if (ContentApiUseThrift.isSwitchedOn) thriftClient else jsonClient
