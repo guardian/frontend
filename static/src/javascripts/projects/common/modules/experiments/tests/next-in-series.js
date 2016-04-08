@@ -22,9 +22,21 @@ define([
     var allSeries = [
         {
             id: 'experience',
-            pageId: 'lifeandstyle/2016/mar/25/i-paid-to-have-my-daughter-kidnapped-experience',
-            title: 'I was attacked by a seal',
-            trail: '‘It rolled on top of me, pushing me under water. I was trapped under a mountain of blubber and muscle…’'
+            pageId: 'lifeandstyle/2016/apr/15/experience-i-watched-my-dad-die-then-come-back-to-life',
+            title: 'I watched my dad die - then come back to life',
+            trail: '‘I ran to him and held his hand; it was tense but there was no pulse’'
+        },
+        {
+            id: 'alanis',
+            pageId: 'society/2016/apr/15/ask-alanis-morissette-how-can-stop-drinking-so-much',
+            title: 'Dear Alanis, how can I stop drinking so much?',
+            trail: '‘I started drinking at university, and 25 years later, I still drink daily and often too much…’'
+        },
+        {
+            id: 'oliver-burkeman',
+            pageId: 'lifeandstyle/2016/apr/16/how-to-deal-with-email-overload',
+            title: 'How to deal with email overload',
+            trail: 'Trying to stay on top of email is a losing battle'
         }
     ];
 
