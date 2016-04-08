@@ -69,7 +69,7 @@
         }
     }
 
-    .advert--large--inverse {
+    .advert--inverse {
         flex-direction: row-reverse;
 
         > .advert__text {
@@ -82,7 +82,7 @@
         }
     }
 
-    .advert--large--thumbnail {
+    .advert--thumbnail {
         .advert__image-container {
             $line-height: 20px;
             $image-height: $line-height * 4 + $gs-baseline;
