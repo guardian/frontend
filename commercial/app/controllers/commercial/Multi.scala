@@ -1,5 +1,6 @@
 package controllers.commercial
 
+import conf.switches.Switches
 import common.ExecutionContexts
 import model.commercial.books.BestsellersAgent
 import model.commercial.jobs.JobsAgent
@@ -8,7 +9,6 @@ import model.commercial.soulmates.SoulmatesAgent
 import model.commercial.travel.TravelOffersAgent
 import model.{Cached, NoCache}
 import play.api.mvc._
-
 import scala.concurrent.Future
 import scala.util.Random
 
@@ -29,7 +29,7 @@ object Multi
 
       val omnitureId = request.getParameter("omnitureId")
 
-      var eventualContent = if(conf.switches.Switches.v2BlendedTemplate.isSwitchedOn) {
+      var eventualContent = if(Switches.v2BlendedTemplate.isSwitchedOn) {
           componentsAndSpecificIds map {
             case ("jobs", jobId) if jobId.nonEmpty =>
               Future.successful {
@@ -173,7 +173,7 @@ object Multi
       val content = contents.flatten
       if (requestedContent.nonEmpty && content.size == requestedContent.size) {
         Cached(componentMaxAge) {
-          if(conf.switches.Switches.v2BlendedTemplate.isSwitchedOn) {
+          if(Switches.v2BlendedTemplate.isSwitchedOn) {
             jsonFormat.result(views.html.multiV2(content, omnitureId))
           } else {
             jsonFormat.result(views.html.multi(content, omnitureId))
