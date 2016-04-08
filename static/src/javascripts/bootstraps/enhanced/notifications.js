@@ -71,8 +71,7 @@ define([
             console.log("++ Template");
             var subscribed = modules.checkSubscriptions(),
                 hasNoSubscriptions = modules.subscriptionsEmpty(),
-                handler = subscribed ? modules.unSubscribeHandler : modules.subscribeHandler;
-
+                handler = subscribed ? modules.unSubscribeHandler : modules.subscribeHandler,
                 src = template(subscribeTemplate, {
                     className: hasNoSubscriptions ? '' : 'notifications-subscribe-link--has-subscriptions',
                     text: subscribed ? 'Unfollow' : 'Follow story',
@@ -92,7 +91,13 @@ define([
             fastdom.write(function () {
                 console.log("++ Write: " + src );
                 $('.js-notifications').prepend(src);
-                console.log("++ Written");
+                console.log("++ Written it");
+                //bean.one(document.body, 'click', '.js-notifications-subscribe-link', modules.subscribeHandler );
+                bean.one(document.body, 'click', '.js-notifications__item__close', function(){
+                    console.log("++ Close permission notification");
+                    //$('.js-notifications-permission-denied').remove ();
+                });
+                console.log("++ Handled");
             });
         },
 
@@ -124,6 +129,8 @@ define([
                 .catch( function(err){
                     if (Notification.permission === 'denied') {
                         console.log("+++ Gotcha Now!");
+                        bean.one(document.body, 'click', '.js-notifications-subscribe-link', modules.subscribeHandler1);
+                        modules.displayPermissiosMessage();
                     }
                 });
         },
