@@ -105,14 +105,14 @@ object SystemMetrics extends implicits.Numbers {
 }
 
 object ContentApiMetrics {
-  val ElasticHttpTimingMetric = TimingMetric(
-    "elastic-content-api-call-latency",
-    "Elastic outgoing requests to content api"
+  val HttpLatencyTimingMetric = TimingMetric(
+    "content-api-call-latency",
+    "Content api call latency"
   )
 
-  val ElasticHttpTimeoutCountMetric = CountMetric(
-    "elastic-content-api-timeouts",
-    "Elastic Content api calls that timeout"
+  val HttpTimeoutCountMetric = CountMetric(
+    "content-api-timeouts",
+    "Content api calls that timeout"
   )
 
   val ContentApiErrorMetric = CountMetric(
