@@ -21,20 +21,24 @@ This is more tricky especially if you are making a breaking change (i.e. new fac
 
 ### Adding a new field
 If you just ship new facia without pressing things will break until the presser kicks in.
+
 #### Prepare the ground
 * choose a quiet time of day, and this could take an hour
 * if it's on, turn off auto deploy of preview (and CODE facia if you like)
 * goo deploy block
 * let the team know what you're doing
 * merge to master
+
 #### CODE: get the field into the pressed json
 * deploy facia-press, turn on the facia-press-on-demand switch
 * log into a facia presser and post to http://localhost:9000/press/draft/all (takes a couple of mins) to repress all the draft fronts (curl -v -X POST -H 'Content-Length: 0' http://localhost:9000/press/draft/all)
 * go to frontend admin /press and click press all, then wait a while for all the live fronts to press (you can monitor the SQS queue size to know when it's done - it may be worth scaling the group to 2 while it's happening)
 * check that code facia still works (e.g. /uk) (if you want to debug, go to a facia press load balancer: http://<frontend-faciapre-elb>/pressed/live/uk/money)
+* 
 #### CODE: now that the field is there, both the new and old facia should work
 * once you're happy, deploy facia and check things still work (/uk etc)
 * deploy everything else in dotcom
+
 #### PROD: get the field into the pressed json
 * deploy facia-press, turn on the facia-press-on-demand switch
 * log into a facia presser and post to http://localhost:9000/press/draft/all (takes a couple of mins) to repress all the draft fronts (curl -v -X POST -H 'Content-Length: 0' http://localhost:9000/press/draft/all)
@@ -43,6 +47,7 @@ If you just ship new facia without pressing things will break until the presser 
 * deploy training/preview and check they still work
 * deploy facia etc and check they still work
 * deploy everything else and check they still work
+
 #### important cleanup
 * turn off the facia-press-on-demand switches again
 * turn on auto deploys again
