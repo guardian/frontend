@@ -2,7 +2,7 @@ package contentapi
 
 import akka.actor.ActorSystem
 import com.gu.contentapi.client.ContentApiClientLogic
-import com.gu.contentapi.client.model.ErrorResponse
+import com.gu.contentapi.client.model.v1.ErrorResponse
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import conf.switches.Switches
 import scala.concurrent.{ExecutionContext, Future}
