@@ -76,6 +76,7 @@
     "gulp-sourcemaps": "^1.5.2",
     "gulp-util": "^3.0.6",
     "gulp-watch": "^4.3.4",
+    "karma-teamcity-reporter": "^0.2.2",
     "postcss-pxtorem": "^2.3.0",
     "require-dir": "^0.3.0"
   },
