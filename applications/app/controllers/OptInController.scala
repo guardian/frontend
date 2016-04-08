@@ -24,6 +24,6 @@ object OptInController extends Controller {
     }
   }
 
-  object HTTPS extends OptInFeature("https_opt_in")
-  object Header extends OptInFeature("new_header_opt_in")
+  val HTTPS = OptInFeature("https_opt_in")
+  val Header = OptInFeature("new_header_opt_in")
 }
