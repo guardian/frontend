@@ -76,7 +76,6 @@ object MetaDataFormat {
     contentType: String,
     hasHeader: Boolean,
     schemaType: Option[String],
-    cacheSeconds: Int,
     cacheTime: CacheTime,
     openGraphImages: Seq[String],
     membershipAccess: Option[String],
@@ -150,7 +149,6 @@ object MetaDataFormat {
           meta.contentType,
           meta.hasHeader,
           meta.schemaType,
-          meta.cacheTime.cacheSeconds,//TODO remove after deploy
           meta.cacheTime,
           meta.openGraphImages,
           meta.membershipAccess,
