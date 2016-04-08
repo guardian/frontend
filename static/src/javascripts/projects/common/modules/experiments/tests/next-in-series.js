@@ -1,9 +1,13 @@
 define([
     'common/utils/$',
-    'lodash/collections/find'
+    'lodash/collections/find',
+    'lodash/collections/pluck',
+    'lodash/collections/some'
 ], function (
     $,
-    find
+    find,
+    pluck,
+    some
 ) {
     var path = '/surveys/404-test/next-in-series/';
     var render = function (state) {
@@ -63,6 +67,18 @@ define([
                     if (series) {
                         var el = $.create(render(series));
                         el.insertAfter($articleBody);
+                    }
+                },
+
+                success: function(complete) {
+                    var onSurvey = window.location.href.match(path.replace(/\/$/, '')).length > 0;
+
+                    var referredFromSeries = some(pluck(allSeries, 'pageId'), function (id) {
+                        return window.document.referrer.match(id).length > 0;
+                    });
+
+                    if (onSurvey && referredFromSeries) {
+                        complete();
                     }
                 }
             }

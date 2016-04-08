@@ -15,7 +15,7 @@ define([
 ) {
     function getSurveyLink(adblockUsed) {
         var ophanId = '&ophanId=' + config.ophan.pageViewId;
-        return adblockUsed ? 'https://surveys.theguardian.com/R.aspx?a=684&as=AC5tF8XE6G&t=1' + ophanId : 'https://surveys.theguardian.com/R.aspx?a=685&as=Aj5jo96J9j&t=1' + ophanId;
+        return adblockUsed ? 'https://surveys.theguardian.com/R.aspx?a=684&as=AC5tF8XE6G' + ophanId : 'https://surveys.theguardian.com/R.aspx?a=685&as=Aj5jo96J9j' + ophanId;
     }
 
     return function () {
@@ -32,7 +32,7 @@ define([
         this.idealOutcome = 'We want to understand what causes people to block ads on theguardian.com and what would make them consider unblocking.';
 
         this.canRun = function () {
-            return true;
+            return detect.getUserAgent.browser !== 'Firefox';
         };
 
         this.variants = [{

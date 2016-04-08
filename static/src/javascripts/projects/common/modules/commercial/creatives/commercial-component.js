@@ -54,7 +54,12 @@ define([
 
     function bookUrlBuilder(url) {
         return function (params) {
-            return buildComponentUrl(url, merge(params, { t: config.page.isbn || params.isbn }));
+            var isbn = config.page.isbn || params.isbn;
+            if (isbn) {
+                return buildComponentUrl(url, merge(params, { t: config.page.isbn || params.isbn }));
+            } else {
+                return false;
+            }
         };
     }
 
@@ -155,12 +160,14 @@ define([
     }
 
     CommercialComponent.prototype.create = function () {
-        lazyload({
-            url: this.url,
-            container: this.adSlot,
-            success: onSuccess.bind(this),
-            error: onError.bind(this)
-        });
+        if (this.url) {
+            lazyload({
+                url: this.url,
+                container: this.adSlot,
+                success: onSuccess.bind(this),
+                error: onError.bind(this)
+            });
+        }
 
         return this;
 

@@ -1,19 +1,21 @@
-@(items: Seq[model.ContentType],
+@import common.commercial.CardContent
+@import common.{Edition, LinkTo}
+@import views.html.commercial.cards.itemCard
+@import views.html.commercial.containerWrapper
+@import views.html.fragments.inlineSvg
+@(cards: Seq[CardContent],
   optLogo: Option[String],
   optCapiTitle: Option[String],
   optCapiLink: Option[String],
   optCapiAbout: Option[String],
   clickMacro: Option[String],
-  omnitureId: Option[String],
+  omnitureId: String,
   optCapiAdFeature: Option[String],
   optSponsorType: Option[String],
   optSponsorLabel: Option[String])(implicit request: RequestHeader)
 
-@import views.html.commercial.containerWrapper
-@import views.html.fragments.inlineSvg
-
 @containerWrapper(Seq("legacy", "capi", "tone-capi"),
-                  omnitureId.map(id => s"merchandising | capi | multiple ${id}"),
+                  Some(s"merchandising | capi | multiple $omnitureId"),
                   optBadge = Some(badge),
                   optKicker = Some(fragments.commercial.paidForMeta()),
                   optStamp = Some(stamp)){
@@ -27,9 +29,9 @@
 }{
 
     <div class="adverts__row">
-        @items.map { item => @itemCard(item, clickMacro) }
+        @for(card <- cards){ @itemCard(card, omnitureId) }
     </div>
-    
+
 }
 
 @stamp = {

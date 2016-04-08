@@ -1,7 +1,6 @@
 package common
 
-import com.gu.contentapi.client.model.ItemResponse
-import com.gu.contentapi.client.model.v1.{Section => ApiSection}
+import com.gu.contentapi.client.model.v1.{Section => ApiSection, ItemResponse}
 import contentapi.Paths
 import play.api.mvc.{ Result, RequestHeader, Results }
 import model._

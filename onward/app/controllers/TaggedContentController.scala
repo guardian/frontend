@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.contentapi.client.GuardianContentApiError
+import com.gu.contentapi.client.GuardianContentApiThriftError
 import common._
 import conf.LiveContentApi
 import conf.LiveContentApi.getResponse
@@ -50,7 +50,7 @@ object TaggedContentController extends Controller with Related with Logging with
       .pageSize(3)
     ).map { response =>
         response.results map { Content(_) }
-    } recover { case GuardianContentApiError(404, message, _) =>
+    } recover { case GuardianContentApiThriftError(404, message, _) =>
       log.info(s"Got a 404 while calling content api: $message")
       Nil
     }

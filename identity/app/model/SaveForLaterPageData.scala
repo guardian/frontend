@@ -30,7 +30,7 @@ case class SaveForLaterItem (
 
 case class SaveForLaterPageData(
   formActionUrl: String,
-  savedItems: List[SaveForLaterItem],
+  savedItems: Seq[SaveForLaterItem],
   pagination: Pagination,
   paginationUrl: String,
   totalArticlesSaved: Int,
