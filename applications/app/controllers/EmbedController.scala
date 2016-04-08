@@ -6,7 +6,7 @@ import common._
 import model._
 import play.api.mvc._
 import scala.concurrent.Future
-import LiveContentApi.getResponse
+import contentapi.ContentApiClient
 
 case class EmbedPage(model: Option[Video], title: String, isExpired: Boolean = false)
 
@@ -24,7 +24,7 @@ object EmbedController extends Controller with Logging with ExecutionContexts {
 
     log.info(s"Fetching video: $path for edition $edition")
 
-    val response: Future[ItemResponse] = getResponse(LiveContentApi.item(path, edition)
+    val response: Future[ItemResponse] = ContentApiClient.getResponse(ContentApiClient.item(path, edition)
       .showFields("all")
     )
 

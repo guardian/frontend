@@ -4,8 +4,8 @@ import com.gu.contentapi.client.GuardianContentApiThriftError
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import com.gu.facia.client.models.Backfill
 import common._
-import conf.LiveContentApi
-import conf.LiveContentApi.getResponse
+import contentapi.ContentApiClient
+import contentapi.ContentApiClient.getResponse
 import implicits.Requests
 import layout.{CollectionEssentials, DescriptionMetaHeader, FaciaContainer}
 import model._
@@ -48,7 +48,7 @@ object SeriesController extends Controller with Logging with Paging with Executi
     def isCurrentStory(content: ApiContent) =
       content.fields.flatMap(_.shortUrl).exists(_.equals(currentShortUrl))
 
-    val seriesResponse: Future[Option[Series]] = getResponse(LiveContentApi.item(seriesId, edition)
+    val seriesResponse: Future[Option[Series]] = getResponse(ContentApiClient.item(seriesId, edition)
       .showFields("all")
     ).map { response =>
         response.tag.flatMap { tag =>
