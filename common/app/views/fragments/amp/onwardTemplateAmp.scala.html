@@ -9,6 +9,12 @@
                 <div class="fc-container__header__title">
                     <span>{{displayName}}</span>
                 </div>
+                {{#description}} @* Don't show if there is not description *@
+                    <div class="fc-container__header__description">
+                            {{description}}
+                    </div>
+                {{/description}}
+
                 {{#content}}
                     {{#headline}} @* Don't show if headline is empty*@
                         <div class="fc-item {{toneClass}}">
