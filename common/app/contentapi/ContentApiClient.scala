@@ -109,6 +109,8 @@ trait ApiQueryDefaults extends Logging {
     .showElements("all")
 }
 
+// This trait extends ContentApiClientLogic with Cloudwatch metrics that monitor
+// the average response time, and the number of timeouts, from Content Api.
 trait MonitoredContentApiClientLogic extends ContentApiClientLogic with ApiQueryDefaults with Logging {
 
   def httpTimingMetric: TimingMetric
