@@ -24,7 +24,7 @@ object DynamoDbStore extends Logging with ExecutionContexts {
       .withKey(Map[String, AttributeValue](
         ("notificationTopicId", new AttributeValue().withS(notificationTopicId)),
         ("gcmBrowserId", new AttributeValue().withS(gcmBrowserId)),
-        ("subscribeDate", new AttributeValue().withN(DateTime.now.getMillis.toString))
+        ("subscribeDate", new AttributeValue().withN((DateTime.now.getMillis / 1000).toString))
       ).asJava)
 
     client.updateItemFuture(updateItemRequest) onFailure {
