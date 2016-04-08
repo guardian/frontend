@@ -270,14 +270,13 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val dfpFacebookIaAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfp.facebookIaAdUnitRoot")
     lazy val dfpMobileAppsAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfp.mobileAppsAdUnitRoot")
     lazy val dfpAccountId = configuration.getMandatoryStringProperty("guardian.page.dfpAccountId")
+
     lazy val books_url = configuration.getMandatoryStringProperty("commercial.books_url")
     lazy val masterclasses_url =
       configuration.getMandatoryStringProperty("commercial.masterclasses_url")
     lazy val soulmates_url = configuration.getMandatoryStringProperty("commercial.soulmates_url")
     lazy val soulmatesApiUrl = configuration.getStringProperty("soulmates.api.url")
-    lazy val travel_url = configuration.getMandatoryStringProperty("commercial.travel_url")
-    lazy val traveloffers_url =
-      configuration.getStringProperty("traveloffers.api.url") map (u => s"$u/consumerfeed")
+    lazy val travelFeedUrl = configuration.getStringProperty("travel.feed.url")
     lazy val guMerchandisingAdvertiserId =
       configuration.getMandatoryStringProperty("commercial.dfp.guMerchandising.advertiserId")
 
