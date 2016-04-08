@@ -45,9 +45,6 @@ GET        /embed/video/*path                                                   
 # Preferences
 GET        /preferences                                                         controllers.PreferencesController.indexPrefs()
 
-GET        /crosswords/optin                                                    controllers.CrosswordPreferencesController.crosswordsOptIn
-GET        /crosswords/optout                                                   controllers.CrosswordPreferencesController.crosswordsOptOut
-
 # opt-in/out routes: this format is deprecated in favour of /opt/<in|out>/<feature>
 # don't add any new ones!
 GET        /https/optin                                                         controllers.OptInController.handle(feature = "https", choice = "in")

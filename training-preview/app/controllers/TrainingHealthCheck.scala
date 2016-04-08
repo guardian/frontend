@@ -34,7 +34,7 @@ class TrainingHttp extends contentapi.Http with ExecutionContexts {
       auth =>
         req.as_!(auth.user, auth.password)
     )
-    def handler = new FunctionHandler(r => Response(r.getResponseBody("utf-8"), r.getStatusCode, r.getStatusText))
+    def handler = new FunctionHandler(r => Response(r.getResponseBodyAsBytes, r.getStatusCode, r.getStatusText))
     http(authReq.toRequest, handler)
   }
 }

@@ -6,7 +6,7 @@ import implicits.Requests
 import model.{NoCache, Cached, Content, ContentType}
 import scala.concurrent.Future
 import conf.LiveContentApi
-import com.gu.contentapi.client.model.ItemResponse
+import com.gu.contentapi.client.model.v1.ItemResponse
 import play.twirl.api.HtmlFormat
 import LiveContentApi.getResponse
 
