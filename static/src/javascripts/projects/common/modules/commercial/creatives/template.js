@@ -75,6 +75,16 @@ define([
 
     Template.prototype.create = function () {
         return new Promise(function (resolve) {
+            if( this.params.creative === 'manual-single' && config.switches.v2ManualSingleTemplate ) {
+                this.params.creative = 'manual-container';
+                this.params.creativeCard = 'manual-card-large';
+            }
+
+            if (this.params.creative === 'manual-multiple' && config.switches.v2ManualMultipleTemplate ) {
+                this.params.creative = 'manual-container';
+                this.params.creativeCard = 'manual-card';
+            }
+
             require(['text!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
                 if (templatePreprocessor[this.params.creative]) {
                     templatePreprocessor[this.params.creative](this);

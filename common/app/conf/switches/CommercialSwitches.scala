@@ -299,7 +299,7 @@ trait CommercialSwitches {
     "Manual single component using template v2",
     safeState = Off,
     sellByDate = new LocalDate(2016, 4, 20),
-    exposeClientSide = false
+    exposeClientSide = true
   )
 
   val v2ManualMultipleTemplate = Switch(
@@ -308,7 +308,7 @@ trait CommercialSwitches {
     "Manual multiple component using template v2",
     safeState = Off,
     sellByDate = new LocalDate(2016, 4, 20),
-    exposeClientSide = false
+    exposeClientSide = true
   )
 
   val v2CapiSingleTemplate = Switch(
