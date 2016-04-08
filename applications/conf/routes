@@ -45,9 +45,6 @@ GET        /embed/video/*path                                                   
 # Preferences
 GET        /preferences                                                         controllers.PreferencesController.indexPrefs()
 
-GET        /crosswords/optin                                                    controllers.CrosswordPreferencesController.crosswordsOptIn
-GET        /crosswords/optout                                                   controllers.CrosswordPreferencesController.crosswordsOptOut
-
 GET        /https/optin                                                         controllers.HTTPSCookieController.optIn()
 GET        /https/optout                                                        controllers.HTTPSCookieController.optOut()
 

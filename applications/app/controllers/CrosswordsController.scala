@@ -158,32 +158,3 @@ object CrosswordSearchController extends CrosswordController {
 
   case class CrosswordLookup(crosswordType: String, id: Int)
 }
-
-object CrosswordPreferencesController extends Controller with PreferenceController {
-  private val CrosswordOptIn = "crossword_opt_in"
-  private val CrosswordOptInPath= "/crosswords"
-  private val CrosswordOptInMaxAge = 14.days.toSeconds.toInt
-  private val CrosswordOptOutMaxAge = 60.days.toSeconds.toInt
-
-  def crosswordsOptIn = Action { implicit request =>
-    Cached(60)(SeeOther("/crosswords?view=beta").withCookies(
-      Cookie(
-        CrosswordOptIn, "true",
-        path = CrosswordOptInPath,
-        maxAge = Some(CrosswordOptInMaxAge),
-        domain = getShortenedDomain(request.domain)
-      )
-    ))
-  }
-
-  def crosswordsOptOut = Action { implicit request =>
-    Cached(60)(SeeOther("/crosswords?view=classic").withCookies(
-      Cookie(
-        CrosswordOptIn, "false",
-        path = CrosswordOptInPath,
-        maxAge = Some(CrosswordOptOutMaxAge),
-        domain = getShortenedDomain(request.domain)
-      )
-    ))
-  }
-}
