@@ -41,7 +41,7 @@ object LatestIndexController extends Controller with ExecutionContexts with impl
       item.section.map( section =>
         IndexPage(
           page = Section.make(section),
-          contents = item.results.map(IndexPageItem(_)),
+          contents = item.results.getOrElse(Nil).map(IndexPageItem(_)),
           tags = Tags(Nil),
           date = DateTime.now,
           tzOverride = None
@@ -49,7 +49,7 @@ object LatestIndexController extends Controller with ExecutionContexts with impl
       ).orElse(item.tag.map( tag =>
         IndexPage(
           page = Tag.make(tag),
-          contents = item.results.map(IndexPageItem(_)),
+          contents = item.results.getOrElse(Nil).map(IndexPageItem(_)),
           tags = Tags(Nil),
           date = DateTime.now,
           tzOverride = None
