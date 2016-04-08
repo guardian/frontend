@@ -40,7 +40,7 @@ object TravelOffersApi extends ExecutionContexts with Logging {
   def parse(xml: Elem): Seq[TravelOffer] = (xml \\ "offer") map buildOffer
 
   def parseOffers(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[TravelOffer]] = {
-    feedMetaData.switch.isGuaranteedSwitchedOn flatMap { switchedOn =>
+    feedMetaData.parseSwitch.isGuaranteedSwitchedOn flatMap { switchedOn =>
       if (switchedOn) {
         val start = System.currentTimeMillis
         feedContent map { body =>
@@ -51,7 +51,7 @@ object TravelOffersApi extends ExecutionContexts with Logging {
           Future.failed(MissingFeedException(feedMetaData.name))
         }
       } else {
-        Future.failed(SwitchOffException(feedMetaData.switch.name))
+        Future.failed(SwitchOffException(feedMetaData.parseSwitch.name))
       }
     } recoverWith {
       case NonFatal(e) => Future.failed(e)
