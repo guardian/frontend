@@ -53,7 +53,7 @@ define([
                 ));
             }
         },
-        renderAd = function (container, sponsorship, opts) {
+        renderAd = function (item, sponsorship, opts) {
             var badgeConfig = badgesConfig[sponsorship],
                 slotTarget  = badgeConfig.namePrefix + 'badge',
                 name        = slotTarget + (++badgeConfig.count),
@@ -69,12 +69,12 @@ define([
 
             return new Promise(function (resolve) {
                 idleFastdom.write(function () {
-                    var placeholder = $('.js-badge-placeholder', container);
+                    var placeholder = $('.js-badge-placeholder', item);
 
                     if (placeholder.length) {
                         placeholder.replaceWith($adSlot);
                     } else {
-                        $('.js-container__header', container).after($adSlot);
+                        $(opts.fallback, item).after($adSlot);
                     }
 
                     resolve($adSlot);
@@ -83,7 +83,8 @@ define([
         },
         init = function () {
             var sponsoredFrontPromise,
-                sponsoredContainersPromise;
+                sponsoredContainersPromise,
+                sponsoredCardsPromise;
 
             if (!commercialFeatures.badges) {
                 return false;
@@ -96,7 +97,8 @@ define([
                     qwery('.fc-container', front)[0],
                     $front.data('sponsorship'),
                     {
-                        sponsor: $front.data('sponsor')
+                        sponsor: $front.data('sponsor'),
+                        fallback: '.js-container__header'
                     }
                 );
             }));
@@ -112,14 +114,34 @@ define([
                             {
                                 sponsor:  $container.data('sponsor'),
                                 series:   $container.data('series'),
-                                keywords: $container.data('keywords')
+                                keywords: $container.data('keywords'),
+                                fallback: '.js-container__header'
                             }
                         );
                     }
                 }));
             });
 
-            return sponsoredContainersPromise;
+            sponsoredCardsPromise = sponsoredContainersPromise.then(function () {
+                return Promise.all(map($('.js-sponsored-card'), function (card) {
+                    if (qwery('.ad-slot--paid-for-badge', card).length === 0) {
+                        var $card = bonzo(card);
+
+                        return renderAd(
+                            card,
+                            $card.data('sponsorship'),
+                            {
+                                sponsor:  $card.data('sponsor'),
+                                series:   $card.data('series'),
+                                keywords: $card.data('keywords'),
+                                fallback: '.js-card__header'
+                            }
+                        );
+                    }
+                }));
+            });
+
+            return sponsoredCardsPromise;
         },
         badges = {
 
@@ -154,7 +176,6 @@ define([
                     badgesConfig[type].count = 0;
                 }
             }
-
         };
 
     return badges;

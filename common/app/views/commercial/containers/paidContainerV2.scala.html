@@ -8,7 +8,7 @@
 @import views.html.fragments.inlineSvg
 @import views.support.commercial.TrackingCodeBuilder.mkInteractionTrackingCode
 
-<div data-id="@containerModel.id" class="fc-container@if(containerModel.branding){ js-sponsored-container}"
+<div data-id="@containerModel.id" class="fc-container@if(containerModel.isSingleSponsorContainer){ js-sponsored-container}"
     @for(branding <- containerModel.branding){
         data-sponsorship="@branding.sponsorshipType"
         @for(sponsor <- branding.sponsor){ data-sponsor="@sponsor" }
@@ -20,7 +20,7 @@
         Seq("legacy", "capi", "tone-capi"),
         optKicker = Some(fragments.commercial.paidForMeta(Some(containerModel.id))),
         optStamp = Some(stamp),
-        optBadge = if(containerModel.branding == None){ None } else { Some(logoSlot) }
+        optBadge = if(containerModel.isSingleSponsorContainer){ Some(logoSlot) } else { None }
     ){
 
         <a class="adverts__logo u-text-hyphenate" href="@containerModel.content.targetUrl">@containerModel.content.title</a>
