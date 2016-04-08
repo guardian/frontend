@@ -6,11 +6,13 @@ define([
     find
 ) {
     var path = '/surveys/404-test/next-in-series/';
-    var render = function (state) {
+    var render = function (state, options) {
         return '<div class="next-in-series-test">' +
             '<h3>Coming up next week</h3>' +
-            '<h4>' + state.title + '</h4>' +
-            '<p class="next-in-series-test__teaser">' + state.trail + '</p>' +
+            (options.teaser ? (
+                             '<h4>' + state.title + '</h4>' +
+                             '<p class="next-in-series-test__teaser">' + state.trail + '</p>'
+                          ) : '') +
             '<a href="' + path + state.id + '"' +
                 ' data-link-name="next in series | remind me"' +
                 ' class="button button--large next-in-series-test__remind-me-link">Remind me</a>' +
@@ -64,16 +66,19 @@ define([
 
         this.variants = [
             {
-                id: 'control',
+                id: 'with-teaser',
                 test: function () {
-
+                    if (series) {
+                        var el = $.create(render(series, { teaser: true }));
+                        el.insertAfter($articleBody);
+                    }
                 }
             },
             {
-                id: 'variant',
+                id: 'without-teaser',
                 test: function () {
                     if (series) {
-                        var el = $.create(render(series));
+                        var el = $.create(render(series, { teaser: false }));
                         el.insertAfter($articleBody);
                     }
                 }
