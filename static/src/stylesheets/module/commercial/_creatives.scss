@@ -737,6 +737,11 @@
         padding-bottom: 0;
         padding-left: 0;
     }
+
+    @include mq(mobile, tablet) {
+        // Full width on mobile fronts
+        width: auto;
+    }
 }
 
 .creative--full-width-250 {
