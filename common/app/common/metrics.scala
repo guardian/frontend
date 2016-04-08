@@ -12,6 +12,7 @@ import model.diagnostics.CloudWatch
 import play.api.{GlobalSettings, Application => PlayApp}
 
 import scala.collection.JavaConversions._
+import scala.concurrent.Future
 
 object SystemMetrics extends implicits.Numbers {
 
@@ -34,37 +35,34 @@ object SystemMetrics extends implicits.Numbers {
 
   lazy val garbageCollectors: Seq[GcRateMetric] = ManagementFactory.getGarbageCollectorMXBeans.map(new GcRateMetric(_))
 
-  // divide by 1048576 to convert bytes to MB
-  private def asMb(bytes: Long): Long = bytes / 1048576
-
   val MaxHeapMemoryMetric = GaugeMetric(
     name = "max-heap-memory",
     description = "Max heap memory (MB)",
-    get = () => asMb(ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getMax)
+    get = () => bytesAsMb(ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getMax)
   )
 
   val UsedHeapMemoryMetric = GaugeMetric(
     name ="used-heap-memory",
     description = "Used heap memory (MB)",
-    get = () => asMb(ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getUsed)
+    get = () => bytesAsMb(ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getUsed)
   )
 
   val MaxNonHeapMemoryMetric = GaugeMetric(
     name = "max-non-heap-memory",
     description = "Max non heap memory (MB)",
-    get = () => asMb(ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getMax)
+    get = () => bytesAsMb(ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getMax)
   )
 
   val UsedNonHeapMemoryMetric = GaugeMetric(
     name = "used-non-heap-memory",
     description = "Used non heap memory (MB)",
-    get = () => asMb(ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getUsed)
+    get = () => bytesAsMb(ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getUsed)
   )
 
   val FreeDiskSpaceMetric = GaugeMetric(
     name = "free-disk-space",
     description = "Free disk space (MB)",
-    get = () => asMb(new File("/").getUsableSpace)
+    get = () => bytesAsMb(new File("/").getUsableSpace)
   )
 
   val ThreadCountMetric = GaugeMetric(
@@ -78,7 +76,7 @@ object SystemMetrics extends implicits.Numbers {
   val TotalPhysicalMemoryMetric = GaugeMetric(
     name = "total-physical-memory", description = "Total physical memory",
     get = () => ManagementFactory.getOperatingSystemMXBean match {
-      case b: com.sun.management.OperatingSystemMXBean => b.getTotalPhysicalMemorySize
+      case b: com.sun.management.OperatingSystemMXBean => bytesAsMb(b.getTotalPhysicalMemorySize)
       case _ => -1
     }
   )
@@ -86,7 +84,7 @@ object SystemMetrics extends implicits.Numbers {
   val FreePhysicalMemoryMetric = GaugeMetric(
     name = "free-physical-memory", description = "Free physical memory",
     get = () => ManagementFactory.getOperatingSystemMXBean match {
-      case b: com.sun.management.OperatingSystemMXBean => b.getFreePhysicalMemorySize
+      case b: com.sun.management.OperatingSystemMXBean => bytesAsMb(b.getFreePhysicalMemorySize)
       case _ => -1
     }
   )
@@ -148,7 +146,7 @@ object EmailSubsciptionMetrics {
   val ListIDError = CountMetric("email-list-id-error", "Invalid list ID in email subscription")
 }
 
-trait CloudWatchApplicationMetrics extends GlobalSettings {
+trait CloudWatchApplicationMetrics extends GlobalSettings with Logging {
   val applicationMetricsNamespace: String = "Application"
   val applicationDimension = List(new Dimension().withName("ApplicationName").withValue(applicationName))
 
@@ -187,11 +185,22 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
     Jobs.schedule("ApplicationSystemMetricsJob", "36 * * * * ?"){
       report()
     }
+    Jobs.scheduleEveryNSeconds("LogMetricsJob", 5) {
+      val heapUsed = bytesAsMb(ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getUsed)
+      log.info(s"heap used: $heapUsed")
+      Future.successful(())
+    }
   }
 
   override def onStop(app: PlayApp) {
     Jobs.deschedule("ApplicationSystemMetricsJob")
+    Jobs.deschedule("LogMetricsJob")
     super.onStop(app)
   }
 
+}
+
+object bytesAsMb {
+  // divide by 1048576 to convert bytes to MB
+  def apply(bytes: Long): Long = bytes / 1048576
 }

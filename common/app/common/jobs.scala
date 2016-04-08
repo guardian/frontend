@@ -41,22 +41,23 @@ object Jobs extends Logging {
 
   scheduler.start()
 
+  // TODO delete this function and make easy to understand function(s)
   def schedule(name: String, cron: String)(block: => Unit): Unit = {
-    schedule(name, CronScheduleBuilder.cronSchedule(new CronExpression(cron)))(block)
+    schedule(name, CronScheduleBuilder.cronSchedule(new CronExpression(cron)))(Future(block))// TODO make a version to take a future
   }
 
-  def schedule(name: String, cron: String, timeZone: TimeZone)(block: => Unit): Unit = {
+  def scheduleWeekdayJob(name: String, hour: Int, minute: Int, timeZone: TimeZone)(block: => Future[Unit]): Unit = {
     schedule(name,
-      CronScheduleBuilder.cronSchedule(new CronExpression(cron)).inTimeZone(timeZone))(block)
+      CronScheduleBuilder.cronSchedule(new CronExpression(s"0 $minute $hour ? * MON-FRI")).inTimeZone(timeZone))(block)
   }
 
-  def schedule(name: String, schedule: => CronScheduleBuilder)(block: => Unit): Unit = {
+  private def schedule(name: String, schedule: => CronScheduleBuilder)(block: => Future[Unit]): Unit = {
     // running cron scheduled jobs in tests is useless
     // it just results in unexpected data files when you
     // want to check in
     if (!Play.isTest) {
       log.info(s"Scheduling $name")
-      jobs.put(name, () => Future(block))// TODO make a version to take a future
+      jobs.put(name, () => block)
 
       scheduler.scheduleJob(
         JobBuilder.newJob(classOf[FunctionJob]).withIdentity(name).build(),
@@ -65,11 +66,11 @@ object Jobs extends Logging {
     }
   }
 
-  def scheduleEveryNMinutes(name: String, intervalInMinutes: Int)(block: => Unit): Unit = {
+  def scheduleEveryNMinutes(name: String, intervalInMinutes: Int)(block: => Future[Unit]): Unit = {
     if (!Play.isTest) {
       val schedule = DailyTimeIntervalScheduleBuilder.dailyTimeIntervalSchedule().withIntervalInMinutes(intervalInMinutes)
       log.info(s"Scheduling $name to run every $intervalInMinutes minutes")
-      jobs.put(name, () => Future(block))// TODO make a version to take a future
+      jobs.put(name, () => block)
 
       scheduler.scheduleJob(
         JobBuilder.newJob(classOf[FunctionJob]).withIdentity(name).build(),
