@@ -169,8 +169,6 @@ object Multi
         }
     }
 
-    println(eventualContent)
-
     Future.sequence(eventualContent) map { contents =>
       val content = contents.flatten
       if (requestedContent.nonEmpty && content.size == requestedContent.size) {

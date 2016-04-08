@@ -41,3 +41,17 @@
         }
     }
 }
+
+.advert__blended-container--masterclasses .advert__blended-container__title {
+    padding-top: 5px;
+    padding-bottom: 9px;
+
+    > svg {
+        height: 22px;
+        width: 144px;
+    }
+}
+
+.logo--tone-masterclasses {
+    fill: guss-colour(multimedia-main-1, $pasteup-palette);
+}

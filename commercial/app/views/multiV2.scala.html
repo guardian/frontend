@@ -3,10 +3,12 @@
 @import views.html.commercial.containerWrapper
 
 @containerWrapper(Seq("legacy", "blended", "tone-brand"),
-                  omnitureId.map(id => s"creative | blended component | ${id}"),
-                  optBlurb = Some(Html("from across the guardian"))){
+                  omnitureId.map(id => s"creative | blended component | ${id}")){
 
-    @fragments.inlineSvg("marque-54", "icon")
+    <span class="adverts__logo">
+        @fragments.inlineSvg("marque-54", "icon")
+    </span>
+    from across the guardian
 
 }{
 

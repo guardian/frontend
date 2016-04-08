@@ -34,8 +34,38 @@
     }
 }
 
+.advert--job {
+    .button {
+        @include button-colour(
+            guss-colour(news-main-1, $pasteup-palette),
+            null
+        );
+    }
+
+
+    &:hover,
+    &:focus,
+    &:active {
+        .button {
+            @include button-colour(
+                darken(guss-colour(news-main-1, $pasteup-palette), 5%),
+                null
+            );
+        }
+    }
+}
+
+.advert__blended-container--jobs .advert__blended-container__title {
+    padding-top: 5px;
+    padding-bottom: 4px;
+}
+
 .adverts--tone-jobs {
     > .adverts__header {
         background: guss-colour(news-support-2, $pasteup-palette);
     }
+}
+
+.logo--tone-jobs {
+    fill: guss-colour(news-support-2, $pasteup-palette);
 }
