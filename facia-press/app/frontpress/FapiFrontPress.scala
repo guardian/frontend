@@ -2,7 +2,8 @@ package frontpress
 
 import com.amazonaws.services.s3.AmazonS3Client
 import com.gu.contentapi.client.GuardianContentClient
-import com.gu.contentapi.client.model.{ItemQuery, ItemResponse, SearchQuery}
+import com.gu.contentapi.client.model.{ItemQuery, SearchQuery}
+import com.gu.contentapi.client.model.v1.ItemResponse
 import com.gu.facia.api.contentapi.ContentApi.{AdjustItemQuery, AdjustSearchQuery}
 import com.gu.facia.api.models.Collection
 import com.gu.facia.api.{FAPI, Response}
@@ -27,12 +28,12 @@ private case class ContentApiClientWithTarget(override val apiKey: String, overr
   lazy val httpTimingMetric = ContentApiMetrics.ElasticHttpTimingMetric
   lazy val httpTimeoutMetric = ContentApiMetrics.ElasticHttpTimeoutCountMetric
 
-  override def fetch(url: String)(implicit context: ExecutionContext): Future[String] = {
-    val futureString: Future[String] = super.fetch(url)(context)
-    futureString.onFailure{ case t =>
+  override def fetch(url: String)(implicit context: ExecutionContext): Future[Array[Byte]] = {
+    val futureContent: Future[Array[Byte]] = super.fetch(url)(context)
+    futureContent.onFailure{ case t =>
       val tryDecodedUrl: String = Try(java.net.URLDecoder.decode(url, "UTF-8")).getOrElse(url)
       log.error(s"$t: $tryDecodedUrl")}
-    futureString
+    futureContent
   }
 }
 

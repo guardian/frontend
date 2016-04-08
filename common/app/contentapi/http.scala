@@ -15,7 +15,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Success, Failure, Try}
 
-case class Response(body: String, status: Int, statusText: String)
+case class Response(body: Array[Byte], status: Int, statusText: String)
 
 trait Http {
   def GET(url: String, headers: Iterable[(String, String)]): Future[Response]
@@ -63,7 +63,7 @@ class WsHttp(val httpTimingMetric: TimingMetric, val httpTimeoutMetric: CountMet
     }
 
     response map { wsResponse =>
-      Response(wsResponse.body, wsResponse.status, wsResponse.statusText)
+      Response(wsResponse.bodyAsBytes, wsResponse.status, wsResponse.statusText)
     }
   }
 }

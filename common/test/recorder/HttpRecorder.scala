@@ -1,6 +1,7 @@
 package recorder
 
 import java.io._
+import java.nio.charset.StandardCharsets
 
 import common.ExecutionContexts
 import conf.Configuration
@@ -75,15 +76,15 @@ trait ContentApiHttpRecorder extends HttpRecorder[Response] {
 
   def toResponse(str: String) = {
     if (str.startsWith("Error:")) {
-      Response("", str.replace("Error:", "").toInt, "")
+      Response(Array.empty, str.replace("Error:", "").toInt, "")
     } else {
-      Response(str, 200, "")
+      Response(str.getBytes(StandardCharsets.UTF_8), 200, "")
     }
   }
 
   def fromResponse(response: Response) = {
     if (response.status == 200) {
-      response.body
+      new String(response.body, StandardCharsets.UTF_8)
     } else {
       s"Error:${response.status}"
     }

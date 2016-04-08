@@ -11803,6 +11803,9 @@
         }
       }
     },
+    "karma-teamcity-reporter": {
+      "version": "0.2.2"
+    },
     "load-grunt-config": {
       "version": "0.17.1",
       "dependencies": {

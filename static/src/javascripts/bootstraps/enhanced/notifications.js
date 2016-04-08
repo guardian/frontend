@@ -56,9 +56,8 @@ define([
 
             fastdom.write(function () {
                 $('.js-notifications').prepend(src);
+                bean.one(document.body, 'click', '.js-notifications-subscribe-link', handler);
             });
-
-            bean.one(document.body, 'click', '.js-notifications-subscribe-link', handler);
         },
 
         setSubscriptionStatus: function (subscribed) {

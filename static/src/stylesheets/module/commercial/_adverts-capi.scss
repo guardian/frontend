@@ -18,6 +18,7 @@
     }
 
     .adverts__row > * + *::before,
+    .adverts__row--legacy > .advert::after,
     .adverts__row--wrap::before,
     .adverts__row--wrap::after {
         background: guss-colour(paid-article-subheader-bg, $frontend-palette);
@@ -46,12 +47,28 @@
         border-color: colour(neutral-4);
         color: colour(neutral-1);
     }
+
+    .button {
+        @include button-colour(
+            guss-colour(paid-article-brand, $frontend-palette),
+            null
+        );
+
+        &:hover,
+        &:focus,
+        &:active {
+            @include button-colour(
+                darken(guss-colour(paid-article-brand, $frontend-palette), 5%),
+                null
+            );
+        }
+    }
 }
 
 .advert--capi {
     @include f-textSans;
     background: colour(paid-article-subheader);
-    border-top-color: guss-colour(paid-article-brand, $frontend-palette);
+    border-top: 1px solid guss-colour(paid-article-brand, $frontend-palette);
 
     .advert__title,
     .advert__meta,
@@ -80,6 +97,11 @@
 
     .adverts--legacy-single & {
         background: none;
+        border-top: 0;
+
+        &::after {
+            background-color: guss-colour(paid-article-icon, $frontend-palette);
+        }
 
         .advert__image-container {
             border-top: 0;
