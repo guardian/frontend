@@ -18,7 +18,7 @@ define([
         this.audienceOffset = 0.0;
         this.successMeasure = '';
         this.showForSensitive = true;
-        this.audienceCriteria = 'Internal use only ap';
+        this.audienceCriteria = 'Chrome users on desktop and androd';
         this.dataLinkNames = '';
         this.idealOutcome = '';
 
