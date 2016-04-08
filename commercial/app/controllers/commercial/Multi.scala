@@ -1,5 +1,6 @@
 package controllers.commercial
 
+import conf.switches.Switches
 import common.ExecutionContexts
 import model.commercial.books.BestsellersAgent
 import model.commercial.jobs.JobsAgent
@@ -8,7 +9,6 @@ import model.commercial.soulmates.SoulmatesAgent
 import model.commercial.travel.TravelOffersAgent
 import model.{Cached, NoCache}
 import play.api.mvc._
-
 import scala.concurrent.Future
 import scala.util.Random
 
