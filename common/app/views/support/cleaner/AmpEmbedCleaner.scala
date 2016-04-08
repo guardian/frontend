@@ -82,12 +82,34 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
   }
 
+  def cleanAmpInteractives(document: Document) = {
+
+    document.getElementsByClass("element-interactive").filter { element: Element =>
+      element.getElementsByTag("a").length !=0
+    }.foreach { interactive: Element =>
+      val link = interactive.getElementsByTag("a")
+      val linkToInteractive = link.first().attr("href")
+      val iframe = document.createElement("amp-iframe")
+      // AMP uses the height and width ratio, so exact values don't matter
+      // All interactives should resize to the correct height once they load
+      iframe.attr("width", "5")
+      iframe.attr("height", "1")
+      iframe.attr("layout", "responsive")
+      iframe.attr("sandbox", "allow-scripts")
+      iframe.attr("src", linkToInteractive)
+
+      link.remove()
+      interactive.appendChild(iframe)
+    }
+  }
+
   private def getVideoAssets(id:String): Seq[VideoAsset] = article.elements.bodyVideos.filter(_.properties.id == id).flatMap(_.videos.videoAssets)
 
   override def clean(document: Document): Document = {
 
     cleanAmpVideos(document)
     cleanAmpYouTube(document)
+    cleanAmpInteractives(document)
     cleanAmpEmbed(document)
 
     document
