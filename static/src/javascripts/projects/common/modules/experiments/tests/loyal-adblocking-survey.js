@@ -24,8 +24,8 @@ define([
         this.expiry = '2016-05-31';
         this.author = 'Zofia Korcz';
         this.description = 'An adblock ongoing survey for all loyal users';
-        this.audience = 0;
-        this.audienceOffset = 0;
+        this.audience = 0.01;
+        this.audienceOffset = 0.9;
         this.successMeasure = 'We want to understand what causes people to block ads on theguardian.com and what would make them consider unblocking.';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = 'loyal adblocking survey overlay take part btn, loyal adblocking survey overlay hide survey message';
