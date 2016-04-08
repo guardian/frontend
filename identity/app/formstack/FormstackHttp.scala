@@ -1,7 +1,7 @@
 package formstack
 
 import com.google.inject.Singleton
-import com.gu.contentapi.client.GuardianContentApiError
+import com.gu.contentapi.client.GuardianContentApiThriftError
 import common.ExecutionContexts
 import play.api.Play.current
 import play.api.libs.ws.WS
@@ -23,7 +23,7 @@ class WsFormstackHttp extends FormstackHttp with ExecutionContexts {
       .get()
       .map(response => FormstackHttpResponse(response.body, response.status, response.statusText))
       .recover{
-        case GuardianContentApiError(status, message, _) => FormstackHttpResponse("", status, message)
+        case GuardianContentApiThriftError(status, message, _) => FormstackHttpResponse("", status, message)
     }
   }
 }

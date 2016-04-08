@@ -78,7 +78,7 @@ object FeedParser {
   }
 
   private val travelOffers: Option[FeedParser[TravelOffer]] = {
-    Configuration.commercial.traveloffers_url map { url =>
+    Configuration.commercial.travelFeedUrl map { url =>
       new FeedParser[TravelOffer] {
 
         val feedMetaData = TravelOffersFeedMetaData(url)

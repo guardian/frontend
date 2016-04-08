@@ -1,7 +1,6 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.{Content => ApiContent}
-import com.gu.contentapi.client.model.ItemResponse
+import com.gu.contentapi.client.model.v1.{Content => ApiContent, ItemResponse}
 import common._
 import conf._
 import conf.switches.Switches

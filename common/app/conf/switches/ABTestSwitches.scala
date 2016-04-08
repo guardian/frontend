@@ -4,6 +4,15 @@ import org.joda.time.LocalDate
 
 trait ABTestSwitches {
 
+  val ABDummyTest = Switch(
+    "A/B Tests",
+    "dummy-test",
+    "A do-nothing AA test, for the data team",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 5, 10),
+    exposeClientSide = true
+  )
+
   // Owner: Dotcom Reach
   val ABFrontsOnArticles2 = Switch(
     "A/B Tests",
@@ -32,12 +41,21 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABLiveBlogChromeNotifications = Switch(
+  val ABLiveBlogChromeNotificationsInternal = Switch(
     "A/B Tests",
-    "ab-live-blog-chrome-notifications",
-    "Live blog chrome notifications",
+    "ab-live-blog-chrome-notifications-internal",
+    "Live blog chrome notifications - Internal",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 2),
+    sellByDate = new LocalDate(2016, 6, 1),
+    exposeClientSide = true
+  )
+
+  val ABLiveBlogChromeNotificationsProd = Switch(
+    "A/B Tests",
+    "ab-live-blog-chrome-notifications-prod",
+    "Live blog chrome notifications - prod",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 1),
     exposeClientSide = true
   )
 

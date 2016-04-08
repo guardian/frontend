@@ -43,14 +43,17 @@ define([
                 $(document.body).append(this.bannerTmpl);
 
                 if (this.config.showCloseBtn) {
-                    bean.on(document, 'click', $('.js-survey-close'), function () {
-                        $('.js-survey-overlay').addClass('u-h');
-                        if (this.shouldClosePermanently) {
-                            this.closePermanently();
-                        }
-                    }.bind(this));
+                    bean.on(document, 'click', $('.js-survey-close'), this.handleClick.bind(this));
+                    bean.on(document, 'click', $('.js-survey-link__takepart'), this.handleClick.bind(this));
                 }
             }.bind(this));
+        }
+    };
+
+    surveySimple.prototype.handleClick = function () {
+        $('.js-survey-overlay').addClass('u-h');
+        if (this.shouldClosePermanently) {
+            this.closePermanently();
         }
     };
 

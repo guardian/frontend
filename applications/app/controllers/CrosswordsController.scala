@@ -1,7 +1,6 @@
 package controllers
 
-import com.gu.contentapi.client.model.ItemResponse
-import com.gu.contentapi.client.model.v1.{Content => ApiContent, Crossword, Section => ApiSection}
+import com.gu.contentapi.client.model.v1.{Content => ApiContent, Crossword, Section => ApiSection, ItemResponse}
 import common.{Edition, ExecutionContexts, Logging}
 import conf.{LiveContentApi, Static}
 import crosswords.{AccessibleCrosswordRows, CrosswordPage, CrosswordSearchPage, CrosswordSvg}
@@ -121,7 +120,7 @@ object CrosswordSearchController extends CrosswordController {
         }
 
         LiveContentApi.getResponse(maybeSetter.showFields("all")).map { response =>
-          response.results match {
+          response.results.getOrElse(Nil) match {
             case Nil => noResults
 
             case results =>
@@ -157,33 +156,4 @@ object CrosswordSearchController extends CrosswordController {
   }
 
   case class CrosswordLookup(crosswordType: String, id: Int)
-}
-
-object CrosswordPreferencesController extends Controller with PreferenceController {
-  private val CrosswordOptIn = "crossword_opt_in"
-  private val CrosswordOptInPath= "/crosswords"
-  private val CrosswordOptInMaxAge = 14.days.toSeconds.toInt
-  private val CrosswordOptOutMaxAge = 60.days.toSeconds.toInt
-
-  def crosswordsOptIn = Action { implicit request =>
-    Cached(60)(SeeOther("/crosswords?view=beta").withCookies(
-      Cookie(
-        CrosswordOptIn, "true",
-        path = CrosswordOptInPath,
-        maxAge = Some(CrosswordOptInMaxAge),
-        domain = getShortenedDomain(request.domain)
-      )
-    ))
-  }
-
-  def crosswordsOptOut = Action { implicit request =>
-    Cached(60)(SeeOther("/crosswords?view=classic").withCookies(
-      Cookie(
-        CrosswordOptIn, "false",
-        path = CrosswordOptInPath,
-        maxAge = Some(CrosswordOptOutMaxAge),
-        domain = getShortenedDomain(request.domain)
-      )
-    ))
-  }
 }

@@ -3,7 +3,7 @@ package common
 import java.util.concurrent.TimeoutException
 
 import akka.pattern.CircuitBreakerOpenException
-import com.gu.contentapi.client.GuardianContentApiError
+import com.gu.contentapi.client.GuardianContentApiThriftError
 import conf.switches.Switch
 import contentapi.ErrorResponseHandler.isCommercialExpiry
 import model.{Cached, NoCache}
@@ -25,10 +25,10 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
     case e: CircuitBreakerOpenException =>
       log.error(s"Got a circuit breaker open error while calling content api")
       NoCache(ServiceUnavailable)
-    case GuardianContentApiError(404, message, _) =>
+    case GuardianContentApiThriftError(404, message, _) =>
       log.info(s"Got a 404 while calling content api: $message")
       NoCache(NotFound)
-    case GuardianContentApiError(410, message, errorResponse) =>
+    case GuardianContentApiThriftError(410, message, errorResponse) =>
       errorResponse match {
         case Some(errorResponse) if isCommercialExpiry(errorResponse) =>
           log.info(s"Got a 410 while calling content api: $message: ${errorResponse.message}")
