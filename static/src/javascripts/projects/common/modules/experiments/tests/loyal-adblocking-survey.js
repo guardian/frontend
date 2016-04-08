@@ -14,8 +14,7 @@ define([
     SurveySimple
 ) {
     function getSurveyLink(adblockUsed) {
-        //var ophanId = '&ophanId=' + config.ophan.pageViewId;
-        var ophanId = '&ophanId=XXXX'; //temporary
+        var ophanId = '&ophanId=' + config.ophan.pageViewId;
         return adblockUsed ? 'https://surveys.theguardian.com/R.aspx?a=684&as=AC5tF8XE6G' + ophanId : 'https://surveys.theguardian.com/R.aspx?a=685&as=Aj5jo96J9j' + ophanId;
     }
 
