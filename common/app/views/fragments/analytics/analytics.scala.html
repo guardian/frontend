@@ -4,7 +4,6 @@
 @import views.support.OmnitureAnalyticsData
 @import conf.Static
 @import conf.switches.Switches.BritishCouncilBeacon
-@import conf.switches.Switches.GoogleAnalyticsSwitch
 @import common.InlineJs
 
 
@@ -57,19 +56,7 @@
 
 <img src="@Configuration.debug.beaconUrl/count/pv.gif" alt="" style="display : none ;" rel="nofollow"/>
 
-@if(GoogleAnalyticsSwitch.isSwitchedOn) {
-    <script id='google_analytics'>
-        @*
-        Note, you cannot @InlineJs(...) this
-        InlineJS should only be used for fragments that do not take parameters due to the way memoization happens.
-        *@
-        @Html(templates.inlineJS.nonBlocking.js.googleAnalytics(page).body)
-    </script>
-
-    @*
-        If at some point in the future this goes live, please somebody think of the "noscript" for Google Analytics
-    *@
-}
+@fragments.analytics.googleAnalytics(page)
 
 @if(BritishCouncilBeacon.isSwitchedOn && page.metadata.url.contains("british-council-partner-zone")) {
     <img alt="DCSIMG" id="DCSIMG" width="1" height="1"
