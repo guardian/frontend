@@ -109,21 +109,20 @@ define([
     }
 
     function _mapElementToDimensions(el) {
-        var rect = el.getBoundingClientRect();
         return {
-            top: rect.top,
-            bottom: rect.bottom,
+            top: el.offsetTop,
+            bottom: el.offsetTop + el.offsetHeight,
             element: el
         };
     }
 
-    function _enforceRules(slots, rules, bodyHeight) {
+    function _enforceRules(slots, rules, bodyTop, bodyHeight) {
         var filtered = Promise.resolve(slots);
 
         // enforce absoluteMinAbove rule
         if (rules.absoluteMinAbove > 0) {
             filtered = filtered.then(filter(slots, function (slot) {
-                return slot.top >= rules.absoluteMinAbove;
+                return bodyTop + slot.top >= rules.absoluteMinAbove;
             }));
         }
 
@@ -227,7 +226,7 @@ define([
             return fastdom.read(function () {
                 var rect = body.getBoundingClientRect();
                 return [
-                    rect.top,
+                    rect.top + window.pageYOffset,
                     rect.height,
                     map(slots, _mapElementToDimensions)
                 ];
@@ -235,7 +234,7 @@ define([
         }
 
         function enforceRules(data) {
-            return _enforceRules(data[2], rules, data[1]);
+            return _enforceRules(data[2], rules, data[0], data[1]);
         }
 
         function filterSlots(slots) {
