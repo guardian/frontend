@@ -2,12 +2,12 @@ package frontpress
 
 import com.amazonaws.services.s3.AmazonS3Client
 import com.gu.contentapi.client.GuardianContentClient
-import com.gu.contentapi.client.model.{ItemQuery, ItemResponse, SearchQuery}
+import com.gu.contentapi.client.model.{ItemQuery, SearchQuery}
+import com.gu.contentapi.client.model.v1.ItemResponse
 import com.gu.facia.api.contentapi.ContentApi.{AdjustItemQuery, AdjustSearchQuery}
 import com.gu.facia.api.models.Collection
 import com.gu.facia.api.{FAPI, Response}
 import com.gu.facia.client.{AmazonSdkS3Client, ApiClient}
-import common.FaciaPressMetrics.{ContentApiSeoRequestFailure, ContentApiSeoRequestSuccess}
 import common._
 import conf.switches.Switches.FaciaInlineEmbeds
 import conf.{Configuration, LiveContentApi}
@@ -28,12 +28,12 @@ private case class ContentApiClientWithTarget(override val apiKey: String, overr
   lazy val httpTimingMetric = ContentApiMetrics.ElasticHttpTimingMetric
   lazy val httpTimeoutMetric = ContentApiMetrics.ElasticHttpTimeoutCountMetric
 
-  override def fetch(url: String)(implicit context: ExecutionContext): Future[String] = {
-    val futureString: Future[String] = super.fetch(url)(context)
-    futureString.onFailure{ case t =>
+  override def fetch(url: String)(implicit context: ExecutionContext): Future[Array[Byte]] = {
+    val futureContent: Future[Array[Byte]] = super.fetch(url)(context)
+    futureContent.onFailure{ case t =>
       val tryDecodedUrl: String = Try(java.net.URLDecoder.decode(url, "UTF-8")).getOrElse(url)
       log.error(s"$t: $tryDecodedUrl")}
-    futureString
+    futureContent
   }
 }
 
@@ -254,12 +254,10 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
     )
 
     contentApiResponse.onSuccess { case _ =>
-      ContentApiSeoRequestSuccess.increment()
       log.info(s"Getting SEO data from content API for $id")}
 
     contentApiResponse.onFailure { case e: Exception =>
       log.warn(s"Error getting SEO data from content API for $id: $e")
-      ContentApiSeoRequestFailure.increment()
     }
 
     contentApiResponse.map(Option(_)).fallbackTo(Future.successful(None))

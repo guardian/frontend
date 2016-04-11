@@ -5,22 +5,28 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
+    'common/modules/experiments/tests/dummy-test',
     'common/modules/experiments/tests/fronts-on-articles2',
     'common/modules/experiments/tests/identity-register-membership-standfirst',
-    'common/modules/experiments/tests/live-blog-chrome-notifications',
+    'common/modules/experiments/tests/live-blog-chrome-notifications-internal',
+    'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/header-bidding-us',
     'common/modules/experiments/tests/next-in-series',
     'common/modules/experiments/tests/people-who-read-this-also-read-variants',
     'common/modules/experiments/tests/membership',
     'common/modules/experiments/tests/loyal-adblocking-survey',
     'lodash/arrays/flatten',
+    'lodash/arrays/zip',
     'lodash/collections/forEach',
     'lodash/objects/keys',
     'lodash/collections/some',
     'lodash/collections/filter',
     'lodash/collections/map',
+    'lodash/collections/reduce',
     'lodash/collections/find',
     'lodash/objects/pick',
+    'lodash/utilities/noop',
+    'lodash/objects/merge',
     'common/utils/chain'
 ], function (
     reportError,
@@ -29,29 +35,37 @@ define([
     mediator,
     store,
     mvtCookie,
+    DummyTest,
     FrontsOnArticles2,
     IdentityRegisterMembershipStandfirst,
-    LiveBlogChromeNotifications,
+    LiveBlogChromeNotificationsInternal,
+    LiveBlogChromeNotificationsProd,
     HeaderBiddingUS,
     NextInSeries,
     PeopleWhoReadThisAlsoReadVariants,
     Membership,
     LoyalAdblockingSurvey,
     flatten,
+    zip,
     forEach,
     keys,
     some,
     filter,
     map,
+    reduce,
     find,
     pick,
+    noop,
+    merge,
     chain
 ) {
 
     var TESTS = flatten([
+        new DummyTest(),
         new FrontsOnArticles2(),
         new IdentityRegisterMembershipStandfirst(),
-        new LiveBlogChromeNotifications(),
+        new LiveBlogChromeNotificationsInternal(),
+        new LiveBlogChromeNotificationsProd(),
         new HeaderBiddingUS(),
         new NextInSeries(),
         new PeopleWhoReadThisAlsoReadVariants(),
@@ -157,6 +171,61 @@ define([
         return tag.join(',');
     }
 
+    function abData(variantName, complete) {
+        return {
+            'variantName': variantName,
+            'complete': complete
+        };
+    }
+
+    function getAbLoggableObject() {
+        try {
+            return reduce(zip(getActiveTests(), getServerSideTests()), function(log, tests) {
+                var active = tests[0];
+                var server = tests[1];
+
+                if (active && isParticipating(active) && testCanBeRun(active)) {
+                    var variant = getTestVariantId(active.id);
+
+                    if (variant && variant !== 'notintest') {
+                        log[active.id] = abData(variant, 'false');
+                    }
+                }
+
+                if (server) {
+                    log['ab' + server] = abData('inTest', 'false');
+                }
+
+                return log;
+            }, {});
+        } catch (error) {
+            // Encountering an error should invalidate the logging process.
+            reportError(error, false);
+            return {};
+        }
+    }
+
+    function trackEvent() {
+        recordOphanAbEvent(getAbLoggableObject());
+    }
+
+    function recordOphanAbEvent(data) {
+        require(['ophan/ng'], function (ophan) {
+            ophan.record({
+                abTestRegister: data
+            });
+        });
+    }
+
+    function recordTestComplete(test, variantId) {
+        var data = {};
+        data[test.id] = abData(variantId, 'true');
+
+        return function() {
+            recordOphanAbEvent(data);
+        };
+    }
+
     // Finds variant in specific tests and runs it
     function run(test) {
         if (isParticipating(test) && testCanBeRun(test)) {
@@ -165,6 +234,9 @@ define([
             var variant = getVariant(test, variantId);
             if (variant) {
                 variant.test();
+
+                var onTestComplete = variant.success || noop;
+                onTestComplete(recordTestComplete(test, variantId));
             } else if (variantId === 'notintest' && test.notInTest) {
                 test.notInTest();
             }
@@ -313,34 +385,12 @@ define([
                 }).valueOf();
         },
 
-        getAbLoggableObject: function () {
-            var abLogObject = {};
-
-            try {
-                forEach(getActiveTests(), function (test) {
-                    if (isParticipating(test) && testCanBeRun(test)) {
-                        var variant = getTestVariantId(test.id);
-                        if (variant && variant !== 'notintest') {
-                            abLogObject['ab' + test.id] = variant;
-                        }
-                    }
-                });
-                forEach(getServerSideTests(), function (testName) {
-                    abLogObject['ab' + testName] = 'inTest';
-                });
-            } catch (error) {
-                // Encountering an error should invalidate the logging process.
-                abLogObject = {};
-                reportError(error, false);
-            }
-
-            return abLogObject;
-        },
-
+        getAbLoggableObject: getAbLoggableObject,
         getParticipations: getParticipations,
         isParticipating: isParticipating,
         getTest: getTest,
         makeOmnitureTag: makeOmnitureTag,
+        trackEvent: trackEvent,
         getExpiredTests: getExpiredTests,
         getActiveTests: getActiveTests,
         getTestVariantId: getTestVariantId,

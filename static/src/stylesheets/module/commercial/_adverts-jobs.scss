@@ -12,8 +12,7 @@
         flex-flow: row wrap;
         justify-content: space-between;
         list-style: none;
-        margin-top: $gs-baseline;
-        margin-bottom: $gs-baseline;
+        margin-bottom: $gs-baseline / 2;
 
         > li {
             border-top: 1px solid colour(neutral-4);

@@ -30,7 +30,7 @@
     .gu-title {
         @include f-headlineSans;
         @include font-size(20, 24);
-        margin-bottom: 5px;
+        padding-bottom: 5px;
         font-weight: normal;
     }
 

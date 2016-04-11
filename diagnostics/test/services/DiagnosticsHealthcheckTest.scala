@@ -9,7 +9,7 @@ import scala.concurrent.Await
 
 @DoNotDiscover class DiagnosticsHealthcheckTest extends FlatSpec with Matchers with ConfiguredTestSuite with TestWsConfig {
 
-  "Healthchecks" should "pass" in goTo("/ab.gif"){ _ =>
+  "Healthchecks" should "pass" in goTo("/robots.txt"){ _ =>
 
     Await.result(WS.clientUrl(s"http://localhost:${port}/_healthcheck")(longTimeoutConfig).get(), 10.seconds).status should be (200)
   }

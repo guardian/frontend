@@ -1,7 +1,6 @@
 package controllers
 
-import com.gu.contentapi.client.GuardianContentApiError
-import com.gu.facia.api.models.FaciaContent
+import com.gu.contentapi.client.GuardianContentApiThriftError
 import common._
 import conf.LiveContentApi.getResponse
 import conf._
@@ -35,13 +34,13 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
     getResponse(LiveContentApi.item("/", edition)
       .showEditorsPicks(true)
     ).map { response =>
-        response.editorsPicks map { item =>
+        response.editorsPicks.getOrElse(Nil) map { item =>
           RelatedContentItem(item)
         } match {
           case Nil => None
           case picks => Some(RelatedContent(picks))
         }
-      } recover { case GuardianContentApiError(404, message, _) =>
+      } recover { case GuardianContentApiThriftError(404, message, _) =>
         log.info(s"Got a 404 while calling content api: $message")
         None
       }

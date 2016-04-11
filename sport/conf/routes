@@ -76,3 +76,6 @@ GET        /football/match-redirect/:matchId                                    
 
 GET        /sport/rugby/api/score/:year/:month/:day/:team1Id/:team2Id.json                     rugby.controllers.MatchesController.scoreJson(year, month, day, team1Id, team2Id)
 GET        /sport/rugby/api/score/:year/:month/:day/:team1Id/:team2Id                          rugby.controllers.MatchesController.score(year, month, day, team1Id, team2Id)
+
+#AMP
+GET        /football-mf2/api/match-summary/:year/:month/:day/:home/:away.json                  football.controllers.MoreOnMatchController.matchSummaryMf2(year, month, day, home, away)

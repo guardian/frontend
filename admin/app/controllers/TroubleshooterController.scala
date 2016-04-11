@@ -1,6 +1,6 @@
 package controllers.admin
 
-import contentapi.CircuitBreakingContentApiClient
+import contentapi.ContentApiClient
 import play.api.mvc.Controller
 import common.{ContentApiMetrics, ExecutionContexts, Logging}
 import model.NoCache
@@ -20,10 +20,11 @@ object TestFailed{
   def apply(name: String, messages: String*) = EndpointStatus(name, false, messages:_*)
 }
 
-object PreviewContentApi extends CircuitBreakingContentApiClient {
+object PreviewContentApi extends ContentApiClient {
   lazy val httpTimingMetric = ContentApiMetrics.ElasticHttpTimingMetric
   lazy val httpTimeoutMetric = ContentApiMetrics.ElasticHttpTimeoutCountMetric
   override val targetUrl = AdminConfiguration.contentapi.previewHost
+  override val useThrift = false
 }
 
 object TroubleshooterController extends Controller with Logging with AuthLogging with ExecutionContexts {

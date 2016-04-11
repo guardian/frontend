@@ -10,10 +10,9 @@ object SimpleHtmlCleaner extends HtmlCleaner {
   }
 
   override def clean(document: Document) = {
-    universalClean(document).map { _ =>
-      removeScripts(document)
-      createSimplePageTracking(document)
-      removeByTagName(document, "noscript")
-    }
+    universalClean(document)
+    removeScripts(document)
+    createSimplePageTracking(document)
+    removeByTagName(document, "noscript")
   }
 }

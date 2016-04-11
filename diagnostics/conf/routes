@@ -4,9 +4,6 @@
 
 GET        /_healthcheck                    conf.HealthCheck.healthcheck()
 
-GET        /js.gif                          controllers.DiagnosticsController.js
-GET        /ab.gif                          controllers.DiagnosticsController.ab
-
 GET        /count/$path<.+>.gif             controllers.DiagnosticsController.analytics(path)
 
 GET        /counts.gif                      controllers.DiagnosticsController.analyticsCounts()

@@ -102,7 +102,11 @@ trait Prototypes {
     javaOptions in Test += "-Xmx2048M",
     javaOptions in Test += "-XX:+UseConcMarkSweepGC",
     javaOptions in Test += "-XX:ReservedCodeCacheSize=128m",
-    baseDirectory in Test := file(".")
+    baseDirectory in Test := file("."),
+
+    // Set testResultLogger back to the default, fixes an issue with `sbt-teamcity-logger`
+    //   See: https://github.com/JetBrains/sbt-tc-logger/issues/9
+    testResultLogger in (Test, test) := TestResultLogger.Default
   )
 
   val testAll = taskKey[Unit]("test all aggregate projects")
@@ -160,6 +164,7 @@ trait Prototypes {
     .settings(VersionInfo.settings)
     .settings(libraryDependencies ++= Seq(commonsIo))
     .settings(frontendDistSettings(applicationName))
+    .settingSets(settingSetsOrder)
   }
 
   def library(applicationName: String) = {
@@ -171,5 +176,22 @@ trait Prototypes {
     .settings(VersionInfo.settings)
     .settings(libraryDependencies ++= Seq(commonsIo))
     .settings(riffRaffUpload := {})
+    .settingSets(settingSetsOrder)
+  }
+
+  /**
+   * Overrides the default order in which settings are applied.
+   * Modified this so that settings from "nonAutoPlugins" (plugins using the older sbt plugin API)
+   * are applied before settings defined in build.scala
+   *
+   * Required for resetting the `testResultLogger` in `frontendTestSettings` above
+   *
+   * Default:
+   *   AddSettings.allDefaults: AddSettings = seq(autoPlugins, buildScalaFiles, userSettings, nonAutoPlugins, defaultSbtFiles)
+   */
+  lazy val settingSetsOrder = {
+    import AddSettings._
+
+    seq(autoPlugins, nonAutoPlugins, buildScalaFiles, userSettings, defaultSbtFiles)
   }
 }

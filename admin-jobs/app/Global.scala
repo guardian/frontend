@@ -19,8 +19,6 @@ with SwitchboardLifecycle {
   override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ++ List(
     ContentApiMetrics.ElasticHttpTimeoutCountMetric,
     ContentApiMetrics.ElasticHttpTimingMetric,
-    ContentApiMetrics.ContentApiCircuitBreakerRequestsMetric,
-    ContentApiMetrics.ContentApiCircuitBreakerOnOpen,
     ContentApiMetrics.ContentApiErrorMetric
   )
 }

@@ -1,6 +1,6 @@
 package services
 
-import com.gu.contentapi.client.model.ItemResponse
+import com.gu.contentapi.client.model.v1.ItemResponse
 import common.{Edition, _}
 import conf.LiveContentApi
 import conf.LiveContentApi.getResponse

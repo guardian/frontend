@@ -116,7 +116,7 @@ define([
         var slotName = slotTarget ? slotTarget : name,
             attributes = {},
             definition,
-            classes,
+            classes = [],
             $adSlot;
 
         definition = adSlotDefinitions[slotName] || adSlotDefinitions.inline;

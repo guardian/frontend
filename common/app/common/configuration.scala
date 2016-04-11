@@ -270,14 +270,13 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val dfpFacebookIaAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfp.facebookIaAdUnitRoot")
     lazy val dfpMobileAppsAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfp.mobileAppsAdUnitRoot")
     lazy val dfpAccountId = configuration.getMandatoryStringProperty("guardian.page.dfpAccountId")
+
     lazy val books_url = configuration.getMandatoryStringProperty("commercial.books_url")
     lazy val masterclasses_url =
       configuration.getMandatoryStringProperty("commercial.masterclasses_url")
     lazy val soulmates_url = configuration.getMandatoryStringProperty("commercial.soulmates_url")
     lazy val soulmatesApiUrl = configuration.getStringProperty("soulmates.api.url")
-    lazy val travel_url = configuration.getMandatoryStringProperty("commercial.travel_url")
-    lazy val traveloffers_url =
-      configuration.getStringProperty("traveloffers.api.url") map (u => s"$u/consumerfeed")
+    lazy val travelFeedUrl = configuration.getStringProperty("travel.feed.url")
     lazy val guMerchandisingAdvertiserId =
       configuration.getMandatoryStringProperty("commercial.dfp.guMerchandising.advertiserId")
 
@@ -405,10 +404,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val pressRateInSeconds = configuration.getIntegerProperty("admin.r2.page.press.rate.seconds").getOrElse(60)
     lazy val pressQueueWaitTimeInSeconds = configuration.getIntegerProperty("admin.r2.press.queue.wait.seconds").getOrElse(10)
     lazy val pressQueueMaxMessages = configuration.getIntegerProperty("admin.r2.press.queue.max.messages").getOrElse(10)
-    object header {
-      val name = configuration.getStringProperty("r2.presser.header.name")
-      val value = configuration.getStringProperty("r2.presser.header.value")
-    }
+    lazy val fallbackCachebustId = configuration.getStringProperty("admin.r2.press.fallback.cachebust.id").getOrElse("")
   }
 
   object memcached {

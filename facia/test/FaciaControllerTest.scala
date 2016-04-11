@@ -131,6 +131,7 @@ import org.scalatest._
   }
 
   it should "render fronts with content that has been pre-fetched from facia-press" in {
+    // make sure you switch on facia inline-embeds switch before you press to make this pass
     val request = FakeRequest("GET", "/inline-embeds").from(Uk)
     val future = test.faciaController.renderFront("inline-embeds")(request)
     contentAsString(future) should include ("""<div class="keep-it-in-the-ground__wrapper""")

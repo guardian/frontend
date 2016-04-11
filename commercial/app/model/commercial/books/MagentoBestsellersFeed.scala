@@ -41,7 +41,7 @@ object MagentoBestsellersFeed extends ExecutionContexts with Logging {
 
     val feedName = feedMetaData.name
 
-    feedMetaData.switch.isGuaranteedSwitchedOn flatMap { switchedOn =>
+    feedMetaData.parseSwitch.isGuaranteedSwitchedOn flatMap { switchedOn =>
       if (switchedOn) {
         val start = currentTimeMillis
         feedContent map { body =>
@@ -53,7 +53,7 @@ object MagentoBestsellersFeed extends ExecutionContexts with Logging {
           Future.failed(MissingFeedException(feedName))
         }
       } else {
-        Future.failed(SwitchOffException(feedMetaData.switch.name))
+        Future.failed(SwitchOffException(feedMetaData.parseSwitch.name))
       }
     } recoverWith {
       case NonFatal(e) => Future.failed(e)
