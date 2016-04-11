@@ -92,7 +92,11 @@ function release(release) {
     });
 }
 
-megalog.log('Updated release dependencies. \n\nPreparing a new `pasteup` release...');
+megalog.log([
+    'Updated release dependencies.',
+    'Preparing a new `pasteup` release...'
+].join('\n\n'));
+
 getCredentials()
     .then(setCredentials)
     .then(getReleaseType)
