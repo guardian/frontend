@@ -103,6 +103,9 @@ case class PressedPage (
       s"/${Paths.withoutEdition(id).getOrElse(id)}/all"
     }
   }
+
+  def alwaysAvailableAllPath = allPath.orElse(Some(s"/${Paths.withoutEdition(id).getOrElse(id)}/all"))
+
   val navSection: String = metadata.section
 
   val keywordIds: Seq[String] = frontKeywordIds(id)
