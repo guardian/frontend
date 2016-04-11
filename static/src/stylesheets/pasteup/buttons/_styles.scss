@@ -39,6 +39,7 @@
         guss-colour(guardian-brand, $pasteup-palette),
         #ffffff
     );
+
     @include button-hover-colour(
         darken(guss-colour(guardian-brand, $pasteup-palette), 10%)
     );
@@ -49,6 +50,7 @@
         guss-colour(neutral-7, $pasteup-palette),
         guss-colour(neutral-1, $pasteup-palette)
     );
+
     @include button-hover-colour(
         darken(guss-colour(neutral-7, $pasteup-palette), 10%)
     );
@@ -60,6 +62,7 @@
         guss-colour(neutral-1, $pasteup-palette),
         guss-colour(neutral-4, $pasteup-palette)
     );
+
     @include button-hover-colour(
         transparent,
         darken(guss-colour(neutral-3, $pasteup-palette), 10%)
@@ -71,6 +74,7 @@
         guss-colour(multimedia-support-4, $pasteup-palette),
         #ffffff
     );
+
     @include button-hover-colour(
         guss-colour(neutral-2, $pasteup-palette)
     );
@@ -82,6 +86,7 @@
         #ffffff,
         guss-colour(neutral-2, $pasteup-palette)
     );
+
     @include button-hover-colour(
         guss-colour(multimedia-main-1, $pasteup-palette),
         guss-colour(neutral-3, $pasteup-palette)
@@ -93,6 +98,7 @@
         guss-colour(neutral-7, $pasteup-palette),
         guss-colour(news-main-1, $pasteup-palette)
     );
+
     @include button-hover-colour(
         darken(guss-colour(neutral-7, $pasteup-palette), 10%)
     );
@@ -104,6 +110,7 @@
         guss-colour(news-main-1, $pasteup-palette),
         guss-colour(neutral-4, $pasteup-palette)
     );
+
     @include button-hover-colour(
         #ffffff,
         darken(guss-colour(neutral-3, $pasteup-palette), 10%)
@@ -115,6 +122,7 @@
         guss-colour(neutral-7, $pasteup-palette),
         guss-colour(features-support-1, $pasteup-palette)
     );
+
     @include button-hover-colour(
         darken(guss-colour(neutral-7, $pasteup-palette), 10%)
     );
@@ -126,6 +134,7 @@
         guss-colour(features-support-1, $pasteup-palette),
         guss-colour(neutral-4, $pasteup-palette)
     );
+
     @include button-hover-colour(
         #ffffff,
         darken(guss-colour(neutral-3, $pasteup-palette), 10%)
@@ -137,6 +146,7 @@
         guss-colour(neutral-7, $pasteup-palette),
         guss-colour(comment-main-1, $pasteup-palette)
     );
+
     @include button-hover-colour(
         darken(guss-colour(neutral-7, $pasteup-palette), 10%)
     );
@@ -148,6 +158,7 @@
         guss-colour(comment-main-1, $pasteup-palette),
         guss-colour(neutral-4, $pasteup-palette)
     );
+
     @include button-hover-colour(
         #ffffff,
         darken(guss-colour(neutral-3, $pasteup-palette), 10%)
@@ -159,6 +170,7 @@
         guss-colour(neutral-6, $pasteup-palette),
         guss-colour(neutral-1, $pasteup-palette)
     );
+
     @include button-hover-colour(
         darken(guss-colour(neutral-6, $pasteup-palette), 10%)
     );
@@ -170,6 +182,7 @@
         guss-colour(neutral-1, $pasteup-palette),
         guss-colour(neutral-3, $pasteup-palette)
     );
+
     @include button-hover-colour(
         guss-colour(neutral-8, $pasteup-palette),
         darken(guss-colour(neutral-3, $pasteup-palette), 10%)
@@ -238,6 +251,7 @@ $show-more-icon-spacing: $base-size + 1;
         guss-colour(news-main-2, $pasteup-palette),
         guss-colour(news-main-2, $pasteup-palette)
     );
+
     @include button-hover-colour(
         transparent,
         darken(guss-colour(news-main-2, $pasteup-palette), 10%)
