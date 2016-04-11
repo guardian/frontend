@@ -1,12 +1,16 @@
 define([
     'bean',
     'bonzo',
+    'common/utils/config',
+    'common/utils/detect',
     'common/utils/fastdom-promise',
     'lodash/utilities/template',
     'text!common/views/commercial/creatives/full-width-250.html'
 ], function (
     bean,
     bonzo,
+    config,
+    detect,
     fastdom,
     template,
     fullWidth250Html
@@ -15,7 +19,9 @@ define([
         this.create = function () {
             renderContainer($adSlot);
             var $creative = renderCreative($adSlot, params);
-            attachExpander($creative);
+            if (isExpandable()) {
+                attachExpander($creative);
+            }
         };
     }
 
@@ -50,6 +56,10 @@ define([
         }
 
         bean.on($creative[0], 'click', toggleExpansion);
+    }
+
+    function isExpandable() {
+        return config.page.isFront && detect.isBreakpoint({max: 'phablet'});
     }
 
     return FullWidth250;
