@@ -205,14 +205,15 @@ $video-width-desktop: 700px;
     padding: $gs-baseline/4 $gs-gutter/4 $gs-baseline * 2;
     box-sizing: border-box;
     color: #ffffff;
-    min-width: 100%;
+    width: gs-span(3);
+    min-height: gs-height(3);
     transition: opacity .4s ease-out;
 
     @include mq(desktop) {
         opacity: 0;
         position: absolute;
-        top: 0;
-        left: 0;
+        top: $gs-baseline;
+        left: $gs-gutter;
         z-index: 2;
         background-color: rgba(0, 0, 0, .5);
     }
