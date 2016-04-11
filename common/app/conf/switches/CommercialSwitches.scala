@@ -134,7 +134,7 @@ trait CommercialSwitches {
   val JobFeedSwitch = Switch(
     "Commercial",
     "gu-jobs",
-    "If this switch is on, commercial components will be fed by job feed.",
+    "If this switch is on, commercial components will be fed by the dynamic job feed.",
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -143,7 +143,7 @@ trait CommercialSwitches {
   val StaticJobsFeedSwitch = Switch(
     "Commercial",
     "gu-static-jobs",
-    "If this switch is on, use the static jobs feed, not the dynamically named one.",
+    "If this switch is on, commercial components will be fed by the static job feed.",
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
