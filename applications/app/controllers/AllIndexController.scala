@@ -98,14 +98,14 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
       item.section.map( section =>
         IndexPage(
           page = Section.make(section),
-          contents = item.results.map(IndexPageItem(_)),
+          contents = item.results.getOrElse(Nil).map(IndexPageItem(_)),
           Tags(Nil),
           date,
           tzOverride = None
         )
       ).orElse(item.tag.map( apitag => {
         val tag = Tag.make(apitag)
-        IndexPage(page = tag, contents = item.results.map(IndexPageItem(_)), Tags(Seq(tag)), date, tzOverride = None)
+        IndexPage(page = tag, contents = item.results.getOrElse(Nil).map(IndexPageItem(_)), Tags(Seq(tag)), date, tzOverride = None)
       }))
     }
 
@@ -122,7 +122,7 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
         .fromDate(date)
         .orderBy("oldest")
     ).map{ item =>
-      item.results.headOption.flatMap(_.webPublicationDate).map(_.toJodaDateTime.withZone(DateTimeZone.UTC))
+      item.results.getOrElse(Nil).headOption.flatMap(_.webPublicationDate).map(_.toJodaDateTime.withZone(DateTimeZone.UTC))
     }
     result.recover{ case e: Exception =>
       log.error(e.getMessage, e)

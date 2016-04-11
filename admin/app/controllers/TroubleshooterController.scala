@@ -24,6 +24,7 @@ object PreviewContentApi extends ContentApiClient {
   lazy val httpTimingMetric = ContentApiMetrics.ElasticHttpTimingMetric
   lazy val httpTimeoutMetric = ContentApiMetrics.ElasticHttpTimeoutCountMetric
   override val targetUrl = AdminConfiguration.contentapi.previewHost
+  override val useThrift = false
 }
 
 object TroubleshooterController extends Controller with Logging with AuthLogging with ExecutionContexts {
