@@ -5,6 +5,7 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBAsyncClient
 import com.amazonaws.services.dynamodbv2.model.{AttributeValue, DeleteItemRequest, UpdateItemRequest}
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
+import org.joda.time.DateTime
 import scala.collection.JavaConverters._
 import awswrappers.dynamodb._
 
@@ -24,6 +25,9 @@ object DynamoDbStore extends Logging with ExecutionContexts {
         ("notificationTopicId", new AttributeValue().withS(notificationTopicId)),
         ("gcmBrowserId", new AttributeValue().withS(gcmBrowserId))
       ).asJava)
+      .withUpdateExpression(s"SET createdDate = :createdDate")
+      .withExpressionAttributeValues(Map[String, AttributeValue](
+        ":createdDate" -> new AttributeValue().withN((DateTime.now.getMillis / 1000).toString)).asJava)
 
     client.updateItemFuture(updateItemRequest) onFailure {
       case t: Throwable =>
