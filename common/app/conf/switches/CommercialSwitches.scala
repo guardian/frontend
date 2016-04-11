@@ -113,10 +113,19 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val TravelOffersFeedSwitch = Switch(
+  val TravelFeedFetchSwitch = Switch(
     "Commercial",
-    "gu-travel-offers",
-    "If this switch is on, commercial components will be fed by travel offer feed.",
+    "gu-travel-feed-fetch",
+    "If this switch is on, cached travel offers feed will be updated from external source.",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val TravelFeedParseSwitch = Switch(
+    "Commercial",
+    "gu-travel-feed-parse",
+    "If this switch is on, commercial components will be fed by travel offers feed.",
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false

@@ -31,7 +31,7 @@ trait Related extends ConciergeRepository {
       )
 
       val trails = response.map { response =>
-        val relatedContentItems = response.relatedContent map { item =>
+        val relatedContentItems = response.relatedContent.getOrElse(Nil) map { item =>
           RelatedContentItem(item)
         }
         RelatedContent(relatedContentItems)

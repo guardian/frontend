@@ -1,6 +1,6 @@
 package test
 
-import com.gu.contentapi.client.model.ItemResponse
+import com.gu.contentapi.client.model.v1.ItemResponse
 import conf.LiveContentApi.getResponse
 import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 import org.scalatest.concurrent.{Futures, ScalaFutures}

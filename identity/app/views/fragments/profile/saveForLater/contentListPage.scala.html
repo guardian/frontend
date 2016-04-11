@@ -2,7 +2,7 @@
 @import views.html.fragments.items.facia_cards.contentCard
 @import common.LinkTo
 
-@(articles: List[SaveForLaterItem])(implicit request: RequestHeader)
+@(articles: Seq[SaveForLaterItem])(implicit request: RequestHeader)
 <div class="saved-contents js-saved-contents" data-link-name="saved">
 @if(articles.zipWithRowInfo.isEmpty) {
     <p>You don't have any saved items.</p>

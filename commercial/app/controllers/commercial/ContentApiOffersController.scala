@@ -1,5 +1,6 @@
 package controllers.commercial
 
+import common.commercial._
 import common.{ExecutionContexts, Logging}
 import model.commercial.{CapiAgent, Lookup}
 import model.{Cached, NoCache}
@@ -64,16 +65,19 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
     futureContents map {
       case Nil => NoCache(format.nilResult)
       case contents => Cached(componentMaxAge) {
+
+        val omnitureId: String = optOmnitureId orElse optCapiTitle getOrElse ""
+
         if (isMulti) {
           if(conf.switches.Switches.v2CapiMultipleTemplate.isSwitchedOn) {
             format.result(views.html.contentapi.itemsV2(
-              contents,
+              contents map (CardContent.fromContentItem(_, optClickMacro)),
               optLogo,
               optCapiTitle,
               optCapiLink,
               optCapiAbout,
               optClickMacro,
-              optOmnitureId,
+              omnitureId,
               optCapiAdFeature,
               optSponsorType,
               optSponsorLabel)
@@ -95,7 +99,7 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
         } else {
           if(conf.switches.Switches.v2CapiSingleTemplate.isSwitchedOn) {
             format.result(views.html.contentapi.itemV2(
-              contents.head,
+              CardContent.fromContentItem(contents.head, optClickMacro),
               optLogo,
               optCapiTitle,
               optCapiLink,
@@ -106,8 +110,8 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
               optSponsorType,
               optSponsorLabel,
               optClickMacro,
-              optOmnitureId)
-            )
+              omnitureId
+            ))
           } else {
             format.result(views.html.contentapi.item(
               contents.head,

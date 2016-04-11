@@ -5,7 +5,9 @@ import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
+import conf.switches.Switches._
 import cricketPa.CricketTeams
+import model.CacheTime._
 import model.liveblog.BodyBlock
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import ophan.SurgingContentAgent
@@ -201,11 +203,11 @@ object MetaData {
       analyticsName = s"GFE:$section:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section,
       description = apiContent.fields.flatMap(_.trailText),
-      cacheSeconds = {
-        if (fields.isLive) 5
-        else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 1.hour) 10
-        else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 24.hours) 30
-        else 300
+      cacheTime = {
+        if (fields.isLive) CacheTime.LiveBlogActive
+        else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 1.hour) CacheTime.RecentlyUpdated
+        else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 24.hours) CacheTime.LastDayUpdated
+        else CacheTime.NotRecentlyUpdated
       }
     )
   }
@@ -226,7 +228,7 @@ final case class MetaData (
   contentType: String = "",
   hasHeader: Boolean = true,
   schemaType: Option[String] = None, // Must be one of... http://schema.org/docs/schemas.html
-  cacheSeconds: Int = 60,
+  cacheTime: CacheTime = CacheTime.Default,
   openGraphImages: Seq[String] = Seq(),
   membershipAccess: Option[String] = None,
   isFront: Boolean = false,

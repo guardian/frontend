@@ -1441,3 +1441,33 @@ $comment-recommend-button-size: 19px;
     padding: ($gs-baseline / 3) * 2 ($gs-gutter / 2);
     margin-top: $gs-baseline / 2;
 }
+
+.d-comment-box__onboarding {
+    display: none;
+}
+
+.d-comment-box__onboarding h3 {
+    font-weight: bold;
+}
+
+.d-comment-box--onboarding-visible .d-comment-box__onboarding {
+    @include fs-textSans(2);
+    display: block;
+    background-color: colour(neutral-7);
+    padding: $gs-baseline $gs-gutter;
+}
+
+.d-comment-box--onboarding-visible .d-comment-box__content {
+    display: none;
+}
+
+.d-comment-box__onboarding-preview-body p {
+    background-color: #ffffff;
+    padding: $gs-baseline $gs-gutter;
+    margin-bottom: $gs-baseline;
+}
+
+.d-comment-box__onboarding-cancel {
+    background-color: colour(neutral-3);
+    border-color: colour(neutral-3);
+}

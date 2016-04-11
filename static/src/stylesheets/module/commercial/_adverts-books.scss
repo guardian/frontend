@@ -1,8 +1,4 @@
 .adverts--books {
-    .advert__image {
-        max-height: $gs-baseline * 11;
-    }
-
     > .adverts__header {
         .search {
             position: relative;
@@ -89,4 +85,13 @@
             );
         }
     }
+}
+
+.advert-blended--books .advert-blended__title {
+    padding-top: 5px;
+    padding-bottom: 4px;
+}
+
+.logo--tone-books {
+    fill: guss-colour(features-main-1, $pasteup-palette);
 }

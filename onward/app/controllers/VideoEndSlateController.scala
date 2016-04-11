@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.contentapi.client.GuardianContentApiError
+import com.gu.contentapi.client.GuardianContentApiThriftError
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import common._
 import conf.LiveContentApi
@@ -43,7 +43,7 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
           }
       }
 
-      promiseOrResponse.recover{ case GuardianContentApiError(404, message, _) =>
+      promiseOrResponse.recover{ case GuardianContentApiThriftError(404, message, _) =>
          log.info(s"Got a 404 calling content api: $message" )
          None
       }
@@ -73,7 +73,7 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
       .showTags("all")
       .showFields("all")
     ).map { response =>
-      response.results filter { content => !isCurrentStory(content) } map { result =>
+      response.results.getOrElse(Nil) filter { content => !isCurrentStory(content) } map { result =>
         Content(result)
       } collect {
         case v: Video => v
@@ -83,7 +83,7 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
       }
     }
 
-    promiseOrResponse.recover{ case GuardianContentApiError(404, message, _) =>
+    promiseOrResponse.recover{ case GuardianContentApiThriftError(404, message, _) =>
       log.info(s"Got a 404 calling content api: $message" )
       None
     }
