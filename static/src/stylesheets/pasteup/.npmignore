@@ -1,2 +1,4 @@
 *
 !README.md
+!*.scss
+!**/*.scss
