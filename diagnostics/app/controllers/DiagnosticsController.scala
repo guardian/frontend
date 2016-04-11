@@ -41,8 +41,6 @@ object DiagnosticsController extends Controller with Logging {
     TinyResponse.noContent()
   }
 
-  def cssOptions = postOptions
-
   def csp = Action(jsonParser) { implicit request =>
     if (conf.switches.Switches.CspReporting.isSwitchedOn) {
       CSP.report(request.body)
@@ -50,7 +48,7 @@ object DiagnosticsController extends Controller with Logging {
     TinyResponse.noContent()
   }
 
-  private def postOptions: Action[AnyContent] = Action { implicit request =>
+  def postOptions: Action[AnyContent] = Action { implicit request =>
     TinyResponse.noContent(Some("POST, OPTIONS"))
   }
 }
