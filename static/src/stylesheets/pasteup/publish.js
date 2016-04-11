@@ -1,3 +1,5 @@
+// Don't run this file manually – to publish a new release run `make pasteup` from `frontend/`
+
 var Promise = require("bluebird");
 var writeFile = Promise.promisify(require("fs").writeFile);
 var exec = require('child_process').exec;
