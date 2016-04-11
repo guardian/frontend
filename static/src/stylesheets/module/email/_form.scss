@@ -179,12 +179,12 @@
 }
 
 .email-sub__close-icon svg {
-    fill: darken(colour(neutral-2), 10%);
+    fill: darken($neutral-2, 10%);
 
     &:hover,
     &:focus {
         cursor: pointer;
-        fill: colour(neutral-2);
+        fill: $neutral-2;
     }
 }
 
@@ -249,7 +249,7 @@
 
 // IN-ARTICLE (COMPOSER) PAGE MODS
 .email-sub--article {
-    border-top: 1px dotted colour(neutral-4);
+    border-top: 1px dotted $neutral-4;
     padding: $gs-gutter / 4;
 
     @include mq($from: phablet) {
@@ -262,7 +262,7 @@
 
     .email-sub__message__headline,
     .email-sub__message__description {
-        color: colour(neutral-1);
+        color: $neutral-1;
     }
 }
 
@@ -274,7 +274,7 @@
     }
 
     .email-sub__text-input {
-        border-color: colour(neutral-3);
+        border-color: $neutral-3;
     }
 
     .email-sub__submit-input {

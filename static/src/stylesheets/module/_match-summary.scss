@@ -1,9 +1,9 @@
 .match-summary__rugby-table {
     @include fs-textSans(3);
-    color: colour(neutral-2);
+    color: $neutral-2;
 
     tr {
-        border: solid colour(neutral-6);
+        border: solid $neutral-6;
         border-width: 1px 0;
     }
 

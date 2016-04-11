@@ -1,7 +1,7 @@
 .tone-editorial--item {
     $c-headline: #ffffff;
 
-    background-color: colour(editorial-default);
+    background-color: $editorial-default;
 
     &,
     .rich-link__link,
@@ -12,24 +12,24 @@
 
     .u-faux-block-link--hover,
     .fc-item__image-container {
-        background-color: darken(colour(editorial-default), 5%);
+        background-color: darken($editorial-default, 5%);
     }
 
     .fc-item__link,
     .fc-sublink__link {
         &:visited {
-            color: mix($c-headline, colour(editorial-default), 80%);
+            color: mix($c-headline, $editorial-default, 80%);
         }
     }
 
     .inline-quote,
     .fc-item__meta .inline-icon {
-        fill: colour(editorial-accent);
+        fill: $editorial-accent;
     }
 
     .fc-item__container:before,
     .rich-link__container:before {
-        background-color: colour(editorial-accent);
+        background-color: $editorial-accent;
     }
 
     .fc-item__kicker,
@@ -37,47 +37,47 @@
     .fc-item__standfirst,
     .rich-link__read-more-text,
     .fc-save-for-later--is-saved {
-        color: colour(editorial-accent);
+        color: $editorial-accent;
     }
 
     .fc-save-for-later {
-        border-color: mix($c-headline, colour(editorial-default), 20%);
+        border-color: mix($c-headline, $editorial-default, 20%);
     }
 
 
     .fc-item__kicker--dreamsnap {
-        background-color: mix(#000000, colour(editorial-default), 10%);
+        background-color: mix(#000000, $editorial-default, 10%);
     }
 
     .rich-link__arrow-icon {
-        fill: colour(editorial-accent);
+        fill: $editorial-accent;
     }
 
     .fc-item__meta {
-        color: colour(editorial-accent);
+        color: $editorial-accent;
     }
 
     .fc-save-for-later--is-saved .inline-tone-fill {
-        fill: colour(editorial-accent);
+        fill: $editorial-accent;
     }
 
     .fc-sublink__title:before {
-        border-color: mix($c-headline, colour(editorial-default), 20%);
+        border-color: mix($c-headline, $editorial-default, 20%);
     }
 }
 
 .tone-editorial--sublink {
     .fc-sublink__kicker {
-        color: colour(editorial-default);
+        color: $editorial-default;
     }
 
     @include sublink-style(editorial, feature, live, media, review) {
         .fc-sublink__kicker {
-            color: colour(editorial-accent);
+            color: $editorial-accent;
         }
     }
 }
 
 .tone-editorial--most-popular .fc-item__kicker {
-    color: colour(editorial-default);
+    color: $editorial-default;
 }

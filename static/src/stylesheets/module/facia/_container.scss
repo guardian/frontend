@@ -36,7 +36,7 @@ $header-image-size-desktop: 100px;
     }
 
     .fc-container & {
-        border-top: 1px solid colour(news-accent);
+        border-top: 1px solid $news-accent;
     }
 }
 
@@ -160,15 +160,15 @@ $header-image-size-desktop: 100px;
         color: inherit;
 
         &:hover {
-            color: colour(news-accent);
+            color: $news-accent;
 
             & .inline-icon {
-                fill: colour(news-accent);
+                fill: $news-accent;
             }
         }
 
         .inline-icon {
-            fill: colour(news-main-1);
+            fill: $news-main-1;
             position: relative;
             height: .7em;
             width: 1em;
@@ -186,7 +186,7 @@ $header-image-size-desktop: 100px;
     border: 0;
 
     & button {
-        color: colour(neutral-3);
+        color: $neutral-3;
         font-weight: 500;
         text-align: left;
         background: #ffffff;
@@ -251,7 +251,7 @@ $header-image-size-desktop: 100px;
 .fc-container__header__description {
     @include fs-headline(2);
     padding-bottom: $gs-baseline / 2;
-    color: colour(neutral-2);
+    color: $neutral-2;
     text-align: right;
 
     @include mq(tablet) {
@@ -283,7 +283,7 @@ $header-image-size-desktop: 100px;
     }
 
     @include mq(leftCol) {
-        border-top: 1px dotted colour(neutral-5);
+        border-top: 1px dotted $neutral-5;
         padding-top: $gs-baseline / 2;
         margin-top: $gs-baseline;
         width: 100%;
@@ -364,12 +364,12 @@ $header-image-size-desktop: 100px;
     right: 0;
     bottom: 0;
     padding-bottom: $gs-baseline / 2;
-    color: colour(neutral-2);
+    color: $neutral-2;
 
     @include mq(leftCol) {
         position: static;
         margin-top: ($gs-baseline / 3) * 5;
-        border-top: 1px dotted colour(neutral-3);
+        border-top: 1px dotted $neutral-3;
         padding-top: $gs-baseline / 4;
     }
 
@@ -444,7 +444,7 @@ $header-image-size-desktop: 100px;
         top: 6px;
         left: 50%;
         margin-left: -12px;
-        fill: colour(neutral-1);
+        fill: $neutral-1;
 
         .fc-container--rolled-up & {
             transform: rotate(0deg);
@@ -453,7 +453,7 @@ $header-image-size-desktop: 100px;
 
     @include mq(tablet) {
         text-align: right;
-        color: colour(neutral-2);
+        color: $neutral-2;
 
         .fc-container--advertisement &,
         .fc-container--advertisement-feature & {
@@ -461,7 +461,7 @@ $header-image-size-desktop: 100px;
         }
         &:hover,
         &:focus {
-            color: colour(neutral-1);
+            color: $neutral-1;
         }
         .inline-icon {
             display: none;
@@ -493,7 +493,7 @@ $header-image-size-desktop: 100px;
 .fc-container--media {
     .fc-container__inner,
     .fc-slice__item+.fc-slice__item:before {
-        border-color: colour(neutral-2);
+        border-color: $neutral-2;
     }
 
     .fc-container__header__title {
@@ -518,7 +518,7 @@ $header-image-size-desktop: 100px;
 
 .fc-date-headline {
     @include fs-headline(2);
-    color: colour(neutral-1);
+    color: $neutral-1;
     display: block;
     padding-bottom: $gs-baseline / 2;
 }
@@ -527,7 +527,7 @@ $header-image-size-desktop: 100px;
     padding-bottom: 0;
 
     .fc-container__inner {
-        border-top: 1px solid colour(neutral-5);
+        border-top: 1px solid $neutral-5;
     }
 }
 
@@ -540,7 +540,7 @@ $header-image-size-desktop: 100px;
     background-color: #ffffff;
 }
 .index-page-header {
-    border-top: 1px solid colour(news-accent);
+    border-top: 1px solid $news-accent;
     padding-top: $gs-baseline / 2;
     padding-bottom: $gs-baseline;
     margin-top: $gs-baseline;
@@ -593,7 +593,7 @@ $header-image-size-desktop: 100px;
 
 .index-page-header__description {
     @include fs-headline(2);
-    color: colour(neutral-2);
+    color: $neutral-2;
 
     @include mq(leftCol) {
         float: left;

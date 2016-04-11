@@ -9,9 +9,9 @@
         height: 100%;
     }
 }
-$c-mem-test-red: colour(live-default);
-$c-mem-test-orange: colour(media-default);
-$c-mem-test-grey: colour(analysis-background);
+$c-mem-test-red: $live-default;
+$c-mem-test-orange: $media-default;
+$c-mem-test-grey: $analysis-background;
 $c-mem-test-dark-grey: $neutral-3;
 
 .membership-test-bg-orange {

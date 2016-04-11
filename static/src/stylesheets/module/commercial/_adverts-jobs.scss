@@ -15,7 +15,7 @@
         margin-bottom: $gs-baseline / 2;
 
         > li {
-            border-top: 1px solid colour(neutral-4);
+            border-top: 1px solid $neutral-4;
             flex-basis: calc(50% - (#{$gs-gutter / 4}));
         }
 

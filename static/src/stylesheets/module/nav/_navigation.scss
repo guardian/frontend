@@ -5,7 +5,7 @@
 /* Configuration
    ========================================================================== */
 
-$c-navigation-base: colour(neutral-5);
+$c-navigation-base: $neutral-5;
 
 $navigation-height: $gs-row-height;
 
@@ -15,14 +15,14 @@ $navigation-toggler-width-full: 186px;
 
 $c-navigation-background: mix($c-navigation-base, #ffffff, 80%);
 // TODO: Palette?
-$c-navigation-background-side-bar: darken(colour(guardian-brand), 2%);
+$c-navigation-background-side-bar: darken($guardian-brand, 2%);
 
-$c-signposting-action: colour(news-default);
+$c-signposting-action: $news-default;
 $c-signposting-background: $c-navigation-base;
 
 $c-top-navigation-action: #ffffff;
 
-$c-local-navigation-action: colour(neutral-1);
+$c-local-navigation-action: $neutral-1;
 $c-local-navigation-background: $c-navigation-base;
 
 $c-global-navigation-background: $c-navigation-base;
@@ -30,16 +30,16 @@ $c-global-navigation-title: #ffffff;
 $c-global-navigation-title-background: $c-top-header-background;
 $global-navigation-title-width: $left-column + $gs-gutter;
 $global-navigation-title-width-wide: $left-column-wide + $gs-gutter;
-$c-global-navigation-action: colour(neutral-1);
+$c-global-navigation-action: $neutral-1;
 $c-global-navigation-border: mix($c-local-navigation-background, #ffffff, 60%);
 
-$c-navigation-toggle-background: colour(neutral-1);
+$c-navigation-toggle-background: $neutral-1;
 $c-navigation-toggle-icon: #ffffff;
 $c-navigation-toggle-shadow: rgba(#000000, .333333);
 
 $navigation-h-space-between-items: $gs-gutter/2;
 
-$c-navigation-expandable-background: colour(neutral-1);
+$c-navigation-expandable-background: $neutral-1;
 
 @include mq-add-breakpoint(navigationBreakOnTwoLevels, mq-get-breakpoint-width(desktop));
 @include mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-get-breakpoint-width(leftCol));
@@ -48,7 +48,7 @@ $c-navigation-expandable-background: colour(neutral-1);
    ========================================================================== */
 
 .navigation-container {
-    background: colour(guardian-brand);
+    background: $guardian-brand;
 }
 
 .navigation {
@@ -185,7 +185,7 @@ $c-navigation-expandable-background: colour(neutral-1);
 }
 .signposting__separator__inner {
     font-weight: 200;
-    color: colour(neutral-2);
+    color: $neutral-2;
     font-size: 27px;
     line-height: $navigation-height;
 }
@@ -335,7 +335,7 @@ $c-navigation-expandable-background: colour(neutral-1);
     color: $c-global-navigation-title;
     background: $c-global-navigation-title-background;
     float: left;
-    border-top: 1px solid colour(guardian-brand);
+    border-top: 1px solid $guardian-brand;
 
     @include mq($until: tablet) {
         line-height: $gs-baseline*2;

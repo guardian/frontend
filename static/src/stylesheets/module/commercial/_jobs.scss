@@ -78,8 +78,8 @@
 
 .commercial--jobs__sector__link {
     @include fs-headline(2);
-    color: colour(neutral-1);
-    border-top: 1px solid colour(neutral-4);
+    color: $neutral-1;
+    border-top: 1px solid $neutral-4;
     padding: $gs-baseline/1.5 0;
     display: block;
 }

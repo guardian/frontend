@@ -55,7 +55,7 @@ $gimbap-width-quarter: calc(25% - 20px);
 
 .gimbap-wrap__box {
     position: relative;
-    border-top: 1px solid colour(news-accent);
+    border-top: 1px solid $news-accent;
 }
 
 .gimbap-wrap__header {

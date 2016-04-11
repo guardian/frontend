@@ -17,15 +17,15 @@
 }
 
 .sudoku__cell--highlighted rect {
-    fill: colour(sudoku-mute);
+    fill: $sudoku-mute;
 }
 
 .sudoku__cell--focussed rect {
-    fill: colour(sudoku-accent);
+    fill: $sudoku-accent;
 }
 
 .sudoku__cell--error .sudoku__cell-text {
-    fill: colour(error);
+    fill: $error;
 }
 
 .sudoku__cell-text {

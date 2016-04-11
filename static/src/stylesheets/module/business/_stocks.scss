@@ -44,7 +44,7 @@ $stocks-icon-height: 10px;
 @mixin stock($change, $colour, $icon) {
     .stocks__stock-value--#{$change} {
         .stocks__change {
-            color: colour($colour);
+            color: $colour;
         }
 
         .stocks__icon--#{$icon} {
