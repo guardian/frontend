@@ -12,6 +12,8 @@ import play.api.GlobalSettings
 import services.EmailService
 import tools.{CloudWatch, LoadBalancer}
 
+import scala.concurrent.Future
+
 trait AdminLifecycle extends GlobalSettings with Logging {
 
   lazy val adminPressJobStandardPushRateInMinutes: Int = Configuration.faciatool.adminPressJobStandardPushRateInMinutes
@@ -48,14 +50,17 @@ trait AdminLifecycle extends GlobalSettings with Logging {
 
     Jobs.scheduleEveryNMinutes("FrontPressJobHighFrequency", adminPressJobHighPushRateInMinutes) {
       if(FrontPressJobSwitch.isSwitchedOn) RefreshFrontsJob.runFrequency(HighFrequency)
+      Future.successful(())
     }
 
     Jobs.scheduleEveryNMinutes("FrontPressJobStandardFrequency", adminPressJobStandardPushRateInMinutes) {
       if(FrontPressJobSwitchStandardFrequency.isSwitchedOn) RefreshFrontsJob.runFrequency(StandardFrequency)
+      Future.successful(())
     }
 
     Jobs.scheduleEveryNMinutes("FrontPressJobLowFrequency", adminPressJobLowPushRateInMinutes) {
       if(FrontPressJobSwitch.isSwitchedOn) RefreshFrontsJob.runFrequency(LowFrequency)
+      Future.successful(())
     }
 
     Jobs.schedule("RebuildIndexJob", s"9 0/$adminRebuildIndexRateInMinutes * 1/1 * ? *") {
@@ -69,14 +74,14 @@ trait AdminLifecycle extends GlobalSettings with Logging {
 
     if (environment.isProd) {
       val londonTime = TimeZone.getTimeZone("Europe/London")
-      Jobs.schedule("AdsStatusEmailJob", "0 44 8 ? * MON-FRI", londonTime) {
+      Jobs.scheduleWeekdayJob("AdsStatusEmailJob", 44, 8, londonTime) {
         AdsStatusEmailJob.run()
       }
-      Jobs.schedule("ExpiringAdFeaturesEmailJob", "0 47 8 ? * MON-FRI", londonTime) {
+      Jobs.scheduleWeekdayJob("ExpiringAdFeaturesEmailJob", 47, 8, londonTime) {
         log.info(s"Starting ExpiringAdFeaturesEmailJob")
         ExpiringAdFeaturesEmailJob.run()
       }
-      Jobs.schedule("ExpiringSwitchesEmailJob", "0 48 8 ? * MON-FRI", londonTime) {
+      Jobs.scheduleWeekdayJob("ExpiringSwitchesEmailJob", 48, 8, londonTime) {
         log.info(s"Starting ExpiringSwitchesEmailJob")
         ExpiringSwitchesEmailJob.run()
       }
