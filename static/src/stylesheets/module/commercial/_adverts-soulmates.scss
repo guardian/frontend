@@ -85,7 +85,7 @@
     }
 }
 
-.advert__blended-container--soulmates {
+.advert-blended--soulmates {
     background: #f5f3e7;
     padding: 0 $gs-gutter / 4;
 
@@ -96,13 +96,13 @@
         }
     }
 
-    .advert__blended-container__title {
+    .advert-blended__title {
         background: guss-colour(soulmates-colour, $frontend-palette);
         margin: 0 $gs-gutter / -4 5px;
         padding: 4px $gs-gutter / 4 0;
     }
 
-    .advert__blended-container__body {
+    .advert-blended__body {
         display: flex;
 
         > * {

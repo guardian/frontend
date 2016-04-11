@@ -3,15 +3,15 @@
 
 @import conf.Configuration
 
-<div class="advert__blended-container advert__blended-container--soulmates">
-    <div class="advert__blended-container__title">
+<div class="advert-blended advert-blended--soulmates">
+    <div class="advert-blended__title">
         @fragments.inlineSvg("logo-soulmates", "commercial", classes = Seq("logo--tone-soulmates"))
         <span class="u-h">The Guardian</span> <span class="u-h">Soulmates</span>
     </div>
-    <div class="advert__blended-container__body">
+    <div class="advert-blended__body">
         @members.map { member => @soulmateCard(member, clickMacro) }
     </div>
-    <div class="advert__blended-container__footer">
+    <div class="advert-blended__footer">
         <a class="button button--tone-media button--small"
             href="@clickMacro@Configuration.commercial.soulmates_url"
             data-link-name="merchandising-soulmates-v1_0_2014-08-18-find-solumate-link"
