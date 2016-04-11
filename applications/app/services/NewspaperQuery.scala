@@ -15,7 +15,7 @@ import slices.{ContainerDefinition, Fixed, FixedContainers, TTT}
 
 import scala.concurrent.Future
 
-case class BookSectionContent(tag: Tag, content: List[ApiContent])
+case class BookSectionContent(tag: Tag, content: Seq[ApiContent])
 case class ContentByPage(page: Int, content: ApiContent)
 case class TagWithContent(tag: Tag, content: ApiContent)
 case class BookSectionContentByPage(page: Int, booksectionContent: BookSectionContent)
@@ -62,7 +62,7 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
     LiveContentApi.getResponse(itemQuery).map { resp =>
 
       //filter out the first page results to make a Front Page container
-      val (firstPageContent, otherContent) = resp.results.partition(content => getNewspaperPageNumber(content).contains(1))
+      val (firstPageContent, otherContent) = resp.results.getOrElse(Nil).partition(content => getNewspaperPageNumber(content).contains(1))
 
       val firstPageContainer = {
         val content = firstPageContent.map(c => FaciaContentConvert.contentToFaciaContent(c))
@@ -83,8 +83,8 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
     }
   }
 
-  private def createBookSections(contentList: List[ApiContent]): List[BookSectionContent] = {
-    val tagWithContent: List[TagWithContent] = contentList.flatMap { content =>
+  private def createBookSections(contentList: Seq[ApiContent]): List[BookSectionContent] = {
+    val tagWithContent: Seq[TagWithContent] = contentList.flatMap { content =>
       content.tags.find(_.`type`.name == "NewspaperBookSection").map(t => TagWithContent(t, content))
     }
 
@@ -107,8 +107,8 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
     pageNumberToFaciaContainer.sortBy(_.page).map(_.booksectionContent)
   }
 
-  private def orderContentByPageNumber(unorderedContent: List[ApiContent]): List[ApiContent] = {
-    val pageNumberToContent: List[ContentByPage] = unorderedContent.flatMap { content =>
+  private def orderContentByPageNumber(unorderedContent: Seq[ApiContent]): Seq[ApiContent] = {
+    val pageNumberToContent: Seq[ContentByPage] = unorderedContent.flatMap { content =>
       getNewspaperPageNumber(content).map(ContentByPage(_, content))
     }
     pageNumberToContent.sortBy(_.page).map(_.content)

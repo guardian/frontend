@@ -28,6 +28,10 @@
     @include mq(wide) {
         padding: 0 calc(50% - 650px);
     }
+
+    .inline-commercial {
+        display: block;
+    }
 }
 
 .adverts--legacy {
@@ -82,6 +86,11 @@
         @include mq(desktop) {
             max-width: gs-span(12) + ($gs-gutter * 2);
         }
+    }
+
+    .adverts__title {
+        color: #ffffff;
+        @include fs-header(2);
     }
 
     .adverts__logo {
@@ -177,30 +186,19 @@
     .advert {
         flex-basis: calc(75% - #{$gs-gutter});
         flex-grow: 0;
-        margin: 0;
     }
 
-    .advert__image-container {
-        @include mq(tablet) {
-            position: absolute;
-            left: $gs-gutter / 2;
-            top: 0;
-            width: $gs-gutter*11;
-        }
+    .advert--inverse > .advert__image-container {
+        flex-basis: calc(33.33% - #{$gs-gutter / 2});
+        margin-right: 0;
     }
 
-    .adverts__row > .button {
-        position: absolute;
-        top: $gs-baseline;
-        right: $gs-gutter / 2;
+    .adverts__row > .advert::after {
+        @include separator(colour(neutral-4), 100%, $gs-gutter / 2);
     }
 
-    .advert__title,
-    .advert__meta,
-    .advert__standfirst {
-        margin-left: $gs-gutter * 11;
-        padding-left: $gs-gutter / 2;
-        padding-right: $gs-gutter / 2;
+    .adverts__row > .button::before {
+        content: none;
     }
 }
 
@@ -465,3 +463,4 @@
 @import '_adverts-jobs';
 @import '_adverts-soulmates';
 @import '_adverts-capi';
+@import '_adverts-brand';

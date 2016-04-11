@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.contentapi.client.GuardianContentApiError
+import com.gu.contentapi.client.GuardianContentApiThriftError
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import com.gu.facia.client.models.Backfill
 import common._
@@ -52,13 +52,13 @@ object SeriesController extends Controller with Logging with Paging with Executi
       .showFields("all")
     ).map { response =>
         response.tag.flatMap { tag =>
-          val trails = response.results filterNot (isCurrentStory(_)) map (RelatedContentItem(_))
+          val trails = response.results.getOrElse(Nil) filterNot (isCurrentStory(_)) map (RelatedContentItem(_))
           if (!trails.isEmpty) {
             Some(Series(seriesId, Tag.make(tag,None), RelatedContent(trails)))
           } else { None }
         }
       }
-      seriesResponse.recover{ case GuardianContentApiError(404, message, _) =>
+      seriesResponse.recover{ case GuardianContentApiThriftError(404, message, _) =>
         log.info(s"Got a 404 calling content api: $message" )
         None
       }
@@ -67,11 +67,13 @@ object SeriesController extends Controller with Logging with Paging with Executi
   private def rendermf2Series(series: Series)(implicit request: RequestHeader) = {
     val displayName = Some(series.displayName)
     val seriesStories = series.trails.items take 4
-
+    val description = series.tag.metadata.description.getOrElse("").replaceAll("<.*?>", "")
+    
     JsonComponent(
       "items" -> JsArray(Seq(
         Json.obj(
           "displayName" -> displayName,
+          "description" -> description,
           "showContent" -> seriesStories.nonEmpty,
           "content" -> seriesStories.map( collection => isCuratedContent(collection.faciaContent))
         )

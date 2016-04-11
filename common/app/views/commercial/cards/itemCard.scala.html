@@ -8,6 +8,8 @@
   optKeywords: Option[String] = None,
   optSeries: Option[String] = None)
 
+@import views.html.fragments.inlineSvg
+
 <a href="@item.targetUrl" class="advert advert--capi
     @optAdvertClassNames.map { classNames => @classNames.map(c => s"advert--$c").mkString(" ")}
     @optClassNames.map { classNames => @classNames.mkString(" ")}
@@ -18,7 +20,10 @@
     @for(keywords    <- optKeywords)   {data-keywords="@keywords"}
     @for(series      <- optSeries)     {data-series="@series"}
     >
-    <h2 class="advert__title">@item.headline</h2>
+    <h2 class="advert__title">
+        @for(icon <- item.icon){@inlineSvg(icon, "icon")}
+        @item.headline
+    </h2>
     <div class="advert__image-container @for(imgRatio <- optImgRatio){u-responsive-ratio u-responsive-ratio--@imgRatio}">
         <img class="advert__image" src="@item.imageUrl">
     </div>

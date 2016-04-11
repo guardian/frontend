@@ -13,7 +13,10 @@ sealed trait FeedMetaData {
   def url: String
   def parameters: Map[String, String] = Map.empty
   def timeout: Duration = 2.seconds
-  def switch: Switch
+
+  def fetchSwitch: Switch
+
+  def parseSwitch: Switch
   def responseEncoding: String = ResponseEncoding.default
 }
 
@@ -31,7 +34,9 @@ case class JobsFeedMetaData(urlTemplate: String) extends FeedMetaData {
     urlTemplate replace("yyyy-MM-dd", feedDate)
   }
 
-  val switch = Switches.JobFeedReadSwitch
+  override val fetchSwitch = Switches.JobFeedReadSwitch
+  override val parseSwitch = Switches.JobParseSwitch
+
   override val responseEncoding = utf8
 }
 
@@ -39,7 +44,10 @@ case class SoulmatesFeedMetaData(baseUrl: String, agent: SoulmatesAgent) extends
 
   val name = s"soulmates/${agent.groupName}"
   val url = s"$baseUrl/${agent.feed.path}"
-  val switch = Switches.SoulmatesFeedSwitch
+
+  override val fetchSwitch = Switches.SoulmatesFeedSwitch
+  override val parseSwitch = Switches.SoulmatesFeedSwitch
+
   override val responseEncoding = utf8
 }
 
@@ -47,11 +55,16 @@ case class BestsellersFeedMetaData(domain: String) extends FeedMetaData {
 
   val name = "bestsellers"
   val url = s"http://$domain/bertrams/feed/independentsTop20"
-  val switch = Switches.GuBookshopFeedsSwitch
+
+  override val fetchSwitch = Switches.GuBookshopFeedsSwitch
+  override val parseSwitch = Switches.GuBookshopFeedsSwitch
+
   override val responseEncoding = utf8
 }
 
-case class EventsFeedMetaData(feedName: String, accessToken: String, additionalParameters: Map[String, String] = Map.empty)
+case class EventsFeedMetaData(feedName: String,
+                              accessToken: String,
+                              additionalParameters: Map[String, String] = Map.empty)
   extends FeedMetaData {
 
   val name = feedName
@@ -63,12 +76,17 @@ case class EventsFeedMetaData(feedName: String, accessToken: String, additionalP
   ) ++ additionalParameters
 
   override val timeout = 20.seconds
-  val switch = Switches.EventsFeedSwitch
+
+  override val fetchSwitch = Switches.EventsFeedSwitch
+  override val parseSwitch = Switches.EventsFeedSwitch
 }
 
 case class TravelOffersFeedMetaData(url: String) extends FeedMetaData {
 
   override def name: String = "travel-offers"
 
-  override def switch: Switch = Switches.TravelOffersFeedSwitch
+  override val timeout = 10.seconds
+
+  override val fetchSwitch = Switches.TravelFeedFetchSwitch
+  override val parseSwitch = Switches.TravelFeedParseSwitch
 }

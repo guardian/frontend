@@ -303,6 +303,7 @@ GET            /commercial/multi.json                                           
 GET            /commercial/guardian-explain                                                                                      controllers.commercial.StaticPageController.renderGuardianExplainPage()
 GET            /commercial/guardian-explore                                                                                      controllers.commercial.StaticPageController.renderGuardianExplorePage()
 GET            /commercial/guardian-experience                                                                                   controllers.commercial.StaticPageController.renderGuardianExperiencePage()
+GET            /$path<commercial-containers>                                                                                     controllers.FaciaController.renderFront(path)
 
 # Commercial Admin
 GET            /admin/commercial                                                                                                 controllers.admin.CommercialController.renderCommercialMenu()

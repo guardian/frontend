@@ -20,6 +20,9 @@
     @for(keywords    <- optKeywords)   {data-keywords="@keywords"}
     @for(series      <- optSeries)     {data-series="@series"}
     >
-    <p class="advert__title">@item.headline</p>
+    <p class="advert__title">
+        @for(icon <- item.icon){@inlineSvg(icon, "icon")}
+        @item.headline
+    </p>
     @for(sponsorship <- optSponsorship){<div class="advert__badge js-badge"></div>}
 </a>

@@ -1,3 +1,6 @@
+var isTeamcityReporterEnabled = process.env.KARMA_TEAMCITY_REPORTER === 'true',
+    karmaReporters = [ isTeamcityReporterEnabled ? 'teamcity' : 'spec' ];
+
 module.exports = function (config) {
     return {
         // root of project
@@ -22,7 +25,7 @@ module.exports = function (config) {
 
         // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
         port: 9876,
-        reporters: ['spec'],
+        reporters: karmaReporters,
         // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
         logLevel: config.LOG_ERROR,
         autoWatch: true,

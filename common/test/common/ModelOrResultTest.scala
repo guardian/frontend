@@ -1,7 +1,6 @@
 package common
 
-import com.gu.contentapi.client.model.v1.{Content, Section, Tag, TagType}
-import com.gu.contentapi.client.model.ItemResponse
+import com.gu.contentapi.client.model.v1.{Content, Section, Tag, TagType, ItemResponse}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
@@ -51,26 +50,28 @@ class ModelOrResultTest extends FlatSpec with Matchers with ExecutionContexts {
   )
 
   // FML ٩(ఠ益ఠ)۶
-  val stubResponse = new ItemResponse(
-    "ok",
-    "top_tier",
-    None,
-    None,
-    None,
-    None,
-    None,
-    None,
-    None,
-    None,
-    None,
-    None,
-    Nil,
-    Nil,
-    Nil,
-    Nil,
-    Nil,
-    Nil,
-    None)
+  val stubResponse = ItemResponse.apply(
+    status = "ok",
+    userTier = "top_tier",
+    total = None,
+    startIndex = None,
+    pageSize = None,
+    currentPage = None,
+    pages = None,
+    orderBy = None,
+    content =  None,
+    tag = None,
+    edition = None,
+    section = None,
+    results = Some(Nil),
+    quiz = None,
+    relatedContent = Some(Nil),
+    storyPackage = Some(Nil),
+    editorsPicks = Some(Nil),
+    mostViewed = Some(Nil),
+    leadContent = Some(Nil),
+    packages = Some(Nil),
+    viewpoints = Some(Nil))
 
   "ModelOrNotFound" should "return the model if it exists" in {
     ModelOrResult(
