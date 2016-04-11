@@ -117,7 +117,7 @@ define([
         };
     }
 
-    function _enforceRules(slots, rules, bodyTop, bodyHeight) {
+    function _enforceRules(slots, rules, bodyHeight) {
         var filtered = Promise.resolve(slots);
 
         // enforce absoluteMinAbove rule
@@ -235,7 +235,7 @@ define([
         }
 
         function enforceRules(data) {
-            return _enforceRules(data[2], rules, data[0], data[1]);
+            return _enforceRules(data[2], rules, data[1]);
         }
 
         function filterSlots(slots) {
