@@ -10,6 +10,7 @@ import scala.collection.JavaConverters._
 import awswrappers.dynamodb._
 
 import scala.concurrent.Future
+import scala.util.{Success, Failure}
 
 
 object DynamoDbStore extends Logging with ExecutionContexts {
@@ -32,10 +33,12 @@ object DynamoDbStore extends Logging with ExecutionContexts {
 
     val futureUpdateResult: Future[UpdateItemResult] = client.updateItemFuture(updateItemRequest)
 
-    futureUpdateResult.onFailure {
-      case t: Throwable =>
+    futureUpdateResult.onComplete {
+      case Failure(t) =>
         val message = t.getMessage
-        log.error(s"Unable to Subscribe $gcmBrowserId to $notificationTopicId: $message")}
+        log.error(s"Unable to Subscribe $gcmBrowserId to $notificationTopicId: $message")
+      case Success(_) =>
+        log.info(s"Successfully subscribed $gcmBrowserId to $notificationTopicId")}
 
     futureUpdateResult
   }
@@ -51,10 +54,12 @@ object DynamoDbStore extends Logging with ExecutionContexts {
 
     val futureDeleteResult: Future[DeleteItemResult] = client.deleteItemFuture(deleteItemRequest)
 
-    futureDeleteResult.onFailure {
-      case t: Throwable =>
+    futureDeleteResult.onComplete {
+      case Failure(t) =>
         val message = t.getMessage
-        log.error(s"Unable to delete $gcmBrowserId for topic $notificationTopicId: $message")}
+        log.error(s"Unable to delete $gcmBrowserId for topic $notificationTopicId: $message")
+      case Success(_) =>
+        log.info(s"Successfully deleted $gcmBrowserId from topic $notificationTopicId")}
 
     futureDeleteResult
   }
