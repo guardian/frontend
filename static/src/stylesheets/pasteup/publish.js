@@ -1,12 +1,14 @@
 // Don't run this file manually – to publish a new release run `make pasteup` from `frontend/`
 
-var Promise = require("bluebird");
-var fs = require("fs");
+/*eslint no-console: ["error", { allow: ["error"] }] */
+
+var Promise = require('bluebird');
+var fs = require('fs');
 var path = require('path');
 var exec = require('child_process').exec;
 var homeDir = require('home-dir');
 var properties = require('java-properties');
-var inquirer = require("inquirer");
+var inquirer = require('inquirer');
 var del = require('del');
 var megalog = require('megalog');
 var ora = require('ora');
@@ -18,7 +20,7 @@ function getCredentials() {
     return new Promise(function (resolve, reject) {
         var propertiesFile = path.join(homeDir(), '.gu', 'frontend.properties');
         var npmAuthToken = properties.of(propertiesFile).get(authTokenKey);
-        if (typeof npmAuthToken === "undefined") {
+        if (typeof npmAuthToken === 'undefined') {
             reject(new Error('noauth'));
         } else {
             resolve(npmAuthToken);
@@ -38,26 +40,26 @@ function setCredentials(authToken) {
 function getReleaseType() {
     return new Promise(function(resolve, reject) {
         inquirer.prompt([{
-            type: "rawlist",
-            message: "What kind of release is this?",
-            name: "type",
+            type: 'rawlist',
+            message: 'What kind of release is this?',
+            name: 'type',
             default: 3,
             choices: [{
-                name: "Patch – it’s just small fix, nothing new",
+                name: 'Patch – it’s just small fix, nothing new',
                 value: 'patch'
             },{
-                name: "Minor – it adds some new, backwards-compatible stuff",
+                name: 'Minor – it adds some new, backwards-compatible stuff',
                 value: 'minor'
             },{
-                name: "Major – includes a breaking change",
+                name: 'Major – includes a breaking change',
                 value: 'major'
             },{
-                name: "I don’t really understand what you’re asking...",
+                name: 'I don’t really understand what you’re asking...',
                 value: null
             }],
             validate: function(answer) {
                 if (answer.length < 1) {
-                    return "You must choose at least one.";
+                    return 'You must choose at least one.';
                 }
                 return true;
             }
@@ -96,16 +98,27 @@ getCredentials()
     .then(getReleaseType)
     .then(release)
     .then(function (response) {
-        megalog.log('Released a new version of `pasteup`:\n\n`' + response + '`');
+        megalog.log([
+            'Released a new version of `pasteup`:',
+            '`' + response + '`'
+        ].join('\n\n'));
         return del(['node_modules', '.npmrc']);
     })
     .catch(function (e) {
         switch (e.message) {
             case 'noauth':
-                megalog.error("You do not have the NPM credentials in your `frontend.properties`.\n\nYou cannot publish without them.");
+                megalog.error([
+                    'You do not have the NPM credentials in your `frontend.properties`.',
+                    'You cannot publish without them.'
+                ].join('\n\n'));
                 break;
             case 'confused':
-                megalog.info("It is pretty straightforward, but important to get right.\n\nFor more information, see `http://semver.org`.", {heading: 'Ask a team mate for guidance'});
+                megalog.info([
+                    'It is pretty straightforward, but important to get right.',
+                    'For more information, see `http://semver.org`.'
+                ].join('\n\n'), {
+                    heading: 'Ask a team mate for guidance'
+                });
                 break;
             default:
                 console.error(e.stack);
