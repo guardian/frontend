@@ -18,7 +18,8 @@ define([
     'text!common/views/commercial/creatives/manual-multiple.html',
     'text!common/views/commercial/creatives/manual-single.html',
     'text!common/views/commercial/creatives/gimbap.html',
-    'text!common/views/commercial/creatives/gimbap-simple.html'
+    'text!common/views/commercial/creatives/gimbap-simple.html',
+    'text!common/views/commercial/creatives/manual-container.html'
 ], function (
     Promise,
     $,
@@ -77,13 +78,17 @@ define([
     Template.prototype.create = function () {
         return new Promise(function (resolve) {
             if( this.params.creative === 'manual-single' && config.switches.v2ManualSingleTemplate ) {
+                this.params.originalCreative = 'manual-single';
                 this.params.creative = 'manual-container';
                 this.params.creativeCard = 'manual-card-large';
+                this.params.classNames = ['legacy', 'legacy-single', this.params.toneClass.replace('commercial--', '')];
             }
 
             if (this.params.creative === 'manual-multiple' && config.switches.v2ManualMultipleTemplate ) {
+                this.params.originalCreative = 'manual-multiple';
                 this.params.creative = 'manual-container';
                 this.params.creativeCard = 'manual-card';
+                this.params.classNames = ['legacy', this.params.Toneclass.replace('commercial--', '')];
             }
 
             require(['text!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
