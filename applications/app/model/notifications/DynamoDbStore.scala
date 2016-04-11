@@ -2,7 +2,7 @@ package model.notifications
 
 import com.amazonaws.regions.{Region, Regions}
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBAsyncClient
-import com.amazonaws.services.dynamodbv2.model.{UpdateItemResult, AttributeValue, DeleteItemRequest, UpdateItemRequest}
+import com.amazonaws.services.dynamodbv2.model._
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import org.joda.time.DateTime
@@ -40,7 +40,7 @@ object DynamoDbStore extends Logging with ExecutionContexts {
     futureUpdateResult
   }
 
-  def deleteItemFromSubcription(gcmBrowserId: String, notificationTopicId: String): Unit = {
+  def deleteItemFromSubcription(gcmBrowserId: String, notificationTopicId: String): Future[DeleteItemResult] = {
 
     val deleteItemRequest = new DeleteItemRequest()
       .withTableName(tableName)
@@ -49,10 +49,13 @@ object DynamoDbStore extends Logging with ExecutionContexts {
         ("gcmBrowserId", new AttributeValue().withS(gcmBrowserId))
       ).asJava)
 
-    client.deleteItemFuture(deleteItemRequest) onFailure {
+    val futureDeleteResult: Future[DeleteItemResult] = client.deleteItemFuture(deleteItemRequest)
+
+    futureDeleteResult.onFailure {
       case t: Throwable =>
         val message = t.getMessage
-        log.error(s"Unable to unsubscribe $gcmBrowserId to $notificationTopicId: $message")
-    }
+        log.error(s"Unable to unsubscribe $gcmBrowserId to $notificationTopicId: $message")}
+
+    futureDeleteResult
   }
 }
