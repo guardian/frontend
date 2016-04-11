@@ -11,7 +11,7 @@ define([
     config,
     detect,
     template,
-    fullWidth250Html
+    fullWidth250Template
 ) {
     function FullWidth250($adSlot, params) {
         this.create = function () {
@@ -28,7 +28,7 @@ define([
     }
 
     function renderCreative($adSlot, params) {
-        var html = template(fullWidth250Html, params);
+        var html = template(fullWidth250Template, params);
         var creative = bonzo.create(html);
         $adSlot.append(creative);
         return bonzo(creative);
