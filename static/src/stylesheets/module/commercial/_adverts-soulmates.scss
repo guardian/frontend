@@ -60,7 +60,7 @@
 }
 
 .adverts--tone-soulmates {
-    background: #f5f3e7;
+    background: guss-colour(soulmates-background, $frontend-palette);
 
     > .adverts__header {
         background: guss-colour(soulmates-colour, $frontend-palette);
@@ -86,7 +86,7 @@
 }
 
 .advert-blended--soulmates {
-    background: #f5f3e7;
+    background: guss-colour(soulmates-background, $frontend-palette);
     padding: 0 $gs-gutter / 4;
 
     .inline-logo-soulmates {
