@@ -46,7 +46,7 @@ object Jobs extends Logging {
     schedule(name, CronScheduleBuilder.cronSchedule(new CronExpression(cron)))(Future(block))// TODO make a version to take a future
   }
 
-  def scheduleWeekdayJob(name: String, hour: Int, minute: Int, timeZone: TimeZone)(block: => Future[Unit]): Unit = {
+  def scheduleWeekdayJob(name: String, minute: Int, hour: Int, timeZone: TimeZone)(block: => Future[Unit]): Unit = {
     schedule(name,
       CronScheduleBuilder.cronSchedule(new CronExpression(s"0 $minute $hour ? * MON-FRI")).inTimeZone(timeZone))(block)
   }

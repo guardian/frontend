@@ -74,14 +74,14 @@ trait AdminLifecycle extends GlobalSettings with Logging {
 
     if (environment.isProd) {
       val londonTime = TimeZone.getTimeZone("Europe/London")
-      Jobs.scheduleWeekdayJob("AdsStatusEmailJob", 8, 44, londonTime) {
+      Jobs.scheduleWeekdayJob("AdsStatusEmailJob", 44, 8, londonTime) {
         AdsStatusEmailJob.run()
       }
-      Jobs.scheduleWeekdayJob("ExpiringAdFeaturesEmailJob", 8, 47, londonTime) {
+      Jobs.scheduleWeekdayJob("ExpiringAdFeaturesEmailJob", 47, 8, londonTime) {
         log.info(s"Starting ExpiringAdFeaturesEmailJob")
         ExpiringAdFeaturesEmailJob.run()
       }
-      Jobs.scheduleWeekdayJob("ExpiringSwitchesEmailJob", 8, 48, londonTime) {
+      Jobs.scheduleWeekdayJob("ExpiringSwitchesEmailJob", 48, 8, londonTime) {
         log.info(s"Starting ExpiringSwitchesEmailJob")
         ExpiringSwitchesEmailJob.run()
       }

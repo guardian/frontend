@@ -5,11 +5,11 @@ import java.lang.management.{GarbageCollectorMXBean, ManagementFactory}
 import java.util.concurrent.atomic.AtomicLong
 
 import com.amazonaws.services.cloudwatch.model.{Dimension, StandardUnit}
-import conf.Configuration
 
 import metrics._
 import model.diagnostics.CloudWatch
-import play.api.{GlobalSettings, Application => PlayApp}
+import play.api.{Application => PlayApp, Play, GlobalSettings}
+import play.api.Play.current
 
 import scala.collection.JavaConversions._
 import scala.concurrent.Future
@@ -185,16 +185,20 @@ trait CloudWatchApplicationMetrics extends GlobalSettings with Logging {
     Jobs.schedule("ApplicationSystemMetricsJob", "36 * * * * ?"){
       report()
     }
-    Jobs.scheduleEveryNSeconds("LogMetricsJob", 5) {
-      val heapUsed = bytesAsMb(ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getUsed)
-      log.info(s"heap used: $heapUsed")
-      Future.successful(())
+    if (!Play.isDev) {
+      Jobs.scheduleEveryNSeconds("LogMetricsJob", 5) {
+        val heapUsed = bytesAsMb(ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getUsed)
+        log.info(s"heap used: ${heapUsed}Mb")
+        Future.successful(())
+      }
     }
   }
 
   override def onStop(app: PlayApp) {
     Jobs.deschedule("ApplicationSystemMetricsJob")
-    Jobs.deschedule("LogMetricsJob")
+    if (!Play.isDev) {
+      Jobs.deschedule("LogMetricsJob")
+    }
     super.onStop(app)
   }
 
