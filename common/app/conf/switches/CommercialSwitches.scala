@@ -140,6 +140,15 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
+  val StaticJobsFeedSwitch = Switch(
+    "Commercial",
+    "gu-static-jobs",
+    "If this switch is on, use the static jobs feed, not the dynamically named one.",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
   val MembersAreaSwitch = Switch(
     "Commercial",
     "gu-members-area",

@@ -4,6 +4,7 @@ import java.lang.System.currentTimeMillis
 
 import com.ning.http.client.Response
 import conf.Configuration
+import conf.switches.Switches
 import model.commercial.soulmates.SoulmatesAgent
 import play.api.Play.current
 import play.api.libs.json.{JsArray, Json}
@@ -130,8 +131,14 @@ object FeedFetcher {
   }
 
   private val jobs: Option[FeedFetcher] = {
-    Configuration.commercial.jobsUrlTemplate map { template =>
-      new SingleFeedFetcher(JobsFeedMetaData(template))
+    if (Switches.StaticJobsFeedSwitch.isSwitchedOff) {
+      Configuration.commercial.jobsUrlTemplate map { template =>
+        new SingleFeedFetcher(JobsFeedMetaData(template))
+      }
+    } else {
+      Configuration.commercial.jobsStaticUrl map { url =>
+        new SingleFeedFetcher(StaticJobsFeedMetaData(url))
+      }
     }
   }
 

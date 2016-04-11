@@ -35,6 +35,15 @@ case class JobsFeedMetaData(urlTemplate: String) extends FeedMetaData {
   override val responseEncoding = utf8
 }
 
+case class StaticJobsFeedMetaData(url: String) extends FeedMetaData {
+
+  val name = "jobs"
+
+  val switch = Switches.JobFeedSwitch
+  override val responseEncoding = utf8
+}
+
+
 case class SoulmatesFeedMetaData(baseUrl: String, agent: SoulmatesAgent) extends FeedMetaData {
 
   val name = s"soulmates/${agent.groupName}"
