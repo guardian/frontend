@@ -44,7 +44,7 @@ define([
     function onOpenClick(event) {
         var summary = event.currentTarget;
         var details = summary.parentNode;
-        var label = summary.querySelector('.button__label');
+        var label = summary.querySelector('.js-button__label');
         if (details.hasAttribute('open')) {
             fastdom.write(function () {
                 label.textContent = 'More ' + summary.getAttribute('data-text');
