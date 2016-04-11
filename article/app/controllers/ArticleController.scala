@@ -187,7 +187,12 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
         case (liveBlog: Article, Some(Some(requiredBlockId))/*page param specified and valid format*/) if liveBlog.isLiveBlog =>
           createLiveBlogModel(liveBlog, response, Some(requiredBlockId))
         case (article: Article, None) =>
-          Left(ArticlePage(article, RelatedContent(article, response)))
+          if(mvt.ABIntersperseMultipleStoryPackagesStories.isParticipating) {
+            Left(ArticlePage(article, StoryPackages(article, response)))
+          }
+          else {
+            Left(ArticlePage(article, RelatedContent(article, response)))
+          }
         case _ =>
           Right(NotFound)
       }

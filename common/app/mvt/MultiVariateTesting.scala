@@ -68,8 +68,29 @@ object SeriesOnwardPosition extends TestDefinition(
     }
 }
 
+object ABIntersperseMultipleStoryPackagesStories extends TestDefinition(
+  List(Variant8), // 1% of our audience
+  "intersperse-multiple-story-packages-stories",
+  "To test if mixing storyPackages stories (when article has more than one storyPackage) results in more clicks",
+  new LocalDate(2016, 5, 3)
+)
+object ABIntersperseMultipleStoryPackagesStoriesControl extends TestDefinition(
+  List(Variant9), // 1% of our audience
+  "intersperse-multiple-story-packages-stories-control",
+  "Control for the intersperse-multiple-story-packages-stories A/B test",
+  new LocalDate(2016, 5, 3)
+)
+
 object ActiveTests extends Tests {
-  val tests: Seq[TestDefinition] = List(ABNewHeaderVariant, CMTopBannerPosition, ABHeadlinesTestControl, ABHeadlinesTestVariant, SeriesOnwardPosition)
+  val tests: Seq[TestDefinition] = List(
+    ABNewHeaderVariant,
+    CMTopBannerPosition,
+    ABHeadlinesTestControl,
+    ABHeadlinesTestVariant,
+    SeriesOnwardPosition,
+    ABIntersperseMultipleStoryPackagesStories,
+    ABIntersperseMultipleStoryPackagesStoriesControl
+  )
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
 
