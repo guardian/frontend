@@ -114,7 +114,7 @@ $ima-controls-height: 70px;
             background-color: rgba(51, 51, 51, .6);
             .gu-media-wrapper:hover &,
             .gu-media__fallback:hover & {
-                background-color: colour(media-default);
+                background-color: $media-default;
             }
         }
 
@@ -125,7 +125,7 @@ $ima-controls-height: 70px;
             top: 1.85em;
             border-style: solid;
             border-width: 1em 0 1em 2.4em;
-            border-color: transparent transparent transparent colour(neutral-7);
+            border-color: transparent transparent transparent $neutral-7;
             -moz-transform: scale(.99999); // fix for diagonal border aliasing in firefox
 
             @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
@@ -311,7 +311,7 @@ $ima-controls-height: 70px;
 }
 
 .vjs-duration {
-    color: colour(neutral-3);
+    color: $neutral-3;
 }
 
 .vjs-fullscreen-control {
@@ -385,7 +385,7 @@ $ima-controls-height: 70px;
 }
 
 .vjs-play-progress {
-    background-color: colour(media-default);
+    background-color: $media-default;
     z-index: 2;
 }
 
@@ -415,7 +415,7 @@ $ima-controls-height: 70px;
         content: '';
         left: 0;
         right: 0;
-        background-color: colour(neutral-7);
+        background-color: $neutral-7;
     }
 }
 
@@ -427,11 +427,11 @@ $ima-controls-height: 70px;
 }
 
 .vjs-volume-level {
-    background-color: colour(media-default);
+    background-color: $media-default;
 
     &:before {
         position: absolute;
-        background-color: colour(media-default);
+        background-color: $media-default;
         height: 11px;
         width: 2px;
         top: -$gs-baseline/3;
@@ -581,7 +581,7 @@ $ima-controls-height: 70px;
     .vjs-overlay__duration {
         @include fs-headline(3);
         text-align: left;
-        color: colour(media-default);
+        color: $media-default;
         padding: 0 $gs-gutter/2 $gs-baseline*2;
     }
 }
@@ -651,9 +651,9 @@ $ima-controls-height: 70px;
     box-sizing: border-box;
     width: 100%;
     height: gs-height(1) + $gs-baseline;
-    color: colour(neutral-1);
+    color: $neutral-1;
     padding: $gs-baseline/3 $gs-gutter/2 0;
-    border: 1px solid colour(neutral-3);
+    border: 1px solid $neutral-3;
     outline: none;
 
     &::selection {
@@ -703,7 +703,7 @@ $ima-controls-height: 70px;
         }
 
         .vjs-control-text {
-            color: colour(media-default);
+            color: $media-default;
         }
     }
 }
@@ -745,7 +745,7 @@ $ima-controls-height: 70px;
         display: inline-block;
         max-width: 90%;
         &:hover {
-            color: colour(media-default);
+            color: $media-default;
         }
     }
 
@@ -757,7 +757,7 @@ $ima-controls-height: 70px;
         fill: #ffffff;
 
         &:hover {
-            fill: colour(media-default);
+            fill: $media-default;
         }
     }
 }
@@ -772,7 +772,7 @@ $ima-controls-height: 70px;
     right: 8px;
     // width so text goes over two lines
     width: 140px;
-    background-color: rgba(colour(neutral-1), .8);
+    background-color: rgba($neutral-1, .8);
     color: #ffffff;
     text-align: left;
 
@@ -799,7 +799,7 @@ $ima-controls-height: 70px;
         display: none;
     }
     &:hover {
-        color: colour(comment-main-2);
+        color: $comment-main-2;
 
         .i-play-icon-grey {
             display: none;
@@ -825,7 +825,7 @@ $ima-controls-height: 70px;
     margin: auto;
     box-sizing: border-box;
     background-color: rgba(25, 25, 25, .8);
-    color: colour(neutral-7);
+    color: $neutral-7;
     top: $gs-baseline*4;
     padding-top: $gs-gutter/4;
     max-width: gs-span(7);
@@ -866,13 +866,13 @@ $ima-controls-height: 70px;
             list-style: none;
 
             &:not(:first-child) {
-                border-left: 1px solid colour(neutral-2);
+                border-left: 1px solid $neutral-2;
             }
 
             .fc-item__action {
                 color: #ffffff;
                 &:hover {
-                    color: colour(media-default);
+                    color: $media-default;
                 }
             }
 
@@ -891,7 +891,7 @@ $ima-controls-height: 70px;
 
         @include mq($until: tablet) {
             top: $gs-baseline*4;
-            border-top: 1px solid colour(neutral-2);
+            border-top: 1px solid $neutral-2;
         }
 
         @include mq(tablet, desktop) {
@@ -933,7 +933,7 @@ $ima-controls-height: 70px;
             margin-bottom: 0;
 
             &:nth-child(-n+3) {
-                border-right: 1px solid colour(neutral-2);
+                border-right: 1px solid $neutral-2;
             }
         }
         .item__headline {
@@ -950,7 +950,7 @@ $ima-controls-height: 70px;
 
 .podcast-meta {
     text-align: left;
-    border-top: 1px solid lighten(colour(neutral-1), 16%);
+    border-top: 1px solid lighten($neutral-1, 16%);
     margin-top: $gs-baseline/2;
     padding: $gs-baseline/2 $gs-gutter/2;
 }
@@ -966,7 +966,7 @@ $ima-controls-height: 70px;
 }
 .podcast-meta__item__link {
     @include fs-textSans(1);
-    color: colour(neutral-7);
+    color: $neutral-7;
 }
 
 /* Tech overrides
@@ -1009,7 +1009,7 @@ $ima-controls-height: 70px;
 }
 #ima-progress-div {
     height: 100%;
-    background-color: colour(media-default);
+    background-color: $media-default;
 }
 #ima-play-pause-div,
 #ima-mute-div,
@@ -1060,7 +1060,7 @@ $ima-controls-height: 70px;
             left: 0;
             width: 1px;
             height: 100%;
-            border-left: 1px solid colour(neutral-2);
+            border-left: 1px solid $neutral-2;
         }
     }
 
@@ -1075,7 +1075,7 @@ $ima-controls-height: 70px;
     .fc-item__action {
         display: block;
         padding-top: $gs-baseline;
-        color: colour(neutral-5);
+        color: $neutral-5;
 
         &:hover,
         &:focus {
@@ -1083,7 +1083,7 @@ $ima-controls-height: 70px;
         }
         &:visited,
         &:active {
-            color: darken(colour(neutral-5), 20%);
+            color: darken($neutral-5, 20%);
         }
     }
 
@@ -1094,7 +1094,7 @@ $ima-controls-height: 70px;
         text-align: left; //Required for end slate items
         height: get-line-height(headline, 1) * 3;
         .inline-video-icon {
-            fill: colour(media-default);
+            fill: $media-default;
             svg {
                 height: .75em;
                 width: 1.1em;

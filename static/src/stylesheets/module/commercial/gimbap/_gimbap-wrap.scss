@@ -55,7 +55,7 @@ $gimbap-width-quarter: calc(25% - 20px);
 
 .gimbap-wrap__box {
     position: relative;
-    border-top: 1px solid colour(news-accent);
+    border-top: 1px solid $news-accent;
 }
 
 .gimbap-wrap__header {
@@ -75,7 +75,7 @@ $gimbap-width-quarter: calc(25% - 20px);
     svg {
         width: 39px;
         height: 39px;
-        fill: guss-colour(guardian-brand, $pasteup-palette);
+        fill: $guardian-brand;
     }
 
     @include mq(leftCol) {
@@ -130,6 +130,7 @@ $gimbap-width-quarter: calc(25% - 20px);
     }
 
     @include mq(wide) {
+        width: 940px;
         margin-left: $gimbap-wrap-left-space-wide;
     }
 
@@ -190,7 +191,7 @@ $gimbap-width-quarter: calc(25% - 20px);
 
 .gimbap-wrap__title {
     font: 900 1.375rem/2.25rem 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;
-    color: guss-colour(guardian-brand-dark, $pasteup-palette);;
+    color: $guardian-brand-dark;;
     margin: 0;
 }
 
@@ -267,5 +268,5 @@ $gimbap-colors: (
                 fill: map-get($gimbap-colors, $tone);
             }
         }
-    }    
+    }
 }

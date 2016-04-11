@@ -27,7 +27,7 @@
             content: '';
             position: absolute;
             z-index: 1;
-            background: rgba(colour(neutral-1), .05);
+            background: rgba($neutral-1, .05);
             top: 0;
             height: 100%;
             width: 0;
@@ -71,7 +71,7 @@
             background: rgba(0, 0, 0, .05);
 
             .container__banding + .container__banding & {
-                background: rgba(colour(neutral-1), .15);
+                background: rgba($neutral-1, .15);
             }
         }
     }

@@ -2,14 +2,14 @@
 }
 
 .adverts--tone-capi {
-    background-color: colour(neutral-6);
+    background-color: $neutral-6;
 
     > .adverts__header {
-        background: guss-colour(paidfor-background, $frontend-palette);
+        background: $paidfor-background;
     }
 
     .adverts__title {
-        @include f-headlineSans;
+        @include f-headlineSans;    
     }
 
     .adverts__logo {
@@ -24,15 +24,15 @@
     .adverts__row--legacy > .advert::after,
     .adverts__row--wrap::before,
     .adverts__row--wrap::after {
-        background: guss-colour(paid-article-subheader-bg, $frontend-palette);
+        background: $paid-article-subheader-bg;
     }
 
     .adverts__more > summary {
-        background: guss-colour(paidfor-background, $frontend-palette);
-        border-color: guss-colour(paidfor-background, $frontend-palette);
+        background: $paidfor-background;
+        border-color: $paidfor-background;
 
         .inline-icon {
-            fill: colour(neutral-2);
+            fill: $neutral-2;
         }
 
         @include mq(desktop) {
@@ -47,13 +47,13 @@
 
     .adverts__more[open] > summary {
         background: none;
-        border-color: colour(neutral-4);
-        color: colour(neutral-1);
+        border-color: $neutral-4;
+        color: $neutral-1;
     }
 
     .button {
         @include button-colour(
-            guss-colour(paid-article-brand, $frontend-palette),
+            $paid-article-brand,
             null
         );
 
@@ -61,7 +61,7 @@
         &:focus,
         &:active {
             @include button-colour(
-                darken(guss-colour(paid-article-brand, $frontend-palette), 5%),
+                darken($paid-article-brand, 5%),
                 null
             );
         }
@@ -70,8 +70,8 @@
 
 .advert--capi {
     @include f-textSans;
-    background: colour(paid-article-subheader);
-    border-top: 1px solid guss-colour(paid-article-brand, $frontend-palette);
+    background: $paid-article-subheader;
+    border-top: 1px solid $paid-article-brand;
 
     .advert__title,
     .advert__meta,
@@ -86,7 +86,7 @@
         margin-bottom: .5em;
 
         > .inline-icon svg {
-            fill: guss-colour(paid-article-icon, $frontend-palette);
+            fill: $paid-article-icon;
             width: 1.1em;
             height: .75em;
             margin-right: .3em;
@@ -103,7 +103,7 @@
         border-top: 0;
 
         &::after {
-            background-color: guss-colour(paid-article-icon, $frontend-palette);
+            background-color: $paid-article-icon;
         }
 
         .advert__image-container {

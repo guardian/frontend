@@ -9,7 +9,7 @@
     hr {
         border: 0;
         margin: 0 0 $gs-baseline / 2;
-        border-top: 1px dotted colour(neutral-4);
+        border-top: 1px dotted $neutral-4;
     }
 
     .submeta__tone {
@@ -45,7 +45,7 @@
 
 .submeta__head {
     @include fs-textSans(1);
-    color: colour(neutral-2);
+    color: $neutral-2;
     padding: $gs-baseline/3 0 $gs-baseline;
     float: left;
     margin-right: $gs-gutter / 2;

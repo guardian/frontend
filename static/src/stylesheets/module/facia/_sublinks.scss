@@ -14,7 +14,7 @@
     @include fs-headline(1);
     padding-top: 0;
     margin: 0;
-    color: colour(neutral-1);
+    color: $neutral-1;
 
     &:before {
         display: block;
@@ -23,7 +23,7 @@
         left: 0;
         content: '';
         width: 40%;
-        border-top: 1px dotted colour(neutral-3);
+        border-top: 1px dotted $neutral-3;
     }
 
     .fc-sublink__kicker {
