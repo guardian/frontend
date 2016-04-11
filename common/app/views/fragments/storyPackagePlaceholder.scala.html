@@ -11,7 +11,10 @@
 
 @defining(Seq("related") ++ (if(content.commercial.isAdvertisementFeature) Seq("fc-container--advertisement-feature") else Nil)) { classes =>
     @if(related.hasStoryPackage) {
-        <aside class="@classes.mkString(" ") more-on-this-story" role="complementary" aria-labelledby="related-content-head">
+        <aside class="@classes.mkString(" ") more-on-this-story" role="complementary" aria-labelledby="related-content-head"
+            @if(mvt.ABIntersperseMultipleStoryPackagesStories.isParticipating && related.storyPackagesCount > 1){data-link-name="ab-multiple-story-packages"}
+            @if(mvt.ABIntersperseMultipleStoryPackagesStoriesControl.isParticipating && related.storyPackagesCount > 1){data-link-name="ab-multiple-story-packages-control"}
+        >
             @container("more on this story", "more-on-this-story", href = None)
         </aside>
     } else {
