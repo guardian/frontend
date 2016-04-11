@@ -13,12 +13,9 @@
     width: auto;
     font-weight: bold;
     text-decoration: none;
-    -webkit-border-radius: 1000px; /* [1] */
-    border-radius: 1000px;         /* [1] */
+    border-radius: 1000px;
     border-width: 1px;
     border-style: solid;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
     box-sizing: border-box;
 
     &:hover,
@@ -78,6 +75,7 @@
         guss-colour(neutral-2, $pasteup-palette)
     );
 }
+
 .button--tone-media-variant {
     @include button-colour(
         guss-colour(multimedia-main-1, $pasteup-palette),
@@ -89,6 +87,7 @@
         guss-colour(neutral-3, $pasteup-palette)
     );
 }
+
 .button--tone-news {
     @include button-colour(
         guss-colour(neutral-7, $pasteup-palette),
@@ -98,6 +97,7 @@
         darken(guss-colour(neutral-7, $pasteup-palette), 10%)
     );
 }
+
 .button--tone-news-variant {
     @include button-colour(
         #ffffff,
@@ -109,6 +109,7 @@
         darken(guss-colour(neutral-3, $pasteup-palette), 10%)
     );
 }
+
 .button--tone-feature {
     @include button-colour(
         guss-colour(neutral-7, $pasteup-palette),
@@ -118,6 +119,7 @@
         darken(guss-colour(neutral-7, $pasteup-palette), 10%)
     );
 }
+
 .button--tone-feature-variant {
     @include button-colour(
         #ffffff,
@@ -129,6 +131,7 @@
         darken(guss-colour(neutral-3, $pasteup-palette), 10%)
     );
 }
+
 .button--tone-comment {
     @include button-colour(
         guss-colour(neutral-7, $pasteup-palette),
@@ -138,6 +141,7 @@
         darken(guss-colour(neutral-7, $pasteup-palette), 10%)
     );
 }
+
 .button--tone-comment-variant {
     @include button-colour(
         #ffffff,
@@ -149,6 +153,7 @@
         darken(guss-colour(neutral-3, $pasteup-palette), 10%)
     );
 }
+
 .button--tone-live {
     @include button-colour(
         guss-colour(neutral-6, $pasteup-palette),
@@ -158,6 +163,7 @@
         darken(guss-colour(neutral-6, $pasteup-palette), 10%)
     );
 }
+
 .button--tone-live-variant {
     @include button-colour(
         guss-colour(neutral-8, $pasteup-palette),
@@ -169,9 +175,11 @@
         darken(guss-colour(neutral-3, $pasteup-palette), 10%)
     );
 }
+
 .button--xlarge {
     @include button-height(44px);
 }
+
 .button--large {
     @include button-height($base-size * 6);
 
@@ -179,6 +187,7 @@
         line-height: ($base-size * 6) + 2;
     }
 }
+
 .button--medium {
     @include button-height($base-size * 5);
 
@@ -186,6 +195,7 @@
         line-height: ($base-size * 5) + 2px;
     }
 }
+
 .button--small {
     @include button-height($base-size * 4);
     @include fs-textSans(1);
@@ -195,6 +205,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 .button--xsmall {
     @include button-height($base-size * 3);
     @include fs-textSans(1);
