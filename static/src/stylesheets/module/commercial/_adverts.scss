@@ -348,6 +348,10 @@
     &[open] .inline-plus {
         display: none;
     }
+
+    &:not([open]) > *:not(summary) {
+        display: none;
+    }
 }
 
 
