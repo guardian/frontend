@@ -5,8 +5,11 @@
     background-color: colour(neutral-6);
 
     > .adverts__header {
-        @include f-headlineSans;
         background: guss-colour(paidfor-background, $frontend-palette);
+    }
+
+    .adverts__title {
+        @include f-headlineSans;
     }
 
     .adverts__logo {
@@ -119,4 +122,7 @@
         }
     }
 
+    .advert__image-container {
+        height: auto;
+    }
 }
