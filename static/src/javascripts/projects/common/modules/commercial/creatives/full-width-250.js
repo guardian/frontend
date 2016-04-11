@@ -3,7 +3,6 @@ define([
     'bonzo',
     'common/utils/config',
     'common/utils/detect',
-    'common/utils/fastdom-promise',
     'lodash/utilities/template',
     'text!common/views/commercial/creatives/full-width-250.html'
 ], function (
@@ -11,7 +10,6 @@ define([
     bonzo,
     config,
     detect,
-    fastdom,
     template,
     fullWidth250Html
 ) {
@@ -26,33 +24,27 @@ define([
     }
 
     function renderContainer(div) {
-        fastdom.write(function () {
-            div.addClass('ad-slot--full-width-250 content__mobile-full-width');
-        });
+        div.addClass('ad-slot--full-width-250 content__mobile-full-width');
     }
 
     function renderCreative($adSlot, params) {
         var html = template(fullWidth250Html, params);
         var creative = bonzo.create(html);
-        fastdom.write(function () {
-            $adSlot.append(creative);
-        });
+        $adSlot.append(creative);
         return bonzo(creative);
     }
 
     function attachExpander($creative) {
-        var expandClass = 'creative--full-width-250--expanded';
+        var expandClass = 'full-width-250--expanded';
         var isExpanded = false;
 
         function toggleExpansion() {
-            fastdom.write(function () {
-                if (!isExpanded) {
-                    $creative.addClass(expandClass);
-                } else {
-                    $creative.removeClass(expandClass);
-                }
-                isExpanded = !isExpanded;
-            });
+            if (!isExpanded) {
+                $creative.addClass(expandClass);
+            } else {
+                $creative.removeClass(expandClass);
+            }
+            isExpanded = !isExpanded;
         }
 
         bean.on($creative[0], 'click', toggleExpansion);

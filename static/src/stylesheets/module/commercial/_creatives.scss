@@ -747,7 +747,7 @@
     }
 }
 
-.creative--full-width-250 {
+.full-width-250 {
     height: 250px;
 
     // Just for demonstration purposes
@@ -755,8 +755,20 @@
     background: #303030;
 }
 
-.creative--full-width-250--expanded {
+.full-width-250--expanded {
     height: 500px;
+}
+
+// Label
+
+.full-width-250__label-wrapper {
+    .top-banner-ad-container--desktop & {
+        width: auto;
+    }
+}
+
+.full-width-250__label {
+    padding: 0;
 }
 
 // Animations
