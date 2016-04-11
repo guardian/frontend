@@ -12,14 +12,19 @@ var megalog = require('megalog');
 var ora = require('ora');
 
 var writeFile = Promise.promisify(fs.writeFile);
-
 var authTokenKey = 'npm.guardian.developers.authToken';
 
-var npmCredentials = (function () {
-    var propertiesFile = path.join(homeDir(), '.gu', 'frontend.properties');
-    var npmAuthToken = properties.of(propertiesFile).get(authTokenKey);
-    return npmAuthToken;
-})();
+function getCredentials() {
+    return new Promise(function (resolve, reject) {
+        var propertiesFile = path.join(homeDir(), '.gu', 'frontend.properties');
+        var npmAuthToken = properties.of(propertiesFile).get(authTokenKey);
+        if (typeof npmAuthToken === "undefined") {
+            reject(new Error('noauth'));
+        } else {
+            resolve(npmAuthToken);
+        }
+    });
+}
 
 function setCredentials(authToken) {
     return writeFile('.npmrc', [
@@ -58,8 +63,7 @@ function getReleaseType() {
             }
         }], function (response) {
             if (response.type === null) {
-                megalog.info("It is pretty straightforward, but important to get right.\n\nFor more information, see `http://semver.org`.", {heading: 'Ask a team mate for guidance'});
-                process.exit(0);
+                reject(new Error('confused'));
             } else {
                 resolve(response);
             }
@@ -68,7 +72,7 @@ function getReleaseType() {
 }
 
 function release(release) {
-    release.type = 'prerelease';
+    release.type = 'prerelease'; // hardcode release type while in dev
     var spinner = ora({text: 'Publishing a new ' + release.type + ' release (while in dev) of pasteup to NPM...', spinner: 'bouncingBall'});
     spinner.start();
     return new Promise(function (resolve, reject) {
@@ -86,13 +90,9 @@ function release(release) {
     });
 }
 
-if (typeof npmCredentials === "undefined") {
-    megalog.error("You do not have the NPM credentials in your `frontend.properties`.\n\nYou cannot publish without them.");
-    process.exit(1);
-}
-
 megalog.log('Updated release dependencies. \n\nPreparing a new `pasteup` release...');
-setCredentials(npmCredentials)
+getCredentials()
+    .then(setCredentials)
     .then(getReleaseType)
     .then(release)
     .then(function (response) {
@@ -100,6 +100,14 @@ setCredentials(npmCredentials)
         return del(['node_modules', '.npmrc']);
     })
     .catch(function (e) {
-        console.error(e.stack);
-        process.exit(0);
+        switch (e.message) {
+            case 'noauth':
+                megalog.error("You do not have the NPM credentials in your `frontend.properties`.\n\nYou cannot publish without them.");
+                break;
+            case 'confused':
+                megalog.info("It is pretty straightforward, but important to get right.\n\nFor more information, see `http://semver.org`.", {heading: 'Ask a team mate for guidance'});
+                break;
+            default:
+                console.error(e.stack);
+        }
     });

@@ -1,6 +1,6 @@
 {
   "name": "pasteup",
-  "version": "0.0.1-alpha.27",
+  "version": "0.0.1-alpha.28",
   "description": "Sass and CSS helpers for common styles in use on the Guardian website.",
   "main": "pasteup.css",
   "keywords": [
