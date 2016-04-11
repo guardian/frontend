@@ -2,13 +2,14 @@ package model.notifications
 
 import com.amazonaws.regions.{Region, Regions}
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBAsyncClient
-import com.amazonaws.services.dynamodbv2.model.{AttributeValue, DeleteItemRequest, UpdateItemRequest}
+import com.amazonaws.services.dynamodbv2.model.{UpdateItemResult, AttributeValue, DeleteItemRequest, UpdateItemRequest}
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import org.joda.time.DateTime
 import scala.collection.JavaConverters._
 import awswrappers.dynamodb._
 
+import scala.concurrent.Future
 
 
 object DynamoDbStore extends Logging with ExecutionContexts {
@@ -17,7 +18,7 @@ object DynamoDbStore extends Logging with ExecutionContexts {
   private val client = new AmazonDynamoDBAsyncClient(Configuration.aws.credentials.get)
   client.setRegion(Region.getRegion(Regions.EU_WEST_1))
 
-  def addItemToSubcription(gcmBrowserId: String, notificationTopicId: String): Unit = {
+  def addItemToSubcription(gcmBrowserId: String, notificationTopicId: String): Future[UpdateItemResult] = {
 
     val updateItemRequest = new UpdateItemRequest()
       .withTableName(tableName)
@@ -29,11 +30,14 @@ object DynamoDbStore extends Logging with ExecutionContexts {
       .withExpressionAttributeValues(Map[String, AttributeValue](
         ":createdDate" -> new AttributeValue().withN((DateTime.now.getMillis / 1000).toString)).asJava)
 
-    client.updateItemFuture(updateItemRequest) onFailure {
+    val futureUpdateResult: Future[UpdateItemResult] = client.updateItemFuture(updateItemRequest)
+
+    futureUpdateResult.onFailure {
       case t: Throwable =>
         val message = t.getMessage
-        log.error(s"Unable to Subscribe $gcmBrowserId to $notificationTopicId: $message")
-    }
+        log.error(s"Unable to Subscribe $gcmBrowserId to $notificationTopicId: $message")}
+
+    futureUpdateResult
   }
 
   def deleteItemFromSubcription(gcmBrowserId: String, notificationTopicId: String): Unit = {
