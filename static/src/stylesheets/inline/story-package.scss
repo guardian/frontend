@@ -1,6 +1,5 @@
 @import '../_vars';
 @import '../_mixins';
-@import '../components/pasteup-buttons/src/_mixins';
 
 @mixin kicker-override($tone, $colour) {
     .tone-#{$tone}--item {
