@@ -1,16 +1,23 @@
 // Don't run this file manually – to publish a new release run `make pasteup` from `frontend/`
 
 var Promise = require("bluebird");
-var writeFile = Promise.promisify(require("fs").writeFile);
+var fs = require("fs");
+var path = require('path');
 var exec = require('child_process').exec;
+var homeDir = require('home-dir');
+var properties = require('java-properties');
+var inquirer = require("inquirer");
 var del = require('del');
 var megalog = require('megalog');
+var ora = require('ora');
+
+var writeFile = Promise.promisify(fs.writeFile);
 
 var authTokenKey = 'npm.guardian.developers.authToken';
 
 var npmCredentials = (function () {
-    var propertiesFile = require('path').join(require('home-dir')(), '.gu', 'frontend.properties');
-    var npmAuthToken = require('java-properties').of(propertiesFile).get(authTokenKey);
+    var propertiesFile = path.join(homeDir(), '.gu', 'frontend.properties');
+    var npmAuthToken = properties.of(propertiesFile).get(authTokenKey);
     return npmAuthToken;
 })();
 
@@ -25,7 +32,7 @@ function setCredentials(authToken) {
 
 function getReleaseType() {
     return new Promise(function(resolve, reject) {
-        require("inquirer").prompt([{
+        inquirer.prompt([{
             type: "rawlist",
             message: "What kind of release is this?",
             name: "type",
@@ -62,11 +69,11 @@ function getReleaseType() {
 
 function release(release) {
     release.type = 'prerelease';
-    var ora = require('ora')({text: 'Publishing a new ' + release.type + ' release (while in dev) of pasteup to NPM...', spinner: 'bouncingBall'});
-    ora.start();
+    var spinner = ora({text: 'Publishing a new ' + release.type + ' release (while in dev) of pasteup to NPM...', spinner: 'bouncingBall'});
+    spinner.start();
     return new Promise(function (resolve, reject) {
         exec('npm version ' + release.type + ' && npm publish', function (e, stdout, stderr) {
-            ora.stop();
+            spinner.stop();
             if (stderr) {
                 console.error(stderr);
             }
