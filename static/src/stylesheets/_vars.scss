@@ -25,7 +25,7 @@ $headerHeight: 36px;
 
 @import 'components/guss-colours/_colours';
 @import 'components/pasteup-palette/src/_palette';
-@import 'components/guss-grid-system/_grid-system';
+@import 'pasteup/grid-system/src';
 
 $right-column:     gs-span(4);
 $left-column:      gs-span(2); // Grows to 3 columns on wide viewports

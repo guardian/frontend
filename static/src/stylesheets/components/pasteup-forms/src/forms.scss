@@ -2,7 +2,7 @@ $guss-webfonts-base-url: '//pasteup.guim.co.uk/fonts/';
 
 @import 'bower_components/guss-colours/_colours';
 @import 'bower_components/guss-css3/_css3';
-@import 'bower_components/guss-grid-system/_grid-system';
+@import 'pasteup/grid-system/src';
 @import 'bower_components/guss-typography/_typography';
 @import 'bower_components/guss-webfonts/src/_webfonts';
 @import 'bower_components/pasteup-palette/src/_palette';
