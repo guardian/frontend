@@ -1,8 +1,8 @@
 define([
-    'bean',
     'qwery',
+    'bean',
     'fastdom'
-], function (bean, qwery, fastdom) {
+], function (qwery, bean, fastdom) {
     var shouldWePolyfill = !('open' in document.createElement('details'));
 
     return {
