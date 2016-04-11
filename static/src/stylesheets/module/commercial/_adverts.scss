@@ -28,10 +28,6 @@
     @include mq(wide) {
         padding: 0 calc(50% - 650px);
     }
-
-    .inline-commercial {
-        display: block;
-    }
 }
 
 .adverts--legacy {
@@ -86,11 +82,6 @@
         @include mq(desktop) {
             max-width: gs-span(12) + ($gs-gutter * 2);
         }
-    }
-
-    .adverts__title {
-        color: #ffffff;
-        @include fs-header(2);
     }
 
     .adverts__logo {
@@ -463,4 +454,3 @@
 @import '_adverts-jobs';
 @import '_adverts-soulmates';
 @import '_adverts-capi';
-@import '_adverts-brand';
