@@ -90,15 +90,24 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
       val link = interactive.getElementsByTag("a")
       val linkToInteractive = link.first().attr("href")
       val iframe = document.createElement("amp-iframe")
-      // AMP uses the height and width ratio, so exact values don't matter
-      // All interactives should resize to the correct height once they load
+      val overflowElem = document.createElement("div")
+      // In AMP, when using the layout `responsive`, width is 100%,
+      // and height is decided by the ratio between width and height.
+      // https://www.ampproject.org/docs/guides/responsive/control_layout.html
       iframe.attr("width", "5")
       iframe.attr("height", "1")
       iframe.attr("layout", "responsive")
       iframe.attr("sandbox", "allow-scripts")
       iframe.attr("src", linkToInteractive)
 
+      // All interactives should resize to the correct height once they load,
+      // but if they don't this overflow element will show and load it fully once it is clicked
+      overflowElem.addClass("cta cta--medium cta--show-more cta--show-more__unindent")
+      overflowElem.text("See the full visual")
+      overflowElem.attr("overflow", "")
+
       link.remove()
+      iframe.appendChild(overflowElem)
       interactive.appendChild(iframe)
     }
   }
