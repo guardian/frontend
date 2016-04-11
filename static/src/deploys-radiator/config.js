@@ -1,13 +1,6 @@
 System.config({
   baseURL: "/assets/admin/deploys-radiator",
   defaultJSExtensions: true,
-  transpiler: "babel",
-  babelOptions: {
-    "optional": [
-      "runtime",
-      "optimisation.modules.system"
-    ]
-  },
   typescriptOptions: {
     "typeCheck": "strict",
     "tsconfig": true
@@ -20,7 +13,7 @@ System.config({
   packages: {
     "app": {
       "defaultExtension": "ts",
-      "modules": {
+      "meta": {
         "*.ts": {
           "loader": "ts"
         }
@@ -35,10 +28,10 @@ System.config({
     "hyperscript-helpers": "npm:hyperscript-helpers@2.0.2",
     "immutable": "npm:immutable@3.7.6",
     "monapt": "npm:monapt@0.5.0",
-    "ts": "github:frankwallis/plugin-typescript@2.4.3",
+    "ts": "github:frankwallis/plugin-typescript@4.0.2",
     "virtual-dom": "npm:virtual-dom@2.1.1",
-    "github:frankwallis/plugin-typescript@2.4.3": {
-      "typescript": "npm:typescript@1.7.5"
+    "github:frankwallis/plugin-typescript@4.0.2": {
+      "typescript": "npm:typescript@1.8.9"
     },
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
