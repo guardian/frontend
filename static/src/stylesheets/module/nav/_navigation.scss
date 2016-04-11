@@ -362,8 +362,8 @@ $c-navigation-expandable-background: colour(neutral-1);
     }
 
     &.global-navigation__title--history {
-        color: guss-colour(neutral-1, $pasteup-palette);
-        background: guss-colour(neutral-3, $pasteup-palette);
+        color: $neutral-1;
+        background: $neutral-3;
         border: 0;
         padding-bottom: 0;
     }
@@ -393,7 +393,7 @@ $c-navigation-expandable-background: colour(neutral-1);
     }
 
     &.global-navigation__children--history {
-        background: guss-colour(neutral-3, $pasteup-palette);
+        background: $neutral-3;
 
         .button--tag {
             margin-top: $gs-baseline / 2;

@@ -102,7 +102,7 @@
 .skip:active {
     font-size: 80%;
     display: block;
-    color: guss-colour(guardian-brand-dark, $pasteup-palette);
+    color: $guardian-brand-dark;
     text-decoration: none;
 
     position: static !important;

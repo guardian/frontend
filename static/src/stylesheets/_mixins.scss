@@ -210,19 +210,6 @@
     column-rule: $style;
 }
 
-@function colour($color) {
-    @if map-has-key($frontend-palette, $color) {
-        @return map-get($frontend-palette, $color);
-    } @else {
-        @if map-has-key($pasteup-palette, $color) {
-            @return guss-colour($color, $pasteup-palette);
-        } @else {
-            @warn '#{$color} not found in either frontend or pasteup palette';
-            @return false;
-        }
-    }
-}
-
 @function colour-hover($colour) {
     @return darken(colour($colour), 10%)
 }

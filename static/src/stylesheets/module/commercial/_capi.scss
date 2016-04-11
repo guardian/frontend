@@ -171,11 +171,11 @@
     }
 
     .fc-item__title {
-        color: guss-colour(news-support-7, $pasteup-palette);
+        color: $news-support-7;
     }
 
     .tone-news--item .fc-item__kicker {
-        color: guss-colour(neutral-1, $pasteup-palette);
+        color: $neutral-1;
     }
 
     .fc-item__kicker:after {

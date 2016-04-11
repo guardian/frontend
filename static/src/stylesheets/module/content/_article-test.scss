@@ -1,7 +1,7 @@
 .next-in-series-test {
     padding-top: $gs-baseline / 4;
     padding-bottom: $gs-baseline / 4;
-    border-top: 1px dotted guss-colour(neutral-3, $pasteup-palette);
+    border-top: 1px dotted $neutral-3;
 
     @include mq(mobileLandscape) {
         padding-right: 140px;

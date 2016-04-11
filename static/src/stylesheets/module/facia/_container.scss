@@ -138,7 +138,7 @@ $header-image-size-desktop: 100px;
     position: relative;
     padding-bottom: $gs-baseline/3;
     line-height: get-line-height(header, 2);
-    color: guss-colour(guardian-brand-dark, $pasteup-palette);
+    color: $guardian-brand-dark;
 
     @include mq(tablet, leftCol) {
         float: left;
@@ -568,7 +568,7 @@ $header-image-size-desktop: 100px;
 
     &,
     a {
-        color: guss-colour(guardian-brand-dark, $pasteup-palette);
+        color: $guardian-brand-dark;
     }
 
     @include fs-header(4);

@@ -4,9 +4,9 @@
     @include fs-textSans(2);
     @include button-height($base-size * 5);
     @include button-colour(
-        guss-colour(news-main-2, $pasteup-palette),
+        $news-main-2,
         #ffffff,
-        guss-colour(news-main-1, $pasteup-palette)
+        $news-main-1
     );
     display: inline-block;
     vertical-align: top;
@@ -36,156 +36,156 @@
 
 .button--primary {
     @include button-colour(
-        guss-colour(guardian-brand, $pasteup-palette),
+        $guardian-brand,
         #ffffff
     );
 
     @include button-hover-colour(
-        darken(guss-colour(guardian-brand, $pasteup-palette), 10%)
+        darken($guardian-brand, 10%)
     );
 }
 
 .button--secondary {
     @include button-colour(
-        guss-colour(neutral-7, $pasteup-palette),
-        guss-colour(neutral-1, $pasteup-palette)
+        $neutral-7,
+        $neutral-1
     );
 
     @include button-hover-colour(
-        darken(guss-colour(neutral-7, $pasteup-palette), 10%)
+        darken($neutral-7, 10%)
     );
 }
 
 .button--tertiary {
     @include button-colour(
         transparent,
-        guss-colour(neutral-1, $pasteup-palette),
-        guss-colour(neutral-4, $pasteup-palette)
+        $neutral-1,
+        $neutral-4
     );
 
     @include button-hover-colour(
         transparent,
-        darken(guss-colour(neutral-3, $pasteup-palette), 10%)
+        darken($neutral-3, 10%)
     );
 }
 
 .button--tone-media {
     @include button-colour(
-        guss-colour(multimedia-support-4, $pasteup-palette),
+        $multimedia-support-4,
         #ffffff
     );
 
     @include button-hover-colour(
-        guss-colour(neutral-2, $pasteup-palette)
+        $neutral-2
     );
 }
 
 .button--tone-media-variant {
     @include button-colour(
-        guss-colour(multimedia-main-1, $pasteup-palette),
+        $multimedia-main-1,
         #ffffff,
-        guss-colour(neutral-2, $pasteup-palette)
+        $neutral-2
     );
 
     @include button-hover-colour(
-        guss-colour(multimedia-main-1, $pasteup-palette),
-        guss-colour(neutral-3, $pasteup-palette)
+        $multimedia-main-1,
+        $neutral-3
     );
 }
 
 .button--tone-news {
     @include button-colour(
-        guss-colour(neutral-7, $pasteup-palette),
-        guss-colour(news-main-1, $pasteup-palette)
+        $neutral-7,
+        $news-main-1
     );
 
     @include button-hover-colour(
-        darken(guss-colour(neutral-7, $pasteup-palette), 10%)
+        darken($neutral-7, 10%)
     );
 }
 
 .button--tone-news-variant {
     @include button-colour(
         #ffffff,
-        guss-colour(news-main-1, $pasteup-palette),
-        guss-colour(neutral-4, $pasteup-palette)
+        $news-main-1,
+        $neutral-4
     );
 
     @include button-hover-colour(
         #ffffff,
-        darken(guss-colour(neutral-3, $pasteup-palette), 10%)
+        darken($neutral-3, 10%)
     );
 }
 
 .button--tone-feature {
     @include button-colour(
-        guss-colour(neutral-7, $pasteup-palette),
-        guss-colour(features-support-1, $pasteup-palette)
+        $neutral-7,
+        $features-support-1
     );
 
     @include button-hover-colour(
-        darken(guss-colour(neutral-7, $pasteup-palette), 10%)
+        darken($neutral-7, 10%)
     );
 }
 
 .button--tone-feature-variant {
     @include button-colour(
         #ffffff,
-        guss-colour(features-support-1, $pasteup-palette),
-        guss-colour(neutral-4, $pasteup-palette)
+        $features-support-1,
+        $neutral-4
     );
 
     @include button-hover-colour(
         #ffffff,
-        darken(guss-colour(neutral-3, $pasteup-palette), 10%)
+        darken($neutral-3, 10%)
     );
 }
 
 .button--tone-comment {
     @include button-colour(
-        guss-colour(neutral-7, $pasteup-palette),
-        guss-colour(comment-main-1, $pasteup-palette)
+        $neutral-7,
+        $comment-main-1
     );
 
     @include button-hover-colour(
-        darken(guss-colour(neutral-7, $pasteup-palette), 10%)
+        darken($neutral-7, 10%)
     );
 }
 
 .button--tone-comment-variant {
     @include button-colour(
         #ffffff,
-        guss-colour(comment-main-1, $pasteup-palette),
-        guss-colour(neutral-4, $pasteup-palette)
+        $comment-main-1,
+        $neutral-4
     );
 
     @include button-hover-colour(
         #ffffff,
-        darken(guss-colour(neutral-3, $pasteup-palette), 10%)
+        darken($neutral-3, 10%)
     );
 }
 
 .button--tone-live {
     @include button-colour(
-        guss-colour(neutral-6, $pasteup-palette),
-        guss-colour(neutral-1, $pasteup-palette)
+        $neutral-6,
+        $neutral-1
     );
 
     @include button-hover-colour(
-        darken(guss-colour(neutral-6, $pasteup-palette), 10%)
+        darken($neutral-6, 10%)
     );
 }
 
 .button--tone-live-variant {
     @include button-colour(
-        guss-colour(neutral-8, $pasteup-palette),
-        guss-colour(neutral-1, $pasteup-palette),
-        guss-colour(neutral-3, $pasteup-palette)
+        $neutral-8,
+        $neutral-1,
+        $neutral-3
     );
 
     @include button-hover-colour(
-        guss-colour(neutral-8, $pasteup-palette),
-        darken(guss-colour(neutral-3, $pasteup-palette), 10%)
+        $neutral-8,
+        darken($neutral-3, 10%)
     );
 }
 
@@ -248,12 +248,12 @@ $show-more-icon-spacing: $base-size + 1;
 .button--syndication-reprint {
     @include button-colour(
         transparent,
-        guss-colour(news-main-2, $pasteup-palette),
-        guss-colour(news-main-2, $pasteup-palette)
+        $news-main-2,
+        $news-main-2
     );
 
     @include button-hover-colour(
         transparent,
-        darken(guss-colour(news-main-2, $pasteup-palette), 10%)
+        darken($news-main-2, 10%)
     );
 }
