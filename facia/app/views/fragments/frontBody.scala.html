@@ -50,13 +50,7 @@
 
                 <div class="js-front-bottom"></div>
 
-                @defining(faciaPage.allPath) { allPath =>
-                    @if(allPath.isEmpty) {
-                        @fragments.trendingTopics(faciaPage.allItems, faciaPage.id, faciaPage.alwaysAvailableAllPath)
-                    } else {
-                        @fragments.trendingTopics(faciaPage.allItems, faciaPage.id, faciaPage.allPath)
-                    }
-                }
+                @fragments.trendingTopics(faciaPage.allItems, faciaPage.id, faciaPage.allPath)
 
                 @if(!isAdFeature) {
                     <div class="fc-container fc-container--commercial">
