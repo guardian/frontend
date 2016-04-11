@@ -4,18 +4,21 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'lodash/utilities/template',
-    'text!common/views/commercial/creatives/full-width-250.html'
+    'text!common/views/commercial/creatives/full-width-250.html',
+    'text!common/views/commercial/creatives/full-width-250-label.html'
 ], function (
     bean,
     bonzo,
     config,
     detect,
     template,
-    fullWidth250Template
+    fullWidth250Template,
+    fullWidth250LabelTemplate
 ) {
     function FullWidth250($adSlot, params) {
         this.create = function () {
             renderContainer($adSlot);
+            renderLabel($adSlot);
             var $creative = renderCreative($adSlot, params);
             if (isExpandable()) {
                 attachExpander($creative);
@@ -23,8 +26,13 @@ define([
         };
     }
 
-    function renderContainer(div) {
-        div.addClass('ad-slot--full-width-250 content__mobile-full-width');
+    function renderContainer($adSlot) {
+        $adSlot.addClass('ad-slot--full-width-250 content__mobile-full-width');
+    }
+
+    function renderLabel($adSlot) {
+        var html = template(fullWidth250LabelTemplate, {});
+        $adSlot.append(html);
     }
 
     function renderCreative($adSlot, params) {
