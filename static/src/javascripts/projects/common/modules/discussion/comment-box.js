@@ -155,6 +155,7 @@ CommentBox.prototype.showOnboarding = function(e) {
         this.removeState('onboarding-visible');
         this.postComment();
     } else {
+        this.getElem('onboarding-author').innerHTML = this.getUserData().displayName;
         this.setState('onboarding-visible');
         this.previewComment(this.onboardingPreviewSuccess);
     }
