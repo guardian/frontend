@@ -1,0 +1,14 @@
+@(job: model.commercial.jobs.Job, clickMacro: Option[String])
+
+<div class="advert-blended advert-blended--jobs">
+    <div class="advert-blended__title">
+        <a href="@{clickMacro}http://jobs.theguardian.com"
+            data-link-name="merchandising-hybrid-jobs-v1_0_2014-08-14-visit-site">
+            @fragments.inlineSvg("logo-jobs-26", "commercial", Seq("logo--tone-jobs"))
+            <span class="u-h">Jobs</span>
+        </a>
+    </div>
+    <div class="advert-blended__body">
+        @jobCard(job, clickMacro)
+    </div>
+</div>
