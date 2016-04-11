@@ -54,7 +54,7 @@ object DynamoDbStore extends Logging with ExecutionContexts {
     futureDeleteResult.onFailure {
       case t: Throwable =>
         val message = t.getMessage
-        log.error(s"Unable to unsubscribe $gcmBrowserId to $notificationTopicId: $message")}
+        log.error(s"Unable to delete $gcmBrowserId for topic $notificationTopicId: $message")}
 
     futureDeleteResult
   }
