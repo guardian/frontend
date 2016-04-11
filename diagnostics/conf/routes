@@ -13,6 +13,8 @@ GET        /robots.txt                      controllers.Assets.at(path="/public"
 POST       /css                             controllers.DiagnosticsController.css
 OPTIONS    /css                             controllers.DiagnosticsController.cssOptions
 
+POST       /csp-report                      controllers.DiagnosticsController.csp
+
 POST       /accept-beacon                   controllers.DiagnosticsController.acceptBeacon
 OPTIONS    /accept-beacon                   controllers.DiagnosticsController.acceptBeaconOptions
 

@@ -4,6 +4,7 @@ import common._
 import play.api.mvc._
 import model.diagnostics.analytics.Analytics
 import model.diagnostics.css.Css
+import model.diagnostics.csp.CSP
 import model.TinyResponse
 
 object DiagnosticsController extends Controller with Logging {
@@ -41,6 +42,13 @@ object DiagnosticsController extends Controller with Logging {
   }
 
   def cssOptions = postOptions
+
+  def csp = Action(jsonParser) { implicit request =>
+    if (conf.switches.Switches.CspReporting.isSwitchedOn) {
+      CSP.report(request.body)
+    }
+    TinyResponse.noContent()
+  }
 
   private def postOptions: Action[AnyContent] = Action { implicit request =>
     TinyResponse.noContent(Some("POST, OPTIONS"))

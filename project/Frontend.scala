@@ -49,7 +49,8 @@ object Frontend extends Build with Prototypes {
       jerseyCore,
       jerseyClient,
       cssParser,
-      w3cSac
+      w3cSac,
+      scanamo
     )
   ).settings(
       mappings in TestAssets ~= filterAssets
