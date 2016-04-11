@@ -47,11 +47,7 @@ define([
         var isExpanded = false;
 
         function toggleExpansion() {
-            if (!isExpanded) {
-                $creative.addClass(expandClass);
-            } else {
-                $creative.removeClass(expandClass);
-            }
+            !isExpanded ? $creative.addClass(expandClass) : $creative.removeClass(expandClass);
             isExpanded = !isExpanded;
         }
 
