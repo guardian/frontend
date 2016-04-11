@@ -83,6 +83,13 @@ define([
                 $('.js-notifications').prepend(src);
                 bean.one(document.body, 'click', '.js-notifications-subscribe-link', handler);
             });
+            //modules.displayPermissiosMessage();
+        },
+
+        closeDisplayMessage: function(){
+            console.log("++ Close permission notification");
+            $('.js-notifications-permission-denied').remove();
+            bean.one(document.body, 'click', '.js-notifications-subscribe-link', modules.subscribeHandler);
         },
 
         displayPermissiosMessage: function() {
@@ -93,22 +100,9 @@ define([
                 $('.js-notifications').prepend(src);
                 console.log("++ Written it");
                 //bean.one(document.body, 'click', '.js-notifications-subscribe-link', modules.subscribeHandler );
-                bean.one(document.body, 'click', '.js-notifications__item__close', function(){
-                    console.log("++ Close permission notification");
-                    //$('.js-notifications-permission-denied').remove ();
-                });
+                bean.one(document.body, 'click', '.js-notifications__item__close', modules.closeDisplayMessage);
                 console.log("++ Handled");
             });
-        },
-
-        handleAttemptedBlockedSubscribe: function() {
-            Notification.requestPermission().then(function(result){
-                if(result === 'denied') {
-                    console.log("++ More Deniel");
-
-                }
-                bean.one(document.body, 'click', '.js-notifications-subscribe-link', handler);
-            })
         },
 
         setSubscriptionStatus: function (subscribed) {
@@ -129,7 +123,6 @@ define([
                 .catch( function(err){
                     if (Notification.permission === 'denied') {
                         console.log("+++ Gotcha Now!");
-                        bean.one(document.body, 'click', '.js-notifications-subscribe-link', modules.subscribeHandler1);
                         modules.displayPermissiosMessage();
                     }
                 });
