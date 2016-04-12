@@ -1,12 +1,11 @@
 package common.Logback
 
 import conf.switches.Switches
-
-import play.api.{Logger => PlayLogger, Application => PlayApp, GlobalSettings, LoggerLike}
 import conf.Configuration
+import play.api.{Logger => PlayLogger, Application => PlayApp, GlobalSettings, LoggerLike}
 
 
-case class LogStashConf(stream: String, region: String, role: String)
+case class LogStashConf(enabled: Boolean, stream: String, region: String, role: String)
 
 trait Logstash extends GlobalSettings {
 
@@ -23,7 +22,7 @@ object Logstash {
     region <- Configuration.Logstash.streamRegion
     role <- Configuration.Logstash.streamRole
   } yield {
-    LogStashConf(stream, region, role)
+    LogStashConf(Configuration.Logstash.enabled, stream, region, role)
   }
 
   def init(logger: LoggerLike) = {

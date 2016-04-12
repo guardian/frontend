@@ -59,28 +59,31 @@ object LogbackConfig {
   }
 
   def initLogger(logger: LoggerLike, config: LogStashConf) = {
-    logger.info("LogConfig initializing")
-    asLogBack(logger).map { lb =>
-      try {
-        lb.info("Configuring Logback")
-        val context = lb.getLoggerContext
-        val layout = makeLayout(makeCustomFields(customFields))
-        val bufferSize = 1000
-        val appender  = makeKinesisAppender(layout, context,
-          KinesisAppenderConfig(
-            config.stream,
-            config.region,
-            config.role,
-            appName,
-            bufferSize
+    if (config.enabled) {
+      asLogBack(logger).map { lb =>
+        try {
+          lb.info("Configuring Logback")
+          val context = lb.getLoggerContext
+          val layout = makeLayout(makeCustomFields(customFields))
+          val bufferSize = 1000
+          val appender  = makeKinesisAppender(layout, context,
+            KinesisAppenderConfig(
+              config.stream,
+              config.region,
+              config.role,
+              appName,
+              bufferSize
+            )
           )
-        )
-        lb.addAppender(appender)
-        lb.info("Configured Logback")
-      } catch {
-        case ex: Throwable => logger.info(s"Error while adding Logback appender: ${ex}")
-      }
-    } getOrElse(logger.info("not running using logback"))
+          lb.addAppender(appender)
+          lb.info("Configured Logback")
+        } catch {
+          case ex: Throwable => logger.info(s"Error while adding Logback appender: ${ex}")
+        }
+      } getOrElse(logger.info("not running using logback"))
+    } else {
+      logger.info("Logging disabled")
+    }
   }
 
 }
