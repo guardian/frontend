@@ -53,12 +53,12 @@ class ContentTest extends FlatSpec with Matchers with OneAppPerSuite with implic
 
   "Tags" should "understand tag types" in {
 
-    val theKeywords = Seq(Tag.make(tag("/keyword1", TagType.Keyword)), Tag.make(tag("/keyword2", TagType.Keyword)))
-    val theSeries = Seq(Tag.make(tag("/series", TagType.Series)))
-    val theContributors = Seq(Tag.make(tag("/contributor", TagType.Contributor)))
-    val theTones = Seq(Tag.make(tag("/tone", TagType.Tone)))
-    val theBlogs = Seq(Tag.make(tag("/blog", TagType.Blog)))
-    val theTypes = Seq(Tag.make(tag("/type", TagType.Type)))
+    val theKeywords = List(Tag.make(tag("/keyword1", TagType.Keyword)), Tag.make(tag("/keyword2", TagType.Keyword)))
+    val theSeries = List(Tag.make(tag("/series", TagType.Series)))
+    val theContributors = List(Tag.make(tag("/contributor", TagType.Contributor)))
+    val theTones = List(Tag.make(tag("/tone", TagType.Tone)))
+    val theBlogs = List(Tag.make(tag("/blog", TagType.Blog)))
+    val theTypes = List(Tag.make(tag("/type", TagType.Type)))
 
     val tags = Tags(tags = theBlogs ++ theTones ++ theContributors ++ theSeries ++ theKeywords ++ theTypes)
 
