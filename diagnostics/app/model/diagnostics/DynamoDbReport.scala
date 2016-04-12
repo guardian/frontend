@@ -6,6 +6,7 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBAsyncClient
 import com.amazonaws.services.dynamodbv2.model.{AttributeAction, AttributeValue, AttributeValueUpdate, UpdateItemRequest}
 import com.gu.scanamo._
 import common.{ExecutionContexts, Logging}
+import conf.Configuration
 import model.diagnostics.csp.CSPReport
 import model.diagnostics.css.CssReport
 import org.joda.time.LocalDate
@@ -13,7 +14,7 @@ import org.joda.time.LocalDate
 import scala.collection.JavaConverters._
 
 trait DynamoDbReport[A] extends Logging with ExecutionContexts {
-  val client = new AmazonDynamoDBAsyncClient()
+  val client = new AmazonDynamoDBAsyncClient(Configuration.aws.mandatoryCredentials)
   client.setRegion(Region.getRegion(Regions.EU_WEST_1))
 
   def report(report: A): Unit
