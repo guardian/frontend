@@ -21,14 +21,6 @@
         }
     }
     data-link-name="@omnitureId"
-    @if(useCardBranding){
-        @for(branding <- item.branding) {
-            @for(sponsorship <- branding.sponsorshipType) {data-sponsorship="@sponsorship"}
-            @for(sponsor <- branding.sponsor)             {data-sponsor="@sponsor"}
-            @for(keywords <- branding.keywordId)          {data-keywords="@keywords"}
-            @for(series <- branding.seriesId)             {data-series="@series"}
-        }
-    }
     >
     <h2 class="advert__title">
         @for(icon <- item.icon){@inlineSvg(icon, "icon")}
