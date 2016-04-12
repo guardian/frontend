@@ -7,8 +7,8 @@
 @import 'components/guss-rem/_rem';
 @import 'components/guss-typography/_typography';
 @import 'components/guss-css3/_css3';
-@import 'components/guss-layout/_columns';
-@import 'components/guss-layout/_row';
+@import 'pasteup/layout/_columns';
+@import 'pasteup/layout/_row';
 
 // The grid system is already imported in the _vars.scss file where it's needed
 // @import 'components/guss-grid-system/_grid-system';
