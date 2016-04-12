@@ -1,6 +1,5 @@
 import com.google.inject.Guice
 import common.CloudWatchApplicationMetrics
-import common.Logback.Logstash
 import conf._
 import filters.{StrictTransportSecurityHeaderFilter, HeaderLoggingFilter}
 import play.api.Play.current
@@ -16,8 +15,7 @@ object Global extends WithFilters(HeaderLoggingFilter :: StrictTransportSecurity
   with SafeLogging
   with CloudWatchApplicationMetrics
   with IdentityLifecycle
-  with SwitchboardLifecycle
-  with Logstash {
+  with SwitchboardLifecycle {
 
   override lazy val applicationName = "frontend-identity"
 

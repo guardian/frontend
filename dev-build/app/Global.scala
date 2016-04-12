@@ -1,5 +1,4 @@
 import commercial.CommercialLifecycle
-import common.Logback.Logstash
 import common.dfp.FaciaDfpAgentLifecycle
 import common.{CanonicalLink, DiagnosticsLifecycle, ExecutionContexts}
 import conf._
@@ -76,8 +75,7 @@ object Global extends WithFilters(DevJsonExtensionFilter :: DevCacheWarningFilte
   with CricketLifecycle
   with RugbyLifecycle
   with CorsErrorHandler
-  with ABHeadlinesLifecycle
-  with Logstash {
+  with ABHeadlinesLifecycle {
   override val allowedParams: Seq[String] =
     CanonicalLink.significantParams ++ commercialParams ++ insignificantParams ++ Seq("query")
 }

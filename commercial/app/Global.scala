@@ -1,5 +1,4 @@
 import commercial.CommercialLifecycle
-import common.Logback.Logstash
 import common._
 import conf.{CorsErrorHandler, Filters, SwitchboardLifecycle}
 import dev.DevParametersLifecycle
@@ -16,7 +15,6 @@ object Global extends WithFilters(Filters.common: _*)
   with DevParametersLifecycle
   with SwitchboardLifecycle
   with CloudWatchApplicationMetrics
-  with CorsErrorHandler
-  with Logstash {
+  with CorsErrorHandler {
   override lazy val applicationName = "frontend-commercial"
 }

@@ -1,4 +1,3 @@
-import common.Logback.Logstash
 import common.dfp.DfpAgentLifecycle
 import common.{CloudWatchApplicationMetrics, ContentApiMetrics, EmailSubsciptionMetrics}
 import conf.{CorsErrorHandler, Filters, SwitchboardLifecycle}
@@ -20,8 +19,7 @@ object Global extends WithFilters(Filters.common: _*)
   with SectionsLookUpLifecycle
   with SwitchboardLifecycle
   with CorsErrorHandler
-  with SiteMapLifecycle
-  with Logstash {
+  with SiteMapLifecycle {
   override lazy val applicationName = "frontend-applications"
 
   override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ++ List(
