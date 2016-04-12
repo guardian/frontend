@@ -109,7 +109,11 @@
 
 
 @include mq(tablet, desktop) {
-    @include guss-columns('.headline-column--tablet', $column-min-width: 340px, $columns-fallback-width: gs-span(9), $columns-fallback-columns: 2);
+    @include layout-columns('.headline-column--tablet',
+        $column-min-width: 340px,
+        $columns-fallback-width: gs-span(9),
+        $columns-fallback-columns: 2
+    );
 
     .headline-column__item {
         height: auto;
@@ -117,5 +121,9 @@
 }
 
 @include mq(desktop) {
-    @include guss-columns('.headline-column--desktop', $column-min-width: 300px, $columns-fallback-width: gs-span(8), $columns-fallback-columns: 2);
+    @include layout-columns('.headline-column--desktop',
+        $column-min-width: 300px,
+        $columns-fallback-width: gs-span(8),
+        $columns-fallback-columns: 2
+    );
 }

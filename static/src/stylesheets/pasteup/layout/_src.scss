@@ -1,5 +1,4 @@
-$browser-supports-flexbox: true !default;
-
+// ROWS
 @mixin layout-row($class, $detect: false) {
     @if ($detect) {
         .has-flex {
@@ -46,7 +45,6 @@ $browser-supports-flexbox: true !default;
 
     @include mq($until: tablet) {
         #{$class}--layout-m {
-            display: -webkit-flex;
             display: flex;
             flex-wrap: wrap;
 
@@ -77,6 +75,89 @@ $browser-supports-flexbox: true !default;
     @each $i in 2, 3, 4 {
         #{$class}--items-#{$i} #{$class}__item {
             width: $fallback-width / $i;
+        }
+    }
+}
+
+// COLUMNS
+
+@function width-of-fallback-column-item($container-width, $gap-between-columns, $number-of-columns) {
+    @return ($container-width - $gap-between-columns * ($number-of-columns - 1)) / $number-of-columns;
+}
+
+@mixin layout-columns(
+    $class,
+    $column-min-width: 300px,
+    $column-gap: $gs-gutter,
+    $columns-fallback-width: 940px,
+    $columns-fallback-columns: 3
+) {
+    @if $browser-supports-columns {
+        #{$class} {
+            column-width: rem($column-min-width);
+            column-gap: rem($column-gap);
+            column-fill: balance;
+        }
+        #{$class}__item {
+            // Fix a bug in IE where hovering items would change
+            // the column container's height
+            height: 100%;
+            display: inline-block;
+            width: 100%;
+        }
+    }
+    @if not $browser-supports-columns {
+        #{$class} {
+            margin-left: $column-gap / 2 * -1;
+            margin-right: $column-gap / 2 * -1;
+
+            @include clearfix;
+        }
+        #{$class}__item {
+            position: relative;
+            display: block;
+            margin-left: $column-gap / 2;
+            margin-right: $column-gap / 2;
+
+            @include mq(tablet) {
+                float: left;
+            }
+
+            @if type-of($columns-fallback-width) == map {
+                @each $breakpoint, $fallback-width in $columns-fallback-width {
+
+                    $number-of-fallback-columns: if(type-of($columns-fallback-columns) == map, map-get($columns-fallback-columns, $breakpoint), $columns-fallback-columns);
+
+                    @include mq($breakpoint) {
+                        width: width-of-fallback-column-item(
+                            $container-width: $fallback-width,
+                            $gap-between-columns: $column-gap,
+                            $number-of-columns: $number-of-fallback-columns
+                        );
+
+                        &:nth-child(n) {
+                            clear: none;
+                        }
+                        &:nth-child(#{$number-of-fallback-columns}n+1) {
+                            clear: both;
+                        }
+                    }
+
+                }
+            } @else {
+                width: width-of-fallback-column-item(
+                    $container-width: $columns-fallback-width,
+                    $gap-between-columns: $column-gap,
+                    $number-of-columns: $columns-fallback-columns
+                );
+
+                &:nth-child(n) {
+                    clear: none;
+                }
+                &:nth-child(#{$columns-fallback-columns}n+1) {
+                    clear: both;
+                }
+            }
         }
     }
 }
