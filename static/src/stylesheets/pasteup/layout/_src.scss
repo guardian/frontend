@@ -108,10 +108,9 @@
     }
     @if not $browser-supports-columns {
         #{$class} {
+            @include clearfix;
             margin-left: $column-gap / 2 * -1;
             margin-right: $column-gap / 2 * -1;
-
-            @include clearfix;
         }
         #{$class}__item {
             position: relative;
