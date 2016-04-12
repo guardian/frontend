@@ -77,7 +77,7 @@
     .rich-link__meta {
         @include f-textSans;
         color: $neutral-2;
-        font-size: get-font-size(data, 3);
+        font-size: get-font-size(textSans, 2);
         text-align: right;
     }
 
