@@ -154,24 +154,29 @@ define([
     function preprocessManualContainer(tpl) {
         manualContainerButtonTpl || (manualContainerButtonTpl = template(manualContainerButtonStr));
         manualCardTpls[tpl.params.creativeCard] || (manualCardTpls[tpl.params.creativeCard] = template(manualCardStrs[tpl.params.creativeCard]));
+
         tpl.params.classNames = tpl.params.classNames.map(function (cn) { return 'adverts--' + cn; }).join(' ');
         tpl.params.title || (tpl.params.title = '');
+
         if (tpl.params.isSoulmates) {
             manualContainerCtaSoulmatesTpl || (manualContainerCtaSoulmatesTpl = template(manualContainerCtaSoulmatesStr));
             tpl.params.title = tpl.params.marque54icon + tpl.params.logosoulmates + '<span class="u-h">The Guardian Soulmates</span>';
             tpl.params.blurb = 'Meet someone <em>worth</em> meeting';
             tpl.params.ctas = manualContainerCtaSoulmatesTpl(tpl.params);
+
         } else if (tpl.params.isMembership) {
             manualContainerCtaMembershipTpl || (manualContainerCtaMembershipTpl = template(manualContainerCtaMembershipStr));
             tpl.params.blurb = tpl.params.title;
             tpl.params.title = tpl.params.logomembership + '<span class="u-h">The Guardian Membership</span>';
             tpl.params.ctas = manualContainerCtaMembershipTpl(tpl.params);
+
         } else {
             manualContainerCtaTpl || (manualContainerCtaTpl = template(manualContainerCtaStr));
             tpl.params.title = tpl.params.marque54icon + tpl.params.logoguardian + '<span class="u-h">The Guardian</span>' + tpl.params.title;
             tpl.params.blurb = tpl.params.explainer || '';
             tpl.params.ctas = tpl.params.viewalltext ? manualContainerCtaTpl(tpl.params) : '';
         }
+
         if (tpl.params.originalCreative === 'manual-multiple') {
             tpl.params.innards = [1, 2, 3, 4].map(function(index) {
                 return manualCardTpls[tpl.params.creativeCard]({
