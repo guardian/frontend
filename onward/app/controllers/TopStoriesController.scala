@@ -2,7 +2,7 @@ package controllers
 
 import com.gu.contentapi.client.GuardianContentApiThriftError
 import common._
-import conf.LiveContentApi.getResponse
+import contentapi.ContentApiClient
 import conf._
 import model._
 import model.pressed.PressedContent
@@ -31,7 +31,7 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
 
   private def lookup(edition: Edition)(implicit request: RequestHeader): Future[Option[RelatedContent]] = {
     log.info(s"Fetching top stories for edition ${edition.id}")
-    getResponse(LiveContentApi.item("/", edition)
+    ContentApiClient.getResponse(ContentApiClient.item("/", edition)
       .showEditorsPicks(true)
     ).map { response =>
         response.editorsPicks.getOrElse(Nil) map { item =>

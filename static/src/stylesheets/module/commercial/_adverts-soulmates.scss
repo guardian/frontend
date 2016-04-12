@@ -47,7 +47,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 1px solid guss-colour(soulmates-border-colour, $frontend-palette);
+        border-bottom: 1px solid $soulmates-border-colour;
         padding-bottom: $gs-baseline / 2;
         margin-bottom: $gs-baseline / 2;
     }
@@ -62,10 +62,10 @@
 }
 
 .adverts--tone-soulmates {
-    background: guss-colour(soulmates-background, $frontend-palette);
+    background: $soulmates-background;
 
     > .adverts__header {
-        background: guss-colour(soulmates-colour, $frontend-palette);
+        background: $soulmates-colour;
     }
 
     .adverts__blurb {
@@ -95,7 +95,7 @@
 }
 
 .advert-blended--soulmates {
-    background: guss-colour(soulmates-background, $frontend-palette);
+    background: $soulmates-background;
     padding: 0 $gs-gutter / 4;
 
     .inline-logo-soulmates {
@@ -106,7 +106,7 @@
     }
 
     .advert-blended__title {
-        background: guss-colour(soulmates-colour, $frontend-palette);
+        background: $soulmates-colour;
         margin: 0 $gs-gutter / -4 5px;
         padding: 4px $gs-gutter / 4 0;
     }

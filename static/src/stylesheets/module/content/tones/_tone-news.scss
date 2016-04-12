@@ -5,17 +5,17 @@
         .element-pullquote {
             &:before,
             &:after {
-                background-color: colour(news-default);
+                background-color: $news-default;
             }
         }
     }
 
     .tone-colour {
-        color: colour(news-default);
+        color: $news-default;
     }
 
     .tone-accent-border {
-        border-color: colour(news-accent);
+        border-color: $news-accent;
     }
 
     // Interactives need help because their headers are not tonal

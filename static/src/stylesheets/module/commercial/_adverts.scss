@@ -140,7 +140,7 @@
                 position: relative;
 
                 &::before {
-                    @include separator(colour(neutral-4), $gs-gutter / -2);
+                    @include separator($neutral-4, $gs-gutter / -2);
                 }
             }
         }
@@ -174,11 +174,11 @@
 
         @include mq(tablet) {
             &::before {
-                @include separator(colour(neutral-4), calc((100% - #{$gs-gutter}) / 3), $gs-gutter / 2);
+                @include separator($neutral-4, calc((100% - #{$gs-gutter}) / 3), $gs-gutter / 2);
             }
 
             &::after {
-                @include separator(colour(neutral-4), calc((100% - #{$gs-gutter}) / 3 * 2), $gs-gutter / 2);
+                @include separator($neutral-4, calc((100% - #{$gs-gutter}) / 3 * 2), $gs-gutter / 2);
             }
         }
     }
@@ -196,7 +196,7 @@
     }
 
     .adverts__row > .advert::after {
-        @include separator(colour(neutral-4), 100%, $gs-gutter / 2);
+        @include separator($neutral-4, 100%, $gs-gutter / 2);
     }
 
     .adverts__row > .button::before {
@@ -316,7 +316,7 @@
 
 .adverts__badge {
     @include fs-textSans(1);
-    color: colour(neutral-2);
+    color: $neutral-2;
     font-weight: bold;
     padding-right: $gs-gutter;
     text-align: right;
@@ -348,6 +348,10 @@
 
     &:not([open]) .inline-minus,
     &[open] .inline-plus {
+        display: none;
+    }
+
+    &:not([open]) > *:not(summary) {
         display: none;
     }
 }
