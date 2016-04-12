@@ -77,7 +77,7 @@
 
 .email-sub__text-input {
     border: 1px solid $form-primary-colour;
-    color: guss-colour(neutral-1, $pasteup-palette);
+    color: $neutral-1;
     height: 3em;
     outline: none;
     padding: .667em 1.250em;
@@ -85,7 +85,7 @@
 
 .email-sub__submit-input {
     background-color: transparent;
-    border: 1px solid guss-colour(news-support-1, $pasteup-palette);
+    border: 1px solid $news-support-1;
     color: $form-primary-colour;
 
     &:focus,
@@ -118,7 +118,7 @@
 
 .email-sub__small {
     @include fs-textSans(1, $size-only: true);
-    color: guss-colour(guardian-brand, $pasteup-palette);
+    color: $guardian-brand;
     display: block;
     padding-left: $gs-baseline / 3;
     position: relative;
@@ -135,9 +135,9 @@
     position: relative;
 
     .inline-icon {
-        background-color: guss-colour(neutral-3, $pasteup-palette);
+        background-color: $neutral-3;
         border-radius: 1000px;
-        fill: guss-colour(neutral-1, $pasteup-palette);
+        fill: $neutral-1;
         height: $icon-size;
         left: 0;
         position: absolute;
@@ -179,12 +179,12 @@
 }
 
 .email-sub__close-icon svg {
-    fill: darken(colour(neutral-2), 10%);
+    fill: darken($neutral-2, 10%);
 
     &:hover,
     &:focus {
         cursor: pointer;
-        fill: colour(neutral-2);
+        fill: $neutral-2;
     }
 }
 
@@ -198,15 +198,15 @@
     padding: 0 $gs-gutter;
 
     .email-sub__submit-input {
-        background-color: guss-colour(neutral-2, $pasteup-palette);
-        border-color: guss-colour(neutral-2, $pasteup-palette);
+        background-color: $neutral-2;
+        border-color: $neutral-2;
         margin-bottom: $gs-baseline;
 
         &:hover,
         &:focus,
         &:active {
-            background-color: darken(guss-colour(neutral-2, $pasteup-palette), 10%);
-            border-color: darken(guss-colour(neutral-2, $pasteup-palette), 10%);
+            background-color: darken($neutral-2, 10%);
+            border-color: darken($neutral-2, 10%);
         }
     }
 
@@ -219,7 +219,7 @@
 
 // LANDING PAGE MODS
 .email-sub--landing {
-    background-color: guss-colour(guardian-brand, $pasteup-palette);
+    background-color: $guardian-brand;
 
     .email-sub__description {
         padding: $gs-baseline $gs-gutter;
@@ -249,7 +249,7 @@
 
 // IN-ARTICLE (COMPOSER) PAGE MODS
 .email-sub--article {
-    border-top: 1px dotted colour(neutral-4);
+    border-top: 1px dotted $neutral-4;
     padding: $gs-gutter / 4;
 
     @include mq($from: phablet) {
@@ -262,7 +262,7 @@
 
     .email-sub__message__headline,
     .email-sub__message__description {
-        color: colour(neutral-1);
+        color: $neutral-1;
     }
 }
 
@@ -274,12 +274,12 @@
     }
 
     .email-sub__text-input {
-        border-color: colour(neutral-3);
+        border-color: $neutral-3;
     }
 
     .email-sub__submit-input {
-        background-color: guss-colour(guardian-brand, $pasteup-palette);
-        border-color: guss-colour(guardian-brand, $pasteup-palette);
+        background-color: $guardian-brand;
+        border-color: $guardian-brand;
     }
 
     .email-sub__label,
@@ -298,7 +298,7 @@
     padding: 0;
 
     .email-sub__text-input {
-        border-color: guss-colour(guardian-brand, $pasteup-palette);
+        border-color: $guardian-brand;
     }
 }
 
@@ -376,19 +376,4 @@
             color: $tone-colour-headline;
         }
     }
-}
-
-// A/B Test - Marketing Emails
-$mark-input-dim: 15px;
-
-.email-sub__small--mark {
-    padding-left: $mark-input-dim + $gs-gutter/2;
-}
-
-.email-sub__mark-input {
-    height: $mark-input-dim;
-    width: $mark-input-dim;
-    left: 0;
-    position: absolute;
-    top: 0;
 }

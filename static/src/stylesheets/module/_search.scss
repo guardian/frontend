@@ -78,8 +78,7 @@ td.gsc-search-button {
     overflow: visible !important;
     text-decoration: none !important;
 }
-
-// Add space between pagination links to make them more touch friendly
+/*Add space between pagination links to make them more touch friendly*/
 .gsc-results .gsc-cursor-box {
     margin: 0 0 ($gs-baseline/3)*4 !important;
 }
@@ -119,36 +118,36 @@ td.gsc-search-button {
     @include f-headline;
     font-size: get-font-size(headline, 1) !important;
     line-height: get-line-height(headline, 1) !important;
-    color: colour(neutral-2) !important;
+    color: $neutral-2 !important;
 }
 // Hide URLs
 .gsc-url-top {
     display: none !important;
 }
-// Make titles look like story headlines
+/* Make titles look like story headlines*/
 .gsc-thumbnail-inside a.gs-title {
-    display: block;
     @include fs-headline(2);
+    display: block;
     padding-bottom: 10px;
 }
 .gs-webResult.gs-result a.gs-title,
 .gs-imageResult a.gs-title {
     &,
     b {
-        color: colour(neutral-1) !important;
+        color: $neutral-1 !important;
     }
 
     &:visited {
         &,
         b {
-            color: colour(neutral-2);
+            color: $neutral-2;
         }
     }
 
     &:active {
         &,
         b {
-            color: colour(neutral-1);
+            color: $neutral-1;
         }
     }
 
@@ -157,7 +156,7 @@ td.gsc-search-button {
     }
 }
 .gsc-expansionArea .gsc-result {
-    border-top: 1px solid colour(neutral-5) !important;
+    border-top: 1px solid $neutral-5 !important;
 }
 .gsc-webResult .gsc-result {
     padding-top: 2px;

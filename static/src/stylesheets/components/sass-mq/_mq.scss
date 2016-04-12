@@ -255,3 +255,10 @@ $mq-media-type: all !default;
         }
     }
 }
+
+// A standard media query list wrapped as an arglist. To keep the linter happy.
+@mixin mq-list($queries...) {
+    @media #{$queries} {
+        @content
+    }
+}

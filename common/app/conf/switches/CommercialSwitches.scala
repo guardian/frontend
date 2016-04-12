@@ -113,10 +113,19 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val TravelOffersFeedSwitch = Switch(
+  val TravelFeedFetchSwitch = Switch(
     "Commercial",
-    "gu-travel-offers",
-    "If this switch is on, commercial components will be fed by travel offer feed.",
+    "gu-travel-feed-fetch",
+    "If this switch is on, cached travel offers feed will be updated from external source.",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val TravelFeedParseSwitch = Switch(
+    "Commercial",
+    "gu-travel-feed-parse",
+    "If this switch is on, commercial components will be fed by travel offers feed.",
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -149,10 +158,10 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val MasterclassFeedSwitch = Switch(
+  val EventsFeedSwitch = Switch(
     "Commercial",
-    "gu-masterclasses",
-    "If this switch is on, commercial components will be fed by masterclass feed.",
+    "gu-events",
+    "If this switch is on, commercial components will be fed by masterclass and live-events feeds.",
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -217,7 +226,7 @@ trait CommercialSwitches {
     "fixed-top-above-nav",
     "Fixes size of top-above-nav ad slot on fronts.",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 13),
+    sellByDate = new LocalDate(2016, 4, 20),
     exposeClientSide = false
   )
 
@@ -228,15 +237,6 @@ trait CommercialSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
-  )
-
-  val OutbrainOnAmp = Switch(
-    "Commercial",
-    "outbrain-on-amp",
-    "Show an Outbrain component on amp pages",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 5),
-    exposeClientSide = false
   )
 
   val BritishCouncilBeacon = Switch(
@@ -253,7 +253,7 @@ trait CommercialSwitches {
     "v2-jobs-template",
     "Jobs component using template v2",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 13),
+    sellByDate = new LocalDate(2016, 4, 20),
     exposeClientSide = false
   )
 
@@ -262,7 +262,7 @@ trait CommercialSwitches {
     "v2-masterclasses-template",
     "Masterclasses component using template v2",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 13),
+    sellByDate = new LocalDate(2016, 4, 20),
     exposeClientSide = false
   )
 
@@ -271,7 +271,7 @@ trait CommercialSwitches {
     "v2-books-template",
     "Books component using template v2",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 13),
+    sellByDate = new LocalDate(2016, 4, 20),
     exposeClientSide = false
   )
 
@@ -280,7 +280,7 @@ trait CommercialSwitches {
     "v2-travel-template",
     "Travel component using template v2",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 13),
+    sellByDate = new LocalDate(2016, 4, 20),
     exposeClientSide = false
   )
 
@@ -289,7 +289,7 @@ trait CommercialSwitches {
     "v2-soulmates-template",
     "Soulmates component using template v2",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 13),
+    sellByDate = new LocalDate(2016, 4, 20),
     exposeClientSide = false
   )
 
@@ -298,7 +298,7 @@ trait CommercialSwitches {
     "v2-blended-template",
     "Blended component using template v2",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 13),
+    sellByDate = new LocalDate(2016, 4, 20),
     exposeClientSide = false
   )
 
@@ -307,7 +307,7 @@ trait CommercialSwitches {
     "v2-manual-single-template",
     "Manual single component using template v2",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 13),
+    sellByDate = new LocalDate(2016, 4, 20),
     exposeClientSide = false
   )
 
@@ -316,7 +316,7 @@ trait CommercialSwitches {
     "v2-manual-multiple-template",
     "Manual multiple component using template v2",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 13),
+    sellByDate = new LocalDate(2016, 4, 20),
     exposeClientSide = false
   )
 
@@ -325,7 +325,7 @@ trait CommercialSwitches {
     "v2-capi-single-template",
     "Capi single component using template v2",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 13),
+    sellByDate = new LocalDate(2016, 4, 20),
     exposeClientSide = false
   )
 
@@ -334,7 +334,34 @@ trait CommercialSwitches {
     "v2-capi-multiple-template",
     "Capi multiple component using template v2",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 13),
+    sellByDate = new LocalDate(2016, 4, 20),
+    exposeClientSide = false
+  )
+
+  val v2FixedContainerTemplate = Switch(
+    "Commercial",
+    "v2-fixed-container-template",
+    "Fixed paid containers using template v2",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 4, 20),
+    exposeClientSide = false
+  )
+
+  val v2DynamicContainerTemplate = Switch(
+    "Commercial",
+    "v2-dynamic-container-template",
+    "Dynamic paid containers using template v2",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 4, 20),
+    exposeClientSide = false
+  )
+
+  val cardsDecidePaidContainerBranding = Switch(
+    "Commercial",
+    "cards-decide-paid-container-branding",
+    "If on, the cards will decide the branding of their container",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 4, 20),
     exposeClientSide = false
   )
 }

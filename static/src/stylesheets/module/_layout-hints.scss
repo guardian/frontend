@@ -19,13 +19,13 @@
 }
 
 @mixin pull-quote {
+    @include fs-headline(4);
     float: left;
     margin-top: 0;
     margin-right: 24px;
-    @include fs-headline(4);
     font-weight: 200;
     font-style: normal;
-    color: colour(neutral-2);
+    color: $neutral-2;
 
     @if ($svg-support) {
         &:before {

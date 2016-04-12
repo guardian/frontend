@@ -1,4 +1,4 @@
-@(env: String, assets: Seq[tools.AssetData])
+@(env: String, assets: Seq[tools.AssetData])(implicit request: RequestHeader)
 
 @chart(chart: tools.AwsDailyLineChart) = {
     <div id="@chart.id" class="chart @chart.format.cssClass"></div>

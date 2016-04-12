@@ -35,15 +35,15 @@ $text-size:               14px;
 $pagination-icon-spacing: 10px;
 
 .pagination {
-    width: auto;
-    text-align: right;
     @include f-textSans;
     @include font-size($text-size, 48px);
+    width: auto;
+    text-align: right;
 }
 
 .pagination--full {
     width: 100%;
-    border-top: 1px solid colour(neutral-5);
+    border-top: 1px solid $neutral-5;
 
     @include mq(leftCol) {
         float: right;
@@ -104,7 +104,7 @@ $pagination-icon-spacing: 10px;
 .pagination__action {
     @include font-size($text-size, $pagination-item-size);
     margin: 0;
-    color: colour(neutral-2);
+    color: $neutral-2;
     border-color: transparent;
     padding: 0 2px;
     min-width: $gs-baseline * 2;
@@ -112,8 +112,8 @@ $pagination-icon-spacing: 10px;
 
     &.is-active {
         color: #ffffff;
-        background-color: colour(neutral-2);
-        border-color: colour(neutral-2);
+        background-color: $neutral-2;
+        border-color: $neutral-2;
     }
 }
 
@@ -129,7 +129,7 @@ $pagination-icon-spacing: 10px;
     margin: 0;
     line-height: $text-size;
     vertical-align: middle;
-    fill: colour(neutral-2);
+    fill: $neutral-2;
 
     svg {
         width: 6px;

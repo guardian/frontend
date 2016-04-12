@@ -60,8 +60,6 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
         !request.isJson &&
         !request.uri.startsWith("/oauth2callback") &&
         !request.uri.startsWith("/px.gif")  && // diagnostics box
-        !request.uri.startsWith("/ab.gif") &&
-        !request.uri.startsWith("/js.gif") &&
         !request.uri.startsWith("/tech-feedback") &&
         !request.uri.startsWith("/crosswords/search") &&
         !request.uri.startsWith("/crosswords/lookup")

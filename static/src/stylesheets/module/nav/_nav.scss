@@ -56,22 +56,22 @@
     }
 
     .nav__link {
+        @include fs-header(1);
         display: block;
         padding: 3px 0 ($gs-baseline/3)*4;
-        border-top: 1px solid lighten(colour(neutral-4), 8%);
+        border-top: 1px solid lighten($neutral-4, 8%);
         height: auto;
         background-color: transparent;
-        @include fs-header(1);
         -webkit-font-smoothing: subpixel-antialiased;
         text-decoration: none;
 
         &:link,
         &:visited {
-            color: colour(neutral-1);
+            color: $neutral-1;
         }
         &:hover,
         &:focus {
-            color: colour(guardian-brand-light);
+            color: $guardian-brand-light;
         }
     }
 }
@@ -89,11 +89,11 @@
 .nav .nav__item .nav__link--faded {
     &:link,
     &:visited {
-        color: colour(neutral-2);
+        color: $neutral-2;
     }
     &:hover,
     &:focus {
-        color: colour(guardian-brand-light);
+        color: $guardian-brand-light;
     }
 }
 

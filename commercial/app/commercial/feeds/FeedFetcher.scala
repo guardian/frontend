@@ -24,10 +24,10 @@ trait FeedFetcher {
 class SingleFeedFetcher(val feedMetaData: FeedMetaData) extends FeedFetcher {
 
   def fetch()(implicit executionContext: ExecutionContext): Future[FetchResponse] = {
-    feedMetaData.switch.isGuaranteedSwitchedOn flatMap { reallyOn =>
+    feedMetaData.fetchSwitch.isGuaranteedSwitchedOn flatMap { reallyOn =>
       if (reallyOn) {
         FeedFetcher.fetch(feedMetaData)
-      } else Future.failed(SwitchOffException(feedMetaData.switch.name))
+      } else Future.failed(SwitchOffException(feedMetaData.fetchSwitch.name))
     }
   }
 }
@@ -35,7 +35,7 @@ class SingleFeedFetcher(val feedMetaData: FeedMetaData) extends FeedFetcher {
 class EventbriteMultiPageFeedFetcher(override val feedMetaData: EventsFeedMetaData) extends FeedFetcher {
 
   def fetchPage(index: Int)(implicit executionContext: ExecutionContext): Future[FetchResponse] = {
-    FeedFetcher.fetch(feedMetaData.copy(parameters = feedMetaData.baseParameters + ("page" -> index.toString)))
+    FeedFetcher.fetch(feedMetaData.copy(additionalParameters = Map("page" -> index.toString)))
   }
 
   def combineFetchResponses(responses: Seq[FetchResponse]): FetchResponse ={
@@ -43,7 +43,9 @@ class EventbriteMultiPageFeedFetcher(override val feedMetaData: EventsFeedMetaDa
     val duration = responses.foldLeft(0 milliseconds)(
       (result, current: FetchResponse) => result + Duration(current.duration.toMillis, MILLISECONDS))
 
-    val contents = responses.foldLeft(JsArray())((result: JsArray, current: FetchResponse) => result :+ Json.parse(current.feed.content))
+    val contents = responses.foldLeft(JsArray())(
+      (result: JsArray, current: FetchResponse) => result :+ Json.parse(current.feed.content)
+    )
 
     FetchResponse(
       Feed(
@@ -56,7 +58,7 @@ class EventbriteMultiPageFeedFetcher(override val feedMetaData: EventsFeedMetaDa
 
   def fetch()(implicit executionContext: ExecutionContext): Future[FetchResponse] = {
 
-    feedMetaData.switch.isGuaranteedSwitchedOn flatMap { reallyOn =>
+    feedMetaData.fetchSwitch.isGuaranteedSwitchedOn flatMap { reallyOn =>
       if (reallyOn) {
 
         fetchPage(0) flatMap { initialFetch =>
@@ -67,7 +69,7 @@ class EventbriteMultiPageFeedFetcher(override val feedMetaData: EventsFeedMetaDa
             combineFetchResponses((initialFetch +: fetches.toSeq).seq)
           }
         }
-      } else Future.failed(SwitchOffException(feedMetaData.switch.name))
+      } else Future.failed(SwitchOffException(feedMetaData.fetchSwitch.name))
     }
   }
 }
@@ -137,12 +139,17 @@ object FeedFetcher {
       new EventbriteMultiPageFeedFetcher(EventsFeedMetaData("masterclasses", token))
       )
 
+  private val liveEvents: Option[FeedFetcher] =
+    Configuration.commercial.liveEventsToken map (token =>
+      new EventbriteMultiPageFeedFetcher(EventsFeedMetaData("live-events", token))
+      )
+
   private val travelOffers: Option[FeedFetcher] =
-    Configuration.commercial.traveloffers_url map { url =>
+    Configuration.commercial.travelFeedUrl map { url =>
       new SingleFeedFetcher(TravelOffersFeedMetaData(url))
     }
 
-  val all: Seq[FeedFetcher] = soulmates ++ Seq(jobs, bestsellers, masterclasses, travelOffers).flatten
+  val all: Seq[FeedFetcher] = soulmates ++ Seq(jobs, bestsellers, masterclasses, liveEvents, travelOffers).flatten
 }
 
 object ResponseEncoding {

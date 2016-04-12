@@ -42,14 +42,6 @@ define([
         formatTarget = function (target) {
             return target ? format(target).replace(/&/g, 'and').replace(/'/g, '') : null;
         },
-        getSeries = function (page) {
-            if (page.seriesId) {
-                return parseId(page.seriesId);
-            }
-            var seriesIdFromUrl = /\/series\/(.+)$/.exec(page.pageId);
-
-            return seriesIdFromUrl === null ? '' : seriesIdFromUrl[1];
-        },
         parseId = function (id) {
             if (!id) {
                 return null;
@@ -59,6 +51,14 @@ define([
             } else {
                 return format(id.split('/').pop());
             }
+        },
+        getSeries = function (page) {
+            if (page.seriesId) {
+                return parseId(page.seriesId);
+            }
+            var seriesIdFromUrl = /\/series\/(.+)$/.exec(page.pageId);
+
+            return seriesIdFromUrl === null ? '' : seriesIdFromUrl[1];
         },
         parseIds = function (ids) {
             if (!ids) {

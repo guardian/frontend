@@ -2,7 +2,7 @@
    Commercial container layout adaptions
    ========================================================================== */
 .commercial {
-    background-color: colour(neutral-6);
+    background-color: $neutral-6;
 }
 .commercial__inner {
     position: relative;
@@ -127,7 +127,7 @@
     @include mq(wide) {
         svg {
             width: 200px;
-            height: 65px;		
+            height: 65px;
         }
     }
 }
@@ -155,9 +155,9 @@
     padding-top: $gs-baseline/2;
 }
 .commercial__search__input {
+    @include fs-textSans(2);
     box-sizing: border-box;
     border-radius: 18px;
-    @include fs-textSans(2);
     background-color: rgba(#ffffff, .9);
     border: 0;
     width: 100%;
@@ -183,7 +183,7 @@
     padding: $gs-baseline*.75 $gs-baseline;
 
     path {
-        fill: colour(neutral-3);
+        fill: $neutral-3;
     }
 
     &:hover,
@@ -236,8 +236,8 @@
     margin-bottom: $gs-gutter;
 }
 .commercial__desc {
-    color: #ffffff;
     @include fs-headline(1);
+    color: #ffffff;
     margin-top: $gs-baseline*-1.5;
     margin-bottom: 0;
 

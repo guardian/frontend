@@ -7,10 +7,6 @@
     <script src="@Static("javascripts/components/html5shiv/html5shiv.js")"></script>
 <![endif]-->
 
-@if(NonBlockingOmniture.isSwitchedOff) {
-    @fragments.omnitureScript(Some(page.metadata))
-}
-
 @* NOTE the order of these includes is important  *@
 <script id="gu">
     @Html(curlConfig().body)
@@ -39,11 +35,6 @@
 
     // page config
     @Html(config(page).body)
-
-    @if(NonBlockingOmniture.isSwitchedOff) {
-        // analytics code
-        @InlineJs(analytics().body, "analytics.js")
-    }
 
     // apply render conditions
     @InlineJs(applyRenderConditions().body, "applyRenderConditions.js")

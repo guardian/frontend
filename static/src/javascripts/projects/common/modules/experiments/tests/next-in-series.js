@@ -1,9 +1,13 @@
 define([
     'common/utils/$',
-    'lodash/collections/find'
+    'lodash/collections/find',
+    'lodash/collections/pluck',
+    'lodash/collections/some'
 ], function (
     $,
-    find
+    find,
+    pluck,
+    some
 ) {
     var path = '/surveys/404-test/next-in-series/';
     var render = function (state) {
@@ -22,33 +26,21 @@ define([
     var allSeries = [
         {
             id: 'experience',
-            pageId: 'lifeandstyle/2016/mar/11/i-fought-off-mountain-lion-experience',
-            title: 'I lost three limbs to meningitis aged 54',
-            trail: 'When I looked down after the first operation, I thought that I looked like a drawing of a body with the feet and half the calves rubbed out...'
-        },
-        {
-            id: 'blind-date',
-            pageId: 'lifeandstyle/2016/mar/12/ross-hoping-for-vin-diesel-meets-charles-blind-date',
-            title: 'Will Zak and Mimi hit it off?',
-            trail: 'I used the wrong fork for the starter and dropped my knife'
+            pageId: 'lifeandstyle/2016/apr/08/experience-my-boyfriend-threw-acid-in-my-face',
+            title: 'I watched my dad die - then come back to life',
+            trail: '‘I ran to him and held his hand; it was tense but there was no pulse’'
         },
         {
             id: 'alanis',
-            pageId: 'lifeandstyle/2016/mar/11/ask-alanis-best-friends-secrets',
-            title: 'Dear Alanis, my accidental email has created a family rift',
-            trail: 'Although I sent a grovelling apology I’m wondering if she’ll speak to me again. What can I do?'
+            pageId: 'lifeandstyle/2016/apr/08/i-have-no-friends-alanis-morissette-advice-column',
+            title: 'Dear Alanis, how can I stop drinking so much?',
+            trail: '‘I started drinking at university, and 25 years later, I still drink daily and often too much…’'
         },
         {
-            id: 'what-im-really-thinking',
-            pageId: 'lifeandstyle/2016/mar/12/mother-of-baby-with-disabilities-what-im-really-thinking',
-            title: 'What I’m Really Thinking: the independent cafe barista',
-            trail: 'I wonder if they realise the cost of their coffee is half what I get paid per hour...'
-        },
-        {
-            id: 'yotam',
-            pageId: 'lifeandstyle/2016/mar/12/merguez-recipes-kebab-potato-bake-scotch-egg-yotam-ottolenghi',
-            title: 'Yotam Ottolenghi’s chorizo recipes',
-            trail: 'Salty, spicy, smoky and fatty: chorizo adds oomph to any dish'
+            id: 'oliver-burkeman',
+            pageId: 'lifeandstyle/2016/apr/08/how-to-love-your-daily-commute-oliver-burkeman',
+            title: 'How to deal with email overload',
+            trail: 'Trying to stay on top of email is a losing battle'
         }
     ];
 
@@ -59,8 +51,8 @@ define([
 
     return function () {
         this.id = 'NextInSeries';
-        this.start = '2016-03-07';
-        this.expiry = '2016-03-23';
+        this.start = '2016-03-24';
+        this.expiry = '2016-05-03';
         this.author = 'Oliver Ash';
         this.description = 'Show next in series';
         this.audience = 1;
@@ -87,6 +79,18 @@ define([
                     if (series) {
                         var el = $.create(render(series));
                         el.insertAfter($articleBody);
+                    }
+                },
+
+                success: function(complete) {
+                    var onSurvey = window.location.href.match(path.replace(/\/$/, '')).length > 0;
+
+                    var referredFromSeries = some(pluck(allSeries, 'pageId'), function (id) {
+                        return window.document.referrer.match(id).length > 0;
+                    });
+
+                    if (onSurvey && referredFromSeries) {
+                        complete();
                     }
                 }
             }

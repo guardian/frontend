@@ -1,15 +1,16 @@
 package controllers
 
 import common.`package`._
-import common.{ExecutionContexts, Edition, JsonNotFound}
-import conf.LiveContentApi
+import common.{Edition, ExecutionContexts, JsonNotFound}
+import contentapi.ContentApiClient
 import feed.MostPopularSocialAutoRefresh
 import layout.{CollectionEssentials, FaciaContainer}
 import model.FrontProperties
 import model.pressed.CollectionConfig
 import play.api.mvc.{Action, Controller}
-import services.{FaciaContentConvert, CollectionConfigWithId}
+import services.{CollectionConfigWithId, FaciaContentConvert}
 import slices.Fixed
+
 import scala.concurrent.Future.{successful => unit}
 
 object MostViewedSocialController extends Controller with ExecutionContexts {
@@ -24,8 +25,8 @@ object MostViewedSocialController extends Controller with ExecutionContexts {
 
     articles match {
       case Some(articleIds) if articleIds.nonEmpty =>
-        LiveContentApi.getResponse(
-          LiveContentApi
+        ContentApiClient.getResponse(
+          ContentApiClient
             .search(Edition(request))
             .ids(articleIds.take(7).map(item => feed.urlToContentPath(item.url)).mkString(","))
         ) map { response =>
@@ -38,7 +39,7 @@ object MostViewedSocialController extends Controller with ExecutionContexts {
           val properties = FrontProperties(None, None, None, None, false, None)
 
           val config = CollectionConfig.empty.copy(
-            apiQuery = None, displayName = displayName, href = None
+            backfill = None, displayName = displayName, href = None
           )
 
           val facebookResponse = () => views.html.fragments.containers.facia_cards.container(

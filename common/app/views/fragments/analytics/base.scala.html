@@ -1,0 +1,48 @@
+@(page: model.Page)( implicit request:RequestHeader)
+@import conf.Configuration
+@import conf.Static
+@import conf.switches.Switches.BritishCouncilBeacon
+
+
+@******************************************************************************
+                            Core Analytics
+******************************************************************************@
+
+@fragments.analytics.omniture(page)
+
+@fragments.analytics.google(page)
+
+<script>
+    @*
+        Basic Omniture runs on both Core & 'Full experience'
+        We just need to run Ophan here.
+    *@
+
+    if (!guardian.isEnhanced) {
+        var ophanScript = document.createElement('script'),
+                sc = document.getElementsByTagName('script')[0];
+
+        ophanScript.src = '@Static("javascripts/bootstraps/enhanced/ophan.js")';
+        ophanScript.async = true;
+        sc.parentNode.insertBefore(ophanScript, sc);
+    }
+</script>
+
+
+@******************************************************************************
+                            'Other' Analytics
+******************************************************************************@
+
+@* google remarketing fallback *@
+<noscript>
+    <div style="display:inline;">
+        <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/971225648/?value=0&amp;guid=ON&amp;script=0"/>
+    </div>
+</noscript>
+
+<img src="@Configuration.debug.beaconUrl/count/pv.gif" alt="" style="display : none ;" rel="nofollow"/>
+
+@if(BritishCouncilBeacon.isSwitchedOn && page.metadata.url.contains("british-council-partner-zone")) {
+    <img alt="DCSIMG" id="DCSIMG" width="1" height="1"
+    src="http://statse.webtrendslive.com/dcsozkqgb00000sh0y1unaabw_9e3r/njs.gif?dcssip=www.guardian.co.uk&amp;dcsuri=/british-council-partner-zone&amp;WT.dl=0&amp;WT.es=www.guardian.co.uk/british-council-partner-zone&amp;WT.sp=Guardian_British_Council_Zone&amp;WT.js=No&amp;WT.tv=BC.nojs.1"/>
+}

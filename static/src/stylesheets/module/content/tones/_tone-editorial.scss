@@ -2,15 +2,15 @@
 
 @include tone-content(
     editorial, // $tone
-    colour(comment-background), // $tonal__header-background
-    colour(neutral-2), // $tonal__header-text
-    colour(guardian-brand), // $tonal__header-link
+    $comment-background, // $tonal__header-background
+    $neutral-2, // $tonal__header-text
+    $guardian-brand, // $tonal__header-link
     200, // $tonal__headline-weight
-    colour(neutral-1), // $tonal__headline-colour
-    colour(guardian-brand), // $tonal__headline-accent
-    colour(guardian-brand), // $tonal__standfirst-background
+    $neutral-1, // $tonal__headline-colour
+    $guardian-brand, // $tonal__headline-accent
+    $guardian-brand, // $tonal__standfirst-background
     #ffffff, // $tonal__standfirst-text
     #ffffff, // $tonal__standfirst-link
     #ffffff, // $tonal__article-background
-    colour(guardian-brand) // $tonal__article-link
+    $guardian-brand // $tonal__article-link
 );

@@ -3,8 +3,8 @@ package model
 import com.google.inject.{Inject, Singleton}
 import com.gu.identity.model.{SavedArticle, SavedArticles}
 import common.{ExecutionContexts, Edition, Pagination}
-import conf.LiveContentApi
-import conf.LiveContentApi._
+import contentapi.ContentApiClient
+import contentapi.ContentApiClient._
 import layout.{ItemClasses, FaciaCard, ContentCard}
 import services.{FaciaContentConvert, IdRequestParser, IdentityRequest, IdentityUrlBuilder}
 import implicits.Articles._
@@ -30,7 +30,7 @@ case class SaveForLaterItem (
 
 case class SaveForLaterPageData(
   formActionUrl: String,
-  savedItems: List[SaveForLaterItem],
+  savedItems: Seq[SaveForLaterItem],
   pagination: Pagination,
   paginationUrl: String,
   totalArticlesSaved: Int,
@@ -44,7 +44,7 @@ class SaveForLaterDataBuilder @Inject()(idUrlBuilder: IdentityUrlBuilder) extend
     val articles = savedArticles.getPage(pageNum)
     val shortUrls = articles.map(_.shortUrl)
 
-    getResponse(LiveContentApi.search(Edition.defaultEdition)
+    getResponse(ContentApiClient.search(Edition.defaultEdition)
       .ids(shortUrls.map(_.drop(1)).mkString(","))
       .showFields("all")
       .showElements ("all")

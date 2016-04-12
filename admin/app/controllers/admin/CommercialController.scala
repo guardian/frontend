@@ -3,8 +3,8 @@ package controllers.admin
 import common.dfp.{GuCreativeTemplate, LineItemReport}
 import common.{Edition, ExecutionContexts, Logging}
 import conf.Configuration.environment
-import conf.LiveContentApi.getResponse
-import conf.{Configuration, LiveContentApi}
+import contentapi.ContentApiClient
+import conf.Configuration
 import controllers.AuthLogging
 import dfp.{CreativeTemplateAgent, DfpApi}
 import model._
@@ -27,7 +27,7 @@ case class CommercialPage() extends StandalonePage {
 
 object CommercialController extends Controller with Logging with AuthLogging with ExecutionContexts {
 
-  def renderCommercialMenu() = AuthActions.AuthActionTest { request =>
+  def renderCommercialMenu() = AuthActions.AuthActionTest { implicit request =>
     NoCache(Ok(views.html.commercial.commercialMenu(environment.stage)))
   }
 
@@ -68,15 +68,15 @@ object CommercialController extends Controller with Logging with AuthLogging wit
     val emptyTemplates = CreativeTemplateAgent.get
     val creatives = Store.getDfpTemplateCreatives
     val templates = emptyTemplates.foldLeft(Seq.empty[GuCreativeTemplate]) { (soFar, template) =>
-      soFar :+ template.copy(creatives = creatives.filter(_.templateId == template.id).sortBy(_.name))
+      soFar :+ template.copy(creatives = creatives.filter(_.templateId.get == template.id).sortBy(_.name))
     }.sortBy(_.name)
     NoCache(Ok(views.html.commercial.templates(environment.stage, templates)))
   }
 
   def sponsoredContainers = AuthActions.AuthActionTest.async { implicit request =>
     // get some example trails
-    lazy val trailsFuture = getResponse(
-      LiveContentApi.search(Edition(request))
+    lazy val trailsFuture = ContentApiClient.getResponse(
+      ContentApiClient.search(Edition(request))
         .pageSize(2)
     ).map { response  =>
       response.results.map { item =>

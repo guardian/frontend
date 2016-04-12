@@ -154,7 +154,7 @@ object Eventbrite extends ExecutionContexts with Logging {
   }
   def parsePagesOfEvents(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[EBEvent]] = {
 
-    feedMetaData.switch.isGuaranteedSwitchedOn flatMap { switchedOn =>
+    feedMetaData.parseSwitch.isGuaranteedSwitchedOn flatMap { switchedOn =>
       if (switchedOn) {
         val start = currentTimeMillis
         feedContent map { body =>
@@ -169,10 +169,29 @@ object Eventbrite extends ExecutionContexts with Logging {
           Future.failed(MissingFeedException(feedMetaData.name))
         }
       } else {
-        Future.failed(SwitchOffException(feedMetaData.switch.name))
+        Future.failed(SwitchOffException(feedMetaData.parseSwitch.name))
       }
     } recoverWith {
       case NonFatal(e) => Future.failed(e)
     }
+  }
+
+  trait EBTicketHandler {
+    def tickets: Seq[EBTicket]
+
+    lazy val displayPrice = {
+      val priceList = tickets.map(_.price).sorted.distinct
+      if (priceList.size > 1) {
+        val (low, high) = (priceList.head, priceList.last)
+        f"£$low%,.2f to £$high%,.2f"
+      } else f"£${priceList.head}%,.2f"
+    }
+
+    lazy val ratioTicketsLeft = 1 - (tickets.map(_.quantitySold).sum.toDouble / tickets.map(_.quantityTotal).sum)
+  }
+
+  trait EBEventHandler {
+    def status: String
+    lazy val isOpen = { status == "live" }
   }
 }

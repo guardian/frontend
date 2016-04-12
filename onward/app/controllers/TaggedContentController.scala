@@ -1,9 +1,9 @@
 package controllers
 
-import com.gu.contentapi.client.GuardianContentApiError
+import com.gu.contentapi.client.GuardianContentApiThriftError
 import common._
-import conf.LiveContentApi
-import conf.LiveContentApi.getResponse
+import contentapi.ContentApiClient
+import contentapi.ContentApiClient.getResponse
 import model._
 import play.api.libs.json.{JsArray, Json}
 import play.api.mvc.{Action, Controller, RequestHeader}
@@ -45,12 +45,12 @@ object TaggedContentController extends Controller with Related with Logging with
 
   private def lookup(tag: String, edition: Edition)(implicit request: RequestHeader): Future[Seq[ContentType]] = {
     log.info(s"Fetching tagged stories for edition ${edition.id}")
-    getResponse(LiveContentApi.search(edition)
+    getResponse(ContentApiClient.search(edition)
       .tag(tag)
       .pageSize(3)
     ).map { response =>
         response.results map { Content(_) }
-    } recover { case GuardianContentApiError(404, message, _) =>
+    } recover { case GuardianContentApiThriftError(404, message, _) =>
       log.info(s"Got a 404 while calling content api: $message")
       Nil
     }

@@ -80,10 +80,10 @@ define([
         it('should increment a count in the summary, for the 1st value from each of various page metadata', function () {
             hist.logSummary(pageConfig);
 
-            /*eslint-disable dot-notation*//*jscs:disable requireDotNotation*/
+            /*eslint-disable dot-notation*/
             expect(hist.test.getSummary().tags['foobar'][0]).toEqual('Foobar Section');
             expect(hist.test.getSummary().tags['foobar'][1][0][1]).toEqual(1);
-            /*eslint-enable dot-notation*//*jscs:enable requireDotNotation*/
+            /*eslint-enable dot-notation*/
 
             expect(hist.test.getSummary().tags['foo/bar'][0]).toEqual('Foobar Tag');
             expect(hist.test.getSummary().tags['foo/bar'][1][0][1]).toEqual(1);
@@ -99,14 +99,14 @@ define([
             hist.logSummary(pageConfig);
             hist.logSummary(pageConfig);
 
-            /*eslint-disable dot-notation*//*jscs:disable requireDotNotation*/
+            /*eslint-disable dot-notation*/
             expect(hist.test.getSummary().tags['foobar'][0]).toEqual('Foobar Section');
             expect(hist.test.getSummary().tags['foobar'][1][0][1]).toEqual(3);
-            /*eslint-enable dot-notation*//*jscs:enable requireDotNotation*/
+            /*eslint-enable dot-notation*/
         });
 
         it('should age the data points in the the summary', function () {
-            /*eslint-disable dot-notation*//*jscs:disable requireDotNotation*/
+            /*eslint-disable dot-notation*/
             expect(
                 hist.test.pruneSummary({
                     periodEnd: today,
@@ -122,11 +122,11 @@ define([
                 })
                 .tags['foo'][1][0][0]
             ).toEqual(5);
-            /*eslint-enable dot-notation*//*jscs:enable requireDotNotation*/
+            /*eslint-enable dot-notation*/
         });
 
         it('should drop the obsoleted data points from the summary', function () {
-            /*eslint-disable dot-notation*//*jscs:disable requireDotNotation*/
+            /*eslint-disable dot-notation*/
             expect(
                 hist.test.pruneSummary({
                     periodEnd: today - 500,
@@ -134,7 +134,7 @@ define([
                 })
                 .tags['foo']
             ).toBeUndefined();
-            /*eslint-enable dot-notation*//*jscs:enable requireDotNotation*/
+            /*eslint-enable dot-notation*/
         });
 
         it('should return equally visited items in last-in-first-out order', function () {
@@ -175,6 +175,60 @@ define([
             expect(
                 hist.getPopular()[1][0]
             ).toEqual('less/visited');
+        });
+
+        describe('series summary', function() {
+            var pages = [
+                {
+                    pageId: '111',
+                    section: 'a/series/b',
+                    sectionName: 'A series (two views)'
+                },
+                {
+                    pageId: '112',
+                    section: 'a/series/b',
+                    sectionName: 'A series (two views)'
+                },
+                {
+                    pageId: '222',
+                    section: 'g/series/h',
+                    sectionName: 'Another series'
+                },
+                {
+                    pageId: '333',
+                    section: 'j/series/k',
+                    sectionName: 'A different series'
+                },
+                {
+                    pageId: '444',
+                    section: 'x/series/y',
+                    sectionName: 'A really different series'
+                },
+                {
+                    pageId: '555',
+                    section: 'a/sport/z',
+                    sectionName: 'Not a series'
+                }
+            ];
+
+            beforeEach(function() {
+                pages.forEach(function (page, i) {
+                    hist.logSummary(page, today + i);
+                });
+            });
+
+            it('should calculate series summary', function() {
+                expect(hist.seriesSummary()).toEqual({
+                    'a/series/b': 2,
+                    'g/series/h': 1,
+                    'j/series/k': 1,
+                    'x/series/y': 1
+                });
+            });
+
+            it('should calculate most viewed series', function() {
+                expect(hist.mostViewedSeries()).toEqual('a/series/b');
+            });
         });
     });
 });

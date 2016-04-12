@@ -57,6 +57,7 @@ object MetaDataFormat {
   implicit val paginationFormat = Json.format[Pagination]
   implicit val sectionLinkFormat = Json.format[SectionLink]
   implicit val navItemFormat = Json.format[NavItem]
+  implicit val cacheTimeFormat = Json.format[CacheTime]
 
   private case class MetaDataPart1(
     id: String,
@@ -75,7 +76,7 @@ object MetaDataFormat {
     contentType: String,
     hasHeader: Boolean,
     schemaType: Option[String],
-    cacheSeconds: Int,
+    cacheTime: CacheTime,
     openGraphImages: Seq[String],
     membershipAccess: Option[String],
     isFront: Boolean,
@@ -110,7 +111,7 @@ object MetaDataFormat {
         part2.contentType,
         part2.hasHeader,
         part2.schemaType,
-        part2.cacheSeconds,
+        part2.cacheTime,
         part2.openGraphImages,
         part2.membershipAccess,
         part2.isFront,
@@ -148,7 +149,7 @@ object MetaDataFormat {
           meta.contentType,
           meta.hasHeader,
           meta.schemaType,
-          meta.cacheSeconds,
+          meta.cacheTime,
           meta.openGraphImages,
           meta.membershipAccess,
           meta.isFront,
@@ -212,6 +213,7 @@ object ContentTypeFormat {
     witnessAssignment: Option[String],
     isbn: Option[String],
     imdb: Option[String],
+    paFootballTeams: Seq[String],
     javascriptReferences: Seq[JsObject],
     wordCount: Int,
     showByline: Boolean,
@@ -293,6 +295,7 @@ object ContentTypeFormat {
         jsonContent.witnessAssignment,
         jsonContent.isbn,
         jsonContent.imdb,
+        jsonContent.paFootballTeams,
         jsonContent.javascriptReferences,
         jsonContent.wordCount,
         jsonContent.showByline,
@@ -324,6 +327,7 @@ object ContentTypeFormat {
           content.witnessAssignment,
           content.isbn,
           content.imdb,
+          content.paFootballTeams,
           content.javascriptReferences,
           content.wordCount,
           content.showByline,

@@ -1,5 +1,6 @@
+@(env: String)(implicit request: RequestHeader)
+
 @import conf.switches.Switches.R2PagePressServiceSwitch
-@(env: String)
 @admin_main("Frontend Admin", env, isAuthed = true) {
     <div class="row">
 
@@ -17,6 +18,7 @@
                             </ul>
                         </li>
                         <li><a href="@controllers.admin.routes.AnalyticsController.renderQuality()">Quality dashboard</a></li>
+                        <li><a href="@controllers.admin.routes.MetricsController.renderHeadlinesTest()">Headline AB Test</a></li>
                     </ul>
                 </div>
             </div>

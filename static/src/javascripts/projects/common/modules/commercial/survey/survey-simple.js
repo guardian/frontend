@@ -3,28 +3,32 @@ define([
     'fastdom',
     'common/utils/$',
     'common/utils/template',
+    'common/modules/user-prefs',
     'common/views/svgs',
-    'text!common/views/commercial/survey/survey-simple.html'
+    'text!common/views/commercial/survey/survey-simple.html',
+    'lodash/arrays/uniq'
 ], function (
     bean,
     fastdom,
     $,
     template,
+    userPrefs,
     svgs,
-    surveySimpleTemplate
+    surveySimpleTemplate,
+    uniq
 ) {
     var surveySimple = function (config) {
         this.config = config || {};
+        this.id = this.config.id;
+        this.prefs = 'overlay-messages';
+        this.shouldClosePermanently = this.config.shouldClosePermanently || false;
         this.bannerTmpl = template(surveySimpleTemplate,
             {
                 surveyHeader: this.config.surveyHeader,
                 surveyText: this.config.surveyText,
-                signupText: this.config.signupText,
-                membershipText: this.config.membershipText,
-                signupLink: this.config.signupLink,
-                membershipLink: this.config.membershipLink,
-                signupDataLink: this.config.signupDataLink,
-                membershipDataLink: this.config.membershipDataLink,
+                buttonText: this.config.buttonText,
+                buttonLink: this.config.buttonLink,
+                buttonDataLink: this.config.membershipDataLink,
                 showCloseBtn: this.config.showCloseBtn,
                 arrowWhiteRight: svgs('arrowWhiteRight'),
                 marque36icon: svgs('marque36icon'),
@@ -34,15 +38,34 @@ define([
     };
 
     surveySimple.prototype.attach = function () {
-        fastdom.write(function () {
-            $(document.body).append(this.bannerTmpl);
+        if (!this.hasSeen()) {
+            fastdom.write(function () {
+                $(document.body).append(this.bannerTmpl);
 
-            if (this.config.showCloseBtn) {
-                bean.on(document, 'click', $('.js-survey-close'), function () {
-                    $('.js-survey-overlay').addClass('u-h');
-                });
-            }
-        }.bind(this));
+                if (this.config.showCloseBtn) {
+                    bean.on(document, 'click', $('.js-survey-close'), this.handleClick.bind(this));
+                    bean.on(document, 'click', $('.js-survey-link__takepart'), this.handleClick.bind(this));
+                }
+            }.bind(this));
+        }
+    };
+
+    surveySimple.prototype.handleClick = function () {
+        $('.js-survey-overlay').addClass('u-h');
+        if (this.shouldClosePermanently) {
+            this.closePermanently();
+        }
+    };
+
+    surveySimple.prototype.hasSeen = function () {
+        var messageStates = userPrefs.get(this.prefs);
+        return messageStates && messageStates.indexOf(this.id) > -1;
+    };
+
+    surveySimple.prototype.closePermanently = function () {
+        var messageStates = userPrefs.get(this.prefs) || [];
+        messageStates.push(this.id);
+        userPrefs.set(this.prefs, uniq(messageStates));
     };
 
     surveySimple.prototype.show = function () {

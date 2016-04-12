@@ -1,8 +1,8 @@
+@import com.gu.facia.client.models.Backfill
 @(env: String, page: controllers.admin.CommercialPage, trails: Seq[model.pressed.PressedContent])(implicit request: RequestHeader)
 
-@import layout.CollectionEssentials
+@import layout.{CollectionEssentials, FaciaContainer}
 @import model.pressed.CollectionConfig
-@import layout.FaciaContainer
 @import services.CollectionConfigWithId
 @import slices.Fixed
 @import slices.FixedContainers.fixedMediumSlowVI
@@ -41,7 +41,7 @@
                     Fixed(fixedMediumSlowVI),
                     CollectionConfigWithId("type", CollectionConfig.empty.copy(
                         displayName = Some(c("title")),
-                        apiQuery = Some(c("keyword"))
+                        backfill = Some(Backfill(`type` = "capi", query = c("keyword")))
                     )),
                     CollectionEssentials.fromFaciaContent(trails))
                 ))(request)

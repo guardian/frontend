@@ -225,7 +225,6 @@ define([
                     }
                 },
                 skip: function () {
-                    // jscs:disable disallowDanglingUnderscores
                     $('.js-ads-skip', this.el()).hide();
                     this.trigger(constructEventName('preroll:skip', this));
                     // in lieu of a 'skip' api, rather hacky way of achieving it

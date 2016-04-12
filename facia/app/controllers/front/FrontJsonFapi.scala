@@ -1,6 +1,6 @@
 package controllers.front
 
-import common.{ExecutionContexts, Logging, S3Metrics}
+import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import model.PressedPage
 import play.api.libs.json._
@@ -30,7 +30,6 @@ trait FrontJsonFapi extends Logging with ExecutionContexts {
       r.status match {
         case 200 => Some(r.body)
         case 403 =>
-          S3Metrics.S3AuthorizationError.increment()
           log.warn(s"Got 403 trying to load path: $path")
           None
         case 404 =>

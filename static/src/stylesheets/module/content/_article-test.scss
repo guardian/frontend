@@ -1,11 +1,15 @@
 .next-in-series-test {
     padding-top: $gs-baseline / 4;
     padding-bottom: $gs-baseline / 4;
-    border-top: 1px dotted guss-colour(neutral-3, $pasteup-palette);
+    border-top: 1px dotted $neutral-3;
+
+    @include mq(mobileLandscape) {
+        padding-right: 140px;
+    }
 
     h3 {
-        color: colour(neutral-2);
         @include fs-textSans(5);
+        color: $neutral-2;
     }
 
     h4 {
@@ -16,13 +20,13 @@
 
 .next-in-series-test__teaser {
     margin-bottom: $gs-baseline;
-    color: colour(neutral-2);
+    color: $neutral-2;
 }
 
 .next-in-series-test__remind-me-link {
     &, a:hover, a:active {
-        background-color: colour(features-support-1) !important;
-        border-color: darken(colour(features-support-1), 5%) !important;
+        background-color: $features-support-1 !important;
+        border-color: darken($features-support-1, 5%) !important;
         color: #ffffff !important;
     }
 }

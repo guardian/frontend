@@ -39,6 +39,7 @@ define([
         books:          complexUrlBuilder('books/books', 'isbns'),
         jobs:           complexUrlBuilder('jobs', 'jobIds', true),
         masterclasses:  complexUrlBuilder('masterclasses', 'ids', true),
+        liveevents:     complexUrlBuilder('liveevents/event', 'id', true),
         travel:         complexUrlBuilder('travel/offers', '', true),
         multi:          complexUrlBuilder('multi', '', true),
         book:           bookUrlBuilder('books/book'),
@@ -53,7 +54,12 @@ define([
 
     function bookUrlBuilder(url) {
         return function (params) {
-            return buildComponentUrl(url, merge(params, { t: config.page.isbn || params.isbn }));
+            var isbn = config.page.isbn || params.isbn;
+            if (isbn) {
+                return buildComponentUrl(url, merge(params, { t: config.page.isbn || params.isbn }));
+            } else {
+                return false;
+            }
         };
     }
 
@@ -80,17 +86,21 @@ define([
     }
 
     function adjustMostPopHeight(el) {
-        var height;
+        var adSlotHeight;
         var $adSlot = $(el);
         var $mostPopTabs = $('.js-most-popular-footer .tabs__pane');
+        var mostPopTabsHeight;
 
         if ($adSlot.hasClass('ad-slot--mostpop')) {
             fastdom.read(function () {
-                height = $adSlot.dim().height;
-            });
+                adSlotHeight = $adSlot.dim().height;
+                mostPopTabsHeight = $mostPopTabs.dim().height;
 
-            fastdom.write(function () {
-                $mostPopTabs.css('height', height);
+                if (adSlotHeight > mostPopTabsHeight) {
+                    fastdom.write(function () {
+                        $mostPopTabs.css('height', adSlotHeight);
+                    });
+                }
             });
         }
     }
@@ -150,12 +160,14 @@ define([
     }
 
     CommercialComponent.prototype.create = function () {
-        lazyload({
-            url: this.url,
-            container: this.adSlot,
-            success: onSuccess.bind(this),
-            error: onError.bind(this)
-        });
+        if (this.url) {
+            lazyload({
+                url: this.url,
+                container: this.adSlot,
+                success: onSuccess.bind(this),
+                error: onError.bind(this)
+            });
+        }
 
         return this;
 

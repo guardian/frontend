@@ -14,15 +14,6 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
-  val NonBlockingOmniture = Switch(
-    "Performance",
-    "non-blocking-omniture",
-    "If this switch is on, omniture will be inlined in the footer. If it is off, it will be inlined in the head",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   // Performance
   val LazyLoadContainersSwitch = Switch(
     "Performance",
@@ -64,33 +55,6 @@ trait PerformanceSwitches {
     "Performance",
     "circuit-breaker",
     "If this switch is switched on then the Content API circuit breaker will be operational",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val MemcachedSwitch = Switch(
-    "Performance",
-    "memcached-action",
-    "If this switch is switched on then the MemcacheAction will be operational",
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val MemcachedFallbackSwitch = Switch(
-    "Performance",
-    "memcached-fallback",
-    "If this switch is switched on then the MemcachedFallback will be operational",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val IncludeBuildNumberInMemcachedKey = Switch(
-    "Performance",
-    "memcached-build-number",
-    "If this switch is switched on then the MemcacheFilter will include the build number in the cache key",
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -239,6 +203,15 @@ trait PerformanceSwitches {
     "If this switch is on then some beacons will be dropped to gauge iPhone confidence",
     safeState = Off,
     sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val ContentApiUseThrift = Switch(
+    "Performance",
+    "content-api-use-thrift",
+    "If this switch is on then content api calls will be requested in thrift format, instead of json format.",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 5),
     exposeClientSide = false
   )
 

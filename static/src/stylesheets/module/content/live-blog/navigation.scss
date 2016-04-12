@@ -3,8 +3,8 @@
     // then the children are floated
     @include clearfix;
     // If we do support flexbox
-    display: flex;
     @include fs-textSans(3);
+    display: flex;
 }
 
 .liveblog-navigation__detail {
@@ -40,20 +40,20 @@
 .liveblog-navigation__link {
     display: inline-block;
     position: relative;
-    color: colour(neutral-1);
-    border: 1px solid colour(neutral-4);
+    color: $neutral-1;
+    border: 1px solid $neutral-4;
     height: $gs-baseline * 3;
     line-height: 38px;
     font-weight: bold;
     vertical-align: middle;
 
     &:hover {
-        border-color: colour(neutral-2);
+        border-color: $neutral-2;
         text-decoration: none;
     }
 
     svg {
-        fill: colour(neutral-2);
+        fill: $neutral-2;
         position: absolute;
     }
 
@@ -125,16 +125,16 @@
 
 .liveblog-navigation__link--disabled {
     cursor: default;
-    color: colour(neutral-5);
-    border-color: colour(neutral-6);
+    color: $neutral-5;
+    border-color: $neutral-6;
 
     svg {
-        fill: colour(neutral-5);
+        fill: $neutral-5;
     }
 
     &:hover,
     &:active {
-        color: colour(neutral-5);
-        border-color: colour(neutral-6);
+        color: $neutral-5;
+        border-color: $neutral-6;
     }
 }

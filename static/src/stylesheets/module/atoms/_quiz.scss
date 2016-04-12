@@ -73,7 +73,7 @@
 
 // [type=radio] + label
 .atom-quiz__answer__item {
-    background-color: colour(neutral-8);
+    background-color: $neutral-8;
     transition: background-color 100ms;
     display: block;
     position: relative;
@@ -89,35 +89,33 @@
     // [type=radio]:checked + label
     :checked + & {
         cursor: default; // make it look un-clickable
-        background-color: colour(comment-main-2);
+        background-color: $comment-main-2;
 
         .element-image {
             opacity: .8;
         }
 
         &:before {
-            background-color: colour(neutral-1);
-            box-shadow: 0px 0px 0px 1px colour(neutral-1),
-                inset 0px 0px 0px 3px colour(comment-main-2);
+            background-color: $neutral-1;
+            box-shadow: 0px 0px 0px 1px $neutral-1, inset 0px 0px 0px 3px $comment-main-2;
         }
     }
 
     // highlight state (darker grey)
     .atom-quiz--is-not-results :not(:checked) + &:hover,
     .atom-quiz--is-not-results :not(:checked):focus + & {
-        background-color: colour(neutral-4);
+        background-color: $neutral-4;
 
         &:before {
-            background-color: colour(neutral-2);
-            box-shadow: 0px 0px 0px 1px colour(neutral-2),
-                inset 0px 0px 0px 3px colour(neutral-4);
+            background-color: $neutral-2;
+            box-shadow: 0px 0px 0px 1px $neutral-2, inset 0px 0px 0px 3px $neutral-4;
         }
     }
 }
 
 @mixin atom-quiz__answer__item--selected--is-incorrect {
     color: #ffffff;
-    background-color: colour(quiz-incorrect);
+    background-color: $quiz-incorrect;
 
     .element-image {
         opacity: .8;
@@ -129,7 +127,7 @@
 }
 
 @mixin atom-quiz__answer__item--selected--is-correct {
-    background-color: colour(quiz-correct);
+    background-color: $quiz-correct;
 
     .element-image {
         opacity: 1;
@@ -144,7 +142,7 @@
 }
 
 @mixin atom-quiz__answer__item--is-correct {
-    background-color: fade-out(colour(quiz-correct), .4);
+    background-color: fade-out($quiz-correct, .4);
 
     .element-image {
         opacity: .8;
@@ -183,22 +181,20 @@
         position: absolute;
         left: 1em;
         top: 1em;
-        box-shadow: 0px 0px 0px 1px colour(neutral-3);
+        box-shadow: 0px 0px 0px 1px $neutral-3;
         transition: background-color 100ms, box-shadow 50ms;
     }
 
     :checked + &:before {
-        background-color: colour(neutral-1);
-        box-shadow: 0px 0px 0px 1px colour(neutral-1),
-            inset 0px 0px 0px 3px colour(comment-main-2);
+        background-color: $neutral-1;
+        box-shadow: 0px 0px 0px 1px $neutral-1, inset 0px 0px 0px 3px $comment-main-2;
     }
 
     // highlight state (darker grey)
     .atom-quiz--is-not-results :not(:checked) + &:hover:before,
     .atom-quiz--is-not-results :not(:checked):focus + &:before {
-        background-color: colour(neutral-2);
-        box-shadow: 0px 0px 0px 1px colour(neutral-2),
-            inset 0px 0px 0px 3px colour(neutral-4);
+        background-color: $neutral-2;
+        box-shadow: 0px 0px 0px 1px $neutral-2, inset 0px 0px 0px 3px $neutral-4;
     }
 
     // don't show the fake radio button on a personality quiz results page
@@ -270,9 +266,9 @@
 }
 
 .atom-quiz__answer__reveal-text {
-    display: none;
-    color: colour(neutral-1);
     @include fs-textSans(1);
+    display: none;
+    color: $neutral-1;
 
     .atom-quiz--is-results & {
         display: block;
@@ -286,8 +282,8 @@
 
 .atom-quiz__end-message {
     display: none;
-    border-top: 1px solid colour(neutral-4);
-    background-color: colour(neutral-8);
+    border-top: 1px solid $neutral-4;
+    background-color: $neutral-8;
     padding: $gs-baseline / 2 $gs-gutter * 2 / 3;
 
     .atom-quiz--is-results & {
@@ -297,19 +293,19 @@
 
 .atom-quiz__score-message,
 .atom-quiz__bucket-message {
-    color: colour(neutral-2);
+    color: $neutral-2;
 }
 
 .atom-quiz__score {
     @include fs-headline(9);
     font-size: 72px;
     line-height: 78px;
-    color: colour(guardian-brand);
+    color: $guardian-brand;
     display: block;
 }
 
 .atom-quiz__share {
-    border-top: 1px solid colour(neutral-4);
+    border-top: 1px solid $neutral-4;
     padding-top: $gs-baseline * 2 / 3;
     margin-top: $gs-baseline;
 }

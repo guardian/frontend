@@ -2,33 +2,33 @@
     margin-top: $gs-baseline;
 }
 .activity-stream--loading:after {
+    @include fs-textSans(4);
     display: block;
     content: 'Loading comments…';
     min-height: $gs-baseline*20;
     padding-top: $gs-baseline*2;
-    @include fs-textSans(4);
     text-align: center;
 }
 .activity-item {
     padding-bottom: $gs-baseline/2;
     padding-top: $gs-baseline/2;
-    border-top: 1px solid colour(neutral-4);
+    border-top: 1px solid $neutral-4;
 }
 .activity-item--first {
     border-top: 0;
 }
 .activity-item__title {
-    margin-bottom: $gs-baseline;
     @include fs-header(2);
+    margin-bottom: $gs-baseline;
     font-weight: normal;
 
     @include mq(leftCol) {
+        @include fs-header(1, true);
         float: left;
         position: relative;
         z-index: 1;
         margin-right: $gs-gutter;
         width: $left-column;
-        @include fs-header(1, true);
     }
 
     @include mq(wide) {
@@ -79,7 +79,7 @@
 .activity-stream--discussions {
     .activity-item__content {
         padding-top: $gs-baseline/2;
-        border-top: 1px solid colour(neutral-4);
+        border-top: 1px solid $neutral-4;
     }
 
     .activity-item__content--no-border {
@@ -99,6 +99,7 @@
     padding-left: $gs-gutter;
 }
 .activity-stream-search__q {
+    @include fs-textSans(2);
     box-sizing: border-box;
     vertical-align: bottom;
     width: 100%;
@@ -106,16 +107,15 @@
     padding-left: $gs-gutter/5;
     padding-top: $gs-baseline/3;
     border: 0;
-    @include fs-textSans(2);
-    color: colour(neutral-2-contrasted);
+    color: $neutral-2-contrasted;
 
     &:focus {
-        outline-color: colour(news-accent);
+        outline-color: $news-accent;
     }
 }
 
 .activity-stream-content {
-    border-top: 1px solid colour(neutral-4);
+    border-top: 1px solid $neutral-4;
 
     @include mq(tablet) {
         margin-left: $gs-gutter;
@@ -128,12 +128,12 @@
 }
 
 .activity-stream__witness-item {
+    @include fs-textSans(1);
     display: inline-block;
     width: 292px;
     margin-right: $gs-gutter/2;
     margin-bottom: $gs-baseline;
     vertical-align: top;
-    @include fs-textSans(1);
 
     a {
         text-decoration: none;
@@ -146,25 +146,25 @@
 }
 
 .activity-stream__witness-meta {
-    background-color: colour(neutral-8);
-    border: 1px solid colour(neutral-4);
+    @include fs-textSans(1);
+    background-color: $neutral-8;
+    border: 1px solid $neutral-4;
     border-top: 0;
     text-align: right;
-    @include fs-textSans(1);
     padding: $gs-baseline 0;
 
     .activity-stream__witness-meta-inner {
         margin: 0 $gs-gutter;
-        color: colour(neutral-1);
+        color: $neutral-1;
     }
 }
 .activity-stream__witness-content {
-    border: 1px solid colour(neutral-4);
+    border: 1px solid $neutral-4;
     border-top: 0;
     line-height: 14px;
 }
 .activity-stream__witness-content:hover {
-    background: colour(neutral-6);
+    background: $neutral-6;
     transition: .3s all;
 }
 .activity-stream__witness-text {
@@ -173,11 +173,11 @@
     min-height: 100px;
 }
 .activity-stream__witness-title {
-    margin-bottom: $gs-baseline/4;
-    color: colour(neutral-1);
     @include fs-textSans(4);
+    margin-bottom: $gs-baseline/4;
+    color: $neutral-1;
 }
 .activity-stream__witness-description {
-    color: colour(neutral-2);
     @include fs-textSans(2);
+    color: $neutral-2;
 }

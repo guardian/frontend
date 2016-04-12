@@ -2,29 +2,31 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/modules/accessibility/helpers',
     'common/modules/article/rich-links',
     'common/modules/commercial/liveblog-adverts',
     'common/modules/experiments/affix',
     'common/modules/ui/autoupdate',
     'common/modules/ui/notification-counter',
     'common/modules/ui/relativedates',
+    'common/modules/experiments/ab',
     'bootstraps/enhanced/article-liveblog-common',
     'bootstraps/enhanced/trail',
+    'bootstraps/enhanced/notifications',
     'common/utils/robust'
 ], function (
     config,
     detect,
     mediator,
-    accessibility,
     richLinks,
     liveblogAdverts,
     Affix,
     AutoUpdate,
     NotificationCounter,
     RelativeDates,
+    ab,
     articleLiveblogCommon,
     trail,
+    notifications,
     robust
 ) {
     'use strict';
@@ -33,7 +35,7 @@ define([
 
     modules = {
         initAdverts: function () {
-            return config.switches.liveblogAdverts ? liveblogAdverts.init() : null;
+            return liveblogAdverts.init();
         },
 
         affixTimeline: function () {
@@ -65,18 +67,22 @@ define([
             );
         },
 
-        accessibility: function () {
-            accessibility.shouldHideFlashingElements();
+        initNotifications: function() {
+            if ((ab.isInVariant('LiveBlogChromeNotificationsInternal', 'control') || ab.isInVariant('LiveBlogChromeNotificationsProd', 'show-notifications') )
+                && (window.location.protocol === 'https:' ||  window.location.hash === '#force-sw')
+                && detect.getUserAgent.browser === 'Chrome' && config.page.isLive) {
+                    notifications.init();
+            }
         }
     };
 
     function ready() {
         robust.catchErrorsAndLogAll([
-            ['lb-a11y',       modules.accessibility],
             ['lb-adverts',    modules.initAdverts],
             ['lb-autoupdate', modules.createAutoUpdate],
             ['lb-timeline',   modules.affixTimeline],
             ['lb-timestamp',  modules.keepTimestampsCurrent],
+            ['lb-notifications',  modules.initNotifications],
             ['lb-richlinks',  richLinks.upgradeRichLinks]
         ]);
 

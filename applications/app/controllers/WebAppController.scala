@@ -2,7 +2,8 @@ package controllers
 
 import com.gu.contentapi.client.model.v1.Crossword
 import common.{JsonComponent, Edition, ExecutionContexts, Logging}
-import conf.{Static, LiveContentApi}
+import contentapi.ContentApiClient
+import conf.Static
 import model._
 import play.api.mvc.{Action, Controller, RequestHeader, Result}
 import play.api.libs.json.{JsArray, JsString, JsObject}
@@ -21,7 +22,7 @@ case class OfflinePage(crossword: CrosswordData) extends StandalonePage {
 object WebAppController extends Controller with ExecutionContexts with Logging {
 
   def serviceWorker() = Action { implicit request =>
-    Cached(3600) { Ok(templates.js.serviceWorker()) }
+    Cached(60) { Ok(templates.js.serviceWorker()) }
   }
 
   def manifest() = Action {
@@ -30,9 +31,9 @@ object WebAppController extends Controller with ExecutionContexts with Logging {
 
 
   protected def withCrossword(crosswordType: String)(f: (Crossword) => Result)(implicit request: RequestHeader): Future[Result] = {
-    LiveContentApi.getResponse(LiveContentApi.item(s"crosswords/series/quick", Edition(request)).showFields("all")).map { response =>
+    ContentApiClient.getResponse(ContentApiClient.item(s"crosswords/series/quick", Edition(request)).showFields("all")).map { response =>
       val maybeCrossword = for {
-        content <- response.results.headOption
+        content <- response.results.getOrElse(Nil).headOption
         crossword <- content.crossword }
         yield f(crossword)
       maybeCrossword getOrElse InternalServerError("Crossword response from Content API invalid.")

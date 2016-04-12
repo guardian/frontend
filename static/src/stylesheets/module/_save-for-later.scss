@@ -1,6 +1,6 @@
 $sfl-button-height: 30px;
 
-@mixin sfl-button-style($foreground: colour(neutral-2), $background: #ffffff) {
+@mixin sfl-button-style($foreground: $neutral-2, $background: #ffffff) {
     .save-for-later__button {
         color: $foreground;
 
@@ -26,7 +26,7 @@ $sfl-button-height: 30px;
     }
 }
 
-@mixin sfl-button-toned($tone, $foreground: colour(news-main-1), $background: #ffffff) {
+@mixin sfl-button-toned($tone, $foreground: $news-main-1, $background: #ffffff) {
     .tonal--tone-#{$tone} {
         @include sfl-button-style($foreground, $background);
     }
@@ -34,8 +34,8 @@ $sfl-button-height: 30px;
 
 // size etc
 .save-for-later__button {
-    font-size: get-font-size(textSans, 1);
     @include button-height($sfl-button-height);
+    font-size: get-font-size(textSans, 1);
     border: 0;
     background-color: transparent;
     padding: 0;
@@ -57,30 +57,30 @@ $sfl-button-height: 30px;
 
 // colours per state
 @include sfl-button-style();
-@include sfl-button-toned(analysis, colour(analysis-accent));
-@include sfl-button-toned(comment, colour(comment-default));
-@include sfl-button-toned(dead, colour(live-default), colour(neutral-7));
-@include sfl-button-toned(editorial, colour(editorial-default));
-@include sfl-button-toned(feature, colour(feature-default));
-@include sfl-button-toned(letters, colour(comment-default));
-@include sfl-button-toned(live, colour(live-default), colour(neutral-8));
-@include sfl-button-toned(media, colour(media-default), colour(media-background));
+@include sfl-button-toned(analysis, $analysis-accent);
+@include sfl-button-toned(comment, $comment-default);
+@include sfl-button-toned(dead, $live-default, $neutral-7);
+@include sfl-button-toned(editorial, $editorial-default);
+@include sfl-button-toned(feature, $feature-default);
+@include sfl-button-toned(letters, $comment-default);
+@include sfl-button-toned(live, $live-default, $neutral-8);
+@include sfl-button-toned(media, $media-default, $media-background);
 @include sfl-button-toned(news);
-@include sfl-button-toned(review, colour(review-background));
+@include sfl-button-toned(review, $review-background);
 
 // Specific fix for pages that are special-report & media
 .content--media.tonal--tone-special-report {
     .save-for-later__button {
-        color: colour(news-support-1);
+        color: $news-support-1;
         .inline-icon {
-            fill: colour(news-support-1);
-            border-color: colour(news-support-1);
-            background-color: colour(news-support-6);
+            fill: $news-support-1;
+            border-color: $news-support-1;
+            background-color: $news-support-6;
         }
         &:hover {
             .inline-icon {
-                fill: colour(news-support-6);
-                background-color: colour(news-support-1);
+                fill: $news-support-6;
+                background-color: $news-support-1;
             }
         }
     }

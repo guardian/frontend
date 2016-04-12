@@ -1,10 +1,12 @@
 define([
     'common/modules/commercial/liveblog-adverts',
+    'common/modules/commercial/commercial-features',
     'common/utils/mediator',
     'helpers/fixtures',
     'common/utils/$'
 ], function (
     liveblogAdverts,
+    commercialFeatures,
     mediator,
     fixtures,
     $
@@ -38,6 +40,7 @@ define([
             $style = $.create('<style type="text/css"></style>')
                 .html('.block{ height: 1200px }')
                 .appendTo('head');
+            commercialFeatures.liveblogAdverts = true;
             done();
         });
 
@@ -50,7 +53,7 @@ define([
             expect(liveblogAdverts).toBeDefined();
         });
 
-        it('should insert ads every 5th block', function () {
+        xit('should insert ads every 5th block', function (done) {
             liveblogAdverts.init().then(function () {
                 slotsCounter = body.querySelectorAll('.ad-slot').length;
                 var candidates = document.querySelectorAll('.js-liveblog-body > *:nth-child(1+5n)');
@@ -58,7 +61,7 @@ define([
                     Array.prototype.every.call(candidates, function (c) { return c.classList.contains('ad-slot'); }) &&
                     candidates.length === slotsCounter;
                 expect(allSlots).toBe(true);
-            });
+            }).then(done).catch(done.fail);
         });
 
     });

@@ -12,7 +12,7 @@ define([
     'common/modules/commercial/slice-adverts',
     'common/modules/commercial/third-party-tags',
     'common/modules/commercial/paidfor-band',
-    'lodash/collections/forEach'
+    'common/modules/commercial/adverts'
 ], function (
     Promise,
     config,
@@ -27,17 +27,17 @@ define([
     sliceAdverts,
     thirdPartyTags,
     paidforBand,
-    forEach
+    adverts
 ) {
     var modules = [
+        ['cm-dfp', dfp.init],
+        ['cm-thirdPartyTags', thirdPartyTags.init],
         ['cm-articleAsideAdverts', articleAsideAdverts.init],
         ['cm-articleBodyAdverts', articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
         ['cm-frontCommercialComponents', frontCommercialComponents.init],
         ['cm-topBannerBelowContainer', topBannerBelowContainer.init],
-        ['cm-thirdPartyTags', thirdPartyTags.init],
-        ['cm-badges', badges.init],
-        ['cm-paidforBand', paidforBand.init]
+        ['cm-badges', badges.init]
     ];
 
     return {
@@ -48,7 +48,7 @@ define([
 
             var modulePromises = [];
 
-            forEach(modules, function (pair) {
+            modules.forEach(function (pair) {
                 robust.catchErrorsAndLog(pair[0], function () {
                     modulePromises.push(pair[1]());
                 });
@@ -56,8 +56,9 @@ define([
 
             Promise.all(modulePromises).then(function () {
                 robust.catchErrorsAndLogAll([
-                    ['cm-dfp', dfp.init],
-                    // TODO does dfp return a promise?
+                    ['cm-adverts', dfp.loadAds],
+                    ['cm-paidforBand', paidforBand.init],
+                    ['cm-new-adverts', adverts.init],
                     ['cm-ready', function () {
                         mediator.emit('page:commercial:ready');
                     }]
