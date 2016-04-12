@@ -3,8 +3,7 @@ package controllers
 import _root_.liveblog.LiveBlogCurrentPage
 import com.gu.contentapi.client.model.v1.{Content => ApiContent, ItemResponse}
 import common._
-import conf.LiveContentApi.getResponse
-import conf._
+import contentapi.ContentApiClient
 import conf.switches.Switches
 import model._
 import model.liveblog.{BodyBlock, KeyEventData}
@@ -155,14 +154,14 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
     val edition = Edition(request)
 
     log.info(s"Fetching article: $path for edition ${edition.id}: ${RequestLog(request)}")
-    val capiItem = LiveContentApi.item(path, edition)
+    val capiItem = ContentApiClient.item(path, edition)
       .showTags("all")
       .showFields("all")
       .showReferences("all")
       .showAtoms("all")
 
     val capiItemWithBlocks = if (blocks) capiItem.showBlocks("body") else capiItem
-    getResponse(capiItemWithBlocks)
+    ContentApiClient.getResponse(capiItemWithBlocks)
 
   }
 

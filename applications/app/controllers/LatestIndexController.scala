@@ -1,8 +1,8 @@
 package controllers
 
 import common._
-import conf.LiveContentApi
-import conf.LiveContentApi.getResponse
+import contentapi.ContentApiClient
+import contentapi.ContentApiClient.getResponse
 import contentapi.Paths
 import model._
 import org.joda.time.DateTime
@@ -34,7 +34,7 @@ object LatestIndexController extends Controller with ExecutionContexts with impl
   // this is simply the latest by date. No lead content, editors picks, or anything else
   private def loadLatest(path: String)(implicit request: RequestHeader): Future[Option[IndexPage]] = {
     val result = getResponse(
-      LiveContentApi.item(s"/$path", Edition(request))
+      ContentApiClient.item(s"/$path", Edition(request))
         .pageSize(1)
         .orderBy("newest")
     ).map{ item =>

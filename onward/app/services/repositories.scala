@@ -7,10 +7,10 @@ import model.{RelatedContentItem, RelatedContent}
 import org.json4s.native.JsonMethods
 import play.api.libs.ws.WS
 import scala.concurrent.Future
-import conf.LiveContentApi
+import contentapi.ContentApiClient
 import feed.MostReadAgent
 import conf.switches.Switches.RelatedContentSwitch
-import LiveContentApi.getResponse
+import ContentApiClient.getResponse
 
 trait Related extends ConciergeRepository {
   def related(edition: Edition, path: String, excludeTags: Seq[String] = Nil): Future[RelatedContent] = {
@@ -25,7 +25,7 @@ trait Related extends ConciergeRepository {
         case excluding => Some(excluding.map(t => s"-$t").mkString(","))
       }
 
-      val response = getResponse(LiveContentApi.item(path, edition)
+      val response = getResponse(ContentApiClient.item(path, edition)
         .tag(tags)
         .showRelated(true)
       )
@@ -69,7 +69,7 @@ trait Related extends ConciergeRepository {
     val tags = (tag +: excludeTags.map(t => s"-$t")).mkString(",")
 
     val response = getResponse(
-      LiveContentApi.search(edition)
+      ContentApiClient.search(edition)
         .tag(tags)
         .pageSize(50)
     )

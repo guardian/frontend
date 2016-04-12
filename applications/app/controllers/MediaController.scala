@@ -2,8 +2,7 @@ package controllers
 
 import com.gu.contentapi.client.model.v1.{Content => ApiContent, ItemResponse}
 import common._
-import conf.LiveContentApi.getResponse
-import conf._
+import contentapi.ContentApiClient
 import conf.switches.Switches
 import model._
 import play.api.libs.json.{Format, JsObject, Json}
@@ -34,8 +33,8 @@ object MediaController extends Controller with RendersItemResponse with Logging 
     val edition = Edition(request)
 
     log.info(s"Fetching media: $path for edition $edition")
-    val response: Future[ItemResponse] = getResponse(
-      LiveContentApi.item(path, edition)
+    val response: Future[ItemResponse] = ContentApiClient.getResponse(
+      ContentApiClient.item(path, edition)
         .showFields("all")
     )
 

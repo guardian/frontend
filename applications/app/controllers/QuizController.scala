@@ -1,8 +1,8 @@
 package controllers
 
 import common._
-import conf.{Configuration, LiveContentApi}
-import conf.LiveContentApi.getResponse
+import conf.Configuration
+import contentapi.ContentApiClient
 import model._
 import model.content.{Quiz, Atoms}
 import quiz.form
@@ -58,8 +58,8 @@ object QuizController extends Controller with ExecutionContexts with Logging {
     val edition = Edition(request)
 
     log.info(s"Fetching quiz atom: $quizId from content id: $path: ${RequestLog(request)}")
-    val capiQuery = LiveContentApi.item(path, edition).showAtoms("all")
-    val result = getResponse(capiQuery) map { itemResponse =>
+    val capiQuery = ContentApiClient.item(path, edition).showAtoms("all")
+    val result = ContentApiClient.getResponse(capiQuery) map { itemResponse =>
       val maybePage: Option[QuizAnswersPage] = itemResponse.content.flatMap { content =>
 
         val quiz = Atoms.make(content).flatMap(_.quizzes.find(_.id == quizId))
