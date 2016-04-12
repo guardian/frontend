@@ -15,20 +15,22 @@
         }
     }
 
-    .adverts__ctas {
-        margin-top: $gs-baseline * 2;
+    .adverts__blurb {
+        margin-bottom: $gs-baseline;
+    }
 
+    .adverts__ctas {
         .button {
-            background: none;
-            border: 0;
             display: flex;
             align-items: center;
         }
 
         svg {
+            display: inline-block;
             width: initial;
             height: initial;
             margin-right: $gs-gutter / 2;
+            vertical-align: middle;
         }
     }
 
@@ -80,6 +82,13 @@
         }
     }
 
+    .adverts__ctas {
+        .button {
+            background: none;
+            border: 0;
+        }
+    }
+
     .search {
         @include fs-textSans(2);
     }
@@ -119,6 +128,27 @@
     .advert__image-container {
         height: 7 * $gs-baseline;
     }
+}
+
+.advert--soulmates {
+    .button {
+        @include button-colour(
+            guss-colour(soulmates-accent-colour, $frontend-palette),
+            null
+        );
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+        .button {
+            @include button-colour(
+                colour(neutral-2),
+                null
+            );
+        }
+    }
+
 }
 
 .logo--tone-soulmates {

@@ -3,3 +3,25 @@
         background: guss-colour(news-support-2, $pasteup-palette);
     }
 }
+
+.adverts--tone-brand > .adverts__body,
+.advert--brand {
+    .button {
+        @include button-colour(
+            guss-colour(news-main-2, $pasteup-palette),
+            null
+        );
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+        .button {
+            @include button-colour(
+                darken(guss-colour(news-main-2, $pasteup-palette), 5%),
+                null
+            );
+        }
+    }
+
+}
