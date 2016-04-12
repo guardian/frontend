@@ -42,7 +42,7 @@ case class JobsFeedMetaData(urlTemplate: String) extends FeedMetaData {
 
 case class StaticJobsFeedMetaData(url: String) extends FeedMetaData {
 
-  val name = "jobs(static)"
+  val name = "jobs"
 
   override val fetchSwitch = Switches.StaticJobsFeedSwitch
   override val parseSwitch = Switches.JobParseSwitch
