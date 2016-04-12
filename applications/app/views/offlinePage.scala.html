@@ -21,7 +21,7 @@
     @* We don't use the inlineJSBlocking template because we need to specify
     our own paths *@
 
-    @fragments.omnitureScript(Some(offlinePage.metadata))
+    @fragments.analytics.omnitureScript(Some(offlinePage.metadata))
 
     @* NOTE the order of these includes is important  *@
     <script>
@@ -115,7 +115,7 @@
 
         @fragments.inlineJSNonBlocking()
 
-        @fragments.analytics.analytics(offlinePage)
+        @fragments.analytics.base(offlinePage)
 
     </body>
 </html>
