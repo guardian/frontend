@@ -23,19 +23,9 @@ object CSPReport {
       (__ \ "original-policy").read[String] and
       (__ \ "referrer").read[String] and
       (__ \ "status-code").readNullable[Int] and
-      (__ \ "violated-directive").read[String]
-    )(withTimestamp _)
-
-  def withTimestamp(
-    blockedUri: String,
-    documentUri: String,
-    effectiveDirective: String,
-    originalPolicy: String,
-    referrer: String,
-    statusCode: Option[Int],
-    violatedDirective: String): CSPReport = {
-    CSPReport(blockedUri, documentUri, effectiveDirective, originalPolicy, referrer, statusCode, violatedDirective, new Instant().getMillis)
-  }
+      (__ \ "violated-directive").read[String] and
+      Reads.pure(new Instant().getMillis)
+    )(CSPReport.apply _)
 }
 
 object CSP {
