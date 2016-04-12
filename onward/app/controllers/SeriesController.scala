@@ -67,11 +67,13 @@ object SeriesController extends Controller with Logging with Paging with Executi
   private def rendermf2Series(series: Series)(implicit request: RequestHeader) = {
     val displayName = Some(series.displayName)
     val seriesStories = series.trails.items take 4
-
+    val description = series.tag.metadata.description.getOrElse("").replaceAll("<.*?>", "")
+    
     JsonComponent(
       "items" -> JsArray(Seq(
         Json.obj(
           "displayName" -> displayName,
+          "description" -> description,
           "showContent" -> seriesStories.nonEmpty,
           "content" -> seriesStories.map( collection => isCuratedContent(collection.faciaContent))
         )

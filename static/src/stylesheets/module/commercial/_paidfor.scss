@@ -17,7 +17,7 @@
     /* Card background */
 
     .tone-paidfor--item, .fc-item {
-        background: colour(paid-article-subheader);
+        background: $paid-article-subheader;
     }
 
 
@@ -70,13 +70,13 @@
     .u-faux-block-link--hover,
     .u-faux-block-link__cta {
         text-decoration: none;
-        background-color: colour(paid-article-subheader);
+        background-color: $paid-article-subheader;
     }
 
     .commercial__meta,
     .rich-link__meta {
         @include f-textSans;
-        color: colour(neutral-2);
+        color: $neutral-2;
         font-size: get-font-size(data, 3);
         text-align: right;
     }
@@ -132,11 +132,11 @@
     .ad-slot--paid-for-badge--front {
         float: right;
         margin-bottom: $gs-baseline;
-        border-top-color: colour(neutral-2);
+        border-top-color: $neutral-2;
 
         .ad-slot--paid-for-badge__link {
             &:after {
-                border-bottom-color: colour(neutral-2);
+                border-bottom-color: $neutral-2;
             }
         }
     }
@@ -158,12 +158,12 @@
 
     .fc-item__kicker {
         &:after {
-            color: colour(neutral-2);
+            color: $neutral-2;
         }
     }
 
     .inline-icon {
-        fill: colour(neutral-2);
+        fill: $neutral-2;
     }
 
     .l-row--cols-1 .lineitem {
@@ -274,6 +274,6 @@
     flex: 0 1 auto;
 
     .rich-link__container:before {
-        background: guss-colour(paidfor-background, $frontend-palette);
+        background: $paidfor-background;
     }
 }

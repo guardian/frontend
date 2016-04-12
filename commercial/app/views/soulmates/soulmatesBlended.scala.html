@@ -1,0 +1,22 @@
+@(members: Seq[model.commercial.soulmates.Member],
+  clickMacro: Option[String])
+
+@import conf.Configuration
+
+<div class="advert-blended advert-blended--soulmates">
+    <div class="advert-blended__title">
+        @fragments.inlineSvg("logo-soulmates", "commercial", classes = Seq("logo--tone-soulmates"))
+        <span class="u-h">The Guardian</span> <span class="u-h">Soulmates</span>
+    </div>
+    <div class="advert-blended__body">
+        @members.map { member => @soulmateCard(member, clickMacro) }
+    </div>
+    <div class="advert-blended__footer">
+        <a class="button button--tone-media button--small"
+            href="@clickMacro@Configuration.commercial.soulmates_url"
+            data-link-name="merchandising-soulmates-v1_0_2014-08-18-find-solumate-link"
+            >
+            Find a Soulmate@fragments.inlineSvg("arrow-right", "icon", List("i-right"))
+        </a>
+    </div>
+</div>

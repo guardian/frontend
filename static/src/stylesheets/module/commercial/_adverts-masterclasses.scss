@@ -3,30 +3,30 @@
 
 .adverts--tone-masterclasses {
     > .adverts__header {
-        background: guss-colour(multimedia-main-1, $pasteup-palette);
+        background: $multimedia-main-1;
 
         .button {
-            color: guss-colour(multimedia-main-2, $pasteup-palette);
-            border-color: fade-out(guss-colour(multimedia-main-2, $pasteup-palette), .7);
+            color: $multimedia-main-2;
+            border-color: fade-out($multimedia-main-2, .7);
 
             &:hover,
             &:focus,
             &:active {
-                border-color: guss-colour(multimedia-main-2, $pasteup-palette);
+                border-color: $multimedia-main-2;
             }
         }
     }
 
     .inline-commercial-brand svg {
-        fill: guss-colour(multimedia-main-2, $pasteup-palette);
+        fill: $multimedia-main-2;
     }
 }
 
 .advert--masterclass {
     .button {
         @include button-colour(
-            guss-colour(multimedia-main-2, $pasteup-palette),
-            colour(neutral-1)
+            $multimedia-main-2,
+            $neutral-1
         );
     }
 
@@ -35,9 +35,23 @@
     &:active {
         .button {
             @include button-colour(
-                darken(guss-colour(multimedia-main-2, $pasteup-palette), 5%),
-                colour(neutral-1)
+                darken($multimedia-main-2, 5%),
+                $neutral-1
             );
         }
     }
+}
+
+.advert-blended--masterclasses .advert-blended__title {
+    padding-top: 5px;
+    padding-bottom: 9px;
+
+    > svg {
+        height: 22px;
+        width: 144px;
+    }
+}
+
+.logo--tone-masterclasses {
+    fill: $multimedia-main-1;
 }

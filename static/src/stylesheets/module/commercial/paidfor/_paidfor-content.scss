@@ -24,7 +24,7 @@
 }
 
 .paidfor-content {
-    background: colour(paid-article-subheader);
+    background: $paid-article-subheader;
     text-align: left;
     &,
     .gu-title {
@@ -40,7 +40,7 @@
         top: 0;
         left: 0;
         right: 0;
-        background: guss-colour(paidfor-background, $frontend-palette);
+        background: $paidfor-background;
         height: 1px;
         z-index: 5;
     }
@@ -112,7 +112,7 @@
 }
 
 .paidfor-band {
-    background: guss-colour(paidfor-background, $frontend-palette);
+    background: $paidfor-background;
     width: 100%;
     z-index: 1200;
 

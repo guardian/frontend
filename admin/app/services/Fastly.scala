@@ -22,6 +22,16 @@ case class FastlyStatistic(service: String, region: String, timestamp: Long, nam
 object Fastly extends ExecutionContexts with Logging {
   import play.api.Play.current
 
+  private case class FastlyApiStat(
+    hits: Int,
+    miss: Int,
+    errors: Int,
+    service_id: String,
+    start_time: Long
+  )
+
+  private implicit val FastlyApiStatFormat = Json.format[FastlyApiStat]
+
   private val regions = List("usa", "europe", "ausnz")
 
   def apply(): Future[List[FastlyStatistic]] = {
@@ -47,26 +57,22 @@ object Fastly extends ExecutionContexts with Logging {
 
       responses flatMap { body =>
         val json: JsValue = Json.parse(body)
-        val samples: List[JsObject] = (json \ "data").as[JsObject].values.toList.flatMap {_.as[JsArray].value} map {_.as[JsObject]}
+        val samples: List[FastlyApiStat] = (json \ "data").validate[List[FastlyApiStat]].getOrElse(Nil)
         val region: String = (json \ "meta" \ "region").as[String]
 
         log.info(s"Loaded ${samples.size} Fastly statistics results for region: $region")
 
-        samples flatMap { block =>
-          val service: String = (block \ "service_id").as[String]
-          val timestamp: Long = (block \ "start_time").as[Long] * 1000
-          val statistics: List[(String, JsValue)] = block.fieldSet.toList
+        samples flatMap { sample: FastlyApiStat =>
+          val service: String = sample.service_id
+          val timestamp: Long = sample.start_time * 1000
+          val statistics: List[(String, String)] = List(
+            ("hits", sample.hits.toString),
+            ("miss", sample.miss.toString),
+            ("errors", sample.errors.toString)
+          )
 
-          val filtered = statistics filter {
-            case (_, JsNull) => false
-            case ("hits", _) => true
-            case ("miss", _) => true
-            case ("errors", _) => true
-            case _ => false
-          }
-
-          filtered map {
-            case (name, stat) => FastlyStatistic(service, region, timestamp, name, stat.asOpt[Double].map(_.toString) getOrElse stat.as[String])
+          statistics map {
+            case (name, stat) => FastlyStatistic(service, region, timestamp, name, stat)
           }
         }
       }
