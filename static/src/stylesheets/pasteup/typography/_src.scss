@@ -60,9 +60,9 @@ $font-scale: (
 }
 
 @mixin font($family, $weight, $size, $line-height: $size) {
+    @include font-size($size, $line-height);
     font-family: $family;
     font-weight: $weight;
-    @include font-size($size, $line-height);
 }
 
 // Font scale
