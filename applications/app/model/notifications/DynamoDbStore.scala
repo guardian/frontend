@@ -43,13 +43,13 @@ object DynamoDbStore extends Logging with ExecutionContexts {
     futureUpdateResult
   }
 
-  def deleteItemFromSubcription(gcmBrowserId: String, notificationTopicId: String): Future[DeleteItemResult] = {
+  def deleteItemFromSubcription(browserEndpoint: String, notificationTopicId: String): Future[DeleteItemResult] = {
 
     val deleteItemRequest = new DeleteItemRequest()
       .withTableName(tableName)
       .withKey(Map[String, AttributeValue](
         ("notificationTopicId", new AttributeValue().withS(notificationTopicId)),
-        ("gcmBrowserId", new AttributeValue().withS(gcmBrowserId))
+        ("browserEndpoint", new AttributeValue().withS(browserEndpoint))
       ).asJava)
 
     val futureDeleteResult: Future[DeleteItemResult] = client.deleteItemFuture(deleteItemRequest)
@@ -57,9 +57,9 @@ object DynamoDbStore extends Logging with ExecutionContexts {
     futureDeleteResult.onComplete {
       case Failure(t) =>
         val message = t.getMessage
-        log.error(s"Unable to delete $gcmBrowserId for topic $notificationTopicId: $message")
+        log.error(s"Unable to delete $browserEndpoint for topic $notificationTopicId: $message")
       case Success(_) =>
-        log.info(s"Successfully deleted $gcmBrowserId from topic $notificationTopicId")}
+        log.info(s"Successfully deleted $browserEndpoint from topic $notificationTopicId")}
 
     futureDeleteResult
   }
