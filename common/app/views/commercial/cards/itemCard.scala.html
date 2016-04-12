@@ -10,7 +10,16 @@
 <a href="@item.targetUrl" class="advert advert--capi
     @optAdvertClassNames.map { classNames => @classNames.map(c => s"advert--$c").mkString(" ")}
     @optClassNames.map { classNames => @classNames.mkString(" ")}
+    @if(useCardBranding) {js-sponsored-card}
     "
+    @if(useCardBranding){
+        @for(branding <- item.branding) {
+            data-sponsorship="@branding.sponsorshipType"
+            @for(sponsor <- branding.sponsor)             {data-sponsor="@sponsor"}
+            @for(keywords <- branding.keywordId)          {data-keywords="@keywords"}
+            @for(series <- branding.seriesId)             {data-series="@series"}
+        }
+    }
     data-link-name="@omnitureId"
     @if(useCardBranding){
         @for(branding <- item.branding) {
@@ -32,5 +41,9 @@
         <div class="advert__standfirst">@Html(description)</div>
     }
 
-    @for(branding <- item.branding; sponsor <- branding.sponsor) {<div class="advert__badge js-badge"></div>}
+    @if(useCardBranding) {
+        @for(branding <- item.branding; sponsor <- branding.sponsor) {
+            <div class="advert__badge js-badge-placeholder"></div>
+        }
+    }
 </a>

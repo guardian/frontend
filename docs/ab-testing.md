@@ -63,12 +63,24 @@ define(['bonzo'], function (bonzo) {
             {
                 id: 'control',
                 test: function (context, config) {
+                },
+
+                success: function(complete) {
+                    // do something that determines whether the user has completed
+                    // the test (e.g. set up an event listener) and call 'complete' afterwards
+                    complete();
                 }
             },
             {
                 id: 'hide',
                 test: function (context, config) {
                     bonzo(context.querySelector('.js-related')).hide();
+                },
+
+                success: function(complete) {
+                    // do something that determines whether the user has completed
+                    // the test (e.g. set up an event listener) and call 'complete' afterwards
+                    complete();
                 }
             }
         ];
@@ -95,7 +107,12 @@ The AMD module must return an object with the following properties,
 - `dataLinkNames`: Link names or custom link names used for test.
 - `idealOutcome`: What is the outcome that you want to see from the new variant (We want to see Y when we do X)?
 - `canRun`: A function to determine if the test is allowed to run (Eg, so you can target individual pages, segments etc.).
-- `variants`: An array of two functions - the first representing the _control_ group, the second the variant.  See "Detecting a user's bucket" below if you want to affect existing code rather than running new code.
+- `variants`: An array of objects representing the groups in your test. See "Detecting a user's bucket" below if you want to affect existing code rather than running new code.
+    - the variant objects can contain three properties:
+        - variant.id: the name of the variant
+        - variant.test: the main test function that applies the treatment for the test
+        - variant.success: a function that's called alongside test that determines if the user has finished the test. it receives a callback as a parameter that you must call when the test is completed.
+
 
 You will also need to mark the module as a dependency of the AB testing module.
 

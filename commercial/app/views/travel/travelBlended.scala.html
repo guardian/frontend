@@ -1,0 +1,15 @@
+@(offer: model.commercial.travel.TravelOffer, clickMacro: Option[String])
+
+@import conf.Configuration
+
+<div class="advert-blended">
+    <div class="advert-blended__title">
+        <a href="@{clickMacro}https://holidays.theguardian.com/" data-link-name="merchandising-hybrid-travel-visit-all">
+            @fragments.inlineSvg("logo-holidayoffers-26", "commercial", List("commercial--tone-holidayoffers-logo"))
+            <span class="u-h">Holiday Offers</span>
+        </a>
+    </div>
+    <div class="advert-blended__body">
+        @travelCard(offer, clickMacro)
+    </div>
+</div>

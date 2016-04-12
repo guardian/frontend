@@ -33,7 +33,7 @@ trait SoulmatesFeed extends ExecutionContexts with Logging {
   }
 
   def parsedMembers(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[Member]] = {
-    feedMetaData.switch.isGuaranteedSwitchedOn flatMap { switchedOn =>
+    feedMetaData.parseSwitch.isGuaranteedSwitchedOn flatMap { switchedOn =>
       if (switchedOn) {
         val start = currentTimeMillis
         feedContent map { body =>
@@ -43,7 +43,7 @@ trait SoulmatesFeed extends ExecutionContexts with Logging {
           Future.failed(MissingFeedException(feedMetaData.name))
         }
       } else {
-        Future.failed(SwitchOffException(feedMetaData.switch.name))
+        Future.failed(SwitchOffException(feedMetaData.parseSwitch.name))
       }
     } recoverWith {
       case NonFatal(e) => Future.failed(e)

@@ -10,7 +10,7 @@ GET        /_healthcheck                                                        
 GET        /sitemaps/news.xml                                                   controllers.SiteMapController.renderNewsSiteMap()
 GET        /sitemaps/video.xml                                                  controllers.SiteMapController.renderVideoSiteMap()
 
-GET        /surveys/404-test/next-in-series/$seriesName<experience> controllers.SurveysController.render404TestNextInSeries(seriesName: String)
+GET        /surveys/404-test/next-in-series/$seriesName<experience|alanis|oliver-burkeman> controllers.SurveysController.render404TestNextInSeries(seriesName: String)
 GET        /surveys/*file                                                       controllers.Assets.at(path="/public/surveys", file)
 
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
@@ -45,11 +45,14 @@ GET        /embed/video/*path                                                   
 # Preferences
 GET        /preferences                                                         controllers.PreferencesController.indexPrefs()
 
-GET        /https/optin                                                         controllers.HTTPSCookieController.optIn()
-GET        /https/optout                                                        controllers.HTTPSCookieController.optOut()
+# opt-in/out routes: this format is deprecated in favour of /opt/<in|out>/<feature>
+# don't add any new ones!
+GET        /https/optin                                                         controllers.OptInController.handle(feature = "https", choice = "in")
+GET        /https/optout                                                        controllers.OptInController.handle(feature = "https", choice = "out")
+GET        /new-header/optin                                                    controllers.OptInController.handle(feature = "header", choice = "in")
+GET        /new-header/optout                                                   controllers.OptInController.handle(feature = "header", choice = "out")
 
-GET        /new-header/optin                                                    controllers.NewHeaderCookieController.optIn()
-GET        /new-header/optout                                                   controllers.NewHeaderCookieController.optOut()
+GET        /opt/$choice<in|out>/:feature                                        controllers.OptInController.handle(feature, choice)
 
 # Web App paths
 GET        /offline-page.json                                                   controllers.WebAppController.offlinePage()
