@@ -1,6 +1,7 @@
 package controllers
 
 import common._
+import org.joda.time.Instant
 import play.api.mvc._
 import model.diagnostics.analytics.Analytics
 import model.diagnostics.css.Css
@@ -8,8 +9,6 @@ import model.diagnostics.csp.CSP
 import model.TinyResponse
 
 object DiagnosticsController extends Controller with Logging {
-  lazy val random = scala.util.Random
-
   def acceptBeaconOptions = postOptions
 
   def acceptBeacon = Action { implicit request =>
@@ -42,9 +41,9 @@ object DiagnosticsController extends Controller with Logging {
   }
 
   def csp = Action(jsonParser) { implicit request =>
-    val sampleRate = 0.01
+    val shouldReport = (new Instant().getMillis) % 10000 == 1
 
-    if (conf.switches.Switches.CspReporting.isSwitchedOn && random.nextDouble <= sampleRate) {
+    if (conf.switches.Switches.CspReporting.isSwitchedOn && shouldReport) {
       CSP.report(request.body)
     }
 
