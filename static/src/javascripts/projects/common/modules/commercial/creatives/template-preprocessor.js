@@ -205,6 +205,6 @@ define([
         'manual-multiple': preprocessManualMultiple,
         'gimbap': preprocessGimbap,
         'gimbap-simple': preprocessGimbapSimple,
-        'manual-container': preprocessManualContainer,
+        'manual-container': preprocessManualContainer
     };
 });
