@@ -55,6 +55,7 @@ define([
     }
 
     function isExpandable() {
+        // Only expands when embedded in a mobile front container
         return config.page.isFront && detect.isBreakpoint({max: 'phablet'});
     }
 
