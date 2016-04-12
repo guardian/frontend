@@ -3,8 +3,8 @@ define([
 ) {
     return function () {
         this.id = 'Minute';
-        this.start = '2016-05-11';
-        this.expiry = '2016-04-11';
+        this.start = '2016-04-11';
+        this.expiry = '2016-05-11';
         this.author = 'James Gorrie';
         this.description = 'Just so we can test the minute product, not to be seen by users';
         this.audience = 0;
