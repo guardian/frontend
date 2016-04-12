@@ -19,13 +19,13 @@ object DynamoDbStore extends Logging with ExecutionContexts {
   private val client = new AmazonDynamoDBAsyncClient(Configuration.aws.credentials.get)
   client.setRegion(Region.getRegion(Regions.EU_WEST_1))
 
-  def addItemToSubcription(gcmBrowserId: String, notificationTopicId: String): Future[UpdateItemResult] = {
+  def addItemToSubcription(browserEndpoint: String, notificationTopicId: String): Future[UpdateItemResult] = {
 
     val updateItemRequest = new UpdateItemRequest()
       .withTableName(tableName)
       .withKey(Map[String, AttributeValue](
         ("notificationTopicId", new AttributeValue().withS(notificationTopicId)),
-        ("gcmBrowserId", new AttributeValue().withS(gcmBrowserId))
+        ("browserEndpoint", new AttributeValue().withS(browserEndpoint))
       ).asJava)
       .withUpdateExpression(s"SET createdDate = :createdDate")
       .withExpressionAttributeValues(Map[String, AttributeValue](
@@ -36,9 +36,9 @@ object DynamoDbStore extends Logging with ExecutionContexts {
     futureUpdateResult.onComplete {
       case Failure(t) =>
         val message = t.getMessage
-        log.error(s"Unable to Subscribe $gcmBrowserId to $notificationTopicId: $message")
+        log.error(s"Unable to Subscribe $browserEndpoint to $notificationTopicId: $message")
       case Success(_) =>
-        log.info(s"Successfully subscribed $gcmBrowserId to $notificationTopicId")}
+        log.info(s"Successfully subscribed $browserEndpoint to $notificationTopicId")}
 
     futureUpdateResult
   }
