@@ -1,11 +1,11 @@
 package feed
 
-import conf.LiveContentApi
+import contentapi.ContentApiClient
 import common._
 import model.RelatedContentItem
 import play.api.libs.json.{JsArray, JsValue}
 import scala.concurrent.Future
-import LiveContentApi.getResponse
+import ContentApiClient.getResponse
 
 object MostViewedGalleryAgent extends Logging with ExecutionContexts {
 
@@ -25,7 +25,7 @@ object MostViewedGalleryAgent extends Logging with ExecutionContexts {
         url <- (item \ "url").asOpt[String]
         count <- (item \ "count").asOpt[Int]
       } yield {
-        getResponse(LiveContentApi.item(urlToContentPath(url), Edition.defaultEdition)).map(_.content.map { item =>
+        getResponse(ContentApiClient.item(urlToContentPath(url), Edition.defaultEdition)).map(_.content.map { item =>
           RelatedContentItem(item)
         })
       }
