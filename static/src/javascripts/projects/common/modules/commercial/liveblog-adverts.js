@@ -44,7 +44,8 @@ define([
             absoluteMinAbove: update ? 0 : (windowHeight * OFFSET),
             minAbove: 0,
             minBelow: 0,
-            filter: filterSlot
+            filter: filterSlot,
+            considerScroll: true
         };
 
         function filterSlot(slot, index) {
