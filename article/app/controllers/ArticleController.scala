@@ -3,8 +3,7 @@ package controllers
 import _root_.liveblog.LiveBlogCurrentPage
 import com.gu.contentapi.client.model.v1.{Content => ApiContent, ItemResponse}
 import common._
-import conf.LiveContentApi.getResponse
-import conf._
+import contentapi.ContentApiClient
 import conf.switches.Switches
 import model._
 import model.liveblog.{BodyBlock, KeyEventData}
@@ -155,14 +154,14 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
     val edition = Edition(request)
 
     log.info(s"Fetching article: $path for edition ${edition.id}: ${RequestLog(request)}")
-    val capiItem = LiveContentApi.item(path, edition)
+    val capiItem = ContentApiClient.item(path, edition)
       .showTags("all")
       .showFields("all")
       .showReferences("all")
       .showAtoms("all")
 
     val capiItemWithBlocks = if (blocks) capiItem.showBlocks("body") else capiItem
-    getResponse(capiItemWithBlocks)
+    ContentApiClient.getResponse(capiItemWithBlocks)
 
   }
 
@@ -186,7 +185,12 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
         case (liveBlog: Article, Some(Some(requiredBlockId))/*page param specified and valid format*/) if liveBlog.isLiveBlog =>
           createLiveBlogModel(liveBlog, response, Some(requiredBlockId))
         case (article: Article, None) =>
-          Left(ArticlePage(article, RelatedContent(article, response)))
+          if(mvt.ABIntersperseMultipleStoryPackagesStories.isParticipating) {
+            Left(ArticlePage(article, StoryPackages(article, response)))
+          }
+          else {
+            Left(ArticlePage(article, RelatedContent(article, response)))
+          }
         case _ =>
           Right(NotFound)
       }

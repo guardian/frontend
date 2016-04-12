@@ -21,7 +21,7 @@
     height: 1em;
     margin-left: .2em;
     vertical-align: middle;
-    background: colour(news-default);
+    background: $news-default;
     font: bold 13px/1 $f-serif-headline;
     color: #ffffff;
     text-align: center;
@@ -31,7 +31,7 @@
 %icon-holder-circle {
     width: 30px;
     height: 30px;
-    border: 1px solid colour(neutral-1);
+    border: 1px solid $neutral-1;
     padding: 0;
     box-sizing: content-box; // Force proper sizing on button elements
     background-color: transparent;
@@ -41,7 +41,7 @@
     &:focus,
     &:hover {
         text-decoration: none;
-        color: colour(neutral-1);
+        color: $neutral-1;
     }
 }
 %u-unstyled {

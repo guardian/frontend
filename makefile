@@ -49,6 +49,9 @@ shrinkwrap:
 clean-assets:
 	@rm -rf static/target static/hash static/requirejs
 
+pasteup:
+	@cd static/src/stylesheets/pasteup && npm --silent i && node publish.js
+
 
 # internal targets
 help:

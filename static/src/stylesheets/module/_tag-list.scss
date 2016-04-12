@@ -19,12 +19,12 @@
     button {
         @include button-colour(
             transparent,
-            guss-colour(neutral-1, $pasteup-palette),
-            guss-colour(neutral-4, $pasteup-palette)
+            $neutral-1,
+            $neutral-4
         );
         @include button-hover-colour(
             transparent,
-            darken(guss-colour(neutral-3, $pasteup-palette), 10%)
+            darken($neutral-3, 10%)
         );
         border: 0;
         padding: 0 $gs-baseline / 2;

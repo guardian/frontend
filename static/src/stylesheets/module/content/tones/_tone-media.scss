@@ -2,28 +2,28 @@
 
 @include tone-content(
     media, // $tone
-    colour(media-background), // $tonal__header-background
-    colour(neutral-6), // $tonal__header-text
-    colour(media-default), // $tonal__header-link
+    $media-background, // $tonal__header-background
+    $neutral-6, // $tonal__header-text
+    $media-default, // $tonal__header-link
     400, // $tonal__headline-weight
     #ffffff, // $tonal__headline-colour
-    colour(media-default), // $tonal__headline-accent
-    colour(media-background), // $tonal__standfirst-background
+    $media-default, // $tonal__headline-accent
+    $media-background, // $tonal__standfirst-background
     #ffffff, // $tonal__standfirst-text
     #ffffff, // $tonal__standfirst-link
-    colour(media-background), // $tonal__article-background
-    colour(media-default) // $tonal__article-link
+    $media-background, // $tonal__article-background
+    $media-default // $tonal__article-link
 );
 
 // Podcast and media tones share page styling
 .tonal--tone-media .tonal__main--tone-media {
-    color: colour(neutral-7);
+    color: $neutral-7;
     padding-top: 0;
 
     .byline,
     .content__dateline,
     .meta__numbers .sharecount__heading {
-        color: colour(neutral-3);
+        color: $neutral-3;
     }
 
     .byline a,
@@ -33,7 +33,7 @@
     .ad-slot--paid-for-badge__help,
     .from-content-api,
     .meta__numbers .sharecount__value {
-        color: colour(neutral-7);
+        color: $neutral-7;
     }
 
     .byline,
@@ -45,7 +45,7 @@
     .meta__numbers,
     .meta__social,
     .meta__number:not(u-h) + .meta__number {
-        border-color: colour(neutral-2);
+        border-color: $neutral-2;
     }
 
     .from-content-api {
@@ -56,15 +56,15 @@
         a,
         .u-underline {
             color: inherit;
-            border-bottom-color: colour(neutral-2);
+            border-bottom-color: $neutral-2;
 
             &:hover,
             &:focus {
-                border-color: mix(colour(neutral-2), colour(neutral-4), 50%);
+                border-color: mix($neutral-2, $neutral-4, 50%);
             }
             &:active {
-                color: colour(media-default);
-                border-color: colour(media-default);
+                color: $media-default;
+                border-color: $media-default;
             }
         }
     }

@@ -6,7 +6,7 @@ import cache.SurrogateKey
 import common.{AkkaAsync, ExecutionContexts, Jobs, Logging}
 import conf.AdminConfiguration.fastly
 import conf.Configuration.environment
-import conf.LiveContentApi.{getResponse, search}
+import contentapi.ContentApiClient.{getResponse, search}
 import implicits.Dates
 import play.api.Play.current
 import play.api.libs.ws.WS

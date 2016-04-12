@@ -30,7 +30,7 @@
 
 .crossword__accessible-data--header {
     @include fs-header(1);
-    border-top: 1px solid colour(crosswordAccent2);
-    border-bottom: 1px dotted colour(neutral-3);
+    border-top: 1px solid $crosswordAccent2;
+    border-bottom: 1px dotted $neutral-3;
     padding-bottom: $gs-baseline * .75;
 }

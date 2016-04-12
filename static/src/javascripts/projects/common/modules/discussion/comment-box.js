@@ -96,6 +96,7 @@ CommentBox.prototype.defaultOptions = {
     apiRoot: null,
     maxLength: 5000,
     premod: false,
+    newCommenter: false,
     focus: false,
     state: 'top-level',
     replyTo: null,
@@ -145,6 +146,26 @@ CommentBox.prototype.prerender = function() {
     }
 };
 
+CommentBox.prototype.showOnboarding = function(e) {
+    e.preventDefault();
+
+    // Check if new commenter as they may have already commented on this article
+    if (this.hasState('onboarding-visible') || !this.options.newCommenter) {
+        this.options.newCommenter = false;
+        this.removeState('onboarding-visible');
+        this.postComment();
+    } else {
+        this.getElem('onboarding-author').innerHTML = this.getUserData().displayName;
+        this.setState('onboarding-visible');
+        this.previewComment(this.onboardingPreviewSuccess);
+    }
+};
+
+CommentBox.prototype.hideOnboarding = function(e) {
+    e.preventDefault();
+    this.removeState('onboarding-visible');
+};
+
 /** @override */
 CommentBox.prototype.ready = function() {
     if (this.getDiscussionId() === null) {
@@ -156,12 +177,19 @@ CommentBox.prototype.ready = function() {
     this.setFormState();
 
     // TODO (jamesgorrie): Could definitely use the this.on and make the default context this
-    bean.on(document.body, 'submit', [this.elem], this.postComment.bind(this));
+
+    if (this.options.newCommenter) {
+         bean.on(document.body, 'submit', [this.elem], this.showOnboarding.bind(this));
+         bean.on(document.body, 'click', this.getClass('onboarding-cancel'), this.hideOnboarding.bind(this));
+    } else {
+        bean.on(document.body, 'submit', [this.elem], this.submitPostComment.bind(this));
+    }
+
     bean.on(document.body, 'change keyup', [commentBody], this.setFormState.bind(this));
     bean.on(commentBody, 'focus', this.setExpanded.bind(this)); // this isn't delegated as bean doesn't support it
 
     this.on('change', '.d-comment-box__body', this.resetPreviewComment);
-    this.on('click', this.getClass('preview'), this.previewComment);
+    this.on('click', this.getClass('preview'), this.previewComment.bind(this, this.previewCommentSuccess));
     this.on('click', this.getClass('hide-preview'), this.resetPreviewComment);
 
     this.on('click', this.getClass('cancel'), this.cancelComment);
@@ -195,13 +223,18 @@ CommentBox.prototype.urlify = function(str) {
 /**
  * @param {Event}
  */
-CommentBox.prototype.postComment = function(e) {
+CommentBox.prototype.submitPostComment = function(e) {
+    e.preventDefault();
+    this.postComment();
+};
+
+
+CommentBox.prototype.postComment = function() {
     var self = this,
         comment = {
             body: this.elem.body.value
         };
 
-    e.preventDefault();
     self.clearErrors();
 
     var validEmailCommentSubmission = function () {
@@ -313,6 +346,10 @@ CommentBox.prototype.fail = function(xhr) {
     }
 };
 
+CommentBox.prototype.onboardingPreviewSuccess = function(comment, resp) {
+    this.getElem('onboarding-preview-body').innerHTML = resp.commentBody;
+};
+
 /**
  * @param {Object} comment
  * @param {Object} resp
@@ -379,13 +416,12 @@ CommentBox.prototype.verificationEmailFail = function() {
 /**
  * @param {Event=} e (optional)
  */
-CommentBox.prototype.previewComment = function(e) {
+CommentBox.prototype.previewComment = function(callback) {
     var self = this,
         comment = {
             body: this.getElem('body').value
         };
 
-    e.preventDefault();
     self.clearErrors();
 
     if (comment.body === '') {
@@ -401,7 +437,7 @@ CommentBox.prototype.previewComment = function(e) {
     if (self.errors.length === 0) {
         DiscussionApi
             .previewComment(comment)
-            .then(self.previewCommentSuccess.bind(self, comment), self.fail.bind(self));
+            .then(callback.bind(self, comment), self.fail.bind(self));
     }
 };
 
