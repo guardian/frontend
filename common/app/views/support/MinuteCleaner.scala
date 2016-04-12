@@ -67,10 +67,11 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
         // Inline (fullscreen) image mark-up
         // Move the picture element out of thumbnail anchor and responsive image
         block.getElementsByClass("element--inline").headOption.map { figure =>
-          figure.getElementsByTag("picture").headOption.map(picture => {
-            figure.insertChildren(0, Seq(picture))
-            picture.getElementsByClass("gu-image").headOption.map(image => image.addClass("js-is-fixed-height"))
-          })
+          figure.getElementsByClass("u-responsive-ratio").headOption.map { outer => {
+            figure.insertChildren(0, Seq(outer))
+            outer.getElementsByClass("gu-image").headOption.map(image => image.addClass("js-is-fixed-height"))
+            outer.addClass("element--inline__image-wrapper")
+          }}
           figure.getElementsByClass("article__img-container").headOption.map(container => container.remove())
         }
 

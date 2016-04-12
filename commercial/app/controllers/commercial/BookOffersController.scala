@@ -4,7 +4,7 @@ import common.{ExecutionContexts, Logging}
 import model.commercial.books.{BestsellersAgent, Book, BookFinder, CacheNotConfiguredException}
 import model.commercial.{FeedMissingConfigurationException, FeedSwitchOffException}
 import model.{Cached, NoCache}
-import performance.MemcachedAction
+
 import play.api.mvc._
 
 import scala.concurrent.Future
@@ -17,7 +17,7 @@ object BookOffersController
   with implicits.Collections
   with implicits.Requests {
 
-  def renderBook = MemcachedAction { implicit request =>
+  def renderBook = Action.async { implicit request =>
     specificId map { isbn =>
 
       BookFinder.findByIsbn(isbn) map {
@@ -50,7 +50,7 @@ object BookOffersController
     }
   }
 
-  def renderBooks = MemcachedAction { implicit request =>
+  def renderBooks = Action.async { implicit request =>
 
     def result(books: Seq[Book]): Result = books.distinctBy(_.isbn).take(5) match {
       case Nil =>
@@ -63,7 +63,11 @@ object BookOffersController
             case Some("prominent") =>
               jsonFormat.result(views.html.books.booksProminent(someBooks, omnitureId, clickMacro))
             case _ =>
-              jsonFormat.result(views.html.books.booksStandard(someBooks, omnitureId, clickMacro))
+              if (conf.switches.Switches.v2BooksTemplate.isSwitchedOn) {
+                jsonFormat.result(views.html.books.booksStandardV2(someBooks, omnitureId, clickMacro))
+              } else {
+                jsonFormat.result(views.html.books.booksStandard(someBooks, omnitureId, clickMacro))
+              }
           }
         }
     }

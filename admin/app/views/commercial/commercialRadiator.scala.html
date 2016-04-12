@@ -1,4 +1,4 @@
-@(env: String, confidenceGraph: tools.AwsLineChart)
+@(env: String, confidenceGraph: tools.AwsLineChart)(implicit request: RequestHeader)
 
 @admin_main("Commercial Radiator", env, isAuthed = true, hasCharts = true) {
     <h3>Commercial Radiator</h3>

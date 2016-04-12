@@ -7,17 +7,6 @@ module.exports = function (grunt, options) {
             sourceMap: options.isDev,
             precision: 5
         },
-        compileStyleguide: {
-            files: [{
-                expand: true,
-                cwd: 'docs/styleguide/assets/scss/',
-                src: ['*.scss', '!_*'],
-                dest: 'docs/styleguide/assets/css/',
-                rename: function (dest, src) {
-                    return dest + src.replace('scss', 'css');
-                }
-            }]
-        },
         'old-ie': {
             files: [{
                 expand: true,

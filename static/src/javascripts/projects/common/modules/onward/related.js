@@ -66,6 +66,7 @@ define([
                 showCount: false
             }).init();
         } else if (fetchRelated) {
+
             container = document.body.querySelector('.js-related');
 
             if (container) {
@@ -75,18 +76,30 @@ define([
 
                 container.setAttribute('data-component', componentName);
 
-                relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json';
+                if (ab.isInVariant('PeopleWhoReadThisAlsoReadVariants', 'people-who-read-this-also-read-thirty-minutes')) {
+                    relatedUrl = popularInTag || '/people-who-read/thirtyMinutes/' + config.page.pageId + '.json';
 
-                if (opts.excludeTags && opts.excludeTags.length) {
-                    relatedUrl += '?' + map(opts.excludeTags, function (tag) {
-                        return 'exclude-tag=' + tag;
-                    }).join('&');
+                } else if (ab.isInVariant('PeopleWhoReadThisAlsoReadVariants', 'people-who-read-this-also-read-three-hours')) {
+                    relatedUrl = popularInTag || '/people-who-read/threeHours/' + config.page.pageId + '.json';
+
+                } else if (ab.isInVariant('PeopleWhoReadThisAlsoReadVariants', 'people-who-read-this-also-read-twenty-four-hours')) {
+                    relatedUrl = popularInTag || '/people-who-read/twentyFourHours/' + config.page.pageId + '.json';
+
+                } else {
+                    relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json';
+
+                    if (opts.excludeTags && opts.excludeTags.length) {
+                        relatedUrl += '?' + map(opts.excludeTags, function (tag) {
+                                return 'exclude-tag=' + tag;
+                            }).join('&');
+                    }
                 }
 
                 lazyload({
                     url: relatedUrl,
                     container: container,
                     success: function () {
+
                         var relatedContainer = container.querySelector('.related-content');
 
                         new Expandable({dom: relatedContainer, expanded: false, showCount: false}).init();

@@ -2,42 +2,45 @@ define([
     'common/utils/$',
     'bean',
     'bonzo',
-    'common/modules/identity/api',
     'fastdom',
     'common/modules/email/email',
-    'common/utils/detect',
-    'lodash/collections/contains',
-    'lodash/arrays/intersection',
     'common/utils/config',
-    'lodash/collections/every',
-    'lodash/collections/find',
     'text!common/views/email/iframe.html',
     'common/utils/template',
     'common/modules/article/space-filler',
-    'common/modules/analytics/omniture'
+    'common/modules/analytics/omniture',
+    'common/utils/robust',
+    'common/modules/email/run-checks',
+    'common/utils/page',
+    'common/utils/storage',
+    'lodash/collections/find'
 ], function (
     $,
     bean,
     bonzo,
-    Id,
     fastdom,
     email,
-    detect,
-    contains,
-    intersection,
     config,
-    every,
-    find,
     iframeTemplate,
     template,
     spaceFiller,
-    omniture
+    omniture,
+    robust,
+    emailRunChecks,
+    page,
+    storage,
+    find
 ) {
 
-    var listConfigs = {
+    var insertBottomOfArticle = function () {
+            return function ($iframeEl) {
+                $iframeEl.appendTo('.js-article__body');
+            };
+        },
+        listConfigs = {
             theCampaignMinute: {
                 listId: '3599',
-                canRun: 'theCampaignMinute',
+                listName: 'theCampaignMinute',
                 campaignCode: 'the_minute_footer',
                 headline: 'Enjoying The Minute?',
                 description: 'Sign up and we\'ll send you the Guardian US Campaign Minute, once per day.',
@@ -52,7 +55,7 @@ define([
             },
             theFilmToday: {
                 listId: '1950',
-                canRun: 'theFilmToday',
+                listName: 'theFilmToday',
                 campaignCode: 'film_article_signup',
                 headline: 'Want the best of Film, direct to your inbox?',
                 description: 'Sign up to Film Today and we\'ll deliver to you the latest movie news, blogs, big name interviews, festival coverage, reviews and more.',
@@ -62,19 +65,18 @@ define([
             },
             theFiver: {
                 listId: '218',
-                canRun: 'theFiver',
+                listName: 'theFiver',
                 campaignCode: 'fiver_article_signup',
                 headline: 'Want a football roundup direct to your inbox?',
                 description: 'Sign up to the Fiver, our daily email on the world of football',
                 successHeadline: 'Thank you for signing up',
                 successDescription: 'You\'ll receive the Fiver daily, around 5pm.',
-                modClass: 'end-article'
+                modClass: 'end-article',
+                insertMethod: insertBottomOfArticle
             },
             theGuardianToday: {
                 listId: (function () {
                     switch (config.page.edition) {
-                        case 'UK':
-                        case 'INT':
                         default:
                             return '37';
 
@@ -85,28 +87,16 @@ define([
                             return '1506';
                     }
                 }()),
-                canRun: 'theGuardianToday',
+                listName: 'theGuardianToday',
                 campaignCode: 'guardian_today_article_bottom',
                 headline: 'Want stories like this in your inbox?',
                 description: 'Sign up to The Guardian Today daily email and get the biggest headlines each morning.',
                 successHeadline: 'Thank you for signing up to the Guardian Today',
                 successDescription: 'We will send you our picks of the most important headlines tomorrow morning.',
                 modClass: 'end-article',
-                insertMethod: function () {
-                    if (config.page.edition === 'AU') {
-                        // In AU Edition, we want to place the article at the bottom of the body
-                        // and not use space-finder
-                        return function ($iframeEl) {
-                            $iframeEl.appendTo('.js-article__body');
-                        };
-                    } else {
-                        return false;
-                    }
-                }
+                insertMethod: insertBottomOfArticle
             }
         },
-        emailInserted = false,
-        keywords = config.page.keywords ? config.page.keywords.split(',') : '',
         getSpacefinderRules = function () {
             return {
                 bodySelector: '.js-article__body',
@@ -123,11 +113,6 @@ define([
                 }
             };
         },
-        listCanRun = function (listConfig) {
-            if (listConfig.canRun && canRunList[listConfig.canRun]()) {
-                return listConfig;
-            }
-        },
         addListToPage = function (listConfig) {
             if (listConfig) {
                 var iframe = bonzo.create(template(iframeTemplate, listConfig))[0],
@@ -139,53 +124,35 @@ define([
                 if (listConfig.insertMethod && listConfig.insertMethod()) {
                     fastdom.write(function () {
                         listConfig.insertMethod()($iframeEl);
+
+                        omniture.trackLinkImmediate('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
+                        emailRunChecks.setEmailInserted();
+                        emailRunChecks.setEmailShown(listConfig.listName);
                     });
                 } else {
                     spaceFiller.fillSpace(getSpacefinderRules(), function (paras) {
                         $iframeEl.insertBefore(paras[0]);
                         omniture.trackLinkImmediate('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
-                        emailInserted = true;
+                        emailRunChecks.setEmailInserted();
+                        emailRunChecks.setEmailShown(listConfig.listName);
                     });
                 }
 
-            }
-        },
-        canRunHelpers = {
-            keywordExists: function (keyword) {
-                // Compare page keywords with passed in array
-                return !!intersection(keywords, keyword).length;
-            }
-        },
-        canRunList = {
-            theCampaignMinute: function () {
-                return config.page.isMinuteArticle && canRunHelpers.keywordExists(['US elections 2016']);
-            },
-            theFilmToday: function () {
-                return config.page.section === 'film';
-            },
-            theFiver: function () {
-                return canRunHelpers.keywordExists(['Football']);
-            },
-            theGuardianToday: function () {
-                var host = window.location.host,
-                    escapedHost = host.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'), // Escape anything that will mess up the regex
-                    urlRegex = new RegExp('^https?:\/\/' + escapedHost + '\/(uk\/|us\/|au\/|international\/)?([a-z-])+$', 'gi'),
-                    browser = detect.getUserAgent.browser,
-                    version = detect.getUserAgent.version,
-                    pageIsBlacklisted = canRunHelpers.keywordExists(['US elections 2016', 'Football']) || config.page.section === 'film';
-
-                return !pageIsBlacklisted &&
-                        urlRegex.test(document.referrer) &&
-                        !Id.isUserLoggedIn() &&
-                        !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
+                storage.session.set('email-sign-up-seen', 'true');
             }
         };
 
     return {
         init: function () {
-            if (!emailInserted) {
-                // Get the first list that is allowed on this page
-                addListToPage(find(listConfigs, listCanRun));
+            if (emailRunChecks.allEmailCanRun()) {
+                // First we need to check the user's email subscriptions
+                // so we don't insert the sign-up if they've already subscribed
+                emailRunChecks.getUserEmailSubscriptions().then(function () {
+                    // Get the first list that is allowed on this page
+                    addListToPage(find(listConfigs, emailRunChecks.listCanRun));
+                }).catch(function (error) {
+                    robust.log('c-email', error);
+                });
             }
         }
     };

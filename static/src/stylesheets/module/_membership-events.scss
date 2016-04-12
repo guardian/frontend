@@ -6,8 +6,8 @@
  * e.g. https://membership.theguardian.com/event/the-observer-election-countdown-16253236869/card
  */
 .element-membership--not-upgraded {
-    border-top: 1px dotted colour(neutral-3);
-    border-bottom: 1px dotted colour(neutral-3);
+    border-top: 1px dotted $neutral-3;
+    border-bottom: 1px dotted $neutral-3;
     margin-bottom: $gs-baseline / 1.5;
 
     @include mq(mobileLandscape) {
@@ -21,9 +21,9 @@
     }
 
     span {
-        display: block;
         @include fs-textSans(1);
-        color: colour(neutral-2);
+        display: block;
+        color: $neutral-2;
         padding: $gs-baseline/4 0;
     }
 
@@ -32,7 +32,7 @@
         font-weight: 500;
         display: block;
         padding: 0;
-        color: colour(neutral-1);
+        color: $neutral-1;
         border: 0;
         padding-bottom: $gs-baseline * 1.5;
 

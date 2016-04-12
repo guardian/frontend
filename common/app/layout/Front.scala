@@ -118,7 +118,7 @@ object ContainerCommercialOptions {
 
       ContainerCommercialOptions(
         isSponsored = dfpTag.paidForType == Sponsored,
-        isAdvertisementFeature = dfpTag.paidForType == AdvertisementFeature,
+        isPaidContainer = dfpTag.paidForType == AdvertisementFeature,
         isFoundationSupported = dfpTag.paidForType == FoundationFunded,
         sponsor,
         sponsorshipTag = Some(SponsorshipTag(dfpTag.tagType, capiTagId)),
@@ -155,7 +155,7 @@ object ContainerCommercialOptions {
 
         ContainerCommercialOptions(
           isSponsored = dfpTag.paidForType == Sponsored,
-          isAdvertisementFeature = dfpTag.paidForType == AdvertisementFeature,
+          isPaidContainer = dfpTag.paidForType == AdvertisementFeature,
           isFoundationSupported = dfpTag.paidForType == FoundationFunded,
           sponsor = dfpTag.lineItems.headOption flatMap (_.sponsor),
           sponsorshipTag,
@@ -172,7 +172,7 @@ object ContainerCommercialOptions {
 
   val empty = ContainerCommercialOptions(
     isSponsored = false,
-    isAdvertisementFeature = false,
+    isPaidContainer = false,
     isFoundationSupported = false,
     sponsor = None,
     sponsorshipTag = None,
@@ -185,14 +185,14 @@ object ContainerCommercialOptions {
 
 case class ContainerCommercialOptions(
   isSponsored: Boolean,
-  isAdvertisementFeature: Boolean,
+  isPaidContainer: Boolean,
   isFoundationSupported: Boolean,
   sponsor: Option[String],
   sponsorshipTag: Option[SponsorshipTag],
   sponsorshipType: Option[String],
   omitMPU: Boolean
 ) {
-  val isPaidFor = isSponsored || isAdvertisementFeature || isFoundationSupported
+  val isPaidFor = isSponsored || isPaidContainer || isFoundationSupported
 }
 
 object FaciaContainer {
@@ -256,7 +256,12 @@ object FaciaContainer {
       case MostPopular => ContainerCommercialOptions.mostPopular(omitMPU)
       case Commercial(SingleCampaign(_)) => ContainerCommercialOptions.fromCollection(collectionEssentials)
       case Commercial(MultiCampaign(_)) => ContainerCommercialOptions.empty
-      case _ => ContainerCommercialOptions.fromConfig(config.config)
+      case _ =>
+        if (Switches.cardsDecidePaidContainerBranding.isSwitchedOn) {
+          ContainerCommercialOptions.empty
+        } else {
+          ContainerCommercialOptions.fromConfig(config.config)
+        }
     },
     config.config.description.map(DescriptionMetaHeader),
     None,

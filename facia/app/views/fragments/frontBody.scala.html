@@ -1,3 +1,4 @@
+@import common.commercial.ContainerModel
 @(faciaPage: model.PressedPage)(implicit request: RequestHeader)
 @import common.Edition
 @import views.support.RenderClasses
@@ -27,14 +28,15 @@
 
                 @defining(layout.Front.fromPressedPage(faciaPage, Edition(request)).containers) { collections =>
 
-                    @fragments.basher(faciaPage.id)
-
                     @collections.map { containerDefinition =>
                         @fragments.containers.facia_cards.container(
                             containerDefinition,
                             faciaPage.frontProperties,
+                            Some(faciaPage.id),
                             faciaPage.isAdvertisementFeature,
-                            faciaPage.frontPriority
+                            faciaPage.collections
+                                .find(_.id == containerDefinition.dataId)
+                                .map(ContainerModel.fromPressedCollection)
                         )
                     }
 

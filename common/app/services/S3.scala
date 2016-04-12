@@ -11,7 +11,6 @@ import com.amazonaws.services.s3.model.CannedAccessControlList.{Private, PublicR
 import com.amazonaws.services.s3.model._
 import com.amazonaws.util.StringInputStream
 import common.Logging
-import common.S3Metrics.S3ClientExceptionsMetric
 import conf.Configuration
 import org.joda.time.DateTime
 import play.Play
@@ -42,7 +41,6 @@ trait S3 extends Logging {
       }
       catch {
         case e: Exception =>
-          S3ClientExceptionsMetric.increment()
           throw e
       }
       finally {
@@ -54,7 +52,6 @@ trait S3 extends Logging {
         None
       }
       case e: Exception => {
-        S3ClientExceptionsMetric.increment()
         throw e
       }
     }
@@ -112,7 +109,6 @@ trait S3 extends Logging {
       client.foreach(_.putObject(request))
     } catch {
       case e: Exception =>
-        S3ClientExceptionsMetric.increment()
         throw e
     }
   }
@@ -129,7 +125,6 @@ trait S3 extends Logging {
       client.foreach(_.putObject(request))
     } catch {
       case e: Exception =>
-        S3ClientExceptionsMetric.increment()
         throw e
     }
   }

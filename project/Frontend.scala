@@ -41,7 +41,6 @@ object Frontend extends Build with Prototypes {
       scalaCheck,
       scalajTime,
       scalaz,
-      shadeMemcached,
       snappyJava,
       ws,
       faciaFapiScalaClient,
@@ -89,8 +88,6 @@ object Frontend extends Build with Prototypes {
     )
   )
 
-  val image = application("image")
-
   val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       scalaUri
@@ -125,7 +122,11 @@ object Frontend extends Build with Prototypes {
     RoutesKeys.routesImport += "org.joda.time.LocalDate"
   )
 
-  val faciaPress = application("facia-press").dependsOn(commonWithTests)
+  val faciaPress = application("facia-press").dependsOn(commonWithTests).settings(
+    libraryDependencies ++= Seq(
+      awsKinesis
+    )
+  )
 
   val identity = application("identity").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
@@ -146,6 +147,7 @@ object Frontend extends Build with Prototypes {
   )
 
   val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common)
+      .settings(libraryDependencies ++= List(shadeMemcached))
 
   val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
 
@@ -207,7 +209,6 @@ object Frontend extends Build with Prototypes {
     article,
     applications,
     sport,
-    image,
     discussion,
     router,
     diagnostics,

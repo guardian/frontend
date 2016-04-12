@@ -1,0 +1,15 @@
+@(offers: Seq[model.commercial.travel.TravelOffer],
+  omnitureId: Option[String],
+  clickMacro: Option[String])(implicit request: RequestHeader)
+
+@import views.html.commercial.containerWrapper
+
+@containerWrapper(Nil, omnitureId.map(id => s"commercial-low | travel | ${id}")){
+
+}{
+
+    <div class="adverts__row">
+        @offers.map { offer => @travelCard(offer, clickMacro) }
+    </div>
+
+}

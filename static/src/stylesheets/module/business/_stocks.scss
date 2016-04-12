@@ -24,7 +24,7 @@ $stocks-icon-height: 10px;
     width: 50%;
 
     @include mq(leftCol) {
-        border-top: 1px dotted guss-colour(neutral-3, $pasteup-palette);
+        border-top: 1px dotted $neutral-3;
     }
 
     @include mq(wide) {
@@ -44,7 +44,7 @@ $stocks-icon-height: 10px;
 @mixin stock($change, $colour, $icon) {
     .stocks__stock-value--#{$change} {
         .stocks__change {
-            color: colour($colour);
+            color: $colour;
         }
 
         .stocks__icon--#{$icon} {
@@ -62,7 +62,7 @@ $stocks-icon-height: 10px;
     padding-left: 6px;
     padding-right: $gs-gutter;
     min-width: 60%;
-    border-right: 1px dotted guss-colour(neutral-3, $pasteup-palette);
+    border-right: 1px dotted $neutral-3;
 
     @include mq(mobileLandscape) {
         min-width: 35%;
@@ -86,7 +86,7 @@ $stocks-icon-height: 10px;
             padding-left: 6px;
             padding-right: $gs-gutter;
             min-width: 150px;
-            border-right: 1px dotted guss-colour(neutral-3, $pasteup-palette);
+            border-right: 1px dotted $neutral-3;
         }
     }
 
@@ -109,7 +109,7 @@ $stocks-icon-height: 10px;
 
 .stocks__closed,
 .stocks__closed--inline {
-    color: guss-colour(neutral-2, $pasteup-palette);
+    color: $neutral-2;
 }
 
 .stocks__closed {

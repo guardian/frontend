@@ -1,14 +1,9 @@
-define(['helpers/injector'], function (Injector) {
+define(['helpers/injector', 'Promise'], function (Injector, Promise) {
     var injector = new Injector();
 
     describe('Commercial features', function () {
-        var CommercialFeatures;
-        var config;
-        var features;
-        var location;
-        var userPrefs;
-        var detect;
-        var userFeatures;
+        var CommercialFeatures, config, features, location,
+            userPrefs, detect, userFeatures, isSignedIn, breakpoint;
 
         beforeEach(function (done) {
             injector.require([
@@ -17,7 +12,8 @@ define(['helpers/injector'], function (Injector) {
                 'common/utils/location',
                 'common/modules/user-prefs',
                 'common/utils/detect',
-                'common/modules/commercial/user-features'
+                'common/modules/commercial/user-features',
+                'common/modules/identity/api'
             ], function () {
                 CommercialFeatures = arguments[0].constructor;
                 config = arguments[1];
@@ -25,6 +21,7 @@ define(['helpers/injector'], function (Injector) {
                 userPrefs = arguments[3];
                 detect = arguments[4];
                 userFeatures = arguments[5];
+                var identityApi = arguments[6];
 
                 // Set up a happy path by default
                 config.page = {
@@ -41,14 +38,25 @@ define(['helpers/injector'], function (Injector) {
                     outbrain : true,
                     sponsored : true,
                     standardAdverts : true,
-                    videoAdverts : true
+                    videoAdverts : true,
+                    viewability : true,
+                    discussion : true
                 };
 
                 location.getHash = function () {return '';};
+
                 userPrefs.removeSwitch('adverts');
-                detect.getBreakpoint = function () { return 'desktop'; };
+
+                breakpoint = 'desktop';
+                detect.getBreakpoint = function () { return breakpoint; };
+
                 detect.adblockInUse = Promise.resolve(false);
+
                 userFeatures.isPayingMember = function () {return false;};
+
+                identityApi.isUserLoggedIn = function () {
+                    return isSignedIn;
+                };
 
                 done();
             });
@@ -210,10 +218,8 @@ define(['helpers/injector'], function (Injector) {
 
         describe('Third party tags', function () {
             it('Runs by default', function () {
-                it('Runs by default', function () {
-                    features = new CommercialFeatures;
-                    expect(features.thirdPartyTags).toBe(true);
-                });
+                features = new CommercialFeatures;
+                expect(features.thirdPartyTags).toBe(true);
             });
 
             it('Does not run on identity pages', function () {
@@ -262,6 +268,54 @@ define(['helpers/injector'], function (Injector) {
                 expect(features.outbrain).toBe(false);
             });
 
+        });
+
+        describe('Comment adverts', function () {
+            beforeEach(function () {
+                config.page.commentable = true;
+                isSignedIn = true;
+            });
+
+            it('Displays when page has comments and user is signed in', function () {
+                features = new CommercialFeatures;
+                expect(features.commentAdverts).toBe(true);
+            });
+
+            it('Does not display on minute articles', function () {
+                config.page.isMinuteArticle = true;
+                features = new CommercialFeatures;
+                expect(features.commentAdverts).toBe(false);
+            });
+
+            it('Does not appear when user signed out', function () {
+                isSignedIn = false;
+                features = new CommercialFeatures;
+                expect(features.commentAdverts).toBe(false);
+            });
+
+            it('Short circuits when no comments to add adverts to', function () {
+                config.page.commentable = false;
+                features = new CommercialFeatures;
+                expect(features.commentAdverts).toBe(false);
+            });
+
+            describe('If live blog', function () {
+                beforeEach(function () {
+                    config.page.isLiveBlog = true;
+                });
+
+                it('Appears if page is wide', function () {
+                    breakpoint = 'wide';
+                    features = new CommercialFeatures;
+                    expect(features.commentAdverts).toBe(true);
+                });
+
+                it('Does not appear if page is not wide', function () {
+                    breakpoint = 'desktop';
+                    features = new CommercialFeatures;
+                    expect(features.commentAdverts).toBe(false);
+                });
+            });
         });
 
         describe('Membership messages', function () {

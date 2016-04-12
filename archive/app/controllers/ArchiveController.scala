@@ -3,7 +3,7 @@ package controllers
 import campaigns.ShortCampaignCodes
 import common._
 import play.api.mvc._
-import services.{Archive, DynamoDB, Googlebot404Count, Destination}
+import services.{Archive, DynamoDB, Destination, GoogleBotMetric}
 import java.net.URLDecoder
 import model.Cached
 import scala.concurrent.Future
@@ -41,6 +41,9 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
         case DatedSpecialIndexPage(section, rest, _) => Cached(300)(Redirect(s"${LinkTo(section)}$rest/all", 301))
         case SectionSpecialIndex(section, _)  => Cached(300)(Redirect(s"${LinkTo(section)}/all", 301))
         case NewspaperPage(paper, date, book)       =>  Cached(300)(Redirect(s"${LinkTo(paper)}/$book/$date/all", 301))
+
+          // edge cache test
+        case "automated-test/strict-transport-security" => Cached(300)(Ok("<h1>test</h1>").withHeaders("Strict-Transport-Security" -> "max-age=0", "X-Test-Response" -> "true"))
 
         case _ =>
           log404(request)
@@ -141,7 +144,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
     request.headers.get("User-Agent").getOrElse("no user agent") match {
       case GoogleBot(_) =>
         log.warn(s"404,${RequestLog(request)}")
-        Googlebot404Count.increment()
+        GoogleBotMetric.Googlebot404Count.increment()
       case _ =>
         log.info(s"404,${RequestLog(request)}")
     }

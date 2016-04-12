@@ -1,6 +1,7 @@
 package common
 
 import java.io.StringWriter
+import java.util.regex.Pattern
 
 import com.gu.facia.api.models.LinkSnap
 import com.sun.syndication.feed.module.DCModuleImpl
@@ -19,8 +20,9 @@ import scala.collection.JavaConverters._
 
 object TrailsToRss extends implicits.Collections {
 
+  val pattern = Pattern.compile("[^\\x09\\x0A\\x0D\\x20-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFFF]")
   private def stripInvalidXMLCharacters(s: String) = {
-    s.replaceAll("[^\\x09\\x0A\\x0D\\x20-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFFF]", "")
+    pattern.matcher(s).replaceAll("")
   }
 
   val image: SyndImageImpl = {

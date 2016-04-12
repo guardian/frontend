@@ -5,8 +5,8 @@ $football-crest--large: 60px;
 .match-summary {
     position: relative;
     display: block;
-    border-bottom: 1px dotted colour(neutral-2);
-    color: colour(neutral-1);
+    border-bottom: 1px dotted $neutral-2;
+    color: $neutral-1;
 
     .content__head & {
         padding-top: $gs-baseline/2;
@@ -16,7 +16,7 @@ $football-crest--large: 60px;
 .match-summary__teams {
     padding-top: $gs-baseline;
     position: relative;
-    border-top: 1px dotted colour(neutral-5);
+    border-top: 1px dotted $neutral-5;
     font-size: 0;
 
     @include mq(tablet) {
@@ -29,9 +29,9 @@ $football-crest--large: 60px;
 }
 
 .team__info {
+    @include fs-headline(5);
     position: relative;
     margin-left: $gs-gutter/2 + $football-crest--small;
-    @include fs-headline(5);
 
     @include mq(mobileLandscape) {
         @include fs-headline(7, true);
@@ -68,10 +68,10 @@ $football-crest--large: 60px;
 }
 
 .team__name {
+    @include ellipsis();
     box-sizing: border-box;
     padding-right: $gs-gutter*2;
     display: block;
-    @include ellipsis();
 }
 
 .team__score {
@@ -88,7 +88,7 @@ $football-crest--large: 60px;
 
 .team__scorers {
     @include fs-textSans(3);
-    color: colour(neutral-2);
+    color: $neutral-2;
 }
 
 .match-summary--report .team__scorers dd {
@@ -109,21 +109,21 @@ $football-crest--large: 60px;
 }
 
 .status__time {
+    @include fs-textSans(2);
     box-sizing: border-box;
     display: inline-block;
     height: $football-crest--small;
     width: $football-crest--small;
     border-radius: 24px;
-    border: 2px dotted colour(neutral-2);
-    @include fs-textSans(2);
+    border: 2px dotted $neutral-2;
     line-height: $football-crest--small - 3; // account for the border
     text-align: center;
 }
 
 .match-summary__status--live {
     .status__time {
-        border-color: colour(news-accent);
-        color: colour(news-accent);
+        border-color: $news-accent;
+        color: $news-accent;
         font-weight: bold;
     }
 }
@@ -299,8 +299,8 @@ $football-crest--large: 60px;
 }
 
 .match-summary--report {
-    border-bottom: 1px solid colour(neutral-6);
-    border-top: 1px solid colour(neutral-6);
+    border-bottom: 1px solid $neutral-6;
+    border-top: 1px solid $neutral-6;
 
     .match-summary__status {
         display: none;

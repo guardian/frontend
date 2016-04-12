@@ -12,7 +12,7 @@ object InteractiveHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
     document.getElementById("interactive-content") != null
   }
 
-  override def clean(document: Document): Document = {
+  override def clean(document: Document) = {
     universalClean(document)
     removeScripts(document)
     createSimplePageTracking(document)
@@ -66,6 +66,8 @@ object InteractiveHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
 
   override def removeScripts(document: Document): Document = {
     val scripts = document.getElementsByTag("script")
+    val needsJquery = scripts.exists(_.html().toLowerCase.contains("jquery"))
+
     val (interactiveScripts, nonInteractiveScripts) = scripts.partition { e =>
       val parentIds = e.parents().map(p => p.id()).toList
       parentIds.contains("interactive-content")
@@ -77,6 +79,22 @@ object InteractiveHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
         addSwfObjectScript(document)
       }
     }
+
+    if (needsJquery) {
+      addJqueryScript(document)
+    }
+
+    document
+  }
+
+  private def addJqueryScript(document: Document): Document = {
+    val jqScript = """
+    <script src="//pasteup.guim.co.uk/js/lib/jquery/1.8.1/jquery.min.js"></script>
+    <script>
+    var jQ = jQuery.noConflict();
+    jQ.ajaxSetup({ cache: true });
+  </script>"""
+    document.body().prepend(jqScript)
     document
   }
 

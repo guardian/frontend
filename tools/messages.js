@@ -58,5 +58,11 @@ switch (process.argv[2]) {
             heading: 'Dependencies have changed'
         }, 'info');
         break;
+
+    case 'pasteup':
+        notify('You will need to release a new version of pasteup to NPM once you’ve merged this branch to master.\n\nTo begin a new release, run `make pasteup`.', {
+            heading: 'Pasteup files have changed'
+        }, 'info');
+        break;
 }
 

@@ -1,4 +1,4 @@
-@(env: String, reports: Map[String, String])
+@(env: String, reports: Map[String, String])(implicit request: RequestHeader)
 
 @admin_main("Dashboard", env, isAuthed = true, hasCharts = true) {
 
@@ -91,7 +91,7 @@
                 }
 
                 function titleFromOmnitureResponse(report) {
-                    return "Top " + report[0].report.elements[0].name + "'s"
+                    return "Top " + report[0].report.elements[0].name + "s"
                 }
 
                 return template;

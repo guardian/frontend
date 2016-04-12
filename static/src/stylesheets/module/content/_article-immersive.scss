@@ -11,7 +11,7 @@
         padding-top: $gs-baseline / 2;
     }
 
-/*  Header
+    /* Header
     ========================================================================== */
     .content__head {
         position: relative;
@@ -85,12 +85,12 @@
         }
 
         a {
-            color: colour(feature-mute);
-            border-bottom: 1px solid rgba(colour(feature-mute), .4);
+            color: $feature-mute;
+            border-bottom: 1px solid rgba($feature-mute, .4);
 
             &:hover {
                 text-decoration: none;
-                border-bottom-color: rgba(colour(feature-mute), .8);
+                border-bottom-color: rgba($feature-mute, .8);
             }
         }
     }
@@ -101,8 +101,8 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: colour(neutral-5);
-        color: colour(neutral-1);
+        background-color: $neutral-5;
+        color: $neutral-1;
         display: none;
     }
 
@@ -156,12 +156,12 @@
         }
     }
 
-/*  Meta
+    /* Meta
     ========================================================================== */
     .content__meta-container--immersive {
         position: relative;
         width: auto;
-        border-bottom: colour(neutral-7) solid 1px;
+        border-bottom: $neutral-7 solid 1px;
         border-top: 0;
 
         @include mq(leftCol) {
@@ -170,11 +170,11 @@
         }
 
         .content__dateline {
+            @include fs-textSans(3);
             min-height: 0;
             border: 0;
             padding: 0;
             padding-right: $gs-gutter / 2 - 4px;
-            @include fs-textSans(3);
 
             @include mq(tablet, leftCol) {
                 margin-bottom: $gs-gutter;
@@ -190,7 +190,7 @@
         }
 
         .content__dateline-wpd {
-            color: colour(neutral-2);
+            color: $neutral-2;
             cursor: text;
 
             &:hover,
@@ -217,7 +217,7 @@
                 top: 2px;
                 height: 1em;
                 width: 1px;
-                background-color: colour(neutral-6);
+                background-color: $neutral-6;
             }
         }
 
@@ -230,7 +230,7 @@
 
             @include mq($until: tablet) {
                 display: block;
-                border-top: 1px dotted colour(neutral-5);
+                border-top: 1px dotted $neutral-5;
                 margin-top: $gs-baseline;
                 padding-top: $gs-baseline / 4;
                 padding-bottom: $gs-baseline;
@@ -244,14 +244,14 @@
                     top: 2px;
                     height: 1em;
                     width: 1px;
-                    background-color: colour(neutral-6);
+                    background-color: $neutral-6;
                 }
             }
         }
 
         .meta__number {
             @include fs-textSans(3);
-            color: colour(neutral-2);
+            color: $neutral-2;
             padding-left: $gs-gutter / 2;
 
             .inline-icon {
@@ -284,7 +284,7 @@
             }
 
             .inline-icon {
-                fill: colour(neutral-2);
+                fill: $neutral-2;
                 margin-top: 1px;
                 margin-right: 4px;
 
@@ -309,7 +309,7 @@
         }
     }
 
-/*  Body
+    /* Body
     ========================================================================== */
     .drop-cap {
         height: 7.25em;
@@ -328,7 +328,7 @@
         border: 0;
         margin-top: $gs-baseline * 4;
         margin-bottom: $gs-baseline / 4;
-        background-color: colour(neutral-7);
+        background-color: $neutral-7;
     }
 
     .section-image {
@@ -375,10 +375,10 @@
     }
 
     .in-body-link--immersive {
-        color: colour(feature-default);
+        color: $feature-default;
 
         &:hover {
-            border-bottom-color: rgba(colour(feature-default), .4);
+            border-bottom-color: rgba($feature-default, .4);
         }
     }
 
@@ -391,8 +391,8 @@
         width: auto;
         margin-left: 0;
         margin-bottom: $gs-baseline / 2;
-        border-top: 1px solid colour(neutral-7);
-        border-bottom: 1px solid colour(neutral-7);
+        border-top: 1px solid $neutral-7;
+        border-bottom: 1px solid $neutral-7;
         padding: 0;
         padding-top: .2em;
         padding-bottom: $gs-baseline * 3;
@@ -405,7 +405,7 @@
         }
 
         .inline-quote svg {
-            fill: colour(neutral-3);
+            fill: $neutral-3;
             width: 2.5em;
             height: 1.4em;
         }
@@ -419,11 +419,11 @@
         }
 
         .pullquote-paragraph {
-            color: colour(feature-default);
+            color: $feature-default;
         }
 
         .pullquote-cite {
-            color: colour(neutral-1) !important; // important to override super specific tonal classes
+            color: $neutral-1 !important; // important to override super specific tonal classes
         }
 
         .inline-quote.closing {
@@ -628,7 +628,7 @@
         z-index: 10;
 
         @include mq($until: desktop) {
-            background-color: lighten(colour(neutral-1), 15%);
+            background-color: lighten($neutral-1, 15%);
             padding-bottom: $gs-baseline / 2;
         }
 

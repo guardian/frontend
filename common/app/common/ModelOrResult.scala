@@ -1,7 +1,6 @@
 package common
 
-import com.gu.contentapi.client.model.ItemResponse
-import com.gu.contentapi.client.model.v1.{Section => ApiSection}
+import com.gu.contentapi.client.model.v1.{Section => ApiSection, ItemResponse}
 import contentapi.Paths
 import play.api.mvc.{ Result, RequestHeader, Results }
 import model._
@@ -29,9 +28,8 @@ private object ItemOrRedirect extends ItemResponses with Logging {
   }
 
   private def redirectArticle[T](item: T, response: ItemResponse, request: RequestHeader): Either[T, Result] = {
-
     canonicalPath(response) match {
-      case Some(canonicalPath) if canonicalPath != request.pathWithoutModifiers && !(request.isJson || request.isRss) =>
+      case Some(canonicalPath) if canonicalPath != request.pathWithoutModifiers && !(request.isModified) =>
         Right(Found(canonicalPath + paramString(request)))
       case _ => Left(item)
     }

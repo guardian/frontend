@@ -1,5 +1,4 @@
 /*global requirejs*/
-// jscs: disable disallowDanglingUnderscores
 var tests = [];
 for (var file in window.__karma__.files) {
     if (/.*\.spec\.js$/.test(file)) {

@@ -7,7 +7,7 @@
     padding-top: ($gs-baseline/3)*2;
     margin-bottom: $gs-baseline*2;
 
-    border-top: 1px dotted colour(neutral-5);
+    border-top: 1px dotted $neutral-5;
     &:first-child {
         padding-top: 0;
         border-top: 0;
@@ -15,24 +15,24 @@
 }
 
 .right-most-popular-item__headline {
-    color: colour(neutral-1);
-    margin-bottom: 0;
     @include fs-headline(2);
     @include text-clamp(4);
+    color: $neutral-1;
+    margin-bottom: 0;
 }
 
 .right-most-popular-item__url {
     &:hover,
     &:active,
     &:focus {
-        color: colour(neutral-1);
+        color: $neutral-1;
         text-decoration: underline;
     }
 
     &:visited,
     &:active {
         .right-most-popular-item__headline {
-            color: colour(neutral-2);
+            color: $neutral-2;
         }
     }
 }

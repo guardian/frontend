@@ -15,13 +15,13 @@ define([
     'common/utils/robust',
     'common/utils/storage',
     'common/modules/analytics/foresee-survey',
-    'common/modules/analytics/livestats',
     'common/modules/analytics/media-listener',
     'common/modules/analytics/omniture',
     'common/modules/analytics/register',
     'common/modules/analytics/scrollDepth',
     'common/modules/analytics/css-logging',
     'common/modules/analytics/simple-metrics',
+    'common/modules/analytics/headlines-test-analytics',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/commercial/donot-use-adblock',
     'common/modules/commercial/user-features',
@@ -30,7 +30,7 @@ define([
     'common/modules/identity/autosignin',
     'common/modules/identity/cookierefresh',
     'common/modules/navigation/navigation',
-    'common/modules/commercial/sticky-ad-banner',
+    'common/modules/commercial/sticky-top-banner',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/onward/history',
@@ -70,13 +70,13 @@ define([
     robust,
     storage,
     Foresee,
-    liveStats,
     mediaListener,
     omniture,
     register,
     ScrollDepth,
     logCss,
     simpleMetrics,
+    HeadlinesTestAnalytics,
     userAdTargeting,
     donotUseAdblock,
     userFeatures,
@@ -143,7 +143,8 @@ define([
                     && !config.page.isAdvertisementFeature
                     && config.page.pageId !== 'offline-page'
                     && !config.page.shouldHideAdverts
-                    && config.page.section !== 'childrens-books-site') {
+                    && config.page.section !== 'childrens-books-site'
+                    && !config.tests.abNewHeaderVariant) {
                     stickyAdBanner.initialise();
                     config.page.hasStickyAdBanner = true;
                 } else {
@@ -180,10 +181,6 @@ define([
                 donotUseAdblock.init();
             },
 
-            logLiveStats: function () {
-                liveStats.log();
-            },
-
             loadAnalytics: function () {
                 omniture.go();
 
@@ -203,6 +200,13 @@ define([
 
             cleanupCookies: function () {
                 cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at', 'gu_adfree_user']);
+            },
+
+            cleanupLocalStorage : function () {
+                var deprecatedKeys = [
+                    'gu.subscriber'
+                ];
+                forEach(deprecatedKeys, storage.remove);
             },
 
             updateHistory: function () {
@@ -358,6 +362,9 @@ define([
                         email.init(el);
                     });
                 });
+            },
+            headlinesTestAnalytics: function () {
+                HeadlinesTestAnalytics.init();
             }
         };
 
@@ -393,8 +400,8 @@ define([
                 ['c-tag-links', modules.showMoreTagsLink],
                 ['c-smart-banner', smartAppBanner.init],
                 ['c-adblock', modules.showAdblockMessage],
-                ['c-log-stats', modules.logLiveStats],
                 ['c-cookies', modules.cleanupCookies],
+                ['c-localStorage', modules.cleanupLocalStorage],
                 ['c-overlay', modules.initOpenOverlayOnClick],
                 ['c-css-logging', modules.runCssLogging],
                 ['c-public-api', modules.initPublicApi],
@@ -406,7 +413,8 @@ define([
                 ['c-save-for-later', modules.saveForLater],
                 ['c-show-membership-messages', modules.showMembershipMessages],
                 ['c-email', modules.initEmail],
-                ['c-user-features', userFeatures.refresh]
+                ['c-user-features', userFeatures.refresh],
+                ['c-headlines-test-analytics', modules.headlinesTestAnalytics]
             ]), function (fn) {
                 fn();
             });

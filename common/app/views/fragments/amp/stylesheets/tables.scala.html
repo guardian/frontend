@@ -1,3 +1,7 @@
+.score-container {
+    margin-bottom: 12px;
+}
+
 figure.element-table {
     margin: 0 0.1rem 0 1.25rem;
     float: right;
@@ -69,7 +73,6 @@ figure.element-table {
 .player-card__stat-name, .player-card__stat-value {
     font-size: 0.8125rem;
     line-height: 1.125rem;
-
 }
 
 .player-card__position {
@@ -92,4 +95,106 @@ figure.element-table {
     text-align: right;
     margin: 0;
     padding: 0.25rem 0 0.5rem;
+}
+
+.match-summary {
+    position: relative;
+    display: block;
+    border-top: 0.0625rem solid #eaeaea;
+}
+
+.match-summary__team--away {
+    text-align: right;
+}
+
+.match-summary .match-summary__status {
+    display: none;
+}
+
+.match-summary .match-info {
+    padding: 0.625rem 0;
+}
+
+.match-info {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.match-info__competition {
+    font-weight: bold;
+}
+
+.match-summary__teams {
+    display: flex;
+    border-top: 0.0625rem dotted #dfdfdf;
+    padding-top: 0.75rem;
+}
+
+.match-summary__team {
+    min-height: 44px;
+    flex: 1;
+    vertical-align: top;
+}
+
+.team__score {
+    font-weight: 400;
+    min-width: 1.2em;
+    position: absolute;
+    top: 0;
+}
+
+.match-summary__team--home .team__score {
+    right: 0;
+}
+
+.match-summary__team--away .team__score {
+    left: 0;
+}
+
+.team__scorers {
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
+    color: #767676;
+}
+
+.team__scorers dd {
+    padding: 0;
+    margin: 0;
+}
+
+.match-summary .team__info {
+    line-height: 1.75rem;
+    position: relative;
+}
+
+.match-summary .team__heading {
+    margin-top: 0;
+}
+
+.team__name {
+    margin: 0;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 400;
+    font-size: 1.5rem;
+}
+
+@@media (max-width: 500px) {
+    .team__name {
+        width: 100%;
+        font-size: 1rem;
+    }
+}
+
+.match-summary__team--home .team__score::after {
+    content: '\2013';
+    position: absolute;
+    text-align: center;
+    right: -15px;
+    width: 30px;
 }

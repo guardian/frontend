@@ -1,4 +1,4 @@
-@(page: model.Page)(body: Html)(implicit request: RequestHeader)
+@(page: model.ContentPage)(body: Html)(implicit request: RequestHeader)
 
 @import common.{LinkTo, CanonicalLink}
 
@@ -13,11 +13,14 @@
         <title>@views.support.Title(page)</title>
 
         @fragments.email.stylesheets.ink()
+        @fragments.email.stylesheets.fonts()
         @fragments.email.stylesheets.main()
         @fragments.email.stylesheets.footer()
     </head>
 
     <body>
+        @fragments.email.ampScript(page)
+
         <table class="body">
             <tr>
                 <td class="center" align="center" valign="top">
@@ -28,7 +31,7 @@
                             </tr>
 
                             <tr>
-                                <td class="footer">@fragments.email.footer()</td>
+                                <td class="footer">@fragments.email.footer(page)</td>
                             </tr>
                         </table>
                     </center>

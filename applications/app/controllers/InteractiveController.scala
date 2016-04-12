@@ -1,8 +1,8 @@
 package controllers
 
-import com.gu.contentapi.client.model.ItemResponse
+import com.gu.contentapi.client.model.v1.ItemResponse
 import common._
-import conf.LiveContentApi.getResponse
+import contentapi.ContentApiClient
 import conf._
 import conf.switches.Switches
 import model._
@@ -24,8 +24,8 @@ object InteractiveController extends Controller with RendersItemResponse with Lo
                     (implicit request: RequestHeader): Future[Either[InteractivePage, Result]] = {
     val edition = Edition(request)
     log.info(s"Fetching interactive: $path for edition $edition")
-    val response: Future[ItemResponse] = getResponse(
-      LiveContentApi.item(path, edition)
+    val response: Future[ItemResponse] = ContentApiClient.getResponse(
+      ContentApiClient.item(path, edition)
         .showFields("all")
     )
 

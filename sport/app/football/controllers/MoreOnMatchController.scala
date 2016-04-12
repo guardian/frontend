@@ -1,7 +1,7 @@
 package football.controllers
 
 import common._
-import conf.LiveContentApi
+import conf.Configuration
 import feed.Competitions
 import football.model.FootballMatchTrail
 import implicits.{Football, Requests}
@@ -10,10 +10,10 @@ import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 import org.scala_tools.time.Imports._
 import pa.FootballMatch
+import play.api.libs.json._
 import play.api.mvc.{Action, Controller, RequestHeader, Result}
 import play.twirl.api.Html
-import LiveContentApi.getResponse
-
+import contentapi.ContentApiClient
 import scala.concurrent.Future
 
 case class Report(trail: FootballMatchTrail, name: String)
@@ -75,7 +75,9 @@ object MoreOnMatchController extends Controller with Football with Requests with
 
     val maybeResponse: Option[Future[Result]] = maybeMatch map { theMatch =>
       loadMoreOn(request, theMatch) map {
-        case Nil => JsonNotFound()
+        case Nil =>
+          log.info(s"Cannot load more for match id: ${theMatch.id}")
+          JsonNotFound()
         case related => JsonComponent(
           "nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, related filter {
             hasExactlyTwoTeams
@@ -91,9 +93,9 @@ object MoreOnMatchController extends Controller with Football with Requests with
   def loadMoreOn(request: RequestHeader, theMatch: FootballMatch): Future[Seq[ContentType]] = {
     val matchDate = theMatch.date.toLocalDate
 
-    getResponse(LiveContentApi.search(Edition(request))
+    ContentApiClient.getResponse(ContentApiClient.search(Edition(request))
       .section("football")
-      .tag("tone/matchreports|football/series/squad-sheets|football/series/match-previews|football/series/saturday-clockwatch")
+      .tag("tone/minutebyminute|tone/matchreports|football/series/squad-sheets|football/series/match-previews|football/series/saturday-clockwatch")
       .fromDate(matchDate.minusDays(2).toDateTimeAtStartOfDay)
       .toDate(matchDate.plusDays(2).toDateTimeAtStartOfDay)
       .reference(s"pa-football-team/${theMatch.homeTeam.id},pa-football-team/${theMatch.awayTeam.id}")
@@ -122,6 +124,62 @@ object MoreOnMatchController extends Controller with Football with Requests with
     Cached(30)(response)
   }
 
+  def matchSummaryMf2(year: String, month: String, day: String, team1: String, team2: String) = Action.async { implicit request =>
+    val contentDate = dateFormat.parseDateTime(year + month + day).toLocalDate
+
+    val maybeResponse: Option[Future[Result]] = Competitions().matchFor(interval(contentDate), team1, team2) map { theMatch =>
+
+      val related: Future[Seq[ContentType]] = loadMoreOn(request, theMatch)
+      // We are only interested in content with exactly 2 team tags
+      related map { _ filter hasExactlyTwoTeams } map { filtered =>
+        Cached(if(theMatch.isLive) 10 else 300) {
+          lazy val competition = Competitions().competitionForMatch(theMatch.id)
+          lazy val homeTeamResults = competition.map(_.teamResults(theMatch.homeTeam.id).take(5))
+
+          JsonComponent(
+            "items" -> Json.arr(
+              Json.obj(
+                "id" -> theMatch.id,
+                "date" -> theMatch.date,
+                "venue" -> theMatch.venue.map(_.name),
+                "isLive" -> theMatch.isLive,
+                "isResult" -> theMatch.isResult,
+                "isLiveOrIsResult" -> (theMatch.isResult || theMatch.isLive),
+                "homeTeam" -> Json.obj(
+                  "name" -> theMatch.homeTeam.name,
+                  "id" -> theMatch.homeTeam.id,
+                  "score" -> theMatch.homeTeam.score,
+                  "crest" -> s"${Configuration.staticSport.path}/football/crests/120/${theMatch.homeTeam.id}.png",
+                  "scorers" -> theMatch.homeTeam.scorers.getOrElse("").split(",").map(scorer => {
+                    Json.obj(
+                      "scorer" -> scorer.replace("(", "").replace(")", "")
+                    )
+                  })
+                ),
+                "awayTeam" -> Json.obj(
+                  "name" -> theMatch.awayTeam.name,
+                  "id" -> theMatch.awayTeam.id,
+                  "score" -> theMatch.awayTeam.score,
+                  "crest" -> s"${Configuration.staticSport.path}/football/crests/120/${theMatch.awayTeam.id}.png",
+                  "scorers" -> theMatch.awayTeam.scorers.getOrElse("").split(",").map(scorer => {
+                    Json.obj(
+                      "scorer" -> scorer.replace("(", "").replace(")", "")
+                    )
+                  })
+                ),
+                "competition" -> Json.obj(
+                  "fullName" -> competition.map(_.fullName)
+                )
+              )
+            )
+          )
+        }
+      }
+    }
+
+    maybeResponse.getOrElse(Future.successful(Cached(30){ JsonNotFound() }))
+  }
+
   private def canonicalRedirectForMatch(maybeMatch: Option[FootballMatch], request: RequestHeader): Future[Result] = {
     maybeMatch.map { theMatch =>
       loadMoreOn(request, theMatch).map { related =>
@@ -146,8 +204,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
         c.matchReport && !c.minByMin && !c.preview
     }
     val minByMin = related.find { c =>
-      c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")).toLocalDate == matchDate &&
-        c.matchReport && c.minByMin && !c.preview
+      c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")).toLocalDate == matchDate && c.minByMin && !c.preview
     }
     val preview = related.find { c =>
       c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")) <= matchDate.toDateTimeAtStartOfDay &&

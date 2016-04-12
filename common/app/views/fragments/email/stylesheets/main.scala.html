@@ -1,5 +1,7 @@
 @()
 
+@import views.support.EmailHelpers.Images.quote
+
 <style>
     body, .body {
         background: #eaeaea;
@@ -14,8 +16,8 @@
         padding: 0;
     }
 
-    h1, h2, h3, h4, h5, h6, p {
-        font-family: Georgia, serif;
+    h1, h2, h3, h4, h5, h6, p, blockquote {
+        font-family: "Guardian Egyptian Text", Georgia, serif;
         color: #333333;
     }
 
@@ -25,18 +27,18 @@
         margin-bottom: 20px;
     }
 
-    h2, h3 {
-        font-size: 18px;
-        line-height: 28px;
-    }
-
     h2 {
         font-weight: bold;
+        font-size: 24px;
+        line-height: 28px;
         margin-bottom: 5px;
+        margin-top: 20px;
     }
 
     h3 {
         font-weight: normal;
+        font-size: 18px;
+        line-height: 28px;
     }
 
     p {
@@ -69,6 +71,10 @@
         margin-bottom: -4px;
     }
 
+    hr.rule--compact {
+        margin-top: 5px;
+    }
+
     .author a {
         text-decoration: none;
         color: #005689 !important;
@@ -78,6 +84,20 @@
     .author a:hover svg {
         fill: #94b1ca !important;
         color: #94b1ca !important;
+    }
+
+    blockquote {
+        background: transparent url(@quote.path) no-repeat top left;
+        font-size: 16px;
+        padding-top: 24px;
+    }
+
+    .media--main {
+        width: 100% ;
+    }
+
+    .row.background--image {
+        background-size: cover;
     }
 
     .container,
@@ -104,26 +124,30 @@
         color: #767676;
     }
 
-    .inline-icon {
+    .icon {
+        margin-right: 4px;
+        padding-top: 1px;
+    }
+
+    .icon-camera {
         margin-right: 4px;
     }
 
-    .inline-icon svg {
-        height: 14px;
-        width: 14px;
+    .play--button {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        width: 580px;
     }
 
-
-    .inline-twitter-bird svg {
-        fill: #005689;
+    .play--icon {
+        float: none;
+        clear: none;
+        margin: 0 auto;
+        padding: 20% 0;
     }
 
-    .inline-camera svg {
-        fill: #767676;
-        margin-top: -1px;
-    }
-
-    .i-left {
-        float: left;
+    .text--brand {
+        color: #005689;
     }
 </style>

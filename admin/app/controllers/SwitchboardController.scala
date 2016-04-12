@@ -2,7 +2,6 @@ package controllers.admin
 
 import com.gu.googleauth.UserIdentity
 import common._
-import common.AdminMetrics.{ SwitchesUpdateCounter, SwitchesUpdateErrorCounter }
 import conf.switches.Switches
 import controllers.AuthLogging
 import conf.Configuration
@@ -67,7 +66,6 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
     }
 
     Store.putSwitches(updates mkString "\n")
-    SwitchesUpdateCounter.increment()
 
     log.info("switches successfully updated")
 
@@ -80,7 +78,6 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
     Redirect(routes.SwitchboardController.renderSwitchboard())
   } catch { case e: Throwable =>
     log.error("exception saving switches", e)
-    SwitchesUpdateErrorCounter.increment()
 
     Redirect(routes.SwitchboardController.renderSwitchboard()).flashing(
       "error" -> ("Error saving switches '%s'" format e.getMessage)

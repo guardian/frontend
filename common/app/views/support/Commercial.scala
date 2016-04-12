@@ -1,6 +1,5 @@
 package views.support
 
-import com.gu.facia.api.models.{EditorialPriority, FrontPriority}
 import common.Edition
 import common.dfp.AdSize.{leaderboardSize, responsiveSize}
 import common.dfp._
@@ -82,9 +81,8 @@ object Commercial {
 
   object container {
 
-    def shouldRenderAsCommercialContainer(frontPriority: Option[FrontPriority], container: FaciaContainer): Boolean = {
-      frontPriority.contains(EditorialPriority) &&
-      container.commercialOptions.isAdvertisementFeature
+    def shouldRenderAsPaidContainer(isPaidFront: Boolean, container: FaciaContainer): Boolean = {
+      !isPaidFront && container.commercialOptions.isPaidContainer
     }
 
     def mkSponsorDataAttributes(config: CollectionConfig): Option[SponsorDataAttributes] = {
@@ -100,6 +98,19 @@ object Commercial {
         )
       }
     }
+
+    def numberOfItems(container: FaciaContainer): Int = container.containerLayout.map {
+      _.slices.flatMap {
+        _.columns.flatMap { case ColumnAndCards(_, cards) =>
+          cards.flatMap {
+            _.item match {
+                case card: ContentCard => Some(card)
+                case _ => None
+            }
+          }
+        }
+      }.length
+    }.getOrElse(0)
   }
 
   object containerCard {
@@ -148,35 +159,34 @@ case class CardWithSponsorDataAttributes(card: ContentCard, sponsorData: Option[
 
 object CardWithSponsorDataAttributes {
 
-  def apply(cardAndContent: ContentCardAndItsContent): CardWithSponsorDataAttributes = {
+  def sponsorDataAttributes(item: PressedContent): Option[SponsorDataAttributes] = {
 
-    def sponsorDataAttributes(item: PressedContent): Option[SponsorDataAttributes] = {
-
-      def sponsoredTagPair(content: ContentType): Option[CapiTagAndDfpTag] = {
-        DfpAgent.winningTagPair(
-          capiTags = content.tags.tags,
-          sectionId = Some(content.metadata.section),
-          edition = None
-        )
-      }
-
-      def mkFromSponsoredTagPair(tagProps: CapiTagAndDfpTag): SponsorDataAttributes = {
-        val capiTag = tagProps.capiTag
-        val dfpTag = tagProps.dfpTag
-
-        def tagId(p: Tag => Boolean): Option[String] = if (p(capiTag)) Some(capiTag.id) else None
-
-        SponsorDataAttributes(
-          sponsor = dfpTag.lineItems.headOption flatMap (_.sponsor),
-          sponsorshipType = dfpTag.paidForType.name,
-          seriesId = tagId(_.isSeries),
-          keywordId = tagId(_.isKeyword)
-        )
-      }
-
-      item.properties.maybeContent flatMap (sponsoredTagPair(_) map mkFromSponsoredTagPair)
+    def sponsoredTagPair(content: ContentType): Option[CapiTagAndDfpTag] = {
+      DfpAgent.winningTagPair(
+        capiTags = content.tags.tags,
+        sectionId = Some(content.metadata.section),
+        edition = None
+      )
     }
 
+    def mkFromSponsoredTagPair(tagProps: CapiTagAndDfpTag): SponsorDataAttributes = {
+      val capiTag = tagProps.capiTag
+      val dfpTag = tagProps.dfpTag
+
+      def tagId(p: Tag => Boolean): Option[String] = if (p(capiTag)) Some(capiTag.id) else None
+
+      SponsorDataAttributes(
+        sponsor = dfpTag.lineItems.headOption flatMap (_.sponsor),
+        sponsorshipType = dfpTag.paidForType.name,
+        seriesId = tagId(_.isSeries),
+        keywordId = tagId(_.isKeyword)
+      )
+    }
+
+    item.properties.maybeContent flatMap (sponsoredTagPair(_) map mkFromSponsoredTagPair)
+  }
+
+  def apply(cardAndContent: ContentCardAndItsContent): CardWithSponsorDataAttributes = {
     CardWithSponsorDataAttributes(cardAndContent.card, sponsorDataAttributes(cardAndContent.content))
   }
 }

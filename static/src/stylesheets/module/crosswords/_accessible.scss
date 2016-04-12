@@ -12,9 +12,9 @@
 }
 
 .crossword__accessible-row-data {
+    @include fs-textSans(4);
     position: relative;
     cursor: pointer;
-    @include fs-textSans(4);
     padding: $gs-baseline * .25 0;
     list-style-type: none;
     padding-left: 2em;
@@ -30,7 +30,7 @@
 
 .crossword__accessible-data--header {
     @include fs-header(1);
-    border-top: 1px solid colour(crosswordAccent2);
-    border-bottom: 1px dotted colour(neutral-3);
+    border-top: 1px solid $crosswordAccent2;
+    border-bottom: 1px dotted $neutral-3;
     padding-bottom: $gs-baseline * .75;
 }

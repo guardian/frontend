@@ -4,16 +4,15 @@
 @import common.LinkTo
 @import views.BodyCleaner
 @import views.support.TrailCssClasses.toneClass
-@import conf.switches.Switches.ForceSchemaOrgTypeForAmpArticlesSwitch
 @import views.support.RenderClasses
 
-@*Feb 2015: Google does only support NewsArticle in their amp carousel. To remove once Google starts supporting other schemas like schema.org/Review*@
-@shouldForceSchemaType = @{amp && ForceSchemaOrgTypeForAmpArticlesSwitch.isSwitchedOn}
+@* Feb 2015: Google does only support NewsArticle in their amp carousel. To remove once Google starts supporting other schemas like schema.org/Review *@
 @schemaType(page: ArticlePage) = @{
-    if (shouldForceSchemaType) "http://schema.org/NewsArticle" else page.article.metadata.schemaType
+    if (amp) "http://schema.org/NewsArticle" else page.article.metadata.schemaType
 }
+
 @bodyType(page: ArticlePage) = @{
-    if (page.article.tags.isReview && !shouldForceSchemaType) "reviewBody" else "articleBody"
+    if (page.article.tags.isReview && !amp) "reviewBody" else "articleBody"
 }
 
 @defining(model.article) { article =>
@@ -45,7 +44,7 @@
                 @fragments.guBand()
             }
 
-            @fragments.headTonal(article, article.commercial.isAdvertisementFeature)
+            @fragments.headTonal(article, article.commercial.isAdvertisementFeature, amp = amp)
 
             @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
                 @fragments.mainMedia(article, amp)

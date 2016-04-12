@@ -10,6 +10,7 @@ GET        /_healthcheck                                                        
 GET        /sitemaps/news.xml                                                   controllers.SiteMapController.renderNewsSiteMap()
 GET        /sitemaps/video.xml                                                  controllers.SiteMapController.renderVideoSiteMap()
 
+GET        /surveys/404-test/next-in-series/$seriesName<experience|alanis|oliver-burkeman> controllers.SurveysController.render404TestNextInSeries(seriesName: String)
 GET        /surveys/*file                                                       controllers.Assets.at(path="/public/surveys", file)
 
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
@@ -21,6 +22,10 @@ GET        /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|prize|eve
 # Crosswords search
 GET            /crosswords/search                                                                                                controllers.CrosswordSearchController.search()
 GET            /crosswords/lookup                                                                                                controllers.CrosswordSearchController.lookup()
+
+#Notifications Store
+POST           /notification/store                                              controllers.NotificationsController.saveSubscription()
+POST           /notification/delete                                             controllers.NotificationsController.deleteSubscription()
 
 # Email paths
 GET        /email                                                               controllers.EmailSignupController.renderPage()
@@ -36,14 +41,18 @@ GET        /index/contributors/*contributor                                     
 
 GET        /embed/video/*path                                                   controllers.EmbedController.render(path)
 
+
 # Preferences
 GET        /preferences                                                         controllers.PreferencesController.indexPrefs()
 
-GET        /crosswords/optin                                                    controllers.CrosswordPreferencesController.crosswordsOptIn
-GET        /crosswords/optout                                                   controllers.CrosswordPreferencesController.crosswordsOptOut
+# opt-in/out routes: this format is deprecated in favour of /opt/<in|out>/<feature>
+# don't add any new ones!
+GET        /https/optin                                                         controllers.OptInController.handle(feature = "https", choice = "in")
+GET        /https/optout                                                        controllers.OptInController.handle(feature = "https", choice = "out")
+GET        /new-header/optin                                                    controllers.OptInController.handle(feature = "header", choice = "in")
+GET        /new-header/optout                                                   controllers.OptInController.handle(feature = "header", choice = "out")
 
-GET        /https/optin                                                         controllers.HTTPSCookieController.optIn()
-GET        /https/optout                                                        controllers.HTTPSCookieController.optOut()
+GET        /opt/$choice<in|out>/:feature                                        controllers.OptInController.handle(feature, choice)
 
 # Web App paths
 GET        /offline-page.json                                                   controllers.WebAppController.offlinePage()
@@ -79,6 +88,7 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|picture|graphic)/.*>.json       
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|picture|graphic)/.*>            controllers.ImageContentController.render(path)
 
 # Audio and Video paths
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>/info.json              controllers.MediaController.renderInfoJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                   controllers.MediaController.renderJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>                        controllers.MediaController.render(path)
 

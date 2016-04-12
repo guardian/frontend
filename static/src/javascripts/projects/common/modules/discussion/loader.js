@@ -218,7 +218,7 @@ Loader.prototype.initToolbar = function() {
         var updateLabelText = function (prefValue) {
             $timestampsLabel.text(prefValue ? 'Relative' : 'Absolute');
         };
-        updateLabelText(prefValue);
+        updateLabelText(undefined);
 
         var PREF_RELATIVE_TIMESTAMPS = 'discussion.enableRelativeTimestamps';
         // Default to true
@@ -345,7 +345,8 @@ Loader.prototype.commentPosted = function () {
 Loader.prototype.renderCommentBox = function(elem) {
     return new CommentBox({
         discussionId: this.getDiscussionId(),
-        premod: this.user.privateFields.isPremoderated
+        premod: this.user.privateFields.isPremoderated,
+        newCommenter: !this.user.privateFields.hasCommented
     }).render(elem).on('post:success', this.commentPosted.bind(this));
 };
 

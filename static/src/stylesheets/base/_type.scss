@@ -8,7 +8,7 @@
 @include guss-typography-defaults;
 
 body {
-    color: colour(neutral-1);
+    color: $neutral-1;
 }
 
 
@@ -67,7 +67,7 @@ p {
     margin-bottom: ($gs-baseline/3)*2;
 }
 h3 {
+    @include fs-bodyCopy(2);
     font-weight: normal;
     margin-bottom: 7px;
-    @include fs-bodyCopy(2);
 }

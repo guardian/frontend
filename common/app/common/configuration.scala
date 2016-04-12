@@ -19,6 +19,7 @@ class BadConfigurationException(msg: String) extends RuntimeException(msg)
 class GuardianConfiguration(val application: String, val webappConfDirectory: String = "env") extends Logging {
 
   case class OAuthCredentials(oauthClientId: String, oauthSecret: String, oauthCallback: String)
+  case class OAuthCredentialsWithMultipleCallbacks(oauthClientId: String, oauthSecret: String, authorizedOauthCallbacks: List[String])
 
   protected val configuration = ConfigurationFactory.getNonLoggingConfiguration(application, webappConfDirectory)
 
@@ -88,12 +89,14 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   case class Auth(user: String, password: String)
 
   object contentApi {
-    val contentApiLiveHost: String = configuration.getMandatoryStringProperty("content.api.host")
+    val contentApiHost: String = configuration.getMandatoryStringProperty("content.api.host")
 
     def contentApiDraftHost: String =
         configuration.getStringProperty("content.api.draft.host")
           .filter(_ => Switches.FaciaToolDraftContent.isSwitchedOn)
-          .getOrElse(contentApiLiveHost)
+          .getOrElse(contentApiHost)
+
+    val previewHost: String = configuration.getStringProperty("content.api.preview.host").getOrElse(contentApiHost)
 
     lazy val key: Option[String] = configuration.getStringProperty("content.api.key")
     lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
@@ -171,6 +174,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object teamcity {
     lazy val host = configuration.getMandatoryStringProperty("teamcity.host")
+    lazy val internalHost = configuration.getMandatoryStringProperty("teamcity.internalhost")
   }
 
   object ajax {
@@ -185,6 +189,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     private lazy val scheme = configuration.getStringProperty("amp.scheme").getOrElse("")
     lazy val host = configuration.getStringProperty("amp.host").getOrElse("")
     lazy val baseUrl = scheme + host
+    lazy val corsOrigins: Seq[String] = configuration.getStringProperty("amp.cors.origin").map(_.split(",")
+      .map(_.trim).toSeq).getOrElse(Nil)
   }
 
   object id {
@@ -266,14 +272,13 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val dfpFacebookIaAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfp.facebookIaAdUnitRoot")
     lazy val dfpMobileAppsAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfp.mobileAppsAdUnitRoot")
     lazy val dfpAccountId = configuration.getMandatoryStringProperty("guardian.page.dfpAccountId")
+
     lazy val books_url = configuration.getMandatoryStringProperty("commercial.books_url")
     lazy val masterclasses_url =
       configuration.getMandatoryStringProperty("commercial.masterclasses_url")
     lazy val soulmates_url = configuration.getMandatoryStringProperty("commercial.soulmates_url")
     lazy val soulmatesApiUrl = configuration.getStringProperty("soulmates.api.url")
-    lazy val travel_url = configuration.getMandatoryStringProperty("commercial.travel_url")
-    lazy val traveloffers_url =
-      configuration.getStringProperty("traveloffers.api.url") map (u => s"$u/consumerfeed")
+    lazy val travelFeedUrl = configuration.getStringProperty("travel.feed.url")
     lazy val guMerchandisingAdvertiserId =
       configuration.getMandatoryStringProperty("commercial.dfp.guMerchandising.advertiserId")
 
@@ -301,6 +306,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val merchandisingFeedsLatest = s"$merchandisingFeedsRoot/latest"
 
     lazy val masterclassesToken = configuration.getStringProperty("masterclasses.token")
+    lazy val liveEventsToken = configuration.getStringProperty("live-events.token")
+    lazy val liveEventsImagesUrl = "https://membership.theguardian.com/events.json"
     lazy val jobsUrlTemplate = configuration.getStringProperty("jobs.api.url.template")
     lazy val jobsStaticUrl= configuration.getStringProperty("jobs.api.url")
     lazy val mortgagesUrl = configuration.getStringProperty("lc.mortgages.api.url")
@@ -373,6 +380,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object faciatool {
     lazy val frontPressCronQueue = configuration.getStringProperty("frontpress.sqs.cron_queue_url")
     lazy val frontPressToolQueue = configuration.getStringProperty("frontpress.sqs.tool_queue_url")
+    lazy val frontPressStatusNotificationStream = configuration.getStringProperty("frontpress.kinesis.status_notification_stream")
 
     lazy val configBeforePressTimeout: Int = 1000
 
@@ -399,10 +407,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val pressRateInSeconds = configuration.getIntegerProperty("admin.r2.page.press.rate.seconds").getOrElse(60)
     lazy val pressQueueWaitTimeInSeconds = configuration.getIntegerProperty("admin.r2.press.queue.wait.seconds").getOrElse(10)
     lazy val pressQueueMaxMessages = configuration.getIntegerProperty("admin.r2.press.queue.max.messages").getOrElse(10)
-    object header {
-      val name = configuration.getStringProperty("r2.presser.header.name")
-      val value = configuration.getStringProperty("r2.presser.header.value")
-    }
+    lazy val fallbackCachebustId = configuration.getStringProperty("admin.r2.press.fallback.cachebust.id").getOrElse("")
   }
 
   object memcached {
@@ -482,6 +487,15 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object NewsAlert {
     lazy val apiKey = configuration.getStringProperty("news-alert.api.key")
+  }
+
+  object Notifications {
+    lazy val latestMessageUrl = configuration.getMandatoryStringProperty("notifications.latest_message.url")
+    lazy val notificationSubscriptionTable = configuration.getMandatoryStringProperty("notifications.subscriptions_table")
+  }
+
+  object DeploysNotify {
+    lazy val apiKey = configuration.getStringProperty("deploys-notify.api.key")
   }
 }
 

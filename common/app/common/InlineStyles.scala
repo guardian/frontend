@@ -44,7 +44,7 @@ object CSSRule {
 
   def makeStyles(styles: String): ListMap[String, String] = {
     styles.split(";(?!base)").flatMap { style =>
-      val split = style.split(":(?!\\w)")
+      val split = style.split(":(?!(\\w)|(//))")
 
       for {
         property <- split.lift(0)
@@ -94,9 +94,9 @@ object InlineStyles {
       val source = new InputSource(new StringReader(element.html))
 
       Try(cssParser.parseStyleSheet(source, null, null)).toOption map { sheet =>
-        val (mediaQueries, styles) = seq(sheet.getCssRules).partition(isMediaQuery)
+        val (styles, others) = seq(sheet.getCssRules).partition(isStyleRule)
         val (inlineStyles, headStyles) = styles.flatMap(CSSRule.fromW3).flatten.partition(_.canInline)
-        val newHead = (headStyles.map(_.toString) ++ mediaQueries.map(_.getCssText)).mkString("\n")
+        val newHead = (headStyles.map(_.toString) ++ others.map(_.getCssText)).mkString("\n")
 
         (inline ++ inlineStyles, (head :+ newHead).filter(_.nonEmpty))
       } getOrElse {
@@ -113,5 +113,5 @@ object InlineStyles {
   }
 
   private def seq(rules: CSSRuleList): Seq[W3CSSRule] = for (i <- 0 until rules.getLength) yield rules.item(i)
-  private def isMediaQuery(rule: W3CSSRule): Boolean = rule.getType == W3CSSRule.MEDIA_RULE
+  private def isStyleRule(rule: W3CSSRule): Boolean = rule.getType == W3CSSRule.STYLE_RULE
 }

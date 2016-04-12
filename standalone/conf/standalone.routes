@@ -24,7 +24,7 @@ GET        /commercial/travel/offers.json                                       
 GET        /commercial/jobs.json                                                               controllers.commercial.JobAds.renderJobs
 
 # Masterclasses
-GET        /commercial/masterclasses.json                                                      controllers.commercial.MasterClasses.renderMasterclasses
+GET        /commercial/masterclasses.json                                                      controllers.commercial.Masterclasses.renderMasterclasses
 
 # Soulmates
 GET        /commercial/soulmates/$subgroup<\w+>.json                                           controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
@@ -136,6 +136,7 @@ GET        /sport/rugby/api/score/:year/:month/:day/:team1Id/:team2Id           
 # Onward journeys
 GET        /series/*path.json                                                                  controllers.SeriesController.renderSeriesStories(path)
 
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>/info.json                             controllers.MediaController.renderInfoJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                                  controllers.MediaController.renderJson(path)
 
 # Facia
@@ -155,6 +156,9 @@ GET        /theguardian                                                         
 GET        /theobserver                                                                        controllers.NewspaperController.latestObserverNewspaper()
 GET        /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>           controllers.NewspaperController.newspaperForDate(path, day, month, year)
 GET        /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all       controllers.NewspaperController.allOn(path, day, month, year)
+
+# Atoms
+POST       /atom/quiz/:id/*path                                                                controllers.QuizController.submit(id, path)
 
 GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                     controllers.AllIndexController.on(path)
 GET        /$path<.+>/latest                                                                   controllers.LatestIndexController.latest(path)

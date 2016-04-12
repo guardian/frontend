@@ -26,7 +26,7 @@
                     </a>
                 </div>
                 <div class="commercial__body">
-                    <ul class="u-unstyled l-row l-row--cols-4 l-row--layout-m fc-slice">
+                    <ul class="u-unstyled l-row l-row--cols-@math.min(4, items.length) l-row--layout-m fc-slice">
                         @for(item <- items) {
                             <li class="fc-slice__item l-row__item l-row__item--span-1">
                                 <div class="fc-item fc-item--has-image fc-item--has-metadata @item match {

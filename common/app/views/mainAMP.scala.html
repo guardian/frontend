@@ -10,8 +10,6 @@
         @* "utf-8" meta tag needs to be first according to AMP spec *@
         <meta charset="utf-8">
         <meta name="amp-3p-iframe-src" content="https://www.theguardian.com/amp/remote.html">
-
-
         @fragments.metaData(page, amp = true)
         <title>@views.support.Title(page)</title>
         @fragments.amp.stylesheets.main(page.metadata)
@@ -24,7 +22,7 @@
         @* Required for outbrain served in an amp-iframe *@
         <script custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js" async></script>
         <script custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" async></script>
-        <style>body {opacity: 0}</style><noscript><style>body {opacity: 1}</style></noscript>
+        <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
         <script src="https://cdn.ampproject.org/v0.js" async></script>
     </head>
     <body class="guardian-egyptian-loading">
@@ -47,12 +45,17 @@
             @body
 
             @if(content.trail.isCommentable) {
-                <div class="content__comments-container">
+                <div class="submeta">
                     <a href="@LinkTo(page.metadata.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, page.metadata.webUrl)))#comments" class="cta cta--medium cta--comments">
                         @fragments.inlineSvg("comment-16", "icon") View comments
                     </a>
-                </div>
+            } else {
+                <div class="submeta no-comments">
             }
+                    <a href="@LinkTo(page.metadata.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, page.metadata.webUrl)))" class="cta cta--medium main-site-link">
+                        View on theguardian.com
+                    </a>
+                </div>
 
             @if(content.metadata.section != "childrens-books-site") {
                 @if(content.hasStoryPackage) {

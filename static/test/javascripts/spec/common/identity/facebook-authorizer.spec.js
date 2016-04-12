@@ -1,4 +1,3 @@
-// jscs:disable disallowDanglingUnderscores
 /*global FB*/
 define([
     'bonzo',

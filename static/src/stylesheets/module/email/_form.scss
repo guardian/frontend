@@ -18,7 +18,6 @@
 .email-sub__form {
     @include clearfix();
     @include fs-textSans(3);
-    padding: $gs-baseline 0 $gs-baseline * 2;
 
     * {
         box-sizing: border-box;
@@ -30,7 +29,6 @@
 }
 
 .email-sub__label {
-    color: $form-label-colour;
     display: block;
 }
 
@@ -46,6 +44,7 @@
     width: 100%;
 
     .email-sub__label {
+        color: $form-label-colour;
         line-height: 3;
         left: 1.250em;
         position: absolute;
@@ -53,20 +52,32 @@
     }
 }
 
-.email-sub__label__icon {
+.email-sub__inline-label--is-hidden {
+    display: none;
+}
+
+.submit-input__icon,
+.label__icon {
     display: none; // Hidden by default
 
     svg {
-        fill: $form-label-colour;
-        opacity: .65;
         width: 1.143em;
         height: .857em;
     }
 }
 
+.submit-input__icon svg {
+    fill: $form-primary-colour;
+}
+
+.label__icon svg {
+    fill: $form-label-colour;
+    opacity: .65;
+}
+
 .email-sub__text-input {
     border: 1px solid $form-primary-colour;
-    color: guss-colour(neutral-1, $pasteup-palette);
+    color: $neutral-1;
     height: 3em;
     outline: none;
     padding: .667em 1.250em;
@@ -74,7 +85,7 @@
 
 .email-sub__submit-input {
     background-color: transparent;
-    border: 1px solid guss-colour(news-support-1, $pasteup-palette);
+    border: 1px solid $news-support-1;
     color: $form-primary-colour;
 
     &:focus,
@@ -85,9 +96,16 @@
     }
 }
 
+.email-sub__submit-input--solo {
+
+    .submit-input__icon {
+        display: inline-block;
+        margin-right: $gs-gutter / 4;
+    }
+}
+
 .email-sub__text-input,
 .email-sub__submit-input {
-    margin-bottom: $gs-baseline;
     width: 100%;
 }
 
@@ -100,9 +118,14 @@
 
 .email-sub__small {
     @include fs-textSans(1, $size-only: true);
-    color: guss-colour(guardian-brand, $pasteup-palette);
+    color: $guardian-brand;
     display: block;
     padding-left: $gs-baseline / 3;
+    position: relative;
+}
+
+.email-sub__small--is-hidden {
+    display: none;
 }
 
 .email-sub__message {
@@ -112,9 +135,9 @@
     position: relative;
 
     .inline-icon {
-        background-color: guss-colour(neutral-3, $pasteup-palette);
+        background-color: $neutral-3;
         border-radius: 1000px;
-        fill: guss-colour(neutral-1, $pasteup-palette);
+        fill: $neutral-1;
         height: $icon-size;
         left: 0;
         position: absolute;
@@ -143,6 +166,28 @@
     @include fs-textSans(1, $size-only: true);
 }
 
+.email-sub__close {
+    background: 0 none;
+    border: 0 none;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.email-sub__hidden {
+    @include u-h();
+}
+
+.email-sub__close-icon svg {
+    fill: darken($neutral-2, 10%);
+
+    &:hover,
+    &:focus {
+        cursor: pointer;
+        fill: $neutral-2;
+    }
+}
+
 /**
 * Modifications
 */
@@ -153,18 +198,20 @@
     padding: 0 $gs-gutter;
 
     .email-sub__submit-input {
-        background-color: guss-colour(neutral-2, $pasteup-palette);
-        border-color: guss-colour(neutral-2, $pasteup-palette);
+        background-color: $neutral-2;
+        border-color: $neutral-2;
+        margin-bottom: $gs-baseline;
 
         &:hover,
         &:focus,
         &:active {
-            background-color: darken(guss-colour(neutral-2, $pasteup-palette), 10%);
-            border: 1px solid darken(guss-colour(neutral-2, $pasteup-palette), 10%);
+            background-color: darken($neutral-2, 10%);
+            border-color: darken($neutral-2, 10%);
         }
     }
 
     .email-sub__small {
+        clear: left;
         color: $form-primary-colour;
         @include fs-textSans(1, $size-only: true);
     }
@@ -172,7 +219,7 @@
 
 // LANDING PAGE MODS
 .email-sub--landing {
-    background-color: guss-colour(guardian-brand, $pasteup-palette);
+    background-color: $guardian-brand;
 
     .email-sub__description {
         padding: $gs-baseline $gs-gutter;
@@ -202,8 +249,8 @@
 
 // IN-ARTICLE (COMPOSER) PAGE MODS
 .email-sub--article {
-    border-top: 1px dotted guss-colour(neutral-3, $pasteup-palette);
-    border-bottom: 1px dotted guss-colour(neutral-3, $pasteup-palette);
+    border-top: 1px dotted $neutral-4;
+    padding: $gs-gutter / 4;
 
     @include mq($from: phablet) {
         padding-right: gs-span(1);
@@ -213,29 +260,26 @@
         padding: $gs-baseline $gs-gutter $gs-baseline $icon-padding;
     }
 
-    .email-sub__message__headline {
-        color: guss-colour(guardian-brand, $pasteup-palette);
-    }
-
+    .email-sub__message__headline,
     .email-sub__message__description {
-        color: guss-colour(neutral-1, $pasteup-palette);
+        color: $neutral-1;
     }
 }
 
 .email-sub__form--article,
 .email-sub__form--plain {
-    .email-sub__label__icon {
+    .label__icon {
         display: inline-block;
         margin-right: $gs-gutter / 4;
     }
 
     .email-sub__text-input {
-        border-color: guss-colour(neutral-1, $pasteup-palette);
+        border-color: $neutral-3;
     }
 
     .email-sub__submit-input {
-        background-color: guss-colour(guardian-brand, $pasteup-palette);
-        border-color: guss-colour(guardian-brand, $pasteup-palette);
+        background-color: $guardian-brand;
+        border-color: $guardian-brand;
     }
 
     .email-sub__label,
@@ -254,7 +298,7 @@
     padding: 0;
 
     .email-sub__text-input {
-        border-color: guss-colour(guardian-brand, $pasteup-palette);
+        border-color: $guardian-brand;
     }
 }
 
@@ -296,20 +340,40 @@
 }
 
 // TONE SPECIFIC MODS
-@each $toneClass, $toneColour in $tones {
-    .email-sub--tone-#{$toneClass} {
-        .email-sub__message__headline {
-            color: $toneColour;
+@each $tone-class, $tone-colour-accent, $tone-colour-headline in $tones {
+
+
+    .email-sub--tone-#{$tone-class} {
+
+        .email-sub__close-icon svg {
+            fill: $tone-colour-accent;
+
+            &:hover,
+            &:focus {
+                cursor: pointer;
+                fill: darken($tone-colour-accent, 10%);
+            }
+        }
+
+        .email-sub__inline-label--enabled {
+            .email-sub__label {
+                color: $form-label-colour;
+            }
         }
 
         .email-sub__submit-input {
-            background-color: $toneColour;
-            border-color: $toneColour;
+            background-color: $tone-colour-accent;
+            border-color: $tone-colour-accent;
+            color: #ffffff;
+
+            &:hover,
+            &:focus {
+                background-color: darken($tone-colour-accent, 10%);
+            }
         }
 
         .email-sub__small {
-            color: $toneColour;
+            color: $tone-colour-headline;
         }
     }
 }
-

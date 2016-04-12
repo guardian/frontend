@@ -1,9 +1,11 @@
 define([
     'lodash/collections/map',
-    'common/utils/ajax-promise'
+    'common/utils/ajax-promise',
+    'Promise'
 ], function (
     map,
-    ajaxPromise
+    ajaxPromise,
+    Promise
 ) {
     var curlConfig = window.curlConfig;
     var resolveModuleId = function (moduleId) {

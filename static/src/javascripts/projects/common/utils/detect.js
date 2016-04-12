@@ -52,7 +52,7 @@ define([
         // These should match those defined in:
         //   stylesheets/_vars.scss
         //   common/app/layout/Breakpoint.scala
-        breakpoints = [
+            breakpoints = [
             {
                 name: 'mobile',
                 isTweakpoint: false,
@@ -109,30 +109,6 @@ define([
                 was = is;
             }
         };
-    }
-
-    /**
-     * @param performance - Object allows passing in of window.performance, for testing
-     */
-    function getPageSpeed(performance) {
-
-        //https://dvcs.w3.org/hg/webperf/raw-file/tip/specs/NavigationTiming/Overview.html#sec-window.performance-attribute
-
-        var startTime,
-            endTime,
-            totalTime,
-            perf = performance || window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
-
-        if (perf && perf.timing) {
-            startTime =  perf.timing.requestStart || perf.timing.fetchStart || perf.timing.navigationStart;
-            endTime = perf.timing.responseEnd;
-
-            if (startTime && endTime) {
-                totalTime = endTime - startTime;
-            }
-        }
-
-        return totalTime;
     }
 
     function isReload() {
@@ -211,41 +187,6 @@ define([
             version: M[1]
         };
     })();
-
-    function getConnectionSpeed(performance, connection, reportUnknown) {
-
-        connection = connection || navigator.connection || navigator.mozConnection || navigator.webkitConnection || {type: 'unknown'};
-
-        var isMobileNetwork = connection.type === 3 // connection.CELL_2G
-                || connection.type === 4 // connection.CELL_3G
-                || /^[23]g$/.test(connection.type), // string value in new spec
-            loadTime,
-            speed;
-
-        if (isMobileNetwork) {
-            return 'low';
-        }
-
-        loadTime = getPageSpeed(performance);
-
-        // Assume high speed for non supporting browsers
-        speed = 'high';
-        if (reportUnknown) {
-            speed = 'unknown';
-        }
-
-        if (loadTime) {
-            if (loadTime > 1000) { // One second
-                speed = 'medium';
-                if (loadTime > 3000) { // Three seconds
-                    speed = 'low';
-                }
-            }
-        }
-
-        return speed;
-
-    }
 
     function hasTouchScreen() {
         return ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
@@ -404,6 +345,11 @@ define([
         return window.guardian.isEnhanced;
     }
 
+    var createSacrificialAd = memoize(function () {
+        var sacrificialAd = $.create('<div class="ad_unit" style="position: absolute; height: 10px; top: 0; left: 0; z-index: -1;">&nbsp;</div>');
+        sacrificialAd.appendTo(document.body);
+        return sacrificialAd;
+    });
     // sync adblock detection is deprecated.
     // it will be removed once sticky nav and omniture top up call are both removed
     // this is soon - it's not worth refactoring them when they're off soon
@@ -417,12 +363,6 @@ define([
     var getFirefoxAdblockPlusInstalledSync = memoize(function () {
         var adUnitMozBinding = createSacrificialAd().css('-moz-binding');
         return !!adUnitMozBinding && adUnitMozBinding.match('elemhidehit') !== null;
-    });
-
-    var createSacrificialAd = memoize(function () {
-        var sacrificialAd = $.create('<div class="ad_unit" style="position: absolute; height: 10px; top: 0; left: 0; z-index: -1;">&nbsp;</div>');
-        sacrificialAd.appendTo(document.body);
-        return sacrificialAd;
     });
     // end sync adblock detection
 
@@ -451,7 +391,6 @@ define([
 
     detect = {
         hasCrossedBreakpoint: hasCrossedBreakpoint,
-        getConnectionSpeed: getConnectionSpeed,
         getVideoFormatSupport: getVideoFormatSupport,
         hasTouchScreen: hasTouchScreen,
         hasPushStateSupport: hasPushStateSupport,
@@ -473,7 +412,6 @@ define([
         initPageVisibility: initPageVisibility,
         pageVisible: pageVisible,
         hasWebSocket: hasWebSocket,
-        getPageSpeed: getPageSpeed,
         breakpoints: breakpoints,
         isEnhanced: isEnhanced,
         adblockInUseSync: adblockInUseSync,

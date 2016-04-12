@@ -1,5 +1,5 @@
 @import conf.switches.Switch
-@(env: String, switch: Switch, lastModified: Long)(implicit flash: Flash)
+@(env: String, switch: Switch, lastModified: Long)(implicit flash: Flash, request: RequestHeader)
 
 @import controllers.admin.routes.UncachedAssets
 
@@ -18,8 +18,8 @@
                 <div class="checkbox">
                     <label @if(Switch.expiry(switch).expiresSoon) { class="Expiring expiry-days-@Switch.expiry(switch).daysToExpiry"}>
                     <strong>@switch.name</strong><span> - @switch.description @if(Switch.expiry(switch).expiresSoon) {There are <strong> @Switch.expiry(switch).daysToExpiry</strong> days left.} <br /></span>
-                    <input id="switch-@switch.name" name="@switch.name" type="radio" value = "on" @if(env == "prod") {disabled="disabled"} @if(switch.isSwitchedOn) { checked="checked" } style="margin-right: 3px"/>on
-                    <input id="switch-@switch.name" name="@switch.name" type="radio" value = "off" @if(env == "prod") {disabled="disabled"} @if(!switch.isSwitchedOn) { checked="checked" } style="margin-right: 3px"/>off
+                    <input id="switch-@switch.name" name="@switch.name" type="radio" value = "on" @if(switch.isSwitchedOn) { checked="checked" } style="margin-right: 3px"/>on
+                    <input id="switch-@switch.name" name="@switch.name" type="radio" value = "off" @if(!switch.isSwitchedOn) { checked="checked" } style="margin-right: 3px"/>off
                     </label>
                 </div>
             </div>

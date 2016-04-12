@@ -97,7 +97,9 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
     for {
       figure <- body.getElementsByTag("figure")
       image <- figure.getElementsByTag("img").headOption
-      if !figure.hasClass("element-comment") && !figure.hasClass("element-witness")
+      if !(figure.hasClass("element-comment") ||
+           figure.hasClass("element-witness") ||
+           figure.hasClass("element-atom"))
       container <- findContainerFromId(figure.attr("data-media-id"), image.attr("src"))
       image <- container.images.largestImage
     }{
@@ -430,7 +432,7 @@ case class ImmersiveHeaders(isImmersive: Boolean) extends HtmlCleaner {
       document.getElementsByTag("h2").foreach{ h2 =>
         val beforeH2 = h2.previousElementSibling()
         if (beforeH2 != null) {
-          if(beforeH2.hasClass("element--immersive")) {
+          if(beforeH2.hasClass("element--immersive element-image")) {
             beforeH2.addClass("section-image")
             beforeH2.prepend("""<h2 class="section-title">""" + h2.text() + "</h2>")
             h2.remove()
@@ -532,7 +534,7 @@ object ChaptersLinksCleaner extends HtmlCleaner {
   }
 }
 
-case class AtomsCleaner(atoms: Option[Atoms]) extends HtmlCleaner {
+case class AtomsCleaner(atoms: Option[Atoms])(implicit val request: RequestHeader) extends HtmlCleaner {
   private def findAtom(id: String): Option[Atom] = {
     atoms.flatMap(_.all.find(_.id == id))
   }

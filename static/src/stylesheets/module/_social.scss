@@ -81,12 +81,12 @@ category: Common
 
 .social-icon {
     @extend %icon-holder-circle;
+    @include ellipsis();
     border: 0;
     min-width: 32px;
     max-width: 100%;
     width: auto;
     height: 32px;
-    @include ellipsis();
 
     &,
     &:hover,
@@ -135,16 +135,16 @@ category: Common
 }
 
 .social-icon--facebook {
-    background-color: colour(social-facebook);
+    background-color: $social-facebook;
     &:hover {
-        background-color: darken(colour(social-facebook), 10%);
+        background-color: darken($social-facebook, 10%);
     }
 }
 
 .social-icon--gplus {
-    background-color: colour(social-gplus);
+    background-color: $social-gplus;
     &:hover {
-        background-color: darken(colour(social-gplus), 10%);
+        background-color: darken($social-gplus, 10%);
     }
 
     .content--media & {
@@ -153,39 +153,39 @@ category: Common
 }
 
 .social-icon--whatsapp {
-    background-color: colour(social-whatsapp);
+    background-color: $social-whatsapp;
     &:hover {
-        background-color: darken(colour(social-whatsapp), 10%);
+        background-color: darken($social-whatsapp, 10%);
     }
 }
 
 .social-icon--twitter {
-    background-color: colour(social-twitter);
+    background-color: $social-twitter;
     &:hover {
-        background-color: darken(colour(social-twitter), 10%);
+        background-color: darken($social-twitter, 10%);
     }
 }
 
 .social-icon--linkedin {
-    background-color: colour(social-linkedin);
+    background-color: $social-linkedin;
 
     &:hover {
-        background-color: darken(colour(social-linkedin), 10%);
+        background-color: darken($social-linkedin, 10%);
     }
 }
 
 .social-icon--pinterest {
-    background-color: colour(social-pinterest);
+    background-color: $social-pinterest;
 
     &:hover {
-        background-color: darken(colour(social-pinterest), 10%);
+        background-color: darken($social-pinterest, 10%);
     }
 }
 
 .social-icon--email {
-    background-color: colour(social-email);
+    background-color: $social-email;
     &:hover {
-        background-color: darken(colour(social-email), 10%);
+        background-color: darken($social-email, 10%);
     }
 }
 
@@ -240,12 +240,12 @@ category: Common
 }
 
 .social-fixed__item--facebook {
-    background-color: colour(social-facebook);
+    background-color: $social-facebook;
     margin: 0 $gs-gutter/4 0 $gs-gutter/2 !important;
 }
 
 .social-fixed__item--twitter {
-    background-color: colour(social-twitter);
+    background-color: $social-twitter;
 }
 
 .social-fixed--show {
@@ -254,8 +254,8 @@ category: Common
 }
 
 .share-text {
-    float: left;
     @include fs-textSans(3);
+    float: left;
     font-weight: 700;
     padding: ($gs-baseline/3*2) ($gs-gutter/10) 0 ($gs-gutter/2);
 }
@@ -321,11 +321,11 @@ category: Common
 // Pintrest is inappropriate in certain sections
 
 .social__item--pinterest {
-    .content[class*="-network"] &,
-    .content[class*="-leadership"] &,
-    .content[class*="-careers"] &,
-    .content[class*="-advertisement-feature"] &,
-    .content[class*="-partner-zone"] & {
+    .content[class*='-network'] &,
+    .content[class*='-leadership'] &,
+    .content[class*='-careers'] &,
+    .content[class*='-advertisement-feature'] &,
+    .content[class*='-partner-zone'] & {
         display: none;
     }
 }

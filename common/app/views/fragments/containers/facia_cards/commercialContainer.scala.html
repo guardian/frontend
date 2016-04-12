@@ -37,7 +37,7 @@
                         <div class="commercial__body">
                             @for(layout <- container.containerLayout) {
                                 @for(slice <- layout.slices) {
-                                    <ul class="lineitems l-row l-row--cols-4">
+                                    <ul class="lineitems l-row l-row--cols-@math.min(Commercial.container.numberOfItems(container), 4)">
                                     @for(ColumnAndCards(_, cards) <- slice.columns) {
                                         @for(FaciaCardAndIndex(_, card, hideUpTo) <- cards) {
                                             @card match {
@@ -45,8 +45,12 @@
                                                     <li class="lineitem l-row__item l-row__item--span-1">
                                                         <div class="rich-link tone-paidfor--item">
                                                             <div class="rich-link__container">
-                                                                @for(InlineImage(images) <- contentCard.displayElement) {
-                                                                    @itemImage(images)
+                                                                @for(displayElement <- contentCard.displayElement) {
+                                                                    @displayElement match {
+                                                                        case InlineVideo(videoElement, _, _, _) => { @itemImage(videoElement.images) }
+                                                                        case InlineImage(images) => { @itemImage(images) }
+                                                                        case _ => { }
+                                                                    }
                                                                 }
                                                             <div class="rich-link__header">
                                                             @title(contentCard.header, 0, container.index)
@@ -106,34 +110,36 @@
                             </a>
                         </div>
                         <div class="commercial__body">
-                            <ul class="lineitems l-row l-row--cols-4">
-                                @*
-                                Taking first 4 cards as a temporary fix until container can show a 'more' CTA
-                                *@
-                                @for(cardWithSponsorData <- Commercial.containerCard.mkCardsWithSponsorDataAttributes(container, 4)) {
-                                    <li class="lineitem l-row__item l-row__item--span-1 js-sponsored-container"
-                                        @for(sponsorData <- cardWithSponsorData.sponsorData) {
-                                            @for(sponsor <- sponsorData.sponsor) { data-sponsor="@sponsor" }
-                                            data-sponsorship="@sponsorData.sponsorshipType"
-                                            @for(seriesId <- sponsorData.seriesId) { data-series="@seriesId" }
-                                            @for(keywordId <- sponsorData.keywordId) { data-keywords="@keywordId" }
-                                        }
-                                    >
-                                        <div class="rich-link tone-paidfor--item">
-                                            <div class="rich-link__container js-container__header">
-                                                @for( InlineImage(images) <- cardWithSponsorData.card.displayElement) {
-                                                    @itemImage(images)
-                                                }
-                                                <div class="rich-link__header">
-                                                    @title(cardWithSponsorData.card.header, 0, container.index)
+                            @defining(Commercial.containerCard.mkCardsWithSponsorDataAttributes(container, 4)) { items =>
+                                <ul class="lineitems l-row l-row--cols-@math.min(items.length, 4)">
+                                    @*
+                                    Taking first 4 cards as a temporary fix until container can show a 'more' CTA
+                                    *@
+                                    @for(cardWithSponsorData <- items) {
+                                        <li class="lineitem l-row__item l-row__item--span-1 js-sponsored-container"
+                                            @for(sponsorData <- cardWithSponsorData.sponsorData) {
+                                                @for(sponsor <- sponsorData.sponsor) { data-sponsor="@sponsor" }
+                                                data-sponsorship="@sponsorData.sponsorshipType"
+                                                @for(seriesId <- sponsorData.seriesId) { data-series="@seriesId" }
+                                                @for(keywordId <- sponsorData.keywordId) { data-keywords="@keywordId" }
+                                            }
+                                        >
+                                            <div class="rich-link tone-paidfor--item">
+                                                <div class="rich-link__container js-container__header">
+                                                    @for( InlineImage(images) <- cardWithSponsorData.card.displayElement) {
+                                                        @itemImage(images)
+                                                    }
+                                                    <div class="rich-link__header">
+                                                        @title(cardWithSponsorData.card.header, 0, container.index)
+                                                    </div>
+                                                    <div class="rich-link__standfirst u-cf">@for( text <- cardWithSponsorData.card.trailText) {@Html(text)}</div>
+                                                    <a class="rich-link__link u-faux-block-link__overlay" @Html(cardWithSponsorData.card.header.url.hrefWithRel)>@RemoveOuterParaHtml(cardWithSponsorData.card.header.headline)</a>
                                                 </div>
-                                                <div class="rich-link__standfirst u-cf">@for( text <- cardWithSponsorData.card.trailText) {@Html(text)}</div>
-                                                <a class="rich-link__link u-faux-block-link__overlay" @Html(cardWithSponsorData.card.header.url.hrefWithRel)>@RemoveOuterParaHtml(cardWithSponsorData.card.header.headline)</a>
                                             </div>
-                                        </div>
-                                    </li>
-                                }
-                            </ul>
+                                        </li>
+                                    }
+                                </ul>
+                            }
                         </div>
                     </div>
                 </div>

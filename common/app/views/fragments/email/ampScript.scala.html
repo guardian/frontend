@@ -1,0 +1,15 @@
+@(page: model.ContentPage)
+
+@import views.support.StripHtmlTagsAndUnescapeEntities
+
+<!--
+%%[
+    Var @@subject, @@intro
+    Set @@subject = "@Html(StripHtmlTagsAndUnescapeEntities(page.item.trail.headline))"
+
+
+    @page.item.trail.fields.trailText.map { byline =>
+    Set @@intro = "@Html(StripHtmlTagsAndUnescapeEntities(byline))"
+    }
+]%%
+-->
