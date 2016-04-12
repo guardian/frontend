@@ -11,7 +11,8 @@ define([
     'common/modules/commercial/top-banner-below-container',
     'common/modules/commercial/slice-adverts',
     'common/modules/commercial/third-party-tags',
-    'common/modules/commercial/paidfor-band'
+    'common/modules/commercial/paidfor-band',
+    'common/modules/commercial/adverts'
 ], function (
     Promise,
     config,
@@ -25,7 +26,8 @@ define([
     topBannerBelowContainer,
     sliceAdverts,
     thirdPartyTags,
-    paidforBand
+    paidforBand,
+    adverts
 ) {
     var modules = [
         ['cm-dfp', dfp.init],
@@ -56,6 +58,7 @@ define([
                 robust.catchErrorsAndLogAll([
                     ['cm-adverts', dfp.loadAds],
                     ['cm-paidforBand', paidforBand.init],
+                    ['cm-new-adverts', adverts.init],
                     ['cm-ready', function () {
                         mediator.emit('page:commercial:ready');
                     }]

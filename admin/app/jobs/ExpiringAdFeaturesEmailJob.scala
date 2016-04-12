@@ -1,15 +1,17 @@
 package jobs
 
-import common.Logging
+import common.{ExecutionContexts, Logging}
 import common.dfp.GuLineItem
 import conf.Configuration.commercial.{adOpsTeam, adTechTeam, gLabsTeam}
 import dfp.DfpApi
 import org.joda.time.DateTime.now
 import services.EmailService
 
-object ExpiringAdFeaturesEmailJob extends Logging {
+import scala.concurrent.Future
 
-  def run(): Unit = {
+object ExpiringAdFeaturesEmailJob extends Logging with ExecutionContexts {
+
+  def run(): Future[Unit] = {
 
     val adFeatures: Seq[GuLineItem] =
       DfpApi.readAdFeatureLogoLineItems(
@@ -19,11 +21,11 @@ object ExpiringAdFeaturesEmailJob extends Logging {
         (lineItem.endTime.map(_.getMillis).get, lineItem.id)
       }
 
-    for {
+    (for {
       adTech <- adTechTeam
       adOps <- adOpsTeam
       gLabsCsv <- gLabsTeam
-    } {
+    } yield {
       if (adFeatures.nonEmpty) {
 
         val (expired, expiring) = adFeatures partition (_.endTime.exists(_.isBeforeNow))
@@ -39,7 +41,9 @@ object ExpiringAdFeaturesEmailJob extends Logging {
           cc = Seq(adTech),
           subject = "Expiring Advertisement Features",
           htmlBody = Some(htmlBody))
+      } else {
+        Future.successful(())
       }
-    }
+    }).getOrElse(Future.successful(())).map(_ => ())
   }
 }

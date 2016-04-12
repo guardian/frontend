@@ -1,12 +1,11 @@
 package controllers
 
 import common.ExecutionContexts
-import conf.{LiveContentApi, AllGoodHealthcheckController}
+import conf.AllGoodHealthcheckController
 import dispatch.{FunctionHandler, Http}
 import scala.concurrent.Future
-import contentapi.Response
+import contentapi.{ContentApiClient, Response}
 import conf.Configuration.contentApi.previewAuth
-import play.api.mvc.Action
 
 class TrainingHttp extends contentapi.Http with ExecutionContexts {
 
@@ -44,14 +43,13 @@ object TrainingHealthCheck extends AllGoodHealthcheckController(
  "/world/2012/sep/11/barcelona-march-catalan-independence"
 ) {
 
-  lazy val init = {
-    LiveContentApi._http = new TrainingHttp
-    ()=>()
+  def init: Unit = {
+    ContentApiClient.setHttp(new TrainingHttp)
   }
 
   override def healthcheck() = {
     if (!isOk) {
-      init()
+      init
     }
     super.healthcheck()
   }

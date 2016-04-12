@@ -3,13 +3,13 @@
 }
 
 .email-sub__heading-emph {
-    color: guss-colour(guardian-brand, $pasteup-palette);
+    color: $guardian-brand;
 }
 
 .email-sub__description {
     border-top: 3px solid $form-secondary-colour;
     color: $form-primary-colour;
-    background-color: guss-colour(guardian-brand, $pasteup-palette);
+    background-color: $guardian-brand;
 }
 
 .email-sub__description-emph {
@@ -29,7 +29,7 @@
 
     .email-sub__description {
         @include fs-textSans(3);
-        color: colour(neutral-2);
+        color: $neutral-2;
         margin-bottom: $gs-baseline;
     }
 }
@@ -74,7 +74,7 @@
 // PLAIN MODS
 .email-sub--plain {
     .email-sub__message__headline {
-        color: guss-colour(guardian-brand, $pasteup-palette);
+        color: $guardian-brand;
         line-height: 2rem;
     }
 

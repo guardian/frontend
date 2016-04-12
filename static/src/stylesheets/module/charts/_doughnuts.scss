@@ -39,7 +39,7 @@ category: Charts
 
     .chart__unit {
         @include fs-headline(4);
-        fill: colour(neutral-2);
+        fill: $neutral-2;
         font-weight: 900;
         text-anchor: middle;
     }

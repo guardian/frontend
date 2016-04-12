@@ -1,5 +1,3 @@
-@import '../../components/pasteup-buttons/src/_mixins';
-
 .treats__container {
     list-style-type: none;
     margin: $gs-baseline 0;
@@ -33,12 +31,12 @@
     @include ellipsis();
     @include button-colour(
         #ffffff,
-        colour(news-default),
-        colour(news-accent)
+        $news-default,
+        $news-accent
     );
     @include button-hover-colour(
         #ffffff,
-        darken(colour(neutral-3), 10%)
+        darken($neutral-3, 10%)
     );
     box-sizing: border-box;
     display: inline-block;
@@ -62,7 +60,7 @@
     &:hover,
     &:focus,
     &:active {
-        color: colour(neutral-1);
+        color: $neutral-1;
         text-decoration: none;
     }
 }
@@ -86,8 +84,8 @@
     &:focus,
     &:active {
         .treats__treat {
-            color: colour(neutral-1);
-            border-color: darken(colour(neutral-3), 10%);
+            color: $neutral-1;
+            border-color: darken($neutral-3, 10%);
         }
     }
 }

@@ -3,7 +3,7 @@
    ========================================================================== */
 $popup-anchor-arrow-size: 6px;
 $popup-top: $headerHeight + $gs-baseline/2 + 3;
-$c-popup-bg: colour(neutral-8);
+$c-popup-bg: $neutral-8;
 
 // Popups align with the label, so if there's a control icon, we need to account
 // for it. The number is derived from the icon size on the control.
@@ -58,9 +58,9 @@ $control-offset: 36 + $gs-gutter/2;
 
 .popup__group-header {
     @include fs-textSans(2);
-    color: colour(neutral-2);
+    color: $neutral-2;
     padding: $gs-baseline/2 $gs-gutter/2;
-    border-top: 1px solid colour(neutral-4);
+    border-top: 1px solid $neutral-4;
     padding-bottom: 0;
     margin: 0;
 
@@ -176,7 +176,7 @@ $control-offset: 36 + $gs-gutter/2;
     line-height: 36px;
 
     a {
-        border-bottom: 1px solid colour(neutral-5);
+        border-bottom: 1px solid $neutral-5;
     }
 
     &:last-child {
@@ -194,7 +194,7 @@ $control-offset: 36 + $gs-gutter/2;
     .brand-bar__item--action:hover {
         display: block;
         white-space: nowrap;
-        color: colour(neutral-1);
+        color: $neutral-1;
         line-height: $gs-baseline * 3;
     }
 
@@ -232,7 +232,7 @@ $control-offset: 36 + $gs-gutter/2;
     top: 20px;
     left: 30px;
     display: none;
-    fill: colour(news-main-2);
+    fill: $news-main-2;
 }
 
 .has-saved-articles .save-for-later__icon {
@@ -250,7 +250,7 @@ $control-offset: 36 + $gs-gutter/2;
     padding: 0 $gs-gutter / 3;
     border-radius: 30px;
     text-align: center;
-    background: colour(news-main-2);
+    background: $news-main-2;
     color: #ffffff;
 }
 

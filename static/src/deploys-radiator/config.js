@@ -1,6 +1,13 @@
 System.config({
   baseURL: "/assets/admin/deploys-radiator",
   defaultJSExtensions: true,
+  transpiler: "babel",
+  babelOptions: {
+    "optional": [
+      "runtime",
+      "optimisation.modules.system"
+    ]
+  },
   typescriptOptions: {
     "typeCheck": "strict",
     "tsconfig": true
@@ -35,6 +42,9 @@ System.config({
     },
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
+    },
+    "github:jspm/nodelibs-os@0.1.0": {
+      "os-browserify": "npm:os-browserify@0.1.2"
     },
     "github:jspm/nodelibs-path@0.1.0": {
       "path-browserify": "npm:path-browserify@0.0.0"
@@ -75,11 +85,17 @@ System.config({
     "npm:next-tick@0.2.2": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
+    "npm:os-browserify@0.1.2": {
+      "os": "github:jspm/nodelibs-os@0.1.0"
+    },
     "npm:path-browserify@0.0.0": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:process@0.11.2": {
       "assert": "github:jspm/nodelibs-assert@0.1.0"
+    },
+    "npm:typescript@1.8.9": {
+      "os": "github:jspm/nodelibs-os@0.1.0"
     },
     "npm:util@0.10.3": {
       "inherits": "npm:inherits@2.0.1",
