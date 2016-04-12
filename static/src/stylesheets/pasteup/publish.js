@@ -12,9 +12,33 @@ var inquirer = require('inquirer');
 var del = require('del');
 var megalog = require('megalog');
 var ora = require('ora');
+var git = require('git-rev');
+var isGitClean = require('is-git-clean');
 
 var writeFile = Promise.promisify(fs.writeFile);
 var authTokenKey = 'npm.guardian.developers.authToken';
+
+function isMasterBranch() {
+    return new Promise(function (resolve, reject) {
+        git.branch(function (branch) {
+            if (branch === 'master') {
+                resolve();
+            } else {
+                reject(new Error('notmaster'));
+            }
+        })
+    });
+}
+
+function isClean() {
+    return isGitClean().then(function (isClean) {
+        if (isClean) {
+            return true;
+        } else {
+            throw new Error('notclean');
+        }
+    })
+}
 
 function getCredentials() {
     return new Promise(function (resolve, reject) {
@@ -97,7 +121,9 @@ megalog.log([
     'Preparing a new `pasteup` release...'
 ].join('\n\n'));
 
-getCredentials()
+isMasterBranch()
+    .then(isClean)
+    .then(getCredentials)
     .then(setCredentials)
     .then(getReleaseType)
     .then(release)
@@ -110,6 +136,19 @@ getCredentials()
     })
     .catch(function (e) {
         switch (e.message) {
+            case 'notmaster':
+                megalog.error([
+                    'You can only publish from the `master` branch.',
+                    'Switch to master and try again: `git checkout master`.'
+                ].join('\n\n'), {
+                    heading: 'Incorrect branch'
+                });
+                break;
+            case 'notclean':
+                megalog.error('Commit your changes and merge a PR of them before continuing.', {
+                    heading: 'You have uncommited changes'
+                });
+                break;
             case 'noauth':
                 megalog.error([
                     'You do not have the NPM credentials in your `frontend.properties`.',
