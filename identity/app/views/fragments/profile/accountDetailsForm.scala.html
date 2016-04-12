@@ -21,7 +21,7 @@
     <fieldset class="fieldset">
 
         <div class="fieldset__heading">
-            <h2 class="form__heading">Contact information</h2>
+            <h2 class="form__heading">Email</h2>
         </div>
 
         <div class="fieldset__fields">
@@ -42,9 +42,19 @@
                         </p>
                     }
                 </li>
+            </ul>
+        </div>
+    </fieldset>
+    <fieldset class="fieldset">
+
+        <div class="fieldset__heading">
+            <h2 class="form__heading">Phone</h2>
+        </div>
+
+                <div class="fieldset__fields">
+                    <ul class="u-unstyled">
 
                 <li class="form-field form-fields--phone">
-                    <span class="form-fields__heading">Phone</span>
                     <ul class="u-unstyled">
                         @if(accountDetailsForm("telephoneNumber").hasErrors) {
                             <div class="form__error">@accountDetailsForm("telephoneNumber").errors.map(_.message).mkString(", ")</div>
@@ -52,16 +62,16 @@
                         @select(
                             accountDetailsForm("telephoneNumber.countryCode"),
                             PhoneNumbers.countryCodes.map { item => (item.toString, "+" + item.toString)},
-                            ('_label, ""),
+                            ('_label, "Country code"),
                             ('_showConstraints, false),
                             ('_default, ""),
                             Symbol("data-test-id") -> "telephone-number-country-code",
                             Symbol("class") -> "select--telephone-number-country-code"
                         )
                         @inputField(
-                            Input(
+                            Phone(
                                 accountDetailsForm("telephoneNumber.localNumber"),
-                                ('_label, ""),
+                                ('_label, "Local number"),
                                 Symbol("data-test-id") -> "telephone-number-local-number"
                             )
                         )
