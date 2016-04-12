@@ -12,8 +12,6 @@ import play.api.mvc.{Action, Controller}
 import scala.concurrent.Future
 
 case class Subscription(notificationTopicId: String, gcmBrowserId: String)
-case class TestMessage(gcmBrowserId: String, title: String, body: String)
-
 
 object NotificationsController extends Controller with ExecutionContexts with Logging {
 
