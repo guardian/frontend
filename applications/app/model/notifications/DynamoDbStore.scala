@@ -19,7 +19,7 @@ object DynamoDbStore extends Logging with ExecutionContexts {
   private val client = new AmazonDynamoDBAsyncClient(Configuration.aws.credentials.get)
   client.setRegion(Region.getRegion(Regions.EU_WEST_1))
 
-  def addItemToSubcription(browserEndpoint: String, notificationTopicId: String): Future[UpdateItemResult] = {
+  def addItemToSubscription(browserEndpoint: String, notificationTopicId: String): Future[UpdateItemResult] = {
 
     val updateItemRequest = new UpdateItemRequest()
       .withTableName(tableName)
@@ -43,7 +43,7 @@ object DynamoDbStore extends Logging with ExecutionContexts {
     futureUpdateResult
   }
 
-  def deleteItemFromSubcription(browserEndpoint: String, notificationTopicId: String): Future[DeleteItemResult] = {
+  def deleteItemFromSubscription(browserEndpoint: String, notificationTopicId: String): Future[DeleteItemResult] = {
 
     val deleteItemRequest = new DeleteItemRequest()
       .withTableName(tableName)

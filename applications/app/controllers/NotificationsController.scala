@@ -26,7 +26,7 @@ object NotificationsController extends Controller with ExecutionContexts with Lo
         Future.successful(NoCache(BadRequest))
       },
       data => {
-        DynamoDbStore.addItemToSubcription(data.browserEndpoint, data.notificationTopicId)
+        DynamoDbStore.addItemToSubscription(data.browserEndpoint, data.notificationTopicId)
           .map(_ => NoCache(Ok))
           .recover{ case t => NoCache(InternalServerError)}
       }
@@ -39,7 +39,7 @@ object NotificationsController extends Controller with ExecutionContexts with Lo
         Future.successful(NoCache(BadRequest))
       },
       data => {
-        DynamoDbStore.deleteItemFromSubcription(data.browserEndpoint, data.notificationTopicId)
+        DynamoDbStore.deleteItemFromSubscription(data.browserEndpoint, data.notificationTopicId)
           .map(_ => NoCache(Ok))
           .recover{ case t => NoCache(InternalServerError)}
       }
