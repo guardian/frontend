@@ -100,7 +100,7 @@
     @include f-textSans;
     color: #767676;
     text-align: right;
-    font-size: get-font-size(data, 3);
+    font-size: get-font-size(textSans, 2);
 
     img {
         vertical-align: middle;

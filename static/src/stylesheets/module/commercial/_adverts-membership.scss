@@ -1,14 +1,13 @@
-.adverts--tone-brand {
+.adverts--tone-membership {
     > .adverts__header {
-        background: $news-support-2;
+        background: $membership-default;
     }
 }
 
-.adverts--tone-brand > .adverts__body,
-.advert--brand {
+.advert--membership {
     .button {
         @include button-colour(
-            $news-main-2,
+            $membership-default,
             null
         );
     }
@@ -18,10 +17,9 @@
     &:active {
         .button {
             @include button-colour(
-                darken($news-main-2, 5%),
+                darken($membership-default, 5%),
                 null
             );
         }
     }
-
 }

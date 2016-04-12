@@ -167,7 +167,7 @@
 }
 
 .share-modal__title {
-    @include fs-data(4);
+    @include fs-textSans(3);
     color: $neutral-2;
     text-align: center;
     margin-bottom: $gs-baseline * 3;
