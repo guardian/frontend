@@ -28,7 +28,7 @@ trait ABTestSwitches {
     "ab-next-in-series",
     "Show next in series",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 12),
+    sellByDate = new LocalDate(2016, 5, 3),
     exposeClientSide = true
   )
 

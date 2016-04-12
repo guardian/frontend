@@ -7,7 +7,7 @@
 }
 
 .inline-icon--light-grey {
-    fill: colour(neutral-3);
+    fill: $neutral-3;
 }
 
 .inline-close--small svg {
@@ -20,39 +20,39 @@
 }
 
 .inline-tone-fill {
-    fill: colour(news-default);
+    fill: $news-default;
 
     .tonal--tone-comment & {
-        fill: colour(comment-default);
+        fill: $comment-default;
     }
 
     .tonal--tone-feature & {
-        fill: colour(feature-default);
+        fill: $feature-default;
     }
 
     .tonal--tone-review & {
-        fill: colour(review-background);
+        fill: $review-background;
     }
 
     .tonal--tone-editorial & {
-        fill: colour(editorial-default);
+        fill: $editorial-default;
     }
 
     .tonal--tone-analysis & {
-        fill: colour(analysis-accent);
+        fill: $analysis-accent;
     }
 
     .tonal--tone-live &,
     .tonal--tone-dead & {
-        fill: colour(live-default);
+        fill: $live-default;
     }
 
     .tonal--tone-media & {
-        fill: colour(media-default);
+        fill: $media-default;
     }
 
     .tonal--tone-special-report & {
-        fill: colour(news-support-6);
+        fill: $news-support-6;
     }
 }
 

@@ -18,14 +18,14 @@
     margin-bottom: $gs-baseline;
 
     @include mq($until: desktop) {
-        border-top: 1px dotted colour(media-mute);
+        border-top: 1px dotted $media-mute;
         padding-top: $gs-baseline;
 
         &:first-child {
             border-top: 0;
         }
         &:last-child {
-            border-bottom: 1px dotted colour(media-mute);
+            border-bottom: 1px dotted $media-mute;
         }
         .gallery2__item--advert + & {
         }
@@ -80,12 +80,12 @@
         width: gs-span(3);
         right: 0;
         top: 0;
-        border-top: 1px dotted colour(neutral-2);
+        border-top: 1px dotted $neutral-2;
     }
 }
 
 .gallery2__caption {
-    color: colour(neutral-7);
+    color: $neutral-7;
     margin-bottom: 0;
 
     > strong:first-child {
@@ -99,24 +99,24 @@
     }
 
     a {
-        color: colour(neutral-7);
-        border-bottom: 1px solid colour(neutral-2);
+        color: $neutral-7;
+        border-bottom: 1px solid $neutral-2;
 
         &:hover {
-            border-bottom: 1px solid colour(neutral-7);
+            border-bottom: 1px solid $neutral-7;
             text-decoration: none;
         }
     }
 }
 
 .gallery2__credit {
-    color: colour(neutral-3);
+    color: $neutral-3;
 }
 
 .gallery2__img-container {
     position: relative;
     display: block;
-    background-color: lighten(colour(media-background), 2.5%);
+    background-color: lighten($media-background, 2.5%);
 }
 
 .gallery2__img {
@@ -171,7 +171,7 @@
     @include mq(desktop) {
         .gallery2__img-container:hover &,
         .article__img-container:hover & {
-            background-color: colour(media-default);
+            background-color: $media-default;
 
             &.inline-expand-image {
                 fill: #000000;
@@ -233,7 +233,7 @@
 .gallery-lightbox--endslate {
     .tone-media--item {
         .u-faux-block-link--hover {
-            background-color: colour(media-background) !important;
+            background-color: $media-background !important;
 
             .responsive-img {
                 opacity: 1 !important;

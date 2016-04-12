@@ -2,7 +2,7 @@
    Commercial container layout adaptions
    ========================================================================== */
 .commercial {
-    background-color: colour(neutral-6);
+    background-color: $neutral-6;
 }
 .commercial__inner {
     position: relative;
@@ -127,7 +127,7 @@
     @include mq(wide) {
         svg {
             width: 200px;
-            height: 65px;		
+            height: 65px;
         }
     }
 }
@@ -183,7 +183,7 @@
     padding: $gs-baseline*.75 $gs-baseline;
 
     path {
-        fill: colour(neutral-3);
+        fill: $neutral-3;
     }
 
     &:hover,

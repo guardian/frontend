@@ -1,5 +1,5 @@
 .new-header {
-    background-color: colour(guardian-brand);
+    background-color: $guardian-brand;
 }
 
 .new-header__inner {
@@ -51,7 +51,7 @@
 .new-header__edition-button {
     @include fs-textSans(2);
     order: -1;
-    color: colour(news-support-1);
+    color: $news-support-1;
     // Override from fs-textSans mixin
     line-height: 1;
     // TODO: Use reset util?
@@ -106,7 +106,7 @@
 
 .new-header__nav__menu-button {
     // Override button from user agent stylesheet
-    background-color: colour(news-main-2);
+    background-color: $news-main-2;
     // Unset button from user agent stylesheet
     border: 0;
     // Override button from user agent stylesheet
@@ -139,7 +139,7 @@
     // Unset button from user agent stylesheet
     padding: 0;
     // Override button from user agent stylesheet
-    background-color: colour(guardian-brand-dark);
+    background-color: $guardian-brand-dark;
     border-radius: 100%;
     // Mask contents to keep them in the circle
     overflow: hidden;
@@ -162,7 +162,7 @@
         height: 20px;
 
         path {
-            fill: colour(news-support-1);
+            fill: $news-support-1;
         }
     }
 }
@@ -194,7 +194,7 @@
     &:not(:last-child) {
         &:after {
             content: '/';
-            color: colour(news-main-2);
+            color: $news-main-2;
         }
     }
 }

@@ -21,8 +21,8 @@
     @include fs-textSans(2);
     margin-bottom: $gs-baseline*2;
     padding-top: $gs-baseline/2;
-    border-top: 1px solid colour(neutral-5);
-    color: colour(neutral-1);
+    border-top: 1px solid $neutral-5;
+    color: $neutral-1;
     font-weight: 900;
 
     @include mq(leftCol) {
