@@ -1,0 +1,25 @@
+.adverts--tone-membership {
+    > .adverts__header {
+        background: guss-colour(membership-default, $frontend-palette);
+    }
+}
+
+.advert--membership {
+    .button {
+        @include button-colour(
+            guss-colour(membership-default, $frontend-palette),
+            null
+        );
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+        .button {
+            @include button-colour(
+                darken(guss-colour(membership-default, $frontend-palette), 5%),
+                null
+            );
+        }
+    }
+}

@@ -94,6 +94,7 @@
     }
 
     .adverts__logo {
+        color: #ffffff;
         display: flex;
         flex-direction: column;
 
@@ -105,6 +106,7 @@
         svg {
             display: block;
             fill: #ffffff;
+            max-width: 100%;
         }
     }
 
@@ -464,3 +466,4 @@
 @import '_adverts-soulmates';
 @import '_adverts-capi';
 @import '_adverts-brand';
+@import '_adverts-membership';
