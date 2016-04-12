@@ -23,10 +23,6 @@ object AdminConfiguration {
 
   lazy val topStoriesKey = configuration.getStringProperty("top-stories.config").getOrElse(throw new RuntimeException("Top Stories file name is not setup"))
 
-  object contentapi {
-    val previewHost: String = configuration.getStringProperty("content.api.preview.host").getOrElse(throw new RuntimeException("Preview host is not configured"))
-  }
-
   object fastly {
     lazy val key = configuration.getStringProperty("fastly.key").getOrElse(throw new RuntimeException("Fastly key not configured"))
     lazy val serviceId = configuration.getStringProperty("fastly.serviceId").getOrElse(throw new RuntimeException("Fastly service id not configured"))

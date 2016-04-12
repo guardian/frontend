@@ -23,8 +23,8 @@ object Global extends WithFilters(Filters.common: _*)
   override lazy val applicationName = "frontend-applications"
 
   override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ++ List(
-    ContentApiMetrics.ElasticHttpTimeoutCountMetric,
-    ContentApiMetrics.ElasticHttpTimingMetric,
+    ContentApiMetrics.HttpTimeoutCountMetric,
+    ContentApiMetrics.HttpLatencyTimingMetric,
     ContentApiMetrics.ContentApiErrorMetric,
     EmailSubsciptionMetrics.EmailSubmission,
     EmailSubsciptionMetrics.EmailFormError,

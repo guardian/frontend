@@ -42,7 +42,7 @@
     position: relative;
 
     .i-center {
-        background-color: colour(guardian-brand);
+        background-color: $guardian-brand;
     }
 }
 
@@ -65,7 +65,7 @@
     }
 
     .fc-container--first .fc-container__inner {
-        border-top: 1px solid colour(news-main-2) !important;
+        border-top: 1px solid $news-main-2 !important;
     }
 
     .fc-container--first .fc-container__header__title {

@@ -2,8 +2,8 @@ package indexes
 
 import common.Logging
 import common.StringEncodings.asAscii
-import conf.LiveContentApi
-import LiveContentApi.getResponse
+import contentapi.ContentApiClient
+import ContentApiClient.getResponse
 
 import scala.concurrent.Future
 import com.gu.contentapi.client.model.v1.{TagsResponse, Tag}
@@ -39,7 +39,7 @@ object ContentApiTagsEnumerator extends Logging {
   }
 
   def enumerateTagType(tagType: String) = enumeratePages { page =>
-    getResponse(LiveContentApi.tags.tagType(tagType).pageSize(MaxPageSize).page(page))
+    getResponse(ContentApiClient.tags.tagType(tagType).pageSize(MaxPageSize).page(page))
   }
 
   implicit class RichTag(tag: Tag) {

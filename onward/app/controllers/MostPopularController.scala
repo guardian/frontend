@@ -8,7 +8,7 @@ import play.api.mvc.{ RequestHeader, Controller, Action }
 import views.support.FaciaToMicroFormat2Helpers._
 import scala.concurrent.Future
 import play.api.libs.json._
-import LiveContentApi.getResponse
+import contentapi.ContentApiClient
 
 object MostPopularController extends Controller with Logging with ExecutionContexts {
   val page = SimplePage(MetaData.make(
@@ -101,7 +101,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
 
   private def lookup(edition: Edition, path: String)(implicit request: RequestHeader) = {
     log.info(s"Fetching most popular: $path for edition $edition")
-    getResponse(LiveContentApi.item(path, edition)
+    ContentApiClient.getResponse(ContentApiClient.item(path, edition)
       .tag(None)
       .showMostViewed(true)
     ).map{response =>

@@ -2,15 +2,15 @@
 
 @include tone-content(
     live, // $tone
-    colour(live-default), // $tonal__header-background
-    colour(neutral-6), // $tonal__header-text
+    $live-default, // $tonal__header-background
+    $neutral-6, // $tonal__header-text
     #ffffff, // $tonal__header-link
     400, // $tonal__headline-weight
     #ffffff, // $tonal__headline-colour
-    colour(live-default), // $tonal__headline-accent
-    colour(live-accent), // $tonal__standfirst-background
+    $live-default, // $tonal__headline-accent
+    $live-accent, // $tonal__standfirst-background
     #ffffff, // $tonal__standfirst-text
     #ffffff, // $tonal__standfirst-link
-    colour(neutral-8), // $tonal__article-background
-    colour(live-default) // $tonal__article-link
+    $neutral-8, // $tonal__article-background
+    $live-default // $tonal__article-link
 );

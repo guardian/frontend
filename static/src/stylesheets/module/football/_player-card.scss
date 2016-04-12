@@ -12,9 +12,9 @@ $player-card-avatar: (
  **/
 .player-card {
     padding: $gs-baseline $gs-gutter/2;
-    background: colour(neutral-8);
-    border-top: 1px solid colour(sport-mid);
-    color: colour(neutral-1);
+    background: $neutral-8;
+    border-top: 1px solid $sport-mid;
+    color: $neutral-1;
 
     @include mq(mobileLandscape) {
         margin-top: $gs-baseline/2;
@@ -53,7 +53,7 @@ $player-card-avatar: (
 }
 .player-card__position {
     @include fs-textSans(4);
-    color: colour(sport-mid);
+    color: $sport-mid;
 }
 
 .player-card__stats {
@@ -73,7 +73,7 @@ $player-card-avatar: (
 }
 .player-card__stat-value {
     @include fs-textSans(2);
-    border-top: 1px solid colour(neutral-3);
+    border-top: 1px solid $neutral-3;
     font-weight: bold;
     padding-left: 85%;
     text-align: right;
