@@ -86,7 +86,7 @@ define([
                     var onSurvey = new RegExp(surveyPath.replace(/\/$/, '')).test(window.location.href);
 
                     var referredFromSeries = some(pluck(allSeries, 'pageId'), function (id) {
-                        return window.document.referrer.match(id).length > 0;
+                        return new RegExp(id).test(window.document.referrer);
                     });
 
                     if (onSurvey && referredFromSeries) {
