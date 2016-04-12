@@ -12,6 +12,7 @@ import model.diagnostics.css.CssReport
 import org.joda.time.LocalDate
 
 import scala.collection.JavaConverters._
+import scala.util.Try
 
 trait DynamoDbReport[A] extends Logging with ExecutionContexts {
   val client = new AmazonDynamoDBAsyncClient(Configuration.aws.mandatoryCredentials)
@@ -47,7 +48,7 @@ object CSSDynamoDbReport extends DynamoDbReport[CssReport] {
     } {
       client.updateItemFuture(request) onFailure {
         case error: Throwable =>
-          log.error(s"Failed to log CSS report to dynamo DB", error)
+          log.error(s"Failed to log CSS report to DynamoDB", error)
       }
     }
   }
@@ -55,7 +56,8 @@ object CSSDynamoDbReport extends DynamoDbReport[CssReport] {
 
 object CSPDynamoDbReport extends DynamoDbReport[CSPReport] {
   def report(report: CSPReport): Unit = {
-    Scanamo.put(client)("cspReport")(report)
-    ()
+    Try(Scanamo.put(client)("cspReport")(report)).recover {
+      case e: Throwable => log.error(s"Failed to log CSP report to DynamoDB", e)
+    }
   }
 }
