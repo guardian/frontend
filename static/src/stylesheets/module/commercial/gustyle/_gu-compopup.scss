@@ -27,6 +27,6 @@
     @include font-size(13, 15);
 
     font-weight: bold;
-    color: colour(neutral-1);
+    color: $neutral-1;
     float: left;
 }

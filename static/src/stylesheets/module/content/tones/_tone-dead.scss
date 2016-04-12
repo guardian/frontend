@@ -3,14 +3,14 @@
 @include tone-content(
     dead, // $tone
     #ffffff, // $tonal__header-background
-    colour(neutral-2), // $tonal__header-text
-    colour(live-default), // $tonal__header-link
+    $neutral-2, // $tonal__header-text
+    $live-default, // $tonal__header-link
     400, // $tonal__headline-weight
-    colour(neutral-1), // $tonal__headline-colour
-    colour(live-default), // $tonal__headline-accent
-    colour(neutral-6), // $tonal__standfirst-background
-    colour(media-mute), // $tonal__standfirst-text
-    colour(live-default), // $tonal__standfirst-link
-    colour(neutral-8), // $tonal__article-background
-    colour(live-default) // $tonal__article-link
+    $neutral-1, // $tonal__headline-colour
+    $live-default, // $tonal__headline-accent
+    $neutral-6, // $tonal__standfirst-background
+    $media-mute, // $tonal__standfirst-text
+    $live-default, // $tonal__standfirst-link
+    $neutral-8, // $tonal__article-background
+    $live-default // $tonal__article-link
 );

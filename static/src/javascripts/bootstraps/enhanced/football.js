@@ -192,6 +192,7 @@ define([
                             renderTable(competition + '/' + resp.group, extras, dropdownTemplate);
                         }
 
+                        // Other games today
                         $.create('<div class="js-football-match-day" data-link-name="football-match-day-embed"></div>').each(function (container) {
                             football.matchDayFor(competition, resp.matchDate).fetch(container).then(function () {
                                 extras[1] = {

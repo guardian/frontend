@@ -24,7 +24,7 @@
         &,
         p {
             // Override article styles
-            color: colour(neutral-2);
+            color: $neutral-2;
             font-family: $f-sans-serif-text;
             font-size: inherit;
             line-height: inherit;

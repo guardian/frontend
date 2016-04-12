@@ -1,5 +1,5 @@
 .popup--paidfor {
-    background: guss-colour(neutral-1, $pasteup-palette);
+    background: $neutral-1;
     box-shadow: none;
     left: 50%;
     top: 100%;
@@ -19,7 +19,7 @@
     &::before {
         content: '';
         border: solid transparent;
-        border-bottom-color: guss-colour(neutral-1, $pasteup-palette);
+        border-bottom-color: $neutral-1;
         border-style: solid;
         border-width: 6px;
         height: 0;

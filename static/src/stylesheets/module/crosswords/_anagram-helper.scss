@@ -6,7 +6,7 @@
     width: 100%;
     height: 100%;
     padding-top: 2.5%;
-    background: colour(neutral-8);
+    background: $neutral-8;
     text-align: center;
 
     .button:last-of-type {
@@ -70,8 +70,8 @@
     width: $xword-cell-width;
     height: $xword-cell-width;
     line-height: $xword-cell-width;
-    border: 1px solid colour(neutral-3);
-    border-left: 1px solid colour(neutral-3);
+    border: 1px solid $neutral-3;
+    border-left: 1px solid $neutral-3;
 
     @include mq($until: mobileLandscape) {
         width: $xword-cell-width-small;
@@ -86,17 +86,17 @@
     }
 
     &:first-of-type {
-        border-left: 1px solid colour(neutral-3);
+        border-left: 1px solid $neutral-3;
     }
 
     &.has-value {
-        background: colour(neutral-4);
-        color: colour(neutral-3);
+        background: $neutral-4;
+        color: $neutral-3;
     }
 }
 
 .crossword__anagram-helper__cell--with-space {
-    border-right: 1px solid colour(neutral-1);
+    border-right: 1px solid $neutral-1;
 }
 
 .crossword__anagram-helper__cell--with-hyphen::after {
@@ -129,7 +129,7 @@
     position: absolute;
 
     &.entered {
-        color: colour(neutral-3);
+        color: $neutral-3;
     }
 }
 
@@ -143,6 +143,6 @@
         position: relative;
         top: 2px;
         left: 3px;
-        fill: colour(neutral-1);
+        fill: $neutral-1;
     }
 }

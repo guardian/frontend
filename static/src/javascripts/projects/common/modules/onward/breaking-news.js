@@ -41,7 +41,7 @@ define([
             'sport': 'sport',
             'football': 'sport'
         },
-        breakingNewsURL = (config.switches.breakingNewsFromAdminJobs) ? '/news-alert/alerts' : '/breaking-news/lite.json',
+        breakingNewsURL = '/news-alert/alerts',
         page = config.page,
 
         // get the users breaking news alert history

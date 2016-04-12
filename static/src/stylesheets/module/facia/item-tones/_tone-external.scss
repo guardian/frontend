@@ -1,32 +1,32 @@
 .tone-external--item {
-    background-color: colour(neutral-6);
+    background-color: $neutral-6;
 
     .fc-item__kicker,
     .fc-item__byline,
     .fc-save-for-later--is-saved {
-        color: colour(external-main-1);
+        color: $external-main-1;
     }
 
     .fc-save-for-later {
-        border-color: mix(#000000, colour(neutral-6), 10%);
+        border-color: mix(#000000, $neutral-6, 10%);
     }
 
     .fc-item__kicker--dreamsnap {
-        background-color: mix(#000000, colour(neutral-6), 10%);
+        background-color: mix(#000000, $neutral-6, 10%);
     }
 
     .u-faux-block-link--hover,
     .fc-item__image-container {
-        background-color: darken(colour(neutral-6), 3%);
+        background-color: darken($neutral-6, 3%);
     }
 
     .fc-item__container:before,
     .rich-link__container:before {
-        background-color: colour(external-support-1);
+        background-color: $external-support-1;
     }
 
     .fc-save-for-later--is-saved .inline-tone-fill {
-        fill: colour(external-main-1);
+        fill: $external-main-1;
     }
 }
 
