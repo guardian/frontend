@@ -130,7 +130,7 @@ $gimbap-width-quarter: calc(25% - 20px);
     }
 
     @include mq(wide) {
-        width: 940px;
+        width: 960px;
         margin-left: $gimbap-wrap-left-space-wide;
     }
 

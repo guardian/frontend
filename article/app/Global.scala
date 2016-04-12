@@ -19,8 +19,8 @@ object Global
   override lazy val applicationName = "frontend-article"
 
   override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ::: List(
-    ContentApiMetrics.ElasticHttpTimingMetric,
-    ContentApiMetrics.ElasticHttpTimeoutCountMetric,
+    ContentApiMetrics.HttpLatencyTimingMetric,
+    ContentApiMetrics.HttpTimeoutCountMetric,
     ContentApiMetrics.ContentApiErrorMetric
   )
 }

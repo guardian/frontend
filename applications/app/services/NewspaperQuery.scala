@@ -5,7 +5,7 @@ import com.gu.contentapi.client.model.v1.{Content => ApiContent, Tag}
 import com.gu.facia.api.utils.{ResolvedMetaData, ContentProperties}
 import com.gu.facia.api.{models => fapi}
 import common._
-import conf.LiveContentApi
+import contentapi.ContentApiClient
 import implicits.Dates
 import layout.{CollectionEssentials, FaciaContainer}
 import model.pressed.{CollectionConfig, LinkSnap, PressedContent}
@@ -50,7 +50,7 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
 
   private def bookSectionContainers(itemId: String, newspaperDate: DateTime, publication: String): Future[List[FaciaContainer]] = {
 
-    val itemQuery = LiveContentApi.item(itemId)
+    val itemQuery = ContentApiClient.item(itemId)
       .useDate("newspaper-edition")
       .showFields("all")
       .showElements("all")
@@ -59,7 +59,7 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
       .fromDate(newspaperDate.withTimeAtStartOfDay())
       .toDate(newspaperDate)
 
-    LiveContentApi.getResponse(itemQuery).map { resp =>
+    ContentApiClient.getResponse(itemQuery).map { resp =>
 
       //filter out the first page results to make a Front Page container
       val (firstPageContent, otherContent) = resp.results.getOrElse(Nil).partition(content => getNewspaperPageNumber(content).contains(1))
