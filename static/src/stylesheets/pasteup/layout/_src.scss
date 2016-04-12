@@ -117,45 +117,22 @@
             display: block;
             margin-left: $column-gap / 2;
             margin-right: $column-gap / 2;
+            width: width-of-fallback-column-item(
+                $container-width: $columns-fallback-width,
+                $gap-between-columns: $column-gap,
+                $number-of-columns: $columns-fallback-columns
+            );
 
             @include mq(tablet) {
                 float: left;
             }
 
-            @if type-of($columns-fallback-width) == map {
-                @each $breakpoint, $fallback-width in $columns-fallback-width {
+            &:nth-child(n) {
+                clear: none;
+            }
 
-                    $number-of-fallback-columns: if(type-of($columns-fallback-columns) == map, map-get($columns-fallback-columns, $breakpoint), $columns-fallback-columns);
-
-                    @include mq($breakpoint) {
-                        width: width-of-fallback-column-item(
-                            $container-width: $fallback-width,
-                            $gap-between-columns: $column-gap,
-                            $number-of-columns: $number-of-fallback-columns
-                        );
-
-                        &:nth-child(n) {
-                            clear: none;
-                        }
-                        &:nth-child(#{$number-of-fallback-columns}n+1) {
-                            clear: both;
-                        }
-                    }
-
-                }
-            } @else {
-                width: width-of-fallback-column-item(
-                    $container-width: $columns-fallback-width,
-                    $gap-between-columns: $column-gap,
-                    $number-of-columns: $columns-fallback-columns
-                );
-
-                &:nth-child(n) {
-                    clear: none;
-                }
-                &:nth-child(#{$columns-fallback-columns}n+1) {
-                    clear: both;
-                }
+            &:nth-child(#{$columns-fallback-columns}n+1) {
+                clear: both;
             }
         }
     }
