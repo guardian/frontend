@@ -3,6 +3,7 @@ package model.diagnostics.csp
 import model.diagnostics.CSPDynamoDbReport
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
+import org.joda.time.Instant
 
 case class CSPReport(
   blockedUri: String,
@@ -11,7 +12,8 @@ case class CSPReport(
   originalPolicy: String,
   referrer: String,
   statusCode: Option[Int],
-  violatedDirective: String)
+  violatedDirective: String,
+  timestamp: Long)
 
 object CSPReport {
   implicit val jsonReads: Reads[CSPReport] = (
@@ -22,7 +24,18 @@ object CSPReport {
       (__ \ "referrer").read[String] and
       (__ \ "status-code").readNullable[Int] and
       (__ \ "violated-directive").read[String]
-    )(CSPReport.apply _)
+    )(withTimestamp _)
+
+  def withTimestamp(
+    blockedUri: String,
+    documentUri: String,
+    effectiveDirective: String,
+    originalPolicy: String,
+    referrer: String,
+    statusCode: Option[Int],
+    violatedDirective: String): CSPReport = {
+    CSPReport(blockedUri, documentUri, effectiveDirective, originalPolicy, referrer, statusCode, violatedDirective, new Instant().getMillis)
+  }
 }
 
 object CSP {
