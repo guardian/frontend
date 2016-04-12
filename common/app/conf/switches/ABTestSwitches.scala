@@ -6,10 +6,10 @@ trait ABTestSwitches {
 
   val ABDummyTest = Switch(
     "A/B Tests",
-    "dummy-test",
+    "ab-dummy-test",
     "A do-nothing AA test, for the data team",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 10),
+    sellByDate = new LocalDate(2016, 5, 12),
     exposeClientSide = true
   )
 
