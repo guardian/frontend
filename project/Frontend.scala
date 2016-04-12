@@ -49,8 +49,7 @@ object Frontend extends Build with Prototypes {
       jerseyCore,
       jerseyClient,
       cssParser,
-      w3cSac,
-      scanamo
+      w3cSac
     )
   ).settings(
       mappings in TestAssets ~= filterAssets
@@ -101,7 +100,8 @@ object Frontend extends Build with Prototypes {
   val diagnostics = application("diagnostics").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       uaDetectorResources,
-      openCsv
+      openCsv,
+      scanamo
     )
   )
 
