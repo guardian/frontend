@@ -36,7 +36,7 @@
 @import 'layout/_ab-new-header-test-variant';
 @import 'layout/_helpers';
 @import 'layout/_side-margins';
-@include guss-row-utility($detect: true);
+@import 'pasteup/layout/styles';
 @include guss-columns(
     $base-class: $guss-columns-utility-class,
     $css3-columns-support: false, // Because buggy in some versions of WebKit

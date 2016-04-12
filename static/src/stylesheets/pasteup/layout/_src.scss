@@ -1,0 +1,83 @@
+$browser-supports-flexbox: true !default;
+
+@mixin layout-row($class, $detect: false) {
+    @if ($detect) {
+        .has-flex {
+            @include flex-row($class);
+        }
+        .has-no-flex {
+            @include no-flex-row($class);
+        }
+    } @else {
+        @if ($browser-supports-flexbox) {
+            @include flex-row($class);
+        } @else {
+            @include no-flex-row($class);
+        }
+    }
+}
+
+@mixin flex-row($class) {
+    @include mq(tablet) {
+        #{$class} {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-content: stretch;
+            align-items: stretch;
+            width: 100%; // Prevent consecutive rows from flexing together in FF
+        }
+        #{$class}--reverse {
+            flex-direction: row-reverse;
+        }
+        #{$class}__item {
+            flex: 1;
+            flex-grow: 1;
+            flex-basis: 0;
+            width: 0; // Prevent items to grow out of their parent in FF
+        }
+        #{$class}__item--boost-1 {
+            flex-grow: 1.5;
+        }
+        #{$class}__item--boost-2 {
+            flex-grow: 2;
+        }
+    }
+
+    @include mq($until: tablet) {
+        #{$class}--layout-m {
+            display: -webkit-flex;
+            display: flex;
+            flex-wrap: wrap;
+
+            // Items fill half the width of their container
+            #{$class}__item {
+                flex-basis: 50%;
+            }
+
+            // Break the flow on mobile:
+            // Item will fill the whole width of its container
+            #{$class}__item--break-m {
+                flex: 1 100%;
+            }
+        }
+    }
+}
+
+@mixin no-flex-row($class, $fallback-width: 940px) {
+    #{$class} {
+        @include clearfix;
+        width: $fallback-width;
+    }
+
+    #{$class}__item {
+        float: left;
+    }
+
+    @each $i in 2, 3, 4 {
+        #{$class}--items-#{$i} #{$class}__item {
+            width: $fallback-width / $i;
+        }
+    }
+}
+
