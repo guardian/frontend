@@ -104,44 +104,35 @@ define([
             }));
 
             sponsoredContainersPromise = sponsoredFrontPromise.then(function () {
-                return Promise.all(map($('.js-sponsored-container'), function (container) {
-                    if (qwery('.ad-slot--paid-for-badge', container).length === 0) {
-                        var $container = bonzo(container);
-
-                        return renderAd(
-                            container,
-                            $container.data('sponsorship'),
-                            {
-                                sponsor:  $container.data('sponsor'),
-                                series:   $container.data('series'),
-                                keywords: $container.data('keywords'),
-                                fallback: '.js-container__header'
-                            }
-                        );
-                    }
-                }));
+                return Promise.all($('.js-sponsored-container').map(processItem.bind(undefined, '.js-container__header')));
             });
 
             sponsoredCardsPromise = sponsoredContainersPromise.then(function () {
-                return Promise.all(map($('.js-sponsored-card'), function (card) {
-                    if (qwery('.ad-slot--paid-for-badge', card).length === 0) {
-                        var $card = bonzo(card);
-
-                        return renderAd(
-                            card,
-                            $card.data('sponsorship'),
-                            {
-                                sponsor:  $card.data('sponsor'),
-                                series:   $card.data('series'),
-                                keywords: $card.data('keywords'),
-                                fallback: '.js-card__header'
-                            }
-                        );
-                    }
-                }));
+                return Promise.all($('.js-sponsored-card').map(processItem.bind(undefined, '.js-card__header')));
             });
 
             return sponsoredCardsPromise;
+
+            function processItem(fallback, item) {
+                if (qwery('.ad-slot--paid-for-badge', item).length === 0) {
+                    var $item = bonzo(item);
+
+                    if (!item.hasAttribute('data-sponsorship')) {
+                        return;
+                    }
+
+                    return renderAd(
+                        item,
+                        $item.data('sponsorship'),
+                        {
+                            sponsor:  $item.data('sponsor'),
+                            series:   $item.data('series'),
+                            keywords: $item.data('keywords'),
+                            fallback: fallback
+                        }
+                    );
+                }
+            }
         },
         badges = {
 
