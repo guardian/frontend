@@ -7,6 +7,7 @@
 
 html {
     font-family: $f-serif-text;
+    -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
 }
 body {
