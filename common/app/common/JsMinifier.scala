@@ -13,7 +13,7 @@ import scala.util.Try
 
 object JsMinifier {
 
-  val compilerOptions = {
+  def compilerOptions = {
     val options = new CompilerOptions()
 
     /* Checks */
@@ -53,12 +53,14 @@ object JsMinifier {
   private def compileUnsafe(codeToCompile: String, fileName: String, compilationLevel: CompilationLevel): String = {
     val compiler = new Compiler()
 
-    compilationLevel.setOptionsForCompilationLevel(compilerOptions)
+    val options = compilerOptions
+
+    compilationLevel.setOptionsForCompilationLevel(options)
 
     val extern: SourceFile = SourceFile.fromCode("extern.js", "")
     val input: SourceFile = SourceFile.fromCode(fileName, codeToCompile)
 
-    val result: Result = compiler.compile(extern, input, compilerOptions)
+    val result: Result = compiler.compile(extern, input, options)
 
     if (result.warnings.isEmpty && result.errors.isEmpty && result.success) {
       compiler.toSource
