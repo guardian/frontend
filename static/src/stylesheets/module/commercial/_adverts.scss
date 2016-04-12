@@ -419,7 +419,7 @@
         float: none;
         min-height: 0;
         overflow: visible;
-        margin: 0;
+        margin: auto $gs-gutter / 4 0;
         padding: 0;
         position: static;
         width: auto;
@@ -430,8 +430,15 @@
         }
     }
 
+    .ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
+        margin-top: 0;
+    }
+
     .ad-slot--paid-for-badge .ad-slot--paid-for-badge__inner {
         overflow: visible;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
     }
 
     .ad-slot--paid-for-badge .ad-slot--paid-for-badge__header {
@@ -450,6 +457,7 @@
         display: inline-block;
         margin-left: $gs-gutter / 2;
         vertical-align: middle;
+        max-height: 5 * $gs-baseline;
     }
 
     .ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link:after {
