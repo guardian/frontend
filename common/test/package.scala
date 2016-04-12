@@ -4,8 +4,8 @@ import java.io.File
 
 import com.gargoylesoftware.htmlunit.BrowserVersion
 import common.ExecutionContexts
-import conf.{Configuration, LiveContentApi}
-import contentapi.Http
+import conf.Configuration
+import contentapi.{ContentApiClient, Http}
 import org.apache.commons.codec.digest.DigestUtils
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import org.scalatestplus.play._
@@ -37,7 +37,7 @@ trait TestSettings {
     val originalHttp = http
 
     verify(
-      Configuration.contentApi.contentApiLiveHost,
+      Configuration.contentApi.contentApiHost,
       "5f755b14e59810c1c7ed8a79dfe9bc132340d22ee255f3b41bd4f3e2af5e5393",
       "YOU ARE NOT USING THE CORRECT ELASTIC SEARCH LIVE CONTENT API HOST"
     )
@@ -57,7 +57,8 @@ trait TestSettings {
     }
   }
 
-  LiveContentApi._http = toRecorderHttp(LiveContentApi._http)
+  ContentApiClient.thriftClient._http = toRecorderHttp(ContentApiClient.thriftClient._http)
+  ContentApiClient.jsonClient._http = toRecorderHttp(ContentApiClient.jsonClient._http)
 }
 
 trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with ExecutionContexts {

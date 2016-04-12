@@ -196,7 +196,6 @@ GET            /sport/rugby/api/score/:year/:month/:day/:team1Id/:team2Id.json  
 GET            /sport/rugby/api/score/:year/:month/:day/:team1Id/:team2Id                                                        rugby.controllers.MatchesController.score(year, month, day, team1Id, team2Id)
 
 # Admin
-# authentication endpoints
 GET            /login                                                                                                            controllers.admin.OAuthLoginController.login
 POST           /login                                                                                                            controllers.admin.OAuthLoginController.loginAction
 GET            /oauth2callback                                                                                                   controllers.admin.OAuthLoginController.oauth2Callback
@@ -235,6 +234,10 @@ GET            /troubleshoot/pages                                              
 GET            /troubleshoot/test                                                                                                controllers.admin.TroubleshooterController.test(id, testPath)
 GET            /redirects                                                                                                        controllers.admin.RedirectController.redirect()
 POST           /redirect-post                                                                                                    controllers.admin.RedirectController.redirectPost()
+GET            /press/r2                                                                                                         controllers.admin.R2PressController.pressForm()
+POST           /press/r2                                                                                                         controllers.admin.R2PressController.press()
+GET            /press/r2/batchupload                                                                                             controllers.admin.R2PressController.pressForm()
+POST           /press/r2/batchupload                                                                                             controllers.admin.R2PressController.batchUpload()
 
 # css reports
 GET            /css-reports                                                                                                      controllers.admin.CssReportController.entry

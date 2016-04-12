@@ -138,10 +138,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 
   def renderFrontJsonLite(path: String) = Action.async { implicit request =>
-    val cacheTime = path match {
-      case p if p.startsWith("breaking-news") => 10
-      case _ => 60}
-
+    val cacheTime = 60
     frontJsonFapi.get(path).map {
         case Some(pressedPage) => Cached(cacheTime)(Cors(JsonComponent(FapiFrontJsonLite.get(pressedPage))))
         case None => Cached(cacheTime)(Cors(JsonComponent(JsObject(Nil))))}

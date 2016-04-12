@@ -1,7 +1,7 @@
 package football.controllers
 
 import common._
-import conf.{LiveContentApi, Configuration}
+import conf.Configuration
 import feed.Competitions
 import football.model.FootballMatchTrail
 import implicits.{Football, Requests}
@@ -13,7 +13,7 @@ import pa.FootballMatch
 import play.api.libs.json._
 import play.api.mvc.{Action, Controller, RequestHeader, Result}
 import play.twirl.api.Html
-import LiveContentApi.getResponse
+import contentapi.ContentApiClient
 import scala.concurrent.Future
 
 case class Report(trail: FootballMatchTrail, name: String)
@@ -93,7 +93,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
   def loadMoreOn(request: RequestHeader, theMatch: FootballMatch): Future[Seq[ContentType]] = {
     val matchDate = theMatch.date.toLocalDate
 
-    getResponse(LiveContentApi.search(Edition(request))
+    ContentApiClient.getResponse(ContentApiClient.search(Edition(request))
       .section("football")
       .tag("tone/minutebyminute|tone/matchreports|football/series/squad-sheets|football/series/match-previews|football/series/saturday-clockwatch")
       .fromDate(matchDate.minusDays(2).toDateTimeAtStartOfDay)

@@ -3,8 +3,8 @@ package model.commercial
 import com.gu.contentapi.client.model.v1.Tag
 import common.Edition.defaultEdition
 import common.{ExecutionContexts, Logging}
-import conf.LiveContentApi
-import LiveContentApi.getResponse
+import contentapi.ContentApiClient
+import ContentApiClient.getResponse
 import model.{ImageElement, ContentType, Content}
 
 import scala.concurrent.Future
@@ -13,7 +13,7 @@ object Lookup extends ExecutionContexts with Logging {
 
   def content(contentId: String): Future[Option[ContentType]] = {
     val response = try {
-      getResponse(LiveContentApi.item(contentId, defaultEdition))
+      getResponse(ContentApiClient.item(contentId, defaultEdition))
     } catch {
       case e: Exception => Future.failed(e)
     }
@@ -29,14 +29,14 @@ object Lookup extends ExecutionContexts with Logging {
   def contentByShortUrls(shortUrls: Seq[String]): Future[Seq[ContentType]] = {
     if (shortUrls.nonEmpty) {
       val shortIds = shortUrls map (_.stripPrefix("http://").stripPrefix("gu.com").stripPrefix("/")) mkString ","
-      getResponse(LiveContentApi.search(defaultEdition).ids(shortIds)) map {
+      getResponse(ContentApiClient.search(defaultEdition).ids(shortIds)) map {
         _.results map (Content(_))
       }
     } else Future.successful(Nil)
   }
 
   def latestContentByKeyword(keywordId: String, maxItemCount: Int): Future[Seq[ContentType]] = {
-    getResponse(LiveContentApi.search(defaultEdition).tag(keywordId).pageSize(maxItemCount).orderBy("newest")) map {
+    getResponse(ContentApiClient.search(defaultEdition).tag(keywordId).pageSize(maxItemCount).orderBy("newest")) map {
       _.results map (Content(_))
     }
   }
@@ -46,7 +46,7 @@ object Lookup extends ExecutionContexts with Logging {
   }
 
   def keyword(term: String, section: Option[String] = None): Future[Seq[Tag]] = {
-    val baseQuery = LiveContentApi.tags.q(term).tagType("keyword").pageSize(50)
+    val baseQuery = ContentApiClient.tags.q(term).tagType("keyword").pageSize(50)
     val query = section.foldLeft(baseQuery)((acc, sectionName) => acc section sectionName)
 
     val result = getResponse(query).map(_.results) recover {
