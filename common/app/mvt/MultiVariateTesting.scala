@@ -62,14 +62,35 @@ object SeriesOnwardPosition extends TestDefinition(
   List(Variant2, Variant3, Variant4, Variant5, Variant6), // 5% of our audience
   "series-onward-position",
   "Test engagement with the series onward container positioned as the first thing after the article",
-  new LocalDate(2016, 4, 11)) {
+  new LocalDate(2016, 4, 12)) {
     def isParticipating(request: RequestHeader, content: model.ContentType): Boolean = {
       content.tags.series.nonEmpty && super.isParticipating(request)
     }
 }
 
+object ABIntersperseMultipleStoryPackagesStories extends TestDefinition(
+  List(Variant8), // 1% of our audience
+  "intersperse-multiple-story-packages-stories",
+  "To test if mixing storyPackages stories (when article has more than one storyPackage) results in more clicks",
+  new LocalDate(2016, 5, 3)
+)
+object ABIntersperseMultipleStoryPackagesStoriesControl extends TestDefinition(
+  List(Variant9), // 1% of our audience
+  "intersperse-multiple-story-packages-stories-control",
+  "Control for the intersperse-multiple-story-packages-stories A/B test",
+  new LocalDate(2016, 5, 3)
+)
+
 object ActiveTests extends Tests {
-  val tests: Seq[TestDefinition] = List(ABNewHeaderVariant, CMTopBannerPosition, ABHeadlinesTestControl, ABHeadlinesTestVariant, SeriesOnwardPosition)
+  val tests: Seq[TestDefinition] = List(
+    ABNewHeaderVariant,
+    CMTopBannerPosition,
+    ABHeadlinesTestControl,
+    ABHeadlinesTestVariant,
+    SeriesOnwardPosition,
+    ABIntersperseMultipleStoryPackagesStories,
+    ABIntersperseMultipleStoryPackagesStoriesControl
+  )
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
 

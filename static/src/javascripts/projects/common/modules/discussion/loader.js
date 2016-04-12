@@ -345,7 +345,8 @@ Loader.prototype.commentPosted = function () {
 Loader.prototype.renderCommentBox = function(elem) {
     return new CommentBox({
         discussionId: this.getDiscussionId(),
-        premod: this.user.privateFields.isPremoderated
+        premod: this.user.privateFields.isPremoderated,
+        newCommenter: !this.user.privateFields.hasCommented
     }).render(elem).on('post:success', this.commentPosted.bind(this));
 };
 

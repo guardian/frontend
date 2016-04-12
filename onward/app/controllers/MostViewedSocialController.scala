@@ -2,7 +2,7 @@ package controllers
 
 import common.`package`._
 import common.{Edition, ExecutionContexts, JsonNotFound}
-import conf.LiveContentApi
+import contentapi.ContentApiClient
 import feed.MostPopularSocialAutoRefresh
 import layout.{CollectionEssentials, FaciaContainer}
 import model.FrontProperties
@@ -25,8 +25,8 @@ object MostViewedSocialController extends Controller with ExecutionContexts {
 
     articles match {
       case Some(articleIds) if articleIds.nonEmpty =>
-        LiveContentApi.getResponse(
-          LiveContentApi
+        ContentApiClient.getResponse(
+          ContentApiClient
             .search(Edition(request))
             .ids(articleIds.take(7).map(item => feed.urlToContentPath(item.url)).mkString(","))
         ) map { response =>

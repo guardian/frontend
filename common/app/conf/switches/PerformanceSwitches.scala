@@ -206,4 +206,13 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
+  val ContentApiUseThrift = Switch(
+    "Performance",
+    "content-api-use-thrift",
+    "If this switch is on then content api calls will be requested in thrift format, instead of json format.",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 5),
+    exposeClientSide = false
+  )
+
 }

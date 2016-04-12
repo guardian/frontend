@@ -26,19 +26,19 @@ define([
     var allSeries = [
         {
             id: 'experience',
-            pageId: 'lifeandstyle/2016/apr/15/experience-i-watched-my-dad-die-then-come-back-to-life',
+            pageId: 'lifeandstyle/2016/apr/08/experience-my-boyfriend-threw-acid-in-my-face',
             title: 'I watched my dad die - then come back to life',
             trail: '‘I ran to him and held his hand; it was tense but there was no pulse’'
         },
         {
             id: 'alanis',
-            pageId: 'society/2016/apr/15/ask-alanis-morissette-how-can-stop-drinking-so-much',
+            pageId: 'lifeandstyle/2016/apr/08/i-have-no-friends-alanis-morissette-advice-column',
             title: 'Dear Alanis, how can I stop drinking so much?',
             trail: '‘I started drinking at university, and 25 years later, I still drink daily and often too much…’'
         },
         {
             id: 'oliver-burkeman',
-            pageId: 'lifeandstyle/2016/apr/16/how-to-deal-with-email-overload',
+            pageId: 'lifeandstyle/2016/apr/08/how-to-love-your-daily-commute-oliver-burkeman',
             title: 'How to deal with email overload',
             trail: 'Trying to stay on top of email is a losing battle'
         }
@@ -52,7 +52,7 @@ define([
     return function () {
         this.id = 'NextInSeries';
         this.start = '2016-03-24';
-        this.expiry = '2016-04-12';
+        this.expiry = '2016-05-03';
         this.author = 'Oliver Ash';
         this.description = 'Show next in series';
         this.audience = 1;
