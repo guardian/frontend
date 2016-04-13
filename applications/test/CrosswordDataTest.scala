@@ -38,7 +38,7 @@ import org.scalatest.time.{Millis, Span}
       Entry.formatHumanNumber("2,3,4,5across") should be (Some("2, 3, 4, 5 across"))
     }
 
-    "fromCrossword should populate dateSolutionAvailable field if it is available and leave it empty if not" in {
+    "fromCrossword should populate solutionAvailable field always and dateSolutionAvailable field if it exists" in {
 
       implicit val patienceConfig = PatienceConfig(timeout = Span(3000, Millis), interval = Span(100, Millis))
       val futureCrossword = controllers.CrosswordPageController.getCrossword("speedy", 1040)(TestRequest("crosswords/speedy/1040"))
@@ -48,6 +48,7 @@ import org.scalatest.time.{Millis, Span}
         val maybeCrossword = result.content.flatMap(_.crossword)
         maybeCrossword shouldBe defined
         val crossword = CrosswordData.fromCrossword(maybeCrossword.get)
+        crossword.solutionAvailable should be(false)
         crossword.dateSolutionAvailable should be(None)
       }
 
@@ -55,6 +56,7 @@ import org.scalatest.time.{Millis, Span}
         val maybeCrossword = result.content.flatMap(_.crossword)
         maybeCrossword shouldBe defined
         val crossword = CrosswordData.fromCrossword(maybeCrossword.get)
+        crossword.solutionAvailable should be(true)
         crossword.dateSolutionAvailable should be(Some(new DateTime(2016,2,20,0,0,0)))
       }
     }
