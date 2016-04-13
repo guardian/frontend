@@ -23,7 +23,7 @@
     @if(Switches.cardsDecidePaidContainerBranding.isSwitchedOn) {
         @for(container <- maybeContainerModel) {
             @for(branding <- container.branding) {
-                data-sponsor="@branding.sponsor"
+                @for(sponsor <- branding.sponsor){data-sponsor="@sponsor"}
                 @for(seriesId <- branding.seriesId) { data-series="@seriesId" }
                 @for(keywordId <- branding.keywordId) { data-keywords="@keywordId" }
                 data-sponsorship="@branding.sponsorshipType"
@@ -54,7 +54,7 @@
     @containerDefinition.container match {
         case _: model.MostPopular if isPaidFront => {}
 
-        case _: Fixed if Switches.v2FixedContainerTemplate.isSwitchedOn && shouldRenderAsPaidContainer(isPaidFront, containerDefinition) => {
+        case _: Fixed if Switches.v2FixedContainerTemplate.isSwitchedOn && shouldRenderAsPaidContainer(isPaidFront, containerDefinition, maybeContainerModel) => {
             @maybeContainerModel match {
                 case Some(containerModel) => {
                     @paidContainerV2(frontId.getOrElse(""), containerDefinition.index, containerModel)
@@ -63,7 +63,7 @@
             }
         }
 
-        case _: Dynamic if Switches.v2DynamicContainerTemplate.isSwitchedOn && shouldRenderAsPaidContainer(isPaidFront, containerDefinition) => {
+        case _: Dynamic if Switches.v2DynamicContainerTemplate.isSwitchedOn && shouldRenderAsPaidContainer(isPaidFront, containerDefinition, maybeContainerModel) => {
             @maybeContainerModel match {
                 case Some(containerModel) => {
                     @paidContainerV2(frontId.getOrElse(""), containerDefinition.index, containerModel)
@@ -77,7 +77,7 @@
         class="@GetClasses.forContainerDefinition(containerDefinition)
         @if(Switches.cardsDecidePaidContainerBranding.isSwitchedOn){
             @for(container <- maybeContainerModel){
-                @if(container.branding.isDefined){ js-sponsored-container }
+                @if(container.isSingleSponsorContainer){ js-sponsored-container }
             }
         }"
         data-link-name="container-@{containerDefinition.index + 1} | @componentName"
@@ -96,7 +96,7 @@
 
             @containerDefinition.container match {
 
-                case Fixed(definition) if shouldRenderAsPaidContainer(isPaidFront, containerDefinition) => {
+                case Fixed(definition) if shouldRenderAsPaidContainer(isPaidFront, containerDefinition, maybeContainerModel) => {
                     @renderCommercialContainer(SingleCampaign(definition))
                 }
 
