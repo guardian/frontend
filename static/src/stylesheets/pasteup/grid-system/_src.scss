@@ -1,0 +1,53 @@
+$gs-gutter: 20px;
+$gs-baseline: 12px;
+$gs-column-width: 60px;
+$gs-row-height: 36px;
+$gs-max-columns: 16;
+
+// Helpers
+// =============================================================================
+@function gs-span($n-columns) {
+    @return $n-columns * $gs-column-width + $gs-gutter * ($n-columns - 1);
+}
+
+@function gs-height($n-rows) {
+    @return $n-rows * $gs-row-height + $gs-baseline * ($n-rows - 1);
+}
+
+@mixin gs-container {
+    position: relative;
+    margin: 0 auto;
+
+    @include mq(tablet) {
+        max-width: gs-span(9) + $gs-gutter * 2;
+    }
+
+    @include mq(desktop) {
+        max-width: gs-span(12) + $gs-gutter * 2;
+    }
+
+    @include mq(leftCol) {
+        max-width: gs-span(14) + $gs-gutter * 2;
+    }
+
+    @include mq(wide) {
+        max-width: gs-span($gs-max-columns) + $gs-gutter * 2;
+    }
+}
+
+@mixin gs-helpers {
+    @for $n from 1 through $gs-max-columns {
+        .gs-span-#{$n} {
+            width: gs-span($n);
+        }
+    }
+}
+
+// Output grid system helper classes
+// =============================================================================
+
+@mixin grid-system {
+    .gs-container {
+        @include gs-container;
+    }
+}

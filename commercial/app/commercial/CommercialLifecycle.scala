@@ -8,6 +8,7 @@ import model.commercial.money.BestBuysAgent
 import model.commercial.travel.Countries
 import play.api.{Application => PlayApp, GlobalSettings}
 
+import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.util.Random
 import scala.util.control.NonFatal
@@ -31,7 +32,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
 
     def randomStartSchedule(minsLater: Int = 0) = s"0 ${Random.nextInt(15) + minsLater}/15 * * * ?"
 
-    def fetchFeed(fetcher: FeedFetcher): Unit = {
+    def fetchFeed(fetcher: FeedFetcher): Future[Unit] = {
 
       val feedName = fetcher.feedMetaData.name
 
@@ -55,9 +56,10 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
           recordFetch(Some(response.duration))
           log.info(s"$msgPrefix succeeded in ${response.duration}")
       }
+      eventualResponse.map(_ => ())
     }
 
-    def parseFeed[T](parser: FeedParser[T]): Unit = {
+    def parseFeed[T](parser: FeedParser[T]): Future[Unit] = {
 
       val feedName = parser.feedMetaData.name
 
@@ -80,6 +82,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
           recordParse(Some(feed.parseDuration))
           log.info(s"$msgPrefix succeeded: parsed ${feed.contents.size} $feedName in ${feed.parseDuration}")
       }
+      parsedFeed.map(_ => ())
     }
 
     super.onStart(application)
@@ -107,6 +110,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     Jobs.deschedule("cloudwatchUpload")
     Jobs.scheduleEveryNMinutes("cloudwatchUpload", 15) {
       CommercialMetrics.metrics.upload()
+      Future.successful(())
     }
 
     refreshJobs.zipWithIndex foreach {

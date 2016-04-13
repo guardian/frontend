@@ -1,14 +1,14 @@
 .paidfor-meta {
     @include f-textSans;
-    background: guss-colour(paidfor-background, $frontend-palette);
-    font-size: get-font-size(data, 3);
+    background: $paidfor-background;
+    font-size: get-font-size(textSans, 2);
 }
 
 
 .paidfor-meta__label,
 .paidfor-meta__more {
     display: inline-block;
-    font-size: get-font-size(data, 3);
+    font-size: get-font-size(textSans, 2);
 }
 
 .paidfor-meta__label,
@@ -37,7 +37,7 @@
     svg {
         width: 12px;
         height: 9px;
-        fill: colour(neutral-1);
+        fill: $neutral-1;
 
     }
 

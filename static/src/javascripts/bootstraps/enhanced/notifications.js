@@ -189,12 +189,11 @@ define([
         updateSubscription: function (notificationsEndpoint) {
             return modules.getSub().then(function (sub) {
                 var endpoint = sub.endpoint,
-                    gcmBrowserId = endpoint.substring(endpoint.lastIndexOf('/') + 1),
                     request = ajax({
                         url: notificationsEndpoint,
                         method: 'POST',
                         contentType: 'application/x-www-form-urlencoded',
-                        data: {gcmBrowserId: gcmBrowserId, notificationTopicId: config.page.pageId}
+                        data: {browserEndpoint: endpoint, notificationTopicId: config.page.pageId}
                     });
                 return request;
             });

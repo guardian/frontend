@@ -10,7 +10,7 @@ GET        /_healthcheck                                                        
 GET        /sitemaps/news.xml                                                   controllers.SiteMapController.renderNewsSiteMap()
 GET        /sitemaps/video.xml                                                  controllers.SiteMapController.renderVideoSiteMap()
 
-GET        /surveys/404-test/next-in-series/$seriesName<experience> controllers.SurveysController.render404TestNextInSeries(seriesName: String)
+GET        /surveys/404-test/next-in-series/$seriesName<experience|alanis|oliver-burkeman> controllers.SurveysController.render404TestNextInSeries(seriesName: String)
 GET        /surveys/*file                                                       controllers.Assets.at(path="/public/surveys", file)
 
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.

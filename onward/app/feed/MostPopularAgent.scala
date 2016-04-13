@@ -1,13 +1,13 @@
 package feed
 
-import conf.LiveContentApi
+import contentapi.ContentApiClient
 import common._
 import services.OphanApi
 import play.api.libs.json.{JsArray, JsValue}
 import model.RelatedContentItem
 import scala.concurrent.duration._
 import scala.concurrent.Future
-import LiveContentApi.getResponse
+import ContentApiClient.getResponse
 
 object MostPopularAgent extends Logging with ExecutionContexts {
 
@@ -20,7 +20,7 @@ object MostPopularAgent extends Logging with ExecutionContexts {
     Edition.all foreach refresh
   }
 
-  def refresh(edition: Edition) = getResponse(LiveContentApi.item("/", edition)
+  def refresh(edition: Edition) = getResponse(ContentApiClient.item("/", edition)
       .showMostViewed(true)
     ).map { response =>
       val mostViewed = response.mostViewed.getOrElse(Nil) map { RelatedContentItem(_) } take 10
@@ -56,7 +56,7 @@ object GeoMostPopularAgent extends Logging with ExecutionContexts {
         item: JsValue <- ophanResults.asOpt[JsArray].map(_.value).getOrElse(Nil)
         url <- (item \ "url").asOpt[String]
       } yield {
-        getResponse(LiveContentApi.item(urlToContentPath(url), Edition.defaultEdition))
+        getResponse(ContentApiClient.item(urlToContentPath(url), Edition.defaultEdition))
           .map(_.content.map(RelatedContentItem(_)))
           .fallbackTo{
             log.error(s"Error requesting $url")
@@ -106,7 +106,7 @@ object DayMostPopularAgent extends Logging with ExecutionContexts {
         item: JsValue <- ophanResults.asOpt[JsArray].map(_.value).getOrElse(Nil)
         url <- (item \ "url").asOpt[String]
       } yield {
-        getResponse(LiveContentApi.item(urlToContentPath(url), Edition.defaultEdition ))
+        getResponse(ContentApiClient.item(urlToContentPath(url), Edition.defaultEdition ))
           .map(_.content.map(RelatedContentItem(_)))
           .fallbackTo{
             log.error(s"Error requesting $url")
@@ -140,7 +140,7 @@ object MostPopularExpandableAgent extends Logging with ExecutionContexts {
   def refresh() {
     log.info("Refreshing most popular.")
     Edition.all foreach { edition =>
-      getResponse(LiveContentApi.item("/", edition)
+      getResponse(ContentApiClient.item("/", edition)
         .showMostViewed(true)
         .showFields("headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl,body")
       ).foreach { response =>

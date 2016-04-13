@@ -26,7 +26,7 @@
         @include fs-header(4);
         padding-bottom: $gs-baseline/3;
         line-height: get-line-height(header, 2);
-        color: guss-colour(guardian-brand-dark, $pasteup-palette);
+        color: $guardian-brand-dark;
 
         @include mq($until: tablet) {
             padding: 0 0 $gs-baseline/3;
@@ -38,6 +38,6 @@
     .container__meta__item {
         @include fs-headline(2);
         margin: 0;
-        color: colour(neutral-2);
+        color: $neutral-2;
     }
 }

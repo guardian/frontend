@@ -28,6 +28,10 @@
     @include mq(wide) {
         padding: 0 calc(50% - 650px);
     }
+
+    .inline-commercial {
+        display: block;
+    }
 }
 
 .adverts--legacy {
@@ -84,7 +88,13 @@
         }
     }
 
+    .adverts__title {
+        color: #ffffff;
+        @include fs-header(2);
+    }
+
     .adverts__logo {
+        color: #ffffff;
         display: flex;
         flex-direction: column;
 
@@ -96,6 +106,7 @@
         svg {
             display: block;
             fill: #ffffff;
+            max-width: 100%;
         }
     }
 
@@ -129,7 +140,7 @@
                 position: relative;
 
                 &::before {
-                    @include separator(colour(neutral-4), $gs-gutter / -2);
+                    @include separator($neutral-4, $gs-gutter / -2);
                 }
             }
         }
@@ -163,11 +174,11 @@
 
         @include mq(tablet) {
             &::before {
-                @include separator(colour(neutral-4), calc((100% - #{$gs-gutter}) / 3), $gs-gutter / 2);
+                @include separator($neutral-4, calc((100% - #{$gs-gutter}) / 3), $gs-gutter / 2);
             }
 
             &::after {
-                @include separator(colour(neutral-4), calc((100% - #{$gs-gutter}) / 3 * 2), $gs-gutter / 2);
+                @include separator($neutral-4, calc((100% - #{$gs-gutter}) / 3 * 2), $gs-gutter / 2);
             }
         }
     }
@@ -185,7 +196,7 @@
     }
 
     .adverts__row > .advert::after {
-        @include separator(colour(neutral-4), 100%, $gs-gutter / 2);
+        @include separator($neutral-4, 100%, $gs-gutter / 2);
     }
 
     .adverts__row > .button::before {
@@ -305,7 +316,7 @@
 
 .adverts__badge {
     @include fs-textSans(1);
-    color: colour(neutral-2);
+    color: $neutral-2;
     font-weight: bold;
     padding-right: $gs-gutter;
     text-align: right;
@@ -337,6 +348,10 @@
 
     &:not([open]) .inline-minus,
     &[open] .inline-plus {
+        display: none;
+    }
+
+    &:not([open]) > *:not(summary) {
         display: none;
     }
 }
@@ -454,3 +469,5 @@
 @import '_adverts-jobs';
 @import '_adverts-soulmates';
 @import '_adverts-capi';
+@import '_adverts-brand';
+@import '_adverts-membership';
