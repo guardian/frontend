@@ -54,7 +54,7 @@
         }
         @include mq(desktop) {
             padding-left: $gs-gutter/2;
-            border-left: 1px solid colour(neutral-2);
+            border-left: 1px solid $neutral-2;
         }
     }
     .content__secondary-column--video {
@@ -108,7 +108,7 @@
    ========================================================================== */
 
 .most-viewed-container--media {
-    border-top: 1px solid colour(neutral-2);
+    border-top: 1px solid $neutral-2;
 
     @include mq($until: desktop) {
         margin-top: $gs-baseline*2;

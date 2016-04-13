@@ -18,7 +18,7 @@ object Global extends WithFilters(Filters.common: _*)
   override lazy val applicationName = "frontend-onward"
 
   override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ++ Seq(
-    ContentApiMetrics.ElasticHttpTimeoutCountMetric,
+    ContentApiMetrics.HttpTimeoutCountMetric,
     ContentApiMetrics.ContentApiErrorMetric
   )
 }

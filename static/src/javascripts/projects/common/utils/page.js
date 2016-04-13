@@ -1,12 +1,14 @@
 define([
     'common/utils/$',
     'common/utils/config',
+    'common/utils/detect',
     'lodash/objects/assign',
     'lodash/collections/find',
     'lodash/arrays/intersection'
 ], function (
     $,
     config,
+    detect,
     assign,
     find,
     intersection
@@ -45,7 +47,8 @@ define([
     }
 
     function isCompetition(yes, no) {
-        var competition = ($('.js-football-competition').attr('data-link-name') || '').replace('keyword: football/', '');
+        var notMobile = detect.getBreakpoint() !== 'mobile',
+            competition =  notMobile ? ($('.js-football-competition').attr('data-link-name') || '').replace('keyword: football/', '') : '';
         return isit(competition, yes, no);
     }
 

@@ -1,8 +1,8 @@
 package model
 
 import common._
-import conf.LiveContentApi
-import LiveContentApi.getResponse
+import contentapi.ContentApiClient
+import ContentApiClient.getResponse
 
 trait LiveBlogAgent extends ExecutionContexts with Logging {
   import Edition.{all => editions}
@@ -21,7 +21,7 @@ trait LiveBlogAgent extends ExecutionContexts with Logging {
     log.info(s"Fetching football blogs with tag: $tag")
 
     getResponse(
-      LiveContentApi.item("/football", edition)
+      ContentApiClient.item("/football", edition)
         .tag(tag)
         .showEditorsPicks(true)
     ).map {response =>

@@ -68,19 +68,6 @@ class WsHttp(val httpTimingMetric: TimingMetric, val httpTimeoutMetric: CountMet
   }
 }
 
-// allows us to inject a test Http
-trait DelegateHttp { self: ContentApiClientLogic =>
-  val httpTimingMetric: TimingMetric
-  val httpTimeoutMetric: CountMetric
-
-  var _http: Http = new WsHttp(httpTimingMetric, httpTimeoutMetric)
-
-  override def get(url: String, headers: Map[String, String])(implicit executionContext: ExecutionContext) =
-    _http.GET(url, headers) map { response: Response =>
-      self.HttpResponse(response.body, response.status, response.statusText)
-  }
-}
-
 private object RequestDebugInfo {
   import java.net.URLEncoder.encode
 

@@ -28,7 +28,7 @@ trait ABTestSwitches {
     "ab-next-in-series",
     "Show next in series",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 12),
+    sellByDate = new LocalDate(2016, 5, 3),
     exposeClientSide = true
   )
 
@@ -92,6 +92,15 @@ trait ABTestSwitches {
     "An adblock ongoing survey for all loyal users",
     safeState = Off,
     sellByDate = new LocalDate(2016, 5, 31),
+    exposeClientSide = true
+  )
+
+  val ABMinute = Switch(
+    "A/B Tests",
+    "ab-minute",
+    "Switch to include the minute.ly script",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 5, 11),
     exposeClientSide = true
   )
 

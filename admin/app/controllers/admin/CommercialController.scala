@@ -3,8 +3,8 @@ package controllers.admin
 import common.dfp.{GuCreativeTemplate, LineItemReport}
 import common.{Edition, ExecutionContexts, Logging}
 import conf.Configuration.environment
-import conf.LiveContentApi.getResponse
-import conf.{Configuration, LiveContentApi}
+import contentapi.ContentApiClient
+import conf.Configuration
 import controllers.AuthLogging
 import dfp.{CreativeTemplateAgent, DfpApi}
 import model._
@@ -75,8 +75,8 @@ object CommercialController extends Controller with Logging with AuthLogging wit
 
   def sponsoredContainers = AuthActions.AuthActionTest.async { implicit request =>
     // get some example trails
-    lazy val trailsFuture = getResponse(
-      LiveContentApi.search(Edition(request))
+    lazy val trailsFuture = ContentApiClient.getResponse(
+      ContentApiClient.search(Edition(request))
         .pageSize(2)
     ).map { response  =>
       response.results.map { item =>

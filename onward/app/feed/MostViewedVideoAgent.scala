@@ -3,8 +3,8 @@ package feed
 import com.gu.contentapi.client
 import common._
 import common.editions.Uk
-import conf.LiveContentApi
-import conf.LiveContentApi.getResponse
+import contentapi.ContentApiClient
+import contentapi.ContentApiClient.getResponse
 import model.{Video, _}
 import play.api.libs.json._
 
@@ -40,7 +40,7 @@ object MostViewedVideoAgent extends Logging with ExecutionContexts {
         .map(id => id.drop(1)) // drop leading '/'
         .mkString(",")
 
-      val mostViewed: Future[Seq[Video]] = getResponse(LiveContentApi.search(Uk)
+      val mostViewed: Future[Seq[Video]] = getResponse(ContentApiClient.search(Uk)
         .ids(contentIds)
         .pageSize(20)
       ).map{ r =>

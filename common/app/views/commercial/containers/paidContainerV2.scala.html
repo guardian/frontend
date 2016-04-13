@@ -48,10 +48,10 @@
 
         @if(containerModel.content.showMoreCards != Nil && containerModel.content.showMoreCards.length > 0){
             <details class="adverts__more">
-                <summary class="button button--medium button--primary button--show-more">
+                <summary class="button button--medium button--primary button--show-more" data-text="@containerModel.content.title">
                     @fragments.inlineSvg("plus", "icon")
                     @fragments.inlineSvg("minus", "icon")
-                    More @containerModel.content.title
+                    <span class="js-button__label">More @containerModel.content.title</span>
                 </summary>
                 <div class="adverts__row adverts__row--wrap">
                     @containerModel.content.showMoreCards.map(card => views.html.commercial.cards.itemSmallCard(

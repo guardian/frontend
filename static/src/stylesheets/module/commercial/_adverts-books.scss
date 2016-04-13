@@ -32,7 +32,7 @@
             padding: $gs-baseline*.75 $gs-gutter;
 
             path {
-                fill: colour(neutral-3);
+                fill: $neutral-3;
             }
 
             &:hover,
@@ -59,7 +59,7 @@
 
 .adverts--tone-books {
     > .adverts__header {
-        background: guss-colour(features-main-1, $pasteup-palette);
+        background: $features-main-1;
     }
 }
 
@@ -70,7 +70,7 @@
 
     .button {
         @include button-colour(
-            guss-colour(features-main-2, $pasteup-palette),
+            $features-main-2,
             null
         );
     }
@@ -80,7 +80,7 @@
     &:active {
         .button {
             @include button-colour(
-                darken(guss-colour(features-main-2, $pasteup-palette), 5%),
+                darken($features-main-2, 5%),
                 null
             );
         }
@@ -93,5 +93,5 @@
 }
 
 .logo--tone-books {
-    fill: guss-colour(features-main-1, $pasteup-palette);
+    fill: $features-main-1;
 }

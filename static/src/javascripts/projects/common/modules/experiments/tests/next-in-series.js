@@ -9,13 +9,13 @@ define([
     pluck,
     some
 ) {
-    var path = '/surveys/404-test/next-in-series/';
+    var surveyPath = '/surveys/404-test/next-in-series/';
     var render = function (state) {
         return '<div class="next-in-series-test">' +
             '<h3>Coming up next week</h3>' +
             '<h4>' + state.title + '</h4>' +
             '<p class="next-in-series-test__teaser">' + state.trail + '</p>' +
-            '<a href="' + path + state.id + '"' +
+            '<a href="' + surveyPath + state.id + '"' +
                 ' data-link-name="next in series | remind me"' +
                 ' class="button button--large next-in-series-test__remind-me-link">Remind me</a>' +
         '</div>';
@@ -52,7 +52,7 @@ define([
     return function () {
         this.id = 'NextInSeries';
         this.start = '2016-03-24';
-        this.expiry = '2016-04-12';
+        this.expiry = '2016-05-03';
         this.author = 'Oliver Ash';
         this.description = 'Show next in series';
         this.audience = 1;
@@ -83,10 +83,10 @@ define([
                 },
 
                 success: function(complete) {
-                    var onSurvey = window.location.href.match(path.replace(/\/$/, '')).length > 0;
+                    var onSurvey = new RegExp(surveyPath.replace(/\/$/, '')).test(window.location.href);
 
                     var referredFromSeries = some(pluck(allSeries, 'pageId'), function (id) {
-                        return window.document.referrer.match(id).length > 0;
+                        return new RegExp(id).test(window.document.referrer);
                     });
 
                     if (onSurvey && referredFromSeries) {

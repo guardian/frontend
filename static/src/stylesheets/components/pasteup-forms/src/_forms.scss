@@ -211,8 +211,8 @@ category: Common
 .text-input,
 .textarea {
     border: 1px solid $pasteup-forms-fields-border-colour;
-    @include box-shadow(none);
-    @include box-sizing(border-box);
+    box-shadow: none;
+    box-sizing: border-box;
     color: $pasteup-forms-fields-colour;
     display: inline-block;
     font-family: $pasteup-forms-fields-font-family;
@@ -220,7 +220,7 @@ category: Common
     font-size: 16px;
     line-height: 1.4;
     outline: none;
-    @include border-radius(0);
+    border-radius: 0;
     width: 100%;
     -webkit-appearance: none;
 

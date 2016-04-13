@@ -89,12 +89,14 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   case class Auth(user: String, password: String)
 
   object contentApi {
-    val contentApiLiveHost: String = configuration.getMandatoryStringProperty("content.api.host")
+    val contentApiHost: String = configuration.getMandatoryStringProperty("content.api.host")
 
     def contentApiDraftHost: String =
         configuration.getStringProperty("content.api.draft.host")
           .filter(_ => Switches.FaciaToolDraftContent.isSwitchedOn)
-          .getOrElse(contentApiLiveHost)
+          .getOrElse(contentApiHost)
+
+    val previewHost: String = configuration.getStringProperty("content.api.preview.host").getOrElse(contentApiHost)
 
     lazy val key: Option[String] = configuration.getStringProperty("content.api.key")
     lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
@@ -307,6 +309,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val liveEventsToken = configuration.getStringProperty("live-events.token")
     lazy val liveEventsImagesUrl = "https://membership.theguardian.com/events.json"
     lazy val jobsUrlTemplate = configuration.getStringProperty("jobs.api.url.template")
+    lazy val jobsStaticUrl= configuration.getStringProperty("jobs.api.url")
     lazy val mortgagesUrl = configuration.getStringProperty("lc.mortgages.api.url")
     lazy val moneyUrl = configuration.getStringProperty("moneysupermarket.api.url")
 
