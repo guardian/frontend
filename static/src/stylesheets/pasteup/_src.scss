@@ -2,7 +2,7 @@ $browser-supports-columns: true !default;
 $browser-supports-flexbox: true !default;
 
 @import 'buttons/src';
-@import 'forms/src';
 @import 'grid-system/src';
 @import 'layout/src';
 @import 'typography/src';
+@import 'forms/src';
