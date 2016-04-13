@@ -37,7 +37,6 @@ define([
         absoluteMinAbove: 0, // minimum from slot to top of page
         minAbove: 250, // minimum from para to top of article
         minBelow: 300, // minimum from (top of) para to bottom of article
-        clearContentMeta: 50, // vertical px to clear the content meta element (byline etc) by. 0 to ignore
         selectors: { // custom rules using selectors. format:
             //'.selector': {
             //   minAbove: <min px above para to bottom of els matching selector>,
@@ -123,13 +122,6 @@ define([
 
     function _enforceRules(slots, rules, bodyHeight) {
         var filtered = Promise.resolve(slots);
-
-        // enforce absoluteMinAbove rule
-        if (rules.absoluteMinAbove > 0) {
-            filtered = filtered.then(filter(slots, function (slot) {
-                return slot.top >= rules.absoluteMinAbove;
-            }));
-        }
 
         // enforce minAbove and minBelow rules
         filtered = filtered.then(function (slots) {

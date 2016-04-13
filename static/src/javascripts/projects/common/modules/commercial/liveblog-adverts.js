@@ -41,7 +41,6 @@ define([
             slotSelector: ' > .block',
             fromBottom: update,
             startAt: update ? firstSlot : null,
-            absoluteMinAbove: update ? 0 : (windowHeight * OFFSET),
             minAbove: 0,
             minBelow: 0,
             filter: filterSlot,
