@@ -1,0 +1,66 @@
+%gimbap-richmedia-position {
+	position: absolute;
+	left: $gs-gutter / 2;
+}
+
+.gimbap-richmedia__title {
+	@extend %gimbap-richmedia-position;
+	@include fs-headline(3);
+
+	top: $gs-gutter / 2;
+	font-weight: bold;
+	color: #ffffff;
+}
+
+.gimbap-richmedia__headline {
+	@extend %gimbap-richmedia-position;
+	@include fs-headline(2);
+
+	top: $gs-baseline * 3;
+	width: 65%;
+	font-weight: bold;
+	line-height: 1;
+	color: #ffffff;
+}
+
+.gimbap-richmedia__meta {
+	@extend %gimbap-richmedia-position;
+	@include fs-textSans(1);
+
+	color: #ffffff;
+}
+
+.gimbap-richmedia__meta--date {
+	top: $gs-baseline * 6.1;
+}
+
+.gimbap-richmedia__meta--place {
+	top: $gs-baseline * 7.5;
+}
+
+.gimbap-richmedia__meta--saving {
+	bottom: $gs-baseline;
+}
+
+.gimbap-richmedia__icon {
+	display: inline-block;
+	vertical-align: middle;
+	width: 11px;
+	text-align: center;
+}
+
+.gimbap-richmedia__price {
+	@extend %gimbap-richmedia-position;
+	@include fs-headline(3);
+
+	bottom: $gs-baseline * 2.5;
+	font-weight: 500;
+}
+
+// TONES
+.gimbap-wrap--tone-masterclasses {
+
+	.gimbap-richmedia__highlight {
+		color: $gimbap-masterclasses-text;
+	}
+}

@@ -991,5 +991,60 @@
         </script>
     }
 
+    @Seq(
+        Map(
+            ("id", "gimbap-richmedia"),
+            ("type", "gimbap richmedia"),
+            ("creativeId", "10025847"),
+            ("args", Json.obj(
+                ("creative", "gimbap-richmedia"),
+                ("layout", "2x2"),
+                ("componenteffects", "yes"),
+                ("componenttone", "masterclasses"),
+                ("componentheadline", "masterclasses"),
+                ("componentmessage", "New masterclasses now booking"),
+                ("offer1url", "https://memebrship.theguardian.com"),
+                ("offer1title", "Business courses"),
+                ("offer1image", "http://www.theaureview.com/sites/default/files/nathan-fillion-firefly.jpg"),
+                ("offer1highlight", "Journalism"),
+                ("offer1title", "Writing for women magazines"),
+                ("offer1headline", "An evening class with Cosmopolitan editor-in-chief Farrah Storr"),
+                ("offer2url", "https://memebrship.theguardian.com"),
+                ("offer2title", "Hournalism courses"),
+                ("offer2image", "http://www.theaureview.com/sites/default/files/nathan-fillion-firefly.jpg"),
+                ("offer2highlight", "Writing"),
+                ("offer2title", "Creating characters for your novel"),
+                ("offer2headline", "A writing class with Louisa Young"),
+                ("omnitureId", "[%OmnitureID%]"),
+                ("clickMacro", "%%CLICK_URL_ESC%%")
+            ))
+        )
+    ).map { component =>
+        <div class="fc-container__inner">
+            <h2 class="test-page-head">
+                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=@component("creativeId")">
+                    Merchandising: manual @component("type")
+                </a>
+            </h2>
+            
+        </div>
+        <div id="@component("id")" class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--@component("type")-manual"></div>
+        <script>
+            'use strict';
+            @component("args") match {
+                case args: JsObject => {
+                    loadCommercial(function () {
+                        require(['bean', 'common/modules/commercial/creatives/template'])
+                            .then(function (bean, Template) {
+                                let container = document.querySelector('#@component("id")');
+                                new Template(container, Object.assign({}, @Html(Json.stringify(args)))).create();
+                        });
+                    });
+                }
+                case _ => { }
+            }
+        </script>
+    }
+
 </div>
 }
