@@ -26,7 +26,7 @@ object JobAds extends Controller with implicits.Requests {
 
   def renderJobs = Action.async { implicit request =>
     Future.successful {
-      (JobsAgent.specificJobs(specificIds) ++ JobsAgent.jobsTargetedAt(segment)).distinct match {
+      (JobsAgent.specificJobs(specificIds) ++ JobsAgent.jobsTargetedAt(segment)).distinct.toList match {
         case Nil => NoCache(jsonFormat.nilResult)
         case jobs => Cached(componentMaxAge) {
           val clickMacro = request.getParameter("clickMacro")

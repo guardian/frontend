@@ -121,7 +121,7 @@ object CrosswordSearchController extends CrosswordController {
         }
 
         ContentApiClient.getResponse(maybeSetter.showFields("all")).map { response =>
-          response.results.getOrElse(Nil) match {
+          response.results.getOrElse(Seq.empty).toList match {
             case Nil => noResults
 
             case results =>
