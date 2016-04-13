@@ -62,7 +62,8 @@ object Cached extends implicits.Dates {
       "Surrogate-Control" -> cacheControl,
       "Cache-Control" -> cacheControl,
       "Expires" -> expiresTime.toHttpDateTimeString,
-      "Date" -> now.toHttpDateTimeString
+      "Date" -> now.toHttpDateTimeString,
+      "ETag" -> s"johnTest${scala.util.Random.nextInt}${scala.util.Random.nextInt}" // see if we get any If-None-Match requests
     )
   }
 }
