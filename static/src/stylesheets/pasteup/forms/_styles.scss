@@ -1,65 +1,9 @@
-@import '_forms.config';
+@import 'src';
 
-/*doc
----
-title: Forms
-name: forms
-category: Common
----
-
-```html_example
-<form class="form">
-    <fieldset class="fieldset">
-        <div class="fieldset__heading">
-            <h2 class="form__heading">
-                Form Heading
-            </h2>
-            <div class="form__note">
-                Form Note. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat, ratione!
-            </div>
-        </div>
-        <div class="fieldset__fields">
-            <ul>
-                <li class="form-field">
-                    <label class="label" for="field-1">Label</label>
-                    <input class="text-input" name="field-1" />
-                </li>
-                <li class="form-field">
-                    <label class="label" for="field-2">Another label</label>
-                    <input class="text-input" name="field-2" />
-                </li>
-                <li class="form-field">
-                    <div class="form-field__note">
-                        <a href="#">Forgotten your password?</a>
-                    </div>
-                    <button type="submit" class="submit-input">Submit</button>
-                    <label class="check-label check-label--helper">
-                        <input type="checkbox" />
-                        Remember me
-                    </label>
-                </li>
-            </ul>
-        </div>
-    </fieldset>
-</form>
-```
-*/
-
-/**
- * Fix a bug Internet Explorer 8 where text in password fields
- * would become invisible when `font-family` references a webfont.
- *
- * @group forms
- */
 [type=password] {
     font-family: sans-serif !important;
 }
 
-/**
- * Default form styles
- *
- * @group forms
- */
 .form {
     margin-top: $gs-baseline*2;
     margin-bottom: $gs-baseline*2;
@@ -302,4 +246,3 @@ category: Common
     margin-top: 2px;
     width: 13px;
 }
-

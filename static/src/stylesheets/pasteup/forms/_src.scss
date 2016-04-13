@@ -1,0 +1,16 @@
+$pasteup-forms-fieldset-border-top: 1px solid $neutral-7 !default;
+$pasteup-forms-fields-font-family: $f-sans-serif-text !default;
+$pasteup-forms-fields-colour: $neutral-1 !default;
+$pasteup-forms-fields-border-colour: $neutral-4 !default;
+$pasteup-forms-fields-border-colour-focus: $neutral-2 !default;
+$pasteup-forms-error-colour: $error !default;
+$pasteup-forms-error-background: #fdf4f3 !default;
+$pasteup-forms-error-border-colour: lighten($pasteup-forms-error-colour, 35%) !default;
+$pasteup-forms-error-field-border-colour: $pasteup-forms-error-colour !default;
+$pasteup-forms-success-colour: $success !default;
+$pasteup-forms-success-background: lighten($pasteup-forms-success-colour, 70%)  !default;
+$pasteup-forms-success-border-colour: lighten($pasteup-forms-success-colour, 35%) !default;
+$pasteup-forms-submit-background: $news-main-1 !default;
+$pasteup-forms-submit-background-focus: darken($pasteup-forms-submit-background, 5%) !default;
+$pasteup-forms-submit-background-active: $neutral-1 !default;
+$pasteup-forms-submit-background-disabled: $neutral-5 !default;
