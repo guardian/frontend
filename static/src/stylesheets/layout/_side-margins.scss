@@ -9,7 +9,7 @@
 @mixin side-margins-position($container-width) {
     &:before,
     &:after {
-        width: calc((100% - #{rem($container-width + $gs-gutter * 2)}) / 2);
+        width: calc((100% - #{$container-width + $gs-gutter * 2}) / 2);
     }
 }
 
