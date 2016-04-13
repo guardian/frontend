@@ -750,16 +750,12 @@
 }
 
 .full-width-250 {
-    display: block;
     height: 250px;
     transition: height .8s;
 
     // This is just for demonstration purposes, whilst the ad is populated with ipsum text
     color: #f0f0f0;
     background: #303030;
-    &:hover {
-        text-decoration: none;
-    }
 }
 
 .full-width-250--expanded {
