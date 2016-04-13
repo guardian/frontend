@@ -5,15 +5,9 @@
 
 <div class="adverts__row">
     <div class="adverts__column">
-        @containerModel.content.dynamic.bigCards.take(4).map(card => views.html.commercial.cards.itemCard(
-                                card,
-                                omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
-                                useCardBranding = !containerModel.isSingleSponsorContainer))
+        @containerModel.content.dynamic.bigCards.take(4).map(card => views.html.commercial.cards.itemCard(card, omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card)))
     </div>
     <div class="adverts__column">
-        @containerModel.content.dynamic.bigCards.drop(4).take(4).map(card => views.html.commercial.cards.itemCard(
-                                card,
-                                omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
-                                useCardBranding = !containerModel.isSingleSponsorContainer))
+        @containerModel.content.dynamic.bigCards.drop(4).take(4).map(card => views.html.commercial.cards.itemCard(card, omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card)))
     </div>
 </div>

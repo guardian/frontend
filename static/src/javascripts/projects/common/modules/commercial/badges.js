@@ -53,7 +53,7 @@ define([
                 ));
             }
         },
-        renderAd = function (item, sponsorship, opts) {
+        renderAd = function (container, sponsorship, opts) {
             var badgeConfig = badgesConfig[sponsorship],
                 slotTarget  = badgeConfig.namePrefix + 'badge',
                 name        = slotTarget + (++badgeConfig.count),
@@ -69,12 +69,12 @@ define([
 
             return new Promise(function (resolve) {
                 idleFastdom.write(function () {
-                    var placeholder = $('.js-badge-placeholder', item);
+                    var placeholder = $('.js-badge-placeholder', container);
 
                     if (placeholder.length) {
                         placeholder.replaceWith($adSlot);
                     } else {
-                        $(opts.fallback, item).after($adSlot);
+                        $('.js-container__header', container).after($adSlot);
                     }
 
                     resolve($adSlot);
@@ -83,8 +83,7 @@ define([
         },
         init = function () {
             var sponsoredFrontPromise,
-                sponsoredContainersPromise,
-                sponsoredCardsPromise;
+                sponsoredContainersPromise;
 
             if (!commercialFeatures.badges) {
                 return false;
@@ -97,42 +96,30 @@ define([
                     qwery('.fc-container', front)[0],
                     $front.data('sponsorship'),
                     {
-                        sponsor: $front.data('sponsor'),
-                        fallback: '.js-container__header'
+                        sponsor: $front.data('sponsor')
                     }
                 );
             }));
 
             sponsoredContainersPromise = sponsoredFrontPromise.then(function () {
-                return Promise.all($('.js-sponsored-container').map(processItem.bind(undefined, '.js-container__header')));
-            });
+                return Promise.all(map($('.js-sponsored-container'), function (container) {
+                    if (qwery('.ad-slot--paid-for-badge', container).length === 0) {
+                        var $container = bonzo(container);
 
-            sponsoredCardsPromise = sponsoredContainersPromise.then(function () {
-                return Promise.all($('.js-sponsored-card').map(processItem.bind(undefined, '.js-card__header')));
-            });
-
-            return sponsoredCardsPromise;
-
-            function processItem(fallback, item) {
-                if (qwery('.ad-slot--paid-for-badge', item).length === 0) {
-                    var $item = bonzo(item);
-
-                    if (!item.hasAttribute('data-sponsorship')) {
-                        return;
+                        return renderAd(
+                            container,
+                            $container.data('sponsorship'),
+                            {
+                                sponsor:  $container.data('sponsor'),
+                                series:   $container.data('series'),
+                                keywords: $container.data('keywords')
+                            }
+                        );
                     }
+                }));
+            });
 
-                    return renderAd(
-                        item,
-                        $item.data('sponsorship'),
-                        {
-                            sponsor:  $item.data('sponsor'),
-                            series:   $item.data('series'),
-                            keywords: $item.data('keywords'),
-                            fallback: fallback
-                        }
-                    );
-                }
-            }
+            return sponsoredContainersPromise;
         },
         badges = {
 
@@ -152,8 +139,7 @@ define([
                         {
                             sponsor:  $container.data('sponsor'),
                             series:   $container.data('series'),
-                            keywords: $container.data('keywords'),
-                            fallback: '.js-container__header'
+                            keywords: $container.data('keywords')
                         }
                     ).then(function ($adSlot) {
                         // add slot to dfp
@@ -168,6 +154,7 @@ define([
                     badgesConfig[type].count = 0;
                 }
             }
+
         };
 
     return badges;
