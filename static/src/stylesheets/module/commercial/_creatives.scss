@@ -779,8 +779,13 @@
 // Backgrounds
 
 .full-width-250 {
-    background-position: center center; // When no background-attachment:fixed support
-    background-attachment: fixed;
+    // Center background as fallback
+    background-position: center center;
+
+    // Use 'revealer' background unless top-slot ad
+    .ad-slot:not(.ad-slot--top-banner-ad) & {
+        background-attachment: fixed;
+    }
 }
 
 // Animations
