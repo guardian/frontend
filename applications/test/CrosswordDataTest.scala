@@ -48,7 +48,7 @@ import org.scalatest.time.{Millis, Span}
         val maybeCrossword = result.content.flatMap(_.crossword)
         maybeCrossword shouldBe defined
         val crossword = CrosswordData.fromCrossword(maybeCrossword.get)
-        crossword.solutionAvailable should be(false)
+        crossword.solutionAvailable should be(true)
         crossword.dateSolutionAvailable should be(None)
       }
 
