@@ -33,9 +33,9 @@ object MostViewedGalleryController extends Controller with Logging with Executio
   }
   def renderMostViewedHtml() = renderMostViewed()
 
-  private def getMostViewedGallery()(implicit request: RequestHeader): Seq[RelatedContentItem] = {
+  private def getMostViewedGallery()(implicit request: RequestHeader): List[RelatedContentItem] = {
     val size = request.getQueryString("size").getOrElse("6").toInt
-    MostViewedGalleryAgent.mostViewedGalleries().take(size)
+    MostViewedGalleryAgent.mostViewedGalleries().take(size).toList
   }
 
   private def renderMostViewedGallery(galleries: Seq[RelatedContentItem])(implicit request: RequestHeader) = {
