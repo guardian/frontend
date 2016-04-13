@@ -95,4 +95,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABMinute = Switch(
+    "A/B Tests",
+    "ab-minute",
+    "Switch to include the minute.ly script",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 5, 11),
+    exposeClientSide = true
+  )
+
 }

@@ -8,10 +8,10 @@ x x x x x x x x x x x x x x x x x x x x x x x
 
 @mixin fc-item--list-compact {
     @include fs-bodyHeading(2);
-    color: colour(neutral-1);
+    color: $neutral-1;
     padding-top: $gs-baseline/3;
     padding-bottom: $gs-baseline;
-    border-top: 1px solid colour(neutral-6);
+    border-top: 1px solid $neutral-6;
     display: block !important;
     background-color: transparent;
 

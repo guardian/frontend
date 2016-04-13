@@ -15,23 +15,23 @@ $c-guardian-services-action: #ffffff;
     }
 
     @include mq(mobile) {
-        background: colour(guardian-brand);
+        background: $guardian-brand;
     }
 }
 
 .l-header--is-slim {
-    background: colour(guardian-brand);
+    background: $guardian-brand;
 
     .l-header__inner {
         @include clearfix;
 
         @include mq(tablet) {
-            background: colour(guardian-brand);
+            background: $guardian-brand;
         }
     }
 
     &.l-header--is-slim-ab {
-        background: colour(guardian-brand);
+        background: $guardian-brand;
     }
 
     .hide-on-slim-header {

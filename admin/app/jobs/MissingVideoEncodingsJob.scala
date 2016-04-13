@@ -4,8 +4,8 @@ import common.{Edition, Logging, ExecutionContexts, AkkaAgent}
 import conf.switches.Switches
 import model.{Content, Video}
 import scala.language.postfixOps
-import conf.LiveContentApi
-import LiveContentApi.getResponse
+import contentapi.ContentApiClient
+import ContentApiClient.getResponse
 import scala.concurrent.{Future, Await}
 import scala.concurrent.duration._
 import akka.util.Timeout
@@ -37,7 +37,7 @@ object VideoEncodingsJob extends ExecutionContexts with Logging  {
   private def checkForMissingEncodings() {
      log.info("Checking for missing video encodings")
 
-     val apiVideoResponse = getResponse(LiveContentApi.search(Edition.defaultEdition)
+     val apiVideoResponse = getResponse(ContentApiClient.search(Edition.defaultEdition)
         .tag("type/video")
         .showElements("all")
         .pageSize(100)

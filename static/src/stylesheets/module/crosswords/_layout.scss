@@ -181,7 +181,7 @@
 
 .crossword__meta {
     .crossword__links & {
-        border-top: 1px dotted colour(neutral-5);
+        border-top: 1px dotted $neutral-5;
         @include mq($from: leftCol) {
             display: none;
         }

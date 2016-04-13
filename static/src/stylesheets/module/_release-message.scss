@@ -1,6 +1,6 @@
 .site-message {
     @include fs-headline(1);
-    background: colour(news-default);
+    background: $news-default;
     display: block;
     color: #ffffff;
 
@@ -17,7 +17,7 @@
 }
 
 .site-message--alt {
-    background-color: colour(status-neutral);
+    background-color: $status-neutral;
 }
 
 .site-message__inner {
@@ -286,8 +286,8 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         bottom: auto;
         width: $gs-gutter;
         height: $gs-gutter;
-        background-color: colour(neutral-1);
-        box-shadow: 0px 1px 0px colour(neutral-3);
+        background-color: $neutral-1;
+        box-shadow: 0px 1px 0px $neutral-3;
 
         &:before {
             @include font(arial, bold, 14px);
@@ -296,8 +296,8 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             content: '×';
             left: 6px;
             top: 3px;
-            background-color: colour(neutral-1);
-            color: colour(neutral-4);
+            background-color: $neutral-1;
+            color: $neutral-4;
         }
 
         i {
@@ -388,7 +388,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             content: '×';
             top: -($gs-baseline/2);
             left: 2px;
-            color: colour(neutral-2);
+            color: $neutral-2;
         }
 
         i {
@@ -417,13 +417,13 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
     .app__heading {
         @include font($helvetica, normal, 14px);
-        color: colour(neutral-1) !important;
+        color: $neutral-1 !important;
     }
 
     .app__copy {
         @include font($helvetica, 200, 12px, 14px);
         margin-bottom: 0;
-        color: colour(neutral-1);
+        color: $neutral-1;
 
         strong {
             font-weight: normal;
@@ -472,7 +472,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 }
 .site-message--adblock-message,
 .site-message--membership-message {
-    background: colour(membership-default);
+    background: $membership-default;
 }
 .site-message--membership-message-deep-purple {
     background: #7d0068;
@@ -584,7 +584,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 .adblock-sticky__message {
     @include fs-headline(1);
     position: relative;
-    background: colour(neutral-8);
+    background: $neutral-8;
     display: block;
     color: #ffffff;
 
@@ -594,7 +594,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
     .gs-container {
         height: 128px;
-        background-color: colour(neutral-4);
+        background-color: $neutral-4;
     }
 
     &.macaskill {
@@ -651,7 +651,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     @include fs-headline(2);
     padding-top: $gs-gutter;
     margin-bottom: 0;
-    color: colour(neutral-1);
+    color: $neutral-1;
     @include mq(desktop) {
         @include fs-headline(3);
     }
@@ -662,7 +662,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
 .adblock-sticky__author {
     @include fs-headline(2);
-    color: colour(guardian-brand);
+    color: $guardian-brand;
     @include mq(desktop) {
         @include fs-headline(3);
     }
@@ -685,7 +685,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     bottom: 0;
     left: 0;
     width: 100%;
-    background: colour(news-main-2);
+    background: $news-main-2;
     padding: $gs-baseline*.25 0;
 }
 

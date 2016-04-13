@@ -13,8 +13,8 @@ object Global extends GlobalSettings
 
   override def applicationMetrics = List(
     FaciaPressMetrics.FrontPressCronSuccess,
-    ContentApiMetrics.ElasticHttpTimingMetric,
-    ContentApiMetrics.ElasticHttpTimeoutCountMetric,
+    ContentApiMetrics.HttpLatencyTimingMetric,
+    ContentApiMetrics.HttpTimeoutCountMetric,
     ContentApiMetrics.ContentApi404Metric,
     ContentApiMetrics.ContentApiErrorMetric,
     FaciaPressMetrics.UkPressLatencyMetric,

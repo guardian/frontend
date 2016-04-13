@@ -2,7 +2,8 @@ package controllers
 
 import com.gu.contentapi.client.model.v1.{Content => ApiContent, Crossword, Section => ApiSection, ItemResponse}
 import common.{Edition, ExecutionContexts, Logging}
-import conf.{LiveContentApi, Static}
+import conf.Static
+import contentapi.ContentApiClient
 import crosswords.{AccessibleCrosswordRows, CrosswordPage, CrosswordSearchPage, CrosswordSvg}
 import model._
 import org.joda.time.{DateTime, LocalDate}
@@ -18,7 +19,7 @@ trait CrosswordController extends Controller with Logging with ExecutionContexts
   def noResults()(implicit request: RequestHeader): Result
 
   def getCrossword(crosswordType: String, id: Int)(implicit request: RequestHeader): Future[ItemResponse] = {
-    LiveContentApi.getResponse(LiveContentApi.item(s"crosswords/$crosswordType/$id", Edition(request)).showFields("all"))
+    ContentApiClient.getResponse(ContentApiClient.item(s"crosswords/$crosswordType/$id", Edition(request)).showFields("all"))
   }
 
   def withCrossword(crosswordType: String, id: Int)(f: (Crossword, ApiContent) => Result)(implicit request: RequestHeader): Future[Result] = {
@@ -110,7 +111,7 @@ object CrosswordSearchController extends CrosswordController {
       empty => Future.successful(Cached(7.days)(Ok(views.html.crosswordSearch(CrosswordSearchPage.make())))),
 
       params => {
-        val withoutSetter = LiveContentApi.item(s"crosswords/series/${params.crosswordType}")
+        val withoutSetter = ContentApiClient.item(s"crosswords/series/${params.crosswordType}")
           .stringParam("from-date", params.fromDate.toString("yyyy-MM-dd"))
           .stringParam("to-date", params.toDate.toString("yyyy-MM-dd"))
           .pageSize(50)
@@ -119,8 +120,8 @@ object CrosswordSearchController extends CrosswordController {
           withoutSetter.stringParam("tag", s"profile/${setter.toLowerCase}")
         }
 
-        LiveContentApi.getResponse(maybeSetter.showFields("all")).map { response =>
-          response.results.getOrElse(Nil) match {
+        ContentApiClient.getResponse(maybeSetter.showFields("all")).map { response =>
+          response.results.getOrElse(Seq.empty).toList match {
             case Nil => noResults
 
             case results =>

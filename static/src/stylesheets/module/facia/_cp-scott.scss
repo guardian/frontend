@@ -3,7 +3,7 @@ $cp-scott-width-tablet: 80px;
 
 .fc-cp-scott__quote {
     display: block;
-    color: colour(neutral-2);
+    color: $neutral-2;
 }
 
 .fc-cp-scott__quote-line {
@@ -55,7 +55,7 @@ $cp-scott-width-tablet: 80px;
 
     .inline-quote svg {
         height: $gs-gutter / 2;
-        fill: colour(neutral-2);
+        fill: $neutral-2;
     }
 
     @include mq(mobileLandscape) {

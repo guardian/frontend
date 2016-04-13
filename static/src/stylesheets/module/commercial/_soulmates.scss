@@ -3,7 +3,7 @@
    ========================================================================== */
 $c-soulmatesBackground: #f5f3e7;
 $c-soulmatesBorder: #e6e1c3;
-$c-soulmates-high: colour(neutral-1);
+$c-soulmates-high: $neutral-1;
 
 .commercial--soulmates {
     background-color: $c-soulmatesBackground;
@@ -296,18 +296,16 @@ $c-soulmates-high: colour(neutral-1);
         overflow: hidden;
 
         .commercial__cta__label {
-            @include fs-data(1);
+            @include fs-textSans(1);
             float: left;
             line-height: 20px;
             width: auto;
             display: block;
 
             @include mq(wide) {
-                @include fs-data(2);
                 line-height: 20px;
 
                 .has-page-skin & {
-                    @include fs-data(1);
                     line-height: 20px;
                 }
             }

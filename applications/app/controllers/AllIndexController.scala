@@ -3,8 +3,8 @@ package controllers
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import common.Edition.defaultEdition
 import common.{Edition, ExecutionContexts, Logging}
-import conf.LiveContentApi
-import conf.LiveContentApi.getResponse
+import contentapi.ContentApiClient
+import contentapi.ContentApiClient.getResponse
 import implicits.{Dates, ItemResponses}
 import model._
 import org.joda.time.format.DateTimeFormat
@@ -93,7 +93,7 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
   // this is simply the latest by date. No lead content, editors picks, or anything else
   private def loadLatest(path: String, date: DateTime)(implicit request: RequestHeader): Future[Option[IndexPage]] = {
     val result = getResponse(
-      LiveContentApi.item(s"/$path", Edition(request)).pageSize(50).toDate(date).orderBy("newest")
+      ContentApiClient.item(s"/$path", Edition(request)).pageSize(50).toDate(date).orderBy("newest")
     ).map{ item =>
       item.section.map( section =>
         IndexPage(
@@ -105,7 +105,7 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
         )
       ).orElse(item.tag.map( apitag => {
         val tag = Tag.make(apitag)
-        IndexPage(page = tag, contents = item.results.getOrElse(Nil).map(IndexPageItem(_)), Tags(Seq(tag)), date, tzOverride = None)
+        IndexPage(page = tag, contents = item.results.getOrElse(Nil).map(IndexPageItem(_)), Tags(List(tag)), date, tzOverride = None)
       }))
     }
 
@@ -117,7 +117,7 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
 
   private def findByDate(path: String, date: DateTime)(implicit request: RequestHeader): Future[Option[DateTime]] = {
     val result = getResponse(
-      LiveContentApi.item(s"/$path", Edition(request))
+      ContentApiClient.item(s"/$path", Edition(request))
         .pageSize(1)
         .fromDate(date)
         .orderBy("oldest")
