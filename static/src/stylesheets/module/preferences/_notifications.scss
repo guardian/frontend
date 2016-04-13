@@ -27,7 +27,7 @@ $breaking-news-close-icon-width: 32px;
     left: 6.375rem;
     width: 28.825rem;
     height: 3.7625rem;
-    background: fade-out(colour(live-default), 1 - .95);
+    background: fade-out($live-default, 1 - .95);
     transition: background-color .25s ease;
     filter:alpha(opacify=50);
     -moz-opacity: 0.5;
