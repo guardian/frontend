@@ -733,6 +733,8 @@
 // Full-width-250
 // =============================================================================
 
+// Layout
+
 .ad-slot--full-width-250 {
 
     &.ad-slot--top-banner-ad {
@@ -772,6 +774,13 @@
     padding: 0;
     border-top: 0; // undoes default borders on fc-container-inner
     text-align: left;
+}
+
+// Backgrounds
+
+.full-width-250 {
+    background-position: center center; // When no background-attachment:fixed support
+    background-attachment: fixed;
 }
 
 // Animations
