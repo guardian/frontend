@@ -152,7 +152,8 @@ define([
                         {
                             sponsor:  $container.data('sponsor'),
                             series:   $container.data('series'),
-                            keywords: $container.data('keywords')
+                            keywords: $container.data('keywords'),
+                            fallback: '.js-container__header'
                         }
                     ).then(function ($adSlot) {
                         // add slot to dfp
