@@ -15,6 +15,7 @@ define([
     'common/modules/experiments/tests/people-who-read-this-also-read-variants',
     'common/modules/experiments/tests/membership',
     'common/modules/experiments/tests/loyal-adblocking-survey',
+    'common/modules/experiments/tests/minute',
     'lodash/arrays/flatten',
     'lodash/arrays/zip',
     'lodash/collections/forEach',
@@ -45,6 +46,7 @@ define([
     PeopleWhoReadThisAlsoReadVariants,
     Membership,
     LoyalAdblockingSurvey,
+    Minute,
     flatten,
     zip,
     forEach,
@@ -70,7 +72,8 @@ define([
         new NextInSeries(),
         new PeopleWhoReadThisAlsoReadVariants(),
         new Membership(),
-        new LoyalAdblockingSurvey()
+        new LoyalAdblockingSurvey(),
+        new Minute()
     ]);
 
     var participationsKey = 'gu.ab.participations';

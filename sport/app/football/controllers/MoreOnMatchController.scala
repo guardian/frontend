@@ -90,7 +90,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
     response map { Cached(60) }
   }
 
-  def loadMoreOn(request: RequestHeader, theMatch: FootballMatch): Future[Seq[ContentType]] = {
+  def loadMoreOn(request: RequestHeader, theMatch: FootballMatch): Future[List[ContentType]] = {
     val matchDate = theMatch.date.toLocalDate
 
     ContentApiClient.getResponse(ContentApiClient.search(Edition(request))
@@ -100,7 +100,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
       .toDate(matchDate.plusDays(2).toDateTimeAtStartOfDay)
       .reference(s"pa-football-team/${theMatch.homeTeam.id},pa-football-team/${theMatch.awayTeam.id}")
     ).map{ response =>
-        response.results.map(Content(_))
+        response.results.map(Content(_)).toList
     }
   }
 
