@@ -244,6 +244,21 @@ module.exports = function (grunt, options) {
                 ]
             }
         },
+        minute: {
+            options: {
+                name: 'bootstraps/enhanced/minute',
+                out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/minute.js',
+                exclude: [
+                    'boot',
+                    'bootstraps/standard/main',
+                    'bootstraps/commercial',
+                    'enhanced-vendor',
+                    'bootstraps/enhanced/main',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
         football: {
             options: {
                 name: 'bootstraps/enhanced/football',
