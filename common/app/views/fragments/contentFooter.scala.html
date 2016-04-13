@@ -2,15 +2,12 @@
 @import views.support.ContentFooterContainersLayout
 
 <div class="content-footer @if(cssClass){content-footer--@cssClass}">
-
-    @if(mvt.SeriesOnwardPosition.isParticipating(request, content)) { @fragments.onwardPlaceholder() }
-
     @fragments.discussionFooter(content.content, content.trail.isCommentable, content.trail.isClosedForComments, content.content.shortUrlId)
 
     @ContentFooterContainersLayout(content.content, related, content.commercial.isAdvertisementFeature) {
         @fragments.storyPackagePlaceholder(content, related)
     } {
-        @if(!mvt.SeriesOnwardPosition.isParticipating(request, content)) { @fragments.onwardPlaceholder() }
+        @fragments.onwardPlaceholder()
     } {
         <div class="js-fronts-section" data-link-name="fronts-on-articles | section-front"></div>
     } {
