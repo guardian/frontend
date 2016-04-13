@@ -45,7 +45,7 @@ object MediaInSectionController extends Controller with Logging with Paging with
       .showFields("all")
     ).map {
       response =>
-        response.results filter { content => isCurrentStory(content) } map { result =>
+        response.results.toList filter { content => isCurrentStory(content) } map { result =>
           RelatedContentItem(result)
         } match {
           case Nil => None

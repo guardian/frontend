@@ -94,8 +94,8 @@
 ) {
     @if $browser-supports-columns {
         #{$class} {
-            column-width: rem($column-min-width);
-            column-gap: rem($column-gap);
+            column-width: $column-min-width;
+            column-gap: $column-gap;
             column-fill: balance;
         }
         #{$class}__item {

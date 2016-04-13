@@ -20,7 +20,7 @@ trait Related extends ConciergeRepository {
     } else {
 
       // doesn't like "tag" being an empty string - need to explicitly pass a None
-      val tags: Option[String] = excludeTags match {
+      val tags: Option[String] = excludeTags.toList match {
         case Nil => None
         case excluding => Some(excluding.map(t => s"-$t").mkString(","))
       }

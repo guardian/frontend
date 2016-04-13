@@ -524,17 +524,17 @@ final case class Tags(
 
   def contributorAvatar: Option[String] = tags.flatMap(_.contributorImagePath).headOption
 
-  private def tagsOfType(tagType: String): Seq[Tag] = tags.filter(_.properties.tagType == tagType)
+  private def tagsOfType(tagType: String): List[Tag] = tags.filter(_.properties.tagType == tagType)
 
-  lazy val keywords: Seq[Tag] = tagsOfType("Keyword")
-  lazy val nonKeywordTags: Seq[Tag] = tags.filterNot(_.properties.tagType == "Keyword")
-  lazy val contributors: Seq[Tag] = tagsOfType("Contributor")
+  lazy val keywords: List[Tag] = tagsOfType("Keyword")
+  lazy val nonKeywordTags: List[Tag] = tags.filterNot(_.properties.tagType == "Keyword")
+  lazy val contributors: List[Tag] = tagsOfType("Contributor")
   lazy val isContributorPage: Boolean = contributors.nonEmpty
-  lazy val series: Seq[Tag] = tagsOfType("Series")
-  lazy val blogs: Seq[Tag] = tagsOfType("Blog")
-  lazy val tones: Seq[Tag] = tagsOfType("Tone")
-  lazy val types: Seq[Tag] = tagsOfType("Type")
-  lazy val tracking: Seq[Tag] = tagsOfType("Tracking")
+  lazy val series: List[Tag] = tagsOfType("Series")
+  lazy val blogs: List[Tag] = tagsOfType("Blog")
+  lazy val tones: List[Tag] = tagsOfType("Tone")
+  lazy val types: List[Tag] = tagsOfType("Type")
+  lazy val tracking: List[Tag] = tagsOfType("Tracking")
 
   lazy val richLink: Option[String] = tags.flatMap(_.richLinkId).headOption
   lazy val openModule: Option[String] = tags.flatMap(_.openModuleId).headOption

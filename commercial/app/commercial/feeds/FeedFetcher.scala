@@ -111,10 +111,16 @@ object FeedFetcher {
     }
   }
 
-  private val jobs: Option[FeedFetcher] = {
-    Configuration.commercial.jobsUrlTemplate map { template =>
-      new SingleFeedFetcher(JobsFeedMetaData(template))
-    }
+  private val jobs: Seq[FeedFetcher] = {
+      val dynamicDateJob = Configuration.commercial.jobsUrlTemplate map { template =>
+        new SingleFeedFetcher(JobsFeedMetaData(template))
+      }
+
+      val staticDateJob = Configuration.commercial.jobsStaticUrl map { url =>
+        new SingleFeedFetcher(StaticJobsFeedMetaData(url))
+      }
+
+      List(dynamicDateJob, staticDateJob).flatten
   }
 
   private val soulmates: Seq[FeedFetcher] = {
@@ -149,7 +155,8 @@ object FeedFetcher {
       new SingleFeedFetcher(TravelOffersFeedMetaData(url))
     }
 
-  val all: Seq[FeedFetcher] = soulmates ++ Seq(jobs, bestsellers, masterclasses, liveEvents, travelOffers).flatten
+  val all: Seq[FeedFetcher] = soulmates ++ jobs ++ Seq(bestsellers, masterclasses, travelOffers).flatten
+
 }
 
 object ResponseEncoding {

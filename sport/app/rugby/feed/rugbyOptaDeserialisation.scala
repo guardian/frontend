@@ -255,7 +255,7 @@ object Parser {
   }
 
   private def chainAttributes(attributes: Iterable[MetaData]): MetaData = {
-    attributes match {
+    attributes.toList match {
       case Nil => Null
       case head :: tail => new UnprefixedAttribute(head.key, head.value, chainAttributes(tail))
     }

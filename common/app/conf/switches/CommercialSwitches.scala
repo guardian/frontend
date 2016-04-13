@@ -140,6 +140,16 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
+
+  val StaticJobsFeedSwitch = Switch(
+    "Commercial",
+    "gu-static-jobs",
+    "If this switch is on, commercial components will be fed by the static job feed.",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
   val JobParseSwitch = Switch(
     "Commercial",
     "gu-jobs-parse",
