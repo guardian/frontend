@@ -9,13 +9,13 @@ define([
     pluck,
     some
 ) {
-    var path = '/surveys/404-test/next-in-series/';
+    var surveyPath = '/surveys/404-test/next-in-series/';
     var render = function (state) {
         return '<div class="next-in-series-test">' +
             '<h3>Coming up next week</h3>' +
             '<h4>' + state.title + '</h4>' +
             '<p class="next-in-series-test__teaser">' + state.trail + '</p>' +
-            '<a href="' + path + state.id + '"' +
+            '<a href="' + surveyPath + state.id + '"' +
                 ' data-link-name="next in series | remind me"' +
                 ' class="button button--large next-in-series-test__remind-me-link">Remind me</a>' +
         '</div>';
@@ -83,10 +83,10 @@ define([
                 },
 
                 success: function(complete) {
-                    var onSurvey = window.location.href.match(path.replace(/\/$/, '')).length > 0;
+                    var onSurvey = new RegExp(surveyPath.replace(/\/$/, '')).test(window.location.href);
 
                     var referredFromSeries = some(pluck(allSeries, 'pageId'), function (id) {
-                        return window.document.referrer.match(id).length > 0;
+                        return new RegExp(id).test(window.document.referrer);
                     });
 
                     if (onSurvey && referredFromSeries) {

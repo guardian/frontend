@@ -18,7 +18,7 @@ define([
 ) {
     describe('Breaking news', function () {
         var injector = new Injector(),
-            breakingNewsURL = (config.switches.breakingNewsFromAdminJobs) ? '/news-alert/alerts' : '/breaking-news/lite.json',
+            breakingNewsURL = '/news-alert/alerts',
             knownAlertIDsStorageKey = 'gu.breaking-news.hidden',
             server;
 

@@ -520,7 +520,7 @@ final case class Elements(elements: Seq[Element]) {
  * Tags lets you extract meaning from tags on a page.
  */
 final case class Tags(
-  tags: Seq[Tag]) {
+  tags: List[Tag]) {
 
   def contributorAvatar: Option[String] = tags.flatMap(_.contributorImagePath).headOption
 
@@ -640,4 +640,8 @@ object Tags {
   val reviewMappings = Seq(
     "tone/reviews"
   )
+
+  def make(apiContent: contentapi.Content) = {
+    Tags(apiContent.tags.toList map { Tag.make(_) })
+  }
 }

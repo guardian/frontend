@@ -11,15 +11,13 @@ import play.api.mvc.{Action, Controller}
 
 import scala.concurrent.Future
 
-case class Subscription(notificationTopicId: String, gcmBrowserId: String)
-case class TestMessage(gcmBrowserId: String, title: String, body: String)
-
+case class Subscription(notificationTopicId: String, browserEndpoint: String)
 
 object NotificationsController extends Controller with ExecutionContexts with Logging {
 
   val form = Form(mapping(
     "notificationTopicId" -> nonEmptyText,
-    "gcmBrowserId" -> nonEmptyText
+    "browserEndpoint" -> nonEmptyText
   )(Subscription.apply)(Subscription.unapply)
   )
   def saveSubscription() = Action.async { implicit request =>
@@ -28,7 +26,7 @@ object NotificationsController extends Controller with ExecutionContexts with Lo
         Future.successful(NoCache(BadRequest))
       },
       data => {
-        DynamoDbStore.addItemToSubcription(data.gcmBrowserId, data.notificationTopicId)
+        DynamoDbStore.addItemToSubscription(data.browserEndpoint, data.notificationTopicId)
           .map(_ => NoCache(Ok))
           .recover{ case t => NoCache(InternalServerError)}
       }
@@ -41,7 +39,7 @@ object NotificationsController extends Controller with ExecutionContexts with Lo
         Future.successful(NoCache(BadRequest))
       },
       data => {
-        DynamoDbStore.deleteItemFromSubcription(data.gcmBrowserId, data.notificationTopicId)
+        DynamoDbStore.deleteItemFromSubscription(data.browserEndpoint, data.notificationTopicId)
           .map(_ => NoCache(Ok))
           .recover{ case t => NoCache(InternalServerError)}
       }

@@ -1,18 +1,6 @@
 @import 'components/sass-mq/_mq';
 @import 'pasteup/src';
 
-// Guss - https://github.com/guardian/guss
-// =============================================================================
-
-@import 'components/guss-rem/_rem';
-@import 'components/guss-typography/_typography';
-@import 'components/guss-css3/_css3';
-@import 'components/guss-layout/_columns';
-@import 'components/guss-layout/_row';
-
-// The grid system is already imported in the _vars.scss file where it's needed
-// @import 'components/guss-grid-system/_grid-system';
-
 // CSS helpers
 // =============================================================================
 
