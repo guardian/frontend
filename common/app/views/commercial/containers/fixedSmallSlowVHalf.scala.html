@@ -8,21 +8,18 @@
         @containerModel.content.fixed.initialCards.take(2).map(card => views.html.commercial.cards.itemLargeCard(
             card,
             optAdvertClassNames = Some(Seq("inverse", "thumbnail")),
-            omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
-            useCardBranding = !containerModel.isSingleSponsorContainer
+            omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card)
         ))
         @containerModel.content.fixed.initialCards.drop(2).take(2).map(card => views.html.commercial.cards.itemLargeCard(
             card,
             optAdvertClassNames = Some(Seq("inverse", "thumbnail")),
             optClassNames = Some(Seq("hide-until-tablet")),
-            omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
-            useCardBranding = !containerModel.isSingleSponsorContainer
+            omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card)
         ))
     </div>
     @containerModel.content.fixed.initialCards.drop(4).take(1).map(card => views.html.commercial.cards.itemCard(
         card,
         optClassNames = Some(Seq("hide-until-tablet")),
-        omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
-        useCardBranding = !containerModel.isSingleSponsorContainer
+        omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card)
     ))
 </div>

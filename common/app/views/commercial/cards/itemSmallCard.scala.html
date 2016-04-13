@@ -2,8 +2,12 @@
   omnitureId: String,
   optAdvertClassNames: Option[Seq[String]] = None,
   optClassNames: Option[Seq[String]] = None,
-  useCardBranding: Boolean)
+  optSponsorship: Option[String] = None,
+  optSponsor: Option[String] = None,
+  optKeywords: Option[String] = None,
+  optSeries: Option[String] = None)
 
+@import views.support.ImgSrc
 @import views.html.fragments.inlineSvg
 
 <a href="@item.targetUrl" class="advert advert--small advert--capi
@@ -11,18 +15,14 @@
     @optClassNames.map { classNames => @classNames.mkString(" ")}
     "
     data-link-name="@omnitureId"
-    @if(useCardBranding){
-        @for(branding <- item.branding) {
-            @for(sponsorship <- branding.sponsorshipType) {data-sponsorship="@sponsorship"}
-            @for(sponsor <- branding.sponsor)             {data-sponsor="@sponsor"}
-            @for(keywords <- branding.keywordId)          {data-keywords="@keywords"}
-            @for(series <- branding.seriesId)             {data-series="@series"}
-        }
-    }
+    @for(sponsorship <- optSponsorship){data-sponsorship="@sponsorship"}
+    @for(sponsor     <- optSponsor)    {data-sponsor="@sponsor"}
+    @for(keywords    <- optKeywords)   {data-keywords="@keywords"}
+    @for(series      <- optSeries)     {data-series="@series"}
     >
     <p class="advert__title">
         @for(icon <- item.icon){@inlineSvg(icon, "icon")}
         @item.headline
     </p>
-    @for(branding <- item.branding; sponsor <- branding.sponsor) {<div class="advert__badge js-badge"></div>}
+    @for(sponsorship <- optSponsorship){<div class="advert__badge js-badge"></div>}
 </a>

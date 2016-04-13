@@ -9,9 +9,7 @@ case class ContainerModel(
                            layoutName: String,
                            content: ContainerContent,
                            branding: Option[SponsorDataAttributes]
-                         ){
-  val isSingleSponsorContainer: Boolean = branding.isDefined
-}
+                         )
 
 case class ContainerContent(
                              title: String,
