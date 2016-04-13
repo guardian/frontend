@@ -62,7 +62,8 @@ object Cached extends implicits.Dates {
       "Surrogate-Control" -> cacheControl,
       "Cache-Control" -> cacheControl,
       "Expires" -> expiresTime.toHttpDateTimeString,
-      "Date" -> now.toHttpDateTimeString
+      "Date" -> now.toHttpDateTimeString,
+      "ETag" -> "johnTest" // see if we get any If-None-Match requests
     )
   }
 }
