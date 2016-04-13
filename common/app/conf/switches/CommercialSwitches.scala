@@ -140,6 +140,16 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
+
+  val StaticJobsFeedSwitch = Switch(
+    "Commercial",
+    "gu-static-jobs",
+    "If this switch is on, commercial components will be fed by the static job feed.",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
   val JobParseSwitch = Switch(
     "Commercial",
     "gu-jobs-parse",
@@ -308,7 +318,7 @@ trait CommercialSwitches {
     "Manual single component using template v2",
     safeState = Off,
     sellByDate = new LocalDate(2016, 4, 20),
-    exposeClientSide = false
+    exposeClientSide = true
   )
 
   val v2ManualMultipleTemplate = Switch(
@@ -317,7 +327,7 @@ trait CommercialSwitches {
     "Manual multiple component using template v2",
     safeState = Off,
     sellByDate = new LocalDate(2016, 4, 20),
-    exposeClientSide = false
+    exposeClientSide = true
   )
 
   val v2CapiSingleTemplate = Switch(
