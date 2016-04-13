@@ -20,7 +20,6 @@ define([
     Promise
 ) {
     var INTERVAL = 5;      // number of posts between ads
-    var OFFSET = 1.5;      // ratio of the screen height from which ads are loaded
     var MAX_ADS = 8;       // maximum number of ads to display
 
     var slotCounter = 0, windowHeight, firstSlot;
