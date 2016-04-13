@@ -244,7 +244,7 @@ module.exports = function (grunt, options) {
                 ]
             }
         },
-        minute: {
+        minutely: {
             options: {
                 name: 'bootstraps/enhanced/minute',
                 out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/minute.js',
