@@ -96,7 +96,7 @@
 
             @containerDefinition.container match {
 
-                case Fixed(definition) if shouldRenderAsPaidContainer(isPaidFront, containerDefinition, maybeContainerModel) => {
+                case Fixed(definition) if shouldRenderAsPaidContainer(isPaidFront, containerDefinition, None) => {
                     @renderCommercialContainer(SingleCampaign(definition))
                 }
 

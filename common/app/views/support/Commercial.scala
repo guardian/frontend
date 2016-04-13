@@ -86,21 +86,22 @@ object Commercial {
 
       def containerHasPaidContent(container: ContainerModel): Boolean = {
 
-        def cardsHaveBranding(content: ContainerContent): Boolean = {
-          val cards = content.fixed.initialCards ++
-                      content.dynamic.bigCards ++
-                      content.dynamic.veryBigCards ++
-                      content.dynamic.hugeCards
-          cards.find(_.branding.isDefined).isDefined
-        }
+        def isPaid(branding: Option[SponsorDataAttributes]): Boolean =
+          branding.exists(_.sponsorshipType == "advertisement-features")
 
-        container.branding.isDefined || cardsHaveBranding(container.content)
+        val content = container.content
+        val allCards = content.fixed.initialCards ++
+          content.dynamic.bigCards ++
+          content.dynamic.veryBigCards ++
+          content.dynamic.hugeCards
+
+        val paidCards = allCards.filter(card => isPaid(card.branding))
+
+        isPaid(container.branding) || !paidCards.isEmpty
       }
 
       !isPaidFront &&
-      ( container.commercialOptions.isPaidContainer ||
-        containerModel.isDefined && containerHasPaidContent(containerModel.get)
-      )
+        ( container.commercialOptions.isPaidContainer || containerModel.exists(containerHasPaidContent) )
     }
 
     def mkSponsorDataAttributes(config: CollectionConfig): Option[SponsorDataAttributes] = {
