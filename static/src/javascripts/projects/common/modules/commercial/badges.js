@@ -53,7 +53,7 @@ define([
                 ));
             }
         },
-        renderAd = function (container, sponsorship, opts) {
+        renderAd = function (item, sponsorship, opts) {
             var badgeConfig = badgesConfig[sponsorship],
                 slotTarget  = badgeConfig.namePrefix + 'badge',
                 name        = slotTarget + (++badgeConfig.count),
@@ -69,12 +69,12 @@ define([
 
             return new Promise(function (resolve) {
                 idleFastdom.write(function () {
-                    var placeholder = $('.js-badge-placeholder', container);
+                    var placeholder = $('.js-badge-placeholder', item);
 
                     if (placeholder.length) {
                         placeholder.replaceWith($adSlot);
                     } else {
-                        $('.js-container__header', container).after($adSlot);
+                        $(opts.fallback, item).after($adSlot);
                     }
 
                     resolve($adSlot);
@@ -83,7 +83,8 @@ define([
         },
         init = function () {
             var sponsoredFrontPromise,
-                sponsoredContainersPromise;
+                sponsoredContainersPromise,
+                sponsoredCardsPromise;
 
             if (!commercialFeatures.badges) {
                 return false;
@@ -96,30 +97,42 @@ define([
                     qwery('.fc-container', front)[0],
                     $front.data('sponsorship'),
                     {
-                        sponsor: $front.data('sponsor')
+                        sponsor: $front.data('sponsor'),
+                        fallback: '.js-container__header'
                     }
                 );
             }));
 
             sponsoredContainersPromise = sponsoredFrontPromise.then(function () {
-                return Promise.all(map($('.js-sponsored-container'), function (container) {
-                    if (qwery('.ad-slot--paid-for-badge', container).length === 0) {
-                        var $container = bonzo(container);
-
-                        return renderAd(
-                            container,
-                            $container.data('sponsorship'),
-                            {
-                                sponsor:  $container.data('sponsor'),
-                                series:   $container.data('series'),
-                                keywords: $container.data('keywords')
-                            }
-                        );
-                    }
-                }));
+                return Promise.all($('.js-sponsored-container').map(processItem.bind(undefined, '.js-container__header')));
             });
 
-            return sponsoredContainersPromise;
+            sponsoredCardsPromise = sponsoredContainersPromise.then(function () {
+                return Promise.all($('.js-sponsored-card').map(processItem.bind(undefined, '.js-card__header')));
+            });
+
+            return sponsoredCardsPromise;
+
+            function processItem(fallback, item) {
+                if (qwery('.ad-slot--paid-for-badge', item).length === 0) {
+                    var $item = bonzo(item);
+
+                    if (!item.hasAttribute('data-sponsorship')) {
+                        return;
+                    }
+
+                    return renderAd(
+                        item,
+                        $item.data('sponsorship'),
+                        {
+                            sponsor:  $item.data('sponsor'),
+                            series:   $item.data('series'),
+                            keywords: $item.data('keywords'),
+                            fallback: fallback
+                        }
+                    );
+                }
+            }
         },
         badges = {
 
@@ -139,7 +152,8 @@ define([
                         {
                             sponsor:  $container.data('sponsor'),
                             series:   $container.data('series'),
-                            keywords: $container.data('keywords')
+                            keywords: $container.data('keywords'),
+                            fallback: '.js-container__header'
                         }
                     ).then(function ($adSlot) {
                         // add slot to dfp
@@ -154,7 +168,6 @@ define([
                     badgesConfig[type].count = 0;
                 }
             }
-
         };
 
     return badges;
