@@ -1,45 +1,43 @@
-%gimbap-richmedia-position {
-	position: absolute;
-	left: $gs-gutter / 2;
+%gimbap-zindex {
+	position: relative;
+	z-index: 1;
 }
 
 .gimbap-richmedia__title {
-	@extend %gimbap-richmedia-position;
+	@extend %gimbap-zindex;
 	@include fs-headline(3);
 
-	top: $gs-gutter / 2;
 	font-weight: bold;
 	color: #ffffff;
+
+	.has-flex & {
+		align-self: flex-start;
+	}
 }
 
 .gimbap-richmedia__headline {
-	@extend %gimbap-richmedia-position;
+	@extend %gimbap-zindex;
 	@include fs-headline(2);
 
-	top: $gs-baseline * 3;
 	width: 65%;
+	margin: 0;
+	padding-bottom: 4px; /* To me, the ultimate act of magic is to create something from nothing. */
 	font-weight: bold;
 	line-height: 1;
 	color: #ffffff;
 }
 
 .gimbap-richmedia__meta {
-	@extend %gimbap-richmedia-position;
+	@extend %gimbap-zindex;
 	@include fs-textSans(1);
 
 	color: #ffffff;
 }
 
-.gimbap-richmedia__meta--date {
-	top: $gs-baseline * 6.1;
-}
-
 .gimbap-richmedia__meta--place {
-	top: $gs-baseline * 7.5;
-}
-
-.gimbap-richmedia__meta--saving {
-	bottom: $gs-baseline;
+	.has-flex & {
+		flex-grow: 1;
+	}
 }
 
 .gimbap-richmedia__icon {
@@ -50,10 +48,9 @@
 }
 
 .gimbap-richmedia__price {
-	@extend %gimbap-richmedia-position;
+	@extend %gimbap-zindex;
 	@include fs-headline(3);
 
-	bottom: $gs-baseline * 2.5;
 	font-weight: 500;
 }
 

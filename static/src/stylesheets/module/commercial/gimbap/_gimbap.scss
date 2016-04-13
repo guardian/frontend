@@ -103,13 +103,13 @@
     float: left;
     width: $gimbap-width-quarter;
     height: 205px;
+    padding: $gs-gutter / 2;
     background-color: #000000;
 
     .has-flex & {
         flex: 1;
     }
 
-    padding: 0;
     position: relative;
 
     @include mq($until: tablet) {
@@ -182,6 +182,12 @@
     display: block;
     margin: auto;
     opacity: .9;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 0;
 }
 
 .gimbap__author {

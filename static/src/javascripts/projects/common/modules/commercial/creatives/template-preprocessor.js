@@ -158,7 +158,11 @@ define([
                 offerimage: tpl.params['offer' + i + 'image'],
                 offerHighlight: tpl.params['offer' + i + 'highlight'],
                 offerTitle: tpl.params['offer' + i + 'title'],
-                offerHeadline: tpl.params['offer' + i + 'headline']
+                offerHeadline: tpl.params['offer' + i + 'headline'],
+                offerDate: tpl.params['offer' + i + 'date'],
+                offerPlace: tpl.params['offer' + i + 'place'],
+                offerPrice: tpl.params['offer' + i + 'price'],
+                offerDiscount: tpl.params['offer' + i + 'discount']
             }));
         }
     }
