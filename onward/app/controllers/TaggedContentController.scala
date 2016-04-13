@@ -43,13 +43,13 @@ object TaggedContentController extends Controller with Related with Logging with
     "theguardian/series/guardiancommentcartoon"
   )
 
-  private def lookup(tag: String, edition: Edition)(implicit request: RequestHeader): Future[Seq[ContentType]] = {
+  private def lookup(tag: String, edition: Edition)(implicit request: RequestHeader): Future[List[ContentType]] = {
     log.info(s"Fetching tagged stories for edition ${edition.id}")
     getResponse(ContentApiClient.search(edition)
       .tag(tag)
       .pageSize(3)
     ).map { response =>
-        response.results map { Content(_) }
+        response.results.toList map { Content(_) }
     } recover { case GuardianContentApiThriftError(404, message, _) =>
       log.info(s"Got a 404 while calling content api: $message")
       Nil

@@ -10,7 +10,9 @@ object GoogleAnalyticsAccount {
 
   val account: String = if (useMainAccount) prod else test
 
-  // percentage of traffic to use in test
-  val samplePercent: Int = if (useMainAccount) 1 else 100
+  // Percentage of traffic to track
+  // Note there are rate limits in the free version
+  // https://developers.google.com/analytics/devguides/collection/ios/v3/limits-quotas
+  val sampleRate: Int = if (useMainAccount) 1 else 100
 
 }
