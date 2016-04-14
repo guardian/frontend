@@ -1,3 +1,4 @@
+import common.Logback.Logstash
 import common._
 import common.dfp.FaciaDfpAgentLifecycle
 import conf.{Filters, SwitchboardLifecycle}
