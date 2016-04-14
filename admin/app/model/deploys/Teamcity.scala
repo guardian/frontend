@@ -24,8 +24,11 @@ case class TeamCityBuild(number: String,
                          state: String,
                          projectName: String,
                          parentNumber: Option[String],
-                         revision: String,
-                         commits: List[Commit]) {
+                         // Revision is sometimes missing on cancelled builds, e.g.
+                         // http://teamcity.gu-web.net:8111/guestAuth/app/rest/builds/id:8181
+                         revision: Option[String],
+                         commits: List[Commit]
+) {
 
   val isSuccess = (status == "SUCCESS")
   def committers() = commits.map(_.username).distinct
@@ -47,7 +50,7 @@ object TeamCityBuild {
       (__ \ "artifact-dependencies" \ "build").read(
         (__ \\ "number").readNullable[String]
       ) and
-      (__ \ "revisions" \ "revision" \\ "version").read[String] and
+      (__ \ "revisions" \ "revision" \\ "version").readNullable[String] and
       (__ \ "changes" \ "change").read[List[Commit]]
     )(TeamCityBuild.apply _)
 }
