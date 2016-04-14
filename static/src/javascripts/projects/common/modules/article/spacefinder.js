@@ -60,11 +60,7 @@ define([
 
         // fromBotton:Boolean
         // will reverse the order of slots (this is useful for lazy loaded content)
-        fromBottom: false,
-
-        // considerScroll:Boolean
-        // will take scroll position into consideration (this is useful for liveblog ads)
-        considerScroll: false
+        fromBottom: false
     };
 
     function expire(resolve) {
