@@ -54,9 +54,25 @@ object CSSDynamoDbReport extends DynamoDbReport[CssReport] {
 }
 
 object CSPDynamoDbReport extends DynamoDbReport[CSPReport] {
-  def report(report: CSPReport): Unit = {
-    Try(Scanamo.put(client)("cspReport")(report)).recover {
-      case e: Throwable => log.error(s"Failed to log CSP report to DynamoDB", e)
+  def report(r: CSPReport): Unit = {
+    val keys: Map[String, AttributeValue] = Map(
+      "documentUri" -> new AttributeValue().withS(r.documentUri),
+      "blockedUri" -> new AttributeValue().withS(r.blockedUri)
+    )
+
+    val count: Map[String, AttributeValueUpdate] = Map(
+      "count" -> new AttributeValueUpdate()
+        .withAction(AttributeAction.ADD)
+        .withValue(new AttributeValue().withN("1"))
+    )
+
+    val update = new UpdateItemRequest()
+      .withTableName("cspReport")
+      .withKey(keys.asJava)
+      .withAttributeUpdates(count.asJava)
+
+    client.updateItemFuture(update) onFailure {
+      case error: Throwable => log.error(s"Failed to log CSP report to DynamoDB", error)
     }
   }
 }
