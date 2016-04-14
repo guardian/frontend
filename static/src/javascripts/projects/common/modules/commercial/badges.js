@@ -53,7 +53,7 @@ define([
                 ));
             }
         },
-        renderAd = function (item, sponsorship, opts) {
+        renderAd = function (item, sponsorship, opts, fallback) {
             var badgeConfig = badgesConfig[sponsorship],
                 slotTarget  = badgeConfig.namePrefix + 'badge',
                 name        = slotTarget + (++badgeConfig.count),
@@ -74,7 +74,7 @@ define([
                     if (placeholder.length) {
                         placeholder.replaceWith($adSlot);
                     } else {
-                        $(opts.fallback, item).after($adSlot);
+                        $(fallback, item).after($adSlot);
                     }
 
                     resolve($adSlot);
@@ -97,9 +97,9 @@ define([
                     qwery('.fc-container', front)[0],
                     $front.data('sponsorship'),
                     {
-                        sponsor: $front.data('sponsor'),
-                        fallback: '.js-container__header'
-                    }
+                        sponsor: $front.data('sponsor')
+                    },
+                    '.js-container__header'
                 );
             }));
 
@@ -127,9 +127,9 @@ define([
                         {
                             sponsor:  $item.data('sponsor'),
                             series:   $item.data('series'),
-                            keywords: $item.data('keywords'),
-                            fallback: fallback
-                        }
+                            keywords: $item.data('keywords')
+                        },
+                        fallback
                     );
                 }
             }
@@ -152,9 +152,9 @@ define([
                         {
                             sponsor:  $container.data('sponsor'),
                             series:   $container.data('series'),
-                            keywords: $container.data('keywords'),
-                            fallback: '.js-container__header'
-                        }
+                            keywords: $container.data('keywords')
+                        },
+                        '.js-container__header'
                     ).then(function ($adSlot) {
                         // add slot to dfp
                         dfp.addSlot($adSlot);
