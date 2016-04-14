@@ -62,7 +62,7 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
       (specific ++ latestByKeyword.filter(_.trail.trailPicture.nonEmpty)).distinct take 4
     }
 
-    futureContents map {
+    futureContents.map(_.toList) map {
       case Nil => NoCache(format.nilResult)
       case contents => Cached(componentMaxAge) {
 

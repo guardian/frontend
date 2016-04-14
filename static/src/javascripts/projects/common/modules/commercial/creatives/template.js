@@ -20,6 +20,7 @@ define([
     'text!common/views/commercial/creatives/gimbap.html',
     'text!common/views/commercial/creatives/gimbap-simple.html',
     'text!common/views/commercial/creatives/gimbap-richmedia.html',
+    'text!common/views/commercial/creatives/manual-container.html'
 ], function (
     Promise,
     $,
@@ -77,6 +78,25 @@ define([
 
     Template.prototype.create = function () {
         return new Promise(function (resolve) {
+            if( this.params.creative === 'manual-single' && config.switches.v2ManualSingleTemplate ) {
+                this.params.originalCreative = 'manual-single';
+                this.params.creative = 'manual-container';
+                this.params.creativeCard = 'manual-card-large';
+                this.params.classNames = ['legacy', 'legacy-single', this.params.toneClass.replace('commercial--', ''), this.params.Toneclass.replace('commercial--tone-', '')];
+            }
+
+            if (this.params.creative === 'manual-multiple' && config.switches.v2ManualMultipleTemplate ) {
+                // harmonise attribute names until we do this on the DFP side
+                this.params.toneClass = this.params.Toneclass;
+                this.params.baseUrl = this.params.base__url;
+                this.params.offerLinkText = this.params.offerlinktext;
+
+                this.params.originalCreative = 'manual-multiple';
+                this.params.creative = 'manual-container';
+                this.params.creativeCard = 'manual-card';
+                this.params.classNames = ['legacy', this.params.toneClass.replace('commercial--', ''), this.params.toneClass.replace('commercial--tone-', '')];
+            }
+
             require(['text!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
                 if (templatePreprocessor[this.params.creative]) {
                     templatePreprocessor[this.params.creative](this);

@@ -15,7 +15,7 @@ object Masterclasses extends Controller with implicits.Requests {
 
       val selectedMasterclasses: Seq[Masterclass] = (MasterclassAgent.specificMasterclasses(specificIds) ++
                                              MasterclassAgent.masterclassesTargetedAt(segment)).distinct
-      selectedMasterclasses match {
+      selectedMasterclasses.toList match {
         case Nil => NoCache(jsonFormat.nilResult)
         case masterclasses => Cached(componentMaxAge) {
           val clickMacro = request.getParameter("clickMacro")

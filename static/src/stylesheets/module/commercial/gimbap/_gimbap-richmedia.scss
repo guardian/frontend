@@ -1,72 +1,72 @@
 %gimbap-zindex {
-	position: relative;
-	z-index: 1;
+    position: relative;
+    z-index: 1;
 }
 
 .gimbap-richmedia__title {
-	@extend %gimbap-zindex;
-	@include fs-headline(3);
+    @extend %gimbap-zindex;
+    @include fs-headline(3);
 
-	font-weight: bold;
-	line-height: .8;
-	color: #ffffff;
+    font-weight: bold;
+    line-height: .8;
+    color: #ffffff;
 
-	.has-flex & {
-		align-self: flex-start;
-	}
+    .has-flex & {
+        align-self: flex-start;
+    }
 
-	@include mq($until: desktop) {
-		margin-bottom: $gs-gutter / 3;
-	}
+    @include mq($until: desktop) {
+        margin-bottom: $gs-gutter / 3;
+    }
 }
 
 .gimbap-richmedia__headline {
-	@extend %gimbap-zindex;
-	@include fs-headline(2);
+    @extend %gimbap-zindex;
+    @include fs-headline(2);
 
-	width: 65%;
-	margin: 0;
-	padding-bottom: 4px; /* To me, the ultimate act of magic is to create something from nothing. */
-	font-weight: bold;
-	line-height: 1;
-	color: #ffffff;
+    width: 65%;
+    margin: 0;
+    padding-bottom: 4px; /* To me, the ultimate act of magic is to create something from nothing. */
+    font-weight: bold;
+    line-height: 1;
+    color: #ffffff;
 
-	@include mq($until: desktop) {
-		width: 80%;
-	}
+    @include mq($until: desktop) {
+        width: 80%;
+    }
 }
 
 .gimbap-richmedia__meta {
-	@extend %gimbap-zindex;
-	@include fs-textSans(1);
+    @extend %gimbap-zindex;
+    @include fs-textSans(1);
 
-	color: #ffffff;
+    color: #ffffff;
 }
 
 .gimbap-richmedia__meta--place {
-	.has-flex & {
-		flex-grow: 1;
-	}
+    .has-flex & {
+        flex-grow: 1;
+    }
 }
 
 .gimbap-richmedia__icon {
-	display: inline-block;
-	vertical-align: middle;
-	width: 11px;
-	text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+    width: 11px;
+    text-align: center;
 }
 
 .gimbap-richmedia__price {
-	@extend %gimbap-zindex;
-	@include fs-headline(3);
+    @extend %gimbap-zindex;
+    @include fs-headline(3);
 
-	font-weight: 500;
+    font-weight: 500;
 }
 
 // TONES
 .gimbap-wrap--tone-masterclasses {
 
-	.gimbap-richmedia__highlight {
-		color: $gimbap-masterclasses-text;
-	}
+    .gimbap-richmedia__highlight {
+        color: $gimbap-masterclasses-text;
+    }
 }

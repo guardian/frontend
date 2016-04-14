@@ -66,6 +66,7 @@ window.curlConfig = {
             'bootstraps/enhanced/trail':         '@Static("javascripts/bootstraps/enhanced/trail.js")',
             'bootstraps/enhanced/gallery':       '@Static("javascripts/bootstraps/enhanced/gallery.js")',
             'bootstraps/enhanced/profile':       '@Static("javascripts/bootstraps/enhanced/profile.js")',
+            'bootstraps/enhanced/minute':        '@Static("javascripts/bootstraps/enhanced/minute.js")',
             'foresee.js':               'vendor/foresee/20150703/foresee-trigger.js',
             'googletag.js':             '@{Configuration.javascript.config("googletagJsUrl")}',
             stripe:                     '@Static("javascripts/vendor/stripe/stripe.min.js")',
