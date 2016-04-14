@@ -1,6 +1,7 @@
 package views.support
 
 import common.Edition
+import common.commercial.{ContainerContent, ContainerModel}
 import common.dfp.AdSize.{leaderboardSize, responsiveSize}
 import common.dfp._
 import conf.switches.Switches._
@@ -81,8 +82,26 @@ object Commercial {
 
   object container {
 
-    def shouldRenderAsPaidContainer(isPaidFront: Boolean, container: FaciaContainer): Boolean = {
-      !isPaidFront && container.commercialOptions.isPaidContainer
+    def shouldRenderAsPaidContainer(isPaidFront: Boolean, container: FaciaContainer, containerModel: Option[ContainerModel]): Boolean = {
+
+      def containerHasPaidContent(container: ContainerModel): Boolean = {
+
+        def isPaid(branding: Option[SponsorDataAttributes]): Boolean =
+          branding.exists(_.sponsorshipType == "advertisement-features")
+
+        val content = container.content
+        val allCards = content.fixed.initialCards ++
+          content.dynamic.bigCards ++
+          content.dynamic.veryBigCards ++
+          content.dynamic.hugeCards
+
+        val paidCards = allCards.filter(card => isPaid(card.branding))
+
+        isPaid(container.branding) || !paidCards.isEmpty
+      }
+
+      !isPaidFront &&
+        ( container.commercialOptions.isPaidContainer || containerModel.exists(containerHasPaidContent) )
     }
 
     def mkSponsorDataAttributes(config: CollectionConfig): Option[SponsorDataAttributes] = {
