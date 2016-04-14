@@ -3,8 +3,7 @@ package model.diagnostics
 import awswrappers.dynamodb._
 import com.amazonaws.regions.{Region, Regions}
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBAsyncClient
-import com.amazonaws.services.dynamodbv2.model.{AttributeAction, AttributeValue, AttributeValueUpdate, UpdateItemRequest}
-import com.gu.scanamo._
+import com.amazonaws.services.dynamodbv2.model._
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import model.diagnostics.csp.CSPReport

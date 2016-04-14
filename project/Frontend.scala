@@ -100,8 +100,7 @@ object Frontend extends Build with Prototypes {
   val diagnostics = application("diagnostics").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       uaDetectorResources,
-      openCsv,
-      scanamo
+      openCsv
     )
   )
 
