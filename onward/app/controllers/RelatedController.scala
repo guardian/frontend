@@ -31,13 +31,6 @@ object RelatedController extends Controller with Related with Containers with Lo
     }
   }
 
-  def renderPeopleWhoRead(path: String, testVariant: String) = Action.async { implicit request =>
-    peopleWhoRead(path, testVariant) map {
-      case related if related.items.isEmpty => JsonNotFound()
-      case trails => renderRelated(trails.items, "people who read this also read")
-    }
-  }
-
   private def renderRelated(trails: Seq[RelatedContentItem], containerTitle: String)(implicit request: RequestHeader) = Cached(30.minutes) {
     val relatedTrails = trails take 8
 

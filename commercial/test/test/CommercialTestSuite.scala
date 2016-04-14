@@ -16,7 +16,6 @@ class CommercialTestSuite extends Suites (
   new money.CurrentAccountsFeedTest,
   new money.SavingsFeedTest,
   new soulmates.SoulmatesFeedTest,
-  new travel.TravelOffersApiTest,
   new LookupTest,
   new BookFinderTest,
   new BookTest

@@ -20,7 +20,7 @@ trait Related extends ConciergeRepository {
     } else {
 
       // doesn't like "tag" being an empty string - need to explicitly pass a None
-      val tags: Option[String] = excludeTags match {
+      val tags: Option[String] = excludeTags.toList match {
         case Nil => None
         case excluding => Some(excluding.map(t => s"-$t").mkString(","))
       }
@@ -40,29 +40,6 @@ trait Related extends ConciergeRepository {
       trails recoverApi404With RelatedContent(Nil)
     }
   }
-
-  def peopleWhoRead(path: String, testVariant: String): Future[RelatedContent] = {
-
-    import play.api.Play.current
-    implicit val formats = JsonParser.formats
-
-    val capiRecommenderUrl = s"https://recommend.capi.gutools.co.uk/recommendations/$testVariant/$path"
-
-    WS.url(capiRecommenderUrl).withRequestTimeout(2000).get() map { response =>
-      response.status match {
-        case 200 =>
-          JsonMethods.parse(response.body).extractOpt[RecommendedContentResponse] map { recommendedContentResponse =>
-            val relatedContentItems = recommendedContentResponse.items map(rc => RelatedContentItem(rc.content))
-            RelatedContent(relatedContentItems)
-          } getOrElse RelatedContent(Nil)
-
-        case _ =>
-          RelatedContent(Nil)
-      }
-    }
-
-  }
-
 
   def getPopularInTag(edition: Edition, tag: String, excludeTags: Seq[String] = Nil): Future[RelatedContent] = {
 
@@ -85,6 +62,3 @@ trait Related extends ConciergeRepository {
     trails
   }
 }
-
-case class RecommendedContent(score: Double, commonUniques: Int, totalUniques: Int, content: Content)
-case class RecommendedContentResponse(items: List[RecommendedContent])
