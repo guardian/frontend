@@ -1,6 +1,8 @@
 define([
     'bean',
     'fastdom',
+    'qwery',
+    'bonzo',
     'common/utils/template',
     'common/utils/$',
     'common/views/svgs',
@@ -9,6 +11,8 @@ define([
 ], function (
     bean,
     fastdom,
+    qwery,
+    bonzo,
     template,
     $,
     svgs,
@@ -18,14 +22,35 @@ define([
     var subscribed = false,
         modules = {
 
-        configureSubscribeTemplate: function () {
-            var handler = subscribed ? modules.unSubscribeHandler : modules.subscribeHandler
+        cxxxonfigureSubscribeTemplate: function () {
+            var handler = subscribed ? modules.unSubscribeHandler : modules.subscribeHandler,
                 src = template(followLink, {
-                icon: svgs('notificationsOff'),
-            });
+                    icon: svgs('notificationsOff'),
+                });
             fastdom.write(function(){
                 $('.js-notification-link').append(src);
             });
+        },
+
+        configureSubscribeTemplate: function() {
+            var $follows = bonzo(qwery('.js-notification-link')),
+                handler = subscribed ? modules.unSubscribeHandler : modules.subscribeHandler, //There's only one, baby,
+                src = template(followLink, {
+                    icon: svgs('notificationsOff')
+                });
+
+            console.log("Follow");
+
+            $follows.each(function(follow) {
+                console.log("++ Follow");
+                var $follow = bonzo(follow);
+                $follow.html(src);
+            })
+
+
+
+
+
         },
 
         subscribeHandler: function() {
