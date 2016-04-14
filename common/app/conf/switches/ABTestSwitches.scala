@@ -6,10 +6,10 @@ trait ABTestSwitches {
 
   val ABDummyTest = Switch(
     "A/B Tests",
-    "dummy-test",
+    "ab-dummy-test",
     "A do-nothing AA test, for the data team",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 10),
+    sellByDate = new LocalDate(2016, 5, 12),
     exposeClientSide = true
   )
 
@@ -56,15 +56,6 @@ trait ABTestSwitches {
     "Live blog chrome notifications - prod",
     safeState = Off,
     sellByDate = new LocalDate(2016, 6, 1),
-    exposeClientSide = true
-  )
-
-  val ABPeopleWhoReadThisAlsoReadVariants = Switch(
-    "A/B Tests",
-    "ab-people-who-read-this-also-read-variants",
-    "Display people who read this also read with different variants",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 14),
     exposeClientSide = true
   )
 

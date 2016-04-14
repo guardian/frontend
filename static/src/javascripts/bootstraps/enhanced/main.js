@@ -45,7 +45,7 @@ define([
                 bootstrapContext('facia', facia);
             });
 
-            if (ab.testCanBeRun('Minute')) {
+            if (ab.isInVariant('Minute', 'on')) {
                 require('bootstraps/enhanced/minute', function() {});
             }
         }
