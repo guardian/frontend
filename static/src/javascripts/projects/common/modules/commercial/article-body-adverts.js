@@ -107,7 +107,7 @@ define([
 
     // If a merchandizing component has been rendered but is empty,
     // we allow a second pass for regular inline ads. This is because of
-    // the decoupling between the spacefinder algorightm and the targeting
+    // the decoupling between the spacefinder algorithm and the targeting
     // in DFP: we can only know if a slot can be removed after we have
     // received a response from DFP
     function onAdRendered(event) {
