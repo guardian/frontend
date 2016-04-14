@@ -56,7 +56,7 @@ define([
         return function (params) {
             var isbn = config.page.isbn || params.isbn;
             if (isbn) {
-                return buildComponentUrl(url, merge(params, isbn));
+                return buildComponentUrl(url, merge(params, { t: isbn }));
             } else {
                 return false;
             }
