@@ -40,7 +40,7 @@ object Logstash {
     )
   }
 
-  def init(logger: LoggerLike) = {
+  def init(logger: LoggerLike): Unit = {
     if(Switches.LogstashLogging.isSwitchedOn) {
       config.fold(logger.info("Logstash config is missing"))(LogbackConfig.initLogger(logger, _))
     } else {
