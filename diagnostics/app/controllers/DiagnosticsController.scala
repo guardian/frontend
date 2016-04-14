@@ -41,9 +41,7 @@ object DiagnosticsController extends Controller with Logging {
   }
 
   def csp = Action(jsonParser) { implicit request =>
-    val shouldReport = (new Instant().getMillis) % 10000 == 1
-
-    if (conf.switches.Switches.CspReporting.isSwitchedOn && shouldReport) {
+    if (conf.switches.Switches.CspReporting.isSwitchedOn) {
       CSP.report(request.body)
     }
 
