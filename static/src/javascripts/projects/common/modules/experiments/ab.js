@@ -12,7 +12,6 @@ define([
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/header-bidding-us',
     'common/modules/experiments/tests/next-in-series',
-    'common/modules/experiments/tests/people-who-read-this-also-read-variants',
     'common/modules/experiments/tests/membership',
     'common/modules/experiments/tests/loyal-adblocking-survey',
     'common/modules/experiments/tests/minute',
@@ -43,7 +42,6 @@ define([
     LiveBlogChromeNotificationsProd,
     HeaderBiddingUS,
     NextInSeries,
-    PeopleWhoReadThisAlsoReadVariants,
     Membership,
     LoyalAdblockingSurvey,
     Minute,
@@ -70,7 +68,6 @@ define([
         new LiveBlogChromeNotificationsProd(),
         new HeaderBiddingUS(),
         new NextInSeries(),
-        new PeopleWhoReadThisAlsoReadVariants(),
         new Membership(),
         new LoyalAdblockingSurvey(),
         new Minute()
