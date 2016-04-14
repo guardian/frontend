@@ -15,19 +15,30 @@ define([
     followLink,
     permissionsTemplate
 ) {
-    var modules = {
+    var subscribed = false,
+        modules = {
 
         configureSubscribeTemplate: function () {
-            var src = template(followLink, {
+            var handler = subscribed ? modules.unSubscribeHandler : modules.subscribeHandler
+                src = template(followLink, {
                 icon: svgs('notificationsOff'),
-                text: 'Get alerts on this story'
             });
             fastdom.write(function(){
-                $('.js-live-blog__key-events').append(src);
+                $('.js-notification-link').append(src);
             });
+        },
 
+        subscribeHandler: function() {
+            console.log("++ SubscribeHandler");
+        },
+
+        unSubscribeHandler: function() {
+            console.log("++ UnSubscribeHandler");
         }
     };
+
+
+
 
     return {
         init: modules.configureSubscribeTemplate

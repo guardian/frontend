@@ -20,6 +20,10 @@ $notifications-button-height: 28px;
     }
 }
 
+.notifications-link {
+    margin-bottom: $gs-baseline /2;
+}
+
 .notifications__button {
 
     .inline-icon {
@@ -27,6 +31,10 @@ $notifications-button-height: 28px;
             width: 1.143em;
             height: .857em;
         }
+    }
+
+    .notifications_label--following {
+        display: none;
     }
 }
 
