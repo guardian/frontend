@@ -65,7 +65,7 @@ trait Index extends ConciergeRepository with Collections {
       .pageSize(if (isRss) IndexPagePagination.rssPageSize else IndexPagePagination.pageSize)
       .showFields(if (isRss) rssFields else QueryDefaults.trailFields)
     ).map {response =>
-      val trails = response.results.map(IndexPageItem(_))
+      val trails = response.results.map(IndexPageItem(_)).toList
       trails match {
         case Nil => Right(NotFound)
         case head :: _ =>
@@ -162,7 +162,7 @@ trait Index extends ConciergeRepository with Collections {
     val latest: Seq[IndexPageItem] = response.results.getOrElse(Nil).map(IndexPageItem(_)).filterNot(c => leadContentIds.contains(c.item.metadata.id))
     val allTrails = (leadContent ++ editorsPicks ++ latest).distinctBy(_.item.metadata.id)
     tag map { tag =>
-      IndexPage(page = tag, contents = allTrails, tags = Tags(Seq(tag)), date = DateTime.now, tzOverride = None)
+      IndexPage(page = tag, contents = allTrails, tags = Tags(List(tag)), date = DateTime.now, tzOverride = None)
     }
   }
 
