@@ -46,17 +46,19 @@ class AllGoodHealthcheckController(override val testPort: Int, paths: String*) e
 
     val healthCheckResults = fetchResults(paths:_*)
 
-    Future.sequence(healthCheckResults).map(_.filterNot { case (_, status) => status == 200})
+    Future.sequence(healthCheckResults)
+      .map(_.filterNot { case (_, status) => status == 200})
+      .map(_.toList)
       .map {
-      case Nil => {
-        status.set(true)
-        Ok("OK")
+        case Nil => {
+          status.set(true)
+          Ok("OK")
+        }
+        case errors => {
+          status.set(false)
+          InternalServerError(errors.map { case (url, status) => s"$status $url"}.mkString("\n"))
+        }
       }
-      case errors => {
-        status.set(false)
-        InternalServerError(errors.map { case (url, status) => s"$status $url"}.mkString("\n"))
-      }
-    }
   }
 }
 

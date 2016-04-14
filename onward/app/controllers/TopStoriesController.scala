@@ -34,7 +34,7 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
     ContentApiClient.getResponse(ContentApiClient.item("/", edition)
       .showEditorsPicks(true)
     ).map { response =>
-        response.editorsPicks.getOrElse(Nil) map { item =>
+        response.editorsPicks.getOrElse(Seq.empty).toList map { item =>
           RelatedContentItem(item)
         } match {
           case Nil => None

@@ -12,9 +12,9 @@ define([
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/header-bidding-us',
     'common/modules/experiments/tests/next-in-series',
-    'common/modules/experiments/tests/people-who-read-this-also-read-variants',
     'common/modules/experiments/tests/membership',
     'common/modules/experiments/tests/loyal-adblocking-survey',
+    'common/modules/experiments/tests/minute',
     'lodash/arrays/flatten',
     'lodash/arrays/zip',
     'lodash/collections/forEach',
@@ -42,9 +42,9 @@ define([
     LiveBlogChromeNotificationsProd,
     HeaderBiddingUS,
     NextInSeries,
-    PeopleWhoReadThisAlsoReadVariants,
     Membership,
     LoyalAdblockingSurvey,
+    Minute,
     flatten,
     zip,
     forEach,
@@ -68,9 +68,9 @@ define([
         new LiveBlogChromeNotificationsProd(),
         new HeaderBiddingUS(),
         new NextInSeries(),
-        new PeopleWhoReadThisAlsoReadVariants(),
         new Membership(),
-        new LoyalAdblockingSurvey()
+        new LoyalAdblockingSurvey(),
+        new Minute()
     ]);
 
     var participationsKey = 'gu.ab.participations';

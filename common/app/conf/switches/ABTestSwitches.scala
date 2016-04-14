@@ -6,10 +6,10 @@ trait ABTestSwitches {
 
   val ABDummyTest = Switch(
     "A/B Tests",
-    "dummy-test",
+    "ab-dummy-test",
     "A do-nothing AA test, for the data team",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 10),
+    sellByDate = new LocalDate(2016, 5, 12),
     exposeClientSide = true
   )
 
@@ -59,15 +59,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABPeopleWhoReadThisAlsoReadVariants = Switch(
-    "A/B Tests",
-    "ab-people-who-read-this-also-read-variants",
-    "Display people who read this also read with different variants",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 14),
-    exposeClientSide = true
-  )
-
   val ABHeaderBiddingUS = Switch(
     "A/B Tests",
     "ab-header-bidding-us",
@@ -92,6 +83,15 @@ trait ABTestSwitches {
     "An adblock ongoing survey for all loyal users",
     safeState = Off,
     sellByDate = new LocalDate(2016, 5, 31),
+    exposeClientSide = true
+  )
+
+  val ABMinute = Switch(
+    "A/B Tests",
+    "ab-minute",
+    "Switch to include the minute.ly script",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 5, 11),
     exposeClientSide = true
   )
 

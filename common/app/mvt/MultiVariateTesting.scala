@@ -58,16 +58,6 @@ object ABHeadlinesTestControl extends TestDefinition(
     }
 }
 
-object SeriesOnwardPosition extends TestDefinition(
-  List(Variant2, Variant3, Variant4, Variant5, Variant6), // 5% of our audience
-  "series-onward-position",
-  "Test engagement with the series onward container positioned as the first thing after the article",
-  new LocalDate(2016, 4, 12)) {
-    def isParticipating(request: RequestHeader, content: model.ContentType): Boolean = {
-      content.tags.series.nonEmpty && super.isParticipating(request)
-    }
-}
-
 object ABIntersperseMultipleStoryPackagesStories extends TestDefinition(
   List(Variant8), // 1% of our audience
   "intersperse-multiple-story-packages-stories",
@@ -87,7 +77,6 @@ object ActiveTests extends Tests {
     CMTopBannerPosition,
     ABHeadlinesTestControl,
     ABHeadlinesTestVariant,
-    SeriesOnwardPosition,
     ABIntersperseMultipleStoryPackagesStories,
     ABIntersperseMultipleStoryPackagesStoriesControl
   )

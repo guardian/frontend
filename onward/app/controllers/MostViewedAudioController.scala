@@ -24,14 +24,14 @@ object MostViewedAudioController extends Controller with Logging with ExecutionC
     }
   }
 
-  private def getMostViewedAudio()(implicit request: RequestHeader): Seq[RelatedContentItem] = {
+  private def getMostViewedAudio()(implicit request: RequestHeader): List[RelatedContentItem] = {
     val size = request.getQueryString("size").getOrElse("4").toInt
-    MostViewedAudioAgent.mostViewedAudio().take(size)
+    MostViewedAudioAgent.mostViewedAudio().take(size).toList
   }
 
-  private def getMostViewedPodcast()(implicit request: RequestHeader): Seq[RelatedContentItem] = {
+  private def getMostViewedPodcast()(implicit request: RequestHeader): List[RelatedContentItem] = {
     val size = request.getQueryString("size").getOrElse("4").toInt
-    MostViewedAudioAgent.mostViewedPodcast().take(size)
+    MostViewedAudioAgent.mostViewedPodcast().take(size).toList
   }
 
   private def renderMostViewedAudio(audios: Seq[RelatedContentItem], mediaType: String)(implicit request: RequestHeader) = Cached(900) {
