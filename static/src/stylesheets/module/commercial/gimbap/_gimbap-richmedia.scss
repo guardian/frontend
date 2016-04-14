@@ -1,10 +1,11 @@
-%gimbap-zindex {
+%gimbap-text-styling {
     position: relative;
     z-index: 1;
+    text-shadow: 0 0 5px rgba(0, 0, 0, .3);
 }
 
 .gimbap-richmedia__title {
-    @extend %gimbap-zindex;
+    @extend %gimbap-text-styling;
     @include fs-headline(3);
 
     font-weight: bold;
@@ -21,7 +22,7 @@
 }
 
 .gimbap-richmedia__headline {
-    @extend %gimbap-zindex;
+    @extend %gimbap-text-styling;
     @include fs-headline(2);
 
     width: 65%;
@@ -37,7 +38,7 @@
 }
 
 .gimbap-richmedia__meta {
-    @extend %gimbap-zindex;
+    @extend %gimbap-text-styling;
     @include fs-textSans(1);
 
     color: #ffffff;
@@ -57,7 +58,7 @@
 }
 
 .gimbap-richmedia__price {
-    @extend %gimbap-zindex;
+    @extend %gimbap-text-styling;
     @include fs-headline(3);
 
     font-weight: 500;
