@@ -4,7 +4,6 @@ import conf.switches.Switches
 import model.pressed.PressedContent
 import model.{ContentType, ImageOverride, ImageMedia}
 import views.support.{CardWithSponsorDataAttributes, ImgSrc, SponsorDataAttributes}
-// import layout.{FaciaWidths, ItemClasses}
 
 case class CardContent(
                         icon: Option[String],
@@ -19,8 +18,6 @@ case class CardContent(
                       )
 
 object CardContent {
-
-  // val breakpointWidths = FaciaWidths.mediaFromItemClasses(ItemClasses.showMore)
 
   def fromPressedContent(content: PressedContent): CardContent = {
 
