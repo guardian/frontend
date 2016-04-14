@@ -8,10 +8,15 @@
 	@include fs-headline(3);
 
 	font-weight: bold;
+	line-height: .8;
 	color: #ffffff;
 
 	.has-flex & {
 		align-self: flex-start;
+	}
+
+	@include mq($until: desktop) {
+		margin-bottom: $gs-gutter / 3;
 	}
 }
 
@@ -25,6 +30,10 @@
 	font-weight: bold;
 	line-height: 1;
 	color: #ffffff;
+
+	@include mq($until: desktop) {
+		width: 80%;
+	}
 }
 
 .gimbap-richmedia__meta {

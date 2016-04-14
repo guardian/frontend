@@ -189,6 +189,14 @@ $gimbap-width-quarter: calc(25% - 20px);
     }
 }
 
+.gimbap-wrap__body--2x2 {
+    @include mq($until: tablet) {
+        > .gimbap:nth-child(n+2) {
+            display: none;
+        }
+    }
+}
+
 .gimbap-wrap__title {
     font: 900 1.375rem/2.25rem 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;
     color: $guardian-brand-dark;;
