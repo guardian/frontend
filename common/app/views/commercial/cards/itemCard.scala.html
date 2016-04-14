@@ -1,5 +1,11 @@
+@import views.html.fragments.inlineSvg
+@import views.html.fragments.items.elements.facia_cards.image
+@import layout.{FaciaWidths, ItemClasses}
+@import cards.{CardType, Standard}
+
 @(item: common.commercial.CardContent,
   omnitureId: String,
+  cardType: CardType = Standard,
   optAdvertClassNames: Option[Seq[String]] = None,
   optClassNames: Option[Seq[String]] = None,
   optImgRatio: Option[String] = None,
@@ -8,7 +14,6 @@
   optKeywords: Option[String] = None,
   optSeries: Option[String] = None)
 
-@import views.html.fragments.inlineSvg
 
 <a href="@item.targetUrl" class="advert advert--capi
     @optAdvertClassNames.map { classNames => @classNames.map(c => s"advert--$c").mkString(" ")}
@@ -25,7 +30,12 @@
         @item.headline
     </h2>
     <div class="advert__image-container @for(imgRatio <- optImgRatio){u-responsive-ratio u-responsive-ratio--@imgRatio}">
-        <img class="advert__image" src="@item.imageUrl">
+        @image(
+            Seq("advert__image"),
+            FaciaWidths.mediaFromItemClasses(ItemClasses(mobile = Standard, tablet = cardType, desktop = Some(cardType))),
+            maybeImageMedia = item.image,
+            maybeSrc = item.fallbackImageUrl
+        )
     </div>
     @for(description <- item.description) {
         <div class="advert__standfirst">@Html(description)</div>

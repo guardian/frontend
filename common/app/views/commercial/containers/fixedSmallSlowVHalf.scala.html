@@ -19,6 +19,7 @@
     </div>
     @containerModel.content.fixed.initialCards.drop(4).take(1).map(card => views.html.commercial.cards.itemCard(
         card,
+        cardType = cards.Half,
         optClassNames = Some(Seq("hide-until-tablet")),
         omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card)
     ))
