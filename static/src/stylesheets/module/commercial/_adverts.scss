@@ -159,6 +159,8 @@
 
         @include mq(tablet) {
             > * + * {
+                position: relative;
+
                 &::before {
                     @include separator($neutral-4, $gs-gutter / -2);
                 }
