@@ -231,7 +231,7 @@ define([
                 offerHeadline: tpl.params['offer' + i + 'headline'],
                 offerDate: tpl.params['offer' + i + 'date'],
                 offerPlace: tpl.params['offer' + i + 'place'],
-                offerPrice: tpl.params['offer' + i + 'price'],
+                offerPrice: tpl.params['offer' + i + 'price'] !== '0' ? tpl.params['offer' + i + 'price'] : '',
                 offerDiscount: tpl.params['offer' + i + 'discount']
             }));
         }
