@@ -15,7 +15,7 @@ GET            /assets/*path                                                    
 GET            /count/$prefix<.+>.gif                                                                                            controllers.DiagnosticsController.analytics(prefix)
 GET            /counts.gif                                                                                                       controllers.DiagnosticsController.analyticsCounts()
 POST           /css                                                                                                              controllers.DiagnosticsController.css
-OPTIONS        /css                                                                                                              controllers.DiagnosticsController.cssOptions
+OPTIONS        /css                                                                                                              controllers.DiagnosticsController.postOptions
 POST           /accept-beacon                                                                                                    controllers.DiagnosticsController.acceptBeacon
 OPTIONS        /accept-beacon                                                                                                    controllers.DiagnosticsController.acceptBeaconOptions
 
