@@ -2,36 +2,30 @@ define([
     'bean',
     'fastdom',
     'common/utils/template',
-    'text!common/views/ui/notifications-subscribe-link.html',
+    'common/utils/$',
+    'common/views/svgs',
+    'text!common/views/ui/notifications-follow-link.html',
     'text!common/views/ui/notifications-permission-denied-message.html'
 ], function (
     bean,
     fastdom,
     template,
-    subscribeTemplate,
+    $,
+    svgs,
+    followLink,
     permissionsTemplate
 ) {
     var modules = {
 
         configureSubscribeTemplate: function () {
-            console.log("++ Template");
-/*
-            var subscribed = modules.checkSubscriptions(),
-                hasNoSubscriptions = modules.subscriptionsEmpty(),
-                handler = subscribed ? modules.unSubscribeHandler : modules.subscribeHandler,
-                src = template(subscribeTemplate, {
-                    className: hasNoSubscriptions ? '' : 'notifications-subscribe-link--has-subscriptions',
-                    text: subscribed ? 'Unfollow' : 'Follow story',
-                    imgMobile: svgs('notificationsExplainerMobile', ['mobile-only', 'notification-explainer']),
-                    imgDesktop: svgs('notificationsExplainerDesktop', ['hide-on-mobile', 'notification-explainer'])
-                });
-
-            fastdom.write(function () {
-                $('.js-notifications').prepend(src);
-                bean.one(document.body, 'click', '.js-notifications-subscribe-link', handler);
+            var src = template(followLink, {
+                icon: svgs('notificationsOff'),
+                text: 'Get alerts on this story'
             });
-*/
-            //modules.displayPermissiosMessage();
+            fastdom.write(function(){
+                $('.js-live-blog__key-events').append(src);
+            });
+
         }
     };
 

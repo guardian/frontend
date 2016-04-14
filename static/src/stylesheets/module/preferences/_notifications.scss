@@ -1,23 +1,47 @@
 $breaking-news-icon-width: 36px;
 $breaking-news-close-icon-width: 32px;
+$notifications-button-height: 28px;
 
-.notifications-subscribe-link--has-subscriptions {
-    display: none;
-}
+@mixin notifcations-button-style($foreground: $neutral-2, $background: #ffffff) {
+    .notifications__button {
+        color: $foreground;
+        border-color: $foreground;
+        border-style: solid;
 
-.notifications-subscribe-link__headline {
-    @include fs-header(3);
-    margin: 0;
-}
-
-.notifications-link {
-    margin-top: $gs-baseline;
-    margin-bottom: $gs-baseline / 2;
-
-    .button--follow {
-        margin-bottom: $gs-baseline;
+        .inline-icon {
+            fill: $foreground
+        }
     }
 }
+
+@mixin notifications-button-toned($tone, $foreground: $news-main-1, $background: #ffffff) {
+    .tonal--tone-#{$tone} {
+        @include notifcations-button-style($foreground, $background);
+    }
+}
+
+.notifications__button {
+
+    .inline-icon {
+        svg {
+            width: 1.143em;
+            height: .857em;
+        }
+    }
+}
+
+.notificications-follow-input--solo {
+
+    .submit-input__icon {
+        display: inline-block;
+        margin-right: $gs-gutter / 4;
+    }
+}
+
+
+@include notifcations-button-style();
+@include notifications-button-toned(live, $live-default, $neutral-8);
+@include notifications-button-toned(dead, $live-default, $neutral-8);
 
 .notifications-permission-denied {
     position: fixed;
