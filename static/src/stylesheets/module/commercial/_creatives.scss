@@ -776,15 +776,6 @@
     text-align: left;
 }
 
-// Backgrounds
-
-.full-width-250 {
-    // Use 'revealer' background unless top-slot ad
-    .ad-slot:not(.ad-slot--top-banner-ad) & {
-        background-attachment: fixed;
-    }
-}
-
 // Animations
 // =============================================================================
 
