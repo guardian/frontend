@@ -20,6 +20,7 @@ define([
     Promise
 ) {
     var INTERVAL = 5;      // number of posts between ads
+    var OFFSET = 1.5;      // ratio of the screen height from which ads are loaded
     var MAX_ADS = 8;       // maximum number of ads to display
 
     var slotCounter = 0, windowHeight, firstSlot;
@@ -40,10 +41,10 @@ define([
             slotSelector: ' > .block',
             fromBottom: update,
             startAt: update ? firstSlot : null,
+            absoluteMinAbove: update ? 0 : (windowHeight * OFFSET),
             minAbove: 0,
             minBelow: 0,
-            filter: filterSlot,
-            considerScroll: true
+            filter: filterSlot
         };
 
         function filterSlot(slot, index) {
