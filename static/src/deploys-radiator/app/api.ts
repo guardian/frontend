@@ -37,7 +37,7 @@ export const getBuild = (build: number): Promise<BuildRecord> => (
 );
 
 export const getBuilds = (): Promise<List<BuildRecord>> => (
-    fetch(`${apiPath}/builds?projectName=dotcom&buildTypeName=master&pageSize=5`, { credentials: 'same-origin' })
+    fetch(`${apiPath}/builds?projectName=dotcom&buildTypeName=master`, { credentials: 'same-origin' })
         .then((response): Promise<BuildsJson> => response.json())
         .then(buildsJson => buildsJson.response)
         .then(buildsJsonResponse => List(buildsJsonResponse.map(buildJsonResponseToBuild)))
