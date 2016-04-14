@@ -2,13 +2,13 @@
   containerIndex: Int,
   containerModel: common.commercial.ContainerModel)(implicit request: RequestHeader)
 
-@import views.support.commercial.TrackingCodeBuilder.mkInteractionTrackingCode
 @import common.{Edition, LinkTo}
 @import views.html.commercial.containerWrapper
 @import views.html.commercial.containers._
 @import views.html.fragments.inlineSvg
+@import views.support.commercial.TrackingCodeBuilder.mkInteractionTrackingCode
 
-<div data-id="@containerModel.id" class="fc-container js-sponsored-container"
+<div data-id="@containerModel.id" class="fc-container@if(containerModel.isSingleSponsorContainer){ js-sponsored-container}"
     @for(branding <- containerModel.branding){
         data-sponsorship="@branding.sponsorshipType"
         @for(sponsor <- branding.sponsor){ data-sponsor="@sponsor" }
@@ -20,7 +20,7 @@
         Seq("legacy", "capi", "tone-capi"),
         optKicker = Some(fragments.commercial.paidForMeta(Some(containerModel.id))),
         optStamp = Some(stamp),
-        optBadge = if(containerModel.branding == None){ None } else { Some(logoSlot) }
+        optBadge = if(containerModel.isSingleSponsorContainer){ Some(logoSlot) } else { None }
     ){
 
         <a class="adverts__logo u-text-hyphenate" href="@containerModel.content.targetUrl">@containerModel.content.title</a>
@@ -42,9 +42,7 @@
             case "dynamic/fast"                  => { @dynamicFast(frontId, containerIndex, containerModel) }
             case "dynamic/slow"                  => { @dynamicSlow(frontId, containerIndex, containerModel) }
             case "dynamic/package"               => { @dynamicPackage(frontId, containerIndex, containerModel) }
-            case "commercial/multi-campaign"     => { @multiCampaign(frontId, containerIndex, containerModel) }
             case _ => {
-                <p>@containerModel.layoutName</p>
             }
         }
 
@@ -56,7 +54,10 @@
                     <span class="js-button__label">More @containerModel.content.title</span>
                 </summary>
                 <div class="adverts__row adverts__row--wrap adverts__3cols">
-                    @containerModel.content.showMoreCards.map(card => views.html.commercial.cards.itemSmallCard(card, omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card)))
+                    @containerModel.content.showMoreCards.map(card => views.html.commercial.cards.itemSmallCard(
+                                            card,
+                                            omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
+                                            useCardBranding = !containerModel.isSingleSponsorContainer))
                 </div>
             </details>
         }
