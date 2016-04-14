@@ -81,15 +81,30 @@ const run = (): Promise<void> => {
         ])
     ));
 
-    const differencePromise = buildsPromise.then(([ codeBuild, prodBuild ]) => (
-        getDifference(prodBuild.revision, codeBuild.revision).then(gitHubCommits => gitHubCommits.reverse().toList())
-    ));
+    const maybeLatestSuccessfulBuildPromise: Promise<Option<BuildRecord>> =
+        getBuilds().then(builds => (
+            Option(
+                builds
+                    .filter(build => build.status === 'SUCCESS')
+                    .first()
+            )
+        ));
 
-    const latestBuildPromise: Promise<Option<BuildRecord>> = getBuilds().then(builds => headOption(builds.toJS()));
+    const differencePromise =
+        maybeLatestSuccessfulBuildPromise.then(maybeLatestSuccessfulBuild => (
+            buildsPromise.then(([ codeBuild, prodBuild ]) => (
+                maybeLatestSuccessfulBuild
+                    .map(latestSuccessfulBuild => (
+                        getDifference(prodBuild.revision, latestSuccessfulBuild.revision)
+                            .then(gitHubCommits => gitHubCommits.reverse().toList())
+                    ))
+                    .getOrElse(() => Promise.resolve(List()))
+            ))
+        ));
 
-    return Promise.all([ deploysPromise, latestDeploysPromise, differencePromise, latestBuildPromise ])
-        .then(([ deploysPair, deployPair, commits, latestBuild ]) => renderPage(deploysPair, deployPair, commits, latestBuild))
-        .then(updateDom);
+    return Promise.all([deploysPromise, latestDeploysPromise, differencePromise, maybeLatestSuccessfulBuildPromise])
+            .then(([deploysPair, deployPair, commits, maybeLatestSuccessfulBuild]) => renderPage(deploysPair, deployPair, commits, maybeLatestSuccessfulBuild))
+            .then(updateDom);
 };
 
 const intervalSeconds = 10;

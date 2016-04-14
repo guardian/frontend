@@ -123,13 +123,13 @@ const renderPage: (
     // TODO: Use tuple instead
     deployPair: Array<DeployRecord>,
     commits: List<GitHubCommit>,
-    maybeLatestBuild: Option<BuildRecord>
+    maybeLatestSuccessfulBuild: Option<BuildRecord>
 ) => VirtualDOM.VNode =
     (
         [ codeDeploys, prodDeploys ],
         [ latestCodeDeploy, oldestProdDeploy ],
         commits,
-        maybeLatestBuild
+        maybeLatestSuccessfulBuild
     ) => {
         const isInSync = oldestProdDeploy.build === latestCodeDeploy.build;
         return h('.row#root', {}, [
@@ -137,17 +137,21 @@ const renderPage: (
                 `Status: ${isInSync ? 'in sync. Ship it!' : 'out of sync.'}`
             ]),
             h('hr', {}, []),
-            maybeLatestBuild
-                .map(latestBuild => h('h2', {}, `Latest build: ${latestBuild.number}, ${latestBuild.state}, ${latestBuild.status}`))
+            maybeLatestSuccessfulBuild
+                .map(build => h('h2', {}, `Latest successful build: ${build.number}`))
                 .getOrElse(() => undefined),
             exp(commits.size > 0) && h('.col', [
-                h('h1', [
-                    'Difference (',
-                    h('span', { title: 'Oldest PROD deploy' }, `${oldestProdDeploy.build}`),
-                    '...',
-                    h('span', { title: 'Latest CODE deploy' }, `${latestCodeDeploy.build}`),
-                    ')'
-                ]),
+                maybeLatestSuccessfulBuild
+                    .map(build => (
+                        h('h1', [
+                            'Difference (',
+                            h('span', { title: 'Build of oldest PROD deploy' }, `${oldestProdDeploy.build}`),
+                            '...',
+                            h('span', { title: 'Latest successful build' }, `${build.number}`),
+                            ')'
+                        ])
+                    ))
+                    .getOrElse(() => undefined),
                 ih('ul', {}, (
                     commits
                         .groupBy(commit => commit.authorLogin)
