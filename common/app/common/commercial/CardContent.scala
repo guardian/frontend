@@ -2,7 +2,7 @@ package common.commercial
 
 import conf.switches.Switches
 import model.pressed.PressedContent
-import model.{ContentType, ImageOverride}
+import model.{ContentType, ImageOverride, ImageMedia}
 import views.support.{CardWithSponsorDataAttributes, ImgSrc, SponsorDataAttributes}
 
 case class CardContent(
@@ -10,7 +10,8 @@ case class CardContent(
                         headline: String,
                         kicker: Option[String],
                         description: Option[String],
-                        imageUrl: Option[String],
+                        image: Option[ImageMedia],
+                        fallbackImageUrl: Option[String],
                         targetUrl: String,
                         group: Option[DynamicGroup],
                         branding: Option[SponsorDataAttributes]
@@ -22,15 +23,17 @@ object CardContent {
 
     val header = content.header
 
-    val imageUrl = {
+    val image = {
       val properties = content.properties
       val maybeContent = properties.maybeContent
       lazy val videoImageMedia = maybeContent flatMap (_.elements.mainVideo.map(_.images))
       lazy val imageOverride = properties.image flatMap ImageOverride.createImageMedia
       lazy val defaultTrailPicture = maybeContent flatMap (_.trail.trailPicture)
-      videoImageMedia.orElse(imageOverride).orElse(defaultTrailPicture) flatMap {
-        ImgSrc.getFallbackUrl
-      }
+      videoImageMedia.orElse(imageOverride).orElse(defaultTrailPicture)
+    }
+
+    var fallbackImageUrl = image flatMap {
+      ImgSrc.getFallbackUrl
     }
 
     CardContent(
@@ -43,7 +46,8 @@ object CardContent {
       headline = header.headline,
       kicker = content.header.kicker flatMap (_.properties.kickerText),
       description = content.card.trailText,
-      imageUrl,
+      image,
+      fallbackImageUrl,
       targetUrl = header.url,
       group = content.card.group match {
         case "3" => Some(HugeGroup)
@@ -73,7 +77,8 @@ object CardContent {
       headline = item.trail.headline,
       kicker = None,
       description = item.fields.trailText,
-      imageUrl = item.trail.trailPicture flatMap ImgSrc.getFallbackUrl,
+      image = item.trail.trailPicture,
+      fallbackImageUrl = item.trail.trailPicture flatMap ImgSrc.getFallbackUrl,
       targetUrl = {
         val url = item.metadata.url
         clickMacro map { cm => s"$cm$url" } getOrElse url
