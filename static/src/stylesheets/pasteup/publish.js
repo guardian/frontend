@@ -18,7 +18,7 @@ var isGitClean = require('is-git-clean');
 var writeFile = Promise.promisify(fs.writeFile);
 var authTokenKey = 'npm.guardian.developers.authToken';
 
-function isMasterBranch() {
+function checkIsMasterBranch() {
     return new Promise(function (resolve, reject) {
         git.branch(function (branch) {
             if (branch === 'master') {
@@ -30,7 +30,7 @@ function isMasterBranch() {
     });
 }
 
-function isClean() {
+function checkIsClean() {
     return isGitClean().then(function (isClean) {
         if (isClean) {
             return true;
@@ -121,8 +121,8 @@ megalog.log([
     'Preparing a new `pasteup` release...'
 ].join('\n\n'));
 
-isMasterBranch()
-    .then(isClean)
+checkIsMasterBranch()
+    .then(checkIsClean)
     .then(getCredentials)
     .then(setCredentials)
     .then(getReleaseType)
