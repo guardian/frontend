@@ -72,7 +72,7 @@ object CSPDynamoDbReport extends DynamoDbReport[CSPReport] {
       .withAttributeUpdates(count.asJava)
 
     client.updateItemFuture(update) onFailure {
-      case error: Throwable => log.error(s"Failed to log CSP report to DynamoDB", error)
+      case error: Throwable => log.error(s"Failed to log CSP report to DynamoDB: $error", error)
     }
   }
 }
