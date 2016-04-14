@@ -190,6 +190,10 @@ $gimbap-width-quarter: calc(25% - 20px);
 }
 
 .gimbap-wrap__body--2x2 {
+    > .gimbap--simple {
+        width: calc(50% - 20px);
+    }
+
     @include mq($until: tablet) {
         > .gimbap:nth-child(n+2) {
             display: none;

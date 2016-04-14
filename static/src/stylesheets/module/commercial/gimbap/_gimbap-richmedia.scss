@@ -11,10 +11,7 @@
     font-weight: bold;
     line-height: .8;
     color: #ffffff;
-
-    .has-flex & {
-        align-self: flex-start;
-    }
+    align-self: flex-start;
 
     @include mq($until: desktop) {
         margin-bottom: $gs-gutter / 3;
@@ -45,9 +42,7 @@
 }
 
 .gimbap-richmedia__meta--place {
-    .has-flex & {
-        flex-grow: 1;
-    }
+    flex-grow: 1;
 }
 
 .gimbap-richmedia__icon {
