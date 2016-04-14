@@ -1,13 +1,13 @@
 $video-width-desktop: 700px;
 
 .fc-container--video {
-    background-color: darken(colour(media-background), 7%);
+    background-color: darken($media-background, 7%);
     padding-bottom: 0;
     margin-bottom: $gs-baseline;
 
     .gs-container {
-        background-color: colour(media-background);
-        border-top: 1px solid colour(media-default);
+        background-color: $media-background;
+        border-top: 1px solid $media-default;
     }
 
     .fc-container__inner {
@@ -32,7 +32,7 @@ $video-width-desktop: 700px;
 }
 
 .video-title {
-    color: colour(media-default);
+    color: $media-default;
     display: block;
     margin-bottom: $gs-baseline;
 }
@@ -53,8 +53,7 @@ $video-width-desktop: 700px;
         }
 
         .video-playlist__item--#{$i} {
-            .fc-item__video-fallback,
-            .video-playlist__title {
+            .fc-item__video-fallback {
                 opacity: 1;
             }
         }
@@ -136,11 +135,11 @@ $video-width-desktop: 700px;
     height: 30px;
     margin: auto;
     border-radius: 50%;
-    background-color: colour(media-default);
+    background-color: $media-default;
     text-align: center;
 
     svg {
-        fill: colour(media-background);
+        fill: $media-background;
         width: 9px;
         height: 30px;
     }
@@ -151,7 +150,7 @@ $video-width-desktop: 700px;
     display: inline-block;
     vertical-align: top;
     width: 70%;
-    background-color: colour(media-background);
+    background-color: $media-background;
 
     @include mq(desktop) {
         width: $video-width-desktop;
@@ -198,23 +197,32 @@ $video-width-desktop: 700px;
     }
 }
 
-.video-playlist__title {
+.video-playlist__item-title {
     @include fs-headline(3);
     font-weight: 500;
     white-space: normal;
-    padding: $gs-baseline/4 $gs-gutter/4 $gs-baseline * 2;
+    padding: 0 $gs-gutter/4 $gs-baseline * 2;
     box-sizing: border-box;
+    border-top: 1px solid $media-default;
     color: #ffffff;
     width: gs-span(3);
     min-height: gs-height(3);
     transition: opacity .4s ease-out;
 
     @include mq(desktop) {
-        opacity: 0;
         position: absolute;
         top: $gs-baseline;
         left: $gs-gutter;
         z-index: 2;
         background-color: rgba(0, 0, 0, .5);
+    }
+
+    .inline-video-icon {
+        display: none;
+    }
+
+    .fc-item__byline,
+    .fc-item__kicker {
+        color: $media-default;
     }
 }

@@ -3,14 +3,15 @@
 @import common.LinkTo
 @import model.VideoPlayer
 @import views.support.{ImgSrc, Video700}
+@import layout.{ColumnAndCards, ContentCard, FaciaCardAndIndex, FaciaCardHeader}
 @import views.html.fragments.items.facia_cards.item
-@import views.html.fragments.items.elements.facia_cards.itemImage
+@import views.html.fragments.items.elements.facia_cards.{itemImage, title}
 @import views.html.fragments.media.video
 
 <div class="fc-container__inner">
-    <div class="video-title fc-container__header__title">
+    <h2 class="video-title fc-container__header__title">
         <a href="@containerDefinition.href">@containerDefinition.displayName</a>
-    </div>
+    </h2>
 </div>
 
 <div class="video-playlist video-playlist--0 js-video-playlist"
@@ -26,6 +27,7 @@
         <li class="video-playlist__item video-title video-title--leftcol fc-container__header__title">
             <a class="video-title__link" href="@containerDefinition.href">@containerDefinition.displayName</a>
         </li>
+
         @containerDefinition.collectionEssentials.items.zipWithIndex.map { case (item, index) =>
             @if(item.header.isVideo) {
                 <li class="video-playlist__item video-playlist__item--@index">
@@ -44,7 +46,6 @@
                                     @video(player, false, false)
                                 </div>
                             </div>
-
                             @content.elements.mainVideo.map { video =>
                                 <div class="fc-item__video-fallback media__placeholder--active js-video-placeholder gu-media__fallback">
                                     <div class="@RenderClasses("fc-item__video-play", "media__placeholder--hidden", "vjs-big-play-button", "js-video-play-button")"><span class="vjs-control-text"></span></div>
@@ -54,10 +55,16 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="video-playlist__item-title">
+                                @title(FaciaCardHeader.fromTrail(item, None), 0, 0, null, None, false)
+                                @if(item.properties.showByline) {
+                                    <div class="fc-item__byline">@item.properties.byline</div>
+                                }
+                                </div>
+<!--                            <span style="color: red;">@video.videos.duration.toString</span> -->
                             }
                         }
                     }
-                    <h2 class="video-playlist__title" href="@LinkTo(SupportedUrl.fromFaciaContent(item))" data-link-name=" | article | @index">@item.header.headline.replace(" – video", "")</h2>
                 </li>
             }
         }
