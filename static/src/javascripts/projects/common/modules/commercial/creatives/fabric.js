@@ -5,8 +5,8 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'lodash/utilities/template',
-    'text!common/views/commercial/creatives/full-width-250.html',
-    'text!common/views/commercial/creatives/full-width-250-label.html'
+    'text!common/views/commercial/creatives/fabric.html',
+    'text!common/views/commercial/creatives/fabric-label.html'
 ], function (
     bean,
     bonzo,
@@ -14,10 +14,10 @@ define([
     config,
     detect,
     template,
-    fullWidth250Template,
-    fullWidth250LabelTemplate
+    fabricTemplate,
+    fabricLabelTemplate
 ) {
-    function FullWidth250($adSlot, params) {
+    function Fabric($adSlot, params) {
         var isExpandable = config.page.isFront && detect.isBreakpoint({max: 'phablet'});
 
         this.create = function () {
@@ -30,23 +30,23 @@ define([
     }
 
     function renderContainer($adSlot) {
-        $adSlot.addClass('ad-slot--full-width-250 content__mobile-full-width');
+        $adSlot.addClass('ad-slot--fabric content__mobile-full-width');
     }
 
     function renderLabel($adSlot) {
-        var html = template(fullWidth250LabelTemplate, {});
+        var html = template(fabricLabelTemplate, {});
         $adSlot.append(html);
     }
 
     function renderCreative($adSlot, params) {
-        var html = template(fullWidth250Template, params);
+        var html = template(fabricTemplate, params);
         var creative = bonzo.create(html);
         $adSlot.append(creative);
         return bonzo(creative);
     }
 
     function addExpander($creative) {
-        var expandClass = 'full-width-250--expanded';
+        var expandClass = 'fabric--expanded';
         var isExpanded = false;
 
         function toggleExpansion() {
@@ -57,6 +57,6 @@ define([
         bean.on($creative[0], 'click', toggleExpansion);
     }
 
-    return FullWidth250;
+    return Fabric;
 
 });

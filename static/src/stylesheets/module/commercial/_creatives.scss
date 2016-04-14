@@ -730,12 +730,12 @@
 
 }
 
-// Full-width-250
+// Fabric
 // =============================================================================
 
 // Layout
 
-.ad-slot--full-width-250 {
+.ad-slot--fabric {
 
     &.ad-slot--top-banner-ad {
         width: auto;
@@ -749,7 +749,7 @@
     }
 }
 
-.full-width-250 {
+.fabric {
     height: 250px;
     transition: height .8s;
 
@@ -758,19 +758,19 @@
     background: #303030;
 }
 
-.full-width-250--expanded {
+.fabric--expanded {
     height: 500px;
 }
 
 // Label
 
-.full-width-250__label-wrapper {
+.fabric__label-wrapper {
     .top-banner-ad-container--desktop & {
         width: auto;
     }
 }
 
-.full-width-250__label-wrapper .full-width-250__label {
+.fabric__label-wrapper .fabric__label {
     padding: 0;
     border-top: 0; // undoes default borders on fc-container-inner
     text-align: left;
