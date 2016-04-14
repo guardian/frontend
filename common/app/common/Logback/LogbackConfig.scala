@@ -2,28 +2,19 @@ package common.Logback
 
 import ch.qos.logback.classic.spi.ILoggingEvent
 import ch.qos.logback.classic.{Logger => LogbackLogger, LoggerContext}
-import com.amazonaws.auth.STSAssumeRoleSessionCredentialsProvider
+import com.amazonaws.auth.AWSCredentialsProvider
 import com.gu.logback.appender.kinesis.KinesisAppender
 import net.logstash.logback.layout.LogstashLayout
 import org.slf4j.LoggerFactory
 import play.api.LoggerLike
-import conf.Configuration
 
 object LogbackConfig {
 
   lazy val loggingContext = LoggerFactory.getILoggerFactory.asInstanceOf[LoggerContext]
 
-  lazy val appName: String = Configuration.environment.projectName
-  lazy val customFields = Map(
-    "stack" -> "frontend",
-    "app" -> appName,
-    "stage" -> Configuration.environment.stage.toUpperCase
-  )
-
   case class KinesisAppenderConfig(stream: String,
                                    region: String,
-                                   roleArn: String,
-                                   sessionName: String,
+                                   awsCredentialsProvider: AWSCredentialsProvider,
                                    bufferSize: Int)
 
   def makeCustomFields(customFields: Map[String, String]): String = {
@@ -45,9 +36,7 @@ object LogbackConfig {
     val a = new KinesisAppender[ILoggingEvent]()
     a.setStreamName(appenderConfig.stream)
     a.setRegion(appenderConfig.region)
-    a.setCredentialsProvider(new STSAssumeRoleSessionCredentialsProvider(
-      appenderConfig.roleArn, appenderConfig.sessionName
-    ))
+    a.setCredentialsProvider(appenderConfig.awsCredentialsProvider)
     a.setBufferSize(appenderConfig.bufferSize)
 
     a.setContext(context)
@@ -64,14 +53,13 @@ object LogbackConfig {
         try {
           lb.info("Configuring Logback")
           val context = lb.getLoggerContext
-          val layout = makeLayout(makeCustomFields(customFields))
+          val layout = makeLayout(makeCustomFields(config.customFields))
           val bufferSize = 1000
           val appender  = makeKinesisAppender(layout, context,
             KinesisAppenderConfig(
               config.stream,
               config.region,
-              config.role,
-              appName,
+              config.awsCredentialsProvider,
               bufferSize
             )
           )

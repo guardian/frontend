@@ -1,11 +1,16 @@
 package common.Logback
 
+import com.amazonaws.auth.AWSCredentialsProvider
 import conf.switches.Switches
 import conf.Configuration
 import play.api.{Logger => PlayLogger, Application => PlayApp, GlobalSettings, LoggerLike}
 
 
-case class LogStashConf(enabled: Boolean, stream: String, region: String, role: String)
+case class LogStashConf(enabled: Boolean,
+                        stream: String,
+                        region: String,
+                        awsCredentialsProvider: AWSCredentialsProvider,
+                        customFields: Map[String, String])
 
 trait Logstash extends GlobalSettings {
 
@@ -17,12 +22,22 @@ trait Logstash extends GlobalSettings {
 
 object Logstash {
 
+  val customFields = Map(
+    "stack" -> "frontend",
+    "app" -> Configuration.environment.projectName,
+    "stage" -> Configuration.environment.stage.toUpperCase
+  )
+
   val config = for {
     stream <- Configuration.Logstash.stream
     region <- Configuration.Logstash.streamRegion
-    role <- Configuration.Logstash.streamRole
   } yield {
-    LogStashConf(Configuration.Logstash.enabled, stream, region, role)
+    LogStashConf(Configuration.Logstash.enabled,
+      stream,
+      region,
+      Configuration.aws.mandatoryCredentials,
+      customFields
+    )
   }
 
   def init(logger: LoggerLike) = {
