@@ -1,6 +1,7 @@
 define([
     'bean',
     'bonzo',
+    'common/modules/commercial/creatives/add-tracking-pixel',
     'common/utils/config',
     'common/utils/detect',
     'lodash/utilities/template',
@@ -9,6 +10,7 @@ define([
 ], function (
     bean,
     bonzo,
+    addTrackingPixel,
     config,
     detect,
     template,
@@ -16,13 +18,14 @@ define([
     fullWidth250LabelTemplate
 ) {
     function FullWidth250($adSlot, params) {
+        var isExpandable = config.page.isFront && detect.isBreakpoint({max: 'phablet'});
+
         this.create = function () {
             renderContainer($adSlot);
             renderLabel($adSlot);
             var $creative = renderCreative($adSlot, params);
-            if (isExpandable()) {
-                attachExpander($creative);
-            }
+            if (isExpandable) addExpander($creative);
+            if (params.trackingPixel) addTrackingPixel($adSlot, params.trackingPixel + params.cacheBuster);
         };
     }
 
@@ -42,7 +45,7 @@ define([
         return bonzo(creative);
     }
 
-    function attachExpander($creative) {
+    function addExpander($creative) {
         var expandClass = 'full-width-250--expanded';
         var isExpanded = false;
 
@@ -52,11 +55,6 @@ define([
         }
 
         bean.on($creative[0], 'click', toggleExpansion);
-    }
-
-    function isExpandable() {
-        // Only expands when embedded in a mobile front container
-        return config.page.isFront && detect.isBreakpoint({max: 'phablet'});
     }
 
     return FullWidth250;
