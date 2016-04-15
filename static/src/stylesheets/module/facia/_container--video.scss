@@ -33,6 +33,10 @@ $video-width-desktop: 700px;
     .vjs-paused.vjs-has-started .vjs-control-bar {
         bottom: -$gs-baseline * 5 !important;
     }
+
+    .vjs-big-play-button {
+        display: none;
+    }
 }
 
 .video-title {
@@ -59,6 +63,10 @@ $video-width-desktop: 700px;
         }
 
         .video-playlist__item--#{$i} {
+            .vjs-big-play-button {
+                display: block;
+            }
+
             .fc-item__video-fallback,
             .video-playlist__content {
                 opacity: 1;
@@ -224,7 +232,7 @@ $video-width-desktop: 700px;
 .video-playlist__content {
     @include fs-headline(3);
     position: relative;
-    z-index: 6; // To move ahead of injected videos that live at z-index 5
+    z-index: 2;
     font-weight: 500;
     white-space: normal;
     padding: 0 $gs-gutter/4 $gs-baseline * 2;
