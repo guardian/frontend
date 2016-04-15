@@ -164,8 +164,12 @@ $video-width-desktop: 700px;
     vertical-align: top;
     width: 70%;
     background-color: $media-background;
-    margin-left: $gs-gutter;
+    margin-left: $gs-gutter / 2;
     margin-bottom: $gs-baseline;
+
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter;
+    }
 
     @include mq(desktop) {
         width: $video-width-desktop;
