@@ -45,12 +45,14 @@
 }
 
 .advert--inverse {
-    > .advert__image-container {
-        float: left;
-    }
+    .has-no-flex & {
+        > .advert__image-container {
+            float: left;
+        }
 
-    > .advert__text {
-        float: right;
+        > .advert__text {
+            float: right;
+        }
     }
 }
 
