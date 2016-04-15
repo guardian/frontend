@@ -19,9 +19,20 @@
         @if(page.media.commercial.isAdvertisementFeature){
             @fragments.guBand()
         }
-
-        @fragments.headTonal(media)
+		
+		@media match {
+			case audio: Audio => {
+                @fragments.headTonal(media)
+            } 
+            case _ => { }
+		}
         <div class="content__main tonal__main tonal__main--@toneClass(media)">
+	        @media match {
+				case video: Video => {
+					<div class="video__fullscreen__fade"></div>
+				}
+				case _ => { }
+			}
             <div class="gs-container">
                 <div class="content__main-column content__main-column--media content__main-column--@mediaType">
                     <div class="media-body">
@@ -79,7 +90,7 @@
                                                 showControlsAtStart = true,
                                                 endSlatePath = video.endSlatePath,
                                                 overrideIsRatioHd = None
-                                            ), true)
+                                            ), true, showTitle = true, seriesTag = media.content.blogOrSeriesTag)
                                         }
                                     </figure>
                                 }
@@ -91,14 +102,33 @@
                                 @media match {
                                     case v: Video => {
                                         <div class="tonal__standfirst">
+	                                        @fragments.meta.dateline(media.trail.webPublicationDate, media.fields.lastModified, media.content.hasBeenModified)
                                             @fragments.standfirst(v)
+                                        </div>
+                                        <div class="video__meta">
+	                                        <div class="meta__numbers modern-visible">
+												<div class="u-h meta__number js-sharecount">
+	                							</div>
+								                <div class="u-h meta__number" data-discussion-id="@media.content.discussionId" data-commentcount-format="content" data-discussion-closed="@{
+								                    !media.trail.isCommentable
+								                }">
+								                </div>
+            								</div>
+                                        </div>
+                                        <div class="video__share">
+	                                        @fragments.social(media.sharelinks.pageShares, "top")
                                         </div>
                                     }
                                     case _ => { }
                                 }
-
-                            @fragments.contentMeta(media)
-
+							
+								@media match {
+									case audio: Audio => {
+										@fragments.contentMeta(media)
+									} 
+									case _ => { }
+								}
+							
                             @media match {
                                 case a: Audio if a.fields.body.nonEmpty => {
                                     <div class="from-content-api">
@@ -107,8 +137,14 @@
                                 }
                                 case _ => { }
                             }
-
-                            @fragments.submeta(media)
+							
+							@media match {
+									case audio: Audio => {
+										@fragments.submeta(media)
+									} 
+									case _ => { }
+								}
+							
                         </div>
                     </div>
                 </div>
@@ -116,10 +152,6 @@
                 @media match {
                     case v: Video => {
                         @if(!page.media.commercial.isAdvertisementFeature) {
-                            <div class="content__secondary-column content__secondary-column--media content__secondary-column--video hide-on-childrens-books-site"
-                            aria-hidden="true">
-                                <div class="js-video-components-container"></div>
-                            </div>
                         }
                     }
                     case a: Audio if a.fields.body.nonEmpty => {
