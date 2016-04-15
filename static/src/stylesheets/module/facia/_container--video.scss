@@ -49,7 +49,7 @@ $video-width-desktop: 700px;
 @for $i from 0 through 20 {
     .video-playlist--#{$i} {
         .video-playlist__inner {
-            transform: translateX(-70% * $i);
+//            transform: translateX(-70% * $i);
     
             @include mq(desktop) {
                 transform: translateX(-$video-width-desktop * $i);
@@ -69,6 +69,38 @@ $video-width-desktop: 700px;
 .video-playlist--end .video-playlist__control--next {
     opacity: 0;
     pointer-events: none;
+}
+
+.video-playlist__control--prev {
+    left: 0;
+
+    @include mq(leftCol) {
+        width: gs-span(2) + $gs-gutter * 2;
+    }
+
+    @include mq(wide) {
+        width: gs-span(3) + $gs-gutter * 2;
+    }
+
+    .video-playlist__icon {
+        right: $gs-gutter;
+    }
+}
+
+.video-playlist__control--next {
+    right: 0;
+
+    @include mq(leftCol) {
+        width: gs-span(3) + $gs-gutter * 2;
+    }
+
+    @include mq(wide) {
+        width: gs-span(4) + $gs-gutter * 2;
+    }
+
+    .video-playlist__icon {
+        left: $gs-gutter;
+    }
 }
 
 .video-playlist__inner {
@@ -110,38 +142,6 @@ $video-width-desktop: 700px;
     }
 }
 
-.video-playlist__control--prev {
-    left: 0;
-
-    @include mq(leftCol) {
-        width: gs-span(2) + $gs-gutter * 2;
-    }
-
-    @include mq(wide) {
-        width: gs-span(3) + $gs-gutter * 2;
-    }
-
-    .video-playlist__icon {
-        right: $gs-gutter;
-    }
-}
-
-.video-playlist__control--next {
-    right: 0;
-
-    @include mq(leftCol) {
-        width: gs-span(3) + $gs-gutter * 2;
-    }
-
-    @include mq(wide) {
-        width: gs-span(4) + $gs-gutter * 2;
-    }
-
-    .video-playlist__icon {
-        left: $gs-gutter;
-    }
-}
-
 .video-playlist__icon {
     position: absolute;
     top: 0;
@@ -166,9 +166,12 @@ $video-width-desktop: 700px;
     vertical-align: top;
     width: 70%;
     background-color: $media-background;
+    margin-left: $gs-gutter;
+    margin-bottom: $gs-baseline;
 
     @include mq(desktop) {
         width: $video-width-desktop;
+        margin: 0;
     }
 
     .fc-item__video-fallback {
@@ -213,6 +216,8 @@ $video-width-desktop: 700px;
 }
 
 .video-playlist__content {
+    position: relative;
+    z-index: 2;
     @include fs-headline(3);
     font-weight: 500;
     white-space: normal;
@@ -220,8 +225,9 @@ $video-width-desktop: 700px;
     box-sizing: border-box;
     border-top: 1px solid $media-default;
     color: #ffffff;
-    width: gs-span(3);
+    background-color: rgba(0, 0, 0, .5);
     height: gs-height(3);
+    margin-bottom: -(get-line-height(textSans, 3) + 4px);
 
     @include mq(desktop, leftCol) {
         opacity: 0;
@@ -232,8 +238,7 @@ $video-width-desktop: 700px;
         position: absolute;
         top: $gs-baseline;
         left: $gs-gutter;
-        z-index: 2;
-        background-color: rgba(0, 0, 0, .5);
+        width: gs-span(3);
     }
 
     .video-playlist__headline {
