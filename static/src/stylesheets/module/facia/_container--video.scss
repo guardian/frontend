@@ -197,7 +197,7 @@ $video-width-desktop: 700px;
     }
 }
 
-.video-playlist__item-title {
+.video-playlist__content {
     @include fs-headline(3);
     font-weight: 500;
     white-space: normal;
@@ -225,4 +225,11 @@ $video-width-desktop: 700px;
     .fc-item__kicker {
         color: $media-default;
     }
+}
+
+.video-duration {
+    @include fs-textSans(3);
+    position: absolute;
+    bottom: 2px;
+    color: $neutral-3;
 }

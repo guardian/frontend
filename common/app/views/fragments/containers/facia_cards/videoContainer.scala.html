@@ -58,15 +58,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="video-playlist__item-title">
-                                @title(FaciaCardHeader.fromTrail(item, None), 0, 0, null, None, false)
-                                @if(item.properties.showByline) {
-                                    <div class="fc-item__byline">@item.properties.byline</div>
-                                }
-                                @formattedDuration(video.videos)
-
+                                <div class="video-playlist__content">
+                                    @title(FaciaCardHeader.fromTrail(item, None), 0, 0, null, None, false)
+                                    @if(item.properties.showByline) {
+                                        <div class="fc-item__byline">@item.properties.byline</div>
+                                    }
+                                    @formattedDuration(video.videos)
                                 </div>
-<!--                            <span style="color: red;">@video.videos.duration.toString</span> -->
                             }
                         }
                     }
