@@ -181,7 +181,7 @@ $video-width-desktop: 700px;
 
     .video-title__link {
         position: absolute;
-        top: $gs-baseline / 3;
+        top: $gs-baseline / 2;
         left: $gs-gutter;
         right: $gs-gutter;
     }
@@ -206,7 +206,7 @@ $video-width-desktop: 700px;
     border-top: 1px solid $media-default;
     color: #ffffff;
     width: gs-span(3);
-    min-height: gs-height(3);
+    height: gs-height(3);
     transition: opacity .4s ease-out;
 
     @include mq(desktop) {
@@ -215,6 +215,13 @@ $video-width-desktop: 700px;
         left: $gs-gutter;
         z-index: 2;
         background-color: rgba(0, 0, 0, .5);
+    }
+
+    .video-playlist__headline {
+        @include mq(desktop) {
+            height: get-line-height(headline, 3) * 4;
+            overflow: hidden;
+        }
     }
 
     .inline-video-icon {

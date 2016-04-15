@@ -59,10 +59,12 @@
                                     </div>
                                 </div>
                                 <div class="video-playlist__content">
-                                    @title(FaciaCardHeader.fromTrail(item, None), 0, 0, null, None, false)
-                                    @if(item.properties.showByline) {
-                                        <div class="fc-item__byline">@item.properties.byline</div>
-                                    }
+                                    <div class="video-playlist__headline">
+                                        @title(FaciaCardHeader.fromTrail(item, None), 0, 0, null, None, false)
+                                        @if(item.properties.showByline) {
+                                            <div class="fc-item__byline">@item.properties.byline</div>
+                                        }
+                                    </div>
                                     @formattedDuration(video.videos)
                                 </div>
                             }
