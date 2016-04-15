@@ -58,9 +58,11 @@ object GeoMostPopularAgent extends Logging with ExecutionContexts {
       } yield {
         getResponse(ContentApiClient.item(urlToContentPath(url), Edition.defaultEdition))
           .map(_.content.map(RelatedContentItem(_)))
-          .fallbackTo{
-            log.error(s"Error requesting $url")
-            Future.successful(None)}
+          .recover {
+            case e: Throwable =>
+              log.error(s"Error requesting $url", e)
+              None
+          }
       }
 
       Future.sequence(mostRead).map { contentSeq =>
@@ -108,9 +110,11 @@ object DayMostPopularAgent extends Logging with ExecutionContexts {
       } yield {
         getResponse(ContentApiClient.item(urlToContentPath(url), Edition.defaultEdition ))
           .map(_.content.map(RelatedContentItem(_)))
-          .fallbackTo{
-            log.error(s"Error requesting $url")
-            Future.successful(None)}
+          .recover {
+            case e: Throwable =>
+              log.error(s"Error requesting $url", e)
+              None
+          }
       }
 
       Future.sequence(mostRead).map { contentSeq =>
