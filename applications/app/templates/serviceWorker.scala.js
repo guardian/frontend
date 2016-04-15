@@ -112,6 +112,11 @@ this.addEventListener('fetch', function (event) {
 
     var url = new URL(request.url);
     var isRootRequest = url.host === self.location.host;
+    var isAssetRequest = @if(play.Play.isDev()) {
+        new RegExp('^@Configuration.assets.path').test(url.pathname)
+    } else {
+        new RegExp('^@Configuration.assets.path').test(url.href)
+    };
     // To workaround a bug in Chrome which results in broken HTTPS->HTTP
     // redirects, we only handle root requests if they match the developer
     // blog. The info section often hosts holding pages which will could
@@ -126,8 +131,7 @@ this.addEventListener('fetch', function (event) {
                     return caches.match('/offline-page');
                 })
         );
-    @* In dev, all requests come from one server (by default) *@
-    } else if (@if(play.Play.isDev()) { true } else { !isRootRequest }) {
+    } else if (isAssetRequest) {
         // Default fetch behaviour
         // Cache first for all other requests
         event.respondWith(

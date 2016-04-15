@@ -497,6 +497,12 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object DeploysNotify {
     lazy val apiKey = configuration.getStringProperty("deploys-notify.api.key")
   }
+
+  object Logstash {
+    lazy val enabled = configuration.getStringProperty("logstash.enabled").map(_.toBoolean).getOrElse(false)
+    lazy val stream = configuration.getStringProperty("logstash.stream.name")
+    lazy val streamRegion = configuration.getStringProperty("logstash.stream.region")
+  }
 }
 
 object ManifestData {

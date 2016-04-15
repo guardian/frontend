@@ -1,4 +1,5 @@
 import business.StocksDataLifecycle
+import common.Logback.Logstash
 import common.{CloudWatchApplicationMetrics, ContentApiMetrics}
 import conf.{CorsErrorHandler, Filters, SwitchboardLifecycle}
 import dev.DevParametersLifecycle
@@ -14,7 +15,8 @@ object Global extends WithFilters(Filters.common: _*)
   with StocksDataLifecycle
   with MostPopularFacebookAutoRefreshLifecycle
   with SwitchboardLifecycle
-  with CorsErrorHandler {
+  with CorsErrorHandler
+  with Logstash {
   override lazy val applicationName = "frontend-onward"
 
   override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ++ Seq(

@@ -56,7 +56,7 @@ define([
         return function (params) {
             var isbn = config.page.isbn || params.isbn;
             if (isbn) {
-                return buildComponentUrl(url, merge(params, { t: config.page.isbn || params.isbn }));
+                return buildComponentUrl(url, merge(params, { t: isbn }));
             } else {
                 return false;
             }
@@ -167,6 +167,8 @@ define([
                 success: onSuccess.bind(this),
                 error: onError.bind(this)
             });
+        } else {
+            this.adSlot.style.display = 'none';
         }
 
         return this;

@@ -3,12 +3,15 @@
   containerIndex: Int,
   containerModel: common.commercial.ContainerModel)(implicit request: RequestHeader)
 
-<div class="adverts__row">
-    @containerModel.content.fixed.initialCards.take(2).map(card => views.html.commercial.cards.itemCard(card, omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card)))
-    <div class="adverts__column hide-until-tablet">
-        @containerModel.content.fixed.initialCards.drop(2).take(3).map(card => views.html.commercial.cards.itemSmallCard(card, omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card)))
-    </div>
-    <div class="adverts__column hide-until-tablet">
-        @containerModel.content.fixed.initialCards.drop(5).take(3).map(card => views.html.commercial.cards.itemSmallCard(card, omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card)))
+<div class="adverts__row adverts__row--1x1x2">
+    @containerModel.content.fixed.initialCards.take(2).map(card => views.html.commercial.cards.itemCard(
+                            card,
+                            omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
+                            useCardBranding = !containerModel.isSingleSponsorContainer))
+    <div class="adverts__column adverts__2cols">
+        @containerModel.content.fixed.initialCards.drop(2).take(6).map(card => views.html.commercial.cards.itemSmallCard(
+                                card,
+                                omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
+                                useCardBranding = !containerModel.isSingleSponsorContainer))
     </div>
 </div>

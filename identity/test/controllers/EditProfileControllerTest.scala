@@ -69,7 +69,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
 
       val result = controller.submitPublicProfileForm().apply(fakeRequest)
 
-      Await.result(result, 2.seconds)
+      Await.result(result, 5.seconds)
 
       "then the user should be saved on the ID API" in {
         val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])

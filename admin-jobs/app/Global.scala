@@ -1,3 +1,4 @@
+import common.Logback.Logstash
 import common.{CloudWatchApplicationMetrics, ContentApiMetrics}
 import conf.{Filters, SwitchboardLifecycle}
 import contentapi.SectionsLookUpLifecycle
@@ -13,7 +14,8 @@ with DevParametersLifecycle
 with CloudWatchApplicationMetrics
 with SurgingContentAgentLifecycle
 with SectionsLookUpLifecycle
-with SwitchboardLifecycle {
+with SwitchboardLifecycle
+with Logstash {
   override lazy val applicationName = "frontend-admin-jobs"
 
   override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ++ List(
