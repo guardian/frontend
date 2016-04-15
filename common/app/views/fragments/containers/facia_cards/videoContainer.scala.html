@@ -32,7 +32,6 @@
             @if(item.header.isVideo) {
                 <li class="video-playlist__item video-playlist__item--@index">
                     @item.properties.maybeContent.map { content => 
-
                         <div class="video-playlist__content">
                             <div class="video-playlist__headline">
                                 @title(FaciaCardHeader.fromTrail(item, None), 0, 0, withLink = false)
