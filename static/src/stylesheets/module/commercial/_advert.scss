@@ -145,18 +145,10 @@
 
     .advert--large--1x3 > .advert__image-container {
         flex-basis: calc(75% - #{$gs-gutter / 2});
-
-        .has-no-flex & {
-            width:  calc(75% - #{$gs-gutter / 2});
-        }
     }
 
     .advert--large--1x2 > .advert__image-container {
         flex-basis: calc(66.67% - #{$gs-gutter / 2});
-
-        .has-no-flex & {
-            width:  calc(66.67% - #{$gs-gutter / 2});
-        }
     }
 
     .has-no-flex {
