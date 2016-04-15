@@ -18,7 +18,8 @@ object Global extends WithFilters(Filters.common: _*)
   with IndexListingsLifecycle
   with TodaysCrosswordGridLifecycle
   with SwitchboardLifecycle
-  with ABHeadlinesLifecycle {
+  with ABHeadlinesLifecycle
+  with Logstash {
 
   override lazy val applicationName = "frontend-facia"
 }
