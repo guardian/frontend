@@ -268,6 +268,8 @@ $multimedia-support-5: #161616;
     }
 
     .content__main-column {
+        max-width: none;
+
         @include mq(tablet) {
             margin-left: 15rem;
         }
@@ -279,7 +281,7 @@ $multimedia-support-5: #161616;
             margin-right: 3rem;
         }
         .byline, .content__dateline {
-            border: none;
+            border: 0;
         }
         .content__standfirst {
             padding-bottom: 0;
@@ -301,7 +303,7 @@ $multimedia-support-5: #161616;
     &.tonal--tone-media {
         // Overwriting media tone header so that you can see the image instead
         .tonal__header {
-            background-color: rgba(0,0,0,0);
+            background-color: rgba(0, 0, 0, 0);
         }
         .meta__numbers {
             color: $neutral-3;
@@ -315,8 +317,8 @@ $multimedia-support-5: #161616;
     }
 
     .content__wrapper--headline {
-        background: rgba(0, 0, 0, .6);
-        background: linear-gradient(rgba(0, 0, 0, 0.5), $multimedia-support-5);
+        background-color: rgba(0, 0, 0, .6);
+        background: linear-gradient(rgba(0, 0, 0, .5), $multimedia-support-5);
         position: absolute;
         left: 0;
         right: 0;
@@ -330,7 +332,7 @@ $multimedia-support-5: #161616;
     }
 
     .inline-camera svg {
-        width: 0.9em;
+        width: 32px;
         height: auto;
     }
 
@@ -339,25 +341,25 @@ $multimedia-support-5: #161616;
     }
 
     .content__meta-container {
-        border: none;
+        border: 0;
         position: relative;
         width: auto;
         margin-bottom: 0;
     }
 
     .meta__social {
-        border-top: 0.0625rem dotted $neutral-2;
-        border-bottom: 0.0625rem dotted $neutral-2;
+        border-top: 1px dotted $neutral-2;
+        border-bottom: 1px dotted $neutral-2;
     }
 
     .meta__break {
-        border-top: 0.0625rem dotted $neutral-2;
+        border-top: 1px dotted $neutral-2;
         display: block;
         width: 10%;
     }
 
     .meta__numbers {
-        border: none;
+        border: 0;
         position: absolute;
         right: 0;
         top: 0;
@@ -385,12 +387,28 @@ $multimedia-support-5: #161616;
         float: none;
     }
 
-    .social-icon, .block-share__item, .block-share--gallery .block-share__item--facebook, .block-share--gallery .block-share__item--twitter, .block-share--gallery .block-share__item--pinterest {
-        background-color: rgba(0,0,0,0);
-        border: 0.0625rem solid $neutral-2;
+    .block-share--gallery {
+        position: relative;
+        .block-share__item--facebook, .block-share__item--twitter, .block-share__item--pinterest {
+            background-color: rgba(0, 0, 0, 0);
+            border: 1px solid $neutral-2;
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 0);
+            }
+
+            &.inline-icon, .inline-icon {
+                fill: $neutral-3;
+            }
+        }
+    }
+
+    .social-icon, .block-share__item {
+        background-color: rgba(0, 0, 0, 0);
+        border: 1px solid $neutral-2;
 
         &:hover {
-            background-color: rgba(0,0,0,0);
+            background-color: rgba(0, 0, 0, 0);
         }
 
         &.inline-icon, .inline-icon {
@@ -409,15 +427,19 @@ $multimedia-support-5: #161616;
             flex-direction: column-reverse;
         }
 
-        @include mq($until: tablet) {
-            // On mobile the images should be 100% of the width of the screen
-            margin-left: -0.625rem;
-            margin-right: -0.625rem;
+        // On mobile the images should be 100% of the width of the screen
+        @include mq($until: phablet) {
+            margin-left: -$gs-gutter;
+            margin-right: -$gs-gutter;
+        }
+        @include mq($until: mobileLandscape) {
+            margin-left: -$gs-gutter / 2;
+            margin-right: -$gs-gutter / 2;
         }
 
         @include mq(tablet) {
             position: relative;
-            border-top: none;
+            border-top: 0;
             padding: 0;
 
             figure {
@@ -432,20 +454,19 @@ $multimedia-support-5: #161616;
         overflow: visible;
         max-height: 100%;
         position: relative;
-        border: none;
+        border: 0;
         width: inherit;
 
-        @include mq(mobileLandscape, $until: tablet) {
-            padding-right: gs-span(2);
-        }
-
         @include mq($until: desktop) {
-            padding-right: $gs-gutter * 10;
             margin-bottom: $gs-baseline * 2;
         }
 
-        @include mq($until: tablet) {
-            padding: 0.625rem;
+        @include mq($until: phablet) {
+            padding: $gs-gutter;
+        }
+
+        @include mq($until: mobileLandscape) {
+            padding: $gs-gutter / 2;
         }
 
         @include mq(tablet) {
@@ -454,8 +475,6 @@ $multimedia-support-5: #161616;
             width: gs-span(3);
             top: 0;
             right: auto;
-            border-top: 1px dotted $neutral-2;
-            //width: 14.5rem;
             margin-left: -15rem;
         }
     }
@@ -466,7 +485,7 @@ $multimedia-support-5: #161616;
 
         a {
             color: $neutral-4;
-            border-bottom: 0.0625rem solid #767676;
+            border-bottom: 1px solid #767676;
 
             &:hover {
                 border-bottom: 1px solid $neutral-7;
@@ -493,8 +512,8 @@ $multimedia-support-5: #161616;
     .gallery__img-container {
         background-color: rgba(0, 0, 0, 0);
         @include mq(tablet) {
-            border-left: 0.0625rem dotted #484848;
-            padding-left: 0.5rem;
+            border-left: 1px dotted #484848;
+            padding-left: $gs-gutter / 2;
             padding-bottom: 2.5rem;
         }
     }
