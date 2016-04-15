@@ -117,7 +117,7 @@ object FeedFetcher {
       }
 
       val staticDateJob = Configuration.commercial.jobsStaticUrl map { url =>
-        new SingleFeedFetcher(StaticJobsFeedMetaData(url))
+        new SingleFeedFetcher(JobsFeedMetaData(url))
       }
 
       List(dynamicDateJob, staticDateJob).flatten
