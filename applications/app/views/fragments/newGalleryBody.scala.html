@@ -8,20 +8,11 @@
 @*
 
 TODO:
-* Styling style
-* Double Picture
-
-
-
-
-
-TODO Later:
 * NO JANK, Padding-bottom hack for gallery images
 * Check on other device
-* Fastly Change
-* Bottom of the page
+* Fastly Change persistent cookie for optin
 * Fix 100vh jumping on mobile
-* MPU slot on mobile
+* MPU slot styling
 
 *@
 
@@ -49,9 +40,11 @@ TODO Later:
                 <div class="content__main-column content__main-column--gallery">
                     @fragments.witnessCallToAction(gallery.content)
                     <ul class="gallery">
-                        @println(gallery.lightbox.largestCrops.length)
                         @gallery.lightbox.largestCrops.zipWithRowInfo.map { case (image, row) =>
-                            @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum, gallery.lightbox.imageContainer(row.rowNum - 1))
+                            @* Skipping first image, as that is used for the background*@
+                            @if(row.rowNum != 1) {
+                                @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum-1, gallery.lightbox.imageContainer(row.rowNum - 1))
+                            }
                         }
                     </ul>
                     @fragments.witnessCallToAction(gallery.content)
