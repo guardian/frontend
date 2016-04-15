@@ -349,14 +349,14 @@ define([
             });
         });
         player.on('playing', function () {
-	        $('.video__headline--overlay').addClass('playing');
-	        $('.vjs-control-bar').css('display', 'block');
+            $('.video__headline--overlay').addClass('playing');
+            $('.vjs-control-bar').css('display', 'block');
             bonzo(player.el()).removeClass(endState);
         });
         
         player.on('pause', function(){
-	       $('.vjs-control-text').css('display', 'none');
-	       $('.video__headline--overlay').removeClass('playing'); 
+            $('.vjs-control-text').css('display', 'none');
+            $('.video__headline--overlay').removeClass('playing'); 
         });
     }
 
