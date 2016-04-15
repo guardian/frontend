@@ -92,15 +92,36 @@ TODO:
             </div>
 
             <div class="gallery__img-container gallery__img-container@if(image.width >= image.height) {--landscape} else {--portrait}">
-                <img class="gallery__img js-gallery-img gallery__img@if(image.width >= image.height) {--landscape} else {--portrait}"
-                    srcset="@ImgSrc.srcset(imageElement.images, GalleryMedia.inline)"
-                    sizes="@GalleryMedia.inline.sizes"
-                    src="@ImgSrc.getFallbackUrl(imageElement.images)"
+                <picture>
+                    @* IE 9 needs this workaround as per https://scottjehl.github.io/picturefill/ *@
+                        <!--[if IE 9]><video style="display: none;"><![endif]-->
+                    @defining({
+                        GalleryMedia.inline
+                    }) { widths =>
+                        @widths.breakpoints.map { breakpointWidth =>
+                            <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi)"
+                            sizes="@breakpointWidth.width"
+                            srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(imageElement.images), hidpi = true)" />
+                            <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px)"
+                            sizes="@breakpointWidth.width"
+                            srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(imageElement.images))" />
+                        }
+                    }
+
+                    <!--[if IE 9]></video><![endif]-->
+
+                    <img class="gallery__img gallery__img@if(image.width >= image.height) {--landscape} else {--portrait}"
+                    itemprop="contentUrl"
                     alt="@image.altText.getOrElse("")"
-                    itemprop="contentUrl" />
+                    src="@ImgSrc.getFallbackUrl(imageElement.images)" />
+                </picture>
             </div>
         </figure>
     </li>
+
+
+
+
 
     @if(!gallery.content.shouldHideAdverts && rowNum % adInterval == 0) {
         @adSlots.lift((rowNum / adInterval) - 1).map { adSlot =>
