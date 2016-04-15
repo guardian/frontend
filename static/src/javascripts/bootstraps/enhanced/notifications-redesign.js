@@ -7,6 +7,7 @@ define([
     'common/utils/$',
     'common/views/svgs',
     'text!common/views/ui/notifications-follow-link.html',
+    'text!common/views/ui/notifications-explainer.html',
     'text!common/views/ui/notifications-permission-denied-message.html'
 ], function (
     bean,
@@ -17,6 +18,7 @@ define([
     $,
     svgs,
     followLink,
+    explainer,
     permissionsTemplate
 ) {
     var subscribed = false,
@@ -47,12 +49,23 @@ define([
                 var $follow = bonzo(follow);
                 $follow.html(src);
                 bean.one($follow[0], 'click', '.js-notifications__button', handler );
-            })
+            });
 
+            modules.showExplainer();
 
+       },
 
-
-
+        showExplainer: function() {
+            console.log("Show explainter");
+            var src = template(explainer,{closeIcon : svgs('closeCentralIcon')});
+            fastdom.write(function () {
+                console.log("++ Write: " + src );
+                $('.js-notification-link').append(src);
+                console.log("++ Written it");
+                //bean.one(document.body, 'click', '.js-notifications-subscribe-link', modules.subscribeHandler );
+                //bean.one(document.body, 'click', '.js-notifications__item__close', modules.closeDisplayMessage);
+                console.log("++ Handled");
+            });
         },
 
         subscribeHandler: function() {
@@ -64,7 +77,7 @@ define([
         unSubscribeHandler: function() {
             console.log("++ UnSubscribeHandler");
             subscribed = false;
-            modules.configureSubscribeTemplate();
+            modules.configureSubscribeTemplate;
         }
     };
 
