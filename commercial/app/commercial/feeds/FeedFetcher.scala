@@ -66,7 +66,7 @@ class EventbriteMultiPageFeedFetcher(override val feedMetaData: EventsFeedMetaDa
           val subsequentFetches = Future.traverse(2 to pageCount)(fetchPage)
 
           subsequentFetches map { fetches =>
-            combineFetchResponses((initialFetch +: fetches.toSeq).seq)
+            combineFetchResponses(initialFetch +: fetches)
           }
         }
       } else Future.failed(SwitchOffException(feedMetaData.fetchSwitch.name))
