@@ -81,7 +81,12 @@ object CrosswordData {
     // group are incorrectly stored on the first group entry. We normalize
     // the data to store the separator locations on their corresponding entries.
 
-    val entries = crossword.entries.map(Entry.fromCrosswordEntry)
+    val shipSolutions = crossword.dateSolutionAvailable.map(_.toJodaDateTime.isBeforeNow).getOrElse(crossword.solutionAvailable)
+
+    val entries = crossword.entries.collect {
+      case entry if shipSolutions || entry.solution.isEmpty => Entry.fromCrosswordEntry(entry)
+      case entry => Entry.fromCrosswordEntry(entry.copy(solution = None))
+    }
 
     val entryGroups = entries
       .groupBy(_.group)
