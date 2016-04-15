@@ -12,6 +12,27 @@ $notifications-button-height: 28px;
             fill: $foreground
         }
     }
+
+    .notifications__button--subscribed,
+    .notifications__button--unsubscribed.hover {
+        color: $background;
+        background-color: $foreground;
+        .inline-icon {
+            fill: $background;
+            background-color: $foreground;
+        }
+    }
+
+    .notifications__button--unsubscribed,
+    .notifications__button--subscribed.hover {
+        color: $foreground;
+        background-color: transparent;
+        .inline-icon {
+            fill: $foreground;
+            background-color: $background;
+        }
+    }
+
 }
 
 @mixin notifications-button-toned($tone, $foreground: $news-main-1, $background: #ffffff) {
@@ -32,19 +53,28 @@ $notifications-button-height: 28px;
             height: .857em;
         }
     }
-
-    .notifications_label--following {
-        display: none;
-    }
 }
 
-.notificications-follow-input--solo {
+.notifcations-follow-input--solo {
 
     .submit-input__icon {
         display: inline-block;
         margin-right: $gs-gutter / 4;
     }
 }
+
+.notifications__label {
+    display: none;
+}
+
+@each $state in (subscribed, unsubscribed) {
+    .notifications__button--#{$state} {
+        .notifications__label--#{$state} {
+            display: inline;
+        }
+    }
+}
+
 
 
 @include notifcations-button-style();
