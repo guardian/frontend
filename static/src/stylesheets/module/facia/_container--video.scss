@@ -40,6 +40,10 @@ $video-width-desktop: 700px;
 .video-playlist {
     position: relative;
     overflow: hidden;
+
+    @include mq(desktop, leftCol) {
+        background-color: darken($media-background, 5%); 
+    }
 }
 
 @for $i from 0 through 20 {
@@ -53,7 +57,8 @@ $video-width-desktop: 700px;
         }
 
         .video-playlist__item--#{$i} {
-            .fc-item__video-fallback {
+            .fc-item__video-fallback,
+            .video-playlist__content {
                 opacity: 1;
             }
         }
@@ -62,7 +67,8 @@ $video-width-desktop: 700px;
 
 .video-playlist--0 .video-playlist__control--prev,
 .video-playlist--end .video-playlist__control--next {
-    opacity: .2;
+    opacity: 0;
+    pointer-events: none;
 }
 
 .video-playlist__inner {
@@ -92,6 +98,15 @@ $video-width-desktop: 700px;
         top: 0;
         bottom: 0;
         z-index: 2;
+        cursor: pointer;
+
+        &:hover .video-playlist__icon {
+            background-color: $media-default;
+
+            svg {
+                fill: $media-background;
+            }
+        }
     }
 }
 
@@ -135,11 +150,11 @@ $video-width-desktop: 700px;
     height: 30px;
     margin: auto;
     border-radius: 50%;
-    background-color: $media-default;
+    background-color: rgba(0, 0, 0, .5);
     text-align: center;
 
     svg {
-        fill: $media-background;
+        fill: #ffffff;
         width: 9px;
         height: 30px;
     }
@@ -207,7 +222,11 @@ $video-width-desktop: 700px;
     color: #ffffff;
     width: gs-span(3);
     height: gs-height(3);
-    transition: opacity .4s ease-out;
+
+    @include mq(desktop, leftCol) {
+        opacity: 0;
+        transition: opacity .4s ease-out;
+    }
 
     @include mq(desktop) {
         position: absolute;
@@ -226,6 +245,10 @@ $video-width-desktop: 700px;
 
     .inline-video-icon {
         display: none;
+    }
+
+    .fc-item__title--quoted .inline-quote {
+        fill: #ffffff;
     }
 
     .fc-item__byline,
