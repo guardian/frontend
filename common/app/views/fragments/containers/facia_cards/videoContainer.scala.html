@@ -6,7 +6,7 @@
 @import layout.{ColumnAndCards, ContentCard, FaciaCardAndIndex, FaciaCardHeader}
 @import views.html.fragments.items.facia_cards.item
 @import views.html.fragments.items.elements.facia_cards.{itemImage, title}
-@import views.html.fragments.media.video
+@import views.html.fragments.media.{video, formattedDuration}
 
 <div class="fc-container__inner">
     <h2 class="video-title fc-container__header__title">
@@ -63,6 +63,8 @@
                                 @if(item.properties.showByline) {
                                     <div class="fc-item__byline">@item.properties.byline</div>
                                 }
+                                @formattedDuration(video.videos)
+
                                 </div>
 <!--                            <span style="color: red;">@video.videos.duration.toString</span> -->
                             }

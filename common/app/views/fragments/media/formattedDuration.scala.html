@@ -1,0 +1,5 @@
+@(video: model.VideoMedia)(implicit requestHeader: RequestHeader)
+
+<span class="video-duration">
+    @if(video.durationMinutes > 0) {@video.durationMinutes} else {0}:@if(video.durationSeconds < 10){0}@video.durationSeconds
+</span>
