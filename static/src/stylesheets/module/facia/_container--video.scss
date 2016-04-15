@@ -49,8 +49,6 @@ $video-width-desktop: 700px;
 @for $i from 0 through 20 {
     .video-playlist--#{$i} {
         .video-playlist__inner {
-//            transform: translateX(-70% * $i);
-    
             @include mq(desktop) {
                 transform: translateX(-$video-width-desktop * $i);
             }
@@ -216,9 +214,9 @@ $video-width-desktop: 700px;
 }
 
 .video-playlist__content {
+    @include fs-headline(3);
     position: relative;
     z-index: 2;
-    @include fs-headline(3);
     font-weight: 500;
     white-space: normal;
     padding: 0 $gs-gutter/4 $gs-baseline * 2;
