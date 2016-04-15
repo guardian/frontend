@@ -22,7 +22,7 @@
         @fragments.meta.contactAuthor(item.tags)
     }
 
-    @if(!item.trail.shouldHidePublicationDate) {
+    @if(!item.trail.shouldHidePublicationDate && !mvt.ABGalleryRedesignVariant.isParticipating) {
         @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.tags.isLiveBlog, item.fields.isLive)
     }
 
