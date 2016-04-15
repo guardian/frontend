@@ -29,6 +29,10 @@ $video-width-desktop: 700px;
     .media__container--active {
         z-index: 5;
     }
+
+    .vjs-paused.vjs-has-started .vjs-control-bar {
+        bottom: -$gs-baseline * 5 !important;
+    }
 }
 
 .video-title {
@@ -69,38 +73,6 @@ $video-width-desktop: 700px;
     pointer-events: none;
 }
 
-.video-playlist__control--prev {
-    left: 0;
-
-    @include mq(leftCol) {
-        width: gs-span(2) + $gs-gutter * 2;
-    }
-
-    @include mq(wide) {
-        width: gs-span(3) + $gs-gutter * 2;
-    }
-
-    .video-playlist__icon {
-        right: $gs-gutter;
-    }
-}
-
-.video-playlist__control--next {
-    right: 0;
-
-    @include mq(leftCol) {
-        width: gs-span(3) + $gs-gutter * 2;
-    }
-
-    @include mq(wide) {
-        width: gs-span(4) + $gs-gutter * 2;
-    }
-
-    .video-playlist__icon {
-        left: $gs-gutter;
-    }
-}
-
 .video-playlist__inner {
     margin: 0;
     font-size: 0; // to remove spacing between inline-blocked children
@@ -137,6 +109,38 @@ $video-width-desktop: 700px;
                 fill: $media-background;
             }
         }
+    }
+}
+
+.video-playlist__control--prev {
+    left: 0;
+
+    @include mq(leftCol) {
+        width: gs-span(2) + $gs-gutter * 2;
+    }
+
+    @include mq(wide) {
+        width: gs-span(3) + $gs-gutter * 2;
+    }
+
+    .video-playlist__icon {
+        right: $gs-gutter;
+    }
+}
+
+.video-playlist__control--next {
+    right: 0;
+
+    @include mq(leftCol) {
+        width: gs-span(3) + $gs-gutter * 2;
+    }
+
+    @include mq(wide) {
+        width: gs-span(4) + $gs-gutter * 2;
+    }
+
+    .video-playlist__icon {
+        left: $gs-gutter;
     }
 }
 
@@ -220,7 +224,7 @@ $video-width-desktop: 700px;
 .video-playlist__content {
     @include fs-headline(3);
     position: relative;
-    z-index: 2;
+    z-index: 6; // To move ahead of injected videos that live at z-index 5
     font-weight: 500;
     white-space: normal;
     padding: 0 $gs-gutter/4 $gs-baseline * 2;

@@ -4,10 +4,12 @@
 
 define([
     'bean',
-    'common/utils/$'
+    'common/utils/$',
+    'bootstraps/enhanced/media/video-player'
 ], function (
     bean,
-    $
+    $,
+    videojs
 ) {
 
     var containerPos = 0,
@@ -43,7 +45,15 @@ define([
             containerPos = 0;
         }
 
+        resetPlayers();
+
         $('.js-video-playlist').addClass('video-playlist--' + containerPos);
+    }
+
+    function resetPlayers() {
+        $('.js-video-playlist .vjs').each(function() {
+            videojs($(this)[0]).pause();
+        });
     }
 
     return function () {
