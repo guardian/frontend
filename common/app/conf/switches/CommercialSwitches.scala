@@ -14,6 +14,15 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
+  val HeaderBiddingUS = Switch(
+     "Commercial",
+     "header-bidding-us",
+     "Auction adverts on the client before calling DFP (US edition only)",
+     safeState = Off,
+     sellByDate = never,
+     exposeClientSide = true
+  )
+
   val CommercialSwitch = Switch(
     "Commercial",
     "commercial",
@@ -135,16 +144,6 @@ trait CommercialSwitches {
     "Commercial",
     "gu-jobs-feed-read",
     "If this switch is on, cached jobs feed will be updated from external source.",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
-
-  val StaticJobsFeedSwitch = Switch(
-    "Commercial",
-    "gu-static-jobs",
-    "If this switch is on, commercial components will be fed by the static job feed.",
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false

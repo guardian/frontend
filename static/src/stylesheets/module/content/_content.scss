@@ -1130,3 +1130,15 @@
         }
     }
 }
+
+.content--interactive {
+    .tonal__main--tone-news {
+        .old-article-message {
+            @include mq(tablet) {
+                position: absolute;
+                left: 0;
+                top: 44px;
+            }
+        }
+    }
+}

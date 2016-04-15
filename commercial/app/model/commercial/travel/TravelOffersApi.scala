@@ -9,35 +9,13 @@ import org.joda.time.format.DateTimeFormat
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.util.control.NonFatal
-import scala.xml.{Elem, Node, XML}
+import scala.xml.{Elem, XML}
 
 object TravelOffersApi extends ExecutionContexts with Logging {
 
   private val dateFormat = DateTimeFormat.forPattern("dd-MMM-yyyy")
 
-  private def buildOffer(node: Node): TravelOffer = {
-
-    def textValue(nodeName: String): String = (node \ nodeName).text.trim()
-
-    def textValues(nodeName: String): List[String] = (node \ nodeName).map(_.text.trim()).toList
-
-    TravelOffer(
-      textValue("prodId").toInt,
-      textValue("prodName"),
-      textValue("prodUrl"),
-      textValue("prodImage"),
-      textValue("@fromprice").replace(".00", ""),
-      dateFormat.parseDateTime(textValue("@earliestdeparture")),
-      Nil,
-      textValues("location"),
-      textValue("category"),
-      textValues("tag"),
-      textValue("@duration"),
-      textValue("position").toInt
-    )
-  }
-
-  def parse(xml: Elem): Seq[TravelOffer] = (xml \\ "offer") map buildOffer
+  def parse(xml: Elem): Seq[TravelOffer] = (xml \\ "product") map TravelOffer.fromXml
 
   def parseOffers(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[TravelOffer]] = {
     feedMetaData.parseSwitch.isGuaranteedSwitchedOn flatMap { switchedOn =>

@@ -42,6 +42,15 @@ trait MonitoringSwitches {
     exposeClientSide = true
   )
 
+  val CspReporting = Switch(
+    "Monitoring",
+    "csp-reporting",
+    "Enables logging of CSP violations",
+    safeState = Off,
+    never,
+    exposeClientSide = false
+  )
+
   val ThirdPartyEmbedTracking = Switch(
     "Monitoring",
     "third-party-embed-tracking",
@@ -49,6 +58,15 @@ trait MonitoringSwitches {
     safeState = Off,
     never,
     exposeClientSide = true
+  )
+
+  val LogstashLogging = Switch(
+    "Monitoring",
+    "logstash-logging",
+    "Enables sending logs to Logstash",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
   )
 
 }

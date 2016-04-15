@@ -43,7 +43,7 @@ trait Mappings extends I18nSupport {
   val idSecondName: Mapping[String] = nonEmptyText(maxLength = 50)
 
   val idPassword: Mapping[String] = text verifying(
-    Messages("error.passwordLength"), {value => 6 <= value.length && value.length <= 20}
+    Messages("error.passwordLength"), {value => 6 <= value.length && value.length <= 72}
   )
 
   val idCountry = comboList("" :: Countries.all)
