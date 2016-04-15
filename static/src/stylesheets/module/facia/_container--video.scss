@@ -35,7 +35,9 @@ $video-width-desktop: 700px;
     }
 
     .vjs-big-play-button {
-        display: none;
+        @include mq(desktop) {
+            display: none;
+        }
     }
 }
 
