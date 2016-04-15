@@ -14,6 +14,15 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
+  val HeaderBiddingUS = Switch(
+     "Commercial",
+     "header-bidding-us",
+     "Auction adverts on the client before calling DFP (US edition only)",
+     safeState = Off,
+     sellByDate = never,
+     exposeClientSide = true
+  )
+
   val CommercialSwitch = Switch(
     "Commercial",
     "commercial",

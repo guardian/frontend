@@ -32,15 +32,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABHeaderBiddingUS = Switch(
-     "A/B Tests",
-     "ab-header-bidding-us",
-     "Auction adverts on the client before calling DFP (US edition only)",
-     safeState = Off,
-     sellByDate = new LocalDate(2016, 5, 13),
-     exposeClientSide = true
-  )
-
   val ABIdentityRegisterMembershipStandfirst = Switch(
     "A/B Tests",
     "ab-identity-register-membership-standfirst",
