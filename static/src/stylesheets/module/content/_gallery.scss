@@ -245,3 +245,293 @@
         }
     }
 }
+
+
+// New gallery stuff
+
+// TODO: put in pasteup
+$multimedia-support-5: #161616;
+
+// The main image needs to take up 100vh and the slim header needs to sit just on top of it.
+.l-header--new-gallery {
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    left: 0;
+}
+
+
+// TODO: When the time comes, remove `.new-gallery` class completely and remove old gallery styling
+.new-gallery {
+    .ad-slot--dark {
+        background-color: $multimedia-support-5;
+    }
+
+    .content__main-column {
+        @include mq(tablet) {
+            margin-left: 15rem;
+        }
+    }
+
+    @include mq(tablet) {
+        .content__dateline, .content__labels, .byline, .content__meta-container, .meta__break, .content__headline, .content__standfirst {
+            margin-left: 6.4rem;
+            margin-right: 3rem;
+        }
+        .byline, .content__dateline {
+            border: none;
+        }
+        .content__standfirst {
+            padding-bottom: 0;
+            padding-top: 0;
+            &:before {
+                content: none;
+            }
+        }
+    }
+
+    .content__header .gs-container {
+        @include mq(tablet) {
+            padding: 0 10rem;
+        }
+    }
+
+
+    // TODO: Replace all media tones instead of overwriting the defaults
+    &.tonal--tone-media {
+        // Overwriting media tone header so that you can see the image instead
+        .tonal__header {
+            background-color: rgba(0,0,0,0);
+        }
+        .meta__numbers {
+            color: $neutral-3;
+        }
+        .content__dateline, .sharecount__heading {
+            color: $neutral-2;
+        }
+        .byline a, .sharecount__value {
+            color: $neutral-3;
+        }
+    }
+
+    .content__wrapper--headline {
+        background: rgba(0, 0, 0, .6);
+        background: linear-gradient(rgba(0, 0, 0, 0.5), $multimedia-support-5);
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    .content__headline {
+        &:before {
+            content: none;
+        }
+    }
+
+    .inline-camera svg {
+        width: 0.9em;
+        height: auto;
+    }
+
+    .content__standfirst {
+        color: $neutral-5;
+    }
+
+    .content__meta-container {
+        border: none;
+        position: relative;
+        width: auto;
+        margin-bottom: 0;
+    }
+
+    .meta__social {
+        border-top: 0.0625rem dotted $neutral-2;
+        border-bottom: 0.0625rem dotted $neutral-2;
+    }
+
+    .meta__break {
+        border-top: 0.0625rem dotted $neutral-2;
+        display: block;
+        width: 10%;
+    }
+
+    .meta__numbers {
+        border: none;
+        position: absolute;
+        right: 0;
+        top: 0;
+
+        @include mq($until: mobileLandscape) {
+            .sharecount__heading {
+                padding-left: 0;
+            }
+        }
+    }
+
+    .content__series-label {
+        padding-top: 0;
+        margin-left: 1rem;
+    }
+
+    .content__series-label, .content__section-label {
+        display: inline-block;
+    }
+
+    .content__labels {
+        border: 0;
+        margin-bottom: 0;
+        width: auto;
+        float: none;
+    }
+
+    .social-icon, .block-share__item, .block-share--gallery .block-share__item--facebook, .block-share--gallery .block-share__item--twitter, .block-share--gallery .block-share__item--pinterest {
+        background-color: rgba(0,0,0,0);
+        border: 0.0625rem solid $neutral-2;
+
+        &:hover {
+            background-color: rgba(0,0,0,0);
+        }
+
+        &.inline-icon, .inline-icon {
+            fill: $neutral-3
+        }
+    }
+
+    .gallery {
+        list-style: none;
+        margin: 0;
+    }
+
+    .gallery__item {
+        figure {
+            display: flex;
+            flex-direction: column-reverse;
+        }
+
+        @include mq($until: tablet) {
+            // On mobile the images should be 100% of the width of the screen
+            margin-left: -0.625rem;
+            margin-right: -0.625rem;
+        }
+
+        @include mq(tablet) {
+            position: relative;
+            border-top: none;
+            padding: 0;
+
+            figure {
+                flex-direction: row;
+            }
+        }
+    }
+
+    .gallery__figcaption {
+        @include fs-textSans(1);
+        padding-top: $gs-baseline / 4;
+        overflow: visible;
+        max-height: 100%;
+        position: relative;
+        border: none;
+        width: inherit;
+
+        @include mq(mobileLandscape, $until: tablet) {
+            padding-right: gs-span(2);
+        }
+
+        @include mq($until: desktop) {
+            padding-right: $gs-gutter * 10;
+            margin-bottom: $gs-baseline * 2;
+        }
+
+        @include mq($until: tablet) {
+            padding: 0.625rem;
+        }
+
+        @include mq(tablet) {
+            @include fs-textSans(2, true);
+            position: absolute;
+            width: gs-span(3);
+            top: 0;
+            right: auto;
+            border-top: 1px dotted $neutral-2;
+            //width: 14.5rem;
+            margin-left: -15rem;
+        }
+    }
+
+    .gallery__caption {
+        color: $neutral-4;
+        margin-bottom: 0;
+
+        a {
+            color: $neutral-4;
+            border-bottom: 0.0625rem solid #767676;
+
+            &:hover {
+                border-bottom: 1px solid $neutral-7;
+                text-decoration: none;
+            }
+        }
+
+        > strong:first-child {
+            @include fs-headline(2);
+            color: $neutral-5;
+            display: block;
+            margin-bottom: $gs-baseline/2;
+
+            & + br {
+                display: none;
+            }
+        }
+
+        .gallery__credit {
+            color: $neutral-2;
+        }
+    }
+
+    .gallery__img-container {
+        background-color: rgba(0, 0, 0, 0);
+        @include mq(tablet) {
+            border-left: 0.0625rem dotted #484848;
+            padding-left: 0.5rem;
+            padding-bottom: 2.5rem;
+        }
+    }
+
+    // landscape gallery images now are wider than they were before.
+    .gallery__img-container--landscape, .gallery__img--landscape {
+        width: 100%;
+        height: auto;
+    }
+
+    &.content--immersive {
+        .content__main {
+            padding-top: 13.5rem;
+
+            @include mq(mobileLandscape) {
+                padding-top: 11.5rem;
+            }
+        }
+    }
+
+    // immersive Overwrites
+    .content__head--immersive.is-fixed-height {
+        .content__header {
+            position: relative;
+        }
+
+        .content__head--mobile {
+            position: relative;
+            background-position: center center;
+            -webkit-background-size: cover;
+            background-size: cover;
+            display: block;
+        }
+    }
+}
+
+// Make related content the right colour.
+.l-side-margins--new-gallery .tonal--tone-media {
+    background-color: $multimedia-support-5;
+}
