@@ -185,7 +185,8 @@ object Frontend extends Build with Prototypes {
     applications,
     sport,
     commercial,
-    onward
+    onward,
+    adminJobs
   )
 
   val preview = application("preview").dependsOn(withTests(common), standalone).settings(
