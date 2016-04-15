@@ -1,9 +1,11 @@
-@(gallery: GalleryPage, related: RelatedContent, index: Int)(implicit request: RequestHeader)
+@(gallery: GalleryPage, related: RelatedContent, index: Int, showNewDesign: Boolean = false)(implicit request: RequestHeader)
 
 @import model.RelatedContent
 
 @main(gallery){ }{
-
-    @fragments.galleryBody(gallery.item, related, index)
-
+    @if(mvt.ABGalleryRedesignVariant.isParticipating) {
+        @fragments.newGalleryBody(gallery.item, related, index)
+    } else {
+        @fragments.galleryBody(gallery.item, related, index)
+    }
 }
