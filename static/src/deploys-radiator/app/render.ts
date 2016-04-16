@@ -120,8 +120,7 @@ const renderGroupDeployListNode = (deploys: List<DeployRecord>) => {
 
 const renderPage: (
     deploysPair: [ List<DeployRecord>, List<DeployRecord> ],
-    // TODO: Use tuple instead
-    deployPair: Array<DeployRecord>,
+    deployPair: [ DeployRecord, DeployRecord ],
     commits: List<GitHubCommit>,
     maybeLatestSuccessfulBuild: Option<BuildRecord>
 ) => VirtualDOM.VNode =
