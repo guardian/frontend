@@ -53,22 +53,22 @@ object LogbackConfig {
       try {
         val rootLogger = LoggerFactory.getLogger(SLFLogger.ROOT_LOGGER_NAME)
         asLogBack(rootLogger).map { lb =>
-            lb.info("Configuring Logback")
-            val context = lb.getLoggerContext
-            val layout = makeLayout(makeCustomFields(config.customFields))
-            val bufferSize = 1000
-            val appender  = makeKinesisAppender(
-              layout,
-              context,
-              KinesisAppenderConfig(
-                config.stream,
-                config.region,
-                config.awsCredentialsProvider,
-                bufferSize
-              )
+          lb.info("Configuring Logback")
+          val context = lb.getLoggerContext
+          val layout = makeLayout(makeCustomFields(config.customFields))
+          val bufferSize = 1000
+          val appender  = makeKinesisAppender(
+            layout,
+            context,
+            KinesisAppenderConfig(
+              config.stream,
+              config.region,
+              config.awsCredentialsProvider,
+              bufferSize
             )
-            lb.addAppender(appender)
-            lb.info("Configured Logback")
+          )
+          lb.addAppender(appender)
+          lb.info("Configured Logback")
         } getOrElse(PlayLogger.info("not running using logback"))
       } catch {
         case ex: Throwable => PlayLogger.info(s"Error while adding Logback Kinesis appender: ${ex}")
