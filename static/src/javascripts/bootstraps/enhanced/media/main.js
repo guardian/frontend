@@ -337,6 +337,7 @@ define([
     }
 
     function initEndSlate(player, endSlatePath) {
+        var fader = $('.video__fader');
         var endSlate = new Component(),
             endState = 'vjs-has-ended';
 
@@ -349,13 +350,14 @@ define([
             });
         });
         player.on('playing', function () {
-            $('.video__fader').addClass('isPlaying').css('opacity', '1');
+            fader.addClass('isPlaying');
             bonzo(player.el()).removeClass(endState);
         });
-        
+
         player.on('pause', function(){
-           $('.video__fader').removeClass('isPlaying').css('opacity', '0'); 
+            fader.removeClass('isPlaying');
         });
+
     }
 
     function initMoreInSection() {

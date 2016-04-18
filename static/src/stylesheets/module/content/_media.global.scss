@@ -24,11 +24,13 @@
         right: 0;
         background-color: rgba(0, 0, 0, .8);
         opacity: 0;
-        transition: opacity .5s ease-in-out;
-        display: none;
+        transition: all 1s ease-in-out;
+        visibility: hidden;
         
         &.isPlaying {
-            display: block;
+            visibility: visible;
+            opacity: 1;
+            transition: all 1s ease-in-out;
         }
     }
 
