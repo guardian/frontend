@@ -50,15 +50,6 @@ $video-width-desktop: 700px;
 .video-playlist {
     position: relative;
     overflow: hidden;
-    padding-right: $gs-gutter / 2;
-
-    @include mq(mobileLandscape) {
-        padding-right: $gs-gutter;
-    }
-
-    @include mq(desktop) {
-        padding-right: 0;
-    }
 
     @include mq(desktop, leftCol) {
         background-color: darken($media-background, 5%); 
@@ -97,11 +88,20 @@ $video-width-desktop: 700px;
     font-size: 0; // to remove spacing between inline-blocked children
     white-space: nowrap;
     transition: transform .4s ease-out;
+    padding-right: $gs-gutter / 2;
+
+    @include mq(mobileLandscape) {
+        padding-right: $gs-gutter;
+    }
 
     @include mq($until: desktop) {
         overflow-x: scroll;
         overflow-y: hidden;
         -webkit-overflow-scrolling: touch;
+    }
+
+    @include mq(desktop) {
+        padding-right: 0;
     }
 
     &::-webkit-scrollbar {
