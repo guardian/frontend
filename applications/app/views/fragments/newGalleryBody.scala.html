@@ -119,10 +119,6 @@ TODO:
         </figure>
     </li>
 
-
-
-
-
     @if(!gallery.content.shouldHideAdverts && rowNum % adInterval == 0) {
         @adSlots.lift((rowNum / adInterval) - 1).map { adSlot =>
             <li class="gallery__item gallery__item--advert">
