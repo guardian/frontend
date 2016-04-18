@@ -104,11 +104,10 @@ case class VideoAsset(
     }
   }
 
-  // The video duration in seconds
-  val duration: Int = fields.get("durationSeconds").getOrElse("0").toInt +
-                           (fields.get("durationMinutes").getOrElse("0").toInt * 60)
   val durationSeconds: Int = fields.get("durationSeconds").getOrElse("0").toInt
   val durationMinutes: Int = fields.get("durationMinutes").getOrElse("0").toInt
+  // The video duration in seconds
+  val duration: Int = durationSeconds + (durationMinutes * 60)
   val blockVideoAds: Boolean = fields.get("blockAds").exists(_.toBoolean)
   val source: Option[String] = fields.get("source")
   val embeddable: Boolean = fields.get("embeddable").exists(_.toBoolean)
