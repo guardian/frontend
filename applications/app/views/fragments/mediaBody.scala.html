@@ -25,14 +25,14 @@
                 @fragments.headTonal(media)
             } 
             case _ => { }
-		}
+        }
         <div class="content__main tonal__main tonal__main--@toneClass(media)">
-	        @media match {
-				case video: Video => {
-					<div class="video__background__fade"></div>
-				}
-				case _ => { }
-			}
+            @media match {
+                case video: Video => {
+                     <div class="video__background__fade"></div>
+                }
+                case _ => { }
+            }
             <div class="gs-container">
                 <div class="content__main-column content__main-column--media content__main-column--@mediaType">
                     <div class="media-body">
@@ -107,13 +107,13 @@
                                         </div>
                                         <div class="video__meta">
 	                                        <div class="meta__numbers modern-visible">
-												<div class="u-h meta__number js-sharecount">
-	                							</div>
-								                <div class="u-h meta__number" data-discussion-id="@media.content.discussionId" data-commentcount-format="content" data-discussion-closed="@{
-								                    !media.trail.isCommentable
-								                }">
-								                </div>
-            								</div>
+                                                <div class="u-h meta__number js-sharecount">
+                                                </div>
+                                                <div class="u-h meta__number" data-discussion-id="@media.content.discussionId" data-commentcount-format="content" data-discussion-closed="@{
+                                                    !media.trail.isCommentable
+                                                }">
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="video__share">
 	                                        @fragments.social(media.sharelinks.pageShares, "top")
@@ -121,14 +121,14 @@
                                     }
                                     case _ => { }
                                 }
-							
-								@media match {
-									case audio: Audio => {
-										@fragments.contentMeta(media)
-									} 
-									case _ => { }
-								}
-							
+
+                                @media match {
+                                	case audio: Audio => {
+                                		@fragments.contentMeta(media)
+                                	} 
+                                	case _ => { }
+                                }
+
                             @media match {
                                 case a: Audio if a.fields.body.nonEmpty => {
                                     <div class="from-content-api">
@@ -137,14 +137,14 @@
                                 }
                                 case _ => { }
                             }
-							
-							@media match {
-									case audio: Audio => {
-										@fragments.submeta(media)
-									} 
-									case _ => { }
-								}
-							
+
+                                @media match {
+                                    case audio: Audio => {
+                                         @fragments.submeta(media)
+                                    } 
+                                    case _ => { }
+                                }
+
                         </div>
                     </div>
                 </div>

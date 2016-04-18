@@ -57,8 +57,14 @@
                 opacity: 0;
             }
             .video-overlay__headline {
-                width: gs-span(8);
-                margin-left: 6px;
+                @include mq(mobileLandscape){
+                    width: 100%;
+                }
+                @include mq(tablet){
+                    width: gs-span(8);
+                    margin-left: 6px;
+                }
+                
             }
             .video-overlay__series-label {
                 @include fs-headline(2);
@@ -98,10 +104,16 @@
             width: gs-span(12);
         }
         .tonal__standfirst {
+            @include mq(mobileLandscape){
+                width: 100%;
+            }
+            
+            @include mq(tablet){
             width: gs-span(8);
             padding-top: 0;
             padding-right: gs-span(.5);
             float: left;
+            }
         }
         .content__dateline {
             border: 0;
@@ -114,6 +126,7 @@
             
             .meta__numbers {
                 border: 0;
+                position: relative;
             }
         }
         .video__share {
