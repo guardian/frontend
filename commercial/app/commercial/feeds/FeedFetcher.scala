@@ -112,7 +112,7 @@ object FeedFetcher {
   }
 
   private val jobs: Option[FeedFetcher] = {
-      Configuration.commercial.jobsStaticUrl map { url =>
+      Configuration.commercial.jobsUrl map { url =>
         new SingleFeedFetcher(JobsFeedMetaData(url))
       }
   }

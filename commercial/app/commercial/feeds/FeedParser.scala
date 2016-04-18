@@ -20,7 +20,7 @@ sealed trait FeedParser[+T] extends ExecutionContexts {
 object FeedParser {
 
   private val jobs: Option[FeedParser[Job]] = {
-    Configuration.commercial.jobsStaticUrl map { url =>
+    Configuration.commercial.jobsUrl map { url =>
       new FeedParser[Job] {
 
         val feedMetaData = JobsFeedMetaData(url)
