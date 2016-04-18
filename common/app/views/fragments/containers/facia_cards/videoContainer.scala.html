@@ -6,7 +6,7 @@
 @import layout.{ColumnAndCards, ContentCard, FaciaCardAndIndex, FaciaCardHeader}
 @import views.html.fragments.items.facia_cards.item
 @import views.html.fragments.items.elements.facia_cards.{itemImage, title}
-@import views.html.fragments.media.{video, formattedDuration}
+@import views.html.fragments.media.video
 
 <div class="fc-container__inner">
     <h2 class="video-title fc-container__header__title">
@@ -39,7 +39,6 @@
                                     <div class="fc-item__byline">@item.properties.byline</div>
                                 }
                             </div>
-                            @formattedDuration(content.elements.mainVideo.get.videos)
                         </div>
                         @defining(VideoPlayer(
                             content.elements.mainVideo.get,
