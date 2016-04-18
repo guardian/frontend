@@ -15,19 +15,19 @@
         }
     }
 
-    .video__background__fade{
+    .video__background__fade {
         position: fixed;
         z-index: 9999;
-        top:0;
+        top: 0;
         bottom: 0;
         left: 0;
         right: 0;
-        background-color: rgba(0,0,0,0.8);
+        background-color: rgba(0, 0, 0, .8);
         opacity: 0;
-        transition: opacity 0.5 ease-in-out;
+        transition: opacity .5 ease-in-out;
         display: none;
         
-        &.isPlaying{
+        &.isPlaying {
             display: block;
             opacity: 1;
         }
@@ -83,12 +83,12 @@
     }
 
     .content__main-column--video {
-        @include mq(desktop){
+        @include mq(desktop) {
             margin-left: 0;
             width: gs-span(12);
         }
         
-        @include mq(leftCol){
+        @include mq(leftCol) {
             margin-left: gs-span(1);
         }
         

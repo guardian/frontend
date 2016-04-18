@@ -65,10 +65,10 @@ $ima-controls-height: 70px;
         height: auto !important;
         cursor: pointer;
         
-        &.vjs-ad-playing{
-           .vjs-control-bar{
-               display: none;
-           } 
+        &.vjs-ad-playing {
+            .vjs-control-bar {
+                display: none;
+            } 
         }
     }
     &.gu-media--audio {
@@ -217,7 +217,7 @@ $ima-controls-height: 70px;
     position: relative;
     display: none;
 
-    &.isPlaying{
+    &.isPlaying {
         display: block;
     }
 
