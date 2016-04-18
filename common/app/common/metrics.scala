@@ -184,6 +184,8 @@ trait CloudWatchApplicationMetrics extends GlobalSettings with Logging {
     Jobs.schedule("ApplicationSystemMetricsJob", "36 * * * * ?"){
       report()
     }
+
+    // Log heap usage every 5 seconds.
     if (Configuration.environment.isProd) {
       Jobs.scheduleEveryNSeconds("LogMetricsJob", 5) {
         val heapUsed = bytesAsMb(ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getUsed)
@@ -191,6 +193,9 @@ trait CloudWatchApplicationMetrics extends GlobalSettings with Logging {
         Future.successful(())
       }
     }
+
+    // Log the build number and revision number on startup.
+    log.info(s"Build number: ${ManifestData.build}, vcs revision: ${ManifestData.revision}")
   }
 
   override def onStop(app: PlayApp) {
