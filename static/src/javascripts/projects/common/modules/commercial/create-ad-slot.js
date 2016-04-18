@@ -13,6 +13,7 @@ define([
     isArray,
     transform
 ) {
+    var fabricSwitch = config.switches.fabricAdverts ? '|88,71' : '';
     var adSlotDefinitions = {
         right: {
             sizeMappings: {
@@ -40,9 +41,9 @@ define([
         },
         inline1: {
             sizeMappings: {
-                mobile:             '1,1|300,250|88,71|88,70',
-                'mobile-landscape': '1,1|300,250|88,71',
-                tablet:             '1,1|300,250|88,71'
+                mobile:             '1,1|300,250|88,70' + fabricSwitch,
+                'mobile-landscape': '1,1|300,250' + fabricSwitch,
+                tablet:             '1,1|300,250'
             }
         },
         inline: {
