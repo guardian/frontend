@@ -84,8 +84,8 @@ object CrosswordData {
     val shipSolutions = crossword.dateSolutionAvailable.map(_.toJodaDateTime.isBeforeNow).getOrElse(crossword.solutionAvailable)
 
     val entries = crossword.entries.collect {
-      case entry if shipSolutions || entry.solution.isEmpty => Entry.fromCrosswordEntry(entry)
-      case entry => Entry.fromCrosswordEntry(entry.copy(solution = None))
+      case entry if !shipSolutions => Entry.fromCrosswordEntry(entry.copy(solution = None))
+      case entry => Entry.fromCrosswordEntry(entry)
     }
 
     val entryGroups = entries
