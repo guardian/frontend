@@ -26,7 +26,7 @@ reinstall: uninstall install
 
 uninstall:
 	@rm -rf node_modules
-	@cd static/src/deploys-radiator && rm -rf node_modules jspm_packages
+	@cd static/src/deploys-radiator && rm -rf node_modules jspm_packages typings
 	@echo 'All 3rd party dependencies have been uninstalled.'
 
 test:

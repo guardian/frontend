@@ -108,21 +108,22 @@ define([
         return every(others, curry(_testElem)(rules, elem));
     }
 
-    function _mapElementToDimensions(el) {
+    function _mapElementToDimensions(el, rules) {
+        var rect = el.getBoundingClientRect();
         return {
-            top: el.offsetTop,
-            bottom: el.offsetTop + el.offsetHeight,
+            top: rules.absoluteMinAbove ? rect.top : el.offsetTop,
+            bottom: rules.absoluteMinAbove ? rect.bottom : el.offsetTop + el.offsetHeight,
             element: el
         };
     }
 
-    function _enforceRules(slots, rules, bodyTop, bodyHeight) {
+    function _enforceRules(slots, rules, bodyHeight) {
         var filtered = Promise.resolve(slots);
 
         // enforce absoluteMinAbove rule
         if (rules.absoluteMinAbove > 0) {
             filtered = filtered.then(filter(slots, function (slot) {
-                return bodyTop + slot.top >= rules.absoluteMinAbove;
+                return slot.top >= rules.absoluteMinAbove;
             }));
         }
 
@@ -141,7 +142,7 @@ define([
                 return [slots, qwery('.js-content-meta')[0]];
             }).then(function (args) {
                 return fastdom.read(function () {
-                    return [args[0], _mapElementToDimensions(args[1])];
+                    return [args[0], _mapElementToDimensions(args[1], rules)];
                 });
             }).then(function (args) {
                 return filter(args[0], function (slot) {
@@ -157,7 +158,9 @@ define([
                     return [slots, qwery(rules.bodySelector + selector)];
                 }).then(function (args) {
                     return fastdom.read(function () {
-                        return [args[0], map(args[1], _mapElementToDimensions)];
+                        return [args[0], map(args[1], function(slot) {
+                            return _mapElementToDimensions(slot, rules);
+                        })];
                     });
                 }).then(function (args) {
                     return filter(args[0], function (slot) {
@@ -226,15 +229,17 @@ define([
             return fastdom.read(function () {
                 var rect = body.getBoundingClientRect();
                 return [
-                    rect.top + window.pageYOffset,
+                    rect.top,
                     rect.height,
-                    map(slots, _mapElementToDimensions)
+                    map(slots, function(slot) {
+                        return _mapElementToDimensions(slot, rules);
+                    })
                 ];
             });
         }
 
         function enforceRules(data) {
-            return _enforceRules(data[2], rules, data[0], data[1]);
+            return _enforceRules(data[2], rules, data[1]);
         }
 
         function filterSlots(slots) {

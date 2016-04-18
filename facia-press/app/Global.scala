@@ -1,3 +1,4 @@
+import common.Logback.Logstash
 import common._
 import conf.{Configuration => GuardianConfiguration, SwitchboardLifecycle}
 import frontpress.{FrontPressCron, ToolPressQueueWorker}
@@ -7,7 +8,8 @@ import services.ConfigAgentLifecycle
 object Global extends GlobalSettings
   with ConfigAgentLifecycle
   with SwitchboardLifecycle
-  with CloudWatchApplicationMetrics {
+  with CloudWatchApplicationMetrics
+  with Logstash {
 
   override def applicationName = "frontend-facia-press"
 

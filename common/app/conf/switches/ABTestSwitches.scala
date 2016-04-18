@@ -59,24 +59,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABPeopleWhoReadThisAlsoReadVariants = Switch(
-    "A/B Tests",
-    "ab-people-who-read-this-also-read-variants",
-    "Display people who read this also read with different variants",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 14),
-    exposeClientSide = true
-  )
-
-  val ABHeaderBiddingUS = Switch(
-    "A/B Tests",
-    "ab-header-bidding-us",
-    "Auction adverts on the client before calling DFP (US edition only)",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 20),
-    exposeClientSide = true
-  )
-
   val ABMembership = Switch(
     "A/B Tests",
     "ab-membership",

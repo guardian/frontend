@@ -597,7 +597,13 @@ define([
         },
 
         hasSolutions: function () {
-            return 'solution' in this.props.data.entries[0];
+            if (this.props.data.dateSolutionAvailable) {
+                return new Date(this.props.data.dateSolutionAvailable) <= new Date();
+            } else if (this.props.data.solutionAvailable) {
+                return this.props.data.solutionAvailable;
+            } else {
+                return false;
+            }
         },
 
         render: function () {

@@ -40,7 +40,7 @@ class TrainingHttp extends contentapi.Http with ExecutionContexts {
 
 object TrainingHealthCheck extends AllGoodHealthcheckController(
  9016,
- "/world/2012/sep/11/barcelona-march-catalan-independence"
+ "/info/developer-blog/2016/apr/14/training-preview-healthcheck"
 ) {
 
   def init: Unit = {

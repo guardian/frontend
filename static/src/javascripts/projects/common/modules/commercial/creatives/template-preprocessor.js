@@ -7,6 +7,7 @@ define([
     'text!common/views/commercial/creatives/manual-multiple-button.html',
     'text!common/views/commercial/creatives/manual-title.html',
     'text!common/views/commercial/creatives/gimbap/gimbap-simple-blob.html',
+    'text!common/views/commercial/creatives/gimbap/gimbap-richmedia-blob.html',
     'text!common/views/commercial/creatives/manual-card.html',
     'text!common/views/commercial/creatives/manual-card-large.html',
     'text!common/views/commercial/creatives/manual-container-button.html',
@@ -22,6 +23,7 @@ define([
     manualMultipleButtonStr,
     manualTitleStr,
     gimbapSimpleStr,
+    gimbapRichmediaStr,
     manualCardStr,
     manualCardLargeStr,
     manualContainerButtonStr,
@@ -34,6 +36,7 @@ define([
     var manualMultipleButtonTpl;
     var manualTitleTpl;
     var gimbapSimpleTpl;
+    var gimbapRichmediaTpl;
     var manualCardStrs = {
         'manual-card': manualCardStr,
         'manual-card-large': manualCardLargeStr
@@ -204,12 +207,43 @@ define([
         }
     }
 
+    function preprocessGimbapRichmedia(tpl) {
+        if (!gimbapRichmediaTpl) {
+            gimbapRichmediaTpl = template(gimbapRichmediaStr);
+        }
+        // SVGs
+        tpl.params.marque36icon = svgs('marque36icon', ['gimbap-wrap__mainlogo']);
+        tpl.params.logo = tpl.params['logo' + tpl.params.componenttone + 'horizontal'];
+        tpl.params.iconClock = svgs('iconClock', ['gimbap-richmedia__icon']);
+        tpl.params.iconLocation = svgs('iconLocation', ['gimbap-richmedia__icon']);
+        tpl.params.iconBasket = svgs('iconBasket', ['gimbap-richmedia__icon']);
+
+        tpl.params.gimbapEffects = tpl.params.componenteffects === 'yes' ? ' ' + 'gimbap--effects' : '';
+
+        tpl.params.gimbapRichmedia = '';
+        for (var i = 1; i <= 2; i++) {
+            tpl.params.gimbapRichmedia += gimbapRichmediaTpl(assign(tpl.params, {
+                offerurl: tpl.params['offer' + i + 'url'],
+                offertitle: tpl.params['offer' + i + 'title'],
+                offerimage: tpl.params['offer' + i + 'image'],
+                offerHighlight: tpl.params['offer' + i + 'highlight'],
+                offerTitle: tpl.params['offer' + i + 'title'],
+                offerHeadline: tpl.params['offer' + i + 'headline'],
+                offerDate: tpl.params['offer' + i + 'date'],
+                offerPlace: tpl.params['offer' + i + 'place'],
+                offerPrice: tpl.params['offer' + i + 'price'] !== '0' ? tpl.params['offer' + i + 'price'] : '',
+                offerDiscount: tpl.params['offer' + i + 'discount']
+            }));
+        }
+    }
+
     return {
         'manual-inline': preprocessManualInline,
         'manual-single': preprocessManualSingle,
         'manual-multiple': preprocessManualMultiple,
         'gimbap': preprocessGimbap,
         'gimbap-simple': preprocessGimbapSimple,
+        'gimbap-richmedia': preprocessGimbapRichmedia,
         'manual-container': preprocessManualContainer
     };
 });

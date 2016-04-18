@@ -3,7 +3,7 @@
 @import views.support.Commercial.topSlot
 
 @if(topSlot.hasResponsiveAd(metaData, edition) && !mvt.CMTopBannerPosition.isParticipating) {
-    <div class="top-banner-ad-container top-banner-ad-container--mobile top-banner-ad-container--ab-mobile js-top-banner-mobile">
+    <div class="top-banner-ad-container top-banner-ad-container--mobile js-top-banner-mobile">
     @fragments.commercial.standardAd(
         "top",
         Seq("top-banner-ad"),

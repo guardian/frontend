@@ -19,6 +19,7 @@ define([
     'text!common/views/commercial/creatives/manual-single.html',
     'text!common/views/commercial/creatives/gimbap.html',
     'text!common/views/commercial/creatives/gimbap-simple.html',
+    'text!common/views/commercial/creatives/gimbap-richmedia.html',
     'text!common/views/commercial/creatives/manual-container.html'
 ], function (
     Promise,
