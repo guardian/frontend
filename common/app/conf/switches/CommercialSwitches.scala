@@ -258,7 +258,7 @@ trait CommercialSwitches {
   )
 
   val FabricAdverts = Switch(
-    "Commercial",
+    SwitchGroup.Commercial,
     "fabric-adverts",
     "Request 'fabric' format adverts (88x71s) from DFP",
     safeState = Off,
