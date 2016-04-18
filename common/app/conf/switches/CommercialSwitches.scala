@@ -257,6 +257,15 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
+  val FabricAdverts = Switch(
+    SwitchGroup.Commercial,
+    "fabric-adverts",
+    "Request 'fabric' format adverts (88x71s) from DFP",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 5, 25),
+    exposeClientSide = true
+  )
+
   val v2JobsTemplate = Switch(
     SwitchGroup.Commercial,
     "v2-jobs-template",
