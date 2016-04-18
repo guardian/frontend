@@ -5,7 +5,7 @@ import org.joda.time.LocalDate
 trait ABTestSwitches {
 
   val ABDummyTest = Switch(
-    "A/B Tests",
+    SwitchGroup.ABTests,
     "ab-dummy-test",
     "A do-nothing AA test, for the data team",
     safeState = Off,
@@ -15,7 +15,7 @@ trait ABTestSwitches {
 
   // Owner: Dotcom Reach
   val ABFrontsOnArticles2 = Switch(
-    "A/B Tests",
+    SwitchGroup.ABTests,
     "ab-fronts-on-articles2",
     "Injects fronts on articles for the test",
     safeState = Off,
@@ -24,7 +24,7 @@ trait ABTestSwitches {
   )
 
   val ABNextInSeries = Switch(
-    "A/B Tests",
+    SwitchGroup.ABTests,
     "ab-next-in-series",
     "Show next in series",
     safeState = Off,
@@ -33,7 +33,7 @@ trait ABTestSwitches {
   )
 
   val ABIdentityRegisterMembershipStandfirst = Switch(
-    "A/B Tests",
+    SwitchGroup.ABTests,
     "ab-identity-register-membership-standfirst",
     "Membership registration page variant for Identity",
     safeState = Off,
@@ -42,7 +42,7 @@ trait ABTestSwitches {
   )
 
   val ABLiveBlogChromeNotificationsInternal = Switch(
-    "A/B Tests",
+    SwitchGroup.ABTests,
     "ab-live-blog-chrome-notifications-internal",
     "Live blog chrome notifications - Internal",
     safeState = Off,
@@ -51,7 +51,7 @@ trait ABTestSwitches {
   )
 
   val ABLiveBlogChromeNotificationsProd = Switch(
-    "A/B Tests",
+    SwitchGroup.ABTests,
     "ab-live-blog-chrome-notifications-prod",
     "Live blog chrome notifications - prod",
     safeState = Off,
@@ -60,7 +60,7 @@ trait ABTestSwitches {
   )
 
   val ABMembership = Switch(
-    "A/B Tests",
+    SwitchGroup.ABTests,
     "ab-membership",
     "Membership propositions",
     safeState = Off,
@@ -69,7 +69,7 @@ trait ABTestSwitches {
   )
 
   val ABLoyalAdblockingSurvey = Switch(
-    "A/B Tests",
+    SwitchGroup.ABTests,
     "ab-loyal-adblocking-survey",
     "An adblock ongoing survey for all loyal users",
     safeState = Off,
@@ -78,7 +78,7 @@ trait ABTestSwitches {
   )
 
   val ABMinute = Switch(
-    "A/B Tests",
+    SwitchGroup.ABTests,
     "ab-minute",
     "Switch to include the minute.ly script",
     safeState = Off,
