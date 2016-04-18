@@ -4,7 +4,8 @@ import com.amazonaws.auth.AWSCredentialsProvider
 import conf.switches.Switches
 import conf.Configuration
 import play.api.{Logger => PlayLogger, Application => PlayApp, GlobalSettings}
-
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.util.{Success, Failure}
 
 case class LogStashConf(enabled: Boolean,
                         stream: String,
@@ -41,10 +42,15 @@ object Logstash {
   }
 
   def init: Unit = {
-    if(Switches.LogstashLogging.isSwitchedOn) {
-      config.fold(PlayLogger.info("Logstash config is missing"))(LogbackConfig.init(_))
-    } else {
-      PlayLogger.info("Logstash logging switch is Off")
+
+    Switches.LogstashLogging.isGuaranteedSwitchedOn.onComplete {
+      case Success(isOn) =>
+        if(isOn) {
+          config.fold(PlayLogger.info("Logstash config is missing"))(LogbackConfig.init(_))
+        } else {
+          PlayLogger.info("Logstash logging switch is Off")
+        }
+      case Failure(_) => PlayLogger.error("Failed retrieving the logtash-logging switch value")
     }
   }
 }
