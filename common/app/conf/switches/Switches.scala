@@ -63,6 +63,14 @@ case class Switch(
     }
     initialized(this)
   }
+  def switchToSafeState(): Unit = {
+    if (safeState == On) {
+      delegate.switchOn()
+    } else {
+      delegate.switchOff()
+    }
+    initialized(this)
+  }
 
   Switch.switches.send(this :: _)
 }
