@@ -5,8 +5,8 @@ import common._
 import services.OphanApi
 import play.api.libs.json.{JsArray, JsValue}
 import model.RelatedContentItem
-import scala.concurrent.duration._
 import scala.concurrent.Future
+import scala.util.control.NonFatal
 import ContentApiClient.getResponse
 
 object MostPopularAgent extends Logging with ExecutionContexts {
@@ -59,7 +59,7 @@ object GeoMostPopularAgent extends Logging with ExecutionContexts {
         getResponse(ContentApiClient.item(urlToContentPath(url), Edition.defaultEdition))
           .map(_.content.map(RelatedContentItem(_)))
           .recover {
-            case e: Throwable =>
+            case NonFatal(e)  =>
               log.error(s"Error requesting $url", e)
               None
           }
@@ -111,7 +111,7 @@ object DayMostPopularAgent extends Logging with ExecutionContexts {
         getResponse(ContentApiClient.item(urlToContentPath(url), Edition.defaultEdition ))
           .map(_.content.map(RelatedContentItem(_)))
           .recover {
-            case e: Throwable =>
+            case NonFatal(e) =>
               log.error(s"Error requesting $url", e)
               None
           }
