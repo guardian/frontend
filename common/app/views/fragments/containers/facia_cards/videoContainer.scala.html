@@ -1,11 +1,7 @@
-@(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit requestHeader: RequestHeader)
+@(containerDefinition: layout.FaciaContainer)(implicit requestHeader: RequestHeader)
 
-@import common.LinkTo
-@import model.{VideoPlayer, ImageOverride, FaciaDisplayElement}
-@import views.support.{ImgSrc, Video700}
-@import layout.{ColumnAndCards, ContentCard, FaciaCardAndIndex, FaciaCardHeader}
-@import views.html.fragments.items.facia_cards.item
-@import views.html.fragments.items.elements.facia_cards.itemImage
+@import model.VideoPlayer
+@import views.support.Video700
 @import views.html.fragments.media.video
 
 <div class="fc-container__inner">
