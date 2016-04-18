@@ -141,7 +141,7 @@ trait CommercialSwitches {
   )
 
   val JobsFeedFetchSwitch = Switch(
-    SwitchGroup.Commercial,,
+    SwitchGroup.Commercial,
     "gu-jobs-feed-fetch",
     "If this switch is on, jobs feed will be periodically updated from external source.",
     safeState = Off,
@@ -150,7 +150,7 @@ trait CommercialSwitches {
   )
 
   val JobsFeedParseSwitch = Switch(
-    SwitchGroup.Commercial,,
+    SwitchGroup.Commercial,
     "gu-jobs-feed-parse",
     "If this switch is on, commercial components will be fed by jobs feed.",
     safeState = Off,
