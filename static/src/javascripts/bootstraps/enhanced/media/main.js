@@ -349,14 +349,16 @@ define([
             });
         });
         player.on('playing', function () {
-            $('.video__headline--overlay').addClass('playing');
-            $('.vjs-control-bar').css('display', 'block');
+            $('.video__overlay').addClass('playing');
+            $('.vjs-control-bar').addClass('isPlaying');
+            $('.video__background__fade').addClass('isPlaying');
             bonzo(player.el()).removeClass(endState);
         });
         
         player.on('pause', function(){
             $('.vjs-control-text').css('display', 'none');
-            $('.video__headline--overlay').removeClass('playing'); 
+            $('.video__overlay').removeClass('playing');
+            $('.video__background__fade').removeClass('isPlaying'); 
         });
     }
 

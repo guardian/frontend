@@ -68,14 +68,14 @@
                 }
             </video>
             @if(showTitle){
-	            <div class="video__headline--overlay">
-		            <div class="video__series">@seriesTag.map { series =>
+	            <div class="video__overlay">
+		            <div class="video-overlay__series-label">@seriesTag.map { series =>
 			            	@series.name
 			            }</div>
-		            <div class="video__headline">
+		            <div class="video-overlay__headline">
 			            @player.title
 		            </div>
-		            <div class="video__duration">
+		            <div class="video-overlay__duration">
 			            
 		            </div>
 	            </div>
