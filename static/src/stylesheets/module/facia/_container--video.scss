@@ -50,6 +50,15 @@ $video-width-desktop: 700px;
 .video-playlist {
     position: relative;
     overflow: hidden;
+    padding-right: $gs-gutter / 2;
+
+    @include mq(mobileLandscape) {
+        padding-right: $gs-gutter;
+    }
+
+    @include mq(desktop) {
+        padding-right: 0;
+    }
 
     @include mq(desktop, leftCol) {
         background-color: darken($media-background, 5%); 
