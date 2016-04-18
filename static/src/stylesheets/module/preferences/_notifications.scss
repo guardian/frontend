@@ -115,6 +115,7 @@ $notifications-button-height: 28px;
 .notifications-explainer {
 
     margin-top: $gs-baseline;
+    margin-bottom: $gs-baseline;
     background: $live-default;
     color: $neutral-8;
     display: block;
@@ -138,7 +139,8 @@ $notifications-button-height: 28px;
 .notifications-explainer__content {
     position: relative;
     box-sizing: border-box;
-    padding: $gs-baseline 0 $gs-baseline $gs-gutter;
+    padding: $gs-baseline 0 ($gs-baseline/3)*2 $gs-gutter;
+    margin-bottom: $gs-baseline * -2;
 }
 
 .notifications-explainer__header {

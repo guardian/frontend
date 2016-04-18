@@ -57,7 +57,11 @@ define([
 
         showExplainer: function() {
             console.log("Show explainter");
-            var src = template(explainer,{closeIcon : svgs('closeCentralIcon')});
+            var src = template(explainer,{
+                closeIcon : svgs('closeCentralIcon'),
+                imgMobile: svgs('mobileNotificationsExplainer', ['mobile-only', 'notification-explainer']),
+                imgDesktop: svgs('desktopNotificationsExplainer', ['hide-on-mobile', 'notification-explainer'])
+            });
             fastdom.write(function () {
                 console.log("++ Write: " + src );
                 $('.js-notification-link').append(src);
