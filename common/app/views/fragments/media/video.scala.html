@@ -1,4 +1,4 @@
-@(player: model.VideoPlayer, enhance: Boolean, showEndSlate: Boolean = true, amp: Boolean = false, showPoster: Boolean = true, showTitle: Boolean = false, seriesTag: Option[model.Tag] = None)
+@(player: model.VideoPlayer, enhance: Boolean, showEndSlate: Boolean = true, amp: Boolean = false, showPoster: Boolean = true, showOverlay: Boolean = false, seriesTag: Option[model.Tag] = None)
 
 @import conf.Static
 @import views.support.RenderClasses
@@ -67,7 +67,7 @@
                     </object>
                 }
             </video>
-            @if(showTitle){
+            @if(showOverlay){
             <div class="video__overlay">
                 @seriesTag.map { series =>
                     <div class="video__series-label">
