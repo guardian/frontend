@@ -140,19 +140,19 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val JobFeedReadSwitch = Switch(
+  val JobsFeedFetchSwitch = Switch(
     "Commercial",
-    "gu-jobs-feed-read",
-    "If this switch is on, cached jobs feed will be updated from external source.",
+    "gu-jobs-feed-fetch",
+    "If this switch is on, jobs feed will be periodically updated from external source.",
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
   )
 
-  val JobParseSwitch = Switch(
+  val JobsFeedParseSwitch = Switch(
     "Commercial",
-    "gu-jobs-parse",
-    "If this switch is on, commercial components will be fed by job feed.",
+    "gu-jobs-feed-parse",
+    "If this switch is on, commercial components will be fed by jobs feed.",
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
