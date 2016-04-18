@@ -24,8 +24,8 @@ case class JobsFeedMetaData(override val url: String) extends FeedMetaData {
 
   val name = "jobs"
 
-  override val fetchSwitch = Switches.JobFeedReadSwitch
-  override val parseSwitch = Switches.JobParseSwitch
+  override val fetchSwitch = Switches.JobsFeedFetchSwitch
+  override val parseSwitch = Switches.JobsFeedParseSwitch
 
   override val responseEncoding = utf8
 }
