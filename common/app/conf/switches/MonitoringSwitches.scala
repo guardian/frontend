@@ -7,7 +7,7 @@ trait MonitoringSwitches {
   // Monitoring
 
   val OphanSwitch = Switch(
-    "Monitoring",
+    SwitchGroup.Monitoring,
     "ophan",
     "Enables the new Ophan tracking javascript",
     safeState = On,
@@ -16,7 +16,7 @@ trait MonitoringSwitches {
   )
 
   val GoogleAnalyticsSwitch = Switch(
-    "Monitoring",
+    SwitchGroup.Monitoring,
     "google-analytics",
     "If this switch is on, then Google Analytics is enabled",
     safeState = Off,
@@ -25,7 +25,7 @@ trait MonitoringSwitches {
   )
 
   val ScrollDepthSwitch = Switch(
-    "Monitoring",
+    SwitchGroup.Monitoring,
     "scroll-depth",
     "Enables tracking and measurement of scroll depth",
     safeState = Off,
@@ -34,7 +34,7 @@ trait MonitoringSwitches {
   )
 
   val CssLogging = Switch(
-    "Monitoring",
+    SwitchGroup.Monitoring,
     "css-logging",
     "If this is on, then a subset of clients will post css selector information for diagnostics.",
     safeState = Off,
@@ -43,7 +43,7 @@ trait MonitoringSwitches {
   )
 
   val CspReporting = Switch(
-    "Monitoring",
+    SwitchGroup.Monitoring,
     "csp-reporting",
     "Enables logging of CSP violations",
     safeState = Off,
@@ -52,7 +52,7 @@ trait MonitoringSwitches {
   )
 
   val ThirdPartyEmbedTracking = Switch(
-    "Monitoring",
+    SwitchGroup.Monitoring,
     "third-party-embed-tracking",
     "Enables tracking on our off-site third party embedded content. Such as: videos on embed.theguardian.com.",
     safeState = Off,
@@ -61,7 +61,7 @@ trait MonitoringSwitches {
   )
 
   val LogstashLogging = Switch(
-    "Monitoring",
+    SwitchGroup.Monitoring,
     "logstash-logging",
     "Enables sending logs to Logstash",
     safeState = Off,
