@@ -1,8 +1,10 @@
-@(player: model.VideoPlayer, enhance: Boolean, showEndSlate: Boolean = true, amp: Boolean = false, showPoster: Boolean = true, showOverlay: Boolean = false, seriesTag: Option[model.Tag] = None)
+@(player: model.VideoPlayer, enhance: Boolean, showEndSlate: Boolean = true, amp: Boolean = false, showPoster: Boolean = true, showOverlay: Boolean = false, seriesTag: Option[model.Tag] = None, pressedContent: Option[model.pressed.PressedContent] = None)(implicit requestHeader: RequestHeader)
 
 @import conf.Static
 @import views.support.RenderClasses
 @import views.support.VideoEncodingUrlCleaner
+@import views.html.fragments.items.elements.facia_cards.title
+@import layout.FaciaCardHeader
 
 <div class="gu-media-wrapper gu-media-wrapper--video">
     @if(amp) {
@@ -74,9 +76,18 @@
                         @series.name
                     </div>
                 }
-                <h1 class="video-overlay__headline">
-                    @player.title
-                </h1>
+                <div class="video-overlay__headline">
+                    @if(pressedContent){
+                        @pressedContent.map { item =>
+                            @title(FaciaCardHeader.fromTrail(item, None), 0, 0, withLink = false)
+                            @if(item.properties.showByline) {
+                                <div class="fc-item__byline">@item.properties.byline</div>
+                            }
+                        }
+                    } else {
+                        <h1 class="video-overlay__title">@player.title</h1>
+                    }
+                </div>
                 <span class="video-overlay__duration">
                     @player.video.videos.formattedDuration
                 </span>

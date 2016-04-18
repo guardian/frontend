@@ -5,7 +5,7 @@
 @import views.support.{ImgSrc, Video700}
 @import layout.{ColumnAndCards, ContentCard, FaciaCardAndIndex, FaciaCardHeader}
 @import views.html.fragments.items.facia_cards.item
-@import views.html.fragments.items.elements.facia_cards.{itemImage, title}
+@import views.html.fragments.items.elements.facia_cards.itemImage
 @import views.html.fragments.media.video
 
 <div class="fc-container__inner">
@@ -31,15 +31,7 @@
         @containerDefinition.collectionEssentials.items.zipWithIndex.map { case (item, index) =>
             @if(item.header.isVideo) {
                 <li class="video-playlist__item video-playlist__item--@index">
-                    @item.properties.maybeContent.map { content => 
-                        <div class="video-playlist__content">
-                            <div class="video-playlist__headline">
-                                @title(FaciaCardHeader.fromTrail(item, None), 0, 0, withLink = false)
-                                @if(item.properties.showByline) {
-                                    <div class="fc-item__byline">@item.properties.byline</div>
-                                }
-                            </div>
-                        </div>
+                    @item.properties.maybeContent.map { content =>
                         @defining(VideoPlayer(
                             content.elements.mainVideo.get,
                             Video640,
@@ -51,7 +43,7 @@
                         )) { player =>
                             <div class="fc-item__media-wrapper u-faux-block-link__promote media__container--hidden js-video-player">
                                 <div class="fc-item__video-container">
-                                    @video(player, false, false)
+                                    @video(player, false, false, showOverlay = true, pressedContent = Option(item))
                                 </div>
                             </div>
                             <div class="fc-item__video-fallback media__placeholder--active js-video-placeholder gu-media__fallback">
@@ -59,7 +51,6 @@
                                 <div class="fc-item__media-wrapper">
                                     <div class="fc-item__image-container u-responsive-ratio inlined-image">
                                     @InlineImage.fromFaciaContent(item).map { fallbackImage =>
-                                        @fallbackImage.imageMedia
                                         <img src="@Video700.bestFor(fallbackImage.imageMedia)" />
                                     }
                                     </div>
