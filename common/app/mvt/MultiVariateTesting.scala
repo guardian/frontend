@@ -2,7 +2,7 @@ package mvt
 
 import MultiVariateTesting._
 import common.InternationalEditionVariant
-import conf.switches.Switch
+import conf.switches.{SwitchGroup, Switch}
 import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
 import views.support.CamelCase
@@ -107,7 +107,7 @@ case class TestDefinition (
   sellByDate: LocalDate
 ) {
   val switch: Switch = Switch(
-    "Server-side A/B Tests",
+    SwitchGroup.ServerSideABTests,
     name,
     description,
     conf.switches.Off,

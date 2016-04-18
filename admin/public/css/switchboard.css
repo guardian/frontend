@@ -17,6 +17,10 @@ html {
     margin: 20px;
 }
 
+.sub-heading {
+    font-style: italic;
+}
+
 input[type="text"] {
     background-color: #DFF0D8;
 }
