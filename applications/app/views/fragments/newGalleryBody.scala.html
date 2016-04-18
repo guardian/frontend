@@ -33,7 +33,7 @@ TODO:
             @fragments.guBand()
         }
 
-        @fragments.immersiveGalleryHeadTonal(gallery, gallery.commercial.isSponsored(Some(Edition(request))) || gallery.commercial.isFoundationSupported || gallery.commercial.isAdvertisementFeature)
+        @fragments.galleryHeader(gallery, gallery.commercial.isSponsored(Some(Edition(request))) || gallery.commercial.isFoundationSupported || gallery.commercial.isAdvertisementFeature)
 
         <div class="content__main tonal__main tonal__main--@toneClass(gallery)">
             <div class="gs-container">
