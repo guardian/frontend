@@ -3,7 +3,7 @@ package common.Logback
 import com.amazonaws.auth.AWSCredentialsProvider
 import conf.switches.Switches
 import conf.Configuration
-import play.api.{Logger => PlayLogger, Application => PlayApp, GlobalSettings, LoggerLike}
+import play.api.{Logger => PlayLogger, Application => PlayApp, GlobalSettings}
 
 
 case class LogStashConf(enabled: Boolean,
@@ -16,7 +16,7 @@ trait Logstash extends GlobalSettings {
 
   override def onStart(app: PlayApp) = {
     super.onStart(app)
-    Logstash.init(PlayLogger) // Setup Play default Logger to send logs to logstash
+    Logstash.init
   }
 }
 
@@ -40,11 +40,11 @@ object Logstash {
     )
   }
 
-  def init(logger: LoggerLike): Unit = {
+  def init: Unit = {
     if(Switches.LogstashLogging.isSwitchedOn) {
-      config.fold(logger.info("Logstash config is missing"))(LogbackConfig.initLogger(logger, _))
+      config.fold(PlayLogger.info("Logstash config is missing"))(LogbackConfig.init(_))
     } else {
-      logger.info("Logstash logging switch is Off")
+      PlayLogger.info("Logstash logging switch is Off")
     }
   }
 }
