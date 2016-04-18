@@ -20,10 +20,10 @@ sealed trait FeedParser[+T] extends ExecutionContexts {
 object FeedParser {
 
   private val jobs: Option[FeedParser[Job]] = {
-    Configuration.commercial.jobsUrlTemplate map { template =>
+    Configuration.commercial.jobsStaticUrl map { url =>
       new FeedParser[Job] {
 
-        val feedMetaData = JobsFeedMetaData(template)
+        val feedMetaData = JobsFeedMetaData(url)
 
         def parse(feedContent: => Option[String]) = JobsAgent.refresh(feedMetaData, feedContent)
       }
