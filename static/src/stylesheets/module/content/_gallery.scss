@@ -246,7 +246,6 @@
     }
 }
 
-
 // New gallery stuff
 
 // TODO: put in pasteup
@@ -259,7 +258,6 @@ $multimedia-support-5: #161616;
     right: 0;
     left: 0;
 }
-
 
 // TODO: When the time comes, remove `.new-gallery` class completely and remove old gallery styling
 .new-gallery {
@@ -276,37 +274,51 @@ $multimedia-support-5: #161616;
     }
 
     @include mq(tablet) {
-        .content__dateline, .content__labels, .byline, .content__meta-container, .meta__break, .content__headline, .content__standfirst {
+        .content__dateline,
+        .content__labels,
+        .byline,
+        .content__meta-container,
+        .meta__break,
+        .content__headline,
+        .content__standfirst {
             margin-left: gs-span(3);
             margin-right: gs-span(1);
             max-width: gs-span(8);
         }
+
         .byline, .content__dateline {
             border: 0;
         }
+
         .content__standfirst {
             padding-bottom: 0;
             padding-top: 0;
+
             &:before {
                 content: none;
             }
         }
     }
 
-
     // TODO: Replace all media tones instead of overwriting the defaults
     &.tonal--tone-media {
+
         // Overwriting media tone header so that you can see the image instead
         .tonal__header {
             background-color: rgba(0, 0, 0, 0);
         }
+
         .meta__numbers {
             color: $neutral-3;
         }
-        .content__dateline, .sharecount__heading {
+
+        .content__dateline,
+        .sharecount__heading {
             color: $neutral-2;
         }
-        .byline a, .sharecount__value {
+
+        .byline a,
+        .sharecount__value {
             color: $neutral-3;
         }
     }
@@ -369,7 +381,8 @@ $multimedia-support-5: #161616;
         margin-left: 1rem;
     }
 
-    .content__series-label, .content__section-label {
+    .content__series-label,
+    .content__section-label {
         display: inline-block;
     }
 
@@ -382,7 +395,10 @@ $multimedia-support-5: #161616;
 
     .block-share--gallery {
         position: relative;
-        .block-share__item--facebook, .block-share__item--twitter, .block-share__item--pinterest {
+
+        .block-share__item--facebook,
+        .block-share__item--twitter,
+        .block-share__item--pinterest {
             background-color: rgba(0, 0, 0, 0);
             border: 1px solid $neutral-2;
 
@@ -425,6 +441,7 @@ $multimedia-support-5: #161616;
             margin-left: -$gs-gutter;
             margin-right: -$gs-gutter;
         }
+
         @include mq($until: mobileLandscape) {
             margin-left: -$gs-gutter / 2;
             margin-right: -$gs-gutter / 2;
@@ -512,6 +529,7 @@ $multimedia-support-5: #161616;
 
     .gallery__img-container {
         background-color: rgba(0, 0, 0, 0);
+
         @include mq(tablet) {
             border-left: 1px dotted #484848;
             padding-left: $gs-gutter / 2;
@@ -520,7 +538,8 @@ $multimedia-support-5: #161616;
     }
 
     // landscape gallery images now are wider than they were before.
-    .gallery__img-container--landscape, .gallery__img--landscape {
+    .gallery__img-container--landscape,
+    .gallery__img--landscape {
         width: 100%;
         height: auto;
     }
@@ -544,7 +563,6 @@ $multimedia-support-5: #161616;
         .content__head--mobile {
             position: relative;
             background-position: center center;
-            -webkit-background-size: cover;
             background-size: cover;
             display: block;
         }
