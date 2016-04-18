@@ -27,7 +27,7 @@
         transition: all 1s ease-in-out;
         visibility: hidden;
         
-        &.isPlaying {
+        &.is-faded {
             visibility: visible;
             opacity: 1;
             transition: all 1s ease-in-out;

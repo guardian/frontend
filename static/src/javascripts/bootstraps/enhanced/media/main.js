@@ -338,6 +338,7 @@ define([
 
     function initEndSlate(player, endSlatePath) {
         var fader = $('.video__fader');
+        var faderTimeout;
         var endSlate = new Component(),
             endState = 'vjs-has-ended';
 
@@ -350,14 +351,21 @@ define([
             });
         });
         player.on('playing', function () {
-            fader.addClass('isPlaying');
+            fader.addClass('is-faded');
             bonzo(player.el()).removeClass(endState);
+
+            bean.on(document.body, 'mousemove', function() {
+                fader.removeClass('is-faded');
+                clearTimeout(faderTimeout);
+                faderTimeout = setTimeout(function() {
+                    fader.addClass('is-faded');
+                }, 1000);
+            });
         });
 
         player.on('pause', function(){
-            fader.removeClass('isPlaying');
+            fader.removeClass('is-faded');
         });
-
     }
 
     function initMoreInSection() {
