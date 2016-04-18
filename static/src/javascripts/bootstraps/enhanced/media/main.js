@@ -349,7 +349,12 @@ define([
             });
         });
         player.on('playing', function () {
+            $('.video__fader').addClass('isPlaying').css('opacity', '1');
             bonzo(player.el()).removeClass(endState);
+        });
+        
+        player.on('pause', function(){
+           $('.video__fader').removeClass('isPlaying').css('opacity', '0'); 
         });
     }
 

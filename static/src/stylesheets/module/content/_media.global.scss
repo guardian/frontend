@@ -15,8 +15,26 @@
         }
     }
 
+    .video__fader {
+        position: fixed;
+        z-index: 9999;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, .8);
+        opacity: 0;
+        transition: opacity .5s ease-in-out;
+        display: none;
+        
+        &.isPlaying{
+            display: block;
+        }
+    }
+
     .player {
         margin-bottom: $gs-baseline/2;
+        z-index: 99999;
     }
 
     .gu-media-wrapper {
