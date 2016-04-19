@@ -338,6 +338,7 @@ define([
 
     function initEndSlate(player, endSlatePath) {
         var fader = $('.video__fader');
+        var videoCheck = false;
         var faderTimeout;
         var endSlate = new Component(),
             endState = 'vjs-has-ended';
@@ -351,19 +352,34 @@ define([
             });
         });
         player.on('playing', function () {
+            videoCheck = true;
             fader.addClass('is-faded');
             bonzo(player.el()).removeClass(endState);
-
-            bean.on(document.body, 'mousemove', function() {
-                fader.removeClass('is-faded');
-                clearTimeout(faderTimeout);
-                faderTimeout = setTimeout(function() {
-                    fader.addClass('is-faded');
-                }, 1000);
-            });
+                bean.on(document.body, 'mousemove', function() {
+                    fader.removeClass('is-faded');
+                    if(videoCheck === false){
+                        console.log('video is paused');
+                    }else{
+                        console.log('video is playing');
+                        clearTimeout(faderTimeout);
+                        faderTimeout = setTimeout(function() {
+                        fader.addClass('is-faded');
+                        }, 3000);
+                    }
+                });
         });
-
+        bean.on(window, 'scroll', function (){
+           var related = $('#more-media-in-section').offset().top;
+           var scroll = $(window).scrollTop();
+           var position = Math.floor(related -scroll);
+           if (position <= 0){
+               fader.removeClass('is-faded');
+           }
+        });
+        //add in on video stop remove class
         player.on('pause', function(){
+            videoCheck = false;
+            clearTimeout(faderTimeout);
             fader.removeClass('is-faded');
         });
     }
