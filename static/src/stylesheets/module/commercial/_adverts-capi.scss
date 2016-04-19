@@ -127,4 +127,12 @@
     .advert__image-container {
         height: auto;
     }
+
+    .has-no-flex &:not(.advert--small):not(.advert--landscape) {
+        padding-top: 0;
+
+        > :first-child {
+            padding-top: 66%;
+        }
+    }
 }
