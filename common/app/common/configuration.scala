@@ -502,6 +502,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val stream = configuration.getStringProperty("logstash.stream.name")
     lazy val streamRegion = configuration.getStringProperty("logstash.stream.region")
   }
+
+  object Kibana {
+    lazy val url = configuration.getStringProperty("kibana.url")
+  }
 }
 
 object ManifestData {
