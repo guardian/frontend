@@ -49,6 +49,8 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
 
 .notifications__button {
 
+     position: relative;
+
     .inline-icon {
         svg {
             width: 1.143em;
