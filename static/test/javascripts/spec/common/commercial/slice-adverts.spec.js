@@ -45,6 +45,9 @@ define([
                 config.tests = {
                     cmTopBannerPosition: false
                 };
+                config.switches = {
+                    fabricAdverts: false
+                };
 
                 detect.getBreakpoint = function () {
                     return 'desktop';
@@ -194,6 +197,24 @@ define([
                 expect(qwery('.fc-container-fifth .ad-slot', $fixtureContainer).length).toBe(1);
                 done();
             });
+        });
+
+        it('can add a fabric advert in lieu of the top slot on mobile fronts', function (done) {
+            config.page.pageId = 'uk';
+            config.switches.fabricAdverts = true;
+            detect.getBreakpoint = function () {
+                return 'mobile';
+            };
+
+            sliceAdverts.init();
+
+            fastdom.defer(function () {
+                var firstContainerAd = qwery('.fc-container-first .ad-slot', $fixtureContainer);
+                var mobileAdSizes = bonzo(firstContainerAd).data('mobile');
+                var fabricSizeMapping = '88,71';
+                expect(mobileAdSizes.indexOf(fabricSizeMapping)).not.toBe(-1);
+                done();
+            })
         });
 
         //TODO: get data if we need to reintroduce this again
