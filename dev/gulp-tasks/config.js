@@ -6,7 +6,7 @@ export const DIRECTORIES = {
     hash: `${root}/static/hash`,
     public: `${root}/static/public`,
     testConf: `${root}/static/test/javascripts/conf`,
-    webfonts: `${root}/static/src/stylesheets/components/guss-webfonts/webfonts`
+    webfonts: `${root}/static/src/stylesheets/pasteup/fonts/webfonts`
 };
 
 export const PRESETS = {

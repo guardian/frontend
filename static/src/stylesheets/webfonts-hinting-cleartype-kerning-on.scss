@@ -1,7 +1,7 @@
 $guss-webfonts-base-url: '//pasteup.guim.co.uk/fonts/';
 $guss-webfonts-hinting: 'cleartype';
 
-@import './components/guss-webfonts/src/_webfonts.scss';
+@import './pasteup/fonts/src/_webfonts.scss';
 
 @include guss-webfonts(
     (

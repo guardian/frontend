@@ -58,7 +58,7 @@ $guss-webfonts-charset: 'original';
  * Hinting
  *
  * - cleartype: larger file, better rendering in Windows
- * - auto: even larger file, better rendering in Windows in Chrome with 
+ * - auto: even larger file, better rendering in Windows in Chrome with
  *   font-smoothing disabled (the default in XP pre-servicepack 1)
  * - off: smaller files, render well on HiDPI displays
  */
@@ -80,7 +80,7 @@ $guss-webfonts-kerning: 'on';
 $guss-webfonts-version: '0.1.0';
 
 
-@import 'bower_components/guss-webfonts/src/_webfonts';
+@import 'bower_pasteup/fonts/src/_webfonts';
 ```
 
 #### 2. Output @font-face rules
