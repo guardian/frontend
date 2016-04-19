@@ -27,7 +27,26 @@
         </div>
         @MainCleaner(article, article.fields.main, false)
     } else {
-        @fragments.immersiveHeaderBackgroundStyling(article.elements.mainPicture.head)
+        <style>
+            @article.elements.mainPicture.map { picture =>
+                .content__head--mobile {
+                    background-image: url('@Html(ImgSrc.findNearestSrc(picture.images, Profile(width = Some(1000))).getOrElse(""))');
+                }
+                @@media (min-width: @{layout.Phablet.minWidth}px) {
+                    .content__head--mobile {
+                        background-image: url('@Html(ImgSrc.findNearestSrc(picture.images, Profile(width = Some(1300))).getOrElse(""))');
+                    }
+                }
+                .content__head--desktop {
+                    background-image: url('@Html(ImgSrc.findNearestSrc(picture.images, Profile(width = Some(1300))).getOrElse(""))');
+                }
+                @@media (min-width: @{layout.Wide.minWidth}px) {
+                    .content__head--desktop {
+                        background-image: url('@Html(ImgSrc.findNearestSrc(picture.images, Profile(width = Some(2200))).getOrElse(""))');
+                    }
+                }
+            }
+        </style>
     }
 
     <div class="content__header">

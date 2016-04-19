@@ -555,18 +555,18 @@ $multimedia-support-5: #161616;
         height: auto;
     }
 
+    .content__header--background-image {
+        height: 100vh;
+        position: relative;
+        background-position: center center;
+        background-size: cover;
+        display: block;
+    }
+
     // immersive Overwrites
     .content__head--immersive.is-fixed-height {
         .content__header {
             position: relative;
-        }
-
-        .content__head--mobile {
-            height: 100vh;
-            position: relative;
-            background-position: center center;
-            background-size: cover;
-            display: block;
         }
     }
 }
