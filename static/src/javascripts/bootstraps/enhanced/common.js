@@ -16,7 +16,6 @@ define([
     'common/utils/storage',
     'common/modules/analytics/foresee-survey',
     'common/modules/analytics/media-listener',
-    'common/modules/analytics/omniture',
     'common/modules/analytics/register',
     'common/modules/analytics/scrollDepth',
     'common/modules/analytics/css-logging',
@@ -71,7 +70,6 @@ define([
     storage,
     Foresee,
     mediaListener,
-    omniture,
     register,
     ScrollDepth,
     logCss,
@@ -182,8 +180,6 @@ define([
             },
 
             loadAnalytics: function () {
-                omniture.go();
-
                 if (config.switches.ophan) {
                     require(['ophan/ng'], function (ophan) {
 

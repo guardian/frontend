@@ -95,12 +95,6 @@ define([
             expect(s.events).toBe('event37');
         });
 
-        it('should log a page view event', function () {
-            omniture.go();
-
-            expect(s.tl).toHaveBeenCalledOnce();
-        });
-
 
         it('should log a clickstream event', function () {
             var clickSpec = {
