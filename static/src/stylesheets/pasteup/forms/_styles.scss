@@ -1,65 +1,9 @@
-@import '_forms.config';
-
-/*doc
----
-title: Forms
-name: forms
-category: Common
----
-
-```html_example
-<form class="form">
-    <fieldset class="fieldset">
-        <div class="fieldset__heading">
-            <h2 class="form__heading">
-                Form Heading
-            </h2>
-            <div class="form__note">
-                Form Note. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat, ratione!
-            </div>
-        </div>
-        <div class="fieldset__fields">
-            <ul>
-                <li class="form-field">
-                    <label class="label" for="field-1">Label</label>
-                    <input class="text-input" name="field-1" />
-                </li>
-                <li class="form-field">
-                    <label class="label" for="field-2">Another label</label>
-                    <input class="text-input" name="field-2" />
-                </li>
-                <li class="form-field">
-                    <div class="form-field__note">
-                        <a href="#">Forgotten your password?</a>
-                    </div>
-                    <button type="submit" class="submit-input">Submit</button>
-                    <label class="check-label check-label--helper">
-                        <input type="checkbox" />
-                        Remember me
-                    </label>
-                </li>
-            </ul>
-        </div>
-    </fieldset>
-</form>
-```
-*/
-
-/**
- * Fix a bug Internet Explorer 8 where text in password fields
- * would become invisible when `font-family` references a webfont.
- *
- * @group forms
- */
+// Fix a bug Internet Explorer 8 where text in password fields		
+// would become invisible when `font-family` references a webfont.
 [type=password] {
     font-family: sans-serif !important;
 }
 
-/**
- * Default form styles
- *
- * @group forms
- */
 .form {
     margin-top: $gs-baseline*2;
     margin-bottom: $gs-baseline*2;
@@ -73,14 +17,14 @@ category: Common
 
 .form__note,
 .form-field__note {
-    font-family: $pasteup-forms-fields-font-family;
+    font-family: $f-sans-serif-text;
     font-size: 14px;
     margin-bottom: 8px;
 }
 
 .fieldset {
     border: 0;
-    border-top: $pasteup-forms-fieldset-border-top;
+    border-top: 1px solid $neutral-7;
     display: table;
     padding: (($gs-baseline/3)*4 - 1) 0 ($gs-baseline*2);
     margin: 0;
@@ -129,37 +73,37 @@ category: Common
 
 .form-field--error {
     .label {
-        color: $pasteup-forms-error-colour;
+        color: $error;
     }
 
     .text-input,
     .text-input:focus {
-        border-color: $pasteup-forms-error-field-border-colour;
+        border-color: $error;
     }
 }
 
 .form__error {
     @include fs-textSans(2);
-    background-color: $pasteup-forms-error-background;
-    border-bottom: 1px solid $pasteup-forms-error-border-colour;
-    border-top: 1px solid $pasteup-forms-error-border-colour;
-    color: $pasteup-forms-error-colour;
+    background-color: lighten($error, 55%);
+    border-bottom: 1px solid lighten($error, 35%);
+    border-top: 1px solid lighten($error, 35%);
+    color: $error;
     margin-top: 6px;
     padding: 7px ($gs-baseline/3)*2;
 }
 
 .form__success {
     @include fs-textSans(2);
-    background-color: $pasteup-forms-success-background;
-    border-bottom: 1px solid $pasteup-forms-success-border-colour;
-    border-top: 1px solid $pasteup-forms-success-border-colour;
-    color: $pasteup-forms-success-colour;
+    background-color: lighten($success, 70%);
+    border-bottom: 1px solid lighten($success, 35%);
+    border-top: 1px solid lighten($success, 35%);
+    color: $success;
     margin-top: $gs-baseline/2;
     padding: 7px ($gs-baseline/3)*2;
 }
 
 .form-field__error {
-    color: $pasteup-forms-error-colour;
+    color: $error;
     margin-top: $gs-baseline/2;
 }
 
@@ -210,12 +154,12 @@ category: Common
 
 .text-input,
 .textarea {
-    border: 1px solid $pasteup-forms-fields-border-colour;
+    border: 1px solid $neutral-4;
     box-shadow: none;
     box-sizing: border-box;
-    color: $pasteup-forms-fields-colour;
+    color: $neutral-1;
     display: inline-block;
-    font-family: $pasteup-forms-fields-font-family;
+    font-family: $f-sans-serif-text;
     padding: 8px 8px 7px;
     font-size: 16px;
     line-height: 1.4;
@@ -225,7 +169,7 @@ category: Common
     -webkit-appearance: none;
 
     &:focus {
-        border-color: $pasteup-forms-fields-border-colour-focus;
+        border-color: $neutral-2;
     }
 
     @include mq(tablet) {
@@ -251,7 +195,7 @@ category: Common
 }
 
 .submit-input, .submit-input--behaviour {
-    background: $pasteup-forms-submit-background;
+    background: $news-main-1;
     border: 0 none;
     color: #ffffff;
     cursor: pointer;
@@ -264,11 +208,11 @@ category: Common
 
     &:hover,
     &:focus {
-        background: $pasteup-forms-submit-background-focus;
+        background: darken($news-main-1, 5%);
     }
 
     &:active {
-        background: $pasteup-forms-submit-background-active;
+        background: $neutral-1;
     }
 }
 
@@ -277,13 +221,13 @@ category: Common
 }
 
 .submit-input[disabled] {
-    background: $pasteup-forms-submit-background-disabled;
+    background: $neutral-5;
 }
 
 .check-label,
 .radio-label {
     display: block;
-    font-family: $pasteup-forms-fields-font-family;
+    font-family: $f-sans-serif-text;
     font-size: 14px;
     margin-bottom: $gs-baseline/3;
     padding-left: $gs-gutter;
@@ -302,4 +246,3 @@ category: Common
     margin-top: 2px;
     width: 13px;
 }
-
