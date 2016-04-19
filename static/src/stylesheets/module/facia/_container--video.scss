@@ -26,10 +26,6 @@ $video-width-desktop: 700px;
         padding-bottom: 56.3%;
     }
 
-    .media__container--active {
-        z-index: 5;
-    }
-
     .gu-media-wrapper .vjs-paused.vjs-has-started .vjs-control-bar {
         bottom: -$gs-baseline * 5;
     }
