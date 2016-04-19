@@ -544,16 +544,6 @@ $multimedia-support-5: #161616;
         height: auto;
     }
 
-    &.content--immersive {
-        .content__main {
-            padding-top: 13.5rem;
-
-            @include mq(mobileLandscape) {
-                padding-top: 11.5rem;
-            }
-        }
-    }
-
     // immersive Overwrites
     .content__head--immersive.is-fixed-height {
         .content__header {
@@ -561,6 +551,7 @@ $multimedia-support-5: #161616;
         }
 
         .content__head--mobile {
+            height: 100vh;
             position: relative;
             background-position: center center;
             background-size: cover;

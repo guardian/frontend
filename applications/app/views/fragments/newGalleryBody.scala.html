@@ -1,23 +1,9 @@
 @(gallery: model.Gallery, related: model.RelatedContent, index: Int)(implicit request: RequestHeader)
+
 @import common.{Edition, LinkTo}
 @import layout.ContentWidths.GalleryMedia
 @import views.support.TrailCssClasses.toneClass
 @import views.support.{ImgSrc, RenderClasses}
-
-
-@*
-
-TODO:
-* NO JANK, Padding-bottom hack for gallery images
-* Check on other device
-* Fastly Change persistent cookie for optin
-* Fix 100vh jumping on mobile
-* MPU slot styling
-
-*@
-
-
-
 
 <div class="l-side-margins l-side-margins--media l-side-margins--new-gallery">
 
