@@ -64,11 +64,19 @@ define([
             });
             fastdom.write(function () {
                 console.log("++ Write: " + src );
-                $('.js-notification-link').append(src);
-                console.log("++ Written it");
+                var notificationLink = $('.js-notification-link');
+                notificationLink.append(src);
+                console.log("++ Written it!");
                 //bean.one(document.body, 'click', '.js-notifications-subscribe-link', modules.subscribeHandler );
                 //bean.one(document.body, 'click', '.js-notifications__item__close', modules.closeDisplayMessage);
                 console.log("++ Handled");
+                bean.on(notificationLink[0], 'click', '.js-notifications__item__close', function(){
+                    console.log("Close-notifice !");
+                    fastdom.write(function() {
+                       console.log("++ Remove explainer");
+                       $('.js-notifications-explainer').remove();
+                    });
+                })
             });
         },
 

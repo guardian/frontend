@@ -138,6 +138,7 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
     }
 
 }
+/*
 
 .notifications-explainer::after {
     content: '';
@@ -151,8 +152,9 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     border-bottom: 10px solid $live-default;
-    //top: $popup-top - $popup-anchor-arrow-size;
+    top: $popup-top - $popup-anchor-arrow-size;
 }
+*/
 
 
 .notifications-explainer__content {
@@ -174,9 +176,9 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
 }
 
 
+@include fs-textSans(3);
+margin-top: $gs-baseline /2;
 .notifications-explainer__header-blurb {
-    @include fs-textSans(3);
-    margin-top: $gs-baseline /2;
 }
 
 .notifications-explainer__headline {
