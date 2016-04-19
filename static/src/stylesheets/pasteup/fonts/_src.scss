@@ -1,17 +1,7 @@
-/**
- * Output a @font-face declaration at root level.
- *
- * @param {String} $family - List to search in
- * @param {String} $file - The filename
- * @param {String} $base-path - Directory where the font is stored
- * @param {Number} $weight (400) - CSS font-weight
- * @param {String} $style (normal) - CSS font-style
- * @param {String} $url ($guss-webfonts-base-url) - URL
- *
- * @requires {variable} guss-webfonts-base-url
- *
- * @group webfonts
- */
+@import '_webfonts.config';
+@import '_webfonts.helpers';
+
+
 @mixin guss-at-font-face(
     $family,
     $filename,
