@@ -12,8 +12,10 @@ class SwitchesTest extends FlatSpec with Matchers with AppendedClues {
     whenReady(Switches.eventuallyAll)(_ foreach { switch => test(switch) withClue s"(switch: '${switch.name}')" })
   }
 
+  private val testSwitchGroup = new SwitchGroup("category")
+
   def testSwitch = Switch(
-    "category",
+    testSwitchGroup,
     "test-switch",
     "exciting switch",
     safeState = Off,
@@ -22,7 +24,7 @@ class SwitchesTest extends FlatSpec with Matchers with AppendedClues {
   )
 
   def foreverSwitch = Switch(
-    "category",
+    testSwitchGroup,
     "forever-switch",
     "exciting switch",
     safeState = Off,
