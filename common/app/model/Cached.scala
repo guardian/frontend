@@ -77,9 +77,9 @@ object Cached extends implicits.Dates {
     val staleWhileRevalidateSeconds = math.max(maxAge / 10, 1)
     val cacheControl = s"max-age=$maxAge, stale-while-revalidate=$staleWhileRevalidateSeconds, stale-if-error=$tenDaysInSeconds"
     val etag = maybeHash.map{ hashInt: Long =>
-      hashInt.toString
+      s"hash${hashInt.toString}"
     }.getOrElse(
-      s"johnFakeHash${scala.util.Random.nextInt}${scala.util.Random.nextInt}" // just to see if they come back in
+      s"johnRandom${scala.util.Random.nextInt}${scala.util.Random.nextInt}" // just to see if they come back in
     )
     result.withHeaders(
       "Surrogate-Control" -> cacheControl,
