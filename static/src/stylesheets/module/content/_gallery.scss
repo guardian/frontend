@@ -279,6 +279,7 @@ $multimedia-support-5: #161616;
         .byline,
         .content__meta-container,
         .meta__break,
+        .meta__save-for-later,
         .content__headline,
         .content__standfirst {
             margin-left: gs-span(3);
@@ -298,6 +299,12 @@ $multimedia-support-5: #161616;
                 content: none;
             }
         }
+    }
+
+    // overriding defaults
+    .meta__save-for-later {
+        position: relative;
+        left: 0;
     }
 
     // TODO: Replace all media tones instead of overwriting the defaults
@@ -320,6 +327,10 @@ $multimedia-support-5: #161616;
         .byline a,
         .sharecount__value {
             color: $neutral-3;
+        }
+
+        .save-for-later__button--save .inline-icon {
+            background-color: $multimedia-support-5;
         }
     }
 

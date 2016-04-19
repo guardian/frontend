@@ -54,6 +54,10 @@
         <div class="gs-container">
             <span class="meta__break"></span>
 
+            @if(!item.content.hasTonalHeaderByline) {
+                @fragments.meta.byline(item.trail.byline, item.tags)
+            }
+
             @if(item.content.tags.contributors.length == 1) {
                 @if(item.content.hasTonalHeaderByline && (item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty) || item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty))) { <p class="meta__contact-header hide-until-leftcol">Contact author</p> }
                 @fragments.meta.contactAuthor(item.tags)
@@ -62,6 +66,10 @@
             @if(!item.trail.shouldHidePublicationDate) {
                 @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.tags.isLiveBlog, item.fields.isLive)
             }
-            </div>
+
+            <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
+
+        </div>
+
     </div>
 </header>
