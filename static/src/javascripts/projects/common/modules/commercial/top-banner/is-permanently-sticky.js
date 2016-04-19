@@ -8,4 +8,4 @@ define([
             return /(^|,)personal-investments(\/|$|,)/.test(config.page.keywordIds) && now < endDate;
         }
     ];
-})
+});
