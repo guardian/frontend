@@ -174,8 +174,8 @@ try {
 
         s.prop31    = getUserFromCookie() ? 'registered user' : 'guest user';
         s.eVar31    = getUserFromCookie() ? 'registered user' : 'guest user';
-        
-        s.prop40    = detect.adblockInUse() || detect.getFirefoxAdblockPlusInstalled();
+
+        s.prop40    = window.guardian.adBlockers.generic || window.guardian.adBlockers.ffAdblockPlus;
 
 
         if (ni) {
