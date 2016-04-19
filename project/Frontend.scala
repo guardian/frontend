@@ -26,8 +26,6 @@ object Frontend extends Build with Prototypes {
       contentApiClient,
       faciaScalaClient,
       filters,
-      flexibleContentBlockToText,
-      flexibleContentBodyParser,
       googleSheetsApi,
       guardianConfiguration,
       jacksonCore,
@@ -42,9 +40,7 @@ object Frontend extends Build with Prototypes {
       romeModules,
       scalaCheck,
       scalajTime,
-      scalaTestPlus,
       scalaz,
-      shadeMemcached,
       snappyJava,
       ws,
       faciaFapiScalaClient,
@@ -53,7 +49,9 @@ object Frontend extends Build with Prototypes {
       jerseyCore,
       jerseyClient,
       cssParser,
-      w3cSac
+      w3cSac,
+      logback,
+      kinesisLogbackAppender
     )
   ).settings(
       mappings in TestAssets ~= filterAssets
@@ -92,8 +90,6 @@ object Frontend extends Build with Prototypes {
     )
   )
 
-  val image = application("image")
-
   val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       scalaUri
@@ -128,7 +124,11 @@ object Frontend extends Build with Prototypes {
     RoutesKeys.routesImport += "org.joda.time.LocalDate"
   )
 
-  val faciaPress = application("facia-press").dependsOn(commonWithTests)
+  val faciaPress = application("facia-press").dependsOn(commonWithTests).settings(
+    libraryDependencies ++= Seq(
+      awsKinesis
+    )
+  )
 
   val identity = application("identity").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
@@ -143,13 +143,19 @@ object Frontend extends Build with Prototypes {
       slf4jExt,
       exactTargetClient,
       nScalaTime,
-      dispatch
+      dispatch,
+      libPhoneNumber
     )
   )
 
   val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common)
+      .settings(libraryDependencies ++= List(shadeMemcached))
 
   val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
+
+  val adminJobs = application("admin-jobs")
+    .dependsOn(commonWithTests)
+    .aggregate(common)
 
   val dev = application("dev-build")
     .dependsOn(
@@ -164,7 +170,8 @@ object Frontend extends Build with Prototypes {
       identity,
       admin,
       commercial,
-      onward
+      onward,
+      adminJobs
     ).settings(
       RoutesKeys.routesImport += "bindables._",
       javaOptions in Runtime += "-Dconfig.file=dev-build/conf/dev-build.application.conf"
@@ -178,7 +185,8 @@ object Frontend extends Build with Prototypes {
     applications,
     sport,
     commercial,
-    onward
+    onward,
+    adminJobs
   )
 
   val preview = application("preview").dependsOn(withTests(common), standalone).settings(
@@ -197,10 +205,6 @@ object Frontend extends Build with Prototypes {
     .dependsOn(commonWithTests)
     .aggregate(common)
 
-  val adminJobs = application("admin-jobs")
-    .dependsOn(commonWithTests)
-    .aggregate(common)
-
   val main = root().aggregate(
     common,
     facia,
@@ -208,7 +212,6 @@ object Frontend extends Build with Prototypes {
     article,
     applications,
     sport,
-    image,
     discussion,
     router,
     diagnostics,

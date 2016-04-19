@@ -10,7 +10,9 @@ define([
     'common/views/svgs',
     'text!common/views/commercial/creatives/expandable-v2.html',
     'lodash/functions/bindAll',
-    'lodash/objects/merge'
+    'lodash/objects/merge',
+    'common/modules/commercial/creatives/add-tracking-pixel',
+    'Promise'
 ], function (
     bean,
     bonzo,
@@ -23,7 +25,9 @@ define([
     svgs,
     expandableV2Tpl,
     bindAll,
-    merge
+    merge,
+    addTrackingPixel,
+    Promise
 ) {
 
     /**
@@ -147,7 +151,7 @@ define([
                 $('.ad-exp-collapse__slide', $expandablev2).css('height', this.closedHeight);
 
                 if (this.params.trackingPixel) {
-                    this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
+                    addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
                 }
 
                 $expandablev2.appendTo(this.$adSlot);

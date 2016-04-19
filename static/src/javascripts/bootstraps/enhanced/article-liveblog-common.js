@@ -5,6 +5,7 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/utils/robust',
+    'common/modules/accessibility/helpers',
     'common/modules/article/twitter',
     'common/modules/open/cta',
     'common/modules/ui/last-modified',
@@ -16,6 +17,7 @@ define([
     config,
     mediator,
     robust,
+    accessibility,
     twitter,
     OpenCta,
     lastModified,
@@ -30,7 +32,7 @@ define([
 
             $.create('<div class="open-cta"></div>').each(function (el) {
                 openCta.fetch(el);
-                if (!config.page.isLiveBlog) { rhc.addComponent(el); }
+                if (!config.page.isLiveBlog && !config.page.isMinuteArticle) { rhc.addComponent(el); }
             });
         }
     }
@@ -48,6 +50,7 @@ define([
 
     return function () {
         robust.catchErrorsAndLogAll([
+            ['trail-a11y',       accessibility.shouldHideFlashingElements],
             ['trail-article', initOpenCta],
             ['trail-fence', initFence],
             ['trail-twitter', initTwitter],

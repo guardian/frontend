@@ -56,7 +56,10 @@ GET         /ophan/ads/render-time                                              
 
 #Development endpoints
 GET         /dev/switchboard                                                                        controllers.admin.SwitchboardController.renderSwitchboard()
+GET         /dev/switchboard-plista                                                                 controllers.admin.SwitchboardPlistaController.renderSwitchboard()
+
 POST        /dev/switchboard                                                                        controllers.admin.SwitchboardController.save()
+POST        /dev/switchboard-plista                                                                 controllers.admin.SwitchboardPlistaController.save()
 
 # Analytics
 GET         /analytics/abtests                                                                      controllers.admin.AnalyticsController.abtests()
@@ -114,9 +117,12 @@ GET         /deploys-radiator/api/deploys                                       
 GET         /deploys-radiator/api/builds/:number                                                    controllers.admin.DeploysRadiatorController.getBuild(number)
 GET         /deploys-radiator                                                                       controllers.admin.DeploysRadiatorController.renderDeploysRadiator()
 
+POST        /deploys-notify/api/builds/:number/notify                                               controllers.admin.DeploysNotifyController.notifyStep(number)
+
 # Redirects
 GET         /redirects                                                                              controllers.admin.RedirectController.redirect()
 POST        /redirect-post                                                                          controllers.admin.RedirectController.redirectPost()
+POST        /redirect-batch-post                                                                    controllers.admin.RedirectController.redirectBatchPost()
 
 # Sport troubleshooter
 GET         /troubleshoot/football                                                                  controllers.admin.SportTroubleshooterController.renderFootballTroubleshooter()

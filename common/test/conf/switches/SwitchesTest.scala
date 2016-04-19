@@ -12,18 +12,20 @@ class SwitchesTest extends FlatSpec with Matchers with AppendedClues {
     whenReady(Switches.eventuallyAll)(_ foreach { switch => test(switch) withClue s"(switch: '${switch.name}')" })
   }
 
+  private val testSwitchGroup = new SwitchGroup("category")
+
   def testSwitch = Switch(
-    "category",
-    "switch-name",
+    testSwitchGroup,
+    "test-switch",
     "exciting switch",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 1),
+    sellByDate = new LocalDate(2018, 2, 1),
     exposeClientSide = true
   )
 
   def foreverSwitch = Switch(
-    "category",
-    "switch-name",
+    testSwitchGroup,
+    "forever-switch",
     "exciting switch",
     safeState = Off,
     sellByDate = None,
@@ -31,19 +33,19 @@ class SwitchesTest extends FlatSpec with Matchers with AppendedClues {
   )
 
   "Switches" should "not be near expiry over a week in advance" in {
-    Switch.expiry(testSwitch, new LocalDate(2016, 1, 24)) should be(Switch.Expiry(Some(8), false, false))
+    Switch.expiry(testSwitch, new LocalDate(2018, 1, 24)) should be(Switch.Expiry(Some(8), false, false))
   }
 
   "Switches" should "be near expiry a week ahead of the last day" in {
-    Switch.expiry(testSwitch, new LocalDate(2016, 1, 25)) should be(Switch.Expiry(Some(7), true, false))
+    Switch.expiry(testSwitch, new LocalDate(2018, 1, 25)) should be(Switch.Expiry(Some(7), true, false))
   }
 
   "Switches" should "still be good on their sell by date" in {
-    Switch.expiry(testSwitch, new LocalDate(2016, 2, 1)) should be(Switch.Expiry(Some(0), true, false))
+    Switch.expiry(testSwitch, new LocalDate(2018, 2, 1)) should be(Switch.Expiry(Some(0), true, false))
   }
 
   they should "be bad after their sell by date" in {
-    Switch.expiry(testSwitch, new LocalDate(2016, 2, 2)) should be(Switch.Expiry(Some(-1), true, true))
+    Switch.expiry(testSwitch, new LocalDate(2018, 2, 2)) should be(Switch.Expiry(Some(-1), true, true))
   }
 
   they should "never expire if they don't have an expiry" in {

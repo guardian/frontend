@@ -90,7 +90,7 @@ trait DfpDataCacheLifecycle extends GlobalSettings with ExecutionContexts {
     jobs foreach { job =>
       Jobs.deschedule(job.name)
       Jobs.scheduleEveryNMinutes(job.name, job.interval) {
-        job.run()
+        job.run().map(_ => ())
       }
     }
 

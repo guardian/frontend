@@ -1,4 +1,4 @@
-@(env: String)
+@(env: String)(implicit request: RequestHeader)
 @import conf.Configuration.commercial.testDomain
 
 @admin_main("Commercial Tools", env, isAuthed = true) {
@@ -101,6 +101,23 @@
                 <div class="panel-body">
                     <ul>
                         <li><a href="@controllers.admin.commercial.routes.TakeoverWithEmptyMPUsController.viewList()">Takeovers with empty MPUs</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-4">
+            <h3>Resources</h3>
+            <div class="panel panel-default well--front">
+                <div class="panel-heading">Links to useful resources.</div>
+                <div class="panel-body">
+                    <ul>
+                        <li><a href="https://github.com/guardian/commercial-tools">Commercial tools repo</a></li>
+                        <li><a href="https://dfp-playground.appspot.com/59739193">DFP API playground</a></li>
                     </ul>
                 </div>
             </div>

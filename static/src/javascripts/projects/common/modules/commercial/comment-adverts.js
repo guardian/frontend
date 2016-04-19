@@ -7,9 +7,9 @@ define([
     'common/utils/fastdom-idle',
     'common/modules/identity/api',
     'common/modules/experiments/ab',
+    'common/modules/commercial/dfp/dfp-api',
+    'common/modules/commercial/commercial-features',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/commercial/dfp-api',
-    'common/modules/commercial/user-features',
     'lodash/objects/defaults'
 ], function (
     Promise,
@@ -20,9 +20,9 @@ define([
     idleFastdom,
     identityApi,
     ab,
-    createAdSlot,
     dfp,
-    userFeatures,
+    commercialFeatures,
+    createAdSlot,
     defaults
 ) {
     return function (options) {
@@ -41,15 +41,7 @@ define([
         $adSlotContainer = $(opts.adSlotContainerSelector);
         $commentMainColumn = $(opts.commentMainColumn, '.js-comments');
 
-        if (!config.switches.standardAdverts ||
-            !config.switches.viewability ||
-            !$adSlotContainer.length ||
-            !config.switches.discussion ||
-            !identityApi.isUserLoggedIn() ||
-            (config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts) || /* Sensitive pages */
-            userFeatures.isAdfree() ||
-            (config.page.isLiveBlog && detect.getBreakpoint() !== 'wide') ||
-            !config.page.commentable) {
+        if (!commercialFeatures.commentAdverts || !$adSlotContainer.length) {
             return false;
         }
 
@@ -63,7 +55,7 @@ define([
                 idleFastdom.write(function () {
                     $commentMainColumn.addClass('discussion__ad-wrapper');
 
-                    if (!config.page.isLiveBlog) {
+                    if (!config.page.isLiveBlog && !config.page.isMinuteArticle) {
                         $commentMainColumn.addClass('discussion__ad-wrapper-wider');
                     }
 

@@ -1,13 +1,11 @@
 package controllers
 
-import common.FaciaMetrics._
 import common._
 import controllers.front._
 import layout.{CollectionEssentials, FaciaContainer, Front}
 import model._
 import model.facia.PressedCollection
 import model.pressed.CollectionConfig
-import performance.MemcachedAction
 import play.api.libs.json._
 import play.api.mvc._
 import play.twirl.api.Html
@@ -25,13 +23,19 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   val frontJsonFapi: FrontJsonFapi
 
+  private def getEditionFromString(edition: String) = {
+    val editionToFilterBy = edition match {
+      case "international" => "int"
+      case _ => edition
+    }
+    Edition.all.find(_.id.toLowerCase() == editionToFilterBy).getOrElse(Edition.all.head)
+  }
+
   def applicationsRedirect(path: String)(implicit request: RequestHeader) = {
-    FaciaToApplicationRedirectMetric.increment()
     successful(InternalRedirect.internalRedirect("applications", path, request.rawQueryStringOption.map("?" + _)))
   }
 
   def rssRedirect(path: String)(implicit request: RequestHeader) = {
-    FaciaToRssRedirectMetric.increment()
     successful(InternalRedirect.internalRedirect(
       "rss_server",
       path,
@@ -40,22 +44,14 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 
   //Only used by dev-build for rending special urls such as lifeandstyle/home-and-garden
-  def renderFrontPressSpecial(path: String) = MemcachedAction { implicit request => renderFrontPressResult(path) }
+  def renderFrontPressSpecial(path: String) = Action.async { implicit request => renderFrontPressResult(path) }
 
   // Needed as aliases for reverse routing
   def renderFrontJson(id: String) = renderFront(id)
 
   def renderContainerJson(id: String) = renderContainer(id, false)
 
-  def renderSomeFrontContainers(path: String, rawNum: String, rawOffset: String, sectionNameToFilter: String, edition: String) = MemcachedAction { implicit request =>
-    def getEditionFromString(edition: String) = {
-      val editionToFilterBy = edition match {
-        case "international" => "int"
-        case _ => edition
-      }
-
-      Edition.all.find(_.id.toLowerCase() == editionToFilterBy).getOrElse(Edition.all.head)
-    }
+  def renderSomeFrontContainers(path: String, rawNum: String, rawOffset: String, sectionNameToFilter: String, edition: String) = Action.async { implicit request =>
 
     def returnContainers(num: Int, offset: Int) = getSomeCollections(Editionalise(path, getEditionFromString(edition)), num, offset, sectionNameToFilter).map { collections =>
       Cached(60) {
@@ -93,10 +89,10 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     }
   }
 
-  def renderSomeFrontContainersMf2(rawNum: String, rawOffset: String, path: String) = MemcachedAction { implicit request =>
-    def getEditionFromString(edition: String) = Edition.all.find(_.id.toLowerCase() == "int").getOrElse(Edition.all.head)
-
-    def returnContainers(num: Int, offset: Int) = getSomeCollections(Editionalise(path, getEditionFromString("international")), num, offset, "none").map { collections =>
+  def renderSomeFrontContainersMf2(count: Int, offset: Int, section: String = "", edition: String = "") = Action.async { implicit request =>
+    val e = if(edition.isEmpty) Edition(request) else getEditionFromString(edition)
+    val collectionsPath = if(section.isEmpty) e.id.toLowerCase else Editionalise(section, e)
+    getSomeCollections(collectionsPath, count, offset, "none").map { collections =>
       Cached(60) {
         JsonComponent(
           "items" -> JsArray(collections.getOrElse(List()).map(getCollection))
@@ -104,19 +100,13 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       }
     }
 
-    (rawNum, rawOffset) match {
-      case (Int(num), Int(offset)) => returnContainers(num, offset)
-      case _ => Future.successful(Cached(600) {
-        BadRequest
-      })
-    }
   }
 
   def renderContainerJsonWithFrontsLayout(id: String) = renderContainer(id, true)
 
   // Needed as aliases for reverse routing
   def renderRootFrontRss() = renderFrontRss(path = "")
-  def renderFrontRss(path: String) = MemcachedAction { implicit  request =>
+  def renderFrontRss(path: String) = Action.async { implicit  request =>
     log.info(s"Serving RSS Path: $path")
     if (shouldEditionRedirect(path))
       redirectTo(s"${Editionalise(path, Edition(request))}/rss")
@@ -127,7 +117,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 
   def rootEditionRedirect() = renderFront(path = "")
-  def renderFront(path: String) = MemcachedAction { implicit request =>
+  def renderFront(path: String) = Action.async { implicit request =>
     log.info(s"Serving Path: $path")
     if (shouldEditionRedirect(path))
       redirectTo(Editionalise(path, Edition(request)))
@@ -147,11 +137,8 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     Cached(60)(Found(LinkTo(s"/$path$params")))
   }
 
-  def renderFrontJsonLite(path: String) = MemcachedAction{ implicit request =>
-    val cacheTime = path match {
-      case p if p.startsWith("breaking-news") => 10
-      case _ => 60}
-
+  def renderFrontJsonLite(path: String) = Action.async { implicit request =>
+    val cacheTime = 60
     frontJsonFapi.get(path).map {
         case Some(pressedPage) => Cached(cacheTime)(Cors(JsonComponent(FapiFrontJsonLite.get(pressedPage))))
         case None => Cached(cacheTime)(Cors(JsonComponent(JsObject(Nil))))}
@@ -175,14 +162,14 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     futureResult
   }
 
-  def renderFrontPress(path: String) = MemcachedAction { implicit request => renderFrontPressResult(path) }
+  def renderFrontPress(path: String) = Action.async { implicit request => renderFrontPressResult(path) }
 
-  def renderContainer(id: String, preserveLayout: Boolean = false) = MemcachedAction { implicit request =>
+  def renderContainer(id: String, preserveLayout: Boolean = false) = Action.async { implicit request =>
     log.info(s"Serving collection ID: $id")
     renderContainerView(id, preserveLayout)
   }
 
-  def renderMostRelevantContainerJson(path: String) = MemcachedAction { implicit request =>
+  def renderMostRelevantContainerJson(path: String) = Action.async { implicit request =>
     log.info(s"Serving most relevant container for $path")
 
     val canonicalId = ConfigAgent.getCanonicalIdForFront(path).orElse (
@@ -227,7 +214,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     }
   }
 
-  def renderShowMore(path: String, collectionId: String) = MemcachedAction { implicit request =>
+  def renderShowMore(path: String, collectionId: String) = Action.async { implicit request =>
     frontJsonFapi.get(path).flatMap {
       case Some(pressedPage) =>
         val containers = Front.fromPressedPage(pressedPage, Edition(request)).containers
@@ -252,7 +239,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   private object JsonFront{
     def apply(faciaPage: PressedPage)(implicit request: RequestHeader) = JsonComponent(
       "html" -> views.html.fragments.frontBody(faciaPage),
-      "config" -> Json.parse(views.html.fragments.javaScriptConfig(faciaPage).body)
+      "config" -> Json.parse(templates.js.javaScriptConfig(faciaPage).body)
     )
   }
 
@@ -270,7 +257,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       })
 
   /* Google news hits this endpoint */
-  def renderCollectionRss(id: String) = MemcachedAction { implicit request =>
+  def renderCollectionRss(id: String) = Action.async { implicit request =>
     log.info(s"Serving collection ID: $id")
     getPressedCollection(id).flatMap {
       case Some(collection) =>

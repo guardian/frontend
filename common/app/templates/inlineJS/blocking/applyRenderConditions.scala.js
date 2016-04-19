@@ -70,7 +70,7 @@
         docClass += ' has-fixed';
     }
 
-    if (window.guardian.isModernBrowser) {
+    if (window.guardian.isEnhanced) {
         docClass = docClass.replace(/\bis-not-modern\b/g, 'is-modern');
     }
 
@@ -78,13 +78,6 @@
         if (window.location.hash !== '#no-kern') {docClass += ' should-kern'}
     } else {
         if (window.location.hash === '#kern') {docClass += ' should-kern'}
-    }
-
-    @if(AdFreeExperience.isSwitchedOn) {
-        var adfreeClass = @JavaScript(templates.inlineJS.blocking.js.applyAdfreeRenderCondition().body);
-        if (adfreeClass) {
-            docClass += ' ' + adfreeClass;
-        }
     }
 
     // MINIMISE DOM THRASHING…

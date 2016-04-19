@@ -1,0 +1,37 @@
+@(page: model.Page)
+@import implicits.Strings.string2encodings
+@import views.support.GoogleAnalyticsAccount
+@import conf.switches.Switches.GoogleAnalyticsSwitch
+
+@if(GoogleAnalyticsSwitch.isSwitchedOn) {
+    <script id='google_analytics'>
+        @***************************************************************************************
+        * Standard copy 'n paste Google Analytics code                                         *
+        ***************************************************************************************@
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        @***************************************************************************************
+        * Code that is customised by us                                                        *
+        ***************************************************************************************@
+        ga('create', '@GoogleAnalyticsAccount.account', 'auto', {
+            'sampleRate': @GoogleAnalyticsAccount.sampleRate
+        });
+
+        ga('set', 'forceSSL', true);
+
+        ga('send', {
+            hitType: 'pageview',
+            title: '@Html(page.metadata.webTitle.javascriptEscaped)'
+        });
+    </script>
+
+    @*
+    If at some point in the future this goes live, please somebody think of the "noscript" for Google Analytics
+    *@
+}
+
+
+

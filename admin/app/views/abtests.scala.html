@@ -1,4 +1,4 @@
-@(env: String)
+@(env: String)(implicit request: RequestHeader)
 
 @import views.support.CamelCase
 
@@ -39,7 +39,7 @@
 
     <script type="text/javascript">
         window.abSwitches = {
-            @conf.switches.Switches.all.filter(_.group == "A/B Tests").map{ s =>
+            @conf.switches.Switches.all.filter(_.group == conf.switches.SwitchGroup.ABTests).map{ s =>
                 "@CamelCase.fromHyphenated(s.name)": @s.isSwitchedOn,
             }
         };

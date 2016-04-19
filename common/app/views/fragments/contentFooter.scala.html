@@ -2,7 +2,6 @@
 @import views.support.ContentFooterContainersLayout
 
 <div class="content-footer @if(cssClass){content-footer--@cssClass}">
-
     @fragments.discussionFooter(content.content, content.trail.isCommentable, content.trail.isClosedForComments, content.content.shortUrlId)
 
     @ContentFooterContainersLayout(content.content, related, content.commercial.isAdvertisementFeature) {
@@ -22,9 +21,9 @@
     } {
         <div class="fc-container fc-container--commercial-high">@fragments.commercial.commercialComponentHigh()</div>
     } {
-        <div class="fc-container fc-container--commercial">@fragments.commercial.commercialComponent()</div>
+        <div class="fc-container fc-container--commercial js-container--commercial">@fragments.commercial.commercialComponent()</div>
     } {
-        @fragments.outbrainPlaceholder()
+        @fragments.externalContentPlaceholder()
     }
 
 </div>

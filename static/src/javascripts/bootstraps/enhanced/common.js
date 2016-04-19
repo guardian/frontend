@@ -15,13 +15,13 @@ define([
     'common/utils/robust',
     'common/utils/storage',
     'common/modules/analytics/foresee-survey',
-    'common/modules/analytics/livestats',
     'common/modules/analytics/media-listener',
     'common/modules/analytics/omniture',
     'common/modules/analytics/register',
     'common/modules/analytics/scrollDepth',
     'common/modules/analytics/css-logging',
     'common/modules/analytics/simple-metrics',
+    'common/modules/analytics/headlines-test-analytics',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/commercial/donot-use-adblock',
     'common/modules/commercial/user-features',
@@ -30,8 +30,7 @@ define([
     'common/modules/identity/autosignin',
     'common/modules/identity/cookierefresh',
     'common/modules/navigation/navigation',
-    'common/modules/navigation/sticky',
-    'common/modules/navigation/newSticky',
+    'common/modules/commercial/sticky-top-banner',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/onward/history',
@@ -54,7 +53,6 @@ define([
     'common/modules/commercial/membership-messages',
     'common/modules/email/email',
     'common/modules/email/email-article',
-    'text!common/views/international-message.html',
     'bootstraps/enhanced/identity-common',
     'lodash/collections/forEach'
 ], function (
@@ -72,13 +70,13 @@ define([
     robust,
     storage,
     Foresee,
-    liveStats,
     mediaListener,
     omniture,
     register,
     ScrollDepth,
     logCss,
     simpleMetrics,
+    HeadlinesTestAnalytics,
     userAdTargeting,
     donotUseAdblock,
     userFeatures,
@@ -87,8 +85,7 @@ define([
     AutoSignin,
     CookieRefresh,
     navigation,
-    sticky,
-    newSticky,
+    stickyAdBanner,
     Profile,
     Search,
     history,
@@ -111,7 +108,6 @@ define([
     membershipMessages,
     email,
     emailArticle,
-    internationalMessage,
     identity,
     forEach
 ) {
@@ -137,20 +133,22 @@ define([
                 navigation.init();
             },
 
-            initialiseStickyHeader: function () {
+            initialiseStickyAdBanner: function () {
                 if (config.switches.viewability
-                    && !(config.page.isProd && config.page.contentType === 'Interactive')
+                    && !(config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile')
+                    && config.page.contentType !== 'Interactive'
                     && config.page.contentType !== 'Crossword'
-                    && (!config.switches.newCommercialContent || !config.page.isAdvertisementFeature)
-                    && config.page.pageId !== 'offline-page') {
-                    if (ab.isInVariant('RemoveStickyNav', 'new')) {
-                        newSticky();
-                    } else {
-                        sticky.init();
-                    }
-                    config.page.hasStickyHeader = true;
+                    && !config.page.isImmersive
+                    && !config.page.isUsMinute
+                    && !config.page.isAdvertisementFeature
+                    && config.page.pageId !== 'offline-page'
+                    && !config.page.shouldHideAdverts
+                    && config.page.section !== 'childrens-books-site'
+                    && !config.tests.abNewHeaderVariant) {
+                    stickyAdBanner.initialise();
+                    config.page.hasStickyAdBanner = true;
                 } else {
-                    config.page.hasStickyHeader = false;
+                    config.page.hasStickyAdBanner = false;
                 }
             },
 
@@ -183,10 +181,6 @@ define([
                 donotUseAdblock.init();
             },
 
-            logLiveStats: function () {
-                liveStats.log();
-            },
-
             loadAnalytics: function () {
                 omniture.go();
 
@@ -205,7 +199,14 @@ define([
             },
 
             cleanupCookies: function () {
-                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at']);
+                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at', 'gu_adfree_user']);
+            },
+
+            cleanupLocalStorage : function () {
+                var deprecatedKeys = [
+                    'gu.subscriber'
+                ];
+                forEach(deprecatedKeys, storage.remove);
             },
 
             updateHistory: function () {
@@ -323,14 +324,6 @@ define([
                 };
             },
 
-            internationalSignposting: function () {
-                if (config.page.edition === 'INT' && config.page.pageId === 'international') {
-                    new Message('international-with-survey-new', {
-                        pinOnHide: true
-                    }).show(template(internationalMessage, {}));
-                }
-            },
-
             initPinterest: function () {
                 if (/Article|LiveBlog|Gallery|Video/.test(config.page.contentType)) {
                     pinterest();
@@ -369,6 +362,9 @@ define([
                         email.init(el);
                     });
                 });
+            },
+            headlinesTestAnalytics: function () {
+                HeadlinesTestAnalytics.init();
             }
         };
 
@@ -391,7 +387,7 @@ define([
                 ['c-tabs', modules.showTabs],
                 ['c-top-nav', modules.initialiseTopNavItems],
                 ['c-init-nav', modules.initialiseNavigation],
-                ['c-sticky-header', modules.initialiseStickyHeader],
+                ['c-sticky-ad-banner', modules.initialiseStickyAdBanner],
                 ['c-toggles', modules.showToggles],
                 ['c-dates', modules.showRelativeDates],
                 ['c-clickstream', modules.initClickstream],
@@ -404,8 +400,8 @@ define([
                 ['c-tag-links', modules.showMoreTagsLink],
                 ['c-smart-banner', smartAppBanner.init],
                 ['c-adblock', modules.showAdblockMessage],
-                ['c-log-stats', modules.logLiveStats],
                 ['c-cookies', modules.cleanupCookies],
+                ['c-localStorage', modules.cleanupLocalStorage],
                 ['c-overlay', modules.initOpenOverlayOnClick],
                 ['c-css-logging', modules.runCssLogging],
                 ['c-public-api', modules.initPublicApi],
@@ -413,19 +409,15 @@ define([
                 ['c-tech-feedback', techFeedback],
                 ['c-media-listeners', mediaListener],
                 ['c-accessibility-prefs', accessibilityPrefs],
-                ['c-international-signposting', modules.internationalSignposting],
                 ['c-pinterest', modules.initPinterest],
                 ['c-save-for-later', modules.saveForLater],
                 ['c-show-membership-messages', modules.showMembershipMessages],
                 ['c-email', modules.initEmail],
-                ['c-user-features', userFeatures.refresh]
+                ['c-user-features', userFeatures.refresh],
+                ['c-headlines-test-analytics', modules.headlinesTestAnalytics]
             ]), function (fn) {
                 fn();
             });
-
-            if (window.console && window.console.log && !config.page.isDev) {
-                window.console.log('##::::: ##: ########::::::: ###:::: ########:: ########:::: ##:::: ##: ####: ########:: ####: ##::: ##:: ######::\n##: ##: ##: ##.....::::::: ## ##::: ##.... ##: ##.....::::: ##:::: ##:. ##:: ##.... ##:. ##:: ###:: ##: ##... ##:\n##: ##: ##: ##::::::::::: ##:. ##:: ##:::: ##: ##:::::::::: ##:::: ##:: ##:: ##:::: ##:: ##:: ####: ##: ##:::..::\n##: ##: ##: ######:::::: ##:::. ##: ########:: ######:::::: #########:: ##:: ########::: ##:: ## ## ##: ##:: ####\n##: ##: ##: ##...::::::: #########: ##.. ##::: ##...::::::: ##.... ##:: ##:: ##.. ##:::: ##:: ##. ####: ##::: ##:\n##: ##: ##: ##:::::::::: ##.... ##: ##::. ##:: ##:::::::::: ##:::: ##:: ##:: ##::. ##::: ##:: ##:. ###: ##::: ##:\n ###. ###:: ########:::: ##:::: ##: ##:::. ##: ########:::: ##:::: ##: ####: ##:::. ##: ####: ##::. ##:. ######::\n\nEver thought about joining us?\nhttp://developers.theguardian.com/join-the-team.html');
-            }
         }
     };
 });

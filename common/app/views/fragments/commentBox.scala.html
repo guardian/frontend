@@ -21,14 +21,26 @@
         </div>
     </div>
 
+    <div class="d-comment-box__onboarding">
+        <h3>Welcome <span class="d-comment-box__onboarding-author"></span>, you’re about to make your first comment!</h3>
+        <p>Before you post, we’d like to thank you for joining the debate - we’re glad you’ve chosen to participate and we value your opinions and experiences.</p>
+        <p>Please keep your posts respectful and abide by the <a target="_blank" href="/community-standards">community guidelines</a> - and if you spot a comment you think doesn’t adhere to the guidelines, please use the ‘Report’ link next to it to let us know.</p>
+        <p>Please preview your comment below and click ‘post’ when you’re happy with it.</p>
+        <div class="d-comment-box__onboarding-preview-body"></div>
+        <button type="submit" class="u-button-reset button button--large button--primary submit-input--behaviour d-comment-box__onboarding-submit">Post your comment</button>
+        <button type="button" class="u-button-reset button button--large button--primary submit-input--behaviour d-comment-box__onboarding-cancel">Cancel</button>
+    </div>
+
     <div class="d-comment-box__content">
         <div class="d-comment-box__messages"></div>
         <div class="d-discussion__error d-comment-box__premod">
             @fragments.inlineSvg("status-alert", "icon")
             <span class="d-discussion__error-text">Your comments are currently being pre-moderated (<a href="/community-faqs#311" target="_blank">why?</a>)</span>
         </div>
+
+        <div class="d-comment-box__community-standards">Please keep comments respectful and abide by the <a href="/community-standards">community guidelines</a>.</div>
         <textarea name="body" class="textarea d-comment-box__body" placeholder="Join the discussion…"></textarea>
-        <button type="submit" data-link-name="post comment" class="u-button-reset button button--large button--primary submit-input d-comment-box__submit">Post your comment</button>
+        <button type="submit" data-link-name="post comment" class="u-button-reset button button--large button--primary submit-input--behaviour d-comment-box__submit">Post your comment</button>
         <span class="u-fauxlink d-comment-box__preview" role="button">Preview</span>
         <span class="u-fauxlink d-comment-box__hide-preview" role="button">Hide preview</span>
         <span class="u-fauxlink d-comment-box__cancel" role="button">Cancel</span>

@@ -33,7 +33,8 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
     "rel", // used by browsersync
     "pageSize",
     "projectName",
-    "stage"
+    "stage",
+    "amp" // used in dev to request the amp version of a specific url
   )
 
   val commercialParams = Seq(
@@ -59,8 +60,6 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
         !request.isJson &&
         !request.uri.startsWith("/oauth2callback") &&
         !request.uri.startsWith("/px.gif")  && // diagnostics box
-        !request.uri.startsWith("/ab.gif") &&
-        !request.uri.startsWith("/js.gif") &&
         !request.uri.startsWith("/tech-feedback") &&
         !request.uri.startsWith("/crosswords/search") &&
         !request.uri.startsWith("/crosswords/lookup")

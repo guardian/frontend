@@ -4,10 +4,11 @@ import sbt._
 
 object Dependencies {
   val cucumberVersion = "1.1.5"
-  val identityLibVersion = "3.49"
+  val identityLibVersion = "3.52"
   val seleniumVersion = "2.44.0"
   val slf4jVersion = "1.7.5"
-  val awsVersion = "1.10.37"
+  val awsVersion = "1.10.58"
+  val faciaVersion = "1.5.2"
 
   val akkaAgent = "com.typesafe.akka" %% "akka-agent" % "2.3.4"
   val akkaContrib = "com.typesafe.akka" %% "akka-contrib" % "2.3.5"
@@ -25,15 +26,13 @@ object Dependencies {
   val commonsHttpClient = "commons-httpclient" % "commons-httpclient" % "3.1"
   val commonsIo = "commons-io" % "commons-io" % "2.4"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.18"
-  val contentApiClient = "com.gu" %% "content-api-client" % "7.13"
+  val contentApiClient = "com.gu" %% "content-api-client" % "8.2"
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "2.8.0"
   val dispatch = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3"
   val dispatchTest = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3" % Test
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.24"
-  val faciaFapiScalaClient = "com.gu" %% "fapi-client" % "0.68"
-  val faciaScalaClient = "com.gu" %% "facia-json" % "0.68"
-  val flexibleContentBlockToText = "com.gu" %% "flexible-content-block-to-text" % "0.4"
-  val flexibleContentBodyParser = "com.gu" %% "flexible-content-body-parser" % "0.6"
+  val faciaFapiScalaClient = "com.gu" %% "fapi-client" % faciaVersion
+  val faciaScalaClient = "com.gu" %% "facia-json" % faciaVersion
   val googleSheetsApi = "com.google.gdata" % "core" % "1.47.1"
   val guardianConfiguration = "com.gu" %% "configuration" % "4.1"
   val guice = "com.google.inject" % "guice" % "3.0"
@@ -44,19 +43,20 @@ object Dependencies {
   val jacksonMapper = "org.codehaus.jackson" % "jackson-mapper-asl" % "1.9.6"
   val jodaTime = "joda-time" % "joda-time" % "2.9.1"
   val jodaConvert = "org.joda" % "joda-convert" % "1.2"
-  val jSoup = "org.jsoup" % "jsoup" % "1.7.3"
+  val jSoup = "org.jsoup" % "jsoup" % "1.8.3"
   val liftJson = "net.liftweb" %% "lift-json" % "2.6-RC2"
   val mockito = "org.mockito" % "mockito-all" % "1.9.5" % Test
   val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "1.2.0"
   val openCsv = "net.sf.opencsv" % "opencsv" % "2.3"
-  val paClient = "com.gu" %% "pa-client" % "5.0.1-NG"
+  val paClient = "com.gu" %% "pa-client" % "6.0.0"
   val playGoogleAuth = "com.gu" %% "play-googleauth" % "0.3.3"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.2.1"
   val rome = "rome" % "rome" % "1.0"
   val romeModules = "org.rometools" % "rome-modules" % "1.0"
   val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.11.5" % "test"
   val scalajTime = "org.scalaj" % "scalaj-time_2.10.2" % "0.7"
-  val scalaTest = "org.scalatest" %% "scalatest" % "2.2.5" % Test
+  val scalaTest = "org.scalatest" %% "scalatest" % "2.2.6" % Test
+  val scalaTestPlus = "org.scalatestplus" %% "play" % "1.4.0" % Test
   val scalaz = "org.scalaz" %% "scalaz-core" % "7.0.6"
   val scalaUri = "com.netaporter" % "scala-uri_2.11" % "0.4.11"
   val seeGuice = "com.tzavellas" % "sse-guice" % "0.7.1"
@@ -65,11 +65,13 @@ object Dependencies {
   val slf4jExt = "org.slf4j" % "slf4j-ext" % slf4jVersion
   val snappyJava = "org.xerial.snappy" % "snappy-java" % "1.0.5.1"
   val uaDetectorResources = "net.sf.uadetector" % "uadetector-resources" % "2013.04"
-  val scalaTestPlus = "org.scalatestplus" %% "play" % "1.4.0-M3" % "test"
   val anormModule = "com.typesafe.play" %% "anorm" % "2.4.0"
   val jerseyCore = "com.sun.jersey" % "jersey-core" % "1.19"
   val jerseyClient = "com.sun.jersey" % "jersey-client" % "1.19"
   val w3cSac = "org.w3c.css" % "sac" % "1.3"
+  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "7.2.4"
+  val logback = "net.logstash.logback" % "logstash-logback-encoder" % "4.6"
+  val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.2.0"
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.5"

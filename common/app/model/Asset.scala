@@ -82,7 +82,11 @@ object VideoAsset {
     VideoAsset(
       fields = Helpers.assetFieldsToMap(asset),
       mimeType = asset.mimeType,
-      url = asset.typeData.flatMap(_.secureFile).orElse(asset.file) )
+      url = asset.typeData.flatMap {
+        // FIXME: Remove this once the multimedia.guardianapis are available over https
+        case asset if !asset.secureFile.exists(s => s.startsWith("https://multimedia.guardianapis.com")) => asset.secureFile
+        case _ => None
+      }.orElse(asset.file) )
   }
 }
 
@@ -100,11 +104,11 @@ case class VideoAsset(
     }
   }
 
+  val durationSeconds: Int = fields.get("durationSeconds").getOrElse("0").toInt
+  val durationMinutes: Int = fields.get("durationMinutes").getOrElse("0").toInt
   // The video duration in seconds
-  val duration: Int = fields.get("durationSeconds").getOrElse("0").toInt +
-                           (fields.get("durationMinutes").getOrElse("0").toInt * 60)
+  val duration: Int = durationSeconds + (durationMinutes * 60)
   val blockVideoAds: Boolean = fields.get("blockAds").exists(_.toBoolean)
-
   val source: Option[String] = fields.get("source")
   val embeddable: Boolean = fields.get("embeddable").exists(_.toBoolean)
   val caption: Option[String] = fields.get("caption")

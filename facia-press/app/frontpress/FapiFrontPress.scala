@@ -1,58 +1,47 @@
 package frontpress
 
 import com.amazonaws.services.s3.AmazonS3Client
-import com.gu.contentapi.client.GuardianContentClient
-import com.gu.contentapi.client.model.{SearchQuery, ItemQuery, ItemResponse}
+import com.gu.contentapi.client.ContentApiClientLogic
+import com.gu.contentapi.client.model.{ItemQuery, SearchQuery}
+import com.gu.contentapi.client.model.v1.ItemResponse
 import com.gu.facia.api.contentapi.ContentApi.{AdjustItemQuery, AdjustSearchQuery}
 import com.gu.facia.api.models.Collection
 import com.gu.facia.api.{FAPI, Response}
 import com.gu.facia.client.{AmazonSdkS3Client, ApiClient}
-import common.FaciaPressMetrics.{ContentApiSeoRequestFailure, ContentApiSeoRequestSuccess}
 import common._
-import conf.{Configuration, LiveContentApi}
 import conf.switches.Switches.FaciaInlineEmbeds
-import contentapi.{CircuitBreakingContentApiClient, QueryDefaults}
+import conf.Configuration
+import contentapi.{QueryDefaults, CircuitBreakingContentApiClient, ContentApiClient}
+import fronts.FrontsApi
+import model._
 import model.facia.PressedCollection
 import model.pressed._
-import model._
-import org.apache.commons.lang.exception.ExceptionUtils
+import play.api.Play.current
 import play.api.libs.json._
 import play.api.libs.ws.WS
-import play.api.Play.current
 import services.{ConfigAgent, S3FrontsApi}
-import views.support.{Item460, Item140, Naked}
-
-import scala.collection.JavaConversions._
-import scala.concurrent.{ExecutionContext, Future}
-import scala.util.Try
-
-private case class ContentApiClientWithTarget(override val apiKey: String, override val targetUrl: String) extends GuardianContentClient(apiKey) with CircuitBreakingContentApiClient {
-  lazy val httpTimingMetric = ContentApiMetrics.ElasticHttpTimingMetric
-  lazy val httpTimeoutMetric = ContentApiMetrics.ElasticHttpTimeoutCountMetric
-
-  override def fetch(url: String)(implicit context: ExecutionContext): Future[String] = {
-    val futureString: Future[String] = super.fetch(url)(context)
-    futureString.onFailure{ case t =>
-      val tryDecodedUrl: String = Try(java.net.URLDecoder.decode(url, "UTF-8")).getOrElse(url)
-      log.error(s"$t: $tryDecodedUrl")}
-    futureString
-  }
-}
+import scala.concurrent.Future
 
 object LiveFapiFrontPress extends FapiFrontPress {
-  val apiKey: String = Configuration.contentApi.key.getOrElse("facia-press")
-  val stage: String = Configuration.facia.stage.toUpperCase
-  val bucket: String = Configuration.aws.bucket
-  val targetUrl: String = Configuration.contentApi.contentApiLiveHost
 
-  override implicit val capiClient: GuardianContentClient = new ContentApiClientWithTarget(apiKey, targetUrl)
-  private val amazonS3Client = new AmazonS3Client()
-  implicit val apiClient: ApiClient = ApiClient(bucket, stage, AmazonSdkS3Client(amazonS3Client))
+  override implicit val capiClient: ContentApiClientLogic = CircuitBreakingContentApiClient(
+    httpTimingMetric = ContentApiMetrics.HttpLatencyTimingMetric,
+    httpTimeoutMetric = ContentApiMetrics.HttpTimeoutCountMetric,
+    targetUrl = Configuration.contentApi.contentApiHost,
+    apiKey = Configuration.contentApi.key.getOrElse("facia-press"),
+    useThrift = false
+  )
+
+  implicit val apiClient: ApiClient = FrontsApi.amazonClient
 
   def pressByPathId(path: String): Future[Unit] =
     getPressedFrontForPath(path)
       .map { pressedFront => S3FrontsApi.putLiveFapiPressedJson(path, Json.stringify(Json.toJson(pressedFront)))}
-      .asFuture.map(_.fold(e => throw new RuntimeException(s"${e.cause} ${e.message}"), _ => ()))
+      .asFuture.map(_.fold(
+        e => {
+          StatusNotification.notifyFailedJob(path, isLive = true, e)
+          throw new RuntimeException(s"${e.cause} ${e.message}")},
+        _ => StatusNotification.notifyCompleteJob(path, isLive = true)))
 
   def collectionContentWithSnaps(
     collection: Collection,
@@ -62,19 +51,29 @@ object LiveFapiFrontPress extends FapiFrontPress {
 }
 
 object DraftFapiFrontPress extends FapiFrontPress {
-  val apiKey: String = Configuration.contentApi.key.getOrElse("facia-press")
   val stage: String = Configuration.facia.stage.toUpperCase
   val bucket: String = Configuration.aws.bucket
-  val targetUrl: String = Configuration.contentApi.contentApiDraftHost
 
-  override implicit val capiClient: GuardianContentClient = new ContentApiClientWithTarget(apiKey, targetUrl)
+
+  override implicit val capiClient: ContentApiClientLogic = CircuitBreakingContentApiClient(
+    httpTimingMetric = ContentApiMetrics.HttpLatencyTimingMetric,
+    httpTimeoutMetric = ContentApiMetrics.HttpTimeoutCountMetric,
+    targetUrl = Configuration.contentApi.contentApiDraftHost,
+    apiKey = Configuration.contentApi.key.getOrElse("facia-press"),
+    useThrift = false
+  )
   private val amazonS3Client = new AmazonS3Client()
   implicit val apiClient: ApiClient = ApiClient(bucket, stage, AmazonSdkS3Client(amazonS3Client))
 
   def pressByPathId(path: String): Future[Unit] =
     getPressedFrontForPath(path)
       .map { pressedFront => S3FrontsApi.putDraftFapiPressedJson(path, Json.stringify(Json.toJson(pressedFront)))}
-      .asFuture.map(_.fold(e => throw new RuntimeException(s"${e.cause} ${e.message}"), _ => ()))
+      .asFuture.map(_.fold(
+        e => {
+          StatusNotification.notifyFailedJob(path, isLive = false, e)
+          throw new RuntimeException(s"${e.cause} ${e.message}")
+        },
+        _ => StatusNotification.notifyCompleteJob(path, isLive = false)))
 
   def collectionContentWithSnaps(
     collection: Collection,
@@ -92,9 +91,9 @@ object EmbedJsonHtml {
   implicit val format = Json.format[EmbedJsonHtml]
 }
 
-trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
+trait FapiFrontPress extends Logging with ExecutionContexts {
 
-  implicit val capiClient: GuardianContentClient
+  implicit val capiClient: ContentApiClientLogic
   implicit val apiClient: ApiClient
   def pressByPathId(path: String): Future[Unit]
 
@@ -109,14 +108,14 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
       .showFields(showFields)
       .showElements("all")
       .showTags("all")
-      .showReferences(references)
+      .showReferences(QueryDefaults.references)
 
   val itemApiQuery: AdjustItemQuery = (itemQuery: ItemQuery) =>
     itemQuery
       .showFields(showFields)
       .showElements("all")
       .showTags("all")
-      .showReferences(references)
+      .showReferences(QueryDefaults.references)
 
   def generateCollectionJsonFromFapiClient(collectionId: String): Response[PressedCollection] =
     for {
@@ -134,39 +133,46 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
   private def getCurated(collection: Collection): Response[List[PressedContent]] = {
     // Map initial PressedContent to enhanced content which contains pre-fetched embed content.
     val initialContent = collectionContentWithSnaps(collection, searchApiQuery, itemApiQuery)
-    initialContent.flatMap(content => Response.traverse(content.map(fetchEmbeds(collection, _))))
+    initialContent.flatMap { content =>
+      Response.traverse( content.map {
+        case curated: CuratedContent if FaciaInlineEmbeds.isSwitchedOn => enrichContent(collection, curated, curated.enriched).map { updatedFields =>
+          curated.copy(enriched = Some(updatedFields))
+        }
+        case link: LinkSnap if FaciaInlineEmbeds.isSwitchedOn => enrichContent(collection, link, link.enriched).map { updatedFields =>
+          link.copy(enriched = Some(updatedFields))
+        }
+        case plain => Response.Right(plain)
+      })
+    }
   }
 
-  private def fetchEmbeds(collection: Collection, pressed: PressedContent): Response[PressedContent] = pressed match {
-    case content: CuratedContent if FaciaInlineEmbeds.isSwitchedOn => {
-        val currentEnriched = content.enriched.getOrElse(EnrichedContent.empty)
+  private def enrichContent(collection: Collection, content: PressedContent, enriched: Option[EnrichedContent]): Response[EnrichedContent] = {
 
-        val newContent = for {
-          embedType <- content.properties.embedType if embedType == "json.html"
-          embedUri <- content.properties.embedUri
-        } yield {
-            val updatedContent = WS.url(embedUri).get().map { response =>
-              Json.parse(response.body).validate[EmbedJsonHtml] match {
-                case JsSuccess(embed, _) => {
-                  val newEnriched = currentEnriched.copy(embedHtml = Some(embed.html))
-                  content.copy(enriched = Some(newEnriched))
-                }
-                case _ => {
-                  log.warn(s"An embed had invalid json format, and won't be pressed. ${pressed.properties.webTitle} for collection ${collection.id}")
-                  content
-                }
-              }
-            } recover {
-              case _ => {
-                log.warn(s"A request to an embed uri failed, embed won't be pressed. ${embedUri} for collection ${collection.id}")
-                content
-              }
+      val beforeEnrichment = enriched.getOrElse(EnrichedContent.empty)
+
+      val afterEnrichment = for {
+        embedType <- content.properties.embedType if embedType == "json.html"
+        embedUri <- content.properties.embedUri
+      } yield {
+        val maybeUpdate = WS.url(embedUri).get().map { response =>
+          Json.parse(response.body).validate[EmbedJsonHtml] match {
+            case JsSuccess(embed, _) => {
+              beforeEnrichment.copy(embedHtml = Some(embed.html))
             }
-            Response.Async.Right(updatedContent)
+            case _ => {
+              log.warn(s"An embed had invalid json format, and won't be pressed. ${content.properties.webTitle} for collection ${collection.id}")
+              beforeEnrichment
+            }
           }
-        newContent.getOrElse(Response.Right(content))
+        } recover {
+          case _ => {
+            log.warn(s"A request to an embed uri failed, embed won't be pressed. $embedUri for collection ${collection.id}")
+            beforeEnrichment
+          }
+        }
+        Response.Async.Right(maybeUpdate)
       }
-    case _ => Response.Right(pressed)
+      afterEnrichment.getOrElse(Response.Right(beforeEnrichment))
   }
 
   private def getTreats(collection: Collection): Response[List[PressedContent]] = {
@@ -235,19 +241,17 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
   }
 
   private def getCapiItemResponseForPath(id: String): Future[Option[ItemResponse]] = {
-    val contentApiResponse:Future[ItemResponse] = LiveContentApi.getResponse(LiveContentApi
-      .item(id, Edition.defaultEdition)
+    val contentApiResponse:Future[ItemResponse] = ContentApiClient.getResponse(
+      ContentApiClient.item(id, Edition.defaultEdition)
       .showEditorsPicks(false)
       .pageSize(0)
     )
 
     contentApiResponse.onSuccess { case _ =>
-      ContentApiSeoRequestSuccess.increment()
       log.info(s"Getting SEO data from content API for $id")}
 
     contentApiResponse.onFailure { case e: Exception =>
       log.warn(s"Error getting SEO data from content API for $id: $e")
-      ContentApiSeoRequestFailure.increment()
     }
 
     contentApiResponse.map(Option(_)).fallbackTo(Future.successful(None))
@@ -267,38 +271,11 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
 
   def slimContent(pressedContent: PressedContent): PressedContent = {
     val slimMaybeContent = pressedContent.properties.maybeContent.map { content =>
-      val slimElements: Seq[Option[Element]] = content.elements.trailPictureAll(5, 3).map { element =>
-        val naked = Naked.elementFor(element.images)
 
-        //These sizes are used in RSS
-        val size140 = Item140.elementFor(element.images)
-        val size460 = Item460.elementFor(element.images)
-
-        val paredImages = ImageMedia.make(Seq(naked ++ size140 ++ size460).flatten.distinct)
-
-        val slimElement: Element = element match {
-          case image: ImageElement => image.copy(images = paredImages)
-          case video: VideoElement => video.copy(images = paredImages)
-          case audio: AudioElement => audio.copy(images = paredImages)
-          case embed: EmbedElement => embed.copy(images = paredImages)
-          case default: DefaultElement => default.copy(images = paredImages)
-        }
-        Some(slimElement)
-      }
-      val elements = Elements.apply((slimElements :+ content.elements.mainVideo).flatten)
+      // Discard all elements except the main video.
+      // It is safe to do so because the trail picture is held in trailPicture in the Trail class.
+      val slimElements = Elements.apply(content.elements.mainVideo.toList)
       val slimFields = content.fields.copy(body = HTML.takeFirstNElements(content.fields.body, 2), blocks = Nil)
-
-      val slimTrailPicture = content.trail.trailPicture.map { imageMedia =>
-        val naked = Naked.elementFor(imageMedia)
-
-        //These sizes are used in RSS
-        val size140 = Item140.elementFor(imageMedia)
-        val size460 = Item460.elementFor(imageMedia)
-
-        ImageMedia.make(Seq(naked ++ size140 ++ size460).flatten.distinct)
-      }
-
-      val slimTrail = content.trail.copy(trailPicture = slimTrailPicture)
 
       // Clear the config fields, because they are not used by facia. That is, the config of
       // an individual card is not used to render a facia front page.
@@ -307,7 +284,7 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
         opengraphPropertiesOverrides = Map(),
         twitterPropertiesOverrides = Map())
 
-      val slimContent = content.content.copy(metadata = slimMetadata, elements = elements, fields = slimFields, trail = slimTrail)
+      val slimContent = content.content.copy(metadata = slimMetadata, elements = slimElements, fields = slimFields)
 
       content match {
         case article: Article => article.copy(content = slimContent)

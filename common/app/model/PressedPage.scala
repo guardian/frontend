@@ -99,14 +99,23 @@ case class PressedPage (
       Paths.withoutEdition(id)
     ).flatten
 
-    tagAndSectionIds.find(validIds contains) map { id =>
+    tagAndSectionIds.find(validIds contains).map { id =>
       s"/${Paths.withoutEdition(id).getOrElse(id)}/all"
-    }
+    }.orElse(allPathFromTreats)
   }
+
+  private def allPathFromTreats: Option[String] = {
+    collections.flatMap(_.treats.collect {
+        case treat if SupportedUrl.fromFaciaContent(treat).endsWith("/all") => SupportedUrl.fromFaciaContent(treat)
+      }
+    ).headOption
+  }
+
   val navSection: String = metadata.section
+
   val keywordIds: Seq[String] = frontKeywordIds(id)
 
-   def sponsorshipType: Option[String] = {
+  def sponsorshipType: Option[String] = {
     if (isSponsored(None)) {
       Option("sponsoredfeatures")
     } else if (isAdvertisementFeature) {

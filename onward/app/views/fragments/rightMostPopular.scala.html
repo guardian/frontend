@@ -5,6 +5,7 @@
 @import implicits.FaciaContentFrontendHelpers._
 @import common.LinkTo
 @import views.support.ImgSrc
+@import views.html.fragments
 
 @popular.map { pop =>
     <div class="js-right-most-popular right-most-popular right-most-popular--image component--rhc hide-on-childrens-books-site" data-component="right-most-popular" data-importance="-1">
@@ -13,12 +14,19 @@
             @pop.trails.take(5).zipWithRowInfo.map{ case(trail, row) =>
                 <li class="right-most-popular-item" data-link-name="trail | @row.rowNum">
                     <a class="right-most-popular-item__url media u-cf" href="@LinkTo{@trail.header.url}">
-                        @trail.trailPicture(5, 3).map{ image =>
+                        @trail.trailPicture.map{ imageMedia =>
                             <div class="right-most-popular-item__img media__img">
-                                <img class="responsiveimg" src="@ImgSrc.getFallbackUrl(image.images)" alt="" />
+                                <img class="responsiveimg" src="@ImgSrc.getFallbackUrl(imageMedia)" alt="" />
                             </div>
                         }
-                        <h4 class="right-most-popular-item__headline media__body">@trail.properties.linkText</h4>
+                        <div class="media__body">
+                            <h4 class="right-most-popular-item__headline">@trail.properties.linkText</h4>
+                            @trail.properties.maybeContent.map { content =>
+                                @if(content.tags.tags.exists(_.id == "tone/news")) {
+                                    @fragments.contentAgeNotice(ContentOldAgeDescriber(content))
+                                }
+                            }
+                        </div>
                     </a>
                 </li>
             }

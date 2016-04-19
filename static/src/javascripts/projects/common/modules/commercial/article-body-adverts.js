@@ -5,7 +5,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/modules/article/space-filler',
-    'common/modules/commercial/dfp-api',
+    'common/modules/commercial/dfp/dfp-api',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features'
 ], function (
@@ -107,7 +107,7 @@ define([
 
     // If a merchandizing component has been rendered but is empty,
     // we allow a second pass for regular inline ads. This is because of
-    // the decoupling between the spacefinder algorightm and the targeting
+    // the decoupling between the spacefinder algorithm and the targeting
     // in DFP: we can only know if a slot can be removed after we have
     // received a response from DFP
     function onAdRendered(event) {
@@ -136,8 +136,8 @@ define([
             addInlineMerchAd(getInlineMerchRules());
         }
 
-        if (config.switches.viewability && detect.getBreakpoint() !== 'mobile') {
-            return addArticleAds(2, rules).then(function (countAdded) {
+        return config.switches.viewability ?
+            addArticleAds(2, rules).then(function (countAdded) {
                 if (config.page.hasInlineMerchandise && countAdded === 0) {
                     mediator.on('modules:commercial:dfp:rendered', onAdRendered);
                 }
@@ -145,16 +145,8 @@ define([
                 return countAdded === 2 ?
                     addArticleAds(8, getLongArticleRules()) :
                     countAdded;
-            });
-        } else {
-            return tryAddingAdvert(rules).then(function (trySuccessful) {
-                if (trySuccessful && detect.isBreakpoint({max: 'tablet'})) {
-                    return tryAddingAdvert(rules);
-                } else {
-                    return null;
-                }
-            });
-        }
+            }) :
+            addArticleAds(2, rules);
     }
 
     return {

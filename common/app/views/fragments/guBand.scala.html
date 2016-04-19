@@ -3,22 +3,7 @@
 
 <div class="paidfor-band">
     <div class="gs-container paidfor-band__inner">
-        <div class="paidfor-meta">
-            <span class="paidfor-meta__label">Paid content</span>
-            <div class="paidfor-label paidfor-meta__more has-popup">
-                <button class="u-button-reset paidfor-label__btn popup__toggle" data-toggle="paidfor-popup--sticky">
-                    About
-                    @fragments.inlineSvg("arrow-down", "icon")
-                </button>
-                <div class="popup is-off paidfor-popup paidfor-popup--sticky">
-                    <h3 class="paidfor-popup__title">Paid content is paid for and controlled by an advertiser and created by the Guardian Labs team</h3>
-                    <a class="paidfor-popup__link" href="@LinkTo("/content-funding")">
-                        Learn more about Guardian Labs content
-                        @fragments.inlineSvg("arrow-right", "icon")
-                    </a>
-                </div>
-            </div>
-        </div>
+        @fragments.commercial.paidForMeta()
         <a class="paidfor-branding"
             @if(Edition(request).id == "AU") {
                 href="@LinkTo("/guardian-labs-australia")"

@@ -1,4 +1,5 @@
-.cta {
+.cta,
+.element-interactive a{
     display: inline-block;
     vertical-align: top;
     width: auto;
@@ -12,7 +13,8 @@
     line-height: 1.125rem;
 }
 
-.cta--medium {
+.cta--medium,
+.element-interactive a{
     height: 1.875rem;
     padding: 0 0.625rem;
     margin-right: 0.625rem;
@@ -30,9 +32,17 @@
     margin: 0 20px 0;
 }
 
+.cta--show-more.cta--show-more__unindent {
+    margin: 0
+}
+
 @@media (max-width: 480px) {
     .cta--show-more {
         margin: 0 10px 0;
+    }
+
+    .cta--show-more.cta--show-more__unindent {
+        margin: 0
     }
 }
 
@@ -48,6 +58,7 @@
     content: "";
     background-color: #eaeaea;
     border-radius: 1.125rem;
+    -webkit-border-radius: 1.125rem;
     position: absolute;
     top: 0;
     left: 0;
@@ -55,4 +66,56 @@
     width: 130px;
     z-index: -1;
     color: #fff;
+}
+
+.cta--comments {
+    background-color: #005689;
+    color: #fff;
+    border-radius: 1.125rem;
+    -webkit-border-radius: 1.125rem;
+    display: inline-block;
+}
+
+.cta--comments svg {
+    margin-bottom: -7px;
+}
+
+.main-site-link {
+    margin: 0;
+    padding: 0;
+    float: right;
+}
+
+.no-comments .main-site-link {
+    float: none;
+}
+
+@@media (max-width: 350px) {
+    .main-site-link {
+        float: none;
+        display: block;
+        margin-top: 12px;
+    }
+}
+
+.element-interactive a {
+    background-color: #efefef;
+    border-radius: 1.125rem;
+    -webkit-border-radius: 1.125rem;
+    border-bottom: none;
+}
+
+.element-interactive a::before {
+    content: "Visual: ";
+}
+
+.element-interactive a::after {
+    content: "";
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNCIgdmlld0JveD0iMCAwIDE2IDE0Ij48cGF0aCBmaWxsPSIjMDA1Njg5IiBkPSJNMTIgMS4xTDguMjcgNC44M2wuOTAyLjlMMTMgMi4wNyAxMy4yIDVoLjhWLjRsLS40LS40SDl2Ljh6TTExLjcgNi42MjVWOC43SDEuMlYyLjJoNWwuOC0uNlYxSC42bC0uNi42djcuOGwuNi42aDExLjhsLjYtLjZWNmgtLjd6Ii8+PC9zdmc+);
+    width: 16px;
+    height: 14px;
+    position: relative;
+    top: 9px;
+    margin-right: 3px;
+    float: left;
 }

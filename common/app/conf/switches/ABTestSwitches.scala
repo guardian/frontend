@@ -4,84 +4,86 @@ import org.joda.time.LocalDate
 
 trait ABTestSwitches {
 
-  val RelatedVariants = Switch(
-    "A/B Tests",
-    "ab-related-variants",
-    "show related content based on the new variants",
+  val ABDummyTest = Switch(
+    SwitchGroup.ABTests,
+    "ab-dummy-test",
+    "A do-nothing AA test, for the data team",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 15),
+    sellByDate = new LocalDate(2016, 5, 12),
     exposeClientSide = true
   )
 
+  // Owner: Dotcom Reach
   val ABFrontsOnArticles2 = Switch(
-    "A/B Tests",
+    SwitchGroup.ABTests,
     "ab-fronts-on-articles2",
     "Injects fronts on articles for the test",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 1),
+    sellByDate = new LocalDate(2016, 7, 5),
     exposeClientSide = true
   )
 
-  val ABIdentityRegisterV2 = Switch(
-    "A/B Tests",
-    "ab-identity-register-v2",
-    "New user registration page variant for Identity",
+  val ABNextInSeries = Switch(
+    SwitchGroup.ABTests,
+    "ab-next-in-series",
+    "Show next in series",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 1),
+    sellByDate = new LocalDate(2016, 5, 3),
     exposeClientSide = true
   )
 
-  val ABIdentitySignInV2 = Switch(
-    "A/B Tests",
-    "ab-identity-sign-in-v2",
-    "New sign in page variant for Identity",
+  val ABIdentityRegisterMembershipStandfirst = Switch(
+    SwitchGroup.ABTests,
+    "ab-identity-register-membership-standfirst",
+    "Membership registration page variant for Identity",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 1),
+    sellByDate = new LocalDate(2016, 5, 4),
     exposeClientSide = true
   )
 
-  val ABRtrtEmailFormArticlePromoV2 = Switch(
-    "A/B Tests",
-    "ab-rtrt-email-form-article-promo-v2",
-    "Testing the email sign up from the bottom of articles of user referred from fronts",
+  val ABLiveBlogChromeNotificationsInternal = Switch(
+    SwitchGroup.ABTests,
+    "ab-live-blog-chrome-notifications-internal",
+    "Live blog chrome notifications - Internal",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 3),
+    sellByDate = new LocalDate(2016, 6, 1),
     exposeClientSide = true
   )
 
-  val ABRemoveStickyNav = Switch(
-    "A/B Tests",
-    "ab-remove-sticky-nav",
-    "Removes the sticky nav (0% test)",
+  val ABLiveBlogChromeNotificationsProd = Switch(
+    SwitchGroup.ABTests,
+    "ab-live-blog-chrome-notifications-prod",
+    "Live blog chrome notifications - prod",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 1),
+    sellByDate = new LocalDate(2016, 6, 1),
     exposeClientSide = true
   )
 
-  val ABLiveblogToast = Switch(
-    "A/B Tests",
-    "ab-liveblog-toast",
-    "Enables Liveblog toast (0% test)",
+  val ABMembership = Switch(
+    SwitchGroup.ABTests,
+    "ab-membership",
+    "Membership propositions",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 3, 1),
+    sellByDate = new LocalDate(2016, 5, 2),
     exposeClientSide = true
   )
 
-  val ABPrebidPerformance = Switch(
-    "A/B Tests",
-    "ab-prebid-performance",
-    "Measure performance impact of running prebid auctions before showing display advertising",
+  val ABLoyalAdblockingSurvey = Switch(
+    SwitchGroup.ABTests,
+    "ab-loyal-adblocking-survey",
+    "An adblock ongoing survey for all loyal users",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 1),
+    sellByDate = new LocalDate(2016, 5, 31),
     exposeClientSide = true
   )
 
-  val UserzoomSurveyMessageV3 = Switch(
-    "A/B Tests",
-    "ab-userzoom-survey-message-v3",
-    "Segment the userzoom data-team survey",
+  val ABMinute = Switch(
+    SwitchGroup.ABTests,
+    "ab-minute",
+    "Switch to include the minute.ly script",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 11),
+    sellByDate = new LocalDate(2016, 5, 11),
     exposeClientSide = true
   )
+
 }

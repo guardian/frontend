@@ -20,7 +20,7 @@
     padding-bottom: $gs-baseline * 2;
 }
 .ad-slot--dark {
-    background-color: lighten(colour(media-background), 2.5%);
+    background-color: lighten($media-background, 2.5%);
 }
 .ad-slot--mobile {
     @include mq(tablet) {
@@ -33,21 +33,27 @@
     }
  }
 
+.ad-slot--right {
+    &.is-sticky {
+        width: 300px;
+    }
+}
+
 .ad-slot__label {
+    @include font-size(12, 20);
     height: $mpu-ad-label-height;
-    background-color: colour(neutral-8);
+    background-color: $neutral-8;
     margin: 0 auto;
     padding: 0 ($gs-baseline/3)*2;
-    border-top: 1px solid colour(neutral-5);
-    color: colour(neutral-2-contrasted);
+    border-top: 1px solid $neutral-5;
+    color: $neutral-2-contrasted;
     text-align: right;
     box-sizing: border-box;
     font-family: $f-sans-serif-text;
-    @include font-size(12, 20);
 
     .ad-slot--dark & {
-        color: colour(neutral-3);
-        border-top-color: colour(neutral-2);
+        color: $neutral-3;
+        border-top-color: $neutral-2;
         background-color: transparent;
     }
 }
@@ -63,17 +69,15 @@
     display: none;
 }
 .top-banner-ad-container--desktop {
-    background-color: colour(neutral-8);
+    background-color: $neutral-8;
     display: none;
 
-    .js-on .new-sticky-ad & {
+    .sticky-ad-banner & {
         z-index: 1022;
         width: 100%;
         transform: translateZ(0);
         will-change: transform;
         position: relative;
-        overflow: hidden;
-        transition: max-height 1s cubic-bezier(0, 0, 0, .985);
     }
 
     &.top-banner-ad-container--below-nav {
@@ -102,10 +106,10 @@
         }
     }
 
-     /*
-      * Sometimes we have ads which needs to be allowed to escape container in the top slot (for example video ads)
-      * We are giving this ad priority 5 so it will go over everything except lightbox
-      */
+    /*
+     * Sometimes we have ads which needs to be allowed to escape container in the top slot (for example video ads)
+     * We are giving this ad priority 5 so it will go over everything except lightbox
+     */
     .ad-slot {
         overflow: visible;
         z-index: $zindex-popover;
@@ -117,28 +121,16 @@
 .top-banner-ad-container--responsive {
     min-height: ($gs-row-height * 7) + 16;
 }
-.top-banner-ad-container--reveal iframe {
-    transform: translateZ(0);
-    transition: height 1s cubic-bezier(0, 0, 0, .985);
-    min-height: 90px;
-
-    // overwrite if in the new sticky ad AB test
-    .new-sticky-ad & {
-        transition: none;
-        transform: none;
-        min-height: auto;
-    }
-}
 .top-banner-ad-container--above-nav {
     @include mq(tablet) {
-        .js-on:not(.is-adfree) & {
+        .js-on & {
             display: block;
         }
     }
 }
 .top-banner-ad-container--below-nav {
     @include mq(desktop) {
-        .js-on:not(.is-adfree) & {
+        .js-on & {
             display: block;
         }
     }
@@ -165,14 +157,6 @@
     @include mq(wide) {
         width: gs-span(16) - ($left-column-wide + $gs-gutter);
         padding-left: $left-column-wide + $gs-gutter;
-    }
-
-    @include mq(wide) {
-        /* Fluid ads just expand horizontally to the size of their container */
-        &.ad-slot--fluid {
-            padding-left: 0;
-            width: auto;
-        }
     }
 
     .top-banner-ad-container--mobile & {
@@ -221,7 +205,8 @@
             text-align: center;
 
             .ad-slot__label {
-                margin: 0 auto;
+                margin-left: auto;
+                margin-right: auto;
             }
         }
     }
@@ -238,9 +223,9 @@
 .ad-slot--container-inline,
 .ad-slot--gallery-inline,
 .ad-slot--liveblog-inline {
-    width: 300px;
+    width: $mpu-original-width;
     margin: $gs-baseline auto;
-    min-height: 250 + $mpu-ad-label-height;
+    min-height: $mpu-original-height + $mpu-ad-label-height;
     text-align: center;
 
     @include mq(mobileLandscape) {
@@ -263,7 +248,7 @@
 }
 .ad-slot--inline,
 .ad-slot--container-inline {
-    background-color: colour(neutral-8);
+    background-color: $neutral-8;
 
     @include mq(tablet) {
         width: 300px;
@@ -327,17 +312,17 @@
     }
 }
 .ad-slot--liveblog-inline {
-    background-color: colour(neutral-6);
+    background-color: $neutral-6;
 
     .ad-slot__label {
-        color: colour(neutral-2);
-        border-top-color: colour(neutral-3);
+        color: $neutral-2;
+        border-top-color: $neutral-3;
     }
 }
 .ad-slot--mpu-banner-ad {
     display: none;
-    width: 300px;
-    min-height: 250 + $mpu-ad-label-height;
+    width: $mpu-original-width;
+    min-height: $mpu-original-height + $mpu-ad-label-height;
     margin-bottom: $gs-baseline*2;
 
     @include mq(desktop) {
@@ -347,9 +332,9 @@
 .ad-slot--sponsored {
     min-height: 250px;
     box-sizing: border-box;
-    background-color: colour(neutral-8);
+    background-color: $neutral-8;
     overflow: hidden;
-    border-top: 1px solid colour(neutral-5);
+    border-top: 1px solid $neutral-5;
     padding-top: $gs-baseline/2;
 }
 .ad-slot--sponsored__article {
@@ -359,7 +344,7 @@
     min-height: gs-height(2);
     padding: 0 $gs-gutter/2 $gs-baseline/2 (gs-span(2) + $gs-gutter);
     margin-bottom: $gs-baseline/2;
-    border-bottom: 1px solid colour(neutral-5);
+    border-bottom: 1px solid $neutral-5;
 }
 .ad-slot--sponsored__image {
     position: absolute;
@@ -369,7 +354,7 @@
 .ad-slot--sponsored__article,
 .ad-slot--sponsored__label,
 .ad-slot--sponsored__help {
-    color: colour(neutral-2);
+    color: $neutral-2;
 }
 .ad-slot--sponsored__article {
     @include f-headlineSans;
@@ -377,10 +362,10 @@
 }
 .ad-slot--sponsored__label,
 .ad-slot--sponsored__help {
+    @include fs-textSans(3);
     float: left;
     clear: left;
     padding-left: $gs-gutter/2;
-    @include fs-textSans(3);
 }
 .ad-slot--sponsored__label {
     margin-bottom: $gs-baseline/3;
@@ -425,7 +410,7 @@
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__help {
         @include fs-textSans(1);
-        color: colour(neutral-2);
+        color: $neutral-2;
     }
     .ad-slot--paid-for-badge__help {
         @include font-size(11, 14);
@@ -463,16 +448,16 @@
 .ad-slot--adbadge {
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__help {
-        color: colour(neutral-2-contrasted);
+        color: $neutral-2-contrasted;
     }
 }
 .ad-slot--im {
-    box-sizing: border-box;
-    max-width: 50%;
     float: left;
+    margin: 5px $gs-gutter $gs-baseline 0;
 
-    @include mq(mobileLandscape) {
-        max-width: $left-column-wide + $gs-gutter;
+    @include mq($until: mobileLandscape) {
+        margin-bottom: $gs-baseline / 2;
+        margin-right: $gs-gutter / 2;
     }
 }
 .ad-slot--fobadge.ad-slot--im {
@@ -480,18 +465,18 @@
 
     .ad-slot--paid-for-badge__inner {
         padding: $gs-baseline / 2 0 $gs-baseline;
-        border-top: 1px solid colour(neutral-3);
-        border-bottom: 1px dotted colour(neutral-3);
+        border-top: 1px solid $neutral-3;
+        border-bottom: 1px dotted $neutral-3;
     }
  }
 .ad-slot--paid-for-badge--article {
     padding-bottom: $gs-baseline * 2;
-    border-bottom: 1px dotted colour(neutral-5);
+    border-bottom: 1px dotted $neutral-5;
 
     @include mq(leftCol) {
         min-height: 0;
         border-bottom-width: 0;
-        border-top: 1px dotted colour(neutral-5);
+        border-top: 1px dotted $neutral-5;
     }
 
     @include mq(mobile, $until: leftCol) {
@@ -513,7 +498,7 @@
 .ad-slot--paid-for-badge--interactive {
     width: 140px;
     min-height: 135px;
-    border-top: 1px dotted colour(neutral-5);
+    border-top: 1px dotted $neutral-5;
 
     @include mq(desktop) {
         position: absolute;
@@ -555,7 +540,7 @@
             height: 0;
             width: $left-column + $gs-gutter;
             content: '';
-            border-bottom: 1px dotted colour(neutral-5);
+            border-bottom: 1px dotted $neutral-5;
             margin-top: $gs-gutter/4;
 
             @include mq(leftCol) {
@@ -591,7 +576,7 @@
         min-height: 0;
         margin-top: 4px;
         padding-top: 2px;
-        border-top: 1px dotted colour(neutral-5);
+        border-top: 1px dotted $neutral-5;
 
         .ad-slot--paid-for-badge__link {
             float: none;
@@ -622,7 +607,7 @@
     }
     @include mq($until: tablet) {
         clear: both;
-        border-top: 1px dotted colour(neutral-5);
+        border-top: 1px dotted $neutral-5;
 
         .fc-container--tag & {
             width: gs-span(2);

@@ -84,7 +84,6 @@ define([
         var events = {
             end: function () {
                 player.trigger(constructEventName('preroll:end', player));
-                player.removeClass('vjs-ad-playing--vpaid');
                 bindContentEvents(player, true);
             },
             start: function () {
@@ -95,18 +94,11 @@ define([
                     player.one('durationchange', events.start);
                 }
             },
-            vpaidStarted: function () {
-                player.addClass('vjs-ad-playing--vpaid');
-            },
             ready: function () {
                 player.trigger(constructEventName('preroll:ready', player));
 
                 player.one('adstart', events.start);
                 player.one('adend', events.end);
-
-                // Handle custom event to understand when vpaid is playing;
-                // there is a lag between 'adstart' and 'Vpaid::AdStarted'.
-                player.one('Vpaid::AdStarted', events.vpaidStarted);
 
                 if (shouldAutoPlay(player)) {
                     player.play();
@@ -233,7 +225,6 @@ define([
                     }
                 },
                 skip: function () {
-                    // jscs:disable disallowDanglingUnderscores
                     $('.js-ads-skip', this.el()).hide();
                     this.trigger(constructEventName('preroll:skip', this));
                     // in lieu of a 'skip' api, rather hacky way of achieving it

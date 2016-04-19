@@ -33,7 +33,7 @@
         </div>
         <div class="brand-bar__item has-popup brand-bar__item--has-control brand-bar__item--more">
             @ellipsis()
-            <div class="popup is-off top-bar__popup--more" id="guardian-services-top-menu">
+            <div class="popup popup--default is-off top-bar__popup--more" id="guardian-services-top-menu">
                 <h3 class="popup__group-header">from the guardian:</h3>
                 <ul class="popup__group">
                     <li class="popup__item brand-bar__popup--jobs mobile-only show-on-slim-header">
@@ -47,6 +47,14 @@
                     <li class="popup__item">
                         <a class="brand-bar__item--action" data-link-name="uk : topNav : masterclasses"
                            href="http://www.theguardian.com/guardian-masterclasses?INTCMP=NGW_TOPNAV_UK_GU_MASTERCLASSES">masterclasses</a>
+                    </li>
+                    <li class="popup__item">
+                        <a class="brand-bar__item--action" data-link-name="uk : topNav : courses"
+                        href="http://courses.theguardian.com?INTCMP=NGW_TOPNAV_UK_GU_COURSES">courses</a>
+                    </li>
+                    <li class="popup__item">
+                        <a class="brand-bar__item--action" data-link-name="uk : topNav : holidays"
+                        href="https://holidays.theguardian.com/?utm_source=theguardian&utm_medium=guardian-links&utm_campaign=topnav&INTCMP=topnav">holidays</a>
                     </li>
                 </ul>
                 <div class="brand-bar__popup--membership hide-on-desktop show-on-slim-header">
@@ -73,7 +81,7 @@
         </div>
         <div class="brand-bar__item has-popup brand-bar__item--has-control brand-bar__item--more mobile-only show-on-slim-header">
             @ellipsis()
-            <div class="popup is-off top-bar__popup--more" id="guardian-services-top-menu">
+            <div class="popup popup--default is-off top-bar__popup--more" id="guardian-services-top-menu">
                 <h3 class="popup__group-header">from the guardian:</h3>
                 <ul class="popup__group">
                     <li class="popup__item brand-bar__popup--jobs mobile-only show-on-slim-header">
@@ -92,7 +100,7 @@
         </div>
         <div class="brand-bar__item has-popup brand-bar__item--has-control brand-bar__item--more mobile-only show-on-slim-header">
             @ellipsis()
-            <div class="popup is-off top-bar__popup--more" id="guardian-services-top-menu">
+            <div class="popup popup--default is-off top-bar__popup--more" id="guardian-services-top-menu">
                 <h3 class="popup__group-header">from the guardian:</h3>
                 <ul class="popup__group">
                     <li class="popup__item mobile-only">
@@ -115,7 +123,7 @@
         </div>
         <div class="brand-bar__item has-popup brand-bar__item--has-control brand-bar__item--more">
             @ellipsis()
-            <div class="popup is-off top-bar__popup--more" id="guardian-services-top-menu">
+            <div class="popup popup--default is-off top-bar__popup--more" id="guardian-services-top-menu">
                 <h3 class="popup__group-header">from the guardian:</h3>
                 <ul class="popup__group">
                     <li class="popup__item brand-bar__popup--soulmates hide-on-desktop show-on-slim-header">
@@ -140,7 +148,7 @@
            aria-haspopup="true" aria-controls="guardian-edition-menu">
             @Edition(request).displayName
         </a>
-        <ul class="popup popup__group is-off top-bar__popup--edition" id="guardian-edition-menu">
+        <ul class="popup popup--default popup__group is-off top-bar__popup--edition" id="guardian-edition-menu">
             @Edition.others(request).map{ edition =>
                 <li class="popup__item">
                     <a class="@RenderClasses(Map(

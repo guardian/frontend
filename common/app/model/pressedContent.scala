@@ -1,17 +1,16 @@
 package model.pressed
 
-import com.gu.facia.api.{utils => fapiutils}
-import com.gu.facia.api.{models => fapi}
-import com.gu.facia.client.models.CollectionConfigJson
-import fapiutils.FaciaContentUtils
-import model.{SupportedUrl, ContentType}
+import com.gu.facia.api.utils.FaciaContentUtils
+import com.gu.facia.api.{models => fapi, utils => fapiutils}
+import com.gu.facia.client.models.{Backfill, CollectionConfigJson}
+import model.{ContentType, SupportedUrl}
 import org.joda.time.DateTime
 
 object CollectionConfig {
   def make(config: fapi.CollectionConfig): CollectionConfig = {
     CollectionConfig(
       displayName = config.displayName,
-      apiQuery = config.apiQuery,
+      backfill = config.backfill,
       collectionType = config.collectionType,
       href = config.href,
       description = config.description,
@@ -36,7 +35,7 @@ object CollectionConfig {
 }
 final case class CollectionConfig(
   displayName: Option[String],
-  apiQuery: Option[String],
+  backfill: Option[Backfill],
   collectionType: String,
   href: Option[String],
   description: Option[String],
@@ -331,7 +330,8 @@ object LinkSnap {
       header = PressedCardHeader.make(content),
       card = PressedCard.make(content),
       discussion = PressedDiscussionSettings.make(content),
-      display = PressedDisplaySettings.make(content)
+      display = PressedDisplaySettings.make(content),
+      enriched = Some(EnrichedContent.empty)
     )
   }
 }
@@ -340,7 +340,9 @@ final case class LinkSnap(
   override val header: PressedCardHeader,
   override val card: PressedCard,
   override val discussion: PressedDiscussionSettings,
-  override val display: PressedDisplaySettings) extends Snap
+  override val display: PressedDisplaySettings,
+  enriched: Option[EnrichedContent] // This is currently an option, as we introduce the new field. It can then become a value type.
+) extends Snap
 
 object LatestSnap {
   def make(content: fapi.LatestSnap): LatestSnap = {
@@ -444,6 +446,7 @@ object Image {
   def make(image: fapi.FaciaImage): Image = image match {
     case cutout: fapi.Cutout => Cutout.make(cutout)
     case replace: fapi.Replace => Replace.make(replace)
+    case imageReplace: fapi.ImageReplace => ImageReplace.make(imageReplace)
     case slideshow: fapi.ImageSlideshow => ImageSlideshow.make(slideshow)
   }
 }
@@ -462,8 +465,16 @@ object Replace {
       imageSrc = replace.imageSrc,
       imageSrcHeight = replace.imageSrcHeight,
       imageSrcWidth = replace.imageSrcWidth)
+
 }
 final case class Replace(imageSrc: String, imageSrcWidth: String, imageSrcHeight: String) extends Image
+
+object ImageReplace {
+  def make(imageReplace: fapi.ImageReplace): ImageReplace = ImageReplace(
+    src = imageReplace.src)
+
+}
+final case class ImageReplace(src: String) extends Image
 
 object ImageSlideshow {
   def make(slideshow: fapi.ImageSlideshow): ImageSlideshow = ImageSlideshow(

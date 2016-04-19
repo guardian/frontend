@@ -1,15 +1,13 @@
 package controllers.admin
 
-import contentapi.CircuitBreakingContentApiClient
+import contentapi.PreviewContentApi
 import play.api.mvc.Controller
-import common.{ContentApiMetrics, ExecutionContexts, Logging}
+import common.{ExecutionContexts, Logging}
 import model.NoCache
 import controllers.AuthLogging
 import tools.LoadBalancer
 import play.api.libs.ws.WS
 import scala.concurrent.Future
-import conf.{AdminConfiguration, LiveContentApi}
-import LiveContentApi.getResponse
 
 case class EndpointStatus(name: String, isOk: Boolean, messages: String*)
 
@@ -20,19 +18,13 @@ object TestFailed{
   def apply(name: String, messages: String*) = EndpointStatus(name, false, messages:_*)
 }
 
-object PreviewContentApi extends CircuitBreakingContentApiClient {
-  lazy val httpTimingMetric = ContentApiMetrics.ElasticHttpTimingMetric
-  lazy val httpTimeoutMetric = ContentApiMetrics.ElasticHttpTimeoutCountMetric
-  override val targetUrl = AdminConfiguration.contentapi.previewHost
-}
-
 object TroubleshooterController extends Controller with Logging with AuthLogging with ExecutionContexts {
 
-  def index() = AuthActions.AuthActionTest{ request =>
+  def index() = AuthActions.AuthActionTest{ implicit request =>
     NoCache(Ok(views.html.troubleshooter(LoadBalancer.all.filter(_.testPath.isDefined))))
   }
 
-  def test(id: String, testPath: String) = AuthActions.AuthActionTest.async{ request =>
+  def test(id: String, testPath: String) = AuthActions.AuthActionTest.async{ implicit request =>
 
     val loadBalancers = LoadBalancer.all.filter(_.testPath.isDefined)
 
@@ -83,8 +75,8 @@ object TroubleshooterController extends Controller with Logging with AuthLogging
 
   private def testOnContentApi(testPath: String, id: String): Future[EndpointStatus] = {
     val testName = "Can fetch directly from Content API"
-    val request = LiveContentApi.item(testPath, "UK").showFields("all")
-    getResponse(request).map {
+    val request = PreviewContentApi.client.item(testPath, "UK").showFields("all")
+    PreviewContentApi.client.getResponse(request).map {
       response =>
         if (response.status == "ok") {
           TestPassed(testName)
@@ -98,8 +90,8 @@ object TroubleshooterController extends Controller with Logging with AuthLogging
 
   private def testOnPreviewContentApi(testPath: String, id: String): Future[EndpointStatus] = {
     val testName = "Can fetch directly from Preview Content API"
-    val request = PreviewContentApi.item(testPath, "UK").showFields("all")
-    getResponse(request).map {
+    val request = PreviewContentApi.client.item(testPath, "UK").showFields("all")
+    PreviewContentApi.client.getResponse(request).map {
       response =>
         if (response.status == "ok") {
           TestPassed(testName)

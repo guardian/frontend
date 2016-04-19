@@ -1,14 +1,13 @@
 package controllers.commercial
 
+import common.commercial._
 import common.{ExecutionContexts, Logging}
 import model.commercial.{CapiAgent, Lookup}
 import model.{Cached, NoCache}
-import performance.MemcachedAction
 import play.api.mvc._
 
 import scala.concurrent.Future
 import scala.util.control.NonFatal
-import conf.switches.Switches.NewCommercialContent
 
 object ContentApiOffersController extends Controller with ExecutionContexts with implicits.Requests with Logging {
 
@@ -18,17 +17,13 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
     "foundation-supported" -> "fc-container--foundation-supported"
   )
 
-  private val sponsorTypeToLabel = {if (NewCommercialContent.isSwitchedOn) Map(
+  private val sponsorTypeToLabel = Map(
     "sponsored" -> "Supported by",
     "advertisement-feature" -> "Paid for by",
     "foundation-supported" -> "Supported by"
-  ) else {Map(
-    "sponsored" -> "Sponsored by",
-    "advertisement-feature" -> "Brought to you by",
-    "foundation-supported" -> "Supported by"
-  )}}
+  )
 
-  private def renderItems(format: Format, isMulti: Boolean) = MemcachedAction { implicit request =>
+  private def renderItems(format: Format, isMulti: Boolean) = Action.async { implicit request =>
 
     val optKeyword = request.getParameter("k")
     val optLogo = request.getParameter("l")
@@ -67,13 +62,72 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
       (specific ++ latestByKeyword.filter(_.trail.trailPicture.nonEmpty)).distinct take 4
     }
 
-    futureContents map {
+    futureContents.map(_.toList) map {
       case Nil => NoCache(format.nilResult)
       case contents => Cached(componentMaxAge) {
+
+        val omnitureId: String = optOmnitureId orElse optCapiTitle getOrElse ""
+
         if (isMulti) {
-          format.result(views.html.contentapi.items(contents, optLogo, optCapiTitle, optCapiLink, optCapiAbout, optClickMacro, optOmnitureId, optCapiAdFeature, optSponsorType, optSponsorLabel))
+          if(conf.switches.Switches.v2CapiMultipleTemplate.isSwitchedOn) {
+            format.result(views.html.contentapi.itemsV2(
+              contents map (CardContent.fromContentItem(_, optClickMacro)),
+              optLogo,
+              optCapiTitle,
+              optCapiLink,
+              optCapiAbout,
+              optClickMacro,
+              omnitureId,
+              optCapiAdFeature,
+              optSponsorType,
+              optSponsorLabel)
+            )
+          } else {
+            format.result(views.html.contentapi.items(
+              contents,
+              optLogo,
+              optCapiTitle,
+              optCapiLink,
+              optCapiAbout,
+              optClickMacro,
+              optOmnitureId,
+              optCapiAdFeature,
+              optSponsorType,
+              optSponsorLabel)
+            )
+          }
         } else {
-          format.result(views.html.contentapi.item(contents.head, optLogo, optCapiTitle, optCapiLink, optCapiAbout, optCapiButtonText, optCapiReadMoreUrl, optCapiReadMoreText, optSponsorType, optSponsorLabel, optClickMacro, optOmnitureId))
+          if(conf.switches.Switches.v2CapiSingleTemplate.isSwitchedOn) {
+            format.result(views.html.contentapi.itemV2(
+              CardContent.fromContentItem(contents.head, optClickMacro),
+              optLogo,
+              optCapiTitle,
+              optCapiLink,
+              optCapiAbout,
+              optCapiButtonText,
+              optCapiReadMoreUrl,
+              optCapiReadMoreText,
+              optSponsorType,
+              optSponsorLabel,
+              optClickMacro,
+              omnitureId
+            ))
+          } else {
+            format.result(views.html.contentapi.item(
+              contents.head,
+              optLogo,
+              optCapiTitle,
+              optCapiLink,
+              optCapiAbout,
+              optCapiButtonText,
+              optCapiReadMoreUrl,
+              optCapiReadMoreText,
+              optSponsorType,
+              optSponsorLabel,
+              optClickMacro,
+              optOmnitureId)
+            )
+          }
         }
       }
     }

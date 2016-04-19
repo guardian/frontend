@@ -1,4 +1,4 @@
-@(player: model.VideoPlayer, enhance: Boolean, showEndSlate: Boolean = true, amp: Boolean = false)
+@(player: model.VideoPlayer, enhance: Boolean, showEndSlate: Boolean = true, amp: Boolean = false, showPoster: Boolean = true, showOverlay: Boolean = false, seriesTag: Option[model.Tag] = None)
 
 @import conf.Static
 @import views.support.RenderClasses
@@ -38,7 +38,7 @@
             ))" data-title="@player.title"
                 data-auto-play="@player.autoPlay"
                 data-show-end-slate="@(player.showEndSlate && showEndSlate)"
-                poster="@player.poster"
+                @if(showPoster) { poster="@player.poster" }
                 data-duration="@player.video.videos.duration.toString()"
                 data-media-id="@player.video.properties.id"
                 data-end-slate="@player.endSlatePath"
@@ -55,8 +55,10 @@
                     <object type="application/x-shockwave-flash" data="@Static("flash/components/mediaelement/flashmediaelement-cdn.swf")" width="@player.width" height="@player.height">
                         <param name="allowFullScreen" value="true" />
                         <param name="movie" value="@Static("flash/components/mediaelement/flashmediaelement.swf")" />
-                        <param name="flashvars" value="controls=true&file=@encoding.url&poster=@player.poster" />
-                        <img src="@player.poster" alt="" width="@player.width" height="@player.height" />
+                        <param name="flashvars" value="controls=true&file=@encoding.url&@if(showPoster){poster=@player.poster}" />
+                        @if(showPoster) {
+                            <img src="@player.poster" alt="" width="@player.width" height="@player.height" />
+                        }
                         <div class="vjs-error-display">
                             <div>Sorry, your browser is unable to play this video.<br/>
                                 Please install <a href="http://get.adobe.com/flashplayer/">Adobe Flash</a>™ and try again.
@@ -65,6 +67,21 @@
                     </object>
                 }
             </video>
+            @if(showOverlay){
+            <div class="video-overlay">
+                @seriesTag.map { series =>
+                    <div class="video-overlay__series-label">
+                        @series.name
+                    </div>
+                }
+                <h1 class="video-overlay__headline">
+                    @player.title
+                </h1>
+                <span class="video-overlay__duration">
+                    @player.video.videos.formattedDuration
+                </span>
+            </div>
+            }
         </div>
     }
 </div>

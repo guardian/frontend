@@ -11,8 +11,8 @@
 }
 
 .formstack-heading--first {
-    margin-top: ($gs-baseline/3)*4;
     @include fs-header(5);
+    margin-top: ($gs-baseline/3)*4;
 }
 
 .formstack-heading--first + .formstack-section {
@@ -31,7 +31,7 @@
 
 .formstack-count {
     position: absolute;
-    color: colour(neutral-1);
+    color: $neutral-1;
     font-family: $f-sans-serif-text;
     font-size: 13px;
     margin-left: 6px;

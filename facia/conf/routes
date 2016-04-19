@@ -14,13 +14,19 @@ GET        /_agentcontents                                                      
 GET        /humans.txt                                                              controllers.Assets.at(path="/public", file="humans.txt")
 GET        /rockabox/rockabox_buster.html                                           controllers.Assets.at(path="/public", file="rockabox_buster.html")
 GET        /external/eyeblaster/addineyeV2.html                                     controllers.Assets.at(path="/public", file="addineyeV2.html")
+GET        /amp/remote.html                                                         controllers.Assets.at(path="/public", file="amp_remote.html")
+GET        /facebook-ia/remote.html                                                 controllers.Assets.at(path="/public", file="facebook_ia_remote.html")
 
+# AMP
+GET        /container/count/:count/offset/:offset/mf2.json                                      controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section = "", edition = "")
+GET        /container/count/:count/offset/:offset/section/:section/mf2.json                     controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section, edition = "")
+GET        /container/count/:count/offset/:offset/edition/:edition/mf2.json                     controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section = "", edition)
+GET        /container/count/:count/offset/:offset/section/:section/edition/:edition/mf2.json    controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section, edition)
 
 #Facia Press
 GET        /collection/*id/rss                                                      controllers.FaciaController.renderCollectionRss(id)
 GET        /container/use-layout/*id.json                                           controllers.FaciaController.renderContainerJsonWithFrontsLayout(id)
 GET        /container/*path/some/:num/:offset/:containerNameToFilter/:edition.json  controllers.FaciaController.renderSomeFrontContainers(path, num, offset, containerNameToFilter, edition)
-GET        /container-mf2/:num/:offset/*path.json                                   controllers.FaciaController.renderSomeFrontContainersMf2(num, offset, path)
 GET        /container/*id.json                                                      controllers.FaciaController.renderContainerJson(id)
 GET        /most-relevant-container/*path.json                                      controllers.FaciaController.renderMostRelevantContainerJson(path)
 

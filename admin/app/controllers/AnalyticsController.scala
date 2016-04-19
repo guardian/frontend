@@ -7,15 +7,21 @@ import model.NoCache
 import scala.concurrent.Future
 import play.api.libs.ws.WS
 import play.api.Play.current
+import model.quality.QualityData
 
 object AnalyticsController extends Controller with Logging with AuthLogging with ExecutionContexts {
-  def abtests() = AuthActions.AuthActionTest.async { request =>
+  def abtests() = AuthActions.AuthActionTest.async { implicit request =>
     Future(NoCache(Ok(views.html.abtests("PROD"))))
   }
 
-  def renderQuality() = AuthActions.AuthActionTest.async { request =>
-    WS.url("https://s3-eu-west-1.amazonaws.com/omniture-dashboard/index.html").get() map { response =>
-      NoCache(Ok(views.html.quality("PROD", response.body)))
-    }
+  def renderQuality() = AuthActions.AuthActionTest.async { implicit request =>
+      val charts = List("browsersTop25", "operatingSystemsTop25")
+      val response = charts.map { chartName =>
+        (chartName -> QualityData.getReport(chartName).getOrElse(""))
+      }.toMap
+
+      Future(NoCache(Ok(views.html.quality("PROD", response))))
+
   }
+
 }

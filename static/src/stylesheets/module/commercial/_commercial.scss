@@ -1,19 +1,12 @@
 @charset 'UTF-8';
 
 /* ==========================================================================
-   Icons
-   ========================================================================== */
-@import '../../icons/_commercial-icons-sprite';
-@import '../../icons/_commercial-icons-svg';
-
-/* ==========================================================================
    .commercial
    ========================================================================== */
 
 /* Common */
 @import '_commercial--v-high';
 @import '_commercial--multi';
-@import '_facia-container';
 @import '_lineitem';
 @import '_table';
 @import '_tabs';
@@ -22,6 +15,7 @@
 @import '_tones';
 
 /* Components */
+@import '_component';
 @import '_books';
 @import '_jobs';
 @import '_masterclasses';
@@ -44,3 +38,17 @@
 @import 'paidfor/_paidfor-content';
 @import 'paidfor/_paidfor-meta';
 @import 'paidfor/_paidfor-popup';
+
+/* Surveys */
+@import 'surveys/_survey';
+
+/* New adverts component */
+@import '_advert';
+@import '_adverts';
+
+/* Gimbap commercial component */
+@import 'gimbap/_gimbap-branding';
+@import 'gimbap/_gimbap-logo';
+@import 'gimbap/_gimbap-wrap';
+@import 'gimbap/_gimbap-richmedia';
+@import 'gimbap/_gimbap';

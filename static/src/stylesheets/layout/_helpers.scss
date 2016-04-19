@@ -104,8 +104,8 @@
 
     .loading__link,
     .accessible-link {
-        display: inline-block;
         @include fs-textSans(2);
+        display: inline-block;
     }
 }
 .loading .loading__animation,

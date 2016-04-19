@@ -22,7 +22,7 @@ define([
                 'common/modules/commercial/create-ad-slot': function () {
                     return '<div class="ad-slot"></div>';
                 },
-                'common/modules/commercial/dfp-api': {
+                'common/modules/commercial/dfp/dfp-api': {
                     addSlot: function () {},
                     createAdSlot: function () {
                         return '<div class="ad-slot"></div>';
@@ -99,7 +99,7 @@ define([
 
             detect.getBreakpoint = function () { return 'mobile'; };
             popular.prerender();
-            expect(popular.$mpu).toBeUndefined();
+            expect(popular.$mpu).toBe(null);
         });
 
         it('should not render MPU when disabled in commercial-features', function () {
@@ -107,7 +107,7 @@ define([
             commercialFeatures.popularContentMPU = false;
 
             popular.prerender();
-            expect(popular.$mpu).toBeUndefined();
+            expect(popular.$mpu).toBe(null);
         });
 
     });

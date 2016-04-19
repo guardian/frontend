@@ -5,7 +5,7 @@
 /* Configuration
    ========================================================================== */
 
-$c-navigation-base: colour(neutral-5);
+$c-navigation-base: $neutral-5;
 
 $navigation-height: $gs-row-height;
 
@@ -15,14 +15,14 @@ $navigation-toggler-width-full: 186px;
 
 $c-navigation-background: mix($c-navigation-base, #ffffff, 80%);
 // TODO: Palette?
-$c-navigation-background-side-bar: darken(colour(guardian-brand), 2%);
+$c-navigation-background-side-bar: darken($guardian-brand, 2%);
 
-$c-signposting-action: colour(news-default);
+$c-signposting-action: $news-default;
 $c-signposting-background: $c-navigation-base;
 
 $c-top-navigation-action: #ffffff;
 
-$c-local-navigation-action: colour(neutral-1);
+$c-local-navigation-action: $neutral-1;
 $c-local-navigation-background: $c-navigation-base;
 
 $c-global-navigation-background: $c-navigation-base;
@@ -30,57 +30,25 @@ $c-global-navigation-title: #ffffff;
 $c-global-navigation-title-background: $c-top-header-background;
 $global-navigation-title-width: $left-column + $gs-gutter;
 $global-navigation-title-width-wide: $left-column-wide + $gs-gutter;
-$c-global-navigation-action: colour(neutral-1);
+$c-global-navigation-action: $neutral-1;
 $c-global-navigation-border: mix($c-local-navigation-background, #ffffff, 60%);
 
-$c-navigation-toggle-background: colour(neutral-1);
+$c-navigation-toggle-background: $neutral-1;
 $c-navigation-toggle-icon: #ffffff;
 $c-navigation-toggle-shadow: rgba(#000000, .333333);
 
 $navigation-h-space-between-items: $gs-gutter/2;
 
-$c-navigation-expandable-background: colour(neutral-1);
+$c-navigation-expandable-background: $neutral-1;
 
 @include mq-add-breakpoint(navigationBreakOnTwoLevels, mq-get-breakpoint-width(desktop));
 @include mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-get-breakpoint-width(leftCol));
-
-@mixin animate-height-up($height) {
-    @keyframes animate-height-up {
-        from {
-            height: 0px;
-        }
-
-        to {
-            height: $height;
-        }
-    }
-
-    animation: animate-height-up ease-in .2s;
-    animation-fill-mode: forwards;
-    overflow: visible;
-}
-
-@mixin animate-height-down($height) {
-    @keyframes animate-height-down {
-        from {
-            height: $height;
-        }
-
-        to {
-            height: 0px;
-        }
-    }
-
-    animation: animate-height-down ease-in .2s;
-    animation-fill-mode: forwards;
-    overflow: hidden;
-}
 
 /* Styles common to all states
    ========================================================================== */
 
 .navigation-container {
-    background: colour(guardian-brand);
+    background: $guardian-brand;
 }
 
 .navigation {
@@ -89,22 +57,6 @@ $c-navigation-expandable-background: colour(neutral-1);
     clear: both;
     background: $c-navigation-background;
     height: $navigation-height;
-
-    &.animate-up-desktop {
-        @include animate-height-up('72px');
-    }
-
-    &.animate-down-desktop {
-        @include animate-height-down('72px');
-    }
-
-    &.animate-up-mobile {
-        @include animate-height-up('0px');
-    }
-
-    &.animate-down-mobile {
-        @include animate-height-down('0px');
-    }
 
     &:before,
     &:after {
@@ -143,7 +95,7 @@ $c-navigation-expandable-background: colour(neutral-1);
     font-weight: 500;
 
     // Restore opentype kerning settings in WebKit / Blink
-    -webkit-font-feature-settings: "kern" 1;
+    -webkit-font-feature-settings: 'kern' 1;
 
     a {
         &,
@@ -167,10 +119,6 @@ $c-navigation-expandable-background: colour(neutral-1);
 .navigation__expandable {
     background: $c-navigation-expandable-background;
     overflow: hidden;
-}
-.navigation__expandable--sticky {
-    overflow-x: hidden;
-    overflow-y: scroll;
 }
 .signposting,
 .local-navigation,
@@ -237,7 +185,7 @@ $c-navigation-expandable-background: colour(neutral-1);
 }
 .signposting__separator__inner {
     font-weight: 200;
-    color: colour(neutral-2);
+    color: $neutral-2;
     font-size: 27px;
     line-height: $navigation-height;
 }
@@ -334,26 +282,24 @@ $c-navigation-expandable-background: colour(neutral-1);
     background-repeat: no-repeat;
     background-size: cover;
 }
+
 .top-navigation__icon--home {
+    @include mq-list((-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi), (min-resolution: 1.3dppx)) {
+        background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNSAxOCI+PHBhdGggZD0ibTggMC0xIDAtNyA3IDAgMTAgMSAxIDQgMCAwLTcgNSAwIDAgNyA0IDAgMS0xIDAtMTB6IiBmaWxsPSIjZmZmIiAvPjwvc3ZnPg==');
+    }
     width: 15px;
     height: 18px;
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAASCAQAAAAul0yEAAAAO0lEQVQoz9XPsQ0AIAwDwYzuzZ8iQjIQUiLh9r5xhA0BinqInDqsggX34EAPSpzBFTOg3Su2o3+wGtYAGI94niPCbrMAAAAASUVORK5CYII=');
     margin-bottom: -3px;
-
-    @media (-webkit-min-device-pixel-ratio: 1.3),
-           (min-resolution: 124.8dpi),
-           (min-resolution: 1.3dppx) {
-        background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNSAxOCI+PHBhdGggZD0ibTggMC0xIDAtNyA3IDAgMTAgMSAxIDQgMCAwLTcgNSAwIDAgNyA0IDAgMS0xIDAtMTB6IiBmaWxsPSIjZmZmIiAvPjwvc3ZnPg==');
-    }
 }
 
 /* Global navigation
    ========================================================================== */
 
 .global-navigation {
+    @include clearfix;
     background: $c-global-navigation-background;
     clear: both;
-    @include clearfix;
 
     @include mq($until: tablet) {
         line-height: 28px;
@@ -389,7 +335,7 @@ $c-navigation-expandable-background: colour(neutral-1);
     color: $c-global-navigation-title;
     background: $c-global-navigation-title-background;
     float: left;
-    border-top: 1px solid colour(guardian-brand);
+    border-top: 1px solid $guardian-brand;
 
     @include mq($until: tablet) {
         line-height: $gs-baseline*2;
@@ -416,8 +362,8 @@ $c-navigation-expandable-background: colour(neutral-1);
     }
 
     &.global-navigation__title--history {
-        color: guss-colour(neutral-1, $pasteup-palette);
-        background: guss-colour(neutral-3, $pasteup-palette);
+        color: $neutral-1;
+        background: $neutral-3;
         border: 0;
         padding-bottom: 0;
     }
@@ -447,7 +393,7 @@ $c-navigation-expandable-background: colour(neutral-1);
     }
 
     &.global-navigation__children--history {
-        background: guss-colour(neutral-3, $pasteup-palette);
+        background: $neutral-3;
 
         .button--tag {
             margin-top: $gs-baseline / 2;
@@ -690,12 +636,12 @@ $c-navigation-expandable-background: colour(neutral-1);
 
 // TODO: Move
 .navigation-toggle {
+    @include fs-header(1);
     z-index: 4; /* ensure it is higher than .top-navigation__action */
     position: absolute;
     right: 0;
     top: 0;
     box-sizing: border-box;
-    @include fs-header(1);
     line-height: $navigation-height;
     padding: 0 $gs-gutter / 2;
     background: $c-navigation-toggle-background;

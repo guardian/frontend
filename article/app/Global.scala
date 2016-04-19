@@ -1,3 +1,4 @@
+import common.Logback.Logstash
 import common.dfp.DfpAgentLifecycle
 import common.{CloudWatchApplicationMetrics, ContentApiMetrics}
 import conf.{CorsErrorHandler, Filters, SwitchboardLifecycle}
@@ -15,14 +16,13 @@ object Global
   with CloudWatchApplicationMetrics
   with SurgingContentAgentLifecycle
   with CorsErrorHandler
-  with SwitchboardLifecycle {
+  with SwitchboardLifecycle
+  with Logstash {
   override lazy val applicationName = "frontend-article"
 
   override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ::: List(
-    ContentApiMetrics.ElasticHttpTimingMetric,
-    ContentApiMetrics.ElasticHttpTimeoutCountMetric,
-    ContentApiMetrics.ContentApiCircuitBreakerRequestsMetric,
-    ContentApiMetrics.ContentApiCircuitBreakerOnOpen,
+    ContentApiMetrics.HttpLatencyTimingMetric,
+    ContentApiMetrics.HttpTimeoutCountMetric,
     ContentApiMetrics.ContentApiErrorMetric
   )
 }

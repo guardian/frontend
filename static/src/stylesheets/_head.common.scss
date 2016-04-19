@@ -33,22 +33,10 @@
 
 @include grid-system;
 @import 'layout/_header';
+@import 'layout/_ab-new-header-test-variant';
 @import 'layout/_helpers';
 @import 'layout/_side-margins';
-@include guss-row-utility($detect: true);
-@include guss-columns(
-    $base-class: $guss-columns-utility-class,
-    $css3-columns-support: false, // Because buggy in some versions of WebKit
-    $columns-fallback-width: (
-        tablet: gs-span(9),
-        desktop: gs-span(12)
-    ),
-    $columns-fallback-columns: (
-        tablet: 2,
-        desktop: 3
-    )
-);
-
+@import 'pasteup/layout/styles';
 
 /* ==========================================================================
    Global modules

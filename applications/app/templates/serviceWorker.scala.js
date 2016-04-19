@@ -1,4 +1,5 @@
 @()
+@import conf.Static
 
 /*eslint quotes: [2, "single"], curly: [2, "multi-line"], strict: 0*/
 /*eslint-env browser*/
@@ -8,6 +9,7 @@
 //
 // Offline page
 //
+"use strict";
 
 var staticCacheName = 'static';
 
@@ -90,6 +92,13 @@ self.addEventListener('install', function (event) {
     event.waitUntil(updateCache());
 });
 
+var needCredentialsWorkaround = function (url) {
+    var whitelist = ['https://discussion.theguardian.com/discussion-api'];
+    return whitelist.some(function (entry) {
+        return new RegExp('^' + entry).test(url);
+    });
+};
+
 this.addEventListener('fetch', function (event) {
     var request = event.request;
 
@@ -103,6 +112,11 @@ this.addEventListener('fetch', function (event) {
 
     var url = new URL(request.url);
     var isRootRequest = url.host === self.location.host;
+    var isAssetRequest = @if(play.Play.isDev()) {
+        new RegExp('^@Configuration.assets.path').test(url.pathname)
+    } else {
+        new RegExp('^@Configuration.assets.path').test(url.href)
+    };
     // To workaround a bug in Chrome which results in broken HTTPS->HTTP
     // redirects, we only handle root requests if they match the developer
     // blog. The info section often hosts holding pages which will could
@@ -117,16 +131,81 @@ this.addEventListener('fetch', function (event) {
                     return caches.match('/offline-page');
                 })
         );
-    @* In dev, all requests come from one server (by default) *@
-    } else if (@if(play.Play.isDev()) { true } else { !isRootRequest }) {
+    } else if (isAssetRequest) {
         // Default fetch behaviour
         // Cache first for all other requests
         event.respondWith(
             caches.match(request)
                 .then(function (response) {
-                    return response || fetch(request);
+                    // Workaround Firefox bug which drops cookies
+                    // https://github.com/guardian/frontend/issues/12012
+                    return response || fetch(request, needCredentialsWorkaround(request.url) ? { credentials: 'include' } : {});
                 })
         );
     }
 });
 
+self.addEventListener('activate', function(event) {
+});
+
+self.addEventListener('push', function(event) {
+
+    event.waitUntil(
+        self.registration.pushManager.getSubscription().then(function (sub) {
+            var gcmBrowserId = sub.endpoint.substring(sub.endpoint.lastIndexOf('/') + 1);
+
+            var endpoint = '@{JavaScript(Configuration.Notifications.latestMessageUrl)}/' + gcmBrowserId;
+            return fetch(endpoint, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (response) {
+               return response.json();
+            })
+            .then(function (json) {
+                   if(json.status === "ok" && json.messages.length > 0) {
+                       /* Client returns current messages for a given browserid ( which are then deleted ) We want the latest one.
+                        If we loop displaying all of them the promise doesn't resolved and a 'website being updated in the background' message is displayed
+                        */
+                       var message = json.messages.slice(-1)[0];
+                       var data = {topic: message.topic, blockId: message.blockId};
+                       return self.registration.showNotification(message.title, {
+                           body: message.body,
+                           icon: '@{JavaScript(Static("images/favicons/114x114.png").path)}',
+                           tag: message.title,
+                           data: data
+                       });
+                }
+            })
+
+        })
+    );
+});
+
+self.addEventListener('notificationclick', function(event){
+
+    event.notification.close();
+    var url = '@{JavaScript(Configuration.site.host)}/'
+        + event.notification.data.topic
+        + "?page=with:block-" + event.notification.data.blockId
+        +  "&CMP=not_b-webalert"
+        + "#block-" + event.notification.data.blockId;
+
+    event.waitUntil(
+        clients.matchAll({
+                type: 'window'
+            })
+            .then(function(windowClients) {
+                for (var i = 0; i < windowClients.length; i++) {
+                    var client = windowClients[i];
+                    if (client.url === url && 'focus' in client) {
+                        return client.focus();
+                    }
+                }
+                if (clients.openWindow) {
+                    return clients.openWindow(url);
+                }
+            })
+    );
+});

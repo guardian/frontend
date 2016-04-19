@@ -13,7 +13,7 @@
         display: block;
         width: 100%;
         height: 1px;
-        background-color: colour(neutral-4);
+        background-color: $neutral-4;
     }
 
     @include mq($until: tablet) {
@@ -34,10 +34,10 @@
 }
 
 .headline-list__count {
+    @include font($f-serif-headline, 200, 44px);
     float: left;
     width: gs-span(1);
-    color: colour(neutral-4);
-    @include font($f-serif-headline, 200, 44px);
+    color: $neutral-4;
 
     @include mq(mobile) {
         width: gs-span(1) - $gs-gutter / 2;
@@ -45,10 +45,10 @@
 }
 
 .headline-list__link {
+    @include fs-headline(2);
     display: block;
     overflow: hidden;
-    color: colour(neutral-1);
-    @include fs-headline(2);
+    color: $neutral-1;
     font-weight: 500;
 
     .headline-list__text {
@@ -61,13 +61,13 @@
     }
 
     .inline-icon {
-        fill: colour(neutral-2);
+        fill: $neutral-2;
     }
 
     .inline-camera,
     .inline-volume-high,
     .inline-video-icon {
-        fill: colour(media-default);
+        fill: $media-default;
     }
 
     .inline-video-icon svg {
@@ -78,7 +78,7 @@
     &:visited {
         .headline-list__body,
         .fc-item__link {
-            color: colour(neutral-2);
+            color: $neutral-2;
         }
     }
 
@@ -91,7 +91,7 @@
         }
 
         .headline-list__count {
-            color: colour(neutral-3);
+            color: $neutral-3;
         }
     }
 
@@ -103,19 +103,17 @@
 
 .headline-list__body {
     .fc-item__link & {
-        color: colour(neutral-1);
+        color: $neutral-1;
     }
 }
 
 
 @include mq(tablet, desktop) {
-    @include guss-columns('.headline-column--tablet', $column-min-width: 340px, $columns-fallback-width: gs-span(9), $columns-fallback-columns: 2);
-
-    .headline-column {
-        min-height: gs-height(11) - $gs-baseline;
-        max-height: gs-height(12) - $gs-baseline;
-        column-fill: auto;
-    }
+    @include layout-columns('.headline-column--tablet',
+        $column-min-width: 340px,
+        $columns-fallback-width: gs-span(9),
+        $columns-fallback-columns: 2
+    );
 
     .headline-column__item {
         height: auto;
@@ -123,5 +121,9 @@
 }
 
 @include mq(desktop) {
-    @include guss-columns('.headline-column--desktop', $column-min-width: 300px, $columns-fallback-width: gs-span(8), $columns-fallback-columns: 2);
+    @include layout-columns('.headline-column--desktop',
+        $column-min-width: 300px,
+        $columns-fallback-width: gs-span(8),
+        $columns-fallback-columns: 2
+    );
 }

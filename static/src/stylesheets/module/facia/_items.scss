@@ -54,7 +54,7 @@
 
 .fc-slice__item--mpu-candidate {
     @include mq(tablet) {
-        min-height: 250 + $mpu-ad-label-height;
+        min-height: $mpu-original-height + $mpu-ad-label-height;
     }
 }
 .fc-slice__item--no-mpu {
@@ -65,6 +65,10 @@
 .fc-item--list-mobile {
     @include mq($until: tablet) {
         @include fc-item--list;
+
+        .fc-item__video-play {
+            display: none;
+        }
     }
 }
 
@@ -107,7 +111,7 @@
             }
         }
 
-        &[class*="fc-item--has-sublinks"] {
+        &[class*='fc-item--has-sublinks'] {
             .has-flex-wrap &.fc-item--has-cutout {
                 .fc-item__header {
                     padding-right: 0;
@@ -140,7 +144,7 @@
             }
         }
 
-        &[class*="fc-item--has-sublinks"] {
+        &[class*='fc-item--has-sublinks'] {
             .fc-item__standfirst,
             .fc-item__media-wrapper {
                 display: none;

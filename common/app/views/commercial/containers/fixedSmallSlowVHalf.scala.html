@@ -1,0 +1,29 @@
+@import views.support.commercial.TrackingCodeBuilder.mkInteractionTrackingCode
+@(frontId: String,
+  containerIndex: Int,
+  containerModel: common.commercial.ContainerModel)(implicit request: RequestHeader)
+
+<div class="adverts__row">
+    <div class="adverts__column">
+        @containerModel.content.fixed.initialCards.take(2).map(card => views.html.commercial.cards.itemLargeCard(
+            card,
+            optAdvertClassNames = Some(Seq("inverse", "thumbnail")),
+            omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
+            useCardBranding = !containerModel.isSingleSponsorContainer
+        ))
+        @containerModel.content.fixed.initialCards.drop(2).take(2).map(card => views.html.commercial.cards.itemLargeCard(
+            card,
+            optAdvertClassNames = Some(Seq("inverse", "thumbnail")),
+            optClassNames = Some(Seq("hide-until-tablet")),
+            omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
+            useCardBranding = !containerModel.isSingleSponsorContainer
+        ))
+    </div>
+    @containerModel.content.fixed.initialCards.drop(4).take(1).map(card => views.html.commercial.cards.itemCard(
+        card,
+        cardType = cards.Half,
+        optClassNames = Some(Seq("hide-until-tablet")),
+        omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
+        useCardBranding = !containerModel.isSingleSponsorContainer
+    ))
+</div>

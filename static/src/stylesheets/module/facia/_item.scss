@@ -157,7 +157,7 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 
     a {
-        color: colour(neutral-1);
+        color: $neutral-1;
         color: inherit;
     }
 
@@ -189,7 +189,7 @@ $fc-item-gutter: $gs-gutter / 4;
 
     .u-faux-block-link--hover,
     .fc-item__image-container {
-        background-color: colour(neutral-6);
+        background-color: $neutral-6;
 
         .fc-slice--nav-list--media & {
             background-color: inherit;
@@ -245,13 +245,13 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 }
 
-.fc-item--video .fc-item__title,
-.rich-link--video .rich-link__title,
-.fc-sublink--video .fc-sublink__link {
+.fc-item__title,
+.rich-link__title,
+.fc-sublink__link {
     .inline-video-icon {
-        fill: colour(media-default);
+        fill: $media-default;
 
-        svg {
+        > svg {
             height: .75em;
             width: 1.1em;
             margin-right: .3em;
@@ -263,7 +263,7 @@ $fc-item-gutter: $gs-gutter / 4;
 .rich-link--gallery .rich-link__title,
 .fc-sublink--gallery .fc-sublink__link {
     .inline-camera {
-        fill: colour(media-default);
+        fill: $media-default;
 
         svg {
             height: .72em;
@@ -277,7 +277,7 @@ $fc-item-gutter: $gs-gutter / 4;
 .rich-link--audio .rich-link__title,
 .fc-sublink--audio .fc-sublink__link {
     .inline-volume-high {
-        fill: colour(media-default);
+        fill: $media-default;
 
         svg {
             height: .72em;
@@ -375,7 +375,7 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__live-indicator {
-    color: colour(live-default);
+    color: $live-default;
 }
 
 .fc-item__header,
@@ -406,7 +406,7 @@ $fc-item-gutter: $gs-gutter / 4;
     word-wrap: break-word;
 
     .inline-external-link {
-        fill: colour(external-main-1);
+        fill: $external-main-1;
 
         svg {
             width: 1.2em;
@@ -418,7 +418,7 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__title--quoted {
     .inline-quote {
-        fill: colour(neutral-2);
+        fill: $neutral-2;
 
         svg {
             width: 1.2em;
@@ -434,7 +434,7 @@ $fc-item-gutter: $gs-gutter / 4;
         content: '/';
         display: inline-block;
         margin-left: .2em;
-        color: mix(colour(neutral-1), #ffffff, 20%);
+        color: mix($neutral-1, #ffffff, 20%);
     }
 
     &:hover:after {
@@ -471,7 +471,7 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__standfirst {
     @include fs-headline(1);
     padding-bottom: .5em;
-    color: colour(neutral-2);
+    color: $neutral-2;
     display: none;
 
     .fc-item--has-boosted-title & {
@@ -520,12 +520,12 @@ $block-height: 71px;
     overflow: hidden;
     @include fs-headline(1);
     line-height: 1rem;
-    color: mix(#ffffff, colour(live-default), 92%);
+    color: mix(#ffffff, $live-default, 92%);
     max-height: $block-height;
     padding: $gs-baseline/4 $gs-baseline/2;
-    border-top: 1px solid mix(#ffffff, colour(live-default), 50%);
+    border-top: 1px solid mix(#ffffff, $live-default, 50%);
     border-bottom: 4px solid #cc2b12;
-    background-color: colour(live-main-2);
+    background-color: $live-main-2;
 }
 
 .fc-item__liveblog-block__text:after {
@@ -536,11 +536,11 @@ $block-height: 71px;
     @include fs-headline(1);
     font-size: 30px;
     line-height: $gs-baseline;
-    color: mix(#ffffff, colour(live-default), 92%);
+    color: mix(#ffffff, $live-default, 92%);
     height: 18px;
     padding-right: 8px;
-    background-color: colour(live-main-2);
-    box-shadow: -5px 0 5px -2px colour(live-main-2);
+    background-color: $live-main-2;
+    box-shadow: -5px 0 5px -2px $live-main-2;
 }
 
 .fc-item__liveblog-block__time {
@@ -555,10 +555,10 @@ $block-height: 71px;
     left: $gs-gutter * .25;
     right: $gs-gutter * .25;
     @include fs-textSans(1);
-    color: colour(neutral-2);
+    color: $neutral-2;
 
     .inline-icon {
-        fill: colour(neutral-3);
+        fill: $neutral-3;
     }
 
     a, button {
@@ -685,7 +685,7 @@ $block-height: 71px;
     @include mq(tablet) {
         border: 0;
         padding: 0;
-        
+
         .inline-icon {
             margin-left: 0;
         }
@@ -747,7 +747,7 @@ $block-height: 71px;
 .fc-item__link,
 .fc-sublink__link {
     &:visited {
-        color: mix(colour(neutral-1), #ffffff, 80%);
+        color: mix($neutral-1, #ffffff, 80%);
     }
 }
 

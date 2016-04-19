@@ -1,9 +1,9 @@
 package controllers
 
-import com.gu.contentapi.client.model.ItemResponse
-import com.gu.contentapi.client.model.v1.{Content => ApiContent, Crossword, Section => ApiSection}
+import com.gu.contentapi.client.model.v1.{Content => ApiContent, Crossword, Section => ApiSection, ItemResponse}
 import common.{Edition, ExecutionContexts, Logging}
-import conf.{LiveContentApi, Static}
+import conf.Static
+import contentapi.ContentApiClient
 import crosswords.{AccessibleCrosswordRows, CrosswordPage, CrosswordSearchPage, CrosswordSvg}
 import model._
 import org.joda.time.{DateTime, LocalDate}
@@ -19,7 +19,7 @@ trait CrosswordController extends Controller with Logging with ExecutionContexts
   def noResults()(implicit request: RequestHeader): Result
 
   def getCrossword(crosswordType: String, id: Int)(implicit request: RequestHeader): Future[ItemResponse] = {
-    LiveContentApi.getResponse(LiveContentApi.item(s"crosswords/$crosswordType/$id", Edition(request)).showFields("all"))
+    ContentApiClient.getResponse(ContentApiClient.item(s"crosswords/$crosswordType/$id", Edition(request)).showFields("all"))
   }
 
   def withCrossword(crosswordType: String, id: Int)(f: (Crossword, ApiContent) => Result)(implicit request: RequestHeader): Future[Result] = {
@@ -111,7 +111,7 @@ object CrosswordSearchController extends CrosswordController {
       empty => Future.successful(Cached(7.days)(Ok(views.html.crosswordSearch(CrosswordSearchPage.make())))),
 
       params => {
-        val withoutSetter = LiveContentApi.item(s"crosswords/series/${params.crosswordType}")
+        val withoutSetter = ContentApiClient.item(s"crosswords/series/${params.crosswordType}")
           .stringParam("from-date", params.fromDate.toString("yyyy-MM-dd"))
           .stringParam("to-date", params.toDate.toString("yyyy-MM-dd"))
           .pageSize(50)
@@ -120,8 +120,8 @@ object CrosswordSearchController extends CrosswordController {
           withoutSetter.stringParam("tag", s"profile/${setter.toLowerCase}")
         }
 
-        LiveContentApi.getResponse(maybeSetter.showFields("all")).map { response =>
-          response.results match {
+        ContentApiClient.getResponse(maybeSetter.showFields("all")).map { response =>
+          response.results.getOrElse(Seq.empty).toList match {
             case Nil => noResults
 
             case results =>
@@ -157,33 +157,4 @@ object CrosswordSearchController extends CrosswordController {
   }
 
   case class CrosswordLookup(crosswordType: String, id: Int)
-}
-
-object CrosswordPreferencesController extends Controller with PreferenceController {
-  private val CrosswordOptIn = "crossword_opt_in"
-  private val CrosswordOptInPath= "/crosswords"
-  private val CrosswordOptInMaxAge = 14.days.toSeconds.toInt
-  private val CrosswordOptOutMaxAge = 60.days.toSeconds.toInt
-
-  def crosswordsOptIn = Action { implicit request =>
-    Cached(60)(SeeOther("/crosswords?view=beta").withCookies(
-      Cookie(
-        CrosswordOptIn, "true",
-        path = CrosswordOptInPath,
-        maxAge = Some(CrosswordOptInMaxAge),
-        domain = getShortenedDomain(request.domain)
-      )
-    ))
-  }
-
-  def crosswordsOptOut = Action { implicit request =>
-    Cached(60)(SeeOther("/crosswords?view=classic").withCookies(
-      Cookie(
-        CrosswordOptIn, "false",
-        path = CrosswordOptInPath,
-        maxAge = Some(CrosswordOptOutMaxAge),
-        domain = getShortenedDomain(request.domain)
-      )
-    ))
-  }
 }

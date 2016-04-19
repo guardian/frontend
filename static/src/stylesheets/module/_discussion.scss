@@ -14,12 +14,6 @@ $avatarPadding: $gs-gutter / 2;
     .pagination_legend {
         display: none !important; // overriding .hide-on-mobile-inline
     }
-
-    @include mq(tablet) {
-        // To offset the anchor link to accomodate the sticky nav
-        padding-top: $gs-baseline*5;
-        margin-top: $gs-baseline*-5;
-    }
 }
 
 .discussion--closed.discussion--empty {
@@ -69,7 +63,7 @@ $avatarPadding: $gs-gutter / 2;
 
 .discussion__top-border {
     @include mq(tablet) {
-        border-top: 1px solid colour(news-accent);
+        border-top: 1px solid $news-accent;
         margin-top: -1px;
     }
 }
@@ -102,7 +96,7 @@ $avatarPadding: $gs-gutter / 2;
 .discussion__disabled-msg {
     @include fs-headline(3);
     padding-top: $gs-baseline / 1.5;
-    color: colour(neutral-2);
+    color: $neutral-2;
 }
 
 .d-discussion {
@@ -117,9 +111,9 @@ $avatarPadding: $gs-gutter / 2;
 .d-discussion__size-message {
     @include fs-textSans(2);
     margin-bottom: $gs-baseline * 2 / 3;
-    border-top: 1px solid colour(neutral-4);
+    border-top: 1px solid $neutral-4;
     padding-top: $gs-baseline;
-    color: colour(neutral-2);
+    color: $neutral-2;
 
     & + .d-comment {
         border-top: 0;
@@ -129,7 +123,7 @@ $avatarPadding: $gs-gutter / 2;
 .discussion__heading {
     margin-bottom: 0;
     padding-top: 0;
-    border-top: 1px solid colour(news-accent);
+    border-top: 1px solid $news-accent;
 
     @include mq(tablet) {
         border-top: 0;
@@ -148,7 +142,7 @@ $avatarPadding: $gs-gutter / 2;
 
 .discussion__comment-count {
     font-weight: bold;
-    color: colour(neutral-2);
+    color: $neutral-2;
 }
 
 .discussion--not-staff .d-staff-required {
@@ -206,7 +200,7 @@ $avatarPadding: $gs-gutter / 2;
 
 .discussion__pagination--bottom {
     .pagination {
-        border-top: 1px solid colour(neutral-4);
+        border-top: 1px solid $neutral-4;
     }
 }
 
@@ -252,7 +246,7 @@ $avatarPadding: $gs-gutter / 2;
 .discussion__toolbar {
     .id--signed-in .discussion--open &,
     .discussion--has-top-comments & {
-        border-top: 1px solid colour(neutral-4);
+        border-top: 1px solid $neutral-4;
     }
 
     .pagination {
@@ -261,11 +255,11 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .discussion__toolbar-item {
+    @include fs-textSans(2);
     position: relative;
     top: 1px;
     float: left;
-    @include fs-textSans(2);
-    color: colour(neutral-2);
+    color: $neutral-2;
     display: inline-block;
     line-height: $gs-baseline * 2;
 
@@ -283,10 +277,10 @@ $avatarPadding: $gs-gutter / 2;
         display: inline-block;
         width: auto;
         &:after {
-            border-top-color: colour(neutral-2);
+            border-top-color: $neutral-2;
         }
         &.is-active:after {
-            border-bottom-color: colour(neutral-2);
+            border-bottom-color: $neutral-2;
         }
     }
     span {
@@ -298,7 +292,7 @@ $avatarPadding: $gs-gutter / 2;
     &:not(:first-child) {
         padding-left: $gs-gutter / 2;
         margin-left: $gs-gutter / 2;
-        border-left: 1px solid colour(neutral-4);
+        border-left: 1px solid $neutral-4;
     }
 }
 
@@ -333,7 +327,7 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .d-comment:target {
-    background-color: colour(neutral-7);
+    background-color: $neutral-7;
     &:before,
     &:after {
         content: '';
@@ -341,10 +335,10 @@ $avatarPadding: $gs-gutter / 2;
         height: 100%;
         width: .5 * $gs-gutter;
         top: -1px;
-        background-color: colour(neutral-7);
+        background-color: $neutral-7;
         border-style: solid;
         border-width: 1px 0;
-        border-color: colour(neutral-4);
+        border-color: $neutral-4;
     }
     &:before {
         left: -.5 * $gs-gutter;
@@ -355,15 +349,15 @@ $avatarPadding: $gs-gutter / 2;
     &.d-comment--response {
         &:before,
         &:after {
-            border-color: colour(neutral-6);
+            border-color: $neutral-6;
         }
     }
 
     .d-comment-box__parent-comment-spout {
-        border-bottom-color: colour(neutral-5);
+        border-bottom-color: $neutral-5;
     }
     .d-comment-box__parent-comment {
-        background-color: colour(neutral-5);
+        background-color: $neutral-5;
     }
 }
 
@@ -431,9 +425,9 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-comment__author,
 .d-comment-box__author {
+    @include fs-textSans(4);
     overflow: hidden;
     padding-right: $gs-gutter / 4;
-    @include fs-textSans(4);
     font-weight: bold;
     text-overflow: ellipsis;
 
@@ -448,29 +442,29 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-comment-box__author-label {
     @include fs-textSans(4);
-    color: colour(neutral-2);
+    color: $neutral-2;
 }
 
 .d-comment__author-label {
-    display: block;
     @include fs-textSans(1);
-    color: colour(news-default);
+    display: block;
+    color: $news-default;
     font-weight: bold;
 
     .d-comment__gu-icon svg {
-        fill: colour(news-default);
+        fill: $news-default;
     }
 
 }
 
 .d-comment__pick {
+    @include fs-textSans(1);
     margin-bottom: $gs-baseline / 6;
     white-space: nowrap;
-    @include fs-textSans(1);
     font-weight: bold;
 
     .d-comment__gu-icon svg {
-        fill: colour(neutral-1);
+        fill: $neutral-1;
     }
 }
 
@@ -487,8 +481,8 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .d-comment__timestamp {
-    margin-bottom: $gs-baseline;
     @include fs-textSans(1);
+    margin-bottom: $gs-baseline;
 
     @include mq($until: tablet) {
         padding: 0;
@@ -499,7 +493,7 @@ $avatarPadding: $gs-gutter / 2;
     }
 
     a {
-        color: colour(neutral-2);
+        color: $neutral-2;
     }
     .inline-comment-anchor {
         display: none;
@@ -515,9 +509,9 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-comment__reply-to-author,
 .d-comment-box__reply-to-author {
+    @include fs-textSans(4);
     padding-right: $gs-gutter / 4;
     display: inline;
-    @include fs-textSans(4);
 }
 
 .d-comment__author {
@@ -566,10 +560,10 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-comment__body,
 .d-comment-box__preview-body {
+    @include font-size(14, 20);
     position: relative;
     z-index: 2;
     font-family: $f-sans-serif-text;
-    @include font-size(14, 20);
     margin-bottom: $gs-baseline * 2 / 3;
 
     p {
@@ -586,7 +580,7 @@ $avatarPadding: $gs-gutter / 2;
     blockquote {
         margin: $gs-baseline $gs-gutter;
         padding-left: $gs-gutter / 2;
-        color: colour(neutral-2);
+        color: $neutral-2;
 
         .d-comment__inner--top-level &:first-child {
             margin-top: $gs-baseline * 1.5;
@@ -611,7 +605,7 @@ $avatarPadding: $gs-gutter / 2;
    ======================================================= */
 
 .d-comment--top-level {
-    border-top: 1px solid colour(neutral-4);
+    border-top: 1px solid $neutral-4;
 }
 
 .d-comment__inner--top-level {
@@ -662,7 +656,7 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-comment--response,
 .d-comment-box--response {
-    border-top: 1px solid colour(neutral-6);
+    border-top: 1px solid $neutral-6;
     margin-left: $gs-gutter * 1.5;
 
     @include mq(tablet) {
@@ -679,9 +673,9 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .d-show-more-replies {
-    border-top: 1px dotted colour(neutral-5);
-    padding: $gs-baseline 0;
     @include fs-textSans(2);
+    border-top: 1px dotted $neutral-5;
+    padding: $gs-baseline 0;
 
     @include mq(tablet) {
         margin-left: $avatarSize-big + $avatarPadding;
@@ -691,7 +685,7 @@ $avatarPadding: $gs-gutter / 2;
 .d-show-more-replies__button.button--show-more {
     padding-left: $gs-baseline * 2;
     svg {
-        fill: colour(guardian-brand);
+        fill: $guardian-brand;
         height: 16px;
         width: 16px;
         left: 4px;
@@ -703,11 +697,11 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-comment__comment-removed {
     @include fs-textSans(1);
-    color: colour(neutral-2);
+    color: $neutral-2;
     margin-top: $gs-baseline / 1.5;
 
     a {
-        color: colour(guardian-brand-light);
+        color: $guardian-brand-light;
     }
 }
 
@@ -734,7 +728,7 @@ $comment-recommend-button-size: 19px;
     width: $comment-recommend-button-size;
     height: $comment-recommend-button-size;
     display: inline-block;
-    background-color: colour(neutral-7);
+    background-color: $neutral-7;
     cursor: default;
     position: relative;
     top: 1px;
@@ -745,7 +739,7 @@ $comment-recommend-button-size: 19px;
         height: $gs-baseline;
         padding-top: $gs-baseline/4;
         padding-left: $gs-baseline/6;
-        fill: colour(neutral-2);
+        fill: $neutral-2;
     }
     .id--signed-in .d-discussion--recommendations-open & {
         cursor: pointer;
@@ -767,14 +761,14 @@ $comment-recommend-button-size: 19px;
     width: $comment-recommend-button-size;
     height: $comment-recommend-button-size;
     border-radius: 18px;
-    background-color: colour(neutral-7);
+    background-color: $neutral-7;
 }
 .d-comment__recommend-count {
+    @include fs-textSans(1);
     display: inline-block;
     overflow: hidden;
     min-width: 12px;
-    @include fs-textSans(1);
-    color: colour(neutral-2);
+    color: $neutral-2;
     text-align: right;
     line-height: $comment-recommend-button-size;
     height: $comment-recommend-button-size;
@@ -808,7 +802,7 @@ $comment-recommend-button-size: 19px;
     .d-comment__recommend-button,
     .d-comment__recommend-pulse {
         transition: background-color .25s ease-in-out;
-        background-color: colour(news-main-2);
+        background-color: $news-main-2;
     }
     .d-comment__recommend-pulse {
         animation: pulse .5s ease-in-out 1;
@@ -843,7 +837,7 @@ $comment-recommend-button-size: 19px;
 .d-comment__action {
     @include fs-textSans(1);
     display: inline-block;
-    color: colour(news-default);
+    color: $news-default;
     font-weight: bold;
     line-height: 20px;
     width: auto;
@@ -869,7 +863,7 @@ $comment-recommend-button-size: 19px;
     font-size: 11px;
 
     a {
-        color: colour(neutral-2);
+        color: $neutral-2;
     }
 
     .discussion__comments__top & {
@@ -878,16 +872,16 @@ $comment-recommend-button-size: 19px;
 }
 
 .d-comment__action--pick {
-    color: colour(neutral-2);
+    color: $neutral-2;
 }
 
 .d-comment__action-separator {
+    @include fs-textSans(1);
     display: inline-block;
     position: relative;
     bottom: 1px;
     margin: 0 ($gs-gutter / 5) * 2;
-    @include fs-textSans(1);
-    color: colour(neutral-2);
+    color: $neutral-2;
     vertical-align: bottom;
 }
 
@@ -906,9 +900,9 @@ $comment-recommend-button-size: 19px;
     right: 0;
     z-index: $zindex-content;
     width: gs-span(4);
-    color: colour(neutral-1);
+    color: $neutral-1;
     padding: $gs-baseline / 2 $gs-gutter / 2;
-    border: 2px solid colour(neutral-6);
+    border: 2px solid $neutral-6;
     background: #ffffff;
 }
 
@@ -926,8 +920,8 @@ $comment-recommend-button-size: 19px;
     margin-top: $gs-baseline;
 }
 .d-report-comment__field {
-    padding: $gs-baseline / 2 $gs-gutter / 4;
     @include fs-textSans(3);
+    padding: $gs-baseline / 2 $gs-gutter / 4;
 }
 .d-report-comment__submit {
     margin-top: $gs-baseline;
@@ -991,12 +985,12 @@ $comment-recommend-button-size: 19px;
 }
 
 .d-top-comment__bubble {
-    color: colour(neutral-1);
     @include fs-textSans(4);
+    color: $neutral-1;
     box-sizing: border-box;
     padding: $gs-baseline ($gs-baseline * 4 / 3);
     position: relative;
-    background-color: colour(comment-support-2);
+    background-color: $comment-support-2;
     border-radius: 15px;
 }
 
@@ -1004,7 +998,7 @@ $comment-recommend-button-size: 19px;
     width: 24px;
     height: 24px;
     margin-left: $avatarSize-big / 2;
-    fill: colour(comment-support-2);
+    fill: $comment-support-2;
 }
 
 .d-top-comment__body {
@@ -1016,7 +1010,7 @@ $comment-recommend-button-size: 19px;
 
     blockquote {
         padding-left: $gs-gutter / 2;
-        color: colour(neutral-2);
+        color: $neutral-2;
     }
 }
 
@@ -1037,13 +1031,13 @@ $comment-recommend-button-size: 19px;
    ===========================================================================*/
 
 .comment {
+    @include fs-textSans(4);
     display: block;
     position: relative;
-    @include fs-textSans(4);
 }
 .comment__datecreated {
-    display: block;
     @include fs-textSans(1, true);
+    display: block;
 }
 .comment--speechy {
     border: 0;
@@ -1051,7 +1045,7 @@ $comment-recommend-button-size: 19px;
 
     .comment__inner {
         box-sizing: border-box;
-        background-color: colour(neutral-7);
+        background-color: $neutral-7;
         display: inline-block;
         padding: ($gs-baseline / 3) * 2 $gs-gutter / 2 $gs-baseline;
         max-width: $right-column;
@@ -1070,8 +1064,8 @@ $comment-recommend-button-size: 19px;
             border: solid transparent;
             height: 0;
             width: 0;
-            border-color: rgba(colour(neutral-7), 0);
-            border-top-color: colour(neutral-7);
+            border-color: rgba($neutral-7, 0);
+            border-top-color: $neutral-7;
             border-width: 30px;
             left: 23px;
             margin-left: -30px;
@@ -1088,10 +1082,10 @@ $comment-recommend-button-size: 19px;
 }
 
 .comments-link {
+    @include fs-textSans(1, true);
     display: block;
     float: right;
     margin-top: -(1 + ($gs-baseline / 3) * 4);
-    @include fs-textSans(1, true);
 
     .i {
         position: relative;
@@ -1152,9 +1146,9 @@ $comment-recommend-button-size: 19px;
    ========================================================================== */
 
 .d-discussion__error {
-    margin-top: ($gs-baseline / 3) * 2;
     @include fs-textSans(4);
-    color: colour(error);
+    margin-top: ($gs-baseline / 3) * 2;
+    color: $error;
 
     .d-discussion__error-text {
         display: inline-block;
@@ -1164,11 +1158,11 @@ $comment-recommend-button-size: 19px;
 }
 
 .d-comment-box__error-meta {
-    color: colour(neutral-2);
+    color: $neutral-2;
 }
 
 .d-comment-box--response {
-    border-top: 1px solid colour(neutral-5);
+    border-top: 1px solid $neutral-5;
     padding-top: $gs-baseline / 2;
 
     .d-comment-box__author-label {
@@ -1193,13 +1187,13 @@ $comment-recommend-button-size: 19px;
 }
 
 .d-bar {
-    margin-bottom: ($gs-baseline / 3) * 4;
     @include fs-textSans(4);
-    color: colour(neutral-2);
+    margin-bottom: ($gs-baseline / 3) * 4;
+    color: $neutral-2;
 }
 .d-comment-box__body {
     box-sizing: border-box;
-    border: 1px solid colour(neutral-3);
+    border: 1px solid $neutral-3;
     height: 50px;
     margin: ($gs-baseline / 3) * 2 0;
     padding: ($gs-baseline / 3) * 2 $gs-gutter / 2;
@@ -1210,7 +1204,7 @@ $comment-recommend-button-size: 19px;
     position: relative;
     z-index: 2;
     .d-comment-box--top-level &::placeholder {
-        color: colour(neutral-1);
+        color: $neutral-1;
         font-weight: bold;
     }
     .d-comment-box--top-level.d-comment-box--expanded &::placeholder {
@@ -1237,10 +1231,11 @@ $comment-recommend-button-size: 19px;
 
 .d-comment-box--invalid {
     .d-comment-box__body {
-        border-color: colour(error);
+        border-color: $error;
     }
 }
 .d-comment-box--expanded .d-comment-box__body {
+    margin-top: $gs-baseline / 6;
     height: gs-height(3);
 }
 .d-comment-box__add-comment {
@@ -1249,8 +1244,8 @@ $comment-recommend-button-size: 19px;
 .d-comment-box__submit {
     vertical-align: middle;
     &[disabled] {
-        background-color: colour(neutral-3);
-        border-color: colour(neutral-3);
+        background-color: $neutral-3;
+        border-color: $neutral-3;
     }
 }
 .d-comment-box__cancel {
@@ -1259,12 +1254,12 @@ $comment-recommend-button-size: 19px;
 .d-comment-box__reply-to,
 .d-comment-box__cancel {
     @include fs-textSans(1);
-    color: colour(neutral-1);
+    color: $neutral-1;
 }
 .d-comment-box__hide-preview,
 .d-comment-box__preview {
     @include fs-textSans(1);
-    color: colour(neutral-2);
+    color: $neutral-2;
     font-weight: bold;
 }
 .d-comment-box__hide-preview {
@@ -1276,9 +1271,9 @@ $comment-recommend-button-size: 19px;
 }
 .d-comment-box__hide-parent,
 .d-comment-box__show-parent {
+    @include fs-textSans(2);
     display: none;
     margin-left: $gs-gutter;
-    @include fs-textSans(2);
 }
 
 .d-comment-box--response {
@@ -1315,7 +1310,7 @@ $comment-recommend-button-size: 19px;
 .d-comment-box__cancel {
     display: none;
     bottom: $gs-baseline;
-    color: colour(neutral-2);
+    color: $neutral-2;
 
     .d-comment-box--expanded &,
     .d-comment-box--response & {
@@ -1332,11 +1327,11 @@ $comment-recommend-button-size: 19px;
     margin-top: ($gs-baseline / 3) * 8;
 
     .clamp-fade {
-        @include simple-gradient(transparent, colour(neutral-7));
+        @include simple-gradient(transparent, $neutral-7);
     }
     .clamp-fade__content {
-        border-top: 1px solid colour(neutral-3);
-        background: colour(neutral-7);
+        border-top: 1px solid $neutral-3;
+        background: $neutral-7;
     }
 }
 .d-comment-box__preview-spout,
@@ -1346,14 +1341,14 @@ $comment-recommend-button-size: 19px;
     width: 0;
     height: 0;
     border-right: 16px solid transparent;
-    border-bottom: 16px solid colour(neutral-7);
+    border-bottom: 16px solid $neutral-7;
     margin-left: $gs-gutter * 2;
     border-right-style: inset;
 }
 .d-comment-box__parent-comment {
-    padding: $gs-baseline $gs-gutter;
-    background-color: colour(neutral-7);
     @include fs-textSans(4);
+    padding: $gs-baseline $gs-gutter;
+    background-color: $neutral-7;
 
     .d-comment-box__hide-parent {
         margin-left: 0;
@@ -1389,7 +1384,7 @@ $comment-recommend-button-size: 19px;
 }
 .d-comment-box__preview-block {
     display: block;
-    background-color: colour(neutral-7);
+    background-color: $neutral-7;
     padding: $gs-baseline $gs-gutter;
 }
 .d-comment-box__preview-body {
@@ -1419,18 +1414,60 @@ $comment-recommend-button-size: 19px;
 .d-comment-box__formatting-italic,
 .d-comment-box__formatting-quote,
 .d-comment-box__formatting-link {
+    @include fs-textSans(2);
     display: inline-block;
-    border: 1px solid colour(neutral-5);
-    color: colour(neutral-2);
+    border: 1px solid $neutral-5;
+    color: $neutral-2;
     text-align: center;
     cursor: pointer;
-    @include fs-textSans(2);
     margin-left: $gs-gutter / 5;
     padding: 2px 5px 0px;
     min-width: 11px;
     line-height: 17px;
 
     &:hover {
-        border-color: colour(guardian-brand);
+        border-color: $guardian-brand;
     }
+}
+
+.d-comment-box__community-standards {
+    display: none;
+}
+
+.d-comment-box--expanded .d-comment-box__community-standards {
+    @include fs-textSans(1);
+    display: block;
+    background-color: $neutral-7;
+    padding: ($gs-baseline / 3) * 2 ($gs-gutter / 2);
+    margin-top: $gs-baseline / 2;
+}
+
+.d-comment-box__onboarding {
+    display: none;
+}
+
+.d-comment-box__onboarding h3 {
+    font-weight: bold;
+}
+
+.d-comment-box--onboarding-visible .d-comment-box__onboarding {
+    @include fs-textSans(2);
+    display: block;
+    background-color: colour(neutral-7);
+    padding: $gs-baseline $gs-gutter;
+}
+
+.d-comment-box--onboarding-visible .d-comment-box__content {
+    display: none;
+}
+
+.d-comment-box__onboarding-preview-body p {
+    background-color: #ffffff;
+    padding: $gs-baseline $gs-gutter;
+    margin-bottom: $gs-baseline;
+}
+
+.d-comment-box__onboarding-cancel {
+    background-color: colour(neutral-3);
+    border-color: colour(neutral-3);
 }

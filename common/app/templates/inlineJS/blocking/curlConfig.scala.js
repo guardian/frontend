@@ -32,13 +32,15 @@ window.curlConfig = {
             'foresee.js':                   'vendor/foresee/20150703/foresee-trigger.js',
             'googletag.js':                 '@{Configuration.javascript.config("googletagJsUrl")}',
             'ophan/ng':                     '@{Configuration.javascript.config("ophanJsUrl")}',
-            'prebid.js':                    'vendor/prebid/0.5.0/prebid.js',
+            'prebid.js':                    'vendor/prebid/0.7.0/prebid.js',
             svgs:                           '../inline-svgs',
+
+            // video
             'bootstraps/enhanced/media/video-player': 'bootstraps/enhanced/media/video-player-dev.js',
-            videojs:                        'components/video.js/video.min.js',
-            videojsads:                     'components/videojs-contrib-ads/videojs.ads.min.js',
+            videojs:                        'components/video.js/video.js',
+            'videojs-contrib-ads':          'components/videojs-contrib-ads/videojs.ads.js',
             videojsembed:                   'components/videojs-embed/videojs.embed.js',
-            videojsima:                     'components/videojs-ima/videojs.ima.js',
+            'videojs-ima':                  'components/videojs-ima/videojs.ima.js',
             videojspersistvolume:           'components/videojs-persistvolume/videojs.persistvolume.js',
             videojsplaylist:                'components/videojs-playlist-audio/videojs.playlist.js',
 
@@ -60,16 +62,18 @@ window.curlConfig = {
             'bootstraps/enhanced/media/main':    '@Static("javascripts/bootstraps/enhanced/media/main.js")',
             'bootstraps/enhanced/article':       '@Static("javascripts/bootstraps/enhanced/article.js")',
             'bootstraps/enhanced/liveblog':      '@Static("javascripts/bootstraps/enhanced/liveblog.js")',
+            'bootstraps/enhanced/article-minute':'@Static("javascripts/bootstraps/enhanced/article-minute.js")',
             'bootstraps/enhanced/trail':         '@Static("javascripts/bootstraps/enhanced/trail.js")',
             'bootstraps/enhanced/gallery':       '@Static("javascripts/bootstraps/enhanced/gallery.js")',
             'bootstraps/enhanced/profile':       '@Static("javascripts/bootstraps/enhanced/profile.js")',
+            'bootstraps/enhanced/minute':        '@Static("javascripts/bootstraps/enhanced/minute.js")',
             'foresee.js':               'vendor/foresee/20150703/foresee-trigger.js',
             'googletag.js':             '@{Configuration.javascript.config("googletagJsUrl")}',
             stripe:                     '@Static("javascripts/vendor/stripe/stripe.min.js")',
             react:                      '@Static("javascripts/components/react/react.js")',
             'facebook.js':              '//connect.facebook.net/en_US/all.js',
             'ophan/ng':                 '@{Configuration.javascript.config("ophanJsUrl")}',
-            'prebid.js':                'vendor/prebid/0.5.0/prebid.js',
+            'prebid.js':                'vendor/prebid/0.7.0/prebid.js',
 
             // plugins
             text:                       'text', // noop

@@ -62,7 +62,7 @@ object MatchController extends Controller with Football with Requests with Loggi
 
   private def render(maybeMatch: Option[FootballMatch]) = Action.async { implicit request =>
     val response = maybeMatch map { theMatch =>
-      val lineup: Future[LineUp] = FootballClient.lineUp(theMatch.id)
+      val lineup: Future[LineUp] = FootballClient.lineUp(theMatch.id).recover(FootballClient.logErrors)
       val page: Future[MatchPage] = lineup map { MatchPage(theMatch, _) }
 
       page map { page =>

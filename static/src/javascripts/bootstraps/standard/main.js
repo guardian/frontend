@@ -115,9 +115,12 @@ define([
         //
 
         robust.catchErrorsAndLog('ab-tests', function () {
-            if (guardian.isModernBrowser) {
+            if (guardian.isEnhanced) {
                 ab.segmentUser();
-                ab.run();
+                robust.catchErrorsAndLog('ab-tests-run', function () {
+                    ab.run();
+                });
+                ab.trackEvent();
             }
         });
 
@@ -152,7 +155,7 @@ define([
         //
 
         var alreadyVisted;
-        if (guardian.isModernBrowser) {
+        if (guardian.isEnhanced) {
             alreadyVisted = storage.local.get('gu.alreadyVisited') || 0;
             storage.local.set('gu.alreadyVisited', alreadyVisted + 1);
         }
@@ -221,6 +224,26 @@ define([
             } else {
                 redirect();
             }
+        }
+
+        // show hiring message if we're in a very modern browser
+        try { // this should never interfere with anything, so `try` it
+            if ('repeat' in String.prototype && !config.page.isDev) {
+                window.console.log(
+                    '\n' +
+                    '%cHello.\n' +
+                    '\n' +
+                    '%cWe are hiring – ever thought about joining us? \n' +
+                    '%chttp://developers.theguardian.com/join-the-team.html%c \n' +
+                    '\n',
+                    'font-family: Georgia, serif; font-size: 32px; color: #005689',
+                    'font-family: Georgia, serif; font-size: 16px; color: #767676',
+                    'font-family: Helvetica Neue, sans-serif; font-size: 11px; text-decoration: underline; line-height: 1.2rem; color: #767676',
+                    ''
+                );
+            }
+        } catch (e) {
+            // do nothing
         }
     };
 });

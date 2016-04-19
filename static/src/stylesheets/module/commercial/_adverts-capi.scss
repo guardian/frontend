@@ -1,0 +1,138 @@
+.adverts--capi {
+}
+
+.adverts--tone-capi {
+    background-color: $neutral-6;
+
+    > .adverts__header {
+        background: $paidfor-background;
+    }
+
+    .adverts__title {
+        @include f-headlineSans;
+        font-size: get-font-size(headline, 3);
+    }
+
+    .adverts__logo {
+        color: #ffffff;
+    }
+
+    .adverts__stamp {
+        text-align: right;
+    }
+
+    .adverts__row > * + *::before,
+    .adverts__row--legacy > .advert::after,
+    .adverts__2cols::after,
+    .adverts__3cols::before,
+    .adverts__3cols::after {
+        background: $paid-article-subheader-bg;
+    }
+
+    .adverts__more > summary {
+        background: $paidfor-background;
+        border-color: $paidfor-background;
+
+        .inline-icon {
+            fill: $neutral-2;
+        }
+
+        @include mq(desktop) {
+            float: left;
+            margin-bottom: $gs-baseline;
+
+            & + * {
+                clear: left;
+            }
+        }
+    }
+
+    .adverts__more[open] > summary {
+        background: none;
+        border-color: $neutral-4;
+        color: $neutral-1;
+    }
+
+    .button {
+        @include button-colour(
+            $paid-article-brand,
+            null
+        );
+
+        &:hover,
+        &:focus,
+        &:active {
+            @include button-colour(
+                darken($paid-article-brand, 5%),
+                null
+            );
+        }
+    }
+}
+
+.advert--capi {
+    @include f-textSans;
+    background: $paid-article-subheader;
+    border-top: 1px solid $paid-article-brand;
+
+    .advert__title,
+    .advert__meta,
+    .advert__standfirst {
+        padding-left: $gs-gutter / 4;
+        padding-right: $gs-gutter / 4;
+    }
+
+    .advert__title {
+        @include f-headlineSans;
+        font-weight: 400;
+        margin-bottom: .5em;
+
+        > .inline-icon svg {
+            fill: $paid-article-icon;
+            width: 1.1em;
+            height: .75em;
+            margin-right: .3em;
+        }
+    }
+
+    > .advert__meta {
+        margin-top: auto;
+        margin-bottom: $gs-baseline / 4;
+    }
+
+    .adverts--legacy-single & {
+        background: none;
+        border-top: 0;
+
+        &::after {
+            background-color: $paid-article-icon;
+        }
+
+        .advert__image-container {
+            border-top: 0;
+        }
+    }
+
+    &:not(.advert--landscape) {
+        > .advert__image-container {
+            width: 100%;
+        }
+
+        .advert__image {
+            min-height: $gs-baseline * 11;
+            width: 100%;
+        }
+    }
+
+    .advert__image-container {
+        height: auto;
+    }
+
+    .has-no-flex &:not(.advert--small):not(.advert--landscape) {
+        padding-top: 0;
+
+        > :first-child {
+            padding-top: 66%;
+        }
+    }
+}

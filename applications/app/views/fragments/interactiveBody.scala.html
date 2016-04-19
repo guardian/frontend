@@ -1,9 +1,7 @@
 @(page: InteractivePage)(implicit request: RequestHeader)
 @import common.Edition
 @import views.support.TrailCssClasses.toneClass
-@import conf.switches.Switches.NewCommercialContent
-
-@body(page.interactive, page.interactive.metadata.isImmersive)
+@body(page.interactive, page.item.content.isImmersive)
 
 @bodyRaw(interactive: model.Interactive) = {
     @page.interactive.maybeBody.map { body =>
@@ -20,13 +18,13 @@
                     "content--advertisement-feature" -> interactive.commercial.isAdvertisementFeature,
                     "content--sponsored" -> interactive.commercial.isSponsored(Some(Edition(request))),
                     "content--foundation-supported" -> interactive.commercial.isFoundationSupported,
-                    "paid-content--advertisement-feature" -> (interactive.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn)
+                    "paid-content--advertisement-feature" -> interactive.commercial.isAdvertisementFeature
                 ),
                 "content", "content--interactive", "tonal", s"tonal--${toneClass(interactive)}"
             )"
             itemscope itemtype="@interactive.metadata.schemaType" role="main">
 
-            @if(interactive.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn){
+            @if(interactive.commercial.isAdvertisementFeature){
                 @fragments.guBand()
             }
 
@@ -62,6 +60,10 @@
     </div>
 
     @if(isImmersive) {
-        @interactive.figureEl.map(HtmlFormat.raw(_))
+        <div class="@RenderClasses(Map(
+                    "paid-content--advertisement-feature" -> interactive.commercial.isAdvertisementFeature
+                ))">
+                @interactive.figureEl.map(HtmlFormat.raw(_))
+        </div>
     }
 }

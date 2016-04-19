@@ -35,9 +35,15 @@
 
     <link rel="manifest" href="/2015-06-24-manifest.json" crossorigin="use-credentials">
 
-    @Page.getContentPage(page).map { content =>
-        @if(content.item.tags.isArticle && !content.item.tags.isLiveBlog && !content.metadata.isImmersive && AmpSwitch.isSwitchedOn) {
-            <link rel="amphtml" href="@LinkTo{/@page.metadata.id/amp}">
+    @Page.getContentPage(page).map { page =>
+        @if(
+            page.item.tags.isArticle &&
+            !page.item.tags.isLiveBlog &&
+            !page.item.content.isImmersive &&
+            !page.item.tags.isQuiz &&
+            AmpSwitch.isSwitchedOn
+        ) {
+            <link rel="amphtml" href="@AmpLinkTo{/@page.metadata.id}">
         }
     }
 }
@@ -70,6 +76,17 @@
 <meta name="msapplication-TileColor" content="#005689" />
 <meta name="theme-color" content="#005689">
 <meta name="msapplication-TileImage" content="@Static("images/favicons/windows_tile_144_b.png")" />
+
+@*
+ * This referrer policy preserves URLs in the Referrer header when navigating
+ * from HTTPS->HTTP.
+ *
+ * We need it for tracking to work properly while we do section-by-section
+ * rollout of HTTPS.
+ *
+ * See https://www.w3.org/TR/referrer-policy/#referrer-policy-state-unsafe-url
+*@
+<meta name="referrer" content="unsafe-url">
 
 @* https://support.google.com/plus/answer/1713826 *@
 <link rel="publisher" href="https://plus.google.com/113000071431138202574" />

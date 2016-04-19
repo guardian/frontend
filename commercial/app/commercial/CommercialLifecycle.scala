@@ -3,12 +3,12 @@ package commercial
 import commercial.feeds._
 import common.{AkkaAsync, ExecutionContexts, Jobs, Logging}
 import model.commercial.jobs.Industries
-import model.commercial.masterclasses.MasterClassTagsAgent
+import model.commercial.events.MasterclassTagsAgent
 import model.commercial.money.BestBuysAgent
 import model.commercial.travel.Countries
-import model.diagnostics.CloudWatch
 import play.api.{Application => PlayApp, GlobalSettings}
 
+import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.util.Random
 import scala.util.control.NonFatal
@@ -25,14 +25,14 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
   private def recordEvent(feedName: String, eventName: String, maybeDuration: Option[Duration]): Unit = {
     val key = s"${feedName.toLowerCase.replaceAll("[\\s/]+", "-")}-$eventName-time"
     val duration = maybeDuration map (_.toMillis.toDouble) getOrElse -1d
-    CloudWatch.put("Commercial", Map(s"$key" -> duration))
+    CommercialMetrics.metrics.put(Map(s"$key" -> duration))
   }
 
-  override def onStart(app: PlayApp): Unit = {
+  override def onStart(application: PlayApp): Unit = {
 
     def randomStartSchedule(minsLater: Int = 0) = s"0 ${Random.nextInt(15) + minsLater}/15 * * * ?"
 
-    def fetchFeed(fetcher: FeedFetcher): Unit = {
+    def fetchFeed(fetcher: FeedFetcher): Future[Unit] = {
 
       val feedName = fetcher.feedMetaData.name
 
@@ -56,9 +56,10 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
           recordFetch(Some(response.duration))
           log.info(s"$msgPrefix succeeded in ${response.duration}")
       }
+      eventualResponse.map(_ => ())
     }
 
-    def parseFeed[T](parser: FeedParser[T]): Unit = {
+    def parseFeed[T](parser: FeedParser[T]): Future[Unit] = {
 
       val feedName = parser.feedMetaData.name
 
@@ -81,9 +82,10 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
           recordParse(Some(feed.parseDuration))
           log.info(s"$msgPrefix succeeded: parsed ${feed.contents.size} $feedName in ${feed.parseDuration}")
       }
+      parsedFeed.map(_ => ())
     }
 
-    super.onStart(app)
+    super.onStart(application)
 
     def mkJobName(feedName: String, task: String): String = s"${feedName.replaceAll("/", "-")}-$task-job"
 
@@ -105,14 +107,20 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       }
     }
 
+    Jobs.deschedule("cloudwatchUpload")
+    Jobs.scheduleEveryNMinutes("cloudwatchUpload", 15) {
+      CommercialMetrics.metrics.upload()
+      Future.successful(())
+    }
+
     refreshJobs.zipWithIndex foreach {
       case (job, i) => job.start(randomStartSchedule(minsLater = i))
     }
 
     AkkaAsync {
 
-      MasterClassTagsAgent.refresh() onFailure {
-        case NonFatal(e) => log.warn(s"Failed to refresh master class tags: ${e.getMessage}")
+      MasterclassTagsAgent.refresh() onFailure {
+        case NonFatal(e) => log.warn(s"Failed to refresh masterclass tags: ${e.getMessage}")
       }
 
       Countries.refresh() onFailure {
@@ -145,6 +153,8 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     for (parser <- FeedParser.all) {
       Jobs.deschedule(s"${parser.feedMetaData.name}ParseJob")
     }
+
+    Jobs.deschedule("cloudwatchUpload")
 
     super.onStop(app)
   }

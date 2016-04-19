@@ -54,4 +54,9 @@ jsTestResult=$?
 
 # Exit code 1 means don't commit and 0 means do commit
 [ $cssValidateResult1 -ne 0 ] || [ $cssValidateResult2 -ne 0 ] || [ $jsValidateResult -ne 0 ] || [ $jsTestResult -ne 0 ] && exit 1
+
+# Modified version of [Sindre Sorhus's gist](https://gist.github.com/sindresorhus/7996717),
+# to run notifiy you if you need to update the pasteup package on npm.
+# changed_files="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
+# echo $changed_files | grep 'pasteup' --quiet && node tools/messages.js pasteup
 exit 0

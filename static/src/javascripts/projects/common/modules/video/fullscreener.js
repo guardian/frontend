@@ -19,7 +19,7 @@ define([
                 },
                 dblclick: function (e) {
                     e.stop();
-                    if (this.isFullScreen()) {
+                    if (this.isFullscreen()) {
                         this.exitFullscreen();
                     } else {
                         this.requestFullscreen();

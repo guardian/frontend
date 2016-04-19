@@ -22,7 +22,7 @@
 
     .meta__numbers {
         position: relative;
-        border-top: 1px dotted colour(neutral-5);
+        border-top: 1px dotted $neutral-5;
 
         @include mq(leftCol) {
             border-bottom: 0;
@@ -45,7 +45,7 @@
         .meta__number {
             @include mq(tablet) {
                 float: right;
-                border-left: 1px solid colour(neutral-5);
+                border-left: 1px solid $neutral-5;
                 padding-left: $gs-gutter / 2;
 
                 &:first-child {
@@ -82,7 +82,7 @@
                 position: static;
                 padding-top: $gs-baseline / 3;
                 margin-bottom: $gs-baseline;
-                border-top: 1px dotted colour(neutral-5);
+                border-top: 1px dotted $neutral-5;
             }
         }
 
@@ -135,7 +135,7 @@
     }
 
     //TODO: Temporary hack for live-streams until we discuss a better solution with composer
-    [data-alt="Live stream"] {
+    [data-alt='Live stream'] {
         @extend %u-responsive-ratio;
     }
 
@@ -163,14 +163,15 @@
     }
 
     .content__main-column--interactive {
-        border-top: 1px dotted colour(neutral-5);
+        border-top: 1px dotted $neutral-5;
         padding-top: $gs-baseline/2;
         min-height: $gs-baseline*20;
     }
 }
 
 .js-on.is-modern .is-immersive-interactive {
-    .content--interactive,
+    .content--interactive .content__head,
+    .content--interactive .content__main,
     .content--interactive ~ *,
     .l-footer {
         display: none;

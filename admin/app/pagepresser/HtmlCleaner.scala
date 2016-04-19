@@ -1,32 +1,21 @@
 package pagepresser
 
 import com.netaporter.uri.Uri.parse
-import common.Logging
+import common.{ExecutionContexts, Logging}
 import org.jsoup.nodes.Document
+import conf.Configuration
 
 import scala.collection.JavaConversions._
-import scala.io.Source
 
-abstract class HtmlCleaner extends Logging {
+abstract class HtmlCleaner extends Logging with ExecutionContexts {
+  val fallbackCacheBustId = Configuration.r2Press.fallbackCachebustId
+  lazy val staticRegEx = """//static.guim.co.uk/static/(\w+)/(.+)(\.\w+)$""".r("cacheBustId", "paths", "extension")
+  lazy val nonDigitRegEx = """\D+""".r
+
   def canClean(document: Document): Boolean
   def clean(document: Document): Document
-}
 
-object BasicHtmlCleaner extends HtmlCleaner {
-
-  override def canClean(document: Document) = {
-    document.getElementsByAttribute("data-poll-url").isEmpty
-  }
-
-  override def clean(document: Document) = {
-    if (canClean(document)) {
-      basicClean(document)
-    } else {
-      document
-    }
-  }
-
-  def basicClean(document: Document): Document = {
+  protected def universalClean(document: Document): Document = {
     removeAds(document)
     removeByClass(document, "top-search-box")
     removeByClass(document, "share-links")
@@ -34,52 +23,127 @@ object BasicHtmlCleaner extends HtmlCleaner {
     removeByClass(document, "user-details")
     removeByClass(document, "initially-off")
     removeByClass(document, "comment-count")
-
-    //fetch omniture data before stripping it. then rea-dd it for simple page tracking
-    val omnitureQueryString = fetchOmnitureTags(document)
-    removeScriptsTagsExceptInteractives(document)
-    removeByTagName(document, "noscript")
-    createSimplePageTracking(document, omnitureQueryString)
-
+    replaceLinks(document)
+    repairStaticLinks(document)
+    repairStaticSources(document)
+    deComboLinks(document)
   }
 
-  def removeScriptsTagsExceptInteractives(document: Document): Document = {
-    val scripts = document.getElementsByTag("script")
-    val (interactiveScripts, nonInteractiveScripts) = scripts.partition { e =>
-      val parentIds = e.parents().map(p => p.id()).toList
-      parentIds.contains("interactive-content")
+  def repairStaticLinks(document: Document): Document = {
+    document.getAllElements.filter { el =>
+      el.hasAttr("href") && el.attr("href").contains("/static/")
+    }.foreach { el =>
+      val staticLink = staticRegEx.findFirstMatchIn(el.attr("href"))
+      staticLink.foreach { link =>
+        val cacheBustId = link.group("cacheBustId")
+        val extension = link.group("extension")
+        val paths = link.group("paths").split('+')
+        paths.map { path =>
+          val newPath = if(nonDigitRegEx.findFirstMatchIn(cacheBustId).isEmpty) {
+            s"//static.guim.co.uk/static/$fallbackCacheBustId/$path$extension"
+          } else {
+            s"//static.guim.co.uk/static/$cacheBustId/$path$extension"
+          }
+          val newEl = el.clone.attr("href", newPath)
+          el.after(newEl)
+        }
+      }
+      el.remove()
     }
-    nonInteractiveScripts.toList.foreach(_.remove())
+    document
+  }
 
-    interactiveScripts.toList.map { interactiveElement =>
-      if (interactiveElement.html().contains("swfobject")) {
-        addSwfObjectScript(document)
+  def repairStaticSources(document: Document): Document = {
+    val elementsWithSrc = document.getAllElements.filter { el =>
+      el.hasAttr("src") && el.attr("src").contains("/static/")
+    }
+    elementsWithSrc.foreach { el =>
+      val staticSrc = staticRegEx.findFirstMatchIn(el.attr("src"))
+      staticSrc.foreach { src =>
+        val cacheBustId = src.group("cacheBustId")
+        val extension = src.group("extension")
+        val paths = src.group("paths").split('+')
+        paths.map { path =>
+          val newPath = if (nonDigitRegEx.findFirstMatchIn(cacheBustId).isEmpty) {
+            s"//static.guim.co.uk/static/$fallbackCacheBustId/$path$extension"
+          } else {
+            s"//static.guim.co.uk/static/$cacheBustId/$path$extension"
+          }
+          val newEl = el.clone.attr("src", newPath)
+          el.after(newEl)
+        }
+      }
+      el.remove()
+    }
+    document
+  }
+
+  def replaceLinks(document: Document): Document = {
+    try {
+      document.getAllElements.filter{ el =>
+        (el.hasAttr("href") && el.attr("href").contains("http://")) || (el.hasAttr("src") && el.attr("src").contains("http://"))
+      }.foreach{ el =>
+
+        if (el.hasAttr("href")) {
+          el.attr("href", el.attr("href").replace("http://", "//"))
+        } else {
+          el.attr("src", el.attr("src").replace("http://", "//"))
+        }
+      }
+      document
+    }
+    catch {
+      case e: Exception => {
+        log.warn("Unable to convert links for document from http to protocol relative url.")
+        document
       }
     }
+  }
+
+  def extractOmnitureParams(document: Document): Map[String, Seq[String]] = {
+    val omnitureNoScript = document.getElementById("omnitureNoScript")
+    if (omnitureNoScript != null) {
+      parse(omnitureNoScript.getElementsByTag("img").attr("src")).query.paramMap
+    } else {
+      Map.empty
+    }
+  }
+
+  def removeScripts(document: Document): Document = {
+    document.getElementsByTag("script").toList.foreach(_.remove())
     document
   }
 
-  def createSimplePageTracking(document: Document, omnitureQueryString: String): Document = {
-    val omnitureTag = "<!---Omniture page tracking for pressed page ---> <img src=\"https://hits-secure.theguardian.com/b/ss/guardiangu-network/1/JS-1.4.1/s985205503180623100?" + omnitureQueryString + "\" width=\"1\" height=\"1\"/>"
+  def createSimplePageTracking(document: Document): Document = {
+    val omnitureQueryString = fetchOmnitureTags(document)
 
+    val newOmnitureScriptBase = "https://hits-secure.theguardian.com/b/ss/guardiangu-network/1/JS-1.4.1/s985205503180623100"
 
-    document.body().append(omnitureTag)
-    document
+    document.getElementsByTag("img").exists { element =>
+      element.hasAttr("src") && element.attr("src").contains(newOmnitureScriptBase)
+    } match {
+      case true =>
+        log.info(s"Archive omniture script exists and was not replaced")
+        document
+      case false =>
+        val omnitureTag = "<!---Omniture page tracking for pressed page ---> <img src=\"" + newOmnitureScriptBase + "?" + omnitureQueryString + "\" width=\"1\" height=\"1\"/>"
+        document.body().append(omnitureTag)
+        log.info("Archive omniture script appended")
+        document
+    }
   }
 
   def fetchOmnitureTags(document: Document): String = {
-    val omnitureCode = document.getElementById("omnitureNoScript").getElementsByTag("img").attr("src")
-    val params = parse(omnitureCode).query.paramMap
-
+    val params = extractOmnitureParams(document)
     val requiredParams: Map[String, Seq[String]] = params.filterKeys(key => List("pageName", "ch", "g", "ns").contains(key)) ++
       Map("AQB" -> List("1"),
-          "ndh" -> List("1"),
-          "c19" -> List("frontendarchive"),
-          "ce" -> List("UTF-8"),
-          "cpd" -> List("2"),
-          "AQE" -> List("1"),
-          "v14" -> List("D=r"),
-          "v9" -> List("D=g"))
+        "ndh" -> List("1"),
+        "c19" -> List("frontendarchive"),
+        "ce" -> List("UTF-8"),
+        "cpd" -> List("2"),
+        "AQE" -> List("1"),
+        "v14" -> List("D=r"),
+        "v9" -> List("D=g"))
 
     requiredParams.flatMap { case ((key: String, value: Seq[String])) =>
       for (v <- value) yield {
@@ -92,15 +156,18 @@ object BasicHtmlCleaner extends HtmlCleaner {
   }
 
   def removeAds(document: Document): Document = {
-    val elements = document.getElementById("sub-header")
-    val ads = elements.children().toList.filterNot(e => e.attr("class") == "top-navigation twelve-col top-navigation-js")
-    ads.foreach(_.remove())
+    val element = document.getElementById("sub-header")
 
-    val htmlComments = elements.childNodes().filter(node => node.nodeName().equals("#comment"))
-    htmlComments.foreach(_.remove())
+    if (element != null) {
+      val ads = element.children().toList.filterNot(e => e.attr("class") == "top-navigation twelve-col top-navigation-js")
+      ads.foreach(_.remove())
 
-    val promos = document.getElementById("promo")
-    if(promos != null) promos.remove()
+      val htmlComments = element.childNodes().filter(node => node.nodeName().equals("#comment"))
+      htmlComments.foreach(_.remove())
+
+      val promo = document.getElementById("promo")
+      if(promo != null) promo.remove()
+    }
 
     document
   }
@@ -111,33 +178,42 @@ object BasicHtmlCleaner extends HtmlCleaner {
     document
   }
 
-  private def removeByClass(document: Document, className: String): Document = {
+  def removeByClass(document: Document, className: String): Document = {
     document.getElementsByClass(className).foreach(_.remove())
     document
   }
 
-  private def removeByTagName(document: Document, tagName: String): Document = {
+  def removeByTagName(document: Document, tagName: String): Document = {
     document.getElementsByTag(tagName).foreach(_.remove())
     document
   }
 
-  private def addSwfObjectScript(document: Document): Document = {
+  def deComboLinks(document: Document): Document = {
+    document.getAllElements.filter { el =>
+      el.hasAttr("href") && el.attr("href").contains("combo.guim.co.uk")
+    }.foreach { el =>
 
-    val swfScriptOpt = try {
-      val source = Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("resources/r2/interactiveSwfScript.js"), "UTF-8").getLines().mkString
-      Some(source)
+      val combinerRegex = """//combo.guim.co.uk/(\w+)/(.+)(\.\w+)$""".r("cacheBustId", "paths", "extension")
+      val microAppRegex = """^m-(\d+)~(.+)""".r
+      val href = el.attr("href")
+      val combiner = combinerRegex.findFirstMatchIn(href)
 
-    } catch {
-      case ex: Exception => {
-        log.error(ex.getMessage)
-        None
+      combiner.foreach { combiner =>
+        val cacheBustId = combiner.group("cacheBustId")
+        val extension = combiner.group("extension")
+        val paths = combiner.group("paths").split('+')
+        paths.map { path =>
+          val newPath = if(nonDigitRegEx.findFirstMatchIn(cacheBustId).isEmpty) {
+            s"//static.guim.co.uk/static/$fallbackCacheBustId/$path$extension"
+          } else {
+            s"//static.guim.co.uk/static/$cacheBustId/$path$extension"
+          }
+          val newEl = el.clone.attr("href", newPath)
+          el.after(newEl)
+        }
+        el.remove()
       }
-    }
-    swfScriptOpt.foreach { script =>
-      val html = "<script type=\"text/javascript\">" + script + "</script>"
-      document.head().append(html)
     }
     document
   }
-
 }

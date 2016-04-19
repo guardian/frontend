@@ -10,7 +10,7 @@ define([
     'common/utils/user-timing',
     './common',
     './sport',
-
+    'common/modules/experiments/ab',
     'enhanced-common'
 ], function (
     fastdom,
@@ -23,7 +23,8 @@ define([
     mediator,
     userTiming,
     common,
-    sport
+    sport,
+    ab
 ) {
     return function () {
         var bootstrapContext = function (featureName, bootstrap) {
@@ -43,6 +44,10 @@ define([
             require(['bootstraps/enhanced/facia'], function (facia) {
                 bootstrapContext('facia', facia);
             });
+
+            if (ab.isInVariant('Minute', 'on')) {
+                require('bootstraps/enhanced/minute', function() {});
+            }
         }
 
         if (config.page.section === 'lifeandstyle' && config.page.series === 'Sudoku') {
@@ -51,11 +56,15 @@ define([
             });
         }
 
-        if (config.page.contentType === 'Article') {
+        if (config.page.contentType === 'Article' && !config.page.isMinuteArticle) {
             require(['bootstraps/enhanced/article', 'bootstraps/enhanced/image-content'], function (article, imageContent) {
                 bootstrapContext('article', article);
                 bootstrapContext('article : image-content', imageContent);
             });
+
+            if (ab.isInVariant('Minute', 'on')) {
+                require('bootstraps/enhanced/minute', function() {});
+            }
         }
 
         if (config.page.contentType === 'Crossword' || config.page.pageId === 'offline-page') {
@@ -68,6 +77,13 @@ define([
             require(['bootstraps/enhanced/liveblog', 'bootstraps/enhanced/image-content'], function (liveBlog, imageContent) {
                 bootstrapContext('liveBlog', liveBlog);
                 bootstrapContext('liveBlog : image-content', imageContent);
+            });
+        }
+
+        if (config.page.isMinuteArticle) {
+            require(['bootstraps/enhanced/article-minute', 'bootstraps/enhanced/image-content'], function (articleMinute, imageContent) {
+                bootstrapContext('articleMinute', articleMinute);
+                bootstrapContext('article : image-content', imageContent);
             });
         }
 
@@ -124,9 +140,8 @@ define([
             });
         }
 
-        var isDev = window.location.hostname === 'localhost';
-        if ((window.location.protocol === 'https:' || isDev)
-            && config.page.section !== 'identity') {
+        // use a #force-sw hash fragment to force service worker registration for local dev
+        if ((window.location.protocol === 'https:' && config.page.section !== 'identity') || window.location.hash === '#force-sw') {
             var navigator = window.navigator;
             if (navigator && navigator.serviceWorker) {
                 navigator.serviceWorker.register('/service-worker.js');

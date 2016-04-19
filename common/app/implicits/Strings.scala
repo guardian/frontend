@@ -46,7 +46,27 @@ trait Strings {
     }
   }
 
+  implicit class String2Uri(uri: String) {
+    def appendQueryParams(queryParams: Map[String, String]): String = {
+      queryParams.foldLeft(uri)((currentUri, queryParam) => {
+        javax.ws.rs.core.UriBuilder.fromUri(currentUri)
+          .queryParam(queryParam._1, queryParam._2)
+          .build()
+          .toString()
+      })
+    }
+
+    def addFragment(fragment: String): String = {
+      javax.ws.rs.core.UriBuilder.fromUri(uri)
+        .fragment(fragment)
+        .build()
+        .toString()
+    }
+  }
+
   implicit class string2decodings(s: String) {
     lazy val stringDecoded = URLDecoder.decode(s, "UTF-8")
   }
 }
+
+object Strings extends Strings

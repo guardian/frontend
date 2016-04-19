@@ -23,7 +23,7 @@ object SoulmatesController extends Controller with implicits.Requests {
       } else SoulmatesAgent.sample(groupName)
     }
 
-    sample match {
+    sample.toList match {
       case Nil => NoCache(jsonFormat.nilResult)
       case soulmates => Cached(componentMaxAge) {
         val clickMacro = request.getParameter("clickMacro")
@@ -34,7 +34,14 @@ object SoulmatesController extends Controller with implicits.Requests {
   }
 
   def renderSoulmates(groupName: String): Action[AnyContent] = Action { implicit request =>
-    result(groupName, views.html.soulmates.soulmates(_, _, _))
+    val soulmates = {
+      if(conf.switches.Switches.v2SoulmatesTemplate.isSwitchedOn) {
+        views.html.soulmates.soulmatesV2(_, _, _)
+      } else {
+        views.html.soulmates.soulmates(_, _, _)
+      }
+    }
+    result(groupName, soulmates)
   }
 
   def renderSoulmatesTest(groupName: String): Action[AnyContent] = Action { implicit request =>

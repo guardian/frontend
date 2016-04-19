@@ -1,6 +1,7 @@
 package common
 
 import java.io.StringWriter
+import java.util.regex.Pattern
 
 import com.gu.facia.api.models.LinkSnap
 import com.sun.syndication.feed.module.DCModuleImpl
@@ -12,14 +13,16 @@ import model._
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import play.api.mvc.RequestHeader
+import views.support.{Profile, Item140, Item460}
 
 import scala.collection.JavaConversions._
 import scala.collection.JavaConverters._
 
 object TrailsToRss extends implicits.Collections {
 
-  def stripInvalidXMLCharacters(s: String) = {
-    s.replaceAll("[^\\x09\\x0A\\x0D\\x20-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFFF]", "")
+  val pattern = Pattern.compile("[^\\x09\\x0A\\x0D\\x20-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFFF]")
+  private def stripInvalidXMLCharacters(s: String) = {
+    pattern.matcher(s).replaceAll("")
   }
 
   val image: SyndImageImpl = {
@@ -68,28 +71,26 @@ object TrailsToRss extends implicits.Collections {
       val readMore = s""" <a href="${trail.metadata.webUrl}">Continue reading...</a>"""
       description.setValue(stripInvalidXMLCharacters(standfirst + intro + readMore))
 
-      val images: Seq[ImageAsset] = (trail.elements.bodyImages ++ trail.elements.mainPicture ++ trail.elements.thumbnail).flatMap { i =>
-        i.images.imageCrops.filter(c => (c.width == 140 && c.height == 84) || (c.width == 460 && c.height == 276))
-      }.distinctBy(_.url)
-
-      val modules: Seq[MediaEntryModuleImpl] = for {
-        image <- images
-        url <- image.url
+      val mediaModules: Seq[MediaEntryModuleImpl] = for {
+        profile: Profile <- List(Item140, Item460)
+        trailPicture: ImageMedia <- trail.trailPicture
+        trailAsset: ImageAsset <- profile.elementFor(trailPicture)
+        resizedImage <- profile.bestFor(trailPicture)
       } yield {
         // create media
-        val media = new MediaContent(new UrlReference(url.encodeURI))
-        media.setHeight(image.height)
-        media.setWidth(image.width)
-        image.mimeType.foreach(media.setType)
-        // create media's metadata
+        val media = new MediaContent(new UrlReference(resizedImage))
+        profile.width.foreach(media.setWidth(_))
+        profile.height.foreach(media.setHeight(_))
+        trailAsset.mimeType.foreach(media.setType)
+        // create image's metadata
         val imageMetadata = new Metadata()
-        image.caption.foreach({ d => imageMetadata.setDescription(stripInvalidXMLCharacters(d)) })
-        image.credit.foreach{ creditName =>
+        trailAsset.caption.foreach({ d => imageMetadata.setDescription(stripInvalidXMLCharacters(d)) })
+        trailAsset.credit.foreach { creditName =>
           val credit = new Credit(null, null, creditName)
           imageMetadata.setCredits(Seq(credit).toArray)
         }
         media.setMetadata(imageMetadata)
-        // create media module
+        // create image module
         val module = new MediaEntryModuleImpl()
         module.setMediaContents(Seq(media).toArray)
         module
@@ -106,7 +107,7 @@ object TrailsToRss extends implicits.Collections {
       entry.setLink(trail.metadata.webUrl)
       entry.setDescription(description)
       entry.setCategories(categories)
-      entry.setModules(new java.util.ArrayList(modules ++ Seq(dc)))
+      entry.setModules(new java.util.ArrayList(mediaModules ++ Seq(dc)))
       entry
 
     }.asJava
@@ -132,16 +133,21 @@ object TrailsToRss extends implicits.Collections {
         .distinctBy(faciaContent => faciaContent.properties.maybeContentId.getOrElse(faciaContent.card.id))
         .flatMap(_.properties.maybeContent)
 
-    fromFaciaContent(pressedPage.metadata.webTitle, faciaContentList, pressedPage.metadata.url, pressedPage.metadata.description)
+    val webTitle = if (pressedPage.metadata.contentType != GuardianContentTypes.NetworkFront) {
+      s"${pressedPage.metadata.webTitle} | The Guardian"
+    } else {
+      "The Guardian"
+    }
+
+    fromFaciaContent(webTitle, faciaContentList, pressedPage.metadata.url, pressedPage.metadata.description)
   }
 
-  def fromFaciaContent(webTitle: String, faciaContentList: Seq[ContentType], url: String, description: Option[String] = None)(implicit request: RequestHeader): String  = {
-    val feedTitle = s"$webTitle | The Guardian"
+  def fromFaciaContent(webTitle: String, faciaContentList: Seq[ContentType], url: String, description: Option[String] = None)(implicit request: RequestHeader): String = {
 
     // Feed
     val feed = new SyndFeedImpl
     feed.setFeedType("rss_2.0")
-    feed.setTitle(feedTitle)
+    feed.setTitle(webTitle)
     feed.setDescription(description.getOrElse("Latest news and features from theguardian.com, the world's leading liberal voice"))
     feed.setLink("http://www.theguardian.com" + url)
     feed.setLanguage("en-gb")
@@ -169,23 +175,21 @@ object TrailsToRss extends implicits.Collections {
       val readMore = s""" <a href="$webUrl">Continue reading...</a>"""
       description.setValue(stripInvalidXMLCharacters(standfirst + intro + readMore))
 
-      val images: Seq[ImageAsset] = (faciaContent.elements.bodyImages ++ faciaContent.elements.mainPicture ++ faciaContent.elements.thumbnail).flatMap{ i =>
-        i.images.imageCrops.filter(c => c.width == 140 || c.width == 460 )
-      }.distinctBy(_.url)
-
-      val modules: Seq[MediaEntryModuleImpl] = for {
-        image <- images
-        url <- image.url
+      val mediaModules: Seq[MediaEntryModuleImpl] = for {
+        profile: Profile <- List(Item140, Item460)
+        trailPicture: ImageMedia <- faciaContent.trail.trailPicture
+        trailAsset: ImageAsset <- profile.elementFor(trailPicture)
+        resizedImage <- profile.bestFor(trailPicture)
       } yield {
         // create image
-        val media = new MediaContent(new UrlReference(url.encodeURI))
-        media.setHeight(image.height)
-        media.setWidth(image.width)
-        image.mimeType.foreach(media.setType)
+        val media = new MediaContent(new UrlReference(resizedImage))
+        profile.width.foreach(media.setWidth(_))
+        profile.height.foreach(media.setHeight(_))
+        trailAsset.mimeType.foreach(media.setType)
         // create image's metadata
         val imageMetadata = new Metadata()
-        image.caption.foreach({ d => imageMetadata.setDescription(stripInvalidXMLCharacters(d)) })
-        image.credit.foreach { creditName =>
+        trailAsset.caption.foreach({ d => imageMetadata.setDescription(stripInvalidXMLCharacters(d)) })
+        trailAsset.credit.foreach { creditName =>
           val credit = new Credit(null, null, creditName)
           imageMetadata.setCredits(Seq(credit).toArray)
         }
@@ -208,7 +212,7 @@ object TrailsToRss extends implicits.Collections {
       entry.setLink(webUrl)
       entry.setDescription(description)
       entry.setCategories(categories)
-      entry.setModules(new java.util.ArrayList(modules ++ Seq(dc)))
+      entry.setModules(new java.util.ArrayList(mediaModules ++ Seq(dc)))
       entry
 
     }.asJava

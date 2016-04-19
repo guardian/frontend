@@ -1,6 +1,6 @@
-@(form: play.api.data.Form[controllers.admin.PageRedirect])
+@(form: play.api.data.Form[controllers.admin.PageRedirect], urlMsgs: List[String] = List.empty, fileMsgs: List[String] = List.empty)(implicit request: RequestHeader)
 
-@admin_main("Redirector", "PROD", isAuthed = true) {
+@admin_main("Redirector", conf.Configuration.environment.stage, isAuthed = true) {
     <ul>
         <li>
             This will <strong>only</strong> add the redirect to Next Gen Web. It will <strong>not</strong> add it to
@@ -44,6 +44,37 @@
                     <input class="btn btn-default" type="submit" value="Submit" />
                 </div>
             </div>
+            @if(urlMsgs.nonEmpty) {
+                <div class="form-group label-warning">
+                    <div id="server-message" class="controls col-sm-offset-1 col-sm-11">
+                    @urlMsgs.mkString
+                    </div>
+                </div>
+            }
+        </fieldset>
+    </form>
+
+    <form action="/redirect-batch-post" method="POST" class="form-horizontal redirect-form" enctype="multipart/form-data">
+        <fieldset>
+            <legend>Redirect a batch of URLs from a tab-separated file (fromUrl\ttoUrl\r\n): </legend>
+            <div class="form-group">
+                <label for="urlfile" class="control-label col-sm-1">File:</label>
+                <div class="col-sm-6">
+                    <input type="file" class="form-control" id="urlfile" name="urlfile" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="controls col-sm-offset-1 col-sm-11">
+                    <input class="btn btn-default" type="submit" value="Upload & Redirect" />
+                </div>
+            </div>
+            @if(fileMsgs.nonEmpty) {
+                <div class="form-group label-warning">
+                    <div id="server-message" class="controls col-sm-offset-1 col-sm-11">
+                    @fileMsgs.mkString
+                    </div>
+                </div>
+            }
         </fieldset>
     </form>
 }

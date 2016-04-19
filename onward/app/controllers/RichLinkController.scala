@@ -5,10 +5,10 @@ import common.{JsonComponent, Edition, ExecutionContexts, Logging}
 import implicits.Requests
 import model.{NoCache, Cached, Content, ContentType}
 import scala.concurrent.Future
-import conf.LiveContentApi
-import com.gu.contentapi.client.model.ItemResponse
+import contentapi.ContentApiClient
+import com.gu.contentapi.client.model.v1.ItemResponse
 import play.twirl.api.HtmlFormat
-import LiveContentApi.getResponse
+import ContentApiClient.getResponse
 
 object RichLinkController extends Controller with Paging with Logging with ExecutionContexts with Requests   {
 
@@ -25,7 +25,7 @@ object RichLinkController extends Controller with Paging with Logging with Execu
     log.info(s"Fetching article: $path for edition: ${edition.id}:")
 
     val response: Future[ItemResponse] = getResponse(
-      LiveContentApi.item(path, edition)
+      ContentApiClient.item(path, edition)
         .showFields("headline,standfirst,shortUrl,webUrl,byline,starRating,trailText,liveBloggingNow")
         .showTags("all")
         .showElements("all")
