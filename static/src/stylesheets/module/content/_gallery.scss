@@ -555,6 +555,14 @@ $multimedia-support-5: #161616;
         height: auto;
     }
 
+    .gallery__img-container--portrait,
+    .gallery__img--portrait {
+        @include mq($until: mobileLandscape) {
+            width: 100%;
+            height: auto;
+        }
+    }
+
     .content__header--background-image {
         height: 100vh;
         position: relative;
