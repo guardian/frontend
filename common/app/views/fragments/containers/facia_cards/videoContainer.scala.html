@@ -35,11 +35,12 @@
                             autoPlay = false,
                             showControlsAtStart = false,
                             SupportedUrl.fromFaciaContent(item),
-                            Some(false)
+                            Some(false),
+                            pressedContent = Option(item)
                         )) { player =>
                             <div class="fc-item__media-wrapper u-faux-block-link__promote media__container--hidden js-video-player">
                                 <div class="fc-item__video-container">
-                                    @video(player, false, false, showOverlay = true, pressedContent = Option(item))
+                                    @video(player, false, false, showOverlay = true)
                                 </div>
                             </div>
                             <div class="fc-item__video-fallback media__placeholder--active js-video-placeholder gu-media__fallback">

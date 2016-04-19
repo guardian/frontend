@@ -11,7 +11,8 @@ case class VideoPlayer(
   showControlsAtStart: Boolean,
   endSlatePath: String,
   overrideIsRatioHd: Option[Boolean] = None,
-  embedPath: Option[String] = None
+  embedPath: Option[String] = None,
+  pressedContent: Option[model.pressed.PressedContent] = None
 ) {
   def poster = profile.bestFor(video.images).getOrElse(Static("images/media-holding.jpg").path)
 
