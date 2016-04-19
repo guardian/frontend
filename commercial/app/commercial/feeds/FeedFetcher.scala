@@ -149,7 +149,7 @@ object FeedFetcher {
       new SingleFeedFetcher(TravelOffersFeedMetaData(url))
     }
 
-  val all: Seq[FeedFetcher] = soulmates ++ Seq(bestsellers, masterclasses, travelOffers, jobs).flatten
+  val all: Seq[FeedFetcher] = soulmates ++ Seq(bestsellers, masterclasses, travelOffers, jobs, liveEvents).flatten
 
 }
 
