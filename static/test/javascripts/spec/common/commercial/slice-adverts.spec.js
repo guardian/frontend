@@ -210,6 +210,8 @@ define([
 
             fastdom.defer(function () {
                 var firstContainerAd = qwery('.fc-container-first .ad-slot', $fixtureContainer);
+                expect(firstContainerAd.length).toBe(1);
+
                 var mobileAdSizes = bonzo(firstContainerAd).data('mobile');
                 var fabricSizeMapping = '88,71';
                 expect(mobileAdSizes.indexOf(fabricSizeMapping)).not.toBe(-1);
