@@ -358,9 +358,8 @@ define([
                 bean.on(document.body, 'mousemove', function() {
                     fader.removeClass('is-faded');
                     if(videoCheck === false){
-                        console.log('video is paused');
+                        return;
                     }else{
-                        console.log('video is playing');
                         clearTimeout(faderTimeout);
                         faderTimeout = setTimeout(function() {
                         fader.addClass('is-faded');
