@@ -199,24 +199,36 @@ define([
             });
         });
 
-        it('can add a fabric advert in lieu of the top slot on mobile fronts', function (done) {
-            config.page.pageId = 'uk';
-            config.switches.fabricAdverts = true;
-            detect.getBreakpoint = function () {
-                return 'mobile';
-            };
+        describe('Fabric adverts', function () {
+            beforeEach(function () {
+                config.page.pageId = 'uk';
+                config.switches.fabricAdverts = true;
+                detect.getBreakpoint = function () {
+                    return 'mobile';
+                };
+                sliceAdverts.init();
+            });
 
-            sliceAdverts.init();
+            it('added in lieu of the top slot on mobile fronts', function (done) {
+                fastdom.defer(function () {
+                    var firstContainer = qwery('.fc-container-first', $fixtureContainer)[0];
+                    var appendedAdvert = firstContainer.nextSibling;
+                    expect(appendedAdvert).not.toBe(null);
 
-            fastdom.defer(function () {
-                var firstContainerAd = qwery('.fc-container-first .ad-slot', $fixtureContainer);
-                expect(firstContainerAd.length).toBe(1);
+                    var mobileAdSizes = bonzo(appendedAdvert).data('mobile');
+                    var fabricSizeMapping = '88,71';
+                    expect(mobileAdSizes.indexOf(fabricSizeMapping)).not.toBe(-1);
+                    done();
+                });
+            });
 
-                var mobileAdSizes = bonzo(firstContainerAd).data('mobile');
-                var fabricSizeMapping = '88,71';
-                expect(mobileAdSizes.indexOf(fabricSizeMapping)).not.toBe(-1);
-                done();
-            })
+            it('if added, next container does not carry an advert', function (done) {
+                fastdom.defer(function () {
+                    var secondContainerAd = qwery('.fc-container-second .ad-slot', $fixtureContainer);
+                    expect(secondContainerAd.length).toBe(0);
+                    done();
+                });
+            });
         });
 
         //TODO: get data if we need to reintroduce this again
