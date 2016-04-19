@@ -10,14 +10,7 @@ try {
             isEmbed = !!guardian.isEmbed,
             tpA     = s.getTimeParting('n', '+0'),
             now     = new Date(),
-            webPublicationDate = config.page.webPublicationDate,
-            w       = window,
-            Storage = function (type) {
-                this.type = type;
-            },
-            storage.local = new Storage('localStorage'),
-            storage.session = new Storage('sessionStorage')
-            isAvailable;
+            webPublicationDate = config.page.webPublicationDate;
 
         var R2_STORAGE_KEY = 's_ni', // DO NOT CHANGE THIS, ITS IS SHARED WITH R2. BAD THINGS WILL HAPPEN!
             NG_STORAGE_KEY = 'gu.analytics.referrerVars',
@@ -35,7 +28,7 @@ try {
             return config.page.section || '';
         };
 
-        @* http://www.electrictoolbox.com/pad-number-zeroes-javascript/ *@
+        /* http://www.electrictoolbox.com/pad-number-zeroes-javascript/ */
         var pad = function (number, length) {
             var str = '' + number;
             while (str.length < length) {
@@ -164,9 +157,6 @@ try {
 
         s.prop47    = config.page.edition || '';
 
-        /* Retrieve navigation interaction data */
-        var ni   = storage.session.get(NG_STORAGE_KEY)
-
         if (getUserFromCookie()) {
             s.prop2 = 'GUID:' + getUserFromCookie().id;
             s.eVar2 = 'GUID:' + getUserFromCookie().id;
@@ -177,16 +167,19 @@ try {
 
         s.prop40    = window.guardian.adBlockers.generic || window.guardian.adBlockers.ffAdblockPlus;
 
+        try {
+            var ni = window.sessionStorage.getItem(NG_STORAGE_KEY);
 
-        if (ni) {
-            d = new Date().getTime();
-            if (d - ni.time < 60 * 1000) { // One minute
-                this.s.eVar24 = ni.pageName;
-                this.s.eVar37 = ni.tag;
+            if (ni) {
+                d = new Date().getTime();
+                if (d - ni.time < 60 * 1000) { // One minute
+                    s.eVar24 = ni.pageName;
+                    s.eVar37 = ni.tag;
+                }
+                window.sessionStorage.removeItem(R2_STORAGE_KEY);
+                window.sessionStorage.removeItem(NG_STORAGE_KEY);
             }
-            storage.session.remove(R2_STORAGE_KEY);
-            storage.session.remove(NG_STORAGE_KEY);
-        }
+        } catch (e) { }
 
         // Sponsored content
         s.prop38 = forEach(document.querySelectorAll('[data-sponsorship]')){function (n) {
@@ -221,77 +214,18 @@ try {
                 };
             }
             return userFromCookieCache
-        }
+        };
 
         var decodeBase64 = function (str) {
             return decodeURIComponent(escape(utilAtob(str.replace(/-/g, '+').replace(/_/g, '/').replace(/,/g, '='))));
         };
 
-        Storage.prototype.isAvailable = function (data) {
-            var testKey = 'local-storage-module-test',
-                d = data || 'test';
-            try {
-                // to fully test, need to set item
-                // http://stackoverflow.com/questions/9077101/iphone-localstorage-quota-exceeded-err-issue#answer-12976988
-                w[this.type].setItem(testKey, d);
-                w[this.type].removeItem(testKey);
-                return true;
-            } catch (e) {
-                return false;
-            }
-        };
-
-        Storage.prototype.isStorageAvailable = function (refresh) {
-            if (isAvailable === void 0 || refresh) {
-                isAvailable = this.isAvailable();
-            }
-            return isAvailable;
-        };
-
-        Storage.prototype.get = function (key) {
-            if (this.isStorageAvailable()) {
-                var data,
-                    dataParsed;
-                if (!w[this.type]) {
-                    return;
-                }
-                data = w[this.type].getItem(key);
-                if (data === null) {
-                    return null;
-                }
-
-                // try and parse the data
-                try {
-                    dataParsed = JSON.parse(data);
-                } catch (e) {
-                    // remove the key
-                    this.remove(key);
-                    return null;
-                }
-
-                // has it expired?
-                if (dataParsed.expires && new Date() > new Date(dataParsed.expires)) {
-                    this.remove(key);
-                    return null;
-                }
-
-                return dataParsed.value;
-            }
-        };
-
-        Storage.prototype.getKey = function (i) {
-            if (this.isStorageAvailable()) {
-                return w[this.type].key(i);
-            }
-        };
-
-
         var checkForPageViewInterval = setInterval(function () {
-            @*
+            /*
                 s_i_guardiangu-network is a globally defined Image() object created by Omniture
                 It does not sit in the DOM tree, and seems to be the only surefire way
                 to check if the intial beacon has been successfully sent
-            *@
+            */
             var img = window['s_i_' + window.s_account.split(',').join('_')];
             if (typeof (img) !== 'undefined' && (img.complete === true || img.width + img.height > 0)) {
                 clearInterval(checkForPageViewInterval);
