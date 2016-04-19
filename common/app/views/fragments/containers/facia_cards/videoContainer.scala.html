@@ -6,22 +6,22 @@
 
 <div class="fc-container__inner">
     <h2 class="video-title fc-container__header__title">
-        <a href="@containerDefinition.href">@containerDefinition.displayName</a>
+        <a href="@containerDefinition.href" data-link-name="video-container-title @containerDefinition.displayName">@containerDefinition.displayName</a>
     </h2>
 </div>
 
 <div class="video-playlist video-playlist--0 js-video-playlist"
      data-number-of-videos="@(containerDefinition.collectionEssentials.items.zipWithIndex.length - 1)">
-    <div class="video-playlist__control video-playlist__control--prev js-video-playlist-prev">
+    <div class="video-playlist__control video-playlist__control--prev js-video-playlist-prev" data-link-name="video-container-prev">
         @fragments.inlineSvg("chevron-left", "icon", Seq("video-playlist__icon"))
     </div>
-    <div class="video-playlist__control video-playlist__control--next js-video-playlist-next">
+    <div class="video-playlist__control video-playlist__control--next js-video-playlist-next" data-link-name="video-container-next">
         @fragments.inlineSvg("chevron-right", "icon", Seq("video-playlist__icon"))
     </div>
 
     <ul class="u-unstyled video-playlist__inner">
         <li class="video-playlist__item video-title video-title--leftcol fc-container__header__title">
-            <a class="video-title__link" href="@containerDefinition.href">@containerDefinition.displayName</a>
+            <a class="video-title__link" href="@containerDefinition.href" data-link-name="video-container-title @containerDefinition.displayName">@containerDefinition.displayName</a>
         </li>
 
         @containerDefinition.collectionEssentials.items.zipWithIndex.map { case (item, index) =>

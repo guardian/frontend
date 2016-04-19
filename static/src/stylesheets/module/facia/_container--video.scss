@@ -86,6 +86,11 @@ $video-width-desktop: 700px;
     color: $media-default;
     display: block;
     margin-bottom: $gs-baseline;
+
+    a:hover {
+        color: #ffffff;
+        border-bottom: #ffffff;
+    }
 }
 
 .video-playlist {
