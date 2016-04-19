@@ -36,7 +36,8 @@
     <script type="text/template" id="tmpl-participation-item-template">@fragments.participationItem()</script>
     <script type="text/template" id="tmpl-audience-template">@fragments.audience()</script>
     <script type="text/template" id="tmpl-audience-item-template">@fragments.audienceItem()</script>
-    <script type="text/javascript">
+
+    <script type="text/javascript">    <script type="text/javascript">
         window.abSwitches = {
             @conf.switches.Switches.all.filter(_.group.name == "A/B Tests").map{ s =>
                 "@CamelCase.fromHyphenated(s.name)": @s.isSwitchedOn,
