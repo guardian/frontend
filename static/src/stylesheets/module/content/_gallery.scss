@@ -339,7 +339,7 @@ $multimedia-support-5: #161616;
     }
 
     .inline-camera svg {
-        width: 32px;
+        width: 44px;
         height: auto;
     }
 
@@ -428,6 +428,18 @@ $multimedia-support-5: #161616;
     .gallery {
         list-style: none;
         margin: 0;
+        position: relative;
+
+        @include mq(tablet) {
+            &:before {
+                content: "";
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: -$gs-gutter/2;
+                border-left: 1px solid $neutral-1;
+            }
+        }
     }
 
     .gallery__item {
@@ -531,8 +543,6 @@ $multimedia-support-5: #161616;
         background-color: rgba(0, 0, 0, 0);
 
         @include mq(tablet) {
-            border-left: 1px dotted #484848;
-            padding-left: $gs-gutter / 2;
             padding-bottom: 2.5rem;
         }
     }
