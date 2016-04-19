@@ -118,7 +118,6 @@ define([
             ]), function (fn) {
                 fn();
             });
-            videoContainer;
         };
 
     return {
