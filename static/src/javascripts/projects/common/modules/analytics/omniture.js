@@ -127,18 +127,9 @@ define([
         });
     };
 
-    Omniture.prototype.shouldPopulateMvtPageProperties = function (mvtTag) {
-        // This checks if the user test alocation has changed once ab test framework has loaded.
-        return mvtTag !== config.abTestsParticipations;
-    };
-
-    Omniture.prototype.populatePageProperties = function () {
+    Omniture.prototype.go = function () {
         this.s.linkTrackVars = standardProps;
         this.s.linkTrackEvents = 'None';
-    };
-
-    Omniture.prototype.go = function () {
-        this.populatePageProperties();
         mediator.emit('analytics:ready');
     };
 
