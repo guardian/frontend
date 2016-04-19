@@ -89,7 +89,7 @@ define([
         unSubscribeHandler: function() {
             console.log("++ UnSubscribeHandler");
             subscribed = false;
-            modules.configureSubscribeTemplate;
+            modules.configureSubscribeTemplate();
         }
     };
 

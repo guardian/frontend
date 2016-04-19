@@ -176,9 +176,9 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
 }
 
 
-@include fs-textSans(3);
-margin-top: $gs-baseline /2;
 .notifications-explainer__header-blurb {
+    @include fs-textSans(3);
+    margin-top: $gs-baseline /2;
 }
 
 .notifications-explainer__headline {

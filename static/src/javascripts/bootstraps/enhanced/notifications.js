@@ -37,7 +37,8 @@ define([
     uniq,
     without
 ) {
-    var modules = {
+    var explainerDismissed = 'gu.notifications.explainer.dismissed',
+        modules = {
 
         getReg: function () {
             return navigator.serviceWorker.ready;
@@ -47,71 +48,45 @@ define([
             return modules.getReg().then(function (reg) {return reg.pushManager.getSubscription();});
         },
 
-/*
-        checkPermissions: function() {
-            console.log("++++ Handle permission");
-            return modules.getReg().then(function(reg){
-                console.log("Got Reg");
-                return modules.getSub().then(function(sub){
-                    console.log("Got Sub");
-                    if(sub) {
-                        console.log("+++++++++++++++ Have sub");
-                        modules.configureSubscribeTemplate();
-                    } else {
-                        console.log("Have not a sub");
-                        reg.pushManager.subscribe({userVisibleOnly: true}).then(function(sub) {
-                            modules.configureSubscribeTemplate();
-                        });
-                    }
-                })
+        configureSubscribeTemplate: function() {
 
-            });
+            modules.configureSubscribeButton();
+            if(!modules.hasSubscribed() && !modules.hasDismissedExplainer()) {
+                modules.showExplainer();
+            }
         },
 
-
-*/
-        configureSubscribeTemplate: function() {
+        configureSubscribeButton: function () {
             var $follows = bonzo(qwery('.js-notification-link')),
                 subscribed = modules.checkSubscriptions(),
-                hasNoSubscriptions = modules.subscriptionsEmpty(),
                 handler = subscribed ? modules.unSubscribeHandler : modules.subscribeHandler,
                 src = template(followLink, {
                     subscribed: subscribed,
                     icon: svgs(subscribed ? 'notificationsOff' : 'notificationsOn')
                 });
 
-            console.log("Follow");
+            console.log("Follow: " + subscribed);
 
             $follows.each(function(follow) {
-                console.log("++ Follow");
                 var $follow = bonzo(follow);
                 $follow.html(src);
                 bean.one($follow[0], 'click', '.js-notifications__button', handler );
             });
-
-            modules.showExplainer();
-
         },
 
         showExplainer: function() {
-            console.log("Show explainter");
             var src = template(explainer,{
                 closeIcon : svgs('closeCentralIcon'),
                 imgMobile: svgs('mobileNotificationsExplainer', ['mobile-only', 'notification-explainer']),
                 imgDesktop: svgs('desktopNotificationsExplainer', ['hide-on-mobile', 'notification-explainer'])
             });
+
             fastdom.write(function () {
-                console.log("++ Write: " + src );
                 var notificationLink = $('.js-notification-link');
                 notificationLink.append(src);
-                console.log("++ Written it!");
-                //bean.one(document.body, 'click', '.js-notifications-subscribe-link', modules.subscribeHandler );
-                //bean.one(document.body, 'click', '.js-notifications__item__close', modules.closeDisplayMessage);
-                console.log("++ Handled");
                 bean.on(notificationLink[0], 'click', '.js-notifications__item__close', function(){
-                    console.log("Close-notifice !");
                     fastdom.write(function() {
-                        console.log("++ Remove explainer");
+                        userPrefs.set(explainerDismissed, true);
                         $('.js-notifications-explainer').remove();
                     });
                 })
@@ -119,12 +94,11 @@ define([
         },
 
 
-
         xxxxxconfigureSubscribeTemplate: function () {
             console.log("++ Template");
             var subscribed = modules.checkSubscriptions(),
                 hasNoSubscriptions = modules.subscriptionsEmpty(),
-                handler = subscribed ? modules.unSubscribeHandler : modules.subscribeHandler,
+                handler = subscribed ? modules.subscribeHandler : modules.unSubscribeHandler,
                 src = template(subscribeTemplate, {
                     className: hasNoSubscriptions ? '' : 'notifications-subscribe-link--has-subscriptions',
                     text: subscribed ? 'Unfollow' : 'Follow story',
@@ -146,36 +120,19 @@ define([
         },
 
         displayPermissiosMessage: function() {
-            console.log("++ CLick");
             var src = template(permissionsTemplate,{closeIcon : svgs('closeCentralIcon')});
             fastdom.write(function () {
-                console.log("++ Write: " + src );
                 $('.js-notifications').prepend(src);
-                console.log("++ Written it");
-                //bean.one(document.body, 'click', '.js-notifications-subscribe-link', modules.subscribeHandler );
                 bean.one(document.body, 'click', '.js-notifications__item__close', modules.closeDisplayMessage);
-                console.log("++ Handled");
             });
-        },
-
-        setSubscriptionStatus: function (subscribed) {
-            var subscribeButton = $('.js-notifications-subscribe-link'),
-                subscribeLink = $('.notifications-subscribe-link--follow'),
-                handler = subscribed ? modules.unSubscribeHandler : modules.subscribeHandler;
-            if (subscribed) {
-                subscribeLink.addClass('notifications-subscribe-link--has-subscriptions');
-            }
-
-            subscribeButton[0].textContent = subscribed ?  'Unfollow' : 'Follow story';
-            bean.one(document.body, 'click', '.js-notifications-subscribe-link', handler);
         },
 
         //TODO ffs dont commit this
         subscribeHandler: function () {
+
             modules.subscribe().then(modules.follow)
                 .catch( function(err){
                     if (Notification.permission === 'denied') {
-                        console.log("+++ Gotcha Now!");
                         modules.displayPermissiosMessage();
                     }
                 });
@@ -186,14 +143,7 @@ define([
         },
 
         subscribe: function () {
-            console.log("+ Subscribe");
-
             return modules.getReg().then(function (reg) {
-                if(reg) {
-                    console.log("+ Reggie Reggie");
-                } else {
-                    console.log("+ No Reggie");
-                }
                 return modules.getSub().then(function (sub) {
                     if (sub) {
                         return sub;
@@ -212,7 +162,7 @@ define([
                     var subscriptions = modules.getSubscriptions();
                     subscriptions.push(config.page.pageId);
                     userPrefs.set('subscriptions', uniq(subscriptions));
-                    modules.setSubscriptionStatus(true);
+                    modules.configureSubscribeButton();
                 }
             );
         },
@@ -225,6 +175,8 @@ define([
                     });
                 });
             }
+            modules.configureSubscribeButton();
+
         },
 
         unFollow: function () {
@@ -234,7 +186,6 @@ define([
                     var subscriptions = modules.getSubscriptions(),
                         newSubscriptions = without(subscriptions, config.page.pageId);
                     userPrefs.set('subscriptions', uniq(newSubscriptions));
-                    modules.setSubscriptionStatus(false);
                 }
             );
         },
@@ -252,8 +203,12 @@ define([
             });
         },
 
+        hasSubscribed: function() {
+            return userPrefs.get('subscriptions');
+        },
+
         getSubscriptions: function () {
-            return userPrefs.get('subscriptions') || [];
+            return modules.hasSubscribed() || [];
         },
 
         subscriptionsEmpty: function () {
@@ -266,6 +221,10 @@ define([
             return some(subscriptions, function (sub) {
                 return sub == config.page.pageId;
             });
+        },
+
+        hasDismissedExplainer: function() {
+           return userPrefs.get(explainerDismissed);
         }
     };
 
