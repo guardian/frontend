@@ -98,7 +98,7 @@ $video-width-desktop: 700px;
     }
 }
 
-@for $i from 0 through 20 {
+@for $i from 0 through 8 {
     .video-playlist--#{$i} {
         .video-playlist__inner {
             @include mq(desktop) {
