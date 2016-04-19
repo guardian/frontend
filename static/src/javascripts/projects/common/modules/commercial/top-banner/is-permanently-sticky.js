@@ -5,7 +5,7 @@ define([
         function isPersonalInvestments() {
             var endDate = new Date(2017, 3, 26);
             var now = new Date();
-            return /(^|,)personal-investments(\/|$|,)/.test(config.page.keywordIds) && now < endDate;
+            return /\/personal-investments($|,)/.test(config.page.keywordIds) && now < endDate;
         }
     ];
 });
