@@ -196,6 +196,9 @@ GET        /weatherapi/city/:id.json                                            
 GET        /weatherapi/city.json                                                               weather.controllers.LocationsController.whatIsMyCity()
 GET        /weatherapi/locations                                                               weather.controllers.LocationsController.findCity(query: String)
 
+# Breaking News
+GET        /news-alert/alerts                                                                  controllers.NewsAlertController.alerts()
+
 # Articles
 GET        /*path.json                                                                         controllers.ArticleController.renderLiveBlogJson(path, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean])
 GET        /*path/email                                                                        controllers.ArticleController.renderArticle(path)

@@ -23,7 +23,7 @@ object SoulmatesController extends Controller with implicits.Requests {
       } else SoulmatesAgent.sample(groupName)
     }
 
-    sample match {
+    sample.toList match {
       case Nil => NoCache(jsonFormat.nilResult)
       case soulmates => Cached(componentMaxAge) {
         val clickMacro = request.getParameter("clickMacro")

@@ -151,7 +151,7 @@ define([
     var recordFirstAdRendered = once(function () {
         beacon.beaconCounts('ad-render');
     });
-    var prebidEnabled = ab.isInVariant('HeaderBiddingUs', 'variant');
+    var prebidEnabled = config.switches.headerBiddingUs && config.page.edition === 'US';
 
     /**
      * Initial commands
@@ -713,11 +713,12 @@ define([
                     fastdom.write(function () {
                         $adSlot.parent().css('display', 'flex');
                     });
-                } else if (!($adSlot.hasClass('ad-slot--top-above-nav') && size === '1,1')) {
-                    fastdom.write(function () {
-                        $adSlot.parent().css('display', 'block');
-                    });
                 }
+                // } else if (!($adSlot.hasClass('ad-slot--top-above-nav') && size === '1,1')) {
+                //     // fastdom.write(function () {
+                //     //     $adSlot.parent().css('display', 'block');
+                //     // });
+                // }
 
                 if (($adSlot.hasClass('ad-slot--top-banner-ad') && size === '88,70')
                 || ($adSlot.hasClass('ad-slot--commercial-component') && size === '88,88')) {

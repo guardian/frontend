@@ -45,7 +45,7 @@ define([
                 bootstrapContext('facia', facia);
             });
 
-            if (ab.testCanBeRun('Minute')) {
+            if (ab.isInVariant('Minute', 'on')) {
                 require('bootstraps/enhanced/minute', function() {});
             }
         }
@@ -61,6 +61,10 @@ define([
                 bootstrapContext('article', article);
                 bootstrapContext('article : image-content', imageContent);
             });
+
+            if (ab.isInVariant('Minute', 'on')) {
+                require('bootstraps/enhanced/minute', function() {});
+            }
         }
 
         if (config.page.contentType === 'Crossword' || config.page.pageId === 'offline-page') {

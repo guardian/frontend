@@ -32,7 +32,7 @@ define([
         this.idealOutcome = 'We want to understand what causes people to block ads on theguardian.com and what would make them consider unblocking.';
 
         this.canRun = function () {
-            return detect.getUserAgent.browser !== 'Firefox';
+            return detect.getUserAgent.browser !== 'Firefox' && config.page.edition !== 'UK';
         };
 
         this.variants = [{
