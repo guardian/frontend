@@ -338,8 +338,16 @@ define([
 
     function initEndSlate(player, endSlatePath) {
         var fader = $('.video__fader');
-        var videoCheck = false;
         var faderTimeout;
+        function setFaderTimeout(){
+            console.log('still listening');
+            fader.removeClass('is-faded');
+            clearTimeout(faderTimeout);
+            faderTimeout = setTimeout(function() {
+            fader.addClass('is-faded');
+            }, 3000);
+        }
+
         var endSlate = new Component(),
             endState = 'vjs-has-ended';
 
@@ -351,34 +359,33 @@ define([
                 bonzo(player.el()).addClass(endState);
             });
         });
+
         player.on('playing', function () {
-            videoCheck = true;
             fader.addClass('is-faded');
             bonzo(player.el()).removeClass(endState);
-                bean.on(document.body, 'mousemove', function() {
+            bean.on(document.body, 'mousemove', setFaderTimeout);
+
+            bean.on(window, 'scroll', function (){
+                
+                var related = $('#more-media-in-section').offset().top;
+                var scroll = $(window).scrollTop();
+                var position = Math.floor(related - scroll);
+                if (position <= 0){
                     fader.removeClass('is-faded');
-                    if(videoCheck === false){
-                        return;
-                    }else{
-                        clearTimeout(faderTimeout);
-                        faderTimeout = setTimeout(function() {
-                        fader.addClass('is-faded');
-                        }, 3000);
-                    }
-                });
+                    clearTimeout(faderTimeout);
+                    bean.off(document.body, 'mousemove', setFaderTimeout);
+                }else if (position > 0 && !player.paused()){
+                    console.log('this isissi');
+                    fader.addClass('is-faded');
+                }
+            });
         });
-        bean.on(window, 'scroll', function (){
-           var related = $('#more-media-in-section').offset().top;
-           var scroll = $(window).scrollTop();
-           var position = Math.floor(related -scroll);
-           if (position <= 0){
-               fader.removeClass('is-faded');
-           }
-        });
+
         //add in on video stop remove class
         player.on('pause', function(){
-            videoCheck = false;
             clearTimeout(faderTimeout);
+            console.log('cleared?');
+            bean.off(document.body, 'mousemove', setFaderTimeout);
             fader.removeClass('is-faded');
         });
     }
