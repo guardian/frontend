@@ -1,6 +1,8 @@
 $breaking-news-icon-width: 36px;
 $breaking-news-close-icon-width: 32px;
 $notifications-button-height: 28px;
+$popup-anchor-arrow-size: 16px;
+$popup-top: $headerHeight + $gs-baseline/2 + 3;
 
 @mixin notifcations-button-style($foreground: $neutral-2, $background: #ffffff) {
     .notifications__button {
@@ -114,7 +116,7 @@ $notifications-button-height: 28px;
 
 .notifications-explainer {
 
-    margin-top: $gs-baseline;
+    margin-top: $gs-baseline * 2;
     margin-bottom: $gs-baseline;
     background: $live-default;
     color: $neutral-8;
@@ -134,14 +136,31 @@ $notifications-button-height: 28px;
             border-color: #ffffff;
         }
     }
+
 }
+
+.notifications-explainer::after {
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-top: 0;
+    position: absolute;
+    left: 30%;
+    background-color: $live-default;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid $live-default;
+    //top: $popup-top - $popup-anchor-arrow-size;
+}
+
 
 .notifications-explainer__content {
     position: relative;
     box-sizing: border-box;
     padding: $gs-baseline 0 ($gs-baseline/3)*2 $gs-gutter;
-    margin-bottom: $gs-baseline * -2;
 }
+
 
 .notifications-explainer__header {
     position: relative;
@@ -153,6 +172,7 @@ $notifications-button-height: 28px;
         top: 0;
     }
 }
+
 
 .notifications-explainer__header-blurb {
     @include fs-textSans(3);
