@@ -77,16 +77,15 @@ define([
         var slotWidth = $iframe.attr('width');
         var slotHeight = $iframe.attr('height');
         // iframe may not have been injected at this point
-        var adSize = [slotWidth, slotHeight].join(',');
-        var isFullSizeAd = $iframe.length > 0 && (adSize === '88,70' || adSize === '88,71');
-        // fluid250 and fabric ads are currently always 250px high. We can't just read the client height as fluid ads are
+        var isFluidAd = $iframe.length > 0 && [slotWidth, slotHeight].join(',') === '88,70';
+        // fluid ads are currently always 250px high. We can't just read the client height as fluid ads are
         // injected asynchronously, so we can't be sure when they will be in the dom
-        var fullSizeAdInnerHeight = 250;
-        var fullSizeAdPadding = 18;
-        var fullSizeAdHeight = fullSizeAdInnerHeight + fullSizeAdPadding;
+        var fluidAdInnerHeight = 250;
+        var fluidAdPadding = 18;
+        var fluidAdHeight = fluidAdInnerHeight + fluidAdPadding;
 
-        if (isFullSizeAd) {
-            return Promise.resolve(fullSizeAdHeight);
+        if (isFluidAd) {
+            return Promise.resolve(fluidAdHeight);
         } else {
             var adHeightPromise = fastdom.read(function () { return $adBannerInner[0].clientHeight; });
             // We can't calculate the height of Rubicon ads because they transition
