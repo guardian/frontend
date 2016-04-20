@@ -46,7 +46,7 @@ define([
             $('.js-video-playlist').addClass('video-playlist--end');
         } else if (containerPos <= 0) {
             containerPos = 0;
-            $('.js-video-playlist').addClass('video-playlist--start')
+            $('.js-video-playlist').addClass('video-playlist--start');
         }
 
         resetPlayers();
@@ -55,7 +55,12 @@ define([
 
         $('.js-video-playlist-item-' + containerPos).addClass('video-playlist__item--active');
         
-        $('.js-video-playlist-inner').attr('style', '-webkit-transform: translate(' + translateWidth + 'px); -transform: translate(' + translateWidth + 'px);');
+        $('.js-video-playlist-inner').attr('style',
+            '-webkit-transform: translate(' + translateWidth + 'px);' +
+            '-moz-transform: translate(' + translateWidth + 'px);' +
+            '-ms-transform: translate(' + translateWidth + 'px);' +
+            '-transform: translate(' + translateWidth + 'px);'
+        );
     }
 
     function resetPlayers() {

@@ -108,7 +108,6 @@ $video-width-desktop: 700px;
     margin: 0;
     font-size: 0; // to remove spacing between inline-blocked children
     white-space: nowrap;
-    transition: transform .4s ease-out;
     padding-right: $gs-gutter / 2;
 
     @include mq(mobileLandscape) {
@@ -119,10 +118,12 @@ $video-width-desktop: 700px;
         overflow-x: scroll;
         overflow-y: hidden;
         -webkit-overflow-scrolling: touch;
+        transform: none !important;
     }
 
     @include mq(desktop) {
         padding-right: 0;
+        transition: transform .4s ease-out;
     }
 
     &::-webkit-scrollbar {
