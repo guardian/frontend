@@ -3,7 +3,7 @@ package controllers
 import common._
 import controllers.front._
 import layout.{CollectionEssentials, FaciaContainer, Front}
-import model.Cached.StringResult
+import model.Cached.RevalidatableResult
 import model._
 import model.facia.PressedCollection
 import model.pressed.CollectionConfig
@@ -145,22 +145,25 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
         case None => Cached(cacheTime)(Cors(JsonComponent(JsObject(Nil))))}
   }
 
-  private[controllers] def renderFrontPressResult(path: String)(implicit request : RequestHeader) = {
+  private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader) = {
     val futureResult = frontJsonFapi.get(path).flatMap {
       case Some(faciaPage) =>
         successful(
-          Cached.withEtag(faciaPage) {
-            if (request.isRss) {
-              val body = TrailsToRss.fromPressedPage(faciaPage)
-              StringResult(Ok(body).as("text/xml; charset=utf-8"), body)
+          if (request.isRss) {
+            val body = TrailsToRss.fromPressedPage(faciaPage)
+            Cached.withRevalidation(faciaPage) {
+              RevalidatableResult(Ok(body).as("text/xml; charset=utf-8"), body)
             }
-            else if (request.isJson)
-              StringResult.withoutString(JsonFront(faciaPage))
-            else {
-              val html = views.html.front(faciaPage)
-              StringResult(Ok(html), html.body)
+          }
+          else if (request.isJson)
+            JsonFront(faciaPage)
+          else {
+            val html = views.html.front(faciaPage)
+            Cached.withRevalidation(faciaPage) {
+              RevalidatableResult(Ok(html), html.body)
             }
-          })
+          }
+        )
       case None => successful(Cached(60)(NotFound))}
 
     futureResult.onFailure { case t: Throwable => log.error(s"Failed rendering $path with $t", t)}
