@@ -6,8 +6,7 @@ define([
     'common/utils/mediator',
     'common/utils/config',
     'common/utils/detect',
-    'lodash/objects/assign',
-    'common/modules/commercial/top-banner/is-permanently-sticky'
+    'lodash/objects/assign'
 ], function (
     fastdom,
     Promise,
@@ -16,8 +15,7 @@ define([
     mediator,
     config,
     detect,
-    assign,
-    isPermanentlyStickyConditions
+    assign
 ) {
 
     // All ads are loaded via DFP, including the following types. DFP does
@@ -46,12 +44,6 @@ define([
     });
 
     var getAdIframe = function () { return $('iframe', $adBanner); };
-
-    // In some conditions, we want the top banner to remain sticky all the way
-    // through the bottom of the page
-    var isPermanentlySticky = isPermanentlyStickyConditions.some(function (test) {
-        return test();
-    });
 
     // Rubicon ads are loaded via DFP like all other ads, but they can
     // render themselves again at any time
@@ -145,8 +137,8 @@ define([
         var userHasScrolledPastHeader = pageYOffset > state.headerHeight;
 
         els.$adBanner.css({
-            'position': !isPermanentlySticky && userHasScrolledPastHeader ? 'absolute' : 'fixed',
-            'top': !isPermanentlySticky && userHasScrolledPastHeader ? state.headerHeight : '',
+            'position': !config.page.hasSuperStickyBanner && userHasScrolledPastHeader ? 'absolute' : 'fixed',
+            'top': !config.page.hasSuperStickyBanner && userHasScrolledPastHeader ? state.headerHeight : '',
             'height': state.adHeight,
             // Stop the ad from overflowing while we transition
             'overflow': state.shouldTransition ? 'hidden' : '',
