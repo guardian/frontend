@@ -15,10 +15,10 @@ define([
     var containerPos = 0,
         videoWidth = 700,
         translateWidth = 0,
-        numberOfVideos;
+        $videoPlaylist = $('.js-video-playlist')
+        numberOfVideos = $videoPlaylist.attr('data-number-of-videos');
 
     function init() {
-        numberOfVideos = $('.js-video-playlist').attr('data-number-of-videos');
         bindEvents();
     }
 
@@ -32,21 +32,21 @@ define([
     }
 
     function moveCarousel(direction) {
-        $('.js-video-playlist').removeClass('video-playlist--end video-playlist--start');
+        $videoPlaylist.removeClass('video-playlist--end video-playlist--start');
         $('.video-playlist__item--active').removeClass('video-playlist__item--active');
 
         if (direction === 'next') {
             containerPos++;
         } else {
-            containerPos = containerPos - 1;
+            containerPos--;
         }
 
         if (containerPos >= numberOfVideos) {
             containerPos = numberOfVideos;
-            $('.js-video-playlist').addClass('video-playlist--end');
+            $videoPlaylist.addClass('video-playlist--end');
         } else if (containerPos <= 0) {
             containerPos = 0;
-            $('.js-video-playlist').addClass('video-playlist--start');
+            $videoPlaylist.addClass('video-playlist--start');
         }
 
         resetPlayers();
@@ -57,9 +57,7 @@ define([
 
         $('.js-video-playlist-inner').attr('style',
             '-webkit-transform: translate(' + translateWidth + 'px);' +
-            '-moz-transform: translate(' + translateWidth + 'px);' +
-            '-ms-transform: translate(' + translateWidth + 'px);' +
-            '-transform: translate(' + translateWidth + 'px);'
+            'transform: translate(' + translateWidth + 'px);'
         );
     }
 
