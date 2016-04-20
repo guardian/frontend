@@ -98,6 +98,7 @@
 
                     <img class="gallery__img gallery__img@if(image.width >= image.height) {--landscape} else {--portrait}"
                     itemprop="contentUrl"
+                        style="max-width: calc(@{image.width.toFloat/image.height} * 96vh)"
                     alt="@image.altText.getOrElse("")"
                     src="@ImgSrc.getFallbackUrl(imageElement.images)" />
                 </picture>
