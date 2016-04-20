@@ -1,0 +1,169 @@
+package commercial.feeds
+
+import java.lang.System.currentTimeMillis
+
+import com.ning.http.client.Response
+import conf.Configuration
+import model.commercial.events.Eventbrite.EBResponse
+import model.commercial.soulmates.SoulmatesAgent
+import play.api.Play.current
+import play.api.libs.json.{JsArray, Json}
+import play.api.libs.ws.{WS, WSResponse}
+
+import scala.concurrent.duration.{Duration, _}
+import scala.concurrent.{ExecutionContext, Future}
+import scala.language.postfixOps
+import scala.util.control.NonFatal
+
+trait FeedFetcher {
+
+  def feedMetaData: FeedMetaData
+  def fetch()(implicit executionContext: ExecutionContext): Future[FetchResponse]
+}
+
+class SingleFeedFetcher(val feedMetaData: FeedMetaData) extends FeedFetcher {
+
+  def fetch()(implicit executionContext: ExecutionContext): Future[FetchResponse] = {
+    feedMetaData.fetchSwitch.isGuaranteedSwitchedOn flatMap { reallyOn =>
+      if (reallyOn) {
+        FeedFetcher.fetch(feedMetaData)
+      } else Future.failed(SwitchOffException(feedMetaData.fetchSwitch.name))
+    }
+  }
+}
+
+class EventbriteMultiPageFeedFetcher(override val feedMetaData: EventsFeedMetaData) extends FeedFetcher {
+
+  def fetchPage(index: Int)(implicit executionContext: ExecutionContext): Future[FetchResponse] = {
+    FeedFetcher.fetch(feedMetaData.copy(additionalParameters = Map("page" -> index.toString)))
+  }
+
+  def combineFetchResponses(responses: Seq[FetchResponse]): FetchResponse ={
+
+    val duration = responses.foldLeft(0 milliseconds)(
+      (result, current: FetchResponse) => result + Duration(current.duration.toMillis, MILLISECONDS))
+
+    val contents = responses.foldLeft(JsArray())(
+      (result: JsArray, current: FetchResponse) => result :+ Json.parse(current.feed.content)
+    )
+
+    FetchResponse(
+      Feed(
+        contents.toString(),
+        responses.head.feed.contentType
+      ),
+      duration
+    )
+  }
+
+  def fetch()(implicit executionContext: ExecutionContext): Future[FetchResponse] = {
+
+    feedMetaData.fetchSwitch.isGuaranteedSwitchedOn flatMap { reallyOn =>
+      if (reallyOn) {
+
+        fetchPage(0) flatMap { initialFetch =>
+          val pageCount = Json.parse(initialFetch.feed.content).as[EBResponse].pagination.pageCount
+          val subsequentFetches = Future.traverse(2 to pageCount)(fetchPage)
+
+          subsequentFetches map { fetches =>
+            combineFetchResponses(initialFetch +: fetches)
+          }
+        }
+      } else Future.failed(SwitchOffException(feedMetaData.fetchSwitch.name))
+    }
+  }
+}
+
+object FeedFetcher {
+
+  def fetch(feedMetaData: FeedMetaData)(implicit executionContext: ExecutionContext): Future[FetchResponse] = {
+
+    def body(response: WSResponse): String = {
+      if (feedMetaData.responseEncoding == ResponseEncoding.default) {
+        response.body
+      } else {
+        response.underlying[Response].getResponseBody(feedMetaData.responseEncoding)
+      }
+    }
+
+    def contentType(response: WSResponse): String = {
+      response.underlying[Response].getContentType
+    }
+
+    val start = currentTimeMillis()
+
+    val futureResponse = WS.url(feedMetaData.url)
+                         .withQueryString(feedMetaData.parameters.toSeq: _*)
+                         .withRequestTimeout(feedMetaData.timeout.toMillis.toInt)
+                         .get()
+
+    futureResponse map { response =>
+      if (response.status == 200) {
+        FetchResponse(
+          Feed(body(response), contentType(response)),
+          Duration(currentTimeMillis() - start, MILLISECONDS)
+        )
+      } else {
+        throw FetchException(response.status, response.statusText)
+      }
+    } recoverWith {
+      case NonFatal(e) => Future.failed(e)
+    }
+  }
+
+  private val jobs: Option[FeedFetcher] = {
+      Configuration.commercial.jobsUrl map { url =>
+        new SingleFeedFetcher(JobsFeedMetaData(url))
+      }
+  }
+
+  private val soulmates: Seq[FeedFetcher] = {
+
+    def feedFetcher(agent: SoulmatesAgent): Option[FeedFetcher] = {
+      Configuration.commercial.soulmatesApiUrl map { url =>
+        new SingleFeedFetcher(SoulmatesFeedMetaData(url, agent))
+      }
+    }
+
+    SoulmatesAgent.agents flatMap feedFetcher
+  }
+
+  private val bestsellers: Option[FeedFetcher] = {
+    Configuration.commercial.magento.domain map { domain =>
+      new SingleFeedFetcher(BestsellersFeedMetaData(domain))
+    }
+  }
+
+  private val masterclasses: Option[FeedFetcher] =
+    Configuration.commercial.masterclassesToken map (token =>
+      new EventbriteMultiPageFeedFetcher(EventsFeedMetaData("masterclasses", token))
+      )
+
+  private val liveEvents: Option[FeedFetcher] =
+    Configuration.commercial.liveEventsToken map (token =>
+      new EventbriteMultiPageFeedFetcher(EventsFeedMetaData("live-events", token))
+      )
+
+  private val travelOffers: Option[FeedFetcher] =
+    Configuration.commercial.travelFeedUrl map { url =>
+      new SingleFeedFetcher(TravelOffersFeedMetaData(url))
+    }
+
+  val all: Seq[FeedFetcher] = soulmates ++ Seq(bestsellers, masterclasses, travelOffers, jobs, liveEvents).flatten
+
+}
+
+object ResponseEncoding {
+
+  val iso88591 = "ISO-8859-1"
+  val utf8 = "UTF-8"
+
+  val default = iso88591
+}
+
+case class FetchResponse(feed: Feed, duration: Duration)
+case class Feed(content: String, contentType: String)
+
+final case class FetchException(status: Int, message: String) extends Exception(s"HTTP status $status: $message")
+
+final case class SwitchOffException(switchName: String) extends Exception(s"$switchName switch is off")

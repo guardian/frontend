@@ -1,16 +1,19 @@
 package controllers
 
-import play.api.mvc.{RequestHeader, Action, Controller}
-import scala.concurrent.Future
-import conf.LiveContentApi
-import common.{Logging, ExecutionContexts, Edition}
-import model.{Cached, Tag, Content, Section}
-import services.{ConfigAgent, IndexPage}
-import views.support.PreviousAndNext
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
+import common.Edition.defaultEdition
+import common.{Edition, ExecutionContexts, Logging}
+import contentapi.ContentApiClient
+import contentapi.ContentApiClient.getResponse
+import implicits.{Dates, ItemResponses}
+import model._
 import org.joda.time.format.DateTimeFormat
-import org.joda.time.{DateTimeZone, DateTime}
-import implicits.{ItemResponses, Dates}
-import LiveContentApi.getResponse
+import org.joda.time.{DateTime, DateTimeZone}
+import play.api.mvc.{Action, Controller, RequestHeader}
+import services.{ConfigAgent, IndexPage, IndexPageItem}
+import views.support.PreviousAndNext
+
+import scala.concurrent.Future
 
 object AllIndexController extends Controller with ExecutionContexts with ItemResponses with Dates with Logging {
 
@@ -41,8 +44,7 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
   def all(path: String) = Action.async { request =>
     val edition = Edition(request)
 
-    if (ConfigAgent.shouldServeFront(path) ||
-      ConfigAgent.shouldServeEditionalisedFront(edition, path)) {
+    if (ConfigAgent.shouldServeFront(path) || defaultEdition.isEditionalised(path)) {
       IndexController.render(path)(request)
     } else {
       /** No front exists, so 'all' is the same as the tag page - redirect there */
@@ -55,9 +57,9 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
 
     loadLatest(path, reqDate).map { _.map { index =>
 
-      val contentOnRequestedDate = index.trails.filter(_.webPublicationDate.sameDay(reqDate))
+      val contentOnRequestedDate = index.contents.filter(_.item.trail.webPublicationDate.sameDay(reqDate))
 
-      val olderDate = index.trails.find(!_.webPublicationDate.sameDay(reqDate)).map(_.webPublicationDate.toDateTime)
+      val olderDate = index.trails.find(!_.trail.webPublicationDate.sameDay(reqDate)).map(_.trail.webPublicationDate.toDateTime)
 
       if (index.trails.isEmpty) {
         redirectToFirstAllPage(path)
@@ -72,7 +74,7 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
         }
         val today = DateTime.now
         val nextPage = if (reqDate.sameDay(today)) None else Some(s"/$path/${urlFormat(reqDate.plusDays(1))}/altdate")
-        val model = index.copy(trails = contentOnRequestedDate, tzOverride = Some(DateTimeZone.UTC))
+        val model = index.copy(contents = contentOnRequestedDate, tzOverride = Some(DateTimeZone.UTC))
 
         Ok(views.html.all(model, PreviousAndNext(prevPage, nextPage)))
       }
@@ -91,13 +93,20 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
   // this is simply the latest by date. No lead content, editors picks, or anything else
   private def loadLatest(path: String, date: DateTime)(implicit request: RequestHeader): Future[Option[IndexPage]] = {
     val result = getResponse(
-      LiveContentApi.item(s"/$path", Edition(request)).pageSize(50).toDate(date).orderBy("newest")
+      ContentApiClient.item(s"/$path", Edition(request)).pageSize(50).toDate(date).orderBy("newest")
     ).map{ item =>
       item.section.map( section =>
-        IndexPage(Section(section), item.results.map(Content(_)), date)
-      ).orElse(item.tag.map( tag =>
-        IndexPage(Tag(tag), item.results.map(Content(_)), date)
-      ))
+        IndexPage(
+          page = Section.make(section),
+          contents = item.results.getOrElse(Nil).map(IndexPageItem(_)),
+          Tags(Nil),
+          date,
+          tzOverride = None
+        )
+      ).orElse(item.tag.map( apitag => {
+        val tag = Tag.make(apitag)
+        IndexPage(page = tag, contents = item.results.getOrElse(Nil).map(IndexPageItem(_)), Tags(List(tag)), date, tzOverride = None)
+      }))
     }
 
     result.recover{ case e: Exception =>
@@ -108,12 +117,12 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
 
   private def findByDate(path: String, date: DateTime)(implicit request: RequestHeader): Future[Option[DateTime]] = {
     val result = getResponse(
-      LiveContentApi.item(s"/$path", Edition(request))
+      ContentApiClient.item(s"/$path", Edition(request))
         .pageSize(1)
         .fromDate(date)
         .orderBy("oldest")
     ).map{ item =>
-      item.results.headOption.map(_.webPublicationDate.withZone(DateTimeZone.UTC))
+      item.results.getOrElse(Nil).headOption.flatMap(_.webPublicationDate).map(_.toJodaDateTime.withZone(DateTimeZone.UTC))
     }
     result.recover{ case e: Exception =>
       log.error(e.getMessage, e)

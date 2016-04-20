@@ -1,5 +1,4 @@
 define([
-    'common/utils/_',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
@@ -8,9 +7,16 @@ define([
     'common/modules/commercial/third-party-tags/krux',
     'common/modules/identity/api',
     'common/modules/commercial/user-ad-targeting',
-    'common/modules/experiments/ab'
+    'common/modules/experiments/ab',
+    'lodash/arrays/compact',
+    'lodash/collections/map',
+    'lodash/objects/forIn',
+    'lodash/objects/keys',
+    'lodash/objects/merge',
+    'lodash/arrays/uniq',
+    'lodash/objects/pick',
+    'lodash/objects/isArray'
 ], function (
-    _,
     config,
     cookies,
     detect,
@@ -19,7 +25,15 @@ define([
     krux,
     identity,
     userAdTargeting,
-    ab
+    ab,
+    compact,
+    map,
+    forIn,
+    keys,
+    merge,
+    uniq,
+    pick,
+    isArray
 ) {
 
     var format = function (keyword) {
@@ -27,14 +41,6 @@ define([
         },
         formatTarget = function (target) {
             return target ? format(target).replace(/&/g, 'and').replace(/'/g, '') : null;
-        },
-        getSeries = function (page) {
-            if (page.seriesId) {
-                return parseId(page.seriesId);
-            }
-            var seriesIdFromUrl = /\/series\/(.+)$/.exec(page.pageId);
-
-            return seriesIdFromUrl === null ? '' : seriesIdFromUrl[1];
         },
         parseId = function (id) {
             if (!id) {
@@ -46,11 +52,19 @@ define([
                 return format(id.split('/').pop());
             }
         },
+        getSeries = function (page) {
+            if (page.seriesId) {
+                return parseId(page.seriesId);
+            }
+            var seriesIdFromUrl = /\/series\/(.+)$/.exec(page.pageId);
+
+            return seriesIdFromUrl === null ? '' : seriesIdFromUrl[1];
+        },
         parseIds = function (ids) {
             if (!ids) {
                 return null;
             }
-            return _.compact(_.map(
+            return compact(map(
                 ids.split(','), function (id) {
                     return parseId(id);
                 }
@@ -60,13 +74,15 @@ define([
             var abParams = [],
                 abParticipations = ab.getParticipations();
 
-            _.forIn(abParticipations, function (n, key) {
+            forIn(abParticipations, function (n, testKey) {
                 if (n.variant && n.variant !== 'notintest') {
-                    abParams.push(key + '-' + n.variant.substring(0, 1));
+                    var testData = testKey + '-' + n.variant;
+                    // DFP key-value pairs accept value strings up to 40 characters long
+                    abParams.push(testData.substring(0, 40));
                 }
             });
 
-            _.forIn(_.keys(config.tests), function (n) {
+            forIn(keys(config.tests), function (n) {
                 if (n.toLowerCase().match(/^cm/)) {
                     abParams.push(n);
                 }
@@ -85,23 +101,42 @@ define([
             }
         },
         getVisitedValue = function () {
-            var alreadyVisited = storage.local.get('alreadyVisited') || 0,
-                visitedValue;
+            var visitCount = storage.local.get('gu.alreadyVisited') || 0;
 
-            if (alreadyVisited > 4) {
-                visitedValue = '5plus';
-            } else {
-                visitedValue = alreadyVisited.toString();
+            if (visitCount <= 5) {
+                return visitCount.toString();
+            } else if (visitCount >= 6 && visitCount <= 9) {
+                return '6-9';
+            } else if (visitCount >= 10 && visitCount <= 15) {
+                return '10-15';
+            } else if (visitCount >= 16 && visitCount <= 19) {
+                return '16-19';
+            } else if (visitCount >= 20 && visitCount <= 29) {
+                return '20-29';
+            } else if (visitCount >= 30) {
+                return '30plus';
             }
+        },
+        getReferrer = function () {
+            var referrerTypes = [
+                    {id: 'facebook', match: 'facebook.com'},
+                    {id: 'twitter', match: 't.co/'}, // added (/) because without slash it is picking up reddit.com too
+                    {id: 'googleplus', match: 'plus.url.google'},
+                    {id: 'reddit', match: 'reddit.com'},
+                    {id: 'google', match: 'www.google'}
+                ],
+                matchedRef = referrerTypes.filter(function (referrerType) {
+                    return detect.getReferrer().indexOf(referrerType.match) > -1;
+                })[0] || {};
 
-            return visitedValue;
+            return matchedRef.id;
         };
 
     return function (opts) {
         var win         = (opts || {}).window || window,
             page        = config.page,
             contentType = formatTarget(page.contentType),
-            pageTargets = _.merge({
+            pageTargets = merge({
                 url:     win.location.pathname,
                 edition: page.edition && page.edition.toLowerCase(),
                 se:      getSeries(page),
@@ -116,18 +151,19 @@ define([
                 si:      identity.isUserLoggedIn() ? 't' : 'f',
                 gdncrm:  userAdTargeting.getUserSegments(),
                 ab:      abParam(),
+                ref:     getReferrer(),
                 co:      parseIds(page.authorIds),
                 bl:      parseIds(page.blogIds),
                 ms:      formatTarget(page.source),
                 fr:      getVisitedValue(),
-                tn:      _.uniq(_.compact([page.sponsorshipType].concat(parseIds(page.tones)))),
+                tn:      uniq(compact([page.sponsorshipType].concat(parseIds(page.tones)))),
                 // round video duration up to nearest 30 multiple
                 vl:      page.contentType === 'Video' ? (Math.ceil(page.videoDuration / 30.0) * 30).toString() : undefined
             }, audienceScienceGateway.getSegments());
 
         // filter out empty values
-        return _.pick(pageTargets, function (target) {
-            if (_.isArray(target)) {
+        return pick(pageTargets, function (target) {
+            if (isArray(target)) {
                 return target.length > 0;
             } else {
                 return target;

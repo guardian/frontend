@@ -1,9 +1,15 @@
+
 @(model: LiveBlogPage)(implicit request: RequestHeader)
-@import conf.switches.Switches._
 
-@main(model.article){
+@import common.LinkTo
+
+@main(model){
+    @model.currentPage.pagination.flatMap(_.older).map(_.suffix).map { suffix =>
+        <link rel="next" href="@LinkTo{ /@{model.article.content.metadata.id}@suffix }">
+    }
+    @model.currentPage.pagination.flatMap(_.newer).map(_.suffix).map { suffix =>
+        <link rel="prev" href="@LinkTo{ /@{model.article.content.metadata.id}@suffix }">
+    }
 }{
-
-    @fragments.liveBlogBody(model)
-
+    @views.html.liveblog.liveBlogBody(model)
 }

@@ -30,47 +30,47 @@ case class FaciaHeaderImage(
 
 object FaciaContainerHeader {
   def fromSection(sectionPage: Section, dateHeadline: DateHeadline): FaciaContainerHeader = MetaDataHeader(
-    sectionPage.webTitle,
+    sectionPage.metadata.webTitle,
     None,
-    sectionPage.description,
+    sectionPage.metadata.description,
     dateHeadline,
-    frontHref(sectionPage.id, sectionPage.pagination)
+    frontHref(sectionPage.metadata.id, sectionPage.metadata.pagination)
   )
 
   def fromPage(page: Page, dateHeadline: DateHeadline): FaciaContainerHeader = {
     MetaDataHeader(
-      page.webTitle,
+      page.metadata.webTitle,
       None,
       None,
       dateHeadline,
-      frontHref(page.id, page.pagination)
+      frontHref(page.metadata.id, page.metadata.pagination)
     )
   }
 
   def fromTagPage(tagPage: Tag, dateHeadline: DateHeadline): FaciaContainerHeader = {
     if (tagPage.isFootballTeam) {
       MetaDataHeader(
-        tagPage.webTitle,
-        tagPage.getFootballBadgeUrl.map(FaciaHeaderImage(_, FootballBadge)),
-        tagPage.description,
+        tagPage.metadata.webTitle,
+        tagPage.properties.footballBadgeUrl.map(FaciaHeaderImage(_, FootballBadge)),
+        tagPage.metadata.description,
         dateHeadline,
-        frontHref(tagPage.id, tagPage.pagination)
+        frontHref(tagPage.id, tagPage.metadata.pagination)
       )
     } else if (tagPage.isContributor) {
       MetaDataHeader(
-        tagPage.webTitle,
+        tagPage.metadata.webTitle,
         tagPage.contributorImagePath.map(FaciaHeaderImage(_, ContributorCircleImage)),
-        Some(tagPage.bio).filter(_.nonEmpty) orElse tagPage.description,
+        tagPage.properties.bio.filter(_.nonEmpty) orElse tagPage.metadata.description,
         dateHeadline,
-        frontHref(tagPage.id, tagPage.pagination)
+        frontHref(tagPage.id, tagPage.metadata.pagination)
       )
     } else {
       MetaDataHeader(
-        tagPage.webTitle,
+        tagPage.metadata.webTitle,
         None,
-        tagPage.description,
+        tagPage.metadata.description,
         dateHeadline,
-        frontHref(tagPage.id, tagPage.pagination)
+        frontHref(tagPage.id, tagPage.metadata.pagination)
       )
     }
   }

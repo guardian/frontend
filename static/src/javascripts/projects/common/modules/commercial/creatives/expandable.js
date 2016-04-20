@@ -2,22 +2,24 @@ define([
     'bean',
     'bonzo',
     'fastdom',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/mediator',
     'common/utils/storage',
     'common/utils/template',
-    'text!common/views/commercial/creatives/expandable.html'
+    'text!common/views/commercial/creatives/expandable.html',
+    'lodash/functions/bindAll',
+    'common/modules/commercial/creatives/add-tracking-pixel'
 ], function (
     bean,
     bonzo,
     fastdom,
-    _,
     $,
     mediator,
     storage,
     template,
-    expandableTpl
+    expandableTpl,
+    bindAll,
+    addTrackingPixel
 ) {
 
     /**
@@ -30,7 +32,7 @@ define([
         this.closedHeight = Math.min(bonzo.viewport().height / 3, 300);
         this.openedHeight = Math.min(bonzo.viewport().height * 2 / 3, 600);
 
-        _.bindAll(this, 'listener');
+        bindAll(this, 'listener');
     };
 
     Expandable.prototype.listener = function () {
@@ -62,7 +64,7 @@ define([
             this.$ad.css('height', this.closedHeight);
             $('.ad-exp-collapse__slide', $expandable).css('height', this.closedHeight);
             if (this.params.trackingPixel) {
-                this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
+                addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
             }
             $expandable.appendTo(this.$adSlot);
         }.bind(this));

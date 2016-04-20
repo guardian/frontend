@@ -1,29 +1,29 @@
 package feed
 
-import conf.LiveContentApi
+import contentapi.ContentApiClient
 import common._
 import services.OphanApi
 import play.api.libs.json.{JsArray, JsValue}
-import model.Content
-import scala.concurrent.duration._
+import model.RelatedContentItem
 import scala.concurrent.Future
-import LiveContentApi.getResponse
+import scala.util.control.NonFatal
+import ContentApiClient.getResponse
 
 object MostPopularAgent extends Logging with ExecutionContexts {
 
-  private val agent = AkkaAgent[Map[String, Seq[Content]]](Map.empty)
+  private val agent = AkkaAgent[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
-  def mostPopular(edition: Edition): Seq[Content] = agent().get(edition.id).getOrElse(Nil)
+  def mostPopular(edition: Edition): Seq[RelatedContentItem] = agent().get(edition.id).getOrElse(Nil)
 
   def refresh() {
     log.info("Refreshing most popular.")
     Edition.all foreach refresh
   }
 
-  def refresh(edition: Edition) = getResponse(LiveContentApi.item("/", edition)
+  def refresh(edition: Edition) = getResponse(ContentApiClient.item("/", edition)
       .showMostViewed(true)
     ).map { response =>
-      val mostViewed = response.mostViewed map { Content(_) } take 10
+      val mostViewed = response.mostViewed.getOrElse(Nil) map { RelatedContentItem(_) } take 10
       agent.alter{ old =>
         old + (edition.id -> mostViewed)
       }
@@ -33,13 +33,13 @@ object MostPopularAgent extends Logging with ExecutionContexts {
 
 object GeoMostPopularAgent extends Logging with ExecutionContexts {
 
-  private val ophanPopularAgent = AkkaAgent[Map[String, Seq[Content]]](Map.empty)
+  private val ophanPopularAgent = AkkaAgent[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
   // These are the only country codes (row must be lower-case) passed to us from the fastly service.
   // This allows us to choose carefully the codes that give us the most impact. The trade-off is caching.
   private val countries = Seq("GB", "US", "AU", "CA", "IN", "NG", "row")
 
-  def mostPopular(country: String): Seq[Content] = ophanPopularAgent().get(country).getOrElse(Nil)
+  def mostPopular(country: String): Seq[RelatedContentItem] = ophanPopularAgent().get(country).getOrElse(Nil)
 
   def refresh() {
     log.info("Refreshing most popular for countries.")
@@ -52,15 +52,17 @@ object GeoMostPopularAgent extends Logging with ExecutionContexts {
     ophanQuery.map { ophanResults =>
 
       // Parse ophan results into a sequence of Content objects.
-      val mostRead: Seq[Future[Option[Content]]] = for {
+      val mostRead: Seq[Future[Option[RelatedContentItem]]] = for {
         item: JsValue <- ophanResults.asOpt[JsArray].map(_.value).getOrElse(Nil)
         url <- (item \ "url").asOpt[String]
       } yield {
-        getResponse(LiveContentApi.item(urlToContentPath(url), Edition.defaultEdition))
-          .map(_.content.map(Content(_)))
-          .fallbackTo{
-            log.error(s"Error requesting $url")
-            Future.successful(None)}
+        getResponse(ContentApiClient.item(urlToContentPath(url), Edition.defaultEdition))
+          .map(_.content.map(RelatedContentItem(_)))
+          .recover {
+            case NonFatal(e)  =>
+              log.error(s"Error requesting $url", e)
+              None
+          }
       }
 
       Future.sequence(mostRead).map { contentSeq =>
@@ -85,11 +87,11 @@ object GeoMostPopularAgent extends Logging with ExecutionContexts {
 
 object DayMostPopularAgent extends Logging with ExecutionContexts {
 
-  private val ophanPopularAgent = AkkaAgent[Map[String, Seq[Content]]](Map.empty)
+  private val ophanPopularAgent = AkkaAgent[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
   private val countries = Seq("GB", "US", "AU")
 
-  def mostPopular(country: String): Seq[Content] = ophanPopularAgent().get(country).getOrElse(Nil)
+  def mostPopular(country: String): Seq[RelatedContentItem] = ophanPopularAgent().get(country).getOrElse(Nil)
 
   def refresh() {
     log.info("Refreshing most popular for the day.")
@@ -102,15 +104,17 @@ object DayMostPopularAgent extends Logging with ExecutionContexts {
     ophanQuery.map { ophanResults =>
 
     // Parse ophan results into a sequence of Content objects.
-      val mostRead: Seq[Future[Option[Content]]] = for {
+      val mostRead: Seq[Future[Option[RelatedContentItem]]] = for {
         item: JsValue <- ophanResults.asOpt[JsArray].map(_.value).getOrElse(Nil)
         url <- (item \ "url").asOpt[String]
       } yield {
-        getResponse(LiveContentApi.item(urlToContentPath(url), Edition.defaultEdition ))
-          .map(_.content.map(Content(_)))
-          .fallbackTo{
-            log.error(s"Error requesting $url")
-            Future.successful(None)}
+        getResponse(ContentApiClient.item(urlToContentPath(url), Edition.defaultEdition ))
+          .map(_.content.map(RelatedContentItem(_)))
+          .recover {
+            case NonFatal(e) =>
+              log.error(s"Error requesting $url", e)
+              None
+          }
       }
 
       Future.sequence(mostRead).map { contentSeq =>
@@ -133,18 +137,18 @@ object DayMostPopularAgent extends Logging with ExecutionContexts {
 
 object MostPopularExpandableAgent extends Logging with ExecutionContexts {
 
-  private val agent = AkkaAgent[Map[String, Seq[Content]]](Map.empty)
+  private val agent = AkkaAgent[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
-  def mostPopular(edition: Edition): Seq[Content] = agent().get(edition.id).getOrElse(Nil)
+  def mostPopular(edition: Edition): Seq[RelatedContentItem] = agent().get(edition.id).getOrElse(Nil)
 
   def refresh() {
     log.info("Refreshing most popular.")
     Edition.all foreach { edition =>
-      getResponse(LiveContentApi.item("/", edition)
+      getResponse(ContentApiClient.item("/", edition)
         .showMostViewed(true)
         .showFields("headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl,body")
       ).foreach { response =>
-        val mostViewed = response.mostViewed map { Content(_) } take 10
+        val mostViewed = response.mostViewed.getOrElse(Nil) map { RelatedContentItem(_) } take 10
         agent.send{ old =>
           old + (edition.id -> mostViewed)
         }

@@ -2,10 +2,11 @@ package implicits
 
 import common.Edition
 import play.api.mvc.RequestHeader
+import conf.Configuration
 
 trait Requests {
 
-
+  val EMAIL_SUFFIX = "/email"
 
   implicit class RichRequestHeader(r: RequestHeader) {
 
@@ -21,9 +22,15 @@ trait Requests {
 
     lazy val isRss: Boolean = r.path.endsWith("/rss")
 
-    lazy val isAmp: Boolean = r.path.endsWith("/amp")
+    lazy val isAmp: Boolean = r.getQueryString("amp").isDefined || (!r.host.isEmpty && r.host == Configuration.amp.host)
 
-    lazy val pathWithoutModifiers: String = if (isAmp) r.path.stripSuffix("/amp") else r.path.stripSuffix("/all")
+    lazy val isEmail: Boolean = r.path.endsWith(EMAIL_SUFFIX)
+
+    lazy val isModified = isJson || isRss || isEmail
+
+    lazy val pathWithoutModifiers: String =
+      if (isEmail) r.path.stripSuffix(EMAIL_SUFFIX)
+      else         r.path.stripSuffix("/all")
 
     lazy val hasParameters: Boolean = r.queryString.nonEmpty
 
@@ -33,13 +40,12 @@ trait Requests {
 
     private val networkFronts = Edition.all.map(_.id).map(id => s"/$id")
 
-    // see http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/TerminologyandKeyConcepts.html#x-forwarded-proto
-    lazy val isSecure: Boolean = r.headers.get("X-Forwarded-Proto").exists(_.equalsIgnoreCase("https")) || isAmp // TODO tidyup - remove isAmp when amp is served over https anyway
-
     //This is a header reliably set by jQuery for AJAX requests used in facia-tool
     lazy val isXmlHttpRequest: Boolean = r.headers.get("X-Requested-With").contains("XMLHttpRequest")
 
     lazy val isCrosswordFront: Boolean = r.path.endsWith("/crosswords")
+
+    lazy val campaignCode: Option[String] = r.getQueryString("CMP")
   }
 }
 

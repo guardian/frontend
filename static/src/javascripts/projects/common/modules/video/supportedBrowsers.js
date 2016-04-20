@@ -1,15 +1,15 @@
 define([
     'bean',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/detect',
-    'common/utils/config'
+    'common/utils/config',
+    'lodash/collections/some'
 ], function (
     bean,
     $,
-    _,
     detect,
-    config
+    config,
+    some
 ) {
 
     var browsers = {
@@ -30,7 +30,7 @@ define([
     }
 
     return function supportedBrowser(player) {
-        var notSupported =  _.some(browsers, function (version, browser) {
+        var notSupported =  some(browsers, function (version, browser) {
             return (ua.browser === browser && ua.version < version);
         });
 

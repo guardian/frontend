@@ -2,10 +2,10 @@ package jobs
 
 import common.{Edition, Logging, ExecutionContexts, AkkaAgent}
 import conf.switches.Switches
-import model.Video
+import model.{Content, Video}
 import scala.language.postfixOps
-import conf.LiveContentApi
-import LiveContentApi.getResponse
+import contentapi.ContentApiClient
+import ContentApiClient.getResponse
 import scala.concurrent.{Future, Await}
 import scala.concurrent.duration._
 import akka.util.Timeout
@@ -37,22 +37,19 @@ object VideoEncodingsJob extends ExecutionContexts with Logging  {
   private def checkForMissingEncodings() {
      log.info("Checking for missing video encodings")
 
-     val apiVideoResponse = getResponse(LiveContentApi.search(Edition.defaultEdition)
+     val apiVideoResponse = getResponse(ContentApiClient.search(Edition.defaultEdition)
         .tag("type/video")
         .showElements("all")
         .pageSize(100)
      ) map {
         response =>
-            response.results map { Video(_)  }
+            response.results.map(Content.apply).collect { case v: Video => v }
      }
 
      apiVideoResponse.onSuccess {
        case allVideoContent =>
          val missingVideoEncodings = Future.sequence(allVideoContent.map { video =>
-           val videoAssets = video.elements.filter(_.isMain)
-             .map {
-             element => element.delegate.assets.filter(_.`type` == "video")
-           }.flatMap(asset => asset).map(_.file).flatten
+           val videoAssets = video.elements.videos.filter(_.properties.isMain).flatMap(_.videos.videoAssets).map(_.url).flatten
 
            val missingVideoAsssets = Future.sequence(
              videoAssets.map { encoding =>
@@ -89,6 +86,6 @@ object VideoEncodingsJob extends ExecutionContexts with Logging  {
 }
 
 case class MissingEncoding(video: Video, encodingSrc: String) {
-    lazy val url = video.webUrl
-    lazy val title = video.webTitle
+    lazy val url = video.metadata.webUrl
+    lazy val title = video.metadata.webTitle
 }

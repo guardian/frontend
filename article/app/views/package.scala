@@ -1,7 +1,8 @@
 package views
 
 import common.Edition
-import layout.ContentWidths.MainMedia
+import layout.ContentWidths
+import layout.ContentWidths.{Inline, Showcase, MainMedia, LiveBlogMedia}
 import model.Article
 import play.api.mvc.RequestHeader
 import views.support._
@@ -10,10 +11,12 @@ import views.support.cleaner.{AmpEmbedCleaner, VideoEmbedCleaner, CmpParamCleane
 object MainMediaWidths {
 
   def apply(article: Article): layout.WidthsByBreakpoint = {
-    (article.hasShowcaseMainElement, article.isFeature) match {
-      case (true, true) => MainMedia.FeatureShowcase
-      case (true, _) => MainMedia.Showcase
-      case _ => MainMedia.Inline
+    if (article.elements.hasShowcaseMainElement && article.tags.isFeature) {
+      MainMedia.featureShowcase
+    } else {
+      val hinting = if (article.elements.hasShowcaseMainElement) { Showcase } else { Inline }
+      val relation = if (article.isLiveBlog) { LiveBlogMedia } else { MainMedia }
+      ContentWidths.getWidthsFromContentElement(hinting, relation)
     }
   }
 
@@ -33,36 +36,38 @@ object MainCleaner {
 object BodyCleaner {
   def apply(article: Article, html: String, amp: Boolean)(implicit request: RequestHeader) = {
     implicit val edition = Edition(request)
+
+    val shouldShowAds = !article.content.shouldHideAdverts && article.metadata.section != "childrens-books-site"
+    def ListIf[T](condition: Boolean)(value: => T): List[T] = if(condition) List(value) else Nil
+
     val cleaners = List(
       InBodyElementCleaner,
-      InBodyLinkCleaner("in body link"),
+      InBodyLinkCleaner("in body link", amp),
       BlockNumberCleaner,
-      new TweetCleaner(article, amp),
+      new TweetCleaner(article.content, amp),
       WitnessCleaner,
       TagLinker(article),
       TableEmbedComplimentaryToP,
-      R2VideoCleaner(article),
+      R2VideoCleaner,
       PictureCleaner(article, amp),
-      LiveBlogDateFormatter(article.isLiveBlog),
-      LiveBlogLinkedData(article.isLiveBlog),
-      BloggerBylineImage(article),
-      LiveBlogShareButtons(article),
-      DropCaps(article.isComment || article.isFeature),
+      AtomsCleaner(article.content.atoms),
+      DropCaps(article.tags.isComment || article.tags.isFeature, article.isImmersive),
+      ImmersiveHeaders(article.isImmersive),
       FigCaptionCleaner,
       RichLinkCleaner,
       MembershipEventCleaner,
       BlockquoteCleaner,
       ChaptersLinksCleaner,
       PullquoteCleaner,
-      CmpParamCleaner
-    )
-    val nonAmpCleaners = List(
-      VideoEmbedCleaner(article)
-    )
-    val ampOnlyCleaners = List(
-      AmpAdCleaner,
-      AmpEmbedCleaner(article)
-    )
-    withJsoup(BulletCleaner(html))((if (amp) ampOnlyCleaners else nonAmpCleaners) ++ cleaners :_*)
+      CmpParamCleaner,
+      ImmersiveLinks(article.isImmersive),
+      TimestampCleaner(article),
+      MinuteCleaner(article)
+    ) ++
+      ListIf(!amp)(VideoEmbedCleaner(article)) ++
+      ListIf(amp)(AmpEmbedCleaner(article)) ++
+      ListIf(amp && shouldShowAds)(AmpAdCleaner(edition, request.uri, article))
+
+    withJsoup(BulletCleaner(html))(cleaners :_*)
   }
 }

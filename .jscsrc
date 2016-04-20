@@ -1,6 +1,0 @@
-{
-    "preset": "crockford",
-    "disallowQuotedKeysInObjects": null,
-    "requireMultipleVarDecl": null,
-    "requireBlocksOnNewline": null
-}

@@ -1,7 +1,7 @@
-@(metaData: model.TagIndexPageMetaData, page: model.TagIndexPage, subTitle: String)(implicit request: RequestHeader)
+@(metaData: model.MetaData, page: model.TagIndexPage, subTitle: String)(implicit request: RequestHeader)
 
 @import fragments.tagIndexBody
 
-@main(metaData, projectName = Some("index")) { } {
+@main(model.SimplePage(metaData), projectName = Some("index")) { } {
     @tagIndexBody(page, subTitle)
 }

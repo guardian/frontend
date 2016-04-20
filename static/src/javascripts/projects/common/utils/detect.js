@@ -6,13 +6,39 @@
 /*global DocumentTouch: true */
 
 define([
-    'common/utils/_',
     'common/utils/mediator',
-    'common/utils/$'
+    'common/utils/$',
+    'common/modules/user-prefs',
+    'lodash/arrays/last',
+    'lodash/arrays/findIndex',
+    'lodash/objects/defaults',
+    'lodash/objects/has',
+    'lodash/arrays/first',
+    'lodash/collections/findLast',
+    'common/utils/chain',
+    'lodash/collections/contains',
+    'lodash/collections/pluck',
+    'lodash/arrays/initial',
+    'lodash/arrays/rest',
+    'lodash/functions/memoize',
+    'Promise'
 ], function (
-    _,
     mediator,
-    $
+    $,
+    userPrefs,
+    last,
+    findIndex,
+    defaults,
+    has,
+    first,
+    findLast,
+    chain,
+    contains,
+    pluck,
+    initial,
+    rest,
+    memoize,
+    Promise
 ) {
 
     var supportsPushState,
@@ -26,7 +52,7 @@ define([
         // These should match those defined in:
         //   stylesheets/_vars.scss
         //   common/app/layout/Breakpoint.scala
-        breakpoints = [
+            breakpoints = [
             {
                 name: 'mobile',
                 isTweakpoint: false,
@@ -83,30 +109,6 @@ define([
                 was = is;
             }
         };
-    }
-
-    /**
-     * @param performance - Object allows passing in of window.performance, for testing
-     */
-    function getPageSpeed(performance) {
-
-        //https://dvcs.w3.org/hg/webperf/raw-file/tip/specs/NavigationTiming/Overview.html#sec-window.performance-attribute
-
-        var startTime,
-            endTime,
-            totalTime,
-            perf = performance || window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
-
-        if (perf && perf.timing) {
-            startTime =  perf.timing.requestStart || perf.timing.fetchStart || perf.timing.navigationStart;
-            endTime = perf.timing.responseEnd;
-
-            if (startTime && endTime) {
-                totalTime = endTime - startTime;
-            }
-        }
-
-        return totalTime;
     }
 
     function isReload() {
@@ -186,41 +188,6 @@ define([
         };
     })();
 
-    function getConnectionSpeed(performance, connection, reportUnknown) {
-
-        connection = connection || navigator.connection || navigator.mozConnection || navigator.webkitConnection || {type: 'unknown'};
-
-        var isMobileNetwork = connection.type === 3 // connection.CELL_2G
-                || connection.type === 4 // connection.CELL_3G
-                || /^[23]g$/.test(connection.type), // string value in new spec
-            loadTime,
-            speed;
-
-        if (isMobileNetwork) {
-            return 'low';
-        }
-
-        loadTime = getPageSpeed(performance);
-
-        // Assume high speed for non supporting browsers
-        speed = 'high';
-        if (reportUnknown) {
-            speed = 'unknown';
-        }
-
-        if (loadTime) {
-            if (loadTime > 1000) { // One second
-                speed = 'medium';
-                if (loadTime > 3000) { // Three seconds
-                    speed = 'low';
-                }
-            }
-        }
-
-        return speed;
-
-    }
-
     function hasTouchScreen() {
         return ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
     }
@@ -291,19 +258,16 @@ define([
     function getBreakpoint(includeTweakpoint) {
         var viewportWidth = detect.getViewport().width,
             index,
-            breakpoint = _.last(takeWhile(breakpoints, function (bp) {
+            breakpoint = last(takeWhile(breakpoints, function (bp) {
                 return bp.width <= viewportWidth;
             })).name;
         if (!includeTweakpoint) {
-            index = _.findIndex(breakpoints, function (b) {
+            index = findIndex(breakpoints, function (b) {
                 return b.name === breakpoint;
             });
-            breakpoint = _(breakpoints)
-                .first(index + 1)
-                .findLast(function (b) {
+            breakpoint = chain(breakpoints).and(first, index + 1).and(findLast, function (b) {
                     return !b.isTweakpoint;
-                })
-                .valueOf()
+                }).valueOf()
                 .name;
         }
 
@@ -311,23 +275,19 @@ define([
     }
 
     function isBreakpoint(criteria) {
-        var c = _.defaults(
+        var c = defaults(
                 criteria,
                 {
-                    min: _.first(breakpoints).name,
-                    max: _.last(breakpoints).name
+                    min: first(breakpoints).name,
+                    max: last(breakpoints).name
                 }
             ),
             currentBreakpoint = getBreakpoint(true);
-        return _(breakpoints)
-            .rest(function (breakpoint) {
+        return chain(breakpoints).and(rest, function (breakpoint) {
                 return breakpoint.name !== c.min;
-            })
-            .initial(function (breakpoint) {
+            }).and(initial, function (breakpoint) {
                 return breakpoint.name !== c.max;
-            })
-            .pluck('name')
-            .contains(currentBreakpoint);
+            }).and(pluck, 'name').and(contains, currentBreakpoint).value();
     }
 
     // Page Visibility
@@ -381,41 +341,56 @@ define([
         return 'WebSocket' in window;
     }
 
-    function isModernBrowser() {
-        return window.guardian.isModernBrowser;
+    function isEnhanced() {
+        return window.guardian.isEnhanced;
     }
 
-    function adblockInUse() {
-        var sacrificialAd = createSacrificialAd();
-        var contentBlocked = isHidden(sacrificialAd);
-        sacrificialAd.remove();
-        return contentBlocked;
-
-        function isHidden(bonzoElement) {
-            return bonzoElement.css('display') === 'none';
-        }
-    }
-
-    /** Includes Firefox Adblock Plus users who whitelist the Guardian domain */
-    function getFirefoxAdblockPlusInstalled() {
-        var sacrificialAd = createSacrificialAd();
-        var adUnitMozBinding = sacrificialAd.css('-moz-binding');
-        if (adUnitMozBinding) {
-            return adUnitMozBinding.match('elemhidehit') !== null;
-        } else {
-            return false;
-        }
-    }
-
-    function createSacrificialAd() {
-        var sacrificialAd = $.create('<div class="ad_unit" style="position: absolute; left: -9999px; height: 10px">&nbsp;</div>');
+    var createSacrificialAd = memoize(function () {
+        var sacrificialAd = $.create('<div class="ad_unit" style="position: absolute; height: 10px; top: 0; left: 0; z-index: -1;">&nbsp;</div>');
         sacrificialAd.appendTo(document.body);
         return sacrificialAd;
+    });
+    // sync adblock detection is deprecated.
+    // it will be removed once sticky nav and omniture top up call are both removed
+    // this is soon - it's not worth refactoring them when they're off soon
+    //
+    // ** don't forget to remove them from the return object too **
+    var adblockInUseSync = memoize(function () {
+        return createSacrificialAd().css('display') === 'none';
+    });
+
+    /** Includes Firefox Adblock Plus users who whitelist the Guardian domain */
+    var getFirefoxAdblockPlusInstalledSync = memoize(function () {
+        var adUnitMozBinding = createSacrificialAd().css('-moz-binding');
+        return !!adUnitMozBinding && adUnitMozBinding.match('elemhidehit') !== null;
+    });
+    // end sync adblock detection
+
+    var getAdBlockers = new Promise(function (resolve) {
+        if (has(window.guardian.adBlockers, 'generic')) {
+            // adblock detection has completed
+            resolve(window.guardian.adBlockers);
+        } else {
+            // Push a listener for when the JS loads
+            window.guardian.adBlockers.onDetect = resolve;
+        }
+    });
+
+    var adblockInUse = getAdBlockers.then(function (adBlockers) {
+        return adBlockers.generic;
+    });
+
+    /** Includes Firefox Adblock Plus users who whitelist the Guardian domain */
+    var getFirefoxAdblockPlusInstalled = getAdBlockers.then(function (adBlockers) {
+        return adBlockers.ffAdblockPlus;
+    });
+
+    function getReferrer() {
+        return document.referrer || '';
     }
 
     detect = {
         hasCrossedBreakpoint: hasCrossedBreakpoint,
-        getConnectionSpeed: getConnectionSpeed,
         getVideoFormatSupport: getVideoFormatSupport,
         hasTouchScreen: hasTouchScreen,
         hasPushStateSupport: hasPushStateSupport,
@@ -437,11 +412,13 @@ define([
         initPageVisibility: initPageVisibility,
         pageVisible: pageVisible,
         hasWebSocket: hasWebSocket,
-        getPageSpeed: getPageSpeed,
         breakpoints: breakpoints,
-        isModernBrowser: isModernBrowser,
-        adblockInUse: adblockInUse(),
-        getFirefoxAdblockPlusInstalled: getFirefoxAdblockPlusInstalled
+        isEnhanced: isEnhanced,
+        adblockInUseSync: adblockInUseSync,
+        getFirefoxAdblockPlusInstalledSync: getFirefoxAdblockPlusInstalledSync,
+        adblockInUse: adblockInUse,
+        getFirefoxAdblockPlusInstalled: getFirefoxAdblockPlusInstalled,
+        getReferrer: getReferrer
     };
     return detect;
 });

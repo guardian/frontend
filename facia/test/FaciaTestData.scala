@@ -1,41 +1,31 @@
 package test
 
-import com.gu.facia.api.models.CollectionConfig
-import com.gu.facia.api.models.FaciaContent
 import common.editions.{Au, Uk, Us}
 import common.{AkkaAgent, Edition}
 import controllers.front.Front
+import model.pressed.{CollectionConfig, PressedContent}
 import model.{PressedPage, _}
 import model.facia.PressedCollection
 import org.joda.time.DateTime
+import com.gu.contentapi.client.model.v1.{Content => ApiContent, ContentFields}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
 import services.FaciaContentConvert
-import com.gu.contentapi.client.model.{Content => ApiContent}
 
 object TestContent {
-
-  def newApiContent: ApiContent = ApiContent(
-    id="",
-    sectionId=None,
-    sectionName=None,
-    webPublicationDateOption=Some(DateTime.now),
-    webTitle="",
-    webUrl="",
-    apiUrl="",
-    elements=None
-  )
-}
-
-case class TestTrail(u: String) extends Content(TestContent.newApiContent) {
-  override lazy val url = u
-  override lazy val webPublicationDate: DateTime = DateTime.now
-  override lazy val shortUrl: String = ""
-  override lazy val linkText: String = ""
-  override lazy val webUrl: String = ""
-  override lazy val headline: String = ""
-  override lazy val trailText: Option[String] = None
-  override lazy val section: String = ""
-  override lazy val sectionName: String = ""
-  override lazy val isLive: Boolean = true
+  def newFaciaContent(u: String): PressedContent = {
+    val content = ApiContent(
+      id = u,
+      sectionId = None,
+      sectionName = None,
+      webPublicationDate = Some(DateTime.now.toCapiDateTime),
+      webTitle = "",
+      webUrl = "",
+      apiUrl = "",
+      elements = None,
+      fields = Some(ContentFields(liveBloggingNow = Some(true)))
+    )
+    FaciaContentConvert.contentToFaciaContent(content)
+  }
 }
 
 class TestPageFront(val id: String, edition: Edition, faciaPage: PressedPage) {
@@ -46,9 +36,6 @@ class TestPageFront(val id: String, edition: Edition, faciaPage: PressedPage) {
 
 trait ModelHelper {
   val emptyConfig = CollectionConfig.empty
-
-  def trailWithUrl(url: String): Content = TestTrail(url)
-  def trailsWithUrl(url: Seq[String]): Seq[Trail] = url map trailWithUrl
 }
 
 trait FaciaTestData extends ModelHelper {
@@ -90,11 +77,11 @@ trait FaciaTestData extends ModelHelper {
     )
 
 
-  val ukFrontTrails: Seq[FaciaContent]= ukFrontTrailIds map trailWithUrl map FaciaContentConvert.frontendContentToFaciaContent
-  val usFrontTrails: Seq[FaciaContent]= usFrontTrailIds map trailWithUrl map FaciaContentConvert.frontendContentToFaciaContent
-  val auFrontTrails: Seq[FaciaContent]= auFrontTrailIds map trailWithUrl map FaciaContentConvert.frontendContentToFaciaContent
+  val ukFrontTrails: Seq[PressedContent]= ukFrontTrailIds map TestContent.newFaciaContent
+  val usFrontTrails: Seq[PressedContent]= usFrontTrailIds map TestContent.newFaciaContent
+  val auFrontTrails: Seq[PressedContent]= auFrontTrailIds map TestContent.newFaciaContent
 
-  val cultureFrontTrails: Seq[FaciaContent] = cultureTrailIds map trailWithUrl map FaciaContentConvert.frontendContentToFaciaContent
+  val cultureFrontTrails: Seq[PressedContent] = cultureTrailIds map TestContent.newFaciaContent
 
   val ukFaciaPage: PressedPage = PressedPage(
     id = "uk",
@@ -112,7 +99,6 @@ trait FaciaTestData extends ModelHelper {
         updatedEmail = None,
         href = None,
         description = None,
-        apiQuery = None,
         collectionType = "",
         groups = None,
         uneditable = false,
@@ -141,7 +127,6 @@ trait FaciaTestData extends ModelHelper {
         updatedEmail = None,
         href = None,
         description = None,
-        apiQuery = None,
         collectionType = "",
         groups = None,
         uneditable = false,
@@ -170,7 +155,6 @@ trait FaciaTestData extends ModelHelper {
         updatedEmail = None,
         href = None,
         description = None,
-        apiQuery = None,
         collectionType = "",
         groups = None,
         uneditable = false,
@@ -199,7 +183,6 @@ trait FaciaTestData extends ModelHelper {
         updatedEmail = None,
         href = None,
         description = None,
-        apiQuery = None,
         collectionType = "",
         groups = None,
         uneditable = false,
@@ -228,7 +211,6 @@ trait FaciaTestData extends ModelHelper {
         updatedEmail = None,
         href = None,
         description = None,
-        apiQuery = None,
         collectionType = "",
         groups = None,
         uneditable = false,
@@ -257,7 +239,6 @@ trait FaciaTestData extends ModelHelper {
         updatedEmail = None,
         href = None,
         description = None,
-        apiQuery = None,
         collectionType = "",
         groups = None,
         uneditable = false,

@@ -1,7 +1,7 @@
 package football.controllers
 
 import common.Pagination
-import model.{Page, Trail, MetaData, Competition}
+import model._
 import org.joda.time.LocalDate
 import implicits.Football
 
@@ -21,20 +21,22 @@ case class MatchesPage(
 
   lazy val isLive = days.flatMap(_.competitions.flatMap(_.matches)).exists(_.isLive)
   lazy val urlBase = comp.map(c => c.url).getOrElse("/football")
-
 }
 
 class FootballPage(
-            id: String,
-            section: String,
-            webTitle: String,
-            analyticsName: String,
-            pagination: Option[Pagination] = None,
-            description: Option[String] = None) extends Page(
-  id,
-  section,
-  webTitle,
-  analyticsName,
-  pagination,
-  description
-)
+  id: String,
+  section: String,
+  webTitle: String,
+  analyticsName: String,
+  pagination: Option[Pagination] = None,
+  description: Option[String] = None) extends StandalonePage {
+
+  override val metadata = MetaData.make(
+    id = id,
+    section = section,
+    webTitle = webTitle,
+    analyticsName = analyticsName,
+    pagination = pagination,
+    description = description
+  )
+}

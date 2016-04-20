@@ -1,9 +1,8 @@
-module.exports = function(grunt, options) {
+module.exports = function (grunt, options) {
     return {
         js: [
             options.staticTargetDir + 'javascripts',
             options.staticHashDir + 'javascripts',
-            options.staticHashDir + 'bundles',
             options.requirejsDir
         ],
         css: [

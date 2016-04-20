@@ -1,7 +1,6 @@
 package test
 
-import play.api.mvc.{AnyContentAsEmpty, Result}
-import play.api.test.FakeRequest
+import play.api.mvc.Result
 import play.api.test.Helpers._
 import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 import scala.concurrent.Future
@@ -9,11 +8,11 @@ import scala.concurrent.Future
 @DoNotDiscover class ArchiveControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   it should "return a normalised r1 path" in {
-    val tests = Map[String, Option[String]](
-      "www.theguardian.com/books/reviews/travel/0,,343395,00.html" -> Some("www.theguardian.com/books/reviews/travel/0,,343395,.html"),
-      "www.theguardian.com/books/reviews/travel/0,,343395,.html" -> Some("www.theguardian.com/books/reviews/travel/0,,343395,.html"),
-      "www.theguardian.com/books/review/story/0,034,908973,00.html" -> Some("www.theguardian.com/books/review/story/0,,908973,.html"),
-      "www.theguardian.com/books/reviews/travel/foo" -> None
+    val tests = List(
+      "www.theguardian.com/books/reviews/travel/0,,343395,00.html" -> "http://www.theguardian.com/books/reviews/travel/0,,343395,.html",
+      "www.theguardian.com/books/reviews/travel/0,,343395,.html" -> "http://www.theguardian.com/books/reviews/travel/0,,343395,.html",
+      "www.theguardian.com/books/review/story/0,034,908973,00.html" -> "http://www.theguardian.com/books/review/story/0,,908973,.html",
+      "www.theguardian.com/books/reviews/travel/foo" -> "http://www.theguardian.com/books/reviews/travel/foo"
     )
     tests foreach {
       case (key, value) => controllers.ArchiveController.normalise(key) should be (value)
@@ -23,8 +22,18 @@ import scala.concurrent.Future
   // r1 curio (all the redirects have their 00's removed, all the s3 archived files don't)
   it should "return a normalised r1 path with suffixed zeros" in {
     val path = "www.theguardian.com/books/reviews/travel/0,,343395,.html"
-    val expectedPath = Some("www.theguardian.com/books/reviews/travel/0,,343395,00.html")
+    val expectedPath = "http://www.theguardian.com/books/reviews/travel/0,,343395,00.html"
     controllers.ArchiveController.normalise(path , zeros = "00") should be (expectedPath)
+  }
+
+  it should "return a normalised short url path" in {
+    val tests = List(
+      "www.theguardian.com/p/dfas/stw" -> "http://www.theguardian.com/p/dfas",
+      "www.theguardian.com/p/dfas" -> "http://www.theguardian.com/p/dfas"
+    )
+    tests foreach {
+      case (key, value) => controllers.ArchiveController.normalise(key) should be (value)
+    }
   }
 
   it should "not decode encoded urls" in {
@@ -47,7 +56,7 @@ import scala.concurrent.Future
     location(result) should be ("http://www.theguardian.com/arts/pictures/0,")
   }
 
-  it should "test a redirect doesn't not link to itself" in {
+  it should "test a redirect doesn't link to itself" in {
     val path = "www.theguardian.com/books/worldliteraturetour/page/0,,2021886,.html"
     val dest = "http://books.theguardian.com/worldliteraturetour/page/0,,2021886,.html"
     controllers.ArchiveController.linksToItself(path, dest) should be (true)
@@ -175,6 +184,25 @@ import scala.concurrent.Future
     val result3 = controllers.ArchiveController.lookup("www.theguardian.com/theobserver/2015/jun/14/news")(TestRequest())
     status(result3) should be (301)
     location(result3) should be ("/theobserver/news/2015/jun/14/all")
+  }
+
+  it should "redirect short urls with campaign codes" in {
+
+    val result = controllers.ArchiveController.retainShortUrlCampaign("http://www.theguardian.com/p/old/stw", "http://www.theguardian.com/p/new")
+    result should be("http://www.theguardian.com/p/new?CMP=share_btn_tw")
+  }
+
+  it should "redirect short urls with campaign codes and allow for overrides" in {
+    val shortRedirectWithCMP = services.Redirect("http://www.theguardian.com/p/new?CMP=existing-cmp")
+    val result = controllers.ArchiveController.retainShortUrlCampaign("http://www.theguardian.com/p/old/stw", "http://www.theguardian.com/p/new?CMP=existing-cmp")
+    result should be ("http://www.theguardian.com/p/new?CMP=existing-cmp")
+  }
+
+  it should "not perform a redirect loop check on Archive objects" in {
+    // The archive x-accel goes to s3. So it is irrelevant whether the original path looks like the s3 archive path.
+    val databaseSaysArchive = services.Archive("http://www.theguardian.com/redirect/path-to-content")
+    val result = controllers.ArchiveController.processLookupDestination("http://www.theguardian.com/redirect/path-to-content").lift(databaseSaysArchive)
+    result.map(_.toString).getOrElse("") should include ("""X-Accel-Redirect -> /s3-archive/http://www.theguardian.com/redirect/path-to-content""")
   }
 
   private def location(result: Future[Result]): String = header("Location", result).head

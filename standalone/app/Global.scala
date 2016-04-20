@@ -1,5 +1,7 @@
 import com.gu.googleauth.{FilterExemption, UserIdentity}
+import commercial.CommercialLifecycle
 import common.ExecutionContexts
+import common.Logback.Logstash
 import common.dfp.FaciaDfpAgentLifecycle
 import conf._
 import controllers.AuthCookie
@@ -69,3 +71,4 @@ object Global extends WithFilters(
   with FootballLifecycle
   with CricketLifecycle
   with RugbyLifecycle
+  with Logstash

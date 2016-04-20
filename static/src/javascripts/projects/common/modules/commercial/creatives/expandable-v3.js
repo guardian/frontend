@@ -2,26 +2,32 @@ define([
     'bean',
     'bonzo',
     'fastdom',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/storage',
     'common/utils/template',
     'common/views/svgs',
-    'text!common/views/commercial/creatives/expandable-v3.html'
+    'text!common/views/commercial/creatives/expandable-v3.html',
+    'lodash/functions/bindAll',
+    'lodash/objects/merge',
+    'common/modules/commercial/creatives/add-tracking-pixel',
+    'Promise'
 ], function (
     bean,
     bonzo,
     fastdom,
-    _,
     $,
-	detect,
+    detect,
     mediator,
     storage,
     template,
     svgs,
-    expandableV3Tpl
+    expandableV3Tpl,
+    bindAll,
+    merge,
+    addTrackingPixel,
+    Promise
 ) {
 
     /**
@@ -41,7 +47,7 @@ define([
             this.openedHeight = 300;
         }
 
-        _.bindAll(this, 'updateBgPosition', 'listener');
+        bindAll(this, 'updateBgPosition', 'listener');
     };
 
     /**
@@ -157,7 +163,7 @@ define([
                 scrollbg: (this.params.backgroundImagePType !== '' || this.params.backgroundImagePType !== 'none') ?
                     '<div class="ad-exp--expand-scrolling-bg" style="background-image: url(' + this.params.backgroundImageP + '); background-position: ' + this.params.backgroundImagePPosition + ' 50%; background-repeat: ' + this.params.backgroundImagePRepeat + ';"></div>' : ''
             },
-            $expandableV3 = $.create(template(expandableV3Tpl, { data: _.merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg) }));
+            $expandableV3 = $.create(template(expandableV3Tpl, { data: merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg) }));
 
         var domPromise = new Promise(function (resolve) {
             fastdom.write(function () {
@@ -168,7 +174,7 @@ define([
                 $('.ad-exp-collapse__slide', $expandableV3).css('height', this.closedHeight);
 
                 if (this.params.trackingPixel) {
-                    this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
+                    addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
                 }
 
                 $expandableV3.appendTo(this.$adSlot);

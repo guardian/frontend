@@ -1,5 +1,15 @@
 module.exports = function (grunt, options) {
+    var taskOptions = options.isDev
+        ? {
+            mangle: false,
+            compress: false,
+            beautify: true,
+            preserveComments: true
+        }
+        : {};
+
     return {
+        options: taskOptions,
         javascript: {
             files: [
                 {
@@ -18,27 +28,14 @@ module.exports = function (grunt, options) {
         conf: {
             files: [{
                 expand: true,
-                cwd: 'static/src/jspm_packages',
-                src: [
-                    'system.src.js',
-                    'system-polyfills.src.js'
-                ],
-                dest: 'common/conf/assets'
-            }, {
-                expand: true,
-                cwd: 'static/src',
-                src: ['systemjs-normalize.js',
-                      'systemjs-config.js'],
-                dest: 'common/conf/assets'
-            }, {
-                expand: true,
                 cwd: 'static/public/javascripts/vendor',
                 src: ['omniture.js'],
                 dest: 'common/conf/assets/vendor'
             }],
-            options:   {
+            options: options.isDev ? {} : {
                 compress: {
-                    evaluate: false // Set to false retain constant expressions, used to avoid writing HTML like </script>.
+                    // Set to false retain constant expressions, used to avoid writing HTML like </script>.
+                    evaluate: false
                 }
             }
         }

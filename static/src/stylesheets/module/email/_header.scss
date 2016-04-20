@@ -1,0 +1,85 @@
+.email-sub__heading {
+    @include fs-headline(3, $size-only: true);
+}
+
+.email-sub__heading-emph {
+    color: $guardian-brand;
+}
+
+.email-sub__description {
+    border-top: 3px solid $form-secondary-colour;
+    color: $form-primary-colour;
+    background-color: $guardian-brand;
+}
+
+.email-sub__description-emph {
+    display: block;
+    font-weight: bold;
+}
+
+// LANDING AND IN-ARTICLE (COMPOSER) PAGE MODS
+.email-sub__header--landing,
+.email-sub__header--article {
+    @include fs-headline(2);
+    background-color: $form-primary-colour;
+
+    .email-sub__heading {
+        margin-bottom: $gs-baseline;
+    }
+
+    .email-sub__description {
+        @include fs-textSans(3);
+        color: $neutral-2;
+        margin-bottom: $gs-baseline;
+    }
+}
+
+// IN-ARTICLE (COMPOSER) PAGE MODS
+.email-sub__header--article {
+    .email-sub__heading {
+        color: #ffffff;
+        padding-right: 40px; // Avoid close icon
+    }
+
+    .email-sub__description {
+        background-color: transparent;
+        border-top: 0 none;
+        min-height: 20px; // Min-height required to avoid some of the layout thrashing from loading in an iframe
+    }
+}
+
+// TONE SPECIFIC MODS
+
+@each $tone-class, $tone-colour-accent, $tone-colour-headline in $tones {
+    .email-sub--tone-#{$tone-class} {
+
+        @if ($tone-colour-headline) {
+            .email-sub__heading {
+                color: $tone-colour-headline;
+            }
+        }
+    }
+}
+
+
+// FOOTER MODS
+.email-sub__header--footer {
+    .email-sub__heading {
+        @include fs-textSans(3);
+        color: #ffffff;
+        margin-bottom: $gs-baseline;
+    }
+}
+
+// PLAIN MODS
+.email-sub--plain {
+    .email-sub__message__headline {
+        color: $guardian-brand;
+        line-height: 2rem;
+    }
+
+    .email-sub__message__description {
+        display: none;
+    }
+}
+

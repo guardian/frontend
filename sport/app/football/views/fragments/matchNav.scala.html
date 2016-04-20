@@ -1,8 +1,7 @@
 @(component: football.controllers.MatchNav)(implicit request: RequestHeader)
-@import implicits.Football._
+@import football.model.FootballMatchTrail
 
-
-@report(trail: Trail, text: String) = {
+@report(trail: FootballMatchTrail, text: String) = {
     @if(component.currentPage.exists(_.url == trail.url)){
         <li class="tabs__tab tab--@text.toLowerCase tabs__tab--selected tone-colour tone-accent-border"><span class="tab__link">@text</span></li>
     } else {

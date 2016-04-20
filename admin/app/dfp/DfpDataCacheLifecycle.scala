@@ -1,6 +1,6 @@
 package dfp
 
-import common.dfp.GuAdUnit
+import common.dfp.{GuAdUnit, GuCreativeTemplate}
 import common.{AkkaAsync, ExecutionContexts, Jobs}
 import play.api.{Application, GlobalSettings}
 
@@ -53,15 +53,33 @@ trait DfpDataCacheLifecycle extends GlobalSettings with ExecutionContexts {
     },
 
     new Job[Unit] {
-      val name: String = "DFP-AdFeatures-Update"
-      val interval: Int = 30
-      def run(): Future[Unit] = DfpAdFeatureCacheJob.run()
-    },
-
-    new Job[Unit] {
       val name: String = "DFP-Ad-Units-Update"
       val interval: Int = 60
       def run(): Future[Unit] = DfpAdUnitCacheJob.run()
+    },
+
+    new Job[Unit] {
+      val name: String = "DFP-Mobile-Apps-Ad-Units-Update"
+      val interval: Int = 60
+      def run(): Future[Unit] = DfpMobileAppAdUnitCacheJob.run()
+    },
+
+    new Job[Unit] {
+      val name: String = "DFP-Facebook-IA-Ad-Units-Update"
+      val interval: Int = 60
+      def run(): Future[Unit] = DfpFacebookIaAdUnitCacheJob.run()
+    },
+
+    new Job[Seq[GuCreativeTemplate]] {
+      val name: String = "DFP-Creative-Templates-Update"
+      val interval: Int = 15
+      def run() = CreativeTemplateAgent.refresh()
+    },
+
+    new Job[Unit] {
+      val name: String = "DFP-Template-Creatives-Cache"
+      val interval: Int = 2
+      def run() = DfpTemplateCreativeCacheJob.run()
     }
 
   )
@@ -72,12 +90,14 @@ trait DfpDataCacheLifecycle extends GlobalSettings with ExecutionContexts {
     jobs foreach { job =>
       Jobs.deschedule(job.name)
       Jobs.scheduleEveryNMinutes(job.name, job.interval) {
-        job.run()
+        job.run().map(_ => ())
       }
     }
 
     AkkaAsync {
       DfpDataCacheJob.refreshAllDfpData()
+      CreativeTemplateAgent.refresh()
+      DfpTemplateCreativeCacheJob.run()
     }
   }
 

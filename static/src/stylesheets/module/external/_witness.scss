@@ -9,7 +9,7 @@
 // - "Contribute with…" cta: /lifeandstyle/the-running-blog/2013/aug/05/competition-win-gps-running-watch
 
 .element-witness {
-    border: 1px solid colour(neutral-5);
+    border: 1px solid $neutral-5;
     margin-bottom: ($gs-baseline/3)*5;
 }
 .element-witness--title {
@@ -19,10 +19,10 @@
     padding: $gs-baseline $gs-gutter/2 ($gs-baseline/3)*4;
 }
 .element-witness figcaption {
-    margin: ($gs-baseline/3)*4 0 0;
     // Make it look like the body copy
     @include fs-bodyCopy(2);
-    color: colour(neutral-1);
+    margin: ($gs-baseline/3)*4 0 0;
+    color: $neutral-1;
 
     &:before {
         display: none; // Hide the "camera" icon
@@ -36,20 +36,20 @@
     max-width: 100%;
 }
 .element-witness--metadata {
-    border-top: 1px solid colour(neutral-5);
-    padding: $gs-baseline $gs-gutter/2;
-    background: colour(neutral-7);
     @include fs-textSans(3);
-    color: colour(neutral-2-contrasted) !important;
+    border-top: 1px solid $neutral-5;
+    padding: $gs-baseline $gs-gutter/2;
+    background: $neutral-7;
+    color: $neutral-2-contrasted !important;
 
     img {
         margin-bottom: 0;
     }
 }
 .element-witness--source {
-    padding-left: $gs-gutter/2;
     @include fs-textSans(3);
-    color: colour(neutral-2);
+    padding-left: $gs-gutter/2;
+    color: $neutral-2;
 }
 .element-witness--author-name {
     font-weight: bold;
@@ -72,11 +72,11 @@
 .witness-cta {
     overflow: hidden;
     padding: $gs-baseline / 3 0;
-    border-top: 1px dotted colour(neutral-4);
+    border-top: 1px dotted $neutral-4;
     margin-top: $gs-baseline / 3;
 
     @include mq(leftCol) {
-        border-bottom: 1px dotted colour(neutral-4);
+        border-bottom: 1px dotted $neutral-4;
         margin-bottom: $gs-baseline;
     }
 }
@@ -85,7 +85,7 @@
     position: relative;
     float: left;
     padding-left: 38px;
-    color: colour(news-support-1);
+    color: $news-support-1;
     font-family: $f-serif-headline;
     font-size: get-font-size(header, 1);
     font-weight: normal;
@@ -112,8 +112,8 @@
     }
 
     .element-witness--source & {
-        color: colour(news-support-2);
         @include font($f-serif-text, 700, 16, 16);
+        color: $news-support-2;
     }
 
 }
@@ -121,11 +121,11 @@
     margin-left: -3px;
 
     .witness__button & {
-        color: colour(news-support-1);
+        color: $news-support-1;
     }
 
     .element-witness--source & {
-        color: colour(neutral-2);
+        color: $neutral-2;
     }
 
 }

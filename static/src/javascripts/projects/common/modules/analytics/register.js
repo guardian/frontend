@@ -8,11 +8,11 @@
 define([
     'common/utils/mediator',
     'common/modules/experiments/ab',
-    'common/utils/_'
+    'lodash/collections/where'
 ], function (
     mediator,
     ab,
-    _
+    where
 ) {
     var register = [],
         startTime = Date.now();
@@ -25,7 +25,7 @@ define([
     }
 
     function end(name) {
-        _.where(register, {name: name})
+        where(register, {name: name})
             .forEach(function (module) {
                 module.status = 'completed';
                 module.endTime = Date.now() - startTime + 'ms';
@@ -33,7 +33,7 @@ define([
     }
 
     function error(name) {
-        _.where(register, {name: name})
+        where(register, {name: name})
             .forEach(function (module) {
                 module.status = 'failed';
                 module.endTime = Date.now() - startTime + 'ms';
@@ -43,8 +43,7 @@ define([
     function sendEvent() {
         require(['ophan/ng'], function (ophan) {
             ophan.record({
-                register: register,
-                abTestRegister: ab.getAbLoggableObject()
+                register: register
             });
         });
     }

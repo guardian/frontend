@@ -1,4 +1,4 @@
-@(metaData: model.MetaData)(implicit request: RequestHeader)
+@(page: model.Page)(implicit request: RequestHeader)
 
 @import common._
 @import views.support.RenderClasses
@@ -7,7 +7,7 @@
     <div class="@RenderClasses(Map(
                     ("navigation", true),
                     ("navigation--has-signposting", !Edition.isEditionFront),
-                    ("navigation--has-local-navigation", Navigation.localLinks(navigation, metaData).nonEmpty),
+                    ("navigation--has-local-navigation", Navigation.localLinks(navigation, page).nonEmpty),
                     ("js-navigation", true)
                 ))">
         <div class="gs-container">
@@ -15,9 +15,9 @@
                 <div class="navigation__scroll">
                     <nav class="navigation__container navigation__container--first" data-component="nav" role="navigation" aria-label="Current section">
                         @if(!Edition.isEditionFront){
-                            @fragments.nav.signposting(metaData, navigation)
+                            @fragments.nav.signposting(page, navigation)
 
-                            @defining(Navigation.rotatedLocalNav(Navigation.topLevelItem(navigation, metaData), metaData)){ localNav =>
+                            @defining(Navigation.rotatedLocalNav(Navigation.topLevelItem(navigation, page), page)){ localNav =>
                                 @if(localNav.nonEmpty) {
                                     <ul class="local-navigation">
                                     @localNav.map{ link =>
@@ -31,11 +31,11 @@
                         }
                     </nav>
                     <nav class="navigation__container navigation__container--second" data-component="nav" role="navigation" aria-label="Guardian sections">
-                        @fragments.nav.topNavigation(metaData, navigation)
+                        @fragments.nav.topNavigation(page, navigation)
                     </nav>
                 </div>
-                @if(!metaData.hasSlimHeader) {
-                    @fragments.nav.navigationToggle(metaData)
+                @if(!page.metadata.hasSlimHeader) {
+                    @fragments.nav.navigationToggle()
                 }
             </div>
             <div id="all-sections-popup" class="navigation__expandable js-mega-nav-placeholder" data-component="all-nav"></div>

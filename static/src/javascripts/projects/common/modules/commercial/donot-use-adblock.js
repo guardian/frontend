@@ -1,59 +1,73 @@
 define([
-    'common/utils/_',
+    'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/storage',
     'common/utils/template',
+    'common/modules/commercial/adblock-messages',
+    'common/modules/commercial/adblock-banner-config',
+    'common/modules/adblock-banner',
+    'common/modules/onward/history',
     'common/modules/ui/message',
     'common/modules/experiments/ab',
     'common/modules/navigation/navigation',
     'text!common/views/membership-message.html',
-    'common/views/svgs'
+    'common/views/svgs',
+    'lodash/collections/sample'
 ], function (
-    _,
+    $,
     config,
     detect,
     storage,
     template,
+    adblockMsg,
+    adblockConfig,
+    AdblockBanner,
+    history,
     Message,
     ab,
     navigation,
     messageTemplate,
-    svgs
+    svgs,
+    sample
 ) {
-    function init() {
-        var alreadyVisted = storage.local.get('alreadyVisited') || 0,
-            adblockLink = 'https://membership.theguardian.com/',
-            message = _.sample([
-                {
-                    id: 'monthly',
-                    messageText: 'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way? Become a Supporter from just £5 per month',
+    function showAdblockMessage() {
+        var adblockLink = 'https://membership.theguardian.com/supporter',
+            messages = {
+                UK: {
+                    campaign: 'ADB_UK',
+                    messageText: [
+                        'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way?',
+                        'Become a Supporter for less than £1 per week'
+                    ].join(' '),
                     linkText: 'Find out more'
                 },
-                {
-                    id: 'annual',
-                    messageText: 'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way? Become a Supporter for just £50 per a year',
+                US: {
+                    campaign: 'ADB_US',
+                    messageText: [
+                        'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way?',
+                        'Become a Supporter for less than $1 per week'
+                    ].join(' '),
                     linkText: 'Find out more'
                 },
-                {
-                    id: 'weekly',
-                    messageText: 'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way? Become a Supporter for less than £1 per week',
+                INT: {
+                    campaign: 'ADB_INT',
+                    messageText: [
+                        'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way?',
+                        'Become a Supporter for less than $1/€1 per week'
+                    ].join(' '),
                     linkText: 'Find out more'
-                },
-                {
-                    id: 'no-price',
-                    messageText: 'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way?',
-                    linkText: 'Become a supporter today'
                 }
-            ]);
+            },
+            message = messages[config.page.edition];
 
-        if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse && config.switches.adblock && alreadyVisted > 1) {
+        if (message) {
             new Message('adblock-message', {
                 pinOnHide: false,
-                siteMessageLinkName: 'adblock message variant ' + message.id,
+                siteMessageLinkName: 'adblock',
                 siteMessageCloseBtn: 'hide'
             }).show(template(messageTemplate, {
-                supporterLink: adblockLink + '?INTCMP=adb-mv-' + message.id,
+                linkHref: adblockLink + '?INTCMP=' + message.campaign,
                 messageText: message.messageText,
                 linkText: message.linkText,
                 arrowWhiteRight: svgs('arrowWhiteRight')
@@ -61,7 +75,31 @@ define([
         }
     }
 
+    function showAdblockBanner() {
+        var banners = adblockConfig.getBanners(config.page.edition);
+
+        var flatBanners = [];
+        banners.forEach(function (bannerList) {
+            flatBanners.push(sample(bannerList));
+        });
+
+        var bannerToUse = sample(flatBanners);
+
+        if (bannerToUse) {
+            new AdblockBanner(bannerToUse.template, bannerToUse).show();
+        }
+    }
+
+    function init() {
+        // Show messages only if adblock is used by non paying member
+        if (adblockMsg.showAdblockMsg()) {
+            showAdblockMessage();
+            showAdblockBanner();
+        }
+    }
+
     return {
         init: init
     };
 });
+

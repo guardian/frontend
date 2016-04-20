@@ -1,6 +1,10 @@
 @(offlinePage: controllers.OfflinePage)(implicit request: RequestHeader)
 
 @import play.api.libs.json._
+@import conf.switches.Switches._
+@import common.InlineJs
+@import templates.inlineJS.blocking.js._
+@import conf.{Configuration, Static}
 
 <!DOCTYPE html>
 <html id="js-context" class="js-off is-not-modern id--signed-out" data-page-path="@request.path">
@@ -12,29 +16,71 @@
     @fragments.metaData(offlinePage)
 
     @* get the stylesheets downloading ASAP *@
-    @fragments.stylesheetLinks(None)
+    @fragments.stylesheets(None)
 
-    @* polyfill, feature detect etc before we try and use the stylesheets *@
-    @fragments.javaScriptPreFlight(offlinePage)
+    @* We don't use the inlineJSBlocking template because we need to specify
+    our own paths *@
 
-    @* try and load fonts before we use the stylesheets *@
-    @fragments.fonts()
+    @fragments.analytics.omnitureScript(Some(offlinePage.metadata))
 
-    @* start trying to use the stylesheets *@
-    @fragments.stylesheetLinksEnable()
-
+    @* NOTE the order of these includes is important  *@
     <script>
-        @* DO NOT COPY. We do not want to couple other things to the jspm test.
-        Crossword related things is the only exception. Please use curl instead. *@
-        @Html(Static.systemJs.setupFragment)
+        @* Service worker only caches the bundles (including in dev),
+        so the offline page can only ask for those. *@
+        window.curlConfig = {
+            baseUrl: '@{Configuration.assets.path}javascripts',
+            apiName: 'require',
+            paths: {
+                'facebook.js':              '//connect.facebook.net/en_US/all.js',
+                'ophan/ng':                 '@{Configuration.javascript.config("ophanJsUrl")}',
+                text:                       'text', // noop
+                inlineSvg:                  'inlineSvg', // noop
 
-        @* Service worker only caches the bundles, so the offline page can only ask for those.
-        For production, we rely on bundles from systemJsSetup *@
-        @if(play.Play.isDev()) {
-            System.config({ bundles: @Html(Static.systemJs.bundleConfig) });
+                'enhanced-vendor':                '@Static("javascripts/enhanced-vendor.js")',
+                'bootstraps/enhanced/main':      '@Static("javascripts/bootstraps/enhanced/main.js")',
+                'bootstraps/commercial':          '@Static("javascripts/bootstraps/commercial.js")',
+                'bootstraps/enhanced/crosswords': '@Static("javascripts/bootstraps/enhanced/crosswords.js")',
+
+                'react': '@Static("javascripts/components/react/react.js")'
+            }
+        };
+
+        // curl will read from window.curl
+        window.curl = window.curlConfig;
+
+        // Polyfill for async script
+        (function (document) {
+            var script = document.createElement('script');
+            script.src = '@Static("javascripts/app.js")';
+            var ref = document.getElementsByTagName('script')[0];
+            ref.parentNode.insertBefore(script, ref);
+        })(document);
+
+        // polyfills
+        @Html(polyfills().body)
+
+        // determine whether to run enhanced JS
+        @InlineJs(shouldEnhance(offlinePage.metadata).body, "shouldEnhance.js")
+
+        // page config
+        @Html(config(offlinePage).body)
+
+        // apply render conditions
+        @InlineJs(applyRenderConditions().body, "applyRenderConditions.js")
+
+        // try and load fonts before we use the stylesheets
+        @if(FontSwitch.isSwitchedOn) {
+            @InlineJs(loadFonts().body, "loadFonts.js")
         }
 
-        @Html(templates.headerInlineJS.js.bootSystemJS(offlinePage).body)
+        @if(AsyncCss.isSwitchedOn) {
+            // enable non-blocking stylesheets
+            // borrows *heavily* from https://github.com/filamentgroup/loadCSS.
+            @InlineJs(enableStylesheets().body, "enableStylesheets.js")
+        }
+
+        // cloudwatch beacons
+        @InlineJs(cloudwatchBeacons(offlinePage.metadata).body, "cloudwatchBeacons.js")
     </script>
 </head>
     <body
@@ -67,7 +113,9 @@
 
         @fragments.footer(offlinePage)
 
-        @fragments.footerJavaScript()
+        @fragments.inlineJSNonBlocking()
+
+        @fragments.analytics.base(offlinePage)
 
     </body>
 </html>

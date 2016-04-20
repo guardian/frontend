@@ -39,7 +39,7 @@
 }
 
 .meta__numbers {
-    border-top: 1px dotted colour(neutral-5);
+    border-top: 1px dotted $neutral-5;
     height: $gs-baseline * 3;
     padding: $gs-baseline / 2 0;
 
@@ -50,7 +50,7 @@
         border: 0;
     }
     @include mq(leftCol) {
-        border-bottom: 1px dotted colour(neutral-5);
+        border-bottom: 1px dotted $neutral-5;
     }
 
     .commentcount2__heading,
@@ -85,7 +85,7 @@
     }
 
     .sharecount__value {
-        color: colour(neutral-1);
+        color: $neutral-1;
     }
 
     .sharecount__value--short {
@@ -101,7 +101,7 @@
     }
 
     .sharecount__heading {
-        color: colour(neutral-2);
+        color: $neutral-2;
         .i {
             opacity: .35;
         }
@@ -120,10 +120,11 @@
     }
 
     .meta__extras--crossword & {
-        @include mq(tablet) {
-            float: right;
-        }
+        border-left: 1px solid $neutral-7;
+        float: right;
+        padding-left: $gs-gutter / 2;
     }
+
     &:last-child {
         padding-right: 0;
     }
@@ -135,7 +136,7 @@
     padding-top: $gs-baseline / 2;
     padding-bottom: $gs-baseline / 2;
     margin-bottom: 0;
-    border-top: 1px dotted colour(neutral-5);
+    border-top: 1px dotted $neutral-5;
     position: relative;
 
     $social-width: 39px;
@@ -172,7 +173,7 @@
             position: relative;
             left: 0;
             top: 0;
-            border-top: 1px dotted colour(neutral-5);
+            border-top: 1px dotted $neutral-5;
         }
     }
 
@@ -184,7 +185,7 @@
 }
 
 .meta__number:not(.u-h) + .meta__number {
-    border-left: 1px solid colour(neutral-7);
+    border-left: 1px solid $neutral-7;
     padding-left: $gs-gutter / 2;
     @include mq(leftCol, wide) {
         padding-left: 6px;

@@ -1,10 +1,10 @@
-@(metaData: model.MetaData, formstackForm: _root_.formstack.FormstackForm, projectName: Option[String] = Some(conf.Configuration.environment.projectName))(implicit request: RequestHeader)
+@(page: model.Page, formstackForm: _root_.formstack.FormstackForm, projectName: Option[String] = Some(conf.Configuration.environment.projectName))(implicit request: RequestHeader)
 
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
     <meta charset="utf-8" />
-    <title>@Html(metaData.webTitle)</title>
+    <title>@Html(page.metadata.webTitle)</title>
 
     <style>
 /* Fonts

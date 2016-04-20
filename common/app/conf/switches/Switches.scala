@@ -3,8 +3,7 @@ package conf.switches
 import java.util.concurrent.TimeoutException
 
 import common._
-import conf.Configuration.environment
-import org.joda.time.{DateTime, Days, Interval, LocalDate}
+import org.joda.time.{DateTime, Days, LocalDate}
 import play.api.Play
 
 import scala.concurrent.duration._
@@ -13,6 +12,21 @@ import scala.concurrent.{Future, Promise}
 sealed trait SwitchState
 case object On extends SwitchState
 case object Off extends SwitchState
+
+case class SwitchGroup(name: String, description: Option[String] = None)
+object SwitchGroup {
+  val ABTests = SwitchGroup("A/B Tests",
+                            Some("The expiry date of these switches does NOT affect the expiry of the AB tests; " +
+                                 "these switches serve only to quickly enable/disable said tests."))
+  val Commercial = SwitchGroup("Commercial")
+  val Facia = SwitchGroup("Facia")
+  val Feature = SwitchGroup("Feature")
+  val Identity = SwitchGroup("Identity")
+  val Monitoring = SwitchGroup("Monitoring")
+  val Performance = SwitchGroup("Performance")
+  val ServerSideABTests = SwitchGroup("Server-side A/B Tests")
+}
+
 
 trait Initializable[T] extends ExecutionContexts with Logging {
 
@@ -33,74 +47,92 @@ trait Initializable[T] extends ExecutionContexts with Logging {
   def onInitialized: Future[T] = initialized.future
 }
 
-
-trait SwitchTrait extends Switchable with Initializable[SwitchTrait] {
-  val group: String
-  val name: String
-  val description: String
-  val safeState: SwitchState
-  val sellByDate: LocalDate
-  val exposeClientSide: Boolean
+case class Switch(
+  group: SwitchGroup,
+  name: String,
+  description: String,
+  safeState: SwitchState,
+  sellByDate: Option[LocalDate],
+  exposeClientSide: Boolean
+) extends Switchable with Initializable[Switch] {
 
   val delegate = DefaultSwitch(name, description, initiallyOn = safeState == On)
 
-  def isSwitchedOn: Boolean = delegate.isSwitchedOn && new LocalDate().isBefore(sellByDate)
+  def isSwitchedOn: Boolean = delegate.isSwitchedOn
 
-  def switchOn() {
+  /*
+   * If the switchboard hasn't been read yet, the "safe state" is returned instead of the real switch value.
+   * This makes sure the switchboard has been read before returning the switch state.
+   */
+  def isGuaranteedSwitchedOn: Future[Boolean] = onInitialized map { _ => isSwitchedOn }
+
+  def switchOn(): Unit = {
     if (isSwitchedOff) {
       delegate.switchOn()
     }
     initialized(this)
   }
-  def switchOff() {
+  def switchOff(): Unit = {
     if (isSwitchedOn) {
       delegate.switchOff()
     }
     initialized(this)
   }
-
-  def daysToExpiry = Days.daysBetween(new DateTime(), sellByDate.toDateTimeAtStartOfDay).getDays
-
-  def expiresSoon = daysToExpiry < 7
-
-  def hasExpired = daysToExpiry == 0
+  def switchToSafeState(): Unit = {
+    if (safeState == On) {
+      delegate.switchOn()
+    } else {
+      delegate.switchOff()
+    }
+    initialized(this)
+  }
 
   Switch.switches.send(this :: _)
 }
 
-case class Switch(
-  group: String,
-  name: String,
-  description: String,
-  safeState: SwitchState,
-  sellByDate: LocalDate,
-  exposeClientSide: Boolean
-) extends SwitchTrait
-
-case class TimerSwitch(
-  group: String,
-  name: String,
-  description: String,
-  safeState: SwitchState,
-  sellByDate: LocalDate,
-  activePeriods: Seq[Interval],
-  exposeClientSide: Boolean
-) extends SwitchTrait with Logging {
-
-  def isSwitchedOnAndActive: Boolean = {
-    val active = activePeriods.exists(_.containsNow())
-    isSwitchedOn && (environment.isNonProd || active)
-  }
-}
-
 object Switch {
-  val switches = AkkaAgent[List[SwitchTrait]](Nil)
-  def allSwitches: Seq[SwitchTrait] = switches.get()
+
+  def apply(
+    group: SwitchGroup,
+    name: String,
+    description: String,
+    safeState: SwitchState,
+    sellByDate: LocalDate,
+    exposeClientSide: Boolean
+  ): Switch = Switch(
+    group,
+    name,
+    description,
+    safeState,
+    Some(sellByDate),
+    exposeClientSide
+  )
+
+  val switches = AkkaAgent[List[Switch]](Nil)
+  def allSwitches: Seq[Switch] = switches.get()
+
+  // the agent won't immediately return its switches
+  def eventuallyAllSwitches: Future[List[Switch]] = switches.future()
+
+  case class Expiry(daysToExpiry: Option[Int], expiresSoon: Boolean, hasExpired: Boolean)
+
+  def expiry(switch: Switch, today: LocalDate = new DateTime().toLocalDate) = {
+    val daysToExpiry = switch.sellByDate.map {
+      Days.daysBetween(today, _).getDays
+    }
+
+    val expiresSoon = daysToExpiry.exists(_ < 8)
+
+    val hasExpired = daysToExpiry.exists(_ < 0)
+
+    Expiry(daysToExpiry, expiresSoon, hasExpired)
+  }
+
 }
 
 object Expiry {
 
-  lazy val never = new LocalDate(2100, 1, 1)
+  lazy val never = None
 
 }
 
@@ -113,11 +145,13 @@ with CommercialSwitches
 with PerformanceSwitches
 with MonitoringSwitches {
 
-  def all: Seq[SwitchTrait] = Switch.allSwitches
+  def all: Seq[Switch] = Switch.allSwitches
 
-  def grouped: List[(String, Seq[SwitchTrait])] = {
+  def eventuallyAll: Future[List[Switch]] = Switch.eventuallyAllSwitches
+
+  def grouped: List[(SwitchGroup, Seq[Switch])] = {
     val sortedSwitches = all.groupBy(_.group).map { case (key, value) => (key, value.sortBy(_.name)) }
-    sortedSwitches.toList.sortBy(_._1)
+    sortedSwitches.toList.sortBy(_._1.name)
   }
 
 }

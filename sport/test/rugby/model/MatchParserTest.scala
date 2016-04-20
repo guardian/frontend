@@ -1,7 +1,7 @@
 package rugby.model
 
 import org.scalatest._
-import rugby.feed.WarmupWorldCup2015
+import rugby.feed.WorldCup2015
 import test.ConfiguredTestSuite
 
 import scala.io.Source
@@ -12,7 +12,7 @@ import scala.io.Source
     "should parse rugby live scores correctly" in {
       val liveScoreData = Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("rugby/feed/live-scores.xml")).mkString
 
-      val liveScores = rugby.feed.Parser.parseLiveScores(liveScoreData, WarmupWorldCup2015)
+      val liveScores = rugby.feed.Parser.parseLiveScores(liveScoreData, WorldCup2015)
 
       liveScores.size should be(4)
 
@@ -37,7 +37,7 @@ import scala.io.Source
     "should parse rugby results correctly" in {
       val fixturesAndResultsData = Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("rugby/feed/fixtures-and-results.xml")).mkString
 
-      val fixturesAndResults = rugby.feed.Parser.parseFixturesAndResults(fixturesAndResultsData, WarmupWorldCup2015)
+      val fixturesAndResults = rugby.feed.Parser.parseFixturesAndResults(fixturesAndResultsData, WorldCup2015)
 
       fixturesAndResults.size should be(26)
 

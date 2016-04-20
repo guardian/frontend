@@ -1,18 +1,20 @@
 package model
 
-import com.gu.contentapi.client.model.{Asset, Content => ApiContent, Element => ApiElement}
+import com.gu.contentapi.client.model.v1.{Content => ApiContent, Element => ApiElement, AssetFields, Asset, ElementType, AssetType}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
 import contentapi.FixtureTemplates
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
+import org.scalatestplus.play.OneAppPerSuite
 
-class ElementsTest extends FlatSpec with Matchers {
+class ElementsTest extends FlatSpec with Matchers with OneAppPerSuite {
 
   "Elements" should "find the biggest crop of the main picture" in {
     val images: Elements = Content(
       ApiContent(id = "foo/2012/jan/07/bar",
         sectionId = None,
         sectionName = None,
-        webPublicationDateOption = Some(new DateTime),
+        webPublicationDate = Some(new DateTime().toCapiDateTime),
         webTitle = "Some article",
         webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
         apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
@@ -20,22 +22,22 @@ class ElementsTest extends FlatSpec with Matchers {
           image("test-image-0", "main", 0, List(asset("smaller picture 1", 50), asset("biggest picture 1", 100))),
           image("test-image-1", "main", 1, "a single picture 2", 200))),
         fields = None)
-    )
+    ).elements
 
-    images.mainPicture.flatMap(_.largestImage.flatMap(_.caption)) should be(Some("biggest picture 1"))
+    images.mainPicture.flatMap(_.images.largestImage.flatMap(_.caption)) should be(Some("biggest picture 1"))
   }
 
   def thumbnailFixture(crops: (Int, Int)*) = FixtureTemplates.emptyElement.copy(
-    `type` = "image",
+    `type` = ElementType.Image,
     relation = "thumbnail",
     assets = crops.toList map { case (width, height) =>
       FixtureTemplates.emptyAsset.copy(
-        `type` = "image",
+        `type` = AssetType.Image,
         mimeType = Some("image/jpeg"),
-        typeData = Map(
-          "width" -> width.toString,
-          "height" -> height.toString
-        )
+        typeData = Some(AssetFields(
+          width = Some(width),
+          height = Some(height)
+        ))
       )
     }
   )
@@ -47,7 +49,9 @@ class ElementsTest extends FlatSpec with Matchers {
       FixtureTemplates.emptyApiContent.copy(
         elements = Some(List(theImage))
       )
-    ).trailPicture(5, 3).map(_.delegate) shouldEqual Some(theImage)
+    ).trail.trailPicture.map(_.allImages.headOption.exists( image =>
+      image.width == 504 && image.height == 300
+    )) shouldBe Some(true)
   }
 
   it should "reject images more than 1% from the desired aspect ratio" in {
@@ -57,7 +61,7 @@ class ElementsTest extends FlatSpec with Matchers {
       FixtureTemplates.emptyApiContent.copy(
         elements = Some(List(theImage))
       )
-    ).trailPicture(5, 3).map(_.delegate) shouldEqual None
+    ).trail.trailPicture shouldEqual None
   }
 
   it should "not die if an image has 0 height or width" in {
@@ -69,7 +73,7 @@ class ElementsTest extends FlatSpec with Matchers {
           thumbnailFixture((0, 300), (500, 0), (500, 300))
         ))
       )
-    ).trailPicture(5, 3) shouldBe defined
+    ).trail.trailPicture shouldBe defined
   }
 
   private def image(  id: String,
@@ -77,17 +81,18 @@ class ElementsTest extends FlatSpec with Matchers {
                       index: Int,
                       caption: String,
                       width: Int): ApiElement = {
-    new ApiElement(id, relation, "image", Some(0), List(asset(caption, width)))
+    ApiElement(id, relation, ElementType.Image, Some(0), List(asset(caption, width)))
   }
 
   private def image(  id: String,
                       relation: String,
                       index: Int,
                       assets: List[Asset]): ApiElement = {
-    new ApiElement(id, relation, "image", Some(0), assets)
+    ApiElement(id, relation, ElementType.Image, Some(0), assets)
   }
 
   private def asset(caption: String, width: Int): Asset = {
-    Asset("image", Some("image/jpeg"), Some("http://www.foo.com/bar"), Map("caption" -> caption, "width" -> width.toString))
+    Asset(AssetType.Image, Some("image/jpeg"), Some("http://www.foo.com/bar"),
+      Some(AssetFields(caption = Some(caption), width = Some(width))))
   }
 }

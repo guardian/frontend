@@ -1,0 +1,16 @@
+@(  componentClass: String,
+    formHeading: String,
+    formDescription: String,
+    formImage: String = "")
+
+@headerClass = @{"email-sub__header" + " email-sub__header--" + componentClass }
+
+<div class="@headerClass">
+    <h2 class="email-sub__heading js-email-sub__heading">@Html(formHeading)</h2>
+
+    @if(formImage) {}
+
+    @if(formDescription || componentClass == "article") {
+        <div class="email-sub__description js-email-sub__description">@Html(formDescription)</div>
+    }
+</div>

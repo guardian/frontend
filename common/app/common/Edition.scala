@@ -2,11 +2,9 @@ package common
 
 import java.util.Locale
 
-import conf.switches.Switches.InternationalEditionBetaSwitch
 import org.joda.time.DateTimeZone
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
-import Function.const
 
 // describes the ways in which editions differ from each other
 abstract class Edition(
@@ -14,7 +12,7 @@ abstract class Edition(
     val displayName: String,
     val timezone: DateTimeZone,
     val locale: Locale,
-    val homePagePath: String,
+    val networkFrontId: String,
     val editionalisedSections: Seq[String] = Seq(
       "", // network front
       "business",
@@ -26,14 +24,14 @@ abstract class Edition(
       "technology",
       "media",
       "environment",
-      "film"
+      "film",
+      "lifeandstyle"
     )
-  ) extends Navigation {
 
+  ) extends Navigation {
+  val homePagePath: String = s"/$networkFrontId"
   def navigation: Seq[NavItem]
   def briefNav: Seq[NavItem]
-
-  def isBeta: Boolean = false
 
   def isEditionalised(id: String) = editionalisedSections.contains(id)
 
@@ -69,15 +67,9 @@ object Edition {
     // in production no cookies make it this far
     val editionFromCookie = request.cookies.get("GU_EDITION").map(_.value)
 
-    // TODO - temporary measure between coming out of Testing and going fully live
-    // Keeps the "control" group of the international edition in the UK edition
-    val isInternationalControlGroup = InternationalEdition(request).contains("control") &&
-      InternationalEditionBetaSwitch.isSwitchedOn
-
     editionFromParameter
      .orElse(editionFromHeader)
      .orElse(editionFromCookie)
-     .filter(const(!isInternationalControlGroup))
      .getOrElse(defaultEdition.id)
   }
 
@@ -147,8 +139,6 @@ object Editionalise {
 }
 
 case class EditionLink(edition: Edition, path: String)
-
-
 
 object InternationalEdition {
 

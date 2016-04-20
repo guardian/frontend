@@ -1,23 +1,23 @@
-@(content: model.Content, showBadge: Boolean = false)(implicit request: RequestHeader)
+@(item: model.ContentType, showBadge: Boolean = false)(implicit request: RequestHeader)
 
 <header class="content__head u-cf">
     <div class="gs-container">
         <div class="content__main-column">
 
-            @fragments.meta.metaInline(content)
+            @fragments.meta.metaInline(item)
 
-            <h1 class="content__headline js-score" itemprop="headline">@Html(content.headline)</h1>
+            <h1 class="content__headline js-score" itemprop="headline">@Html(item.trail.headline)</h1>
 
-            @if(!content.delegate.isVideo && !content.delegate.isGallery) {
-                @fragments.standfirst(content)
+            @if(!item.tags.isVideo && !item.tags.isGallery) {
+                @fragments.standfirst(item)
             }
 
             @if(showBadge) {
-                @fragments.commercial.badge(content)
+                @fragments.commercial.badge(item)
             }
 
-            @if(content.isInteractive && !content.shouldHidePublicationDate) {
-                @fragments.meta.dateline(content.webPublicationDate, content.lastModified, content.hasBeenModified)
+            @if(item.tags.isInteractive && !item.trail.shouldHidePublicationDate) {
+                @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified)
             }
 
         </div>

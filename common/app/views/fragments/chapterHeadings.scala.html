@@ -4,10 +4,17 @@
 
 @if(ChapterHeadingsSwitch.isSwitchedOn && content.chapterHeadings.size > 2) {
     <div class="chapters">
-        <span class="chapters__heading">Contents</span>
-        <ol>
+        <h3 class="chapters__heading">Chapter guide</h3>
+        <button class="chapters__button js-toggle-chapters meta-button hide-on-desktop" data-link-name="chapter-toggle">
+            @fragments.inlineSvg("arrow-down", "icon", Seq("chapters__toggle-icon"))
+        </button>
+        <ol class="chapters__list">
             @content.chapterHeadings.map { case (linkId, linkText) =>
-                <li><a href="#@linkId">@linkText</a></li>
+                <li class="chapters__list-item">
+                    <a class="chapters__link tone-colour" href="#@linkId">
+                        <span class="chapters__link-text">@linkText</span>
+                    </a>
+                </li>
             }
         </ol>
     </div>

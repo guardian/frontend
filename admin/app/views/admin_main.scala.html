@@ -1,7 +1,8 @@
-@(title: String, env: String, isAuthed: Boolean = false, hasCharts: Boolean = false, autoRefresh: Boolean = false)(content: Html)
+@(title: String, env: String, isAuthed: Boolean = false, hasCharts: Boolean = false, autoRefresh: Boolean = false)(content: Html)(implicit request: RequestHeader)
 
 @import controllers.admin.routes.UncachedAssets
 @import controllers.admin.routes.UncachedWebAssets
+@import templates.inlineJS.blocking.js._
 
 <!DOCTYPE html>
 
@@ -76,22 +77,20 @@
         <link href='//fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
         <link href='//fonts.googleapis.com/css?family=Open+Sans:800' rel='stylesheet' type='text/css'>
 
-        <script>
-            @Html(Static.systemJs.setupFragment)
+        <script type="text/javascript">
 
-            // Our app assumes a normal env
-            window.guardian = {
-                config: {
-                    switches: { },
-                    page: { }
-                }
-            };
+            @Html(curlConfig().body)
 
-            System.import('core').then(function () {
-                System.import('bootstraps/admin');
-            })
+            @Html(config(model.AdminPage(title)).body)
+
+            window.curl.paths['bootstraps/admin'] = '@Static("javascripts/bootstraps/admin.js")';
+
+            @Html(Static.js.curl);
+
+            require(['bootstraps/admin']);
         </script>
         <script src="//code.jquery.com/jquery.js"></script>
         <script type="text/javascript" src="@UncachedWebAssets.at("lib/bootstrap/js/bootstrap.min.js")"></script>
+
     </body>
 </html>

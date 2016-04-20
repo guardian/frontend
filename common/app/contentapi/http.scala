@@ -8,20 +8,20 @@ import common.ContentApiMetrics.{ContentApiErrorMetric, ContentApi404Metric}
 import common.{Logging, ExecutionContexts}
 import conf.Configuration
 import conf.Configuration.contentApi.previewAuth
-import metrics.{CountMetric, FrontendTimingMetric}
+import metrics.{CountMetric, TimingMetric}
 import play.api.libs.ws.{WS, WSAuthScheme}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Success, Failure, Try}
 
-case class Response(body: String, status: Int, statusText: String)
+case class Response(body: Array[Byte], status: Int, statusText: String)
 
 trait Http {
   def GET(url: String, headers: Iterable[(String, String)]): Future[Response]
 }
 
-class WsHttp(val httpTimingMetric: FrontendTimingMetric, val httpTimeoutMetric: CountMetric)
+class WsHttp(val httpTimingMetric: TimingMetric, val httpTimeoutMetric: CountMetric)
   extends Http with ExecutionContexts with Logging {
 
   import java.lang.System.currentTimeMillis
@@ -63,21 +63,8 @@ class WsHttp(val httpTimingMetric: FrontendTimingMetric, val httpTimeoutMetric: 
     }
 
     response map { wsResponse =>
-      Response(wsResponse.body, wsResponse.status, wsResponse.statusText)
+      Response(wsResponse.bodyAsBytes, wsResponse.status, wsResponse.statusText)
     }
-  }
-}
-
-// allows us to inject a test Http
-trait DelegateHttp { self: ContentApiClientLogic =>
-  val httpTimingMetric: FrontendTimingMetric
-  val httpTimeoutMetric: CountMetric
-
-  var _http: Http = new WsHttp(httpTimingMetric, httpTimeoutMetric)
-
-  override def get(url: String, headers: Map[String, String])(implicit executionContext: ExecutionContext) =
-    _http.GET(url, headers) map { response: Response =>
-      self.HttpResponse(response.body, response.status, response.statusText)
   }
 }
 

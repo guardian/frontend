@@ -1,23 +1,19 @@
 package rugby.controllers
 
-import common._
-
-import common.{ExecutionContexts, JsonComponent}
-import conf.switches.Switches.{RugbyWorldCupMatchStatsSwitch, RugbyWorldCupTablesSwitch}
-import model.{Cached, MetaData}
+import common.{ExecutionContexts, JsonComponent, _}
+import model.{MetaData, StandalonePage, Cached}
 import play.api.mvc.{Action, Controller}
 import play.twirl.api.Html
+import rugby.feed.CapiFeed
 import rugby.jobs.RugbyStatsJob
-import rugby.model.{ScoreType, Match}
-import rugby.feed.{CapiFeed, OptaFeed}
 import rugby.model.Match
 
-
-case class MatchPage(liveScore: Match) extends MetaData {
-  override lazy val id = s"/sport/rugby/api/score/${liveScore.date.toString("yyyy/MMM/dd")}/${liveScore.homeTeam.id}/${liveScore.awayTeam.id}"
-  override lazy val section = "rugby"
-  override lazy val webTitle = s"${liveScore.homeTeam.name} v ${liveScore.awayTeam.name} "
-  override lazy val analyticsName = s"GFE:Rugby:automatic:match:${liveScore.date.toString("dd MMM YYYY")}:${liveScore.homeTeam.name} v ${liveScore.awayTeam.name}"
+case class MatchPage(liveScore: Match) extends StandalonePage {
+  override val metadata = MetaData.make(
+    id = s"/sport/rugby/api/score/${liveScore.date.toString("yyyy/MMM/dd")}/${liveScore.homeTeam.id}/${liveScore.awayTeam.id}",
+    section = "rugby",
+    webTitle = s"${liveScore.homeTeam.name} v ${liveScore.awayTeam.name} ",
+    analyticsName = s"GFE:Rugby:automatic:match:${liveScore.date.toString("dd MMM YYYY")}:${liveScore.homeTeam.name} v ${liveScore.awayTeam.name}")
 }
 
 object MatchesController extends Controller with Logging with ExecutionContexts {
@@ -26,10 +22,8 @@ object MatchesController extends Controller with Logging with ExecutionContexts 
 
   def score(year: String, month: String, day: String, team1: String, team2: String) = Action { implicit request =>
 
-    val matchFixture = RugbyStatsJob.getFixturesAndResultScore(year, month, day, team1, team2)
-    val matchOpt =  RugbyStatsJob.getLiveScore(year, month, day, team1, team2)
-      .map ( m => m.copy( venue = matchFixture.flatMap(_.venue)))
-      .orElse(matchFixture)
+    val matchOpt = RugbyStatsJob.getFixturesAndResultScore(year, month, day, team1, team2)
+
     val currentPage = request.getParameter("page")
 
     matchOpt.map { aMatch =>
@@ -38,8 +32,8 @@ object MatchesController extends Controller with Logging with ExecutionContexts 
       val scoreEvents = RugbyStatsJob.getScoreEvents(aMatch)
       val (homeTeamScorers, awayTeamScorers) =  scoreEvents.partition(_.player.team.id == aMatch.homeTeam.id)
 
-      val matchStat = if (RugbyWorldCupMatchStatsSwitch.isSwitchedOn) RugbyStatsJob.getMatchStat(aMatch) else None
-      val table = if (RugbyWorldCupTablesSwitch.isSwitchedOn) RugbyStatsJob.getGroupTable(aMatch) else None
+      val matchStat = RugbyStatsJob.getMatchStat(aMatch)
+      val table = RugbyStatsJob.getGroupTable(aMatch)
 
       val page = MatchPage(aMatch)
       Cached(60){

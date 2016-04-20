@@ -4,18 +4,20 @@ define([
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/detect',
-    'common/modules/article/spacefinder'
+    'common/modules/article/space-filler'
 ], function (
     fastdom,
     $,
     ajax,
     config,
     detect,
-    spacefinder
+    spaceFiller
 ) {
 
     function getSpacefinderRules() {
         return {
+            bodySelector: '.js-article__body',
+            slotSelector: ' > p',
             minAbove: 200,
             minBelow: 250,
             clearContentMeta: 50,
@@ -31,23 +33,21 @@ define([
     return {
         init: function () {
             if (config.page.openModule) {
-                spacefinder.getParaWithSpace(getSpacefinderRules()).then(function (space) {
-                    if (space) {
-                        ajax({
-                            url: config.page.openModule,
-                            crossOrigin: true,
-                            method: 'get'
-                        }).then(function (resp) {
-                            if (resp.html) {
-                                fastdom.write(function () {
-                                    $.create(resp.html)
-                                        .addClass('element--supporting')
-                                        .insertBefore(space);
-                                    $('.submeta-container--break').removeClass('submeta-container--break');
-                                });
-                            }
-                        });
-                    }
+                spaceFiller.fillSpace(getSpacefinderRules(), function (spaces) {
+                    ajax({
+                        url: config.page.openModule,
+                        crossOrigin: true,
+                        method: 'get'
+                    }).then(function (resp) {
+                        if (resp.html) {
+                            fastdom.write(function () {
+                                $.create(resp.html)
+                                    .addClass('element--supporting')
+                                    .insertBefore(spaces[0]);
+                                $('.submeta-container--break').removeClass('submeta-container--break');
+                            });
+                        }
+                    });
                 });
             }
         }

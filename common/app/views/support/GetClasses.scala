@@ -1,9 +1,9 @@
 package views.support
 
-import com.gu.facia.api.utils.{Audio, Video, Gallery}
-import layout._
 import conf.switches.Switches.SaveForLaterSwitch
-import slices.{DynamicSlowMPU, Dynamic}
+import layout._
+import model.pressed.{Audio, Gallery, Video}
+import slices.{Dynamic, DynamicSlowMPU}
 
 object GetClasses {
   def forHtmlBlob(item: HtmlBlob) = {
@@ -58,7 +58,8 @@ object GetClasses {
       containerDefinition.showLatestUpdate,
       containerDefinition.index == 0 && containerDefinition.customHeader.isEmpty,
       containerDefinition.displayName.isDefined,
-      containerDefinition.displayName == Some("headlines"),
+      containerDefinition.displayName.contains("headlines"),
+      containerDefinition.container.toString == "Video",
       containerDefinition.commercialOptions,
       containerDefinition.hasDesktopShowMore,
       Some(containerDefinition.container),
@@ -66,7 +67,7 @@ object GetClasses {
         slices.Container.customClasses(containerDefinition.container),
       disableHide = containerDefinition.hideToggle,
       lazyLoad = containerDefinition.shouldLazyLoad,
-      dynamicSlowMpu = containerDefinition.container == Dynamic(DynamicSlowMPU)
+      dynamicSlowMpu = containerDefinition.container == Dynamic(DynamicSlowMPU(omitMPU = false))
     )
 
   /** TODO get rid of this when we consolidate 'all' logic with index logic */
@@ -75,6 +76,7 @@ object GetClasses {
     isFirst = true,
     hasTitle,
     isHeadlines = false,
+    isVideo = false,
     ContainerCommercialOptions.empty,
     hasDesktopShowMore = false,
     container = None,
@@ -89,6 +91,7 @@ object GetClasses {
     isFirst: Boolean,
     hasTitle: Boolean,
     isHeadlines: Boolean,
+    isVideo: Boolean,
     commercialOptions: ContainerCommercialOptions,
     hasDesktopShowMore: Boolean,
     container: Option[slices.Container] = None,
@@ -102,8 +105,8 @@ object GetClasses {
       ("fc-container--first", isFirst),
       ("fc-container--has-show-more", hasDesktopShowMore),
       ("js-container--first", isFirst),
+      ("fc-container--video", isVideo),
       ("fc-container--sponsored", commercialOptions.isSponsored),
-      ("fc-container--advertisement-feature", commercialOptions.isAdvertisementFeature),
       ("fc-container--foundation-supported", commercialOptions.isFoundationSupported),
       ("fc-container--lazy-load", lazyLoad),
       ("js-container--lazy-load", lazyLoad),

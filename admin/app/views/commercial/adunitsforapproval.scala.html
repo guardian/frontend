@@ -1,4 +1,4 @@
-@(env: String, dfpAccount: String, adunits: Seq[dfp.GuAdUnit], totalToApprove: Int)(implicit flash: Flash)
+@(env: String, dfpAccount: String, adunits: Seq[dfp.GuAdUnit], totalToApprove: Int)(implicit flash: Flash, request: RequestHeader)
 @import tools.DfpLink
 @import tools.SiteLink
 

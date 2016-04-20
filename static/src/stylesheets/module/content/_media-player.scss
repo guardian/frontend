@@ -35,6 +35,8 @@ $ima-controls-height: 70px;
 
 .element-video {
     position: relative;
+    // Force this container to wrap around the floated rich link
+    overflow: hidden;
 }
 
 .gu-video-embed-html {
@@ -79,53 +81,52 @@ $ima-controls-height: 70px;
     height: 100%;
     box-sizing: border-box;
     text-align: center;
+    border: 0;
+    padding: 0;
+    background-color: transparent;
 
     .vjs-has-started & {
         padding-bottom: $vjs-control-height;
     }
 
-    &:after {
-        display: inline-block;
-        vertical-align: middle;
-        height: 100%;
-        content: '';
-    }
+    .vjs-control-text {
+        // Magic numbers are used here to draw the play arrow and circle as pseudo elements.
 
-    > span {
-        display: inline-block;
-        vertical-align: middle;
-        position: relative;
-        @include circular;
         @include video-play-button-size($vjs-small-button-size);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: $vjs-small-button-size/-2;
+        margin-left: $vjs-small-button-size/-2;
+
         @include mq(mobileLandscape) {
             @include video-play-button-size($vjs-large-button-size);
         }
 
-        background-color: rgba(51, 51, 51, .8);
-
-        .gu-media-wrapper:hover &,
-        .gu-media__fallback:hover & {
-            background-color: colour(media-default);
+        &:before {
+            @include circular;
+            @include video-play-button-size($vjs-small-button-size);
+            content: '';
+            display: block;
+            @include mq(mobileLandscape) {
+                @include video-play-button-size($vjs-large-button-size);
+            }
+            background-color: rgba(51, 51, 51, .6);
+            .gu-media-wrapper:hover &,
+            .gu-media__fallback:hover & {
+                background-color: $media-default;
+            }
         }
 
-        /**
-         * As arrow is made by using borders we need to use magic numbers
-         * to be able to position it to the center of the button circle.
-         */
-        &:before {
+        &:after {
             content: '';
             position: absolute;
-            display: block;
-            width: 0;
-            height: 0;
+            left: 1.85em;
+            top: 1.85em;
             border-style: solid;
             border-width: 1em 0 1em 2.4em;
-            border-color: transparent transparent transparent colour(neutral-7);
+            border-color: transparent transparent transparent $neutral-7;
             -moz-transform: scale(.99999); // fix for diagonal border aliasing in firefox
-            top: 50%;
-            left: 50%;
-            margin-top: -.9em; /* [1] */
-            margin-left: -.9em; /* [1] */
 
             @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
                 border-radius: .2em;
@@ -161,10 +162,6 @@ $ima-controls-height: 70px;
     .vjs-using-native-controls & {
         display: none;
     }
-
-    .vjs-ad-playing--vpaid & {
-        display: none;
-    }
 }
 
 .vjs-loading-spinner {
@@ -192,20 +189,26 @@ $ima-controls-height: 70px;
 
 .vjs-control-bar,
 #ima-controls-div {
+    @include fs-textSans(1);
     cursor: default;
     width: 100%;
     z-index: 4;
     left: 0;
     background-color: $vjs-control-colour;
     color: #ffffff;
-    @include fs-textSans(1);
     font-weight: bold;
     height: $vjs-control-height;
     transition: bottom .8s;
     transition-delay: 1s;
+
+    &.vjs-hidden {
+        display: none;
+    }
 }
 
 .vjs-control-bar {
+    position: relative;
+
     .gu-media--video & {
         position: absolute;
         bottom: $gs-baseline*-5;
@@ -231,14 +234,27 @@ $ima-controls-height: 70px;
     }
 }
 
-.vjs-control-text,
-.vjs-live-controls,
+.vjs-custom-control-spacer,
+.vjs-live-control,
 .vjs-remaining-time,
 .vjs-playback-rate,
 .vjs-subtitles-button,
 .vjs-captions-button,
-.vjs-chapters-button {
+.vjs-chapters-button,
+.vjs-caption-settings {
     display: none;
+}
+
+.vjs-control-text {
+    overflow: hidden !important; // some control texts have pseudo elements for icons, so they cannot use u-h.
+    display: inline-block;
+
+    .vjs-load-progress &,
+    .vjs-play-progress &,
+    .vjs-play-control &,
+    .vjs-time-control & {   // these control texts are free to use u-h.
+        @include u-h;
+    }
 }
 
 .vjs-poster {
@@ -260,6 +276,9 @@ $ima-controls-height: 70px;
     float: left;
     cursor: pointer;
     margin: 7px;
+    border: 0;
+    padding: 0;
+    background-color: transparent;
 }
 
 .vjs-play-control {
@@ -292,29 +311,29 @@ $ima-controls-height: 70px;
 }
 
 .vjs-duration {
-    color: colour(neutral-3);
+    color: $neutral-3;
 }
 
 .vjs-fullscreen-control {
     cursor: pointer;
     float: right;
-    box-sizing: border-box;
-    height: $vjs-control-height;
-    width: $vjs-control-height;
-    position: relative;
+    border: 0;
+    padding: 0;
+    background-color: transparent;
+    margin: $gs-baseline;
+
+    .vjs-control-text {
+        width: $gs-gutter;
+        height: 20px;
+    }
 }
 
 .vjs-fullscreen-control {
-    .vjs-control-content {
-        width: 20px !important;
-        height: 20px !important;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        margin: auto;
+    .vjs-control-text:before {
         @include icon(expand-white);
+        content: '';
+        width: $gs-gutter;
+        height: 20px !important;
 
         &:hover {
             @include icon(expand-yellow);
@@ -366,7 +385,7 @@ $ima-controls-height: 70px;
 }
 
 .vjs-play-progress {
-    background-color: colour(media-default);
+    background-color: $media-default;
     z-index: 2;
 }
 
@@ -374,76 +393,81 @@ $ima-controls-height: 70px;
 /* VJS: VOLUME BAR
    ========================================================================== */
 
-.vjs-volume-control {
+.vjs-volume-menu-button {
     float: right;
-    width: $gs-gutter*5;
-    margin-top: $gs-baseline * 1.5;
-    margin-right: 8px;
+    margin: 16px 8px 0;
     position: relative;
     height: 100%;
 }
 
+.vjs-volume-menu-button > .vjs-menu {
+    float: left;
+    cursor: pointer;
+}
+
 .vjs-volume-bar {
     height: $gs-baseline;
-    width: 100%;
+    width: $gs-gutter*5;
+    position: relative;
     cursor: pointer;
 
     &:before {
         content: '';
-        display: block;
-        width: 100%;
-        background-color: colour(neutral-7);
+        left: 0;
+        right: 0;
+        background-color: $neutral-7;
     }
 }
 
 .vjs-volume-bar:before,
 .vjs-volume-level {
     height: $gs-baseline/6;
-    top: $gs-baseline/3;
+    top: $gs-baseline/2;
     position: absolute;
 }
 
 .vjs-volume-level {
-    background-color: colour(media-default);
-}
+    background-color: $media-default;
 
-.vjs-volume-handle {
-    position: absolute;
-    background-color: colour(media-default);
-    height: 11px;
-    width: 2px;
-}
-
-.vjs-mute-control,
-#ima-mute-div {
-    cursor: pointer;
-    float: right;
-    box-sizing: border-box;
-    width: $gs-gutter;
-    margin-right: $gs-gutter/4;
-    margin-top: $gs-baseline * (4/3);
-    text-align: left;
-}
-
-.vjs-mute-control {
-    > div {
-        @include icon(volume-low-white);
+    &:before {
+        position: absolute;
+        background-color: $media-default;
+        height: 11px;
+        width: 2px;
+        top: -$gs-baseline/3;
+        right: 0;
+        content: '';
     }
-    &:hover > div {
-        @include icon(volume-low--tone-media);
+}
+
+.vjs-volume-menu-button {
+
+    > .vjs-control-text {
+        float: left;
+        margin-right: $gs-gutter/3;
+        width: $gs-gutter;
+        height: $gs-baseline*1.5;
+
+        &:before {
+            @include icon(volume-low-white);
+            content: '';
+            min-width: $gs-gutter;
+        }
+        &:before:hover {
+            @include icon(volume-low--tone-media);
+        }
     }
 
-    &.vjs-vol-0 > div {
+    &.vjs-vol-0 > .vjs-control-text:before {
         @include icon(volume-mute-white);
     }
-    &.vjs-vol-0:hover > div {
+    &.vjs-vol-0 > .vjs-control-text:before:hover {
         @include icon(volume-mute--tone-media);
     }
-
-    &.vjs-vol-3 > div {
+    &.vjs-vol-3 > .vjs-control-text:before {
         @include icon(volume-high-white);
     }
-    &.vjs-vol-3:hover > div {
+    &.vjs-vol-3 > .vjs-control-text:before:hover {
         @include icon(volume-high--tone-media);
     }
 }
@@ -464,7 +488,6 @@ $ima-controls-height: 70px;
     }
 }
 
-
 /* VJS: OVERLAYS
    ========================================================================== */
 
@@ -483,13 +506,13 @@ $ima-controls-height: 70px;
         background-color: #000000;
     }
     > div {
+        @include fs-headline(2);
         position: absolute;
         display: table-cell;
         width: 100%;
         margin: auto;
         padding: $gs-baseline*1.5 $gs-gutter*3;
         box-sizing: border-box;
-        @include fs-headline(2);
         line-height: 1em;
         text-align: left;
         color: #ffffff;
@@ -502,7 +525,7 @@ $ima-controls-height: 70px;
             position: absolute;
             top: 50%;
             left: $gs-gutter/2;
-            margin-top: -18px // half icon height for centering;
+            margin-top: -18px; // half icon height for centering;
         }
     }
 
@@ -514,6 +537,7 @@ $ima-controls-height: 70px;
 
 .vjs-error-display__close {
     @include icon(close-icon-white-small);
+    @include circular;
     content: ' ';
     display: block;
     position: absolute;
@@ -523,7 +547,6 @@ $ima-controls-height: 70px;
     text-indent: -9999px;
     background: transparent;
     border: 1px solid rgba(#ffffff, .3);
-    @include circular;
 
     &:hover {
         border-color: #ffffff;
@@ -539,9 +562,9 @@ $ima-controls-height: 70px;
 
 .vjs-overlay--big-title {
     .vjs-overlay__title {
+        @include fs-headline(4);
         text-align: left;
         padding: $gs-gutter/2;
-        @include fs-headline(4);
         @include mq(tablet) {
             @include fs-headline(5);
         }
@@ -549,24 +572,24 @@ $ima-controls-height: 70px;
             @include fs-headline(6);
         }
         &:before {
+            @include icon(video-camera--tone-media);
             content: '';
             margin-right: $gs-gutter/2;
-            @include icon(video-camera--tone-media);
         }
     }
 
     .vjs-overlay__duration {
-        text-align: left;
-        color: colour(media-default);
         @include fs-headline(3);
+        text-align: left;
+        color: $media-default;
         padding: 0 $gs-gutter/2 $gs-baseline*2;
     }
 }
 
 .vjs-overlay--small-title {
-    text-align: left;
     @include ellipsis();
     @include fs-headline(2);
+    text-align: left;
     position: absolute;
     $height: get-line-height(headline, 2);
     height: $height;
@@ -596,10 +619,6 @@ $ima-controls-height: 70px;
     .vjs-playing & {
         display: block;
     }
-
-    .vjs-playing.vjs-ad-playing--vpaid & {
-        display: none;
-    }
 }
 
 .vast-skip-button {
@@ -620,21 +639,21 @@ $ima-controls-height: 70px;
 }
 
 .vjs-embedoverlay-text {
-    display: block;
     @include fs-headline(2);
+    display: block;
     color: #ffffff;
     text-align: center;
     margin-bottom: $gs-baseline * 2;
 }
 
 .vjs-embedoverlay-input {
+    @include fs-textSans(2);
     box-sizing: border-box;
     width: 100%;
     height: gs-height(1) + $gs-baseline;
-    color: colour(neutral-1);
-    @include fs-textSans(2);
+    color: $neutral-1;
     padding: $gs-baseline/3 $gs-gutter/2 0;
-    border: 1px solid colour(neutral-3);
+    border: 1px solid $neutral-3;
     outline: none;
 
     &::selection {
@@ -643,16 +662,19 @@ $ima-controls-height: 70px;
 }
 
 .vjs-embed-button {
+    @include mq($until: desktop) {
+        display: none;
+    }
     cursor: pointer;
     float: right;
     box-sizing: border-box;
     height: $vjs-control-height;
     padding-right: $gs-gutter/2;
-    margin-right: $gs-gutter/2;
     position: relative;
 
     .vjs-control-content {
         &:before {
+            @include icon(embed--white);
             content: ' ';
             display: block;
             width: $gs-gutter !important;
@@ -663,7 +685,6 @@ $ima-controls-height: 70px;
             right: 0;
             bottom: 0;
             margin: auto;
-            @include icon(embed--white);
         }
     }
 
@@ -682,19 +703,19 @@ $ima-controls-height: 70px;
         }
 
         .vjs-control-text {
-            color: colour(media-default);
+            color: $media-default;
         }
     }
 }
 
 .vjs-title-bar {
+    @include fs-textSans(3);
     position: fixed;
     width: 100%;
     height: $gs-baseline*4;
     box-sizing: border-box;
     background-color: rgba(25, 25, 25, .8);
     padding: $gs-baseline/2 $gs-gutter/2;
-    @include fs-textSans(3);
     font-weight: bold;
     transition: top .8s;
     transition-delay: 1s;
@@ -717,14 +738,14 @@ $ima-controls-height: 70px;
     }
 
     .vjs-title {
+        @include ellipsis();
         margin-top: $gs-baseline*2/3;
         font-size: 14px;
         color: #ffffff;
         display: inline-block;
         max-width: 90%;
-        @include ellipsis();
         &:hover {
-            color: colour(media-default);
+            color: $media-default;
         }
     }
 
@@ -736,7 +757,7 @@ $ima-controls-height: 70px;
         fill: #ffffff;
 
         &:hover {
-            fill: colour(media-default);
+            fill: $media-default;
         }
     }
 }
@@ -744,16 +765,16 @@ $ima-controls-height: 70px;
 /* VJS: SKIP AD OVERLAY
    ========================================================================== */
 .vjs-ads-skip {
+    @include fs-textSans(1);
     position: absolute;
     z-index: 4;
     bottom: $ima-controls-height;
     right: 8px;
     // width so text goes over two lines
     width: 140px;
-    background-color: rgba(colour(neutral-1), .8);
+    background-color: rgba($neutral-1, .8);
     color: #ffffff;
     text-align: left;
-    @include fs-textSans(1);
 
     @include mq(tablet) {
         @include fs-textSans(2, true);
@@ -778,7 +799,7 @@ $ima-controls-height: 70px;
         display: none;
     }
     &:hover {
-        color: colour(comment-main-2);
+        color: $comment-main-2;
 
         .i-play-icon-grey {
             display: none;
@@ -804,7 +825,7 @@ $ima-controls-height: 70px;
     margin: auto;
     box-sizing: border-box;
     background-color: rgba(25, 25, 25, .8);
-    color: colour(neutral-7);
+    color: $neutral-7;
     top: $gs-baseline*4;
     padding-top: $gs-gutter/4;
     max-width: gs-span(7);
@@ -815,7 +836,6 @@ $ima-controls-height: 70px;
     }
 
     .vjs-fullscreen & {
-        height: 100%;
         margin: auto;
         bottom: 0;
         top: -1 * (gs-height(1) + $gs-baseline);
@@ -846,13 +866,13 @@ $ima-controls-height: 70px;
             list-style: none;
 
             &:not(:first-child) {
-                border-left: 1px solid colour(neutral-2);
+                border-left: 1px solid $neutral-2;
             }
 
             .fc-item__action {
                 color: #ffffff;
                 &:hover {
-                    color: colour(media-default);
+                    color: $media-default;
                 }
             }
 
@@ -871,7 +891,7 @@ $ima-controls-height: 70px;
 
         @include mq($until: tablet) {
             top: $gs-baseline*4;
-            border-top: 1px solid colour(neutral-2);
+            border-top: 1px solid $neutral-2;
         }
 
         @include mq(tablet, desktop) {
@@ -895,8 +915,8 @@ $ima-controls-height: 70px;
     }
 }
 .end-slate-container__heading {
-    padding-top: $gs-baseline/3;
     @include fs-header(1);
+    padding-top: $gs-baseline/3;
     font-weight: bold;
     text-align: left;
 
@@ -913,7 +933,7 @@ $ima-controls-height: 70px;
             margin-bottom: 0;
 
             &:nth-child(-n+3) {
-                border-right: 1px solid colour(neutral-2);
+                border-right: 1px solid $neutral-2;
             }
         }
         .item__headline {
@@ -930,7 +950,7 @@ $ima-controls-height: 70px;
 
 .podcast-meta {
     text-align: left;
-    border-top: 1px solid lighten(colour(neutral-1), 16%);
+    border-top: 1px solid lighten($neutral-1, 16%);
     margin-top: $gs-baseline/2;
     padding: $gs-baseline/2 $gs-gutter/2;
 }
@@ -945,14 +965,13 @@ $ima-controls-height: 70px;
     }
 }
 .podcast-meta__item__link {
-    color: colour(neutral-7);
     @include fs-textSans(1);
+    color: $neutral-7;
 }
 
 /* Tech overrides
    ========================================================================== */
-.vjs-tech-flash,
-.vjs-tech-vpaid {
+.vjs-tech-flash {
     .vjs-poster,
     .vjs-big-play-button,
     .vjs-fullscreen-clickbox,
@@ -969,13 +988,6 @@ $ima-controls-height: 70px;
     top: 0;
     left: 0;
     z-index: 3;
-}
-.ima-ad-container--fullscreen {
-    &,
-    > div:first-child {
-        width: 100% !important;
-        height: 100% !important;
-    }
 }
 #ima-controls-div {
     display: none;
@@ -997,7 +1009,7 @@ $ima-controls-height: 70px;
 }
 #ima-progress-div {
     height: 100%;
-    background-color: colour(media-default);
+    background-color: $media-default;
 }
 #ima-play-pause-div,
 #ima-mute-div,
@@ -1005,19 +1017,94 @@ $ima-controls-height: 70px;
     display: block !important;
 }
 #ima-mute-div {
-    position: absolute;
-    right: 159px;
+    margin: $gs-baseline*1.5 $gs-gutter*5 0 8px;
+    cursor: pointer;
     width: 17px !important;
+    float: right;
 }
 #ima-fullscreen-div {
+    @include icon(expand-white);
     cursor: pointer;
     float: right;
     margin: 14px;
     width: 20px !important;
     height: 20px !important;
-    @include icon(expand-white);
 
     &:hover {
         @include icon(expand-yellow);
     }
+}
+
+.fc-item--media {
+    position: relative;
+    box-sizing: border-box;
+    margin-bottom: $gs-baseline*2;
+    padding-left: $gs-gutter/2;
+    padding-right: $gs-gutter/2;
+
+    &.fc-item {
+        width: 25%;
+        background-color: transparent;
+        margin-left: 0;
+        margin-right: 0;
+        padding: 0 $gs-gutter/2;
+    }
+
+    + .fc-item {
+        &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 1px;
+            height: 100%;
+            border-left: 1px solid $neutral-2;
+        }
+    }
+
+    .fc-item__container {
+        margin-top: -$gs-baseline;
+    }
+
+    .fc-item__image-container {
+        display: block;
+    }
+
+    .fc-item__action {
+        display: block;
+        padding-top: $gs-baseline;
+        color: $neutral-5;
+
+        &:hover,
+        &:focus {
+            text-decoration: underline;
+        }
+        &:visited,
+        &:active {
+            color: darken($neutral-5, 20%);
+        }
+    }
+
+    .fc-item__title {
+        @include fs-headline(1);
+        @include text-clamp(3, get-line-height(headline, 1));
+        font-weight: 500;
+        text-align: left; //Required for end slate items
+        height: get-line-height(headline, 1) * 3;
+        .inline-video-icon {
+            fill: $media-default;
+            svg {
+                height: .75em;
+                width: 1.1em;
+                margin-right: .3em;
+                position: relative;
+            }
+        }
+    }
+}
+
+.vjs-modal-dialog-description {
+    display: none;
 }

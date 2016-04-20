@@ -1,13 +1,11 @@
-@(trail: com.gu.facia.api.models.FaciaContent, rowNum: Int)(implicit request: RequestHeader)
+@(trail: model.pressed.PressedContent, rowNum: Int)(implicit request: RequestHeader)
 
-@import implicits.FaciaContentImplicits._
-@import implicits.FaciaContentFrontendHelpers._
 @import common.LinkTo
 @import views.support.RemoveOuterParaHtml
 
 <span class="headline-list__count">@rowNum</span>
 <div class="headline-list__body">
-    <a href="@LinkTo{@trail.url}" data-link-name="Top stories:link text:item @rowNum">
-        @trail.linkText.map(RemoveOuterParaHtml.apply))
+    <a href="@LinkTo{@trail.header.url}" data-link-name="Top stories:link text:item @rowNum">
+        @trail.properties.linkText.map(RemoveOuterParaHtml.apply))
     </a>
 </div>

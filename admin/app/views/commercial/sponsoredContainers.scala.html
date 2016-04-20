@@ -1,12 +1,11 @@
-@(env: String, page: model.MetaData, trails: Seq[model.Content])(implicit request: RequestHeader)
+@import com.gu.facia.client.models.Backfill
+@(env: String, page: controllers.admin.CommercialPage, trails: Seq[model.pressed.PressedContent])(implicit request: RequestHeader)
 
-@import layout.CollectionEssentials
-@import com.gu.facia.api.models.CollectionConfig
-@import layout.FaciaContainer
+@import layout.{CollectionEssentials, FaciaContainer}
+@import model.pressed.CollectionConfig
 @import services.CollectionConfigWithId
 @import slices.Fixed
 @import slices.FixedContainers.fixedMediumSlowVI
-@import services.FaciaContentConvert
 
 @main(page, projectName = Option("facia")) { } {
 
@@ -17,7 +16,7 @@
                 0,
                 Fixed(fixedMediumSlowVI),
                 CollectionConfigWithId("front", CollectionConfig.empty.copy(displayName = Some("Front"))),
-                CollectionEssentials.fromFaciaContent(trails.map(FaciaContentConvert.frontendContentToFaciaContent))
+                CollectionEssentials.fromFaciaContent(trails))
             ))(request)
 
             @Seq(
@@ -42,9 +41,9 @@
                     Fixed(fixedMediumSlowVI),
                     CollectionConfigWithId("type", CollectionConfig.empty.copy(
                         displayName = Some(c("title")),
-                        apiQuery = Some(c("keyword"))
+                        backfill = Some(Backfill(`type` = "capi", query = c("keyword")))
                     )),
-                    CollectionEssentials.fromFaciaContent(trails.map(FaciaContentConvert.frontendContentToFaciaContent))
+                    CollectionEssentials.fromFaciaContent(trails))
                 ))(request)
             }
         </div>

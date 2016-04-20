@@ -14,7 +14,7 @@ define([
     Audience
 ) {
     function renderTests(tests, active, elem) {
-        var items = tests.map(function(test) { return new ReportItem({test: test, active: active}); });
+        var items = tests.map(function (test) { return new ReportItem({test: test, active: active}); });
         items.forEach(function (i) { i.render(elem); });
         return items;
     }
@@ -35,7 +35,7 @@ define([
             if (e.currentTarget.textContent === 'show') {
                 e.currentTarget.textContent = 'hide';
                 $expired.style.display = 'block';
-                expiredTestItems.forEach(function(t) {t.renderChart(); });
+                expiredTestItems.forEach(function (t) {t.renderChart(); });
             } else {
                 e.currentTarget.textContent = 'show';
                 $expired.style.display = 'none';
@@ -43,7 +43,7 @@ define([
         });
 
         // timeout on this to allow google charts to render before hiding the container
-        setTimeout(function() { $expired.style.display = 'none'; }, 0);
+        setTimeout(function () { $expired.style.display = 'none'; }, 0);
     }
 
     return {

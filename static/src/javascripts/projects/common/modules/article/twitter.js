@@ -5,30 +5,30 @@ define([
     'bonzo',
     'qwery',
     'fastdom',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'lodash/functions/debounce'
 ], function (
     bean,
     bonzo,
     qwery,
     fastdom,
-    _,
     $,
     config,
     detect,
-    mediator
+    mediator,
+    debounce
 ) {
-    var body = qwery('.js-liveblog-body, .js-article__body');
+    var body = qwery('.js-liveblog-body, .js-article__body, .js-article__body--minute-article');
 
     function bootstrap() {
-        mediator.on('window:throttledScroll', _.debounce(enhanceTweets, 200));
+        mediator.on('window:throttledScroll', debounce(enhanceTweets, 200));
     }
 
     function enhanceTweets() {
-        if (detect.getBreakpoint() === 'mobile' || !config.switches.enhanceTweets) {
+        if ((detect.getBreakpoint() === 'mobile' && !config.page.isMinuteArticle) || !config.switches.enhanceTweets) {
             return;
         }
 

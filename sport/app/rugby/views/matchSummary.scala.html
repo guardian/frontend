@@ -1,7 +1,5 @@
-@import model.MetaData
-
 @import rugby.model.ScoreEvent
-@(page: MetaData, theMatch: rugby.model.Match, homeTeamScorers: Seq[ScoreEvent], awayTeamScorers: Seq[ScoreEvent])(implicit request: RequestHeader)
+@(page: model.Page, theMatch: rugby.model.Match, homeTeamScorers: Seq[ScoreEvent], awayTeamScorers: Seq[ScoreEvent])(implicit request: RequestHeader)
 
 @main(page, "football") { } {
     <div class="l-side-margins">

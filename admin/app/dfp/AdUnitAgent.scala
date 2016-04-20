@@ -1,7 +1,7 @@
 package dfp
 
-import com.google.api.ads.dfp.axis.utils.v201411.StatementBuilder
-import com.google.api.ads.dfp.axis.v201411.InventoryStatus
+import com.google.api.ads.dfp.axis.utils.v201508.StatementBuilder
+import com.google.api.ads.dfp.axis.v201508.InventoryStatus
 import common.dfp.GuAdUnit
 import conf.Configuration
 
@@ -10,13 +10,13 @@ import scala.util.Try
 object AdUnitAgent extends DataAgent[String, GuAdUnit] {
 
   override def loadFreshData() = Try {
-    DfpServiceRegistry().fold(Map[String, GuAdUnit]()) { serviceRegistry =>
+    val maybeData = for (session <- SessionWrapper()) yield {
 
       val statementBuilder = new StatementBuilder()
-        .where("status = :status")
-        .withBindVariableValue("status", InventoryStatus._ACTIVE)
+                             .where("status = :status")
+                             .withBindVariableValue("status", InventoryStatus._ACTIVE)
 
-      val dfpAdUnits = DfpApiWrapper.fetchAdUnits(serviceRegistry, statementBuilder)
+      val dfpAdUnits = session.adUnits(statementBuilder)
 
       val rootName = Configuration.commercial.dfpAdUnitRoot
       val rootAndDescendantAdUnits = dfpAdUnits filter { adUnit =>
@@ -33,6 +33,7 @@ object AdUnitAgent extends DataAgent[String, GuAdUnit] {
         id -> GuAdUnit(id, path)
       }.toMap
     }
-  }
 
+    maybeData getOrElse Map.empty
+  }
 }

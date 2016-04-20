@@ -50,7 +50,8 @@
                     }
                 }
 
-                &:nth-last-child(-n+#{$column}) {
+                &:nth-last-child(#{$column}):nth-child(#{$column}n+1),
+                &:nth-last-child(#{$column}):nth-child(#{$column}n+1) ~ .l-list__item {
                     padding-bottom: 0;
                 }
 

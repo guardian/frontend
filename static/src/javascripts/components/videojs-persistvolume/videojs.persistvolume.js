@@ -1,5 +1,19 @@
-(function(window, document, vjs) {
-"use strict";
+
+ (function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module unless amdModuleId is set
+    define('videojs-persistvolume', ["videojs"], function (a0) {
+      return (factory(window, document, a0));
+    });
+  } else if (typeof exports === 'object') {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+    module.exports = factory(window, document, require("video.js"));
+  } else {
+    root['videojs-persistvolume'] = factory(window, document, videojs);
+  }
+}(this, function(window, document, vjs) {
   //cookie functions from https://developer.mozilla.org/en-US/docs/DOM/document.cookie
   var
   getCookieItem = function(sKey) {
@@ -84,7 +98,7 @@
 
     var key = settings.namespace + '-' + 'volume';
     var muteKey = settings.namespace + '-' + 'mute';
-    
+
     player.on("volumechange", function() {
       setStorageItem(key, player.volume());
       setStorageItem(muteKey, player.muted());
@@ -94,7 +108,7 @@
     if(persistedVolume !== null){
       player.volume(persistedVolume);
     }
-    
+
     var persistedMute = getStorageItem(muteKey);
     if(persistedMute !== null){
       player.muted('true' === persistedMute);
@@ -103,4 +117,4 @@
 
   vjs.plugin("persistvolume", volumePersister);
 
-})(window, document, videojs);
+}));

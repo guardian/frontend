@@ -1,0 +1,355 @@
+@import "compass";
+
+$line-height: 14px;
+$margin-unit: 14px;
+
+$faint-text-color: #aaa;
+$light-text-color: #666;
+$text-color: #333;
+
+$page-background-color: #eee;
+
+$passing-color: #007069;
+$failing-color: #ca3a11;
+$pending-color: #ba9d37;
+$empty-color: #eff543;
+$neutral-color: #bababa;
+
+$font-size: 11px;
+$large-font-size: 14px;
+
+body {
+  overflow-y: scroll;
+}
+
+.jasmine_html-reporter {
+  background-color: $page-background-color;
+  padding: 5px;
+  margin: -8px;
+
+  font-size: $font-size;
+  font-family: Monaco, "Lucida Console", monospace;
+  line-height: $line-height;
+  color: $text-color;
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  p, h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    line-height: $line-height;
+  }
+
+  .banner,
+  .symbol-summary,
+  .summary,
+  .result-message,
+  .spec .description,
+  .spec-detail .description,
+  .alert .bar,
+  .stack-trace {
+    padding-left: $margin-unit - 5px;
+    padding-right: $margin-unit - 5px;
+  }
+
+  .banner {
+    position: relative;
+  }
+
+  .banner .title {
+    background: inline-image('jasmine-horizontal.png') no-repeat;
+    background: inline-image('jasmine-horizontal.svg') no-repeat, none;
+    @include background-size(100%);
+    display: block;
+    float: left;
+    width: 90px;
+    height: 25px;
+  }
+
+  .banner .version {
+    margin-left: $margin-unit;
+    position: relative;
+    top: 6px;
+  }
+
+  .banner .duration {
+    position: absolute;
+    right: 14px;
+    top: 6px;
+   }
+
+  // This div is available for testing elements that must be added to the DOM.
+  // We position it out of view, so it doesn't obstruct the runner.
+  #jasmine_content {
+    position: fixed;
+    right: 100%;
+  }
+
+  .version {
+    color: $faint-text-color;
+  }
+
+  //--- Banner ---//
+
+  .banner {
+    margin-top: $line-height;
+  }
+
+  .duration {
+    color: $faint-text-color;
+    float: right;
+  }
+
+  //--- Symbol summary ---//
+
+  .symbol-summary {
+    @include clearfix;
+    margin: $line-height 0;
+
+    li {
+      display: inline-block;
+      height: ($line-height / 2) + 1;
+      width: $line-height;
+
+      font-size: 16px;
+
+      &.passed {
+        font-size: 14px;
+
+        &:before {
+          color: $passing-color;
+          content: "\02022";
+        }
+      }
+
+      &.failed {
+        line-height: ($line-height / 2) + 2;
+
+        &:before {
+          color: $failing-color;
+          content: "\d7";
+          font-weight: bold;
+          margin-left: -1px;
+        }
+      }
+
+        &.disabled {
+          font-size: 14px;
+
+          &:before {
+            color: $neutral-color;
+            content: "\02022";
+          }
+        }
+
+      &.pending {
+        line-height: 17px;
+        &:before {
+          color: $pending-color;
+          content: "*";
+        }
+      }
+
+      &.empty {
+        font-size: 14px;
+
+        &:before {
+          color: $pending-color;
+          content: "\02022";
+        }
+      }
+    }
+  }
+
+  .exceptions {
+    color: #fff;
+    float: right;
+    margin-top: 5px;
+    margin-right: 5px;
+  }
+
+  //--- Alerts: status bars ---//
+
+  .bar {
+    line-height: $line-height * 2;
+    font-size: $large-font-size;
+
+    display: block;
+    color: #eee;
+
+    &.failed {
+      background-color: $failing-color;
+    }
+
+    &.passed {
+      background-color: $passing-color;
+    }
+
+    &.skipped {
+      background-color: $neutral-color;
+    }
+
+    &.menu {
+      background-color: #fff;
+      color: $faint-text-color;
+
+      a {
+        color: $text-color;
+      }
+    }
+
+    a {
+      color: white;
+    }
+  }
+
+  // simplify toggle control between the two menu bars
+  &.spec-list {
+    .bar.menu.failure-list,
+    .results .failures {
+      display: none;
+    }
+  }
+
+  &.failure-list {
+    .bar.menu.spec-list,
+    .summary {
+      display: none;
+    }
+  }
+
+  .running-alert {
+    background-color: $light-text-color;
+  }
+
+  //--- Results ---//
+
+  .results {
+    margin-top: $line-height;
+  }
+
+  //--- Results menu ---//
+
+  &.showDetails {
+
+    .summaryMenuItem {
+      font-weight: normal;
+      text-decoration: inherit;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .detailsMenuItem {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+    .summary {
+      display: none;
+    }
+
+    #details {
+      display: block;
+    }
+  }
+
+  .summaryMenuItem {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+
+  //--- Results summary: Suites and Specs names/links ---//
+
+  .summary {
+    margin-top: $margin-unit;
+
+    ul {
+      list-style-type: none;
+      margin-left: $margin-unit;
+      padding-top: 0;
+      padding-left: 0;
+
+      &.suite {
+        margin-top: $margin-unit/2;
+        margin-bottom: $margin-unit/2
+      }
+    }
+
+    li {
+      &.passed a {
+        color: $passing-color;
+      }
+
+      &.failed a {
+        color: $failing-color;
+      }
+
+      &.empty a {
+        color: $pending-color;
+      }
+
+      &.pending a {
+        color: $pending-color;
+      }
+    }
+  }
+
+  .description+.suite {
+    margin-top: 0;
+  }
+
+  .suite {
+    margin-top: $margin-unit;
+
+    a {
+      color: $text-color;
+    }
+  }
+
+  //--- Failure details ---//
+
+  .failures {
+    .spec-detail {
+      margin-bottom: $line-height * 2;
+
+      .description {
+        background-color: $failing-color;
+
+        a {
+          color: white;
+        }
+      }
+    }
+  }
+
+  .result-message {
+    padding-top: $line-height;
+
+    color: $text-color;
+
+    white-space: pre;
+  }
+
+  .result-message span.result {
+    display: block;
+  }
+
+  .stack-trace {
+    margin: 5px 0 0 0;
+    max-height: $line-height * 16;
+    overflow: auto;
+    line-height: 18px;
+
+    color: $light-text-color;
+    border: 1px solid #ddd;
+    background: white;
+    white-space: pre;
+  }
+}

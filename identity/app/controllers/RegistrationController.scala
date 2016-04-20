@@ -5,18 +5,17 @@ import common.ExecutionContexts
 import com.google.inject.Inject
 import com.gu.identity.model.User
 import utils.{ThirdPartyConditions, SafeLogging}
-import ThirdPartyConditions._
 import idapiclient.{ IdApiClient, EmailPassword }
 import javax.inject.Singleton
 import model.{NoCache, IdentityPage}
 import play.api.i18n.MessagesApi
 import play.api.mvc._
 import play.api.data._
-import play.api.mvc.Result
 import scala.concurrent.Future
 import services._
 import utils.SafeLogging
 import form.Mappings
+import tracking.Omniture
 
 @Singleton
 class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
@@ -65,7 +64,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
     val registrationError = request.getQueryString("error")
     val groupCode = idRequest.groupCode.orElse(group)
 
-    NoCache(Ok(views.html.registration(page.registrationStart(idRequest), idRequest, idUrlBuilder, filledForm, registrationError, groupCode)))
+    NoCache(Ok(views.html.registration(Omniture.registrationStart(page, idRequest), idRequest, idUrlBuilder, filledForm, registrationError, groupCode)))
   }
 
   def renderRegistrationConfirmation(returnUrl: String) = Action{ implicit request =>

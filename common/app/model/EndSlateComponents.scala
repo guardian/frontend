@@ -1,19 +1,19 @@
 package model
 
-import com.gu.facia.api.models.FaciaContent
-import implicits.FaciaContentImplicits._
+import model.pressed._
+import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
 
 object EndSlateComponents {
   def fromContent(content: Content) = EndSlateComponents(
-    content.series collectFirst { case Tag(apiTag, _) => apiTag.id },
-    content.section,
-    content.shortUrl
+    content.tags.series collectFirst { case tag: Tag => tag.metadata.id },
+    content.metadata.section,
+    content.fields.shortUrl
   )
 
-  def fromFaciaContent(faciaContent: FaciaContent) = EndSlateComponents(
-    faciaContent.series map ( Tag.apply(_) ) collectFirst { case Tag(apiTag, _) => apiTag.id },
-    faciaContent.section,
-    faciaContent.shortUrl
+  def fromFaciaContent(faciaContent: PressedContent) = EndSlateComponents(
+    faciaContent.series collectFirst { case tag:Tag => tag.metadata.id },
+    faciaContent.properties.section,
+    faciaContent.card.shortUrl
   )
 }
 

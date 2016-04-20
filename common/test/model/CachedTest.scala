@@ -1,6 +1,7 @@
 package model
 
-import com.gu.contentapi.client.model.{Content => ApiContent}
+import com.gu.contentapi.client.model.v1.{Content => ApiContent, ContentFields}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
 import conf.switches.Switches
 import conf.switches.Switches.DoubleCacheTimesSwitch
 import org.joda.time.DateTime
@@ -49,15 +50,11 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
   it should "cache other things for 1 minute" in {
     Switches.DoubleCacheTimesSwitch.switchOff()
 
-    val page = new MetaData {
-      def id = ""
-
-      def section = ""
-
-      def webTitle = ""
-
-      def analyticsName = ""
-    }
+    val page = SimplePage(MetaData.make(
+      id = "",
+      section = "",
+      webTitle = "",
+      analyticsName = ""))
 
     val result = Cached(page)(Ok("foo"))
     val headers = result.header.headers
@@ -89,15 +86,11 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
   it should "set Surrogate-Control the same as Cache-Control" in {
     Switches.DoubleCacheTimesSwitch.switchOff()
 
-    val page = new MetaData {
-      def id = ""
-
-      def section = ""
-
-      def webTitle = ""
-
-      def analyticsName = ""
-    }
+    val page = SimplePage(MetaData.make(
+      id = "",
+      section = "",
+      webTitle = "",
+      analyticsName = ""))
 
     val result = Cached(page)(Ok("foo"))
     val headers = result.header.headers
@@ -106,19 +99,19 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
     headers("Cache-Control") should equal (headers("Surrogate-Control"))
   }
 
-  private def content(lastModified: DateTime, live: Boolean): Content = {
-    Content(ApiContent(id = "foo/2012/jan/07/bar",
+  private def content(lastModified: DateTime, live: Boolean) = {
+    val content = Content(ApiContent(id = "foo/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
-      webPublicationDateOption = Some(new DateTime),
+      webPublicationDate = Some(new DateTime().toCapiDateTime),
       webTitle = "Some article",
       webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
       elements = None,
-      fields = Some(Map(
-        "lastModified" -> lastModified.toISODateTimeNoMillisString,
-        "liveBloggingNow" -> live.toString)
-      )
+      fields = Some(ContentFields(
+        lastModified = Some(lastModified.toCapiDateTime),
+        liveBloggingNow = Some(live)))
     ))
+    model.SimpleContentPage(content)
   }
 }

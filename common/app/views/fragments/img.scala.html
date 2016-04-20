@@ -5,11 +5,11 @@
 @import views.support.ImgSrc
 
 @(
-    picture: model.ImageContainer,
+    picture: model.ImageMedia,
     lightboxIndex: Option[Int] = None,
     isShowcase: Boolean = false,
     isFeature: Boolean = false,
-    widthsByBreakpoint: layout.WidthsByBreakpoint = MainMedia.Inline,
+    widthsByBreakpoint: layout.WidthsByBreakpoint = MainMedia.inline,
     image_figureClasses: Option[(model.ImageAsset, String)] = None,
     shareInfo: Option[(Seq[model.ShareLink], String)] = None,
     amp: Boolean = false
@@ -38,10 +38,9 @@
         @if(isMain) {
             <meta itemprop="representativeOfPage" content="true">
         }
-
-        @if(amp) {
-            <meta itemprop="url" content="@ImgSrc.getFallbackUrl(picture)">
-        }
+        <meta itemprop="url" content="@ImgSrc.getFallbackUrl(picture)">
+        <meta itemprop="width" content="@ImgSrc.getFallbackAsset(picture).fold(0)(_.width)">
+        <meta itemprop="height" content="@ImgSrc.getFallbackAsset(picture).fold(0)(_.height)">
 
         @lightbox{
             @image(picture, widthsByBreakpoint, imageOption, isMain)
@@ -68,28 +67,30 @@
 }
 
 @lightbox(imageHtml: => Html) =  {
-
-    @lightboxIndex.map { index =>
-        <a href="#img-@index" class="article__img-container js-gallerythumbs" data-link-name="Launch Article Lightbox" data-is-ajax>
+    @if(amp) {
+        @imageHtml
+    } else {
+        @lightboxIndex.map { index =>
+            <a href="#img-@index" class="article__img-container js-gallerythumbs" data-link-name="Launch Article Lightbox" data-is-ajax>
                 @imageHtml
                 @fragments.inlineSvg("expand-image", "icon", List("centered-icon rounded-icon article__fullscreen modern-visible"))
-        </a>
-        @shareInfo.map { case (shareLinks, contentType) =>
-            @share.blockLevelSharing(s"img-$index", shareLinks, contentType)
-        }
-    }.getOrElse {
-        @imageHtml
-    }
+            </a>
 
+            @shareInfo.map { case (shareLinks, contentType) =>
+                @share.blockLevelSharing(s"img-$index", shareLinks, contentType)
+            }
+        }.getOrElse {
+            @imageHtml
+        }
+    }
 }
 
-@image(picture: model.ImageContainer, widths: WidthsByBreakpoint, imageOption: Option[ImageAsset], isMain: Boolean) = {
+@image(picture: model.ImageMedia, widths: WidthsByBreakpoint, imageOption: Option[ImageAsset], isMain: Boolean) = {
 
 @if(amp) {
+
     @picture.largestImage.map { largestImage =>
-        <amp-img src="@ImgSrc.getFallbackUrl(picture)"
-        srcset="@ImgSrc.srcset(picture, widths)"
-        sizes="@widths.sizes"
+        <amp-img src="@ImgSrc.getAmpImageUrl(picture)"
         layout="responsive"
         width="@largestImage.width"
         height="@largestImage.height"
@@ -106,12 +107,23 @@
         >
     }
 
-    <img src="@ImgSrc.getFallbackUrl(picture)"
-    srcset="@ImgSrc.srcset(picture, widths)"
-    sizes="@widths.sizes"
-    class="@if(isMain) {maxed responsive-img} else {gu-image}"
-    itemprop="contentUrl"
-    alt="@imageOption.flatMap(_.altText).getOrElse("")" />
+    <picture>
+        @* IE 9 needs this workaround as per https://scottjehl.github.io/picturefill/ *@
+        <!--[if IE 9]><video style="display: none;"><![endif]-->
+        @widths.breakpoints.map { breakpointWidth =>
+            <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi)"
+                    sizes="@breakpointWidth.width"
+                    srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(picture), hidpi = true)" />
+            <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px)"
+                    sizes="@breakpointWidth.width"
+                    srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(picture))" />
+        }
+        <!--[if IE 9]></video><![endif]-->
+        <img class="@if(isMain) {maxed responsive-img} else {gu-image}"
+             itemprop="contentUrl"
+             alt="@imageOption.flatMap(_.altText).getOrElse("")"
+             src="@ImgSrc.getFallbackUrl(picture)" />
+    </picture>
 
     @picture.largestImage.map{ largestImage =>
         </div>
@@ -121,7 +133,7 @@
 
 }
 
-@caption(picture: model.ImageContainer, imageOption: Option[ImageAsset], isMain: Boolean) = {
+@caption(picture: model.ImageMedia, imageOption: Option[ImageAsset], isMain: Boolean) = {
     @imageOption.map { img =>
         @if(img.showCaption) {
             <figcaption class="caption@if(isMain){ caption--main} caption--img" itemprop="description">

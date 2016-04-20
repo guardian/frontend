@@ -1,55 +1,39 @@
-@(metaData: model.MetaData, projectName: Option[String] = None, head: Html, curlPaths: Map[String, String] = Map())(implicit request: RequestHeader)
-@import conf.switches.Switches._
-@import conf.Static
-@import conf.Configuration
-@import views.support.OmnitureAnalyticsData
+@(page: model.Page, projectName: Option[String] = None, head: Html)(implicit request: RequestHeader)
+@import model.Page.getContent
 
 <meta charset="utf-8" />
-<title>@views.support.Title(metaData)</title>
+<!--
+ __        __                      _     _      _
+ \ \      / /__    __ _ _ __ ___  | |__ (_)_ __(_)_ __   __ _
+  \ \ /\ / / _ \  / _` | '__/ _ \ | '_ \| | '__| | '_ \ / _` |
+   \ V  V /  __/ | (_| | | |  __/ | | | | | |  | | | | | (_| |
+    \_/\_/ \___|  \__,_|_|  \___| |_| |_|_|_|  |_|_| |_|\__, |
+                                                        |___/
+Ever thought about joining us?
+http://developers.theguardian.com/join-the-team.html
+-->
+<title>@views.support.Title(page)</title>
 
-@fragments.metaData(metaData)
+@fragments.metaData(page)
 @head
 
-<!--[if lt IE 9]>
-    <script src="@Static("javascripts/components/html5shiv/html5shiv.js")"></script>
-<![endif]-->
+@* stylesheet <link>s - get the stylesheets downloading ASAP *@
+@fragments.stylesheets(projectName, getContent(page).exists(_.tags.isCrossword))
 
-@* provide some ipad users with the core view of fronts *@
+@if(!play.Play.isDev()) {
+    <link rel="prefetch" href="@Static("javascripts/app.js")">
+}
+
+@*
+Protect against ReferenceErrors in IE:
+`window.console` only exists when the dev tools are open. If you reference
+something that doesn't exist, JavaScript will throw a `ReferenceError`. Here, we
+ensure console always exists one can safely reference it.
+Example: http://output.jsbin.com/jodureg/1
+*@
 <script>
-    @if(ServeCoreFrontsToSomeIpadsSwitch.isSwitchedOn) {
-            if(navigator.platform === 'iPad' &&
-                window.devicePixelRatio === 2) {
-                try {
-                    var storage = window.localStorage;
-                    var participation = storage.getItem('gu.retina-core-fronts-test');
-                    if (!participation) {
-                        if(Math.random() > .5) {
-                            storage.setItem('gu.retina-core-fronts-test', 'true');
-                        } else {
-                            storage.setItem('gu.retina-core-fronts-test', 'false');
-                        }
-                    }
-                    window.serveCoreFronts = storage.getItem('gu.retina-core-fronts-test') === 'true';
-                } catch (e) {
-                    window.serveCoreFronts = false;
-                }
-            }
-    } else {
-        window.serveCoreFronts = false;
-    }
+    window.console = window.console || undefined;
 </script>
 
-@* get the stylesheets downloading ASAP *@
-@fragments.stylesheetLinks(projectName)
-
-@* polyfill, feature detect etc before we try and use the stylesheets *@
-@fragments.javaScriptPreFlight(metaData)
-
-@* try and load fonts before we use the stylesheets *@
-@fragments.fonts()
-
-@* start trying to use the stylesheets *@
-@fragments.stylesheetLinksEnable()
-
-@* load the app *@
-@fragments.javaScriptBootstraps(metaData, curlPaths)
+@* inline JS - blocking *@
+@fragments.inlineJSBlocking(page)

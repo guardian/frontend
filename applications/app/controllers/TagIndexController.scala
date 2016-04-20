@@ -6,22 +6,26 @@ import play.api.mvc.{Action, Controller}
 import services._
 
 object TagIndexController extends Controller with ExecutionContexts with Logging {
-  private def forTagType(keywordType: String, title: String, metaData: TagIndexPageMetaData) = Action { implicit request =>
-    TagIndexesS3.getIndex(keywordType, metaData.page) match {
+  private val TagIndexCacheTime = 600
+
+  private def forTagType(keywordType: String, title: String, page: String, metadata: MetaData) = Action { implicit request =>
+    TagIndexesS3.getIndex(keywordType, page) match {
       case Left(TagIndexNotFound) =>
-        log.error(s"404 error serving tag index page for $keywordType ${metaData.page}")
+        log.error(s"404 error serving tag index page for $keywordType ${page}")
         NotFound
 
       case Left(TagIndexReadError(error)) =>
-        log.error(s"JSON parse error serving tag index page for $keywordType ${metaData.page}: $error")
+        log.error(s"JSON parse error serving tag index page for $keywordType ${page}: $error")
         InternalServerError
 
       case Right(tagPage) =>
-        Ok(views.html.tagIndexPage(
-          metaData,
-          tagPage,
-          title
-        ))
+        Cached(TagIndexCacheTime) {
+          Ok(views.html.tagIndexPage(
+            metadata,
+            tagPage,
+            title
+          ))
+        }
     }
   }
 
@@ -30,7 +34,9 @@ object TagIndexController extends Controller with ExecutionContexts with Logging
       alphaListing <- KeywordAlphaIndexAutoRefresh.get
       sectionListing <- KeywordSectionIndexAutoRefresh.get
     } yield {
-      Ok(views.html.subjectsIndexListing(new SubjectsListingMetaData(), alphaListing))
+      Cached(TagIndexCacheTime) {
+        Ok(views.html.subjectsIndexListing(SubjectsListing(), alphaListing))
+      }
     }) getOrElse InternalServerError("Not yet loaded alpha and section index for keywords")
   }
 
@@ -38,11 +44,13 @@ object TagIndexController extends Controller with ExecutionContexts with Logging
     (for {
       alphaListing <- ContributorAlphaIndexAutoRefresh.get
     } yield {
-      Ok(views.html.contributorsIndexListing(new ContributorsListingMetaData(), alphaListing))
+      Cached(TagIndexCacheTime) {
+        Ok(views.html.contributorsIndexListing(ContributorsListing(), alphaListing))
+      }
     }) getOrElse InternalServerError("Not yet loaded contributor index listing")
   }
 
-  def keyword(page: String) = forTagType("keywords", "subjects", new SubjectIndexPageMetaData(page))
+  def keyword(page: String) = forTagType("keywords", "subjects", page, SubjectIndexPageMetaData.make(page))
 
-  def contributor(page: String) = forTagType("contributors", "contributors", new ContributorsIndexPageMetaData(page))
+  def contributor(page: String) = forTagType("contributors", "contributors", page, ContributorsIndexPageMetaData.make(page))
 }

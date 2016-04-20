@@ -1,9 +1,10 @@
 package feed
 
+import com.gu.contentapi.client
 import common._
 import common.editions.Uk
-import conf.LiveContentApi
-import conf.LiveContentApi.getResponse
+import contentapi.ContentApiClient
+import contentapi.ContentApiClient.getResponse
 import model.{Video, _}
 import play.api.libs.json._
 
@@ -33,14 +34,20 @@ object MostViewedVideoAgent extends Logging with ExecutionContexts {
         path
       }
 
+      log.info(s"Number of paths returned from Ophan: ${paths.size}")
+
       val contentIds = paths.distinct.take(10)
         .map(id => id.drop(1)) // drop leading '/'
         .mkString(",")
 
-      val mostViewed: Future[Seq[Video]] = getResponse(LiveContentApi.search(Uk)
+      val mostViewed: Future[Seq[Video]] = getResponse(ContentApiClient.search(Uk)
         .ids(contentIds)
         .pageSize(20)
-      ).map(r => r.results.filter(_.isVideo).map(Video(_)))
+      ).map{ r =>
+        val videoContent: Seq[client.model.v1.Content] = r.results.filter(_.isVideo)
+        log.info(s"Number of video content items from CAPI: ${videoContent.size}")
+        videoContent.map(Content(_)).collect { case v: Video => v }
+      }
 
       mostViewed.filter(_.nonEmpty).foreach(agent.alter)
     }

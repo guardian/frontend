@@ -27,7 +27,7 @@
             }
         </div>
         <div class="activity-stream__pagination u-cf">
-            @fragments.pagination(page.webTitle, profileComments.pagination, SimplePagePaths(page.url), Some("js-activity-stream-page-change"), false, Some("Comments"))
+            @fragments.pagination(page.metadata.webTitle, profileComments.pagination, SimplePagePaths(page.metadata.url), Some("js-activity-stream-page-change"), false, Some("Comments"))
         </div>
     }
 </div>

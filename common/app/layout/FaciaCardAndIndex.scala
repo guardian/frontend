@@ -1,10 +1,10 @@
 package layout
 
-import com.gu.facia.api.models.{CollectionConfig, FaciaContent}
+import model.pressed.{PressedContent, CollectionConfig}
 
 object FaciaCardAndIndex {
   /** If creating a Card off the cuff (i.e., outside of the normal Facia front construction code */
-  def fromTrail(faciaContent: FaciaContent, itemClasses: ItemClasses, index: Int) = FaciaCardAndIndex(
+  def fromTrail(faciaContent: PressedContent, itemClasses: ItemClasses, index: Int) = FaciaCardAndIndex(
     index,
     FaciaCard.fromTrail(
       faciaContent,

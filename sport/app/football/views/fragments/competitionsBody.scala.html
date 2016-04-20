@@ -22,7 +22,7 @@
         <h2 class="sport-header tone-accent-border hide-on-mobile-if-localnav content__inline-section">
             <a class="tone-colour" data-link-name="article section" href="@LinkTo{/football}">football</a>
         </h2>
-        <h1 class="page-header">@page.webTitle</h1>
+        <h1 class="page-header">@page.metadata.webTitle</h1>
 
         @competitionList.map{ comp =>
             @renderFilter(comp)

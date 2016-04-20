@@ -44,6 +44,20 @@ create_frontend_properties() {
   fi
 }
 
+create_aws_config() {
+  local path="$HOME/.aws"
+  local filename="config"
+
+  if [[ ! -f "$path/$filename" ]]; then
+    if [[ ! -d "$path" ]]; then
+      mkdir "$path"
+    fi
+
+    echo "[profile nextgen]
+region = eu-west-1" > "$path/$filename"
+  fi
+}
+
 create_aws_credentials() {
   local path="$HOME/.aws"
   local filename="credentials"
@@ -54,9 +68,8 @@ create_aws_credentials() {
     fi
 
     echo "[nextgen]
-    aws_access_key_id=[YOUR_AWS_ACCESS_KEY]
-    aws_secret_access_key=[YOUR_AWS_SECRET_ACCESS_KEY]
-    region=eu-west-1" > "$path/$filename"
+aws_access_key_id = [YOUR_AWS_ACCESS_KEY]
+aws_secret_access_key = [YOUR_AWS_SECRET_ACCESS_KEY]" > "$path/$filename"
     EXTRA_STEPS+=("Add your AWS keys to $path/$filename")
   fi
 }
@@ -98,28 +111,6 @@ install_grunt() {
   fi
 }
 
-install_jspm() {
-  if ! installed jspm; then
-    npm -g install jspm
-  fi
-
- npm -g install jspm-bower-endpoint
- jspm registry config github
- jspm registry create bower jspm-bower-endpoint
-}
-
-install_ruby() {
-  if linux && ! installed ruby; then
-    sudo apt-get install -y ruby1.9.1-full
-  fi
-}
-
-install_bundler() {
-  if ! installed bundle; then
-    sudo gem install bundler
-  fi
-}
-
 install_gcc() {
   if ! installed g++; then
     if linux; then
@@ -143,7 +134,7 @@ install_dependencies() {
 }
 
 compile() {
-  grunt install compile
+  make install compile
 }
 
 report() {
@@ -159,15 +150,13 @@ report() {
 main() {
   create_install_vars
   create_frontend_properties
+  create_aws_config
   create_aws_credentials
   install_homebrew
   install_jdk
   install_node
   install_gcc
   install_grunt
-  install_jspm
-  install_ruby
-  install_bundler
   install_libpng
   install_dependencies
   compile

@@ -1,0 +1,155 @@
+.ad-slot--paidfor {
+    float: left;
+    margin: 5px $gs-gutter $gs-baseline 0;
+    clear: both;
+    overflow: visible;
+
+    @include mq($until: mobileLandscape) {
+        width: $gs-gutter * 6.5;
+        margin-bottom: $gs-baseline / 2;
+        margin-right: $gs-gutter / 2;
+    }
+
+    @include mq(mobileLandscape) {
+        width: gs-span(3);
+    }
+
+    @include mq(leftCol) {
+        margin-left: -1 * (gs-span(2) + $gs-gutter);
+    }
+
+    @include mq(wide) {
+        margin-left: -1 * (gs-span(3) + $gs-gutter);
+    }
+}
+
+.paidfor-content {
+    background: $paid-article-subheader;
+    text-align: left;
+    &,
+    .gu-title {
+        @include f-headlineSans;
+        @include font-size(20, 24);
+        padding-bottom: 5px;
+        font-weight: normal;
+    }
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: $paidfor-background;
+        height: 1px;
+        z-index: 5;
+    }
+
+    .inline-glabs-logo-small {
+        svg {
+            right: 0;
+            left: auto;
+            top: 4px;
+            width: 75px;
+            height: 23px;
+
+            path {
+                fill: #ffffff;
+            }
+        }
+    }
+
+    .gu-text {
+        @include font-size(16, 20);
+        margin-bottom: $gs-baseline;
+    }
+}
+
+.paidfor-box {
+    color: inherit;
+    display: block;
+    padding: 0 $gs-gutter / 4;
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
+}
+
+.paidfor-box--header {
+    padding-top: $gs-baseline / 3;
+}
+
+.paidfor-box--text {
+    &:hover,
+    &:focus {
+        text-decoration: underline;
+    }
+}
+
+.paidfor-box--logo {
+    padding-bottom: $gs-gutter / 4;
+}
+
+.paidfor-title {
+    font-weight: 400;
+    padding-bottom: .5em;
+}
+
+.paidfor-brand {
+    @include f-textSans;
+    color: #767676;
+    text-align: right;
+    font-size: get-font-size(textSans, 2);
+
+    img {
+        vertical-align: middle;
+    }
+}
+
+.paidfor-logo {
+    max-height: $gs-baseline * 5;
+}
+
+.paidfor-band {
+    background: $paidfor-background;
+    width: 100%;
+    z-index: 1200;
+
+    .paidfor-meta,
+    .paidfor-meta__label,
+    .paidfor-label,
+    .paidfor-branding {
+        display: flex;
+    }
+
+    .paidfor-meta__label,
+    .paidfor-branding {
+        align-items: center;
+    }
+
+    .paidfor-meta__label,
+    .paidfor-meta__more > .popup__toggle {
+        padding: $gs-baseline / 3 $gs-gutter / 2;
+    }
+
+    .paidfor-meta__label {
+        padding-left: 0;
+    }
+
+    .paidfor-branding {
+        padding: ($gs-baseline / 2) 0 ($gs-baseline / 2) ($gs-gutter / 2);
+
+        svg {
+            height: 24px;
+            width: 75px;
+        }
+    }
+}
+
+.paidfor-band__inner {
+    @include content-gutter();
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+}

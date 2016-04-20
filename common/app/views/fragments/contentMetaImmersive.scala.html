@@ -1,0 +1,24 @@
+@(item: model.ContentType, showBadge: Boolean = true)(implicit request: RequestHeader)
+@import model._
+
+@byline() = {
+    @item match {
+        case v: Video   => { @fragments.meta.byline(v.bylineWithSource, v.tags) }
+        case c          => { @fragments.meta.byline(c.trail.byline, c.tags) }
+    }
+}
+
+<div class="content__meta-container content__meta-container--immersive js-content-meta u-cf">
+    @if(!item.trail.shouldHidePublicationDate) {
+        @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, false, item.tags.isLiveBlog, item.fields.isLive)
+    }
+
+    <div class="meta__numbers">
+        <div class="u-h meta__number meta__number--sharecount js-sharecount js-sharecount-immersive"></div>
+        <div class="u-h meta__number meta__number--commentcount" data-discussion-id="@item.content.discussionId" data-commentcount-format="contentImmersive" data-discussion-closed="@{!item.trail.isCommentable}"></div>
+    </div>
+
+    <div class="meta__social" data-component="share">
+        @fragments.social(item.sharelinks.pageShares, "top")
+    </div>
+</div>

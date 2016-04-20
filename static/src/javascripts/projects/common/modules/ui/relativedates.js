@@ -1,19 +1,12 @@
 define([
     'common/utils/$',
-    'common/utils/config',
     'common/utils/mediator',
     'bonzo'
 ], function (
     $,
-    config,
     mediator,
     bonzo
 ) {
-    var timeAdjustmentMs = config.page && config.page.renderTime ? Math.max(0, new Date() - new Date(config.page.renderTime)) : 0;
-
-    function adjustedNow() {
-        return new Date(new Date().getTime() - timeAdjustmentMs);
-    }
 
     function dayOfWeek(day) {
         return ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][day];
@@ -28,29 +21,29 @@ define([
     }
 
     function isToday(date) {
-        var today = adjustedNow();
+        var today = new Date();
         return date && (date.toDateString() === today.toDateString());
     }
 
     function isWithin24Hours(date) {
-        var today = adjustedNow();
+        var today = new Date();
         return date && (date.valueOf() > today.valueOf() - (24 * 60 * 60 * 1000));
     }
 
     function isWithinSeconds(date, seconds) {
-        var today = adjustedNow();
+        var today = new Date();
         return date && (date.valueOf() > today.valueOf() - ((seconds || 0) * 1000));
     }
 
     function isYesterday(relative) {
-        var today = adjustedNow(),
-            yesterday = adjustedNow();
+        var today = new Date(),
+            yesterday = new Date();
         yesterday.setDate(today.getDate() - 1);
         return (relative.toDateString() === yesterday.toDateString());
     }
 
     function isWithinPastWeek(date) {
-        var weekAgo = adjustedNow().valueOf() - (7 * 24 * 60 * 60 * 1000);
+        var weekAgo = new Date().valueOf() - (7 * 24 * 60 * 60 * 1000);
         return date.valueOf() >= weekAgo;
     }
 
@@ -102,7 +95,7 @@ define([
 
         var minutes, hours, days, delta,
             then = new Date(Number(epoch)),
-            now = adjustedNow(),
+            now = new Date(),
             format = opts.format || 'short',
             extendedFormatting = (opts.format === 'short' || opts.format === 'med');
 

@@ -1,6 +1,6 @@
 // Create JSON web font files from fonts. See https://github.com/ahume/grunt-webfontjson
 
-module.exports = function(grunt, options) {
+module.exports = function (grunt, options) {
     return {
         GuardianTextEgyptianWebWoff2: {
             options: {

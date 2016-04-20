@@ -1,4 +1,6 @@
 @(theMatch: cricketModel.Match, matchUrl: String)(implicit request: RequestHeader)
+@import common.LinkTo
+@import views.support.Format
 
 <div class="sport-summary sport-summary--cricket" itemscope itemtype="http://schema.org/SportsEvent">
 
@@ -53,7 +55,7 @@
                 @theMatch.competitionName, @theMatch.venueName
             </caption>
             <caption class="table__caption table__caption--bottom" >
-                <a class="table__caption--bottom-link" href=@matchUrl>View full scorecard</a>
+                <a class="table__caption--bottom-link" href=@LinkTo(matchUrl)>View full scorecard</a>
             </caption>
         </table>
     </div>

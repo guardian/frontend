@@ -1,11 +1,12 @@
 package common.dfp
 
-import com.gu.contentapi.client.model.{Tag => ApiTag}
-import com.gu.facia.api.models.CollectionConfig
-import com.gu.facia.client.models.CollectionConfigJson
+import com.gu.contentapi.client.model.v1.{Tag => ApiTag, TagType => ApiTagType}
+import com.gu.facia.api.{models => fapi}
+import com.gu.facia.client.models.{Backfill, CollectionConfigJson}
 import common.Edition.defaultEdition
 import common.editions.Us
 import model.Tag
+import model.pressed.CollectionConfig
 import org.joda.time.DateTime
 import org.scalatest.Inspectors._
 import org.scalatest.{FlatSpec, Matchers}
@@ -14,8 +15,8 @@ import scala.util.Random
 
 class PaidForTagAgentTest extends FlatSpec with Matchers {
 
-  private def toTag(tagType: String, tagId: String, sectionId: Option[String] = None): Tag = {
-    Tag(ApiTag(id = tagId,
+  private def toTag(tagType: ApiTagType, tagId: String, sectionId: Option[String] = None): Tag = {
+    Tag.make(ApiTag(id = tagId,
       `type` = tagType,
       sectionId = sectionId,
       webTitle = "title",
@@ -23,11 +24,9 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
       apiUrl = "url"))
   }
   private def toKeyword(tagId: String, sectionId: Option[String] = None): Tag =
-    toTag("keyword", tagId, sectionId)
+    toTag(ApiTagType.Keyword, tagId, sectionId)
   private def toSeries(tagId: String, sectionId: Option[String] = None): Tag =
-    toTag("series", tagId, sectionId)
-  private val adFeatureToneTagId = "tone/advertisement-features"
-  private val adFeatureTone = toTag("tone", adFeatureToneTagId, None)
+    toTag(ApiTagType.Series, tagId, sectionId)
 
   private def toLineItem(state: String = "DELIVERING",
                          editionId: Option[String] = None,
@@ -153,10 +152,30 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
 
     override protected def tagToAdvertisementFeatureSponsorsMap: Map[String, Set[String]] = Map
       .empty
+
+    private def isPaidFor(config: CollectionConfig, paidForType: PaidForType): Boolean = {
+      findContainerCapiTagIdAndDfpTag(config) exists (_.dfpTag.paidForType == paidForType)
+    }
+
+    def isSponsored(config: CollectionConfig): Boolean = {
+      isPaidFor(config, Sponsored)
+    }
+
+    def isAdvertisementFeature(config: CollectionConfig): Boolean = {
+      isPaidFor(config, AdvertisementFeature)
+    }
+
+    def isFoundationSupported(config: CollectionConfig): Boolean = {
+      isPaidFor(config, FoundationFunded)
+    }
   }
 
-  private def apiQuery(apiQuery: String) = {
-    CollectionConfig.fromCollectionJson(CollectionConfigJson.withDefaults(apiQuery = Some(apiQuery)))
+  private def apiQuery(apiQuery: String): CollectionConfig = {
+    CollectionConfig.make(
+      fapi.CollectionConfig.fromCollectionJson(
+        CollectionConfigJson.withDefaults(backfill = Some(Backfill("capi", apiQuery)))
+      )
+    )
   }
 
   "isAdvertisementFeature" should "be true for an advertisement feature" in {
@@ -586,53 +605,5 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
     sponsorsMap should contain key "universityguide"
     sponsorsMap("universityguide") should equal(Set("University Sponsor A"))
     sponsorsMap should not contain key("videogames")
-  }
-
-  "isExpiredAdvertisementFeature" should "be true for an expired ad feature" in {
-    val tags = Seq(toKeyword("section/tagName"), adFeatureTone)
-    val expired = TestPaidForTagAgent.isExpiredAdvertisementFeature("pageId", tags, None)
-    expired should be(true)
-  }
-
-  "isExpiredAdvertisementFeature" should "be false for any content page without the ad feature tone" in {
-    val tags = Seq(toKeyword("section/tagName"))
-    val expired = TestPaidForTagAgent.isExpiredAdvertisementFeature("pageId", tags, None)
-    expired should be(false)
-  }
-
-  it should "be false for an ad feature with multiple line items where one has no end date" in {
-    val tags = Seq(toKeyword("section/tagNameMatchingMultipleLineItems"))
-    TestPaidForTagAgent.isExpiredAdvertisementFeature("pageId", tags, None) should be(false)
-  }
-
-  it should "be false for an ad feature with multiple line items where one has not expired" in {
-    val tags = Seq(toKeyword("section/tagNameMatchingMoreMultipleLineItems"))
-    TestPaidForTagAgent.isExpiredAdvertisementFeature("pageId", tags, None) should be(false)
-  }
-
-  it should "be false for an un-paid-for page" in {
-    val tags = Seq(toKeyword("anotherSection/someOtherUnrelatedTagName"))
-    TestPaidForTagAgent.isExpiredAdvertisementFeature("pageId", tags, None) should be(false)
-  }
-
-  it should "be true for a page with ad-feature tone and no logo" in {
-    val tags = Seq(adFeatureTone)
-    TestPaidForTagAgent.isExpiredAdvertisementFeature("pageId", tags, None) should be(true)
-  }
-
-  it should "be false for a page with an unexpired logo and ad-feature tone" in {
-    val tags = Seq(adFeatureTone, toKeyword("section/tagNameMatchingMoreMultipleLineItems"))
-    TestPaidForTagAgent.isExpiredAdvertisementFeature("pageId", tags, None) should be(false)
-  }
-
-  it should "be true for a page with a paused logo" in {
-    val tags = Seq(adFeatureTone, toKeyword("section/tagNameMatchingPausedTag"))
-    TestPaidForTagAgent.isExpiredAdvertisementFeature("pageId", tags, None) should be(true)
-  }
-
-  it should "be false for the ad feature tone tag page" in {
-    val tags = Seq(adFeatureTone)
-    val expired = TestPaidForTagAgent.isExpiredAdvertisementFeature(adFeatureToneTagId, tags, None)
-    expired should be(false)
   }
 }

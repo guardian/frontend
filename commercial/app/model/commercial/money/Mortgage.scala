@@ -1,7 +1,7 @@
 package model.commercial.money
 
 import common.{ExecutionContexts, Logging}
-import conf.CommercialConfiguration
+import conf.Configuration
 import conf.switches.Switches._
 import model.commercial._
 
@@ -17,7 +17,7 @@ case class Mortgage(lender: String,
 
 object MortgagesFeed extends ExecutionContexts with Logging {
 
-  private lazy val maybeUrl = CommercialConfiguration.getProperty("lc.mortgages.api.url")
+  private lazy val maybeUrl = Configuration.commercial.mortgagesUrl
 
   def parse(xml: Elem): Seq[Mortgage] = {
     xml \ "RefProducts" map {

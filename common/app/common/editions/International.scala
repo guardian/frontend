@@ -4,7 +4,6 @@ import java.util.Locale
 
 import common._
 import conf.switches.Switches
-import conf.switches.Switches.InternationalEditionBetaSwitch
 import org.joda.time.DateTimeZone
 
 object International extends Edition(
@@ -12,26 +11,16 @@ object International extends Edition(
   displayName = "International",
   timezone = DateTimeZone.forID("Europe/London"),
   locale = Locale.forLanguageTag("en"),
-  homePagePath = "/international",
+  networkFrontId = "international",
   editionalisedSections = Seq("") // only the home page
 ){
 
   implicit val INT = International
 
-  override def isBeta: Boolean = InternationalEditionBetaSwitch.isSwitchedOn
-
-  // TODO temporary to let us migrate cookies to proper value (i.e. INT)
-  // it is currently INTL
-  override def matchesCookie(cookieValue: String): Boolean = super.matchesCookie(cookieValue) ||
-    "INTL".equalsIgnoreCase(cookieValue)
-
-  import Switches.RugbyWorldCupswitch
   val sportLocalNav: Seq[SectionLink] = Seq(
     football,
     cricket,
-
-    // TODO delete & replace with rugbyUnion
-    rugbyWorldCup, //rugbyunion
+    rugbyunion,
     formulaOne,
     tennis,
     golf,
@@ -116,12 +105,13 @@ object International extends Edition(
       NavItem(fashion),
       NavItem(environment, environmentLocalNav),
       NavItem(technology),
-      NavItem(travel, Seq(uktravel, europetravel, usTravel)),
+      NavItem(travel, Seq(uktravel, europetravel, usTravel, skiingTravel)),
       NavItem(money, Seq(property, savings, pensions, borrowing, workAndCareers)),
       NavItem(science),
       NavItem(guardianProfessional),
       NavItem(observer),
       NavItem(todaysPaper, Seq(editorialsandletters, obituaries, g2, weekend, theGuide, saturdayreview)),
+      NavItem(sundayPaper, Seq(observerComment, observerNewReview, observerMagazine)),
       NavItem(membership),
       NavItem(crosswords, crosswordsLocalNav),
       NavItem(video)

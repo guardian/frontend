@@ -21,7 +21,7 @@
             @slice(sliceWithCards, containerDefinition.index)
         }
 
-        @if(containerDefinition.hasShowMore) {
+        @if(containerDefinition.hasShowMore && containerDefinition.hasShowMoreEnabled) {
             @if(containerDefinition.useShowMore) {
                 <div class="js-show-more-placeholder"></div>
 

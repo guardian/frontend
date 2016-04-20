@@ -1,45 +1,39 @@
 package jobs
 
-import common.Logging
+import common.{ExecutionContexts, Logging}
 import common.dfp.GuLineItem
-import conf.Configuration.commercial.{adOpsTeam, adTechTeam, dfpAdFeatureReportKey, gLabsTeam}
+import conf.Configuration.commercial.{adOpsTeam, adTechTeam, gLabsTeam}
+import dfp.DfpApi
+import org.joda.time.DateTime.now
 import services.EmailService
-import tools.Store
 
-object ExpiringAdFeaturesEmailJob extends Logging {
+import scala.concurrent.Future
 
-  def run(): Unit = {
-    val adFeatureTags = Store.getDfpPaidForTags(dfpAdFeatureReportKey).paidForTags
+object ExpiringAdFeaturesEmailJob extends Logging with ExecutionContexts {
 
-    def adFeatures(p: GuLineItem => Boolean): Seq[GuLineItem] = {
-      adFeatureTags.withFilter {
-        _.lineItems.forall(p)
-      }.flatMap {
-        _.lineItems
-      }.sortBy { lineItem =>
+  def run(): Future[Unit] = {
+
+    val adFeatures: Seq[GuLineItem] =
+      DfpApi.readAdFeatureLogoLineItems(
+        expiredSince = now().minusWeeks(1),
+        expiringBefore = now().plusMonths(1)
+      ).sortBy { lineItem =>
         (lineItem.endTime.map(_.getMillis).get, lineItem.id)
-      }.distinct
-    }
+      }
 
-    for {
+    (for {
       adTech <- adTechTeam
       adOps <- adOpsTeam
       gLabsCsv <- gLabsTeam
-    } {
+    } yield {
+      if (adFeatures.nonEmpty) {
 
-      val expiredAdFeatures = adFeatures(_.isExpiredRecently)
-      val expiringAdFeatures = adFeatures(_.isExpiringSoon)
-
-      if (expiredAdFeatures.nonEmpty || expiringAdFeatures.nonEmpty) {
+        val (expired, expiring) = adFeatures partition (_.endTime.exists(_.isBeforeNow))
 
         val gLabs = gLabsCsv.split(",") map (_.trim())
 
-        val htmlBody = {
-          views.html.commercial.email.expiringAdFeatures(
-            expiredAdFeatures,
-            expiringAdFeatures
-          ).body.trim()
-        }
+        val htmlBody =
+          views.html.commercial.email.expiringAdFeatures(expired, expiring).body.trim()
 
         EmailService.send(
           from = adTech,
@@ -47,7 +41,9 @@ object ExpiringAdFeaturesEmailJob extends Logging {
           cc = Seq(adTech),
           subject = "Expiring Advertisement Features",
           htmlBody = Some(htmlBody))
+      } else {
+        Future.successful(())
       }
-    }
+    }).getOrElse(Future.successful(())).map(_ => ())
   }
 }

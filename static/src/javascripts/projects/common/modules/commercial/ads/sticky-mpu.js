@@ -1,36 +1,38 @@
 define([
-    'qwery',
-    'common/utils/$',
-    'common/utils/_',
     'common/utils/config',
-    'common/modules/ui/sticky'
+    'common/modules/ui/sticky',
+    'common/utils/fastdom-promise'
 ], function (
-    qwery,
-    $,
-    _,
     config,
-    Sticky
+    Sticky,
+    fastdom
 ) {
 
-    var mpuHeight = 275,
-        StickyMpu = function ($adSlot, options) {
-            this.$adSlot = $adSlot;
-            this.opts    = _.defaults(options || {}, {
-                top: 0
-            });
-        };
+    var mpuHeight = 275;
 
-    StickyMpu.prototype.create = function () {
-        var articleBodyOffset;
-
-        if (this.$adSlot.data('name') !== 'right') {
+    function stickyMpu($adSlot) {
+        if ($adSlot.data('name') !== 'right') {
             return;
         }
-        articleBodyOffset = config.page.hasShowcaseMainElement ? $('.media-primary').dim().height : qwery('.content__article-body')[0].offsetTop;
-        this.$adSlot.parent().css('height', (articleBodyOffset + mpuHeight) + 'px');
-        new Sticky(this.$adSlot[0], { top: this.opts.top }).init();
-    };
 
-    return StickyMpu;
+        var referenceElement = document.querySelector(config.page.hasShowcaseMainElement ? '.media-primary' : '.content__article-body');
+        if (!referenceElement) {
+            return;
+        }
+
+        return fastdom.read(function () {
+            return referenceElement[config.page.hasShowcaseMainElement ? 'offsetHeight' : 'offsetTop'];
+        }).then(function (articleBodyOffset) {
+            return fastdom.write(function () {
+                $adSlot.parent().css('height', (articleBodyOffset + mpuHeight) + 'px');
+            }).then(function () {
+                //if there is a sticky 'paid by' band move the sticky mpu down so it will be always visible
+                var options = config.page.isAdvertisementFeature ? {top: 43} : {};
+                return new Sticky($adSlot[0], options).init();
+            });
+        });
+    }
+
+    return stickyMpu;
 
 });

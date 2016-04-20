@@ -1,11 +1,10 @@
-@(faciaContent: com.gu.facia.api.models.FaciaContent, info: RowInfo)(implicit request: RequestHeader)
+@(faciaContent: model.pressed.PressedContent, info: RowInfo)(implicit request: RequestHeader)
 
 @import views.support.RowInfo
 @import common.LinkTo
 @import views.support.RemoveOuterParaHtml
-@import implicits.FaciaContentImplicits._
 @import model.SupportedUrl
 
 <a href="@LinkTo(SupportedUrl.fromFaciaContent(faciaContent))" data-link-name="@info.rowNum | text">
-    @faciaContent.maybeWebTitle.map(RemoveOuterParaHtml.apply)
+    @faciaContent.properties.linkText.map(RemoveOuterParaHtml.apply)
 </a>

@@ -1,0 +1,9 @@
+@import model.liveblog.LiveBlogDate
+
+@(date: Option[LiveBlogDate])
+
+@date.map { case LiveBlogDate(createdDate, hhmm, ampm, gmt) =>
+    <time datetime="@createdDate" data-relativeformat="med" class=" js-timestamp" itemprop="datePublished">@ampm <span class="timezone">@gmt</span></time>
+    <span class="block-time__absolute">@hhmm</span>
+}
+

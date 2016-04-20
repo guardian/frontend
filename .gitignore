@@ -44,7 +44,6 @@ RUNNING_PID
 local.sbt
 
 node_modules
-jspm_packages
 screenshots
 
 common/conf/assets
@@ -77,9 +76,6 @@ bower_components
 # Scala test framework #
 local.conf
 
-# Generared styleguide files #
-docs/styleguide/*.html
-docs/styleguide/assets/css
-
 #Node Version Manager
 .nvmrc
+static/src/stylesheets/pasteup/.npmrc

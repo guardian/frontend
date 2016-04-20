@@ -1,22 +1,20 @@
 package services
 
-import com.gu.contentapi.client.GuardianContentApiError
-import com.gu.contentapi.client.model.{ItemResponse, SearchResponse, Section => ApiSection}
+import com.gu.contentapi.client.GuardianContentApiThriftError
+import com.gu.contentapi.client.model.v1.{Section => ApiSection, ItemResponse, SearchResponse}
 import common._
-import conf.Configuration.commercial.expiredAdFeatureUrl
-import conf.LiveContentApi
-import conf.LiveContentApi.getResponse
-import contentapi.{QueryDefaults, SectionTagLookUp, SectionsLookUp}
-import model.{Section, _}
+import contentapi.{ContentApiClient, QueryDefaults, SectionTagLookUp, SectionsLookUp}
+import implicits.Collections
+import model._
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import play.api.mvc.{RequestHeader, Result => PlayResult}
 
 import scala.concurrent.Future
 
-trait Index extends ConciergeRepository with QueryDefaults {
+trait Index extends ConciergeRepository with Collections {
 
-  private val rssFields = s"$trailFields,byline,body,standfirst"
+  private val rssFields = s"${QueryDefaults.trailFields},byline,body,standfirst"
 
   def normaliseTag(tag: String): String = {
     val conversions: Map[String, String] =
@@ -61,37 +59,38 @@ trait Index extends ConciergeRepository with QueryDefaults {
       }
     )
 
-    val promiseOfResponse = getResponse(LiveContentApi.search(edition)
+    val promiseOfResponse = ContentApiClient.getResponse(ContentApiClient.search(edition)
       .tag(s"$firstTag,$secondTag")
       .page(page)
       .pageSize(if (isRss) IndexPagePagination.rssPageSize else IndexPagePagination.pageSize)
-      .showFields(if (isRss) rssFields else trailFields)
+      .showFields(if (isRss) rssFields else QueryDefaults.trailFields)
     ).map {response =>
-      val trails = response.results map { Content(_) }
+      val trails = response.results.map(IndexPageItem(_)).toList
       trails match {
         case Nil => Right(NotFound)
         case head :: _ =>
-          //we can use .head here as the query is guaranteed to return the 2 tags
-          val tag1 = findTag(head, firstTag)
-          val tag2 = findTag(head, secondTag)
-
-          val page = new TagCombiner(s"$leftSide+$rightSide", tag1, tag2, pagination(response))
-
-          Left(IndexPage(page, trails))
+          val tag1 = findTag(head.item, firstTag)
+          val tag2 = findTag(head.item, secondTag)
+          if (tag1.isDefined && tag2.isDefined) {
+            val page = new TagCombiner(s"$leftSide+$rightSide", tag1.get, tag2.get, pagination(response))
+            Left(IndexPage(page, contents = trails, tags = Tags(Nil), date = DateTime.now, tzOverride = None))
+          } else {
+            Right(NotFound)
+          }
       }
     }
 
     promiseOfResponse.recover({
       //this is the best handle we have on a wrong 'page' number
-      case GuardianContentApiError(400, _, _) => Right(Found(s"/$leftSide+$rightSide"))
+      case GuardianContentApiThriftError(400, _, _) => Right(Found(s"/$leftSide+$rightSide"))
     }).recover(convertApiExceptions)
 
   }
 
-  private def findTag(content: Content, tagId: String) = content.tags.filter(tag =>
+  private def findTag(trail: ContentType, tagId: String) = trail.content.tags.tags.filter(tag =>
     tagId.contains(tag.id))
     .sortBy(tag => tagId.replace(tag.id, "")) //effectively sorts by best match
-    .head
+    .headOption
 
 
   private def pagination(response: ItemResponse) = Some(Pagination(
@@ -108,7 +107,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
 
   def index(edition: Edition, path: String, pageNum: Int, isRss: Boolean)(implicit request: RequestHeader): Future[Either[IndexPage, PlayResult]] = {
     val pageSize = if (isRss) IndexPagePagination.rssPageSize else IndexPagePagination.pageSize
-    val fields = if (isRss) rssFields else trailFields
+    val fields = if (isRss) rssFields else QueryDefaults.trailFields
 
     val maybeSection = SectionsLookUp.get(path)
 
@@ -122,47 +121,49 @@ trait Index extends ConciergeRepository with QueryDefaults {
       */
     val queryPath = maybeSection.fold(path)(s => SectionTagLookUp.tagId(s.id))
 
-    val promiseOfResponse = getResponse(LiveContentApi.item(queryPath, edition).page(pageNum)
+    val promiseOfResponse = ContentApiClient.getResponse(ContentApiClient.item(queryPath, edition).page(pageNum)
       .pageSize(pageSize)
       .showFields(fields)
     ) map { response =>
       val page = maybeSection.map(s => section(s, response)) orElse
         response.tag.flatMap(t => tag(response, pageNum)) orElse
         response.section.map(s => section(s, response))
-      if (page.exists(_.page.isExpiredAdvertisementFeature)) {
-        Right(MovedPermanently(expiredAdFeatureUrl))
-      } else {
-        ModelOrResult(page, response, maybeSection)
-      }
+
+      ModelOrResult(page, response, maybeSection)
     }
 
     promiseOfResponse.recover({
       //this is the best handle we have on a wrong 'page' number
-      case GuardianContentApiError(400, _, _) if pageNum != 1 => Right(Found(s"/$path"))
+      case GuardianContentApiThriftError(400, _, _) if pageNum != 1 => Right(Found(s"/$path"))
     }).recover(convertApiExceptions)
   }
 
   private def section(apiSection: ApiSection, response: ItemResponse) = {
-    val section = Section(apiSection, pagination(response))
-    val editorsPicks = response.editorsPicks.map(Content(_))
+    val section = Section.make(apiSection, pagination(response))
+    val editorsPicks = response.editorsPicks.getOrElse(Nil)
     val editorsPicksIds = editorsPicks.map(_.id)
-    val latestContent = response.results.map(Content(_)).filterNot(c => editorsPicksIds contains c.id)
-    val trails = editorsPicks ++ latestContent
-    IndexPage(section, trails)
+    val latestContent = response.results.getOrElse(Nil).filterNot(c => editorsPicksIds contains c.id)
+    val trails = (editorsPicks ++ latestContent).map(IndexPageItem(_))
+    val commercial = Commercial.make(section)
+
+    IndexPage(page = section, contents = trails, tags = Tags(Nil), date = DateTime.now, tzOverride = None, commercial)
   }
 
   private def tag(response: ItemResponse, page: Int) = {
-    val tag = response.tag map { new Tag(_, pagination(response)) }
-    val leadContentCutOff = DateTime.now - leadContentMaxAge
-    val editorsPicks = response.editorsPicks.map(Content(_))
+    val tag = response.tag map { Tag.make(_, pagination(response)) }
+    val leadContentCutOff = DateTime.now - QueryDefaults.leadContentMaxAge
+    val editorsPicks = response.editorsPicks.getOrElse(Nil).map(IndexPageItem(_))
     val leadContent = if (editorsPicks.isEmpty && page == 1) //only promote lead content on first page
-      response.leadContent.take(1).map(Content(_)).filter(_.webPublicationDate > leadContentCutOff)
+      response.leadContent.getOrElse(Nil).take(1).map(IndexPageItem(_)).filter(_.item.trail.webPublicationDate > leadContentCutOff)
     else
       Nil
+    val leadContentIds = leadContent.map(_.item.metadata.id)
 
-    val latest: Seq[Content] = response.results.map(Content(_)).filterNot(c => leadContent.map(_.id).contains(c.id))
-    val allTrails = (leadContent ++ editorsPicks ++ latest).distinctBy(_.id)
-    tag map { IndexPage(_, allTrails) }
+    val latest: Seq[IndexPageItem] = response.results.getOrElse(Nil).map(IndexPageItem(_)).filterNot(c => leadContentIds.contains(c.item.metadata.id))
+    val allTrails = (leadContent ++ editorsPicks ++ latest).distinctBy(_.item.metadata.id)
+    tag map { tag =>
+      IndexPage(page = tag, contents = allTrails, tags = Tags(List(tag)), date = DateTime.now, tzOverride = None)
+    }
   }
 
   // for some reason and for the life of me I cannot figure it out, this does not compile if these

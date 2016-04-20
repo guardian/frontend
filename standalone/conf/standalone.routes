@@ -6,12 +6,16 @@
 GET        /assets/internal/*file                                                              controllers.Assets.at(path="/public", file)
 GET        /assets/*path                                                                       dev.DevAssetsController.at(path)
 
+
 #Login
 # authentication endpoints
 GET           /login                                                                           controllers.OAuthLoginController.login
 POST          /login                                                                           controllers.OAuthLoginController.loginAction
 GET           /oauth2callback                                                                  controllers.OAuthLoginController.oauth2Callback
 GET           /logout                                                                          controllers.OAuthLoginController.logout
+
+# Crossword
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
 
 # Travel offers
 GET        /commercial/travel/offers.json                                                      controllers.commercial.TravelOffers.renderTravel
@@ -20,7 +24,7 @@ GET        /commercial/travel/offers.json                                       
 GET        /commercial/jobs.json                                                               controllers.commercial.JobAds.renderJobs
 
 # Masterclasses
-GET        /commercial/masterclasses.json                                                      controllers.commercial.MasterClasses.renderMasterclasses
+GET        /commercial/masterclasses.json                                                      controllers.commercial.Masterclasses.renderMasterclasses
 
 # Soulmates
 GET        /commercial/soulmates/$subgroup<\w+>.json                                           controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
@@ -62,7 +66,8 @@ GET        /embed/card/*path.json                                               
 GET        /embed/card/*path                                                                   controllers.RichLinkController.renderHtml(path)
 
 # Sport
-GET        /sport/cricket/match/:matchId                                                       controllers.CricketMatchController.renderMatchId(matchId)
+GET        /sport/cricket/match/:matchDate/:teamId.json                                        controllers.CricketMatchController.renderMatchIdJson(matchDate, teamId)
+GET        /sport/cricket/match/:matchDate/:teamId                                             controllers.CricketMatchController.renderMatchId(matchDate, teamId)
 
 GET        /football/fixtures/:year/:month/:day.json                                           football.controllers.FixturesController.allFixturesForJson(year, month, day)
 GET        /football/fixtures/:year/:month/:day                                                football.controllers.FixturesController.allFixturesFor(year, month, day)
@@ -131,6 +136,7 @@ GET        /sport/rugby/api/score/:year/:month/:day/:team1Id/:team2Id           
 # Onward journeys
 GET        /series/*path.json                                                                  controllers.SeriesController.renderSeriesStories(path)
 
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>/info.json                             controllers.MediaController.renderInfoJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                                  controllers.MediaController.renderJson(path)
 
 # Facia
@@ -145,8 +151,18 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                        
 
 GET        /container/*id.json                                                                 controllers.FaciaDraftController.renderContainerJson(id)
 
+# Newspaper pages
+GET        /theguardian                                                                        controllers.NewspaperController.latestGuardianNewspaper()
+GET        /theobserver                                                                        controllers.NewspaperController.latestObserverNewspaper()
+GET        /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>           controllers.NewspaperController.newspaperForDate(path, day, month, year)
+GET        /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all       controllers.NewspaperController.allOn(path, day, month, year)
+
+# Atoms
+POST       /atom/quiz/:id/*path                                                                controllers.QuizController.submit(id, path)
+
 GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                     controllers.AllIndexController.on(path)
 GET        /$path<.+>/latest                                                                   controllers.LatestIndexController.latest(path)
+GET        /$path<.+>/latest/email                                                             controllers.LatestIndexController.latest(path)
 GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all                            controllers.AllIndexController.allOn(path, day, month, year)
 GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/altdate                        controllers.AllIndexController.altDate(path, day, month, year)
 GET        /$path<.+>/all                                                                      controllers.AllIndexController.all(path)
@@ -163,6 +179,13 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>.json       
 
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json                   controllers.InteractiveController.renderInteractiveJson(path)
 
+# Email paths
+GET        /email                                                                              controllers.EmailSignupController.renderPage()
+GET        /email/form/$emailType<article|footer|plain>/:listId                                      controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
+GET        /email/:result                                                                      controllers.EmailSignupController.subscriptionResult(result: String)
+POST       /email                                                                              controllers.EmailSignupController.submit()
+OPTIONS    /email                                                                              controllers.EmailSignupController.options()
+
 # Weather - OLD
 GET        /weather/city/:id.json                                                              weather.controllers.WeatherController.forCity(id)
 GET        /weather/city.json                                                                  weather.controllers.LocationsController.whatIsMyCity()
@@ -173,8 +196,12 @@ GET        /weatherapi/city/:id.json                                            
 GET        /weatherapi/city.json                                                               weather.controllers.LocationsController.whatIsMyCity()
 GET        /weatherapi/locations                                                               weather.controllers.LocationsController.findCity(query: String)
 
+# Breaking News
+GET        /news-alert/alerts                                                                  controllers.NewsAlertController.alerts()
+
 # Articles
-GET        /*path.json                                                                         controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean])
+GET        /*path.json                                                                         controllers.ArticleController.renderLiveBlogJson(path, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean])
+GET        /*path/email                                                                        controllers.ArticleController.renderArticle(path)
 
 # Don't forward requests for favicon.ico to the Content API
 GET        /favicon.ico                                                                        controllers.FaviconController.favicon

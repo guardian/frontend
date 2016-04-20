@@ -2,19 +2,13 @@ define([
     'bean',
     'raven',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/ajax',
     'common/utils/mediator',
-    'common/modules/analytics/omniture'
-], function (
-    bean,
-    raven,
-    $,
-    _,
-    ajax,
-    mediator,
-    omniture
-    ) {
+    'common/modules/analytics/omniture',
+    'lodash/collections/forEach',
+    'lodash/arrays/initial',
+    'common/utils/chain'
+], function (bean, raven, $, ajax, mediator, omniture, forEach, initial, chain) {
     function SearchTool(options) {
         var $list      = null,
             $input     = null,
@@ -225,7 +219,7 @@ define([
                 var docFragment   = document.createDocumentFragment(),
                     resultsToShow = results.length - numOfResults;
 
-                _(results).initial(resultsToShow).each(function (item, index) {
+                chain(results).and(initial, resultsToShow).and(forEach, function (item, index) {
                     var li = document.createElement('li');
 
                     li.className = 'search-tool__item';

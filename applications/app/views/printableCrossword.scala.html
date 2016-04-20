@@ -1,0 +1,48 @@
+@(crosswordPage: crosswords.CrosswordPage, svg: Seq[scala.xml.Node], year: Int)(implicit request: RequestHeader)
+
+@import views.html.fragments.crosswords.printableCrosswordClue
+
+<!DOCTYPE html>
+<html>
+    <head>
+        @fragments.head(crosswordPage, None, Html(""))
+    </head>
+
+    <body class="printable-crossword">
+        <h1 class="printable-crossword__title">
+            @(crosswordPage.crossword.creator match {
+                case Some(creator) => s"${crosswordPage.crossword.name} set by ${creator.name}"
+                case None          => s"${crosswordPage.crossword.name}"
+            })
+        </h1>
+
+        @crosswordPage.crossword.instructions.map { instructions =>
+            <h2 class="printable-crossword__instructions">
+                <strong>Special instructions:</strong> @instructions
+            </h2>
+        }
+
+        <div class="printable-crossword__grid">@svg</div>
+
+        <div class="printable-crossword__clues">
+            <h3 class="printable-crossword__clues__title">Across</h3>
+
+            <ul class="printable-crossword__clues__list">
+                @crosswordPage.crossword.acrossEntries.map(printableCrosswordClue.render)
+            </ul>
+        </div>
+
+        <div class="printable-crossword__clues">
+            <h3 class="printable-crossword__clues__title">Down</h3>
+
+            <ul class="printable-crossword__clues__list">
+                @crosswordPage.crossword.downEntries.map(printableCrosswordClue.render)
+            </ul>
+        </div>
+
+        <div class="printable-crossword__copyright">
+            <hr />
+            <small>&copy; @year Guardian News and Media Limited or its affiliated companies. All rights reserved.</small>
+        </div>
+    </body>
+</html>

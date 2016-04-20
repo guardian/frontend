@@ -1,5 +1,6 @@
 package model.diagnostics.css
 
+import model.diagnostics.CSSDynamoDbReport
 import play.api.libs.json._
 
 object CssReport {
@@ -21,9 +22,7 @@ case class CssReport(
 object Css extends common.Logging {
   def report(requestBody: JsValue): Unit = {
     requestBody.validate[CssReport] match {
-      case JsSuccess(report, _) =>
-        log.info("\n" + report.toString)
-        DynamoDbReport.report(report)
+      case JsSuccess(report, _) => CSSDynamoDbReport.report(report)
       case JsError(e) => throw new Exception(JsError.toJson(e).toString())
     }
   }

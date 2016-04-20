@@ -1,7 +1,7 @@
 package model
 
 case class AudioPlayer(
-  audio: Content,
+  audio: ContentType,
   audioElement: AudioElement,
   title: String,
   autoPlay: Boolean

@@ -1,4 +1,5 @@
-@(env: String, lastModified: Long)(implicit flash: Flash)
+@import conf.switches.Switch
+@(env: String, lastModified: Long)(implicit flash: Flash, request: RequestHeader)
 
 @import controllers.admin.routes.UncachedAssets
 
@@ -16,16 +17,24 @@
     <form id="switchboard" action="/dev/switchboard" method="POST">
         <input type="hidden" name="lastModified" value="@lastModified" />
         @conf.switches.Switches.grouped.map { case (group, switches) =>
-            <h4>@group</h4>
+            <h4>@group.name</h4>
+            @for(description <- group.description){
+                <p class="sub-heading">@description</p>
+            }
             <div class="well">
                 @switches.map { switch =>
-                    <div class="checkbox">
-                        <label for="switch-@switch.name"@if(switch.expiresSoon){ class="Expiring expiry-days-@switch.daysToExpiry"}>
-                            <input id="switch-@switch.name" name="@switch.name" type="checkbox" @if(switch.isSwitchedOn) { checked="checked" }/>
-                            <strong>@switch.name</strong>
-                        </label>
-                        <span> - @switch.description<strong> @switch.daysToExpiry</strong> days left</span>
-                    </div>
+                    @defining(Switch.expiry(switch)) { expiry =>
+                        <div class="checkbox">
+                            <label for="switch-@switch.name" @if(Switch.expiry(switch).expiresSoon) {
+                                class="Expiring expiry-days-@expiry.daysToExpiry"}>
+                                <input id="switch-@switch.name" name="@switch.name" type="checkbox" @if(switch.isSwitchedOn) {
+                                    checked="checked" }/>
+                                <strong>@switch.name</strong>
+                            </label>
+                            <span> - @switch.description
+                                @expiry.daysToExpiry.map{ days => <strong> @days</strong> days left}</span>
+                        </div>
+                    }
                 }
             </div>
         }

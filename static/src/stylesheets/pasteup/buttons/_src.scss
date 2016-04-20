@@ -1,0 +1,60 @@
+$base-size: $gs-baseline / 2;
+
+/**
+ * 1. As on mobile devices we use Helvetica font which have a different baseline
+ *    we have to change line-height depending on resolution.
+ */
+@mixin button-height($button-size) {
+    height: $button-size;
+    padding: 0 ($button-size / 3);
+    margin-right: $button-size / 3;
+    line-height: $button-size - 2px; /* [1] */
+
+    .i {
+        width: $button-size;
+        height: $button-size;
+        margin: -1px (-$button-size / 3) 0;
+    }
+
+    svg {
+        width: $button-size;
+        height: $button-size;
+    }
+
+    .i-left {
+        margin-left: -($button-size / 3);
+        margin-right: 0;
+    }
+    .i-right {
+        margin-right: -($button-size / 3);
+        margin-left: 0;
+    }
+}
+
+@mixin button-height-simple($button-size) {
+    height: $button-size;
+    padding: 0 ($button-size / 3);
+    line-height: $button-size - 2px; /* [1] */
+}
+
+@mixin button-colour(
+    $fill-colour,
+    $text-colour,
+    $border-color: $fill-colour
+) {
+    color: $text-colour;
+    background-color: $fill-colour;
+    border-color: $border-color;
+}
+
+@mixin button-hover-colour(
+    $hover-colour,
+    $hover-border: $hover-colour
+) {
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: $hover-colour;
+        border-color: $hover-border;
+    }
+}

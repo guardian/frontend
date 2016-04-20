@@ -1,17 +1,26 @@
 package model
 
-import play.api.libs.json.JsValue
-import tracking.Omniture
+import play.api.libs.json.JsString
 
-class IdentityPage(id: String, webTitle: String, analyticsName: String, overridenMetadata: Option[Map[String, JsValue]] = None)
-  extends Page(id, "identity", webTitle, analyticsName) {
+case class IdentityPage(
+  id: String,
+  webTitle: String,
+  analyticsName: String,
+  returnUrl: Option[String] = None,
+  registrationType: Option[String] = None,
+  omnitureEvent: Option[String] = None) extends StandalonePage {
 
-  override def metaData: Map[String, JsValue] =
-    overridenMetadata.getOrElse(super.metaData)
-}
+  private val javascriptConfig = Seq(
+    Some("contentType" -> JsString("userid")), // For the no js omniture tracking
+    returnUrl.map("returnUrl" -> JsString(_)),
+    registrationType.map("registrationType" -> JsString(_)),
+    omnitureEvent.map("omnitureEvent" -> JsString(_))
+  ).flatten.toMap
 
-object IdentityPage {
-  def apply(id: String, webTitle: String, analyticsName: String): IdentityPage with Omniture = {
-    new IdentityPage(id, webTitle, analyticsName, None) with Omniture
-  }
+  override val metadata = MetaData.make(
+    id = id,
+    section = "identity",
+    webTitle = webTitle,
+    analyticsName = analyticsName,
+    javascriptConfigOverrides = javascriptConfig)
 }

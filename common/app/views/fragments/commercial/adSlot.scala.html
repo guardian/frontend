@@ -9,6 +9,7 @@
     contentSponsor: Option[String] = None,
     paidForContentType: Option[String] = None
 )(placeholderContent: Html)
+@import conf.switches.Switches._
 
 <div
     id="dfp-ad--@name"
@@ -23,4 +24,5 @@
     @if(outOfPage){ data-out-of-page="true" }
     @sizeMapping.map{ case(breakpoint, sizes) =>
         data-@breakpoint="@sizes.mkString("|")"
-    }>@placeholderContent</div>
+    }
+    >@placeholderContent</div>

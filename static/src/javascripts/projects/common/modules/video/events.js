@@ -4,25 +4,27 @@ define([
     'qwery',
     'common/utils/report-error',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/template',
     'common/modules/analytics/omnitureMedia',
     'common/modules/onward/history',
-    'text!common/views/ui/video-ads-skip-overlay.html'
+    'text!common/views/ui/video-ads-skip-overlay.html',
+    'lodash/arrays/indexOf',
+    'lodash/functions/throttle'
 ], function (
     bean,
     qwery,
     reportError,
     $,
-    _,
     config,
     detect,
     template,
     OmnitureMedia,
     history,
-    adsSkipOverlayTmpl
+    adsSkipOverlayTmpl,
+    indexOf,
+    throttle
 ) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
         isEmbed = !!guardian.isEmbed,
@@ -79,26 +81,18 @@ define([
     }
 
     function bindPrerollEvents(player) {
-        var preRollPlay = false,
-        events = {
+        var events = {
             end: function () {
-                if (preRollPlay) {
-                    player.trigger(constructEventName('preroll:end', player));
-                }
-                player.removeClass('vjs-ad-playing--vpaid');
+                player.trigger(constructEventName('preroll:end', player));
                 bindContentEvents(player, true);
             },
             start: function () {
                 var duration = player.duration();
                 if (duration) {
-                    preRollPlay = true;
                     player.trigger(constructEventName('preroll:play', player));
                 } else {
                     player.one('durationchange', events.start);
                 }
-            },
-            vpaidStarted: function () {
-                player.addClass('vjs-ad-playing--vpaid');
             },
             ready: function () {
                 player.trigger(constructEventName('preroll:ready', player));
@@ -106,22 +100,26 @@ define([
                 player.one('adstart', events.start);
                 player.one('adend', events.end);
 
-                // Handle custom event to understand when vpaid is playing;
-                // there is a lag between 'adstart' and 'Vpaid::AdStarted'.
-                player.one('Vpaid::AdStarted', events.vpaidStarted);
-
                 if (shouldAutoPlay(player)) {
                     player.play();
                 }
             }
+        },
+        adFailed = function () {
+            bindContentEvents(player);
+            if (shouldAutoPlay(player)) {
+                player.play();
+            }
+            // Remove both handlers, because this adFailed handler should only happen once.
+            player.off('adtimeout', adFailed);
+            player.off('adserror', adFailed);
         };
+
         player.one('adsready', events.ready);
 
-        //If no preroll avaliable or preroll fails, cancel ad framework and init content tracking
-        player.one('adtimeout', function () {
-            player.trigger('adscanceled');
-            bindContentEvents(player);
-        });
+        //If no preroll avaliable or preroll fails, cancel ad framework and init content tracking.
+        player.one('adtimeout', adFailed);
+        player.one('adserror', adFailed);
     }
 
     function kruxTracking(player, event) {
@@ -130,7 +128,7 @@ define([
         ///music/video/2015/aug/31/vmas-2015-highlights-video
 
 
-        if (config.switches.kruxVideoTracking && config.switches.krux && $(player.el()).attr('data-media-id') && _.indexOf(desiredVideos, $(player.el()).attr('data-media-id')) !== -1) {
+        if (config.switches.kruxVideoTracking && config.switches.krux && $(player.el()).attr('data-media-id') && indexOf(desiredVideos, $(player.el()).attr('data-media-id')) !== -1) {
             if (event === 'videoPlaying') {
                 //Krux is a global object loaded by krux.js file
 
@@ -176,7 +174,7 @@ define([
                 player.trigger(constructEventName('content:ready', player));
 
                 player.one('play', events.play);
-                player.on('timeupdate', _.throttle(events.timeupdate, 1000));
+                player.on('timeupdate', throttle(events.timeupdate, 1000));
                 player.one('ended', events.end);
 
                 if (shouldAutoPlay(player)) {
@@ -227,7 +225,6 @@ define([
                     }
                 },
                 skip: function () {
-                    // jscs:disable disallowDanglingUnderscores
                     $('.js-ads-skip', this.el()).hide();
                     this.trigger(constructEventName('preroll:skip', this));
                     // in lieu of a 'skip' api, rather hacky way of achieving it
@@ -240,14 +237,16 @@ define([
 
                     $(this.el()).append(skipButton);
                     intervalId = setInterval(events.update.bind(this), 250);
-                    this.one(constructEventName('content:play', this), function () {
-                        $('.js-ads-skip', this.el()).hide();
-                        window.clearInterval(intervalId);
-                    });
+
+                },
+                end: function () {
+                    $('.js-ads-skip', this.el()).hide();
+                    window.clearInterval(intervalId);
                 }
             };
 
         this.one(constructEventName('preroll:play', this), events.init.bind(this));
+        this.one(constructEventName('preroll:end', this), events.end.bind(this));
     }
 
     function beaconError(err) {

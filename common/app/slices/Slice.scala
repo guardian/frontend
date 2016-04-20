@@ -360,6 +360,43 @@ case object QuarterQuarterHl3 extends Slice {
   )
 }
 
+/* .________.________._________________.
+ * |                 |########|########|
+ * |_________________|########|########|
+ * |_________________|        |        |
+ * |_________________|________|________|
+ */
+case object Hl3QuarterQuarter extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "hl3-q-q",
+    columns = Seq(
+      Rows(
+        colSpan = 2,
+        columns = 1,
+        rows = 3,
+        ItemClasses(
+          mobile = ListItem,
+          tablet = MediaList
+        )
+      ),
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = MediaList,
+          tablet = Standard
+        )
+      ),
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = MediaList,
+          tablet = Standard
+        )
+      )
+    )
+  )
+}
+
 /* ._________________.________.________.
  * |_________________|########|########|
  * |_________________|########|########|

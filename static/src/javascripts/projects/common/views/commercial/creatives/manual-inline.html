@@ -1,4 +1,4 @@
-<div class="commercial <%=Toneclass%> commercial--v-high" role="complementary" data-link-name="creative | manual inline | <%=omniture_id%>">
+<div class="commercial <%=Toneclass%> commercial--v-high" role="complementary" data-link-name="merchandising | creative | manual inline | <%=omniture_id%>">
     <div class="commercial--v-high__header">
         <h3 class="commercial__title">
             <a href="<%=clickMacro%><%=base_url%>" data-link-name="title">
@@ -10,10 +10,8 @@
         <a href="<%=clickMacro%><%=offer_url%>" class="lineitem__link" data-link-name="offer">
             <img class="lineitem__image" src="<%=offer_image%>" alt="" />
             <h4 class="lineitem__title"><%=offer_title%></h4>
+            <p class="lineitem__meta"><%=offer_meta%></p>
         </a>
-        <p class="lineitem__meta"><%=offer_meta%></p>
-        <a href="<%=clickMacro%><%=offer_url%>" class="button button--primary button--small" data-link-name="click here">
-            Click here<%=arrowRight%>
-        </a>
+        <%=offerButton%>
     </div>
 </div>

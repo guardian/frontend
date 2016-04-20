@@ -2,8 +2,8 @@
 //--------------------------------------
 
 .element-rich-link--not-upgraded {
-    border-top: 1px dotted colour(neutral-3);
-    border-bottom: 1px dotted colour(neutral-3);
+    border-top: 1px dotted $neutral-3;
+    border-bottom: 1px dotted $neutral-3;
     margin-bottom: $gs-baseline / 1.5;
 
     @include mq(mobileLandscape) {
@@ -25,7 +25,7 @@
         font-weight: 500;
         display: block;
         padding: 0;
-        color: colour(neutral-1);
+        color: $neutral-1;
         border: 0;
         padding-bottom: $gs-baseline * 1.5;
 
@@ -34,10 +34,10 @@
         }
 
         &:before {
+            @include fs-textSans(1);
             content: 'More on this topic';
             display: block;
-            @include fs-textSans(1);
-            color: colour(neutral-2);
+            color: $neutral-2;
             padding: $gs-baseline/4 0;
         }
     }
@@ -57,18 +57,16 @@
 //----------------------------------
 
 .rich-link {
+    @include stars();
     margin: 0;
     position: relative;
     overflow: hidden;
-
-    @include stars();
 
     .stars {
         padding-top: $gs-baseline / 4;
     }
 
     a {
-        color: colour(neutral-1);
         color: inherit;
     }
 }
@@ -83,7 +81,7 @@
 }
 
 .rich-link .u-faux-block-link--hover {
-    background-color: colour(neutral-6);
+    background-color: $neutral-6;
 
     .rich-link__image-container {
         background-color: #000000;
@@ -122,7 +120,7 @@
     padding-left: $gs-gutter / 4;
 
     @include mq(tablet) {
-        .tone-comment--item.rich-link--has-byline-pic & {
+        .rich-link--has-byline-pic & {
             position: absolute;
             bottom: 0;
         }
@@ -178,7 +176,7 @@
 }
 
 .rich-link__title .inline-quote {
-    fill: colour(neutral-2);
+    fill: $neutral-2;
     svg {
         height: 14px;
         width: 23px;
@@ -220,7 +218,8 @@
     margin: 5px $gs-gutter $gs-baseline 0;
     clear: both;
 
-    .tone-comment--item {
+    .tone-comment--item,
+    .rich-link--has-byline-pic {
         .rich-link__standfirst {
             display: none;
         }
@@ -259,13 +258,13 @@
     }
 
     @include mq(tablet) {
-        .rich-link--has-byline-pic.tone-comment--item .rich-link__container {
+        .rich-link--has-byline-pic .rich-link__container {
             padding-bottom: $gs-baseline * 10;
         }
     }
 
     @include mq(leftCol) {
-        &.element--supporting .rich-link--has-byline-pic.tone-comment--item .rich-link__container {
+        &.element--supporting .rich-link--has-byline-pic .rich-link__container {
             padding-bottom: ($gs-baseline * 2) + 8;
         }
     }
@@ -274,7 +273,9 @@
         margin-left: -1 * (gs-span(2) + $gs-gutter);
         &.element--supporting {
             width: gs-span(4);
-            .tone-comment--item {
+
+            .tone-comment--item,
+            .rich-link--has-byline-pic {
                 .rich-link__standfirst {
                     display: block;
                 }

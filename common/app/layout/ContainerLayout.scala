@@ -1,16 +1,16 @@
 package layout
 
-import com.gu.facia.api.models.FaciaContent
 import slices._
 import scalaz.std.list._
 import scalaz.syntax.traverse._
+import model.pressed.PressedContent
 
-case class IndexedTrail(faciaContent: FaciaContent, index: Int)
+case class IndexedTrail(faciaContent: PressedContent, index: Int)
 
 object ContainerLayout extends implicits.Collections {
   def apply(
       sliceDefinitions: Seq[Slice],
-      items: Seq[FaciaContent],
+      items: Seq[PressedContent],
       initialContext: ContainerLayoutContext,
       config: ContainerDisplayConfig,
       mobileShowMore: MobileShowMore
@@ -50,7 +50,7 @@ object ContainerLayout extends implicits.Collections {
   def singletonFromContainerDefinition(
     containerDefinition: ContainerDefinition,
     config: ContainerDisplayConfig,
-    items: Seq[FaciaContent]
+    items: Seq[PressedContent]
   ) = fromContainerDefinition(
     containerDefinition,
     ContainerLayoutContext.empty,
@@ -62,7 +62,7 @@ object ContainerLayout extends implicits.Collections {
       containerDefinition: ContainerDefinition,
       containerLayoutContext: ContainerLayoutContext,
       config: ContainerDisplayConfig,
-      items: Seq[FaciaContent]
+      items: Seq[PressedContent]
   ) = apply(
       containerDefinition.slices,
       items,
@@ -75,7 +75,7 @@ object ContainerLayout extends implicits.Collections {
       container: Container,
       containerLayoutContext: ContainerLayoutContext,
       config: ContainerDisplayConfig,
-      items: Seq[FaciaContent]
+      items: Seq[PressedContent]
   ) =
     ContainerDefinition.fromContainer(container, items) map {
       case definition: ContainerDefinition =>

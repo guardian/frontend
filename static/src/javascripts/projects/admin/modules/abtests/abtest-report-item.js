@@ -4,23 +4,25 @@
  Description: Displays information about a single test
  */
 define([
-    'common/utils/_',
     'common/modules/component',
     'admin/modules/abtests/participation',
     'bonzo',
     'qwery',
-    'bean'
+    'bean',
+    'lodash/objects/assign',
+    'lodash/objects/clone'
 ], function (
-    _,
     Component,
     Participation,
     bonzo,
     qwery,
-    bean
+    bean,
+    assign,
+    clone
 ) {
 
     function ABTestReportItem(config) {
-        this.config = _.extend(_.clone(this.config), config);
+        this.config = assign(clone(this.config), config);
         if (window.abCharts) {
             this.chart = window.abCharts['ab' + this.config.test.id];
         }
@@ -37,7 +39,7 @@ define([
     ABTestReportItem.prototype.componentClass = 'abtest-item';
     ABTestReportItem.prototype.useBem = true;
 
-    ABTestReportItem.prototype.renderChart = function() {
+    ABTestReportItem.prototype.renderChart = function () {
         if (this.chart) {
             new google.visualization.LineChart(this.getElem('chart'))
                 .draw(google.visualization.arrayToDataTable(this.chart.data), {
@@ -64,7 +66,7 @@ define([
         }
     };
 
-    ABTestReportItem.prototype.prerender = function() {
+    ABTestReportItem.prototype.prerender = function () {
 
         this.elem.className += this.config.active ? ' abtest-item--active' : ' abtest-item--expired';
         this.elem.setAttribute('data-abtest-name', this.config.test.id);
@@ -92,12 +94,12 @@ define([
         participation.render(this.getElem('participation'));
     };
 
-    ABTestReportItem.prototype.ready = function() {
+    ABTestReportItem.prototype.ready = function () {
         if (this.chart) {
             var redraw = this.renderChart.bind(this);
             redraw();
             var timerid;
-            bean.on(window, 'resize', function() {
+            bean.on(window, 'resize', function () {
                 if (timerid) { window.clearTimeout(timerid); }
                 timerid = window.setTimeout(redraw, 150);
             });

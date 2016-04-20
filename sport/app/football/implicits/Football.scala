@@ -1,44 +1,44 @@
 package implicits
 
-import pa._
-import org.joda.time.{ DateTime, LocalDate }
+import football.model.FootballMatchTrail
 import model._
+import org.joda.time.LocalDate
+import pa._
 import views.MatchStatus
-import com.gu.contentapi.client.model.{Content => ApiContent}
+import scala.language.implicitConversions
 
 trait Football extends Collections {
-
 
   implicit class MatchSeq2Sorted(matches: Seq[FootballMatch]) {
     lazy val sortByDate = matches.sortBy(m => (m.date.getMillis, m.homeTeam.name))
   }
 
-  implicit class Content2minByMin(c: Content) {
-    lazy val minByMin = c.tags.exists(_.id == "tone/minutebyminute")
+  implicit class Content2minByMin(c: ContentType) {
+    lazy val minByMin = c.tags.tags.exists(_.id == "tone/minutebyminute")
   }
 
-  implicit class Content2matchReport(c: Content) {
-    lazy val matchReport = c.tags.exists(_.id == "tone/matchreports")
+  implicit class Content2matchReport(c: ContentType) {
+    lazy val matchReport = c.tags.tags.exists(_.id == "tone/matchreports")
   }
 
-  implicit class Content2squadSheet(c: Content) {
-    lazy val squadSheet = c.tags.exists(_.id == "football/series/squad-sheets")
+  implicit class Content2squadSheet(c: ContentType) {
+    lazy val squadSheet = c.tags.tags.exists(_.id == "football/series/squad-sheets")
   }
 
-  implicit class Content2preview(c: Content) {
-    lazy val preview = c.tags.exists(_.id == "football/series/match-previews")
+  implicit class Content2preview(c: ContentType) {
+    lazy val preview = c.tags.tags.exists(_.id == "football/series/match-previews")
   }
 
-  implicit class Match2StatusSummary(m: FootballMatch) {
+  implicit def match2Trail(m: FootballMatch): FootballMatchTrail = {
+    FootballMatchTrail.toTrail(m)
+  }
+
+  implicit class MatchHelpers(m: FootballMatch) {
+
     lazy val statusSummary = StatusSummary(s"${m.homeTeam.name} v ${m.awayTeam.name}",
       MatchStatus(m.matchStatus).toString, m.homeTeam.score, m.awayTeam.score)
-  }
 
-  implicit class Match2isOn(m: FootballMatch) {
     def isOn(date: LocalDate) = m.date.isAfter(date) && m.date.isBefore(date.plusDays(1))
-  }
-
-  implicit class Match2status(m: FootballMatch) {
 
     //results and fixtures do not actually have a status field in the API
     lazy val matchStatus = m match {
@@ -59,53 +59,18 @@ trait Football extends Collections {
       case m: MatchDay => m.result
       case _ => false
     }
-  }
 
-  implicit class Match2nations(m: FootballMatch) {
+    lazy val hasStarted = m.isLive || m.isResult
+
+    val smartUrl: String = MatchUrl.smartUrl(m)
+
+    def hasTeam(teamId: String) = m.homeTeam.id == teamId || m.awayTeam.id == teamId
+
     // England, Scotland, Wales, N. Ireland or Rep. Ireland
     lazy val isHomeNationGame = {
       val homeNations = Seq("497", "630", "964", "494", "499")
       homeNations.contains(m.homeTeam.id) || homeNations.contains(m.awayTeam.id)
     }
-  }
-
-  implicit class Match2hasTeam(m: FootballMatch) {
-    def hasTeam(teamId: String) = m.homeTeam.id == teamId || m.awayTeam.id == teamId
-  }
-
-  implicit class Match2Trail(m: FootballMatch) extends Trail {
-    private def text = if (m.isFixture) {
-      s"${m.homeTeam.name} v ${m.awayTeam.name}"
-    } else {
-      val homeScore = m.homeTeam.score.getOrElse(0)
-      val awayScore = m.awayTeam.score.getOrElse(0)
-      s"${m.homeTeam.name} $homeScore - $awayScore ${m.awayTeam.name}"
-    }
-
-    override def linkText: String = text
-    override def headline: String = text
-    override def trailText: Option[String] = text
-
-    override lazy val isLive: Boolean = m match {
-      case matchDay: MatchDay => matchDay.liveMatch
-      case _ => false
-    }
-
-    override lazy val thumbnail: Option[ImageElement] = None
-    override lazy val mainPicture = None
-    override lazy val url: String = MatchUrl(m)
-    lazy val smartUrl: String = MatchUrl.smartUrl(m)
-    override lazy val webUrl: String = ""
-    override lazy val section: String = "football"
-    override lazy val webPublicationDate: DateTime = m.date
-    override lazy val sectionName: String = "Football"
-    override lazy val mainVideo: Option[VideoElement] = None
-    lazy val snapUri: Option[String] = None
-    lazy val snapType: Option[String] = None
-  }
-
-  implicit class Match2hasStarted(m: FootballMatch) {
-    lazy val hasStarted = m.isLive || m.isResult
   }
 
   implicit class TeamHasScored(t: MatchDayTeam) {

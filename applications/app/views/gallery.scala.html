@@ -1,9 +1,9 @@
-@(gallery: model.Gallery, related: RelatedContent, index: Int)(implicit request: RequestHeader)
+@(gallery: GalleryPage, related: RelatedContent, index: Int)(implicit request: RequestHeader)
 
 @import model.RelatedContent
 
 @main(gallery){ }{
 
-    @fragments.galleryBody(gallery, related, index)
+    @fragments.galleryBody(gallery.item, related, index)
 
 }

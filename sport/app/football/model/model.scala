@@ -6,7 +6,6 @@ import pa.LeagueTableEntry
 import pa.MatchDayTeam
 import java.awt.Color
 
-
 case class Competition(
     id: String,
     url: String,

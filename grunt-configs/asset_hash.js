@@ -1,4 +1,4 @@
-module.exports = function(grunt, options) {
+module.exports = function (grunt, options) {
     return {
         options: {
             assetMap: options.staticHashDir + 'assets/assets.map',

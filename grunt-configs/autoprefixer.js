@@ -1,4 +1,4 @@
-module.exports = function(grunt, options) {
+module.exports = function (grunt, options) {
     var dir = options.staticTargetDir + 'stylesheets/';
     return {
         modern: {
@@ -35,5 +35,5 @@ module.exports = function(grunt, options) {
                 browsers: ['Explorer 9']
             }
         }
-    }
+    };
 };

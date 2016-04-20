@@ -1,0 +1,16 @@
+{
+    "plugins": [
+        "jasmine"
+    ],
+    "env": {
+        "jasmine": true,
+        "amd": true,
+        "browser": true
+    },
+    "rules": {
+        // Overrides old
+        "camelcase": 2,
+        "no-shadow": 2
+    },
+    "globals": { "sinon": true }
+}

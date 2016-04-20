@@ -12,14 +12,17 @@ import play.api.GlobalSettings
 import services.EmailService
 import tools.{CloudWatch, LoadBalancer}
 
+import scala.concurrent.Future
+
 trait AdminLifecycle extends GlobalSettings with Logging {
 
   lazy val adminPressJobStandardPushRateInMinutes: Int = Configuration.faciatool.adminPressJobStandardPushRateInMinutes
   lazy val adminPressJobHighPushRateInMinutes: Int = Configuration.faciatool.adminPressJobHighPushRateInMinutes
   lazy val adminPressJobLowPushRateInMinutes: Int = Configuration.faciatool.adminPressJobLowPushRateInMinutes
   lazy val adminRebuildIndexRateInMinutes: Int = Configuration.indexes.adminRebuildIndexRateInMinutes
+  lazy val r2PagePressRateInSeconds: Int = Configuration.r2Press.pressRateInSeconds
 
-  private def scheduleJobs() {
+  private def scheduleJobs(): Unit = {
 
     //every 0, 30 seconds past the minute
     Jobs.schedule("AdminLoadJob", "0/30 * * * * ?") {
@@ -36,6 +39,10 @@ trait AdminLifecycle extends GlobalSettings with Logging {
       FastlyCloudwatchLoadJob.run()
     }
 
+    Jobs.scheduleEveryNSeconds("R2PagePressJob", r2PagePressRateInSeconds) {
+      R2PagePressJob.run()
+    }
+
     //every 2, 17, 32, 47 minutes past the hour, on the 12th second past the minute (e.g 13:02:12, 13:17:12)
     Jobs.schedule("AnalyticsSanityCheckJob", "12 2/15 * * * ?") {
       AnalyticsSanityCheckJob.run()
@@ -43,23 +50,21 @@ trait AdminLifecycle extends GlobalSettings with Logging {
 
     Jobs.scheduleEveryNMinutes("FrontPressJobHighFrequency", adminPressJobHighPushRateInMinutes) {
       if(FrontPressJobSwitch.isSwitchedOn) RefreshFrontsJob.runFrequency(HighFrequency)
+      Future.successful(())
     }
 
     Jobs.scheduleEveryNMinutes("FrontPressJobStandardFrequency", adminPressJobStandardPushRateInMinutes) {
       if(FrontPressJobSwitchStandardFrequency.isSwitchedOn) RefreshFrontsJob.runFrequency(StandardFrequency)
+      Future.successful(())
     }
 
     Jobs.scheduleEveryNMinutes("FrontPressJobLowFrequency", adminPressJobLowPushRateInMinutes) {
       if(FrontPressJobSwitch.isSwitchedOn) RefreshFrontsJob.runFrequency(LowFrequency)
+      Future.successful(())
     }
 
     Jobs.schedule("RebuildIndexJob", s"9 0/$adminRebuildIndexRateInMinutes * 1/1 * ? *") {
       RebuildIndexJob.run()
-    }
-
-    // every 1, 31 minutes past the hour, 14 seconds past the minute (e.g 13:01:14, 13:31:14)
-    Jobs.schedule("TravelOffersCacheJob", "14 1/30 * * * ? *") {
-      TravelOffersCacheJob.run()
     }
 
     // every minute, 22 seconds past the minute (e.g 13:01:22, 13:02:22)
@@ -69,14 +74,14 @@ trait AdminLifecycle extends GlobalSettings with Logging {
 
     if (environment.isProd) {
       val londonTime = TimeZone.getTimeZone("Europe/London")
-      Jobs.schedule("AdsStatusEmailJob", "0 44 8 ? * MON-FRI", londonTime) {
+      Jobs.scheduleWeekdayJob("AdsStatusEmailJob", 44, 8, londonTime) {
         AdsStatusEmailJob.run()
       }
-      Jobs.schedule("ExpiringAdFeaturesEmailJob", "0 47 8 ? * MON-FRI", londonTime) {
+      Jobs.scheduleWeekdayJob("ExpiringAdFeaturesEmailJob", 47, 8, londonTime) {
         log.info(s"Starting ExpiringAdFeaturesEmailJob")
         ExpiringAdFeaturesEmailJob.run()
       }
-      Jobs.schedule("ExpiringSwitchesEmailJob", "0 48 8 ? * MON-FRI", londonTime) {
+      Jobs.scheduleWeekdayJob("ExpiringSwitchesEmailJob", 48, 8, londonTime) {
         log.info(s"Starting ExpiringSwitchesEmailJob")
         ExpiringSwitchesEmailJob.run()
       }
@@ -90,13 +95,13 @@ trait AdminLifecycle extends GlobalSettings with Logging {
 
   }
 
-  private def descheduleJobs() {
+  private def descheduleJobs(): Unit = {
     Jobs.deschedule("AdminLoadJob")
     Jobs.deschedule("LoadBalancerLoadJob")
     Jobs.deschedule("FastlyCloudwatchLoadJob")
+    Jobs.deschedule("R2PagePressJob")
     Jobs.deschedule("AnalyticsSanityCheckJob")
     Jobs.deschedule("FrontPressJob")
-    Jobs.deschedule("TravelOffersCacheJob")
     Jobs.deschedule("RebuildIndexJob")
     Jobs.deschedule("MatchDayRecorderJob")
     Jobs.deschedule("SentryReportJob")
@@ -109,19 +114,18 @@ trait AdminLifecycle extends GlobalSettings with Logging {
     Jobs.deschedule("ExpiringSwitchesEmailJob")
   }
 
-  override def onStart(app: play.api.Application) {
+  override def onStart(app: play.api.Application): Unit = {
     super.onStart(app)
     descheduleJobs()
     scheduleJobs()
 
     AkkaAsync {
       RebuildIndexJob.run()
-      TravelOffersCacheJob.run()
       VideoEncodingsJob.run()
     }
   }
 
-  override def onStop(app: play.api.Application) {
+  override def onStop(app: play.api.Application): Unit = {
     descheduleJobs()
     CloudWatch.shutdown()
     EmailService.shutdown()

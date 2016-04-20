@@ -1,4 +1,4 @@
-@(metaData: model.MetaData, navigation: Seq[common.NavItem])(implicit request: RequestHeader)
+@(page: model.Page, navigation: Seq[common.NavItem])(implicit request: RequestHeader)
 
 @import _root_.common._
 
@@ -12,7 +12,7 @@
             <span class="u-h">home</span>
         </a>
     </li>
-    @defining(Navigation.topLevelItem(navigation, metaData)){ topSection =>
+    @defining(Navigation.topLevelItem(navigation, page)){ topSection =>
         @defining(Edition(request).briefNav) { briefNav =>
             @briefNav.filterNot(Navigation.isEditionFront(_)).map{ nav =>
                 <li class="@RenderClasses(Map(
@@ -21,7 +21,7 @@
                     ))">
                     <a class="top-navigation__action" href="@LinkTo(nav.name.href)" data-link-name="nav : primary : @nav.name.title">
                         @Html(nav.name.title)
-                        @if(nav.currentFor(metaData)){
+                        @if(nav.currentFor(page)){
                             <span class="u-h">selected</span>
                         }
                     </a>

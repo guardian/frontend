@@ -7,7 +7,7 @@ import services.IndexPage
 
 object RssController extends IndexControllerCommon {
   override protected def renderFaciaFront(model: IndexPage)(implicit request: RequestHeader): Result = Cached(model.page) {
-    Ok(TrailsToRss(model.page, model.trails))
+    Ok(TrailsToRss(model.page.metadata, model.trails.map(_.trail)))
       .as("text/xml; charset=utf-8")
   }
 }

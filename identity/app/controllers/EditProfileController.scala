@@ -12,11 +12,16 @@ import play.api.data.Form
 import play.api.i18n.{ MessagesApi, I18nSupport }
 import play.api.mvc.{AnyContent, Controller, Request}
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
-import services.{IdentityRequest, _}
-import tracking.{Omniture, TrackingParams}
+import services._
+import tracking.Omniture
 import utils.SafeLogging
 
 import scala.concurrent.Future
+
+sealed trait EditProfilePage
+case object PublicEditProfilePage extends EditProfilePage
+case object AccountEditProfilePage extends EditProfilePage
+case object PrivacyEditProfilePage extends EditProfilePage
 
 @Singleton
 class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
@@ -28,33 +33,53 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
 
   import authenticatedActions._
 
-  type OmniPage = IdentityPage with Omniture
-
   protected val accountPage = IdentityPage("/account/edit", "Edit Account Details", "edit account details")
   protected val publicPage = IdentityPage("/public/edit", "Edit Public Profile", "edit public profile")
   protected val membershipPage = IdentityPage("/membership/edit", "Membership", "edit membership details")
+  protected val digitalPackPage = IdentityPage("/digitalpack/edit", "Digital Pack", "edit digital pack details")
+  protected val privacyPage = IdentityPage("/privacy/edit", "Privacy", "edit privacy details")
 
   def displayPublicProfileForm = displayForm(publicPage)
   def displayAccountForm = displayForm(accountPage)
   def displayMembershipForm = displayForm(membershipPage)
+  def displayDigitalPackForm = displayForm(digitalPackPage)
+  def displayPrivacyForm = displayForm(privacyPage)
 
-  protected def displayForm(page: OmniPage) = CSRFAddToken {
+  protected def displayForm(page: IdentityPage) = CSRFAddToken {
     recentlyAuthenticated.async { implicit request =>
-      profileFormsView(page.tracking, ProfileForms(request.user, false))
+      profileFormsView(Omniture.tracking(page,idRequestParser(request)), ProfileForms(request.user, PublicEditProfilePage))
     }
   }
 
   def submitPublicProfileForm() = submitForm(publicPage)
   def submitAccountForm() = submitForm(accountPage)
+  def submitPrivacyForm() = submitForm(privacyPage)
 
-  def submitForm(page: OmniPage) = CSRFCheck {
+  def identifyActiveSubmittedForm(page: IdentityPage): EditProfilePage =
+    if(page == publicPage)
+      PublicEditProfilePage
+    else if(page == accountPage)
+      AccountEditProfilePage
+    else
+      PrivacyEditProfilePage
+
+  def submitForm(page: IdentityPage) = CSRFCheck {
     authActionWithUser.async {
       implicit request =>
+        val activePage = identifyActiveSubmittedForm(page)
         val idRequest = idRequestParser(request)
         val user = request.user
-        val forms = ProfileForms(user, page == publicPage).bindFromRequest(request)
+        val forms = ProfileForms(user, activePage).bindFromRequest(request)
         val futureFormOpt = forms.activeForm.value map {
-          data: UserFormData =>
+          case data: AccountFormData if (data.deleteTelephone) => {
+            identityApiClient.deleteTelephone(user.auth) map {
+              case Left(errors) => forms.withErrors(errors)
+              case Right(_) => {
+                forms.bindForms(user.user.copy(privateFields = user.user.privateFields.copy(telephoneNumber = None)))
+              }
+            }
+          }
+          case data: UserFormData =>
             identityApiClient.saveUser(user.id, data.toUserUpdate(user), user.auth) map {
               case Left(errors) =>
                 forms.withErrors(errors)
@@ -66,26 +91,32 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
         val futureForms = futureFormOpt getOrElse Future.successful(forms)
         futureForms flatMap {
           forms =>
-            profileFormsView(page.accountEdited, forms)
+            profileFormsView(Omniture.accountEdited(page, idRequest), forms)
         }
     }
   }
 
-  def profileFormsView(pageWithTrackingParamsFor: IdentityRequest => IdentityPage with TrackingParams, forms: ProfileForms)(implicit request: AuthRequest[AnyContent]) = {
+  def profileFormsView(pageWithTrackingParams: IdentityPage, forms: ProfileForms)(implicit request: AuthRequest[AnyContent]) = {
     val idRequest = idRequestParser(request)
     val user = request.user
 
     Future(NoCache(Ok(views.html.profileForms(
-           pageWithTrackingParamsFor(idRequest),
+           pageWithTrackingParams,
            user, forms, idRequest, idUrlBuilder))))
   }
 }
 
-case class ProfileForms(publicForm: Form[ProfileFormData], accountForm: Form[AccountFormData], isPublicFormActive: Boolean)
+case class ProfileForms(publicForm: Form[ProfileFormData], accountForm: Form[AccountFormData], privacyForm: Form[PrivacyFormData], activePage: EditProfilePage)
   extends ProfileMapping
-  with AccountDetailsMapping {
+  with AccountDetailsMapping
+  with PrivacyMapping
+{
 
-  lazy val activeForm = if(isPublicFormActive) publicForm else accountForm
+  lazy val activeForm = activePage match {
+    case PublicEditProfilePage => publicForm
+    case AccountEditProfilePage => accountForm
+    case PrivacyEditProfilePage => privacyForm
+  }
 
   def bindFromRequest(implicit request: Request[_]) = update {
     form =>
@@ -100,7 +131,8 @@ case class ProfileForms(publicForm: Form[ProfileFormData], accountForm: Form[Acc
   def bindForms(user: User): ProfileForms = {
     copy(
       publicForm = profileMapping.bindForm(user),
-      accountForm = accountDetailsMapping.bindForm(user)
+      accountForm = accountDetailsMapping.bindForm(user),
+      privacyForm = privacyMapping.bindForm(user)
     )
   }
 
@@ -115,24 +147,30 @@ case class ProfileForms(publicForm: Form[ProfileFormData], accountForm: Form[Acc
     }
   }
 
-  private lazy val activeMapping = if(isPublicFormActive) profileMapping else accountDetailsMapping
+  private lazy val activeMapping = activePage match {
+    case PublicEditProfilePage => profileMapping
+    case AccountEditProfilePage => accountDetailsMapping
+    case PrivacyEditProfilePage => privacyMapping
+  }
 
   private def update(change: (Form[_ <: UserFormData]) => Form[_ <: UserFormData]): ProfileForms = {
-    if(isPublicFormActive){
-      copy(publicForm = change(publicForm).asInstanceOf[Form[ProfileFormData]])
+    activePage match {
+      case PublicEditProfilePage => copy(publicForm = change(publicForm).asInstanceOf[Form[ProfileFormData]])
+      case AccountEditProfilePage => copy(accountForm = change(accountForm).asInstanceOf[Form[AccountFormData]])
+      case PrivacyEditProfilePage => copy(privacyForm = change(privacyForm).asInstanceOf[Form[PrivacyFormData]])
     }
-    else
-      copy(accountForm = change(accountForm).asInstanceOf[Form[AccountFormData]])
   }
 }
 
 object ProfileForms
   extends ProfileMapping
-  with AccountDetailsMapping {
+  with AccountDetailsMapping
+  with PrivacyMapping {
 
-  def apply(user: User, isPublicFormActive: Boolean): ProfileForms = ProfileForms(
+  def apply(user: User, activePage: EditProfilePage): ProfileForms = ProfileForms(
     publicForm = profileMapping.bindForm(user),
     accountForm = accountDetailsMapping.bindForm(user),
-    isPublicFormActive = isPublicFormActive
+    privacyForm = privacyMapping.bindForm(user),
+    activePage = activePage
   )
 }

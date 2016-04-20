@@ -1,13 +1,11 @@
 /* global guardian, s */
 define([
-    'common/utils/_',
+    'qwery',
     'common/utils/config',
-    'qwery'
-], function (
-    _,
-    config,
-    qwery
-) {
+    'common/modules/analytics/omniture',
+    'lodash/objects/values',
+    'common/utils/chain'
+], function (qwery, config, omniture, values, chain) {
 
     function OmnitureMedia(player) {
 
@@ -24,12 +22,11 @@ define([
             isEmbed = !!guardian.isEmbed,
             events = {
                 // this is the expected ordering of events
-                'video:request': 'event98',
+                'video:play': 'event17',
                 'preroll:request': 'event97',
                 'preroll:play': 'event59',
                 'preroll:skip': 'event99',
                 'preroll:end': 'event64',
-                'video:play': 'event17',
                 'audio:play': 'event19',
                 'video:25': 'event21',
                 'video:50': 'event22',
@@ -39,7 +36,16 @@ define([
                 'video:fullscreen': 'event96',
                 // extra events with no set ordering
                 duration: 'event57'
-            };
+            },
+            trackingVars = [
+                // these tracking vars are specific to media events.
+                'eVar11',   // embedded or on platform
+                'prop41',   // preroll milestone
+                'prop43',   // media type
+                'prop44',   // media id
+                'eVar44',   // media id
+                'eVar74',   // ad or content
+                'eVar61'];  // restricted
 
         this.getDuration = function () {
             return parseInt(getAttribute('data-duration'), 10) || undefined;
@@ -62,6 +68,7 @@ define([
         };
 
         this.sendEvent = function (event, eventName, ad) {
+            omniture.populateEventProperties(eventName || event);
             s.eVar74 = ad ?  mediaType + ' ad' : mediaType + ' content';
 
             // Set these each time because they are shared global variables, but OmnitureMedia is instanced.
@@ -71,11 +78,11 @@ define([
                 // Any event after 'video:preroll:play' should be tagged with this value.
                 s.prop41 = 'PrerollMilestone';
             }
-            s.linkTrackVars = 'events,eVar11,prop41,eVar43,prop43,eVar44,prop44,prop9,channel';
-            s.linkTrackEvents = _.values(events).join(',');
-            s.events = event;
+            s.linkTrackVars += ',' + chain(trackingVars).join(',');
+            s.linkTrackEvents +=  ',' + values(events).join(',');
+            s.events += ',' + event;
             s.tl(true, 'o', eventName || event);
-            s.prop41 = s.eVar44 = s.prop44 = s.eVar43 = s.prop43 = undefined;
+            s.prop41 = s.eVar44 = s.prop44 = s.eVar43 = s.prop43 = s.eVar74 = undefined;
         };
 
         this.sendNamedEvent = function (eventName, ad) {
@@ -86,19 +93,15 @@ define([
             s.loadModule('Media');
             s.Media.autoTrack = false;
             s.Media.trackWhilePlaying = false;
-            s.Media.trackVars = 'events,eVar7,eVar43,eVar44,prop44,eVar47,eVar61,channel';
-            s.Media.trackEvents = 'event17,event18,event19,event20,event21,event22,event23,event57,event59,event64,event96,event97,event98';
+            s.Media.trackVars = omniture.getStandardProps() + ',' + chain(trackingVars).join(',');
+            s.Media.trackEvents = values(events).join(',');
             s.Media.segmentByMilestones = false;
             s.Media.trackUsingContextData = false;
 
-            s.eVar11 = s.prop11 = isEmbed ? 'Embedded' : config.page.sectionName || '';
+            s.eVar11 = isEmbed ? 'Embedded' : config.page.sectionName || '';
             s.eVar7 = s.pageName;
 
             s.Media.open(mediaId, this.getDuration(), 'HTML5 Video');
-
-            if (mediaType === 'video') {
-                this.sendNamedEvent('video:request');
-            }
         };
 
         this.getDurationWatched = function () { // get the duration watched since this function was last called
@@ -168,6 +171,7 @@ define([
 
             player.one('video:preroll:request', this.sendNamedEvent.bind(this, 'preroll:request', true));
             player.one('video:preroll:play', this.onPrerollPlay.bind(this));
+            player.one('video:preroll:skip', this.sendNamedEvent.bind(this, 'preroll:skip', true));
             player.one('video:preroll:end', this.sendNamedEvent.bind(this, 'preroll:end', true));
             player.one('video:content:play', this.onContentPlay.bind(this));
             player.one('audio:content:play', this.sendNamedEvent.bind(this, 'audio:play'));

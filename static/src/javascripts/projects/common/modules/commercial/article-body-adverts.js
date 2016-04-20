@@ -1,26 +1,39 @@
 define([
-    'fastdom',
     'Promise',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
-    'common/modules/article/spacefinder',
+    'common/utils/mediator',
+    'common/modules/article/space-filler',
+    'common/modules/commercial/dfp/dfp-api',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features'
 ], function (
-    fastdom,
     Promise,
-    _,
     $,
     config,
     detect,
-    spacefinder,
+    mediator,
+    spaceFiller,
+    dfp,
     createAdSlot,
     commercialFeatures
 ) {
+
+    /* bodyAds is a counter that keeps track of the number of inline MPUs
+     * inserted dynamically. It is used to give each MPU its own ID. */
+    var bodyAds;
+    var inlineMerchRules;
+    var longArticleRules;
+
+    function boot() {
+        bodyAds = 0;
+    }
+
     function getRules() {
         return {
+            bodySelector: '.js-article__body',
+            slotSelector: ' > p',
             minAbove: detect.isBreakpoint({ max: 'tablet' }) ? 300 : 700,
             minBelow: 300,
             selectors: {
@@ -31,116 +44,112 @@ define([
         };
     }
 
-    function getLenientRules() {
-        var lenientRules = _.cloneDeep(getRules());
-        // more lenient rules, closer to the top start of the article
-        lenientRules.minAbove = 300;
-        lenientRules.selectors[' > h2'].minAbove = 20;
-        return lenientRules;
+    function getInlineMerchRules() {
+        if (!inlineMerchRules) {
+            inlineMerchRules = getRules();
+            inlineMerchRules.minAbove = 300;
+            inlineMerchRules.selectors[' > h2'].minAbove = 20;
+        }
+        return inlineMerchRules;
     }
 
     function getLongArticleRules() {
-        var newRules = _.cloneDeep(getRules());
-
-        newRules.selectors[' .ad-slot'] = {
-            minAbove: 1300,
-            minBelow: 1300
-        };
-
-        return newRules;
+        if (!longArticleRules) {
+            longArticleRules = getRules();
+            longArticleRules.selectors[' .ad-slot'].minAbove =
+            longArticleRules.selectors[' .ad-slot'].minBelow = 1300;
+        }
+        return longArticleRules;
     }
 
-    // Add new ads while there is still space
-    function getAdSpace() {
-        return spacefinder.getParaWithSpace(getLongArticleRules()).then(function (nextSpace) {
-            // check if spacefinder found another space
-            if (typeof nextSpace === 'undefined' || ads.length >= 9) {
-                return Promise.resolve(null);
-            }
-
-            // if yes add another ad and try another run
-            adNames.push(['inline' + (ads.length + 1), 'inline']);
-            return insertAdAtP(nextSpace).then(function () {
-                return getAdSpace();
-            });
+    function addInlineMerchAd(rules) {
+        spaceFiller.fillSpace(rules, function (paras) {
+            insertAdAtPara(paras[0], 'im', 'im');
         });
     }
 
-    var ads = [],
-        adNames = [['inline1', 'inline'], ['inline2', 'inline']],
-        insertAdAtP = function (para) {
-            if (para) {
-                var adName = adNames[ads.length],
-                    $ad    = $.create(createAdSlot(adName[0], adName[1]));
+    // Add new ads while there is still space
+    function addArticleAds(count, rules) {
+        return addArticleAdsRec(count, 0);
 
-                ads.push($ad);
-                return new Promise(function (resolve) {
-                    fastdom.write(function () {
-                        $ad.insertBefore(para);
-                        resolve(null);
-                    });
-                });
-            } else {
-                return Promise.resolve(null);
+        /*
+         * count:Integer is the number of adverts that should optimally inserted
+         * countAdded:Integer is the number of adverts effectively added. It is
+         * an accumulator (although no JS engine optimizes tail calls so far).
+         */
+        function addArticleAdsRec(count, countAdded) {
+            return count === 0 ?
+                Promise.resolve(countAdded) :
+                tryAddingAdvert(rules).then(onArticleAdAdded);
+
+            function onArticleAdAdded(trySuccessful) {
+                // If last attempt worked, recurse another
+                return trySuccessful ?
+                    addArticleAdsRec(count - 1, countAdded + 1) :
+                    countAdded;
             }
-        },
-        init = function () {
-            var rules, lenientRules, inlineMercPromise;
+        }
+    }
 
-            if (!commercialFeatures.articleMPUs) {
-                return false;
-            }
+    function tryAddingAdvert(rules) {
+        return spaceFiller.fillSpace(rules, insertInlineAd);
 
-            rules = getRules();
-            lenientRules = getLenientRules();
+        function insertInlineAd(paras) {
+            bodyAds += 1;
+            insertAdAtPara(paras[0], 'inline' + bodyAds, 'inline');
+        }
+    }
 
-            if (config.page.hasInlineMerchandise) {
-                adNames.unshift(['im', 'im']);
+    function insertAdAtPara(para, name, type) {
+        var $ad = $.create(createAdSlot(name, type));
+        $ad.insertBefore(para);
+    }
 
-                inlineMercPromise = spacefinder.getParaWithSpace(lenientRules).then(function (space) {
-                    return insertAdAtP(space);
-                });
-            } else {
-                inlineMercPromise = Promise.resolve(null);
-            }
+    // If a merchandizing component has been rendered but is empty,
+    // we allow a second pass for regular inline ads. This is because of
+    // the decoupling between the spacefinder algorithm and the targeting
+    // in DFP: we can only know if a slot can be removed after we have
+    // received a response from DFP
+    function onAdRendered(event) {
+        if (event.slot.getSlotElementId() === 'dfp-ad--im' && event.isEmpty) {
+            mediator.off('modules:commercial:dfp:rendered', onAdRendered);
+            return addArticleAds(2, getRules()).then(function (countAdded) {
+                return countAdded === 2 ?
+                    addArticleAds(8, getLongArticleRules()) :
+                    countAdded;
+            }).then(function () {
+                $('.ad-slot--inline').each(dfp.addSlot);
+            });
+        }
+    }
 
-            if (config.switches.viewability && detect.getBreakpoint() !== 'mobile') {
-                return inlineMercPromise.then(function () {
-                    return spacefinder.getParaWithSpace(rules).then(function (space) {
-                        return insertAdAtP(space);
-                    }).then(function () {
-                        return spacefinder.getParaWithSpace(rules).then(function (nextSpace) {
-                            return insertAdAtP(nextSpace);
-                        }).then(function () {
-                            return getAdSpace();
-                        });
-                    });
-                });
-            } else {
-                return inlineMercPromise.then(function () {
-                    return spacefinder.getParaWithSpace(rules).then(function (space) {
-                        return insertAdAtP(space);
-                    }).then(function () {
-                        if (detect.isBreakpoint({max: 'tablet'})) {
-                            return spacefinder.getParaWithSpace(rules).then(function (nextSpace) {
-                                return insertAdAtP(nextSpace);
-                            });
-                        } else {
-                            return Promise.resolve(null);
-                        }
-                    });
-                });
-            }
-        };
+    function init() {
+        if (!commercialFeatures.articleBodyAdverts) {
+            return false;
+        }
+
+        var rules = getRules();
+
+        boot();
+
+        if (config.page.hasInlineMerchandise) {
+            addInlineMerchAd(getInlineMerchRules());
+        }
+
+        return config.switches.viewability ?
+            addArticleAds(2, rules).then(function (countAdded) {
+                if (config.page.hasInlineMerchandise && countAdded === 0) {
+                    mediator.on('modules:commercial:dfp:rendered', onAdRendered);
+                }
+
+                return countAdded === 2 ?
+                    addArticleAds(8, getLongArticleRules()) :
+                    countAdded;
+            }) :
+            addArticleAds(2, rules);
+    }
 
     return {
-        init: init,
-        // rules exposed for spacefinder debugging
-        getRules: getRules,
-        getLenientRules: getLenientRules,
-
-        reset: function () {
-            ads = [];
-        }
+        init: init
     };
 });

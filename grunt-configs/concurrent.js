@@ -1,5 +1,5 @@
-module.exports = function(grunt, options) {
-    var requireJSTargets = grunt.util._.chain(require('./requirejs')(grunt, options)).keys().without('options').map(function(key){
+module.exports = function (grunt, options) {
+    var requireJSTargets = grunt.util._.chain(require('./requirejs')(grunt, options)).keys().without('options').map(function (key) {
         return 'requirejs:' + key;
     }).value();
 

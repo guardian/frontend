@@ -11,25 +11,23 @@ object Uk extends Edition(
   displayName = "UK edition",
   timezone = DateTimeZone.forID("Europe/London"),
   locale = Locale.forLanguageTag("en-gb"),
-  homePagePath = "/uk"
+  networkFrontId = "uk"
 ){
 
   implicit val UK = Uk
 
-  import Switches.RugbyWorldCupswitch
   val sportLocalNav: Seq[SectionLink] = Seq(
     football,
     cricket,
-
-    // TODO delete & replace with rugbyUnion
-    rugbyWorldCup, //rugbyunion
+    rugbyunion,
     formulaOne,
     tennis,
     golf,
     cycling,
     boxing,
     racing,
-    rugbyLeague
+    rugbyLeague,
+    usSport
   )
 
   val cultureLocalNav: Seq[SectionLink] = Seq(
@@ -108,11 +106,13 @@ object Uk extends Edition(
       NavItem(fashion),
       NavItem(environment, environmentLocalNav),
       NavItem(technology),
-      NavItem(travel, Seq(uktravel, europetravel, usTravel)),
+      NavItem(travel, Seq(uktravel, europetravel, usTravel, skiingTravel)),
       NavItem(money, Seq(property, savings, pensions, borrowing, workAndCareers)),
       NavItem(science),
+      NavItem(guardianProfessional),
       NavItem(observer),
       NavItem(todaysPaper, Seq(editorialsandletters, obituaries, g2, weekend, theGuide, saturdayreview)),
+      NavItem(sundayPaper, Seq(observerComment, observerNewReview, observerMagazine)),
       NavItem(membership),
       NavItem(crosswords, crosswordsLocalNav),
       NavItem(video)

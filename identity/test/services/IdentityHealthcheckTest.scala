@@ -10,10 +10,8 @@ import scala.concurrent.Await
 
 class IdentityHealthcheckTest extends FlatSpec with Matchers with TestWsConfig {
 
-  import play.api.Play.current
-
   "Healthchecks" should "pass" in HtmlUnit("/signin"){ _ =>
 
-    Await.result(WS.clientUrl(s"http://localhost:${HtmlUnit.port}/_healthcheck").get(), 10.seconds).status should be (200)
+    Await.result(WS.clientUrl(s"http://localhost:${HtmlUnit.port}/_healthcheck")(longTimeoutConfig).get(), 10.seconds).status should be (200)
   }
 }

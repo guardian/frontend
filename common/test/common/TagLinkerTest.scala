@@ -1,18 +1,20 @@
 package common
 
-import com.gu.contentapi.client.model.{Content => ApiContent, Tag => ApiTag}
+import com.gu.contentapi.client.model.v1.{Content => ApiContent, Tag => ApiTag, ContentFields, TagType}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
 import common.editions.Uk
-import model.Article
+import model.{Content, Article}
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.scalatest.{FlatSpec, Matchers}
+import org.scalatestplus.play.OneAppPerSuite
 import play.api.test.FakeRequest
 import views.support.TagLinker
 
 import scala.collection.JavaConversions._
 
-class TagLinkerTest extends FlatSpec with Matchers {
+class TagLinkerTest extends FlatSpec with Matchers with OneAppPerSuite {
 
   implicit val edition = Uk
   implicit val request = FakeRequest("GET", "/")
@@ -23,27 +25,27 @@ class TagLinkerTest extends FlatSpec with Matchers {
 
   "TagLinker" should "link tag at the start of the paragraph" in {
     val cleaned = new TagLinker(article(tag("sport/cycling", "Cycling"))).clean(souped("""<p>Cycling is an awesome sport.</p>"""))
-    cleaned.firstPara should be ("""<a href="/sport/cycling" data-link-name="auto-linked-tag" data-component="auto-linked-tag" class=" u-underline">Cycling</a> is an awesome sport.""")
+    cleaned.firstPara should be ("""<a href="/sport/cycling" data-link-name="auto-linked-tag" data-component="auto-linked-tag" class="u-underline">Cycling</a> is an awesome sport.""")
   }
 
   it should "link tag in the middle of the paragraph" in {
     val cleaned = new TagLinker(article(tag("sport/cycling", "Cycling"))).clean(souped("""<p>After the change in law, Cycling is an awesome sport.</p>"""))
-    cleaned.firstPara should be ("""After the change in law, <a href="/sport/cycling" data-link-name="auto-linked-tag" data-component="auto-linked-tag" class=" u-underline">Cycling</a> is an awesome sport.""")
+    cleaned.firstPara should be ("""After the change in law, <a href="/sport/cycling" data-link-name="auto-linked-tag" data-component="auto-linked-tag" class="u-underline">Cycling</a> is an awesome sport.""")
   }
 
   it should "link tag at the end of the paragraph" in {
     val cleaned = new TagLinker(article(tag("sport/cycling", "Cycling"))).clean(souped("""<p>After all that Cycling.</p>"""))
-    cleaned.firstPara should be ("""After all that <a href="/sport/cycling" data-link-name="auto-linked-tag" data-component="auto-linked-tag" class=" u-underline">Cycling</a>.""")
+    cleaned.firstPara should be ("""After all that <a href="/sport/cycling" data-link-name="auto-linked-tag" data-component="auto-linked-tag" class="u-underline">Cycling</a>.""")
   }
 
   it should "link if followed by a comma" in {
     val cleaned = new TagLinker(article(tag("sport/cycling", "Cycling"))).clean(souped("""<p>Show up to Cycling, it won't hurt.</p>"""))
-    cleaned.firstPara should be ("""Show up to <a href="/sport/cycling" data-link-name="auto-linked-tag" data-component="auto-linked-tag" class=" u-underline">Cycling</a>, it won't hurt.""")
+    cleaned.firstPara should be ("""Show up to <a href="/sport/cycling" data-link-name="auto-linked-tag" data-component="auto-linked-tag" class="u-underline">Cycling</a>, it won't hurt.""")
   }
 
   it should "link if followed by a question mark" in {
     val cleaned = new TagLinker(article(tag("sport/cycling", "Cycling"))).clean(souped("""<p>Who knows about Cycling?</p>"""))
-    cleaned.firstPara should be ("""Who knows about <a href="/sport/cycling" data-link-name="auto-linked-tag" data-component="auto-linked-tag" class=" u-underline">Cycling</a>?""")
+    cleaned.firstPara should be ("""Who knows about <a href="/sport/cycling" data-link-name="auto-linked-tag" data-component="auto-linked-tag" class="u-underline">Cycling</a>?""")
   }
 
   it should "not link as part of another word" in {
@@ -64,7 +66,12 @@ class TagLinkerTest extends FlatSpec with Matchers {
   it should "escape the tag name" in {
     val cleaned = new TagLinker(article(tag("sport/cycling", "Cycling?."))).clean(souped(
       """<p>Help with the Cycling?.</p>"""))
-    cleaned.firstPara should be ("""Help with the <a href="/sport/cycling" data-link-name="auto-linked-tag" data-component="auto-linked-tag" class=" u-underline">Cycling?.</a>""")
+    cleaned.firstPara should be ("""Help with the <a href="/sport/cycling" data-link-name="auto-linked-tag" data-component="auto-linked-tag" class="u-underline">Cycling?.</a>""")
+  }
+
+  it should "not link tags in an article pullquote" in {
+    val cleaned = new TagLinker(article(tag("sport/cycling", "Cycling"))).clean(souped("""<aside class="element-pullquote"><p>Cycling is an awesome sport.</p></aside>"""))
+    cleaned.firstPara should be ("""Cycling is an awesome sport.""")
   }
 
   it should "not link tags in articles that should be excluded from related content" in {
@@ -77,24 +84,35 @@ class TagLinkerTest extends FlatSpec with Matchers {
     cleaned.firstPara should be ("such as Harlem rapper A$AP Rocky")
   }
 
-  private def tag(id: String, name: String) = new ApiTag(id, "keyword", webTitle = name, webUrl = "does not matter",
+  private def tag(id: String, name: String) = ApiTag(id, TagType.Keyword, webTitle = name, webUrl = "does not matter",
     apiUrl = "does not matter", sectionId = Some("does not matter"))
 
-  private def sensitiveArticle(tags: ApiTag*) = new Article(
-    article(tags:_*).delegate.copy(fields = Some(Map("showInRelatedContent" -> "false")))
+  private def sensitiveArticle(tags: ApiTag*) = {
+    val contentApiItem = contentApi(tags.toList).copy(fields = Some(ContentFields(showInRelatedContent = Some(false))))
+
+    val content = Content.make(contentApiItem)
+    Article.make(content)
+  }
+
+  private def contentApi(tags: List[ApiTag]) = ApiContent(
+      id = "foo/2012/jan/07/bar",
+      sectionId = None,
+      sectionName = None,
+      webPublicationDate = Some(new DateTime().toCapiDateTime),
+      webTitle = "Some article",
+      webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
+      apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
+      elements = None,
+      tags = tags,
+      fields = Some(ContentFields(showInRelatedContent = Some(true)))
   )
 
-  private def article(tags: ApiTag*) = new Article(ApiContent(id = "foo/2012/jan/07/bar",
-    sectionId = None,
-    sectionName = None,
-    webPublicationDateOption = Some(new DateTime),
-    webTitle = "Some article",
-    webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
-    apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
-    elements = None,
-    tags = tags.toList,
-    fields = Some(Map("showInRelatedContent" -> "true"))
-  ))
+  private def article(tags: ApiTag*) = {
+    val contentApiItem = contentApi(tags.toList)
+
+    val content = Content.make(contentApiItem)
+    Article.make(content)
+  }
 
   private def souped(s: String) = Jsoup.parseBodyFragment(s)
 }

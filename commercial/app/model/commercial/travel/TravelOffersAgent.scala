@@ -1,5 +1,6 @@
 package model.commercial.travel
 
+import commercial.feeds.{FeedMetaData, ParsedFeed}
 import common.ExecutionContexts
 import model.commercial.{Keyword, MerchandiseAgent, Segment}
 
@@ -14,11 +15,10 @@ object TravelOffersAgent extends MerchandiseAgent[TravelOffer] with ExecutionCon
   }
 
   def specificTravelOffers(offerIdStrings: Seq[String]): Seq[TravelOffer] = {
-    val offerIds = offerIdStrings map (_.toInt)
-    available filter (offer => offerIds contains offer.id)
+    available filter (offer => offerIdStrings contains offer.id)
   }
 
-  def refresh(): Future[Future[Seq[TravelOffer]]] = {
+  def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[TravelOffer]] = {
 
     def populateKeywords(offers: Seq[TravelOffer]) = {
       val populated = offers map {
@@ -35,9 +35,16 @@ object TravelOffersAgent extends MerchandiseAgent[TravelOffer] with ExecutionCon
       populated
     }
 
-    TravelOffersApi.loadAds() map { offers =>
-      updateAvailableMerchandise(populateKeywords(offers))
+    val parsedFeed: Future[ParsedFeed[TravelOffer]] = {
+      TravelOffersApi.parseOffers(feedMetaData, feedContent) map { feed =>
+        feed.copy(contents = populateKeywords(feed.contents))
+      }
     }
-  }
 
+    parsedFeed map { offers =>
+      updateAvailableMerchandise(offers.contents)
+    }
+
+    parsedFeed
+  }
 }

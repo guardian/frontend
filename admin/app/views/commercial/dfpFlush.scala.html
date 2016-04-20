@@ -1,4 +1,4 @@
-@(env: String)(implicit flash: Flash)
+@(env: String)(implicit flash: Flash, request: RequestHeader)
 
 @link(cssClass: String) = {
     <a class="@cssClass" href="@controllers.admin.commercial.routes.DfpDataController.flushCache()" role="button">

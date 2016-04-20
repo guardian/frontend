@@ -1,69 +1,76 @@
 package views.support
 
 import common.Maps.RichMap
-import common.{StaticPage, Edition, InternationalEdition}
+import common.Edition
 import conf.Configuration
 import conf.Configuration.environment
-import conf.switches.Switches.IdentitySocialOAuthSwitch
-import model.{CommercialExpiryPage, Content, MetaData}
+import model._
+import implicits.Dates.DateTime2ToCommonDateFormats
 import org.joda.time.DateTime
 import play.api.Play
 import play.api.Play.current
-import play.api.libs.json.{JsBoolean, JsString, Json}
+import play.api.libs.json.{JsValue, JsBoolean, JsString, Json}
 import play.api.mvc.RequestHeader
 
-case class JavaScriptPage(metaData: MetaData)(implicit request: RequestHeader) {
+object JavaScriptPage {
 
-  def get = {
+  def get(page: Page)(implicit request: RequestHeader): JsValue = Json.toJson(getMap(page))
+
+  def getMap(page: Page)(implicit request: RequestHeader): Map[String,JsValue] = {
     val edition = Edition(request)
-
-    // keeping this here for now as we use it for the "opt in" message
-    val internationalEdition = InternationalEdition(request) map { edition =>
-      ("internationalEdition", JsString(edition))
-    }
+    val metaData = page.metadata
+    val content: Option[Content] = Page.getContent(page).map(_.content)
 
     val pageData = Configuration.javascript.pageData mapKeys { key =>
       CamelCase.fromHyphenated(key.split('.').lastOption.getOrElse(""))
     }
 
     val config = (Configuration.javascript.config ++ pageData).mapValues(JsString.apply)
+    val isInappropriateForSponsorship = content.exists(_.commercial.isInappropriateForSponsorship)
+    val sponsorshipType = content.flatMap(_.commercial.sponsorshipType).map("sponsorshipType" -> JsString(_))
+    val sponsorshipTag = content.flatMap(_.commercial.sponsorshipTag).map( tag => "sponsorshipTag" -> JsString(tag.name))
+    val allowUserGeneratedContent = content.map(_.allowUserGeneratedContent).getOrElse(false)
+    val requiresMembershipAccess = content.map(_.metadata.requiresMembershipAccess).getOrElse(false)
+    val membershipAccess = content.flatMap(_.metadata.membershipAccess).getOrElse("")
 
-    Json.toJson(metaData.metaData ++ config ++ internationalEdition ++ Map(
+    val cardStyle = content.map(_.cardStyle.toneString).getOrElse("")
+
+    val commercialMetaData = Map(
+      "oasHost" -> JsString("oas.theguardian.com"),
+      "oasUrl" -> JsString(Configuration.oas.url),
+      "oasSiteIdHost" -> JsString("www.theguardian-alpha.com"),
+      "dfpHost" -> JsString("pubads.g.doubleclick.net"),
+      "hasPageSkin" -> JsBoolean(metaData.hasPageSkin(edition)),
+      "hasBelowTopNavSlot" -> JsBoolean(metaData.hasAdInBelowTopNavSlot(edition)),
+      "shouldHideAdverts" -> JsBoolean(page match {
+        case c: ContentPage if c.item.content.shouldHideAdverts => true
+        case c: CommercialExpiryPage => true
+        case _ => false
+      }),
+      "isInappropriateForSponsorship" -> JsBoolean(isInappropriateForSponsorship)
+    ) ++ sponsorshipType ++ sponsorshipTag
+
+    val javascriptConfig = page match {
+      case c: ContentPage => c.getJavascriptConfig
+      case s: StandalonePage => s.getJavascriptConfig
+      case _ => Map()
+    }
+
+    javascriptConfig ++ config ++ commercialMetaData ++ Map(
       ("edition", JsString(edition.id)),
       ("ajaxUrl", JsString(Configuration.ajax.url)),
       ("isDev", JsBoolean(Play.isDev)),
       ("isProd", JsBoolean(Configuration.environment.isProd)),
-      ("oasHost", JsString("oas.theguardian.com")),
-      ("oasUrl", JsString(Configuration.oas.url)),
-      ("oasSiteIdHost", JsString("www.theguardian-alpha.com")),
-      ("dfpHost", JsString("pubads.g.doubleclick.net")),
       ("idUrl", JsString(Configuration.id.url)),
       ("beaconUrl", JsString(Configuration.debug.beaconUrl)),
-      ("renderTime", JsString(DateTime.now.toISODateTimeNoMillisString)),
       ("isSSL", JsBoolean(Configuration.environment.secure)),
       ("assetsPath", JsString(Configuration.assets.path)),
-      ("hasPageSkin", JsBoolean(metaData.hasPageSkin(edition))),
-      ("hasBelowTopNavSlot", JsBoolean(metaData.hasAdInBelowTopNavSlot(edition))),
-      ("omitMPUs", JsBoolean(metaData.omitMPUsFromContainers(edition))),
-      ("shouldHideAdverts", JsBoolean(metaData match {
-        case c: Content if c.shouldHideAdverts => true
-        case p: StaticPage => true
-        case CommercialExpiryPage(_) => true
-        case _ => false
-      })),
       ("isPreview", JsBoolean(environment.isPreview)),
-      ("allowUserGeneratedContent", JsBoolean(metaData match {
-        case c: Content if c.allowUserGeneratedContent => true
-        case _ => false
-      })),
-      ("isInappropriateForSponsorship", JsBoolean(metaData.isInappropriateForSponsorship)),
-      ("idWebAppUrl", JsString(
-        if (IdentitySocialOAuthSwitch.isSwitchedOn) Configuration.id.oauthUrl
-        else Configuration.id.webappUrl
-      )),
-      ("pushNotificationsHost", JsString(Configuration.pushNotifications.host))
-    ) ++ metaData.sponsorshipType.map{s => Map("sponsorshipType" -> JsString(s))}.getOrElse(Nil)
-      ++ metaData.sponsorshipTag.map{tag => Map("sponsorshipTag" -> JsString(tag.name))}.getOrElse(Nil))
+      ("allowUserGeneratedContent", JsBoolean(allowUserGeneratedContent)),
+      ("requiresMembershipAccess", JsBoolean(requiresMembershipAccess)),
+      ("membershipAccess", JsString(membershipAccess)),
+      ("idWebAppUrl", JsString(Configuration.id.oauthUrl)),
+      ("cardStyle", JsString(cardStyle))
+    )
   }
-
 }

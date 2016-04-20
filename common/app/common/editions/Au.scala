@@ -3,10 +3,8 @@ package common.editions
 import java.util.Locale
 
 import common.editions.Uk._
-import conf.switches.Switches
 import org.joda.time.DateTimeZone
 import common._
-import contentapi.QueryDefaults
 import common.NavItem
 
 //This object exists to be used with ItemTrailblockDescription and is not a real edition like the others.
@@ -17,8 +15,8 @@ object Au extends Edition(
   displayName = "Australia edition",
   DateTimeZone.forID("Australia/Sydney"),
   locale = Locale.forLanguageTag("en-au"),
-  homePagePath = "/au"
-) with QueryDefaults {
+  networkFrontId = "au"
+) {
 
   implicit val AU = Au
 
@@ -35,28 +33,22 @@ object Au extends Edition(
 
   val economyLocalNav: Seq[SectionLink] = Seq(markets, money)
 
-  import Switches.RugbyWorldCupswitch
   override val navigation: Seq[NavItem] = {
     Seq(
       NavItem(home),
       NavItem(australia),
       NavItem(world, Seq(uk, us, asia, europeNews, americas, africa, middleEast)),
       NavItem(opinion),
-      NavItem(sport, Seq(australiaSport, afl, nrl, aLeague, football, cricket,
-
-        //TODO delete and replace with rugbyunion
-        rugbyWorldCup,
-
-        tennis, cycling, boxing)),
+      NavItem(sport, Seq(australiaSport, afl, nrl, aLeague, football, cricket, rugbyunion, tennis, cycling, boxing)),
       NavItem(football, aLeague :: footballNav.toList),
       NavItem(technology),
       NavItem(culture, cultureLocalNav),
       NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women)),
       NavItem(fashion),
       NavItem(economy, economyLocalNav),
-      NavItem(travel, Seq(australasiaTravel, asiaTravel, uktravel, europetravel, usTravel)),
+      NavItem(travel, Seq(australasiaTravel, asiaTravel, uktravel, europetravel, usTravel, skiingTravel)),
       NavItem(media),
-      NavItem(environment, Seq(cities, globalDevelopment)),
+      NavItem(environment, Seq(cities, globalDevelopment, ausustainablebusiness)),
       NavItem(science),
       NavItem(crosswords, crosswordsLocalNav),
       NavItem(video)
@@ -77,6 +69,6 @@ object Au extends Edition(
     NavItem(economy, economyLocalNav),
     NavItem(travel, Seq(australasiaTravel, asiaTravel, uktravel, europetravel, usTravel)),
     NavItem(media),
-    NavItem(environment, Seq(cities, globalDevelopment))
+    NavItem(environment, Seq(cities, globalDevelopment, ausustainablebusiness))
   )
 }

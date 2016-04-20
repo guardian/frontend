@@ -1,6 +1,6 @@
 package crosswords
 
-import com.gu.contentapi.client.model.{CrosswordPosition => Position, Crossword}
+import com.gu.contentapi.client.model.v1.{CrosswordPosition => Position, Crossword}
 
 import scalaz.std.list._
 import scalaz.std.set._

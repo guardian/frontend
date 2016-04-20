@@ -1,6 +1,6 @@
 package slices
 
-import com.gu.facia.api.models.FaciaContent
+import model.pressed.PressedContent
 
 sealed trait MobileShowMore
 
@@ -12,15 +12,26 @@ object ContainerDefinition {
 
   def ofSlices(slices: Slice*) = ContainerDefinition(
     slices,
-    RestrictTo(6),
-    Set.empty
+    slicesWithoutMPU = slices,
+    mobileShowMore = RestrictTo(6),
+    customCssClasses = Set.empty
   )
 
-  def fromContainer(container: Container, items: Seq[FaciaContent]) = container match {
+  def ofSlices(slices: Seq[Slice], slicesWithoutMpu: Seq[Slice]) = ContainerDefinition(
+    slices,
+    slicesWithoutMpu,
+    mobileShowMore = RestrictTo(6),
+    customCssClasses = Set.empty
+  )
+
+  def fromContainer(container: Container, items: Seq[PressedContent]) = container match {
     case Dynamic(dynamicContainer) =>
       dynamicContainer.containerDefinitionFor(items.map(Story.fromFaciaContent))
 
     case Fixed(containerDefinition) => Some(containerDefinition)
+
+    case Commercial(SingleCampaign(containerDefinition)) => Some(containerDefinition)
+    case Commercial(MultiCampaign(containerDefinition)) => Some(containerDefinition)
 
     case _ => None
   }
@@ -52,6 +63,7 @@ object ContainerDefinition {
 
 case class ContainerDefinition(
   slices: Seq[Slice],
+  slicesWithoutMPU: Seq[Slice],
   mobileShowMore: MobileShowMore,
   customCssClasses: Set[String]
 ) {

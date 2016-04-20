@@ -1,10 +1,9 @@
-/* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
 define([
     'common/utils/$',
-    'common/utils/_',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/date-formats',
+    'common/utils/defer-to-analytics',
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/storage',
@@ -12,13 +11,18 @@ define([
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/ab',
     'common/modules/onward/history',
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+    'lodash/objects/assign',
+    'lodash/collections/forEach',
+    'lodash/arrays/uniq',
+    'lodash/collections/map',
+    'common/utils/robust'
 ], function (
     $,
-    _,
     config,
     cookies,
     dateFormats,
+    deferToAnalytics,
     detect,
     mediator,
     storage,
@@ -26,7 +30,12 @@ define([
     mvtCookie,
     ab,
     history,
-    id
+    id,
+    assign,
+    forEach,
+    uniq,
+    map,
+    robust
 ) {
     var R2_STORAGE_KEY = 's_ni', // DO NOT CHANGE THIS, ITS IS SHARED WITH R2. BAD THINGS WILL HAPPEN!
         NG_STORAGE_KEY = 'gu.analytics.referrerVars',
@@ -40,10 +49,19 @@ define([
         this.addHandlers();
     }
 
+    Omniture.prototype.getStandardProps = function () {
+        return standardProps;
+    };
+
     Omniture.prototype.addHandlers = function () {
         mediator.on('module:clickstream:interaction', this.trackLinkImmediate.bind(this));
 
-        mediator.on('module:clickstream:click', this.logTag.bind(this));
+        var logTag = this.logTag.bind(this);
+        mediator.on('module:clickstream:click', function (spec) {
+            // We don't want tracking errors to terminate the event emitter, as
+            // this will mean other event listeners will not be called.
+            robust.catchErrorsAndLog('c-analytics', function () { logTag(spec); });
+        });
     };
 
     Omniture.prototype.logView = function () {
@@ -69,9 +87,12 @@ define([
             try { sessionStorage.setItem(R2_STORAGE_KEY, storeObj.tag); } catch (e) {/**/}
             storage.session.set(NG_STORAGE_KEY, storeObj);
         } else {
-            // this is confusing: if s.tl() first param is "true" then it *doesn't* delay.
-            delay = spec.samePage ? true : spec.target;
-            this.trackLink(delay, spec.tag, { customEventProperties: spec.customEventProperties });
+            // Do not perform a same-page track link when there isn't a tag.
+            if (spec.tag) {
+                // this is confusing: if s.tl() first param is "true" then it *doesn't* delay.
+                delay = spec.samePage ? true : spec.target;
+                this.trackLink(delay, spec.tag, {customEventProperties: spec.customEventProperties});
+            }
         }
     };
 
@@ -103,89 +124,56 @@ define([
     Omniture.prototype.trackLink = function (linkObject, linkName, options) {
         options = options || {};
         this.populateEventProperties(linkName);
-        _.assign(this.s, options.customEventProperties);
+        assign(this.s, options.customEventProperties);
         this.s.tl(linkObject, 'o', linkName);
-        _.forEach(options.customEventProperties, function (value, key) {
+        forEach(options.customEventProperties, function (value, key) {
             delete this.s[key];
         });
+    };
+
+    Omniture.prototype.shouldPopulateMvtPageProperties = function (mvtTag) {
+        // This checks if the user test alocation has changed once ab test framework has loaded.
+        return mvtTag !== config.abTestsParticipations;
     };
 
     Omniture.prototype.populatePageProperties = function () {
         var d,
             /* Retrieve navigation interaction data */
             ni       = storage.session.get(NG_STORAGE_KEY),
-            mvt      = ab.makeOmnitureTag(document),
-            // Tag the identity of this user, which is composed of
-            // the omniture visitor id, the ophan browser id, and the frontend-only mvt id.
-            mvtId    = mvtCookie.getMvtFullId();
+            mvt      = ab.makeOmnitureTag(document);
 
         if (id.getUserFromCookie()) {
             this.s.prop2 = 'GUID:' + id.getUserFromCookie().id;
             this.s.eVar2 = 'GUID:' + id.getUserFromCookie().id;
         }
-
-        // see http://blogs.adobe.com/digitalmarketing/mobile/responsive-web-design-and-web-analytics/
-        this.s.eVar18    = detect.getBreakpoint();
-
-
-        this.s.eVar32    = detect.getOrientation();
-
-        this.s.prop60    = detect.isFireFoxOSApp() ? 'firefoxosapp' : null;
+        //This is for testing moving ab testing to first omniture call.
+        var inTest = this.shouldPopulateMvtPageProperties(mvt);
+        var testCall = 'AB | firedSecondCall | ' + inTest;
+        mvt = mvt.split(',').concat(testCall).join(',');
 
         this.s.prop31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
         this.s.eVar31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
-
-        this.s.prop40    = detect.adblockInUse || detect.getFirefoxAdblockPlusInstalled();
-
-        this.s.prop51  = config.page.allowUserGeneratedContent ? 'witness-contribution-cta-shown' : null;
-
-        this.s.eVar51  = mvt;
-
-        this.s.list1  = mvt; // allows us to 'unstack' the AB test names (allows longer names)
-
-        // List of components on the page
-        this.s.list2 = _.uniq($('[data-component]')
-            .map(function (x) { return $(x).attr('data-component'); }))
-            .toString();
-        this.s.list3 = _.map(history.getPopularFiltered(), function (tagTuple) { return tagTuple[1]; }).join(',');
-
-        if (this.s.eVar51) {
-            this.s.events = this.s.apl(this.s.events, 'event58', ',');
-        }
-
-        if (mvtId) {
-            this.s.eVar60 = mvtId;
-        }
-
-
-        this.s.prop63    = detect.getPageSpeed();
-
+        this.s.prop40    = detect.adblockInUseSync() || detect.getFirefoxAdblockPlusInstalledSync();
+        this.s.eVar51    = mvt;
+        this.s.list1     = mvt; // allows us to 'unstack' the AB test names (allows longer names)
 
         if (ni) {
             d = new Date().getTime();
             if (d - ni.time < 60 * 1000) { // One minute
                 this.s.eVar24 = ni.pageName;
                 this.s.eVar37 = ni.tag;
-                this.s.events = 'event37';
-
-                // this allows 'live' Omniture tracking of Navigation Interactions
-                this.s.eVar7 = ni.pageName;
-                this.s.prop37 = ni.tag;
             }
             storage.session.remove(R2_STORAGE_KEY);
             storage.session.remove(NG_STORAGE_KEY);
         }
 
-        this.s.prop73 = detect.isFacebookApp() ? 'facebook app' : detect.isTwitterApp() ? 'twitter app' : null;
-
         // Sponsored content
-        this.s.prop38 = _.uniq($('[data-sponsorship]')).map(function (n) {
+        this.s.prop38 = uniq($('[data-sponsorship]')).map(function (n) {
             var sponsorshipType = n.getAttribute('data-sponsorship');
             var maybeSponsor = n.getAttribute('data-sponsor');
             var sponsor = maybeSponsor ? maybeSponsor : 'unknown';
             return sponsorshipType + ':' + sponsor;
         }).toString();
-
 
         this.s.linkTrackVars = standardProps;
         this.s.linkTrackEvents = 'None';

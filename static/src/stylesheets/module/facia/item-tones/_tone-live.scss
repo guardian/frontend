@@ -1,7 +1,7 @@
 .tone-live--item {
     $c-headline: #ffffff;
 
-    background-color: colour(live-default);
+    background-color: $live-default;
 
     &,
     .fc-sublink__title {
@@ -10,13 +10,13 @@
 
     .u-faux-block-link--hover,
     .fc-item__image-container {
-        background-color: darken(colour(live-default), 4%);
+        background-color: darken($live-default, 4%);
     }
 
     .fc-item__link,
     .fc-sublink__link {
         &:visited {
-            color: mix($c-headline, colour(live-default), 80%);
+            color: mix($c-headline, $live-default, 80%);
         }
     }
 
@@ -26,7 +26,7 @@
 
     .fc-item__container:before,
     .rich-link__container:before, {
-        background-color: colour(live-mute);
+        background-color: $live-mute;
     }
 
     .fc-item__kicker,
@@ -34,29 +34,29 @@
     .fc-item__meta,
     .rich-link__read-more-text,
     .fc-save-for-later--is-saved {
-        color: colour(live-mute);
+        color: $live-mute;
     }
 
     .fc-save-for-later {
-        border-color: mix($c-headline, colour(live-default), 20%);
+        border-color: mix($c-headline, $live-default, 20%);
     }
 
     .rich-link__arrow-icon {
-        fill: colour(live-mute);
+        fill: $live-mute;
     }
 
     .fc-item__kicker:after,
     .rich-link__kicker:after,
     .fc-sublink__kicker:after {
-        color: mix($c-headline, colour(live-default), 20%);
+        color: mix($c-headline, $live-default, 20%);
     }
 
     .fc-item__kicker--dreamsnap {
-        background-color: mix(#000000, colour(live-default), 10%);
+        background-color: mix(#000000, $live-default, 10%);
     }
 
     .fc-item__standfirst {
-        color: mix($c-headline, colour(live-default), 80%);
+        color: mix($c-headline, $live-default, 80%);
     }
 
     .fc-item__live-indicator,
@@ -66,24 +66,24 @@
     }
 
     .fc-sublink__title:before {
-        border-color: mix($c-headline, colour(live-default), 20%);
+        border-color: mix($c-headline, $live-default, 20%);
     }
 
     .fc-item__meta {
         .inline-icon {
-            fill: colour(live-mute);
+            fill: $live-mute;
         }
     }
 }
 
 .tone-live--sublink {
     .fc-sublink__kicker {
-        color: colour(live-accent);
+        color: $live-accent;
     }
 
     .fc-sublink__live-indicator,
     .fc-sublink__breaking-indicator {
-        color: colour(live-default);
+        color: $live-default;
     }
 
     @include sublink-style(editorial, feature, live, media, review) {
@@ -94,5 +94,5 @@
 }
 
 .tone-live--most-popular .fc-item__kicker {
-    color: colour(live-accent);
+    color: $live-accent;
 }

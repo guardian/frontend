@@ -1,12 +1,10 @@
 define([
     'common/utils/$',
-    'common/utils/_',
-    'common/utils/config'
-], function (
-    $,
-    _,
-    config
-) {
+    'lodash/collections/contains',
+    'lodash/arrays/compact',
+    'lodash/collections/map',
+    'common/utils/chain'
+], function ($, contains, compact, map, chain) {
 
     var codecs = {
         'video/m3u8': 'video/m3u8; codecs="avc1.42C01e, mp4a.40.2"',
@@ -24,21 +22,13 @@ define([
     }
 
     function hasProbableHtml5Source(el) {
-        return _.chain(getMediaSources(el))
-            .map(function (type) {
+        return chain(getMediaSources(el)).and(map, function (type) {
                 return el.canPlayType(type);
-            })
-            .compact()
-            .contains('probably')
-            .value();
+            }).and(compact).and(contains, 'probably').value();
     }
 
     return function priority(el) {
-        var defaultPriority = ['flash', 'html5'];
-        if (config.switches.html5MediaCompatibilityCheck) {
-            return ('canPlayType' in el && hasProbableHtml5Source(el)) ? defaultPriority.reverse() : defaultPriority;
-        } else {
-            return defaultPriority;
-        }
+        var defaultPriority = ['html5', 'flash'];
+        return ('canPlayType' in el && hasProbableHtml5Source(el)) ? defaultPriority : defaultPriority.reverse();
     };
 });

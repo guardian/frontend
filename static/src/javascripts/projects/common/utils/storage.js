@@ -4,9 +4,9 @@
  Description: Wrapper around localStorage functionality
  */
 define([
-    'common/utils/_'
+    'lodash/objects/isUndefined'
 ], function (
-    _
+    isUndefined
 ) {
 
     var w = window,
@@ -20,7 +20,7 @@ define([
     };
 
     Storage.prototype.isStorageAvailable = function (refresh) {
-        if (_.isUndefined(isAvailable) || refresh) {
+        if (isUndefined(isAvailable) || refresh) {
             isAvailable = this.isAvailable();
         }
         return isAvailable;

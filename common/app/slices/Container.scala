@@ -1,6 +1,6 @@
 package slices
 
-import com.gu.facia.api.models.CollectionConfig
+import model.pressed.CollectionConfig
 import common.Logging
 import model.facia.PressedCollection
 
@@ -10,11 +10,14 @@ object Container extends Logging {
     ("dynamic/fast", Dynamic(DynamicFast)),
     ("dynamic/slow", Dynamic(DynamicSlow)),
     ("dynamic/package", Dynamic(DynamicPackage)),
-    ("dynamic/slow-mpu", Dynamic(DynamicSlowMPU)),
+    ("dynamic/slow-mpu", Dynamic(DynamicSlowMPU(omitMPU = false))),
+    ("fixed/video", Video),
     ("nav/list", NavList),
     ("nav/media-list", NavMediaList),
     ("news/most-popular", MostPopular)
-  ) ++ FixedContainers.all.mapValues(Fixed.apply)
+  ) ++
+    FixedContainers.all.mapValues(Fixed.apply) ++
+    CommercialContainerType.all
 
   /** So that we don't blow up at runtime, which would SUCK */
   val default = Fixed(FixedContainers.fixedSmallSlowIV)
@@ -27,11 +30,19 @@ object Container extends Logging {
   def fromConfig(collectionConfig: CollectionConfig) =
     resolve(collectionConfig.collectionType)
 
-  def fromPressedCollection(pressedCollection: PressedCollection): Container =
-    resolve(pressedCollection.collectionType)
+  def fromPressedCollection(pressedCollection: PressedCollection, omitMPU: Boolean): Container = {
+    val container = resolve(pressedCollection.collectionType)
+    container match {
+      case Fixed(definition) if omitMPU =>
+        Fixed(definition.copy(slices = definition.slicesWithoutMPU))
+      case Dynamic(DynamicSlowMPU(_)) if omitMPU =>
+        Dynamic(DynamicSlowMPU(omitMPU = true))
+      case _ => container
+    }
+  }
 
   def showToggle(container: Container) = container match {
-    case NavList | NavMediaList => false
+    case NavList | NavMediaList | Video => false
     case _ => true
   }
 
@@ -49,3 +60,5 @@ case class Fixed(get: ContainerDefinition) extends Container
 case object NavList extends Container
 case object NavMediaList extends Container
 case object MostPopular extends Container
+case object Video extends Container
+case class Commercial(get: CommercialContainerType) extends Container

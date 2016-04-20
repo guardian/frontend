@@ -1,14 +1,16 @@
 package views.support
 
-import com.gu.facia.api.models.{LinkSnap, FaciaContent}
 import common._
 import model._
+import model.pressed.PressedContent
 
 import org.apache.commons.lang.StringEscapeUtils
 import org.joda.time.{DateTimeZone, LocalDate, DateTime}
 import org.joda.time.format.DateTimeFormat
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import org.jsoup.nodes.Document.OutputSettings
+import org.jsoup.nodes.Entities.EscapeMode
 import org.jsoup.safety.{ Whitelist, Cleaner }
 import play.api.libs.json.Json._
 import play.api.libs.json.Writes
@@ -17,7 +19,6 @@ import play.api.mvc.Result
 import play.twirl.api.Html
 import scala.collection.JavaConversions._
 import java.text.DecimalFormat
-import implicits.FaciaContentImplicits._
 
 /**
  * Encapsulates previous and next urls
@@ -81,7 +82,7 @@ object ContributorLinks {
   def apply(html: Html, tags: Seq[Tag])(implicit request: RequestHeader): Html = apply(html.body, tags)
 }
 
-object `package` extends Formats {
+object `package` {
 
   def withJsoup(html: Html)(cleaners: HtmlCleaner*): Html = withJsoup(html.body) { cleaners: _* }
 
@@ -90,10 +91,10 @@ object `package` extends Formats {
     Html(cleanedHtml.body.html)
   }
 
-  def getTagContainerDefinition(page: MetaData) = {
-    if (page.isContributorPage) {
+  def getTagContainerDefinition(page: ContentPage) = {
+    if (page.item.tags.isContributorPage) {
       slices.TagContainers.contributorTagPage
-    } else if (page.keywords.nonEmpty) {
+    } else if (page.item.tags.keywords.nonEmpty) {
       slices.TagContainers.keywordPage
     } else {
       slices.TagContainers.tagPage
@@ -148,7 +149,7 @@ object cleanTrailText {
 }
 
 object StripHtmlTags {
-  def apply(html: String): String = Jsoup.clean(html, Whitelist.none())
+  def apply(html: String): String = Jsoup.clean(html, "", Whitelist.none())
 }
 
 object StripHtmlTagsAndUnescapeEntities{
@@ -174,7 +175,7 @@ object TableEmbedComplimentaryToP extends HtmlCleaner {
 object RenderOtherStatus {
   def gonePage(implicit request: RequestHeader) = {
     val canonicalUrl: Option[String] = Some(s"/${request.path.drop(1).split("/").head}")
-    model.Page(request.path, "news", "This page has been removed", "GFE:Gone", maybeCanonicalUrl = canonicalUrl)
+    SimplePage(MetaData.make(request.path, "news", "This page has been removed", "GFE:Gone", canonicalUrl = canonicalUrl))
   }
 
   def apply(result: Result)(implicit request: RequestHeader) = result.header.status match {
@@ -193,9 +194,9 @@ object RenderClasses {
 }
 
 object SnapData {
-  def apply(faciaContent: FaciaContent): String = generateDataAttributes(faciaContent).mkString(" ")
+  def apply(faciaContent: PressedContent): String = generateDataAttributes(faciaContent).mkString(" ")
 
-  private def generateDataAttributes(faciaContent: FaciaContent): Iterable[String] =
-    faciaContent.embedType.filter(_.nonEmpty).map(t => s"data-snap-type=$t") ++
-    faciaContent.embedUri.filter(_.nonEmpty).map(t => s"data-snap-uri=$t")
+  private def generateDataAttributes(faciaContent: PressedContent): Iterable[String] =
+    faciaContent.properties.embedType.filter(_.nonEmpty).map(t => s"data-snap-type=$t") ++
+    faciaContent.properties.embedUri.filter(_.nonEmpty).map(t => s"data-snap-uri=$t")
 }

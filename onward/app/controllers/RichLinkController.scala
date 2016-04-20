@@ -3,12 +3,12 @@ package controllers
 import play.api.mvc.{RequestHeader, Action, Controller}
 import common.{JsonComponent, Edition, ExecutionContexts, Logging}
 import implicits.Requests
-import model.{NoCache, Cached, Content}
+import model.{NoCache, Cached, Content, ContentType}
 import scala.concurrent.Future
-import conf.LiveContentApi
-import com.gu.contentapi.client.model.ItemResponse
+import contentapi.ContentApiClient
+import com.gu.contentapi.client.model.v1.ItemResponse
 import play.twirl.api.HtmlFormat
-import LiveContentApi.getResponse
+import ContentApiClient.getResponse
 
 object RichLinkController extends Controller with Paging with Logging with ExecutionContexts with Requests   {
 
@@ -20,12 +20,12 @@ object RichLinkController extends Controller with Paging with Logging with Execu
     }
   }
 
-  private def lookup(path: String)(implicit request: RequestHeader): Future[Option[Content]] = {
+  private def lookup(path: String)(implicit request: RequestHeader): Future[Option[ContentType]] = {
     val edition = Edition(request)
     log.info(s"Fetching article: $path for edition: ${edition.id}:")
 
     val response: Future[ItemResponse] = getResponse(
-      LiveContentApi.item(path, edition)
+      ContentApiClient.item(path, edition)
         .showFields("headline,standfirst,shortUrl,webUrl,byline,starRating,trailText,liveBloggingNow")
         .showTags("all")
         .showElements("all")
@@ -34,7 +34,7 @@ object RichLinkController extends Controller with Paging with Logging with Execu
     response.map { response => response.content.map(Content(_))  }
   }
 
-  private def renderContent(content: Content)(implicit request: RequestHeader) = {
+  private def renderContent(content: ContentType)(implicit request: RequestHeader) = {
     def contentResponse: HtmlFormat.Appendable = views.html.fragments.richLinkBody(content)(request)
 
     if (!request.isJson) NoCache(Ok(views.html.richLink(content)(request)))

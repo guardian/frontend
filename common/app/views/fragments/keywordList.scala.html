@@ -7,11 +7,11 @@
 @renderItem(keyword: Tag, row: RowInfo, clazz: String = "", trailingComma: Boolean = false) = {
     <li class="inline-list__item @clazz">
         <a class="@if(keyword.isFootballTeam){js-football-team} @if(keyword.isFootballCompetition){ js-football-competition} button button--small button--tag @tone.map("button--tone-" + _).getOrElse("button--secondary")"
-           href="@LinkTo(keyword.url)"
+           href="@LinkTo(keyword.metadata.url)"
            data-link-name="keyword: @keyword.id"
            itemprop="keywords">
                @keyword.name
-               @if(keywords.filter(_ != keyword).find(_.name == keyword.name)){ (@keyword.sectionName) }
+               @if(keywords.filter(_ != keyword).find(_.name == keyword.name)){ (@keyword.properties.sectionName) }
         </a>
     </li>
 }

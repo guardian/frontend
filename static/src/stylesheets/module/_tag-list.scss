@@ -1,7 +1,7 @@
 .button--tag {
+    @include ellipsis();
     margin-right: $gs-gutter / 5;
     margin-bottom: $gs-row-height / 4.5;
-    @include ellipsis();
     max-width: gs-span(4);
 
     @include mq(leftCol) {
@@ -19,10 +19,12 @@
     button {
         @include button-colour(
             transparent,
-            guss-colour(neutral-1, $pasteup-palette),
+            $neutral-1,
+            $neutral-4
+        );
+        @include button-hover-colour(
             transparent,
-            darken(guss-colour(neutral-3, $pasteup-palette), 10%),
-            guss-colour(neutral-4, $pasteup-palette)
+            darken($neutral-3, 10%)
         );
         border: 0;
         padding: 0 $gs-baseline / 2;

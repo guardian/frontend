@@ -1,23 +1,27 @@
 define([
     'bonzo',
     'qwery',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/analytics/register',
     'common/modules/lazyload',
-    'common/modules/ui/expandable'
+    'common/modules/ui/expandable',
+    'common/modules/experiments/ab',
+    'lodash/arrays/intersection',
+    'lodash/collections/map'
 ], function (
     bonzo,
     qwery,
-    _,
     $,
     config,
     mediator,
     register,
-    LazyLoad,
-    Expandable
+    lazyload,
+    Expandable,
+    ab,
+    intersection,
+    map
 ) {
 
     var opts;
@@ -45,7 +49,7 @@ define([
             ],
             pageTags      = config.page.keywordIds.split(','),
             // if this is an advertisement feature, use the page's keyword (there'll only be one)
-            popularInTags = config.page.isAdvertisementFeature ? pageTags : _.intersection(whitelistedTags, pageTags);
+            popularInTags = config.page.isAdvertisementFeature ? pageTags : intersection(whitelistedTags, pageTags);
 
         if (popularInTags.length) {
             return '/popular-in-tag/' + popularInTags[0] + '.json';
@@ -55,15 +59,14 @@ define([
     Related.prototype.renderRelatedComponent = function () {
         var relatedUrl, popularInTag, componentName, container,
             fetchRelated = config.switches.relatedContent && config.page.showRelatedContent;
-
         if (config.page && config.page.hasStoryPackage) {
             new Expandable({
                 dom: document.body.querySelector('.related-trails'),
                 expanded: false,
                 showCount: false
             }).init();
-
         } else if (fetchRelated) {
+
             container = document.body.querySelector('.js-related');
 
             if (container) {
@@ -76,15 +79,16 @@ define([
                 relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json';
 
                 if (opts.excludeTags && opts.excludeTags.length) {
-                    relatedUrl += '?' + _.map(opts.excludeTags, function (tag) {
-                        return 'exclude-tag=' + tag;
-                    }).join('&');
+                    relatedUrl += '?' + map(opts.excludeTags, function (tag) {
+                            return 'exclude-tag=' + tag;
+                        }).join('&');
                 }
 
-                new LazyLoad({
+                lazyload({
                     url: relatedUrl,
                     container: container,
                     success: function () {
+
                         var relatedContainer = container.querySelector('.related-content');
 
                         new Expandable({dom: relatedContainer, expanded: false, showCount: false}).init();
@@ -93,12 +97,13 @@ define([
                         mediator.emit('page:new-content', container);
                         mediator.emit('ui:images:upgradePictures', container);
                         register.end(componentName);
+
                     },
                     error: function () {
                         bonzo(container).remove();
                         register.error(componentName);
                     }
-                }).load();
+                });
             }
         } else {
             $('.js-related').addClass('u-h');

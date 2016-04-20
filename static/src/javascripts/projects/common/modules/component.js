@@ -1,16 +1,17 @@
-/* jscs:disable disallowDanglingUnderscores */
 define([
     'bean',
     'bonzo',
     'qwery',
-    'common/utils/_',
-    'common/utils/ajax'
+    'common/utils/ajax',
+    'lodash/objects/assign',
+    'lodash/objects/clone'
 ], function (
     bean,
     bonzo,
     qwery,
-    _,
-    ajax
+    ajax,
+    assign,
+    clone
 ) {
 
     /**
@@ -341,7 +342,7 @@ define([
      * @param {Object} options
      */
     Component.prototype.setOptions = function (options) {
-        this.options = _.assign(_.clone(this.defaultOptions), this.options || {}, options);
+        this.options = assign(clone(this.defaultOptions), this.options || {}, options);
     };
 
     /**

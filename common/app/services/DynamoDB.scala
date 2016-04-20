@@ -20,7 +20,7 @@ case class Archive(location: String) extends Destination
 
 trait DynamoDB extends Logging with ExecutionContexts {
   import play.api.Play.current
-  private val tableName = "redirects"
+  private val tableName = if (Configuration.environment.isNonProd) "redirects-CODE" else "redirects"
   private val DynamoDbGet = "DynamoDB_20120810.GetItem"
 
   // should not directly call AWS during tests.
@@ -35,6 +35,7 @@ trait DynamoDB extends Logging with ExecutionContexts {
         request.addHeader("Content-Type", "application/x-amz-json-1.0")
         request.addHeader("x-amz-target", xAmzTarget)
         request.setContent(new StringInputStream(bodyContent))
+        signer.setServiceName("dynamodb")
         signer.sign(request, credentialsProvider.getCredentials)
         request.getHeaders.toSeq
       }

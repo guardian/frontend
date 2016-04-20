@@ -56,10 +56,10 @@ object EmailSubscriptions {
       subscribedTo = subscribedListIds.exists{ x => x == "2635" }
     ),
     EmailSubscription(
-      "Best of Comment is free - Australia",
+      "Best of Guardian Opinion - Australia",
       "comment",
-      "Cartoons from Guardian Australia's resident Walkley-winning cartoonist",
-      "An evening selection of the best reads on Comment is free in Australia",
+      "An evening selection of the best reads from Guardian Opinion in Australia",
+      "An evening selection of the best reads from Guardian Opinion in Australia",
       "Daily",
       "2976",
       11,
@@ -118,6 +118,39 @@ object EmailSubscriptions {
     )
   )
 
+  def moreFromTheguardianEmails(subscribedListIds: Iterable[String] = None) = List(
+    // Guardian favourites
+    EmailSubscription(
+      "Guardian Masterclasses",
+      "guardian favourites",
+      "Courses and training",
+      "News on the latest classes, blog content and competitions from the Guardian's learning programme. Plus inspiring tips from world-class tutors on everything from journalism and creative writing to culture and general knowledge, delivered to your inbox three times per week.",
+      "3 times per week",
+      "3561",
+      subscribedTo = subscribedListIds.exists{ x => x == "3561" }
+    ),
+
+    EmailSubscription(
+      "Guardian Gardener",
+      "guardian favourites",
+      "Gardening",
+      "Tips and seasonal advice from our expert gardeners to help you care for any green space: whether you have acres or plant pots. Plus shop for bulbs, plants and garden hardware sourced from our favourite independent suppliers.",
+      "1-2 times per week",
+      "3562",
+      subscribedTo = subscribedListIds.exists{ x => x == "3562" }
+    ),
+
+    EmailSubscription(
+      "Guardian Bookshop",
+      "guardian favourites",
+      "Books",
+      "Every week you’ll receive our hand-picked edits of books we know you’ll enjoy. From thought-provoking collections, round-ups of the Guardian and Observer weekend reviews and special offers plus from time to time we’ll give you first preview of the books we publish and new and noteworthy titles to look out for each month.",
+      "Every Wednesday, Saturday and Sunday",
+      "3563",
+      subscribedTo = subscribedListIds.exists{ x => x == "3563" }
+    )
+  )
+
   def newsEmails(subscribedListIds: Iterable[String] = None) = List(
     EmailSubscription(
       "The Long Read",
@@ -154,10 +187,10 @@ object EmailSubscriptions {
       subscribedTo = subscribedListIds.exists{ x => x == "1493" }
     ),
     EmailSubscription(
-      "The best of CiF",
+      "The best of Guardian Opinion",
       "news",
-      "The best of Comment is free",
-      "Comment is free's daily email newsletter with the most shared comment, analysis and editorial articles from the last 24 hours — sign up to read, share and join the debate on the Guardian's most popular opinion pieces every lunchtime.",
+      "Opinion's daily email newsletter",
+      "Guardian Opinion's daily email newsletter with the most shared opinion, analysis and editorial articles from the last 24 hours — sign up to read, share and join the debate every lunchtime.",
       "Weekday lunchtime",
       "2313",
       10,
@@ -281,5 +314,5 @@ object EmailSubscriptions {
       "220",
       subscribedTo = subscribedListIds.exists{ x => x == "220" }
     )
-  ) ++ newsEmails(subscribedListIds) ++ australianEmails(subscribedListIds) ++ cultureEmails(subscribedListIds))
+  ) ++ newsEmails(subscribedListIds) ++ australianEmails(subscribedListIds) ++ cultureEmails(subscribedListIds) ++ moreFromTheguardianEmails(subscribedListIds))
 }

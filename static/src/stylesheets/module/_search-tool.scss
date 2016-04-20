@@ -1,4 +1,5 @@
 .search-tool__input {
+    @include ellipsis();
     display: block;
     position: relative;
     z-index: 4;
@@ -6,7 +7,6 @@
     border: 0;
     border-bottom: 1px solid transparent; // To allow for focus state
     padding: 0;
-    @include ellipsis();
 
     &:focus {
         outline: 0;
@@ -18,7 +18,7 @@
 }
 
 .search-tool__btn {
-    background-color: colour(guardian-brand);
+    background-color: $guardian-brand;
     border: 0;
     width: 28px;
     height: 28px;
@@ -32,7 +32,7 @@
 }
 
 .search-tool__item {
-    border-top: 1px solid colour(neutral-5);
+    border-top: 1px solid $neutral-5;
 
     &:first-of-type {
         border-top: 0;
@@ -40,13 +40,13 @@
 }
 
 .search-tool__link {
+    @include fs-headline(2);
     box-sizing: border-box;
-    color: colour(neutral-1);
+    color: $neutral-1;
     padding-top: $gs-baseline / 3;
     padding-bottom: $gs-baseline;
     width: 100%;
     display: block;
-    @include fs-headline(2);
 
     @include mq(tablet, leftCol) {
         padding-left: $gs-gutter / 4;
@@ -60,14 +60,14 @@
 
     &:hover,
     &.active {
-        background-color: colour(neutral-4);
+        background-color: $neutral-4;
         text-decoration: none;
     }
 }
 
 .search-tool__meta {
-    color: colour(neutral-2);
-    display: block;
     @include fs-textSans(2);
+    color: $neutral-2;
+    display: block;
     line-height: 16px;
 }

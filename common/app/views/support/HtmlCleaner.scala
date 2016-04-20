@@ -1,19 +1,17 @@
 package views.support
 
-import java.net.URL
 import java.text.Normalizer
 import java.util.regex.{Matcher, Pattern}
 
 import common.{Edition, LinkTo}
 import conf.switches.Switches._
-import layout.{WidthsByBreakpoint, ContentWidths}
+import layout.ContentWidths
 import layout.ContentWidths._
 import model._
-import org.joda.time.DateTime
+import model.content.{Atom, Atoms}
 import org.jsoup.Jsoup
-import org.jsoup.nodes.{TextNode, Element, Document}
+import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
-
 import scala.collection.JavaConversions._
 
 trait HtmlCleaner {
@@ -70,13 +68,15 @@ object PullquoteCleaner extends HtmlCleaner {
     pullquotes.foreach { element: Element =>
       element.prepend(openingQuoteSvg)
       element.append(closingQuoteSvg)
+      element.getElementsByTag("p").addClass("pullquote-paragraph")
+      element.getElementsByTag("cite").addClass("pullquote-cite")
     }
 
     document
   }
 }
 
-case class R2VideoCleaner(article: Article) extends HtmlCleaner {
+case object R2VideoCleaner extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
 
@@ -97,12 +97,22 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
     for {
       figure <- body.getElementsByTag("figure")
       image <- figure.getElementsByTag("img").headOption
-      if !figure.hasClass("element-comment") && !figure.hasClass("element-witness")
+      if !(figure.hasClass("element-comment") ||
+           figure.hasClass("element-witness") ||
+           figure.hasClass("element-atom"))
       container <- findContainerFromId(figure.attr("data-media-id"), image.attr("src"))
-      image <- container.largestImage
+      image <- container.images.largestImage
     }{
       val hinting = findBreakpointWidths(figure)
-      val widths = ContentWidths.getWidthsFromContentElement(hinting, BodyMedia)
+
+      val relation = {
+        if (article.isLiveBlog) LiveBlogMedia
+        else if (article.isImmersive) ImmersiveMedia
+        else if (article.isUSMinute) MinuteMedia
+        else BodyMedia
+      }
+
+      val widths = ContentWidths.getWidthsFromContentElement(hinting, relation)
 
       val orientationClass = image.orientation match {
         case Portrait => Some("img--portrait")
@@ -115,21 +125,23 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
         case _ => None
       }
 
-      val figureClasses = List(orientationClass, smallImageClass, hinting.className).flatten.mkString(" ")
+      val inlineClass = if (article.isUSMinute && !figure.hasClass("element--thumbnail")) Some("element--inline") else None
+
+      val figureClasses = List(orientationClass, smallImageClass, hinting.className, inlineClass).flatten.mkString(" ")
 
       // lightbox uses the images in the order mentioned in the header array
       val lightboxInfo: Option[(Int, ImageAsset)] = for {
-        index <- Some(article.lightboxImages.indexOf(container)).flatMap(index => if (index == -1) None else Some(index + 1))
-        crop <- container.largestEditorialCrop
+        index <- Some(article.lightbox.lightboxImages.indexOf(container)).flatMap(index => if (index == -1) None else Some(index + 1))
+        crop <- container.images.largestEditorialCrop
         if !article.isLiveBlog
       } yield (index, crop)
 
       val html = views.html.fragments.img(
-        container,
+        container.images,
         lightboxIndex = lightboxInfo.map(_._1),
         widthsByBreakpoint = widths,
         image_figureClasses = Some(image, figureClasses),
-        shareInfo = lightboxInfo.map{case (index, crop) => (article.elementShares(Some(s"img-$index"), crop.url), article.contentType) },
+        shareInfo = lightboxInfo.map{case (index, crop) => (article.sharelinks.elementShares(s"img-$index", crop.url), article.metadata.contentType) },
         amp = amp
       ).toString()
 
@@ -139,16 +151,16 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
     body
   }
 
-  def findContainerFromId(id: String, src: String): Option[ImageContainer] = {
+  def findContainerFromId(id: String, src: String): Option[ImageElement] = {
     // It is possible that a single data media id can appear multiple times in the elements array.
     val srcImagePath = new java.net.URL(src).getPath()
-    val imageContainers = article.bodyImages.filter(_.id == id)
+    val imageContainers = article.elements.bodyImages.filter(_.properties.id == id)
 
     // Try to match the container based on both URL and media ID.
-    val fullyMatchedImage: Option[ImageContainer] = {
+    val fullyMatchedImage: Option[ImageElement] = {
       for {
         container <- imageContainers
-        asset <- container.imageCrops
+        asset <- container.images.imageCrops
         url <- asset.url
         if url.contains(srcImagePath)
       } yield { container }
@@ -163,89 +175,9 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
       case classes if classes.contains(Supporting.className) => Supporting
       case classes if classes.contains(Showcase.className) => Showcase
       case classes if classes.contains(Thumbnail.className) => Thumbnail
+      case classes if classes.contains(Immersive.className) => Immersive
       case _ => Inline
     }
-  }
-}
-
-case class LiveBlogDateFormatter(isLiveBlog: Boolean)(implicit val request: RequestHeader) extends HtmlCleaner  {
-  def clean(body: Document): Document = {
-    if (isLiveBlog) {
-      body.select(".block").foreach { el =>
-        val id = el.id()
-        el.select(".block-time.published-time time").foreach { time =>
-          val datetime = DateTime.parse(time.attr("datetime"))
-          val hhmm = Format(datetime, "HH:mm")
-          time.wrap(s"""<a href="#$id" itemprop="url" class="block-time__link"></a>""")
-          time.attr("data-relativeformat", "med")
-          time.after( s"""<span class="block-time__absolute">$hhmm</span>""")
-          if (datetime.isAfter(DateTime.now().minusDays(5))) {
-            time.addClass("js-timestamp")
-          }
-        }
-      }
-    }
-    body
-  }
-}
-
-case class LiveBlogLinkedData(isLiveBlog: Boolean)(implicit val request: RequestHeader) extends HtmlCleaner  {
-  def clean(body: Document): Document = {
-    if (isLiveBlog) {
-      body.select(".block").foreach { el =>
-        val id = el.id()
-        val blockElements = el.select(".block-elements")
-        val noByline = el.attributes().get("data-block-contributor").isEmpty
-        el.attr("itemprop", "liveBlogUpdate")
-        el.attr("itemscope", "")
-        el.attr("itemtype", "http://schema.org/BlogPosting")
-        el.select(".block-time.published-time time").foreach { time =>
-          time.attr("itemprop", "datePublished")
-        }
-        el.select(".block-title").foreach { title =>
-          title.attr("itemprop", "headline")
-
-        }
-        if (noByline) blockElements.addClass("block-elements--no-byline")
-        blockElements.foreach { body =>
-          body.attr("itemprop", "articleBody")
-        }
-      }
-    }
-    body
-  }
-}
-
-case class BloggerBylineImage(article: Article)(implicit val request: RequestHeader) extends HtmlCleaner  {
-  def clean(body: Document): Document = {
-    if (article.isLiveBlog) {
-      body.select(".block").foreach { el =>
-        val contributorId = el.attributes().get("data-block-contributor")
-        if (contributorId.nonEmpty) {
-          article.tags.find(_.id == contributorId).map{ contributorTag =>
-            val html = views.html.fragments.meta.bylineLiveBlockImage(contributorTag)
-            el.getElementsByClass("block-elements").headOption.foreach(_.before(html.toString()))
-          }
-        }
-      }
-    }
-    body
-  }
-}
-
-case class LiveBlogShareButtons(article: Article)(implicit val request: RequestHeader) extends HtmlCleaner  {
-  def clean(body: Document): Document = {
-    if (article.isLiveBlog) {
-      body.select(".block").foreach { el =>
-        val blockId = el.id()
-        val shares = article.elementShares(Some(blockId))
-
-        val html = views.html.fragments.share.blockLevelSharing(blockId, shares, article.contentType)
-
-        el.append(html.toString())
-      }
-    }
-    body
   }
 }
 
@@ -257,10 +189,10 @@ object VideoEncodingUrlCleaner {
   def apply(url: String): String = url.filter(_ != '\n')
 }
 
-object AmpVideoSrcCleaner {
+object AmpSrcCleaner {
   def apply(videoSrc: String) = {
-    // All videos need to start with https for AMP.
-    // Temperary code until all videos returned from CAPI are https
+    // All media sources need to start with https for AMP.
+    // Temperary code until all media urls returned from CAPI are https
     if (videoSrc.startsWith("http:")) {
       val (first, last) = videoSrc.splitAt(4);
       first + "s" + last
@@ -268,7 +200,7 @@ object AmpVideoSrcCleaner {
   }
 }
 
-case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
+case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
   def clean(body: Document): Document = {
     val links = body.getElementsByAttribute("href")
 
@@ -278,6 +210,9 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
         link.attr("data-link-name", dataLinkName)
         link.attr("data-component", dataLinkName.replace(" ", "-"))
         link.addClass("u-underline")
+      }
+      if (amp && link.hasAttr("style")) {
+        link.removeAttr("style")
       }
     }
 
@@ -359,6 +294,7 @@ class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
           }
         } else {
           val el = element.clone()
+
           if (el.children.size > 1) {
             val body = el.child(0).attr("class", "tweet-body")
             val date = el.child(1).attr("class", "tweet-date")
@@ -366,7 +302,7 @@ class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
             val userEl = document.createElement("span").attr("class", "tweet-user").text(user)
             val link = document.createElement("a").attr("href", date.attr("href")).attr("style", "display: none;")
 
-            element.empty().attr("class", "js-tweet tweet")
+            element.empty().removeClass("twitter-tweet").addClass("js-tweet tweet")
 
             tweetImage.foreach { image =>
               val img = document.createElement("img")
@@ -403,13 +339,18 @@ case class TagLinker(article: Article)(implicit val edition: Edition, implicit v
 
   def clean(doc: Document): Document = {
 
-    if (article.showInRelated) {
+    if (article.content.showInRelated) {
 
-      val paragraphs = doc.getElementsByTag("p")
+      // Get all paragraphs which are not contained in a pullquote
+      val paragraphs = doc.getElementsByTag("p").filterNot( p =>
+        p.parents.exists( ancestor =>
+          ancestor.tagName() == "aside" && ancestor.hasClass("element-pullquote")
+        )
+      )
 
       // order by length of name so we do not make simple match errors
       // e.g 'Northern Ireland' & 'Ireland'
-      article.keywords.filterNot(_.isSectionTag).sortBy(_.name.length).reverse.foreach { keyword =>
+      article.tags.keywords.filterNot(_.isSectionTag).sortBy(_.name.length).reverse.foreach { keyword =>
 
         // don't link again in paragraphs that already have links
         val unlinkedParas = paragraphs.filterNot(_.html.contains("<a"))
@@ -423,7 +364,7 @@ case class TagLinker(article: Article)(implicit val edition: Edition, implicit v
 
           paragraphsWithMatchers.foreach { case (matcher, p) =>
             val tagLink = doc.createElement("a")
-            tagLink.attr("href", LinkTo(keyword.url, edition))
+            tagLink.attr("href", LinkTo(keyword.metadata.url, edition))
             tagLink.text(keyword.name)
             tagLink.attr("data-link-name", "auto-linked-tag")
             tagLink.attr("data-component", "auto-linked-tag")
@@ -474,20 +415,44 @@ case class Summary(amount: Int) extends HtmlCleaner {
   }
 }
 
-case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
-
-  private def setDropCap(p: Element): String = {
-    val html = p.html
-    if ( html.length > 200 && html.matches("^[\"a-hj-zA-HJ-Z].*") && html.split("\\s+").head.length >= 3 ) {
-      val classes = if (html.length > 325) "drop-cap drop-cap--wide" else "drop-cap"
-      s"""<span class="${classes}"><span class="drop-cap__inner">${html.head}</span></span>${html.tail}"""
-    } else {
-      html
+case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if(isImmersive) {
+      document.getElementsByTag("a").foreach{ a =>
+        a.addClass("in-body-link--immersive")
+      }
     }
+    document
+  }
+}
+
+case class ImmersiveHeaders(isImmersive: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if(isImmersive) {
+      document.getElementsByTag("h2").foreach{ h2 =>
+        val beforeH2 = h2.previousElementSibling()
+        if (beforeH2 != null) {
+          if(beforeH2.hasClass("element--immersive element-image")) {
+            beforeH2.addClass("section-image")
+            beforeH2.prepend("""<h2 class="section-title">""" + h2.text() + "</h2>")
+            h2.remove()
+          }
+        }
+      }
+    }
+    document
+  }
+}
+
+case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleaner {
+  private def setDropCap(p: Element): String = {
+    p.html.replaceFirst(
+      "^([\"'“‘]*[a-zA-Z])(.{199,})",
+      """<span class="drop-cap"><span class="drop-cap__inner">$1</span></span>$2"""
+    )
   }
 
   override def clean(document: Document): Document = {
-
     if(isFeature) {
       val children = document.body().children().toList
       children.headOption match {
@@ -496,6 +461,17 @@ case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
         }
         case _ =>
       }
+    }
+
+    document.getElementsByTag("h2").foreach{ h2 =>
+        if (isImmersive && h2.text() == "* * *") {
+            h2.before("""<hr class="section-rule" />""")
+            val next = h2.nextElementSibling()
+            if (next.nodeName() == "p") {
+                next.html(setDropCap(next))
+            }
+            h2.remove()
+        }
     }
     document
   }
@@ -553,9 +529,27 @@ object ChaptersLinksCleaner extends HtmlCleaner {
     autoaChapters.foreach { ch =>
       val h2 = ch.getElementsByTag("h2")
       h2.attr("id", slugify(h2.text()))
+    }
+    document
+  }
+}
 
-      if(Viewability.isSwitchedOn) {
-        h2.attr("class", "anchor-link-fix")
+case class AtomsCleaner(atoms: Option[Atoms])(implicit val request: RequestHeader) extends HtmlCleaner {
+  private def findAtom(id: String): Option[Atom] = {
+    atoms.flatMap(_.all.find(_.id == id))
+  }
+
+  override def clean(document: Document): Document = {
+    if (UseAtomsSwitch.isSwitchedOn) {
+      for {
+        atomContainer <- document.getElementsByClass("element-atom")
+        bodyElement <- atomContainer.getElementsByTag("gu-atom")
+        atomId <- Some(bodyElement.attr("data-atom-id"))
+        atomData <- findAtom(atomId)
+      } {
+        val html = views.html.fragments.atoms.atom(atomData).toString()
+        bodyElement.remove()
+        atomContainer.append(html)
       }
     }
     document

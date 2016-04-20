@@ -1,0 +1,248 @@
+// Fix a bug Internet Explorer 8 where text in password fields		
+// would become invisible when `font-family` references a webfont.
+[type=password] {
+    font-family: sans-serif !important;
+}
+
+.form {
+    margin-top: $gs-baseline*2;
+    margin-bottom: $gs-baseline*2;
+}
+
+.form__heading {
+    @include fs-bodyHeading(3);
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.form__note,
+.form-field__note {
+    font-family: $f-sans-serif-text;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.fieldset {
+    border: 0;
+    border-top: 1px solid $neutral-7;
+    display: table;
+    padding: (($gs-baseline/3)*4 - 1) 0 ($gs-baseline*2);
+    margin: 0;
+}
+
+@include mq(desktop) {
+    .fieldset__heading {
+        display: table-cell;
+        padding-right: $gs-gutter*5;
+        width: gs-span(3);
+        vertical-align: top;
+    }
+
+    .fieldset__fields {
+        display: table-cell;
+        vertical-align: top;
+        width: gs-span(6);
+    }
+}
+
+.form-fields-group .form-field {
+    margin-bottom: 0;
+}
+
+.form-field {
+    list-style: none;
+    margin: 0 0 $gs-baseline*2;
+    padding: 0;
+}
+
+.form-field__submit {
+    .form-field__note {
+        margin: 0 0 $gs-baseline*2;
+
+        @include mq(desktop) {
+            float: right;
+            width: 60%;
+            margin: 0;
+        }
+    }
+}
+
+.form-field--no-margin {
+    margin: 0;
+}
+
+.form-field--error {
+    .label {
+        color: $error;
+    }
+
+    .text-input,
+    .text-input:focus {
+        border-color: $error;
+    }
+}
+
+.form__error {
+    @include fs-textSans(2);
+    background-color: lighten($error, 55%);
+    border-bottom: 1px solid lighten($error, 35%);
+    border-top: 1px solid lighten($error, 35%);
+    color: $error;
+    margin-top: 6px;
+    padding: 7px ($gs-baseline/3)*2;
+}
+
+.form__success {
+    @include fs-textSans(2);
+    background-color: lighten($success, 70%);
+    border-bottom: 1px solid lighten($success, 35%);
+    border-top: 1px solid lighten($success, 35%);
+    color: $success;
+    margin-top: $gs-baseline/2;
+    padding: 7px ($gs-baseline/3)*2;
+}
+
+.form-field__error {
+    color: $error;
+    margin-top: $gs-baseline/2;
+}
+
+.form-field__note--below {
+    margin-bottom: 0;
+    margin-top: $gs-baseline/2;
+}
+
+.form-field__note--left {
+    float: left;
+}
+
+.form-field__note--right {
+    float: right;
+    margin-left: $gs-gutter;
+}
+
+.form-fields__inline {
+    ul {
+        margin: 0;
+        padding: 0;
+
+        .form-field {
+            display: inline-block;
+        }
+    }
+
+    .form-fields__heading {
+        @include fs-bodyHeading(3, true);
+        margin: 0 0 $gs-baseline;
+        display: block;
+    }
+}
+
+.form-fields--date-of-birth .form-field {
+    margin: 0 18px 0 0;
+}
+
+.select--telephone-number-country-code {
+    width: 100%;
+}
+
+.label {
+    cursor: pointer;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.text-input,
+.textarea {
+    border: 1px solid $neutral-4;
+    box-shadow: none;
+    box-sizing: border-box;
+    color: $neutral-1;
+    display: inline-block;
+    font-family: $f-sans-serif-text;
+    padding: 8px 8px 7px;
+    font-size: 16px;
+    line-height: 1.4;
+    outline: none;
+    border-radius: 0;
+    width: 100%;
+    -webkit-appearance: none;
+
+    &:focus {
+        border-color: $neutral-2;
+    }
+
+    @include mq(tablet) {
+        font-size: 14px;
+    }
+}
+
+.textarea {
+    resize: vertical;
+}
+
+.textarea--no-resize {
+    min-height: ($gs-baseline/3)*20;
+    resize: none;
+}
+
+.textarea--mid {
+    min-height: $gs-baseline*9;
+}
+
+.textarea--long {
+    min-height: ($gs-baseline/3)*40;
+}
+
+.submit-input, .submit-input--behaviour {
+    background: $news-main-1;
+    border: 0 none;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    margin: 0 $gs-gutter 0 0;
+    min-width: gs-span(2);
+    outline: none;
+    text-align: center;
+
+    &:hover,
+    &:focus {
+        background: darken($news-main-1, 5%);
+    }
+
+    &:active {
+        background: $neutral-1;
+    }
+}
+
+.submit-input {
+    padding: 11px $gs-gutter/2;
+}
+
+.submit-input[disabled] {
+    background: $neutral-5;
+}
+
+.check-label,
+.radio-label {
+    display: block;
+    font-family: $f-sans-serif-text;
+    font-size: 14px;
+    margin-bottom: $gs-baseline/3;
+    padding-left: $gs-gutter;
+}
+
+.check-label--helper {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+[type=checkbox],
+[type=radio] {
+    float: left;
+    height: 13px;
+    margin-left: -$gs-gutter;
+    margin-top: 2px;
+    width: 13px;
+}

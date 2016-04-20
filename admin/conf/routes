@@ -31,14 +31,23 @@ POST        /press/high                                                         
 POST        /press/standard                                                                         controllers.FrontPressController.queueStandardFrequencyFrontsForPress()
 POST        /press/low                                                                              controllers.FrontPressController.queueLowFrequencyFrontsForPress()
 
+#R2 Press
+GET         /press/r2                                                                               controllers.admin.R2PressController.pressForm()
+POST        /press/r2                                                                               controllers.admin.R2PressController.press()
+GET         /press/r2/batchupload                                                                   controllers.admin.R2PressController.pressForm()
+POST        /press/r2/batchupload                                                                   controllers.admin.R2PressController.batchUpload()
+
 # API endpoint proxying for https
 GET         /api/proxy/*path                                                                        controllers.admin.Api.proxy(path, callback)
 GET         /api/tag                                                                                controllers.admin.Api.tag(q, callback)
 GET         /api/item/*path                                                                         controllers.admin.Api.item(path, callback)
 GET         /json/proxy/*absUrl                                                                     controllers.admin.Api.json(absUrl)
 
-GET         /images/clear                                                                           controllers.images.ImageDecacheController.renderImageDecacheForm()
-POST        /images/clear                                                                           controllers.images.ImageDecacheController.decache()
+GET         /images/clear                                                                           controllers.cache.ImageDecacheController.renderImageDecacheForm()
+POST        /images/clear                                                                           controllers.cache.ImageDecacheController.decache()
+
+GET         /page/clear                                                                             controllers.cache.PageDecacheController.renderPageDecacheForm()
+POST        /page/clear                                                                             controllers.cache.PageDecacheController.decache()
 
 # Ophan proxying for https
 GET         /ophan/pageviews/*path                                                                  controllers.admin.OphanApiController.pageViews(path)
@@ -47,12 +56,16 @@ GET         /ophan/ads/render-time                                              
 
 #Development endpoints
 GET         /dev/switchboard                                                                        controllers.admin.SwitchboardController.renderSwitchboard()
+GET         /dev/switchboard-plista                                                                 controllers.admin.SwitchboardPlistaController.renderSwitchboard()
+
 POST        /dev/switchboard                                                                        controllers.admin.SwitchboardController.save()
+POST        /dev/switchboard-plista                                                                 controllers.admin.SwitchboardPlistaController.save()
 
 # Analytics
 GET         /analytics/abtests                                                                      controllers.admin.AnalyticsController.abtests()
 GET         /analytics/confidence                                                                   controllers.admin.AnalyticsConfidenceController.renderConfidence()
 GET         /analytics/content/video                                                                controllers.admin.ContentPerformanceController.renderVideoEncodingsDashboard()
+GET         /analytics/quality                                                                      controllers.admin.AnalyticsController.renderQuality()
 
 GET         /analytics/headlines-test                                                               controllers.admin.MetricsController.renderHeadlinesTest()
 
@@ -100,9 +113,16 @@ GET         /radiator                                                           
 GET         /radiator/pingdom                                                                       controllers.admin.RadiatorController.pingdom()
 GET         /radiator/commit/*hash                                                                  controllers.admin.RadiatorController.commitDetail(hash)
 
+GET         /deploys-radiator/api/deploys                                                           controllers.admin.DeploysRadiatorController.getDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String])
+GET         /deploys-radiator/api/builds/:number                                                    controllers.admin.DeploysRadiatorController.getBuild(number)
+GET         /deploys-radiator                                                                       controllers.admin.DeploysRadiatorController.renderDeploysRadiator()
+
+POST        /deploys-notify/api/builds/:number/notify                                               controllers.admin.DeploysNotifyController.notifyStep(number)
+
 # Redirects
 GET         /redirects                                                                              controllers.admin.RedirectController.redirect()
 POST        /redirect-post                                                                          controllers.admin.RedirectController.redirectPost()
+POST        /redirect-batch-post                                                                    controllers.admin.RedirectController.redirectBatchPost()
 
 # Sport troubleshooter
 GET         /troubleshoot/football                                                                  controllers.admin.SportTroubleshooterController.renderFootballTroubleshooter()

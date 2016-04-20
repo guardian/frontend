@@ -2,11 +2,11 @@
 
 @import common.SimplePagePaths
 
-@page.pagination.map{ paginate =>
+@page.metadata.pagination.map{ paginate =>
     @fragments.pagination(
-        page.webTitle,
+        page.metadata.webTitle,
         paginate,
-        SimplePagePaths(page.url),
+        SimplePagePaths(page.metadata.url),
         Some("js-discussion-change-page"),
         false,
         Some("Comments")

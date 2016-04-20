@@ -1,0 +1,84 @@
+@(projectName: Option[String], isCrossword: Boolean = false)(implicit request: RequestHeader)
+
+@import conf.switches.Switches._
+
+@* any images in head need to go here (or they'll be relative to the page)} *@
+<style class="js-loggable">
+    .i,
+    .caption:before,
+    figcaption:before,
+    blockquote.quoted:before {
+        background-image: url(@Static("images/global/sprite.png"));
+    }
+    .commercial--soulmates .i--commercial {
+        background-image: url(@Static("images/commercial/sprite.png"));
+    }
+    .commercial--soulmates-test .commercial__body, .commercial--soulmates-test .commercial__inner {
+        background-image: url(@Static("images/commercial/soulmates-bg.jpg"));
+    }
+    .commercial--soulmates-test .search__dropdown__options {
+        background-image: url(@Static("images/commercial/soulmates-dropdown-arrow.png"));
+    }
+    .svg .i,
+    .svg .caption:before,
+    .svg figcaption:before,
+    .svg blockquote.quoted:before {
+        background-image: none;
+    }
+    .is-updating {
+        background-image: url(@Static("images/auto-update-activity.gif"));
+    }
+    .is-updating--dark {
+        background-image: url(@Static("images/auto-update-activity-dark.gif"));
+    }
+    .tweet-user {
+        background-image: url(@Static("images/twitter/bird.png"));
+    }
+    .svg .tweet-user {
+        background-image: url(@Static("images/twitter/bird.svg"));
+    }
+
+    .no-svg .inline-guardian-logo-160 { background-image: url(@Static("images/logo/guardian-logo-160.png")); }
+    .no-svg .inline-guardian-logo-320 { background-image: url(@Static("images/logo/guardian-logo-320.png")); }
+    .no-svg .inline-observer-logo-160 { background-image: url(@Static("images/logo/observer-logo-160.png")); }
+    .no-svg .inline-observer-logo-320 { background-image: url(@Static("images/logo/observer-logo-320.png")); }
+</style>
+
+@*
+  - Include IE < 9 [(lt IE 9)]
+  - Exclude IE Mobile [&(!IEMobile)]
+*@
+<!--[if (lt IE 9)&(!IEMobile)]>
+    @fragments.stylesheetLink(Static.css.headOldIE(projectName), isCrossword)
+    @fragments.stylesheetLink("stylesheets/old-ie.content.css", isCrossword)
+<![endif]-->
+
+@*
+  - Include IE 9 [(IE 9)]
+  - Exclude IE Mobile [&(!IEMobile)]
+*@
+<!--[if (IE 9)&(!IEMobile)]>
+    @fragments.stylesheetLink(Static.css.headIE9(projectName), isCrossword)
+    @fragments.stylesheetLink("stylesheets/ie9.content.css", isCrossword)
+<![endif]-->
+
+@*
+  - Include all browsers [<!-->]
+  - Exclude IE < 10 [(gt IE 9)]
+  - Include IE Mobile [|(IEMobile)]
+*@
+<!--[if (gt IE 9)|(IEMobile)]><!-->
+@if(play.Play.isDev() || !InlineCriticalCss.isSwitchedOn) {
+    <link rel="stylesheet" id="head-css" data-reload="head@projectName.map("." + _).getOrElse(".content")" type="text/css" href="@Static("stylesheets/head" + projectName.map("." + _).getOrElse(".content") + ".css")" />
+} else {
+    <style class="js-loggable">
+        @Html(Static.css.head(projectName))
+    </style>
+}
+@fragments.stylesheetLink(Static.css.projectCss(projectName), isCrossword)
+<!--<![endif]-->
+
+<link rel="stylesheet" media="print" type="text/css" href="@Static("stylesheets/print.css")" />
+
+@* placeholder <style>'s for font to go in *@
+@fragments.fontDefinitions()

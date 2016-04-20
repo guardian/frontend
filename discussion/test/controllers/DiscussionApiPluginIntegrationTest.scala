@@ -28,7 +28,7 @@ import play.api.libs.ws.WS
 
   "DiscussionApiPlugin getJsonOrError " should "send GU-Client headers in GET request" in {
 
-    val responseFuture: Future[Comment] = TestPlugin.comment(0)
+    val responseFuture: Future[Comment] = TestPlugin.commentFor(0)
 
     Await.ready(responseFuture, 2 seconds)
 

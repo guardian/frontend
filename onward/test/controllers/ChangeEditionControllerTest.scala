@@ -8,19 +8,20 @@ import test.{ConfiguredTestSuite, TestRequest}
 @DoNotDiscover class ChangeEditionControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite with BeforeAndAfterEach {
 
   val callbackName = "aFunction"
+  val oneYearInSeconds = 31536000
 
 
   "ChangeEditionController" should "redirect to correct page" in {
     val result = controllers.ChangeEditionController.render("uk")(TestRequest())
     status(result) should be(302)
-    header("Location", result) should be (Some("/uk"))
+    header("Location", result) should be (Some("/uk?INTCMP=CE_UK"))
   }
 
   it should "set a preference cookie" in {
     val result = controllers.ChangeEditionController.render("au")(TestRequest())
     val GU_EDITION = playCookies(result).apply("GU_EDITION")
 
-    GU_EDITION.maxAge.getOrElse(0) should be (5184000 +- 1)  // 60 days, this is seconds
+    GU_EDITION.maxAge.getOrElse(0) should be (oneYearInSeconds +- 1)
     GU_EDITION.value should be ("AU")
   }
 
@@ -29,10 +30,10 @@ import test.{ConfiguredTestSuite, TestRequest}
     val result = controllers.ChangeEditionController.render("int")(TestRequest())
     val GU_EDITION = playCookies(result).apply("GU_EDITION")
 
-    GU_EDITION.maxAge.getOrElse(0) should be (5184000 +- 1)  // 60 days, this is seconds
+    GU_EDITION.maxAge.getOrElse(0) should be (oneYearInSeconds +- 1)
     GU_EDITION.value should be ("INT")
 
-    header("Location", result).head should endWith ("/international")
+    header("Location", result).head should endWith ("/international?INTCMP=CE_INT")
   }
 
   it should "not cache" in {

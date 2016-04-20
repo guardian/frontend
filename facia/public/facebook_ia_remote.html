@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex">
+    <script>
+    </script>
+</head>
+<body style="margin:0">
+<div id="c" style="position:absolute;top:0;left:0;bottom:0;right:0;">
+
+    <script>
+        var scripts = parseParameters();
+
+        var slot = scripts[scripts.length - 1];
+
+        var slotName = "ad-slot-" + scripts.length;
+
+        var config = {} ;
+
+        function parseParameters() {
+            var script = document.createElement("script");
+            script.id = "ad-slot-id";
+
+            var args = window.location.hash.substr(1).split('&');
+            var i, argsLength = args.length;
+
+            for (i = 0; i < argsLength; ++i) {
+                var arg = args[i].split("=");
+                var argName = arg[0];
+                var argValue = decodeURIComponent(arg[1]);
+
+                var currValue = script.getAttribute(argName);
+                if (currValue) {
+                    script.setAttribute(argName, currValue + "," + argValue);
+                } else {
+                    script.setAttribute(argName, argValue);
+                }
+            }
+            document.getElementsByTagName("div")[0].appendChild(script);
+
+            return document.querySelectorAll("script[id$='" + script.id + "']");
+        }
+
+        function toTitleCase(str) {
+            return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+        }
+
+        function exposeMetaDataForKrux() {
+            config = {
+                'pageId' : slot.getAttribute("url"),
+                'edition' : toTitleCase(slot.getAttribute("edition")),
+                'seriesId' : slot.getAttribute("se"),
+                'contentType' : toTitleCase(slot.getAttribute("ct")),
+                'keywordIds' : slot.getAttribute("keywordIds"),
+                'keywords' : slot.getAttribute("k").split(',').map(function (x) { return toTitleCase(x)}),
+                'authorIds' : slot.getAttribute("authorIds"),
+                'blogIds' : slot.getAttribute("bl"),
+                'referrer' : 'facebook-ia',
+                'section' : slot.getAttribute("section")
+            };
+        }
+
+        function loadKrux() {
+            var krux = document.createElement('script');
+            krux.setAttribute("class", "kxct");
+            krux.setAttribute("data-id", "J_RxuxWJ");
+            krux.setAttribute("data-timing", "async");
+            krux.setAttribute("data-version", "1.9");
+            krux.setAttribute("type", "text/javascript");
+
+            krux.innerHTML = "window.Krux||((Krux=function(){Krux.q.push(arguments)}).q=[]); " +
+                "(function(){ " +
+                "var k=document.createElement('script');k.type='text/javascript';k.async=true; " +
+                "var m,src=(m=location.href.match(/\bkxsrc=([^&]+)/))&&decodeURIComponent(m[1]); " +
+                "k.src = /^https?:\\/\\/([a-z0-9_\\-\\.]+\\.)?krxd\\.net(:\\d{1,5})?\\//i.test(src) ? src : src === 'disable' ? '' : " +
+                "(location.protocol==='https:'?'https:':'http:')+'//cdn.krxd.net/controltag?confid=J_RxuxWJ' ; " +
+                "var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(k,s); }());";
+
+            document.body.appendChild(krux);
+        }
+
+        function buildSegments() {
+            var filling, kruxSegments, output, ref;
+            var targeting = "";
+            kruxSegments = (ref = localStorage.getItem('kxsegs')) != null ? ref : "";
+            if (kruxSegments !== "") {
+                filling = kruxSegments.split(',').join("','");
+                output = "['" + filling + "']";
+                targeting += ".setTargeting('x', " + output + ")";
+            }
+            return targeting;
+        }
+
+        function insertScript(content) {
+            var script = document.createElement("script");
+            slot.parentElement.appendChild(script);
+            script.type = "text/javascript";
+            return script.text = content;
+        }
+
+        function buildTargetSize(size) {
+            var formatted = size.replace(/\s*,\s*/g, "],[").replace(/\s*x\s*/g, ",");
+            return "[[" + formatted + "]]";
+        }
+
+        function buildCustomTargeting() {
+            var attr, i, key, len, match, value;
+            var targeting = "";
+            var ref = slot.attributes;
+            for (i = 0, len = ref.length; i < len; i++) {
+                attr = ref[i];
+                match = attr.name.match(/^data-ad-target-(.+)$/);
+                if (match != null) {
+                    key = match[1];
+                    value = attr.value.replace(/\s*,\s*/g, "','");
+                    targeting += ".setTargeting('" + key + "',['" + value + "'])";
+                }
+            }
+            return targeting;
+        }
+
+
+        function insertAdConfig() {
+            var isFirstAd = scripts.length === 1;
+            if (isFirstAd) {
+                var pageLevelCodePart1 = "var googletag = googletag || {}; googletag.cmd = googletag.cmd || []; (function() { var gads = document.createElement(\"script\"); gads.async = true; gads.type = \"text/javascript\"; var useSSL = \"https:\" == document.location.protocol; gads.src = (useSSL ? \"https:\" : \"http:\") + \"//www.googletagservices.com/tag/js/gpt.js\"; var node = document.getElementsByTagName(\"script\")[0]; node.parentNode.insertBefore(gads, node); })();";
+                insertScript(pageLevelCodePart1);
+                var pageLevelCodePart2 = "googletag.cmd.push(function() { googletag.pubads().enableAsyncRendering(); googletag.pubads().collapseEmptyDivs(); googletag.enableServices(); });";
+                insertScript(pageLevelCodePart2);
+            }
+            var size = slot.getAttribute("data-ad-size");
+            var adUnitName = slot.getAttribute("data-ad-unit");
+            var slotDeclaration = "googletag.cmd.push(function() { googletag.defineSlot('/59666047/" + adUnitName + "', " + (buildTargetSize(size)) + ", '" + slotName + "')" + (buildCustomTargeting()) + (buildSegments()) + ".addService(googletag.pubads()); });";
+            return insertScript(slotDeclaration);
+        }
+
+        function insertAd() {
+            var slotDiv = document.createElement("div");
+            slotDiv.setAttribute("id", slotName);
+            slot.parentElement.appendChild(slotDiv);
+            var slotCode = "googletag.cmd.push(function() { googletag.display('" + slotName + "'); });";
+            return insertScript(slotCode);
+        }
+
+        function init() {
+            exposeMetaDataForKrux();
+            loadKrux();
+
+            insertAdConfig();
+            insertAd();
+        }
+
+        init();
+
+    </script>
+
+</div>
+<script>if (window.docEndCallback) window.docEndCallback()</script>
+</body>
+</html>

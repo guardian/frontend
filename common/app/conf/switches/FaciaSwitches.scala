@@ -6,35 +6,8 @@ import org.joda.time.LocalDate
 trait FaciaSwitches {
   // Facia
 
-  val ToolDisable = Switch(
-    "Facia",
-    "facia-tool-disable",
-    "If this is switched on then the fronts tool is disabled",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val ToolSparklines = Switch(
-    "Facia",
-    "facia-tool-sparklines",
-    "If this is switched on then the fronts tool renders images from sparklines.ophan.co.uk",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val FaciaToolPressSwitch = Switch(
-    "Facia",
-    "facia-tool-press-front",
-    "If this switch is on facia tool will press fronts on each change",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val FaciaToolDraftContent = Switch(
-    "Facia",
+    SwitchGroup.Facia,
     "facia-tool-draft-content",
     "If this switch is on facia tool will offer draft content to editors, and press draft fronts from draft content",
     safeState = On,
@@ -42,17 +15,8 @@ trait FaciaSwitches {
     exposeClientSide = false
   )
 
-  val FaciaToolCachedContentApiSwitch = Switch(
-    "Facia",
-    "facia-tool-cached-capi-requests",
-    "If this switch is on facia tool will cache responses from the content API and use them on failure",
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val FrontPressJobSwitch = Switch(
-    "Facia",
+    SwitchGroup.Facia,
     "front-press-job-switch",
     "If this switch is on then the jobs to push and pull from SQS will run",
     safeState = Off,
@@ -61,7 +25,7 @@ trait FaciaSwitches {
   )
 
   val FrontPressJobSwitchStandardFrequency = Switch(
-    "Facia",
+    SwitchGroup.Facia,
     "front-press-job-switch-standard-frequency",
     "If this switch is on then the jobs to push and pull from SQS will run",
     safeState = Off,
@@ -70,7 +34,7 @@ trait FaciaSwitches {
   )
 
   val FaciaPressOnDemand = Switch(
-    "Facia",
+    SwitchGroup.Facia,
     "facia-press-on-demand",
     "If this is switched on, you can force facia to press on demand (Leave off)",
     safeState = Off,
@@ -78,11 +42,20 @@ trait FaciaSwitches {
     exposeClientSide = false
   )
 
-  val FaciaToolAllowConfigForAll = Switch(
-    "Facia",
-    "facia-tool-allow-config-for-all",
-    "If this is switched on, anyone can access the config tool, regardless of permissions service (Leave off)",
+  val FaciaInlineEmbeds = Switch(
+    SwitchGroup.Facia,
+    "facia-inline-embeds",
+    "If this is switched on, facia will prefetch embeds and render them on the server",
     safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val FaciaPressStatusNotifications = Switch(
+    SwitchGroup.Facia,
+    "facia-press-status-notifications",
+    "If this is switched off, facia press will not send status notification on kinesis",
+    safeState = On,
     sellByDate = never,
     exposeClientSide = false
   )

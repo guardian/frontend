@@ -1,7 +1,7 @@
 package model.commercial
 
 import common.{ExecutionContexts, Logging}
-import conf.CommercialConfiguration
+import conf.Configuration
 import conf.switches.Switches._
 
 import scala.concurrent.Future
@@ -21,7 +21,7 @@ package object money {
       // this tracking code appears in the links to products
       val trackingCode = "GU15"
 
-      CommercialConfiguration.getProperty("moneysupermarket.api.url") map {
+      Configuration.commercial.moneyUrl map {
         base => s"$base/bestbuys/$path/$trackingCode"
       }
     }

@@ -1,11 +1,12 @@
-@(stylesheet: String, reload: String = "")
+@(stylesheet: String, isCrossword: Boolean = false)
 @import conf.switches.Switches._
 
-@if(AsyncCss.isSwitchedOn) {
-    <link rel="stylesheet" @if(reload){data-reload="@reload"} type="text/css" href="@Static(stylesheet)" media="only x" />
+@* temporarily disable async css on crossword pages so they're usable on safari 6 and below *@
+@if(AsyncCss.isSwitchedOn && !isCrossword) {
+    <link rel="stylesheet" type="text/css" href="@Static(stylesheet)" media="only x" />
     <noscript>
         <link rel="stylesheet" type="text/css" href="@Static(stylesheet)" />
     </noscript>
 } else {
-    <link rel="stylesheet" @if(reload){data-reload="@reload"} type="text/css" href="@Static(stylesheet)" />
+    <link rel="stylesheet" type="text/css" href="@Static(stylesheet)" />
 }

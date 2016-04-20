@@ -1,27 +1,28 @@
 package common
 
 import java.io.StringWriter
+import java.util.regex.Pattern
 
-import com.gu.facia.api.models.{FaciaContent, LinkSnap}
+import com.gu.facia.api.models.LinkSnap
 import com.sun.syndication.feed.module.DCModuleImpl
 import com.sun.syndication.feed.module.mediarss._
 import com.sun.syndication.feed.module.mediarss.types.{Credit, MediaContent, Metadata, UrlReference}
 import com.sun.syndication.feed.synd._
 import com.sun.syndication.io.SyndFeedOutput
-import implicits.FaciaContentFrontendHelpers._
-import implicits.FaciaContentImplicits._
 import model._
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import play.api.mvc.RequestHeader
+import views.support.{Profile, Item140, Item460}
 
 import scala.collection.JavaConversions._
 import scala.collection.JavaConverters._
 
 object TrailsToRss extends implicits.Collections {
 
-  def stripInvalidXMLCharacters(s: String) = {
-    s.replaceAll("[^\\x09\\x0A\\x0D\\x20-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFFF]", "")
+  val pattern = Pattern.compile("[^\\x09\\x0A\\x0D\\x20-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFFF]")
+  private def stripInvalidXMLCharacters(s: String) = {
+    pattern.matcher(s).replaceAll("")
   }
 
   val image: SyndImageImpl = {
@@ -56,47 +57,42 @@ object TrailsToRss extends implicits.Collections {
     // Feed: entries
     val entries = trails.map{ trail =>
       // Entry: categories
-      val categories = trail.keywords.map{ tag =>
+      val categories = trail.tags.keywords.map{ tag =>
         val category = new SyndCategoryImpl
         category.setName(tag.name)
-        category.setTaxonomyUri(tag.webUrl)
+        category.setTaxonomyUri(tag.metadata.webUrl)
         category
       }.asJava
 
       // Entry: description
       val description = new SyndContentImpl
-      val standfirst = trail match {
-          case c: Content => c.standfirst.getOrElse("")
-          case _ => ""
-        }
-      val intro = trail match {
-          case a: Article => Jsoup.parseBodyFragment(a.body).select("p:lt(2)").toArray.map(_.toString).mkString("")
-          case _ => ""
-        }
-      val readMore = s""" <a href="${trail.webUrl}">Continue reading...</a>"""
+      val standfirst = trail.fields.standfirst.getOrElse("")
+      val intro = Jsoup.parseBodyFragment(trail.fields.body).select("p:lt(2)").toArray.map(_.toString).mkString("")
+      val readMore = s""" <a href="${trail.metadata.webUrl}">Continue reading...</a>"""
       description.setValue(stripInvalidXMLCharacters(standfirst + intro + readMore))
 
-      val images: Seq[ImageAsset] = (trail.bodyImages ++ trail.mainPicture ++ trail.thumbnail).map{ i =>
-        i.imageCrops.filter(c => (c.width == 140 && c.height == 84) || (c.width == 460 && c.height == 276))
-      }.flatten.toSeq.distinctBy(_.url)
-
-      val modules: Seq[MediaEntryModuleImpl] = images.filter(_.url.nonEmpty).map { i =>
-        // create image
-        val image = new MediaContent(new UrlReference(i.url.get))
-        image.setHeight(i.height)
-        image.setWidth(i.width)
-        i.mimeType.map(image.setType)
+      val mediaModules: Seq[MediaEntryModuleImpl] = for {
+        profile: Profile <- List(Item140, Item460)
+        trailPicture: ImageMedia <- trail.trailPicture
+        trailAsset: ImageAsset <- profile.elementFor(trailPicture)
+        resizedImage <- profile.bestFor(trailPicture)
+      } yield {
+        // create media
+        val media = new MediaContent(new UrlReference(resizedImage))
+        profile.width.foreach(media.setWidth(_))
+        profile.height.foreach(media.setHeight(_))
+        trailAsset.mimeType.foreach(media.setType)
         // create image's metadata
         val imageMetadata = new Metadata()
-        i.caption.map({ d => imageMetadata.setDescription(stripInvalidXMLCharacters(d)) })
-        i.credit.map{ creditName =>
+        trailAsset.caption.foreach({ d => imageMetadata.setDescription(stripInvalidXMLCharacters(d)) })
+        trailAsset.credit.foreach { creditName =>
           val credit = new Credit(null, null, creditName)
           imageMetadata.setCredits(Seq(credit).toArray)
         }
-        image.setMetadata(imageMetadata)
+        media.setMetadata(imageMetadata)
         // create image module
         val module = new MediaEntryModuleImpl()
-        module.setMediaContents(Seq(image).toArray)
+        module.setMediaContents(Seq(media).toArray)
         module
       }
 
@@ -107,11 +103,11 @@ object TrailsToRss extends implicits.Collections {
 
       // Entry
       val entry = new SyndEntryImpl
-      entry.setTitle(stripInvalidXMLCharacters(trail.linkText))
-      entry.setLink(trail.webUrl)
+      entry.setTitle(stripInvalidXMLCharacters(trail.fields.linkText))
+      entry.setLink(trail.metadata.webUrl)
       entry.setDescription(description)
       entry.setCategories(categories)
-      entry.setModules(new java.util.ArrayList(modules ++ Seq(dc)))
+      entry.setModules(new java.util.ArrayList(mediaModules ++ Seq(dc)))
       entry
 
     }.asJava
@@ -126,26 +122,32 @@ object TrailsToRss extends implicits.Collections {
   }
 
   def fromPressedPage(pressedPage: PressedPage)(implicit request: RequestHeader) = {
-    val faciaContentList: List[FaciaContent] =
+    val faciaContentList: List[ContentType] =
       pressedPage.collections
         .filterNot(_.config.excludeFromRss)
         .flatMap(_.curatedPlusBackfillDeduplicated)
         .filter{
           case _: LinkSnap => false
           case _ => true}
-        .filter(_.maybeContentId.isDefined)
-        .distinctBy(faciaContent => faciaContent.maybeContentId.getOrElse(faciaContent.id))
+        .filter(_.properties.maybeContentId.isDefined)
+        .distinctBy(faciaContent => faciaContent.properties.maybeContentId.getOrElse(faciaContent.card.id))
+        .flatMap(_.properties.maybeContent)
 
-    fromFaciaContent(pressedPage.webTitle, faciaContentList, pressedPage.url, pressedPage.description)
+    val webTitle = if (pressedPage.metadata.contentType != GuardianContentTypes.NetworkFront) {
+      s"${pressedPage.metadata.webTitle} | The Guardian"
+    } else {
+      "The Guardian"
+    }
+
+    fromFaciaContent(webTitle, faciaContentList, pressedPage.metadata.url, pressedPage.metadata.description)
   }
 
-  def fromFaciaContent(webTitle: String, faciaContentList: Seq[FaciaContent], url: String, description: Option[String] = None)(implicit request: RequestHeader): String  = {
-    val feedTitle = s"$webTitle | The Guardian"
+  def fromFaciaContent(webTitle: String, faciaContentList: Seq[ContentType], url: String, description: Option[String] = None)(implicit request: RequestHeader): String = {
 
     // Feed
     val feed = new SyndFeedImpl
     feed.setFeedType("rss_2.0")
-    feed.setTitle(feedTitle)
+    feed.setTitle(webTitle)
     feed.setDescription(description.getOrElse("Latest news and features from theguardian.com, the world's leading liberal voice"))
     feed.setLink("http://www.theguardian.com" + url)
     feed.setLanguage("en-gb")
@@ -157,62 +159,60 @@ object TrailsToRss extends implicits.Collections {
     // Feed: entries
     val entries = faciaContentList.map{ faciaContent =>
       // Entry: categories
-      val categories = faciaContent.keywords.map(Tag.apply(_)).map{ tag =>
+      val categories = faciaContent.tags.keywords.map{ tag =>
         val category = new SyndCategoryImpl
         category.setName(tag.name)
-        category.setTaxonomyUri(tag.webUrl)
+        category.setTaxonomyUri(tag.metadata.webUrl)
         category
       }.asJava
 
       // Entry: description
       val description = new SyndContentImpl
-      val standfirst = faciaContent.standfirst.getOrElse("")
-      val intro = faciaContent
-        .body
-        .map { b => Jsoup.parseBodyFragment(b).select("p:lt(2)").toArray.map(_.toString).mkString("") }
-        .getOrElse("")
+      val standfirst = faciaContent.fields.standfirst.getOrElse("")
+      val intro = Jsoup.parseBodyFragment(faciaContent.fields.body).select("p:lt(2)").toArray.map(_.toString).mkString("")
 
-      val webUrl = faciaContent.webUrl.getOrElse("http://www.theguardian.com/")
+      val webUrl = faciaContent.metadata.webUrl
       val readMore = s""" <a href="$webUrl">Continue reading...</a>"""
       description.setValue(stripInvalidXMLCharacters(standfirst + intro + readMore))
 
-      val images: Seq[ImageAsset] = (faciaContent.bodyImages ++ faciaContent.mainPicture ++ faciaContent.thumbnail).flatMap{ i =>
-        i.imageCrops.filter(c => c.width == 140 || c.width == 460 )
-      }.distinctBy(_.url)
-
-      val modules: Seq[MediaEntryModuleImpl] = images.filter(_.url.nonEmpty).map { i =>
+      val mediaModules: Seq[MediaEntryModuleImpl] = for {
+        profile: Profile <- List(Item140, Item460)
+        trailPicture: ImageMedia <- faciaContent.trail.trailPicture
+        trailAsset: ImageAsset <- profile.elementFor(trailPicture)
+        resizedImage <- profile.bestFor(trailPicture)
+      } yield {
         // create image
-        val image = new MediaContent(new UrlReference(i.url.get))
-        image.setHeight(i.height)
-        image.setWidth(i.width)
-        i.mimeType.foreach(image.setType)
+        val media = new MediaContent(new UrlReference(resizedImage))
+        profile.width.foreach(media.setWidth(_))
+        profile.height.foreach(media.setHeight(_))
+        trailAsset.mimeType.foreach(media.setType)
         // create image's metadata
         val imageMetadata = new Metadata()
-        i.caption.foreach({ d => imageMetadata.setDescription(stripInvalidXMLCharacters(d)) })
-        i.credit.foreach { creditName =>
+        trailAsset.caption.foreach({ d => imageMetadata.setDescription(stripInvalidXMLCharacters(d)) })
+        trailAsset.credit.foreach { creditName =>
           val credit = new Credit(null, null, creditName)
           imageMetadata.setCredits(Seq(credit).toArray)
         }
-        image.setMetadata(imageMetadata)
+        media.setMetadata(imageMetadata)
         // create image module
         val module = new MediaEntryModuleImpl()
-        module.setMediaContents(Seq(image).toArray)
+        module.setMediaContents(Seq(media).toArray)
         module
       }
 
       // Entry: DublinCore
       val dc = new DCModuleImpl
-      dc.setDate(faciaContent.webPublicationDate.toDate)
-      dc.setCreator(faciaContent.byline.getOrElse("Guardian Staff"))
+      dc.setDate(faciaContent.trail.webPublicationDate.toDate)
+      dc.setCreator(faciaContent.trail.byline.getOrElse("Guardian Staff"))
 
       // Entry
-      val entryWebTitle = faciaContent.maybeWebTitle.getOrElse("The Guardian")
+      val entryWebTitle = faciaContent.metadata.webTitle
       val entry = new SyndEntryImpl
       entry.setTitle(stripInvalidXMLCharacters(entryWebTitle))
       entry.setLink(webUrl)
       entry.setDescription(description)
       entry.setCategories(categories)
-      entry.setModules(new java.util.ArrayList(modules ++ Seq(dc)))
+      entry.setModules(new java.util.ArrayList(mediaModules ++ Seq(dc)))
       entry
 
     }.asJava

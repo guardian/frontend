@@ -1,6 +1,5 @@
 @(model: ArticlePage)(implicit request: RequestHeader)
-@import conf.switches.Switches._
 
-@mainAMP(model.article){
+@mainAMP(model, model.related, model.article.content){
     @fragments.articleBody(model, amp = true)
 }

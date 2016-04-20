@@ -1,6 +1,7 @@
 package common
 
-import com.gu.contentapi.client.model.{Content, ItemResponse, Section, Tag}
+import com.gu.contentapi.client.model.v1.{Content, Section, Tag, TagType, ItemResponse}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
 import play.api.mvc.RequestHeader
@@ -18,13 +19,19 @@ class ModelOrResultTest extends FlatSpec with Matchers with ExecutionContexts {
   val testContent = Content(id = "the/id",
     sectionId = None,
     sectionName = None,
-    webPublicationDateOption = Some(new DateTime()),
+    webPublicationDate = Some(new DateTime().toCapiDateTime),
     webTitle = "the title",
     webUrl = "http://www.guardian.co.uk/canonical",
     apiUrl = "http://foo.bar",
     elements = None)
 
-  val articleTag = new Tag("type/article", "type", webTitle = "the title", webUrl = "http://foo.bar", apiUrl = "http://foo.bar")
+  val articleTag = Tag(
+    id = "type/article",
+    `type` = TagType.Type,
+    webTitle = "the title",
+    webUrl = "http://foo.bar",
+    apiUrl = "http://foo.bar")
+
   val galleryTag = articleTag.copy(id = "type/gallery")
   val videoTag = articleTag.copy(id = "type/video")
   val audioTag = articleTag.copy(id = "type/audio")
@@ -34,10 +41,37 @@ class ModelOrResultTest extends FlatSpec with Matchers with ExecutionContexts {
   val testVideo = testContent.copy(tags = List(videoTag))
   val testAudio = testContent.copy(tags = List(audioTag))
 
-  val testSection = new Section("water", "Water", "http://foo.bar", "http://foo.bar", Nil)
+  val testSection = Section(
+    id = "water",
+    webTitle = "Water",
+    webUrl = "http://foo.bar",
+    apiUrl = "http://foo.bar",
+    editions = Nil
+  )
 
-  // FML
-  val stubResponse = new ItemResponse("ok", "top_tier", None, None, None, None, None, None, None, None, None, None, Nil, Nil, Nil, Nil, Nil, Nil)
+  // FML ٩(ఠ益ఠ)۶
+  val stubResponse = ItemResponse.apply(
+    status = "ok",
+    userTier = "top_tier",
+    total = None,
+    startIndex = None,
+    pageSize = None,
+    currentPage = None,
+    pages = None,
+    orderBy = None,
+    content =  None,
+    tag = None,
+    edition = None,
+    section = None,
+    results = Some(Nil),
+    quiz = None,
+    relatedContent = Some(Nil),
+    storyPackage = Some(Nil),
+    editorsPicks = Some(Nil),
+    mostViewed = Some(Nil),
+    leadContent = Some(Nil),
+    packages = Some(Nil),
+    viewpoints = Some(Nil))
 
   "ModelOrNotFound" should "return the model if it exists" in {
     ModelOrResult(

@@ -1,11 +1,10 @@
 package controllers
 
-import com.gu.contentapi.client.model.ItemResponse
+import com.gu.contentapi.client.model.v1.ItemResponse
 import common._
 import model._
-import performance.MemcachedAction
 import play.api.mvc._
-import services.{FaciaContentConvert, Index, IndexPage}
+import services.{Index, IndexPage}
 import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
@@ -17,7 +16,7 @@ trait IndexControllerCommon extends Controller with Index with RendersItemRespon
   // Needed as aliases for reverse routing
   def renderCombinerRss(leftSide: String, rightSide: String) = renderCombiner(leftSide, rightSide)
 
-  def renderCombiner(leftSide: String, rightSide: String) = MemcachedAction { implicit request =>
+  def renderCombiner(leftSide: String, rightSide: String) = Action.async { implicit request =>
     logGoogleBot(request)
     index(Edition(request), leftSide, rightSide, inferPage(request), request.isRss).map {
       case Left(page) => renderFaciaFront(page)
@@ -35,7 +34,7 @@ trait IndexControllerCommon extends Controller with Index with RendersItemRespon
 
   def renderRss(path: String) = render(path)
 
-  def render(path: String) = MemcachedAction { implicit request =>
+  def render(path: String) = Action.async { implicit request =>
     renderItem(path)
   }
 
@@ -43,7 +42,7 @@ trait IndexControllerCommon extends Controller with Index with RendersItemRespon
 
   def renderTrailsJson(path: String) = renderTrails(path)
 
-  def renderTrails(path: String) = MemcachedAction { implicit request =>
+  def renderTrails(path: String) = Action.async { implicit request =>
     index(Edition(request), path, inferPage(request), request.isRss) map {
       case Left(model) => renderTrailsFragment(model)
       case Right(notFound) => notFound
@@ -53,7 +52,7 @@ trait IndexControllerCommon extends Controller with Index with RendersItemRespon
   protected def renderFaciaFront(model: IndexPage)(implicit request: RequestHeader): Result
 
   private def renderTrailsFragment(model: IndexPage)(implicit request: RequestHeader) = {
-    val response = () => views.html.fragments.trailblocks.headline(model.trails.map(FaciaContentConvert.frontendContentToFaciaContent), numItemsVisible = model.trails.size)
+    val response = () => views.html.fragments.trailblocks.headline(model.faciaTrails, numItemsVisible = model.trails.size)
     renderFormat(response, response, model.page)
   }
 

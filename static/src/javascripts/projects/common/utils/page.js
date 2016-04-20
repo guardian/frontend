@@ -1,12 +1,17 @@
 define([
     'common/utils/$',
     'common/utils/config',
-    'common/utils/_'
-],
-function (
+    'common/utils/detect',
+    'lodash/objects/assign',
+    'lodash/collections/find',
+    'lodash/arrays/intersection'
+], function (
     $,
     config,
-    _
+    detect,
+    assign,
+    find,
+    intersection
 ) {
 
     function isit(isTrue, yes, no, arg) {
@@ -23,11 +28,11 @@ function (
 
         // the order of this is important as, on occasion,
         // "minbymin" is tagged with "match reports" but should be considered "minbymin".
-        _.assign(match, {
+        assign(match, {
             date: config.webPublicationDateAsUrlPart(),
             teams: teams,
             isLive: config.page.isLive,
-            pageType: _.find([
+            pageType: find([
                 ['minbymin', config.page.isLiveBlog],
                 ['report', config.hasTone('Match reports')],
                 ['preview', config.hasSeries('Match previews')],
@@ -42,7 +47,8 @@ function (
     }
 
     function isCompetition(yes, no) {
-        var competition = ($('.js-football-competition').attr('data-link-name') || '').replace('keyword: football/', '');
+        var notMobile = detect.getBreakpoint() !== 'mobile',
+            competition =  notMobile ? ($('.js-football-competition').attr('data-link-name') || '').replace('keyword: football/', '') : '';
         return isit(competition, yes, no);
     }
 
@@ -67,13 +73,20 @@ function (
         return isit(vis, yes, no, el);
     }
 
+    function keywordExists(keyword) {
+        var keywords = config.page.keywords ? config.page.keywords.split(',') : '';
+        // Compare page keywords with passed in array
+        return !!intersection(keywords, keyword).length;
+    }
+
     return {
         isMatch: isMatch,
         isCompetition: isCompetition,
         isClockwatch: isClockwatch,
         isLiveClockwatch: isLiveClockwatch,
         isFootballStatsPage: isFootballStatsPage,
-        belowArticleVisible: belowArticleVisible
+        belowArticleVisible: belowArticleVisible,
+        keywordExists: keywordExists
     };
 
 }); // define

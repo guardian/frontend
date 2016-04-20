@@ -20,16 +20,6 @@ object Application extends Controller with ExecutionContexts {
     NoCache(Ok(ConfigAgent.contentsAsJsonString).withHeaders("Content-Type" -> "application/json"))
   }
 
-  def generateFrontJson() = Action.async { request =>
-    LiveFapiFrontPress.generateFrontJsonFromFapiClient()
-      .map(Json.prettyPrint)
-      .map(Ok.apply(_))
-      .map(NoCache.apply)
-      .fold(
-        apiError => InternalServerError(apiError.message),
-        successJson => successJson
-      )}
-
   def generateLivePressedFor(path: String) = Action.async { request =>
     LiveFapiFrontPress.getPressedFrontForPath(path)
       .map(Json.toJson(_))
@@ -48,7 +38,7 @@ object Application extends Controller with ExecutionContexts {
         .map(_ => NoCache(Ok(s"Successfully pressed $path on $liveOrDraft for $stage")))
         .recover { case t => NoCache(InternalServerError(t.getMessage))}}
     else {
-      Future.successful(NoCache(ServiceUnavailable))}
+      Future.successful(NoCache(ServiceUnavailable(s"This service has been disabled by the switch: ${FaciaPressOnDemand.name}")))}
 
   def pressLiveForPath(path: String) = Action.async {
     handlePressRequest(path, "live")(LiveFapiFrontPress.pressByPathId)

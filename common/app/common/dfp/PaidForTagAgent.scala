@@ -2,17 +2,16 @@ package common.dfp
 
 import java.net.URLDecoder
 
-import com.gu.facia.api.models.CollectionConfig
 import common.Edition
 import model.Tag
 import model.`package`.frontKeywordIds
+import model.pressed.CollectionConfig
 
 trait PaidForTagAgent {
 
   protected def isPreview: Boolean
 
   protected def currentPaidForTags: Seq[PaidForTag]
-  protected def allAdFeatureTags: Seq[PaidForTag]
   protected def tagToSponsorsMap: Map[String, Set[String]]
   protected def tagToAdvertisementFeatureSponsorsMap: Map[String, Set[String]]
 
@@ -121,15 +120,15 @@ trait PaidForTagAgent {
     isPaidFor(capiTagId, maybeSectionId, maybeEdition = None, FoundationFunded)
   }
 
-  private def findContainerCapiTagIdAndDfpTag(config: CollectionConfig):
+  def findContainerCapiTagIdAndDfpTag(config: CollectionConfig):
   Option[CapiTagIdAndDfpTag] = {
 
     def containerCapiTagIds(config: CollectionConfig): Seq[String] = {
       val stopWords = Set("newest", "order-by", "published", "search", "tag", "use-date")
 
-      config.apiQuery map { encodedQuery =>
+      config.backfill map { backfill =>
         def negativeClause(token: String): Boolean = token.startsWith("-")
-        val query = URLDecoder.decode(encodedQuery, "utf-8")
+        val query = URLDecoder.decode(backfill.query, "utf-8")
         val tokens = query.split( """\?|&|=|\(|\)|\||\,""")
         (tokens filterNot negativeClause filterNot stopWords.contains flatMap frontKeywordIds).toSeq
       } getOrElse Nil
@@ -144,75 +143,8 @@ trait PaidForTagAgent {
     None
   }
 
-  private def isPaidFor(config: CollectionConfig, paidForType: PaidForType): Boolean = {
-    findContainerCapiTagIdAndDfpTag(config) exists (_.dfpTag.paidForType == paidForType)
-  }
-
-  def sponsorshipType(config: CollectionConfig): Option[String] = {
-    findContainerCapiTagIdAndDfpTag(config) map (_.dfpTag.paidForType.name)
-  }
-
-  def isSponsored(config: CollectionConfig): Boolean = {
-    isPaidFor(config, Sponsored)
-  }
-
-  def isAdvertisementFeature(config: CollectionConfig): Boolean = {
-    isPaidFor(config, AdvertisementFeature)
-  }
-
-  def isFoundationSupported(config: CollectionConfig): Boolean = {
-    isPaidFor(config, FoundationFunded)
-  }
-
   def sponsorshipTag(capiTags: Seq[Tag], maybeSectionId: Option[String]): Option[Tag] = {
     findWinningTagPair(currentPaidForTags, capiTags, maybeSectionId, None) map (_.capiTag)
-  }
-
-  def sponsorshipTag(config: CollectionConfig): Option[SponsorshipTag] = {
-    findContainerCapiTagIdAndDfpTag(config) map { tagPair =>
-      SponsorshipTag(tagPair.dfpTag.tagType, tagPair.capiTagId)
-    }
-  }
-
-  private def isExpiredAdvertisementFeature(pageId: String,
-                                            hasAdFeatureTone: Boolean,
-                                            maybeDfpTag: => Option[PaidForTag],
-                                    maybeSectionId: Option[String]): Boolean = {
-
-    lazy val lineItems = maybeDfpTag map (_.lineItems) getOrElse Nil
-
-    lazy val isExpiredLegacyAdFeature =
-      lineItems.isEmpty && hasAdFeatureTone && pageId != "tone/advertisement-features"
-
-    lazy val isExpiredAdFeature = {
-      def hasExpiredStatus(lineItem: GuLineItem): Boolean = {
-        lineItem.status != "READY" && lineItem.status != "DELIVERING"
-      }
-      lineItems.nonEmpty && (lineItems forall { lineItem =>
-          hasExpiredStatus(lineItem) || lineItem.endTime.exists(_.isBeforeNow)
-      })
-    }
-
-    !isPreview && (isExpiredLegacyAdFeature || isExpiredAdFeature)
-  }
-
-  def isExpiredAdvertisementFeature(pageId: String,
-                                    capiTags: Seq[Tag],
-                                    maybeSectionId: Option[String]): Boolean = {
-    val hasAdFeatureTone = capiTags exists (_.id == "tone/advertisement-features")
-    if (hasAdFeatureTone) {
-      lazy val maybeDfpTag = findWinningTagPair(allAdFeatureTags, capiTags, maybeSectionId, None) map (_.dfpTag)
-      isExpiredAdvertisementFeature(pageId, hasAdFeatureTone, maybeDfpTag, maybeSectionId)
-    } else false
-  }
-
-  def isExpiredAdvertisementFeatureFront(pageId: String,
-                                         keywordIds: Seq[String],
-                                         maybeSectionId: Option[String]): Boolean = {
-    lazy val maybeDfpTag = keywordIds.flatMap { keywordId =>
-      findWinningDfpTag(allAdFeatureTags, keywordId, maybeSectionId, maybeEdition = None)
-    }.headOption
-    isExpiredAdvertisementFeature(pageId, hasAdFeatureTone = false, maybeDfpTag, maybeSectionId)
   }
 
   private def hasMultiplesOfAPaidForType(capiTags: Seq[Tag],
@@ -249,6 +181,14 @@ trait PaidForTagAgent {
 
   def getSponsor(capiTagId: String): Option[String] = {
     findWinningDfpTag(currentPaidForTags, capiTagId, None, None) flatMap (_.lineItems.head.sponsor)
+  }
+
+  def winningTagPair(
+    capiTags: Seq[Tag],
+    sectionId: Option[String],
+    edition: Option[Edition]
+  ): Option[CapiTagAndDfpTag] = {
+    findWinningTagPair(currentPaidForTags, capiTags, sectionId, edition)
   }
 }
 

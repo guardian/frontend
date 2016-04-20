@@ -1,32 +1,34 @@
 package model.commercial
 
 import common.{AkkaAgent, Logging}
-import model.Content
+import model.ContentType
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 
 object CapiAgent extends Logging {
 
-  private lazy val shortUrlAgent = AkkaAgent[Map[String, Option[Content]]](Map.empty)
+  private lazy val shortUrlAgent = AkkaAgent[Map[String, Option[ContentType]]](Map.empty)
 
   private lazy val cache = shortUrlAgent.get()
 
-  def contentByShortUrls(shortUrls: Seq[String])
-                        (implicit ec: ExecutionContext): Future[Seq[Content]] = {
-
-    val shortUrlIds = shortUrls map { url =>
+  private[commercial] def idsFromShortUrls(shortUrls: Seq[String]): Seq[String] = {
+    shortUrls map { url =>
       val slashPrefixed = if (url startsWith "/") url else s"/$url"
-      val endTrimmed = slashPrefixed.take(slashPrefixed.indexOf("/", 3))
-      endTrimmed
+      slashPrefixed.trim.stripSuffix("/stw")
     }
+  }
 
+  def contentByShortUrls(shortUrls: Seq[String])
+                        (implicit ec: ExecutionContext): Future[Seq[ContentType]] = {
+
+    val shortUrlIds = idsFromShortUrls(shortUrls)
     val urlsNotInCache = shortUrlIds filterNot cache.contains
 
-    def addToCache(contents: Seq[Content]): Future[Map[String, Option[Content]]] = {
+    def addToCache(contents: Seq[ContentType]): Future[Map[String, Option[ContentType]]] = {
       val initialValues = urlsNotInCache.map(_ -> None).toMap
       shortUrlAgent alter (_ ++ initialValues)
-      val newContents = contents.map(content => content.shortUrlId -> Some(content)).toMap
+      val newContents = contents.map(content => content.content.shortUrlId -> Some(content)).toMap
       shortUrlAgent alter (_ ++ newContents)
     }
 

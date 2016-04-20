@@ -105,7 +105,8 @@ object FixturesAndResults extends Football {
           hideToggle = true,
           showTimestamps = false,
           dateLinkPath = None,
-          useShowMore = false
+          useShowMore = false,
+          hasShowMoreEnabled = true
         )
       }
     }).flatten

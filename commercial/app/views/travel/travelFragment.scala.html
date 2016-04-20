@@ -4,7 +4,7 @@
     <div class="commercial--travel commercial--tone-travel">
         <div class="commercial--multi__header">
             <h4 class="commercial__title">
-                <a href="@clickMacro@Configuration.commercial.travel_url/" data-link-name="merchandising-hybrid-travel-visit-all">
+                <a href="@{clickMacro}http://www.guardianholidayoffers.co.uk/" data-link-name="merchandising-hybrid-travel-visit-all">
                     @fragments.inlineSvg("logo-holidayoffers-26", "commercial", List("commercial--tone-holidayoffers-logo"))
                     <span class="u-h">Holiday Offers</span>
                 </a>
@@ -19,7 +19,7 @@
                 </div>
                 <h4 class="lineitem__title">@travelOffer.title</h4>
                 <div class="lineitem__offer">
-                    <p class="lineitem__meta">@travelOffer.durationInWords from <span class="lineitem__price">£@travelOffer.fromPrice</span></p>
+                    <p class="lineitem__meta">@travelOffer.durationInWords from <span class="lineitem__price">@travelOffer.formattedPrice</span></p>
                 </div>
             </a>
             <a class="lineitem__cta button button--primary button--small" href="@clickMacro@travelOffer.offerUrl">

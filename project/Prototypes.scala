@@ -36,6 +36,7 @@ trait Prototypes {
     testOptions in Test += Tests.Argument("-oDF"),
     resolvers ++= Seq(Resolver.typesafeRepo("releases")),
     libraryDependencies ++= Seq(
+      scalaTest,
       scalaTestPlus,
       seleniumJava % Test,
       jodaTime % Test,
@@ -56,6 +57,7 @@ trait Prototypes {
       Resolver.typesafeRepo("releases"),
       Resolver.sonatypeRepo("releases"),
       "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
+      "Guardian Frontend Bintray" at "https://dl.bintray.com/guardian/frontend",
       "Spy" at "https://files.couchbase.com/maven2/"
     ),
 
@@ -91,6 +93,7 @@ trait Prototypes {
 
     libraryDependencies ++= Seq(
       scalaTest,
+      scalaTestPlus,
       mockito
     ),
 
@@ -99,7 +102,33 @@ trait Prototypes {
     javaOptions in Test += "-Xmx2048M",
     javaOptions in Test += "-XX:+UseConcMarkSweepGC",
     javaOptions in Test += "-XX:ReservedCodeCacheSize=128m",
-    baseDirectory in Test := file(".")
+    baseDirectory in Test := file("."),
+
+    // Set testResultLogger back to the default, fixes an issue with `sbt-teamcity-logger`
+    //   See: https://github.com/JetBrains/sbt-tc-logger/issues/9
+    testResultLogger in (Test, test) := TestResultLogger.Default
+  )
+
+  val testAll = taskKey[Unit]("test all aggregate projects")
+  val uploadAll = taskKey[Unit]("upload all riff-raff artifacts from aggregate projects")
+  val testThenUpload = taskKey[Unit]("Conditional task that uploads to riff raff only if tests pass")
+
+  def frontendRootSettings= List(
+    testAll := (test in Test).all(ScopeFilter(inAggregates(ThisProject, includeRoot = false))).value,
+    uploadAll := riffRaffUpload.all(ScopeFilter(inAggregates(ThisProject, includeRoot = false))).value,
+
+    testThenUpload := Def.taskDyn({
+     testAll.result.value match {
+       case Inc(inc) => Def.task[Unit] {
+         println("Tests failed, no riff raff upload will be performed.")
+         throw inc
+       }
+       case Value(_) => {
+         println("Tests passed, uploading artifacts to riff raff.")
+         uploadAll.toTask
+       }
+     }
+    }).value
   )
 
   def frontendDistSettings(application: String) = List(
@@ -124,6 +153,7 @@ trait Prototypes {
 
   def root() = Project("root", base = file(".")).enablePlugins(play.PlayScala)
     .settings(frontendCompilationSettings)
+    .settings(frontendRootSettings)
 
   def application(applicationName: String) = {
     Project(applicationName, file(applicationName)).enablePlugins(play.PlayScala, RiffRaffArtifact, UniversalPlugin)
@@ -134,6 +164,7 @@ trait Prototypes {
     .settings(VersionInfo.settings)
     .settings(libraryDependencies ++= Seq(commonsIo))
     .settings(frontendDistSettings(applicationName))
+    .settingSets(settingSetsOrder)
   }
 
   def library(applicationName: String) = {
@@ -144,5 +175,23 @@ trait Prototypes {
     .settings(frontendTestSettings)
     .settings(VersionInfo.settings)
     .settings(libraryDependencies ++= Seq(commonsIo))
+    .settings(riffRaffUpload := {})
+    .settingSets(settingSetsOrder)
+  }
+
+  /**
+   * Overrides the default order in which settings are applied.
+   * Modified this so that settings from "nonAutoPlugins" (plugins using the older sbt plugin API)
+   * are applied before settings defined in build.scala
+   *
+   * Required for resetting the `testResultLogger` in `frontendTestSettings` above
+   *
+   * Default:
+   *   AddSettings.allDefaults: AddSettings = seq(autoPlugins, buildScalaFiles, userSettings, nonAutoPlugins, defaultSbtFiles)
+   */
+  lazy val settingSetsOrder = {
+    import AddSettings._
+
+    seq(autoPlugins, nonAutoPlugins, buildScalaFiles, userSettings, defaultSbtFiles)
   }
 }

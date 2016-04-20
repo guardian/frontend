@@ -69,7 +69,7 @@ define([
         }
 
         // HTML shim|v it for old IE (IE9 will still need the HTML video tag workaround)
-        // doc.createElement('picture');
+        doc.createElement('picture');
 
         // local object for method references and testing exposure
         var pf = w.picturefill || {},
@@ -166,9 +166,7 @@ define([
                 media = parsedSize.media;
 
                 if (!length) {
-                    // jscs:disable disallowKeywords
                     continue;
-                    // jscs:enable disallowKeywords
                 }
                 // if there is no media query or it matches, choose this as our winning length
                 if ((!media || pf.matchesMedia(media)) &&
@@ -376,6 +374,26 @@ define([
         };
 
         /**
+         * In IE9, <source> elements get removed if they aren't children of
+         * video elements. Thus, we conditionally wrap source elements
+         * using <!--[if IE 9]><video style="display: none;"><![endif]-->
+         * and must account for that here by moving those source elements
+         * back into the picture element.
+         */
+        pf.removeVideoShim = function (picture) {
+            var videos = picture.getElementsByTagName('video');
+            if (videos.length) {
+                var video = videos[0],
+                    vsources = video.getElementsByTagName('source');
+                while (vsources.length) {
+                    picture.insertBefore(vsources[0], video);
+                }
+                // Remove the video element once we're finished removing its children
+                video.parentNode.removeChild(video);
+            }
+        };
+
+        /**
          * Find all `img` elements, and add them to the candidate list if they have
          * a `picture` parent, a `sizes` attribute in basic `srcset` supporting browsers,
          * a `srcset` attribute at all, and they haven’t been evaluated already.
@@ -395,6 +413,51 @@ define([
                 }
             }
             return elems;
+        };
+
+        pf.getMatch = function (img, picture) {
+            var sources = picture.childNodes,
+                match;
+
+            // Go through each child, and if they have media queries, evaluate them
+            for (var j = 0, slen = sources.length; j < slen; j++) {
+                var source = sources[ j ];
+
+                // ignore non-element nodes
+                if (source.nodeType !== 1) {
+                    continue;
+                }
+
+                // Hitting the `img` element that started everything stops the search for `sources`.
+                // If no previous `source` matches, the `img` itself is evaluated later.
+                if (source === img) {
+                    return match;
+                }
+
+                // ignore non-`source` nodes
+                if (source.nodeName.toUpperCase() !== "SOURCE") {
+                    continue;
+                }
+                // if it's a source element that has the `src` property set, throw a warning in the console
+                if (source.getAttribute("src") !== null && typeof console !== undefined) {
+                    console.warn("The `src` attribute is invalid on `picture` `source` element; instead, use `srcset`.");
+                }
+
+                var media = source.getAttribute("media");
+
+                // if source does not have a srcset attribute, skip
+                if (!source.getAttribute("srcset")) {
+                    continue;
+                }
+
+                // if there's no media specified, OR w.matchMedia is supported
+                if ((!media || pf.matchesMedia(media))) {
+                    match = source;
+                    break;
+                }
+            }
+
+            return match;
         };
 
         function picturefill(opt) {
@@ -420,9 +483,7 @@ define([
 
                     // immediately skip non-`img` nodes
                     if (element.nodeName.toUpperCase() !== 'IMG') {
-                        // jscs:disable disallowKeywords
                         continue;
-                        // jscs:enable disallowKeywords
                     }
 
                     // expando for caching data on the img
@@ -434,12 +495,33 @@ define([
                     // `options.reevaluate` is set to true (this, for example,
                     // is set to true when running `picturefill` on `resize`).
                     if (!options.reevaluate && element[ pf.ns ].evaluated) {
-                        // jscs:disable disallowKeywords
                         continue;
-                        // jscs:enable disallowKeywords
                     }
 
-                    if (!pf.sizesSupported && (element.srcset && regWDesc.test(element.srcset))) {
+                    // if `img` is in a `picture` element
+                    if (parent && parent.nodeName.toUpperCase() === "PICTURE") {
+
+                        // IE9 video workaround
+                        pf.removeVideoShim(parent);
+
+                        // return the first match which might undefined
+                        // returns false if there is a pending source
+                        // TODO the return type here is brutal, cleanup
+                        firstMatch = pf.getMatch(element, parent);
+
+                        // if any sources are pending in this picture due to async type test(s)
+                        // remove the evaluated attr and skip for now ( the pending test will
+                        // rerun picturefill on this element when complete)
+                        if (firstMatch === false) {
+                            continue;
+                        }
+                    } else {
+                        firstMatch = undefined;
+                    }
+
+                    // Cache and remove `srcset` if present and we’re going to be doing `picture`/`srcset`/`sizes` polyfilling to it.
+                    if ((parent && parent.nodeName.toUpperCase() === "PICTURE") ||
+                    (!pf.sizesSupported && (element.srcset && regWDesc.test(element.srcset)))) {
                         pf.dodgeSrcset(element);
                     }
 

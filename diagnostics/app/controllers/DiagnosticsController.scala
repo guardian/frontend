@@ -1,31 +1,19 @@
 package controllers
 
 import common._
+import org.joda.time.Instant
 import play.api.mvc._
-import model.diagnostics.javascript.JavaScript
-import model.diagnostics.abtests.AbTests
 import model.diagnostics.analytics.Analytics
 import model.diagnostics.css.Css
+import model.diagnostics.csp.CSP
 import model.TinyResponse
 
 object DiagnosticsController extends Controller with Logging {
-
-
   def acceptBeaconOptions = postOptions
 
   def acceptBeacon = Action { implicit request =>
     countsFromQueryString(request)
     TinyResponse.ok
-  }
-
-  def js = Action { implicit request =>
-    JavaScript.report(request)
-    TinyResponse.gif
-  }
-
-  def ab = Action { implicit request =>
-    AbTests.report(request.queryString)
-    TinyResponse.gif
   }
 
   def analytics(prefix: String) = Action { implicit request =>
@@ -52,9 +40,15 @@ object DiagnosticsController extends Controller with Logging {
     TinyResponse.noContent()
   }
 
-  def cssOptions = postOptions
+  def csp = Action(jsonParser) { implicit request =>
+    if (conf.switches.Switches.CspReporting.isSwitchedOn) {
+      CSP.report(request.body)
+    }
 
-  private def postOptions: Action[AnyContent] = Action { implicit request =>
+    TinyResponse.noContent()
+  }
+
+  def postOptions: Action[AnyContent] = Action { implicit request =>
     TinyResponse.noContent(Some("POST, OPTIONS"))
   }
 }

@@ -3,16 +3,31 @@
 
 @import common.LinkTo
 @import views.BodyCleaner
-@import views.support.TrailCssClasses.articleToneClass
+@import views.support.TrailCssClasses.toneClass
+@import views.support.RenderClasses
+
+@* Feb 2015: Google does only support NewsArticle in their amp carousel. To remove once Google starts supporting other schemas like schema.org/Review *@
+@schemaType(page: ArticlePage) = @{
+    if (amp) "http://schema.org/NewsArticle" else page.article.metadata.schemaType
+}
+
+@bodyType(page: ArticlePage) = @{
+    if (page.article.tags.isReview && !amp) "reviewBody" else "articleBody"
+}
 
 @defining(model.article) { article =>
+
     <div class="l-side-margins">
         <article id="article" data-test-id="article-root"
-            class="content content--article tonal tonal--@articleToneClass(article) section-@article.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")
-            @if(article.isAdvertisementFeature){content--advertisement-feature}
-            @if(article.isFeature && article.hasShowcaseMainElement){has-feature-showcase-element}"
-            itemscope itemtype="@article.schemaType" role="main">
-            <meta itemprop="mainEntityOfPage" content="@LinkTo(article.url)">
+
+        class="@RenderClasses(Map(
+            "content--advertisement-feature" -> article.commercial.isAdvertisementFeature,
+            "has-feature-showcase-element" -> (article.tags.isFeature && article.elements.hasShowcaseMainElement),
+            "paid-content--advertisement-feature" -> article.commercial.isAdvertisementFeature
+        ),  "content", "content--article", "tonal", s"tonal--${toneClass(article)}", s"section-${article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")}")"
+
+        itemscope itemtype="@schemaType(model)" role="main">
+            <meta itemprop="mainEntityOfPage" content="@LinkTo(article.metadata.url)">
             <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
                 <meta itemprop="name" content="The Guardian">
                 @if(amp) {
@@ -25,38 +40,53 @@
                 }
             </div>
 
-            @fragments.headTonal(article)
+            @if(article.commercial.isAdvertisementFeature){
+                @fragments.guBand()
+            }
 
-            @if(article.isFeature && article.hasShowcaseMainElement) {
+            @fragments.headTonal(article, article.commercial.isAdvertisementFeature, amp = amp)
+
+            @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
                 @fragments.mainMedia(article, amp)
             }
 
-            <div class="content__main tonal__main tonal__main--@articleToneClass(article)">
+            <div class="content__main tonal__main tonal__main--@toneClass(article)">
                 <div class="gs-container">
-                    <div class="content__main-column content__main-column--article js-content-main-column @if(article.isSudoku) {sudoku}">
+                    <div class="content__main-column content__main-column--article js-content-main-column @if(article.tags.isSudoku) {sudoku}">
 
                         <div class="js-sport-tabs football-tabs content__mobile-full-width"></div>
 
-                        @if(!(article.isFeature && article.hasShowcaseMainElement)) {
+                        @if(!(article.tags.isFeature && article.elements.hasShowcaseMainElement)) {
                             @fragments.mainMedia(article, amp)
                         }
 
-                        @fragments.witnessCallToAction(article)
+                        @fragments.witnessCallToAction(article.content)
 
                         @fragments.contentMeta(article)
 
-                        @if(article.isNews && !article.hasMainEmbed && article.elements("main").isEmpty) {
+                        @fragments.chapterHeadings(article)
+
+                        @if(article.tags.isNews && !article.elements.hasMainEmbed && article.elements.elements("main").isEmpty) {
                             <hr class="content__hr hide-until-leftcol" />
                         }
 
-                        @fragments.chapterHeadings(article)
-
-                        <div class="content__article-body from-content-api js-article__body" itemprop="@if(article.isReview){reviewBody} else {articleBody}"
+                        <div class="content__article-body from-content-api js-article__body" itemprop="@bodyType(model)"
                             data-test-id="article-review-body">
-                            @BodyCleaner(article, article.body, amp = amp)
+                            @BodyCleaner(article, article.fields.body, amp = amp)
+
+                            @* A value for the image field is required for AMP article
+                            WORKAROUND: if the article doesn't contain any image we insert the metadata of the fallback logo,
+                            so the amp page passes validation but no image is visible by the user *@
+                            @if(amp && article.content.elements.images.isEmpty) {
+                                <div itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
+                                    <meta itemprop="url" content="https://assets.guim.co.uk/images/2170b16eb045a34f8c79761b203627b4/fallback-logo.png">
+                                    <meta itemprop="width" content="1200">
+                                    <meta itemprop="height" content="630">
+                                </div>
+                            }
                         </div>
 
-                        @fragments.witnessCallToAction(article)
+                        @fragments.witnessCallToAction(article.content)
 
                         @fragments.submeta(article)
 
@@ -64,6 +94,7 @@
                     </div>
 
                     <div class="content__secondary-column js-secondary-column" aria-hidden="true">
+                        @fragments.chapterHeadings(article)
                         <div class="ad-slot-container js-ad-slot-container"></div>
                         <div class="js-components-container"></div>
                     </div>

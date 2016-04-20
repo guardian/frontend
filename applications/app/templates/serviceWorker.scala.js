@@ -1,4 +1,5 @@
 @()
+@import conf.Static
 
 /*eslint quotes: [2, "single"], curly: [2, "multi-line"], strict: 0*/
 /*eslint-env browser*/
@@ -8,23 +9,54 @@
 //
 // Offline page
 //
+"use strict";
 
 var staticCacheName = 'static';
 
-var getISODate = function () { return new Date().toISOString().split('T')[0]; };
+var getISODate = function () {
+    return new Date().toISOString().split('T')[0];
+};
 
+var fetchAll = function (inputs) {
+    return Promise.all(inputs.map(function (input) {
+        return fetch(input);
+    }));
+};
+
+var cachePageAndAssetResponses = function (jsonResponse, assetResponses) {
+    var cacheName = [getISODate(), staticCacheName].join('-');
+    return caches.open(cacheName).then(function (cache) {
+        return jsonResponse.clone().json().then(function (jsonResponseJson) {
+            var pageRequest = new Request('/offline-page');
+            var pageResponse = new Response(jsonResponseJson.html, { headers: { 'Content-Type': 'text/html' } });
+            return Promise.all([
+                cache.put(pageRequest, pageResponse)
+            ].concat(
+                assetResponses.map(function (assetResponse) {
+                    var assetRequest = new Request(assetResponse.url);
+                    return cache.put(assetRequest, assetResponse);
+                })
+            ));
+        });
+    });
+};
+
+// The JSON contains the HTML and asset versions. We cache the assets at
+// their specified URLs and the page HTML as '/offline-page'.
 var updateCache = function () {
-    return caches.open([getISODate(), staticCacheName].join('-')).then(function (cache) {
-        return cache.addAll([
-            '/offline-page',
-            '@Static("stylesheets/head.content.css")',
-            '@Static("stylesheets/content.css")',
-            '@Static("stylesheets/print.css")',
-            // Crossword pages use jspm
-            '@StaticJspm("javascripts/core.js")',
-            '@StaticJspm("javascripts/bootstraps/app.js")',
-            '@StaticJspm("javascripts/es6/bootstraps/crosswords.js")'
-        ]);
+    // Fetch page and all assets. Iff all responses are OK then cache all assets and page.
+    return fetch('/offline-page.json').then(function (jsonResponse) {
+        if (jsonResponse.ok) {
+            return jsonResponse.clone().json().then(function (json) {
+                return fetchAll(json.assets).then(function (assetResponses) {
+                    var allAssetResponsesOk = assetResponses.every(function (response) { return response.ok; });
+
+                    if (allAssetResponsesOk) {
+                        return cachePageAndAssetResponses(jsonResponse, assetResponses);
+                    }
+                });
+            });
+        }
     });
 };
 
@@ -44,84 +76,136 @@ var keyMatchesTodaysCache = function (key) {
     return new RegExp('^' + getISODate() + '-').test(key);
 };
 
+var doesRequestAcceptHtml = function (request) {
+    return request.headers.get('Accept')
+        .split(',')
+        .some(function (type) { return type === 'text/html'; });
+};
+
+var isCacheUpdated = function () {
+    return caches.keys().then(function (keys) {
+        return keys.some(keyMatchesTodaysCache);
+    });
+};
+
 self.addEventListener('install', function (event) {
     event.waitUntil(updateCache());
 });
 
-this.addEventListener('fetch', function (event) {
-    caches.keys().then(function (keys) {
-        var isUpdated = keys.some(keyMatchesTodaysCache);
-
-        if (!isUpdated) {
-            updateCache().then(deleteOldCaches);
-        }
+var needCredentialsWorkaround = function (url) {
+    var whitelist = ['https://discussion.theguardian.com/discussion-api'];
+    return whitelist.some(function (entry) {
+        return new RegExp('^' + entry).test(url);
     });
-
-    event.respondWith(
-        fetch(event.request)
-            .catch(function () {
-                // If a request is cached, respond with that. Otherwise respond
-                // with the shell, whose subresources will be in the cache.
-                return caches.match(event.request).then(function (response) {
-                    return response || caches.match('/offline-page');
-                })
-            })
-    );
-});
-
-//
-// Push notifications
-//
-
-var findInArray = function (array, fn) {
-    for (var i = array.length - 1; i >= 0; i--) {
-        var value = array[i];
-        if (fn(value)) return value;
-    }
 };
 
-// Warning: reassignment!
-var notificationData;
+this.addEventListener('fetch', function (event) {
+    var request = event.request;
 
-self.addEventListener('push', function (event) {
+    if (doesRequestAcceptHtml(request)) {
+        isCacheUpdated().then(function (isUpdated) {
+            if (!isUpdated) {
+                updateCache().then(deleteOldCaches);
+            }
+        });
+    }
+
+    var url = new URL(request.url);
+    var isRootRequest = url.host === self.location.host;
+    var isAssetRequest = @if(play.Play.isDev()) {
+        new RegExp('^@Configuration.assets.path').test(url.pathname)
+    } else {
+        new RegExp('^@Configuration.assets.path').test(url.href)
+    };
+    // To workaround a bug in Chrome which results in broken HTTPS->HTTP
+    // redirects, we only handle root requests if they match the developer
+    // blog. The info section often hosts holding pages which will could
+    // eventually redirect to a HTTP page.
+    // https://github.com/guardian/frontend/issues/10936
+    var isRequestToDeveloperBlog = url.pathname.match(/^\/info\/developer-blog($|\/.*$)/);
+    if (isRootRequest && isRequestToDeveloperBlog && doesRequestAcceptHtml(request)) {
+        // HTML pages fallback to offline page
+        event.respondWith(
+            fetch(request)
+                .catch(function () {
+                    return caches.match('/offline-page');
+                })
+        );
+    } else if (isAssetRequest) {
+        // Default fetch behaviour
+        // Cache first for all other requests
+        event.respondWith(
+            caches.match(request)
+                .then(function (response) {
+                    // Workaround Firefox bug which drops cookies
+                    // https://github.com/guardian/frontend/issues/12012
+                    return response || fetch(request, needCredentialsWorkaround(request.url) ? { credentials: 'include' } : {});
+                })
+        );
+    }
+});
+
+self.addEventListener('activate', function(event) {
+});
+
+self.addEventListener('push', function(event) {
+
     event.waitUntil(
-        fetch('@{JavaScript(Configuration.pushNotifications.host + "/?url=http://push-api-web.gutools.co.uk/messages/web/latest")}')
-            .then(function (x) { return x.json(); })
-            .then(function (data) {
-                // Warning: reassign !
-                notificationData = {
-                    title: data.message,
-                    url: data.link,
-                    body: '',
-                    tag: 'breaking-news',
-                    icon: '@{JavaScript(Static("images/favicons/152x152.png").path)}'
-                };
+        self.registration.pushManager.getSubscription().then(function (sub) {
+            var gcmBrowserId = sub.endpoint.substring(sub.endpoint.lastIndexOf('/') + 1);
 
-                return self.registration.showNotification(notificationData.title, {
-                    body: notificationData.body,
-                    icon: notificationData.icon,
-                    tag: notificationData.tag
-                });
+            var endpoint = '@{JavaScript(Configuration.Notifications.latestMessageUrl)}/' + gcmBrowserId;
+            return fetch(endpoint, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (response) {
+               return response.json();
             })
+            .then(function (json) {
+                   if(json.status === "ok" && json.messages.length > 0) {
+                       /* Client returns current messages for a given browserid ( which are then deleted ) We want the latest one.
+                        If we loop displaying all of them the promise doesn't resolved and a 'website being updated in the background' message is displayed
+                        */
+                       var message = json.messages.slice(-1)[0];
+                       var data = {topic: message.topic, blockId: message.blockId};
+                       return self.registration.showNotification(message.title, {
+                           body: message.body,
+                           icon: '@{JavaScript(Static("images/favicons/114x114.png").path)}',
+                           tag: message.title,
+                           data: data
+                       });
+                }
+            })
+
+        })
     );
 });
 
-self.addEventListener('notificationclick', function (event) {
-    // Android doesn't close the notification when you click on it
-    // See: http://crbug.com/463146
+self.addEventListener('notificationclick', function(event){
+
     event.notification.close();
+    var url = '@{JavaScript(Configuration.site.host)}/'
+        + event.notification.data.topic
+        + "?page=with:block-" + event.notification.data.blockId
+        +  "&CMP=not_b-webalert"
+        + "#block-" + event.notification.data.blockId;
 
-    var url = notificationData.url;
-
-    // Focus if already open
     event.waitUntil(
-        clients.matchAll({ type: 'window' })
-            .then(function (clientList) {
-                var matchingClient = findInArray(clientList, function (client) {
-                    return new URL(client.url).pathname === url;
-                });
-                return matchingClient ? matchingClient.focus() : clients.openWindow(url);
+        clients.matchAll({
+                type: 'window'
+            })
+            .then(function(windowClients) {
+                for (var i = 0; i < windowClients.length; i++) {
+                    var client = windowClients[i];
+                    if (client.url === url && 'focus' in client) {
+                        return client.focus();
+                    }
+                }
+                if (clients.openWindow) {
+                    return clients.openWindow(url);
+                }
             })
     );
 });
-

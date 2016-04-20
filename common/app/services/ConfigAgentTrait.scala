@@ -1,11 +1,12 @@
 package services
 
 import akka.util.Timeout
-import com.gu.facia.api.models.CollectionConfig
+import com.gu.facia.api.models.{CommercialPriority, EditorialPriority, FrontPriority, TrainingPriority}
 import com.gu.facia.client.models.{ConfigJson => Config, FrontJson => Front}
 import common._
 import conf.Configuration
 import fronts.FrontsApi
+import model.pressed.CollectionConfig
 import model.{FrontProperties, SeoDataJson}
 import play.api.libs.json.Json
 import play.api.{Application, GlobalSettings}
@@ -70,11 +71,11 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
       .map(_.flatMap(collectionId => getConfig(collectionId).map(collectionConfig => CollectionConfigWithId(collectionId, collectionConfig))))
   }
 
-  def getConfig(id: String): Option[CollectionConfig] = configAgent.get().flatMap(_.collections.get(id).map(CollectionConfig.fromCollectionJson))
+  def getConfig(id: String): Option[CollectionConfig] = configAgent.get().flatMap(_.collections.get(id).map(CollectionConfig.make))
 
   def getConfigAfterUpdates(id: String): Future[Option[CollectionConfig]] =
     configAgent.future()
-      .map(_.flatMap(_.collections.get(id)).map(CollectionConfig.fromCollectionJson))
+      .map(_.flatMap(_.collections.get(id)).map(CollectionConfig.make))
 
     def getAllCollectionIds: List[String] = {
     val config = configAgent.get()
@@ -94,6 +95,18 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
       title  = frontOption.flatMap(_.title).filter(_.nonEmpty),
       description  = frontOption.flatMap(_.description).filter(_.nonEmpty)
     )
+  }
+
+  def getFrontPriorityFromConfig(pageId: String): Option[FrontPriority] = {
+    configAgent.get() flatMap {
+      _.fronts.get(pageId) map {
+        _.priority match {
+          case Some("commercial") => CommercialPriority
+          case Some("training") => TrainingPriority
+          case _ => EditorialPriority
+        }
+      }
+    }
   }
 
   def fetchFrontProperties(id: String): FrontProperties = {
