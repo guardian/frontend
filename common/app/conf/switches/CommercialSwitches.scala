@@ -382,4 +382,13 @@ trait CommercialSwitches {
     sellByDate = new LocalDate(2016, 4, 27),
     exposeClientSide = false
   )
+
+  val staticBadgesSwitch = Switch(
+    SwitchGroup.Commercial,
+    "static-badges",
+    "If on, all badges are served server side",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
 }
