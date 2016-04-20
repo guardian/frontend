@@ -31,12 +31,10 @@
                         @defining(VideoPlayer(
                             content.elements.mainVideo.get,
                             Video640,
-                            item.header.headline,
+                            item,
                             autoPlay = false,
                             showControlsAtStart = false,
-                            SupportedUrl.fromFaciaContent(item),
-                            Some(false),
-                            pressedContent = Option(item)
+                            SupportedUrl.fromFaciaContent(item)
                         )) { player =>
                             <div class="fc-item__media-wrapper u-faux-block-link__promote media__container--hidden js-video-player">
                                 <div class="fc-item__video-container">

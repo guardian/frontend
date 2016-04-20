@@ -77,11 +77,11 @@
                     </div>
                 }
                 <div class="video-overlay__headline">
-                    @if(player.pressedContent){
-                        @player.pressedContent.map { item =>
-                            @title(FaciaCardHeader.fromTrail(item, None), 0, 0, withLink = false)
-                            @if(item.properties.showByline) {
-                                <div class="fc-item__byline">@item.properties.byline</div>
+                    @if(player.hasFaciaHeader){
+                        @player.faciaHeaderProperties.map { properties =>
+                            @title(properties.header, 0, 0, withLink = false)
+                            @if(properties.showByline) {
+                                <div class="fc-item__byline">@properties.byline</div>
                             }
                         }
                     } else {
