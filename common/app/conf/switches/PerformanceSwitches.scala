@@ -215,4 +215,14 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
+  // Owner: dotcom health (tbonnin)
+  val RetryFailedAccuWeatherApiRequests = Switch(
+    SwitchGroup.Performance,
+    "retry-failed-accuweather-requests",
+    "If this switch is ON then failed requests to the Accuweather would be retried 2 more times before failing",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 4, 27), //Wednesday
+    exposeClientSide = false
+  )
+
 }
