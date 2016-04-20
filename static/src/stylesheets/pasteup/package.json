@@ -17,6 +17,8 @@
     "inquirer": "^0.12.0",
     "java-properties": "^0.2.9",
     "megalog": "^0.1.0",
-    "ora": "^0.2.1"
+    "ora": "^0.2.1",
+    "git-rev": "^0.2.1",
+    "is-git-clean": "^1.0.0"
   }
 }

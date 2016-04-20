@@ -1,7 +1,5 @@
 package common.dfp
 
-import java.net.URLEncoder
-
 import common.Edition
 import common.dfp.AdSize.{leaderboardSize, responsiveSize}
 import org.joda.time.DateTime
@@ -9,6 +7,7 @@ import org.joda.time.DateTime.now
 import org.joda.time.format.ISODateTimeFormat
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
+import scala.language.postfixOps
 
 case class CustomTarget(name: String, op: String, values: Seq[String]) {
 
@@ -457,7 +456,7 @@ case class GuCreativeTemplate(id: Long,
                               snippet: String,
                               creatives: Seq[GuCreative]) {
 
-  val examplePreviewUrl: Option[String] = creatives.headOption flatMap { creative => creative.previewUrl }
+  lazy val examplePreviewUrl: Option[String] = creatives flatMap {_.previewUrl} headOption
 
   lazy val isForApps: Boolean = name.startsWith("apps - ") || name.startsWith("as ") || name.startsWith("qc ")
 }

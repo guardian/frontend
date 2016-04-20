@@ -436,6 +436,10 @@
     font-weight: bold;
     padding-right: $gs-gutter;
     text-align: right;
+
+    .has-no-flex & {
+        clear: both;
+    }
 }
 
 .adverts__badge__logo {

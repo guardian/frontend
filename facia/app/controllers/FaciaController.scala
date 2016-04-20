@@ -3,6 +3,7 @@ package controllers
 import common._
 import controllers.front._
 import layout.{CollectionEssentials, FaciaContainer, Front}
+import model.Cached.StringResult
 import model._
 import model.facia.PressedCollection
 import model.pressed.CollectionConfig
@@ -148,13 +149,17 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     val futureResult = frontJsonFapi.get(path).flatMap {
       case Some(faciaPage) =>
         successful(
-          Cached(faciaPage) {
-            if (request.isRss)
-              Ok(TrailsToRss.fromPressedPage(faciaPage)).as("text/xml; charset=utf-8")
+          Cached.withEtag(faciaPage) {
+            if (request.isRss) {
+              val body = TrailsToRss.fromPressedPage(faciaPage)
+              StringResult(Ok(body).as("text/xml; charset=utf-8"), body)
+            }
             else if (request.isJson)
-              JsonFront(faciaPage)
-            else
-              Ok(views.html.front(faciaPage))
+              StringResult.withoutString(JsonFront(faciaPage))
+            else {
+              val html = views.html.front(faciaPage)
+              StringResult(Ok(html), html.body)
+            }
           })
       case None => successful(Cached(60)(NotFound))}
 
