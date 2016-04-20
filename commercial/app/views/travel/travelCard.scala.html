@@ -7,7 +7,7 @@
         <img class="advert__image" src="@offer.imageUrl">
     </div>
     <div class="advert__meta">
-        @offer.durationInWords from <strong>£@offer.fromPrice</strong>
+        @offer.durationInWords from <strong>@offer.formattedPrice</strong>
     </div>
     <span class="advert__more button button--small">
         Buy now @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
