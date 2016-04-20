@@ -367,9 +367,7 @@ define([
                 var related = $('.content-footer').offset().top;
                 var scroll = $(window).scrollTop();
                 var position = Math.floor(related - scroll);
-                console.log(position);
                 if (position <= 200){
-                    console.log('tihsihsih');
                     fader.removeClass('is-faded');
                     clearTimeout(faderTimeout);
                     bean.off(document.body, 'mousemove', setFaderTimeout);
