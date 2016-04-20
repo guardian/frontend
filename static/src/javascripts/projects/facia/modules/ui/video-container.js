@@ -54,7 +54,7 @@ define([
         translateWidth = 0 - videoWidth * containerPos;
 
         $('.js-video-playlist-item-' + containerPos).addClass('video-playlist__item--active');
-        
+
         $('.js-video-playlist-inner').attr('style',
             '-webkit-transform: translate(' + translateWidth + 'px);' +
             '-moz-transform: translate(' + translateWidth + 'px);' +

@@ -222,6 +222,16 @@ $video-width-desktop: 700px;
     }
 }
 
+.video-playlist__item--first {
+    @include mq(desktop, leftCol) {
+        margin-left: gs-span(2);
+    }
+
+    @include mq(leftCol) {
+        margin-left: 0;
+    }
+}
+
 .video-playlist__item--active {
     .vjs-big-play-button {
         display: block;
@@ -257,7 +267,7 @@ $video-width-desktop: 700px;
     }
 }
 
-.video-playlist__item--0 {
+.video-playlist__item--first {
     @include mq(desktop) {
         margin-left: gs-span(2);
     }
