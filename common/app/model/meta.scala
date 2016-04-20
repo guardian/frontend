@@ -14,6 +14,7 @@ import ophan.SurgingContentAgent
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
+import campaigns.PersonalInvestmentsCampaign
 
 object Commercial {
 
@@ -578,16 +579,12 @@ final case class Tags(
   lazy val isClimateChangeSeries = tags.exists(t => t.id =="environment/series/keep-it-in-the-ground")
   lazy val isUSMinuteSeries = tags.exists(t => t.id == "us-news/series/the-campaign-minute-2016")
 
-  // The PI campaign will run for one year, during which all the related pages must provide a sticky
-  // banner at the top that sticks all the way through, therefore overriding other config flags
-  // such as isAdvertisementFeature
-  lazy val isPersonalInvestmentsCampaign: Boolean = tags.exists(t => t.id.endsWith("/personal-investments"))
-  lazy val isPersonalInvestmentsCampaignRunning: Boolean = DateTime.now().isBefore(new DateTime(2017, 4, 26, 0, 0))
+  lazy val keywordIds = keywords.map { _.id }
 
   def javascriptConfig: Map[String, JsValue] = Map(
     ("keywords", JsString(keywords.map { _.name }.mkString(","))),
-    ("keywordIds", JsString(keywords.map { _.id }.mkString(","))),
-    ("hasSuperStickyBanner", JsBoolean(isPersonalInvestmentsCampaign && isPersonalInvestmentsCampaignRunning)),
+    ("keywordIds", JsString(keywordIds.mkString(","))),
+    ("hasSuperStickyBanner", JsBoolean(PersonalInvestmentsCampaign.isRunning(keywordIds))),
     ("nonKeywordTagIds", JsString(nonKeywordTags.map { _.id }.mkString(","))),
     ("richLink", JsString(richLink.getOrElse(""))),
     ("openModule", JsString(openModule.getOrElse(""))),
