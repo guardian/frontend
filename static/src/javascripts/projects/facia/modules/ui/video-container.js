@@ -13,6 +13,8 @@ define([
 ) {
 
     var containerPos = 0,
+        videoWidth = 700,
+        translateWidth = 0,
         numberOfVideos;
 
     function init() {
@@ -30,7 +32,8 @@ define([
     }
 
     function moveCarousel(direction) {
-        $('.js-video-playlist').removeClass('video-playlist--end video-playlist--' + containerPos);
+        $('.js-video-playlist').removeClass('video-playlist--end video-playlist--start');
+        $('.video-playlist__item--active').removeClass('video-playlist__item--active');
 
         if (direction === 'next') {
             containerPos++;
@@ -41,13 +44,18 @@ define([
         if (containerPos >= numberOfVideos) {
             containerPos = numberOfVideos;
             $('.js-video-playlist').addClass('video-playlist--end');
-        } else if (containerPos < 0) {
+        } else if (containerPos <= 0) {
             containerPos = 0;
+            $('.js-video-playlist').addClass('video-playlist--start')
         }
 
         resetPlayers();
 
-        $('.js-video-playlist').addClass('video-playlist--' + containerPos);
+        translateWidth = 0 - videoWidth * containerPos;
+
+        $('.js-video-playlist-item-' + containerPos).addClass('video-playlist__item--active');
+        
+        $('.js-video-playlist-inner').attr('style', '-webkit-transform: translate(' + translateWidth + 'px); -transform: translate(' + translateWidth + 'px);');
     }
 
     function resetPlayers() {

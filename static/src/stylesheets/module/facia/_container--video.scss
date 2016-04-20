@@ -98,29 +98,7 @@ $video-width-desktop: 700px;
     }
 }
 
-@for $i from 0 through 8 {
-    .video-playlist--#{$i} {
-        .video-playlist__inner {
-            @include mq(desktop) {
-                transform: translateX(-$video-width-desktop * $i);
-            }
-        }
-
-        .video-playlist__item--#{$i} {
-            .vjs-big-play-button {
-                display: block;
-            }
-
-            .fc-item__video-fallback,
-            .video-overlay,
-            .gu-media {
-                opacity: 1;
-            }
-        }
-    }
-}
-
-.video-playlist--0 .video-playlist__control--prev,
+.video-playlist--start .video-playlist__control--prev,
 .video-playlist--end .video-playlist__control--next {
     opacity: 0;
     pointer-events: none;
@@ -240,6 +218,18 @@ $video-width-desktop: 700px;
     @include mq(desktop) {
         width: $video-width-desktop;
         margin: 0;
+    }
+}
+
+.video-playlist__item--active {
+    .vjs-big-play-button {
+        display: block;
+    }
+
+    .fc-item__video-fallback,
+    .video-overlay,
+    .gu-media {
+        opacity: 1;
     }
 }
 
