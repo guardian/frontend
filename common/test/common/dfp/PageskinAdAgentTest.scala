@@ -49,7 +49,7 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
   }
 
   "isPageSkinned" should "be true for a front with a pageskin in given edition" in {
-    TestPageskinAdAgent.has("business/front", edition = defaultEdition) should be(true)
+    TestPageskinAdAgent.hasPageSkin("business/front", edition = defaultEdition) should be(true)
   }
 
   it should "be false for a front with a pageskin in another edition" in {
