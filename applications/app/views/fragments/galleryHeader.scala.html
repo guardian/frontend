@@ -9,16 +9,16 @@
         @defining(
             item.content.elements.elements.head
         ) { picture =>
-            .content__header--background-image {
+            .content__header__background-image {
                 background-image: url('http:@Html(ImgSrc.findNearestSrc(picture.images, Profile(width = Some(1000))).getOrElse(""))');
             }
             @@media (min-width: @{layout.Phablet.minWidth}px) {
-                .content__header--background-image {
+                .content__header__background-image {
                     background-image: url('http:@Html(ImgSrc.findNearestSrc(picture.images, Profile(width = Some(1300))).getOrElse(""))');
                 }
             }
             @@media (min-width: @{layout.Wide.minWidth}px) {
-                .content__header--background-image {
+                .content__header__background-image {
                     background-image: url('http:@Html(ImgSrc.findNearestSrc(picture.images, Profile(width = Some(2200))).getOrElse(""))');
                 }
             }
@@ -26,7 +26,7 @@
     </style>
 
     <div class="content__header tonal__header">
-        <div class="content__header--background-image">
+        <div class="content__header__background-image">
             <div class="content__wrapper content__wrapper--headline">
                 <div class="gs-container">
 
