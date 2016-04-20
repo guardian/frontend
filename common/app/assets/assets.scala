@@ -33,7 +33,7 @@ class AssetMap(base: String, assetMap: String = "assets/assets.map") {
         case Some(_) => accumulator
         case None => accumulator + (entry -> Asset(base + entry))
       })
-    
+
     if (Play.current.mode == Mode.Dev) {
       // Use the grunt-generated asset map in Dev.
       val assetMapUri = new java.io.File(s"static/hash/assets/assets.map").toURI
@@ -161,6 +161,7 @@ class Assets(base: String) extends Logging {
 
      val curl: String = RelativePathEscaper.escapeLeadingDotPaths(inlineJs("assets/curl-domReady.js"))
      val omnitureJs: String = inlineJs("assets/vendor/omniture.js")
+     val analyticsJs: String =  inlineJs("static/public/javascripts/components/analytics/analytics.js")
   }
 }
 

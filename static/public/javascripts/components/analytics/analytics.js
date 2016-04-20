@@ -1,9 +1,4 @@
-@()
-@import conf.Static
-@import org.joda.time.DateTime
-
 try {
-
     (function(){
 
         var config  = guardian.config,
@@ -157,37 +152,37 @@ try {
 
         s.prop47    = config.page.edition || '';
 
-        if (getUserFromCookie()) {
-            s.prop2 = 'GUID:' + getUserFromCookie().id;
-            s.eVar2 = 'GUID:' + getUserFromCookie().id;
+        var userFromCookie = window.guardian.config.user;
+
+        if (userFromCookie) {
+            s.prop2 = 'GUID:' + userFromCookie.id;
+            s.eVar2 = 'GUID:' + userFromCookie.id;
         }
 
-        s.prop31    = getUserFromCookie() ? 'registered user' : 'guest user';
-        s.eVar31    = getUserFromCookie() ? 'registered user' : 'guest user';
+        s.prop31    = userFromCookie ? 'registered user' : 'guest user';
+        s.eVar31    = userFromCookie ? 'registered user' : 'guest user';
 
         s.prop40    = window.guardian.adBlockers.generic || window.guardian.adBlockers.ffAdblockPlus;
 
         try {
-            var ni = window.sessionStorage.getItem(NG_STORAGE_KEY);
+            var navInteractionData = window.sessionStorage.getItem(NG_STORAGE_KEY);
 
-            if (ni) {
-                d = new Date().getTime();
-                if (d - ni.time < 60 * 1000) { // One minute
-                    s.eVar24 = ni.pageName;
-                    s.eVar37 = ni.tag;
-                }
+            var navInteraction = JSON.parse(navInteractionData);
+
+            if (navInteraction) {
+                trackNavigationInteraction(navInteraction);
                 window.sessionStorage.removeItem(R2_STORAGE_KEY);
                 window.sessionStorage.removeItem(NG_STORAGE_KEY);
             }
+
         } catch (e) { }
 
         // Sponsored content
-        s.prop38 = forEach(document.querySelectorAll('[data-sponsorship]')){function (n) {
-            var sponsorshipType = n.getAttribute('data-sponsorship');
-            var maybeSponsor = n.getAttribute('data-sponsor');
-            var sponsor = maybeSponsor ? maybeSponsor : 'unknown';
-            return sponsorshipType + ':' + sponsor;
-        }).toString();
+        if(window.guardian.isModernBrowser) {
+            var contentNodes = document.querySelectorAll('[data-sponsorship]');
+            var sponsoredContentArray = Array.prototype.slice.call(contentNodes);
+            s.prop38 = getSponsoredContentTrackingData(sponsoredContentArray);
+        }
 
         s.linkTrackVars = standardProps;
         s.linkTrackEvents = 'None';
@@ -199,25 +194,21 @@ try {
 
         s.t();
 
-        var getUserFromCookie = function() {
-            var cookieName = 'GU_U';
-            var cookieData = cookies.get(cookieName),
-            userData = cookieData ? JSON.parse(decodeBase64(cookieData.split('.')[0])) : null;
-            if (userData) {
-                userFromCookieCache = {
-                    id: userData[0],
-                    primaryEmailAddress: userData[1], // not sure where this is stored now - not in the cookie any more
-                    displayName: userData[2],
-                    accountCreatedDate: userData[6],
-                    emailVerified: userData[7],
-                    rawResponse: cookieData
-                };
+        var trackNavigationInteraction = function(ni) {
+            var d = new Date().getTime();
+            if (d - ni.time < 60 * 1000) { // One minute
+                s.eVar24 = ni.pageName;
+                s.eVar37 = ni.tag;
             }
-            return userFromCookieCache
         };
 
-        var decodeBase64 = function (str) {
-            return decodeURIComponent(escape(utilAtob(str.replace(/-/g, '+').replace(/_/g, '/').replace(/,/g, '='))));
+        var getSponsoredContentTrackingData = function (content) {
+            content.map(function(n) {
+                var sponsorshipType = n.getAttribute('data-sponsorship');
+                var maybeSponsor = n.getAttribute('data-sponsor');
+                var sponsor = maybeSponsor ? maybeSponsor : 'unknown';
+                return sponsorshipType + ':' + sponsor;
+            }).toString();
         };
 
         var checkForPageViewInterval = setInterval(function () {
@@ -231,7 +222,8 @@ try {
                 clearInterval(checkForPageViewInterval);
 
                 var pageView = new Image();
-                pageView.src = "@{Configuration.debug.beaconUrl}/count/pva.gif";
+                pageView.src = window.config.page.beaconUrl + '/count/pva.gif';
+
             }
         }, 100);
 
@@ -242,9 +234,10 @@ try {
 
 
     })();
-
 } catch(e) {
-    (new Image()).src = '@{Configuration.debug.beaconUrl}/count/omniture-pageview-error.gif';
+    (new Image()).src = window.config.page.beaconUrl + '/count/omniture-pageview-error.gif';
 }
+
+
 
 
