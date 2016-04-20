@@ -89,7 +89,7 @@ define([
      *
      * Create a new ad slot using the following code:
      *
-     * <div class="ad-slot__dfp AD_SLOT_CLASS" data-name="AD_SLOT_NAME" data-mobile="300,50|320,50"
+     * <div class="js-ad-slot AD_SLOT_CLASS" data-name="AD_SLOT_NAME" data-mobile="300,50|320,50"
      *      data-desktop="300,250" data-refresh="false" data-label="false">
      *     <div id="SLOT_ID" class="ad-container"></div>
      * </div>
