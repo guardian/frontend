@@ -364,14 +364,16 @@ define([
             bonzo(player.el()).removeClass(endState);
             bean.on(document.body, 'mousemove', setFaderTimeout);
             bean.on(window, 'scroll', function (){
-                var related = $('#more-media-in-section').offset().top;
+                var related = $('.content-footer').offset().top;
                 var scroll = $(window).scrollTop();
                 var position = Math.floor(related - scroll);
-                if (position <= 0){
+                console.log(position);
+                if (position <= 200){
+                    console.log('tihsihsih');
                     fader.removeClass('is-faded');
                     clearTimeout(faderTimeout);
                     bean.off(document.body, 'mousemove', setFaderTimeout);
-                }else if (position > 0 && !player.paused()){
+                }else if (!player.paused()){
                     fader.addClass('is-faded');
                     bean.on(document.body, 'mousemove', setFaderTimeout);
                 }
