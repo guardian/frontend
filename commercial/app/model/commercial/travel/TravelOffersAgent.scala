@@ -15,8 +15,7 @@ object TravelOffersAgent extends MerchandiseAgent[TravelOffer] with ExecutionCon
   }
 
   def specificTravelOffers(offerIdStrings: Seq[String]): Seq[TravelOffer] = {
-    val offerIds = offerIdStrings map (_.toInt)
-    available filter (offer => offerIds contains offer.id)
+    available filter (offer => offerIdStrings contains offer.id)
   }
 
   def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[TravelOffer]] = {
