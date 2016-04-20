@@ -41,15 +41,14 @@ object VideoPlayer{
     profile: VideoProfile,
     content: model.pressed.PressedContent,
     autoPlay: Boolean,
-    showControlsAtStart: Boolean,
-    endSlatePath: String
+    showControlsAtStart: Boolean
   ) : VideoPlayer = { VideoPlayer(
     video,
     profile,
     content.header.headline,
     autoPlay,
     showControlsAtStart,
-    endSlatePath,
+    endSlatePath = SupportedUrl.fromFaciaContent(content),
     hasFaciaHeader = true,
     faciaHeaderProperties = Some(VideoFaciaProperties(
       header = FaciaCardHeader.fromTrail(content, None),
