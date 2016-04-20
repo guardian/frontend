@@ -91,7 +91,7 @@ define([
             }
 
             twitterHref = template(twitterHrefTemplate, {
-                text: encodeURI(twitterMessage),
+                text: encodeURIComponent(twitterMessage),
                 url: encodeURI(twitterShortUrl)
             });
             emailHref = template(emailHrefTemplate, {
