@@ -47,10 +47,10 @@ $video-width-desktop: 700px;
         video {
             display: none;
         }
+    }
 
-        .gu-media-wrapper {
-            background-color: transparent;
-        }
+    .gu-media-wrapper {
+        background-color: transparent;
     }
 
     .fc-item__video-fallback,
@@ -302,7 +302,9 @@ $video-width-desktop: 700px;
     }
 
     .video-playlist__item .vjs-playing ~ & {
-        opacity: 0;
+        @include mq(desktop) {
+            opacity: 0;
+        }
     }
 
     .video-overlay__headline {
