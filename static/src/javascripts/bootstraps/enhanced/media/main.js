@@ -340,7 +340,6 @@ define([
         var fader = $('.video__fader');
         var faderTimeout;
         function setFaderTimeout(){
-            console.log('still listening');
             fader.removeClass('is-faded');
             clearTimeout(faderTimeout);
             faderTimeout = setTimeout(function() {
@@ -364,9 +363,7 @@ define([
             fader.addClass('is-faded');
             bonzo(player.el()).removeClass(endState);
             bean.on(document.body, 'mousemove', setFaderTimeout);
-
             bean.on(window, 'scroll', function (){
-                
                 var related = $('#more-media-in-section').offset().top;
                 var scroll = $(window).scrollTop();
                 var position = Math.floor(related - scroll);
@@ -375,8 +372,8 @@ define([
                     clearTimeout(faderTimeout);
                     bean.off(document.body, 'mousemove', setFaderTimeout);
                 }else if (position > 0 && !player.paused()){
-                    console.log('this isissi');
                     fader.addClass('is-faded');
+                    bean.on(document.body, 'mousemove', setFaderTimeout);
                 }
             });
         });
@@ -384,7 +381,6 @@ define([
         //add in on video stop remove class
         player.on('pause', function(){
             clearTimeout(faderTimeout);
-            console.log('cleared?');
             bean.off(document.body, 'mousemove', setFaderTimeout);
             fader.removeClass('is-faded');
         });
