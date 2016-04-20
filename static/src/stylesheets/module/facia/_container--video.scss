@@ -166,6 +166,10 @@ $video-width-desktop: 700px;
 
     .video-playlist__icon {
         right: $gs-gutter;
+
+        svg {
+            margin-left: -2px;
+        }
     }
 }
 
@@ -182,6 +186,10 @@ $video-width-desktop: 700px;
 
     .video-playlist__icon {
         left: $gs-gutter;
+
+        svg {
+            margin-right: -2px;
+        }
     }
 }
 

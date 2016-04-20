@@ -15,7 +15,7 @@ define([
     var containerPos = 0,
         videoWidth = 700,
         translateWidth = 0,
-        $videoPlaylist = $('.js-video-playlist')
+        $videoPlaylist = $('.js-video-playlist'),
         numberOfVideos = $videoPlaylist.attr('data-number-of-videos');
 
     function init() {
