@@ -67,7 +67,7 @@ define([
 
             $follow.html(src);
             bean.one($follow[0], 'click', '.js-notifications__button', handler );
-            modules.displayPermissiosMessage();
+            //modules.displayPermissiosMessage();
 
         },
 

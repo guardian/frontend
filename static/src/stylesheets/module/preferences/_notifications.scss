@@ -87,7 +87,6 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
 .notifications-permission-denied {
     position: fixed;
     display: block;
-    //padding:($gs-baseline * .5) 0 $gs-baseline $gs-gutter;
     top: 0.625rem;
     left: 5.275rem;
     width: 26.825rem;
@@ -116,9 +115,23 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
     }
 }
 
+.notifications-permission-denied::after {
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-top: 0;
+    position: absolute;
+    left: 3%;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid $live-default;
+    top: -0.6225rem;
+}
+
 .notifications-explainer {
 
-    margin-top: $gs-baseline * 2;
+    margin-top: ($gs-baseline / 3) * 4;
     margin-bottom: $gs-baseline;
     background: $live-default;
     color: $neutral-8;
@@ -140,7 +153,6 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
     }
 
 }
-/*
 
 .notifications-explainer::after {
     content: '';
@@ -149,14 +161,13 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
     height: 0;
     border-top: 0;
     position: absolute;
-    left: 30%;
-    background-color: $live-default;
+    left: 5%;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     border-bottom: 10px solid $live-default;
-    top: $popup-top - $popup-anchor-arrow-size;
+    top: 2.700rem;
 }
-*/
+
 
 
 .notifications-explainer-permissions-denied__content,

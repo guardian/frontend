@@ -71,7 +71,7 @@ define([
 
         initNotifications: function() {
             //                             {"value":{"LiveBlogChromeNotificationsInternal":{"variant":"control"},"LiveBlogChromeNotificationsProd":{"variant":"notintest"},"LoyalAdblockingSurvey":{"variant":"notintest"}}}
-            console.log("++ INIT: " + ab.isInVariant('LiveBlogChromeNotificationsInternal', 'control') + " : " + ab.isInVariant('LiveBlogChromeNotificationsProd', 'show-notifications') );
+            console.log("++ INIT::: " + ab.isInVariant('LiveBlogChromeNotificationsInternal', 'control') + " : " + ab.isInVariant('LiveBlogChromeNotificationsProd', 'show-notifications') );
             if ((ab.isInVariant('LiveBlogChromeNotificationsInternal', 'control') || ab.isInVariant('LiveBlogChromeNotificationsProd', 'show-notifications') )
                 && (window.location.protocol === 'https:' ||  window.location.hash === '#force-sw')
                 && detect.getUserAgent.browser === 'Chrome') {
