@@ -2,6 +2,7 @@ define([
     'common/views/svgs',
     'common/utils/template',
     'lodash/objects/assign',
+    'lodash/utilities/identity',
     'text!common/views/commercial/creatives/manual-inline-button.html',
     'text!common/views/commercial/creatives/manual-single-button.html',
     'text!common/views/commercial/creatives/manual-multiple-button.html',
@@ -10,6 +11,7 @@ define([
     'text!common/views/commercial/creatives/gimbap/gimbap-richmedia-blob.html',
     'text!common/views/commercial/creatives/manual-card.html',
     'text!common/views/commercial/creatives/manual-card-large.html',
+    'text!common/views/commercial/creatives/manual-card-cta.html',
     'text!common/views/commercial/creatives/manual-container-button.html',
     'text!common/views/commercial/creatives/manual-container-cta.html',
     'text!common/views/commercial/creatives/manual-container-cta-soulmates.html',
@@ -18,6 +20,7 @@ define([
     svgs,
     template,
     assign,
+    identity,
     manualInlineButtonStr,
     manualSingleButtonStr,
     manualMultipleButtonStr,
@@ -26,6 +29,7 @@ define([
     gimbapRichmediaStr,
     manualCardStr,
     manualCardLargeStr,
+    manualCardCtaStr,
     manualContainerButtonStr,
     manualContainerCtaStr,
     manualContainerCtaSoulmatesStr,
@@ -42,6 +46,7 @@ define([
         'manual-card-large': manualCardLargeStr
     };
     var manualCardTpls = {};
+    var manualCardCtaTpl;
     var manualContainerButtonTpl;
     var manualContainerCtaTpl;
     var manualContainerCtaSoulmatesTpl;
@@ -157,7 +162,7 @@ define([
     function preprocessManualContainer(tpl) {
         manualContainerButtonTpl || (manualContainerButtonTpl = template(manualContainerButtonStr));
         manualCardTpls[tpl.params.creativeCard] || (manualCardTpls[tpl.params.creativeCard] = template(manualCardStrs[tpl.params.creativeCard]));
-
+        manualCardCtaTpl || (manualCardCtaTpl = template(manualCardCtaStr));
         tpl.params.classNames = tpl.params.classNames.map(function (cn) { return 'adverts--' + cn; }).join(' ');
         tpl.params.title || (tpl.params.title = '');
 
@@ -182,17 +187,19 @@ define([
 
         if (tpl.params.originalCreative === 'manual-multiple') {
             tpl.params.innards = [1, 2, 3, 4].map(function(index) {
-                return manualCardTpls[tpl.params.creativeCard]({
+                return tpl.params['offer' + index + 'url'] ? manualCardTpls[tpl.params.creativeCard]({
                     clickMacro:          tpl.params.clickMacro,
                     offerUrl:            tpl.params['offer' + index + 'url'],
                     offerImage:          tpl.params['offer' + index + 'image'],
                     offerTitle:          tpl.params['offer' + index + 'title'],
                     offerText:           tpl.params['offer' + index + 'meta'],
-                    offerLinkText:       tpl.params['offer' + index + 'linktext'] || tpl.params.offerLinkText,
-                    arrowRight:          tpl.params.arrowRight,
+                    cta:                 tpl.params['offer' + index + 'linktext'] || tpl.params.offerLinkText ? manualCardCtaTpl({
+                        offerLinkText:       tpl.params['offer' + index + 'linktext'] || tpl.params.offerLinkText,
+                        arrowRight:          tpl.params.arrowRight
+                    }) : '',
                     classNames:          [tpl.params.toneClass.replace('commercial--tone-', '')].map(function (cn) { return 'advert--' + cn; }).join(' ')
-                });
-            }).join('');
+                }) : null;
+            }).filter(identity).join('');
         } else {
             tpl.params.innards = manualCardTpls[tpl.params.creativeCard]({
                 clickMacro:          tpl.params.clickMacro,
@@ -200,8 +207,10 @@ define([
                 offerImage:          tpl.params.offerImage,
                 offerTitle:          tpl.params.offerTitle,
                 offerText:           tpl.params.offerText,
-                offerLinkText:       tpl.params.offerlinktext,
-                arrowRight:          tpl.params.arrowRight,
+                cta:                 tpl.params.offerlinktext ? manualCardCtaTpl({
+                    offerLinkText:       tpl.params.offerlinktext,
+                    arrowRight:          tpl.params.arrowRight
+                }) : '',
                 classNames:          ['landscape', 'large', 'inverse', tpl.params.toneClass.replace('commercial--tone', '')].map(function (cn) { return 'advert--' + cn; }).join(' ')
             }) + manualContainerButtonTpl(tpl.params);
         }
