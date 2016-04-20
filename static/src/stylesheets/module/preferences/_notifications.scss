@@ -45,11 +45,10 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
 
 .notifications-link {
     margin-bottom: $gs-baseline /2;
+    position: relative;
 }
 
 .notifications__button {
-
-     position: relative;
 
     .inline-icon {
         svg {
@@ -88,10 +87,10 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
 .notifications-permission-denied {
     position: fixed;
     display: block;
-    padding:($gs-baseline * .5) 0 $gs-baseline $gs-gutter;
+    //padding:($gs-baseline * .5) 0 $gs-baseline $gs-gutter;
     top: 0.625rem;
-    left: 6.375rem;
-    width: 28.825rem;
+    left: 5.275rem;
+    width: 26.825rem;
     height: 3.7625rem;
     background: fade-out($live-default, 1 - .95);
     transition: background-color .25s ease;
@@ -99,6 +98,7 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
     -moz-opacity: 0.5;
     -khtml-opacity: 0.5;
     z-index: 15000;
+    color: $neutral-8;
 
     .button {
         padding: 0;
@@ -159,13 +159,14 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
 */
 
 
+.notifications-explainer-permissions-denied__content,
 .notifications-explainer__content {
     position: relative;
     box-sizing: border-box;
     padding: $gs-baseline 0 ($gs-baseline/3)*2 $gs-gutter;
 }
 
-
+.notifications-explainer-permissions-denied__header,
 .notifications-explainer__header {
     position: relative;
     padding-right: gs-span(1) + $gs-gutter * .5;
@@ -177,6 +178,9 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
     }
 }
 
+.notifications-explainer-permissions-denied__header {
+    @include fs-textSans(3);;
+}
 
 .notifications-explainer__header-blurb {
     @include fs-textSans(3);
@@ -192,11 +196,18 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
 }
 
 
-
+.notifications-permission-denied__item-options,
 .notifications-explainer__item-options {
     position: absolute;
-    top: $gs-baseline;
     right: 0;
+}
+
+.notifications-permission-denied__item-options {
+    top: $gs-baseline / 2;
+}
+
+.notifications-explainer__item-options {
+    top: $gs-baseline;
 }
 
 

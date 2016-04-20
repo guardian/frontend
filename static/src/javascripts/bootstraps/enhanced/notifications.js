@@ -57,7 +57,7 @@ define([
         },
 
         configureSubscribeButton: function () {
-            var $follows = bonzo(qwery('.js-notification-link')),
+            var $follow = bonzo(qwery('.js-notification-link')[0]),
                 subscribed = modules.checkSubscriptions(),
                 handler = subscribed ? modules.unSubscribeHandler : modules.subscribeHandler,
                 src = template(followLink, {
@@ -65,13 +65,10 @@ define([
                     icon: svgs(subscribed ? 'notificationsOff' : 'notificationsOn')
                 });
 
-            console.log("Follow: " + subscribed);
+            $follow.html(src);
+            bean.one($follow[0], 'click', '.js-notifications__button', handler );
+            modules.displayPermissiosMessage();
 
-            $follows.each(function(follow) {
-                var $follow = bonzo(follow);
-                $follow.html(src);
-                bean.one($follow[0], 'click', '.js-notifications__button', handler );
-            });
         },
 
         showExplainer: function() {
@@ -91,26 +88,6 @@ define([
                     });
                 })
             });
-        },
-
-
-        xxxxxconfigureSubscribeTemplate: function () {
-            console.log("++ Template");
-            var subscribed = modules.checkSubscriptions(),
-                hasNoSubscriptions = modules.subscriptionsEmpty(),
-                handler = subscribed ? modules.subscribeHandler : modules.unSubscribeHandler,
-                src = template(subscribeTemplate, {
-                    className: hasNoSubscriptions ? '' : 'notifications-subscribe-link--has-subscriptions',
-                    text: subscribed ? 'Unfollow' : 'Follow story',
-                    imgMobile: svgs('notificationsExplainerMobile', ['mobile-only', 'notification-explainer']),
-                    imgDesktop: svgs('notificationsExplainerDesktop', ['hide-on-mobile', 'notification-explainer'])
-                });
-
-            fastdom.write(function () {
-                $('.js-notifications').prepend(src);
-                bean.one(document.body, 'click', '.js-notifications-subscribe-link', handler);
-            });
-            //modules.displayPermissiosMessage();
         },
 
         closeDisplayMessage: function(){
