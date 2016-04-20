@@ -45,6 +45,9 @@ define([
                 config.tests = {
                     cmTopBannerPosition: false
                 };
+                config.switches = {
+                    fabricAdverts: false
+                };
 
                 detect.getBreakpoint = function () {
                     return 'desktop';
@@ -193,6 +196,38 @@ define([
                 expect(qwery('.fc-container-third .ad-slot', $fixtureContainer).length).toBe(1);
                 expect(qwery('.fc-container-fifth .ad-slot', $fixtureContainer).length).toBe(1);
                 done();
+            });
+        });
+
+        describe('Fabric adverts', function () {
+            beforeEach(function () {
+                config.page.pageId = 'uk';
+                config.switches.fabricAdverts = true;
+                detect.getBreakpoint = function () {
+                    return 'mobile';
+                };
+                sliceAdverts.init();
+            });
+
+            it('added in lieu of the top slot on mobile fronts', function (done) {
+                fastdom.defer(function () {
+                    var firstContainer = qwery('.fc-container-first', $fixtureContainer)[0];
+                    var appendedAdvert = firstContainer.nextSibling;
+                    expect(appendedAdvert).not.toBe(null);
+
+                    var mobileAdSizes = bonzo(appendedAdvert).data('mobile');
+                    var fabricSizeMapping = '88,71';
+                    expect(mobileAdSizes.indexOf(fabricSizeMapping)).not.toBe(-1);
+                    done();
+                });
+            });
+
+            it('if added, next container does not carry an advert', function (done) {
+                fastdom.defer(function () {
+                    var secondContainerAd = qwery('.fc-container-second .ad-slot', $fixtureContainer);
+                    expect(secondContainerAd.length).toBe(0);
+                    done();
+                });
             });
         });
 
