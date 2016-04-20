@@ -19,7 +19,7 @@
                 </div>
                 <h4 class="lineitem__title">@travelOffer.title</h4>
                 <div class="lineitem__offer">
-                    <p class="lineitem__meta">@travelOffer.durationInWords from <span class="lineitem__price">£@travelOffer.fromPrice</span></p>
+                    <p class="lineitem__meta">@travelOffer.durationInWords from <span class="lineitem__price">@travelOffer.formattedPrice</span></p>
                 </div>
             </a>
             <a class="lineitem__cta button button--primary button--small" href="@clickMacro@travelOffer.offerUrl">

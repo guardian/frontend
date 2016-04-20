@@ -153,6 +153,11 @@ object CommentsController extends DiscussionController with ExecutionContexts {
         }
       }
     }
+      .recover {
+        case NonFatal(e) =>
+          log.error(s"Error fetching comments from request with following headers: ${request.headers}", e)
+          NotFound(s"Discussion ${key} cannot be retrieved")
+      }
   }
 
   private def getTopComments(key: DiscussionKey)(implicit request: RequestHeader): Future[Result] = {
