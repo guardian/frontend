@@ -8,6 +8,7 @@ import conf.Configuration.commercial.showMpuInAllContainersPageId
 import contentapi.Paths
 import model.facia.PressedCollection
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
+import org.joda.time.DateTime
 
 import scala.language.postfixOps
 
@@ -30,9 +31,16 @@ object PressedPage {
       keywordSponsorship.isAdvertisementFeature
     }
 
+    // The PI campaign will run for one year, during which all the related pages must provide a sticky
+    // banner at the top that sticks all the way through, therefore overriding other config flags
+    // such as isAdvertisementFeature
+    val isPersonalInvestmentsCampaign: Boolean = keywordIds.exists(t => t.endsWith("/personal-investments"))
+    val isPersonalInvestmentsCampaignRunning: Boolean = DateTime.now().isBefore(new DateTime(2017, 4, 26, 0, 0))
+
     val faciaPageMetaData: Map[String, JsValue] = Map(
       "keywords" -> JsString(seoData.webTitle.capitalize),
       "keywordIds" -> JsString(keywordIds.mkString(",")),
+      "hasSuperStickyBanner" -> JsBoolean(isPersonalInvestmentsCampaign && isPersonalInvestmentsCampaignRunning),
       "contentType" -> JsString(contentType),
       "isAdvertisementFeature" -> JsBoolean(isAdvertisementFeature)
     ) ++ (if (showMpuInAllContainers) Map("showMpuInAllContainers" -> JsBoolean(true)) else Nil)
