@@ -21,7 +21,17 @@
 
     <ul class="u-unstyled video-playlist__inner js-video-playlist-inner">
         <li class="video-playlist__item video-title video-title--leftcol fc-container__header__title">
-            <a class="video-title__link" href="@containerDefinition.href" data-link-name="video-container-title @containerDefinition.displayName">@containerDefinition.displayName</a>
+            <a class="video-title__link" href="@containerDefinition.href" data-link-name="video-container-title @containerDefinition.displayName">
+                @containerDefinition.displayName match {
+                    case Some("videos") => {
+                        SWEETVIDZ
+                    }
+
+                    case _ => {
+                        @containerDefinition.displayName
+                    }
+                }
+            </a>
         </li>
 
         @containerDefinition.collectionEssentials.items.zipWithIndex.map { case (item, index) =>
