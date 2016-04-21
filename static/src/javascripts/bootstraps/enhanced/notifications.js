@@ -57,7 +57,7 @@ define([
         },
 
         configureSubscribeButton: function () {
-            var $follow = bonzo(qwery('.js-notification-link')[0]),
+            var $follow = bonzo(qwery('.js-live-notifications')[0]),
                 subscribed = modules.checkSubscriptions(),
                 handler = subscribed ? modules.unSubscribeHandler : modules.subscribeHandler,
                 src = template(followLink, {
@@ -79,7 +79,7 @@ define([
             });
 
             fastdom.write(function () {
-                var notificationLink = $('.js-notification-link');
+                var notificationLink = $('.js-live-notifications');
                 notificationLink.append(src);
                 bean.on(notificationLink[0], 'click', '.js-notifications__item__close', function(){
                     fastdom.write(function() {
