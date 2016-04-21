@@ -290,15 +290,23 @@ final case class MetaData (
     ("videoJsFlashSwf", JsString(conf.Static("flash/components/video-js-swf/video-js.swf").path))
   )
 
-  def opengraphProperties: Map[String, String] = Map(
-    "og:site_name" -> "the Guardian",
-    "fb:app_id"    -> Configuration.facebook.appId,
-    "og:type"      -> "website",
-    "og:url"       -> webUrl) ++ (iosId("applinks") map (iosId => List(
-    "al:ios:url" -> s"gnmguardian://$iosId",
-    "al:ios:app_store_id" -> "409128287",
-    "al:ios:app_name" -> "The Guardian"
-  )) getOrElse Nil)
+  def opengraphProperties: Map[String, String] = {
+    // the cat is already out of the bag for these sections
+    val httpsEnabledSectionsApr2016: Seq[String] = Seq("info", "email", "science", "crosswords", "technology")
+    // for all other sections, keep the old og:url even once the migration happens
+    def ogUrl = if (!httpsEnabledSectionsApr2016.contains(section)) webUrl.replaceFirst("^https:", "http:") else webUrl
+
+    Map(
+      "og:site_name" -> "the Guardian",
+      "fb:app_id"    -> Configuration.facebook.appId,
+      "og:type"      -> "website",
+      "og:url"       -> ogUrl
+    ) ++ (iosId("applinks") map (iosId => List(
+      "al:ios:url" -> s"gnmguardian://$iosId",
+      "al:ios:app_store_id" -> "409128287",
+      "al:ios:app_name" -> "The Guardian"
+    )) getOrElse Nil)
+  }
 
   def twitterProperties: Map[String, String] = Map(
     "twitter:site" -> "@guardian") ++ (iosId("twitter") map (iosId => List(
