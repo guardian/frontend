@@ -37,7 +37,7 @@ define([
     uniq,
     without
 ) {
-    var explainerDismissed = 'gu.notifications.explainer.dismissed',
+    var explainerDismissed = 'gu.notificationsExplainerDismissed',
         modules = {
 
         getReg: function () {
@@ -54,6 +54,7 @@ define([
             if(!modules.hasSubscribed() && !modules.hasDismissedExplainer()) {
                 modules.showExplainer();
             }
+            //modules.displayPermissiosMessage();
         },
 
         configureSubscribeButton: function () {
@@ -67,7 +68,6 @@ define([
 
             $follow.html(src);
             bean.one($follow[0], 'click', '.js-notifications__button', handler );
-            //modules.displayPermissiosMessage();
 
         },
 
@@ -99,8 +99,8 @@ define([
         displayPermissiosMessage: function() {
             var src = template(permissionsTemplate,{closeIcon : svgs('closeCentralIcon')});
             fastdom.write(function () {
-                $('.js-notifications').prepend(src);
-                bean.one(document.body, 'click', '.js-notifications__item__close', modules.closeDisplayMessage);
+                $('.js-live-notifications').prepend(src);
+                bean.one(document.body, 'click', '.js-notifications-permission-denied_item__close', modules.closeDisplayMessage);
             });
         },
 
@@ -110,6 +110,7 @@ define([
             modules.subscribe().then(modules.follow)
                 .catch( function(err){
                     if (Notification.permission === 'denied') {
+                        console.log("++++ CAUGHT");
                         modules.displayPermissiosMessage();
                     }
                 });

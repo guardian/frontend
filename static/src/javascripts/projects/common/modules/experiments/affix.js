@@ -72,6 +72,8 @@ define([
             // This is true when the element is positioned below the top threshold and above the bottom threshold.
             affix         = bottomCheck && topCheck && viewportCheck;
 
+        console.log("++++ HEIGHT " + elHeight)
+
         if (this.affixed !== affix) {
             this.affixed = affix;
 

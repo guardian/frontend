@@ -56,20 +56,19 @@
 
                         <div class="js-top-marker"></div>
                         <div class="js-live-blog__sticky-components">
-                            <div class="js-live-blog__sticky-components-container">
+                            <div class="js-live-blog__sticky-components-container blog__sticky-components-container">
                                 @if(article.hasKeyEvents) {
-                                    <div class="blog__timeline blog__dropdown js-live-blog__key-events modern-visible js-updates-desktop">
-                                        <div class="blog__timeline-container js-live-blog__timeline-container" data-component="timeline">
+                                    <div class="modern-visible js-updates-desktop">
+                                        <div data-component="timeline">
                                             @fragments.dropdown("Key events", Some("key-events"), true) {
                                                 <ul class="timeline js-live-blog__timeline u-unstyled">
                                                     @views.html.liveblog.keyEvents("/" + article.metadata.id, KeyEventData(article.content.fields.blocks, timezone))
                                                 </ul>
                                             }
                                         </div>
-
                                     </div>
                                 }
-                                <div class="js-live-notifications live-notifications"></div>
+                                <div class="js-live-notifications live-notifications" data-component="notifications"></div>
                             </div>
                         </div>
                     <div class="js-components-container"></div>
