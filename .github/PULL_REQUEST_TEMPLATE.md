@@ -1,5 +1,3 @@
-# My Awesome Pull Request
-
 ## What does this change?
 
 ## What is the value of this and can you measure success?
