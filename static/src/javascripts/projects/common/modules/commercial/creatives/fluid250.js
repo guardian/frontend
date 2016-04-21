@@ -88,12 +88,11 @@ define([
 
     Fluid250.prototype.updateBgPosition = function () {
         if (this.params.backgroundImagePType === 'parallax') {
-            this.scrollAmount = Math.ceil((window.pageYOffset - this.$adSlot.offset().top) * 0.3 * -1) + 20;
-            this.scrollAmountP += '%';
+            var scrollAmount = Math.ceil((window.pageYOffset - this.$adSlot.offset().top) * 0.3 * -1) + 20;
             fastdom.write(function () {
-                this.$scrollingBg
+                bonzo(this.$scrollingBg)
                     .addClass('ad-scrolling-bg-parallax')
-                    .css('background-position', '50%' + this.scrollAmountP);
+                    .css('background-position', '50% ' + scrollAmount + '%');
             }, this);
         }
 
@@ -105,9 +104,9 @@ define([
         if (this.params.layerTwoAnimation === 'enabled' && isEnhanced && !isIE9OrLess) {
             inViewB = (window.pageYOffset + bonzo.viewport().height) > this.$adSlot.offset().top;
             fastdom.write(function () {
-                this.$layer2.addClass('ad-scrolling-text-hide' + (this.params.layerTwoAnimationPosition ? '-' + this.params.layerTwoAnimationPosition : ''));
+                bonzo(this.$layer2).addClass('ad-scrolling-text-hide' + (this.params.layerTwoAnimationPosition ? '-' + this.params.layerTwoAnimationPosition : ''));
                 if (inViewB) {
-                    this.$layer2.addClass('ad-scrolling-text-animate' + (this.params.layerTwoAnimationPosition ? '-' + this.params.layerTwoAnimationPosition : ''));
+                    bonzo(this.$layer2).addClass('ad-scrolling-text-animate' + (this.params.layerTwoAnimationPosition ? '-' + this.params.layerTwoAnimationPosition : ''));
                 }
             }, this);
         }
