@@ -61,6 +61,17 @@ $video-width-desktop: 700px;
         }
     }
 
+    .treats__treat {
+        background-color: transparent;
+        border-color: $media-default;
+
+        &:hover {
+            border-color: $media-default;
+            background-color: $media-default;
+            color: $media-background;
+        }
+    }
+
     @include mq($until: desktop) {
         .u-responsive-ratio video {
             top: inherit;
@@ -269,17 +280,6 @@ $video-width-desktop: 700px;
     @include mq(wide) {
         width: gs-span(3) + $gs-gutter * 2;
     }
-
-    .video-title__link {
-/*
-        position: absolute;
-        top: $gs-baseline / 2;
-        left: $gs-gutter;
-        right: $gs-gutter;
-*/
-    }
-
-
 }
 
 .video-playlist__item--first {
