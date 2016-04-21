@@ -23,7 +23,8 @@ define([
     // This must be the full path because we use curl config to change it based
     // on env
     'bootstraps/enhanced/media/video-player',
-    'text!common/views/ui/loading.html'
+    'text!common/views/ui/loading.html',
+    'lodash/functions/debounce'
 ], function (
     bean,
     bonzo,
@@ -47,7 +48,8 @@ define([
     supportedBrowsers,
     techOrder,
     videojs,
-    loadingTmpl
+    loadingTmpl,
+    debounce
 ) {
     function getAdUrl() {
         var queryParams = {
@@ -276,6 +278,7 @@ define([
 
                             if (showEndSlate && detect.isBreakpoint({ min: 'desktop' })) {
                                 initEndSlate(player, endSlateUri);
+                                initFader(player);
                             }
 
                             if (withPreroll) {
@@ -337,16 +340,6 @@ define([
     }
 
     function initEndSlate(player, endSlatePath) {
-        var fader = $('.video__fader');
-        var faderTimeout;
-        function setFaderTimeout(){
-            fader.removeClass('is-faded');
-            clearTimeout(faderTimeout);
-            faderTimeout = setTimeout(function() {
-            fader.addClass('is-faded');
-            }, 3000);
-        }
-
         var endSlate = new Component(),
             endState = 'vjs-has-ended';
 
@@ -360,29 +353,43 @@ define([
         });
 
         player.on('playing', function () {
-            fader.addClass('is-faded');
             bonzo(player.el()).removeClass(endState);
-            bean.on(document.body, 'mousemove', setFaderTimeout);
-            bean.on(window, 'scroll', function (){
-                var related = $('.content-footer').offset().top;
-                var scroll = $(window).scrollTop();
-                var position = Math.floor(related - scroll);
+        });
+    }
+    
+    function initFader(player){
+        var fader = $('.video-fader');
+        var faderTimeout;
+        function setFaderTimeout(){
+            fader.removeClass('video-fader--active');
+            clearTimeout(faderTimeout);
+            faderTimeout = setTimeout(function() {
+            fader.addClass('video-fader--active');
+            }, 3000);
+        }
+        function removeFadeScroll(){
+            var related = $('.content-footer').offset().top;
+            var scroll = $(window).scrollTop();
+            var position = Math.floor(related - scroll);
                 if (position <= 200){
-                    fader.removeClass('is-faded');
+                    fader.removeClass('video-fader--active');
                     clearTimeout(faderTimeout);
                     bean.off(document.body, 'mousemove', setFaderTimeout);
-                }else if (!player.paused()){
-                    fader.addClass('is-faded');
+                } else if (!player.paused()){
+                    fader.addClass('video-fader--active');
                     bean.on(document.body, 'mousemove', setFaderTimeout);
                 }
-            });
+        }
+        player.on('playing', function(){
+            fader.addClass('video-fader--active');
+            bean.on(document.body, 'mousemove', setFaderTimeout);
+            mediator.on('window:throttledScroll', debounce(removeFadeScroll, 200));
         });
 
-        //add in on video stop remove class
         player.on('pause', function(){
             clearTimeout(faderTimeout);
             bean.off(document.body, 'mousemove', setFaderTimeout);
-            fader.removeClass('is-faded');
+            fader.removeClass('video-fader--active');
         });
     }
 

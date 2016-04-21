@@ -15,7 +15,7 @@
         }
     }
 
-    .video__fader {
+    .video-fader {
         position: fixed;
         z-index: 9999;
         top: 0;
@@ -27,7 +27,7 @@
         transition: all 1s ease-in-out;
         visibility: hidden;
         
-        &.is-faded {
+        &--active {
             visibility: visible;
             opacity: 1;
             transition: all 1s ease-in-out;
