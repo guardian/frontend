@@ -2,7 +2,6 @@
 @import conf.switches.Switches.SaveForLaterSwitch
 @import model._
 @import views.support.ContentOldAgeDescriber
-@import conf.switches.Switches.staticBadgesSwitch
 
 @byline() = {
     @item match {
@@ -59,10 +58,9 @@
     @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty)) { content__meta-container--twitter}
     @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty)) { content__meta-container--email}">
 
-    @if(!staticBadgesSwitch.isSwitchedOn) {
-        @if(showBadge && (item.tags.isVideo || item.tags.isAudio || (item.tags.isArticle && !item.commercial.isAdvertisementFeature))) {
-            @fragments.commercial.badge(item)
-        }
+    
+    @if(showBadge && (item.tags.isVideo || item.tags.isAudio || (item.tags.isArticle && !item.commercial.isAdvertisementFeature))) {
+        @fragments.commercial.badge(item)
     }
 
     @if(item.content.showCircularBylinePicAtSide) {

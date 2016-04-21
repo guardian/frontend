@@ -1,6 +1,7 @@
 @(content: model.ContentType)(implicit request: RequestHeader)
 @import common.Edition
 @import conf.switches.Switches.SponsoredSwitch
+@import conf.switches.Switches.staticBadgesSwitch
 @import model.{Article, Audio, Gallery, Interactive, Video}
 
 @defining(content.commercial.isSponsored(Some(Edition(request))),
@@ -38,6 +39,7 @@
                 paidForContentType = content.commercial.sponsorshipType
             ) {
                 @content.tags.sponsor.map { sponsor =>
+                @if(!staticBadgesSwitch.isSwitchedOn) {
                     <div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">
                         <h3 class="ad-slot--paid-for-badge__header">
                             @if(isSponsored) {
@@ -62,6 +64,7 @@
                             <p class="ad-slot--paid-for-badge__header">@sponsor</p>
                         }
                     </div>
+                }
                 }
             }
         }
