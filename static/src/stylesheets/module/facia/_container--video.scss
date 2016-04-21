@@ -338,6 +338,14 @@ $video-width-desktop: 700px;
         fill: #ffffff;
     }
 
+    .fc-item__link {
+        color: #ffffff;
+
+        &:visited {
+            color: $neutral-3
+        }
+    }
+
     .fc-item__byline,
     .fc-item__kicker {
         color: $media-default;

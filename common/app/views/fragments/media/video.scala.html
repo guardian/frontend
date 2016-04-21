@@ -79,7 +79,7 @@
                 <div class="video-overlay__headline">
                     @if(player.hasFaciaHeader){
                         @player.faciaHeaderProperties.map { properties =>
-                            @title(properties.header, 0, 0, withLink = false)
+                            @title(properties.header, 0, 0)
                             @if(properties.showByline) {
                                 <div class="fc-item__byline">@properties.byline</div>
                             }
