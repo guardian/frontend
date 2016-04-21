@@ -49,8 +49,7 @@ define([
                 adSlices     = [],
                 containerGap = 1,
                 prefs        = userPrefs.get('container-states'),
-                isFront      = contains(['uk', 'us', 'au'], config.page.pageId),
-                addFabricAd  = (isFront && config.switches.fabricAdverts && detect.getBreakpoint() === 'mobile');
+                addFabricAd  = (config.page.isFront && config.switches.fabricAdverts && detect.isBreakpoint({max : 'phablet'}));
 
             // insert fabric advert at first container in lieu of a top slot
             if (addFabricAd) {
@@ -67,8 +66,8 @@ define([
                 container    = containers[index];
                 containerId  = bonzo(container).data('id');
                 $adSlice     = $(opts.sliceSelector, container);
-                // don't display ad in the first container on the fronts
-                isFrontFirst = isFront && index === 0;
+                // don't display ad in the first container on the network fronts
+                isFrontFirst = contains(['uk', 'us', 'au'], config.page.pageId) && index === 0;
 
                 if (config.page.showMpuInAllContainers) {
                     adSlices.push($adSlice.first());
