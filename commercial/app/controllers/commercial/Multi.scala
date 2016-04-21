@@ -75,15 +75,15 @@ object Multi
               }
             case ("masterclasses", eventBriteId) if eventBriteId.nonEmpty =>
               Future.successful {
-                MasterclassAgent.specificMasterclasses(Seq(eventBriteId)).filter(!_.mainPicture.isEmpty).headOption orElse {
-                  MasterclassAgent.masterclassesTargetedAt(segment).filter(!_.mainPicture.isEmpty).headOption
+                MasterclassAgent.specificMasterclasses(Seq(eventBriteId)).filterNot(_.mainPicture.isEmpty).headOption orElse {
+                  MasterclassAgent.masterclassesTargetedAt(segment).filterNot(_.mainPicture.isEmpty).headOption
                 } map {
                   views.html.masterclasses.masterclassesBlended(_, clickMacro)
                 }
               }
             case ("masterclasses", _) =>
               Future.successful {
-                MasterclassAgent.masterclassesTargetedAt(segment).filter(!_.mainPicture.isEmpty).headOption map {
+                MasterclassAgent.masterclassesTargetedAt(segment).filterNot(_.mainPicture.isEmpty).headOption map {
                   views.html.masterclasses.masterclassesBlended(_, clickMacro)
                 }
               }
