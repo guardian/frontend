@@ -39,6 +39,13 @@ define([
                 mobile: '1,1|88,85'
             }
         },
+        inline1: {
+            sizeMappings: {
+                mobile:             '1,1|300,250',
+                'mobile-landscape': '1,1|300,250',
+                tablet:             '1,1|300,250'
+            }
+        },
         inline: {
             sizeMappings: {
                 mobile:             '1,1|300,250',

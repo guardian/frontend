@@ -1,9 +1,10 @@
 package model
 
+import conf.switches.Switches
 import conf.switches.Switches._
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
-import play.api.mvc.{Request, Action, Result}
+import play.api.mvc._
 import scala.concurrent.Future
 import scala.concurrent.duration.Duration
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -41,32 +42,31 @@ object Cached extends implicits.Dates {
     if (cacheableStatusCodes.contains(result.header.status)) cacheHeaders(cacheSeconds, result) else result
   }
 
-  case class StringResult(result: Result, body: Option[String])
-  object StringResult {
-    def apply(result: Result, body: String) = new StringResult(result, Some(body))
-    def withoutString(result: Result) = StringResult(result, None)
+  case class Hash(string: String)
+  case class RevalidatableResult(result: Result, hash: Hash)
+  object RevalidatableResult {
+    def apply(result: Result, body: String) = {
+      // hashing function from Arrays.java
+      val hashLong: Long = body.getBytes("UTF-8").foldLeft(z = 1L){
+        case (accu, nextByte) => 31 * accu + nextByte
+      }
+      new RevalidatableResult(result, Hash(hashLong.toString))
+    }
   }
 
-  def withEtag(page: Page)(stringResult: StringResult): Result = {
+  def withRevalidation(page: Page)(stringResult: RevalidatableResult)(implicit request: RequestHeader): Result = {
     val cacheSeconds = page.metadata.cacheTime.cacheSeconds
-    if (cacheableStatusCodes.contains(stringResult.result.header.status)) cacheHeaders(cacheSeconds, stringResult.result, stringResult.body) else stringResult.result
+    if (cacheableStatusCodes.contains(stringResult.result.header.status)) cacheHeaders(cacheSeconds, stringResult.result, Some((stringResult.hash, request.headers.get("If-None-Match")))) else stringResult.result
   }
 
   // Use this when you are sure your result needs caching headers, even though the result status isn't
   // conventionally cacheable. Typically we only cache 200 and 404 responses.
   def explicitlyCache(seconds: Int)(result: Result): Result = cacheHeaders(seconds, result)
 
-  private def cacheHeaders(seconds: Int, result: Result, maybeBody: Option[String] = None) = {
+  private def cacheHeaders(seconds: Int, result: Result, maybeHash: Option[(Hash, Option[String])] = None) = {
     val now = DateTime.now
     val expiresTime = now + seconds.seconds
     val maxAge = if (DoubleCacheTimesSwitch.isSwitchedOn) seconds * 2 else seconds
-
-    val maybeHash = maybeBody.map {
-      // hashing function from Arrays.java
-      _.getBytes("UTF-8").foldLeft(z = 1L){
-        case (accu, nextByte) => 31 * accu + nextByte
-      }
-    }
 
     // NOTE, if you change these headers make sure they are compatible with our Edge Cache
 
@@ -76,17 +76,24 @@ object Cached extends implicits.Dates {
     // http://docs.fastly.com/guides/22966608/40347813
     val staleWhileRevalidateSeconds = math.max(maxAge / 10, 1)
     val cacheControl = s"max-age=$maxAge, stale-while-revalidate=$staleWhileRevalidateSeconds, stale-if-error=$tenDaysInSeconds"
-    val etag = maybeHash.map{ hashInt: Long =>
-      s"hash${hashInt.toString}"
+
+    val (etagHeaderString, validatedResult): (String, Result) = maybeHash.map { case (hash, maybeHashToMatch) =>
+      val etag = s"""W/"hash${hash.string}""""
+      if (Switches.CheckETagsSwitch.isSwitchedOn && maybeHashToMatch.contains(etag)) {
+        (etag, Results.NotModified)
+      } else {
+        (etag, result)
+      }
     }.getOrElse(
-      s"johnRandom${scala.util.Random.nextInt}${scala.util.Random.nextInt}" // just to see if they come back in
+      (s""""johnRandom${scala.util.Random.nextInt}${scala.util.Random.nextInt}"""", result) // just to see if they come back in
     )
-    result.withHeaders(
+
+    validatedResult.withHeaders(
       "Surrogate-Control" -> cacheControl,
       "Cache-Control" -> cacheControl,
       "Expires" -> expiresTime.toHttpDateTimeString,
       "Date" -> now.toHttpDateTimeString,
-      "ETag" -> s""""$etag"""")
+      "ETag" -> etagHeaderString)
 
 
   }

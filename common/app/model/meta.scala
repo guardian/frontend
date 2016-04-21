@@ -245,7 +245,10 @@ final case class MetaData (
 ){
 
   def hasPageSkin(edition: Edition) = if (isPressedPage){
-    DfpAgent.isPageSkinned(adUnitSuffix, edition)
+    DfpAgent.hasPageSkin(adUnitSuffix, edition)
+  } else false
+  def hasPageSkinOrAdTestPageSkin(edition: Edition) = if (isPressedPage){
+    DfpAgent.hasPageSkinOrAdTestPageSkin(adUnitSuffix, edition)
   } else false
   def sizeOfTakeoverAdsInSlot(slot: AdSlot, edition: Edition): Seq[AdSize] = if (isPressedPage) {
     DfpAgent.sizeOfTakeoverAdsInSlot(slot, adUnitSuffix, edition)

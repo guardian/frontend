@@ -1,28 +1,6 @@
-$guss-webfonts-base-url: '//pasteup.guim.co.uk/fonts/';
-$guss-webfonts-hinting: 'off';
+@import 'pasteup/fonts/src';
 
-@import './components/guss-webfonts/src/_webfonts.scss';
-
-@include guss-webfonts(
-    (
-        'Guardian Text Egyptian Web': (
-            (weight: 'regular',  style: 'normal'),
-            (weight: 'regular',  style: 'italic', charset: 'latin1'),
-            (weight: 'medium',   style: 'normal', charset: 'latin1', use-as: (weight: 'bold', style: 'normal')),
-        ),
-        'Guardian Egyptian Web': (
-            (weight: 'light',    style: 'normal', charset: 'latin1'),
-            (weight: 'regular',  style: 'normal', charset: 'latin1'),
-            (weight: 'medium',   style: 'normal', charset: 'latin1'),
-            (weight: 'semibold', style: 'normal', charset: 'ascii', use-as: (weight: 'ultrablack', style: 'normal')),
-        ),
-        'Guardian Text Sans Web': (
-            (weight: 'regular',  style: 'normal'),
-            (weight: 'regular',  style: 'italic', charset: 'latin1'),
-            (weight: 'medium',   style: 'normal', use-as: (weight: 'bold', style: 'normal')),
-        ),
-        'Guardian Sans Web': (
-            (weight: 'regular',  style: 'normal', charset: 'latin1'),
-        )
-    )
-);
+@include font-face('Guardian Text Egyptian Web');
+@include font-face('Guardian Egyptian Web');
+@include font-face('Guardian Text Sans Web');
+@include font-face('Guardian Sans Web');
