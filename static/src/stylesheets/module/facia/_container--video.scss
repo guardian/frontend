@@ -273,6 +273,15 @@ $video-width-desktop: 700px;
         left: $gs-gutter;
         right: $gs-gutter;
     }
+
+    .inline-guardian-video-logo svg {
+        margin-top: 6px;
+        max-width: 100%;
+
+        &:hover .inline-guardian-video-logo__title {
+            fill: #ffffff;
+        }
+    }
 }
 
 .video-playlist__item--first {

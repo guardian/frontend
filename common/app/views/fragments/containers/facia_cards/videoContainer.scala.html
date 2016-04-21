@@ -24,7 +24,7 @@
             <a class="video-title__link" href="@containerDefinition.href" data-link-name="video-container-title @containerDefinition.displayName">
                 @containerDefinition.displayName match {
                     case Some("videos") => {
-                        SWEETVIDZ
+                        @fragments.inlineSvg("guardian-video-logo", "logo")
                     }
 
                     case _ => {
