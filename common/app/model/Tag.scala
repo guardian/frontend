@@ -138,7 +138,7 @@ object SponsorshipType {
   def make(name: String): SponsorshipType = name match {
     case PaidContent.name => PaidContent
     case Foundation.name => Foundation
-    case Sponsored.name => Sponsored
+    case _ => Sponsored
   }
 
   implicit val format: Format[SponsorshipType] =
