@@ -19,6 +19,11 @@ object SwitchGroup {
                             Some("The expiry date of these switches does NOT affect the expiry of the AB tests; " +
                                  "these switches serve only to quickly enable/disable said tests."))
   val Commercial = SwitchGroup("Commercial")
+  val CommercialRefactoring = SwitchGroup("Commercial: Refactoring",
+                            Some("All commercial containers have been refactored, these switches enable the " +
+                                 "refactored components."))
+  val CommercialFeeds = SwitchGroup("Commercial: Feeds",
+                            Some("These feeds enable the fetching and parsing of the commercial merchandising components."))
   val Facia = SwitchGroup("Facia")
   val Feature = SwitchGroup("Feature")
   val Identity = SwitchGroup("Identity")
