@@ -69,7 +69,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     case "fetch"=>
     val currentFetchCount = recordSuccess("fetch")
     val f: Future[Unit] = Future {
-      CommercialMetrics.metrics.put(Map(s"successful-fetches" -> currentFetchCount))
+      CommercialMetrics.metrics.put(Map(s"successful-$eventName" -> currentFetchCount))
       log.info(s"uploading the success count to cloud: Count :(fetch) $currentFetchCount")
     }
     fetchSuccessCount send (_ - currentFetchCount)
@@ -78,7 +78,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     case "parse" =>
       val currentParseCount = recordSuccess("parse")
       val f: Future[Unit] = Future {
-        CommercialMetrics.metrics.put(Map(s"successful-parses" -> currentParseCount))
+        CommercialMetrics.metrics.put(Map(s"successful-$eventName" -> currentParseCount))
         log.info(s"uploading the success count to cloud: Count :(parse) $currentParseCount")
       }
       parseSuccessCount send (_ - currentParseCount)
@@ -175,31 +175,32 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       val feedName = fetcher.feedMetaData.name
       val jobName = mkJobName(feedName, "fetch")
       Jobs.deschedule(jobName)
-//      Jobs.scheduleEveryNMinutes(jobName, 15) {
-//        fetchFeed(fetcher)
-//      }
-      Jobs.scheduleEveryNSeconds(jobName,10){
+      Jobs.scheduleEveryNMinutes(jobName, 15) {
         fetchFeed(fetcher)
       }
+//      Jobs.scheduleEveryNSeconds(jobName,10){
+//        fetchFeed(fetcher)
+//      }
     }
 
     for (parser <- FeedParser.all) {
       val feedName = parser.feedMetaData.name
       val jobName = mkJobName(feedName, "parse")
       Jobs.deschedule(jobName)
-//      Jobs.scheduleEveryNMinutes(jobName, 15) {
-//        parseFeed(parser)
-//      }
-      Jobs.scheduleEveryNSeconds(jobName, 10) {
+      Jobs.scheduleEveryNMinutes(jobName, 15) {
         parseFeed(parser)
       }
+//      Jobs.scheduleEveryNSeconds(jobName, 10) {
+//        parseFeed(parser)
+//      }
     }
-    /////////////////////////////////////WORKING ON THIS CURRENTLY//////////////////////////////////
-    Jobs.scheduleEveryNSeconds("cloudwatchSuccessUpdate",10){
+
+    //upload to cloudwatch
+    Jobs.scheduleEveryNMinutes("cloudwatchSuccessUpdate",15){
       successUploader("fetch")
       successUploader("parse")
     }
-    Jobs.scheduleEveryNSeconds("cloudwatchFailureUpdate",10){
+    Jobs.scheduleEveryNMinutes("cloudwatchFailureUpdate",15){
       failureUploader("fetch")
       failureUploader("parse")
     }
