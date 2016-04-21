@@ -257,8 +257,11 @@ $video-width-desktop: 700px;
 
     @include mq(leftCol) {
         position: relative;
+        height: $video-width-desktop / 16 * 9;
         display: inline-block;
         width: gs-span(2) + $gs-gutter * 2;
+        padding: ($gs-baseline / 2) $gs-gutter;
+        box-sizing: border-box;
         margin-bottom: 0;
         white-space: normal;
     }
@@ -268,11 +271,15 @@ $video-width-desktop: 700px;
     }
 
     .video-title__link {
+/*
         position: absolute;
         top: $gs-baseline / 2;
         left: $gs-gutter;
         right: $gs-gutter;
+*/
     }
+
+
 }
 
 .video-playlist__item--first {
