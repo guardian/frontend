@@ -27,12 +27,6 @@
             case _ => { }
         }
         <div class="content__main tonal__main tonal__main--@toneClass(media)">
-            @media match {
-                case video: Video => {
-                     <div class="video__background__fade"></div>
-                }
-                case _ => { }
-            }
             <div class="gs-container">
                 <div class="content__main-column content__main-column--media content__main-column--@mediaType">
                     <div class="media-body">
@@ -117,6 +111,11 @@
                                         </div>
                                         <div class="video__share">
 	                                        @fragments.social(media.sharelinks.pageShares, "top")
+                                        </div>
+                                        <div class="tonal__standfirst--more">
+                                            <div class="button button--more">
+                                                Show More
+                                            </div>
                                         </div>
                                     }
                                     case _ => { }
