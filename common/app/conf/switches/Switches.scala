@@ -23,7 +23,7 @@ object SwitchGroup {
                             Some("All commercial containers have been refactored, these switches enable the " +
                                  "refactored components."))
   val CommercialFeeds = SwitchGroup("Commercial: Feeds",
-                            Some("These feeds enable the fetching and parsing of the commercial merchandising components."))
+                            Some("These switches enable the fetching and parsing of the commercial merchandising components."))
   val Facia = SwitchGroup("Facia")
   val Feature = SwitchGroup("Feature")
   val Identity = SwitchGroup("Identity")
