@@ -27,6 +27,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
   private def recordEvent(feedName: String, eventName: String, maybeDuration: Option[Duration]): Unit = {
     val key = s"${feedName.toLowerCase.replaceAll("[\\s/]+", "-")}"
     val duration = maybeDuration map (_.toMillis.toDouble) getOrElse -1d
+    log.info(s"The key is this : $key")
 //    CommercialMetrics.metrics.put(Map(s"$key" -> duration))
     log.info(s"$key $eventName  ame took $duration ms")
   }
@@ -45,7 +46,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
   private def recordFailure(): Int = {
     failureCount send (_ + 1)
     val failureResult = failureCount.get()
-    log.info(s"logging a failure now $failureResult")
+    log.info(s"logging a failure now , agent: $failureResult")
     failureResult
   }
 
@@ -55,6 +56,15 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       log.info(s"uploading the success count to cloud: Count : $currentCount")
     }
     successCount send (_ - currentCount)
+    f
+  }
+
+  private def failureUploader(): Future[Unit] = {
+    val currentCount = recordFailure()
+    val f: Future[Unit] = Future {
+      log.info(s"uploading the failure count to cloud: Count : $currentCount")
+    }
+    failureCount send (_ - currentCount)
     f
   }
 
@@ -149,6 +159,9 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     /////////////////////////////////////WORKING ON THIS CURRENTLY//////////////////////////////////
     Jobs.scheduleEveryNSeconds("cloudwatchSuccessUpdate",10){
       successUploder()
+    }
+    Jobs.scheduleEveryNSeconds("cloudwatchFailureUpdate",10){
+      failureUploader()
     }
 
     Jobs.deschedule("cloudwatchUpload")
