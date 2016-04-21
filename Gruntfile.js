@@ -23,7 +23,7 @@ module.exports = function (grunt) {
         staticHashDir:   './static/hash/',
         testConfDir:     './static/test/javascripts/conf/',
         requirejsDir:    './static/requirejs',
-        webfontsDir:     './static/src/stylesheets/pasteup/fonts/webfonts/'
+        webfontsDir:     './static/src/fonts/'
     };
 
     options.propertiesFile = options.isDev ?
