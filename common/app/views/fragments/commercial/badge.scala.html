@@ -12,6 +12,7 @@
             (isSponsored || isAdFeature || isFoundationFunded) &&
             !content.commercial.isInappropriateForSponsorship
     ) {
+    @if(!staticBadgesSwitch.isSwitchedOn) {
         @defining((
             content match {
                 case _ if isSponsored => "spbadge"
@@ -39,7 +40,6 @@
                 paidForContentType = content.commercial.sponsorshipType
             ) {
                 @content.tags.sponsor.map { sponsor =>
-                @if(!staticBadgesSwitch.isSwitchedOn) {
                     <div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">
                         <h3 class="ad-slot--paid-for-badge__header">
                             @if(isSponsored) {
@@ -65,8 +65,8 @@
                         }
                     </div>
                 }
-                }
             }
         }
+    }
     }
 }
