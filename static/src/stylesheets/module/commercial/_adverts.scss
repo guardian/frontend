@@ -44,13 +44,31 @@
 
         > .adverts__header {
             box-sizing: border-box;
-            padding-bottom: $gs-baseline;
-            padding-top: $gs-baseline;
-            width: 240px;
+            padding: $gs-baseline $gs-gutter / 5 * 2;
+            width: 160px;
         }
 
         > .adverts__body {
             flex: 1;
+        }
+
+        .has-no-flex & {
+            display: table;
+
+            &::before,
+            &::after,
+            > .adverts__body,
+            > .adverts__header {
+                display: table-cell;
+                vertical-align: top;
+            }
+        }
+    }
+
+    @include mq(wide) {
+        > .adverts__header {
+            padding: $gs-baseline $gs-gutter;
+            width: 240px;
         }
 
         .adverts__ctas {
@@ -169,6 +187,25 @@
 
         @include mq(desktop) {
             padding-bottom: 0;
+
+            .has-no-flex & {
+                clear: both;
+                max-width: 980px;
+
+                > * {
+                    float: left;
+                    width: calc(25% - #{$gs-gutter});
+                }
+
+                > :only-child {
+                    width: calc(100% - #{$gs-gutter});
+                }
+
+                > :first-child:nth-last-child(2),
+                > :nth-child(2):last-child {
+                    width: calc(50% - #{$gs-gutter});
+                }
+            }
         }
     }
 
@@ -231,6 +268,16 @@
 
     .adverts__row > .button::before {
         content: none;
+    }
+
+    .has-no-flex & {
+        .advert {
+            width: calc(75% - #{$gs-gutter});
+        }
+
+        .advert--landscape > .advert__image-container {
+            width: calc(33.33% - #{$gs-gutter / 2});
+        }
     }
 }
 
@@ -317,6 +364,21 @@
     > :nth-child(2) ~ * {
         margin-top: $gs-baseline;
     }
+
+    .has-no-flex .adverts--legacy & {
+        > * {
+            float: left;
+            width: calc(50% - #{$gs-gutter / 2});
+        }
+
+        > :nth-child(even) {
+            margin-left: $gs-gutter - 5px;
+        }
+
+        > :nth-child(odd) {
+            clear: left;
+        }
+    }
 }
 
 .adverts__3cols {
@@ -327,6 +389,17 @@
     > :nth-child(3) ~ * {
         margin-top: $gs-baseline;
     }
+
+    .has-no-flex .adverts--legacy & {
+        > * {
+            float: left;
+            width: calc(33.33% - #{$gs-gutter});
+        }
+
+        > :nth-child(3n+1) {
+            clear: left;
+        }
+    }
 }
 
 @include mq(tablet) {
@@ -335,12 +408,20 @@
     .adverts__row--1x1x2 > :nth-child(3) {
         flex-basis: calc(50% - #{$gs-gutter} - 1px);
         flex-grow: 0;
+
+        .has-no-flex & {
+            width: calc(50% - #{$gs-gutter} - 1px);
+        }
     }
 
     .adverts__row--3x1 > :nth-child(1),
     .adverts__row--1x3 > :nth-child(2) {
         flex-basis: calc(75% - #{$gs-gutter});
         flex-grow: 0;
+
+        .has-no-flex & {
+            width: calc(75% - #{$gs-gutter});
+        }
     }
 }
 
@@ -361,6 +442,10 @@
     font-weight: bold;
     padding-right: $gs-gutter;
     text-align: right;
+
+    .has-no-flex & {
+        clear: both;
+    }
 }
 
 .adverts__badge__logo {
@@ -398,6 +483,11 @@
 
     &:not([open]) > *:not(summary) {
         display: none;
+    }
+
+    .has-no-flex & {
+        clear: both;
+        padding-top: $gs-baseline;
     }
 }
 
@@ -524,3 +614,4 @@
 @import '_adverts-capi';
 @import '_adverts-brand';
 @import '_adverts-membership';
+@import '_adverts-travel';

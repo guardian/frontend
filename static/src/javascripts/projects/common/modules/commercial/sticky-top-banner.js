@@ -15,7 +15,8 @@ define([
     mediator,
     config,
     detect,
-    assign) {
+    assign
+) {
 
     // All ads are loaded via DFP, including the following types. DFP does
     // report which ad slot size has been chosen, however there are several
@@ -135,8 +136,8 @@ define([
         var userHasScrolledPastHeader = pageYOffset > state.headerHeight;
 
         els.$adBanner.css({
-            'position': userHasScrolledPastHeader ? 'absolute' : 'fixed',
-            'top': userHasScrolledPastHeader ? state.headerHeight : '',
+            'position': !config.page.hasSuperStickyBanner && userHasScrolledPastHeader ? 'absolute' : 'fixed',
+            'top': !config.page.hasSuperStickyBanner && userHasScrolledPastHeader ? state.headerHeight : '',
             'height': state.adHeight,
             // Stop the ad from overflowing while we transition
             'overflow': state.shouldTransition ? 'hidden' : '',

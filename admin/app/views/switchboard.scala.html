@@ -17,7 +17,10 @@
     <form id="switchboard" action="/dev/switchboard" method="POST">
         <input type="hidden" name="lastModified" value="@lastModified" />
         @conf.switches.Switches.grouped.map { case (group, switches) =>
-            <h4>@group</h4>
+            <h4>@group.name</h4>
+            @for(description <- group.description){
+                <p class="sub-heading">@description</p>
+            }
             <div class="well">
                 @switches.map { switch =>
                     @defining(Switch.expiry(switch)) { expiry =>

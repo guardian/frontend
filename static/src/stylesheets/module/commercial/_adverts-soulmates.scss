@@ -115,7 +115,7 @@
         display: flex;
 
         > * {
-            flex: 1;
+            flex-basis: calc(50% - #{$gs-gutter / 4});
         }
 
         > * + * {
