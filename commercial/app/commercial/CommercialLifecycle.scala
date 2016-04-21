@@ -13,6 +13,8 @@ import scala.concurrent.duration._
 import scala.util.Random
 import scala.util.control.NonFatal
 
+import akka.agent.Agent
+
 trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionContexts {
 
   private val refreshJobs: List[RefreshJob] = List(
@@ -23,10 +25,39 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
   )
 
   private def recordEvent(feedName: String, eventName: String, maybeDuration: Option[Duration]): Unit = {
-    val key = s"${feedName.toLowerCase.replaceAll("[\\s/]+", "-")}-$eventName-time"
+    val key = s"${feedName.toLowerCase.replaceAll("[\\s/]+", "-")}"
     val duration = maybeDuration map (_.toMillis.toDouble) getOrElse -1d
-    CommercialMetrics.metrics.put(Map(s"$key" -> duration))
+//    CommercialMetrics.metrics.put(Map(s"$key" -> duration))
+    log.info(s"$key $eventName  ame took $duration ms")
   }
+
+  val successCount = Agent(0)
+  val failureCount = Agent(0)
+
+  private def recordSuccess(): Int = {
+    successCount send (_ + 1)
+    val successResult = successCount.get()
+    log.info(s"logging a success now, agent: $successResult")
+    successResult
+  }
+
+
+  private def recordFailure(): Int = {
+    failureCount send (_ + 1)
+    val failureResult = failureCount.get()
+    log.info(s"logging a failure now $failureResult")
+    failureResult
+  }
+
+  private def successUploder(): Future[Unit] = {
+    val currentCount = recordSuccess()
+    val f: Future[Unit] = Future {
+      log.info(s"uploading the success count to cloud: Count : $currentCount")
+    }
+    successCount send (_ - currentCount)
+    f
+  }
+
 
   override def onStart(application: PlayApp): Unit = {
 
@@ -48,12 +79,14 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
           log.warn(s"$msgPrefix failed: ${e.getMessage}")
         case NonFatal(e) =>
           recordFetch(None)
+          recordFailure()
           log.error(s"$msgPrefix failed: ${e.getMessage}", e)
       }
       eventualResponse onSuccess {
         case response =>
           S3FeedStore.put(feedName, response.feed)
           recordFetch(Some(response.duration))
+          recordSuccess()
           log.info(s"$msgPrefix succeeded in ${response.duration}")
       }
       eventualResponse.map(_ => ())
@@ -85,6 +118,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       parsedFeed.map(_ => ())
     }
 
+
     super.onStart(application)
 
     def mkJobName(feedName: String, task: String): String = s"${feedName.replaceAll("/", "-")}-$task-job"
@@ -93,7 +127,10 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       val feedName = fetcher.feedMetaData.name
       val jobName = mkJobName(feedName, "fetch")
       Jobs.deschedule(jobName)
-      Jobs.scheduleEveryNMinutes(jobName, 15) {
+//      Jobs.scheduleEveryNMinutes(jobName, 15) {
+//        fetchFeed(fetcher)
+//      }
+      Jobs.scheduleEveryNSeconds(jobName,10){
         fetchFeed(fetcher)
       }
     }
@@ -105,6 +142,13 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       Jobs.scheduleEveryNMinutes(jobName, 15) {
         parseFeed(parser)
       }
+//      Jobs.scheduleEveryNSeconds(jobName, 10) {
+//        parseFeed(parser)
+//      }
+    }
+    /////////////////////////////////////WORKING ON THIS CURRENTLY//////////////////////////////////
+    Jobs.scheduleEveryNSeconds("cloudwatchSuccessUpdate",10){
+      successUploder()
     }
 
     Jobs.deschedule("cloudwatchUpload")

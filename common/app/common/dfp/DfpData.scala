@@ -486,7 +486,8 @@ object GuCreativeTemplate extends implicits.Collections {
     )(GuCreativeTemplate.apply _)
 }
 
-case class LineItemReport(timestamp: String, lineItems: Seq[GuLineItem]) {
+case class
+LineItemReport(timestamp: String, lineItems: Seq[GuLineItem]) {
 
   lazy val (adTestLineItems, nonAdTestLineItems) = lineItems partition {
     _.targeting.hasAdTestTargetting

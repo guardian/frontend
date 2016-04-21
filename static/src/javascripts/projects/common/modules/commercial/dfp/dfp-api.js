@@ -182,7 +182,6 @@ define([
                 sponsorshipIdsReturned.push(value);
             }
         });
-
         return sponsorshipIdsReturned;
     }
 
