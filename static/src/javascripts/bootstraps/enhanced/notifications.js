@@ -54,7 +54,6 @@ define([
             if(!modules.hasSubscribed() && !modules.hasDismissedExplainer()) {
                 modules.showExplainer();
             }
-            //modules.displayPermissiosMessage();
         },
 
         configureSubscribeButton: function () {
@@ -99,7 +98,7 @@ define([
         displayPermissiosMessage: function() {
             var src = template(permissionsTemplate,{closeIcon : svgs('closeCentralIcon')});
             fastdom.write(function () {
-                $('.js-live-notifications').prepend(src);
+                $('.js-notificications-blocked').prepend(src);
                 bean.one(document.body, 'click', '.js-notifications-permission-denied_item__close', modules.closeDisplayMessage);
             });
         },
