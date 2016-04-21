@@ -3,6 +3,7 @@ package model
 import com.gu.contentapi.client.model.v1.{Section => ApiSection}
 import common.Pagination
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
+import campaigns.PersonalInvestmentsCampaign
 
 object Section {
   def make(section: ApiSection, pagination: Option[Pagination] = None): Section = {
@@ -18,6 +19,7 @@ object Section {
     val javascriptConfigOverrides: Map[String, JsValue] = Map(
         "keywords" -> JsString(webTitle),
         "keywordIds" -> JsString(keywordIds.mkString(",")),
+        "hasSuperStickyBanner" -> JsBoolean(PersonalInvestmentsCampaign.isRunning(keywordIds)),
         "contentType" -> JsString("Section"),
         "isAdvertisementFeature" -> JsBoolean(keywordSponsorship.isAdvertisementFeature)
       )
