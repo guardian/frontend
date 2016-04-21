@@ -38,8 +38,8 @@ define([
             minBelow: 300,
             selectors: {
                 ' > h2': {minAbove: detect.getBreakpoint() === 'mobile' ? 20 : 0, minBelow: 250},
-                ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
-                ' .ad-slot': {minAbove: 500, minBelow: 500}
+                ' .ad-slot': {minAbove: 500, minBelow: 500},
+                ' > :not(p):not(h2):not(ad-slot)': {minAbove: 200, minBelow: 400}
             }
         };
     }
