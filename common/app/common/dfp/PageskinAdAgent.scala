@@ -9,7 +9,7 @@ trait PageskinAdAgent {
 
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship]
 
-  def isPageSkinned(adUnitWithoutRoot: String, edition: Edition): Boolean = {
+  private def findSponsorship(adUnitWithoutRoot: String, edition: Edition): Option[PageSkinSponsorship] = {
     if (PageSkin.isValidForNextGenPageSkin(adUnitWithoutRoot)) {
       val adUnitWithRoot = s"$dfpAdUnitRoot/$adUnitWithoutRoot"
 
@@ -20,11 +20,22 @@ trait PageskinAdAgent {
           !sponsorship.isR2Only
       }
 
-      pageSkinSponsorships.exists { sponsorship =>
-        val isPageTargeted = targetsAdUnitAndMatchesTheEdition(sponsorship)
-        isPageTargeted && (!isProd || !sponsorship.targetsAdTest)
+      pageSkinSponsorships.find { sponsorship =>
+       targetsAdUnitAndMatchesTheEdition(sponsorship)
       }
+    } else None
+  }
 
-    } else false
+  // The ad unit is considered to have a page skin if it has a corresponding sponsorship.
+  // If the sponsorship is an adTest, it is only considered outside of production.
+  def hasPageSkin(adUnitWithoutRoot: String, edition: Edition): Boolean = {
+    findSponsorship(adUnitWithoutRoot, edition).exists { sponsorship =>
+      !sponsorship.targetsAdTest || !isProd
+    }
+  }
+
+  // True if there is any candidate sponsorship for this ad unit. Used to decide when to render the out-of-page ad slot.
+  def hasPageSkinOrAdTestPageSkin(adUnitWithoutRoot: String, edition: Edition): Boolean = {
+    findSponsorship(adUnitWithoutRoot, edition).isDefined
   }
 }

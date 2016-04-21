@@ -44,18 +44,12 @@
 
         > .adverts__header {
             box-sizing: border-box;
-            padding-bottom: $gs-baseline;
-            padding-top: $gs-baseline;
-            width: 240px;
+            padding: $gs-baseline $gs-gutter / 5 * 2;
+            width: 160px;
         }
 
         > .adverts__body {
             flex: 1;
-        }
-
-        .adverts__ctas {
-            margin-left: (-1 * $gs-gutter / 2);
-            margin-right: (-1 * $gs-gutter / 2);
         }
 
         .has-no-flex & {
@@ -68,6 +62,18 @@
                 display: table-cell;
                 vertical-align: top;
             }
+        }
+    }
+
+    @include mq(wide) {
+        > .adverts__header {
+            padding: $gs-baseline $gs-gutter;
+            width: 240px;
+        }
+
+        .adverts__ctas {
+            margin-left: (-1 * $gs-gutter / 2);
+            margin-right: (-1 * $gs-gutter / 2);
         }
     }
 
