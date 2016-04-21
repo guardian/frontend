@@ -9,8 +9,8 @@ trait FeatureSwitches {
     SwitchGroup.Feature,
     "purple-rain",
     "If this switch is on, the weather will be purple rain",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 23),
+    safeState = On,
+    sellByDate = new LocalDate(2016, 4, 25),
     exposeClientSide = false
   )
 
