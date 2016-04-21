@@ -20,6 +20,7 @@ define([
     'common/modules/video/fullscreener',
     'common/modules/video/supportedBrowsers',
     'common/modules/video/tech-order',
+    'common/modules/video/video-container',
     // This must be the full path because we use curl config to change it based
     // on env
     'bootstraps/enhanced/media/video-player',
@@ -46,6 +47,7 @@ define([
     fullscreener,
     supportedBrowsers,
     techOrder,
+    videoContainer,
     videojs,
     loadingTmpl
 ) {
@@ -407,6 +409,12 @@ define([
         )();
     }
 
+    function initFacia() {
+        if (config.page.isFront) {
+            videoContainer();
+        }
+    }
+
     function init() {
         // The `hasMultipleVideosInPage` flag is temporary until the # will be fixed
         var shouldPreroll = commercialFeatures.videoPreRolls &&
@@ -425,6 +433,7 @@ define([
                 initWithRaven();
             }
         }
+        initFacia();
         initMoreInSection();
         initMostViewedMedia();
     }

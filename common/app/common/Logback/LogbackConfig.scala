@@ -5,8 +5,8 @@ import ch.qos.logback.classic.{Logger => LogbackLogger, LoggerContext}
 import com.amazonaws.auth.AWSCredentialsProvider
 import com.gu.logback.appender.kinesis.KinesisAppender
 import net.logstash.logback.layout.LogstashLayout
-import org.slf4j.LoggerFactory
-import play.api.LoggerLike
+import org.slf4j.{Logger => SLFLogger, LoggerFactory}
+import play.api.{Logger => PlayLogger}
 
 object LogbackConfig {
 
@@ -21,7 +21,7 @@ object LogbackConfig {
     "{" + (for((k, v) <- customFields) yield(s""""${k}":"${v}"""")).mkString(",") + "}"
   }
 
-  def asLogBack(l: LoggerLike): Option[LogbackLogger] = l.logger match {
+  def asLogBack(l: SLFLogger): Option[LogbackLogger] = l match {
     case l: LogbackLogger => Some(l)
     case _ => None
   }
@@ -34,6 +34,7 @@ object LogbackConfig {
 
   def makeKinesisAppender(layout: LogstashLayout, context: LoggerContext, appenderConfig: KinesisAppenderConfig) = {
     val a = new KinesisAppender[ILoggingEvent]()
+    a.setName("LoggingKinesisAppender")
     a.setStreamName(appenderConfig.stream)
     a.setRegion(appenderConfig.region)
     a.setCredentialsProvider(appenderConfig.awsCredentialsProvider)
@@ -47,15 +48,18 @@ object LogbackConfig {
     a
   }
 
-  def initLogger(logger: LoggerLike, config: LogStashConf) = {
+  def init(config: LogStashConf) = {
     if (config.enabled) {
-      asLogBack(logger).map { lb =>
-        try {
+      try {
+        val rootLogger = LoggerFactory.getLogger(SLFLogger.ROOT_LOGGER_NAME)
+        asLogBack(rootLogger).map { lb =>
           lb.info("Configuring Logback")
           val context = lb.getLoggerContext
           val layout = makeLayout(makeCustomFields(config.customFields))
           val bufferSize = 1000
-          val appender  = makeKinesisAppender(layout, context,
+          val appender  = makeKinesisAppender(
+            layout,
+            context,
             KinesisAppenderConfig(
               config.stream,
               config.region,
@@ -65,12 +69,12 @@ object LogbackConfig {
           )
           lb.addAppender(appender)
           lb.info("Configured Logback")
-        } catch {
-          case ex: Throwable => logger.info(s"Error while adding Logback appender: ${ex}")
-        }
-      } getOrElse(logger.info("not running using logback"))
+        } getOrElse(PlayLogger.info("not running using logback"))
+      } catch {
+        case ex: Throwable => PlayLogger.info(s"Error while adding Logback Kinesis appender: ${ex}")
+      }
     } else {
-      logger.info("Logging disabled")
+      PlayLogger.info("Logging disabled")
     }
   }
 

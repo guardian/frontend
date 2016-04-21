@@ -94,6 +94,11 @@ final case class VideoMedia(videoAssets: List[VideoAsset]) {
     }.flatten.sorted
   }
   val duration: Int = videoAssets.headOption.map(_.duration).getOrElse(0)
+  val formattedDuration: String = {
+    videoAssets.headOption.map(_.durationMinutes).getOrElse(0).toString() + ":" + "%02d".format(videoAssets.headOption.map(_.durationSeconds).getOrElse(0))
+  }
+  val durationMinutes: Int = videoAssets.headOption.map(_.durationMinutes).getOrElse(0)
+  val durationSeconds: Int = videoAssets.headOption.map(_.durationSeconds).getOrElse(0)
   val ISOduration: String = new Duration(duration*1000.toLong).toString()
   val height: String = videoAssets.headOption.map(_.height).getOrElse(0).toString
   val width: String = videoAssets.headOption.map(_.width).getOrElse(0).toString

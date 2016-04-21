@@ -27,10 +27,10 @@ define([
         var toggles,
             templateOptions = {
                 buttonTitle: 'Ad',
-                infoTitle: 'Advertising',
-                infoText: 'is created and paid for by third parties and link to an external site',
-                infoLinkText: 'Learn how advertising supports the Guardian',
-                infoLinkUrl: 'http://www.theguardian.com/sponsored-content',
+                infoTitle: 'Advertising on the Guardian',
+                infoText: 'is created and paid for by third parties and link to an external site.',
+                infoLinkText: 'Learn more about how advertising supports the Guardian.',
+                infoLinkUrl: 'https://www.theguardian.com/advertising-on-the-guardian',
                 icon: svgs('arrowicon', ['gu-comlabel__icon']),
                 dataAttr: this.$slot.attr('id')
             };

@@ -3,8 +3,9 @@ package common.Logback
 import com.amazonaws.auth.AWSCredentialsProvider
 import conf.switches.Switches
 import conf.Configuration
-import play.api.{Logger => PlayLogger, Application => PlayApp, GlobalSettings, LoggerLike}
-
+import play.api.{Logger => PlayLogger, Application => PlayApp, GlobalSettings}
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.util.{Success, Failure}
 
 case class LogStashConf(enabled: Boolean,
                         stream: String,
@@ -16,7 +17,7 @@ trait Logstash extends GlobalSettings {
 
   override def onStart(app: PlayApp) = {
     super.onStart(app)
-    Logstash.init(PlayLogger) // Setup Play default Logger to send logs to logstash
+    Logstash.init
   }
 }
 
@@ -40,11 +41,16 @@ object Logstash {
     )
   }
 
-  def init(logger: LoggerLike): Unit = {
-    if(Switches.LogstashLogging.isSwitchedOn) {
-      config.fold(logger.info("Logstash config is missing"))(LogbackConfig.initLogger(logger, _))
-    } else {
-      logger.info("Logstash logging switch is Off")
+  def init: Unit = {
+
+    Switches.LogstashLogging.isGuaranteedSwitchedOn.onComplete {
+      case Success(isOn) =>
+        if(isOn) {
+          config.fold(PlayLogger.info("Logstash config is missing"))(LogbackConfig.init(_))
+        } else {
+          PlayLogger.info("Logstash logging switch is Off")
+        }
+      case Failure(_) => PlayLogger.error("Failed retrieving the logtash-logging switch value")
     }
   }
 }

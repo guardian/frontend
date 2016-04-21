@@ -29,5 +29,5 @@ case class KeywordSponsorshipHandling(
 
   lazy val sponsor: Option[String] = keywordIds.flatMap(DfpAgent.getSponsor(_)).headOption
 
-  def hasPageSkin(edition: Edition): Boolean = DfpAgent.isPageSkinned(adUnitSuffix, edition)
+  def hasPageSkin(edition: Edition): Boolean = DfpAgent.hasPageSkin(adUnitSuffix, edition)
 }

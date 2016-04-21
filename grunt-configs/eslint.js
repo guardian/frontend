@@ -10,9 +10,6 @@ module.exports = function () {
         'grunt-configs': [
             'grunt-configs/**/*.js'
         ],
-        'pasteup': [
-            'static/src/stylesheets/pasteup/**/*.js'
-        ],
         'static/test/javascripts': {
             files: [{
                 expand: true,
