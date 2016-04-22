@@ -381,6 +381,7 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = new LocalDate(2016, 5, 25),
     exposeClientSide = false
+  )
 
   val requestOutOfPageSlotAlways = Switch(
     SwitchGroup.Commercial,
