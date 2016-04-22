@@ -230,7 +230,7 @@ define([
                         });
 
                         // do not appear next to non-paragraph elements
-                        expect(rules.selectors[' > *:not(p):not(h2)']).toEqual({
+                        expect(rules.selectors[' > :not(p):not(h2):not(.ad-slot)']).toEqual({
                             minAbove : 35,
                             minBelow : 400
                         });
