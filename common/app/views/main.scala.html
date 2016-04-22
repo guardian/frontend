@@ -82,7 +82,7 @@
 
         @fragments.analytics.base(page)
 
-        @if(page.metadata.hasPageSkinOrAdTestPageSkin(edition)) {
+        @if(requestOutOfPageSlotAlways.isSwitchedOn || page.metadata.hasPageSkinOrAdTestPageSkin(edition)) {
             @fragments.commercial.pageSkin()
         }
 
