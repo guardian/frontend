@@ -9,7 +9,8 @@ case class EmailSubscription(
   frequency: String,
   listId: String,
   popularity: Int = 0,
-  subscribedTo: Boolean = false
+  subscribedTo: Boolean = false,
+  exampleUrl: Option[String] = None
 )
 object EmailSubscription {
   def apply(emailSubscription: EmailSubscription) = emailSubscription
@@ -114,7 +115,9 @@ object EmailSubscriptions {
       "Art and design",
       "For your art world low-down, sign up to the Guardian's Art Weekly email and get all the latest news, reviews and comment delivered straight to your inbox.",
       "Every Friday",
-      "99"
+      "99",
+      subscribedTo = subscribedListIds.exists{ x => x == "99" },
+      exampleUrl = Some("http://www.theguardian.com/artanddesign/series/art-weekly/latest/email")
     )
   )
 
@@ -214,7 +217,8 @@ object EmailSubscriptions {
       "Weekday afternoons",
       "218",
       10,
-      subscribedTo = subscribedListIds.exists{ x => x == "218" }
+      subscribedTo = subscribedListIds.exists{ x => x == "218" },
+      Some("http://www.theguardian.com/football/series/thefiver/latest/email")
     ),
     EmailSubscription(
       "The Fiver",
@@ -243,7 +247,8 @@ object EmailSubscriptions {
       "In each weekly edition our editors highlight the most important environment stories of the week including data, opinion pieces and background guides. We'll also flag up our best video, picture galleries, podcasts, blogs and green living guides.",
       "Every Friday",
       "38",
-      subscribedTo = subscribedListIds.exists{ x => x == "38" }
+      subscribedTo = subscribedListIds.exists{ x => x == "38" },
+      exampleUrl = Some("http://www.theguardian.com/environment/series/green-light/latest/email")
     ),
     EmailSubscription(
       "Poverty matters",
@@ -252,7 +257,8 @@ object EmailSubscriptions {
       "Our editors track what's happening in development with a special focus on the millennium development goals. Sign up to get all the most important debate and discussion from around the world delivered to your inbox every fortnight.",
       "Every other Tuesday",
       "113",
-      subscribedTo = subscribedListIds.exists{ x => x == "113" }
+      subscribedTo = subscribedListIds.exists{ x => x == "113" },
+      exampleUrl = Some("http://www.theguardian.com/global-development/poverty-matters/latest/email")
     ),
 
     // Lifestyle
@@ -284,7 +290,8 @@ object EmailSubscriptions {
       "Every Thursday",
       "1079",
       9,
-      subscribedTo = subscribedListIds.exists{ x => x == "1079" }
+      subscribedTo = subscribedListIds.exists{ x => x == "1079" },
+      exampleUrl = Some("http://www.theguardian.com/money/series/money-talks/latest/email")
     ),
     EmailSubscription(
       "Fashion statement",
@@ -303,7 +310,8 @@ object EmailSubscriptions {
       "Register to receive our monthly crossword email by the Guardian's crossword editor with the latest issues and tips about theguardian.com/crosswords.",
       "Monthly",
       "101",
-      subscribedTo = subscribedListIds.exists{ x => x == "101" }
+      subscribedTo = subscribedListIds.exists{ x => x == "101" },
+      exampleUrl = Some("https://www.theguardian.com/crosswords/series/crossword-editor-update/latest/email")
     ),
     EmailSubscription(
       "The Observer Food Monthly",
@@ -323,7 +331,8 @@ object EmailSubscriptions {
       "Sign up for our rugby union email, written by our rugby correspondent Paul Rees. Every Thursday Paul will give his thoughts on the big stories, review the latest action and provide gossip from behind the scenes in his unique and indomitable style.",
       "Every Thursday",
       "219",
-      subscribedTo = subscribedListIds.exists{ x => x == "219" }
+      subscribedTo = subscribedListIds.exists{ x => x == "219" },
+      exampleUrl = Some("http://www.theguardian.com/sport/series/breakdown/latest/email")
     ),
     EmailSubscription(
       "The Spin",
@@ -332,7 +341,8 @@ object EmailSubscriptions {
       "The Spin brings you all the latest comment and news, rumour and humour from the world of cricket every Tuesday. It promises not to use tired old cricket cliches, but it might just bowl you over.",
       "Every Tuesday",
       "220",
-      subscribedTo = subscribedListIds.exists{ x => x == "220" }
+      subscribedTo = subscribedListIds.exists{ x => x == "220" },
+      exampleUrl = Some("http://www.theguardian.com/sport/series/thespin/latest/email")
     )
   ) ++ newsEmails(subscribedListIds) ++ australianEmails(subscribedListIds) ++ cultureEmails(subscribedListIds) ++ moreFromTheguardianEmails(subscribedListIds))
 }
