@@ -133,7 +133,7 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
     top: -0.6225rem;
 }
 
-.notifications-explainer {
+.live-notifications-explainer {
 
     margin-top: ($gs-baseline / 3) * 4;
     margin-bottom: $gs-baseline;
@@ -158,7 +158,7 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
 
 }
 
-.notifications-explainer::after {
+.live-notifications-explainer::after {
     content: '';
     display: inline-block;
     width: 0;
@@ -175,14 +175,14 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
 
 
 .live-notifications-denied__content,
-.notifications-explainer__content {
+.live-notifications-explainer__content {
     position: relative;
     box-sizing: border-box;
     padding: $gs-baseline 0 ($gs-baseline/3)*2 $gs-gutter;
 }
 
 .live-notifications-denied__header,
-.notifications-explainer__header {
+.live-notifications-explainer__header {
     position: relative;
     padding-right: gs-span(1) + $gs-gutter * .5;
 
@@ -197,12 +197,12 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
     @include fs-textSans(3);;
 }
 
-.notifications-explainer__header-blurb {
+.live-notifications-explainer__header-blurb {
     @include fs-textSans(3);
     margin-top: $gs-baseline /2;
 }
 
-.notifications-explainer__headline {
+.live-notifications-explainer__headline {
     @include fs_headline(2);
     color: #ffffff;
     font-weight: 500;
@@ -212,7 +212,7 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
 
 
 .live-notifications-denied__item-options,
-.notifications-explainer__item-options {
+.live-notifications-explainer__item-options {
     position: absolute;
     right: 0;
 }
@@ -221,7 +221,7 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
     top: $gs-baseline / 2;
 }
 
-.notifications-explainer__item-options {
+.live-notifications-explainer__item-options {
     top: $gs-baseline;
 }
 

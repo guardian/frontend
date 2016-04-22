@@ -80,10 +80,10 @@ define([
             fastdom.write(function () {
                 var notifications = $('.js-live-notifications');
                 notifications.append(src);
-                bean.one(notifications[0], 'click', '.js-notifications__item__close', function(){
+                bean.one(notifications[0], 'click', '.js-live-notifications__item__close', function() {
                     fastdom.write(function() {
                         userPrefs.set(explainerDismissed, true);
-                        $('.js-notifications-explainer').remove();
+                        $('.js-live-notifications-explainer').remove();
                     });
                 })
             });
