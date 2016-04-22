@@ -39,7 +39,7 @@ define([
             selectors: {
                 ' > h2': {minAbove: detect.getBreakpoint() === 'mobile' ? 20 : 0, minBelow: 250},
                 ' .ad-slot': {minAbove: 500, minBelow: 500},
-                ' > :not(p):not(h2):not(ad-slot)': {minAbove: 200, minBelow: 400}
+                ' > :not(p):not(h2):not(ad-slot)': {minAbove: 35, minBelow: 400}
             }
         };
     }
@@ -49,6 +49,7 @@ define([
             inlineMerchRules = getRules();
             inlineMerchRules.minAbove = 300;
             inlineMerchRules.selectors[' > h2'].minAbove = 20;
+            inlineMerchRules.selectors[' > :not(p):not(h2):not(ad-slot)'].minAbove = 200;
         }
         return inlineMerchRules;
     }
