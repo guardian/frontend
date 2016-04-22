@@ -73,7 +73,9 @@ Loader.prototype.initTopComments = function() {
                 this.setState('has-top-comments');
             }
         }.bind(this)
-    );
+    ).catch(function () {
+        /* ignore */
+    });
 };
 
 Loader.prototype.initMainComments = function() {
