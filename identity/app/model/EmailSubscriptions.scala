@@ -41,7 +41,7 @@ object EmailSubscriptions {
       "news",
       "Politics",
       "All the latest news and comment on Australian politics from the Guardian, delivered to you every weekday.",
-      "Weekdays at midday",
+      "Weekdays at 10am",
       "1866",
       subscribedTo = subscribedListIds.exists{ x => x == "1866" }
     ),
@@ -83,8 +83,8 @@ object EmailSubscriptions {
       "Close up",
       "culture",
       "Film",
-      "Every Thursday, rely on Close up to bring you Guardian film news, reviews and much, much more.",
-      "Every Thursday",
+      "Rely on Close up to bring you Guardian film news, reviews and much, much more.",
+      "Every Friday",
       "40",
       5,
       subscribedTo = subscribedListIds.exists{ x => x == "40" }
@@ -94,7 +94,7 @@ object EmailSubscriptions {
       "culture",
       "Film",
       "Our film editors recap the top headlines each weekday and deliver them straight to your inbox in time for your evening commute.",
-      "Everyday",
+      "Every weekday",
       "1950",
       5,
       subscribedTo = subscribedListIds.exists{ x => x == "1950" }
@@ -103,8 +103,8 @@ object EmailSubscriptions {
       "Bookmarks",
       "culture",
       "Weekly email from the books team",
-      "A weekly email from the books team with our pick of the latest news, views and reviews, delivered to your inbox every Thursday.",
-      "Once a week",
+      "A weekly email from the books team with our pick of the latest news, views and reviews, delivered to your inbox.",
+      "Every Thursday",
       "3039",
       subscribedTo = subscribedListIds.exists{ x => x == "3039" }
     ),
@@ -113,7 +113,7 @@ object EmailSubscriptions {
       "culture",
       "Art and design",
       "For your art world low-down, sign up to the Guardian's Art Weekly email and get all the latest news, reviews and comment delivered straight to your inbox.",
-      "",
+      "Every Friday",
       "99"
     )
   )
@@ -156,8 +156,8 @@ object EmailSubscriptions {
       "The Long Read",
       "news",
       "The week’s Long Reads and audio features",
-      "Bringing you the latest Long Read features and podcasts, delivered to your inbox every Saturday morning",
-      "Every week",
+      "Bringing you the latest Long Read features and podcasts, delivered to your inbox.",
+      "Every Saturday",
       "3322",
       0,
       subscribedTo = subscribedListIds.exists{ x => x == "3322" }
@@ -190,8 +190,18 @@ object EmailSubscriptions {
       "The best of Guardian Opinion",
       "news",
       "Opinion's daily email newsletter",
-      "Guardian Opinion's daily email newsletter with the most shared opinion, analysis and editorial articles from the last 24 hours — sign up to read, share and join the debate every lunchtime.",
-      "Weekday lunchtime",
+      "Guardian Opinion's daily email newsletter with the most shared opinion, analysis and editorial articles from the last 24 hours — sign up to read, share and join the debate every afternoon.",
+      "Weekday afternoons",
+      "2313",
+      10,
+      subscribedTo = subscribedListIds.exists{ x => x == "2313" }
+    ),
+    EmailSubscription(
+      "The best of Guardian Opinion",
+      "comment",
+      "Opinion's daily email newsletter",
+      "Guardian Opinion's daily email newsletter with the most shared opinion, analysis and editorial articles from the last 24 hours — sign up to read, share and join the debate every afternoon.",
+      "Weekday afternoons",
       "2313",
       10,
       subscribedTo = subscribedListIds.exists{ x => x == "2313" }
@@ -201,7 +211,17 @@ object EmailSubscriptions {
       "news",
       "Football",
       "The Fiver is theguardian.com/sport's free football email. Every weekday we round up the day's news and gossip in our own belligerent, sometimes intelligent and — very occasionally — funny way. The Fiver is delivered every Monday to Friday at around 5pm — hence the name.",
-      "5pm every weekday",
+      "Weekday afternoons",
+      "218",
+      10,
+      subscribedTo = subscribedListIds.exists{ x => x == "218" }
+    ),
+    EmailSubscription(
+      "The Fiver",
+      "sport",
+      "Football",
+      "The Fiver is theguardian.com/sport's free football email. Every weekday we round up the day's news and gossip in our own belligerent, sometimes intelligent and — very occasionally — funny way. The Fiver is delivered every Monday to Friday at around 5pm — hence the name.",
+      "Weekday afternoons",
       "218",
       10,
       subscribedTo = subscribedListIds.exists{ x => x == "218" }
@@ -220,8 +240,8 @@ object EmailSubscriptions {
       "Green light",
       "news",
       "Environment",
-      "In each weekly edition our editors highlight the most important stories of the week including data, opinion pieces and background guides. We'll also flag up our best video, picture galleries, podcasts, blogs and green living guides.",
-      "",
+      "In each weekly edition our editors highlight the most important environment stories of the week including data, opinion pieces and background guides. We'll also flag up our best video, picture galleries, podcasts, blogs and green living guides.",
+      "Every Friday",
       "38",
       subscribedTo = subscribedListIds.exists{ x => x == "38" }
     ),
@@ -230,7 +250,7 @@ object EmailSubscriptions {
       "news",
       "Global development",
       "Our editors track what's happening in development with a special focus on the millennium development goals. Sign up to get all the most important debate and discussion from around the world delivered to your inbox every fortnight.",
-      "",
+      "Every other Tuesday",
       "113",
       subscribedTo = subscribedListIds.exists{ x => x == "113" }
     ),
