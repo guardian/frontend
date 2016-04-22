@@ -16,7 +16,7 @@
         <h3>Switch Groups</h3>
         <ul class="multi-column--3">
         @for((group, _) <- switchGroups){
-            <li><a href="#@group.name">@group.name</a></li>
+            <li><a href="#@views.support.URLEncode(group.name)">@group.name</a></li>
         }
         </ul>
     </div>
@@ -26,7 +26,7 @@
         <form id="switchboard" action="/dev/switchboard" method="POST">
             <input type="hidden" name="lastModified" value="@lastModified" />
             @switchGroups.map { case (group, switches) =>
-                <h4 id="@group.name">@group.name</h4>
+                <h4 id="@views.support.URLEncode(group.name)">@group.name</h4>
                 @for(description <- group.description){
                     <p class="sub-heading">@description</p>
                 }
