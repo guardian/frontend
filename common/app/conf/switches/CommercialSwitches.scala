@@ -380,7 +380,7 @@ trait CommercialSwitches {
     "If on, all badges are served server side",
     safeState = Off,
     sellByDate = new LocalDate(2016, 5, 25),
-    exposeClientSide = false
+    exposeClientSide = true
   )
 
   val requestOutOfPageSlotAlways = Switch(

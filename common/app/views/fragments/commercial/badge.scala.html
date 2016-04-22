@@ -6,12 +6,14 @@
 @if(staticBadgesSwitch.isSwitchedOn) {
 
     @for(branding <- content.branding(Edition(request))) {
-        <div class="ad-slot--paid-for-badge__inner">
-            <h3 class="ad-slot--paid-for-badge__header">@branding.label</h3>
-            <a href="@branding.sponsorLink" class="ad-slot--paid-for-badge__link">
-                <img class="ad-slot--paid-for-badge__logo" src="@branding.sponsorLogo">
-            </a>
-            <a href="@branding.aboutThisLink" class="ad-slot--paid-for-badge__help">About this content</a>
+        <div class="ad-slot--paid-for-badge ad-slot--paid-for-badge--article ad-slot--force-display">
+            <div class="ad-slot--paid-for-badge__inner">
+                <h3 class="ad-slot--paid-for-badge__header">@branding.label</h3>
+                <a href="@branding.sponsorLink" class="ad-slot--paid-for-badge__link">
+                    <img class="ad-slot--paid-for-badge__logo" src="@branding.sponsorLogo">
+                </a>
+                <a href="@branding.aboutThisLink" class="ad-slot--paid-for-badge__help">About this content</a>
+            </div>
         </div>
     }
 
