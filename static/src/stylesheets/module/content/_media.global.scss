@@ -93,7 +93,7 @@
 
     .content__main-column--video {
         
-        &--immersive{
+        &--immersive {
             @include mq(desktop) {
                 margin-left: 0;
                 width: gs-span(12);

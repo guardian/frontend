@@ -1,0 +1,129 @@
+@(page: MediaPage)(implicit request: RequestHeader)
+
+@import common.LinkTo
+@import model.{Audio, AudioPlayer, Video, VideoPlayer}
+@import views.support.{Video640, SeoOptimisedContentImage, StripHtmlTags}
+@import views.support.TrailCssClasses.toneClass
+@defining(page.media, page.media match { case _: Audio => "audio" case _ => "video" }){ case (media, mediaType) =>
+<div class="l-side-margins l-side-margins--media">
+
+    <article id="article" class="@RenderClasses(
+            Map(
+                "content--has-body" -> media.fields.body.nonEmpty,
+                "content--advertisement-feature paid-content--advertisement-feature" -> page.media.commercial.isAdvertisementFeature
+            ),
+            "content", "content--media", s"content--media--$mediaType", "tonal", s"tonal--${toneClass(media)}"
+        )"
+        itemscope itemtype="@media.metadata.schemaType" role="main">
+
+        @if(page.media.commercial.isAdvertisementFeature){
+            @fragments.guBand()
+        }
+        <div class="content__main tonal__main tonal__main--@toneClass(media)">
+            <div class="gs-container">
+                <div class="content__main-column content__main-column--media content__main-column--@mediaType--immersive">
+                    <div class="media-body">
+                        <div class="media-primary player">
+                            @media match {
+                                case video: Video => {
+                                    <figure data-component="main video">
+                                        <meta itemprop="name" content="@Html(video.trail.headline)"/>
+                                        <meta itemprop="headline" content="@Html(video.trail.headline)"/>
+                                        <meta itemprop="url" content="@LinkTo(video.metadata.url)"/>
+                                        @video.fields.trailText.map{ t =>
+                                            <meta itemprop="description" content="@StripHtmlTags(t)" />
+                                            <meta itemprop="about" content="@StripHtmlTags(t)" />
+                                        }
+
+                                        <meta itemprop="datePublished" content="@video.trail.webPublicationDate.toString("yyyy-MM-dd")" />
+                                        <meta itemprop="name" content="@video.metadata.webTitle" />
+                                        <meta itemprop="uploadDate" content="@video.trail.webPublicationDate.toString("yyyy-MM-dd")" />
+                                        @video.elements.mainVideo.map { mv =>
+                                            <meta itemprop="duration" content="@mv.videos.ISOduration" />
+                                            <meta itemprop="height" content="@mv.videos.height" />
+                                            <meta itemprop="width" content="@mv.videos.width" />
+                                        }
+                                        <meta itemprop="requiresSubscription" content="false" />
+                                        <meta itemprop="image" content="@Html(video.content.openGraphImage)" />
+                                        @video.elements.thumbnail.map{ img => <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img.images)" /> }
+                                        @video.elements.mainVideo.map { videoElement =>
+                                            @fragments.media.video(VideoPlayer(
+                                                videoElement,
+                                                Video640,
+                                                video.trail.headline,
+                                                autoPlay = true,
+                                                showControlsAtStart = true,
+                                                endSlatePath = video.endSlatePath,
+                                                overrideIsRatioHd = None
+                                            ), true, showOverlay = true, seriesTag = media.content.blogOrSeriesTag)
+                                        }
+                                    </figure>
+                                }
+                                case _ => { }
+                            }
+                        </div>
+
+                        <div class="content__main-column__body" data-component="body">
+                                @media match {
+                                    case v: Video => {
+                                        <div class="tonal__standfirst">
+	                                        @fragments.meta.dateline(media.trail.webPublicationDate, media.fields.lastModified, media.content.hasBeenModified)
+                                            @fragments.standfirst(v)
+                                        </div>
+                                        <div class="video__meta">
+	                                        <div class="meta__numbers modern-visible">
+                                                <div class="u-h meta__number js-sharecount">
+                                                </div>
+                                                <div class="u-h meta__number" data-discussion-id="@media.content.discussionId" data-commentcount-format="content" data-discussion-closed="@{
+                                                    !media.trail.isCommentable
+                                                }">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="video__share">
+	                                        @fragments.social(media.sharelinks.pageShares, "top")
+                                        </div>
+                                        <div class="tonal__standfirst--more">
+                                            <div class="button button--more">
+                                                Show More
+                                            </div>
+                                        </div>
+                                    }
+                                    case _ => { }
+                                }
+                        </div>
+                    </div>
+                </div>
+
+                @media match {
+                    case v: Video => {
+                        @if(!page.media.commercial.isAdvertisementFeature) {
+                        }
+                    }
+                    case _ => { }
+                }
+            </div>
+        </div>
+    </article>
+
+    @if(mediaType != "video" && mediaType != "audio" && page.media.commercial.isAdvertisementFeature) {
+        <div class="fc-container fc-container--media">
+            <div class="js-media-popular tonal--@toneClass(media)">
+                <div class="fc-container fc-container--popular">
+                    <div class="fc-container__inner">
+                        <div class="fc-container__header">
+                            <h2 class="fc-container__header__title">
+                                <a class="most-viewed-no-js tone-colour" href="@LinkTo{/@mediaType/most-viewed}" data-link-name="Most viewed @mediaType">More @mediaType</a>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="l-side-margins">
+    @fragments.contentFooter(media, page.related, "media")
+</div>
+}
