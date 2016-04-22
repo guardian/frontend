@@ -88,7 +88,7 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
 @include notifications-button-toned(live, $live-default, $neutral-8);
 @include notifications-button-toned(dead, $live-default, $neutral-8);
 
-.notifications-permission-denied {
+.live-notifications-denied {
     position: fixed;
     display: block;
     top: 0.625rem;
@@ -119,7 +119,7 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
     }
 }
 
-.notifications-permission-denied::after {
+.live-notifications-denied::after {
     content: '';
     display: inline-block;
     width: 0;
@@ -174,14 +174,14 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
 
 
 
-.notifications-explainer-permissions-denied__content,
+.live-notifications-denied__content,
 .notifications-explainer__content {
     position: relative;
     box-sizing: border-box;
     padding: $gs-baseline 0 ($gs-baseline/3)*2 $gs-gutter;
 }
 
-.notifications-explainer-permissions-denied__header,
+.live-notifications-denied__header,
 .notifications-explainer__header {
     position: relative;
     padding-right: gs-span(1) + $gs-gutter * .5;
@@ -193,7 +193,7 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
     }
 }
 
-.notifications-explainer-permissions-denied__header {
+.live-notifications-denied__header {
     @include fs-textSans(3);;
 }
 
@@ -211,13 +211,13 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
 }
 
 
-.notifications-permission-denied__item-options,
+.live-notifications-denied__item-options,
 .notifications-explainer__item-options {
     position: absolute;
     right: 0;
 }
 
-.notifications-permission-denied__item-options {
+.live-notifications-denied__item-options {
     top: $gs-baseline / 2;
 }
 

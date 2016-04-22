@@ -90,15 +90,16 @@ define([
         },
 
         closeDisplayMessage: function(){
-            $('.js-notifications-permission-denied').remove();
+            $('.js-live-notifications-denied').remove();
             bean.one($('.js-live-notifications')[0], 'click', '.js-notifications__button', modules.subscribeHandler);
         },
 
         notificationsDeniedMessage: function() {
             var src = template(permissionsTemplate,{closeIcon : svgs('closeCentralIcon')});
             fastdom.write(function () {
-                $('.js-notificications-blocked').prepend(src);
-                bean.one(document.body, 'click', '.js-notifications-permission-denied_item__close', modules.closeDisplayMessage);
+                var blocked = $('.js-notificications-blocked');
+                blocked.prepend(src);
+                bean.one(blocked[0], 'click', '.js-live-notifications-denied__item__close', modules.closeDisplayMessage);
             });
         },
 
