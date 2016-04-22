@@ -176,7 +176,7 @@ Loader.prototype.logError = function(commentType, error) {
             statusText: 'status' in request ? request.statusText : ''
         }
     });
-}
+};
 
 Loader.prototype.initPageSizeDropdown = function(pageSize) {
 
