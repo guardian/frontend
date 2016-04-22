@@ -73,8 +73,8 @@ define([
         showExplainer: function() {
             var src = template(explainer,{
                 closeIcon : svgs('closeCentralIcon'),
-                imgMobile: svgs('mobileNotificationsExplainer', ['mobile-only', 'notification-explainer']),
-                imgDesktop: svgs('desktopNotificationsExplainer', ['hide-on-mobile', 'notification-explainer'])
+                imgMobile: svgs('mobileNotificationsExplainer', ['mobile-only', 'live-notifications-explainer']),
+                imgDesktop: svgs('desktopNotificationsExplainer', ['hide-on-mobile', 'live-notifications-explainer'])
             });
 
             fastdom.write(function () {

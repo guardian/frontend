@@ -22,8 +22,12 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
             fill: $background;
             background-color: $foreground;
         }
+
         &:hover {
             background-color: darken($foreground, 10%);
+            .inline-icon {
+                background-color: darken($foreground, 10%);
+            }
         }
     }
 
@@ -34,8 +38,13 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
             fill: $foreground;
             background-color: $background;
         }
+
         &:hover {
             background-color: darken($background, 10%);
+            .inline-icon {
+                background-color: darken($background, 10%);
+            }
+
         }
     }
 
