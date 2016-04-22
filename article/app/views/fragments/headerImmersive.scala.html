@@ -3,6 +3,7 @@
 @import views.support.TrailCssClasses.toneClass
 @import views.support.ContributorLinks
 @import views.support.ImgSrc
+@import conf.switches.Switches.immersiveMainEmbedSwitch
 @import layout._
 
 <header class="content__head content__head--immersive content__head--desktop tonal__head tonal__head--@toneClass(article)
@@ -24,9 +25,17 @@
     </div>
 
     @if(article.elements.hasMainEmbed || article.elements.elements("main").isEmpty) {
-        <div class="content__main-embed">
+        @if(immersiveMainEmbedSwitch.isSwitchedOn) {
+            <div class="content__main-embed">
+                @MainCleaner(article, article.fields.main, false)
+            </div>
+        } else {
+            <div class="content__loading">
+                <span class="content__loading-animation is-updating"></span>
+                <span class="u-h">Loading header</span>
+            </div>
             @MainCleaner(article, article.fields.main, false)
-        </div>
+        }
     } else {
         <style>
             @article.elements.mainPicture.map { picture =>

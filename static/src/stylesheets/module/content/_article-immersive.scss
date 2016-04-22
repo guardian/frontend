@@ -120,6 +120,50 @@
         }
     }
 
+    /* Old Iframed Main Embed (Remove this section if immersiveMainEmbedSwitch is made permanent)
+    ========================================================================== */
+    .content__loading {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: $neutral-5;
+        color: $neutral-1;
+        display: none;
+    }
+
+    .content__loading-animation {
+        display: block;
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .content__head .element-embed {
+        margin: 0;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        .fenced {
+            height: 100% !important; // Overwrite inline styles
+            opacity: 0;
+            transition: .5s opacity ease-out;
+        }
+
+        .fenced-rendered {
+            opacity: 1;
+        }
+    }
+    
+    .is-fixed-height .content__loading {
+        display: block;
+    }
+
     /* Meta
     ========================================================================== */
     .content__meta-container--immersive {

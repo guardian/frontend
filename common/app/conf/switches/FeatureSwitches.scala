@@ -14,6 +14,15 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
+  val immersiveMainEmbedSwitch = Switch(
+    SwitchGroup.Feature,
+    "immersive-main-media",
+    "If this switch is on, main media embeds won't be iframed",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 22),
+    exposeClientSide = false
+  )
+
   val FixturesAndResultsContainerSwitch = Switch(
     SwitchGroup.Feature,
     "fixtures-and-results-container",
