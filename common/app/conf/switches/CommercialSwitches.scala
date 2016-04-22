@@ -381,5 +381,13 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = new LocalDate(2016, 5, 25),
     exposeClientSide = false
+
+  val requestOutOfPageSlotAlways = Switch(
+    SwitchGroup.Commercial,
+    "request-out-of-page-slot-always",
+    "If on, the out of page slot (1x1) will be added to each page, regardless of pageskins, surveys or other dependent features",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 5, 3),
+    exposeClientSide =  false
   )
 }

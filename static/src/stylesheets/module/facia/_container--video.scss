@@ -61,6 +61,17 @@ $video-width-desktop: 700px;
         }
     }
 
+    .treats__treat {
+        background-color: transparent;
+        border-color: $media-default;
+
+        &:hover {
+            border-color: $media-default;
+            background-color: $media-default;
+            color: $media-background;
+        }
+    }
+
     @include mq($until: desktop) {
         .u-responsive-ratio video {
             top: inherit;
@@ -257,8 +268,11 @@ $video-width-desktop: 700px;
 
     @include mq(leftCol) {
         position: relative;
+        height: $video-width-desktop / 16 * 9;
         display: inline-block;
         width: gs-span(2) + $gs-gutter * 2;
+        padding: ($gs-baseline / 2) $gs-gutter;
+        box-sizing: border-box;
         margin-bottom: 0;
         white-space: normal;
     }
@@ -267,11 +281,13 @@ $video-width-desktop: 700px;
         width: gs-span(3) + $gs-gutter * 2;
     }
 
-    .video-title__link {
-        position: absolute;
-        top: $gs-baseline / 2;
-        left: $gs-gutter;
-        right: $gs-gutter;
+    .inline-guardian-video-logo svg {
+        margin-top: 4px;
+        max-width: 100%;
+
+        &:hover .inline-guardian-video-logo__title {
+            fill: #ffffff;
+        }
     }
 }
 

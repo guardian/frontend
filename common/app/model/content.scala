@@ -84,6 +84,7 @@ final case class Content(
   showByline: Boolean,
   hasStoryPackage: Boolean,
   rawOpenGraphImage: String,
+  sensitive: Boolean,
   showFooterContainers: Boolean = false
 ) {
 
@@ -330,7 +331,8 @@ object Content {
           .orElse(elements.mainPicture.flatMap(_.images.largestImageUrl))
           .orElse(trail.trailPicture.flatMap(_.largestImageUrl))
           .getOrElse(Configuration.images.fallbackLogo)
-      }
+      },
+      sensitive = apifields.flatMap(_.sensitive).getOrElse(false)
 
     )
   }
@@ -373,7 +375,8 @@ object Article {
       ("hasInlineMerchandise", JsBoolean(commercial.hasInlineMerchandise)),
       ("lightboxImages", lightbox.javascriptConfig),
       ("hasMultipleVideosInPage", JsBoolean(content.hasMultipleVideosInPage)),
-      ("isImmersive", JsBoolean(content.isImmersive))
+      ("isImmersive", JsBoolean(content.isImmersive)),
+      ("isSensitive", JsBoolean(content.sensitive))
     ) ++ bookReviewIsbn
 
     val opengraphProperties: Map[String, String] = Map(
