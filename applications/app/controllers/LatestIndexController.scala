@@ -28,7 +28,7 @@ object LatestIndexController extends Controller with ExecutionContexts with impl
           MovedPermanently(s"$url/all")
         case _ => NotFound
       }
-    }.getOrElse(NotFound)}.map(Cached(300)(_))
+    }.getOrElse(NotFound)}.map(Cached.withoutRevalidation(300)(_))
   }
 
   // this is simply the latest by date. No lead content, editors picks, or anything else

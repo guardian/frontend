@@ -38,7 +38,7 @@ trait IndexControllerCommon extends Controller with Index with RendersItemRespon
     renderItem(path)
   }
 
-  private def redirect(id: String, isRss: Boolean) = Cached(60)(MovedPermanently(if (isRss) s"/$id/rss" else s"/$id"))
+  private def redirect(id: String, isRss: Boolean) = Cached.withoutRevalidation(60)(MovedPermanently(if (isRss) s"/$id/rss" else s"/$id"))
 
   def renderTrailsJson(path: String) = renderTrails(path)
 

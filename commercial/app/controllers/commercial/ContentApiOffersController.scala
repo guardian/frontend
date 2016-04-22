@@ -63,7 +63,7 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
     }
 
     futureContents.map(_.toList) map {
-      case Nil => NoCache(format.nilResult)
+      case Nil => NoCache(format.nilResult.result)
       case contents => Cached(componentMaxAge) {
 
         val omnitureId: String = optOmnitureId orElse optCapiTitle getOrElse ""

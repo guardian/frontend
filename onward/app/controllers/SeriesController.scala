@@ -34,10 +34,10 @@ object SeriesController extends Controller with Logging with Paging with Executi
   }
 
   def renderMf2SeriesStories(seriesId:String) = Action.async { implicit request =>
-    lookup(Edition(request), seriesId) map { series =>
-      Cached(15.minutes)(
-        series.map(rendermf2Series).getOrElse(NotFound)
-      )
+    lookup(Edition(request), seriesId) map {
+      _.map(series => Cached(15.minutes)(
+        rendermf2Series(series)
+      )).getOrElse(Cached.withoutRevalidation(15.minutes)(NotFound))
     }
   }
 
@@ -68,7 +68,7 @@ object SeriesController extends Controller with Logging with Paging with Executi
     val displayName = Some(series.displayName)
     val seriesStories = series.trails.items take 4
     val description = series.tag.metadata.description.getOrElse("").replaceAll("<.*?>", "")
-    
+
     JsonComponent(
       "items" -> JsArray(Seq(
         Json.obj(

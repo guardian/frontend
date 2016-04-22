@@ -13,11 +13,11 @@ object QuizzesController extends Controller with Logging {
   implicit val ec = Implicits.global
 
   def results(quizId: String) = Action.async { implicit request =>
-    Future.successful(Cached(3600)(NotFound("")))
+    Future.successful(Cached.withoutRevalidation(3600)(NotFound("")))
   }
 
   def update() = Action.async(parse.json) { implicit request =>
-    Future.successful(Cached(3600)(NotFound("")))
+    Future.successful(Cached.withoutRevalidation(3600)(NotFound("")))
   }
 
   def resultsOptions(id: String) = Action { implicit request =>

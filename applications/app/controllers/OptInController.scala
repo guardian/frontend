@@ -12,8 +12,8 @@ object OptInController extends Controller {
       case _ => optOut()
     }
 
-    def optIn() = Cached(60)(SeeOther("/").withCookies(Cookie(cookieName, "true", maxAge = Some(lifetime))))
-    def optOut() = Cached(60)(SeeOther("/").discardingCookies(DiscardingCookie(cookieName)))
+    def optIn() = Cached.withoutRevalidation(60)(SeeOther("/").withCookies(Cookie(cookieName, "true", maxAge = Some(lifetime))))
+    def optOut() = Cached.withoutRevalidation(60)(SeeOther("/").discardingCookies(DiscardingCookie(cookieName)))
   }
 
   def handle(feature: String, choice: String) = Action { implicit request =>

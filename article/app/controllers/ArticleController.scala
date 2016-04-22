@@ -68,7 +68,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
           TextBlock(id, title, publishedAt, updatedAt, html)
       }.take(number)
       Cached(page)(JsonComponent("blocks" -> Json.toJson(blocks)))
-    case _ => Cached(600)(NotFound("Can only return block text for a live blog"))
+    case _ => Cached.withoutRevalidation(600)(NotFound("Can only return block text for a live blog"))
 
   }
 

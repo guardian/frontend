@@ -2,6 +2,7 @@ package controllers
 
 import common.{LinkTo, Logging, ExecutionContexts}
 import conf.Configuration
+import model.Cached.RevalidatableResult
 import model._
 import play.api.Play.current
 import play.api.data._
@@ -151,21 +152,25 @@ object EmailSignupController extends Controller with ExecutionContexts with Logg
   )
 
   def renderPage() = Action { implicit request =>
-    Cached(60)(Ok(views.html.emailLanding(emailLandingPage)))
+    Cached(60)(RevalidatableResult.Ok(views.html.emailLanding(emailLandingPage)))
   }
 
   def renderForm(emailType: String, listId: Int) = Action { implicit request =>
     EmailForm.listIdsWithMaybeTrigger.lift(listId) match {
-      case Some(_) => Cached(1.day)(Ok(views.html.emailFragment(emailLandingPage, emailType, listId)))
+      case Some(_) => Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listId)))
       case None => NotFound(s"List id $listId does not exist")}}
 
   def subscriptionResult(result: String) = Action { implicit request =>
-    Cached(7.days)(result match {
-      case "success" => Ok(views.html.emailSubscriptionResult(emailLandingPage, Subscribed))
-      case "invalid" => Ok(views.html.emailSubscriptionResult(emailLandingPage, InvalidEmail))
-      case "error"   => Ok(views.html.emailSubscriptionResult(emailLandingPage, OtherError))
-      case _         => NotFound
-    })
+    (result match {
+      case "success" => Left(RevalidatableResult.Ok(views.html.emailSubscriptionResult(emailLandingPage, Subscribed)))
+      case "invalid" => Left(RevalidatableResult.Ok(views.html.emailSubscriptionResult(emailLandingPage, InvalidEmail)))
+      case "error" => Left(RevalidatableResult.Ok(views.html.emailSubscriptionResult(emailLandingPage, OtherError)))
+      case _ => Right(NotFound)
+    }) match {
+      case Left(revalidatableResult) => Cached(7.days)(revalidatableResult)
+      case Right(result) => Cached.withoutRevalidation(7.days)(result)
+    }
+
   }
 
   def submit() = Action.async { implicit request =>
