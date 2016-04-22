@@ -604,6 +604,10 @@
     .ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link:after {
         content: none;
     }
+
+    .ad-slot--paid-for-badge__help {
+        display: none;
+    }
 }
 /* /remove */
 
