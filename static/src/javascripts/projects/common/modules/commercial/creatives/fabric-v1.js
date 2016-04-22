@@ -31,6 +31,8 @@ define([
     var iframeVideoTpl;
     var scrollBgTpl;
 
+    // This is a hasty clone of fluid250.js
+
     var FabricV1 = function ($adSlot, params) {
         this.$adSlot = $adSlot;
         this.params = params;
@@ -45,14 +47,14 @@ define([
             scrollBgTpl = template(scrollBgStr);
         }
 
-        var position = {
+        var videoPosition = {
             position: this.params.videoPositionH === 'left' || this.params.videoPositionH === 'right' ?
             this.params.videoPositionH + ':' + this.params.videoHorizSpace + 'px;' : ''
         };
 
         var templateOptions = {
             showLabel: this.params.showAdLabel !== 'hide',
-            video: this.params.videoURL ? iframeVideoTpl(merge(this.params, position)) : '',
+            video: this.params.videoURL ? iframeVideoTpl(merge(this.params, videoPosition)) : '',
             hasContainer: 'layerTwoAnimation' in this.params,
             layerTwoBGPosition: this.params.layerTwoBGPosition && (
                 !this.params.layerTwoAnimation ||
