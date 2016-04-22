@@ -9,7 +9,8 @@
     }
 
     .adverts__title {
-        @include f-headlineSans;    
+        @include f-headlineSans;
+        font-size: get-font-size(headline, 3);
     }
 
     .adverts__logo {
@@ -22,8 +23,9 @@
 
     .adverts__row > * + *::before,
     .adverts__row--legacy > .advert::after,
-    .adverts__row--wrap::before,
-    .adverts__row--wrap::after {
+    .adverts__2cols::after,
+    .adverts__3cols::before,
+    .adverts__3cols::after {
         background: $paid-article-subheader-bg;
     }
 
@@ -124,5 +126,13 @@
 
     .advert__image-container {
         height: auto;
+    }
+
+    .has-no-flex &:not(.advert--small):not(.advert--landscape) {
+        padding-top: 0;
+
+        > :first-child {
+            padding-top: 66%;
+        }
     }
 }

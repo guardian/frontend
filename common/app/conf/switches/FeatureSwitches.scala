@@ -5,8 +5,17 @@ import org.joda.time.LocalDate
 
 trait FeatureSwitches {
 
+  val PurpleRainSwitch = Switch(
+    SwitchGroup.Feature,
+    "purple-rain",
+    "If this switch is on, the weather will be purple rain",
+    safeState = On,
+    sellByDate = new LocalDate(2016, 4, 25),
+    exposeClientSide = false
+  )
+
   val FixturesAndResultsContainerSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "fixtures-and-results-container",
     "Fixtures and results container on football tag pages",
     safeState = On,
@@ -15,7 +24,7 @@ trait FeatureSwitches {
   )
 
   val ChapterHeadingsSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "chapter-headings",
     "If this switch is turned on, we will add a block of chapter headings to the top of article pages",
     safeState = Off,
@@ -24,7 +33,7 @@ trait FeatureSwitches {
   )
 
   val OutbrainSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "outbrain",
     "Enable the Outbrain content recommendation widget on web and AMP.",
     safeState = Off,
@@ -33,7 +42,7 @@ trait FeatureSwitches {
   )
 
   val PlistaForOutbrainAU = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "plista-for-outbrain-au",
     "Enable the Plista content recommendation widget to replace that of Outbrain for AU edition (for web only).",
     safeState = Off,
@@ -42,7 +51,7 @@ trait FeatureSwitches {
   )
 
   val ForeseeSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "foresee",
     "Enable Foresee surveys for a sample of our audience",
     safeState = Off,
@@ -51,7 +60,7 @@ trait FeatureSwitches {
   )
 
   val GeoMostPopular = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "geo-most-popular",
     "If this is switched on users then 'most popular' will be upgraded to geo targeted",
     safeState = On,
@@ -60,7 +69,7 @@ trait FeatureSwitches {
   )
 
   val FontSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "web-fonts",
     "If this is switched on then the custom Guardian web font will load.",
     safeState = On,
@@ -69,7 +78,7 @@ trait FeatureSwitches {
   )
 
   val FontKerningSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "font-kerning",
     "If this is switched on then fonts will be kerned/optimised for legibility.",
     safeState = On,
@@ -78,7 +87,7 @@ trait FeatureSwitches {
   )
 
   val SearchSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "google-search",
     "If this switch is turned on then Google search is added to the sections nav.",
     safeState = On,
@@ -87,7 +96,7 @@ trait FeatureSwitches {
   )
 
   val IdentityProfileNavigationSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "id-profile-navigation",
     "If this switch is on you will see the link in the topbar taking you through to the users profile or sign in..",
     safeState = On,
@@ -96,7 +105,7 @@ trait FeatureSwitches {
   )
 
   val FacebookAutoSigninSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "facebook-autosignin",
     "If this switch is on then users who have previously authorized the guardian app in facebook and who have not " +
       "recently signed out are automatically signed in.",
@@ -106,7 +115,7 @@ trait FeatureSwitches {
   )
 
   val FacebookShareUseTrailPicFirstSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "facebook-shareimage",
     "Facebook shares try to use article trail picture image first when switched ON, or largest available " +
       "image when switched OFF.",
@@ -116,7 +125,7 @@ trait FeatureSwitches {
   )
 
   val IdentityFormstackSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "id-formstack",
     "If this switch is on, formstack forms will be available",
     safeState = Off,
@@ -125,7 +134,7 @@ trait FeatureSwitches {
   )
 
   val IdentityAvatarUploadSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "id-avatar-upload",
     "If this switch is on, users can upload avatars on their profile page",
     safeState = Off,
@@ -134,7 +143,7 @@ trait FeatureSwitches {
   )
 
   val IdentityCookieRefreshSwitch = Switch(
-    "Identity",
+    SwitchGroup.Identity,
     "id-cookie-refresh",
     "If switched on, users cookies will be refreshed.",
     safeState = Off,
@@ -143,7 +152,7 @@ trait FeatureSwitches {
   )
 
   val EnhanceTweetsSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "enhance-tweets",
     "If this switch is turned on then embedded tweets will be enhanced using Twitter's widgets.",
     safeState = Off,
@@ -152,7 +161,7 @@ trait FeatureSwitches {
   )
 
   val EnhancedMediaPlayerSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "enhanced-media-player",
     "If this is switched on then videos are enhanced using our JavaScript player",
     safeState = On,
@@ -161,7 +170,7 @@ trait FeatureSwitches {
   )
 
   val MediaPlayerSupportedBrowsers = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "media-player-supported-browsers",
     "If this is switched on then a message will be displayed to UAs not supported by our media player",
     safeState = On,
@@ -170,7 +179,7 @@ trait FeatureSwitches {
   )
 
   val BreakingNewsSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "breaking-news",
     "If this is switched on then the breaking news feed is requested and articles are displayed",
     safeState = Off,
@@ -179,7 +188,7 @@ trait FeatureSwitches {
   )
 
   val WeatherSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "weather",
     "If this is switched on then the weather component is displayed",
     safeState = Off,
@@ -188,7 +197,7 @@ trait FeatureSwitches {
   )
 
   val HistoryTags = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "history-tags",
     "If this is switched on then personalised history tags are shown in the meganav",
     safeState = Off,
@@ -197,7 +206,7 @@ trait FeatureSwitches {
   )
 
   val IdentityBlockSpamEmails = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "id-block-spam-emails",
     "If switched on, any new registrations with emails from ae blacklisted domin will be blocked",
     safeState = On,
@@ -206,7 +215,7 @@ trait FeatureSwitches {
   )
 
   val IdentityLogRegistrationsFromTor = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "id-log-tor-registrations",
     "If switched on, any user registrations from a known tor exit node will be logged",
     safeState = On,
@@ -215,7 +224,7 @@ trait FeatureSwitches {
   )
 
   val FootballFeedRecorderSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "football-feed-recorder",
     "If switched on then football matchday feeds will be recorded every minute",
     safeState = Off,
@@ -224,7 +233,7 @@ trait FeatureSwitches {
   )
 
   val CrosswordSvgThumbnailsSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "crossword-svg-thumbnails",
     "If switched on, crossword thumbnails will be accurate SVGs",
     safeState = Off,
@@ -233,7 +242,7 @@ trait FeatureSwitches {
   )
 
   val SudokuSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "sudoku",
     "If switched on, sudokus will be available",
     safeState = Off,
@@ -242,7 +251,7 @@ trait FeatureSwitches {
   )
 
   val CricketScoresSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "cricket-scores",
     "If switched on, cricket score and scorecard link will be displayed",
     safeState = Off,
@@ -251,7 +260,7 @@ trait FeatureSwitches {
   )
 
   val RugbyScoresSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "rugby-world-cup",
     "If this switch is on rugby world cup scores will be loaded in to rugby match reports and liveblogs",
     safeState = Off,
@@ -260,7 +269,7 @@ trait FeatureSwitches {
   )
 
   val StocksWidgetSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "stocks-widget",
     "If switched on, a stocks widget will be displayed on the business front",
     safeState = On,
@@ -269,7 +278,7 @@ trait FeatureSwitches {
   )
 
   val DiscussionAllPageSizeSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "discussion-all-page-size",
     "If this is switched on then users will have the option to load all comments",
     safeState = Off,
@@ -278,7 +287,7 @@ trait FeatureSwitches {
   )
 
   val MissingVideoEndcodingsJobSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "check-for-missing-video-encodings",
     "If this switch is switched on then the job will run which will check all video content for missing encodings",
     safeState = Off,
@@ -287,7 +296,7 @@ trait FeatureSwitches {
   )
 
   val EmailInlineInFooterSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "email-inline-in-footer",
     "show the email sign-up in the footer",
     safeState = Off,
@@ -296,7 +305,7 @@ trait FeatureSwitches {
   )
 
   val UseAtomsSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "use-atoms",
     "use atoms from content api to enhance content",
     safeState = Off,
@@ -305,7 +314,7 @@ trait FeatureSwitches {
   )
 
   val AmpSwitch = Switch(
-    "Server-side A/B Tests",
+    SwitchGroup.ServerSideABTests,
     "amp-switch",
     "If this switch is on, link to amp pages will be in the metadata for articles",
     safeState = On,
@@ -314,7 +323,7 @@ trait FeatureSwitches {
   )
 
   val R2PagePressServiceSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "r2-page-press-service",
     "When ON, the R2 page press service will monitor the queue and press pages to S3",
     safeState = On,
@@ -323,7 +332,7 @@ trait FeatureSwitches {
   )
 
   val EmailInArticleSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "email-in-article",
     "When ON, the email sign-up form will show on articles matching the email lists utilising the email module",
     safeState = On,
@@ -332,7 +341,7 @@ trait FeatureSwitches {
   )
 
   val USElectionSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "us-election",
     "When ON, items tagged with us-news/us-elections-2016 will have visual elements added",
     safeState = On,
@@ -340,18 +349,9 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val BreakingNewsFromAdminJobsSwitch = Switch(
-    "Feature",
-    "breaking-news-from-admin-jobs",
-    "When ON, the breaking news data is fetched from the json file generated by the Admin-jobs app, and not from the file generated by Facia-Press",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 12), //Tuesday
-    exposeClientSide = true
-  )
-
   // Owner: Dotcom loyalty
   val EmailInArticleGtodaySwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "email-in-article-gtoday",
     "When ON, the email sign-up form will show the Guardian today email sign-up on articles",
     safeState = On,
@@ -361,7 +361,7 @@ trait FeatureSwitches {
 
   // Owner: Dotcom loyalty
   val EmailInArticleOutbrainSwitch = Switch(
-    "Feature",
+    SwitchGroup.Feature,
     "email-in-article-outbrain",
     "When ON, we will check whether email sign-up will be shown and, if so, the outbrain non-compliant merchandising widget will be shown",
     safeState = On,

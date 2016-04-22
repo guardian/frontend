@@ -1,6 +1,7 @@
 .advert {
     box-sizing: border-box;
     color: inherit;
+    display: block;
     display: flex;
     align-items: flex-start;
     flex-direction: column;
@@ -16,17 +17,67 @@
             text-decoration: underline;
         }
     }
+
+    .has-no-flex &:not(.advert--small):not(.advert--landscape) {
+        padding-top: 11 * $gs-baseline;
+        position: relative;
+    }
+}
+
+.advert--landscape {
+    .has-no-flex & {
+        overflow: hidden;
+
+        > .advert__image-container {
+            float: right;
+            position: static;
+            margin: 0;
+        }
+
+        > .advert__text {
+            $line-height: 20px;
+            $image-height: $line-height * 4 + $gs-baseline;
+            $ratio: 5 / 3;
+            float: left;
+            width: calc(100% - #{$image-height * $ratio});
+        }
+    }
+}
+
+.advert--inverse {
+    .has-no-flex & {
+        > .advert__image-container {
+            float: left;
+        }
+
+        > .advert__text {
+            float: right;
+        }
+    }
 }
 
 .advert__title {
     font-size: 1rem;
     line-height: 1.25;
+
+    &.u-text-hyphenate {
+        max-width: 100%;
+    }
 }
 
 .advert__image-container {
     order: -1;
     margin-bottom: $gs-baseline / 2;
     height: 11 * $gs-baseline;
+    width: 100%;
+
+    .has-no-flex & {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        margin: 0;
+    }
 }
 
 .advert__image {
@@ -103,5 +154,23 @@
 
     .advert--large--1x2 > .advert__image-container {
         flex-basis: calc(66.67% - #{$gs-gutter / 2});
+    }
+
+    .has-no-flex {
+        .advert--large--1x3 > .advert__image-container {
+            width:  calc(75% - #{$gs-gutter / 2});
+        }
+
+        .advert--large--1x2 > .advert__image-container {
+            width:  calc(66.67% - #{$gs-gutter / 2});
+        }
+
+        .advert--large--1x3 > .advert__text {
+            width:  calc(25% - #{$gs-gutter / 2});
+        }
+
+        .advert--large--1x2 > .advert__text {
+            width:  calc(33.33% - #{$gs-gutter / 2});
+        }
     }
 }

@@ -105,7 +105,7 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
         )
       ).orElse(item.tag.map( apitag => {
         val tag = Tag.make(apitag)
-        IndexPage(page = tag, contents = item.results.getOrElse(Nil).map(IndexPageItem(_)), Tags(Seq(tag)), date, tzOverride = None)
+        IndexPage(page = tag, contents = item.results.getOrElse(Nil).map(IndexPageItem(_)), Tags(List(tag)), date, tzOverride = None)
       }))
     }
 

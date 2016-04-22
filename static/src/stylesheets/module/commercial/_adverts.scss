@@ -44,13 +44,31 @@
 
         > .adverts__header {
             box-sizing: border-box;
-            padding-bottom: $gs-baseline;
-            padding-top: $gs-baseline;
-            width: 240px;
+            padding: $gs-baseline $gs-gutter / 5 * 2;
+            width: 160px;
         }
 
         > .adverts__body {
             flex: 1;
+        }
+
+        .has-no-flex & {
+            display: table;
+
+            &::before,
+            &::after,
+            > .adverts__body,
+            > .adverts__header {
+                display: table-cell;
+                vertical-align: top;
+            }
+        }
+    }
+
+    @include mq(wide) {
+        > .adverts__header {
+            padding: $gs-baseline $gs-gutter;
+            width: 240px;
         }
 
         .adverts__ctas {
@@ -94,6 +112,7 @@
     }
 
     .adverts__logo {
+        color: #ffffff;
         display: flex;
         flex-direction: column;
 
@@ -105,6 +124,7 @@
         svg {
             display: block;
             fill: #ffffff;
+            max-width: 100%;
         }
     }
 
@@ -133,7 +153,29 @@
                     max-width: 100%;
                 }
             }
+        }
 
+        @include mq(mobileLandscape, $until: tablet) {
+            flex-flow: row wrap;
+
+            > * {
+                flex-basis: calc(50% - #{$gs-gutter});
+            }
+
+            > :nth-child(2) ~ * {
+                margin-top: $gs-baseline;
+            }
+
+            > * + * {
+                position: relative;
+
+                &:nth-child(even)::before {
+                    @include separator($neutral-4, $gs-gutter / -2);
+                }
+            }
+        }
+
+        @include mq(tablet) {
             > * + * {
                 position: relative;
 
@@ -143,16 +185,27 @@
             }
         }
 
-        @include mq(mobileLandscape, $until: tablet) {
-            flex-flow: row wrap;
-
-            > * {
-                flex-basis: calc(50% - #{$gs-gutter});
-            }
-        }
-
         @include mq(desktop) {
             padding-bottom: 0;
+
+            .has-no-flex & {
+                clear: both;
+                max-width: 980px;
+
+                > * {
+                    float: left;
+                    width: calc(25% - #{$gs-gutter});
+                }
+
+                > :only-child {
+                    width: calc(100% - #{$gs-gutter});
+                }
+
+                > :first-child:nth-last-child(2),
+                > :nth-child(2):last-child {
+                    width: calc(50% - #{$gs-gutter});
+                }
+            }
         }
     }
 
@@ -164,13 +217,29 @@
             > *::before {
                 content: none;
             }
+        }
+    }
 
-            > :nth-child(3) ~ * {
-                margin-top: $gs-baseline;
+    .adverts__2cols {
+        @include mq(tablet) {
+            > * {
+                position: relative;
+                z-index: 1;
+            }
+
+            &::after {
+                @include separator($neutral-4, calc((100% - #{$gs-gutter}) / 2), $gs-gutter / 2);
             }
         }
+    }
 
+    .adverts__3cols {
         @include mq(tablet) {
+            > * {
+                position: relative;
+                z-index: 1;
+            }
+
             &::before {
                 @include separator($neutral-4, calc((100% - #{$gs-gutter}) / 3), $gs-gutter / 2);
             }
@@ -199,6 +268,16 @@
 
     .adverts__row > .button::before {
         content: none;
+    }
+
+    .has-no-flex & {
+        .advert {
+            width: calc(75% - #{$gs-gutter});
+        }
+
+        .advert--landscape > .advert__image-container {
+            width: calc(33.33% - #{$gs-gutter / 2});
+        }
     }
 }
 
@@ -270,10 +349,55 @@
 .adverts__row--wrap {
     @include mq(tablet) {
         flex-wrap: wrap;
+    }
+}
 
+.adverts__2cols {
+    > * {
+        flex-basis: calc(50% - #{$gs-gutter / 2});
+    }
+
+    > :nth-child(even) {
+        margin-left: $gs-gutter;
+    }
+
+    > :nth-child(2) ~ * {
+        margin-top: $gs-baseline;
+    }
+
+    .has-no-flex .adverts--legacy & {
         > * {
-            flex-grow: 0;
-            flex-basis: calc(33.33% - #{$gs-gutter});
+            float: left;
+            width: calc(50% - #{$gs-gutter / 2});
+        }
+
+        > :nth-child(even) {
+            margin-left: $gs-gutter - 5px;
+        }
+
+        > :nth-child(odd) {
+            clear: left;
+        }
+    }
+}
+
+.adverts__3cols {
+    > * {
+        flex-basis: calc(33.33% - #{$gs-gutter});
+    }
+
+    > :nth-child(3) ~ * {
+        margin-top: $gs-baseline;
+    }
+
+    .has-no-flex .adverts--legacy & {
+        > * {
+            float: left;
+            width: calc(33.33% - #{$gs-gutter});
+        }
+
+        > :nth-child(3n+1) {
+            clear: left;
         }
     }
 }
@@ -284,29 +408,29 @@
     .adverts__row--1x1x2 > :nth-child(3) {
         flex-basis: calc(50% - #{$gs-gutter} - 1px);
         flex-grow: 0;
+
+        .has-no-flex & {
+            width: calc(50% - #{$gs-gutter} - 1px);
+        }
     }
 
     .adverts__row--3x1 > :nth-child(1),
     .adverts__row--1x3 > :nth-child(2) {
         flex-basis: calc(75% - #{$gs-gutter});
         flex-grow: 0;
+
+        .has-no-flex & {
+            width: calc(75% - #{$gs-gutter});
+        }
     }
 }
 
 .adverts__column {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
 
-    > .advert {
-        flex: 1;
-    }
-
-    > * + * {
-        margin-top: $gs-baseline;
-    }
-
-    & + &:not(:nth-child(2n)) {
-        @include mq($until: leftCol) {
+    &:not(.adverts__2cols) {
+        > * + * {
             margin-top: $gs-baseline;
         }
     }
@@ -318,6 +442,10 @@
     font-weight: bold;
     padding-right: $gs-gutter;
     text-align: right;
+
+    .has-no-flex & {
+        clear: both;
+    }
 }
 
 .adverts__badge__logo {
@@ -327,20 +455,24 @@
 }
 
 .adverts__more {
-    @include mq(leftCol) {
+    @include mq(tablet) {
         margin: $gs-baseline 0;
     }
 
     > summary {
         cursor: pointer;
         display: block;
-        margin: 0 $gs-gutter;
+        margin: 0 $gs-gutter / 2;
         outline: none;
         width: max-content;
         border-radius: 1000px;
 
         &::-webkit-details-marker {
             display: none;
+        }
+
+        @include mq(mobileLandscape) {
+            margin: 0 $gs-gutter;
         }
     }
 
@@ -351,6 +483,11 @@
 
     &:not([open]) > *:not(summary) {
         display: none;
+    }
+
+    .has-no-flex & {
+        clear: both;
+        padding-top: $gs-baseline;
     }
 }
 
@@ -423,7 +560,7 @@
         float: none;
         min-height: 0;
         overflow: visible;
-        margin: 0;
+        margin: auto $gs-gutter / 4 0;
         padding: 0;
         position: static;
         width: auto;
@@ -434,8 +571,15 @@
         }
     }
 
+    .ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
+        margin-top: 0;
+    }
+
     .ad-slot--paid-for-badge .ad-slot--paid-for-badge__inner {
         overflow: visible;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
     }
 
     .ad-slot--paid-for-badge .ad-slot--paid-for-badge__header {
@@ -454,6 +598,7 @@
         display: inline-block;
         margin-left: $gs-gutter / 2;
         vertical-align: middle;
+        max-height: 5 * $gs-baseline;
     }
 
     .ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link:after {
@@ -468,3 +613,5 @@
 @import '_adverts-soulmates';
 @import '_adverts-capi';
 @import '_adverts-brand';
+@import '_adverts-membership';
+@import '_adverts-travel';

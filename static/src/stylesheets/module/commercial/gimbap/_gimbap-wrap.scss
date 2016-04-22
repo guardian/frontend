@@ -130,7 +130,7 @@ $gimbap-width-quarter: calc(25% - 20px);
     }
 
     @include mq(wide) {
-        width: 940px;
+        width: 960px;
         margin-left: $gimbap-wrap-left-space-wide;
     }
 
@@ -184,6 +184,18 @@ $gimbap-width-quarter: calc(25% - 20px);
 
     @include mq(desktop) {
         > .gimbap:nth-child(n+4) {
+            display: none;
+        }
+    }
+}
+
+.gimbap-wrap__body--2x2 {
+    > .gimbap--simple {
+        width: calc(50% - 20px);
+    }
+
+    @include mq($until: tablet) {
+        > .gimbap:nth-child(n+2) {
             display: none;
         }
     }

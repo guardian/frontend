@@ -89,7 +89,7 @@ define([
      *
      * Create a new ad slot using the following code:
      *
-     * <div class="ad-slot__dfp AD_SLOT_CLASS" data-name="AD_SLOT_NAME" data-mobile="300,50|320,50"
+     * <div class="js-ad-slot AD_SLOT_CLASS" data-name="AD_SLOT_NAME" data-mobile="300,50|320,50"
      *      data-desktop="300,250" data-refresh="false" data-label="false">
      *     <div id="SLOT_ID" class="ad-container"></div>
      * </div>
@@ -151,7 +151,7 @@ define([
     var recordFirstAdRendered = once(function () {
         beacon.beaconCounts('ad-render');
     });
-    var prebidEnabled = ab.isInVariant('HeaderBiddingUs', 'variant');
+    var prebidEnabled = config.switches.headerBiddingUs && config.page.edition === 'US';
 
     /**
      * Initial commands
@@ -713,11 +713,12 @@ define([
                     fastdom.write(function () {
                         $adSlot.parent().css('display', 'flex');
                     });
-                } else if (!($adSlot.hasClass('ad-slot--top-above-nav') && size === '1,1')) {
-                    fastdom.write(function () {
-                        $adSlot.parent().css('display', 'block');
-                    });
                 }
+                // } else if (!($adSlot.hasClass('ad-slot--top-above-nav') && size === '1,1')) {
+                //     // fastdom.write(function () {
+                //     //     $adSlot.parent().css('display', 'block');
+                //     // });
+                // }
 
                 if (($adSlot.hasClass('ad-slot--top-banner-ad') && size === '88,70')
                 || ($adSlot.hasClass('ad-slot--commercial-component') && size === '88,88')) {

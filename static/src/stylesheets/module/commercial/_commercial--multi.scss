@@ -82,7 +82,7 @@ Multi component (AKA Frankenponent)
         }
     }
 
-    @include guss-row('.lineitems');
+    @include layout-row('.lineitems');
     .lineitems {
         width: auto;
 

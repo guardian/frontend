@@ -80,9 +80,11 @@
 
         @fragments.inlineJSNonBlocking()
 
-        @fragments.analytics(page)
+        @fragments.analytics.base(page)
 
-        @fragments.commercial.pageSkin()
+        @if(requestOutOfPageSlotAlways.isSwitchedOn || page.metadata.hasPageSkinOrAdTestPageSkin(edition)) {
+            @fragments.commercial.pageSkin()
+        }
 
     </body>
     </html>

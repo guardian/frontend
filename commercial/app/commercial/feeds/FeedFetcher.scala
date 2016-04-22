@@ -66,7 +66,7 @@ class EventbriteMultiPageFeedFetcher(override val feedMetaData: EventsFeedMetaDa
           val subsequentFetches = Future.traverse(2 to pageCount)(fetchPage)
 
           subsequentFetches map { fetches =>
-            combineFetchResponses((initialFetch +: fetches.toSeq).seq)
+            combineFetchResponses(initialFetch +: fetches)
           }
         }
       } else Future.failed(SwitchOffException(feedMetaData.fetchSwitch.name))
@@ -112,9 +112,9 @@ object FeedFetcher {
   }
 
   private val jobs: Option[FeedFetcher] = {
-    Configuration.commercial.jobsUrlTemplate map { template =>
-      new SingleFeedFetcher(JobsFeedMetaData(template))
-    }
+      Configuration.commercial.jobsUrl map { url =>
+        new SingleFeedFetcher(JobsFeedMetaData(url))
+      }
   }
 
   private val soulmates: Seq[FeedFetcher] = {
@@ -149,7 +149,8 @@ object FeedFetcher {
       new SingleFeedFetcher(TravelOffersFeedMetaData(url))
     }
 
-  val all: Seq[FeedFetcher] = soulmates ++ Seq(jobs, bestsellers, masterclasses, liveEvents, travelOffers).flatten
+  val all: Seq[FeedFetcher] = soulmates ++ Seq(bestsellers, masterclasses, travelOffers, jobs, liveEvents).flatten
+
 }
 
 object ResponseEncoding {

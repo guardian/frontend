@@ -134,9 +134,7 @@ const renderPage: (
         const isInSync = oldestProdDeploy.build === latestCodeDeploy.build;
         return h('.row#root', {}, [
             h('h1', [
-                `Status: ${isInSync ? 'in sync. Ship it!' : 'out of sync.'}`,
-                ' ',
-                `Last updated: ${new Date().toISOString()}`
+                `Status: ${isInSync ? 'in sync. Ship it!' : 'out of sync.'}`
             ]),
             h('hr', {}, []),
             exp(commits.size > 0) && h('.col', [

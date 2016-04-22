@@ -24,24 +24,6 @@
             }
         }
 
-        .search__submit {
-            position: absolute;
-            left: 0;
-            width: $gs-baseline*3;
-            height: $gs-baseline*3;
-            padding: $gs-baseline*.75 $gs-gutter;
-
-            path {
-                fill: $neutral-3;
-            }
-
-            &:hover,
-            &:focus,
-            &:active {
-                outline: none;
-            }
-        }
-
         .button {
             color: #ffffff;
             border-color: rgba(#ffffff, .3);

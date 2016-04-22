@@ -3,8 +3,8 @@ define([
 ) {
     return function () {
         this.id = 'DummyTest';
-        this.start = '2016-04-07';
-        this.expiry = '2016-05-10';
+        this.start = '2016-04-12';
+        this.expiry = '2016-05-12';
         this.author = 'Stephan Fowler';
         this.description = 'A do-nothing AA test, for the data team';
         this.audience = 0.06;

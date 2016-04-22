@@ -7,9 +7,12 @@
  */
 
 @mixin side-margins-position($container-width) {
+    // stupid fix for sasslint AST error
+    $size: $container-width + $gs-gutter * 2;
+
     &:before,
     &:after {
-        width: calc((100% - #{rem($container-width + $gs-gutter * 2)}) / 2);
+        width: calc((100% - #{$size}) / 2);
     }
 }
 

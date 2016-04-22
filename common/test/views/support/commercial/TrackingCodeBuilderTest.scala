@@ -19,7 +19,8 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers {
     headline = s"headline-$index",
     kicker = None,
     description = None,
-    imageUrl = None,
+    image = None,
+    fallbackImageUrl = None,
     targetUrl = "",
     group = None,
     branding

@@ -52,7 +52,7 @@ object BookOffersController
 
   def renderBooks = Action.async { implicit request =>
 
-    def result(books: Seq[Book]): Result = books.distinctBy(_.isbn).take(5) match {
+    def result(books: Seq[Book]): Result = books.distinctBy(_.isbn).take(5).toList match {
       case Nil =>
         NoCache(jsonFormat.nilResult)
       case someBooks =>

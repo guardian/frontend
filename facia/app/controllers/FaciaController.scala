@@ -3,6 +3,7 @@ package controllers
 import common._
 import controllers.front._
 import layout.{CollectionEssentials, FaciaContainer, Front}
+import model.Cached.RevalidatableResult
 import model._
 import model.facia.PressedCollection
 import model.pressed.CollectionConfig
@@ -138,27 +139,31 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 
   def renderFrontJsonLite(path: String) = Action.async { implicit request =>
-    val cacheTime = path match {
-      case p if p.startsWith("breaking-news") => 10
-      case _ => 60}
-
+    val cacheTime = 60
     frontJsonFapi.get(path).map {
         case Some(pressedPage) => Cached(cacheTime)(Cors(JsonComponent(FapiFrontJsonLite.get(pressedPage))))
         case None => Cached(cacheTime)(Cors(JsonComponent(JsObject(Nil))))}
   }
 
-  private[controllers] def renderFrontPressResult(path: String)(implicit request : RequestHeader) = {
+  private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader) = {
     val futureResult = frontJsonFapi.get(path).flatMap {
       case Some(faciaPage) =>
         successful(
-          Cached(faciaPage) {
-            if (request.isRss)
-              Ok(TrailsToRss.fromPressedPage(faciaPage)).as("text/xml; charset=utf-8")
-            else if (request.isJson)
-              JsonFront(faciaPage)
-            else
-              Ok(views.html.front(faciaPage))
-          })
+          if (request.isRss) {
+            val body = TrailsToRss.fromPressedPage(faciaPage)
+            Cached.withRevalidation(faciaPage) {
+              RevalidatableResult(Ok(body).as("text/xml; charset=utf-8"), body)
+            }
+          }
+          else if (request.isJson)
+            JsonFront(faciaPage)
+          else {
+            val html = views.html.front(faciaPage)
+            Cached.withRevalidation(faciaPage) {
+              RevalidatableResult(Ok(html), html.body)
+            }
+          }
+        )
       case None => successful(Cached(60)(NotFound))}
 
     futureResult.onFailure { case t: Throwable => log.error(s"Failed rendering $path with $t", t)}

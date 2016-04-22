@@ -1,14 +1,14 @@
 package model
 
-import common.{NavItem, SectionLink, Pagination}
+import common.{NavItem, Pagination, SectionLink}
 import model.content._
 import model.facia.PressedCollection
 import model.liveblog.{BlockAttributes, BodyBlock}
-import quiz.{Image => _, _}
+import model.pressed._
 import org.joda.time.DateTime
-import play.api.libs.json._
 import play.api.libs.functional.syntax._
-import pressed._
+import play.api.libs.json._
+import quiz.{Image => _, _}
 
 object ElementsFormat {
 
@@ -176,6 +176,9 @@ object ContentTypeFormat {
   implicit val paginationFormat = MetaDataFormat.paginationFormat
   implicit val podcastFormat = Json.format[Podcast]
   implicit val referenceFormat = Json.format[Reference]
+  implicit val sponsorshipTypeFormat = SponsorshipType.format
+  implicit val sponsorshipTargetingFormat = Json.format[SponsorshipTargeting]
+  implicit val sponsorshipFormat = Json.format[Branding]
   implicit val tagPropertiesFormat = Json.format[TagProperties]
   implicit val tagFormat = Json.format[Tag]
   val tagsFormat = Json.format[Tags]
@@ -569,6 +572,7 @@ object FaciaImageFormat {
   implicit val cutoutFormat = Json.format[Cutout]
   implicit val replaceFormat = Json.format[Replace]
   implicit val slideshowFormat = Json.format[ImageSlideshow]
+  implicit val imageReplaceFormat = Json.format[ImageReplace]
 
   object format extends Format[Image] {
     def reads(json: JsValue) = {
@@ -576,6 +580,7 @@ object FaciaImageFormat {
         case JsSuccess(JsString("Cutout"), _) => (json \ "item").validate[Cutout](cutoutFormat)
         case JsSuccess(JsString("Replace"), _) => (json \ "item").validate[Replace](replaceFormat)
         case JsSuccess(JsString("ImageSlideshow"), _) => (json \ "item").validate[ImageSlideshow](slideshowFormat)
+        case JsSuccess(JsString("ImageReplace"), _) => (json \ "item").validate[ImageReplace](imageReplaceFormat)
         case _ => JsError("Could not convert ItemKicker")
       }
     }
@@ -583,6 +588,7 @@ object FaciaImageFormat {
     def writes(faciaImage: Image) = faciaImage match {
       case cutout: Cutout => JsObject(Seq("type" -> JsString("Cutout"), "item" -> Json.toJson(cutout)(cutoutFormat)))
       case replace: Replace => JsObject(Seq("type" -> JsString("Replace"), "item" -> Json.toJson(replace)(replaceFormat)))
+      case image: ImageReplace => JsObject(Seq("type" -> JsString("ImageReplace"), "item" -> Json.toJson(image)(imageReplaceFormat)))
       case imageSlideshow: ImageSlideshow => JsObject(Seq("type" -> JsString("ImageSlideshow"), "item" -> Json.toJson(imageSlideshow)(slideshowFormat)))
     }
   }

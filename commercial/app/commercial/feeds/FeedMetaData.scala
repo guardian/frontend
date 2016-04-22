@@ -20,25 +20,16 @@ sealed trait FeedMetaData {
   def responseEncoding: String = ResponseEncoding.default
 }
 
-case class JobsFeedMetaData(urlTemplate: String) extends FeedMetaData {
+case class JobsFeedMetaData(override val url: String) extends FeedMetaData {
 
   val name = "jobs"
 
-  // url changes daily so cannot be val
-  def url = {
-    /*
-     * Using offset time because this appears to be how the URL is constructed.
-     * With UTC time we lose the feed for 2 hours at midnight every day.
-     */
-    val feedDate = new DateTime(DateTimeZone.forOffsetHours(-2)).toString("yyyy-MM-dd")
-    urlTemplate replace("yyyy-MM-dd", feedDate)
-  }
-
-  override val fetchSwitch = Switches.JobFeedReadSwitch
-  override val parseSwitch = Switches.JobParseSwitch
+  override val fetchSwitch = Switches.JobsFeedFetchSwitch
+  override val parseSwitch = Switches.JobsFeedParseSwitch
 
   override val responseEncoding = utf8
 }
+
 
 case class SoulmatesFeedMetaData(baseUrl: String, agent: SoulmatesAgent) extends FeedMetaData {
 

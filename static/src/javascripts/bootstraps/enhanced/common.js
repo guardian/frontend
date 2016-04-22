@@ -136,15 +136,18 @@ define([
             initialiseStickyAdBanner: function () {
                 if (config.switches.viewability
                     && !(config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile')
-                    && config.page.contentType !== 'Interactive'
-                    && config.page.contentType !== 'Crossword'
-                    && !config.page.isImmersive
-                    && !config.page.isUsMinute
-                    && !config.page.isAdvertisementFeature
                     && config.page.pageId !== 'offline-page'
                     && !config.page.shouldHideAdverts
                     && config.page.section !== 'childrens-books-site'
-                    && !config.tests.abNewHeaderVariant) {
+                    && !config.tests.abNewHeaderVariant
+                    && (config.page.hasSuperStickyBanner
+                        || config.page.contentType !== 'Interactive'
+                        && config.page.contentType !== 'Crossword'
+                        && !config.page.isImmersive
+                        && !config.page.isUsMinute
+                        && !config.page.isAdvertisementFeature
+                        )
+                ) {
                     stickyAdBanner.initialise();
                     config.page.hasStickyAdBanner = true;
                 } else {
