@@ -6,6 +6,7 @@ define([
     merge
 ) {
     function FabricV1($adSlot, params) {
+        $adSlot.addClass('ad-slot__fabric-v1');
         var viewModel = merge(params, {
             creativeHeight : 'fixed'
         });
