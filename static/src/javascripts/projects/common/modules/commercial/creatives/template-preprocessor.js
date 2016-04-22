@@ -160,6 +160,12 @@ define([
     }
 
     function preprocessManualContainer(tpl) {
+        var stems = {
+            jobs: 'job',
+            books: 'book',
+            masterclasses: 'masterclass',
+            travels: 'travel'
+        };
         manualContainerButtonTpl || (manualContainerButtonTpl = template(manualContainerButtonStr));
         manualCardTpls[tpl.params.creativeCard] || (manualCardTpls[tpl.params.creativeCard] = template(manualCardStrs[tpl.params.creativeCard]));
         manualCardCtaTpl || (manualCardCtaTpl = template(manualCardCtaStr));
@@ -197,7 +203,7 @@ define([
                         offerLinkText:       tpl.params['offer' + index + 'linktext'] || tpl.params.offerLinkText,
                         arrowRight:          tpl.params.arrowRight
                     }) : '',
-                    classNames:          [tpl.params.toneClass.replace('commercial--tone-', '')].map(function (cn) { return 'advert--' + cn; }).join(' ')
+                    classNames:          [tpl.params.toneClass.replace('commercial--tone-', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); }).join(' ')
                 }) : null;
             }).filter(identity).join('');
         } else {
@@ -211,7 +217,7 @@ define([
                     offerLinkText:       tpl.params.offerlinktext,
                     arrowRight:          tpl.params.arrowRight
                 }) : '',
-                classNames:          ['landscape', 'large', 'inverse', tpl.params.toneClass.replace('commercial--tone', '')].map(function (cn) { return 'advert--' + cn; }).join(' ')
+                classNames:          ['landscape', 'large', 'inverse', tpl.params.toneClass.replace('commercial--tone', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); }).join(' ')
             }) + manualContainerButtonTpl(tpl.params);
         }
     }
