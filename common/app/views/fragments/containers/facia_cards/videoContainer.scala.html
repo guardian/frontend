@@ -1,8 +1,9 @@
-@(containerDefinition: layout.FaciaContainer)(implicit requestHeader: RequestHeader)
+@(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit requestHeader: RequestHeader)
 
 @import model.VideoPlayer
 @import views.support.Video700
 @import views.html.fragments.media.video
+@import views.html.fragments.nav.treats
 
 <div class="fc-container__inner">
     <h2 class="video-title fc-container__header__title">
@@ -21,7 +22,8 @@
 
     <ul class="u-unstyled video-playlist__inner js-video-playlist-inner">
         <li class="video-playlist__item video-title video-title--leftcol fc-container__header__title">
-            <a class="video-title__link" href="@containerDefinition.href" data-link-name="video-container-title @containerDefinition.displayName">@containerDefinition.displayName</a>
+            <a href="@containerDefinition.href" data-link-name="video-container-title @containerDefinition.displayName">@containerDefinition.displayName</a>
+            @treats(containerDefinition, frontProperties)
         </li>
 
         @containerDefinition.collectionEssentials.items.zipWithIndex.map { case (item, index) =>
