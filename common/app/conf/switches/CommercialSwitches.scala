@@ -379,7 +379,7 @@ trait CommercialSwitches {
     "static-badges",
     "If on, all badges are served server side",
     safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
+    sellByDate = new LocalDate(2016, 5, 25),
+    exposeClientSide = false
   )
 }

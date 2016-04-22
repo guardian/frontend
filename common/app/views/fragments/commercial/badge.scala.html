@@ -1,8 +1,21 @@
 @(content: model.ContentType)(implicit request: RequestHeader)
 @import common.Edition
-@import conf.switches.Switches.SponsoredSwitch
-@import conf.switches.Switches.staticBadgesSwitch
+@import conf.switches.Switches.{SponsoredSwitch, staticBadgesSwitch}
 @import model.{Article, Audio, Gallery, Interactive, Video}
+
+@if(staticBadgesSwitch.isSwitchedOn) {
+
+    @for(branding <- content.branding(Edition(request))) {
+        <div class="ad-slot--paid-for-badge__inner">
+            <h3 class="ad-slot--paid-for-badge__header">@branding.label</h3>
+            <a href="@branding.sponsorLink" class="ad-slot--paid-for-badge__link">
+                <img class="ad-slot--paid-for-badge__logo" src="@branding.sponsorLogo">
+            </a>
+            <a href="@branding.aboutThisLink" class="ad-slot--paid-for-badge__help">About this content</a>
+        </div>
+    }
+
+} else {
 
 @defining(content.commercial.isSponsored(Some(Edition(request))),
     content.commercial.isAdvertisementFeature,
@@ -12,7 +25,6 @@
             (isSponsored || isAdFeature || isFoundationFunded) &&
             !content.commercial.isInappropriateForSponsorship
     ) {
-    @if(!staticBadgesSwitch.isSwitchedOn) {
         @defining((
             content match {
                 case _ if isSponsored => "spbadge"
@@ -68,5 +80,6 @@
             }
         }
     }
-    }
+}
+
 }
