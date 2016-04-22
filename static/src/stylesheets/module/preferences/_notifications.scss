@@ -70,13 +70,13 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
     }
 }
 
-.notifications__label {
+.live-notifications__label {
     display: none;
 }
 
 @each $state in (subscribed, unsubscribed) {
     .notifications__button--#{$state} {
-        .notifications__label--#{$state} {
+        .live-notifications__label--#{$state} {
             display: inline;
         }
     }
