@@ -12,10 +12,31 @@ case class EmailSubscription(
   subscribedTo: Boolean = false,
   exampleUrl: Option[String] = None
 )
+
 object EmailSubscription {
   def apply(emailSubscription: EmailSubscription) = emailSubscription
 }
 object EmailSubscriptions {
+  val theFiver = EmailSubscription(
+    "The Fiver",
+    "sport",
+    "Football",
+    "The Fiver is theguardian.com/sport's free football email. Every weekday we round up the day's news and gossip in our own belligerent, sometimes intelligent and — very occasionally — funny way. The Fiver is delivered every Monday to Friday at around 5pm — hence the name.",
+    "Weekday afternoons",
+    "218",
+    10
+  )
+
+  val guardianOpinion = EmailSubscription(
+    "The best of Guardian Opinion",
+    "news",
+    "Opinion's daily email newsletter",
+    "Guardian Opinion's daily email newsletter with the most shared opinion, analysis and editorial articles from the last 24 hours — sign up to read, share and join the debate every afternoon.",
+    "Weekday afternoons",
+    "2313",
+    10
+  )
+
   def australianEmails(subscribedListIds: Iterable[String] = None) = List(
     EmailSubscription(
       "The Guardian today - AUS",
@@ -189,47 +210,10 @@ object EmailSubscriptions {
       11,
       subscribedTo = subscribedListIds.exists{ x => x == "1493" }
     ),
-    EmailSubscription(
-      "The best of Guardian Opinion",
-      "news",
-      "Opinion's daily email newsletter",
-      "Guardian Opinion's daily email newsletter with the most shared opinion, analysis and editorial articles from the last 24 hours — sign up to read, share and join the debate every afternoon.",
-      "Weekday afternoons",
-      "2313",
-      10,
-      subscribedTo = subscribedListIds.exists{ x => x == "2313" }
-    ),
-    EmailSubscription(
-      "The best of Guardian Opinion",
-      "comment",
-      "Opinion's daily email newsletter",
-      "Guardian Opinion's daily email newsletter with the most shared opinion, analysis and editorial articles from the last 24 hours — sign up to read, share and join the debate every afternoon.",
-      "Weekday afternoons",
-      "2313",
-      10,
-      subscribedTo = subscribedListIds.exists{ x => x == "2313" }
-    ),
-    EmailSubscription(
-      "The Fiver",
-      "news",
-      "Football",
-      "The Fiver is theguardian.com/sport's free football email. Every weekday we round up the day's news and gossip in our own belligerent, sometimes intelligent and — very occasionally — funny way. The Fiver is delivered every Monday to Friday at around 5pm — hence the name.",
-      "Weekday afternoons",
-      "218",
-      10,
-      subscribedTo = subscribedListIds.exists{ x => x == "218" },
-      Some("http://www.theguardian.com/football/series/thefiver/latest/email")
-    ),
-    EmailSubscription(
-      "The Fiver",
-      "sport",
-      "Football",
-      "The Fiver is theguardian.com/sport's free football email. Every weekday we round up the day's news and gossip in our own belligerent, sometimes intelligent and — very occasionally — funny way. The Fiver is delivered every Monday to Friday at around 5pm — hence the name.",
-      "Weekday afternoons",
-      "218",
-      10,
-      subscribedTo = subscribedListIds.exists{ x => x == "218" }
-    ),
+    guardianOpinion.copy(subscribedTo = subscribedListIds.exists{ x => x == "2313" }, theme = "news"),
+    guardianOpinion.copy(subscribedTo = subscribedListIds.exists{ x => x == "2313" }, theme = "comment"),
+    theFiver.copy(subscribedTo = subscribedListIds.exists{ x => x == "218" }, theme = "news"),
+    theFiver.copy(subscribedTo = subscribedListIds.exists{ x => x == "218" }, theme = "sport"),
     EmailSubscription(
       "Media briefing",
       "news",
