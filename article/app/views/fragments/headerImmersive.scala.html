@@ -25,7 +25,7 @@
     </div>
 
     @if(article.elements.hasMainEmbed || article.elements.elements("main").isEmpty) {
-        @if(immersiveMainEmbedSwitch.isSwitchedOn) {
+        @if(immersiveMainEmbedSwitch.isSwitchedOn && article.isSixtyDaysModified) {
             <div class="content__main-embed">
                 @MainCleaner(article, article.fields.main, false)
             </div>
@@ -97,6 +97,8 @@
         @if(!article.isUSMinute) {
             <div class="content__wrapper content__wrapper--standfirst">
                 <div class="gs-container">
+                @article.fields.lastModified
+                @article.isSixtyDaysModified
                 @if(article.fields.standfirst.isDefined) {
                     @fragments.standfirst(article)
                 }
