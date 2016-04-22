@@ -778,12 +778,6 @@
     height: 250px;
 }
 
-//.ad-slot__fabric-v1 {
-//    @include mq($until: tablet) {
-//        width: auto;
-//    }
-//}
-
 @include mq(tablet) {
     .top-banner-ad-container .ad-slot--top-banner-ad__fluid250,
     .top-banner-ad-container .ad-slot--top-banner-ad__fabric-v1 {
