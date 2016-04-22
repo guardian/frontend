@@ -1,6 +1,7 @@
 @(content: model.ContentType)(implicit request: RequestHeader)
 @import common.Edition
 @import conf.switches.Switches.SponsoredSwitch
+@import conf.switches.Switches.staticBadgesSwitch
 @import model.{Article, Audio, Gallery, Interactive, Video}
 
 @defining(content.commercial.isSponsored(Some(Edition(request))),
@@ -11,6 +12,7 @@
             (isSponsored || isAdFeature || isFoundationFunded) &&
             !content.commercial.isInappropriateForSponsorship
     ) {
+    @if(!staticBadgesSwitch.isSwitchedOn) {
         @defining((
             content match {
                 case _ if isSponsored => "spbadge"
@@ -65,5 +67,6 @@
                 }
             }
         }
+    }
     }
 }
