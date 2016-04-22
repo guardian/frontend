@@ -14,6 +14,7 @@ define([
     transform
 ) {
     var fabricMapping = '88,71';
+    var fabricMappingSwitch = config.switches.fabricAdverts ? ('|' + fabricMapping) : '';
     var adSlotDefinitions = {
         right: {
             sizeMappings: {
@@ -42,6 +43,13 @@ define([
         inline1: {
             sizeMappings: {
                 mobile:             '1,1|300,250',
+                'mobile-landscape': '1,1|300,250',
+                tablet:             '1,1|300,250'
+            }
+        },
+        'article-inline1': {
+            sizeMappings: {
+                mobile:             '1,1|300,250' + fabricMappingSwitch,
                 'mobile-landscape': '1,1|300,250',
                 tablet:             '1,1|300,250'
             }
@@ -95,7 +103,7 @@ define([
         },
         'top-above-nav': {
             sizeMappings: {
-                desktop: '1,1|88,70|728,90|940,230|900,250|970,250' + config.switches.fabricAdverts ? ('|' + fabricMapping) : ''
+                desktop: '1,1|88,70|728,90|940,230|900,250|970,250' + fabricMappingSwitch
             }
         },
         'fabric': {
