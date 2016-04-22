@@ -25,17 +25,6 @@ import scala.collection.JavaConversions._
 import scala.language.postfixOps
 import scala.util.Try
 
-sealed trait ContentType {
-  def content: Content
-  final def tags: Tags = content.tags
-  final def elements: Elements = content.elements
-  final def fields: Fields = content.fields
-  final def trail: Trail = content.trail
-  final def metadata: MetaData = content.metadata
-  final def commercial: Commercial = content.commercial
-  final def sharelinks: ShareLinks = content.sharelinks
-}
-
 sealed trait Brandable {
   def content: Content
 
@@ -51,6 +40,17 @@ sealed trait Brandable {
 
     findBrandingBySection() orElse findBrandingByTag()
   }
+}
+
+sealed trait ContentType extends Brandable {
+  def content: Content
+  final def tags: Tags = content.tags
+  final def elements: Elements = content.elements
+  final def fields: Fields = content.fields
+  final def trail: Trail = content.trail
+  final def metadata: MetaData = content.metadata
+  final def commercial: Commercial = content.commercial
+  final def sharelinks: ShareLinks = content.sharelinks
 }
 
 final case class GenericContent(override val content: Content) extends ContentType
@@ -445,7 +445,7 @@ object Article {
 
 final case class Article (
                            override val content: Content,
-                           lightboxProperties: GenericLightboxProperties) extends ContentType with Brandable {
+                           lightboxProperties: GenericLightboxProperties) extends ContentType {
 
   val lightbox = GenericLightbox(content.elements, content.fields, content.trail, lightboxProperties)
 
