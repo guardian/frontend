@@ -128,9 +128,7 @@
     .advert__image-container {
         height: 7 * $gs-baseline;
     }
-}
 
-.advert--soulmates {
     .button {
         @include button-colour(
             $soulmates-accent-colour,
@@ -149,6 +147,11 @@
         }
     }
 
+    .adverts__manual & {
+        .advert__image-container {
+            height: 11 * $gs-baseline;
+        }
+    }
 }
 
 .logo--tone-soulmates {

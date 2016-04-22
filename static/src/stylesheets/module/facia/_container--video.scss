@@ -43,6 +43,8 @@ $video-width-desktop: 700px;
         left: 0;
         right: 0;
         bottom: 0;
+        pointer-events: none;
+        z-index: 2;
 
         video {
             display: none;
@@ -58,6 +60,17 @@ $video-width-desktop: 700px;
         @include mq(desktop) {
             opacity: .3;
             transition: opacity .4s ease-out;
+        }
+    }
+
+    .treats__treat {
+        background-color: transparent;
+        border-color: $media-default;
+
+        &:hover {
+            border-color: $media-default;
+            background-color: $media-default;
+            color: $media-background;
         }
     }
 
@@ -257,8 +270,11 @@ $video-width-desktop: 700px;
 
     @include mq(leftCol) {
         position: relative;
+        height: $video-width-desktop / 16 * 9;
         display: inline-block;
         width: gs-span(2) + $gs-gutter * 2;
+        padding: ($gs-baseline / 2) $gs-gutter;
+        box-sizing: border-box;
         margin-bottom: 0;
         white-space: normal;
     }
@@ -267,11 +283,13 @@ $video-width-desktop: 700px;
         width: gs-span(3) + $gs-gutter * 2;
     }
 
-    .video-title__link {
-        position: absolute;
-        top: $gs-baseline / 2;
-        left: $gs-gutter;
-        right: $gs-gutter;
+    .inline-guardian-video-logo svg {
+        margin-top: 4px;
+        max-width: 100%;
+
+        &:hover .inline-guardian-video-logo__title {
+            fill: #ffffff;
+        }
     }
 }
 
@@ -296,6 +314,7 @@ $video-width-desktop: 700px;
     background-color: rgba(0, 0, 0, .5);
     height: gs-height(3);
     margin-bottom: -(get-line-height(textSans, 3) + 4px);
+    pointer-events: auto;
 
     @include mq(desktop, leftCol) {
         opacity: 0;
@@ -311,6 +330,7 @@ $video-width-desktop: 700px;
 
     .video-playlist__item .vjs-playing ~ & {
         @include mq(desktop) {
+            visibility: hidden;
             opacity: 0;
         }
     }
@@ -336,6 +356,14 @@ $video-width-desktop: 700px;
 
     .fc-item__title--quoted .inline-quote {
         fill: #ffffff;
+    }
+
+    .fc-item__link {
+        color: #ffffff;
+
+        &:visited {
+            color: $neutral-3;
+        }
     }
 
     .fc-item__byline,
