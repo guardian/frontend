@@ -1,8 +1,9 @@
-@(containerDefinition: layout.FaciaContainer)(implicit requestHeader: RequestHeader)
+@(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit requestHeader: RequestHeader)
 
 @import model.VideoPlayer
 @import views.support.Video700
 @import views.html.fragments.media.video
+@import views.html.fragments.nav.treats
 
 <div class="fc-container__inner">
     <h2 class="video-title fc-container__header__title">
@@ -32,6 +33,7 @@
                     }
                 }
             </a>
+            @treats(containerDefinition, frontProperties)
         </li>
 
         @containerDefinition.collectionEssentials.items.zipWithIndex.map { case (item, index) =>

@@ -102,6 +102,10 @@
         }
     }
 
+    .fc-item--list-compact--media {
+        border-color: $paid-article-header-bg;
+    }
+
     .fc-container--first .fc-container__header__title,
     .fc-container .fc-container__inner,
     .fc-container .facia-container__inner {
@@ -135,6 +139,7 @@
         }
 
         .fc-item__standfirst,
+        .fc-item__kicker,
         .fc-item__link:visited {
             color: $neutral-1;
         }
