@@ -124,8 +124,8 @@ object EmailSubscriptions {
       "Guardian Masterclasses",
       "guardian favourites",
       "Courses and training",
-      "News on the latest classes, blog content and competitions from the Guardian's learning programme. Plus inspiring tips from world-class tutors on everything from journalism and creative writing to culture and general knowledge, delivered to your inbox three times per week.",
-      "3 times per week",
+      "News on the latest classes, blog content and competitions from the Guardian's learning programme. Plus inspiring tips from world-class tutors on everything from journalism and creative writing to culture and general knowledge, delivered to your inbox.",
+      "Twice a week",
       "3561",
       subscribedTo = subscribedListIds.exists{ x => x == "3561" }
     ),
@@ -281,7 +281,7 @@ object EmailSubscriptions {
       "lifestyle",
       "Money",
       "Stay on top of the best personal finance and money news of the week, including insight and behind-the-scenes accounts from your favourite Guardian Money editors.",
-      "",
+      "Every Thursday",
       "1079",
       9,
       subscribedTo = subscribedListIds.exists{ x => x == "1079" }
@@ -290,8 +290,8 @@ object EmailSubscriptions {
       "Fashion statement",
       "lifestyle",
       "Fashion",
-      "The Guardian sorts the wheat from the chaff to deliver the latest news, views and shoes from the style frontline. Sign up to Fashion Statement, sent every Friday.",
-      "Every Friday",
+      "The Guardian sorts the wheat from the chaff to deliver the latest news, views and shoes from the style frontline.",
+      "Every Monday",
       "105",
       9,
       subscribedTo = subscribedListIds.exists{ x => x == "105" }
@@ -301,7 +301,7 @@ object EmailSubscriptions {
       "lifestyle",
       "Crosswords",
       "Register to receive our monthly crossword email by the Guardian's crossword editor with the latest issues and tips about theguardian.com/crosswords.",
-      "",
+      "Monthly",
       "101",
       subscribedTo = subscribedListIds.exists{ x => x == "101" }
     ),
