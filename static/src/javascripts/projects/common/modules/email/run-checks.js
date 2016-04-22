@@ -127,6 +127,7 @@ define([
             version = detect.getUserAgent.version;
 
         return !config.page.shouldHideAdverts &&
+            !config.page.isSensitive &&
             !emailInserted &&
             !config.page.isFront &&
             config.switches.emailInArticle &&
