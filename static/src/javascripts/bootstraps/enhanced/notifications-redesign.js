@@ -34,7 +34,7 @@ define([
             });
         },
 
-        configureSubscribeTemplate: function() {
+        init: function() {
             var $follows = bonzo(qwery('.js-notification-link')),
                 handler = subscribed ? modules.unSubscribeHandler : modules.subscribeHandler, //There's only one, baby,
                 src = template(followLink, {
@@ -83,13 +83,13 @@ define([
         subscribeHandler: function() {
             console.log("++ SubscribeHandler");
             subscribed = true;
-            modules.configureSubscribeTemplate();
+            modules.init();
         },
 
         unSubscribeHandler: function() {
             console.log("++ UnSubscribeHandler");
             subscribed = false;
-            modules.configureSubscribeTemplate();
+            modules.init();
         }
     };
 
@@ -97,6 +97,6 @@ define([
 
 
     return {
-        init: modules.configureSubscribeTemplate
+        init: modules.init
     };
 });

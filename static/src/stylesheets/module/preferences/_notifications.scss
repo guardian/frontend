@@ -15,23 +15,27 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
         }
     }
 
-    .notifications__button--subscribed,
-    .notifications__button--unsubscribed.hover {
+    .notifications__button--subscribed {
         color: $background;
         background-color: $foreground;
         .inline-icon {
             fill: $background;
             background-color: $foreground;
         }
+        &:hover {
+            background-color: darken($foreground, 10%);
+        }
     }
 
-    .notifications__button--unsubscribed,
-    .notifications__button--subscribed.hover {
+    .notifications__button--unsubscribed {
         color: $foreground;
         background-color: transparent;
         .inline-icon {
             fill: $foreground;
             background-color: $background;
+        }
+        &:hover {
+            background-color: darken($background, 10%);
         }
     }
 
@@ -90,7 +94,7 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
     top: 0.625rem;
     left: 5.275rem;
     width: 26.825rem;
-    height: 3.7625rem;
+    height: 4.7625rem;
     background: fade-out($live-default, 1 - .95);
     transition: background-color .25s ease;
     filter:alpha(opacify=50);

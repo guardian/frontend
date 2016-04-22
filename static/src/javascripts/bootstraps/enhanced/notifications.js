@@ -48,7 +48,7 @@ define([
             return modules.getReg().then(function (reg) {return reg.pushManager.getSubscription();});
         },
 
-        configureSubscribeTemplate: function() {
+        init: function() {
 
             modules.configureSubscribeButton();
             if(!modules.hasSubscribed() && !modules.hasDismissedExplainer()) {
@@ -78,9 +78,9 @@ define([
             });
 
             fastdom.write(function () {
-                var notificationLink = $('.js-live-notifications');
-                notificationLink.append(src);
-                bean.on(notificationLink[0], 'click', '.js-notifications__item__close', function(){
+                var notifications = $('.js-live-notifications');
+                notifications.append(src);
+                bean.one(notifications[0], 'click', '.js-notifications__item__close', function(){
                     fastdom.write(function() {
                         userPrefs.set(explainerDismissed, true);
                         $('.js-notifications-explainer').remove();
@@ -90,12 +90,11 @@ define([
         },
 
         closeDisplayMessage: function(){
-            console.log("++ Close permission notification");
             $('.js-notifications-permission-denied').remove();
-            bean.one(document.body, 'click', '.js-notifications-subscribe-link', modules.subscribeHandler);
+            bean.one($('.js-live-notifications')[0], 'click', '.js-notifications__button', modules.subscribeHandler);
         },
 
-        displayPermissiosMessage: function() {
+        notificationsDeniedMessage: function() {
             var src = template(permissionsTemplate,{closeIcon : svgs('closeCentralIcon')});
             fastdom.write(function () {
                 $('.js-notificications-blocked').prepend(src);
@@ -103,19 +102,15 @@ define([
             });
         },
 
-        //TODO ffs dont commit this
         subscribeHandler: function () {
-
             modules.subscribe().then(modules.follow)
                 .catch( function(err){
                     if (Notification.permission === 'denied') {
-                        console.log("++++ CAUGHT");
-                        modules.displayPermissiosMessage();
-                    }
-                });
+                        modules.notificationsDeniedMessage();
+                    } });
         },
 
-        unSubscribeHandler: function () {
+            unSubscribeHandler: function () {
             modules.unFollow().then(modules.unSubscribe);
         },
 
@@ -206,6 +201,6 @@ define([
     };
 
     return {
-        init: modules.configureSubscribeTemplate
+        init: modules.init
     };
 });
