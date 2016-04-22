@@ -97,8 +97,6 @@
         @if(!article.isUSMinute) {
             <div class="content__wrapper content__wrapper--standfirst">
                 <div class="gs-container">
-                @article.fields.lastModified
-                @article.isSixtyDaysModified
                 @if(article.fields.standfirst.isDefined) {
                     @fragments.standfirst(article)
                 }
