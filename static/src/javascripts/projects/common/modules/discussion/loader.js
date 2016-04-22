@@ -155,7 +155,7 @@ Loader.prototype.initMainComments = function() {
             shouldTruncate: shouldTruncate})
             .catch(function(error) {
                 var reportMsg = 'Comments failed to load: ',
-                    request = error.request;
+                    request = error.request || {};
                 if (error.message === 'Request is aborted: timeout') {
                     reportMsg += 'XHR timeout';
                 } else if (error.message) {
