@@ -10,10 +10,8 @@ import common.dfp.DfpAgent
 import conf.Configuration
 import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch}
 import cricketPa.CricketTeams
-import layout.ContentWidths.{ImmersiveMedia, BodyMedia, LiveBlogMedia, GalleryMedia}
-import model.content.{Quiz, Atoms}
-import model.liveblog.{LiveBlogDate, BodyBlock}
-import model.liveblog.BodyBlock.{SummaryEvent, KeyEvent}
+import layout.ContentWidths.GalleryMedia
+import model.content.{Atoms, Quiz}
 import model.pressed._
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
@@ -36,6 +34,23 @@ sealed trait ContentType {
   final def metadata: MetaData = content.metadata
   final def commercial: Commercial = content.commercial
   final def sharelinks: ShareLinks = content.sharelinks
+}
+
+sealed trait Brandable {
+  def content: Content
+
+  def branding(edition: Edition): Option[Branding] = {
+
+    def findBrandingBySection(): Option[Branding] = None
+
+    def findBrandingByTag(): Option[Branding] = {
+      val activeBrandings = content.tags.tags.flatMap(_.properties.activeBrandings).flatten
+      val publicationDate = content.trail.webPublicationDate
+      activeBrandings find (_.isTargeting(publicationDate, edition))
+    }
+
+    findBrandingBySection() orElse findBrandingByTag()
+  }
 }
 
 final case class GenericContent(override val content: Content) extends ContentType
@@ -146,7 +161,7 @@ final case class Content(
   }
 
   lazy val blogOrSeriesTag: Option[Tag] = {
-    tags.tags.find( tag => tag.showSeriesInMeta && (tag.isBlog || tag.isSeries )).headOption
+    tags.tags.find( tag => tag.showSeriesInMeta && (tag.isBlog || tag.isSeries ))
   }
 
   lazy val seriesTag: Option[Tag] = {
@@ -429,8 +444,8 @@ object Article {
 }
 
 final case class Article (
-  override val content: Content,
-  lightboxProperties: GenericLightboxProperties) extends ContentType {
+                           override val content: Content,
+                           lightboxProperties: GenericLightboxProperties) extends ContentType with Brandable {
 
   val lightbox = GenericLightbox(content.elements, content.fields, content.trail, lightboxProperties)
 
