@@ -444,8 +444,8 @@ object Article {
 }
 
 final case class Article (
-                           override val content: Content,
-                           lightboxProperties: GenericLightboxProperties) extends ContentType {
+  override val content: Content,
+  lightboxProperties: GenericLightboxProperties) extends ContentType {
 
   val lightbox = GenericLightbox(content.elements, content.fields, content.trail, lightboxProperties)
 
