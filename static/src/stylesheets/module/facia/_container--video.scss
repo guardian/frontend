@@ -280,6 +280,15 @@ $video-width-desktop: 700px;
     @include mq(wide) {
         width: gs-span(3) + $gs-gutter * 2;
     }
+
+    .inline-guardian-video-logo svg {
+        margin-top: 4px;
+        max-width: 100%;
+
+        &:hover .inline-guardian-video-logo__title {
+            fill: #ffffff;
+        }
+    }
 }
 
 .video-playlist__item--first {

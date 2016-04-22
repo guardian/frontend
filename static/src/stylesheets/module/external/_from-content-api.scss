@@ -110,6 +110,18 @@
     }
 }
 
+.is-breuer-mode .from-content-api {
+    p {
+        margin-bottom: 0;
+    }
+
+    p + p,
+    .element--thumbnail + p,
+    .element--supporting + p {
+        text-indent: $gs-gutter * 1.5;
+    }
+}
+
 
 /* Code
    ========================================================================== */
