@@ -84,8 +84,8 @@ CommentBox.prototype.errorMessages = {
     EMAIL_VERIFIED_FAIL: 'We are having technical difficulties. Please try again later or ' +
         '<a href="/send/email" class="js-id-send-validation-email"><strong>resend the verification</strong></a>.',
     EMAIL_NOT_VALIDATED: 'Please confirm your email address to comment.<br />' +
-        'If you can\'t find the email, we can <a href="_#" class="js-id-send-validation-email"><strong>resend the verification email</strong></a><span> to ' +
-        ' your email address' + '.</span>'
+        'If you can\'t find the email, we can <a href="_#" class="js-id-send-validation-email"><strong>resend the verification email</strong></a> to ' +
+        ' your email address' + '.'
 };
 
 /**
