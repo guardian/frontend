@@ -6,7 +6,7 @@
 
 @import views.html.fragments.inlineSvg
 
-<a href="@item.targetUrl" class="advert advert--small advert--capi
+<a href="@item.targetUrl" class="advert advert--small advert--capi advert--paidfor
     @optAdvertClassNames.map { classNames => @classNames.map(c => s"advert--$c").mkString(" ")}
     @optClassNames.map { classNames => @classNames.mkString(" ")}
     "

@@ -17,6 +17,12 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
     "foundation-supported" -> "fc-container--foundation-supported"
   )
 
+  private val sponsorTypeToTone = Map(
+    "sponsored" -> "sponsored",
+    "advertisement-feature" -> "paidfor",
+    "foundation-supported" -> "supported"
+  )
+
   private val sponsorTypeToLabel = Map(
     "sponsored" -> "Supported by",
     "advertisement-feature" -> "Paid for by",
@@ -38,6 +44,7 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
     val optOmnitureId = request.getParameter("omnitureId")
 
     val optSponsorType = optCapiAdFeature flatMap (feature => sponsorTypeToClass.get(feature))
+    val optSponsorTypeRefactor = optCapiAdFeature flatMap (feature => sponsorTypeToTone.get(feature))
     val optSponsorLabel = optCapiAdFeature flatMap (feature => sponsorTypeToLabel.get(feature))
 
     val eventualLatest = optKeyword.map { keyword =>
@@ -78,8 +85,7 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
               optCapiAbout,
               optClickMacro,
               omnitureId,
-              optCapiAdFeature,
-              optSponsorType,
+              optSponsorTypeRefactor,
               optSponsorLabel)
             )
           } else {
@@ -107,7 +113,7 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
               optCapiButtonText,
               optCapiReadMoreUrl,
               optCapiReadMoreText,
-              optSponsorType,
+              optSponsorTypeRefactor,
               optSponsorLabel,
               optClickMacro,
               omnitureId

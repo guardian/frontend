@@ -1,7 +1,7 @@
 .adverts--capi {
 }
 
-.adverts--tone-capi {
+.adverts--tone-paidfor {
     background-color: $neutral-6;
 
     > .adverts__header {
@@ -71,33 +71,11 @@
 }
 
 .advert--capi {
-    @include f-textSans;
-    background: $paid-article-subheader;
-    border-top: 1px solid $paid-article-brand;
-
     .advert__title,
     .advert__meta,
     .advert__standfirst {
         padding-left: $gs-gutter / 4;
         padding-right: $gs-gutter / 4;
-    }
-
-    .advert__title {
-        @include f-headlineSans;
-        font-weight: 400;
-        margin-bottom: .5em;
-
-        > .inline-icon svg {
-            fill: $paid-article-icon;
-            width: 1.1em;
-            height: .75em;
-            margin-right: .3em;
-        }
-    }
-
-    > .advert__meta {
-        margin-top: auto;
-        margin-bottom: $gs-baseline / 4;
     }
 
     .adverts--legacy-single & {
@@ -133,6 +111,25 @@
 
         > :first-child {
             padding-top: 66%;
+        }
+    }
+}
+
+.advert--paidfor {
+    @include f-textSans;
+    background: $paid-article-subheader;
+    border-top: 1px solid $paid-article-brand;
+
+    .advert__title {
+        @include f-headlineSans;
+        font-weight: 400;
+        margin-bottom: .5em;
+
+        > .inline-icon svg {
+            fill: $paid-article-icon;
+            width: 1.1em;
+            height: .75em;
+            margin-right: .3em;
         }
     }
 }
