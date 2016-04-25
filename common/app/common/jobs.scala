@@ -30,6 +30,8 @@ object Jobs extends Logging {
         f().onComplete {
           case Success(_) =>
             outstanding.send(map => map.updated(name, map(name) - 1))
+            val timeFired = context.getScheduledFireTime
+            println(s"$name was fired at $timeFired and was successful")
             log.info(s"Finished job: $name")
           case Failure(t) =>
             outstanding.send(map => map.updated(name, map(name) - 1))
@@ -84,7 +86,6 @@ object Jobs extends Logging {
       val schedule = DailyTimeIntervalScheduleBuilder.dailyTimeIntervalSchedule().withIntervalInSeconds(intervalInSeconds)
       log.info(s"Scheduling $name to run every $intervalInSeconds minutes")
       jobs.put(name, () => block)
-
       scheduler.scheduleJob(
         JobBuilder.newJob(classOf[FunctionJob]).withIdentity(name).build(),
         TriggerBuilder.newTrigger().withSchedule(schedule).build()

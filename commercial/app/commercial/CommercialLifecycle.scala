@@ -9,11 +9,10 @@ import model.commercial.travel.Countries
 import play.api.{Application => PlayApp, GlobalSettings}
 
 import scala.concurrent.Future
-import scala.concurrent.duration._
 import scala.util.Random
 import scala.util.control.NonFatal
 
-import akka.agent.Agent
+import common.AkkaAgent
 
 trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionContexts {
 
@@ -24,84 +23,40 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     MoneyBestBuysRefresh
   )
 
-  private def recordEvent(feedName: String, eventName: String, maybeDuration: Option[Duration]): Unit = {
-    val key = s"${feedName.toLowerCase.replaceAll("[\\s/]+", "-")}"
-    val duration = maybeDuration map (_.toMillis.toDouble) getOrElse -1d
-    log.info(s"The key is this : $key")
-//    CommercialMetrics.metrics.put(Map(s"$key" -> duration))
-    log.info(s"$key $eventName  ame took $duration ms")
+
+  private val metricMap = Map(
+    "fetch-failure" -> AkkaAgent(0.0),
+    "fetch-success" -> AkkaAgent(0.0),
+    "parse-failure" -> AkkaAgent(0.0),
+    "parse-success" -> AkkaAgent(0.0)
+  )
+
+
+  private def recordSuccess(eventName:String): Unit = {
+    val keyName = s"$eventName-success"
+    metricMap
+      .get(keyName)
+      .foreach(agent => agent.send(_ + 1.0))
   }
 
-  val fetchSuccessCount = Agent(0.0)
-  val fetchFailureCount = Agent(0.0)
-  val parseSuccessCount = Agent(0.0)
-  val parseFailureCount = Agent(0.0)
-
-
-  private def recordSuccess(eventName:String): Double = eventName match{
-    case "fetch" =>
-      fetchSuccessCount send (_ + 1.0)
-      val successResult = fetchSuccessCount.get()
-      log.info(s"logging a success now, agent:(fetch) $successResult")
-      successResult
-    case "parse" =>
-      parseSuccessCount send (_ + 1.0)
-      val successResult = parseSuccessCount.get()
-      log.info(s"logging a success now, agent:(parse) $successResult")
-      successResult
+  private def recordFailure(eventName:String): Unit = {
+    val keyName = s"$eventName-failure"
+    metricMap
+      .get(keyName)
+      .foreach(agent => agent.send(_ + 1.0))
   }
 
-  private def recordFailure(eventName:String): Double = eventName match{
-    case "fetch" =>
-      fetchFailureCount send (_ + 1.0)
-      val failureResult = fetchFailureCount.get()
-      log.info(s"logging a failure now , agent:(fetch) $failureResult")
-      failureResult
 
-    case "parse" =>
-      parseFailureCount send (_ +1.0)
-      val failureResult = parseFailureCount.get()
-      log.info(s"logging a failure now , agent:(parse) $failureResult")
-      failureResult
-  }
-
-  private def successUploader(eventName:String): Future[Unit] =  eventName match{
-    case "fetch"=>
-    val currentFetchCount = recordSuccess("fetch")
-    val f: Future[Unit] = Future {
-      CommercialMetrics.metrics.put(Map(s"successful-$eventName" -> currentFetchCount))
-      log.info(s"uploading the success count to cloud: Count :(fetch) $currentFetchCount")
-    }
-    fetchSuccessCount send (_ - currentFetchCount)
-    f
-
-    case "parse" =>
-      val currentParseCount = recordSuccess("parse")
-      val f: Future[Unit] = Future {
-        CommercialMetrics.metrics.put(Map(s"successful-$eventName" -> currentParseCount))
-        log.info(s"uploading the success count to cloud: Count :(parse) $currentParseCount")
+  private def updateFetchAndParseMetrics(): Unit = {
+    metricMap.foreach{
+      case (metricName, agent) => {
+        agent send {currentCount =>
+          log.info(s"uploading $metricName with count of : $currentCount")
+          CommercialMetrics.metrics.put(Map(metricName -> currentCount))
+          0
+        }
       }
-      parseSuccessCount send (_ - currentParseCount)
-      f
-  }
-
-  private def failureUploader(eventName:String): Future[Unit] = eventName match {
-    case "fetch" =>
-    val currentFetchCount = recordFailure("fetch")
-    val f: Future[Unit] = Future {
-      CommercialMetrics.metrics.put(Map(s"failed-fetches" -> currentFetchCount))
-      log.info(s"uploading the failure count to cloud: Count :(fetch) $currentFetchCount")
     }
-    fetchFailureCount send (_ - currentFetchCount)
-    f
-    case "parse" =>
-      val currentParseCount = recordFailure("parse")
-      val f: Future[Unit] = Future {
-        CommercialMetrics.metrics.put(Map(s"failed-parses" -> currentParseCount))
-        log.info(s"uploading the failure count to cloud: Count :(parse) $currentParseCount")
-      }
-      parseFailureCount send (_ - currentParseCount)
-      f
   }
 
 
@@ -113,10 +68,6 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
 
       val feedName = fetcher.feedMetaData.name
 
-      def recordFetch(maybeDuration: Option[Duration]): Unit = {
-        recordEvent(feedName, "fetch", maybeDuration)
-      }
-
       val msgPrefix = s"Fetching $feedName feed"
       log.info(s"$msgPrefix from ${fetcher.feedMetaData.url} ...")
       val eventualResponse = fetcher.fetch()
@@ -124,14 +75,12 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
         case e: SwitchOffException =>
           log.warn(s"$msgPrefix failed: ${e.getMessage}")
         case NonFatal(e) =>
-          recordFetch(None)
           recordFailure("fetch")
           log.error(s"$msgPrefix failed: ${e.getMessage}", e)
       }
       eventualResponse onSuccess {
         case response =>
           S3FeedStore.put(feedName, response.feed)
-          recordFetch(Some(response.duration))
           recordSuccess("fetch")
           log.info(s"$msgPrefix succeeded in ${response.duration}")
       }
@@ -142,10 +91,6 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
 
       val feedName = parser.feedMetaData.name
 
-      def recordParse(maybeDuration: Option[Duration]): Unit = {
-        recordEvent(feedName, "parse", maybeDuration)
-      }
-
       val msgPrefix = s"Parsing $feedName feed"
       log.info(s"$msgPrefix ...")
       val parsedFeed = parser.parse(S3FeedStore.get(parser.feedMetaData.name))
@@ -153,13 +98,11 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
         case e: SwitchOffException =>
           log.warn(s"$msgPrefix failed: ${e.getMessage}")
         case NonFatal(e) =>
-          recordParse(None)
           recordFailure("parse")
           log.error(s"$msgPrefix failed: ${e.getMessage}", e)
       }
       parsedFeed onSuccess {
         case feed =>
-          recordParse(Some(feed.parseDuration))
           recordSuccess("parse")
           log.info(s"$msgPrefix succeeded: parsed ${feed.contents.size} $feedName in ${feed.parseDuration}")
       }
@@ -175,38 +118,28 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       val feedName = fetcher.feedMetaData.name
       val jobName = mkJobName(feedName, "fetch")
       Jobs.deschedule(jobName)
-      Jobs.scheduleEveryNMinutes(jobName, 15) {
+      Jobs.scheduleEveryNMinutes(jobName, 1) {
         fetchFeed(fetcher)
       }
-//      Jobs.scheduleEveryNSeconds(jobName,10){
-//        fetchFeed(fetcher)
-//      }
     }
 
     for (parser <- FeedParser.all) {
       val feedName = parser.feedMetaData.name
       val jobName = mkJobName(feedName, "parse")
       Jobs.deschedule(jobName)
-      Jobs.scheduleEveryNMinutes(jobName, 15) {
+      Jobs.scheduleEveryNMinutes(jobName, 1) {
         parseFeed(parser)
       }
-//      Jobs.scheduleEveryNSeconds(jobName, 10) {
-//        parseFeed(parser)
-//      }
     }
 
-    //upload to cloudwatch
-    Jobs.scheduleEveryNMinutes("cloudwatchSuccessUpdate",15){
-      successUploader("fetch")
-      successUploader("parse")
-    }
-    Jobs.scheduleEveryNMinutes("cloudwatchFailureUpdate",15){
-      failureUploader("fetch")
-      failureUploader("parse")
+    Jobs.deschedule("update-fetch-and-parse-metrics")
+    Jobs.scheduleEveryNMinutes("update-fetch-and-parse-metrics", 1){
+      updateFetchAndParseMetrics()
+      Future.successful(())
     }
 
     Jobs.deschedule("cloudwatchUpload")
-    Jobs.scheduleEveryNMinutes("cloudwatchUpload", 15) {
+    Jobs.scheduleEveryNMinutes("cloudwatchUpload", 1) {
       CommercialMetrics.metrics.upload()
       Future.successful(())
     }
