@@ -257,21 +257,12 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val FabricAdverts = Switch(
-    SwitchGroup.Commercial,
-    "fabric-adverts",
-    "Request 'fabric' format adverts (88x71s) from DFP",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 31),
-    exposeClientSide = true
-  )
-
   val v2JobsTemplate = Switch(
     SwitchGroup.Commercial,
     "v2-jobs-template",
     "Jobs component using template v2",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 27),
+    sellByDate = new LocalDate(2016, 5, 4),
     exposeClientSide = false
   )
 
@@ -280,7 +271,7 @@ trait CommercialSwitches {
     "v2-masterclasses-template",
     "Masterclasses component using template v2",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 27),
+    sellByDate = new LocalDate(2016, 5, 4),
     exposeClientSide = false
   )
 
@@ -289,7 +280,7 @@ trait CommercialSwitches {
     "v2-books-template",
     "Books component using template v2",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 27),
+    sellByDate = new LocalDate(2016, 5, 4),
     exposeClientSide = false
   )
 
@@ -298,7 +289,7 @@ trait CommercialSwitches {
     "v2-travel-template",
     "Travel component using template v2",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 27),
+    sellByDate = new LocalDate(2016, 5, 4),
     exposeClientSide = false
   )
 
@@ -307,7 +298,7 @@ trait CommercialSwitches {
     "v2-soulmates-template",
     "Soulmates component using template v2",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 27),
+    sellByDate = new LocalDate(2016, 5, 4),
     exposeClientSide = false
   )
 
@@ -316,7 +307,7 @@ trait CommercialSwitches {
     "v2-blended-template",
     "Blended component using template v2",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 27),
+    sellByDate = new LocalDate(2016, 5, 4),
     exposeClientSide = false
   )
 
@@ -325,7 +316,7 @@ trait CommercialSwitches {
     "v2-manual-single-template",
     "Manual single component using template v2",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 27),
+    sellByDate = new LocalDate(2016, 5, 4),
     exposeClientSide = true
   )
 
@@ -334,7 +325,7 @@ trait CommercialSwitches {
     "v2-manual-multiple-template",
     "Manual multiple component using template v2",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 27),
+    sellByDate = new LocalDate(2016, 5, 4),
     exposeClientSide = true
   )
 
@@ -343,7 +334,7 @@ trait CommercialSwitches {
     "v2-capi-single-template",
     "Capi single component using template v2",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 27),
+    sellByDate = new LocalDate(2016, 5, 4),
     exposeClientSide = false
   )
 
@@ -352,7 +343,7 @@ trait CommercialSwitches {
     "v2-capi-multiple-template",
     "Capi multiple component using template v2",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 27),
+    sellByDate = new LocalDate(2016, 5, 4),
     exposeClientSide = false
   )
 
@@ -361,16 +352,7 @@ trait CommercialSwitches {
     "v2-fixed-container-template",
     "Fixed paid containers using template v2",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 27),
-    exposeClientSide = false
-  )
-
-  val v2DynamicContainerTemplate = Switch(
-    SwitchGroup.Commercial,
-    "v2-dynamic-container-template",
-    "Dynamic paid containers using template v2",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 27),
+    sellByDate = new LocalDate(2016, 5, 4),
     exposeClientSide = false
   )
 
@@ -379,8 +361,17 @@ trait CommercialSwitches {
     "cards-decide-paid-container-branding",
     "If on, the cards will decide the branding of their container",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 27),
+    sellByDate = new LocalDate(2016, 5, 4),
     exposeClientSide = false
+  )
+
+  val staticBadgesSwitch = Switch(
+    SwitchGroup.Commercial,
+    "static-badges",
+    "If on, all badges are served server side",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 5, 25),
+    exposeClientSide = true
   )
 
   val requestOutOfPageSlotAlways = Switch(
