@@ -112,5 +112,6 @@ define([
             }, this);
         }
     };
+
     return FabricV1;
 });

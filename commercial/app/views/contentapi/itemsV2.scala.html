@@ -13,7 +13,7 @@
   optSponsorType: Option[String],
   optSponsorLabel: Option[String])(implicit request: RequestHeader)
 
-@containerWrapper(Seq("legacy", "capi", optSponsdorType.getOrElse(""), optSponsorType.map(t => s"tone-$t").getOrElse("")),
+@containerWrapper(Seq("legacy", "capi", optSponsorType.getOrElse(""), optSponsorType.map(t => s"tone-$t").getOrElse("")),
                   Some(s"merchandising | capi | multiple $omnitureId"),
                   optBadge = Some(badge),
                   optKicker = Some(fragments.commercial.paidForMeta()),
