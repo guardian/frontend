@@ -132,8 +132,9 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       }
     }
 
-    Jobs.deschedule("update-fetch-and-parse-metrics")
-    Jobs.scheduleEveryNMinutes("update-fetch-and-parse-metrics", 15){
+    val jobName = "update-fetch-and-parse-metrics"
+    Jobs.deschedule(jobName)
+    Jobs.scheduleEveryNMinutes(jobName, 15){
       updateFetchAndParseMetrics()
       Future.successful(())
     }
