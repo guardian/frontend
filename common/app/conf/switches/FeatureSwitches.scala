@@ -5,15 +5,6 @@ import org.joda.time.LocalDate
 
 trait FeatureSwitches {
 
-  val PurpleRainSwitch = Switch(
-    SwitchGroup.Feature,
-    "purple-rain",
-    "If this switch is on, the weather will be purple rain",
-    safeState = On,
-    sellByDate = new LocalDate(2016, 4, 25),
-    exposeClientSide = false
-  )
-
   val FixturesAndResultsContainerSwitch = Switch(
     SwitchGroup.Feature,
     "fixtures-and-results-container",
