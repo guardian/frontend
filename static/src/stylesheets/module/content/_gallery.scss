@@ -309,7 +309,7 @@
 
         // Overwriting media tone header so that you can see the image instead
         .tonal__header {
-            background-color: rgba(0, 0, 0, 0);
+            background-color: rgb(0, 0, 0);
         }
 
         .meta__numbers {
@@ -407,11 +407,11 @@
         .block-share__item--facebook,
         .block-share__item--twitter,
         .block-share__item--pinterest {
-            background-color: rgba(0, 0, 0, 0);
+            background-color: rgb(0, 0, 0);
             border: 1px solid $neutral-2;
 
             &:hover {
-                background-color: rgba(0, 0, 0, 0);
+                background-color: rgb(0, 0, 0);
             }
 
             &.inline-icon, .inline-icon {
@@ -421,11 +421,11 @@
     }
 
     .social-icon, .block-share__item {
-        background-color: rgba(0, 0, 0, 0);
+        background-color: rgb(0, 0, 0);
         border: 1px solid $neutral-2;
 
         &:hover {
-            background-color: rgba(0, 0, 0, 0);
+            background-color: rgb(0, 0, 0);
         }
 
         &.inline-icon, .inline-icon {
@@ -536,7 +536,7 @@
     }
 
     .gallery__img-container {
-        background-color: rgba(0, 0, 0, 0);
+        background-color: rgb(0, 0, 0);
 
         @include mq(tablet) {
             border-left: 1px dotted #484848;
