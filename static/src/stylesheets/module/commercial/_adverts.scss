@@ -592,11 +592,11 @@
         display: inline-block;
         float: none;
         clear: none;
+        margin-left: $gs-gutter / 2;
     }
 
     .ad-slot--paid-for-badge .ad-slot--paid-for-badge__logo {
         display: inline-block;
-        margin-left: $gs-gutter / 2;
         vertical-align: middle;
         max-height: 5 * $gs-baseline;
     }
