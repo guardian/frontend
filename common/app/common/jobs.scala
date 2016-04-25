@@ -30,8 +30,6 @@ object Jobs extends Logging {
         f().onComplete {
           case Success(_) =>
             outstanding.send(map => map.updated(name, map(name) - 1))
-            val timeFired = context.getScheduledFireTime
-            println(s"$name was fired at $timeFired and was successful")
             log.info(s"Finished job: $name")
           case Failure(t) =>
             outstanding.send(map => map.updated(name, map(name) - 1))
