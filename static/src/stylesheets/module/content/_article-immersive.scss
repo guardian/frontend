@@ -24,7 +24,6 @@
 
     .content__series-label {
         @include fs-header(1);
-        display: block;
         float: none;
         padding-top: $gs-baseline / 2;
         margin-bottom: 0;
