@@ -74,7 +74,7 @@
 .content--has-body {
     // if it's audio and there's body text, we display an advert
     .content__main-column--audio {
-        min-height: 274px;
+        min-height: $gs-row-height * 9;
     }
 
     // increase height if we have sponsorship logos
