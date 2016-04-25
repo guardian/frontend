@@ -27,10 +27,7 @@
                     @fragments.witnessCallToAction(gallery.content)
                     <ul class="gallery">
                         @gallery.lightbox.largestCrops.zipWithRowInfo.map { case (image, row) =>
-                            @* Skipping first image, as that is used for the background*@
-                            @if(row.rowNum != 1) {
-                                @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum-1, gallery.lightbox.imageContainer(row.rowNum - 1))
-                            }
+                            @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum, gallery.lightbox.imageContainer(row.rowNum - 1))
                         }
                     </ul>
                     @fragments.witnessCallToAction(gallery.content)
@@ -77,7 +74,10 @@
                 @fragments.share.blockLevelSharing("img-" + rowNum.toString, gallery.sharelinks.elementShares("img-" + rowNum.toString, image.path), gallery.metadata.contentType, isNewGallery = true)
             </div>
 
-            <div class="gallery__img-container gallery__img-container@if(image.width >= image.height) {--landscape} else {--portrait}">
+            <a class="gallery__img-container gallery__img-container@if(image.width >= image.height) {--landscape} else {--portrait} js-gallerythumbs"
+                href="@LinkTo{@gallery.metadata.url#img-@rowNum}"
+                data-link-name="Launch Gallery Lightbox" data-is-ajax>
+
                 <picture>
                     @* IE 9 needs this workaround as per https://scottjehl.github.io/picturefill/ *@
                         <!--[if IE 9]><video style="display: none;"><![endif]-->
@@ -102,7 +102,7 @@
                     alt="@image.altText.getOrElse("")"
                     src="@ImgSrc.getFallbackUrl(imageElement.images)" />
                 </picture>
-            </div>
+            </a>
         </figure>
     </li>
 
