@@ -72,7 +72,10 @@ define([
                 && (window.location.protocol === 'https:' ||  window.location.hash === '#force-sw')
                 && detect.getUserAgent.browser === 'Chrome') {
 
-   */       if(detect.getUserAgent.browser === 'Chrome') {
+   */
+
+            if(detect.getUserAgent.browser === 'Chrome') {
+                console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ GH")
                 notifications.init();
             }
         }
