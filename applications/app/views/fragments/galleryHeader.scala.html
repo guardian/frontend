@@ -48,47 +48,42 @@
                     @if(showBadge && !item.commercial.isAdvertisementFeature) {
                         @fragments.commercial.badge(item)
                     }
-
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="gs-container">
-            @fragments.contentMeta(item)
-        </div>
+    <div class="gs-container">
+
+        @fragments.contentMeta(item)
 
         @if(item.fields.standfirst.isDefined) {
             <div class="content__wrapper--standfirst">
-                <div class="gs-container">
-                    @if(showBadge && item.commercial.isAdvertisementFeature) {
-                        <div class="content__meta-container js-content-meta js-football-meta">
-                            @fragments.commercial.badge(item)
-                        </div>
-                    }
-                    @fragments.standfirst(item)
-                </div>
+                @if(showBadge && item.commercial.isAdvertisementFeature) {
+                    <div class="content__meta-container js-content-meta js-football-meta">
+                        @fragments.commercial.badge(item)
+                    </div>
+                }
+                @fragments.standfirst(item)
             </div>
         }
 
-        <div class="gs-container">
-            <span class="meta__break"></span>
+        <span class="meta__break"></span>
 
-            @if(!item.content.hasTonalHeaderByline) {
-                @fragments.meta.byline(item.trail.byline, item.tags)
-            }
+        @if(!item.content.hasTonalHeaderByline) {
+            @fragments.meta.byline(item.trail.byline, item.tags)
+        }
 
-            @if(item.content.tags.contributors.length == 1) {
-                @if(item.content.hasTonalHeaderByline && (item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty) || item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty))) { <p class="meta__contact-header hide-until-leftcol">Contact author</p> }
-                @fragments.meta.contactAuthor(item.tags)
-            }
+        @if(item.content.tags.contributors.length == 1) {
+            @if(item.content.hasTonalHeaderByline && (item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty) || item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty))) { <p class="meta__contact-header hide-until-leftcol">Contact author</p> }
+            @fragments.meta.contactAuthor(item.tags)
+        }
 
-            @if(!item.trail.shouldHidePublicationDate) {
-                @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.tags.isLiveBlog, item.fields.isLive)
-            }
+        @if(!item.trail.shouldHidePublicationDate) {
+            @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.tags.isLiveBlog, item.fields.isLive)
+        }
 
-            <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
-
-        </div>
+        <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
 
     </div>
 </header>
