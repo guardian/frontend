@@ -20,5 +20,3 @@ object Global extends WithFilters(Filters.common: _*)
   with Logstash {
   override lazy val applicationName = "frontend-commercial"
 }
-
-
