@@ -692,7 +692,7 @@ define([
                 adTargetingMap = event.slot.getTargetingMap(),
                 adKeywords = adTargetingMap ? adTargetingMap['k'].join(', ') : '';
 
-            reportError(new Error('dfp returned an empty ad slot'), {
+            reportError(new Error('dfp returned an empty ad response'), {
                 feature: 'commercial',
                 adUnit: adUnitPath,
                 adSlot: adSlotId,
