@@ -47,7 +47,6 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
 
         }
     }
-
 }
 
 @mixin notifications-button-toned($tone, $foreground: $news-main-1, $background: #ffffff) {
@@ -91,8 +90,6 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
     }
 }
 
-
-
 @include notifcations-button-style();
 @include notifications-button-toned(live, $live-default, $neutral-8);
 @include notifications-button-toned(dead, $live-default, $neutral-8);
@@ -100,15 +97,15 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
 .live-notifications-denied {
     position: fixed;
     display: block;
-    top: 0.625rem;
+    top: .625rem;
     left: 5.275rem;
     width: 26.825rem;
     height: 4.7625rem;
     background: fade-out($live-default, 1 - .95);
     transition: background-color .25s ease;
-    filter:alpha(opacify=50);
-    -moz-opacity: 0.5;
-    -khtml-opacity: 0.5;
+    filter: alpha(opacify=50);
+    -moz-opacity: .5;
+    -khtml-opacity: .5;
     z-index: 15000;
     color: $neutral-8;
 
@@ -139,7 +136,7 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     border-bottom: 10px solid $live-default;
-    top: -0.6225rem;
+    top: -.6225rem;
 }
 
 .live-notifications-explainer {
@@ -164,7 +161,6 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
             border-color: #ffffff;
         }
     }
-
 }
 
 .live-notifications-explainer::after {
@@ -178,7 +174,13 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     border-bottom: 10px solid $live-default;
-    top: 2.700rem;
+    top: 2.7rem;
+}
+
+.live-notifications-explainer-svg {
+    svg {
+        @include fs-textSans(3);
+    }
 }
 
 

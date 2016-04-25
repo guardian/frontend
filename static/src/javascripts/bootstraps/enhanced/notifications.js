@@ -48,9 +48,7 @@ define([
             return modules.getReg().then(function (reg) {return reg.pushManager.getSubscription();});
         },
 
-        init: function() {
-
-            modules.configureSubscribeButton();
+        init: function() {modules.configureSubscribeButton();
             if(!modules.hasSubscribed() && !modules.hasDismissedExplainer()) {
                 modules.showExplainer();
             }
@@ -73,8 +71,8 @@ define([
         showExplainer: function() {
             var src = template(explainer,{
                 closeIcon : svgs('closeCentralIcon'),
-                imgMobile: svgs('mobileNotificationsExplainer', ['mobile-only', 'live-notifications-explainer']),
-                imgDesktop: svgs('desktopNotificationsExplainer', ['hide-on-mobile', 'live-notifications-explainer'])
+                imgMobile: svgs('mobileNotificationsExplainer', ['mobile-only', 'live-notifications-explainer-svg']),
+                imgDesktop: svgs('desktopIllustration', ['hide-on-mobile', 'live-notifications-explainer-svg'])
             });
 
             fastdom.write(function () {
@@ -85,7 +83,7 @@ define([
                         userPrefs.set(explainerDismissed, true);
                         $('.js-live-notifications-explainer').remove();
                     });
-                })
+                });
             });
         },
 
@@ -105,7 +103,7 @@ define([
 
         subscribeHandler: function () {
             modules.subscribe().then(modules.follow)
-                .catch( function(err){
+                .catch( function () {
                     if (Notification.permission === 'denied') {
                         modules.notificationsDeniedMessage();
                     } });
@@ -123,7 +121,7 @@ define([
                     } else {
                         return reg.pushManager.subscribe({userVisibleOnly: true});
                     }
-                })
+                });
             });
         },
 

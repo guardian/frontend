@@ -53,6 +53,7 @@ define([
     'inlineSvg!svgs/notifications-explainer-desktop',
     'inlineSvg!svgs/desktop-illustration-notifications',
     'inlineSvg!svgs/mobile-illustration-notifications',
+    'inlineSvg!svgs/desktop_illustration',
     'inlineSvg!svgs/commercial/adblock-coins-us',
     'lodash/objects/isArray'
 ], function (
@@ -106,6 +107,7 @@ define([
     notificationsExplainerDesktop,
     desktopNotificationsExplainer,
     mobileNotificationsExplainer,
+    desktopIllustration,
     adblockCoinsUS,
     isArray
 ) {
@@ -160,6 +162,7 @@ define([
         notificationsExplainerDesktop: notificationsExplainerDesktop,
         desktopNotificationsExplainer: desktopNotificationsExplainer,
         mobileNotificationsExplainer: mobileNotificationsExplainer,
+        desktopIllustration: desktopIllustration,
         logomembershipwhite: membershipLogoWhite
     };
 
