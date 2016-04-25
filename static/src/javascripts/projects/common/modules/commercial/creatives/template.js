@@ -82,7 +82,7 @@ define([
                 this.params.originalCreative = 'manual-single';
                 this.params.creative = 'manual-container';
                 this.params.creativeCard = 'manual-card-large';
-                this.params.classNames = ['legacy', 'legacy-single', this.params.toneClass.replace('commercial--', ''), this.params.Toneclass.replace('commercial--tone-', '')];
+                this.params.classNames = ['legacy', 'legacy-single', this.params.toneClass.replace('commercial--', ''), this.params.toneClass.replace('commercial--tone-', '')];
             }
 
             if (this.params.creative === 'manual-multiple' && config.switches.v2ManualMultipleTemplate ) {

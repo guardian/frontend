@@ -51,6 +51,15 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
+  val CheckETagsSwitch = Switch(
+    SwitchGroup.Performance,
+    "check-etags",
+    "If this switch is on, empty 304 not modified responses will be returned for requests with the correct etag",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 5, 20),
+    exposeClientSide = false
+  )
+
   val CircuitBreakerSwitch = Switch(
     SwitchGroup.Performance,
     "circuit-breaker",
@@ -212,6 +221,16 @@ trait PerformanceSwitches {
     "If this switch is on then content api calls will be requested in thrift format, instead of json format.",
     safeState = Off,
     sellByDate = new LocalDate(2016, 8, 5),
+    exposeClientSide = false
+  )
+
+  // Owner: dotcom health (tbonnin)
+  val RetryFailedAccuWeatherApiRequests = Switch(
+    SwitchGroup.Performance,
+    "retry-failed-accuweather-requests",
+    "If this switch is ON then failed requests to the Accuweather would be retried 2 more times before failing",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 4, 27), //Wednesday
     exposeClientSide = false
   )
 

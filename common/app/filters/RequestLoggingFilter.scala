@@ -23,7 +23,7 @@ object RequestLoggingFilter extends Filter with Logging with ExecutionContexts {
         }
 
       case Failure(error) =>
-        log.error(s"${rh.method} ${rh.uri} failed after ${stopWatch.elapsed} ms", error)
+        log.warn(s"${rh.method} ${rh.uri} failed after ${stopWatch.elapsed} ms", error)
     }
 
     result

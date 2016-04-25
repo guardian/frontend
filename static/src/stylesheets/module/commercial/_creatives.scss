@@ -730,55 +730,6 @@
 
 }
 
-// Fabric
-// =============================================================================
-
-// Layout
-
-.ad-slot--fabric {
-
-    &.ad-slot--top-banner-ad {
-        width: auto;
-        padding-bottom: 0;
-        padding-left: 0;
-    }
-
-    @include mq(mobile, tablet) {
-        // Full width on mobile fronts
-        width: auto;
-    }
-}
-
-.fabric {
-    height: 250px;
-    transition: height .8s;
-
-    // This is just for demonstration purposes, whilst the ad is populated with ipsum text
-    color: #f0f0f0;
-    background: #303030;
-}
-
-.fabric--expanded {
-    height: 500px;
-}
-
-// Label
-
-.fabric__label-wrapper {
-    .top-banner-ad-container--desktop & {
-        width: auto;
-    }
-}
-
-.fabric__label-wrapper .fabric__label {
-    padding: 0;
-    border-top: 0; // undoes default borders on fc-container-inner
-    text-align: left;
-}
-
-// Animations
-// =============================================================================
-
 @keyframes textanimation {
     0% {
         background-position: 0 -250px;

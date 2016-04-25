@@ -77,8 +77,8 @@
             case Some(svg@CrosswordSvg(_)) => {
                 <div class="fc-item__media-wrapper">
                     <div class="fc-item__image-container u-responsive-ratio inlined-image">
-                        <img src="@svg.imageUrl" class="responsive-img js-crossword-thumbnail" alt=""
-                        role="presentation" data-crossword-id="@svg.persistenceId" />
+                        <object type="image/svg+xml" data="@svg.imageUrl" class="responsive-img js-crossword-thumbnail" alt=""
+                        role="presentation" data-crossword-id="@svg.persistenceId" ></object>
                     </div>
                 </div>
             }

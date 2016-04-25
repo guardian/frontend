@@ -14,6 +14,7 @@ import ophan.SurgingContentAgent
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
+import campaigns.PersonalInvestmentsCampaign
 
 object Commercial {
 
@@ -244,7 +245,10 @@ final case class MetaData (
 ){
 
   def hasPageSkin(edition: Edition) = if (isPressedPage){
-    DfpAgent.isPageSkinned(adUnitSuffix, edition)
+    DfpAgent.hasPageSkin(adUnitSuffix, edition)
+  } else false
+  def hasPageSkinOrAdTestPageSkin(edition: Edition) = if (isPressedPage){
+    DfpAgent.hasPageSkinOrAdTestPageSkin(adUnitSuffix, edition)
   } else false
   def sizeOfTakeoverAdsInSlot(slot: AdSlot, edition: Edition): Seq[AdSize] = if (isPressedPage) {
     DfpAgent.sizeOfTakeoverAdsInSlot(slot, adUnitSuffix, edition)
@@ -578,9 +582,12 @@ final case class Tags(
   lazy val isClimateChangeSeries = tags.exists(t => t.id =="environment/series/keep-it-in-the-ground")
   lazy val isUSMinuteSeries = tags.exists(t => t.id == "us-news/series/the-campaign-minute-2016")
 
+  lazy val keywordIds = keywords.map { _.id }
+
   def javascriptConfig: Map[String, JsValue] = Map(
     ("keywords", JsString(keywords.map { _.name }.mkString(","))),
-    ("keywordIds", JsString(keywords.map { _.id }.mkString(","))),
+    ("keywordIds", JsString(keywordIds.mkString(","))),
+    ("hasSuperStickyBanner", JsBoolean(PersonalInvestmentsCampaign.isRunning(keywordIds))),
     ("nonKeywordTagIds", JsString(nonKeywordTags.map { _.id }.mkString(","))),
     ("richLink", JsString(richLink.getOrElse(""))),
     ("openModule", JsString(openModule.getOrElse(""))),
