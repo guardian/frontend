@@ -383,6 +383,15 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
+  val staticBadgesSwitch = Switch(
+    SwitchGroup.Commercial,
+    "static-badges",
+    "If on, all badges are served server side",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 5, 25),
+    exposeClientSide = true
+  )
+
   val requestOutOfPageSlotAlways = Switch(
     SwitchGroup.Commercial,
     "request-out-of-page-slot-always",
