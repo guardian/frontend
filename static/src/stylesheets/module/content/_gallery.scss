@@ -616,17 +616,6 @@
         background-position: center center;
         background-size: cover;
     }
-
-    // immersive Overwrites
-    .content__head--immersive.is-fixed-height {
-        .content__header {
-            position: static;
-        }
-    }
-
-    .content--immersive .content__main {
-        padding-top: $gs-baseline*2;
-    }
 }
 
 // Make related content the right colour.
