@@ -71,7 +71,7 @@ define([
         showExplainer: function() {
             var src = template(explainer,{
                 closeIcon : svgs('closeCentralIcon'),
-                imgMobile: svgs('mobileNotificationsExplainer', ['mobile-only', 'live-notifications-explainer-svg']),
+                imgMobile: svgs('notificationsExplainerMobile', ['mobile-only', 'live-notifications-explainer-svg']),
                 imgDesktop: svgs('notificationsExplainerDesktop', ['hide-on-mobile', 'live-notifications-explainer-svg'])
             });
 
