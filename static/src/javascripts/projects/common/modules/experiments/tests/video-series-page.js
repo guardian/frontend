@@ -5,7 +5,7 @@ define([
 ) {
     return function () {
 
-        this.id = 'VideoSeries';
+        this.id = 'VideoSeriesPage';
         this.start = '2016-04-21';
         this.expiry = '2016-04-25';
         this.author = 'James Gorrie';

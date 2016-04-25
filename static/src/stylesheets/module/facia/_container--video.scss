@@ -43,6 +43,8 @@ $video-width-desktop: 700px;
         left: 0;
         right: 0;
         bottom: 0;
+        pointer-events: none;
+        z-index: 2;
 
         video {
             display: none;
@@ -280,6 +282,15 @@ $video-width-desktop: 700px;
     @include mq(wide) {
         width: gs-span(3) + $gs-gutter * 2;
     }
+
+    .inline-guardian-video-logo svg {
+        margin-top: 4px;
+        max-width: 100%;
+
+        &:hover .inline-guardian-video-logo__title {
+            fill: #ffffff;
+        }
+    }
 }
 
 .video-playlist__item--first {
@@ -303,6 +314,7 @@ $video-width-desktop: 700px;
     background-color: rgba(0, 0, 0, .5);
     height: gs-height(3);
     margin-bottom: -(get-line-height(textSans, 3) + 4px);
+    pointer-events: auto;
 
     @include mq(desktop, leftCol) {
         opacity: 0;
@@ -318,6 +330,7 @@ $video-width-desktop: 700px;
 
     .video-playlist__item .vjs-playing ~ & {
         @include mq(desktop) {
+            visibility: hidden;
             opacity: 0;
         }
     }
@@ -343,6 +356,14 @@ $video-width-desktop: 700px;
 
     .fc-item__title--quoted .inline-quote {
         fill: #ffffff;
+    }
+
+    .fc-item__link {
+        color: #ffffff;
+
+        &:visited {
+            color: $neutral-3;
+        }
     }
 
     .fc-item__byline,

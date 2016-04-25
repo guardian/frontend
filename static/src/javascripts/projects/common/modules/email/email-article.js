@@ -61,7 +61,8 @@ define([
                 description: 'Sign up to Film Today and we\'ll deliver to you the latest movie news, blogs, big name interviews, festival coverage, reviews and more.',
                 successHeadline: 'Thank you for signing up to Film Today',
                 successDescription: 'We will send you our picks of the most important headlines tomorrow afternoon.',
-                modClass: 'end-article'
+                modClass: 'end-article',
+                insertMethod: insertBottomOfArticle
             },
             theFiver: {
                 listId: '218',

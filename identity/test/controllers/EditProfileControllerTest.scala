@@ -5,7 +5,7 @@ import client.Auth
 import com.gu.identity.cookie.GuUCookieData
 import com.gu.identity.model._
 import idapiclient.{TrackingData, _}
-import model.Countries
+import model.{PhoneNumbers, Countries}
 import org.mockito.Mockito._
 import org.mockito.{ArgumentCaptor, Matchers}
 import org.scalatest._
@@ -32,6 +32,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
   val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true)))
   val testAuth = ScGuU("abc", GuUCookieData(user, 0, None))
   val authenticatedUser = AuthenticatedUser(user, testAuth)
+  val phoneNumbers = PhoneNumbers
 
   val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder])
 
@@ -69,7 +70,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
 
       val result = controller.submitPublicProfileForm().apply(fakeRequest)
 
-      Await.result(result, 5.seconds)
+      Await.result(result, 2.seconds)
 
       "then the user should be saved on the ID API" in {
         val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])
