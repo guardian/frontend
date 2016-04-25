@@ -269,7 +269,7 @@ $multimedia-support-5: #161616;
         max-width: none;
 
         @include mq(tablet) {
-            margin-left: gs-span(3);
+            margin-left: gs-span(3) + $gs-gutter(2);
         }
     }
 
@@ -282,8 +282,7 @@ $multimedia-support-5: #161616;
         .meta__save-for-later,
         .content__headline,
         .content__standfirst {
-            margin-left: gs-span(3);
-            margin-right: gs-span(1);
+            margin-left: gs-span(3) + $gs-gutter;
             max-width: gs-span(8);
         }
 
@@ -313,6 +312,10 @@ $multimedia-support-5: #161616;
         // Overwriting media tone header so that you can see the image instead
         .tonal__header {
             background-color: rgba(0, 0, 0, 0);
+
+            .content__headline {
+                font-weight: 200;
+            }
         }
 
         .meta__numbers {
@@ -320,18 +323,44 @@ $multimedia-support-5: #161616;
         }
 
         .content__dateline,
-        .sharecount__heading {
+        .sharecount__heading,
+        .commentcount2__heading {
             color: $neutral-2;
         }
 
         .byline a,
-        .sharecount__value {
+        .sharecount__value,
+        .commentcount2__value {
             color: $neutral-3;
+        }
+
+        .inline-comment-16 {
+            fill: $neutral-2;
+        }
+
+        a.commentcount2 {
+            &:hover {
+                text-decoration: none;
+            }
         }
 
         .save-for-later__button--save .inline-icon {
             background-color: $multimedia-support-5;
         }
+
+        .tonal__main--tone-media .byline,
+        .tonal__main--tone-media .content__dateline,
+        .tonal__main--tone-media .content__meta-container,
+        .tonal__main--tone-media .ad-slot--paid-for-badge--article,
+        .tonal__main--tone-media .submeta hr,
+        .tonal__main--tone-media .commentcount,
+        .tonal__main--tone-media .meta__numbers,
+        .tonal__main--tone-media .meta__social,
+        .tonal__main--tone-media .meta__number:not(u-h)+.meta__number,
+        .ad-slot--dark .ad-slot__label {
+            border-color: $neutral-1;
+        }
+
     }
 
     .content__wrapper--headline {
@@ -350,7 +379,7 @@ $multimedia-support-5: #161616;
     }
 
     .inline-camera svg {
-        width: 44px;
+        width: .86em;
         height: auto;
     }
 
@@ -366,12 +395,16 @@ $multimedia-support-5: #161616;
     }
 
     .meta__social {
-        border-top: 1px dotted $neutral-2;
-        border-bottom: 1px dotted $neutral-2;
+        border-top: 1px dotted $neutral-1;
+        border-bottom: 1px dotted $neutral-1;
+    }
+
+    .meta__number:not(.u-h) + .meta__number {
+        border-left: 1px solid $neutral-1;
     }
 
     .meta__break {
-        border-top: 1px dotted $neutral-2;
+        border-top: 1px dotted $neutral-1;
         display: block;
         width: 10%;
     }
@@ -407,11 +440,12 @@ $multimedia-support-5: #161616;
     .block-share--gallery {
         position: relative;
 
-        .block-share__item--facebook,
-        .block-share__item--twitter,
-        .block-share__item--pinterest {
+        .block-share__item {
             background-color: rgba(0, 0, 0, 0);
             border: 1px solid $neutral-2;
+            transition: border-color .15s ease-out;
+            width: 32px;
+            height: 32px;
 
             &:hover {
                 background-color: rgba(0, 0, 0, 0);
@@ -419,6 +453,18 @@ $multimedia-support-5: #161616;
 
             &.inline-icon, .inline-icon {
                 fill: $neutral-3;
+
+                svg {
+                    height: 88%;
+                    width: 88%;
+                    vertical-align: middle;
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    right: 0;
+                    left: 0;
+                    margin: auto;
+                }
             }
         }
     }
@@ -426,9 +472,11 @@ $multimedia-support-5: #161616;
     .social-icon, .block-share__item {
         background-color: rgba(0, 0, 0, 0);
         border: 1px solid $neutral-2;
+        transition: border-color .15s ease-out;
 
         &:hover {
             background-color: rgba(0, 0, 0, 0);
+            border-color: $neutral-6;
         }
 
         &.inline-icon, .inline-icon {
@@ -508,7 +556,7 @@ $multimedia-support-5: #161616;
             width: gs-span(3);
             top: 0;
             right: auto;
-            margin-left: -(gs-span(3));
+            margin-left: -(gs-span(3) + $gs-gutter);
         }
     }
 
@@ -578,6 +626,10 @@ $multimedia-support-5: #161616;
         .content__header {
             position: relative;
         }
+    }
+
+    .content--immersive .content__main {
+        padding-top: $gs-baseline*2;
     }
 }
 
