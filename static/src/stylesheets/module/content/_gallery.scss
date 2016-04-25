@@ -256,6 +256,13 @@
     left: 0;
 }
 
+.content__labels--gallery {
+    border: 0;
+    margin-bottom: 0;
+    width: auto;
+    float: none;
+}
+
 // TODO: When the time comes, remove `.new-gallery` class completely and remove old gallery styling
 .new-gallery {
     .ad-slot--dark {
@@ -272,7 +279,7 @@
 
     @include mq(tablet) {
         .content__dateline,
-        .content__labels,
+        .content__labels--gallery,
         .byline,
         .content__meta-container,
         .meta__break,
@@ -392,13 +399,6 @@
     .content__series-label,
     .content__section-label {
         display: inline-block;
-    }
-
-    .content__labels {
-        border: 0;
-        margin-bottom: 0;
-        width: auto;
-        float: none;
     }
 
     .block-share--gallery {
