@@ -76,11 +76,8 @@ define([
         var $iframe = getAdIframe();
         var slotWidth = $iframe.attr('width');
         var slotHeight = $iframe.attr('height');
-        var slotSize = [slotWidth, slotHeight].join(',');
         // iframe may not have been injected at this point
-        var isFluid250 = slotSize === '88,70';
-        var isFabricV1 = slotSize === '88,71';
-        var isFluidAd = $iframe.length > 0 && (isFluid250 || isFabricV1);
+        var isFluidAd = $iframe.length > 0 && [slotWidth, slotHeight].join(',') === '88,70';
         // fluid ads are currently always 250px high. We can't just read the client height as fluid ads are
         // injected asynchronously, so we can't be sure when they will be in the dom
         var fluidAdInnerHeight = 250;
