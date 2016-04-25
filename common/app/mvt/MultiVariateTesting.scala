@@ -56,6 +56,9 @@ object ABGalleryRedesignVariant extends TestDefinition(
   override def isParticipating(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ab-gallery-redesign").contains("variant") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
   }
+  def shouldShow(contentType: String)(implicit request: RequestHeader): Boolean = {
+     isParticipating && contentType.toLowerCase == "gallery"
+  }
 }
 
 object ABHeadlinesTestControl extends TestDefinition(
