@@ -33,6 +33,17 @@
     .content__main {
         padding-top: $gs-baseline / 2;
     }
+
+    .content__standfirst {
+        a {
+            color: $neutral-6;
+            border-bottom: 1px solid rgba($neutral-6, .4);
+
+            &:hover {
+                border-bottom-color: rgba($neutral-6, 1);
+            }
+        }
+    }
 }
 
 .content--immersive-article {
@@ -95,16 +106,6 @@
             height: 2px;
             width: gs-span(2);
             background-color: rgba(255, 255, 255, .2);
-        }
-
-        a {
-            color: $feature-mute;
-            border-bottom: 1px solid rgba($feature-mute, .4);
-
-            &:hover {
-                text-decoration: none;
-                border-bottom-color: rgba($feature-mute, .8);
-            }
         }
     }
 
