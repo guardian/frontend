@@ -79,7 +79,7 @@ CommentBox.prototype.errorMessages = {
     /* Custom error codes */
     API_CORS_BLOCKED: /*CORS blocked by HTTP/1.0 proxy*/'Could not post due to your internet settings, which might be controlled by your provider. Please contact your administrator or disable any proxy servers or VPNs and try again.',
     API_ERROR: 'Sorry, there was a problem posting your comment.  Please try another browser or network connection.  Reference code ',
-    EMAIL_VERIFIED: '<span>Sent. Please check your email to verify ' +
+    EMAIL_VERIFIED: '<span class="d-comment-box__error-meta">Sent. Please check your email to verify ' +
         ' your email address' + '. Once verified post your comment.</span>',
     EMAIL_VERIFIED_FAIL: 'We are having technical difficulties. Please try again later or ' +
         '<a href="/send/email" class="js-id-send-validation-email"><strong>resend the verification</strong></a>.',
