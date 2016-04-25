@@ -39,14 +39,11 @@
             case "fixed/medium/fast-XI"          => { @fixedMediumFastXI(frontId, containerIndex, containerModel) }
             case "fixed/medium/fast-XII"         => { @fixedMediumFastXII(frontId, containerIndex, containerModel) }
             case "fixed/large/slow-XIV"          => { @fixedLargeSlowXIV(frontId, containerIndex, containerModel) }
-            case "dynamic/fast"                  => { @dynamicFast(frontId, containerIndex, containerModel) }
-            case "dynamic/slow"                  => { @dynamicSlow(frontId, containerIndex, containerModel) }
-            case "dynamic/package"               => { @dynamicPackage(frontId, containerIndex, containerModel) }
             case _ => {
             }
         }
 
-        @if(containerModel.content.showMoreCards != Nil && containerModel.content.showMoreCards.length > 0){
+        @if(containerModel.content.showMoreCards != Nil && containerModel.content.showMoreCards.nonEmpty){
             <details class="adverts__more">
                 <summary class="button button--medium button--primary button--show-more" data-text="@containerModel.content.title">
                     @fragments.inlineSvg("plus", "icon")

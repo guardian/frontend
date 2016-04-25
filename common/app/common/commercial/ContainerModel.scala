@@ -17,18 +17,9 @@ case class ContainerContent(
                              title: String,
                              description: Option[String],
                              targetUrl: Option[String],
-                             fixed: FixedContent,
-                             dynamic: DynamicContent,
+                             initialCards: Seq[CardContent],
                              showMoreCards: Seq[CardContent]
                            )
-
-case class FixedContent(initialCards: Seq[CardContent])
-
-case class DynamicContent(
-                           hugeCards: Seq[CardContent],
-                           veryBigCards: Seq[CardContent],
-                           bigCards: Seq[CardContent]
-                         )
 
 object ContainerModel {
 
@@ -64,8 +55,7 @@ object ContainerModel {
           title,
           description,
           targetUrl,
-          fixed = FixedContent(cards.take(maxInitialSize)),
-          dynamic = DynamicContent(Nil, Nil, Nil),
+          initialCards = cards.take(maxInitialSize),
           showMoreCards = {
             if (collection.config.hideShowMore) Nil
             else cards.drop(maxInitialSize)
@@ -96,8 +86,7 @@ object ContainerModel {
           title,
           description,
           targetUrl,
-          fixed = FixedContent(Nil),
-          dynamic = DynamicContent(hugeCards, veryBigCards, bigCards),
+          initialCards = Nil,
           showMoreCards = {
             if (collection.config.hideShowMore) Nil
             else cards drop (hugeCards.size + veryBigCards.size + bigCards.size)
