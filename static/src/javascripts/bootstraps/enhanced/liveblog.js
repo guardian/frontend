@@ -68,15 +68,10 @@ define([
         },
 
         initNotifications: function() {
-   /*         if ((ab.isInVariant('LiveBlogChromeNotificationsInternal', 'control') || ab.isInVariant('LiveBlogChromeNotificationsProd', 'show-notifications') )
+            if ((ab.isInVariant('LiveBlogChromeNotificationsInternal', 'control') || ab.isInVariant('LiveBlogChromeNotificationsProd', 'show-notifications') )
                 && (window.location.protocol === 'https:' ||  window.location.hash === '#force-sw')
-                && detect.getUserAgent.browser === 'Chrome') {
-
-   */
-
-            if(detect.getUserAgent.browser === 'Chrome') {
-                console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ GH")
-                notifications.init();
+                && detect.getUserAgent.browser === 'Chrome' && config.page.isLive) {
+                    notifications.init();
             }
         }
     };
