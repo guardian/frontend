@@ -339,8 +339,6 @@ CommentBox.prototype.fail = function(xhr) {
 
     if (xhr.status == 0) {
         this.error('API_CORS_BLOCKED');
-    } else if (response.errorCode === 'EMAIL_NOT_VALIDATED') {
-        this.invalidEmailError();
     } else if (this.errorMessages[response.errorCode]) {
         this.error(response.errorCode);
     } else {
