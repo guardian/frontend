@@ -27,10 +27,7 @@
                     @fragments.witnessCallToAction(gallery.content)
                     <ul class="gallery">
                         @gallery.lightbox.largestCrops.zipWithRowInfo.map { case (image, row) =>
-                            @* Skipping first image, as that is used for the background*@
-                            @if(row.rowNum != 1) {
-                                @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum-1, gallery.lightbox.imageContainer(row.rowNum - 1))
-                            }
+                            @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum, gallery.lightbox.imageContainer(row.rowNum - 1))
                         }
                     </ul>
                     @fragments.witnessCallToAction(gallery.content)

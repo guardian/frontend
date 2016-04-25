@@ -7,19 +7,20 @@
 
     <style>
         @defining(
-            item.content.elements.elements.head
+            item.content.trail.trailPicture.head
         ) { picture =>
+
             .content__header__background-image {
-                background-image: url('http:@Html(ImgSrc.findNearestSrc(picture.images, Profile(width = Some(1000))).getOrElse(""))');
+                background-image: url('http:@Html(ImgSrc.findNearestSrc(picture, Profile(width = Some(1000))).getOrElse(""))');
             }
             @@media (min-width: @{layout.Phablet.minWidth}px) {
                 .content__header__background-image {
-                    background-image: url('http:@Html(ImgSrc.findNearestSrc(picture.images, Profile(width = Some(1300))).getOrElse(""))');
+                    background-image: url('http:@Html(ImgSrc.findNearestSrc(picture, Profile(width = Some(1300))).getOrElse(""))');
                 }
             }
             @@media (min-width: @{layout.Wide.minWidth}px) {
                 .content__header__background-image {
-                    background-image: url('http:@Html(ImgSrc.findNearestSrc(picture.images, Profile(width = Some(2200))).getOrElse(""))');
+                    background-image: url('http:@Html(ImgSrc.findNearestSrc(picture, Profile(width = Some(2200))).getOrElse(""))');
                 }
             }
         }
