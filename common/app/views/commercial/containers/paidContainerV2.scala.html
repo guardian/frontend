@@ -43,7 +43,7 @@
             }
         }
 
-        @if(containerModel.content.showMoreCards != Nil && containerModel.content.showMoreCards.nonEmpty){
+        @if(containerModel.content.showMoreCards.nonEmpty){
             <details class="adverts__more">
                 <summary class="button button--medium button--primary button--show-more" data-text="@containerModel.content.title">
                     @fragments.inlineSvg("plus", "icon")
