@@ -24,7 +24,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
   )
 
 
-  private val metricMap = Map(
+  private lazy val metricMap = Map(
     "fetch-failure" -> AkkaAgent(0.0),
     "fetch-success" -> AkkaAgent(0.0),
     "parse-failure" -> AkkaAgent(0.0),
