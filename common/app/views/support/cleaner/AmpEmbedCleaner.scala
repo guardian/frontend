@@ -97,7 +97,8 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
       iframe.attr("width", "5")
       iframe.attr("height", "1")
       iframe.attr("layout", "responsive")
-      iframe.attr("sandbox", "allow-scripts")
+      iframe.attr("resizable", "")
+      iframe.attr("sandbox", "allow-scripts allow-same-origin")
       iframe.attr("src", linkToInteractive)
 
       // All interactives should resize to the correct height once they load,
