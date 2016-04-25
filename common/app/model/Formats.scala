@@ -1,14 +1,14 @@
 package model
 
-import common.{NavItem, SectionLink, Pagination}
+import common.{NavItem, Pagination, SectionLink}
 import model.content._
 import model.facia.PressedCollection
 import model.liveblog.{BlockAttributes, BodyBlock}
-import quiz.{Image => _, _}
+import model.pressed._
 import org.joda.time.DateTime
-import play.api.libs.json._
 import play.api.libs.functional.syntax._
-import pressed._
+import play.api.libs.json._
+import quiz.{Image => _, _}
 
 object ElementsFormat {
 
@@ -176,6 +176,9 @@ object ContentTypeFormat {
   implicit val paginationFormat = MetaDataFormat.paginationFormat
   implicit val podcastFormat = Json.format[Podcast]
   implicit val referenceFormat = Json.format[Reference]
+  implicit val sponsorshipTypeFormat = SponsorshipType.format
+  implicit val sponsorshipTargetingFormat = Json.format[SponsorshipTargeting]
+  implicit val sponsorshipFormat = Json.format[Branding]
   implicit val tagPropertiesFormat = Json.format[TagProperties]
   implicit val tagFormat = Json.format[Tag]
   val tagsFormat = Json.format[Tags]
