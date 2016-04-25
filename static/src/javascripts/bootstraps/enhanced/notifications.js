@@ -109,7 +109,7 @@ define([
                     } });
         },
 
-            unSubscribeHandler: function () {
+        unSubscribeHandler: function () {
             modules.unFollow().then(modules.unSubscribe);
         },
 

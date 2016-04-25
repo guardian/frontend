@@ -1,8 +1,6 @@
-$breaking-news-icon-width: 36px;
-$breaking-news-close-icon-width: 32px;
+$live-notifications-icon-width: 36px;
+$live-notifications-icon-width: 32px;
 $notifications-button-height: 28px;
-$popup-anchor-arrow-size: 16px;
-$popup-top: $headerHeight + $gs-baseline/2 + 3;
 
 @mixin notifcations-button-style($foreground: $neutral-2, $background: #ffffff) {
     .notifications__button {
@@ -111,8 +109,8 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
 
     .button {
         padding: 0;
-        width: $breaking-news-close-icon-width;
-        height: $breaking-news-close-icon-width;
+        width: $live-notifications-icon-width;
+        height: $live-notifications-icon-width;
         border-color: #ffffff;
 
         @include mq(tablet) {
@@ -149,8 +147,8 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
 
     .button {
         padding: 0;
-        width: $breaking-news-close-icon-width;
-        height: $breaking-news-close-icon-width;
+        width: $live-notifications-icon-width;
+        height: $live-notifications-icon-width;
         border-color: #ffffff;
 
         @include mq(tablet) {
@@ -199,7 +197,7 @@ $popup-top: $headerHeight + $gs-baseline/2 + 3;
 
     .inline-marque-36 {
         position: absolute;
-        left: 0 - $breaking-news-icon-width - $gs-gutter / 2;
+        left: 0 - $live-notifications-icon-width - $gs-gutter / 2;
         top: 0;
     }
 }
