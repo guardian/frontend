@@ -4,9 +4,7 @@ import model.pressed._
 
 object FixtureBuilder {
 
-  def mkPressedContent(id: Int,
-                       group: Option[DynamicGroup] = None,
-                       kicker: Option[ItemKicker] = None): PressedContent = {
+  def mkPressedContent(id: Int, kicker: Option[ItemKicker] = None): PressedContent = {
 
     def mkProperties(): PressedProperties = PressedProperties(
       isBreaking = false,
@@ -52,12 +50,7 @@ object FixtureBuilder {
       starRating = None,
       shortUrlPath = None,
       shortUrl = "",
-      group = group match {
-        case Some(HugeGroup) => "3"
-        case Some(VeryBigGroup) => "2"
-        case Some(BigGroup) => "1"
-        case _ => "0"
-      },
+      group = "0",
       isLive = false
     )
 

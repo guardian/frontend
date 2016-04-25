@@ -92,38 +92,7 @@ class ContainerModelTest extends FlatSpec with Matchers with OptionValues {
   it should "populate initial cards in a fixed container" in {
     val pressedCollection = mkPressedCollection("fixed/medium/fast-XII")
     val model = ContainerModel.fromPressedCollection(pressedCollection)
-    model.content.fixed.initialCards.size shouldBe 4
-  }
-
-  it should "populate huge cards in a dynamic container" in {
-    val pressedCollection = mkPressedCollection(
-      collectionType = "dynamic/fast",
-      curated = List(
-        mkPressedContent(1, Some(HugeGroup)),
-        mkPressedContent(2, Some(HugeGroup)),
-        mkPressedContent(3, Some(HugeGroup))
-      )
-    )
-    val model = ContainerModel.fromPressedCollection(pressedCollection)
-    model.content.dynamic.hugeCards.size shouldBe 1
-  }
-
-  it should "populate very big cards in a dynamic container" in {
-    val pressedCollection = mkPressedCollection(
-      collectionType = "dynamic/fast",
-      curated = List(
-        mkPressedContent(1, Some(HugeGroup)),
-        mkPressedContent(2, Some(HugeGroup)),
-        mkPressedContent(3, Some(VeryBigGroup)),
-        mkPressedContent(4, Some(VeryBigGroup)),
-        mkPressedContent(5, Some(VeryBigGroup)),
-        mkPressedContent(6, Some(BigGroup)),
-        mkPressedContent(7),
-        mkPressedContent(8)
-      )
-    )
-    val model = ContainerModel.fromPressedCollection(pressedCollection)
-    model.content.dynamic.veryBigCards.size shouldBe 4
+    model.content.initialCards.size shouldBe 4
   }
 
   it should "populate show-more cards" in {

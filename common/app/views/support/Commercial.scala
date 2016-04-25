@@ -1,7 +1,7 @@
 package views.support
 
 import common.Edition
-import common.commercial.{ContainerContent, ContainerModel}
+import common.commercial.ContainerModel
 import common.dfp.AdSize.{leaderboardSize, responsiveSize}
 import common.dfp._
 import conf.switches.Switches._
@@ -91,14 +91,9 @@ object Commercial {
           branding.exists(_.sponsorshipType == "advertisement-features")
 
         val content = container.content
-        val allCards = content.fixed.initialCards ++
-          content.dynamic.bigCards ++
-          content.dynamic.veryBigCards ++
-          content.dynamic.hugeCards
+        val paidCards = content.initialCards.filter(card => isPaid(card.branding))
 
-        val paidCards = allCards.filter(card => isPaid(card.branding))
-
-        isPaid(container.branding) || !paidCards.isEmpty
+        isPaid(container.branding) || paidCards.nonEmpty
       }
 
       !isPaidFront &&
