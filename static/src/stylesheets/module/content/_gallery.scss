@@ -285,7 +285,7 @@
     .meta__save-for-later {
         position: relative;
         left: 0;
-        border-top: none;
+        border-top: 0;
     }
 
     // TODO: Replace all media tones instead of overwriting the defaults
@@ -409,7 +409,7 @@
 
     .ad-slot--paid-for-badge--article {
         border-color: $neutral-1;
-        border-bottom: none;
+        border-bottom: 0;
 
         @include mq(desktop) {
             & {
@@ -509,7 +509,7 @@
 
         @include mq(tablet) {
             &:before {
-                content: "";
+                content: '';
                 position: absolute;
                 top: 0;
                 bottom: 0;
