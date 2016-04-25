@@ -4,7 +4,7 @@
     <div class="fc-container__inner">Advertisement</div>
 </div>
 <%}%>
-<div class="creative--fabric-v1 l-side-margins%>" style="
+<div class="creative--fabric-v1 l-side-margins hide-until-tablet" style="
     background-color: <%=data.backgroundColor%>;
     background-image: url(<%=data.backgroundImage%>);
     background-position: <%=data.backgroundPosition%>;
@@ -25,6 +25,29 @@
             <div class="fabric-v1_layer fabric-v1_layer3" style="
             background-image: url(<%=data.layerThreeBGImage%>);
             background-position: <%=data.layerThreeBGPosition%>;
+        "></div>
+        </div>
+    </a>
+</div>
+<div class="creative--fabric-v1 l-side-margins mobile-only" style="
+    background-color: <%=data.backgroundColor%>;
+    background-image: url(<%=data.backgroundImageM%>);
+    background-position: <%=data.backgroundPositionM%>;
+    background-repeat: <%=data.backgroundRepeatM%>;
+">
+    <a href="<%=data.link%>" target="_blank">
+        <div class="gs-container">
+            <div class="fabric-v1_layer fabric-v1_layer1" style="
+            background-image: url(<%=data.layerOneBGImageM%>);
+            background-position: <%=data.layerOneBGPositionM%>;
+        "></div>
+            <div class="fabric-v1_layer fabric-v1_layer1" style="
+            background-image: url(<%=data.layerTwoBGImageM%>);
+            background-position: <%=data.layerTwoBGPositionM%>;
+        "></div>
+            <div class="fabric-v1_layer fabric-v1_layer1" style="
+            background-image: url(<%=data.layerThreeBGImageM%>);
+            background-position: <%=data.layerThreeBGPositionM%>;
         "></div>
         </div>
     </a>
