@@ -35,7 +35,7 @@
     color: #ffffff;
 }
 
-.content--immersive .from-content-api .gu-display__content-title,
+.content--immersive-article .from-content-api .gu-display__content-title,
 .gu-display__content-title {
     @include f-headlineSans;
     @include font-size(20, 20);
@@ -86,7 +86,7 @@
     color: #ffffff;
 }
 
-.content--immersive .from-content-api .gu-display__content-color--dark,
+.content--immersive-article .from-content-api .gu-display__content-color--dark,
 .gu-display__content-color--dark {
     color: #000000;
 }
