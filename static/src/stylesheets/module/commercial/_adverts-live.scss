@@ -1,0 +1,28 @@
+.adverts--live {
+}
+
+.adverts--tone-live {
+    > .adverts__header {
+        background: $live-main-1;
+    }
+}
+
+.advert--live {
+    .button {
+        @include button-colour(
+            $live-main-1,
+            null
+        );
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+        .button {
+            @include button-colour(
+                darken($live-main-1, 5%),
+                null
+            );
+        }
+    }
+}

@@ -1,0 +1,28 @@
+.adverts--shop {
+}
+
+.adverts--tone-shop {
+    > .adverts__header {
+        background: $features-main-1;
+    }
+}
+
+.advert--shop {
+    .button {
+        @include button-colour(
+            $features-support-4,
+            null
+        );
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+        .button {
+            @include button-colour(
+                darken($features-support-4, 5%),
+                null
+            );
+        }
+    }
+}
