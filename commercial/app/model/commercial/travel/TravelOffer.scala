@@ -28,6 +28,13 @@ case class TravelOffer(id: String,
     case Some(x) => s"$x nights"
     case None => ""
   }
+
+  def formattedPrice : Option[String] = fromPrice map { price =>
+    if (price % 1 == 0)
+      f"£$price%,.0f"
+    else
+      f"£$price%,.2f"
+  }
 }
 
 object TravelOffer {

@@ -41,7 +41,7 @@
                                 <div class="lineitem--high__offer">
                                     <a class="lineitem__link" href="@clickMacro@offer.offerUrl" data-link-name="merchandising-travel-v@{version}_@{date}-high-@{offer.title}-title">
                                         <h4 class="lineitem__title">@offer.title</h4>
-                                        <p class="lineitem__meta">@offer.durationInWords from <span class="lineitem__price">£@offer.fromPrice</span></p>
+                                        <p class="lineitem__meta">@offer.durationInWords from <span class="lineitem__price">@offer.formattedPrice</span></p>
                                     </a>
                                     <a class="lineitem__cta button button--primary button--small" href="@clickMacro@offer.offerUrl" data-link-name="merchandising-travel-v@{version}_@{date}-high-@{offer.title}-book-now">
                                         Book now@fragments.inlineSvg("arrow-right", "icon", List("i-right"))
@@ -58,7 +58,7 @@
                                 <a class="lineitem__link" href="@clickMacro@offer.offerUrl" data-link-name="merchandising-travel-v@{version}_@{date}-high-@{offer.title}">
                                     <div class="lineitem__image-crop"><img class="lineitem__image" src="@offer.imageUrl" alt=""/></div>
                                     <h4 class="lineitem__title">@offer.title</h4>
-                                    <p class="lineitem__meta">@offer.durationInWords from <span class="lineitem__price">£@offer.fromPrice</span></p>
+                                    <p class="lineitem__meta">@offer.durationInWords from <span class="lineitem__price">@offer.formattedPrice</span></p>
                                 </a>
                                 <a class="lineitem__cta button button--primary button--small" href="@clickMacro@offer.offerUrl" data-link-name="merchandising-travel-v@{version}_@{date}-high-@{offer.title}-book-now">
                                     Book now@fragments.inlineSvg("arrow-right", "icon", List("i-right"))

@@ -248,9 +248,6 @@
 
 // New gallery stuff
 
-// TODO: put in pasteup
-$multimedia-support-5: #161616;
-
 // The main image needs to take up 100vh and the slim header needs to sit just on top of it.
 .l-header--new-gallery {
     position: absolute;
@@ -570,7 +567,7 @@ $multimedia-support-5: #161616;
 
         a {
             color: $neutral-4;
-            border-bottom: 1px solid #767676;
+            border-bottom: 1px solid $neutral-2;
 
             &:hover {
                 border-bottom: 1px solid $neutral-7;
@@ -606,25 +603,24 @@ $multimedia-support-5: #161616;
         }
     }
 
-    // landscape gallery images now are wider than they were before.
-    .gallery__img-container--landscape,
-    .gallery__img--landscape {
+    // All images should fit within the viewport height
+    .gallery__img-container,
+    .gallery__img {
         width: 100%;
-        height: auto;
     }
 
-    .content__header--background-image {
+    .content__header__background-image {
         height: 100vh;
+        // The headline wrapper is position absolute within this div
         position: relative;
         background-position: center center;
         background-size: cover;
-        display: block;
     }
 
     // immersive Overwrites
     .content__head--immersive.is-fixed-height {
         .content__header {
-            position: relative;
+            position: static;
         }
     }
 
