@@ -14,19 +14,11 @@
         @include fs-headline(9);
         font-weight: 200;
         line-height: 1;
-        padding-top: $gs-baseline / 2;
         padding-bottom: 1.5rem;
 
         @include mq(desktop) {
             font-size: 4rem;
         }
-    }
-
-    .content__series-label {
-        @include fs-header(1);
-        float: none;
-        padding-top: $gs-baseline / 2;
-        margin-bottom: 0;
     }
 
     .content__main {
@@ -77,6 +69,13 @@
         @include mq(wide) {
             margin-left: gs-span(3) + $gs-gutter;
         }
+    }
+
+    .content__series-label {
+        @include fs-header(1);
+        float: none;
+        padding-top: $gs-baseline / 2;
+        margin-bottom: 0;
     }
 
     .content__series-label__link {

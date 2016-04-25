@@ -228,24 +228,6 @@
     }
 }
 
-//disable hover state for lightbox and related content as they're on dark backgrounds
-.gallery__most-popular,
-.gallery-lightbox--endslate {
-    .tone-media--item {
-        .u-faux-block-link--hover {
-            background-color: $media-background !important;
-
-            .responsive-img {
-                opacity: 1 !important;
-            }
-
-            .fc-item__link {
-                text-decoration: underline !important;
-            }
-        }
-    }
-}
-
 // New gallery stuff
 
 // The main image needs to take up 100vh and the slim header needs to sit just on top of it.
@@ -258,6 +240,11 @@
 
 // TODO: When the time comes, remove `.new-gallery` class completely and remove old gallery styling
 .new-gallery {
+    .content__main > .gs-container {
+        border-top: 1px solid $neutral-1;
+        padding-top: $gs-baseline / 2;
+    }
+
     .ad-slot--dark {
         background-color: $multimedia-support-5;
     }
@@ -266,17 +253,14 @@
         max-width: none;
 
         @include mq(tablet) {
-            margin-left: gs-span(3) + $gs-gutter(2);
+            margin-left: gs-span(3) + $gs-gutter;
+            margin-right: -$gs-gutter;
         }
     }
 
-    @include mq(tablet) {
-        .content__dateline,
+    @include mq(desktop) {
         .content__labels,
-        .byline,
         .content__meta-container,
-        .meta__break,
-        .meta__save-for-later,
         .content__headline,
         .content__standfirst {
             margin-left: gs-span(3) + $gs-gutter;
@@ -301,6 +285,7 @@
     .meta__save-for-later {
         position: relative;
         left: 0;
+        border-top: none;
     }
 
     // TODO: Replace all media tones instead of overwriting the defaults
@@ -401,7 +386,7 @@
     }
 
     .meta__break {
-        border-top: 1px dotted $neutral-1;
+        border-top: 1px solid $neutral-1;
         display: block;
         width: 10%;
     }
@@ -417,35 +402,57 @@
         }
     }
 
-    .content__series-label {
-        padding-top: 0;
-        margin-left: 1rem;
+    .byline {
+        min-height: 0;
+        padding-bottom: 0;
     }
 
-    .content__series-label,
-    .content__section-label {
-        display: inline-block;
+    .ad-slot--paid-for-badge--article {
+        border-color: $neutral-1;
+        border-bottom: none;
+
+        @include mq(desktop) {
+            & {
+                position: absolute;
+            }
+        }
     }
 
     .content__labels {
         border: 0;
         margin-bottom: 0;
+        padding-bottom: 0;
         width: auto;
         float: none;
+    }
+
+    .content__section-label {
+        margin-right: $gs-gutter / 4;
+    }
+
+    .content__series-label {
+        font-weight: normal;
+    }
+
+    .content__series-label,
+    .content__section-label {
+        @include fs-header(1, $size-only: true);
+        float: left;
     }
 
     .block-share--gallery {
         position: relative;
 
         .block-share__item {
-            background-color: rgba(0, 0, 0, 0);
+            background-color: transparent;
             border: 1px solid $neutral-2;
+            box-sizing: border-box;
             transition: border-color .15s ease-out;
             width: 32px;
             height: 32px;
 
             &:hover {
-                background-color: rgba(0, 0, 0, 0);
+                background-color: transparent;
             }
 
             &.inline-icon, .inline-icon {
@@ -466,18 +473,32 @@
         }
     }
 
-    .social-icon, .block-share__item {
-        background-color: rgba(0, 0, 0, 0);
+    .social-icon,
+    .block-share__item {
+        background-color: transparent;
         border: 1px solid $neutral-2;
+        box-sizing: border-box;
         transition: border-color .15s ease-out;
 
         &:hover {
-            background-color: rgba(0, 0, 0, 0);
+            background-color: transparent;
             border-color: $neutral-6;
         }
 
         &.inline-icon, .inline-icon {
-            fill: $neutral-3
+            fill: $neutral-3;
+
+            svg {
+                height: 88%;
+                width: 88%;
+                vertical-align: middle;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: 0;
+                margin: auto;
+            }
         }
     }
 
@@ -528,7 +549,6 @@
 
     .gallery__figcaption {
         @include fs-textSans(1);
-        padding-top: $gs-baseline / 4;
         overflow: visible;
         max-height: 100%;
         position: relative;
@@ -568,6 +588,7 @@
         a {
             color: $neutral-4;
             border-bottom: 1px solid $neutral-2;
+            transition: border-color .15s ease-out;
 
             &:hover {
                 border-bottom: 1px solid $neutral-7;

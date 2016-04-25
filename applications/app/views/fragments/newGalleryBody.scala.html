@@ -39,7 +39,7 @@
 
     @if(gallery.content.showInRelated &&
         !gallery.commercial.isAdvertisementFeature ) {
-        <div class="gallery__most-popular facia-container fc-container--media hide-on-childrens-books-site">
+        <div class="gallery__most-popular fc-container--media hide-on-childrens-books-site">
             <div class="js-gallery-most-popular tonal--@toneClass(gallery)">
                 <div class="fc-container">
                     <div class="fc-container__inner">
@@ -53,6 +53,8 @@
             </div>
         </div>
     }
+</div>
+<div class="l-side-margins">
     @fragments.contentFooter(gallery, related, "media")
 </div>
 
