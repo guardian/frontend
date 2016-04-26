@@ -9,7 +9,7 @@
 @import conf.switches.Switches._
 
 @defining((model.article, Edition(request).timezone)) { case (article, timezone) =>
-<div class="js-notificications-blocked"></div>
+<div class="js-notifications-blocked"></div>
 <div class="l-side-margins">
     <article id="live-blog" data-test-id="live-blog"
         class="content content--liveblog tonal tonal--@toneClass(article) blog @if(article.fields.isLive){is-live} section-@article.trail.sectionName.toLowerCase"
@@ -57,7 +57,7 @@
 
                         <div class="js-top-marker"></div>
                         <div class="js-live-blog__sticky-components">
-                            <div class="js-live-blog__sticky-components-container blog__sticky-components-container">
+                            <div class="js-live-blog__sticky-components-container live-blog__sticky-components-container">
                                 @if(article.hasKeyEvents) {
                                     <div class="modern-visible js-updates-desktop">
                                         <div data-component="timeline">
@@ -72,7 +72,7 @@
                                 <div class="js-live-notifications live-notifications" data-component="notifications"></div>
                             </div>
                         </div>
-                    <div class="js-components-container"></div>
+                        <div class="js-components-container"></div>
                     </div>
 
                     @fragments.dropdown("Live feed", Some("live-feed"), true) {

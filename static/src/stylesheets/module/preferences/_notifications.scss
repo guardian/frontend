@@ -21,6 +21,7 @@ $notifications-button-height: 28px;
             background-color: $foreground;
         }
 
+        &:focus,
         &:hover {
             background-color: darken($foreground, 10%);
             .inline-icon {
@@ -37,6 +38,7 @@ $notifications-button-height: 28px;
             background-color: $background;
         }
 
+        &:focus,
         &:hover {
             background-color: darken($background, 10%);
             .inline-icon {
@@ -55,16 +57,14 @@ $notifications-button-height: 28px;
 
 .live-notifications {
     margin-bottom: $gs-baseline /2;
+    padding-bottom: $gs-baseline;
     position: relative;
 }
 
-.notifications__button {
-
-    .inline-icon {
-        svg {
-            width: 1.143em;
-            height: .857em;
-        }
+.notifications__button .inline-icon {
+    svg {
+        width: 1.143em;
+        height: .857em;
     }
 }
 
@@ -98,13 +98,11 @@ $notifications-button-height: 28px;
     top: .625rem;
     left: 5.275rem;
     width: 26.825rem;
-    height: 4.7625rem;
-    background: fade-out($live-default, 1 - .95);
+    height: 3.7625rem;
+    background: fade-out($live-default, .05);
     transition: background-color .25s ease;
-    filter: alpha(opacify=50);
-    -moz-opacity: .5;
-    -khtml-opacity: .5;
-    z-index: 15000;
+    opacity: .75;
+    z-index: $zindex-notifications-permissions-warning;
     color: $neutral-8;
 
     .button {
@@ -117,20 +115,21 @@ $notifications-button-height: 28px;
             border-color: colour(live-mute);
         }
 
+        &:focus,
         &:hover {
             border-color: #ffffff;
         }
     }
 }
 
-.live-notifications-denied::after {
+.live-notifications-denied:after {
     content: '';
     display: inline-block;
     width: 0;
     height: 0;
     border-top: 0;
     position: absolute;
-    left: 3%;
+    left: 12px;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     border-bottom: 10px solid $live-default;
@@ -144,6 +143,7 @@ $notifications-button-height: 28px;
     background: $live-default;
     color: $neutral-8;
     display: block;
+    padding: $gs-baseline $gs-gutter ($gs-baseline/3)*2 $gs-gutter;
 
     .button {
         padding: 0;
@@ -155,13 +155,14 @@ $notifications-button-height: 28px;
             border-color: colour(live-mute);
         }
 
+        &:focus,
         &:hover {
             border-color: #ffffff;
         }
     }
 }
 
-.live-notifications-explainer::after {
+.live-notifications-explainer:after {
     content: '';
     display: inline-block;
     width: 0;
@@ -177,6 +178,7 @@ $notifications-button-height: 28px;
 
 .live-notifications-explainer-svg {
     svg {
+        width: 100%;
         @include fs-textSans(3);
     }
 }
@@ -187,13 +189,11 @@ $notifications-button-height: 28px;
 .live-notifications-explainer__content {
     position: relative;
     box-sizing: border-box;
-    padding: $gs-baseline 0 ($gs-baseline/3)*2 $gs-gutter;
 }
 
 .live-notifications-denied__header,
 .live-notifications-explainer__header {
     position: relative;
-    padding-right: gs-span(1) + $gs-gutter * .5;
 
     .inline-marque-36 {
         position: absolute;
@@ -202,8 +202,14 @@ $notifications-button-height: 28px;
     }
 }
 
+.live-notifications-explainer__header {
+    padding-right: $gs-baseline * 2;
+}
+
 .live-notifications-denied__header {
-    @include fs-textSans(3);;
+    @include fs-textSans(3);
+    padding: ($gs-baseline / 3 ) * 2 $gs-baseline * 3 $gs-baseline / 3 ($gs-baseline / 3 ) * 2;
+
 }
 
 .live-notifications-explainer__header-blurb {
@@ -223,15 +229,18 @@ $notifications-button-height: 28px;
 .live-notifications-denied__item-options,
 .live-notifications-explainer__item-options {
     position: absolute;
-    right: 0;
 }
 
 .live-notifications-denied__item-options {
     top: $gs-baseline / 2;
+    right: $gs-gutter / 5;
+
 }
 
 .live-notifications-explainer__item-options {
-    top: $gs-baseline;
+    top: $gs-baseline / 50;
+    right: -$gs-gutter;
+
 }
 
 

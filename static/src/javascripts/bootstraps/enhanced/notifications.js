@@ -48,14 +48,15 @@ define([
             return modules.getReg().then(function (reg) {return reg.pushManager.getSubscription();});
         },
 
-        init: function() {modules.configureSubscribeButton();
+        init: function() {
+            modules.configureSubscribeButton();
             if(!modules.hasSubscribed() && !modules.hasDismissedExplainer()) {
                 modules.showExplainer();
             }
         },
 
         configureSubscribeButton: function () {
-            var $follow = bonzo(qwery('.js-live-notifications')[0]),
+            var $follow = bonzo($('.js-live-notifications')),
                 subscribed = modules.checkSubscriptions(),
                 handler = subscribed ? modules.unSubscribeHandler : modules.subscribeHandler,
                 src = template(followLink, {
@@ -76,9 +77,10 @@ define([
             });
 
             fastdom.write(function () {
-                var notifications = $('.js-live-notifications');
-                notifications.append(src);
-                bean.one(notifications[0], 'click', '.js-live-notifications__item__close', function() {
+                var $notifications = $('.js-live-notifications');
+                $notifications.append(src);
+               // bean.one($notifications[0], 'click', '.js-live-notifications__item__close', function() {
+                bean.one($('.js-live-notifications__item__close')[0], 'click', function() {
                     fastdom.write(function() {
                         userPrefs.set(explainerDismissed, true);
                         $('.js-live-notifications-explainer').remove();
@@ -95,7 +97,7 @@ define([
         notificationsDeniedMessage: function() {
             var src = template(permissionsTemplate,{closeIcon : svgs('closeCentralIcon')});
             fastdom.write(function () {
-                var blocked = $('.js-notificications-blocked');
+                var blocked = $('.js-notifications-blocked');
                 blocked.prepend(src);
                 bean.one(blocked[0], 'click', '.js-live-notifications-denied__item__close', modules.closeDisplayMessage);
             });
@@ -106,7 +108,8 @@ define([
                 .catch( function () {
                     if (Notification.permission === 'denied') {
                         modules.notificationsDeniedMessage();
-                    } });
+                    }
+                });
         },
 
         unSubscribeHandler: function () {
@@ -147,7 +150,6 @@ define([
                 });
             }
             modules.configureSubscribeButton();
-
         },
 
         unFollow: function () {
