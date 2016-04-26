@@ -60,4 +60,13 @@ trait FaciaSwitches {
     exposeClientSide = false
   )
 
+  val FaciaPressCrossAccountStorage = Switch(
+    SwitchGroup.Facia,
+    "facia-press-cross-account-storage",
+    "If this is switched on, facia press will access the bucket in cmsFronts account",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 21),
+    exposeClientSide = false
+  )
+
 }
