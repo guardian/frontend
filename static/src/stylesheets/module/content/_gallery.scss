@@ -297,6 +297,7 @@
 
             .content__headline {
                 font-weight: 200;
+                padding-top: 0;
             }
         }
 
@@ -310,6 +311,7 @@
             color: $neutral-2;
         }
 
+        .byline,
         .byline a,
         .sharecount__value,
         .commentcount2__value {
@@ -330,6 +332,11 @@
             background-color: $multimedia-support-5;
         }
 
+        .save-for-later__button--saved .inline-icon,
+        .save-for-later__button--save:hover .inline-icon {
+            fill: $multimedia-support-5;
+        }
+
         .tonal__main--tone-media .byline,
         .tonal__main--tone-media .content__dateline,
         .tonal__main--tone-media .content__meta-container,
@@ -341,6 +348,10 @@
         .tonal__main--tone-media .meta__number:not(u-h)+.meta__number,
         .ad-slot--dark .ad-slot__label {
             border-color: $neutral-1;
+        }
+
+        .ad-slot__label {
+            padding-right: $gs-gutter;
         }
 
     }
@@ -376,6 +387,15 @@
         margin-bottom: 0;
     }
 
+    .content__meta-container--info {
+        &:before {
+            content: '';
+            border-top: 1px solid $neutral-1;
+            display: block;
+            width: gs-span(1);
+        }
+    }
+
     .meta__social {
         border-top: 1px dotted $neutral-1;
         border-bottom: 1px dotted $neutral-1;
@@ -383,12 +403,6 @@
 
     .meta__number:not(.u-h) + .meta__number {
         border-left: 1px solid $neutral-1;
-    }
-
-    .meta__break {
-        border-top: 1px solid $neutral-1;
-        display: block;
-        width: 10%;
     }
 
     .meta__numbers {
@@ -405,6 +419,24 @@
     .byline {
         min-height: 0;
         padding-bottom: 0;
+    }
+
+    .meta__twitter,
+    .meta__email {
+        margin-bottom: 0;
+
+        & a {
+            color: $neutral-4;
+            background-color: $neutral-1;
+
+            &:hover {
+                background-color: darken($neutral-1, 5%);
+            }
+
+            .inline-tone-fill {
+                fill: $neutral-3;
+            }
+        }
     }
 
     .ad-slot--paid-for-badge--article {
@@ -621,6 +653,28 @@
 
         @include mq(tablet) {
             padding-bottom: 2.5rem;
+        }
+    }
+
+    .keyword-list {
+        .button--tone-media {
+            color: $neutral-4;
+            background-color: $neutral-1;
+            border: 0;
+
+            &:hover {
+                background-color: darken($neutral-1, 5%);
+            }
+        }
+
+        .button--tone-media-variant {
+            color: $neutral-4;
+            border-color: $neutral-2;
+            background-color: $multimedia-support-5;
+
+            &:hover {
+                border-color: $neutral-4;
+            }
         }
     }
 
