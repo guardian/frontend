@@ -164,8 +164,14 @@ case class Branding(
                      sponsorName: String,
                      sponsorLogo: String,
                      sponsorLink: String,
+                     aboutThisLink: String,
                      targeting: Option[SponsorshipTargeting]
                    ) {
+
+  val label = sponsorshipType match {
+    case PaidContent => "Paid for by"
+    case _ => "Supported by"
+  }
 
   def isTargeting(publicationDate: DateTime, edition: Edition): Boolean = {
 
@@ -194,6 +200,7 @@ object Branding {
       sponsorship.sponsorName,
       sponsorship.sponsorLogo,
       sponsorship.sponsorLink,
+      aboutThisLink = "/sponsored-content",
       sponsorship.targeting map SponsorshipTargeting.make
     )
   }
