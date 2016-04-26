@@ -3,6 +3,7 @@
 @import views.html.commercial.cards.itemLargeCard
 @import views.html.commercial.containerWrapper
 @import views.html.fragments.inlineSvg
+@import fragments.commercial.paidForMeta
 @(card: CardContent,
   optLogo: Option[String],
   optCapiTitle: Option[String],
@@ -16,11 +17,12 @@
   clickMacro: Option[String],
   omnitureId: String)(implicit request: RequestHeader)
 
-@containerWrapper(Seq("legacy", "legacy-single", "capi", "tone-capi"),
+@containerWrapper(Seq("legacy", "legacy-single", "capi", optSponsorType.getOrElse(""), optSponsorType.map(t => s"tone-$t").getOrElse("")),
                   Some(s"merchandising | capi | single $omnitureId"),
+                  badgeInHeader =  optSponsorType.map(sponsorType => sponsorType!="paidfor").getOrElse(false),
                   optBadge = Some(badge),
-                  optKicker = Some(fragments.commercial.paidForMeta()),
-                  optStamp = Some(stamp)){
+                  optKicker = optSponsorType.flatMap(sponsorType => if(sponsorType=="paidfor") Some(paidForMeta()) else None),
+                  optStamp = optSponsorType.flatMap(sponsorType => if(sponsorType=="paidfor") Some(stamp) else None)){
 
     @optCapiLink.map { linkUrl =>
         <a href="@clickMacro@linkUrl" class="adverts__logo u-text-hyphenate" data-link-name="header link">@optCapiTitle</a>
