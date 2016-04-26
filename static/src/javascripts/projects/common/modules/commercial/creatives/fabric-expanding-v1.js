@@ -40,7 +40,7 @@ define([
         this.closedHeight = 250;
         this.openedHeight = 500;
 
-        bindAll(this, 'updateBgPosition', 'listener');
+        bindAll(this, 'updateBgPosition', 'onScroll');
     };
 
     FabricExpandingV1.hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
@@ -99,7 +99,7 @@ define([
         }
     };
 
-    FabricExpandingV1.prototype.listener = function () {
+    FabricExpandingV1.prototype.onScroll = function () {
         var that = this;
         if (!this.initialExpandCounter && (window.pageYOffset + bonzo.viewport().height) > that.$adSlot.offset().top + this.openedHeight) {
             var itemId = $('.ad-slot__content', that.$adSlot).attr('id'),
@@ -172,7 +172,7 @@ define([
             }.bind(this));
         }.bind(this));
 
-        mediator.on('window:throttledScroll', this.listener);
+        mediator.on('window:throttledScroll', this.onScroll);
 
         bean.on(this.$adSlot[0], 'click', '.ad-exp__open', function () {
             fastdom.write(function () {
