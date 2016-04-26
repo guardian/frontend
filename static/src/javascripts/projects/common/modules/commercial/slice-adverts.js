@@ -35,15 +35,13 @@ define([
             return false;
         }
 
-        var fabricAdSlot, fabricPromise, adSlots;
-        // get all the containers
-        var containers   = qwery(containerSelector);
-        var prefs        = userPrefs.get('container-states');
-        var isMobile     = detect.getBreakpoint() === 'mobile';
+        var fabricAdSlot, adSlots;
+        var prefs          = userPrefs.get('container-states') || {};
+        var isMobile       = detect.getBreakpoint() === 'mobile';
         var isNetworkFront = ['uk', 'us', 'au'].indexOf(config.page.pageId) !== -1;
-        var hasFabricAd  = (config.page.isFront && config.switches.fabricAdverts && detect.isBreakpoint({max : 'phablet'}));
+        var hasFabricAd    = (config.page.isFront && config.switches.fabricAdverts && detect.isBreakpoint({max : 'phablet'}));
 
-        adSlots = containers
+        adSlots = qwery(containerSelector)
             // get all ad slices
             .map(function (container) {
                 return {
@@ -63,7 +61,7 @@ define([
                 }
 
                 var containerId  = item.container.getAttribute('data-id');
-                var isContainerClosed = prefs && prefs[containerId] === 'closed';
+                var isContainerClosed = prefs[containerId] === 'closed';
                 var isFrontFirst = isNetworkFront && index === 0;
                 return !(isFrontFirst || isContainerClosed);
             })
@@ -87,15 +85,17 @@ define([
             });
 
         if (hasFabricAd) {
+            // if there is no fabric creative, we fall back to loading
+            // a normal MPU instead
             trackAd('dfp-ad--fabric').then(function (isLoaded) {
                 if (!isLoaded) {
                     var adSlot = createAdSlot(adName, 'container-inline');
                     adSlot.className += ' ad-slot--mobile';
-                    fabricAdSlot.parentNode.replaceChild(adSlot, fabricAdSlot);
-                    dfp.addSlot(adSlot);
+                    fastdom.write(function () {
+                        fabricAdSlot.parentNode.replaceChild(adSlot, fabricAdSlot);
+                        dfp.addSlot(adSlot);
+                    });
                 }
-            }).catch(function () {
-                console.log('Doh! fabric never loaded');
             });
         }
 
@@ -105,12 +105,13 @@ define([
 
         function insertOnMobile(item, index) {
             // add a mobile advert after the container
-            bonzo(item.adSlot).insertAfter(item.anchor);
+            item.anchor.parentNode.insertBefore(item.adSlot, item.anchor.nextSibling);
         }
 
         function insertOnTabletPlus(item, index) {
             // add a tablet+ ad to the slice
-            bonzo(item.anchor).removeClass('fc-slice__item--no-mpu').append(item.adSlot);
+            bonzo(item.anchor).removeClass('fc-slice__item--no-mpu');
+            item.anchor.appendChild(item.adSlot);
         }
     }
 
