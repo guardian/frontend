@@ -703,14 +703,29 @@
     }
 }
 
-// Make related content the right colour.
-.l-side-margins--new-gallery .tonal--tone-media {
-    background-color: $multimedia-support-5;
-}
+.l-side-margins--new-gallery {
+    // Todo: Make this the default for all media tones once changes are live
+    &.l-side-margins--media {
+        @include mq(desktop) {
+            &:after,
+            &:before {
+                background: rgba(0, 0, 0, .25);
 
-.fc-container--media {
-     .fc-container__inner,
-     .fc-slice__item+.fc-slice__item:before {
-         border-color: $neutral-1;
-     }
- }
+                .container__banding + .container__banding & {
+                    background: rgba($neutral-1, .15);
+                }
+            }
+        }
+    }
+
+    // Make related content the right colour.
+    .tonal--tone-media {
+        background-color: $multimedia-support-5;
+
+        // Todo: Make this the default for all media tones once changes are live
+        .fc-container__inner,
+        .fc-slice__item+.fc-slice__item:before {
+            border-color: $neutral-1;
+        }
+    }
+}
