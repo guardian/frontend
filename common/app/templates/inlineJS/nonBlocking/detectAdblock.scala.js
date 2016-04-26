@@ -19,9 +19,9 @@ try {
                 var adBlockers = window.guardian.adBlockers;
                 var adStyles = window.getComputedStyle(ad);
 
-                adBlockers.hiddenAds = adStyles.getPropertyValue('display') === 'none';
+                adBlockers.active = adStyles.getPropertyValue('display') === 'none';
                 try {
-                    adBlockers.onDetect(adBlockers.hiddenAds);
+                    adBlockers.onDetect(adBlockers.active);
                 } catch(e) {}
             });
         });

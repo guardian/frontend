@@ -361,9 +361,9 @@ define([
     // end sync adblock detection
 
     var adblockInUse = new Promise(function (resolve) {
-        if (has(window.guardian.adBlockers, 'hiddenAds')) {
+        if (has(window.guardian.adBlockers, 'active')) {
             // adblock detection has completed
-            resolve(window.guardian.adBlockers.hiddenAds);
+            resolve(window.guardian.adBlockers.active);
         } else {
             // Push a listener for when the JS loads
             window.guardian.adBlockers.onDetect = resolve;
