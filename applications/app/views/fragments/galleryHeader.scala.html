@@ -48,25 +48,23 @@
                     @if(showBadge && !item.commercial.isAdvertisementFeature) {
                         @fragments.commercial.badge(item)
                     }
-
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="gs-container">
-            @fragments.contentMeta(item)
-        </div>
+    <div class="gs-container">
+
+        @fragments.contentMeta(item)
 
         @if(item.fields.standfirst.isDefined) {
             <div class="content__wrapper--standfirst">
-                <div class="gs-container">
-                    @if(showBadge && item.commercial.isAdvertisementFeature) {
-                        <div class="content__meta-container js-content-meta js-football-meta">
-                            @fragments.commercial.badge(item)
-                        </div>
-                    }
-                    @fragments.standfirst(item)
-                </div>
+                @if(showBadge && item.commercial.isAdvertisementFeature) {
+                    <div class="content__meta-container js-content-meta js-football-meta">
+                        @fragments.commercial.badge(item)
+                    </div>
+                }
+                @fragments.standfirst(item)
             </div>
         }
 
@@ -89,6 +87,5 @@
                 <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
             </div>
         </div>
-
     </div>
 </header>

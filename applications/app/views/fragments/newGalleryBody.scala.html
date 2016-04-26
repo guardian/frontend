@@ -39,16 +39,12 @@
 
     @if(gallery.content.showInRelated &&
         !gallery.commercial.isAdvertisementFeature ) {
-        <div class="gallery__most-popular fc-container--media hide-on-childrens-books-site">
-            <div class="js-gallery-most-popular tonal--@toneClass(gallery)">
-                <div class="fc-container">
-                    <div class="fc-container__inner">
-                        <div class="fc-container__header">
-                            <h2 class="fc-container__header__title">
-                                <a class="most-viewed-no-js tone-colour" href="@LinkTo{/gallery/most-viewed}" data-link-name="Most viewed galleries">More galleries</a>
-                            </h2>
-                        </div>
-                    </div>
+        <div class="gallery__most-popular facia-container fc-container fc-container--media hide-on-childrens-books-site js-gallery-most-popular tonal--@toneClass(gallery)">
+            <div class="fc-container__inner">
+                <div class="fc-container__header">
+                    <h2 class="fc-container__header__title">
+                        <a class="most-viewed-no-js tone-colour" href="@LinkTo{/gallery/most-viewed}" data-link-name="Most viewed galleries">More galleries</a>
+                    </h2>
                 </div>
             </div>
         </div>

@@ -238,6 +238,13 @@
     left: 0;
 }
 
+.content__labels--gallery {
+    border: 0;
+    margin-bottom: 0;
+    width: auto;
+    float: none;
+}
+
 // TODO: When the time comes, remove `.new-gallery` class completely and remove old gallery styling
 .new-gallery {
     .content__main > .gs-container {
@@ -293,7 +300,7 @@
 
         // Overwriting media tone header so that you can see the image instead
         .tonal__header {
-            background-color: rgba(0, 0, 0, 0);
+            background-color: $multimedia-support-5;
 
             .content__headline {
                 font-weight: 200;
@@ -628,12 +635,15 @@
             }
         }
 
+        // This is the gallery caption title
         > strong:first-child {
             @include fs-headline(2);
             color: $neutral-5;
             display: block;
             margin-bottom: $gs-baseline/2;
 
+            // The first br is display none after the title because the
+            // title already has the correct margins provided in "fs-headline(2)"
             & + br {
                 display: none;
             }
@@ -649,7 +659,7 @@
     }
 
     .gallery__img-container {
-        background-color: rgba(0, 0, 0, 0);
+        background-color: $multimedia-support-5;
 
         @include mq(tablet) {
             padding-bottom: 2.5rem;

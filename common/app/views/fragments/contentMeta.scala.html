@@ -11,7 +11,7 @@
 }
 
 @metaBody() = {
-    @if(!mvt.ABGalleryRedesignVariant.isParticipating) {
+    @if(!mvt.ABGalleryRedesignVariant.shouldShow(item.metadata.contentType)) {
         @if(!item.content.hasTonalHeaderByline) {
             @byline()
         }
@@ -46,7 +46,7 @@
                 }">
                 </div>
             </div>
-            @if(SaveForLaterSwitch.isSwitchedOn && !mvt.ABGalleryRedesignVariant.isParticipating) {
+            @if(SaveForLaterSwitch.isSwitchedOn && !mvt.ABGalleryRedesignVariant.shouldShow(item.metadata.contentType)) {
                 <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
             }
         </div>
@@ -62,6 +62,7 @@
     @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty)) { content__meta-container--twitter}
     @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty)) { content__meta-container--email}">
 
+    
     @if(showBadge && (item.tags.isVideo || item.tags.isAudio || (item.tags.isArticle && !item.commercial.isAdvertisementFeature))) {
         @fragments.commercial.badge(item)
     }
