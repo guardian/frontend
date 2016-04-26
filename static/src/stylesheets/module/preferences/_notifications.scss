@@ -218,9 +218,8 @@ $notifications-button-height: 28px;
 }
 
 .live-notifications-explainer__headline {
-    @include fs-headline(2);
+    @include fs-headline(3);
     color: #ffffff;
-    font-weight: 500;
     position: relative;
     display: block;
 }
