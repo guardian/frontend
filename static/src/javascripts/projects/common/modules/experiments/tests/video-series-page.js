@@ -7,7 +7,7 @@ define([
 
         this.id = 'VideoSeriesPage';
         this.start = '2016-04-21';
-        this.expiry = '2016-04-25';
+        this.expiry = '2016-04-27';
         this.author = 'James Gorrie';
         this.description = 'New video series page (initial numbers test)';
         this.audience = 1.0;
