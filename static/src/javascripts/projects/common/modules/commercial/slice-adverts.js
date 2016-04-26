@@ -33,6 +33,10 @@ define([
     var containerSelector = '.fc-container';
     var sliceSelector = '.js-fc-slice-mpu-candidate';
 
+    return {
+        init: init
+    };
+
     function init() {
         if (!commercialFeatures.sliceAdverts) {
             return false;
@@ -110,7 +114,4 @@ define([
         });
     }
 
-    return {
-        init: init
-    };
 });
