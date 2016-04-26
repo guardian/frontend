@@ -15,6 +15,15 @@ trait MonitoringSwitches {
     exposeClientSide = true
   )
 
+  val SentryReporting = Switch(
+    SwitchGroup.Monitoring,
+    "enable-sentry-reporting",
+    "If this switch is on, then js errors will be reported to Sentry.",
+    safeState = Off,
+    never,
+    exposeClientSide = true
+  )
+
   val GoogleAnalyticsSwitch = Switch(
     SwitchGroup.Monitoring,
     "google-analytics",
