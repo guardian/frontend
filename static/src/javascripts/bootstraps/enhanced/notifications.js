@@ -11,7 +11,9 @@ define([
     'common/utils/robust',
     'common/views/svgs',
     'common/modules/user-prefs',
-    'text!common/views/ui/notifications-subscribe-link.html',
+    'text!common/views/ui/notifications-follow-link.html',
+    'text!common/views/ui/notifications-explainer.html',
+    'text!common/views/ui/notifications-permission-denied-message.html',
     'lodash/collections/some',
     'lodash/arrays/uniq',
     'lodash/arrays/without'
@@ -28,12 +30,15 @@ define([
     robust,
     svgs,
     userPrefs,
-    subscribeTemplate,
+    followLink,
+    explainer,
+    permissionsTemplate,
     some,
     uniq,
     without
 ) {
-    var modules = {
+    var explainerDismissed = 'gu.notificationsExplainerDismissed',
+        modules = {
 
         getReg: function () {
             return navigator.serviceWorker.ready;
@@ -43,37 +48,69 @@ define([
             return modules.getReg().then(function (reg) {return reg.pushManager.getSubscription();});
         },
 
-        configureSubscribeTemplate: function () {
-            var subscribed = modules.checkSubscriptions(),
-                hasNoSubscriptions = modules.subscriptionsEmpty(),
-                handler = subscribed ? modules.unSubscribeHandler : modules.subscribeHandler,
-                src = template(subscribeTemplate, {
-                    className: hasNoSubscriptions ? '' : 'notifications-subscribe-link--has-subscriptions',
-                    text: subscribed ? 'Unfollow' : 'Follow story',
-                    imgMobile: svgs('notificationsExplainerMobile', ['mobile-only', 'notification-explainer']),
-                    imgDesktop: svgs('notificationsExplainerDesktop', ['hide-on-mobile', 'notification-explainer'])
+        init: function() {
+            modules.configureSubscribeButton();
+            if(!modules.hasSubscribed() && !modules.hasDismissedExplainer()) {
+                modules.showExplainer();
+            }
+        },
+
+        configureSubscribeButton: function () {
+            var $follow = bonzo($('.js-live-notifications')),
+                isSsubscribed = modules.checkSubscriptions(),
+                handler = isSsubscribed ? modules.unSubscribeHandler : modules.subscribeHandler,
+                src = template(followLink, {
+                    isSubscribed: isSsubscribed,
+                    icon: svgs(isSsubscribed ? 'notificationsOff' : 'notificationsOn')
                 });
 
-            fastdom.write(function () {
-                $('.js-notifications').prepend(src);
-                bean.one(document.body, 'click', '.js-notifications-subscribe-link', handler);
+            fastdom.write( function() {
+                $follow.html(src);
+                bean.one($follow[0], 'click', '.js-notifications__button', handler);
             });
         },
 
-        setSubscriptionStatus: function (subscribed) {
-            var subscribeButton = $('.js-notifications-subscribe-link'),
-                subscribeLink = $('.notifications-subscribe-link--follow'),
-                handler = subscribed ? modules.unSubscribeHandler : modules.subscribeHandler;
-            if (subscribed) {
-                subscribeLink.addClass('notifications-subscribe-link--has-subscriptions');
-            }
+        showExplainer: function() {
+            var src = template(explainer,{
+                closeIcon : svgs('closeCentralIcon'),
+                imgMobile: svgs('notificationsExplainerMobile', ['mobile-only', 'live-notifications-explainer-svg']),
+                imgDesktop: svgs('notificationsExplainerDesktop', ['hide-on-mobile', 'live-notifications-explainer-svg'])
+            });
 
-            subscribeButton[0].textContent = subscribed ?  'Unfollow' : 'Follow story';
-            bean.one(document.body, 'click', '.js-notifications-subscribe-link', handler);
+            fastdom.write(function () {
+                var $notifications = $('.js-live-notifications');
+                $notifications.append(src);
+               // bean.one($notifications[0], 'click', '.js-live-notifications__item__close', function() {
+                bean.one($('.js-live-notifications__item__close')[0], 'click', function() {
+                    fastdom.write(function() {
+                        userPrefs.set(explainerDismissed, true);
+                        $('.js-live-notifications-explainer').remove();
+                    });
+                });
+            });
+        },
+
+        closeDisplayMessage: function(){
+            $('.js-live-notifications-denied').remove();
+            bean.one($('.js-live-notifications')[0], 'click', '.js-notifications__button', modules.subscribeHandler);
+        },
+
+        notificationsDeniedMessage: function() {
+            var src = template(permissionsTemplate,{closeIcon : svgs('closeCentralIcon')});
+            fastdom.write(function () {
+                var blocked = $('.js-notifications-blocked');
+                blocked.prepend(src);
+                bean.one(blocked[0], 'click', '.js-live-notifications-denied__item__close', modules.closeDisplayMessage);
+            });
         },
 
         subscribeHandler: function () {
-            modules.subscribe().then(modules.follow);
+            modules.subscribe().then(modules.follow)
+                .catch( function () {
+                    if (Notification.permission === 'denied') {
+                        modules.notificationsDeniedMessage();
+                    }
+                });
         },
 
         unSubscribeHandler: function () {
@@ -100,7 +137,7 @@ define([
                     var subscriptions = modules.getSubscriptions();
                     subscriptions.push(config.page.pageId);
                     userPrefs.set('subscriptions', uniq(subscriptions));
-                    modules.setSubscriptionStatus(true);
+                    modules.configureSubscribeButton();
                 }
             );
         },
@@ -113,6 +150,7 @@ define([
                     });
                 });
             }
+            modules.configureSubscribeButton();
         },
 
         unFollow: function () {
@@ -122,7 +160,6 @@ define([
                     var subscriptions = modules.getSubscriptions(),
                         newSubscriptions = without(subscriptions, config.page.pageId);
                     userPrefs.set('subscriptions', uniq(newSubscriptions));
-                    modules.setSubscriptionStatus(false);
                 }
             );
         },
@@ -140,8 +177,12 @@ define([
             });
         },
 
+        hasSubscribed: function() {
+            return userPrefs.get('subscriptions');
+        },
+
         getSubscriptions: function () {
-            return userPrefs.get('subscriptions') || [];
+            return modules.hasSubscribed() || [];
         },
 
         subscriptionsEmpty: function () {
@@ -154,10 +195,14 @@ define([
             return some(subscriptions, function (sub) {
                 return sub == config.page.pageId;
             });
+        },
+
+        hasDismissedExplainer: function() {
+           return userPrefs.get(explainerDismissed);
         }
     };
 
     return {
-        init: modules.configureSubscribeTemplate
+        init: modules.init
     };
 });

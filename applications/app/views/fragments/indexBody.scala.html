@@ -5,6 +5,7 @@
 @import views.html.fragments.containers.facia_cards.{container, containerScaffold}
 @import views.html.fragments.pagination
 @import views.support.RenderClasses
+@import conf.switches.Switches.staticBadgesSwitch
 
 @if(index.page.metadata.id == "help/accessibility-help") {
     @containerScaffold("Preferences", "accesibility preferences") {
@@ -12,6 +13,7 @@
     }
 }
 
+@if(!staticBadgesSwitch.isSwitchedOn) {
 <div class="l-side-margins">
     <div
         class="@RenderClasses(
@@ -62,3 +64,45 @@
 
     </div>
 </div>
+} else {
+    <div class="l-side-margins">
+    <div
+        class="@RenderClasses(
+            Map(
+                "fc-container--advertisement-feature paid-content--advertisement-feature" -> index.commercial.isAdvertisementFeature
+            ), "u-cf index-page"
+        )"
+        data-link-name="Front | @request.path"
+        role="main">
+
+        @if(index.commercial.isAdvertisementFeature) {
+            @fragments.guBand()
+        }
+
+        @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
+            @containers.map { containerDefinition =>
+                @container(containerDefinition, empty)
+            }
+        }
+
+        @index.page.metadata.pagination.map { paginationInstance =>
+            <div class="fc-container__pagination">
+                @pagination(index.page.metadata.webTitle, paginationInstance, PagePaths.fromId(index.idWithoutEdition))
+            </div>
+        }
+
+        @fragments.trendingTopics(index.faciaTrails, index.page.metadata.id, None)
+        <div class="fc-container fc-container--commercial">
+            @fragments.commercial.commercialComponent()
+        </div>
+
+        @defining(IndexPage.makeLinkedData(index)) { linkedData =>
+            <script data-schema="@{linkedData.`@type`}" type="application/ld+json">
+                @Html(model.meta.LinkedData.toJson(linkedData))
+            </script>
+        }
+
+    </div>
+</div>
+
+}

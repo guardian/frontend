@@ -10,10 +10,8 @@ import common.dfp.DfpAgent
 import conf.Configuration
 import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch}
 import cricketPa.CricketTeams
-import layout.ContentWidths.{ImmersiveMedia, BodyMedia, LiveBlogMedia, GalleryMedia}
-import model.content.{Quiz, Atoms}
-import model.liveblog.{LiveBlogDate, BodyBlock}
-import model.liveblog.BodyBlock.{SummaryEvent, KeyEvent}
+import layout.ContentWidths.GalleryMedia
+import model.content.{Atoms, Quiz}
 import model.pressed._
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
@@ -27,7 +25,24 @@ import scala.collection.JavaConversions._
 import scala.language.postfixOps
 import scala.util.Try
 
-sealed trait ContentType {
+sealed trait Brandable {
+  def content: Content
+
+  def branding(edition: Edition): Option[Branding] = {
+
+    def findBrandingBySection(): Option[Branding] = None
+
+    def findBrandingByTag(): Option[Branding] = {
+      val activeBrandings = content.tags.tags.flatMap(_.properties.activeBrandings).flatten
+      val publicationDate = content.trail.webPublicationDate
+      activeBrandings find (_.isTargeting(publicationDate, edition))
+    }
+
+    findBrandingBySection() orElse findBrandingByTag()
+  }
+}
+
+sealed trait ContentType extends Brandable {
   def content: Content
   final def tags: Tags = content.tags
   final def elements: Elements = content.elements
@@ -69,6 +84,7 @@ final case class Content(
   showByline: Boolean,
   hasStoryPackage: Boolean,
   rawOpenGraphImage: String,
+  sensitive: Boolean,
   showFooterContainers: Boolean = false
 ) {
 
@@ -146,7 +162,7 @@ final case class Content(
   }
 
   lazy val blogOrSeriesTag: Option[Tag] = {
-    tags.tags.find( tag => tag.showSeriesInMeta && (tag.isBlog || tag.isSeries )).headOption
+    tags.tags.find( tag => tag.showSeriesInMeta && (tag.isBlog || tag.isSeries ))
   }
 
   lazy val seriesTag: Option[Tag] = {
@@ -315,7 +331,8 @@ object Content {
           .orElse(elements.mainPicture.flatMap(_.images.largestImageUrl))
           .orElse(trail.trailPicture.flatMap(_.largestImageUrl))
           .getOrElse(Configuration.images.fallbackLogo)
-      }
+      },
+      sensitive = apifields.flatMap(_.sensitive).getOrElse(false)
 
     )
   }
@@ -358,7 +375,8 @@ object Article {
       ("hasInlineMerchandise", JsBoolean(commercial.hasInlineMerchandise)),
       ("lightboxImages", lightbox.javascriptConfig),
       ("hasMultipleVideosInPage", JsBoolean(content.hasMultipleVideosInPage)),
-      ("isImmersive", JsBoolean(content.isImmersive))
+      ("isImmersive", JsBoolean(content.isImmersive)),
+      ("isSensitive", JsBoolean(content.sensitive))
     ) ++ bookReviewIsbn
 
     val opengraphProperties: Map[String, String] = Map(
