@@ -4,6 +4,7 @@ import com.gu.contentapi.client.model.v1.{Content => ApiContent, ContentFields}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
 import conf.switches.Switches
 import conf.switches.Switches.DoubleCacheTimesSwitch
+import model.Cached.RevalidatableResult
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import org.scalatest.{FlatSpec, Matchers}
@@ -17,10 +18,11 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
     val modified = new DateTime(2001, 5, 20, 12, 3, 4, 555)
     val liveContent = content(lastModified = modified, live = true)
 
-    val result = Cached(liveContent)(Ok("foo"))
+    val result = Cached(liveContent)(RevalidatableResult(Ok("foo"), ""))
     val headers = result.header.headers
 
     headers("Cache-Control") should be("max-age=5, stale-while-revalidate=1, stale-if-error=864000")
+    headers("ETag") should be("""W/"0"""")
   }
 
   it should "cache content less than 1 hour old for 10 seconds" in {
@@ -29,10 +31,11 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
     val modifiedAlmost1HourAgo = DateTime.now - 58.minutes
     val liveContent = content(lastModified = modifiedAlmost1HourAgo, live = false)
 
-    val result = Cached(liveContent)(Ok("foo"))
+    val result = Cached(liveContent)(RevalidatableResult(Ok("foo"), "A"))
     val headers = result.header.headers
 
     headers("Cache-Control") should be("max-age=10, stale-while-revalidate=1, stale-if-error=864000")
+    headers("ETag") should be("""W/"65"""")
   }
 
   it should "cache older content for 5 minutes" in {
@@ -41,7 +44,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
     val modifiedLongAgo = DateTime.now - 25.hours
     val liveContent = content(lastModified = modifiedLongAgo, live = false)
 
-    val result = Cached(liveContent)(Ok("foo"))
+    val result = Cached.withoutRevalidation(liveContent)(Ok("foo"))
     val headers = result.header.headers
 
     headers("Cache-Control") should be("max-age=300, stale-while-revalidate=30, stale-if-error=864000")
@@ -56,7 +59,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
       webTitle = "",
       analyticsName = ""))
 
-    val result = Cached(page)(Ok("foo"))
+    val result = Cached.withoutRevalidation(page)(Ok("foo"))
     val headers = result.header.headers
 
     headers("Cache-Control") should be("max-age=60, stale-while-revalidate=6, stale-if-error=864000")
@@ -68,7 +71,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
 
     val liveContent = content(lastModified = DateTime.now, live = false)
 
-    val result = Cached(liveContent)(Ok("foo"))
+    val result = Cached.withoutRevalidation(liveContent)(Ok("foo"))
     val headers = result.header.headers
 
     headers("Cache-Control") should be("max-age=20, stale-while-revalidate=2, stale-if-error=864000")
@@ -77,7 +80,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
   it should "have at least 1 second stale-while-revalidate" in {
     DoubleCacheTimesSwitch.switchOff()
 
-    val result = Cached(5)(Ok("foo"))
+    val result = Cached.withoutRevalidation(5)(Ok("foo"))
     val headers = result.header.headers
 
     headers("Cache-Control") should be("max-age=5, stale-while-revalidate=1, stale-if-error=864000")
@@ -92,7 +95,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
       webTitle = "",
       analyticsName = ""))
 
-    val result = Cached(page)(Ok("foo"))
+    val result = Cached.withoutRevalidation(page)(Ok("foo"))
     val headers = result.header.headers
 
     headers("Cache-Control") should be("max-age=60, stale-while-revalidate=6, stale-if-error=864000")
