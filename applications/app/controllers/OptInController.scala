@@ -20,10 +20,12 @@ object OptInController extends Controller {
     feature match {
       case "https" => HTTPS.opt(choice)
       case "header" => Header.opt(choice)
+      case "gallery" => gallery.opt(choice)
       case _ => NotFound
     }
   }
 
   val HTTPS = OptInFeature("https_opt_in")
   val Header = OptInFeature("new_header_opt_in")
+  val gallery = OptInFeature("gallery_redesign_opt_in")
 }
