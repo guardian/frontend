@@ -1,0 +1,20 @@
+@(videos: List[model.Video], seriesTitle: Option[String])(implicit request: RequestHeader)
+
+@import views.support.Seq2zipWithRowInfo
+
+<div class="most-viewed-container most-viewed-container--media most-viewed-container--video most-viewed-container--playlist"
+data-component="most-viewed-video">
+
+    <div class="most-viewed-container__header">
+        <h3 class="most-viewed-container__heading u-cf">
+            <div class="most-viewed__more-from">More from</div>
+            @seriesTitle.getOrElse("More in this series")
+        </h3>
+    </div>
+    <ul class="u-cf u-unstyled most-viewed--media most-viewed--video items--media items--video items--playlist" data-link-name="Most viewed video">
+    @videos.zipWithRowInfo.map{ case (video, row) =>
+        @fragments.mediaItem(video, row.rowNum)
+    }
+    </ul>
+
+</div>

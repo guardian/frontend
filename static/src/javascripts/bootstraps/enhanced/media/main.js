@@ -21,6 +21,7 @@ define([
     'common/modules/video/supportedBrowsers',
     'common/modules/video/tech-order',
     'common/modules/video/video-container',
+    'common/modules/experiments/ab',
     // This must be the full path because we use curl config to change it based
     // on env
     'bootstraps/enhanced/media/video-player',
@@ -48,6 +49,7 @@ define([
     supportedBrowsers,
     techOrder,
     videoContainer,
+    ab,
     videojs,
     loadingTmpl
 ) {
@@ -391,8 +393,10 @@ define([
 
         var mediaType  = config.page.contentType.toLowerCase(),
             mostViewed = new Component(),
+            isInSeriesTest = true || ab.isInVariant('inSeries'),
             attachTo   = $(mediaType === 'video' ? '.js-video-components-container' : '.js-media-popular')[0],
-            endpoint   = '/' + (config.page.isPodcast ? 'podcast' : mediaType) + '/most-viewed.json';
+            endpoint   = isInSeriesTest ? '/video/in-series/' + config.page.seriesId + '.json' :
+                         '/' + (config.page.isPodcast ? 'podcast' : mediaType) + '/most-viewed.json';
 
         mostViewed.manipulationType = mediaType === 'video' ? 'append' : 'html';
         mostViewed.endpoint = endpoint;

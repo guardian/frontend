@@ -202,3 +202,18 @@
         border-bottom: 0;
     }
 }
+
+
+.most-viewed-container--playlist {
+    .most-viewed__more-from {
+        @include fs-textSans(1);
+    }
+
+    .most-viewed-container__heading {
+        margin-bottom: $gs-baseline !important;
+    }
+
+    .most-viewed-container__header {
+        height: auto !important;
+    }
+}
