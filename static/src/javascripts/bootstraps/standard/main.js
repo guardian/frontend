@@ -78,7 +78,7 @@ define([
                         }
                     }
 
-                    return config.switches.diagnosticsLogging &&
+                    return config.switches.enableSentryReporting &&
                         Math.random() < 0.2 &&
                         !isDev; // don't actually notify sentry in dev mode
                 }
