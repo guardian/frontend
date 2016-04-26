@@ -4,7 +4,7 @@ import java.lang.System._
 
 import commercial.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
 import common.{ExecutionContexts, Logging}
-import play.api.libs.json.{JsArray, JsValue, Json}
+import play.api.libs.json._
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -17,19 +17,14 @@ trait SoulmatesFeed extends ExecutionContexts with Logging {
   def path: String
 
   def parse(json: JsValue): Seq[Member] = {
-    json match {
-      case JsArray(members) => members map {
-        member =>
-          Member(
-            (member \ "username").as[String],
-            Gender((member \ "gender").as[String]),
-            (member \ "age").as[Int],
-            (member \ "profile_photo").as[String],
-            (member \ "location").as[String].split(',').head
-          )
+    val jsMembers = (json \ "members").as[Seq[JsValue]]
+    jsMembers flatMap { jsMember =>
+        try {
+          jsMember.asOpt[Member]
+        } catch {
+          case _: play.api.libs.json.JsResultException => None
+        }
       }
-      case other => Nil
-    }
   }
 
   def parsedMembers(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[Member]] = {

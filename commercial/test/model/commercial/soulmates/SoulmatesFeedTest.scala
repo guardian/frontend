@@ -1,11 +1,10 @@
 package model.commercial.soulmates
 
 import common.ExecutionContexts
-import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.{FlatSpec, Matchers}
 import play.api.libs.json.Json
-import test.ConfiguredTestSuite
 
-@DoNotDiscover class SoulmatesFeedTest extends FlatSpec with Matchers with ExecutionContexts with ConfiguredTestSuite {
+class SoulmatesFeedTest extends FlatSpec with Matchers with ExecutionContexts {
 
   private val api = new SoulmatesFeed {
     lazy val path: String = "test"
