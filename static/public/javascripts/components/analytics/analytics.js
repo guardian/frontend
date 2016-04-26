@@ -1,5 +1,5 @@
-try {
-    (function(){
+(function () {
+    try {
 
         var config  = guardian.config,
             isEmbed = !!guardian.isEmbed,
@@ -26,6 +26,23 @@ try {
                 str = '0' + str;
             }
             return str;
+        };
+
+        var trackNavigationInteraction = function(ni) {
+            var d = new Date().getTime();
+            if (d - ni.time < 60 * 1000) { // One minute
+                s.eVar24 = ni.pageName;
+                s.eVar37 = ni.tag;
+            }
+        };
+
+        var getSponsoredContentTrackingData = function(content) {
+            return content.map(function(n) {
+                var sponsorshipType = n.getAttribute('data-sponsorship');
+                var maybeSponsor = n.getAttribute('data-sponsor');
+                var sponsor = maybeSponsor ? maybeSponsor : 'unknown';
+                return sponsorshipType + ':' + sponsor;
+            }).toString();
         };
 
         s.trackingServer = 'hits.theguardian.com';
@@ -131,11 +148,11 @@ try {
         s.eVar20    = 'D=c20';
 
         /*
-          eVar1 contains today's date
-          in the Omniture backend it only ever holds the first
-          value a user gets, so in effect it is the first time
-          we saw this user
-        */
+         eVar1 contains today's date
+         in the Omniture backend it only ever holds the first
+         value a user gets, so in effect it is the first time
+         we saw this user
+         */
         s.eVar1 = now.getFullYear() + '/' + pad(now.getMonth() + 1, 2) + '/' + pad(now.getDate(), 2);
 
         s.prop7     = webPublicationDate ? new Date(webPublicationDate).toISOString().substr(0, 10).replace(/-/g, '/') : '';
@@ -166,7 +183,7 @@ try {
             var navInteraction = JSON.parse(navInteractionData);
 
             if (navInteraction) {
-                trackNavigationInteraction(navInteraction);
+                trackNavigationInteraction(navInteraction.value);
                 window.sessionStorage.removeItem(R2_STORAGE_KEY);
                 window.sessionStorage.removeItem(NG_STORAGE_KEY);
             }
@@ -177,45 +194,32 @@ try {
         if(window.guardian.isModernBrowser) {
             var contentNodes = document.querySelectorAll('[data-sponsorship]');
             var sponsoredContentArray = Array.prototype.slice.call(contentNodes);
-            s.prop38 = getSponsoredContentTrackingData(sponsoredContentArray);
+            var sponsoredContentData = getSponsoredContentTrackingData(sponsoredContentArray);
+            s.prop38 = sponsoredContentData.filter(
+                function onlyUnique(value, index, self) {
+                    return self.indexOf(value) === index;
+            });
         }
 
         /*
-            this makes the call to Omniture.
-            `s.t()` records a page view so should only be called once
-        */
+         this makes the call to Omniture.
+         `s.t()` records a page view so should only be called once
+         */
 
         s.t();
 
-        var trackNavigationInteraction = function(ni) {
-            var d = new Date().getTime();
-            if (d - ni.time < 60 * 1000) { // One minute
-                s.eVar24 = ni.pageName;
-                s.eVar37 = ni.tag;
-            }
-        };
-
-        var getSponsoredContentTrackingData = function (content) {
-            content.map(function(n) {
-                var sponsorshipType = n.getAttribute('data-sponsorship');
-                var maybeSponsor = n.getAttribute('data-sponsor');
-                var sponsor = maybeSponsor ? maybeSponsor : 'unknown';
-                return sponsorshipType + ':' + sponsor;
-            }).toString();
-        };
-
         var checkForPageViewInterval = setInterval(function () {
             /*
-                s_i_guardiangu-network is a globally defined Image() object created by Omniture
-                It does not sit in the DOM tree, and seems to be the only surefire way
-                to check if the intial beacon has been successfully sent
-            */
+             s_i_guardiangu-network is a globally defined Image() object created by Omniture
+             It does not sit in the DOM tree, and seems to be the only surefire way
+             to check if the intial beacon has been successfully sent
+             */
             var img = window['s_i_' + window.s_account.split(',').join('_')];
             if (typeof (img) !== 'undefined' && (img.complete === true || img.width + img.height > 0)) {
                 clearInterval(checkForPageViewInterval);
 
                 var pageView = new Image();
-                pageView.src = window.config.page.beaconUrl + '/count/pva.gif';
+                pageView.src = guardian.config.page.beaconUrl + '/count/pva.gif';
 
             }
         }, 100);
@@ -224,13 +228,9 @@ try {
         setTimeout(function () {
             clearInterval(checkForPageViewInterval);
         }, 10000);
-
-
-    })();
-} catch(e) {
-    (new Image()).src = window.config.page.beaconUrl + '/count/omniture-pageview-error.gif';
-}
-
-
+    } catch(e) {
+        (new Image()).src = guardian.config.page.beaconUrl + '/count/omniture-pageview-error.gif';
+    }
+}());
 
 

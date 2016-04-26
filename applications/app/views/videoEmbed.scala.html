@@ -125,7 +125,9 @@
             }
         }
 
-        @fragments.analytics.base(page)
+        @{
+            page.model.map(videoPage => fragments.analytics.base(videoPage))
+        }
 
     </body>
 </html>

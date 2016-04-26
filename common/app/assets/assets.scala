@@ -161,7 +161,7 @@ class Assets(base: String) extends Logging {
 
      val curl: String = RelativePathEscaper.escapeLeadingDotPaths(inlineJs("assets/curl-domReady.js"))
      val omnitureJs: String = inlineJs("assets/vendor/omniture.js")
-     val analyticsJs: String =  inlineJs("static/public/javascripts/components/analytics/analytics.js")
+     val analyticsJs: String =  inlineJs("assets/components/analytics/analytics.js")
   }
 }
 
