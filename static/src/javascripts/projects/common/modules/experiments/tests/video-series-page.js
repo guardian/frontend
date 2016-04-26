@@ -6,12 +6,12 @@ define([
     return function () {
 
         this.id = 'VideoSeriesPage';
-        this.start = '2016-04-25';
-        this.expiry = '2016-05-03';
+        this.start = '2016-04-27';
+        this.expiry = '2016-05-04';
         this.author = 'James Gorrie';
-        this.description = 'In series related content';
-        this.audience = 1.0;
-        this.audienceOffset = 0.0;
+        this.description = 'New video series page (initial numbers test)';
+        this.audience = 0.5;
+        this.audienceOffset = 0.5;
         this.successMeasure = '';
         this.showForSensitive = true;
         this.audienceCriteria = '';
@@ -28,7 +28,7 @@ define([
                 test: function () {}
             },
             {
-                id: 'inSeries',
+                id: 'variant',
                 test: function () {}
             }
         ];
