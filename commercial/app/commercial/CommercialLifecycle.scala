@@ -110,7 +110,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       val feedName = fetcher.feedMetaData.name
       val jobName = mkJobName(feedName, "fetch")
       Jobs.deschedule(jobName)
-      Jobs.scheduleEveryNMinutes(jobName, 1) {
+      Jobs.scheduleEveryNMinutes(jobName, 15) {
         fetchFeed(fetcher)
       }
     }
@@ -119,14 +119,14 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       val feedName = parser.feedMetaData.name
       val jobName = mkJobName(feedName, "parse")
       Jobs.deschedule(jobName)
-      Jobs.scheduleEveryNMinutes(jobName, 1) {
+      Jobs.scheduleEveryNMinutes(jobName, 15) {
         parseFeed(parser)
       }
     }
 
     val jobName = "update-metrics"
     Jobs.deschedule(jobName)
-    Jobs.scheduleEveryNMinutes(jobName, 1){
+    Jobs.scheduleEveryNMinutes(jobName, 15){
       updateMetrics
       Future.successful(())
     }
