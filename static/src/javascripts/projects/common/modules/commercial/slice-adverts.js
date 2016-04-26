@@ -30,22 +30,17 @@ define([
     chain
 ) {
     var maxAdsToShow = config.page.showMpuInAllContainers ? 999 : 3;
+    var containerSelector = '.fc-container';
+    var sliceSelector = '.js-fc-slice-mpu-candidate';
 
-    function init(options) {
+    function init() {
         if (!commercialFeatures.sliceAdverts) {
             return false;
         }
 
         var container, containerId, $adSlice, isFrontFirst, fabricAdSlot,
-            opts = defaults(
-                options || {},
-                {
-                    containerSelector: '.fc-container',
-                    sliceSelector: '.js-fc-slice-mpu-candidate'
-                }
-            ),
         // get all the containers
-            containers   = qwery(opts.containerSelector),
+            containers   = qwery(containerSelector),
             index        = 0,
             adSlices     = [],
             containerGap = 1,
@@ -66,7 +61,7 @@ define([
         while (index < containers.length) {
             container    = containers[index];
             containerId  = bonzo(container).data('id');
-            $adSlice     = $(opts.sliceSelector, container);
+            $adSlice     = $(sliceSelector, container);
             // don't display ad in the first container on the network fronts
             isFrontFirst = contains(['uk', 'us', 'au'], config.page.pageId) && index === 0;
 
