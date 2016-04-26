@@ -68,12 +68,9 @@ define([
         },
 
         initNotifications: function() {
-/*
             if ((ab.isInVariant('LiveBlogChromeNotificationsInternal', 'control') || ab.isInVariant('LiveBlogChromeNotificationsProd', 'show-notifications') )
                 && (window.location.protocol === 'https:' ||  window.location.hash === '#force-sw')
                 && detect.getUserAgent.browser === 'Chrome' && config.page.isLive) {
-*/
-            if(detect.getUserAgent.browser === 'Chrome'){
                     notifications.init();
             }
         }
