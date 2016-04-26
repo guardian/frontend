@@ -291,10 +291,8 @@ final case class MetaData (
   )
 
   def opengraphProperties: Map[String, String] = {
-    // the cat is already out of the bag for these sections
-    val httpsEnabledSectionsApr2016: Seq[String] = Seq("info", "email", "science", "crosswords", "technology")
-    // for all other sections, keep the old og:url even once the migration happens
-    def ogUrl = if (!httpsEnabledSectionsApr2016.contains(section)) webUrl.replaceFirst("^https:", "http:") else webUrl
+    // keep the old og:url even once the migration happens, as facebook lose the share count otherwise
+    def ogUrl = webUrl.replaceFirst("^https:", "http:")
 
     Map(
       "og:site_name" -> "the Guardian",
