@@ -34,6 +34,7 @@ define([
         this.$adSlot      = $adSlot;
         this.params       = params;
         this.isClosed     = true;
+        this.initialExpandCounter = false;
 
         this.closedHeight = 250;
         this.openedHeight = 500;
@@ -67,36 +68,56 @@ define([
             case 'split':
                 this.scrollAmount = bottomScroll + topScroll + '%';
                 fastdom.write(function () {
-                    $('.ad-exp--expand-scrolling-bg').css('background-repeat', 'no-repeat');
+                    $('.ad-exp--expand-scrolling-bg', that.$adSlot).css({
+                        'background-repeat': 'no-repeat',
+                        'background-position': '50%' + that.scrollAmount
+                    });
                 });
                 break;
             case 'fixed':
                 this.scrollAmount = (scrollY - adSlotTop) + 'px';
+                fastdom.write(function () {
+                    $('.ad-exp--expand-scrolling-bg', that.$adSlot).css('background-position', '50%' + that.scrollAmount);
+                });
+                break;
+            case 'fixed matching fluid250':
+                fastdom.write(function () {
+                    $('.ad-exp--expand-scrolling-bg', that.$adSlot).addClass('ad-exp--expand-scrolling-bg-fixed');
+                });
                 break;
             case 'parallax':
-                this.scrollAmount = ((scrollY - adSlotTop) * 0.15) + '%';
+                this.scrollAmount = Math.ceil((scrollY - adSlotTop) * 0.3 * -1) + 20;
+                this.scrollAmountP = this.scrollAmount + '%';
+                fastdom.write(function () {
+                    $('.ad-exp--expand-scrolling-bg', that.$adSlot).addClass('ad-exp--expand-scrolling-bg-parallax');
+                    $('.ad-exp--expand-scrolling-bg', that.$adSlot).css('background-position', '50%' + that.scrollAmountP);
+                });
                 break;
         }
-
-        fastdom.write(function () {
-            $('.ad-exp--expand-scrolling-bg').css('background-position', '50%' + that.scrollAmount);
-        });
     };
 
     FabricExpandingV1.prototype.listener = function () {
         var that = this;
-        if ((window.pageYOffset + bonzo.viewport().height) > (this.$adSlot.offset().top + this.openedHeight)) {
-            // expires in 1 week
-            var week = 1000 * 60 * 60 * 24 * 7;
+        if (!this.initialExpandCounter && (window.pageYOffset + bonzo.viewport().height) > that.$adSlot.offset().top + this.openedHeight) {
+            var itemId = $('.ad-slot__content', that.$adSlot).attr('id'),
+                itemIdArray = itemId.split('/');
 
-            storage.local.set('gu.commercial.expandable.' + this.params.ecid, true, { expires: Date.now() + week });
-            fastdom.write(function () {
-                that.$button.toggleClass('button-spin');
-                $('.ad-exp__open-chevron').toggleClass('chevron-down');
-                that.$ad.css('height', that.openedHeight);
-                that.isClosed = false;
-            });
-
+            if (!storage.local.get('gu.commercial.expandable.' + itemIdArray[1])) {
+                // expires in 1 week
+                var week = 1000 * 60 * 60 * 24 * 7;
+                fastdom.write(function () {
+                    storage.local.set('gu.commercial.expandable.' + itemIdArray[1], true, { expires: Date.now() + week });
+                    that.$button.addClass('button-spin');
+                    $('.ad-exp__open-chevron').removeClass('chevron-up').addClass('chevron-down');
+                    that.$ad.css('height', that.openedHeight);
+                    that.isClosed = false;
+                    that.initialExpandCounter = true;
+                });
+            } else if (this.isClosed) {
+                fastdom.write(function () {
+                    $('.ad-exp__open-chevron').addClass('chevron-up');
+                });
+            }
             return true;
         }
     };
@@ -127,7 +148,7 @@ define([
             },
             scrollingbg = {
                 scrollbg: (this.params.backgroundImagePType !== '' || this.params.backgroundImagePType !== 'none') ?
-                '<div class="ad-exp--expand-scrolling-bg" style="background-image: url(' + this.params.backgroundImageP + '); background-position: ' + this.params.backgroundImagePPosition + ' 50%;"></div>' : ''
+                '<div class="ad-exp--expand-scrolling-bg" style="background-image: url(' + this.params.backgroundImageP + '); background-position: ' + this.params.backgroundImagePPosition + ' 50%; background-repeat: ' + this.params.backgroundImagePRepeat + ';"></div>' : ''
             },
             $fabricExpandingV1 = $.create(template(fabricExpandingV1Html, { data: merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg) }));
 
@@ -144,21 +165,19 @@ define([
                 }
 
                 $fabricExpandingV1.appendTo(this.$adSlot);
-
                 resolve();
             }.bind(this));
         }.bind(this));
 
-        if (!storage.local.get('gu.commercial.expandable.' + this.params.ecid)) {
-            mediator.on('window:throttledScroll', this.listener);
-        }
+        mediator.on('window:throttledScroll', this.listener);
 
         bean.on(this.$adSlot[0], 'click', '.ad-exp__open', function () {
             fastdom.write(function () {
                 $('.ad-exp__close-button').toggleClass('button-spin');
-                $('.ad-exp__open-chevron').toggleClass('chevron-down');
+                $('.ad-exp__open-chevron').removeClass('chevron-up').toggleClass('chevron-down');
                 this.$ad.css('height', this.isClosed ? this.openedHeight : this.closedHeight);
                 this.isClosed = !this.isClosed;
+                this.initialExpandCounter = true;
             }.bind(this));
         }.bind(this));
 
