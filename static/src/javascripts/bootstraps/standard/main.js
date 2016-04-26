@@ -49,7 +49,7 @@ define([
         //
 
         raven.config(
-            'https://' + config.page.sentryPublicApiKey + '@' + config.page.sentryHost,
+            'http://' + config.page.sentryPublicApiKey + '@' + config.page.sentryHost,
             {
                 whitelistUrls: [
                     /localhost/, // will not actually log errors, but `shouldSendCallback` will be called
