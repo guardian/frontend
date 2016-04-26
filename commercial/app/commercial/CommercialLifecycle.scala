@@ -31,26 +31,11 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     "parse-success" -> AkkaAgent(0.0)
   )
 
-
-//  private def recordSuccess(eventName:String): Unit = {
-//    val keyName = s"$eventName-success"
-//    metricMap
-//      .get(keyName)
-//      .foreach(agent => agent.send(_ + 1.0))
-//  }
-//
-//  private def recordFailure(eventName:String): Unit = {
-//    val keyName = s"$eventName-failure"
-//    metricMap
-//      .get(keyName)
-//      .foreach(agent => agent.send(_ + 1.0))
-//  }
-
   private def recordEvent(eventName:String, outcome:String):Unit = {
-    val keyname = s"$eventName-$outcome"
+    val keyName = s"$eventName-$outcome"
     metricMap
-      .get(keyname)
-        .foreach(agent => agent.send(_ +1.0))
+      .get(keyName)
+      .foreach(agent => agent.send(_ +1.0))
   }
 
 
@@ -65,7 +50,6 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       }
     }
   }
-
 
   override def onStart(application: PlayApp): Unit = {
 
@@ -82,7 +66,6 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
         case e: SwitchOffException =>
           log.warn(s"$msgPrefix failed: ${e.getMessage}")
         case NonFatal(e) =>
-//          recordFailure("fetch")
           recordEvent("fetch","failure")
           log.error(s"$msgPrefix failed: ${e.getMessage}", e)
       }
@@ -107,13 +90,11 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
         case e: SwitchOffException =>
           log.warn(s"$msgPrefix failed: ${e.getMessage}")
         case NonFatal(e) =>
-//          recordFailure("parse")
           recordEvent("parse","failure")
           log.error(s"$msgPrefix failed: ${e.getMessage}", e)
       }
       parsedFeed onSuccess {
         case feed =>
-//          recordSuccess("parse")
           recordEvent("parse","success")
           log.info(s"$msgPrefix succeeded: parsed ${feed.contents.size} $feedName in ${feed.parseDuration}")
       }
@@ -146,7 +127,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     val jobName = "update-metrics"
     Jobs.deschedule(jobName)
     Jobs.scheduleEveryNMinutes(jobName, 1){
-      updateMetrics()
+      updateMetrics
       Future.successful(())
     }
 
