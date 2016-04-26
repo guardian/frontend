@@ -707,3 +707,10 @@
 .l-side-margins--new-gallery .tonal--tone-media {
     background-color: $multimedia-support-5;
 }
+
+.fc-container--media {
+     .fc-container__inner,
+     .fc-slice__item+.fc-slice__item:before {
+         border-color: $neutral-1;
+     }
+ }

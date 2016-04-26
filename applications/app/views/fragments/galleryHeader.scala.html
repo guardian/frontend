@@ -11,16 +11,16 @@
         ) { picture =>
 
             .content__header__background-image {
-                background-image: url('http:@Html(ImgSrc.findNearestSrc(picture, Profile(width = Some(1000))).getOrElse(""))');
+                background-image: url('@Html(ImgSrc.findNearestSrc(picture, Profile(width = Some(1000))).getOrElse(""))');
             }
             @@media (min-width: @{layout.Phablet.minWidth}px) {
                 .content__header__background-image {
-                    background-image: url('http:@Html(ImgSrc.findNearestSrc(picture, Profile(width = Some(1300))).getOrElse(""))');
+                    background-image: url('@Html(ImgSrc.findNearestSrc(picture, Profile(width = Some(1300))).getOrElse(""))');
                 }
             }
             @@media (min-width: @{layout.Wide.minWidth}px) {
                 .content__header__background-image {
-                    background-image: url('http:@Html(ImgSrc.findNearestSrc(picture, Profile(width = Some(2200))).getOrElse(""))');
+                    background-image: url('@Html(ImgSrc.findNearestSrc(picture, Profile(width = Some(2200))).getOrElse(""))');
                 }
             }
         }
@@ -68,7 +68,6 @@
             </div>
         }
 
-        <div class="gs-container">
             <div class="content__meta-container content__meta-container--info">
 
                 @if(!item.content.hasTonalHeaderByline) {
@@ -86,6 +85,5 @@
 
                 <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
             </div>
-        </div>
     </div>
 </header>
