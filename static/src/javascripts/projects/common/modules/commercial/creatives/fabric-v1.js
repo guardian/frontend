@@ -71,7 +71,7 @@ define([
         this.$adSlot.append(fabricV1Tpl({ data: merge(this.params, templateOptions) }));
         if (templateOptions.scrollbg) {
             this.scrollingBg = $('.ad-scrolling-bg', this.$adSlot[0]);
-            this.layer2 = $('.hide-until-tablet .fluid250_layer2', this.$adSlot[0]);
+            this.layer2 = $('.hide-until-tablet .fabric-v1_layer2', this.$adSlot[0]);
 
             if (hasScrollEnabled) {
                 // update bg position
@@ -112,5 +112,6 @@ define([
             }, this);
         }
     };
+
     return FabricV1;
 });

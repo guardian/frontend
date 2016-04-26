@@ -47,13 +47,6 @@ define([
                 tablet:             '1,1|300,250'
             }
         },
-        'article-inline1': {
-            sizeMappings: {
-                mobile:             '1,1|300,250' + fabricMappingSwitch,
-                'mobile-landscape': '1,1|300,250',
-                tablet:             '1,1|300,250'
-            }
-        },
         inline: {
             sizeMappings: {
                 mobile:             '1,1|300,250',

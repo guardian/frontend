@@ -96,7 +96,7 @@ define([
 
         function insertInlineAd(paras) {
             bodyAds += 1;
-            insertAdAtPara(paras[0], 'article-inline' + bodyAds, 'inline');
+            insertAdAtPara(paras[0], 'inline' + bodyAds, 'inline');
         }
     }
 
