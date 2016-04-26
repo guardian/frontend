@@ -41,6 +41,7 @@ define([
             adSlices     = [],
             containerGap = 1,
             prefs        = userPrefs.get('container-states'),
+            isNetworkFront = ['uk', 'us', 'au'].indexOf(config.page.pageId) !== -1,
             addFabricAd  = (config.page.isFront && config.switches.fabricAdverts && detect.isBreakpoint({max : 'phablet'}));
 
         // insert fabric advert at first container in lieu of a top slot
@@ -59,7 +60,7 @@ define([
             containerId  = container.getAttribute('data-id');
             adSlice      = container.querySelector(sliceSelector);
             // don't display ad in the first container on the network fronts
-            isFrontFirst = ['uk', 'us', 'au'].indexOf(config.page.pageId) !== -1 && index === 0;
+            isFrontFirst = isNetworkFront && index === 0;
 
             if (config.page.showMpuInAllContainers) {
                 adSlices.push(adSlice);
@@ -79,10 +80,9 @@ define([
                 var inlineIndexOffset = (config.tests.cmTopBannerPosition) ? 2 : 1;
 
                 var adName        = 'inline' + (index + inlineIndexOffset),
-                    $mobileAdSlot = bonzo(createAdSlot(adName, 'container-inline'))
-                        .addClass('ad-slot--mobile'),
-                    $tabletAdSlot = bonzo(createAdSlot(adName, 'container-inline'))
-                        .addClass('ad-slot--not-mobile');
+                    adSlot        = createAdSlot(adName, 'container-inline');
+
+                bonzo(adSlot).addClass(detect.getBreakpoint() === 'mobile' ? 'ad-slot--mobile' : 'container-inline');
 
                 return new Promise(function (resolve) {
                     idleFastdom.write(function () {
@@ -90,10 +90,10 @@ define([
                         if (detect.getBreakpoint() !== 'mobile') {
                             bonzo(adSlice)
                                 .removeClass('fc-slice__item--no-mpu')
-                                .append($tabletAdSlot);
+                                .append(adSlot);
                         } else {
                             // add a mobile advert after the container
-                            $mobileAdSlot
+                            bonzo(adSlot)
                                 .insertAfter($.ancestor(adSlice, 'fc-container'));
                         }
 
