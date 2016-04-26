@@ -5,7 +5,7 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
-    'common/utils/fastdom-idle',
+    'common/utils/fastdom-promise',
     'common/modules/commercial/create-ad-slot',
     'common/modules/user-prefs',
     'common/modules/commercial/commercial-features'
@@ -16,7 +16,7 @@ define([
     $,
     config,
     detect,
-    idleFastdom,
+    fastdom,
     createAdSlot,
     userPrefs,
     commercialFeatures
@@ -84,21 +84,17 @@ define([
 
                 adSlot.className += ' ' + (detect.getBreakpoint() === 'mobile' ? 'ad-slot--mobile' : 'container-inline');
 
-                return new Promise(function (resolve) {
-                    idleFastdom.write(function () {
-                        // add a tablet+ ad to the slice
-                        if (detect.getBreakpoint() !== 'mobile') {
-                            bonzo(adSlice)
-                                .removeClass('fc-slice__item--no-mpu')
-                                .append(adSlot);
-                        } else {
-                            // add a mobile advert after the container
-                            bonzo(adSlot)
-                                .insertAfter($.ancestor(adSlice, 'fc-container'));
-                        }
-
-                        resolve(null);
-                    });
+                return fastdom.write(function () {
+                    // add a tablet+ ad to the slice
+                    if (detect.getBreakpoint() !== 'mobile') {
+                        bonzo(adSlice)
+                            .removeClass('fc-slice__item--no-mpu')
+                            .append(adSlot);
+                    } else {
+                        // add a mobile advert after the container
+                        bonzo(adSlot)
+                            .insertAfter($.ancestor(adSlice, 'fc-container'));
+                    }
                 });
             })
         );
