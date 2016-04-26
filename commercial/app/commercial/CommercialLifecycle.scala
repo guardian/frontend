@@ -72,7 +72,6 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       eventualResponse onSuccess {
         case response =>
           S3FeedStore.put(feedName, response.feed)
-//          recordSuccess("fetch")
           recordEvent("fetch","success")
           log.info(s"$msgPrefix succeeded in ${response.duration}")
       }
