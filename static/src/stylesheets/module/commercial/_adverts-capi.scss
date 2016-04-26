@@ -147,6 +147,10 @@
             min-height: $gs-baseline * 11;
             width: 100%;
         }
+
+        .advert__standfirst {
+            margin-bottom: $gs-baseline / 2;
+        }
     }
 
     .advert__image-container {
