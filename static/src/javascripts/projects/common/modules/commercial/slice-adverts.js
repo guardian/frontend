@@ -8,11 +8,7 @@ define([
     'common/utils/fastdom-idle',
     'common/modules/commercial/create-ad-slot',
     'common/modules/user-prefs',
-    'common/modules/commercial/commercial-features',
-    'lodash/objects/defaults',
-    'lodash/collections/contains',
-    'lodash/collections/map',
-    'common/utils/chain'
+    'common/modules/commercial/commercial-features'
 ], function (
     bonzo,
     qwery,
@@ -23,11 +19,7 @@ define([
     idleFastdom,
     createAdSlot,
     userPrefs,
-    commercialFeatures,
-    defaults,
-    contains,
-    map,
-    chain
+    commercialFeatures
 ) {
     var maxAdsToShow = config.page.showMpuInAllContainers ? 999 : 3;
     var containerSelector = '.fc-container';
@@ -42,7 +34,7 @@ define([
             return false;
         }
 
-        var container, containerId, $adSlice, isFrontFirst, fabricAdSlot,
+        var container, containerId, adSlice, isFrontFirst, fabricAdSlot,
         // get all the containers
             containers   = qwery(containerSelector),
             index        = 0,
@@ -64,17 +56,17 @@ define([
         // pull out ad slices which have at least x containers between them
         while (index < containers.length) {
             container    = containers[index];
-            containerId  = bonzo(container).data('id');
-            $adSlice     = $(sliceSelector, container);
+            containerId  = container.getAttribute('data-id');
+            adSlice      = container.querySelector(sliceSelector);
             // don't display ad in the first container on the network fronts
-            isFrontFirst = contains(['uk', 'us', 'au'], config.page.pageId) && index === 0;
+            isFrontFirst = ['uk', 'us', 'au'].indexOf(config.page.pageId) !== -1 && index === 0;
 
             if (config.page.showMpuInAllContainers) {
-                adSlices.push($adSlice.first());
+                adSlices.push(adSlice);
                 index++;
             } else {
-                if ($adSlice.length && !isFrontFirst && (!prefs || prefs[containerId] !== 'closed')) {
-                    adSlices.push($adSlice.first());
+                if (adSlice && !isFrontFirst && (!prefs || prefs[containerId] !== 'closed')) {
+                    adSlices.push(adSlice);
                     index += (containerGap + 1);
                 } else {
                     index++;
@@ -82,7 +74,7 @@ define([
             }
         }
 
-        return Promise.all(chain(adSlices).slice(0, maxAdsToShow).and(map, function ($adSlice, index) {
+        return Promise.all(adSlices.slice(0, maxAdsToShow).map(function (adSlice, index) {
                 // When we are inside the AB test we are adding inline1 manually so index needs to start from 2.
                 var inlineIndexOffset = (config.tests.cmTopBannerPosition) ? 2 : 1;
 
@@ -96,19 +88,19 @@ define([
                     idleFastdom.write(function () {
                         // add a tablet+ ad to the slice
                         if (detect.getBreakpoint() !== 'mobile') {
-                            $adSlice
+                            bonzo(adSlice)
                                 .removeClass('fc-slice__item--no-mpu')
                                 .append($tabletAdSlot);
                         } else {
                             // add a mobile advert after the container
                             $mobileAdSlot
-                                .insertAfter($.ancestor($adSlice[0], 'fc-container'));
+                                .insertAfter($.ancestor(adSlice, 'fc-container'));
                         }
 
                         resolve(null);
                     });
                 });
-            }).valueOf()
+            })
         ).then(function () {
             return adSlices;
         });
