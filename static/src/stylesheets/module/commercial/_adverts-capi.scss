@@ -108,8 +108,9 @@
         color: $guardian-brand-dark;
     }
 
+    // Supported by containers don't feature separators between items
     .adverts__row > * + *::before {
-        background: none;
+        content: none;
     }
 }
 

@@ -1,5 +1,6 @@
 @import common.commercial.CardContent
 @import common.{Edition, LinkTo}
+@import controllers.commercial.{SponsorType, PaidFor, Supported}
 @import views.html.commercial.cards.itemLargeCard
 @import views.html.commercial.containerWrapper
 @import views.html.fragments.inlineSvg
@@ -12,17 +13,26 @@
   optCapiButtonText: Option[String],
   optCapiReadMoreUrl: Option[String],
   optCapiReadMoreText: Option[String],
-  optSponsorType: Option[String],
+  optSponsorType: Option[SponsorType],
   optSponsorLabel: Option[String],
   clickMacro: Option[String],
   omnitureId: String)(implicit request: RequestHeader)
 
-@containerWrapper(Seq("legacy", "legacy-single", "capi", optSponsorType.getOrElse(""), optSponsorType.map(t => s"tone-$t").getOrElse("")),
+@containerWrapper(Seq("legacy", "legacy-single", "capi", optSponsorType.map(t => t.toString).getOrElse(""), optSponsorType.map(t => s"tone-$t").getOrElse("")),
                   Some(s"merchandising | capi | single $omnitureId"),
-                  badgeInHeader =  optSponsorType.map(sponsorType => sponsorType!="paidfor").getOrElse(false),
+                  badgeInHeader =  optSponsorType match {
+                      case Some(Supported) => true
+                      case _               => false
+                  },
                   optBadge = Some(badge),
-                  optKicker = optSponsorType.flatMap(sponsorType => if(sponsorType=="paidfor") Some(paidForMeta()) else None),
-                  optStamp = optSponsorType.flatMap(sponsorType => if(sponsorType=="paidfor") Some(stamp) else None)){
+                  optKicker = optSponsorType match {
+                      case Some(PaidFor) => Some(paidForMeta())
+                      case _             => None
+                  },
+                  optStamp = optSponsorType match {
+                      case Some(PaidFor) => Some(stamp)
+                      case _             => None
+                  }){
 
     @optCapiLink.map { linkUrl =>
         <a href="@clickMacro@linkUrl" class="adverts__logo u-text-hyphenate" data-link-name="header link">@optCapiTitle</a>
@@ -36,7 +46,7 @@
         @itemLargeCard(
             card,
             omnitureId,
-            optAdvertClassNames = Some(Seq("inverse", optSponsorType.getOrElse(""))),
+            optAdvertClassNames = Some(Seq("inverse", optSponsorType.map(t => t.toString).getOrElse(""))),
             useCardBranding = false)
 
         @for(moreButton <- optCapiReadMoreText) {
@@ -67,7 +77,7 @@
     <a class="adverts__badge__link" href="@clickMacro@optCapiLink" data-link-name="logo link">
         @for(logoUrl <- optLogo) {<img class="adverts__badge__logo" src="@logoUrl" alt="">}
     </a>
-    @for(sponsorType <- optSponsorType if sponsorType != "paidfor";
+    @for(sponsorType <- optSponsorType if sponsorType != PaidFor;
          aboutLinkUrl <- optCapiAbout) {
         <a href="@clickMacro@aboutLinkUrl" class="adverts__badge__help" data-link-name="about link">About this content</a>
     }

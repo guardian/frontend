@@ -9,6 +9,10 @@ import play.api.mvc._
 import scala.concurrent.Future
 import scala.util.control.NonFatal
 
+sealed trait SponsorType
+case object PaidFor extends SponsorType { override def toString = "paidfor" }
+case object Supported extends SponsorType { override def toString = "supported" }
+
 object ContentApiOffersController extends Controller with ExecutionContexts with implicits.Requests with Logging {
 
   private val sponsorTypeToClass = Map(
@@ -18,9 +22,9 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
   )
 
   private val sponsorTypeToClassRefactor = Map(
-    "sponsored" -> "supported",
-    "advertisement-feature" -> "paidfor",
-    "foundation-supported" -> "supported"
+    "sponsored" -> Supported,
+    "advertisement-feature" -> PaidFor,
+    "foundation-supported" -> Supported
   )
 
   private val sponsorTypeToLabel = Map(
