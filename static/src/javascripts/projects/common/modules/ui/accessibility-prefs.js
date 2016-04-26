@@ -18,10 +18,18 @@ define([
         });
     }
 
+    function breuer() {
+        $('body').addClass('is-breuer-mode');
+    }
+
     return function () {
         forEach(['sepia', 'grayscale', 'invert', 'contrast', 'saturate', 'opacity'], function (filter) {
             if (userPrefs.isOn(filter)) {
                 set(filter);
+            }
+
+            if (userPrefs.isOn('breuerMode')) {
+                breuer();
             }
         });
     };
