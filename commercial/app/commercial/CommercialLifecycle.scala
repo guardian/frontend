@@ -32,22 +32,29 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
   )
 
 
-  private def recordSuccess(eventName:String): Unit = {
-    val keyName = s"$eventName-success"
+//  private def recordSuccess(eventName:String): Unit = {
+//    val keyName = s"$eventName-success"
+//    metricMap
+//      .get(keyName)
+//      .foreach(agent => agent.send(_ + 1.0))
+//  }
+//
+//  private def recordFailure(eventName:String): Unit = {
+//    val keyName = s"$eventName-failure"
+//    metricMap
+//      .get(keyName)
+//      .foreach(agent => agent.send(_ + 1.0))
+//  }
+
+  private def recordEvent(eventName:String, outcome:String):Unit = {
+    val keyname = s"$eventName-$outcome"
     metricMap
-      .get(keyName)
-      .foreach(agent => agent.send(_ + 1.0))
+      .get(keyname)
+        .foreach(agent => agent.send(_ +1.0))
   }
 
-  private def recordFailure(eventName:String): Unit = {
-    val keyName = s"$eventName-failure"
-    metricMap
-      .get(keyName)
-      .foreach(agent => agent.send(_ + 1.0))
-  }
 
-
-  private def updateFetchAndParseMetrics(): Unit = {
+  private def updateMetrics(): Unit = {
     metricMap.foreach{
       case (metricName, agent) => {
         agent send {currentCount =>
@@ -75,13 +82,15 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
         case e: SwitchOffException =>
           log.warn(s"$msgPrefix failed: ${e.getMessage}")
         case NonFatal(e) =>
-          recordFailure("fetch")
+//          recordFailure("fetch")
+          recordEvent("fetch","failure")
           log.error(s"$msgPrefix failed: ${e.getMessage}", e)
       }
       eventualResponse onSuccess {
         case response =>
           S3FeedStore.put(feedName, response.feed)
-          recordSuccess("fetch")
+//          recordSuccess("fetch")
+          recordEvent("fetch","success")
           log.info(s"$msgPrefix succeeded in ${response.duration}")
       }
       eventualResponse.map(_ => ())
@@ -98,12 +107,14 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
         case e: SwitchOffException =>
           log.warn(s"$msgPrefix failed: ${e.getMessage}")
         case NonFatal(e) =>
-          recordFailure("parse")
+//          recordFailure("parse")
+          recordEvent("parse","failure")
           log.error(s"$msgPrefix failed: ${e.getMessage}", e)
       }
       parsedFeed onSuccess {
         case feed =>
-          recordSuccess("parse")
+//          recordSuccess("parse")
+          recordEvent("parse","success")
           log.info(s"$msgPrefix succeeded: parsed ${feed.contents.size} $feedName in ${feed.parseDuration}")
       }
       parsedFeed.map(_ => ())
@@ -118,7 +129,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       val feedName = fetcher.feedMetaData.name
       val jobName = mkJobName(feedName, "fetch")
       Jobs.deschedule(jobName)
-      Jobs.scheduleEveryNMinutes(jobName, 15) {
+      Jobs.scheduleEveryNMinutes(jobName, 1) {
         fetchFeed(fetcher)
       }
     }
@@ -127,15 +138,15 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       val feedName = parser.feedMetaData.name
       val jobName = mkJobName(feedName, "parse")
       Jobs.deschedule(jobName)
-      Jobs.scheduleEveryNMinutes(jobName, 15) {
+      Jobs.scheduleEveryNMinutes(jobName, 1) {
         parseFeed(parser)
       }
     }
 
-    val jobName = "update-fetch-and-parse-metrics"
+    val jobName = "update-metrics"
     Jobs.deschedule(jobName)
-    Jobs.scheduleEveryNMinutes(jobName, 15){
-      updateFetchAndParseMetrics()
+    Jobs.scheduleEveryNMinutes(jobName, 1){
+      updateMetrics()
       Future.successful(())
     }
 
