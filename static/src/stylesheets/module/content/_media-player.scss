@@ -64,6 +64,12 @@ $ima-controls-height: 70px;
     &.gu-media--video { // aspect ratio fix (this element gets given a fixed height by video.js)
         height: auto !important;
         cursor: pointer;
+        
+        &.vjs-ad-playing {
+            .vjs-control-bar {
+                display: none;
+            } 
+        }
     }
     &.gu-media--audio {
         position: relative;
@@ -186,6 +192,7 @@ $ima-controls-height: 70px;
 
 /* VJS: CONTROL BAR
    ========================================================================== */
+   
 
 .vjs-control-bar,
 #ima-controls-div {
@@ -208,6 +215,11 @@ $ima-controls-height: 70px;
 
 .vjs-control-bar {
     position: relative;
+    display: none;
+
+    &.isPlaying {
+        display: block;
+    }
 
     .gu-media--video & {
         position: absolute;

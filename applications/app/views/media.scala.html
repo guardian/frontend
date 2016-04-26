@@ -1,7 +1,8 @@
 @(page: MediaPage)(implicit request: RequestHeader)
 
 @main(page){ }{
-
-    @fragments.mediaBody(page)
+    <!-- this is just for development need to check the type of article first to make sure that audio is supported -->
+    @fragments.mediaBodyImmersive(page)
+<!--     @fragments.mediaBody(page) -->
 
 }

@@ -351,7 +351,14 @@ define([
             });
         });
         player.on('playing', function () {
+            $('.video-overlay').addClass('playing');
+            $('.vjs-control-bar').addClass('isPlaying');
             bonzo(player.el()).removeClass(endState);
+        });
+        
+        player.on('pause', function(){
+            $('.vjs-control-text').css('display', 'none');
+            $('.video-overlay').removeClass('playing');
         });
     }
 
