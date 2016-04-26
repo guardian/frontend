@@ -316,7 +316,7 @@
 
         // Overwriting media tone header so that you can see the image instead
         .tonal__header {
-            background-color: rgb(0, 0, 0);
+            background-color: $multimedia-support-5
         }
 
         .meta__numbers {
@@ -407,11 +407,11 @@
         .block-share__item--facebook,
         .block-share__item--twitter,
         .block-share__item--pinterest {
-            background-color: rgb(0, 0, 0);
+            background-color: $multimedia-support-5;
             border: 1px solid $neutral-2;
 
             &:hover {
-                background-color: rgb(0, 0, 0);
+                background-color: $multimedia-support-5;
             }
 
             &.inline-icon, .inline-icon {
@@ -421,11 +421,11 @@
     }
 
     .social-icon, .block-share__item {
-        background-color: rgb(0, 0, 0);
+        background-color: $multimedia-support-5;
         border: 1px solid $neutral-2;
 
         &:hover {
-            background-color: rgb(0, 0, 0);
+            background-color: $multimedia-support-5;
         }
 
         &.inline-icon, .inline-icon {
@@ -515,12 +515,15 @@
             }
         }
 
+        // This is the gallery caption title
         > strong:first-child {
             @include fs-headline(2);
             color: $neutral-5;
             display: block;
             margin-bottom: $gs-baseline/2;
 
+            // The first br is display none after the title because the
+            // title already has the correct margins provided in "fs-headline(2)"
             & + br {
                 display: none;
             }
@@ -536,10 +539,10 @@
     }
 
     .gallery__img-container {
-        background-color: rgb(0, 0, 0);
+        background-color: $multimedia-support-5;
 
         @include mq(tablet) {
-            border-left: 1px dotted #484848;
+            border-left: 1px dotted $multimedia-support-4;
             padding-left: $gs-gutter / 2;
             padding-bottom: 2.5rem;
         }
