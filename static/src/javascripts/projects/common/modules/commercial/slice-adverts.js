@@ -29,90 +29,91 @@ define([
     map,
     chain
 ) {
-    var maxAdsToShow = config.page.showMpuInAllContainers ? 999 : 3,
-        init = function (options) {
-            if (!commercialFeatures.sliceAdverts) {
-                return false;
-            }
+    var maxAdsToShow = config.page.showMpuInAllContainers ? 999 : 3;
 
-            var container, containerId, $adSlice, isFrontFirst, fabricAdSlot,
-                opts = defaults(
-                    options || {},
-                    {
-                        containerSelector: '.fc-container',
-                        sliceSelector: '.js-fc-slice-mpu-candidate'
-                    }
-                ),
-            // get all the containers
-                containers   = qwery(opts.containerSelector),
-                index        = 0,
-                adSlices     = [],
-                containerGap = 1,
-                prefs        = userPrefs.get('container-states'),
-                addFabricAd  = (config.page.isFront && config.switches.fabricAdverts && detect.isBreakpoint({max : 'phablet'}));
+    function init(options) {
+        if (!commercialFeatures.sliceAdverts) {
+            return false;
+        }
 
-            // insert fabric advert at first container in lieu of a top slot
-            if (addFabricAd) {
-                fabricAdSlot = bonzo(createAdSlot('fabric', 'container-inline'));
-                fabricAdSlot.addClass('ad-slot--mobile');
-                fabricAdSlot.insertAfter(containers[0]);
-            }
+        var container, containerId, $adSlice, isFrontFirst, fabricAdSlot,
+            opts = defaults(
+                options || {},
+                {
+                    containerSelector: '.fc-container',
+                    sliceSelector: '.js-fc-slice-mpu-candidate'
+                }
+            ),
+        // get all the containers
+            containers   = qwery(opts.containerSelector),
+            index        = 0,
+            adSlices     = [],
+            containerGap = 1,
+            prefs        = userPrefs.get('container-states'),
+            addFabricAd  = (config.page.isFront && config.switches.fabricAdverts && detect.isBreakpoint({max : 'phablet'}));
 
-            // skip the initial containers if we've already added an advert to the first
-            index+= addFabricAd ? (1 + containerGap) : 0;
+        // insert fabric advert at first container in lieu of a top slot
+        if (addFabricAd) {
+            fabricAdSlot = bonzo(createAdSlot('fabric', 'container-inline'));
+            fabricAdSlot.addClass('ad-slot--mobile');
+            fabricAdSlot.insertAfter(containers[0]);
+        }
 
-            // pull out ad slices which have at least x containers between them
-            while (index < containers.length) {
-                container    = containers[index];
-                containerId  = bonzo(container).data('id');
-                $adSlice     = $(opts.sliceSelector, container);
-                // don't display ad in the first container on the network fronts
-                isFrontFirst = contains(['uk', 'us', 'au'], config.page.pageId) && index === 0;
+        // skip the initial containers if we've already added an advert to the first
+        index+= addFabricAd ? (1 + containerGap) : 0;
 
-                if (config.page.showMpuInAllContainers) {
+        // pull out ad slices which have at least x containers between them
+        while (index < containers.length) {
+            container    = containers[index];
+            containerId  = bonzo(container).data('id');
+            $adSlice     = $(opts.sliceSelector, container);
+            // don't display ad in the first container on the network fronts
+            isFrontFirst = contains(['uk', 'us', 'au'], config.page.pageId) && index === 0;
+
+            if (config.page.showMpuInAllContainers) {
+                adSlices.push($adSlice.first());
+                index++;
+            } else {
+                if ($adSlice.length && !isFrontFirst && (!prefs || prefs[containerId] !== 'closed')) {
                     adSlices.push($adSlice.first());
-                    index++;
+                    index += (containerGap + 1);
                 } else {
-                    if ($adSlice.length && !isFrontFirst && (!prefs || prefs[containerId] !== 'closed')) {
-                        adSlices.push($adSlice.first());
-                        index += (containerGap + 1);
-                    } else {
-                        index++;
-                    }
+                    index++;
                 }
             }
+        }
 
-            return Promise.all(chain(adSlices).slice(0, maxAdsToShow).and(map, function ($adSlice, index) {
-                    // When we are inside the AB test we are adding inline1 manually so index needs to start from 2.
-                    var inlineIndexOffset = (config.tests.cmTopBannerPosition) ? 2 : 1;
+        return Promise.all(chain(adSlices).slice(0, maxAdsToShow).and(map, function ($adSlice, index) {
+                // When we are inside the AB test we are adding inline1 manually so index needs to start from 2.
+                var inlineIndexOffset = (config.tests.cmTopBannerPosition) ? 2 : 1;
 
-                    var adName        = 'inline' + (index + inlineIndexOffset),
-                        $mobileAdSlot = bonzo(createAdSlot(adName, 'container-inline'))
-                            .addClass('ad-slot--mobile'),
-                        $tabletAdSlot = bonzo(createAdSlot(adName, 'container-inline'))
-                            .addClass('ad-slot--not-mobile');
+                var adName        = 'inline' + (index + inlineIndexOffset),
+                    $mobileAdSlot = bonzo(createAdSlot(adName, 'container-inline'))
+                        .addClass('ad-slot--mobile'),
+                    $tabletAdSlot = bonzo(createAdSlot(adName, 'container-inline'))
+                        .addClass('ad-slot--not-mobile');
 
-                    return new Promise(function (resolve) {
-                        idleFastdom.write(function () {
-                            // add a tablet+ ad to the slice
-                            if (detect.getBreakpoint() !== 'mobile') {
-                                $adSlice
-                                    .removeClass('fc-slice__item--no-mpu')
-                                    .append($tabletAdSlot);
-                            } else {
-                                // add a mobile advert after the container
-                                $mobileAdSlot
-                                    .insertAfter($.ancestor($adSlice[0], 'fc-container'));
-                            }
+                return new Promise(function (resolve) {
+                    idleFastdom.write(function () {
+                        // add a tablet+ ad to the slice
+                        if (detect.getBreakpoint() !== 'mobile') {
+                            $adSlice
+                                .removeClass('fc-slice__item--no-mpu')
+                                .append($tabletAdSlot);
+                        } else {
+                            // add a mobile advert after the container
+                            $mobileAdSlot
+                                .insertAfter($.ancestor($adSlice[0], 'fc-container'));
+                        }
 
-                            resolve(null);
-                        });
+                        resolve(null);
                     });
-                }).valueOf()
-            ).then(function () {
-                return adSlices;
-            });
-        };
+                });
+            }).valueOf()
+        ).then(function () {
+            return adSlices;
+        });
+    }
 
     return {
         init: init
