@@ -82,7 +82,7 @@ define([
                 var adName        = 'inline' + (index + inlineIndexOffset),
                     adSlot        = createAdSlot(adName, 'container-inline');
 
-                bonzo(adSlot).addClass(detect.getBreakpoint() === 'mobile' ? 'ad-slot--mobile' : 'container-inline');
+                adSlot.className += ' ' + (detect.getBreakpoint() === 'mobile' ? 'ad-slot--mobile' : 'container-inline');
 
                 return new Promise(function (resolve) {
                     idleFastdom.write(function () {
@@ -101,9 +101,7 @@ define([
                     });
                 });
             })
-        ).then(function () {
-            return adSlices;
-        });
+        );
     }
 
 });
