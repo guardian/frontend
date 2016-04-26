@@ -65,20 +65,22 @@ define([
         var topScroll = (topCusp === 'true') ?
             ((scrollY + (viewportHeight * 0.4) - adSlotTop - adHeight) * 0.2) : 0;
 
+        var scrollAmount;
+
         switch (this.params.backgroundImagePType) {
             case 'split':
-                this.scrollAmount = bottomScroll + topScroll + '%';
+                scrollAmount = bottomScroll + topScroll;
                 fastdom.write(function () {
                     $('.ad-exp--expand-scrolling-bg', that.$adSlot).css({
                         'background-repeat': 'no-repeat',
-                        'background-position': '50%' + that.scrollAmount
+                        'background-position': '50%' + scrollAmount + '%'
                     });
                 });
                 break;
             case 'fixed':
-                this.scrollAmount = (scrollY - adSlotTop) + 'px';
+                scrollAmount = (scrollY - adSlotTop);
                 fastdom.write(function () {
-                    $('.ad-exp--expand-scrolling-bg', that.$adSlot).css('background-position', '50%' + that.scrollAmount);
+                    $('.ad-exp--expand-scrolling-bg', that.$adSlot).css('background-position', '50%' + (scrollAmount  + 'px'));
                 });
                 break;
             case 'fixed matching fluid250':
@@ -87,11 +89,10 @@ define([
                 });
                 break;
             case 'parallax':
-                this.scrollAmount = Math.ceil((scrollY - adSlotTop) * 0.3 * -1) + 20;
-                this.scrollAmountP = this.scrollAmount + '%';
+                scrollAmount = Math.ceil((scrollY - adSlotTop) * 0.3 * -1) + 20;
                 fastdom.write(function () {
                     $('.ad-exp--expand-scrolling-bg', that.$adSlot).addClass('ad-exp--expand-scrolling-bg-parallax');
-                    $('.ad-exp--expand-scrolling-bg', that.$adSlot).css('background-position', '50%' + that.scrollAmountP);
+                    $('.ad-exp--expand-scrolling-bg', that.$adSlot).css('background-position', '50%' + (scrollAmount + '%'));
                 });
                 break;
         }
