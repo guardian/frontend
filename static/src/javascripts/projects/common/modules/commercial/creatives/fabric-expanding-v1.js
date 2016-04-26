@@ -29,6 +29,7 @@ define([
     addTrackingPixel,
     Promise
 ) {
+    // Forked from expandable-v3.js
 
     var FabricExpandingV1 = function ($adSlot, params) {
         this.$adSlot      = $adSlot;
