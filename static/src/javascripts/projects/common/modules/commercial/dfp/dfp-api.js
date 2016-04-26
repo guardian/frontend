@@ -10,13 +10,14 @@ define([
     'common/utils/$',
     'common/utils/$css',
     'common/utils/config',
+    'common/utils/cookies',
     'common/utils/detect',
+    'common/utils/fastdom-promise',
     'common/utils/mediator',
+    'common/utils/report-error',
+    'common/utils/sha1',
     'common/utils/url',
     'common/utils/user-timing',
-    'common/utils/sha1',
-    'common/utils/fastdom-promise',
-    'common/utils/cookies',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
     'common/modules/commercial/commercial-features',
@@ -51,13 +52,14 @@ define([
     $,
     $css,
     config,
+    cookies,
     detect,
+    fastdom,
     mediator,
+    reportError,
+    sha1,
     urlUtils,
     userTiming,
-    sha1,
-    fastdom,
-    cookies,
     stickyMpu,
     buildPageTargeting,
     commercialFeatures,
@@ -683,6 +685,19 @@ define([
 
         if (event.isEmpty) {
             removeSlot(adSlotId);
+
+            // This empty slot could be caused by a targeting problem,
+            // let's report these and diagnose the problem in sentry.
+            var adUnitPath = event.slot.getAdUnitPath(),
+                adTargetingMap = event.slot.getTargetingMap(),
+                adKeywords = adTargetingMap ? adTargetingMap['k'].join(', ') : '';
+
+            reportError(new Error('dfp returned an empty ad response'), {
+                feature: 'commercial',
+                adUnit: adUnitPath,
+                adSlot: adSlotId,
+                adKeywords: adKeywords
+            }, false);
         } else {
             $adSlot = $('#' + adSlotId);
 
