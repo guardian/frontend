@@ -45,10 +45,11 @@ define([
     FabricExpandingV1.hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
 
     FabricExpandingV1.prototype.updateBgPosition = function () {
-        var scrollY = window.pageYOffset,
-            viewportHeight = bonzo.viewport().height,
-            adSlotTop = this.$adSlot.offset().top,
-            that = this;
+        var that = this;
+
+        var scrollY = window.pageYOffset;
+        var viewportHeight = bonzo.viewport().height;
+        var adSlotTop = this.$adSlot.offset().top;
 
         var adHeight = (this.isClosed) ? this.closedHeight : this.openedHeight;
         var inViewB = ((scrollY + viewportHeight) > adSlotTop);
