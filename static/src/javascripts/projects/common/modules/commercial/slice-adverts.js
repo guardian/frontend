@@ -83,7 +83,7 @@ define([
             }
 
             return Promise.all(chain(adSlices).slice(0, maxAdsToShow).and(map, function ($adSlice, index) {
-                    var adName        = 'inline' + index,
+                    var adName        = 'inline' + (index + 1),
                         $mobileAdSlot = bonzo(createAdSlot(adName, 'container-inline'))
                             .addClass('ad-slot--mobile'),
                         $tabletAdSlot = bonzo(createAdSlot(adName, 'container-inline'))
