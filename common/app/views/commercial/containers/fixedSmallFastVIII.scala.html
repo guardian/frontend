@@ -7,11 +7,13 @@
     @containerModel.content.initialCards.take(2).map(card => views.html.commercial.cards.itemCard(
                             card,
                             omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
+                            optAdvertClassNames = Some(Seq("paidfor")),
                             useCardBranding = !containerModel.isSingleSponsorContainer))
     <div class="adverts__column adverts__2cols">
         @containerModel.content.initialCards.slice(2, 8).map(card => views.html.commercial.cards.itemSmallCard(
                                 card,
                                 omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
+                                optAdvertClassNames = Some(Seq("paidfor")),
                                 useCardBranding = !containerModel.isSingleSponsorContainer))
     </div>
 </div>

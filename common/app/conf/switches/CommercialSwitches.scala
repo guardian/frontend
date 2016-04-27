@@ -370,7 +370,7 @@ trait CommercialSwitches {
     "cards-decide-paid-container-branding",
     "If on, the cards will decide the branding of their container",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
+    sellByDate = new LocalDate(2016, 6, 1),
     exposeClientSide = false
   )
 

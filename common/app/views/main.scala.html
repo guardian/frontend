@@ -8,25 +8,21 @@
 
 @headerAndTopAds(showAdverts: Boolean, edition: Edition, adBelowNav: Boolean) = {
     @if(!(page.metadata.shouldHideHeaderAndTopAds && getContent(page).exists(_.tags.isArticle))) {
-        @if(!mvt.CMTopBannerPosition.isParticipating) {
-            @if(showAdverts) {
-                @fragments.commercial.topBanner(page.metadata, edition)
-            }
-
-            @fragments.header(page)
-
-            @if(adBelowNav) {
-                @fragments.commercial.topBannerBelowNav()
-            }
-
-            @if(showAdverts) {
-                @fragments.commercial.topBannerMobile(page.metadata, edition)
-            }
-
-            <div id="maincontent" tabindex="0"></div>
-        } else {
-            @fragments.header(page)
+        @if(showAdverts) {
+            @fragments.commercial.topBanner(page.metadata, edition)
         }
+
+        @fragments.header(page)
+
+        @if(adBelowNav) {
+            @fragments.commercial.topBannerBelowNav()
+        }
+
+        @if(showAdverts) {
+            @fragments.commercial.topBannerMobile(page.metadata, edition)
+        }
+
+        <div id="maincontent" tabindex="0"></div>
     }
 }
 
