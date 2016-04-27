@@ -406,6 +406,14 @@ case class CommercialExpiryPage(
   override val metadata: MetaData = MetaData.make(id, section, webTitle, analyticsName, shouldGoogleIndex = false)
 }
 
+case class GalleryPage(
+  gallery: Gallery,
+  related: RelatedContent,
+  index: Int,
+  trail: Boolean) extends ContentPage {
+  override lazy val item = gallery
+}
+
 case class TagCombiner(
   id: String,
   leftTag: Tag,
