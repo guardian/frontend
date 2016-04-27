@@ -49,7 +49,10 @@
     .advert__meta[itemprop='author'] {
         margin-bottom: 1em;
     }
+}
 
+.adverts--tone-membership.adverts--legacy-single .adverts__row >,
+.advert--book {
     .button {
         @include button-colour(
             $features-main-2,
