@@ -91,7 +91,7 @@ trait ABTestSwitches {
     "ab-video-series-page",
     "Testing new video series layout",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 27),
+    sellByDate = new LocalDate(2016, 5, 4),
     exposeClientSide = true
   )
 
