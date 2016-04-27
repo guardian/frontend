@@ -43,10 +43,10 @@ define([
             if (detect.isBreakpoint({ min: 'desktop' }) && config.page.keywordIds.indexOf('football/football') < 0 && config.page.keywordIds.indexOf('sport/rugby-union') < 0) {
                 topMarker = document.querySelector('.js-top-marker');
                 new Affix({
-                    element: document.querySelector('.js-live-blog__timeline-container'),
+                    element: document.querySelector('.js-live-blog__sticky-components-container'),
                     topMarker: topMarker,
                     bottomMarker: document.querySelector('.js-bottom-marker'),
-                    containerElement: document.querySelector('.js-live-blog__key-events')
+                    containerElement: document.querySelector('.js-live-blog__sticky-components')
                 });
             }
         },

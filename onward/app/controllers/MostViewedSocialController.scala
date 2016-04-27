@@ -36,7 +36,7 @@ object MostViewedSocialController extends Controller with ExecutionContexts {
           val dataId = s"trending-on-$socialContext"
           val componentId = Some(s"trending-on-$socialContext")
           val displayName = Some(s"trending on $socialContext")
-          val properties = FrontProperties(None, None, None, None, false, None)
+          val properties = FrontProperties.empty
 
           val config = CollectionConfig.empty.copy(
             backfill = None, displayName = displayName, href = None

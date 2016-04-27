@@ -34,7 +34,8 @@
                         @fragments.nav.topNavigation(page, navigation)
                     </nav>
                 </div>
-                @if(!page.metadata.hasSlimHeader) {
+                @* Don't show navigation toggle if slimHeader, or participating in the gallery redesign test*@
+                @if(!page.metadata.hasSlimHeader && (!mvt.ABGalleryRedesignVariant.shouldShow(page.metadata.contentType))) {
                     @fragments.nav.navigationToggle()
                 }
             </div>
