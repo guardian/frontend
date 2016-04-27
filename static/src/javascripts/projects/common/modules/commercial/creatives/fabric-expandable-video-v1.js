@@ -73,6 +73,7 @@ define([
             fastdom.write(function () {
                 var videoSrc = $('#YTPlayer').attr('src');
                 var videoSrcAutoplay = videoSrc;
+
                 if (videoSrc.indexOf('autoplay') === -1) {
                     videoSrcAutoplay = videoSrc + '&amp;autoplay=1';
                 } else {
@@ -81,6 +82,7 @@ define([
                         this.isClosed ? 'autoplay=1' : 'autoplay=0'
                     );
                 }
+
                 $('.ad-exp__close-button').toggleClass('button-spin');
                 $('.ad-exp__open-chevron').removeClass('chevron-up').toggleClass('chevron-down');
                 $ad.css(
@@ -90,10 +92,13 @@ define([
                 $('.slide-video, .slide-video .ad-exp__layer', $(this.$adSlot[0]))
                     .css('height', this.isClosed ? this.openedHeight : this.closedHeight)
                     .toggleClass('slide-video__expand');
+
                 this.isClosed = !this.isClosed;
+
                 setTimeout(function () {
                     $('#YTPlayer').attr('src', videoSrcAutoplay);
                 }, 1000);
+
             }.bind(this));
         }.bind(this));
 
