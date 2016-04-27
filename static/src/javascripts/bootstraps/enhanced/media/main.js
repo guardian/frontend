@@ -393,7 +393,7 @@ define([
 
         var mediaType  = config.page.contentType.toLowerCase(),
             mostViewed = new Component(),
-            isInSeriesTest = ab.isInVariant('variant'),
+            isInSeriesTest = ab.isInVariant('VideoSeriesPage', 'variant'),
             attachTo   = $(mediaType === 'video' ? '.js-video-components-container' : '.js-media-popular')[0],
             endpoint   = isInSeriesTest ? '/video/in-series/' + config.page.seriesId + '.json' :
                          '/' + (config.page.isPodcast ? 'podcast' : mediaType) + '/most-viewed.json';
