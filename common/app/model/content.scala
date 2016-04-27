@@ -400,7 +400,7 @@ object Article {
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       twitterPropertiesOverrides = twitterProperties,
-      hasHeader = content.tags.isUSMinuteSeries || content.isImmersive
+      shouldHideHeaderAndTopAds = content.tags.isUSMinuteSeries || content.isImmersive
     )
   }
 
@@ -789,7 +789,6 @@ object Interactive {
       contentType = contentType,
       analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
-      hasHeader = content.isImmersive,
       javascriptConfigOverrides = Map("contentType" -> JsString(contentType)),
       twitterPropertiesOverrides = twitterProperties
     )

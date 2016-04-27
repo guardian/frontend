@@ -9,6 +9,7 @@
 <head>
     @fragments.head(page, projectName, head)
 </head>
+
 @defining(Commercial.shouldShowAds(page), Edition(request)) { case (showAdverts, edition) =>
     @defining(showAdverts && topBelowNavSlot.hasAd(page.metadata, edition)) { adBelowNav =>
         @defining(Navigation.topLevelItem(edition.navigation, page)) { navigation =>
@@ -29,7 +30,7 @@
 
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
-        @if(!(page.metadata.hasHeader && getContent(page).exists(_.tags.isArticle))) {
+        @if(!(page.metadata.shouldHideHeaderAndTopAds && getContent(page).exists(_.tags.isArticle))) {
             @if(!mvt.CMTopBannerPosition.isParticipating) {
                 @if(showAdverts) {
                     @fragments.commercial.topBanner(page.metadata, edition)

@@ -228,7 +228,7 @@ final case class MetaData (
   description: Option[String] = None,
   rssPath: Option[String] = None,
   contentType: String = "",
-  hasHeader: Boolean = true,
+  shouldHideHeaderAndTopAds: Boolean = false,
   schemaType: Option[String] = None, // Must be one of... http://schema.org/docs/schemas.html
   cacheTime: CacheTime = CacheTime.Default,
   openGraphImages: Seq[String] = Seq(),
