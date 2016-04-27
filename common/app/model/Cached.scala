@@ -33,7 +33,7 @@ object Cached extends implicits.Dates {
 
   case class Hash(string: String)
 
-  sealed trait CacheableResult
+  sealed trait CacheableResult { def result: Result }
   case class RevalidatableResult(result: Result, hash: Hash) extends CacheableResult
   case class WithoutRevalidationResult(result: Result) extends CacheableResult
 
@@ -69,15 +69,16 @@ object Cached extends implicits.Dates {
   // conventionally cacheable. Typically we only cache 200 and 404 responses.
   def explicitlyCache(seconds: Int)(result: Result): Result = cacheHeaders(seconds, result, None)
 
-  def apply(seconds: Int, cacheableResult: CacheableResult, ifNoneMatch: Option[String]) = cacheableResult match {
-    case RevalidatableResult(result, hash) =>
-      if (cacheableStatusCodes.contains(result.header.status)) {
-        val hashMaybeRequestHash = (hash, ifNoneMatch)//FIXME could be comma separated
-        cacheHeaders(seconds, result, Some(hashMaybeRequestHash))
-      } else
-        result
-    case WithoutRevalidationResult(result) => cacheHeaders(seconds, result, None)
-  }
+  def apply(seconds: Int, cacheableResult: CacheableResult, ifNoneMatch: Option[String]) =
+    if (cacheableStatusCodes.contains(cacheableResult.result.header.status)) {
+      cacheableResult match {
+        case RevalidatableResult(result, hash) =>
+          cacheHeaders(seconds, result, Some((hash, ifNoneMatch)))
+        case WithoutRevalidationResult(result) => cacheHeaders(seconds, result, None)
+      }
+    } else {
+      cacheableResult.result
+    }
 
   private def cacheHeaders(seconds: Int, result: Result, maybeHash: Option[(Hash, Option[String])]) = {
     val now = DateTime.now
