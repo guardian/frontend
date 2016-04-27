@@ -37,7 +37,7 @@ define([
             minAbove: detect.isBreakpoint({ max: 'tablet' }) ? 300 : 700,
             minBelow: 300,
             selectors: {
-                ' > h2': {minAbove: detect.getBreakpoint() === 'mobile' ? 20 : 0, minBelow: 250},
+                ' > h2': {minAbove: detect.getBreakpoint() === 'mobile' ? 100 : 0, minBelow: 250},
                 ' .ad-slot': {minAbove: 500, minBelow: 500},
                 ' > :not(p):not(h2):not(.ad-slot)': {minAbove: 35, minBelow: 400}
             }
@@ -48,7 +48,7 @@ define([
         if (!inlineMerchRules) {
             inlineMerchRules = getRules();
             inlineMerchRules.minAbove = 300;
-            inlineMerchRules.selectors[' > h2'].minAbove = 20;
+            inlineMerchRules.selectors[' > h2'].minAbove = 100;
             inlineMerchRules.selectors[' > :not(p):not(h2):not(.ad-slot)'].minAbove = 200;
         }
         return inlineMerchRules;
