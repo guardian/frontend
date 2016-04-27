@@ -32,7 +32,7 @@ object Cached extends implicits.Dates {
   private val tenDaysInSeconds = 864000
 
   def apply(seconds: Int)(result: RevalidatableResult)(implicit request: RequestHeader): Result = {
-    maybeCacheHeaders(seconds, result)
+    apply(seconds, result, request.headers.get("If-None-Match"))//FIXME could be comma separated
   }
 
   def apply(duration: Duration)(result: RevalidatableResult)(implicit request: RequestHeader): Result = {
@@ -70,16 +70,16 @@ object Cached extends implicits.Dates {
 
   def apply(page: Page)(revalidatableResult: RevalidatableResult)(implicit request: RequestHeader): Result = {
     val cacheSeconds = page.metadata.cacheTime.cacheSeconds
-    maybeCacheHeaders(cacheSeconds, revalidatableResult)
+    apply(cacheSeconds)(revalidatableResult)
   }
 
   // Use this when you are sure your result needs caching headers, even though the result status isn't
   // conventionally cacheable. Typically we only cache 200 and 404 responses.
   def explicitlyCache(seconds: Int)(result: Result): Result = cacheHeaders(seconds, result)
 
-  private def maybeCacheHeaders(seconds: Int, revalidatableResult: RevalidatableResult)(implicit request: RequestHeader) = {
+  def apply(seconds: Int, revalidatableResult: RevalidatableResult, ifNoneMatch: Option[String]) = {
     if (cacheableStatusCodes.contains(revalidatableResult.result.header.status)) {
-      val hashMaybeRequestHash = (revalidatableResult.hash, request.headers.get("If-None-Match"))//FIXME could be comma separated
+      val hashMaybeRequestHash = (revalidatableResult.hash, ifNoneMatch)//FIXME could be comma separated
       cacheHeaders(seconds, revalidatableResult.result, Some(hashMaybeRequestHash))
     } else
       revalidatableResult.result
