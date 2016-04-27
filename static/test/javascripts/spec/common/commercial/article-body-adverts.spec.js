@@ -103,7 +103,7 @@ define([
                         rules = firstCall.args[0];
 
                     expect(rules.minAbove).toEqual(300);
-                    expect(rules.selectors[' > h2'].minAbove).toEqual(20);
+                    expect(rules.selectors[' > h2'].minAbove).toEqual(100);
 
                     done();
                 });
@@ -252,7 +252,7 @@ define([
                         expect(rules.minAbove).toEqual(300);
 
                         // give headings more vertical clearance
-                        expect(rules.selectors[' > h2'].minAbove).toEqual(20);
+                        expect(rules.selectors[' > h2'].minAbove).toEqual(100);
 
                         done();
                     });
