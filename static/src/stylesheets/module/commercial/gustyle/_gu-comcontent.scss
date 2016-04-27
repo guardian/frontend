@@ -128,15 +128,10 @@ $mobile-max-container-width: gs-span(8);
 @include mq-add-breakpoint(containerWidestMobile, $mobile-max-container-width + $gs-gutter * 2);
 
 .gu-style {
-    width: auto;
+    width: 250px;
     border-top: #fedd79 1px solid;
-    margin-left: $gs-gutter / 2;
-    margin-right: $gs-gutter / 2;
-
-    @include mq(mobileLandscape) {
-        margin-left: $gs-gutter;
-        margin-right: $gs-gutter;
-    }
+    margin-left: auto;
+    margin-right: auto;
 
     @include mq(containerWidestMobile) {
         margin-left: auto;
@@ -144,13 +139,10 @@ $mobile-max-container-width: gs-span(8);
         width: $mobile-max-container-width;
     }
 
-    @include mq(tablet) {
-        margin-left: $gs-gutter / 2;
-        margin-right: $gs-gutter / 2;
-    }
-
     @include mq(desktop) {
         max-width: 300px;
+        margin-left: $gs-gutter / 2;
+        margin-right: $gs-gutter / 2;
     }
 
     // Article styles: Right slot width is exactly the size of the banner so we don't want any margin
