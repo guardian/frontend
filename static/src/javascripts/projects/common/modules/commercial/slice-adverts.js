@@ -4,9 +4,7 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/fastdom-promise',
-    'common/modules/commercial/track-ad',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/commercial/dfp/dfp-api',
     'common/modules/user-prefs',
     'common/modules/commercial/commercial-features'
 ], function (
@@ -15,9 +13,7 @@ define([
     config,
     detect,
     fastdom,
-    trackAd,
     createAdSlot,
-    dfp,
     userPrefs,
     commercialFeatures
 ) {
