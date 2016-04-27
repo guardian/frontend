@@ -1,10 +1,14 @@
 @(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit request: RequestHeader)
-
 @import common.Localisation
-@import views.html.fragments.containers.facia_cards.{containerHeader, slice, showMore, showMoreButton}
+@import views.html.fragments.commercial.contentLogo
+@import views.html.fragments.containers.facia_cards.{containerHeader, showMore, showMoreButton, slice}
 @import views.support.RenderClasses
 
 @containerHeader(containerDefinition, frontProperties)
+
+@for(branding <- frontProperties.branding) {
+    @contentLogo(branding)
+}
 
 @for(containerLayout <- containerDefinition.containerLayout) {
     <div class="@RenderClasses(Map(

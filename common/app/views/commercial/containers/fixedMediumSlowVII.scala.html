@@ -8,14 +8,17 @@
                             card,
                             cardType = cards.Half,
                             omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel,card),
+                            optAdvertClassNames = Some(Seq("paidfor")),
                             useCardBranding = !containerModel.isSingleSponsorContainer))
     @containerModel.content.initialCards.slice(1, 2).map(card => views.html.commercial.cards.itemCard(
                             card,
                             omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel,card),
+                            optAdvertClassNames = Some(Seq("paidfor")),
                             useCardBranding = !containerModel.isSingleSponsorContainer))
     @containerModel.content.initialCards.slice(2, 3).map(card => views.html.commercial.cards.itemCard(
                             card,
                             omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
+                            optAdvertClassNames = Some(Seq("paidfor")),
                             optClassNames = Some(Seq("hide-until-tablet")),
                             useCardBranding = !containerModel.isSingleSponsorContainer))
 </div>
@@ -23,5 +26,6 @@
     @containerModel.content.initialCards.slice(3, 7).map(card => views.html.commercial.cards.itemCard(
                             card,
                             omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
+                            optAdvertClassNames = Some(Seq("paidfor")),
                             useCardBranding = !containerModel.isSingleSponsorContainer))
 </div>

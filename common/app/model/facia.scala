@@ -53,11 +53,14 @@ case class FrontProperties(
   imageWidth: Option[String],
   imageHeight: Option[String],
   isImageDisplayed: Boolean,
-  editorialType: Option[String]
+  editorialType: Option[String],
+  branding: Option[Branding]
 )
 
 object FrontProperties {
   implicit val jsonFormat = Json.format[FrontProperties]
 
-  val empty = FrontProperties(None, None, None, None, false, None)
+  val empty = FrontProperties(None, None, None, None, false, None, None)
+
+  def fromBranding(branding: Branding): FrontProperties = empty.copy(branding = Some(branding))
 }

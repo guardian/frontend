@@ -228,6 +228,10 @@ CommentBox.prototype.submitPostComment = function(e) {
     this.postComment();
 };
 
+CommentBox.prototype.invalidEmailError = function () {
+   this.error('EMAIL_NOT_VALIDATED');
+   ValidationEmail.init();
+};
 
 CommentBox.prototype.postComment = function() {
     var self = this,
@@ -260,11 +264,6 @@ CommentBox.prototype.postComment = function() {
         }
     };
 
-    var invalidEmailError = function () {
-        self.error('EMAIL_NOT_VALIDATED');
-        ValidationEmail.init();
-    };
-
     if (!self.getUserData().emailVerified) {
         // Cookie could be stale so lets refresh and check from the api
         var createdDate = new Date(self.getUserData().accountCreatedDate);
@@ -273,7 +272,7 @@ CommentBox.prototype.postComment = function() {
                 if (response.user.statusFields.userEmailValidated === true) {
                     validEmailCommentSubmission();
                 } else {
-                    invalidEmailError();
+                    self.invalidEmailError();
                 }
             });
         } else {

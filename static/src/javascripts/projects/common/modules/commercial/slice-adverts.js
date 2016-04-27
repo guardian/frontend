@@ -35,7 +35,7 @@ define([
                 return false;
             }
 
-            var container, containerId, $adSlice, isFrontFirst,
+            var container, containerId, $adSlice, isFrontFirst, fabricAdSlot,
                 opts = defaults(
                     options || {},
                     {
@@ -43,19 +43,30 @@ define([
                         sliceSelector: '.js-fc-slice-mpu-candidate'
                     }
                 ),
-                // get all the containers
+            // get all the containers
                 containers   = qwery(opts.containerSelector),
                 index        = 0,
                 adSlices     = [],
                 containerGap = 1,
-                prefs        = userPrefs.get('container-states');
+                prefs        = userPrefs.get('container-states'),
+                addFabricAd  = (config.page.isFront && config.switches.fabricAdverts && detect.isBreakpoint({max : 'phablet'}));
+
+            // insert fabric advert at first container in lieu of a top slot
+            if (addFabricAd) {
+                fabricAdSlot = bonzo(createAdSlot('fabric', 'container-inline'));
+                fabricAdSlot.addClass('ad-slot--mobile');
+                fabricAdSlot.insertAfter(containers[0]);
+            }
+
+            // skip the initial containers if we've already added an advert to the first
+            index+= addFabricAd ? (1 + containerGap) : 0;
 
             // pull out ad slices which have at least x containers between them
             while (index < containers.length) {
                 container    = containers[index];
                 containerId  = bonzo(container).data('id');
                 $adSlice     = $(opts.sliceSelector, container);
-                // don't display ad in the first container on the fronts
+                // don't display ad in the first container on the network fronts
                 isFrontFirst = contains(['uk', 'us', 'au'], config.page.pageId) && index === 0;
 
                 if (config.page.showMpuInAllContainers) {
@@ -72,10 +83,7 @@ define([
             }
 
             return Promise.all(chain(adSlices).slice(0, maxAdsToShow).and(map, function ($adSlice, index) {
-                    // When we are inside the AB test we are adding inline1 manually so index needs to start from 2.
-                    var inlineIndexOffset = (config.tests.cmTopBannerPosition) ? 2 : 1;
-
-                    var adName        = 'inline' + (index + inlineIndexOffset),
+                    var adName        = 'inline' + (index + 1),
                         $mobileAdSlot = bonzo(createAdSlot(adName, 'container-inline'))
                             .addClass('ad-slot--mobile'),
                         $tabletAdSlot = bonzo(createAdSlot(adName, 'container-inline'))

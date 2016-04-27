@@ -1,0 +1,11 @@
+@(branding: model.Branding)
+
+<div class="brandbadge brandbadge--onside ad-slot--force-display">
+    <div class="brandbadge__inner">
+        <h3 class="brandbadge__header">@branding.label</h3>
+        <a href="@branding.sponsorLink" class="brandbadge__link">
+            <img class="brandbadge__logo" src="@branding.sponsorLogo">
+        </a>
+        <a href="@branding.aboutThisLink" class="brandbadge__help">About this content</a>
+    </div>
+</div>
