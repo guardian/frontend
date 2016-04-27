@@ -1,15 +1,4 @@
 .content--immersive {
-    .is-fixed-height {
-        .content__headline {
-            @include fs-headline(7, true);
-            line-height: 1;
-
-            @include mq(desktop) {
-                font-size: 3.25rem;
-            }
-        }
-    }
-
     .content__headline {
         @include fs-headline(9);
         font-weight: 200;
@@ -19,6 +8,15 @@
 
         @include mq(desktop) {
             font-size: 4rem;
+        }
+    }
+
+    .content__headline--with-main-media {
+        @include fs-headline(7, true);
+        line-height: 1;
+
+        @include mq(desktop) {
+            font-size: 3.25rem;
         }
     }
 
