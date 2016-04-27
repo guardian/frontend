@@ -35,7 +35,7 @@ define([
             return false;
         }
 
-        var fabricAdSlot, adSlots;
+        var adSlots;
         var prefs          = userPrefs.get('container-states') || {};
         var isMobile       = detect.getBreakpoint() === 'mobile';
         var isNetworkFront = ['uk', 'us', 'au'].indexOf(config.page.pageId) !== -1;
@@ -73,7 +73,7 @@ define([
                 var inlineIndexOffset = (config.tests.cmTopBannerPosition) ? 2 : 1;
                 var adName = 'inline' + (index + inlineIndexOffset);
                 var adSlot = hasFabricAd && index === 0 ?
-                    (fabricAdSlot = createAdSlot('fabric', 'container-inline')) :
+                    createAdSlot('fabric', 'container-inline') :
                     createAdSlot(adName, 'container-inline');
 
                 adSlot.className += ' ' + (isMobile ? 'ad-slot--mobile' : 'container-inline');
@@ -83,23 +83,6 @@ define([
                     adSlot: adSlot
                 };
             });
-
-        if (hasFabricAd) {
-            // if there is no fabric creative, we fall back to loading
-            // a normal MPU instead
-            trackAd('dfp-ad--fabric').then(function (isLoaded) {
-                if (!isLoaded) {
-                    var inlineIndexOffset = (config.tests.cmTopBannerPosition) ? 2 : 1;
-                    var adName = 'inline' + inlineIndexOffset;
-                    var adSlot = createAdSlot(adName, 'container-inline');
-                    adSlot.className += ' ad-slot--mobile';
-                    fastdom.write(function () {
-                        fabricAdSlot.parentNode.replaceChild(adSlot, fabricAdSlot);
-                        dfp.addSlot(adSlot);
-                    });
-                }
-            });
-        }
 
         return fastdom.write(function () {
             adSlots.forEach(isMobile ? insertOnMobile : insertOnTabletPlus);
