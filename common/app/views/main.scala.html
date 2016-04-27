@@ -4,6 +4,64 @@
 @import views.support.Commercial.topBelowNavSlot
 @import views.support.{Commercial, RenderClasses}
 @import model.Page.getContent
+@import model.GalleryPage
+
+@headerAndTopAds(showAdverts: Boolean, edition: Edition, adBelowNav: Boolean) = {
+    @if(!(page.metadata.shouldHideHeaderAndTopAds && getContent(page).exists(_.tags.isArticle))) {
+        @if(!mvt.CMTopBannerPosition.isParticipating) {
+            @if(showAdverts) {
+                @fragments.commercial.topBanner(page.metadata, edition)
+            }
+
+            @fragments.header(page)
+
+            @if(adBelowNav) {
+                @fragments.commercial.topBannerBelowNav()
+            }
+
+            @if(showAdverts) {
+                @fragments.commercial.topBannerMobile(page.metadata, edition)
+            }
+
+            <div id="maincontent" tabindex="0"></div>
+        } else {
+            @fragments.header(page)
+        }
+    }
+}
+
+@immersiveMainMedia(page: GalleryPage) = {
+    <div class="new-gallery content tonal--tone-media immersive-main-media">
+        @defining(
+            page.item.content.trail.trailPicture.head
+        ) { picture =>
+            <img src="http:@Html(ImgSrc.findNearestSrc(picture, Profile(width = Some(2200))).getOrElse(""))"
+            class="immersive-main-media__img">
+        }
+        <div class="immersive-main-media__headline-container">
+            <div class="gs-container">
+
+                @fragments.meta.metaInline(page.item)
+
+                <h1 class="content__headline content__headline--immersive content__headline--immersive--with-main-media">
+                    @fragments.inlineSvg("camera", "icon", List("inline-tone-fill")) @Html(page.item.trail.headline)
+                </h1>
+
+                @if(page.item.content.hasTonalHeaderByline) {
+                    @page.item.trail.byline.map { text =>
+                        <span class="content__headline content__headline--byline">@ContributorLinks(text, page.item.tags.contributors)</span>
+                    }
+                }
+
+                @if(page.showBadge && !page.item.commercial.isAdvertisementFeature) {
+                    @fragments.commercial.badge(page.item)
+                }
+
+            </div>
+        </div>
+    </div>
+}
+
 <!DOCTYPE html>
 <html id="js-context" class="js-off is-not-modern id--signed-out" data-page-path="@request.path">
 <head>
@@ -30,25 +88,16 @@
 
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
-        @if(!(page.metadata.shouldHideHeaderAndTopAds && getContent(page).exists(_.tags.isArticle))) {
-            @if(!mvt.CMTopBannerPosition.isParticipating) {
-                @if(showAdverts) {
-                    @fragments.commercial.topBanner(page.metadata, edition)
-                }
+        @page match {
+            case page: model.GalleryPage if mvt.ABGalleryRedesignVariant.isParticipating => {
+                <div class="immersive-header-container">
+                    @headerAndTopAds(showAdverts, edition, adBelowNav)
 
-                @fragments.header(page)
-
-                @if(adBelowNav) {
-                    @fragments.commercial.topBannerBelowNav()
-                }
-
-                @if(showAdverts) {
-                    @fragments.commercial.topBannerMobile(page.metadata, edition)
-                }
-
-                <div id="maincontent" tabindex="0"></div>
-            } else {
-                @fragments.header(page)
+                    @immersiveMainMedia(page)
+                </div>
+            }
+            case _ => {
+                @headerAndTopAds(showAdverts, edition, adBelowNav)
             }
         }
 

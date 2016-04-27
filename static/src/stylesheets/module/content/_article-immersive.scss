@@ -1,3 +1,47 @@
+// Contains top ad + header + main media
+.immersive-header-container {
+    @supports (object-fit: cover) and (height: 1vh) and (display: flex) {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+}
+
+.immersive-main-media {
+    // The headline wrapper is position absolute within this div
+    position: relative;
+
+    @supports (object-fit: cover) and (height: 1vh) and (display: flex) {
+        flex: 1;
+        min-height: 400px;
+    }
+}
+
+.immersive-main-media__img {
+    width: 100%;
+    // Remove inline spacing
+    display: block;
+
+    @supports (object-fit: cover) and (height: 1vh) and (display: flex) {
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        z-index: 0;
+    }
+}
+
+.immersive-main-media__headline-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, .6);
+    background: linear-gradient(rgba(0, 0, 0, .5), $multimedia-support-5);
+}
+
 .content__headline--immersive {
     @include fs-headline(9);
     font-weight: 200;

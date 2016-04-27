@@ -1,57 +1,12 @@
-@(gallery: model.GalleryPage, showMeta: Boolean = true)(implicit request: RequestHeader)
+@(gallery: model.GalleryPage)(implicit request: RequestHeader)
 
 @import views.support.TrailCssClasses.toneClass
 @import views.support.ContributorLinks
 
 <header class="content__head is-fixed-height tonal__head tonal__head--@toneClass(gallery.item)">
-
-    <style>
-        @defining(
-            gallery.item.content.trail.trailPicture.head
-        ) { picture =>
-
-            .content__header__background-image {
-                background-image: url('http:@Html(ImgSrc.findNearestSrc(picture, Profile(width = Some(1000))).getOrElse(""))');
-            }
-            @@media (min-width: @{layout.Phablet.minWidth}px) {
-                .content__header__background-image {
-                    background-image: url('http:@Html(ImgSrc.findNearestSrc(picture, Profile(width = Some(1300))).getOrElse(""))');
-                }
-            }
-            @@media (min-width: @{layout.Wide.minWidth}px) {
-                .content__header__background-image {
-                    background-image: url('http:@Html(ImgSrc.findNearestSrc(picture, Profile(width = Some(2200))).getOrElse(""))');
-                }
-            }
-        }
-    </style>
-
-    <div class="content__header tonal__header">
-        <div class="content__header__background-image">
-            <div class="content__wrapper content__wrapper--headline">
-                <div class="gs-container">
-
-                    @if(showMeta) {
-                        @fragments.meta.metaInline(gallery.item)
-                    }
-
-                    <h1 class="content__headline" itemprop="headline">
-                        @fragments.inlineSvg("camera", "icon", List("inline-tone-fill")) @Html(gallery.item.trail.headline)
-                    </h1>
-
-                    @if(gallery.item.content.hasTonalHeaderByline) {
-                        @gallery.item.trail.byline.map { text =>
-                            <span class="content__headline content__headline--byline">@ContributorLinks(text, gallery.item.tags.contributors)</span>
-                        }
-                    }
-
-                    @if(showBadge && !gallery.item.commercial.isAdvertisementFeature) {
-                        @fragments.commercial.badge(gallery.item)
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
+    @* Hidden because we visually show this data in the head, but needed
+    here for SEO. *@
+    <h1 class="is-hidden" itemprop="headline" class="is-hidden">@Html(gallery.item.trail.headline)</h1>
 
     <div class="gs-container">
 
