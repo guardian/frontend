@@ -36,9 +36,12 @@ define([
         ['cm-articleBodyAdverts', articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
         ['cm-frontCommercialComponents', frontCommercialComponents.init],
-        ['cm-topBannerBelowContainer', topBannerBelowContainer.init],
-        ['cm-badges', badges.init]
+        ['cm-topBannerBelowContainer', topBannerBelowContainer.init]
     ];
+
+    if (!config.switches.staticBadges) {
+        modules.push(['cm-badges', badges.init]);
+    }
 
     return {
         init: function () {

@@ -41,10 +41,8 @@ object WeatherApi extends ExecutionContexts with ResourcesHelper {
   private def getJson(url: String): Future[JsValue] = {
     if (Play.isTest) {
       Future(Json.parse(slurpOrDie(new URI(url).getPath.stripPrefix("/"))))
-    } else if(conf.switches.Switches.RetryFailedAccuWeatherApiRequests.isSwitchedOn) {
-      getJsonWithRetry(url)
     } else {
-      WS.url(url).get().filter(_.status == 200).map(_.json)
+      getJsonWithRetry(url)
     }
   }
 
