@@ -37,12 +37,17 @@
         };
 
         var getSponsoredContentTrackingData = function(content) {
-            return content.map(function(n) {
+            var sponsoredContentData = content.map(function(n) {
                 var sponsorshipType = n.getAttribute('data-sponsorship');
                 var maybeSponsor = n.getAttribute('data-sponsor');
                 var sponsor = maybeSponsor ? maybeSponsor : 'unknown';
                 return sponsorshipType + ':' + sponsor;
-            }).toString();
+            });
+            return sponsoredContentData.filter(
+                function filterDuplicates(value, index, self) {
+                    return self.indexOf(value) === index;
+                }
+            );
         };
 
         s.trackingServer = 'hits.theguardian.com';
@@ -194,11 +199,7 @@
         if(window.guardian.isModernBrowser) {
             var contentNodes = document.querySelectorAll('[data-sponsorship]');
             var sponsoredContentArray = Array.prototype.slice.call(contentNodes);
-            var sponsoredContentData = getSponsoredContentTrackingData(sponsoredContentArray);
-            s.prop38 = sponsoredContentData.filter(
-                function onlyUnique(value, index, self) {
-                    return self.indexOf(value) === index;
-            });
+            s.prop38 = getSponsoredContentTrackingData(sponsoredContentArray);
         }
 
         /*
