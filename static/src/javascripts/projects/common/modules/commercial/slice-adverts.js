@@ -40,6 +40,8 @@ define([
         var isMobile       = detect.getBreakpoint() === 'mobile';
         var isNetworkFront = ['uk', 'us', 'au'].indexOf(config.page.pageId) !== -1;
         var hasFabricAd    = (config.page.isFront && config.switches.fabricAdverts && detect.isBreakpoint({max : 'phablet'}));
+        // We must keep a small bit of state in the filtering logic
+        var lastIndex      = -1;
 
         adSlots = qwery(containerSelector)
             // get all ad slices
@@ -49,21 +51,24 @@ define([
                     adSlice: container.querySelector(sliceSelector)
                 };
             })
-            // pull out ad slices which have at least x containers between them
+            // pull out closed, empty (no slice) or first on front containers,
+            // keeping containers only if they are $containerGap nodes apart
             .filter(function (item, index) {
                 if (config.page.showMpuInAllContainers) {
                     return true;
                 }
 
-                // Slots are inserted every containerGap + 1 slice
-                if (!item.adSlice || index % (containerGap + 1) !== 0) {
-                    return false;
-                }
-
                 var containerId  = item.container.getAttribute('data-id');
                 var isContainerClosed = prefs[containerId] === 'closed';
                 var isFrontFirst = isNetworkFront && index === 0;
-                return !(isFrontFirst || isContainerClosed);
+                var isFarEnough = lastIndex === -1 || index - lastIndex > containerGap;
+                if (!item.adSlice || isFrontFirst || isContainerClosed || !isFarEnough) {
+                    return false;
+                }
+
+                lastIndex = index;
+
+                return true;
             })
             // limit to maxAdsToShow
             .slice(0, maxAdsToShow)
