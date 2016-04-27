@@ -1,8 +1,8 @@
 define([], function () {
     return function () {
         this.id = 'FakeSeriesHideSensitive';
-        this.start = '2016-04-28';
-        this.expiry = '2016-04-30';
+        this.start = '2016-04-27';
+        this.expiry = '2016-04-29';
         this.author = 'Sam Desborough';
         this.description = 'A fake test to target series content that\'s hidden on sensitive articles';
         this.audience = 1;
