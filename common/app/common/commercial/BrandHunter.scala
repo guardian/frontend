@@ -8,6 +8,7 @@ object BrandHunter {
 
   def findBranding(tags: Tags, publicationDate: Option[DateTime], edition: Edition): Option[Branding] = {
 
+    // TODO: implement this
     def findBrandingBySection(): Option[Branding] = None
 
     def findBrandingByTag(): Option[Branding] = {
