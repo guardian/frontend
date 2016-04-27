@@ -40,6 +40,20 @@ object ABNewHeaderVariant extends TestDefinition(
   }
 }
 
+object ABGalleryRedesignVariant extends TestDefinition(
+  variants = Nil,
+  name = "ab-gallery-redesign-variant",
+  description = "Feature switch (0% test) for gallery redesign",
+  sellByDate = new LocalDate(2016, 5, 10)
+) {
+  override def isParticipating(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-ab-gallery-redesign").contains("variant") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
+  }
+  def shouldShow(contentType: String)(implicit request: RequestHeader): Boolean = {
+     isParticipating && contentType.toLowerCase == "gallery"
+  }
+}
+
 object ABHeadlinesTestControl extends TestDefinition(
   Nil,
   "headlines-ab-control",
@@ -67,6 +81,7 @@ object ABIntersperseMultipleStoryPackagesStoriesControl extends TestDefinition(
 object ActiveTests extends Tests {
   val tests: Seq[TestDefinition] = List(
     ABNewHeaderVariant,
+    ABGalleryRedesignVariant,
     ABHeadlinesTestControl,
     ABHeadlinesTestVariant,
     ABIntersperseMultipleStoryPackagesStories,
@@ -79,14 +94,15 @@ object ActiveTests extends Tests {
                           .map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""}
     val newHeaderTests = List(ABNewHeaderVariant).filter(_.isParticipating)
                           .map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""}
-
+    val galleryRedesignTests = List(ABGalleryRedesignVariant).filter(_.isParticipating)
+                          .map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""}
     val internationalEditionTests = List(InternationalEditionVariant(request)
                                       .map{ international => s""""internationalEditionVariant" : "$international" """}).flatten
 
     val activeTest = List(ActiveTests.getParticipatingTest(request)
                         .map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""}).flatten
 
-    val configEntries = activeTest ++ internationalEditionTests ++ headlineTests ++ newHeaderTests
+    val configEntries = activeTest ++ internationalEditionTests ++ headlineTests ++ newHeaderTests ++ galleryRedesignTests
 
     configEntries.mkString(",")
   }

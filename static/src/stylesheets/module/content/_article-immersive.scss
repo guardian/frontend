@@ -1,14 +1,57 @@
 .content--immersive {
+    .is-fixed-height {
+        .content__headline {
+            @include fs-headline(7, true);
+            line-height: 1;
+
+            @include mq(desktop) {
+                font-size: 3.25rem;
+            }
+        }
+    }
+
+    .content__headline {
+        @include fs-headline(9);
+        font-weight: 200;
+        line-height: 1;
+        padding-top: $gs-baseline / 2;
+        padding-bottom: 1.5rem;
+
+        @include mq(desktop) {
+            font-size: 4rem;
+        }
+    }
+
+    .content__series-label {
+        @include fs-header(1);
+        float: none;
+        padding-top: $gs-baseline / 2;
+        margin-bottom: 0;
+    }
+
+    .content__main {
+        padding-top: $gs-baseline / 2;
+    }
+
+    .content__standfirst {
+        a {
+            color: $neutral-6;
+            border-bottom: 1px solid rgba($neutral-6, .4);
+
+            &:hover {
+                border-bottom-color: rgba($neutral-6, 1);
+            }
+        }
+    }
+}
+
+.content--immersive-article {
     &.content {
         border-top: 0;
     }
 
     .content__article-body {
         clear: both;
-    }
-
-    .content__main {
-        padding-top: $gs-baseline / 2;
     }
 
     /* Header
@@ -36,28 +79,8 @@
         }
     }
 
-    .content__series-label {
-        @include fs-header(1);
-        display: block;
-        float: none;
-        padding-top: $gs-baseline / 2;
-        margin-bottom: 0;
-    }
-
     .content__series-label__link {
         color: #ffffff;
-    }
-
-    .content__headline {
-        @include fs-headline(9);
-        font-weight: 200;
-        line-height: 1;
-        padding-top: $gs-baseline / 2;
-        padding-bottom: 1.5rem;
-
-        @include mq(desktop) {
-            font-size: 4rem;
-        }
     }
 
     .content__series-label + .content__headline {
@@ -82,16 +105,6 @@
             height: 2px;
             width: gs-span(2);
             background-color: rgba(255, 255, 255, .2);
-        }
-
-        a {
-            color: $feature-mute;
-            border-bottom: 1px solid rgba($feature-mute, .4);
-
-            &:hover {
-                text-decoration: none;
-                border-bottom-color: rgba($feature-mute, .8);
-            }
         }
     }
 
@@ -134,16 +147,6 @@
     }
 
     .is-fixed-height {
-
-        .content__headline {
-            @include fs-headline(7, true);
-            line-height: 1;
-
-            @include mq(desktop) {
-                font-size: 3.25rem;
-            }
-        }
-
         .content__standfirst:before {
             @include mq($until: desktop) {
                 display: none;
@@ -620,7 +623,7 @@
     }
 }
 
-.content__head--immersive {
+.content__head--immersive-article {
     position: relative;
 
     .content__logo-container {
