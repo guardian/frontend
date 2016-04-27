@@ -81,7 +81,7 @@
         top: 0;
         left: 50%;
         right: 0;
-        transform: translate(-50%,0);
+        transform: translate(-50%, 0);
         border-top: 1px solid $news-main-2;
 
         @include mq(tablet) {
