@@ -11,11 +11,16 @@ object MostViewedVideoController extends Controller with Logging with ExecutionC
 
   // Move this out of here if the test is successful
   def renderInSeries(series: String) = Action.async { implicit request =>
+    val page = (request.getQueryString("page") getOrElse "1").toInt
     val edition = Edition(request)
+    val nextPage = Some(page + 1)
+    val prevPage = if (page > 1) Some(page - 1) else None
+
     getResponse(ContentApiClient.search(edition)
       .tag(series)
       .showTags("all")
       .showFields("all")
+      .page(page)
       .pageSize(6)
     ).map { response =>
       val videos = response.results.toList.map(apiContent => {
@@ -29,7 +34,7 @@ object MostViewedVideoController extends Controller with Logging with ExecutionC
 
       Cached(900) {
         JsonComponent(
-          "html" -> views.html.fragments.videosInSeries(videos, seriesTitle)
+          "html" -> views.html.fragments.videosInSeries(videos, seriesTitle, series, nextPage, prevPage)
         )
       }
     }
