@@ -184,7 +184,6 @@ define([
                 sponsorshipIdsReturned.push(value);
             }
         });
-
         return sponsorshipIdsReturned;
     }
 
@@ -690,7 +689,8 @@ define([
             // let's report these and diagnose the problem in sentry.
             var adUnitPath = event.slot.getAdUnitPath(),
                 adTargetingMap = event.slot.getTargetingMap(),
-                adKeywords = adTargetingMap ? adTargetingMap['k'].join(', ') : '';
+                adTargetingKValues = adTargetingMap ? adTargetingMap['k'] : [],
+                adKeywords = adTargetingKValues ? adTargetingKValues.join(', ') : '';
 
             reportError(new Error('dfp returned an empty ad response'), {
                 feature: 'commercial',

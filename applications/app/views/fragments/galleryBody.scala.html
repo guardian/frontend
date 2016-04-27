@@ -20,19 +20,17 @@
 
         @fragments.headTonal(gallery, gallery.commercial.isSponsored(Some(Edition(request))) || gallery.commercial.isFoundationSupported || gallery.commercial.isAdvertisementFeature)
 
-        <div class="content__main tonal__main tonal__main--@toneClass(gallery)">
-            <div class="gs-container">
-                <div class="content__main-column content__main-column--gallery">
-                    @fragments.witnessCallToAction(gallery.content)
-                    @fragments.contentMeta(gallery)
-                    <ul class="gallery2">
-                    @gallery.lightbox.largestCrops.zipWithRowInfo.map { case (image, row) =>
-                        @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum, gallery.lightbox.imageContainer(row.rowNum - 1))
-                    }
-                    </ul>
-                    @fragments.witnessCallToAction(gallery.content)
-                    @fragments.submeta(gallery)
-                </div>
+        <div class="content__main tonal__main tonal__main--@toneClass(gallery) gs-container">
+            <div class="content__main-column content__main-column--gallery">
+                @fragments.witnessCallToAction(gallery.content)
+                @fragments.contentMeta(gallery)
+                <ul class="gallery2">
+                @gallery.lightbox.largestCrops.zipWithRowInfo.map { case (image, row) =>
+                    @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum, gallery.lightbox.imageContainer(row.rowNum - 1))
+                }
+                </ul>
+                @fragments.witnessCallToAction(gallery.content)
+                @fragments.submeta(gallery)
             </div>
         </div>
     </article>

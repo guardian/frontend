@@ -1,6 +1,7 @@
 package services
 
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
+import common.commercial.BrandHunter
 import common.{Edition, LinkTo}
 import conf.switches.Switches
 import contentapi.Paths
@@ -231,4 +232,7 @@ case class IndexPage(
 
   def allPath = s"/$idWithoutEdition"
 
+  def findBranding(edition: Edition): Option[Branding] = {
+    BrandHunter.findBranding(tags, publicationDate = None, edition)
+  }
 }

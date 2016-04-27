@@ -6,6 +6,7 @@ import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.facia.api.{utils => fapiutils}
 import com.gu.facia.client.models.TrailMetaData
 import common._
+import common.commercial.BrandHunter
 import common.dfp.DfpAgent
 import conf.Configuration
 import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch}
@@ -25,24 +26,7 @@ import scala.collection.JavaConversions._
 import scala.language.postfixOps
 import scala.util.Try
 
-sealed trait Brandable {
-  def content: Content
-
-  def branding(edition: Edition): Option[Branding] = {
-
-    def findBrandingBySection(): Option[Branding] = None
-
-    def findBrandingByTag(): Option[Branding] = {
-      val activeBrandings = content.tags.tags.flatMap(_.properties.activeBrandings).flatten
-      val publicationDate = content.trail.webPublicationDate
-      activeBrandings find (_.isTargeting(publicationDate, edition))
-    }
-
-    findBrandingBySection() orElse findBrandingByTag()
-  }
-}
-
-sealed trait ContentType extends Brandable {
+sealed trait ContentType {
   def content: Content
   final def tags: Tags = content.tags
   final def elements: Elements = content.elements
@@ -51,6 +35,10 @@ sealed trait ContentType extends Brandable {
   final def metadata: MetaData = content.metadata
   final def commercial: Commercial = content.commercial
   final def sharelinks: ShareLinks = content.sharelinks
+
+  def findBranding(edition: Edition): Option[Branding] = {
+    BrandHunter.findBranding(tags, publicationDate = Some(trail.webPublicationDate), edition)
+  }
 }
 
 final case class GenericContent(override val content: Content) extends ContentType
