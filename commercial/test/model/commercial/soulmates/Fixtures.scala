@@ -9,7 +9,8 @@ object Fixtures {
         |[
         |{"username":"rose29","gender":"Woman","age":59,"profile_photo":"https://members/a/small.png","location": "St. Johns Wood, London, Greater London, England, United Kingdom"},
         |{"username":"Hanabi","gender":"Man","age":57,"profile_photo":"https://members/b/small.png","location": "Guildford, Surrey, England, United Kingdom"},
-        |{"username":"shelovessea","gender":"Woman","age":54,"profile_photo":"https://members/c/small.png","location": "England, United Kingdom"}
+        |{"username":"shelovessea","gender":"Woman","age":54,"profile_photo":"https://members/c/small.png","location": "England, United Kingdom"},
+        |{"username":"ageless","gender":"Woman","age":"n/a","profile_photo":"https://members/d/small.png","location": "England, United Kingdom"}
         |]
         | """.stripMargin
 

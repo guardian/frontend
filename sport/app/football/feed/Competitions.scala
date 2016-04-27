@@ -97,6 +97,14 @@ trait Competitions extends LiveMatches with Logging with implicits.Collections w
     DateTimeComparator.getInstance.asInstanceOf[Comparator[DateTime]]
   )
 
+  private def mostRecentCompetitionSeasons(competitions: List[Season]): List[Season] = {
+    competitionDefinitions.flatMap{ compDef =>
+      competitions.filter(_.competitionId == compDef.id)
+        .sortBy(_.startDate.toDateTimeAtStartOfDay.getMillis).reverse
+        .take(2)
+    }
+  }
+
   val competitionDefinitions = Seq(
     Competition("500", "/football/championsleague", "Champions League", "Champions League", "European", tableDividers = List(2, 6, 21)),
     Competition("100", "/football/premierleague", "Premier League", "Premier League", "English", showInTeamsList = true, tableDividers = List(4, 5, 17)),
@@ -136,15 +144,23 @@ trait Competitions extends LiveMatches with Logging with implicits.Collections w
   //one http call updates all competitions
   def refreshCompetitionData() = {
     log.info("Refreshing competition data")
-    FootballClient.competitions.map(_.flatMap { season =>
-      competitionAgents.find(_.competition.id == season.id).map { agent =>
-        val newCompetition = agent.competition.startDate match {
-          case Some(existingStartDate) if season.startDate.isAfter(existingStartDate.toDateTimeAtStartOfDay) => agent.update(agent.competition.copy(startDate = Some(season.startDate)))
-          case None => agent.update(agent.competition.copy(startDate = Some(season.startDate)))
-          case _ =>
+    FootballClient.competitions.map { allComps =>
+      mostRecentCompetitionSeasons(allComps).map { season =>
+        competitionAgents.find(_.competition.id == season.id).map { agent =>
+          val newCompetition = agent.competition.startDate match {
+            case Some(existingStartDate) if season.startDate.isAfter(existingStartDate.toDateTimeAtStartOfDay) => {
+              log.info(s"updating competition: ${season.id} season: ${season.seasonId} startDate was: ${existingStartDate.toString} now: ${season.startDate.toString}")
+              agent.update(agent.competition.copy(startDate = Some(season.startDate)))
+            }
+            case None => {
+              log.info(s"setting competition: ${season.id} season: ${season.seasonId} startDate was: None now: ${season.startDate.toString}")
+              agent.update(agent.competition.copy(startDate = Some(season.startDate)))
+            }
+            case _ =>
+          }
         }
       }
-    }).recover(FootballClient.logErrors)
+    }.recover(FootballClient.logErrors)
   }
 
   //one http call updates all competitions

@@ -74,9 +74,7 @@ define([
             .slice(0, maxAdsToShow)
             // create ad slots for the selected slices
             .map(function (item, index) {
-                // When we are inside the AB test we are adding inline1 manually so index needs to start from 2.
-                var inlineIndexOffset = (config.tests.cmTopBannerPosition) ? 2 : 1;
-                var adName = 'inline' + (index + inlineIndexOffset);
+                var adName = 'inline' + (index + 1);
                 var adSlot = hasFabricAd && index === 0 ?
                     createAdSlot('fabric', 'container-inline') :
                     createAdSlot(adName, 'container-inline');

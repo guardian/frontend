@@ -577,7 +577,7 @@ $timeline-width: 15px;
     }
 }
 
-.blog__timeline-container {
+.live-blog__sticky-components-container {
     @include mq(desktop) {
         transform: translateZ(0); //To force on GPU
         width: $right-column;
