@@ -79,28 +79,25 @@
         content: '';
         position: absolute;
         top: 0;
-        left: 0;
+        left: 50%;
         right: 0;
+        transform: translate(-50%,0);
         border-top: 1px solid $news-main-2;
 
         @include mq(tablet) {
-            left: calc(50% - 370px);
-            right: calc(50% - 370px);
+            width: 740px;
         }
 
         @include mq(desktop) {
-            left: calc(50% - 490px);
-            right: calc(50% - 490px);
+            width: 980px;
         }
 
         @include mq(leftCol) {
-            left: calc(50% - 570px);
-            right: calc(50% - 570px);
+            width: 1140px;
         }
 
         @include mq(wide) {
-            left: calc(50% - 650px);
-            right: calc(50% - 650px);
+            width: 1300px;
         }
     }
 
