@@ -2,7 +2,7 @@ package controllers
 
 import common.{ExecutionContexts, Logging}
 import layout.FaciaContainer
-import model.Cached.RevalidatableResult
+import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
 import model.{SimplePage, Cached, MetaData}
 import play.api.mvc.{Action, Controller}
 import services.NewspaperQuery
@@ -47,8 +47,8 @@ object NewspaperController extends Controller with Logging with ExecutionContext
     frontContainer.flatMap(_.items).isEmpty && otherContainer.flatMap(_.items).isEmpty
   }
 
-  def allOn(path: String, day: String, month: String, year: String) = Action {
-    Cached.withoutRevalidation(300)(MovedPermanently(s"/$path/$year/$month/$day"))
+  def allOn(path: String, day: String, month: String, year: String) = Action { implicit request =>
+    Cached(300)(WithoutRevalidationResult(MovedPermanently(s"/$path/$year/$month/$day")))
   }
 }
 

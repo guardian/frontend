@@ -2,7 +2,7 @@ package controllers
 
 import common.{LinkTo, Logging, ExecutionContexts}
 import conf.Configuration
-import model.Cached.RevalidatableResult
+import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
 import model._
 import play.api.Play.current
 import play.api.data._
@@ -161,15 +161,12 @@ object EmailSignupController extends Controller with ExecutionContexts with Logg
       case None => NotFound(s"List id $listId does not exist")}}
 
   def subscriptionResult(result: String) = Action { implicit request =>
-    (result match {
-      case "success" => Left(RevalidatableResult.Ok(views.html.emailSubscriptionResult(emailLandingPage, Subscribed)))
-      case "invalid" => Left(RevalidatableResult.Ok(views.html.emailSubscriptionResult(emailLandingPage, InvalidEmail)))
-      case "error" => Left(RevalidatableResult.Ok(views.html.emailSubscriptionResult(emailLandingPage, OtherError)))
-      case _ => Right(NotFound)
-    }) match {
-      case Left(revalidatableResult) => Cached(7.days)(revalidatableResult)
-      case Right(result) => Cached.withoutRevalidation(7.days)(result)
-    }
+    Cached(7.days)(result match {
+      case "success" => RevalidatableResult.Ok(views.html.emailSubscriptionResult(emailLandingPage, Subscribed))
+      case "invalid" => RevalidatableResult.Ok(views.html.emailSubscriptionResult(emailLandingPage, InvalidEmail))
+      case "error" => RevalidatableResult.Ok(views.html.emailSubscriptionResult(emailLandingPage, OtherError))
+      case _ => WithoutRevalidationResult(NotFound)
+    })
 
   }
 

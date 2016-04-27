@@ -2,7 +2,7 @@ package controllers
 
 import campaigns.ShortCampaignCodes
 import common._
-import model.Cached.RevalidatableResult
+import model.Cached.{CacheableResult, WithoutRevalidationResult, RevalidatableResult}
 import play.api.mvc._
 import services.{Archive, DynamoDB, Destination, GoogleBotMetric}
 import java.net.URLDecoder
@@ -25,7 +25,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   def lookup(path: String) = Action.async{ implicit request =>
 
     // lookup the path to see if we have a location for it in the database
-    lookupPath(path).map(_.getOrElse{
+    lookupPath(path).map(_.map(Cached(300)(_)).getOrElse{
 
       // if we do not have a location in the database then follow these rules
       path match {
@@ -39,9 +39,9 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
         case CombinerSectionRss(section)      => redirectTo(s"$section/rss", "combinerrss")
         case CombinerSection(section)         => redirectTo(section, "combinersection")
         case Combiner(combiner)               => redirectTo(combiner, "combiner")
-        case DatedSpecialIndexPage(section, rest, _) => Cached.withoutRevalidation(300)(Redirect(s"${LinkTo(section)}$rest/all", 301))
-        case SectionSpecialIndex(section, _)  => Cached.withoutRevalidation(300)(Redirect(s"${LinkTo(section)}/all", 301))
-        case NewspaperPage(paper, date, book)       =>  Cached.withoutRevalidation(300)(Redirect(s"${LinkTo(paper)}/$book/$date/all", 301))
+        case DatedSpecialIndexPage(section, rest, _) => Cached(300)(WithoutRevalidationResult(Redirect(s"${LinkTo(section)}$rest/all", 301)))
+        case SectionSpecialIndex(section, _)  => Cached(300)(WithoutRevalidationResult(Redirect(s"${LinkTo(section)}/all", 301)))
+        case NewspaperPage(paper, date, book)       =>  Cached(300)(WithoutRevalidationResult(Redirect(s"${LinkTo(paper)}/$book/$date/all", 301)))
 
           // edge cache test
         case "automated-test/strict-transport-security" => Cached(300)(RevalidatableResult.Ok("<h1>test</h1>")).withHeaders("Strict-Transport-Security" -> "max-age=0", "X-Test-Response" -> "true")
@@ -49,7 +49,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
         case _ =>
           log404(request)
           // short cache time as we might just be waiting for the content api to index
-          Cached.withoutRevalidation(10)(NotFound(views.html.notFound()))
+          Cached(10)(WithoutRevalidationResult(NotFound(views.html.notFound())))
       }
     })
   }
@@ -134,7 +134,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
 
   private def redirectTo(path: String, identifier: String)(implicit request: RequestHeader): Result = {
     log.info(s"301, $identifier, ${RequestLog(request)}")
-    Cached.withoutRevalidation(300)(Redirect(s"http://$path", 301))
+    Cached(300)(WithoutRevalidationResult(Redirect(s"http://$path", 301)))
   }
 
   private def logDestination(path: String, msg: String, destination: String) {
@@ -152,15 +152,15 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
 
   private def lookupPath(path: String) = destinationFor(path).map{ _.flatMap(processLookupDestination(path).lift)}
 
-  def processLookupDestination(path: String) : PartialFunction[Destination, Result] = {
+  def processLookupDestination(path: String) : PartialFunction[Destination, CacheableResult] = {
       case services.Redirect(location) if !linksToItself(path, location) =>
         val locationWithCampaign = retainShortUrlCampaign(path, location)
         logDestination(path, "redirect", locationWithCampaign)
-        Cached.withoutRevalidation(300)(Redirect(locationWithCampaign, 301))
+        WithoutRevalidationResult(Redirect(locationWithCampaign, 301))
       case Archive(archivePath) =>
         // http://wiki.nginx.org/X-accel
         logDestination(path, "archive", archivePath)
-        Cached.withoutRevalidation(300)(Ok.withHeaders("X-Accel-Redirect" -> s"/s3-archive/$archivePath"))
+        WithoutRevalidationResult(Ok.withHeaders("X-Accel-Redirect" -> s"/s3-archive/$archivePath"))
   }
 
 }

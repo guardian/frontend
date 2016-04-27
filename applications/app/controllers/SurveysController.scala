@@ -1,6 +1,6 @@
 package controllers
 
-import model.Cached.RevalidatableResult
+import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
 import model._
 import play.api.mvc.{Controller, Action}
 
@@ -20,9 +20,10 @@ object SurveysController extends Controller {
       ).get(seriesName)
         maybeSurveyId
           .map(id => s"https://www.surveymonkey.co.uk/r/${id}")
-          .map(url => Cached(60)(RevalidatableResult.Ok(views.html.surveys404TestNextInSeries(url, metaData)))).getOrElse(Cached.withoutRevalidation(60)(NotFound))
+          .map(url => Cached(60)(RevalidatableResult.Ok(views.html.surveys404TestNextInSeries(url, metaData))))
+          .getOrElse(Cached(60)(WithoutRevalidationResult(NotFound)))
     } else {
-      NotFound
+      Cached(60)(WithoutRevalidationResult(NotFound))
     }
   }
 }

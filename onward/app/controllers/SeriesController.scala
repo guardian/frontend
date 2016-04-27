@@ -8,6 +8,7 @@ import contentapi.ContentApiClient
 import contentapi.ContentApiClient.getResponse
 import implicits.Requests
 import layout.{CollectionEssentials, DescriptionMetaHeader, FaciaContainer}
+import model.Cached.WithoutRevalidationResult
 import model._
 import model.pressed.CollectionConfig
 import play.api.libs.json.{JsArray, Json}
@@ -37,7 +38,7 @@ object SeriesController extends Controller with Logging with Paging with Executi
     lookup(Edition(request), seriesId) map {
       _.map(series => Cached(15.minutes)(
         rendermf2Series(series)
-      )).getOrElse(Cached.withoutRevalidation(15.minutes)(NotFound))
+      )).getOrElse(Cached(15.minutes)(WithoutRevalidationResult(NotFound)))
     }
   }
 

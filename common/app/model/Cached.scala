@@ -31,29 +31,12 @@ object Cached extends implicits.Dates {
 
   private val tenDaysInSeconds = 864000
 
-  def apply(seconds: Int)(result: RevalidatableResult)(implicit request: RequestHeader): Result = {
-    apply(seconds, result, request.headers.get("If-None-Match"))//FIXME could be comma separated
-  }
-
-  def apply(duration: Duration)(result: RevalidatableResult)(implicit request: RequestHeader): Result = {
-    apply(duration.toSeconds.toInt)(result)
-  }
-
-  def withoutRevalidation(page: Page)(result: Result): Result = {
-    val cacheSeconds = page.metadata.cacheTime.cacheSeconds
-    if (cacheableStatusCodes.contains(result.header.status)) cacheHeaders(cacheSeconds, result) else result
-  }
-
-  def withoutRevalidation(seconds: Int)(result: Result): Result = {
-    if (cacheableStatusCodes.contains(result.header.status)) cacheHeaders(seconds, result) else result
-  }
-
-  def withoutRevalidation(duration: Duration)(result: Result): Result = {
-    withoutRevalidation(duration.toSeconds.toInt)(result)
-  }
-
   case class Hash(string: String)
-  case class RevalidatableResult(result: Result, hash: Hash)
+
+  sealed trait CacheableResult
+  case class RevalidatableResult(result: Result, hash: Hash) extends CacheableResult
+  case class WithoutRevalidationResult(result: Result) extends CacheableResult
+
   object RevalidatableResult {
     def apply[C](result: Result, content: C)(implicit writeable: Writeable[C]) = {
       // hashing function from Arrays.java
@@ -68,23 +51,35 @@ object Cached extends implicits.Dates {
     }
   }
 
-  def apply(page: Page)(revalidatableResult: RevalidatableResult)(implicit request: RequestHeader): Result = {
+
+  def apply(seconds: Int)(result: CacheableResult)(implicit request: RequestHeader): Result = {
+    apply(seconds, result, request.headers.get("If-None-Match"))//FIXME could be comma separated
+  }
+
+  def apply(duration: Duration)(result: CacheableResult)(implicit request: RequestHeader): Result = {
+    apply(duration.toSeconds.toInt, result, request.headers.get("If-None-Match"))
+  }
+
+  def apply(page: Page)(revalidatableResult: CacheableResult)(implicit request: RequestHeader): Result = {
     val cacheSeconds = page.metadata.cacheTime.cacheSeconds
-    apply(cacheSeconds)(revalidatableResult)
+    apply(cacheSeconds, revalidatableResult, request.headers.get("If-None-Match"))
   }
 
   // Use this when you are sure your result needs caching headers, even though the result status isn't
   // conventionally cacheable. Typically we only cache 200 and 404 responses.
-  def explicitlyCache(seconds: Int)(result: Result): Result = cacheHeaders(seconds, result)
+  def explicitlyCache(seconds: Int)(result: Result): Result = cacheHeaders(seconds, result, None)
 
-  def apply(seconds: Int, revalidatableResult: RevalidatableResult, ifNoneMatch: Option[String]) = {
-    if (cacheableStatusCodes.contains(revalidatableResult.result.header.status)) {
-      val hashMaybeRequestHash = (revalidatableResult.hash, ifNoneMatch)//FIXME could be comma separated
-      cacheHeaders(seconds, revalidatableResult.result, Some(hashMaybeRequestHash))
-    } else
-      revalidatableResult.result
+  def apply(seconds: Int, cacheableResult: CacheableResult, ifNoneMatch: Option[String]) = cacheableResult match {
+    case RevalidatableResult(result, hash) =>
+      if (cacheableStatusCodes.contains(result.header.status)) {
+        val hashMaybeRequestHash = (hash, ifNoneMatch)//FIXME could be comma separated
+        cacheHeaders(seconds, result, Some(hashMaybeRequestHash))
+      } else
+        result
+    case WithoutRevalidationResult(result) => cacheHeaders(seconds, result, None)
   }
-  private def cacheHeaders(seconds: Int, result: Result, maybeHash: Option[(Hash, Option[String])] = None) = {
+
+  private def cacheHeaders(seconds: Int, result: Result, maybeHash: Option[(Hash, Option[String])]) = {
     val now = DateTime.now
     val expiresTime = now + seconds.seconds
     val maxAge = if (DoubleCacheTimesSwitch.isSwitchedOn) seconds * 2 else seconds

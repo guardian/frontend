@@ -5,7 +5,7 @@ import conf.Configuration
 import feed.Competitions
 import football.model.FootballMatchTrail
 import implicits.{Football, Requests}
-import model.Cached.RevalidatableResult
+import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
 import model.{ContentType, Cached, Content}
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
@@ -181,16 +181,16 @@ object MoreOnMatchController extends Controller with Football with Requests with
     maybeResponse.getOrElse(Future.successful(Cached(30){ JsonNotFound() }))
   }
 
-  private def canonicalRedirectForMatch(maybeMatch: Option[FootballMatch], request: RequestHeader): Future[Result] = {
+  private def canonicalRedirectForMatch(maybeMatch: Option[FootballMatch], request: RequestHeader)(implicit requestHeader: RequestHeader): Future[Result] = {
     maybeMatch.map { theMatch =>
       loadMoreOn(request, theMatch).map { related =>
         val (matchReport, minByMin, preview, stats) = fetchRelatedMatchContent(theMatch, related)
         val canonicalPage = matchReport.orElse(minByMin).orElse { if (theMatch.isFixture) preview else None }.getOrElse(stats)
-        Cached.withoutRevalidation(60)(Found(canonicalPage.url))
+        Cached(60)(WithoutRevalidationResult(Found(canonicalPage.url)))
       }
     }.getOrElse {
       // we do not keep historical data, so just redirect old stuff to the results page (see also MatchController)
-      Future.successful(Cached.withoutRevalidation(60)(Found("/football/results")))
+      Future.successful(Cached(60)(WithoutRevalidationResult(Found("/football/results"))))
     }
   }
 

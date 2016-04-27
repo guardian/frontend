@@ -37,7 +37,7 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
       errorResponse match {
         case Some(errorResponse) if isCommercialExpiry(errorResponse) =>
           log.info(s"Got a 410 while calling content api: $message: ${errorResponse.message}")
-          Cached.withoutRevalidation(60)(Ok(views.html.commercialExpired()))
+          Cached(60)(RevalidatableResult.Ok(views.html.commercialExpired()))
         case _ =>
           log.info(s"Got a 410 while calling content api: $message")
           NoCache(Gone)

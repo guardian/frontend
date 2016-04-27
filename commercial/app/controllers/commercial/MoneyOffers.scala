@@ -1,6 +1,6 @@
 package controllers.commercial
 
-import model.Cached.RevalidatableResult
+import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
 import model.commercial.money._
 import model.{NoCache, Cached}
 import play.api.mvc._
@@ -24,7 +24,7 @@ object MoneyOffers extends Controller with implicits.Requests {
 
   def savings(savingsType: String) = Action.async { implicit request =>
     Future.successful {
-      SavingsPages.find(savingsType).fold(Cached.withoutRevalidation(componentMaxAge)(NotFound)) { page =>
+      SavingsPages.find(savingsType).fold(Cached(componentMaxAge)(WithoutRevalidationResult(NotFound))) { page =>
         val savings = BestBuysAgent.adsTargetedAt(segment).flatMap(_.savings.get(savingsType)).getOrElse(Nil)
         Cached(componentMaxAge)(RevalidatableResult.Ok(views.html.moneysupermarket.savings.render(page, savings)))
       }
@@ -33,7 +33,7 @@ object MoneyOffers extends Controller with implicits.Requests {
 
   def currentAccounts(currentAccountType: String) = Action.async { implicit request =>
     Future.successful {
-      CurrentAccountsPages.find(currentAccountType).fold(Cached.withoutRevalidation(componentMaxAge)(NotFound)) { page =>
+      CurrentAccountsPages.find(currentAccountType).fold(Cached(componentMaxAge)(WithoutRevalidationResult(NotFound))) { page =>
         val currentAccounts = BestBuysAgent.adsTargetedAt(segment).flatMap(_.currentAccounts.get(currentAccountType))
           .getOrElse(Nil)
         Cached(componentMaxAge)(RevalidatableResult.Ok(views.html.moneysupermarket.currentAccounts.render(page, currentAccounts)))
@@ -43,7 +43,7 @@ object MoneyOffers extends Controller with implicits.Requests {
 
   def creditCards(creditCardType: String) = Action.async { implicit request =>
     Future.successful {
-      CreditCardsPages.find(creditCardType).fold(Cached.withoutRevalidation(componentMaxAge)(NotFound)) { page =>
+      CreditCardsPages.find(creditCardType).fold(Cached(componentMaxAge)(WithoutRevalidationResult(NotFound))) { page =>
         val creditCards = BestBuysAgent.adsTargetedAt(segment).flatMap(_.creditCards.get(creditCardType)).getOrElse(Nil)
         Cached(componentMaxAge)(RevalidatableResult.Ok(views.html.moneysupermarket.creditCards.render(page, creditCards)))
       }
@@ -52,7 +52,7 @@ object MoneyOffers extends Controller with implicits.Requests {
 
   def loans(loanType: String) = Action.async { implicit request =>
     Future.successful {
-      LoansPages.find(loanType).fold(Cached.withoutRevalidation(componentMaxAge)(NotFound)) { page =>
+      LoansPages.find(loanType).fold(Cached(componentMaxAge)(WithoutRevalidationResult(NotFound))) { page =>
         val loans = BestBuysAgent.adsTargetedAt(segment).map(_.loans).getOrElse(Nil).filter(_.categoryName == page
           .category)
         Cached(componentMaxAge)(RevalidatableResult.Ok(views.html.moneysupermarket.loans(page, loans)))

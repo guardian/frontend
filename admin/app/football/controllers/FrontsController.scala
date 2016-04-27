@@ -1,6 +1,6 @@
 package controllers.admin
 
-import model.Cached.RevalidatableResult
+import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
 import play.api.mvc.{RequestHeader, Action, Controller, Result => PlayResult}
 import play.api.libs.ws.WS
 import play.twirl.api.Html
@@ -43,7 +43,7 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
   def resultsRedirect = Action { implicit request =>
     val submission = request.body.asFormUrlEncoded.get
     val competitionId = submission.get("competition").get.head
-    Cached.withoutRevalidation(60)(SeeOther(s"/admin/football/fronts/results/$competitionId"))
+    Cached(60)(WithoutRevalidationResult(SeeOther(s"/admin/football/fronts/results/$competitionId")))
   }
 
   def results(competitionId: String) = Action.async { implicit request =>
@@ -65,7 +65,7 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
   def fixturesRedirect = Action { implicit request =>
     val submission = request.body.asFormUrlEncoded.get
     val competitionId = submission.get("competition").get.head
-    Cached.withoutRevalidation(60)(SeeOther(s"/admin/football/fronts/fixtures/$competitionId"))
+    Cached(60)(WithoutRevalidationResult(SeeOther(s"/admin/football/fronts/fixtures/$competitionId")))
   }
 
   def fixtures(competitionId: String) = Action.async { implicit request =>
@@ -129,7 +129,7 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
       case (None, Some(team2Id)) => s"/admin/football/fronts/matches/$competitionId/$team2Id"
       case (_, _) => s"/admin/football/fronts/matches/$competitionId"
     }
-    Cached.withoutRevalidation(60)(SeeOther(url))
+    Cached(60)(WithoutRevalidationResult(SeeOther(url)))
   }
 
   def chooseMatchForComp(competitionId: String) = chooseMatch(competitionId, None, None)

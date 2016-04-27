@@ -3,7 +3,7 @@ package controllers
 import common._
 import controllers.front._
 import layout.{CollectionEssentials, FaciaContainer, Front}
-import model.Cached.RevalidatableResult
+import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
 import model._
 import model.facia.PressedCollection
 import model.pressed.CollectionConfig
@@ -77,14 +77,14 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
         if(request.isJson) {
           Cached(60) {JsonCollection(Html(containers.mkString))}
         } else {
-          Cached.withoutRevalidation(60)(NotFound)
+          Cached(60)(WithoutRevalidationResult(NotFound))
         }
     }
 
     (rawNum, rawOffset) match {
       case (Int(num), Int(offset)) => returnContainers(num, offset)
-      case _ => Future.successful(Cached.withoutRevalidation(600) {
-        BadRequest
+      case _ => Future.successful(Cached(600) {
+        WithoutRevalidationResult(BadRequest)
       })
     }
   }
@@ -134,7 +134,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   def redirectTo(path: String)(implicit request: RequestHeader): Future[Result] = successful {
     val params = request.rawQueryStringOption.map(q => s"?$q").getOrElse("")
-    Cached.withoutRevalidation(60)(Found(LinkTo(s"/$path$params")))
+    Cached(60)(WithoutRevalidationResult(Found(LinkTo(s"/$path$params"))))
   }
 
   def renderFrontJsonLite(path: String) = Action.async { implicit request =>
@@ -162,7 +162,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
             }
           }
         )
-      case None => successful(Cached.withoutRevalidation(60)(NotFound))}
+      case None => successful(Cached(60)(WithoutRevalidationResult(NotFound)))}
 
     futureResult.onFailure { case t: Throwable => log.error(s"Failed rendering $path with $t", t)}
     futureResult
@@ -214,7 +214,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
           if (request.isJson)
             Cached(60) {JsonCollection(html)}
           else
-            Cached.withoutRevalidation(60)(NotFound)
+            Cached(60)(WithoutRevalidationResult(NotFound))
       }.getOrElse(ServiceUnavailable)
     }
   }
@@ -231,8 +231,8 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
             successful{Cached(pressedPage) {
             JsonComponent(views.html.fragments.containers.facia_cards.showMore(containerLayout.remainingCards, index))}}
 
-        maybeResponse getOrElse successful(Cached.withoutRevalidation(60)(NotFound))
-      case None => successful(Cached.withoutRevalidation(60)(NotFound))}}
+        maybeResponse getOrElse successful(Cached(60)(WithoutRevalidationResult(NotFound)))
+      case None => successful(Cached(60)(WithoutRevalidationResult(NotFound)))}}
 
 
   private object JsonCollection{
@@ -274,7 +274,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
             RevalidatableResult(Ok(body).as("text/xml; charset=utf8"), body)
           }
         }
-      case None => successful(Cached.withoutRevalidation(60)(NotFound))}
+      case None => successful(Cached(60)(WithoutRevalidationResult(NotFound)))}
   }
 
 
