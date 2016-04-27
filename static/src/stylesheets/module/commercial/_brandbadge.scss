@@ -79,9 +79,23 @@
         border-bottom: 1px dotted $neutral-3;
     }
  }
-.brandbadge--article {
+.brandbadge--onside {
     padding-bottom: $gs-baseline * 2;
     border-bottom: 1px dotted $neutral-5;
+
+    @include mq(tablet) {
+        float: right;
+    }
+
+    @include mq(leftCol) {
+        clear: left;
+        float: left;
+        width: $left-column;
+    }
+
+    @include mq(wide) {
+        width: $left-column-wide;
+    }
 
     @include mq(leftCol) {
         min-height: 0;
@@ -91,6 +105,7 @@
 
     @include mq(mobile, $until: leftCol) {
         padding-bottom: $gs-baseline / 2;
+
         .brandbadge__link {
             margin-top: 6px;
         }
