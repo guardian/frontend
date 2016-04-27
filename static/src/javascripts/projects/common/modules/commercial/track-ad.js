@@ -27,4 +27,4 @@ define([
             mediator.on('modules:commercial:dfp:alladsrendered', onAllAdsLoaded);
         });
     }
-})
+});

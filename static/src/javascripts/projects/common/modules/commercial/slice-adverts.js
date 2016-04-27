@@ -89,6 +89,8 @@ define([
             // a normal MPU instead
             trackAd('dfp-ad--fabric').then(function (isLoaded) {
                 if (!isLoaded) {
+                    var inlineIndexOffset = (config.tests.cmTopBannerPosition) ? 2 : 1;
+                    var adName = 'inline' + inlineIndexOffset;
                     var adSlot = createAdSlot(adName, 'container-inline');
                     adSlot.className += ' ad-slot--mobile';
                     fastdom.write(function () {
@@ -103,12 +105,12 @@ define([
             adSlots.forEach(isMobile ? insertOnMobile : insertOnTabletPlus);
         });
 
-        function insertOnMobile(item, index) {
+        function insertOnMobile(item) {
             // add a mobile advert after the container
             item.anchor.parentNode.insertBefore(item.adSlot, item.anchor.nextSibling);
         }
 
-        function insertOnTabletPlus(item, index) {
+        function insertOnTabletPlus(item) {
             // add a tablet+ ad to the slice
             bonzo(item.anchor).removeClass('fc-slice__item--no-mpu');
             item.anchor.appendChild(item.adSlot);
