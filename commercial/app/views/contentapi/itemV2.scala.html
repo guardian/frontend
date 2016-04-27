@@ -18,7 +18,7 @@
   clickMacro: Option[String],
   omnitureId: String)(implicit request: RequestHeader)
 
-@containerWrapper(Seq("legacy", "legacy-single", "capi", optSponsorType.map(t => t.toString).getOrElse(""), optSponsorType.map(t => s"tone-$t").getOrElse("")),
+@containerWrapper(Seq("legacy", "legacy-single", "capi", optSponsorType.map(t => t.className).getOrElse(""), optSponsorType.map(t => s"tone-${t.className}").getOrElse("")),
                   Some(s"merchandising | capi | single $omnitureId"),
                   badgeInHeader =  optSponsorType match {
                       case Some(Supported) => true
@@ -46,7 +46,7 @@
         @itemLargeCard(
             card,
             omnitureId,
-            optAdvertClassNames = Some(Seq("inverse", optSponsorType.map(t => t.toString).getOrElse(""))),
+            optAdvertClassNames = Some(Seq("inverse", optSponsorType.map(t => t.className).getOrElse(""))),
             useCardBranding = false)
 
         @for(moreButton <- optCapiReadMoreText) {

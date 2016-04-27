@@ -16,7 +16,7 @@
   optSponsorType: Option[SponsorType],
   optSponsorLabel: Option[String])(implicit request: RequestHeader)
 
-@containerWrapper(Seq("legacy", "capi", optSponsorType.map(t => t.toString).getOrElse(""), optSponsorType.map(t => s"tone-$t").getOrElse("")),
+@containerWrapper(Seq("legacy", "capi", optSponsorType.map(t => t.className).getOrElse(""), optSponsorType.map(t => s"tone-${t.className}").getOrElse("")),
                   Some(s"merchandising | capi | multiple $omnitureId"),
                   badgeInHeader =  optSponsorType match {
                       case Some(Supported) => true
@@ -44,7 +44,7 @@
         @for(card <- cards){ @itemCard(
             card,
             omnitureId,
-            optAdvertClassNames = optSponsorType.map(t => Seq(t.toString)),
+            optAdvertClassNames = optSponsorType.map(t => Seq(t.className)),
             useCardBranding = false)
         }
     </div>

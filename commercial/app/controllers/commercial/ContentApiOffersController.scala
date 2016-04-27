@@ -9,9 +9,9 @@ import play.api.mvc._
 import scala.concurrent.Future
 import scala.util.control.NonFatal
 
-sealed trait SponsorType
-case object PaidFor extends SponsorType { override def toString = "paidfor" }
-case object Supported extends SponsorType { override def toString = "supported" }
+sealed trait SponsorType { val className = "" }
+final case object PaidFor extends SponsorType { override val className = "paidfor" }
+final case object Supported extends SponsorType { override val className = "supported" }
 
 object ContentApiOffersController extends Controller with ExecutionContexts with implicits.Requests with Logging {
 
