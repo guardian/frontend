@@ -97,11 +97,11 @@ trait Competitions extends LiveMatches with Logging with implicits.Collections w
     DateTimeComparator.getInstance.asInstanceOf[Comparator[DateTime]]
   )
 
-  private def mostRecentCompetitionSeasons(competitions: List[Season], numToTake: Int): List[Season] = {
+  private def mostRecentCompetitionSeasons(competitions: List[Season]): List[Season] = {
     competitionDefinitions.flatMap{ compDef =>
       competitions.filter(_.competitionId == compDef.id)
         .sortBy(_.startDate.toDateTimeAtStartOfDay.getMillis).reverse
-        .take(numToTake)
+        .take(2)
     }
   }
 
@@ -145,7 +145,7 @@ trait Competitions extends LiveMatches with Logging with implicits.Collections w
   def refreshCompetitionData() = {
     log.info("Refreshing competition data")
     FootballClient.competitions.map { allComps =>
-      mostRecentCompetitionSeasons(allComps, numToTake = 1).map { season =>
+      mostRecentCompetitionSeasons(allComps).map { season =>
         competitionAgents.find(_.competition.id == season.id).map { agent =>
           val newCompetition = agent.competition.startDate match {
             case Some(existingStartDate) if season.startDate.isAfter(existingStartDate.toDateTimeAtStartOfDay) => {
