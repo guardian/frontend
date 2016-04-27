@@ -15,6 +15,7 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 import campaigns.PersonalInvestmentsCampaign
+import play.api.mvc.RequestHeader
 
 object Commercial {
 
@@ -410,8 +411,9 @@ case class GalleryPage(
   gallery: Gallery,
   related: RelatedContent,
   index: Int,
-  trail: Boolean) extends ContentPage {
+  trail: Boolean)(implicit request: RequestHeader) extends ContentPage {
   override lazy val item = gallery
+  val showBadge = item.commercial.isSponsored(Some(Edition(request))) || item.commercial.isFoundationSupported || item.commercial.isAdvertisementFeature
 }
 
 case class TagCombiner(

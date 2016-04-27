@@ -1,13 +1,13 @@
-@(item: model.ContentType, showBadge: Boolean = false, showMeta: Boolean = true)(implicit request: RequestHeader)
+@(gallery: model.GalleryPage, showMeta: Boolean = true)(implicit request: RequestHeader)
 
 @import views.support.TrailCssClasses.toneClass
 @import views.support.ContributorLinks
 
-<header class="content__head is-fixed-height tonal__head tonal__head--@toneClass(item)">
+<header class="content__head is-fixed-height tonal__head tonal__head--@toneClass(gallery.item)">
 
     <style>
         @defining(
-            item.content.trail.trailPicture.head
+            gallery.item.content.trail.trailPicture.head
         ) { picture =>
 
             .content__header__background-image {
@@ -32,21 +32,21 @@
                 <div class="gs-container">
 
                     @if(showMeta) {
-                        @fragments.meta.metaInline(item)
+                        @fragments.meta.metaInline(gallery.item)
                     }
 
                     <h1 class="content__headline" itemprop="headline">
-                        @fragments.inlineSvg("camera", "icon", List("inline-tone-fill")) @Html(item.trail.headline)
+                        @fragments.inlineSvg("camera", "icon", List("inline-tone-fill")) @Html(gallery.item.trail.headline)
                     </h1>
 
-                    @if(item.content.hasTonalHeaderByline) {
-                        @item.trail.byline.map { text =>
-                            <span class="content__headline content__headline--byline">@ContributorLinks(text, item.tags.contributors)</span>
+                    @if(gallery.item.content.hasTonalHeaderByline) {
+                        @gallery.item.trail.byline.map { text =>
+                            <span class="content__headline content__headline--byline">@ContributorLinks(text, gallery.item.tags.contributors)</span>
                         }
                     }
 
-                    @if(showBadge && !item.commercial.isAdvertisementFeature) {
-                        @fragments.commercial.badge(item)
+                    @if(showBadge && !gallery.item.commercial.isAdvertisementFeature) {
+                        @fragments.commercial.badge(gallery.item)
                     }
                 </div>
             </div>
@@ -55,32 +55,32 @@
 
     <div class="gs-container">
 
-        @fragments.contentMeta(item)
+        @fragments.contentMeta(gallery.item)
 
-        @if(item.fields.standfirst.isDefined) {
+        @if(gallery.item.fields.standfirst.isDefined) {
             <div class="content__wrapper--standfirst">
-                @if(showBadge && item.commercial.isAdvertisementFeature) {
+                @if(gallery.showBadge && gallery.item.commercial.isAdvertisementFeature) {
                     <div class="content__meta-container js-content-meta js-football-meta">
-                        @fragments.commercial.badge(item)
+                        @fragments.commercial.badge(gallery.item)
                     </div>
                 }
-                @fragments.standfirst(item)
+                @fragments.standfirst(gallery.item)
             </div>
         }
 
         <span class="meta__break"></span>
 
-        @if(!item.content.hasTonalHeaderByline) {
-            @fragments.meta.byline(item.trail.byline, item.tags)
+        @if(!gallery.item.content.hasTonalHeaderByline) {
+            @fragments.meta.byline(gallery.item.trail.byline, gallery.item.tags)
         }
 
-        @if(item.content.tags.contributors.length == 1) {
-            @if(item.content.hasTonalHeaderByline && (item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty) || item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty))) { <p class="meta__contact-header hide-until-leftcol">Contact author</p> }
-            @fragments.meta.contactAuthor(item.tags)
+        @if(gallery.item.content.tags.contributors.length == 1) {
+            @if(gallery.item.content.hasTonalHeaderByline && (gallery.item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty) || gallery.item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty))) { <p class="meta__contact-header hide-until-leftcol">Contact author</p> }
+            @fragments.meta.contactAuthor(gallery.item.tags)
         }
 
-        @if(!item.trail.shouldHidePublicationDate) {
-            @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.tags.isLiveBlog, item.fields.isLive)
+        @if(!gallery.item.trail.shouldHidePublicationDate) {
+            @fragments.meta.dateline(gallery.item.trail.webPublicationDate, gallery.item.fields.lastModified, gallery.item.content.hasBeenModified, gallery.item.tags.isLiveBlog, gallery.item.fields.isLive)
         }
 
         <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
