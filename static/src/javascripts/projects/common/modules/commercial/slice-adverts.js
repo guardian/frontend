@@ -86,18 +86,19 @@ define([
 
         return fastdom.write(function () {
             adSlots.forEach(isMobile ? insertOnMobile : insertOnTabletPlus);
+
+            function insertOnMobile(item) {
+                // add a mobile advert after the container
+                item.anchor.parentNode.insertBefore(item.adSlot, item.anchor.nextSibling);
+            }
+
+            function insertOnTabletPlus(item) {
+                // add a tablet+ ad to the slice
+                bonzo(item.anchor).removeClass('fc-slice__item--no-mpu');
+                item.anchor.appendChild(item.adSlot);
+            }
         });
 
-        function insertOnMobile(item) {
-            // add a mobile advert after the container
-            item.anchor.parentNode.insertBefore(item.adSlot, item.anchor.nextSibling);
-        }
-
-        function insertOnTabletPlus(item) {
-            // add a tablet+ ad to the slice
-            bonzo(item.anchor).removeClass('fc-slice__item--no-mpu');
-            item.anchor.appendChild(item.adSlot);
-        }
     }
 
 });
