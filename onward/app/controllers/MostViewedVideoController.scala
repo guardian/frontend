@@ -16,11 +16,12 @@ object MostViewedVideoController extends Controller with Logging with ExecutionC
       .tag(series)
       .showTags("all")
       .showFields("all")
+      .pageSize(6)
     ).map { response =>
       val videos = response.results.toList.map(apiContent => {
         val content = Content.make(apiContent)
         Video.make(content)
-      }).take(6)
+      })
 
       val seriesTitle = response.results.toList.lift(1).flatMap { result =>
         result.tags.find(tag => tag.id == series).map(tag => tag.webTitle)
