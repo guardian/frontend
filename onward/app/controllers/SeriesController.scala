@@ -68,7 +68,7 @@ object SeriesController extends Controller with Logging with Paging with Executi
     val displayName = Some(series.displayName)
     val seriesStories = series.trails.items take 4
     val description = series.tag.metadata.description.getOrElse("").replaceAll("<.*?>", "")
-    
+
     JsonComponent(
       "items" -> JsArray(Seq(
         Json.obj(
@@ -85,7 +85,7 @@ object SeriesController extends Controller with Logging with Paging with Executi
     val dataId = "series"
     val componentId = Some("series")
     val displayName = Some(series.displayName)
-    val properties = FrontProperties(series.tag.metadata.description, None, None, None, false, None)
+    val properties = FrontProperties.empty.copy(onPageDescription = series.tag.metadata.description)
     val header = series.tag.metadata.description map { description => DescriptionMetaHeader(description) }
 
 

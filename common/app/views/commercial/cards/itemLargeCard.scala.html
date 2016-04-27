@@ -11,7 +11,11 @@
   optImgRatio: Option[String] = None,
   useCardBranding: Boolean)
 
-<a href="@item.targetUrl" class="advert advert--large advert--capi advert--paidfor advert--landscape
+<a href="@item.targetUrl" class="advert advert--large advert--capi advert--landscape
+    @item.icon match {
+        case Some(_) => {advert--media}
+        case None    => {advert--text}
+    }
     @optAdvertClassNames.map { classNames => @classNames.map(c => s"advert--$c").mkString(" ")}
     @optClassNames.map { classNames => @classNames.mkString(" ")}
     "

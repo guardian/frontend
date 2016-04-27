@@ -9,7 +9,7 @@
     @fragments.newHeader()
 } else {
     <header id="header"
-            class="l-header u-cf @if(page.metadata.hasSlimHeader) {l-header--is-slim l-header--no-navigation} js-header"
+            class="l-header u-cf @if(page.metadata.hasSlimHeader) {l-header--is-slim l-header--no-navigation} @if(mvt.ABGalleryRedesignVariant.shouldShow(page.metadata.contentType)){l-header--is-slim l-header--no-navigation l-header--new-gallery} js-header"
             role="banner"
             data-link-name="global navigation: header">
         <div class="js-navigation-header navigation-container navigation-container--collapsed">
@@ -105,7 +105,7 @@
                     } else {
                         <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="logo-wrapper" data-component="logo">
                             <span class="u-h">The Guardian</span>
-                            @if(page.metadata.hasSlimHeader) {
+                            @if(page.metadata.hasSlimHeader || (mvt.ABGalleryRedesignVariant.shouldShow(page.metadata.contentType))) {
                                 @* CRAZY HACK TO FIX IE8 RENDERING ISSUE WITH LOGO SVG MARKUP *@
                                 <!--[if (gt IE 8)|(IEMobile)]><!-->
                                     @fragments.inlineSvg("guardian-logo-160", "logo")
@@ -128,7 +128,7 @@
                             }
                         </a>
                     }
-                    @if(page.metadata.hasSlimHeader) {
+                    @if(page.metadata.hasSlimHeader || (mvt.ABGalleryRedesignVariant.shouldShow(page.metadata.contentType))) {
                         @fragments.nav.navigationToggle()
                     }
                 </div>

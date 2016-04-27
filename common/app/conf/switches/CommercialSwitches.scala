@@ -123,7 +123,7 @@ trait CommercialSwitches {
   )
 
   val TravelFeedFetchSwitch = Switch(
-    SwitchGroup.Commercial,
+    SwitchGroup.CommercialFeeds,
     "gu-travel-feed-fetch",
     "If this switch is on, cached travel offers feed will be updated from external source.",
     safeState = Off,
@@ -132,7 +132,7 @@ trait CommercialSwitches {
   )
 
   val TravelFeedParseSwitch = Switch(
-    SwitchGroup.Commercial,
+    SwitchGroup.CommercialFeeds,
     "gu-travel-feed-parse",
     "If this switch is on, commercial components will be fed by travel offers feed.",
     safeState = Off,
@@ -141,7 +141,7 @@ trait CommercialSwitches {
   )
 
   val JobsFeedFetchSwitch = Switch(
-    SwitchGroup.Commercial,
+    SwitchGroup.CommercialFeeds,
     "gu-jobs-feed-fetch",
     "If this switch is on, jobs feed will be periodically updated from external source.",
     safeState = Off,
@@ -150,9 +150,54 @@ trait CommercialSwitches {
   )
 
   val JobsFeedParseSwitch = Switch(
-    SwitchGroup.Commercial,
+    SwitchGroup.CommercialFeeds,
     "gu-jobs-feed-parse",
     "If this switch is on, commercial components will be fed by jobs feed.",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val EventsFeedSwitch = Switch(
+    SwitchGroup.CommercialFeeds,
+    "gu-events",
+    "If this switch is on, commercial components will be fed by masterclass and live-events feeds.",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val SoulmatesFeedSwitch = Switch(
+    SwitchGroup.CommercialFeeds,
+    "gu-soulmates",
+    "If this switch is on, commercial components will be fed by soulmates feed.",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val MoneysupermarketFeedsSwitch = Switch(
+    SwitchGroup.CommercialFeeds,
+    "moneysupermarket",
+    "If this switch is on, commercial components will be fed by Moneysupermarket feeds.",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val GuBookshopFeedsSwitch = Switch(
+    SwitchGroup.CommercialFeeds,
+    "gu-bookshop",
+    "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val BookLookupSwitch = Switch(
+    SwitchGroup.CommercialFeeds,
+    "book-lookup",
+    "If this switch is on, book data will be looked up using a third-party service.",
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -167,55 +212,10 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val EventsFeedSwitch = Switch(
-    SwitchGroup.Commercial,
-    "gu-events",
-    "If this switch is on, commercial components will be fed by masterclass and live-events feeds.",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val SoulmatesFeedSwitch = Switch(
-    SwitchGroup.Commercial,
-    "gu-soulmates",
-    "If this switch is on, commercial components will be fed by soulmates feed.",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val MoneysupermarketFeedsSwitch = Switch(
-    SwitchGroup.Commercial,
-    "moneysupermarket",
-    "If this switch is on, commercial components will be fed by Moneysupermarket feeds.",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val LCMortgageFeedSwitch = Switch(
     SwitchGroup.Commercial,
     "lc-mortgages",
     "If this switch is on, commercial components will be fed by London & Country mortgage feed.",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val GuBookshopFeedsSwitch = Switch(
-    SwitchGroup.Commercial,
-    "gu-bookshop",
-    "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val BookLookupSwitch = Switch(
-    SwitchGroup.Commercial,
-    "book-lookup",
-    "If this switch is on, book data will be looked up using a third-party service.",
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -235,7 +235,7 @@ trait CommercialSwitches {
     "fixed-top-above-nav",
     "Fixes size of top-above-nav ad slot on fronts.",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 27),
+    sellByDate = new LocalDate(2016, 4, 28),
     exposeClientSide = false
   )
 
@@ -267,7 +267,7 @@ trait CommercialSwitches {
   )
 
   val v2JobsTemplate = Switch(
-    SwitchGroup.Commercial,
+    SwitchGroup.CommercialRefactoring,
     "v2-jobs-template",
     "Jobs component using template v2",
     safeState = Off,
@@ -276,7 +276,7 @@ trait CommercialSwitches {
   )
 
   val v2MasterclassesTemplate = Switch(
-    SwitchGroup.Commercial,
+    SwitchGroup.CommercialRefactoring,
     "v2-masterclasses-template",
     "Masterclasses component using template v2",
     safeState = Off,
@@ -285,7 +285,7 @@ trait CommercialSwitches {
   )
 
   val v2BooksTemplate = Switch(
-    SwitchGroup.Commercial,
+    SwitchGroup.CommercialRefactoring,
     "v2-books-template",
     "Books component using template v2",
     safeState = Off,
@@ -294,7 +294,7 @@ trait CommercialSwitches {
   )
 
   val v2TravelTemplate = Switch(
-    SwitchGroup.Commercial,
+    SwitchGroup.CommercialRefactoring,
     "v2-travel-template",
     "Travel component using template v2",
     safeState = Off,
@@ -303,7 +303,7 @@ trait CommercialSwitches {
   )
 
   val v2SoulmatesTemplate = Switch(
-    SwitchGroup.Commercial,
+    SwitchGroup.CommercialRefactoring,
     "v2-soulmates-template",
     "Soulmates component using template v2",
     safeState = Off,
@@ -312,7 +312,7 @@ trait CommercialSwitches {
   )
 
   val v2BlendedTemplate = Switch(
-    SwitchGroup.Commercial,
+    SwitchGroup.CommercialRefactoring,
     "v2-blended-template",
     "Blended component using template v2",
     safeState = Off,
@@ -321,7 +321,7 @@ trait CommercialSwitches {
   )
 
   val v2ManualSingleTemplate = Switch(
-    SwitchGroup.Commercial,
+    SwitchGroup.CommercialRefactoring,
     "v2-manual-single-template",
     "Manual single component using template v2",
     safeState = Off,
@@ -330,7 +330,7 @@ trait CommercialSwitches {
   )
 
   val v2ManualMultipleTemplate = Switch(
-    SwitchGroup.Commercial,
+    SwitchGroup.CommercialRefactoring,
     "v2-manual-multiple-template",
     "Manual multiple component using template v2",
     safeState = Off,
@@ -339,7 +339,7 @@ trait CommercialSwitches {
   )
 
   val v2CapiSingleTemplate = Switch(
-    SwitchGroup.Commercial,
+    SwitchGroup.CommercialRefactoring,
     "v2-capi-single-template",
     "Capi single component using template v2",
     safeState = Off,
@@ -348,7 +348,7 @@ trait CommercialSwitches {
   )
 
   val v2CapiMultipleTemplate = Switch(
-    SwitchGroup.Commercial,
+    SwitchGroup.CommercialRefactoring,
     "v2-capi-multiple-template",
     "Capi multiple component using template v2",
     safeState = Off,
@@ -357,7 +357,7 @@ trait CommercialSwitches {
   )
 
   val v2FixedContainerTemplate = Switch(
-    SwitchGroup.Commercial,
+    SwitchGroup.CommercialRefactoring,
     "v2-fixed-container-template",
     "Fixed paid containers using template v2",
     safeState = Off,
@@ -366,11 +366,11 @@ trait CommercialSwitches {
   )
 
   val cardsDecidePaidContainerBranding = Switch(
-    SwitchGroup.Commercial,
+    SwitchGroup.CommercialRefactoring,
     "cards-decide-paid-container-branding",
     "If on, the cards will decide the branding of their container",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
+    sellByDate = new LocalDate(2016, 6, 1),
     exposeClientSide = false
   )
 

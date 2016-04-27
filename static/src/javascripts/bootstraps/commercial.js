@@ -8,7 +8,6 @@ define([
     'common/modules/commercial/badges',
     'common/modules/commercial/dfp/dfp-api',
     'common/modules/commercial/front-commercial-components',
-    'common/modules/commercial/top-banner-below-container',
     'common/modules/commercial/slice-adverts',
     'common/modules/commercial/third-party-tags',
     'common/modules/commercial/paidfor-band',
@@ -23,7 +22,6 @@ define([
     badges,
     dfp,
     frontCommercialComponents,
-    topBannerBelowContainer,
     sliceAdverts,
     thirdPartyTags,
     paidforBand,
@@ -35,8 +33,7 @@ define([
         ['cm-articleAsideAdverts', articleAsideAdverts.init],
         ['cm-articleBodyAdverts', articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
-        ['cm-frontCommercialComponents', frontCommercialComponents.init],
-        ['cm-topBannerBelowContainer', topBannerBelowContainer.init]
+        ['cm-frontCommercialComponents', frontCommercialComponents.init]
     ];
 
     if (!config.switches.staticBadges) {

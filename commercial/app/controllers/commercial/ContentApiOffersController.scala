@@ -9,6 +9,10 @@ import play.api.mvc._
 import scala.concurrent.Future
 import scala.util.control.NonFatal
 
+sealed abstract class SponsorType(val className: String)
+final case object PaidFor extends SponsorType("paidfor")
+final case object Supported extends SponsorType("supported")
+
 object ContentApiOffersController extends Controller with ExecutionContexts with implicits.Requests with Logging {
 
   private val sponsorTypeToClass = Map(
@@ -17,10 +21,10 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
     "foundation-supported" -> "fc-container--foundation-supported"
   )
 
-  private val sponsorTypeToTone = Map(
-    "sponsored" -> "sponsored",
-    "advertisement-feature" -> "paidfor",
-    "foundation-supported" -> "supported"
+  private val sponsorTypeToClassRefactor = Map(
+    "sponsored" -> Supported,
+    "advertisement-feature" -> PaidFor,
+    "foundation-supported" -> Supported
   )
 
   private val sponsorTypeToLabel = Map(
@@ -44,7 +48,7 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
     val optOmnitureId = request.getParameter("omnitureId")
 
     val optSponsorType = optCapiAdFeature flatMap (feature => sponsorTypeToClass.get(feature))
-    val optSponsorTypeRefactor = optCapiAdFeature flatMap (feature => sponsorTypeToTone.get(feature))
+    val optSponsorTypeRefactor = optCapiAdFeature flatMap (feature => sponsorTypeToClassRefactor.get(feature))
     val optSponsorLabel = optCapiAdFeature flatMap (feature => sponsorTypeToLabel.get(feature))
 
     val eventualLatest = optKeyword.map { keyword =>
@@ -85,6 +89,7 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
               optCapiAbout,
               optClickMacro,
               omnitureId,
+              optCapiAdFeature,
               optSponsorTypeRefactor,
               optSponsorLabel)
             )

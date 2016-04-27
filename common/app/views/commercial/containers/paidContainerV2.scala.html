@@ -17,13 +17,13 @@
     }
     >
     @containerWrapper(
-        Seq("legacy", "capi", "tone-paidfor"),
+        Seq("legacy", "capi", "paidfor", "tone-paidfor"),
         optKicker = Some(fragments.commercial.paidForMeta(Some(containerModel.id))),
         optStamp = Some(stamp),
         optBadge = if(containerModel.isSingleSponsorContainer){ Some(logoSlot) } else { None }
     ){
 
-        <a class="adverts__logo u-text-hyphenate" href="@containerModel.content.targetUrl">@containerModel.content.title</a>
+        <a class="adverts__logo u-text-hyphenate" href="/@containerModel.content.targetUrl">@containerModel.content.title</a>
 
     }{
 
@@ -53,6 +53,7 @@
                 <div class="adverts__row adverts__row--wrap adverts__3cols">
                     @containerModel.content.showMoreCards.map(card => views.html.commercial.cards.itemSmallCard(
                                             card,
+                                            optAdvertClassNames = Some(Seq("paidfor")),
                                             omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
                                             useCardBranding = !containerModel.isSingleSponsorContainer))
                 </div>

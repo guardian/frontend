@@ -6,12 +6,12 @@ define([
     return function () {
 
         this.id = 'VideoSeriesPage';
-        this.start = '2016-04-21';
-        this.expiry = '2016-04-25';
+        this.start = '2016-04-27';
+        this.expiry = '2016-05-04';
         this.author = 'James Gorrie';
         this.description = 'New video series page (initial numbers test)';
-        this.audience = 1.0;
-        this.audienceOffset = 0.0;
+        this.audience = 0.5;
+        this.audienceOffset = 0.5;
         this.successMeasure = '';
         this.showForSensitive = true;
         this.audienceCriteria = '';
@@ -24,11 +24,11 @@ define([
 
         this.variants = [
             {
-                id: 'test1',
+                id: 'control',
                 test: function () {}
             },
             {
-                id: 'test2',
+                id: 'variant',
                 test: function () {}
             }
         ];

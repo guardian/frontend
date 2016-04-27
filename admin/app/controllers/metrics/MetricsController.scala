@@ -10,6 +10,8 @@ import conf.Configuration
 import tools.CloudWatch._
 import play.api.Play.current
 
+import scala.concurrent.Future
+
 object MetricsController extends Controller with Logging with AuthLogging with ExecutionContexts {
   // We only do PROD metrics
 
@@ -54,7 +56,7 @@ object MetricsController extends Controller with Logging with AuthLogging with E
   }
 
   def renderAssets() = AuthActions.AuthActionTest.async { implicit request =>
-    AssetMetrics.assets.map(metrics => NoCache(Ok(views.html.staticAssets(stage, metrics))))
+    Future.successful(NoCache(Ok(views.html.staticAssets(stage, AssetMetricsCache.sizes))))
   }
 
   def renderAfg() = AuthActions.AuthActionTest.async { implicit request =>
