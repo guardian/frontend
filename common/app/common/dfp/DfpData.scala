@@ -2,6 +2,7 @@ package common.dfp
 
 import common.Edition
 import common.dfp.AdSize.{leaderboardSize, responsiveSize}
+import org.apache.commons.lang.StringUtils
 import org.joda.time.DateTime
 import org.joda.time.DateTime.now
 import org.joda.time.format.ISODateTimeFormat
@@ -231,7 +232,12 @@ case class GuLineItem(id: Long,
   val paidForTags: Seq[PaidForTag] = targeting.customTargetSets.flatMap { targetSet =>
 
     def paidForTagsFromTargets(targetedNames: Seq[String], tagType: TagType, paidForType: PaidForType) = {
-      targetedNames map { targetedName =>
+      targetedNames
+        .map({ dfpTargetName =>
+           // Some of the targeted names in DFP have strange unicode characters. Strip them here.
+           StringUtils.strip(dfpTargetName, "\u200B").trim
+        })
+        .map({ targetedName =>
         PaidForTag(
           targetedName,
           tagType = tagType,
@@ -239,7 +245,7 @@ case class GuLineItem(id: Long,
           matchingCapiTagIds = Nil,
           lineItems = Nil
         )
-      }
+      })
     }
 
     def seriesTags = targetSet.filterTags(_.isSeriesTag) _
