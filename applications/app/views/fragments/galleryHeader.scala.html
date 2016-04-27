@@ -28,7 +28,7 @@
 
     <div class="content__header tonal__header">
         <div class="content__header__background-image">
-            <div class="content__wrapper content__wrapper--headline">
+            <div class="content__wrapper content__wrapper--gallery">
                 <div class="gs-container">
 
                     @if(showMeta) {
@@ -44,16 +44,16 @@
                             <span class="content__headline content__headline--byline">@ContributorLinks(text, item.tags.contributors)</span>
                         }
                     }
-
-                    @if(showBadge && !item.commercial.isAdvertisementFeature) {
-                        @fragments.commercial.badge(item)
-                    }
                 </div>
             </div>
         </div>
     </div>
 
     <div class="gs-container">
+
+        @if(showBadge && !item.commercial.isAdvertisementFeature) {
+            @fragments.commercial.badge(item)
+        }
 
         @fragments.contentMeta(item)
 

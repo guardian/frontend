@@ -33,11 +33,12 @@
     @if(showExtras) {
         <div class="meta__extras">
             <div class="meta__social" data-component="share">
-            @fragments.social(item.sharelinks.pageShares, "top", isGallery = true)
+                @fragments.social(item.sharelinks.pageShares, "top", isGallery = mvt.ABGalleryRedesignVariant.shouldShow(item.metadata.contentType))
+                @if(item.content.tags.tags.exists(_.id == "tone/news")) {
+                    @fragments.contentAgeNotice(ContentOldAgeDescriber(item.content))
+                }
             </div>
-            @if(item.content.tags.tags.exists(_.id == "tone/news")) {
-                @fragments.contentAgeNotice(ContentOldAgeDescriber(item.content))
-            }
+
             <div class="meta__numbers modern-visible">
                 <div class="u-h meta__number js-sharecount">
                 </div>

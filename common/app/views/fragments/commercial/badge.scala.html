@@ -35,6 +35,7 @@
             },
             content match {
                 case a: Article if a.isLiveBlog => "live-blog"
+                case _: Gallery => "gallery"
                 case _: Interactive => "interactive"
                 case _ => "article"
             },
