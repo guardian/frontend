@@ -238,14 +238,14 @@ case class GuLineItem(id: Long,
            StringUtils.strip(dfpTargetName, "\u200B").trim
         })
         .map({ targetedName =>
-        PaidForTag(
-          targetedName,
-          tagType = tagType,
-          paidForType = paidForType,
-          matchingCapiTagIds = Nil,
-          lineItems = Nil
-        )
-      })
+          PaidForTag(
+            targetedName,
+            tagType = tagType,
+            paidForType = paidForType,
+            matchingCapiTagIds = Nil,
+            lineItems = Nil
+          )
+        })
     }
 
     def seriesTags = targetSet.filterTags(_.isSeriesTag) _
