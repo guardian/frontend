@@ -1,0 +1,60 @@
+@import model.ImageAsset
+@import layout.ContentWidths.MainMedia
+@import views.support.ImgSrc
+
+@(
+    picture: model.ImageMedia,
+    isShowcase: Boolean = false,
+    isFeature: Boolean = false,
+    widths: layout.WidthsByBreakpoint =  MainMedia.inline,
+    imageOption: Option[ImageAsset],
+    isMain: Boolean = false,
+    amp: Boolean = false
+)
+
+@if(amp) {
+
+    @picture.largestImage.map { largestImage =>
+        <amp-img src="@ImgSrc.getAmpImageUrl(picture)"
+        layout="responsive"
+        width="@largestImage.width"
+        height="@largestImage.height"
+        class="maxed responsive-img"
+        itemprop="contentUrl"
+        alt="@ImgSrc.getFallbackAsset(picture).flatMap(_.altText).getOrElse("")" ></amp-img>
+    }
+} else {
+
+    @picture.largestImage.map{ largestImage =>
+        <div
+        class="u-responsive-ratio@if(isFeature && isShowcase) { u-responsive-ratio--letterbox}"
+            @if(isFeature && isShowcase) {} else {style="padding-bottom: @{"%.2f".format(100 * largestImage.height.toDouble / largestImage.width)}%"}
+        >
+    }
+
+    <picture>
+        @* IE 9 needs this workaround as per https://scottjehl.github.io/picturefill/ *@
+            <!--[if IE 9]><video style="display: none;"><![endif]-->
+
+        @widths.breakpoints.map { breakpointWidth =>
+            <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (min-resolution: 120dpi)"
+            sizes="@breakpointWidth.width"
+            srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(picture), hidpi = true)" />
+            <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px)"
+            sizes="@breakpointWidth.width"
+            srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(picture))" />
+        }
+
+            <!--[if IE 9]></video><![endif]-->
+
+        <img class="@if(isMain) {maxed responsive-img} else {gu-image}"
+        itemprop="contentUrl"
+        alt="@imageOption.flatMap(_.altText).getOrElse("")"
+        src="@ImgSrc.getFallbackUrl(picture)" />
+    </picture>
+
+
+    @picture.largestImage.map{ largestImage =>
+    </div>
+    }
+}
