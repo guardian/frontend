@@ -236,10 +236,13 @@ object ContentWidths {
 
   object GalleryMedia {
     val inline = WidthsByBreakpoint(
-      mobile          = Some(445.px),
-      mobileLandscape = Some(610.px),
-      phablet =         Some(620.px),
-      tablet =          Some(700.px)) // desktop, leftCol, and wide are also 700px
+      mobile          = Some(480.px),
+      mobileLandscape = Some(660.px),
+      phablet =         Some(700.px),
+      tablet =          Some(700.px), // TODO: Change to 480 when new galleries is merged
+      desktop =         Some(720.px),
+      leftCol =         Some(880.px),
+      wide =            Some(1010.px))
 
     val lightbox = WidthsByBreakpoint(
       mobile =          Some(465.px),
