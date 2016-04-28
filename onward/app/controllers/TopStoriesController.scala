@@ -4,6 +4,7 @@ import com.gu.contentapi.client.GuardianContentApiThriftError
 import common._
 import contentapi.ContentApiClient
 import conf._
+import model.Cached.RevalidatableResult
 import model._
 import model.pressed.PressedContent
 import play.api.mvc.{Action, Controller, RequestHeader}
@@ -63,7 +64,7 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
           "html" -> jsonResponse()
         )
       else
-        Ok(htmlResponse())
+        RevalidatableResult.Ok(htmlResponse())
     }
   }
 

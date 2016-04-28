@@ -9,9 +9,20 @@ import model.commercial.travel.Countries
 import play.api.{Application => PlayApp, GlobalSettings}
 
 import scala.concurrent.Future
-import scala.concurrent.duration._
 import scala.util.Random
 import scala.util.control.NonFatal
+
+import common.AkkaAgent
+
+private [commercial] object CommercialLifecycleMetrics {
+
+  val metricMap = Map(
+    "fetch-failure" -> AkkaAgent(0.0),
+    "fetch-success" -> AkkaAgent(0.0),
+    "parse-failure" -> AkkaAgent(0.0),
+    "parse-success" -> AkkaAgent(0.0)
+  )
+}
 
 trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionContexts {
 
@@ -22,10 +33,23 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     MoneyBestBuysRefresh
   )
 
-  private def recordEvent(feedName: String, eventName: String, maybeDuration: Option[Duration]): Unit = {
-    val key = s"${feedName.toLowerCase.replaceAll("[\\s/]+", "-")}-$eventName-time"
-    val duration = maybeDuration map (_.toMillis.toDouble) getOrElse -1d
-    CommercialMetrics.metrics.put(Map(s"$key" -> duration))
+  private def recordEvent(eventName:String, outcome:String): Unit = {
+    val keyName = s"$eventName-$outcome"
+    CommercialLifecycleMetrics.metricMap
+      .get(keyName)
+      .foreach(agent => agent.send(_ +1.0))
+  }
+
+  private def updateMetrics(): Unit = {
+    CommercialLifecycleMetrics.metricMap.foreach{
+      case (metricName, agent) => {
+        agent send {currentCount =>
+          log.info(s"uploading $metricName with count of : $currentCount")
+          CommercialMetrics.metrics.put(Map(metricName -> currentCount))
+          0
+        }
+      }
+    }
   }
 
   override def onStart(application: PlayApp): Unit = {
@@ -36,10 +60,6 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
 
       val feedName = fetcher.feedMetaData.name
 
-      def recordFetch(maybeDuration: Option[Duration]): Unit = {
-        recordEvent(feedName, "fetch", maybeDuration)
-      }
-
       val msgPrefix = s"Fetching $feedName feed"
       log.info(s"$msgPrefix from ${fetcher.feedMetaData.url} ...")
       val eventualResponse = fetcher.fetch()
@@ -47,13 +67,13 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
         case e: SwitchOffException =>
           log.warn(s"$msgPrefix failed: ${e.getMessage}")
         case NonFatal(e) =>
-          recordFetch(None)
+          recordEvent("fetch","failure")
           log.error(s"$msgPrefix failed: ${e.getMessage}", e)
       }
       eventualResponse onSuccess {
         case response =>
           S3FeedStore.put(feedName, response.feed)
-          recordFetch(Some(response.duration))
+          recordEvent("fetch","success")
           log.info(s"$msgPrefix succeeded in ${response.duration}")
       }
       eventualResponse.map(_ => ())
@@ -63,10 +83,6 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
 
       val feedName = parser.feedMetaData.name
 
-      def recordParse(maybeDuration: Option[Duration]): Unit = {
-        recordEvent(feedName, "parse", maybeDuration)
-      }
-
       val msgPrefix = s"Parsing $feedName feed"
       log.info(s"$msgPrefix ...")
       val parsedFeed = parser.parse(S3FeedStore.get(parser.feedMetaData.name))
@@ -74,16 +90,17 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
         case e: SwitchOffException =>
           log.warn(s"$msgPrefix failed: ${e.getMessage}")
         case NonFatal(e) =>
-          recordParse(None)
+          recordEvent("parse","failure")
           log.error(s"$msgPrefix failed: ${e.getMessage}", e)
       }
       parsedFeed onSuccess {
         case feed =>
-          recordParse(Some(feed.parseDuration))
+          recordEvent("parse","success")
           log.info(s"$msgPrefix succeeded: parsed ${feed.contents.size} $feedName in ${feed.parseDuration}")
       }
       parsedFeed.map(_ => ())
     }
+
 
     super.onStart(application)
 
@@ -105,6 +122,13 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       Jobs.scheduleEveryNMinutes(jobName, 15) {
         parseFeed(parser)
       }
+    }
+
+    val jobName = "update-metrics"
+    Jobs.deschedule(jobName)
+    Jobs.scheduleEveryNMinutes(jobName, 15){
+      updateMetrics
+      Future.successful(())
     }
 
     Jobs.deschedule("cloudwatchUpload")

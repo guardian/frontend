@@ -18,13 +18,6 @@ import conf.switches.Switches.ServerSideTests
 //    val tests = List(ExampleTest)
 // }
 
-object CMTopBannerPosition extends TestDefinition(
-  List(Variant1),
-  "cm-top-banner-position",
-  "Test viewability and revenue changes when top banner is moved below first container on fronts and removed from articles",
-  new LocalDate(2016, 4, 28)
-)
-
 object ABHeadlinesTestVariant extends TestDefinition(
   Nil,
   "headlines-ab-variant",
@@ -89,7 +82,6 @@ object ActiveTests extends Tests {
   val tests: Seq[TestDefinition] = List(
     ABNewHeaderVariant,
     ABGalleryRedesignVariant,
-    CMTopBannerPosition,
     ABHeadlinesTestControl,
     ABHeadlinesTestVariant,
     ABIntersperseMultipleStoryPackagesStories,

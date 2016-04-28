@@ -2,6 +2,7 @@ package controllers
 
 import common._
 import cricketPa.{CricketTeam, CricketTeams, PaFeed}
+import model.Cached.RevalidatableResult
 import model._
 import play.api.mvc.{ Controller, Action }
 import cricketPa.PaFeed.dateFormat
@@ -29,7 +30,7 @@ object CricketMatchController extends Controller with Logging with ExecutionCont
               "summary" -> cricket.views.html.fragments.cricketMatchSummary(page.theMatch, page.metadata.id).toString
             )
           else
-            Ok(cricket.views.html.cricketMatch(page))
+            RevalidatableResult.Ok(cricket.views.html.cricketMatch(page))
         }
       }
     }.getOrElse(NoCache(NotFound))

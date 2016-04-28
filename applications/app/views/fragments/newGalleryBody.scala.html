@@ -1,4 +1,4 @@
-@(gallery: model.Gallery, related: model.RelatedContent, index: Int)(implicit request: RequestHeader)
+@(gallery: model.GalleryPage, related: model.RelatedContent, index: Int)(implicit request: RequestHeader)
 
 @import common.{Edition, LinkTo}
 @import layout.ContentWidths.GalleryMedia
@@ -8,38 +8,38 @@
 <div class="l-side-margins l-side-margins--media l-side-margins--new-gallery">
 
     <article id="article" class="@RenderClasses(
-            Map("content--advertisement-feature" -> gallery.commercial.isAdvertisementFeature,
-                "paid-content--advertisement-feature" -> gallery.commercial.isAdvertisementFeature
+            Map("content--advertisement-feature" -> gallery.item.commercial.isAdvertisementFeature,
+                "paid-content--advertisement-feature" -> gallery.item.commercial.isAdvertisementFeature
             ),
-            "content", "content--media", "content--gallery", "tonal", "new-gallery", "content--immersive", s"tonal--${toneClass(gallery)}"
+            "content", "content--media", "content--gallery", "tonal", "new-gallery", "content--immersive", s"tonal--${toneClass(gallery.item)}"
         )"
-        itemscope itemtype="@gallery.metadata.schemaType" role="main">
+        itemscope itemtype="@gallery.item.metadata.schemaType" role="main">
 
-        @if(gallery.commercial.isAdvertisementFeature){
+        @if(gallery.item.commercial.isAdvertisementFeature){
             @fragments.guBand()
         }
 
-        @fragments.galleryHeader(gallery, gallery.commercial.isSponsored(Some(Edition(request))) || gallery.commercial.isFoundationSupported || gallery.commercial.isAdvertisementFeature)
+        @fragments.galleryHeader(gallery)
 
-        <div class="content__main tonal__main tonal__main--@toneClass(gallery)">
+        <div class="content__main tonal__main tonal__main--@toneClass(gallery.item)">
             <div class="gs-container content-divider-gallery">
                 <div class="content__main-column content__main-column--gallery">
-                    @fragments.witnessCallToAction(gallery.content)
+                    @fragments.witnessCallToAction(gallery.item.content)
                     <ul class="gallery">
-                        @gallery.lightbox.largestCrops.zipWithRowInfo.map { case (image, row) =>
-                            @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum, gallery.lightbox.imageContainer(row.rowNum - 1))
+                        @gallery.item.lightbox.largestCrops.zipWithRowInfo.map { case (image, row) =>
+                            @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum, gallery.item.lightbox.imageContainer(row.rowNum - 1))
                         }
                     </ul>
-                    @fragments.witnessCallToAction(gallery.content)
-                    @fragments.submeta(gallery)
+                    @fragments.witnessCallToAction(gallery.item.content)
+                    @fragments.submeta(gallery.item)
                 </div>
             </div>
         </div>
     </article>
 
-    @if(gallery.content.showInRelated &&
-        !gallery.commercial.isAdvertisementFeature ) {
-        <div class="gallery__most-popular facia-container fc-container fc-container--media hide-on-childrens-books-site js-gallery-most-popular tonal--@toneClass(gallery)">
+    @if(gallery.item.content.showInRelated &&
+        !gallery.item.commercial.isAdvertisementFeature ) {
+        <div class="gallery__most-popular facia-container fc-container fc-container--media hide-on-childrens-books-site js-gallery-most-popular tonal--@toneClass(gallery.item)">
             <div class="fc-container__inner">
                 <div class="fc-container__header">
                     <h2 class="fc-container__header__title">
@@ -51,7 +51,7 @@
     }
 </div>
 <div class="l-side-margins">
-    @fragments.contentFooter(gallery, related, "media")
+    @fragments.contentFooter(gallery.item, related, "media")
 </div>
 
 @galleryItem(adSlots: Seq[String], adInterval: Int, image: model.ImageAsset, rowNum: Int, imageElement: model.ImageElement) = {
@@ -69,11 +69,11 @@
                     }
                 }
 
-                @fragments.share.blockLevelSharing("img-" + rowNum.toString, gallery.sharelinks.elementShares("img-" + rowNum.toString, image.path), gallery.metadata.contentType, isNewGallery = true)
+                @fragments.share.blockLevelSharing("img-" + rowNum.toString, gallery.item.sharelinks.elementShares("img-" + rowNum.toString, image.path), gallery.item.metadata.contentType, isNewGallery = true)
             </div>
 
             <a class="gallery__img-container gallery__img-container@if(image.width >= image.height) {--landscape} else {--portrait} js-gallerythumbs"
-                href="@LinkTo{@gallery.metadata.url#img-@rowNum}"
+                href="@LinkTo{@gallery.item.metadata.url#img-@rowNum}"
                 data-link-name="Launch Gallery Lightbox" data-is-ajax>
 
                 <picture>
@@ -83,7 +83,7 @@
                         GalleryMedia.inline
                     }) { widths =>
                         @widths.breakpoints.map { breakpointWidth =>
-                            <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi)"
+                            <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (min-resolution: 120dpi)"
                             sizes="@breakpointWidth.width"
                             srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(imageElement.images), hidpi = true)" />
                             <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px)"
@@ -104,7 +104,7 @@
         </figure>
     </li>
 
-    @if(!gallery.content.shouldHideAdverts && rowNum % adInterval == 0) {
+    @if(!gallery.item.content.shouldHideAdverts && rowNum % adInterval == 0) {
         @adSlots.lift((rowNum / adInterval) - 1).map { adSlot =>
             <li class="gallery__item gallery__item--advert">
                 <div class="gallery__img-container">

@@ -15,6 +15,7 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 import campaigns.PersonalInvestmentsCampaign
+import play.api.mvc.RequestHeader
 
 object Commercial {
 
@@ -227,7 +228,7 @@ final case class MetaData (
   description: Option[String] = None,
   rssPath: Option[String] = None,
   contentType: String = "",
-  hasHeader: Boolean = true,
+  shouldHideHeaderAndTopAds: Boolean = false,
   schemaType: Option[String] = None, // Must be one of... http://schema.org/docs/schemas.html
   cacheTime: CacheTime = CacheTime.Default,
   openGraphImages: Seq[String] = Seq(),
@@ -290,15 +291,21 @@ final case class MetaData (
     ("videoJsFlashSwf", JsString(conf.Static("flash/components/video-js-swf/video-js.swf").path))
   )
 
-  def opengraphProperties: Map[String, String] = Map(
-    "og:site_name" -> "the Guardian",
-    "fb:app_id"    -> Configuration.facebook.appId,
-    "og:type"      -> "website",
-    "og:url"       -> webUrl) ++ (iosId("applinks") map (iosId => List(
-    "al:ios:url" -> s"gnmguardian://$iosId",
-    "al:ios:app_store_id" -> "409128287",
-    "al:ios:app_name" -> "The Guardian"
-  )) getOrElse Nil)
+  def opengraphProperties: Map[String, String] = {
+    // keep the old og:url even once the migration happens, as facebook lose the share count otherwise
+    def ogUrl = webUrl.replaceFirst("^https:", "http:")
+
+    Map(
+      "og:site_name" -> "the Guardian",
+      "fb:app_id"    -> Configuration.facebook.appId,
+      "og:type"      -> "website",
+      "og:url"       -> ogUrl
+    ) ++ (iosId("applinks") map (iosId => List(
+      "al:ios:url" -> s"gnmguardian://$iosId",
+      "al:ios:app_store_id" -> "409128287",
+      "al:ios:app_name" -> "The Guardian"
+    )) getOrElse Nil)
+  }
 
   def twitterProperties: Map[String, String] = Map(
     "twitter:site" -> "@guardian") ++ (iosId("twitter") map (iosId => List(
@@ -398,6 +405,15 @@ case class CommercialExpiryPage(
   analyticsName: String = "GFE:Gone") extends StandalonePage {
 
   override val metadata: MetaData = MetaData.make(id, section, webTitle, analyticsName, shouldGoogleIndex = false)
+}
+
+case class GalleryPage(
+  gallery: Gallery,
+  related: RelatedContent,
+  index: Int,
+  trail: Boolean)(implicit request: RequestHeader) extends ContentPage {
+  override lazy val item = gallery
+  val showBadge = item.commercial.isSponsored(Some(Edition(request))) || item.commercial.isFoundationSupported || item.commercial.isAdvertisementFeature
 }
 
 case class TagCombiner(
