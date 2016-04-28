@@ -29,7 +29,7 @@
                         @media match {
                             case audio: Audio if audio.elements.mainAudio.exists(_.images.imageCrops.nonEmpty) => {
                                 @media.elements.mainAudio.map { audio =>
-                                    @fragments.img(audio.images)
+                                    @fragments.imageFigure(audio.images)
                                 }
                             }
                             case _ => { }
