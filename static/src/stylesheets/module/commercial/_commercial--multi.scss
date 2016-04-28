@@ -65,23 +65,6 @@ Multi component (AKA Frankenponent)
         }
     }
 
-    .commercial--soulmates {
-        .commercial--multi__body {
-            background: transparent;
-        }
-
-        .lineitem__links {
-            clear: both;
-            overflow: hidden;
-        }
-
-        .lineitem__link {
-            float: left;
-            width: 45%;
-            padding-right: 5%;
-        }
-    }
-
     @include layout-row('.lineitems');
     .lineitems {
         width: auto;
@@ -101,10 +84,6 @@ Multi component (AKA Frankenponent)
         text-align: left;
         min-height: $gs-baseline * 2.5;
         margin: $gs-baseline/3 0 (-$gs-baseline/1.5);
-
-        .commercial--soulmates & {
-            margin: 0;
-        }
 
         .commercial--tone-holidayoffers-logo {
             color: $neutral-1;
