@@ -1,18 +1,21 @@
-.adverts--tone-brand {
+.adverts--subscriptions {
+}
+
+.adverts--tone-subscriptions {
     > .adverts__header {
         background: $news-support-2;
     }
 }
 
-.adverts--tone-brand .button--legacy-single,
-.advert--brand .button {
+.adverts--tone-subscriptions .button--legacy-single,
+.advert--subscription .button {
     @include button-colour(
         $news-main-2,
         null
     );
 }
 
-.advert--brand {
+.advert--subscription {
     &:hover,
     &:focus,
     &:active {
@@ -25,7 +28,7 @@
     }
 }
 
-.adverts--tone-brand .button--legacy-single {
+.adverts--tone-subscriptions .button--legacy-single {
     &:hover,
     &:focus,
     &:active {
