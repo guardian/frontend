@@ -12,23 +12,17 @@ object Masterclasses extends Controller with implicits.Requests {
 
   def renderMasterclasses = Action.async { implicit request =>
     Future.successful {
-
-      val selectedMasterclasses: Seq[Masterclass] = (MasterclassAgent.specificMasterclasses(specificIds) ++
-                                             MasterclassAgent.masterclassesTargetedAt(segment)).distinct
-      selectedMasterclasses.toList match {
+      val selectedMasterclasses: Seq[Masterclass] =
+        (MasterclassAgent.specificMasterclasses(specificIds) ++
+          MasterclassAgent.masterclassesTargetedAt(segment)).distinct
+      selectedMasterclasses match {
         case Nil => NoCache(jsonFormat.nilResult)
         case masterclasses => Cached(componentMaxAge) {
           val clickMacro = request.getParameter("clickMacro")
           val omnitureId = request.getParameter("omnitureId")
-
-          if(conf.switches.Switches.v2MasterclassesTemplate.isSwitchedOn) {
-            jsonFormat.result(views.html.masterclasses.masterclassesV2(masterclasses, omnitureId, clickMacro))
-          } else {
-            jsonFormat.result(views.html.masterclasses.masterclasses(masterclasses, omnitureId, clickMacro))
-          }
+          jsonFormat.result(views.html.masterclasses.masterclassesV2(masterclasses, omnitureId, clickMacro))
         }
       }
     }
   }
-
 }
