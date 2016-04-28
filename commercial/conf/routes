@@ -8,7 +8,7 @@ GET        /commercial/test-page                                         control
 GET        /_healthcheck                                                 conf.HealthCheck.healthcheck()
 
 # Travel offer merchandising components
-GET        /commercial/travel/offers.json                                controllers.commercial.TravelOffers.renderTravel
+GET        /commercial/travel/offers.json                                controllers.commercial.TravelOffersController.renderTravel
 
 # Job merchandising components
 GET        /commercial/jobs.json                                         controllers.commercial.JobAds.renderJobs

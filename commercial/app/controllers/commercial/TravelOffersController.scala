@@ -6,7 +6,7 @@ import play.api.mvc._
 
 import scala.concurrent.Future
 
-object TravelOffers extends Controller with implicits.Requests {
+object TravelOffersController extends Controller with implicits.Requests {
 
   def renderTravel = Action.async { implicit request =>
     Future.successful {
