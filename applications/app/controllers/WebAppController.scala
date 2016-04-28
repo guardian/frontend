@@ -4,6 +4,7 @@ import com.gu.contentapi.client.model.v1.Crossword
 import common.{JsonComponent, Edition, ExecutionContexts, Logging}
 import contentapi.ContentApiClient
 import conf.Static
+import model.Cached.RevalidatableResult
 import model._
 import play.api.mvc.{Action, Controller, RequestHeader, Result}
 import play.api.libs.json.{JsArray, JsString, JsObject}
@@ -22,11 +23,11 @@ case class OfflinePage(crossword: CrosswordData) extends StandalonePage {
 object WebAppController extends Controller with ExecutionContexts with Logging {
 
   def serviceWorker() = Action { implicit request =>
-    Cached(60) { Ok(templates.js.serviceWorker()) }
+    Cached(60) { RevalidatableResult.Ok(templates.js.serviceWorker()) }
   }
 
-  def manifest() = Action {
-    Cached(3600) { Ok(templates.js.webAppManifest()) }
+  def manifest() = Action { implicit request =>
+    Cached(3600) { RevalidatableResult.Ok(templates.js.webAppManifest()) }
   }
 
 

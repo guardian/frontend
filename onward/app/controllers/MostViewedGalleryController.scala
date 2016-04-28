@@ -28,7 +28,7 @@ object MostViewedGalleryController extends Controller with Logging with Executio
   def renderMostViewed() = Action { implicit request =>
     getMostViewedGallery match {
       case Nil => Cached(60) { JsonNotFound() }
-      case galleries => Cached(900) { renderMostViewedGallery(galleries) }
+      case galleries => renderMostViewedGallery(galleries)
     }
   }
   def renderMostViewedHtml() = renderMostViewed()

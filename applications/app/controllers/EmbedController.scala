@@ -3,6 +3,7 @@ package controllers
 import com.gu.contentapi.client.model.v1.ItemResponse
 import conf._
 import common._
+import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
 import model._
 import play.api.mvc._
 import scala.concurrent.Future
@@ -42,11 +43,11 @@ object EmbedController extends Controller with Logging with ExecutionContexts {
 
   private def renderOther(result: Result)(implicit request: RequestHeader) = result.header.status match {
     case 404 => NoCache(NotFound)
-    case 410 => Cached(60)(Gone(views.html.videoEmbed(EmbedPage(None, "Content expired", true))))
+    case 410 => Cached(60)(WithoutRevalidationResult(Gone(views.html.videoEmbed(EmbedPage(None, "Content expired", true)))))
     case _ => result
   }
 
   private def renderVideo(model: EmbedPage)(implicit request: RequestHeader): Result = {
-    Cached(600)(Ok(views.html.videoEmbed(model)))
+    Cached(600)(RevalidatableResult.Ok(views.html.videoEmbed(model)))
   }
 }

@@ -216,4 +216,29 @@
     .most-viewed-container__header {
         height: auto !important;
     }
+
+    .most-viewed-navigation {
+        margin-top: $gs-baseline;
+    }
+    .most-viewed-navigation__link {
+        display: block;
+        width: 24px;
+        height: 24px;
+        text-align: center;
+        border-radius: 24px;
+        background: #ffbb00;
+        color: #333333;
+
+        svg {
+            fill: #333333;
+            position: relative;
+            top: 1px;
+        }
+    }
+    .most-viewed-navigation__link--prev {
+        float: left;
+    }
+    .most-viewed-navigation__link--next {
+        float: right;
+    }
 }
