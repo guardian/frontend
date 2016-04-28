@@ -14,6 +14,16 @@ import scala.util.control.NonFatal
 
 import common.AkkaAgent
 
+private [commercial] object CommercialLifecycleMetrics {
+
+  val metricMap = Map(
+    "fetch-failure" -> AkkaAgent(0.0),
+    "fetch-success" -> AkkaAgent(0.0),
+    "parse-failure" -> AkkaAgent(0.0),
+    "parse-success" -> AkkaAgent(0.0)
+  )
+}
+
 trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionContexts {
 
   private val refreshJobs: List[RefreshJob] = List(
@@ -23,24 +33,15 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     MoneyBestBuysRefresh
   )
 
-
-  private lazy val metricMap = Map(
-    "fetch-failure" -> AkkaAgent(0.0),
-    "fetch-success" -> AkkaAgent(0.0),
-    "parse-failure" -> AkkaAgent(0.0),
-    "parse-success" -> AkkaAgent(0.0)
-  )
-
-  private def recordEvent(eventName:String, outcome:String):Unit = {
+  private def recordEvent(eventName:String, outcome:String): Unit = {
     val keyName = s"$eventName-$outcome"
-    metricMap
+    CommercialLifecycleMetrics.metricMap
       .get(keyName)
       .foreach(agent => agent.send(_ +1.0))
   }
 
-
   private def updateMetrics(): Unit = {
-    metricMap.foreach{
+    CommercialLifecycleMetrics.metricMap.foreach{
       case (metricName, agent) => {
         agent send {currentCount =>
           log.info(s"uploading $metricName with count of : $currentCount")

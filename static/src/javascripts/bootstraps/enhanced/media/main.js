@@ -403,6 +403,22 @@ define([
 
         mostViewed.fetch(attachTo, 'html').then(function () {
             mediator.emit('page:new-content');
+
+            if (isInSeriesTest) {
+                // TODO: This is only for the test - please don't get this close to prod
+                bean.on(attachTo, 'click', '.most-viewed-navigation__link', function(ev) {
+                    var page = ev.currentTarget.getAttribute('data-page');
+                    var endpoint = mostViewed.endpoint.replace(/\?page=\d/, '') + '?page=' + page;
+
+                    mostViewed = new Component();
+                    mostViewed.manipulationType = mediaType === 'video' ? 'append' : 'html';
+                    mostViewed.endpoint = endpoint;
+                    attachTo.innerHTML = '';
+                    mostViewed.fetch(attachTo, 'html');
+                    ev.preventDefault();
+                    return false;
+                });
+            }
         });
     }
 
