@@ -1,5 +1,7 @@
 define([
+    'common/utils/cookies'
 ], function (
+    cookies
 ) {
     return function () {
         this.id = 'https-test';
@@ -15,23 +17,8 @@ define([
         this.idealOutcome = 'Nobody reports that things are broken';
         this.hypothesis = 'We believe that most of our content should serve successfully over https, with a few known exceptions.';
 
-        function getCookieValue(cookieName) {
-            var cookieArray = document.cookie.split(';'),
-                cookieVal;
-            for(var i = 0; i < cookieArray.length; i++) {
-                var c = cookieArray[i].split('='),
-                    n = c[0].trim(),
-                    v = c[1].trim();
-                if(n === cookieName) {
-                    cookieVal = v;
-                    break;
-                }
-            }
-            return cookieVal;
-        }
-
         this.canRun = function () {
-            return !getCookieValue('https_opt_in');
+            return !cookies.get('https_opt_in');
         };
 
         this.variants = [
