@@ -248,14 +248,6 @@
 
 // New gallery stuff
 
-// The main image needs to take up 100vh and the slim header needs to sit just on top of it.
-.l-header--new-gallery {
-    position: absolute;
-    z-index: 1;
-    right: 0;
-    left: 0;
-}
-
 .content__labels--gallery {
     border: 0;
     margin-bottom: 0;
@@ -336,15 +328,6 @@
         .save-for-later__button--save .inline-icon {
             background-color: $multimedia-support-5;
         }
-    }
-
-    .content__wrapper--headline {
-        background-color: rgba(0, 0, 0, .6);
-        background: linear-gradient(rgba(0, 0, 0, .5), $multimedia-support-5);
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
     }
 
     .content__headline {
@@ -552,14 +535,6 @@
     .gallery__img-container,
     .gallery__img {
         width: 100%;
-    }
-
-    .content__header__background-image {
-        height: 100vh;
-        // The headline wrapper is position absolute within this div
-        position: relative;
-        background-position: center center;
-        background-size: cover;
     }
 }
 
