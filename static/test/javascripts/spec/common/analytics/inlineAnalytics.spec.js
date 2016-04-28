@@ -7,22 +7,29 @@ define([
 ) {
     describe('inlineAnalytics', function () {
 
-        var s, analytics, injector = new Injector();
+        var s, oldS, analytics, injector = new Injector();
 
         beforeEach(function (done) {
+            oldS = window.s;
+
             injector.require(['analytics'], function () {
 
                 analytics = arguments[0];
 
                 s = {};
 
-                window.s = s;
-
                 done();
             });
         });
 
+        afterEach(function () {
+            window.s = oldS;
+        });
+
         it('should track navigation interactions', function () {
+
+            window.s = s;
+
             var t = new Date().getTime();
 
             var ni = {
