@@ -78,20 +78,19 @@ define([
             if (this.params.layerTwoAnimation === 'enabled' && isEnhanced && !isIE9OrLess) {
                 bonzo(this.layer2).css('background-position', '');
             }
-        }, this);
 
-        if (templateOptions.scrollbg) {
-            this.scrollingBg = $('.ad-scrolling-bg', this.$adSlot[0]);
-
-
-            if (hasScrollEnabled) {
-                // update bg position
-                fastdom.read(this.updateBgPosition, this);
-                mediator.on('window:throttledScroll', this.updateBgPosition.bind(this));
-                // to be safe, also update on window resize
-                mediator.on('window:resize', this.updateBgPosition.bind(this));
+            if (templateOptions.scrollbg) {
+                this.scrollingBg = $('.ad-scrolling-bg', this.$adSlot[0]);
+                
+                if (hasScrollEnabled) {
+                    // update bg position
+                    fastdom.read(this.updateBgPosition, this);
+                    mediator.on('window:throttledScroll', this.updateBgPosition.bind(this));
+                    // to be safe, also update on window resize
+                    mediator.on('window:resize', this.updateBgPosition.bind(this));
+                }
             }
-        }
+        }, this);
 
         if (this.params.trackingPixel) {
             addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
