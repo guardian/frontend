@@ -1,6 +1,7 @@
 package rugby.controllers
 
 import common.{ExecutionContexts, JsonComponent, _}
+import model.Cached.RevalidatableResult
 import model.{MetaData, StandalonePage, Cached}
 import play.api.mvc.{Action, Controller}
 import play.twirl.api.Html
@@ -47,7 +48,7 @@ object MatchesController extends Controller with Logging with ExecutionContexts 
             "groupTable" -> rugby.views.html.fragments.groupTable(aMatch, table)
           )
         else
-          Ok(rugby.views.html.matchSummary(page, aMatch, homeTeamScorers, awayTeamScorers))
+          RevalidatableResult.Ok(rugby.views.html.matchSummary(page, aMatch, homeTeamScorers, awayTeamScorers))
       }
 
     }.getOrElse(NotFound)
