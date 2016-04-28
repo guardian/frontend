@@ -26,15 +26,8 @@
       @if(sponsorship.adUnits.isEmpty) { <li>Run of network</li> }
       @for(adUnit <- sponsorship.adUnits) {
           <li>
-          @SiteLink.adUnit(adUnit).map { link =>
-              @sponsorship.adTestValue.map { adtest =>
-                <a href="@link?adtest=@adtest">@adUnit</a>
-              }.getOrElse {
-                  <a href="@link">@adUnit</a>
-              }
-          }.getOrElse {
-              @adUnit
-          }
+              <a href="@SiteLink.adUnit(adUnit, sponsorship.adTestValue)">@adUnit</a>
+          </li>
       }
     </ul>
   </li>
@@ -58,12 +51,12 @@
     <h2>Pageskinned Ad Units</h2>
     <p>Last updated: @pageSkinnedAdUnits.updatedTimeStamp</p>
 
-    <h3>Deliverable to NGW</h3>
+    <h3>Deliverable without test cookie</h3>
     <ol>
     @for(sponsorship <- pageSkinnedAdUnits.deliverableSponsorships) {@listItem(sponsorship)}
     </ol>
 
-    <h3>Behind Test Cookie</h3>
+    <h3>Deliverable with test cookie</h3>
     @if(pageSkinnedAdUnits.testSponsorships.isEmpty) {
       <p>None</p>
     } else {
@@ -71,9 +64,4 @@
       @for(sponsorship <- pageSkinnedAdUnits.testSponsorships) {@listItem(sponsorship, flagErrors = false)}
       </ol>
     }
-
-    <h3>R2 Only</h3>
-    <ol>
-    @for(sponsorship <- pageSkinnedAdUnits.legacySponsorships) {@listItem(sponsorship, flagErrors = false)}
-    </ol>
 }

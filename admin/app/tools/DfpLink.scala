@@ -1,7 +1,8 @@
 package tools
 
 import conf.Configuration.commercial.dfpAccountId
-import conf.Configuration.site
+import conf.Configuration.{site, commercial}
+import scala.language.postfixOps
 
 object DfpLink {
 
@@ -24,21 +25,25 @@ object DfpLink {
 
 object SiteLink {
 
-  def adUnit(path: String): Option[String] = {
+  def adUnit(path: String, adTest: Option[String]): String = {
 
     def getRelativePath(dropFromRight: Int) = path.split("/").drop(1).dropRight(dropFromRight).mkString("/")
 
-    lazy val relativePath = getRelativePath(1)
-    lazy val relativeEditionalisedPath = getRelativePath(2)
+    lazy val domain = if (adTest.isDefined) commercial.testDomain else site.host
 
-    if (path endsWith "/front") {
-      Some(s"${site.host}/${relativePath}")
-    } else if (path endsWith "/front/ng") {
-      Some(s"${site.host}/${relativeEditionalisedPath}?view=mobile")
-    } else if (path endsWith "/front/r2") {
-      Some(s"${site.host}/${relativeEditionalisedPath}?view=classic")
-    } else {
-      None
+    val relativePath =
+      if (path endsWith "/front/ng")
+        getRelativePath(2)
+      else if (path endsWith "front")
+        getRelativePath(1)
+      else
+        getRelativePath(0)
+
+    val domainAndPath = s"${domain}/${relativePath}"
+
+    adTest match {
+      case Some(id) => s"${domainAndPath}?adtest=${id}"
+      case _ => domainAndPath
     }
   }
 

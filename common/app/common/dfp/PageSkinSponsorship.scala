@@ -28,17 +28,8 @@ object PageSkinSponsorship {
     )(PageSkinSponsorship.apply, unlift(PageSkinSponsorship.unapply))
 }
 
-object PageSkin {
-  def isValidForNextGenPageSkin(adUnit: String): Boolean = adUnit.endsWith("/front") || adUnit.endsWith("/front/ng")
-}
-
-
 case class PageSkinSponsorshipReport(updatedTimeStamp: String, sponsorships: Seq[PageSkinSponsorship]) {
-
-  val (deliverableAndTestSponsorships, legacySponsorships) = sponsorships partition { sponsorship =>
-    sponsorship.adUnits.exists(PageSkin.isValidForNextGenPageSkin) && (!sponsorship.isR2Only)
-  }
-  val (testSponsorships, deliverableSponsorships) = deliverableAndTestSponsorships partition (_.targetsAdTest)
+  val (testSponsorships, deliverableSponsorships) = sponsorships partition (_.targetsAdTest)
 }
 
 object PageSkinSponsorshipReport {
