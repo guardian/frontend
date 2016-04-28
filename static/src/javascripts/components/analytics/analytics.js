@@ -1,4 +1,33 @@
-(function () {
+(function (name, context, definition) {
+    if (typeof define == 'function' && define.amd) define(definition);
+    definition();
+})('analytics', this, function (name, context) {
+
+    name    = name    || 'analytics';
+    context = context || this;
+
+    var trackNavigationInteraction = function(ni) {
+        var d = new Date().getTime();
+        if (d - ni.time < 60 * 1000) { // One minute
+            s.eVar24 = ni.pageName;
+            s.eVar37 = ni.tag;
+        }
+    };
+
+    var getSponsoredContentTrackingData = function(content) {
+        var sponsoredContentData = content.map(function(n) {
+            var sponsorshipType = n.getAttribute('data-sponsorship');
+            var maybeSponsor = n.getAttribute('data-sponsor');
+            var sponsor = maybeSponsor ? maybeSponsor : 'unknown';
+            return sponsorshipType + ':' + sponsor;
+        });
+        return sponsoredContentData.filter(
+            function filterDuplicates(value, index, self) {
+                return self.indexOf(value) === index;
+            }
+        );
+    };
+
     try {
 
         var config  = guardian.config,
@@ -26,28 +55,6 @@
                 str = '0' + str;
             }
             return str;
-        };
-
-        var trackNavigationInteraction = function(ni) {
-            var d = new Date().getTime();
-            if (d - ni.time < 60 * 1000) { // One minute
-                s.eVar24 = ni.pageName;
-                s.eVar37 = ni.tag;
-            }
-        };
-
-        var getSponsoredContentTrackingData = function(content) {
-            var sponsoredContentData = content.map(function(n) {
-                var sponsorshipType = n.getAttribute('data-sponsorship');
-                var maybeSponsor = n.getAttribute('data-sponsor');
-                var sponsor = maybeSponsor ? maybeSponsor : 'unknown';
-                return sponsorshipType + ':' + sponsor;
-            });
-            return sponsoredContentData.filter(
-                function filterDuplicates(value, index, self) {
-                    return self.indexOf(value) === index;
-                }
-            );
         };
 
         s.trackingServer = 'hits.theguardian.com';
@@ -232,6 +239,9 @@
     } catch(e) {
         (new Image()).src = guardian.config.page.beaconUrl + '/count/omniture-pageview-error.gif';
     }
-}());
 
-
+    return {
+        "getSponsoredContentTrackingData": getSponsoredContentTrackingData,
+        "trackNavigationInteraction": trackNavigationInteraction
+    }
+});
