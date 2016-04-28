@@ -11,19 +11,23 @@
 }
 
 @metaBody() = {
-    @if(!item.content.hasTonalHeaderByline) {
-        @byline()
-    }
+    @if(!mvt.ABGalleryRedesignVariant.shouldShow(item.metadata.contentType)) {
+        @if(!item.content.hasTonalHeaderByline) {
+            @byline()
+        }
 
-    @item.content.contributorBio.map { bio => <p class="meta__bio" data-link-name="byline" data-component="meta-byline">@bio</p> }
+        @item.content.contributorBio.map { bio => <p class="meta__bio" data-link-name="byline" data-component="meta-byline">@bio</p> }
 
-    @if(item.content.tags.contributors.length == 1) {
-        @if(item.content.hasTonalHeaderByline && (item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty) || item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty))) { <p class="meta__contact-header hide-until-leftcol">Contact author</p> }
-        @fragments.meta.contactAuthor(item.tags)
-    }
+        @if(item.content.tags.contributors.length == 1) {
+            @if(item.content.hasTonalHeaderByline && (item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty) || item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty))) {
+                <p class="meta__contact-header hide-until-leftcol">Contact author</p>
+            }
+            @fragments.meta.contactAuthor(item.tags)
+        }
 
-    @if(!item.trail.shouldHidePublicationDate) {
-        @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.tags.isLiveBlog, item.fields.isLive)
+        @if(!item.trail.shouldHidePublicationDate) {
+            @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.tags.isLiveBlog, item.fields.isLive)
+        }
     }
 
     @if(showExtras) {
@@ -42,7 +46,7 @@
                 }">
                 </div>
             </div>
-            @if(SaveForLaterSwitch.isSwitchedOn) {
+            @if(SaveForLaterSwitch.isSwitchedOn && !mvt.ABGalleryRedesignVariant.shouldShow(item.metadata.contentType)) {
                 <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
             }
         </div>
@@ -58,6 +62,7 @@
     @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty)) { content__meta-container--twitter}
     @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty)) { content__meta-container--email}">
 
+    
     @if(showBadge && (item.tags.isVideo || item.tags.isAudio || (item.tags.isArticle && !item.commercial.isAdvertisementFeature))) {
         @fragments.commercial.badge(item)
     }

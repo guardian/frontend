@@ -4,14 +4,15 @@
   containerModel: common.commercial.ContainerModel)(implicit request: RequestHeader)
 
 <div class="adverts__row adverts__row--1x1x2">
-    @containerModel.content.fixed.initialCards.take(2).map(card => views.html.commercial.cards.itemCard(
+    @containerModel.content.initialCards.take(2).map(card => views.html.commercial.cards.itemCard(
                             card,
                             omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
+                            optAdvertClassNames = Some(Seq("paidfor")),
                             useCardBranding = !containerModel.isSingleSponsorContainer))
     <div class="adverts__column hide-until-tablet">
-        @containerModel.content.fixed.initialCards.drop(2).take(3).map(card => views.html.commercial.cards.itemLargeCard(
+        @containerModel.content.initialCards.slice(2, 5).map(card => views.html.commercial.cards.itemLargeCard(
             card,
-            optAdvertClassNames = Some(Seq("inverse", "thumbnail")),
+            optAdvertClassNames = Some(Seq("inverse", "thumbnail", "paidfor")),
             omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
             useCardBranding = !containerModel.isSingleSponsorContainer
         ))

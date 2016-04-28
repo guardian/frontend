@@ -160,10 +160,19 @@ define([
     }
 
     function preprocessManualContainer(tpl) {
+        var stems = {
+            jobs: 'job',
+            books: 'book',
+            masterclasses: 'masterclass',
+            travels: 'travel',
+            soulmates: 'soulmate',
+            subscriptions: 'subscription',
+            networks: 'network'
+        };
         manualContainerButtonTpl || (manualContainerButtonTpl = template(manualContainerButtonStr));
         manualCardTpls[tpl.params.creativeCard] || (manualCardTpls[tpl.params.creativeCard] = template(manualCardStrs[tpl.params.creativeCard]));
         manualCardCtaTpl || (manualCardCtaTpl = template(manualCardCtaStr));
-        tpl.params.classNames = tpl.params.classNames.map(function (cn) { return 'adverts--' + cn; }).join(' ');
+        tpl.params.classNames = ['manual'].concat(tpl.params.classNames).map(function (cn) { return 'adverts--' + cn; }).join(' ');
         tpl.params.title || (tpl.params.title = '');
 
         if (tpl.params.isSoulmates) {
@@ -197,7 +206,7 @@ define([
                         offerLinkText:       tpl.params['offer' + index + 'linktext'] || tpl.params.offerLinkText,
                         arrowRight:          tpl.params.arrowRight
                     }) : '',
-                    classNames:          [tpl.params.toneClass.replace('commercial--tone-', '')].map(function (cn) { return 'advert--' + cn; }).join(' ')
+                    classNames:          [tpl.params.toneClass.replace('commercial--tone-', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); }).join(' ')
                 }) : null;
             }).filter(identity).join('');
         } else {
@@ -211,7 +220,7 @@ define([
                     offerLinkText:       tpl.params.offerlinktext,
                     arrowRight:          tpl.params.arrowRight
                 }) : '',
-                classNames:          ['landscape', 'large', 'inverse', tpl.params.toneClass.replace('commercial--tone', '')].map(function (cn) { return 'advert--' + cn; }).join(' ')
+                classNames:          ['landscape', 'large', 'inverse', tpl.params.toneClass.replace('commercial--tone', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); }).join(' ')
             }) + manualContainerButtonTpl(tpl.params);
         }
     }

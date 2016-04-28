@@ -102,6 +102,10 @@
         }
     }
 
+    .fc-item--list-compact--media {
+        border-color: $paid-article-header-bg;
+    }
+
     .fc-container--first .fc-container__header__title,
     .fc-container .fc-container__inner,
     .fc-container .facia-container__inner {
@@ -135,6 +139,7 @@
         }
 
         .fc-item__standfirst,
+        .fc-item__kicker,
         .fc-item__link:visited {
             color: $neutral-1;
         }
@@ -184,6 +189,16 @@
 
     .fc-item__meta {
         color: $neutral-2;
+
+        .fc-save-for-later {
+            .inline-icon {
+                fill: $neutral-2;
+            }
+            &:hover:after {
+                color: $neutral-2;
+                text-decoration: underline;
+            }
+        }
     }
 
     &.fc-container--sponsored,

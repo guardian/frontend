@@ -49,7 +49,7 @@ define([
         //
 
         raven.config(
-            'http://' + config.page.sentryPublicApiKey + '@' + config.page.sentryHost,
+            'https://' + config.page.sentryPublicApiKey + '@' + config.page.sentryHost,
             {
                 whitelistUrls: [
                     /localhost/, // will not actually log errors, but `shouldSendCallback` will be called
@@ -78,7 +78,7 @@ define([
                         }
                     }
 
-                    return config.switches.diagnosticsLogging &&
+                    return config.switches.enableSentryReporting &&
                         Math.random() < 0.2 &&
                         !isDev; // don't actually notify sentry in dev mode
                 }

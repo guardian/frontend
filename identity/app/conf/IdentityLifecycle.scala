@@ -2,6 +2,7 @@ package conf
 
 import common.{AkkaAsync, Jobs, ExecutionContexts}
 import jobs.{TorExitNodeList, BlockedEmailDomainList}
+import model.PhoneNumbers
 import play.api.GlobalSettings
 
 trait IdentityLifecycle extends GlobalSettings with ExecutionContexts {
@@ -29,6 +30,7 @@ trait IdentityLifecycle extends GlobalSettings with ExecutionContexts {
     AkkaAsync {
       BlockedEmailDomainList.run()
       TorExitNodeList.run()
+      PhoneNumbers
     }
   }
 

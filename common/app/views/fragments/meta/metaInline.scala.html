@@ -7,7 +7,7 @@
     USElectionSwitch.isSwitchedOn &&
     item.content.tags.tags.exists(_.id == "us-news/us-elections-2016")
 ){ isUSElection =>
-    <div class="content__labels @if(isUSElection) {content__labels--us-election}">
+    <div class="content__labels @if(isUSElection) {content__labels--us-election} @if(mvt.ABGalleryRedesignVariant.shouldShow(item.metadata.contentType)) {content__labels--gallery}">
 
         @if(isUSElection) {
             <div class="badge-slot badge-slot--us-election">

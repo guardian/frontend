@@ -1,9 +1,10 @@
 @(offers: Seq[model.commercial.travel.TravelOffer],
   omnitureId: Option[String],
-  clickMacro: Option[String])(implicit request: RequestHeader)
+  clickMacro: Option[String],
+  isProminent: Boolean = false)(implicit request: RequestHeader)
 
 @import views.html.commercial.containerWrapper
-@import views.html.travel.{travelCard, searchForm}
+@import views.html.travel.travelCard
 
 @containerWrapper(Seq("legacy", "travel", "tone-travel"),
                   dataLinkName = omnitureId.map(id => s"commercial-low | travel | ${id}"),
@@ -18,9 +19,16 @@
 
 }{
 
-    <div class="adverts__row">
-        @offers.map { offer => @travelCard(offer, clickMacro) }
-    </div>
+    @if(isProminent) {
+        <div class="adverts__row adverts__row--2x1x1">
+            @offers.take(1).map { offer => @travelLargeCard(offer, clickMacro, Some(Seq("inverse", "large--1x2"))) }
+            @offers.slice(1, 3).map { offer => @travelCard(offer, clickMacro) }
+        </div>
+    } else {
+        <div class="adverts__row">
+            @offers.map { offer => @travelCard(offer, clickMacro) }
+        </div>
+    }
 
 }
 

@@ -1,0 +1,241 @@
+/**
+ * Brand badges
+ */
+.brandbadge {
+    padding: 2px 0 $gs-baseline;
+
+    // badges are always broken out, so hide the actual ad
+    iframe {
+        display: none;
+    }
+    .brandbadge__inner {
+        overflow: hidden;
+
+        .content__meta-container--no-byline & {
+            @include mq(leftCol) {
+                padding-top: $gs-baseline / 3;
+            }
+        }
+    }
+    .brandbadge__header,
+    .brandbadge__help {
+        @include fs-textSans(1);
+        color: $neutral-2;
+    }
+    .brandbadge__help {
+        @include font-size(11, 14);
+    }
+    .brandbadge__header {
+        margin: 0;
+        padding-top: $gs-baseline / 2;
+        font-weight: bold;
+        clear: left;
+
+        &:first-child {
+            padding-top: 0;
+        }
+    }
+    .brandbadge__link,
+    .brandbadge__logo {
+        display: block;
+    }
+    .brandbadge__logo {
+        max-width: 100%;
+        max-height: $gs-baseline * 6;
+    }
+    .brandbadge__link,
+    .brandbadge__help {
+        float: left;
+        clear: left;
+    }
+    .brandbadge__link {
+        margin-top: $gs-row-height / 4;
+    }
+    .brandbadge__help {
+        margin-top: $gs-baseline / 3;
+    }
+}
+.ad-slot--adbadge {
+    .brandbadge__header,
+    .brandbadge__help {
+        color: $neutral-2-contrasted;
+    }
+}
+.ad-slot--im {
+    float: left;
+    margin: 5px $gs-gutter $gs-baseline 0;
+
+    @include mq($until: mobileLandscape) {
+        margin-bottom: $gs-baseline / 2;
+        margin-right: $gs-gutter / 2;
+    }
+}
+.ad-slot--fobadge.ad-slot--im {
+    min-width: gs-span(2) + $gs-gutter;
+
+    .brandbadge__inner {
+        padding: $gs-baseline / 2 0 $gs-baseline;
+        border-top: 1px solid $neutral-3;
+        border-bottom: 1px dotted $neutral-3;
+    }
+ }
+.brandbadge--onside {
+    padding-bottom: $gs-baseline * 2;
+    border-bottom: 1px dotted $neutral-5;
+
+    @include mq(tablet) {
+        float: right;
+    }
+
+    @include mq(leftCol) {
+        clear: left;
+        float: left;
+        width: $left-column;
+    }
+
+    @include mq(wide) {
+        width: $left-column-wide;
+    }
+
+    @include mq(leftCol) {
+        min-height: 0;
+        border-bottom-width: 0;
+        border-top: 1px dotted $neutral-5;
+    }
+
+    @include mq(mobile, $until: leftCol) {
+        padding-bottom: $gs-baseline / 2;
+
+        .brandbadge__link {
+            margin-top: 6px;
+        }
+    }
+
+    .brandbadge__logo {
+        @include mq(mobile, $until: leftCol) {
+            max-height: 60px;
+        }
+    }
+    .content--media--video & {
+        min-height: 0;
+    }
+}
+.brandbadge--interactive {
+    width: 140px;
+    min-height: 135px;
+    border-top: 1px dotted $neutral-5;
+
+    @include mq(desktop) {
+        position: absolute;
+        top: $gs-baseline / 2;
+        right: -1 * (gs-span(4) + $gs-gutter / 2);
+        border-top-width: 0;
+    }
+
+    @include mq(wide) {
+        right: -1 * (gs-span(5) + $gs-gutter);
+    }
+}
+.brandbadge--front {
+    @include clearfix;
+    min-height: 90px;
+    z-index: auto;
+
+    .index-page & {
+        min-height: 0;
+    }
+
+    @include mq(tablet) {
+        padding-left: $gs-gutter / 2;
+    }
+
+    .fc-container--has-toggle & {
+        @include mq(tablet, $until: leftCol) {
+            margin-right: gs-span(1);
+        }
+    }
+    .commercial--dfp-single & {
+        margin: 0;
+    }
+    .brandbadge__link {
+        position: relative;
+
+        &:after {
+            display: block;
+            height: 0;
+            width: $left-column + $gs-gutter;
+            content: '';
+            border-bottom: 1px dotted $neutral-5;
+            margin-top: $gs-gutter/4;
+
+            @include mq(leftCol) {
+                width: $left-column;
+            }
+
+            @include mq(wide) {
+                width: $left-column-wide;
+            }
+        }
+
+        @include mq(mobile, $until: leftCol) {
+            margin-top: 0;
+        }
+    }
+    .brandbadge__logo {
+        @include mq(mobile, $until: leftCol) {
+            max-height: 60px;
+        }
+        @include mq($from: leftCol) {
+            .has-page-skin & {
+                max-height: 60px;
+            }
+        }
+    }
+
+    @include mq(leftCol) {
+        clear: left;
+        width: $left-column;
+        padding: 0;
+        margin: 0;
+        float: left;
+        min-height: 0;
+        margin-top: 4px;
+        padding-top: 2px;
+        border-top: 1px dotted $neutral-5;
+
+        .brandbadge__link {
+            float: none;
+            margin-top: $gs-row-height/4;
+        }
+    }
+    @include mq($from: leftCol) {
+        .has-page-skin & {
+            float: right;
+            clear: right;
+            width: $left-column + $gs-gutter;
+            min-height: 90px;
+            margin: 0;
+            padding: 2px 0 $gs-baseline;
+        }
+    }
+    @include mq(tablet, $until: leftCol) {
+        float: right;
+        clear: right;
+        width: $left-column + $gs-gutter;
+    }
+    @include mq(wide) {
+        width: $left-column-wide;
+
+        .has-page-skin .fc-container--has-toggle & {
+            margin-right: gs-span(1);
+        }
+    }
+    @include mq($until: tablet) {
+        clear: both;
+        border-top: 1px dotted $neutral-5;
+
+        .fc-container--tag & {
+            width: gs-span(2);
+        }
+    }
+}
