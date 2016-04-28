@@ -7,7 +7,6 @@
     }
 }
 
-.adverts--tone-shop.adverts--legacy-single .adverts__row >,
 .advert--shop {
     .button {
         @include button-colour(
@@ -25,5 +24,21 @@
                 null
             );
         }
+    }
+}
+
+.adverts--tone-shop.adverts--legacy-single .adverts__row > .button {
+    @include button-colour(
+        $features-support-4,
+        null
+    );
+
+    &:hover,
+    &:focus,
+    &:active {
+        @include button-colour(
+            darken($features-support-4, 5%),
+            null
+        );
     }
 }

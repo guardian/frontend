@@ -51,7 +51,6 @@
     }
 }
 
-.adverts--tone-membership.adverts--legacy-single .adverts__row >,
 .advert--book {
     .button {
         @include button-colour(
@@ -69,6 +68,22 @@
                 null
             );
         }
+    }
+}
+
+.adverts--tone-membership.adverts--legacy-single .adverts__row > .button {
+    @include button-colour(
+        $features-main-2,
+        null
+    );
+
+    &:hover,
+    &:focus,
+    &:active {
+        @include button-colour(
+            darken($features-main-2, 5%),
+            null
+        );
     }
 }
 

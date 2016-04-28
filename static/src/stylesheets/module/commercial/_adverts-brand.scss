@@ -4,7 +4,6 @@
     }
 }
 
-.adverts--tone-brand.adverts--legacy-single .adverts__row >,
 .advert--brand {
     .button {
         @include button-colour(
@@ -22,6 +21,23 @@
                 null
             );
         }
+    }
+
+}
+
+.adverts--tone-brand.adverts--legacy-single .adverts__row > .button {
+    @include button-colour(
+        $news-main-2,
+        null
+    );
+
+    &:hover,
+    &:focus,
+    &:active {
+        @include button-colour(
+            darken($news-main-2, 5%),
+            null
+        );
     }
 
 }

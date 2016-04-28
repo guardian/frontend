@@ -7,7 +7,6 @@
     }
 }
 
-.adverts--tone-money.adverts--legacy-single .adverts__row >,
 .advert--money {
     .button {
         @include button-colour(
@@ -25,5 +24,21 @@
                 null
             );
         }
+    }
+}
+
+.adverts--tone-money.adverts--legacy-single .adverts__row > .button {
+    @include button-colour(
+        $news-support-2,
+        null
+    );
+
+    &:hover,
+    &:focus,
+    &:active {
+        @include button-colour(
+            darken($news-support-2, 5%),
+            null
+        );
     }
 }

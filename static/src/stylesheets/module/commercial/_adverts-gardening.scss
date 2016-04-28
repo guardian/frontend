@@ -7,7 +7,6 @@
     }
 }
 
-.adverts--tone-gardening.adverts--legacy-single .adverts__row >,
 .advert--gardening {
     .button {
         @include button-colour(
@@ -25,5 +24,21 @@
                 null
             );
         }
+    }
+}
+
+.adverts--tone-gardening.adverts--legacy-single .adverts__row > .button {
+    @include button-colour(
+        $maps-support-2,
+        null
+    );
+
+    &:hover,
+    &:focus,
+    &:active {
+        @include button-colour(
+            darken($maps-support-2, 5%),
+            null
+        );
     }
 }

@@ -4,7 +4,6 @@
     }
 }
 
-.adverts--tone-membership.adverts--legacy-single .adverts__row >,
 .advert--membership {
     .button {
         @include button-colour(
@@ -22,5 +21,21 @@
                 null
             );
         }
+    }
+}
+
+.adverts--tone-membership.adverts--legacy-single .adverts__row > .button {
+    @include button-colour(
+        $membership-default,
+        null
+    );
+
+    &:hover,
+    &:focus,
+    &:active {
+        @include button-colour(
+            darken($membership-default, 5%),
+            null
+        );
     }
 }

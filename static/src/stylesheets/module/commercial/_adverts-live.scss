@@ -7,7 +7,6 @@
     }
 }
 
-.adverts--tone-live.adverts--legacy-single .adverts__row >,
 .advert--live {
     .button {
         @include button-colour(
@@ -25,5 +24,21 @@
                 null
             );
         }
+    }
+}
+
+.adverts--tone-live.adverts--legacy-single .adverts__row > .button {
+    @include button-colour(
+        $live-main-1,
+        null
+    );
+
+    &:hover,
+    &:focus,
+    &:active {
+        @include button-colour(
+            darken($live-main-1, 5%),
+            null
+        );
     }
 }
