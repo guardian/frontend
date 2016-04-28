@@ -6,6 +6,7 @@ define([
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/dummy-test',
+    'common/modules/experiments/tests/https_test',
     'common/modules/experiments/tests/fake-series-hide-sensitive',
     'common/modules/experiments/tests/fake-series-show-sensitive',
     'common/modules/experiments/tests/fronts-on-articles2',
@@ -38,6 +39,7 @@ define([
     store,
     mvtCookie,
     DummyTest,
+    Https,
     FakeSeriesHideSensitive,
     FakeSeriesShowSensitive,
     FrontsOnArticles2,
@@ -66,6 +68,7 @@ define([
 
     var TESTS = flatten([
         new DummyTest(),
+        new Https(),
         new FrontsOnArticles2(),
         new IdentityRegisterMembershipStandfirst(),
         new LiveBlogChromeNotificationsInternal(),

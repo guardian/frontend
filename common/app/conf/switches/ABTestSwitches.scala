@@ -13,6 +13,15 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABHttpsTest = Switch(
+    SwitchGroup.ABTests,
+    "ab-https-test",
+    "AB test site-wide https",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 5, 26),
+    exposeClientSide = true
+  )
+
   val ABFakeSeriesShowSensitive = Switch(
     SwitchGroup.ABTests,
     "ab-fake-series-show-sensitive",
