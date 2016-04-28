@@ -3,7 +3,7 @@
   clickMacro: Option[String])(implicit request: RequestHeader)
 
 @import views.html.commercial.containerWrapper
-@import views.html.travel.{travelCard, searchForm}
+@import views.html.travel.travelCard
 
 @containerWrapper(Seq("legacy", "travel", "tone-travel"),
                   dataLinkName = omnitureId.map(id => s"commercial-low | travel | ${id}"),
