@@ -153,7 +153,7 @@ $notifications-button-height: 28px;
         padding: 0;
         width: $live-notifications-icon-width;
         height: $live-notifications-icon-width;
-        border-color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, .5);
 
         @include mq(tablet) {
             border-color: colour(live-mute);
@@ -162,9 +162,9 @@ $notifications-button-height: 28px;
         &:focus,
         &:hover {
             svg {
-                fill: $neutral-5;
+                fill: #ffffff
             }
-            border-color: $neutral-5;
+            border-color: #ffffff
         }
     }
 }
