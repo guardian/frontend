@@ -185,43 +185,9 @@
     }
 }
 
-.content--gallery {
-    .content__meta-container {
-        min-height: gs-height(1) + $gs-baseline*2;
-
-        @include mq(tablet) {
-            border-bottom: 0;
-        }
-
-        .byline,
-        .content__dateline {
-            border: 0;
-            min-height: 0;
-            padding: 0;
-        }
-
-        .meta__comment-count--top {
-            display: none;
-        }
-
-        .meta__comment-count--bottom {
-            display: block;
-            float: none;
-            padding-top: $gs-baseline/2;
-
-            .commentcount {
-                position: static;
-            }
-
-            .commentcount__label {
-                display: inline;
-            }
-        }
-    }
-
-    .witness-cta {
-        border: 0;
-    }
+.content__main-column--gallery {
+    margin-right: auto;
+    padding-bottom: $gs-baseline*2;
 }
 
 // New gallery stuff
@@ -320,6 +286,35 @@
         width: auto;
         min-height: auto;
         margin-bottom: $gs-baseline;
+
+        .byline,
+        .content__dateline {
+            border: 0;
+            min-height: 0;
+            padding: 0;
+        }
+
+        .meta__comment-count--top {
+            display: none;
+        }
+
+        .meta__comment-count--bottom {
+            display: block;
+            float: none;
+            padding-top: $gs-baseline/2;
+
+            .commentcount {
+                position: static;
+            }
+
+            .commentcount__label {
+                display: inline;
+            }
+        }
+    }
+
+    .witness-cta {
+        border: 0;
     }
 
     .meta__extras {
