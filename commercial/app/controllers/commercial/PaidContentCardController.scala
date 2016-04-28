@@ -34,7 +34,7 @@ object PaidContentCardController extends Controller with ExecutionContexts with 
           format.result(views.html.paidContent.card(articleUrl, articleTitle, articleText, pictureUrl, brandLogo, brand, linkLabel, optClickMacro, optOmnitureId, trackingPixel, cacheBuster))
         }
       } getOrElse {
-        NoCache(format.nilResult)
+        NoCache(format.nilResult.result)
       }
     }
   }
