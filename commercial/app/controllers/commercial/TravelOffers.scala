@@ -22,11 +22,7 @@ object TravelOffers extends Controller with implicits.Requests {
             case Some("prominent") =>
               jsonFormat.result(views.html.travel.travelProminent(offers.take(4), omnitureId, clickMacro))
             case _ =>
-              if (conf.switches.Switches.v2TravelTemplate.isSwitchedOn) {
-                jsonFormat.result(views.html.travel.travelStandardV2(offers.take(4), omnitureId, clickMacro))
-              } else {
-                jsonFormat.result(views.html.travel.travelStandard(offers.take(4), omnitureId, clickMacro))
-              }
+              jsonFormat.result(views.html.travel.travelStandardV2(offers.take(4), omnitureId, clickMacro))
           }
         }
       }
