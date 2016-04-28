@@ -4,7 +4,7 @@ import model.commercial.jobs.{JobSector, JobsAgent}
 import model.{Cached, NoCache}
 import play.api.mvc._
 
-object JobAds extends Controller with implicits.Requests {
+object JobsController extends Controller with implicits.Requests {
 
   implicit val codec = Codec.utf_8
 
