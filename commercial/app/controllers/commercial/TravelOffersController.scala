@@ -14,7 +14,7 @@ object TravelOffersController extends Controller with implicits.Requests {
       case offers => Cached(componentMaxAge) {
         val clickMacro = request.getParameter("clickMacro")
         val omnitureId = request.getParameter("omnitureId")
-        jsonFormat.result(views.html.travel.travelStandard(offers.take(4), omnitureId, clickMacro))
+        jsonFormat.result(views.html.travel.travel(offers.take(4), omnitureId, clickMacro))
       }
     }
   }
