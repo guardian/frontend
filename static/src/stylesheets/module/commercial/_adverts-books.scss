@@ -51,14 +51,15 @@
     }
 }
 
-.advert--book {
-    .button {
-        @include button-colour(
-            $features-main-2,
-            null
-        );
-    }
+.adverts--tone-books .button--legacy-single,
+.advert--book .button {
+    @include button-colour(
+        $features-main-2,
+        null
+    );
+}
 
+.advert--book {
     &:hover,
     &:focus,
     &:active {
@@ -71,12 +72,7 @@
     }
 }
 
-.adverts--tone-membership.adverts--legacy-single .adverts__row > .button {
-    @include button-colour(
-        $features-main-2,
-        null
-    );
-
+.adverts--tone-books .button--legacy-single {
     &:hover,
     &:focus,
     &:active {

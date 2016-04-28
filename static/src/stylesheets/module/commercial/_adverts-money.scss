@@ -7,14 +7,15 @@
     }
 }
 
-.advert--money {
-    .button {
-        @include button-colour(
-            $news-support-2,
-            null
-        );
-    }
+.adverts--tone-money .button--legacy-single,
+.advert--money .button {
+    @include button-colour(
+        $news-support-2,
+        null
+    );
+}
 
+.advert--money {
     &:hover,
     &:focus,
     &:active {
@@ -27,12 +28,7 @@
     }
 }
 
-.adverts--tone-money.adverts--legacy-single .adverts__row > .button {
-    @include button-colour(
-        $news-support-2,
-        null
-    );
-
+.adverts--tone-money .button--legacy-single {
     &:hover,
     &:focus,
     &:active {

@@ -7,14 +7,15 @@
     }
 }
 
-.advert--subscription {
-    .button {
-        @include button-colour(
-            $news-main-2,
-            null
-        );
-    }
+.adverts--tone-subscriptions .button--legacy-single,
+.advert--subscription .button {
+    @include button-colour(
+        $news-main-2,
+        null
+    );
+}
 
+.advert--subscription {
     &:hover,
     &:focus,
     &:active {
@@ -27,12 +28,7 @@
     }
 }
 
-.adverts--tone-subscriptions.adverts--legacy-single .adverts__row > .button {
-    @include button-colour(
-        $news-main-2,
-        null
-    );
-
+.adverts--tone-subscriptions .button--legacy-single {
     &:hover,
     &:focus,
     &:active {

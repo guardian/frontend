@@ -7,14 +7,15 @@
     }
 }
 
-.advert--shop {
-    .button {
-        @include button-colour(
-            $features-support-4,
-            null
-        );
-    }
+.adverts--tone-shop .button--legacy-single,
+.advert--shop .button {
+    @include button-colour(
+        $features-support-4,
+        null
+    );
+}
 
+.advert--shop {
     &:hover,
     &:focus,
     &:active {
@@ -27,12 +28,7 @@
     }
 }
 
-.adverts--tone-shop.adverts--legacy-single .adverts__row > .button {
-    @include button-colour(
-        $features-support-4,
-        null
-    );
-
+.adverts--tone-shop .button--legacy-single {
     &:hover,
     &:focus,
     &:active {

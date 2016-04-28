@@ -34,15 +34,15 @@
     }
 }
 
+.adverts--tone-jobs .button--legacy-single,
+.advert--job .button {
+    @include button-colour(
+        $news-main-1,
+        null
+    );
+}
+
 .advert--job {
-    .button {
-        @include button-colour(
-            $news-main-1,
-            null
-        );
-    }
-
-
     &:hover,
     &:focus,
     &:active {
@@ -55,12 +55,7 @@
     }
 }
 
-.adverts--tone-jobs.adverts--legacy-single .adverts__row > .button {
-    @include button-colour(
-        $news-main-1,
-        null
-    );
-
+.adverts--tone-jobs .button--legacy-single {
     &:hover,
     &:focus,
     &:active {

@@ -7,14 +7,15 @@
     }
 }
 
-.advert--gardening {
-    .button {
-        @include button-colour(
-            $maps-support-2,
-            null
-        );
-    }
+.adverts--tone-gardening .button--legacy-single,
+.advert--gardening .button {
+    @include button-colour(
+        $maps-support-2,
+        null
+    );
+}
 
+.advert--gardening {
     &:hover,
     &:focus,
     &:active {
@@ -27,12 +28,7 @@
     }
 }
 
-.adverts--tone-gardening.adverts--legacy-single .adverts__row > .button {
-    @include button-colour(
-        $maps-support-2,
-        null
-    );
-
+.adverts--tone-gardening .button--legacy-single {
     &:hover,
     &:focus,
     &:active {
