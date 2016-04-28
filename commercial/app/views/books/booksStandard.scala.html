@@ -22,12 +22,12 @@
 
     @if(isProminent) {
         <div class="adverts__row adverts__row--2x1x1">
-            @books.take(1).map { book => @bookLargeCard(book, clickMacro) }
+            @books.take(1).map { book => @bookLargeCard(book, clickMacro, optAdvertClassNames = Some(Seq("inverse", "large--1x2"))) }
             @books.slice(1, 3).map { book => @bookCard(book, clickMacro) }
         </div>
     } else {
         <div class="adverts__row">
-            @books.map { book => @bookCard(book, clickMacro) }
+        @books.map { book => @bookCard(book, clickMacro) }
         </div>
     }
 

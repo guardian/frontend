@@ -49,35 +49,36 @@
         .tonal__header {
             background-color: $tonal__header-background;
 
-            .content__labels {
-                border-bottom-color: rgba($tonal__header-text, .3);
-            }
+        }
 
-            .content__section-label__link {
-                color: $tonal__header-link;
-            }
+        .content__labels {
+            border-bottom-color: rgba($tonal__header-text, .3);
+        }
 
-            .content__series-label__link {
-                color: $tonal__header-text;
-            }
+        .content__section-label__link {
+            color: $tonal__header-link;
+        }
 
-            .content__headline,
-            .content__head__comment-count .tone-colour {
-                color: $tonal__headline-colour;
-            }
+        .content__series-label__link {
+            color: $tonal__header-text;
+        }
 
-            .content__headline {
-                font-weight: $tonal__headline-weight;
-            }
+        .content__headline,
+        .content__head__comment-count .tone-colour {
+            color: $tonal__headline-colour;
+        }
 
-            .content__headline--byline .tone-colour,
-            .content__headline--kicker {
-                color: $tonal__headline-accent;
-            }
+        .content__headline {
+            font-weight: $tonal__headline-weight;
+        }
 
-            .content__headline--kicker {
-                font-weight: 200;
-            }
+        .content__headline--byline .tone-colour,
+        .content__headline--kicker {
+            color: $tonal__headline-accent;
+        }
+
+        .content__headline--kicker {
+            font-weight: 200;
         }
 
         .tonal__standfirst {
