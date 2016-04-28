@@ -49,10 +49,6 @@
         .tonal__header {
             background-color: $tonal__header-background;
 
-            // This needs extra specificity
-            .content__series-label__link {
-                color: $tonal__header-text;
-            }
         }
 
         .content__labels {
@@ -61,6 +57,10 @@
 
         .content__section-label__link {
             color: $tonal__header-link;
+        }
+
+        .content__series-label__link {
+            color: $tonal__header-text;
         }
 
         .content__headline,
