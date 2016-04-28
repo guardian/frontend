@@ -1,6 +1,7 @@
 @(books: Seq[model.commercial.books.Book],
   omnitureId: Option[String],
-  clickMacro: Option[String])(implicit request: RequestHeader)
+  clickMacro: Option[String],
+  isProminent: Boolean = false)(implicit request: RequestHeader)
 
 @import conf.Configuration
 @import views.html.books.{bookCard, searchFormV2}
@@ -19,8 +20,19 @@
 
 }{
 
+    @if(isProminent) {
+        <div class="adverts__row adverts__row--2x1x1">
+            @books.take(1).map { book => @bookLargeCard(book, clickMacro) }
+            @books.slice(1, 3).map { book => @bookCard(book, clickMacro) }
+        </div>
+    } else {
+        <div class="adverts__row">
+            @books.map { book => @bookCard(book, clickMacro) }
+        </div>
+    }
+
     <div class="adverts__row">
-        @books.map { book => @bookCard(book, clickMacro) }
+
     </div>
 
 }
