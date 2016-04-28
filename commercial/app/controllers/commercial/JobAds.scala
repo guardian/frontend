@@ -4,8 +4,6 @@ import model.commercial.jobs.{JobSector, JobsAgent}
 import model.{Cached, NoCache}
 import play.api.mvc._
 
-import scala.concurrent.Future
-
 object JobAds extends Controller with implicits.Requests {
 
   implicit val codec = Codec.utf_8
@@ -24,20 +22,13 @@ object JobAds extends Controller with implicits.Requests {
     JobSector("media", "Media")
   )
 
-  def renderJobs = Action.async { implicit request =>
-    Future.successful {
-      (JobsAgent.specificJobs(specificIds) ++ JobsAgent.jobsTargetedAt(segment)).distinct.toList match {
-        case Nil => NoCache(jsonFormat.nilResult.result)
-        case jobs => Cached(componentMaxAge) {
-          val clickMacro = request.getParameter("clickMacro")
-          val omnitureId = request.getParameter("omnitureId")
-
-          if(conf.switches.Switches.v2JobsTemplate.isSwitchedOn) {
-            jsonFormat.result(views.html.jobs.jobsV2(jobs.take(2), jobSectors, omnitureId, clickMacro))
-          } else {
-            jsonFormat.result(views.html.jobs.jobs(jobs.take(2), omnitureId, clickMacro))
-          }
-        }
+  def renderJobs = Action { implicit request =>
+    (JobsAgent.specificJobs(specificIds) ++ JobsAgent.jobsTargetedAt(segment)).distinct match {
+      case Nil => NoCache(jsonFormat.nilResult.result)
+      case jobs => Cached(componentMaxAge) {
+        val clickMacro = request.getParameter("clickMacro")
+        val omnitureId = request.getParameter("omnitureId")
+        jsonFormat.result(views.html.jobs.jobsV2(jobs.take(2), jobSectors, omnitureId, clickMacro))
       }
     }
   }
