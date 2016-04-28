@@ -114,6 +114,13 @@
     $titleColor: $multimedia-main-2
 );
 
+/* .commercial--tone-travel */
+@include tone-commercial(
+    travel,
+    $maps-support-3,
+    $maps-support-4
+);
+
 /* .commercial--tone-shop */
 @include tone-commercial(
     shop,
