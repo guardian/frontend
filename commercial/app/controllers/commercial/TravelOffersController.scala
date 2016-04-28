@@ -7,14 +7,24 @@ import play.api.mvc._
 object TravelOffersController extends Controller with implicits.Requests {
 
   def renderTravel = Action { implicit request =>
+
     val travelOffers =
       (TravelOffersAgent.specificTravelOffers(specificIds) ++ TravelOffersAgent.offersTargetedAt(segment)).distinct
+
     travelOffers match {
       case Nil => NoCache(jsonFormat.nilResult.result)
       case offers => Cached(componentMaxAge) {
         val clickMacro = request.getParameter("clickMacro")
         val omnitureId = request.getParameter("omnitureId")
-        jsonFormat.result(views.html.travel.travel(offers.take(4), omnitureId, clickMacro))
+
+        request.getParameter("layout") match {
+          // TODO: implement template changes for prominent component
+          case Some("prominent") =>
+            jsonFormat.result(views.html.travel.travel(offers.take(4), omnitureId, clickMacro))
+          case _ =>
+            jsonFormat.result(views.html.travel.travel(offers.take(4), omnitureId, clickMacro))
+        }
+
       }
     }
   }
