@@ -61,7 +61,11 @@ object BookOffersController
           val omnitureId = request.getParameter("omnitureId")
           request.getParameter("layout") match {
             case Some("prominent") =>
-              jsonFormat.result(views.html.books.booksProminent(someBooks, omnitureId, clickMacro))
+              if (conf.switches.Switches.v2BooksTemplate.isSwitchedOn) {
+                jsonFormat.result(views.html.books.booksStandardV2(someBooks.take(3), omnitureId, clickMacro, isProminent = true))
+              } else {
+                jsonFormat.result(views.html.books.booksStandard(someBooks, omnitureId, clickMacro))
+              }
             case _ =>
               if (conf.switches.Switches.v2BooksTemplate.isSwitchedOn) {
                 jsonFormat.result(views.html.books.booksStandardV2(someBooks, omnitureId, clickMacro))
