@@ -59,10 +59,10 @@ object BookOffersController
           request.getParameter("layout") match {
             case Some("prominent") =>
               jsonFormat.result(
-                views.html.books.booksStandardV2(someBooks.take(3), omnitureId, clickMacro, isProminent = true)
+                views.html.books.booksStandard(someBooks.take(3), omnitureId, clickMacro, isProminent = true)
               )
             case _ =>
-              jsonFormat.result(views.html.books.booksStandardV2(someBooks, omnitureId, clickMacro))
+              jsonFormat.result(views.html.books.booksStandard(someBooks, omnitureId, clickMacro))
           }
         }
     }
