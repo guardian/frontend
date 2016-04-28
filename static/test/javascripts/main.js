@@ -28,6 +28,7 @@ requirejs.config({
         qwery:        'components/qwery/qwery',
         raven:        'components/raven-js/raven',
         reqwest:      'components/reqwest/reqwest',
+        analytics:    'components/analytics/analytics',
         // Test specific paths
         omniture:     'vendor/omniture',
         stripe:       'vendor/stripe/stripe.min',

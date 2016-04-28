@@ -101,7 +101,8 @@ define([
                     target: document.documentElement,
                     samePage: true,
                     sameHost: true,
-                    validTarget: true
+                    validTarget: true,
+                    tag: true
                 };
 
             omniture.go();
@@ -113,13 +114,16 @@ define([
         it('should not log clickstream events with an invalidTarget', function () {
             var clickSpec = {
                 target: document.documentElement,
-                validTarget: false
+                samePage: true,
+                sameHost: true,
+                validTarget: false,
+                tag: true
             };
 
             omniture.go();
             mediator.emit('module:clickstream:click', clickSpec);
 
-            expect(s.tl.callCount).toBe(1); //only the initial call
+            expect(s.tl.callCount).toBe(0);
         });
 
         it('should make a non-delayed s.tl call for same-page links', function () {
