@@ -18,7 +18,7 @@ define([
         function getCookieValue(cookieName) {
             var cookieArray = document.cookie.split(';'),
                 cookieVal;
-            for(i = 0; i < cookieArray.length; i++) {
+            for(var i = 0; i < cookieArray.length; i++) {
                 var c = cookieArray[i].split('='),
                     n = c[0].trim(),
                     v = c[1].trim();
@@ -38,8 +38,8 @@ define([
             {
                 id: 'mvt-https',
                 test: function () {
-                    if(document.location.href.startsWith("http:")) {
-                        document.cookie = "https_opt_in=true; expires=Thu, 26 May 2016 22:59:59 GMT";
+                    if(document.location.href.startsWith('http:')) {
+                        document.cookie = 'https_opt_in=true; expires=Thu, 26 May 2016 22:59:59 GMT';
                         document.location = document.location.href.replace('http:','https:');
                     }
                 }
