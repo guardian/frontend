@@ -57,6 +57,7 @@
 .gu-display__cta {
     left: 10px;
     bottom: 10px;
+    line-height: 2.4;
 }
 
 .gu-display__logo-link {
@@ -128,15 +129,21 @@ $mobile-max-container-width: gs-span(8);
 @include mq-add-breakpoint(containerWidestMobile, $mobile-max-container-width + $gs-gutter * 2);
 
 .gu-style {
-    width: 250px;
+    width: auto;
     border-top: #fedd79 1px solid;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: $gs-gutter / 2;
+    margin-right: $gs-gutter / 2;
 
     @include mq(containerWidestMobile) {
         margin-left: auto;
         margin-right: auto;
-        width: $mobile-max-container-width;
+        width: 275px;
+    }
+
+    @include mq(tablet) {
+        width: auto;
+        margin-right: $gs-gutter / 2;
+        margin-left: $gs-gutter / 2;
     }
 
     @include mq(desktop) {
