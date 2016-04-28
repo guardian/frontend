@@ -28,7 +28,7 @@ object JobAds extends Controller with implicits.Requests {
       case jobs => Cached(componentMaxAge) {
         val clickMacro = request.getParameter("clickMacro")
         val omnitureId = request.getParameter("omnitureId")
-        jsonFormat.result(views.html.jobs.jobsV2(jobs.take(2), jobSectors, omnitureId, clickMacro))
+        jsonFormat.result(views.html.jobs.jobs(jobs.take(2), jobSectors, omnitureId, clickMacro))
       }
     }
   }
