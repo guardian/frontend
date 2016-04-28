@@ -1,36 +1,39 @@
-.adverts--tone-brand {
+.adverts--shop {
+}
+
+.adverts--tone-shop {
     > .adverts__header {
-        background: $news-support-2;
+        background: $features-main-1;
     }
 }
 
-.adverts--tone-brand .button--legacy-single,
-.advert--brand .button {
+.adverts--tone-shop .button--legacy-single,
+.advert--shop .button {
     @include button-colour(
-        $news-main-2,
+        $features-support-4,
         null
     );
 }
 
-.advert--brand {
+.advert--shop {
     &:hover,
     &:focus,
     &:active {
         .button {
             @include button-colour(
-                darken($news-main-2, 5%),
+                darken($features-support-4, 5%),
                 null
             );
         }
     }
 }
 
-.adverts--tone-brand .button--legacy-single {
+.adverts--tone-shop .button--legacy-single {
     &:hover,
     &:focus,
     &:active {
         @include button-colour(
-            darken($news-main-2, 5%),
+            darken($features-support-4, 5%),
             null
         );
     }

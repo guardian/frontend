@@ -1,0 +1,17 @@
+@(offer: model.commercial.travel.TravelOffer,
+  clickMacro: Option[String])
+
+<a class="advert advert--travel advert--large advert--landscape advert--inverse advert--large--1x2" href="@clickMacro@offer.offerUrl" data-link-name="merchandising-travel-v2_1_2014-07-04-low-@{offer.title}">
+    <div class="advert__text">
+        <h2 class="advert__title" itemprop="name">@offer.title</h2>
+        <div class="advert__meta">
+            @offer.durationInWords from <strong>@offer.formattedPrice</strong>
+        </div>
+        <span class="advert__more button button--small">
+            Buy now @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
+        </span>
+    </div>
+    <div class="advert__image-container">
+        <img class="advert__image" src="@offer.imageUrl">
+    </div>
+</a>

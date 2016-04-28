@@ -22,14 +22,15 @@
     }
 }
 
-.advert--masterclass {
-    .button {
-        @include button-colour(
-            $multimedia-main-2,
-            $neutral-1
-        );
-    }
+.adverts--tone-masterclasses .button--legacy-single,
+.advert--masterclass .button {
+    @include button-colour(
+        $multimedia-main-2,
+        $neutral-1
+    );
+}
 
+.advert--masterclass {
     &:hover,
     &:focus,
     &:active {
@@ -39,6 +40,17 @@
                 $neutral-1
             );
         }
+    }
+}
+
+.adverts--tone-masterclasses .button--legacy-single {
+    &:hover,
+    &:focus,
+    &:active {
+        @include button-colour(
+            darken($multimedia-main-2, 5%),
+            $neutral-1
+        );
     }
 }
 

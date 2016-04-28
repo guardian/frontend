@@ -68,10 +68,21 @@ define([
                 false
         };
 
-        this.$adSlot.append(fabricV1Tpl({ data: merge(this.params, templateOptions) }));
+        fastdom.write(function () {
+            this.$adSlot.append(fabricV1Tpl({data: merge(this.params, templateOptions)}));
+
+            this.layer2 = $('.hide-until-tablet .fabric-v1_layer2', this.$adSlot[0]);
+
+            // layer two animations must not have a background position, otherwise the background will
+            // be visible before the animation has been initiated.
+            if (this.params.layerTwoAnimation === 'enabled' && isEnhanced && !isIE9OrLess) {
+                bonzo(this.layer2).css('background-position', '');
+            }
+        }, this);
+
         if (templateOptions.scrollbg) {
             this.scrollingBg = $('.ad-scrolling-bg', this.$adSlot[0]);
-            this.layer2 = $('.hide-until-tablet .fabric-v1_layer2', this.$adSlot[0]);
+
 
             if (hasScrollEnabled) {
                 // update bg position

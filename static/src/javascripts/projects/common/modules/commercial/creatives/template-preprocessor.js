@@ -165,7 +165,9 @@ define([
             books: 'book',
             masterclasses: 'masterclass',
             travels: 'travel',
-            soulmates: 'soulmate'
+            soulmates: 'soulmate',
+            subscriptions: 'subscription',
+            networks: 'network'
         };
         manualContainerButtonTpl || (manualContainerButtonTpl = template(manualContainerButtonStr));
         manualCardTpls[tpl.params.creativeCard] || (manualCardTpls[tpl.params.creativeCard] = template(manualCardStrs[tpl.params.creativeCard]));

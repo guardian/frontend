@@ -266,15 +266,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val v2JobsTemplate = Switch(
-    SwitchGroup.CommercialRefactoring,
-    "v2-jobs-template",
-    "Jobs component using template v2",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = false
-  )
-
   val v2MasterclassesTemplate = Switch(
     SwitchGroup.CommercialRefactoring,
     "v2-masterclasses-template",
@@ -288,15 +279,6 @@ trait CommercialSwitches {
     SwitchGroup.CommercialRefactoring,
     "v2-books-template",
     "Books component using template v2",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = false
-  )
-
-  val v2TravelTemplate = Switch(
-    SwitchGroup.CommercialRefactoring,
-    "v2-travel-template",
-    "Travel component using template v2",
     safeState = Off,
     sellByDate = new LocalDate(2016, 5, 4),
     exposeClientSide = false
