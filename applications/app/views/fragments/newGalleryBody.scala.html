@@ -1,9 +1,9 @@
 @(gallery: model.GalleryPage, related: model.RelatedContent, index: Int)(implicit request: RequestHeader)
 
-@import common.{Edition, LinkTo}
+@import common.LinkTo
 @import layout.ContentWidths.GalleryMedia
 @import views.support.TrailCssClasses.toneClass
-@import views.support.{ImgSrc, RenderClasses}
+@import views.support.RenderClasses
 
 <div class="l-side-margins l-side-margins--media l-side-margins--new-gallery">
 
@@ -76,7 +76,7 @@
                 href="@LinkTo{@gallery.item.metadata.url#img-@rowNum}"
                 data-link-name="Launch Gallery Lightbox" data-is-ajax>
 
-                @fragments.image(imageElement.images, imageAltText = image.altText.getOrElse(""))
+                @fragments.image(imageElement.images, widths = GalleryMedia.inline, imageAltText = image.altText.getOrElse(""))
             </a>
         </figure>
     </li>
