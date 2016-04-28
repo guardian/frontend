@@ -116,7 +116,7 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
 
     }.getOrElse(
       if(request.isJson) {
-        JsonNotFound()
+        Cached(60)(JsonNotFound())
       } else {
         Redirect("/football/tables")
       }
@@ -144,7 +144,7 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
     }
     response.getOrElse {
       if(request.isJson) {
-        JsonNotFound()
+        Cached(60)(JsonNotFound())
       } else {
         Redirect("/football/tables")
       }

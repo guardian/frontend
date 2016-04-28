@@ -33,20 +33,20 @@ object BookOffersController
       } recover {
         case e: FeedSwitchOffException =>
           log.warn(e.getMessage)
-          NoCache(jsonFormat.nilResult)
+          NoCache(jsonFormat.nilResult.result)
         case e: FeedMissingConfigurationException =>
           log.warn(e.getMessage)
-          NoCache(jsonFormat.nilResult)
+          NoCache(jsonFormat.nilResult.result)
         case e: CacheNotConfiguredException =>
           log.warn(e.getMessage)
-          NoCache(jsonFormat.nilResult)
+          NoCache(jsonFormat.nilResult.result)
         case NonFatal(e) =>
           log.error(e.getMessage)
-          NoCache(jsonFormat.nilResult)
+          NoCache(jsonFormat.nilResult.result)
       }
 
     } getOrElse {
-      Future.successful(NoCache(jsonFormat.nilResult))
+      Future.successful(NoCache(jsonFormat.nilResult.result))
     }
   }
 
@@ -54,7 +54,7 @@ object BookOffersController
 
     def result(books: Seq[Book]): Result = books.distinctBy(_.isbn).take(5).toList match {
       case Nil =>
-        NoCache(jsonFormat.nilResult)
+        NoCache(jsonFormat.nilResult.result)
       case someBooks =>
         Cached(componentMaxAge) {
           val clickMacro = request.getParameter("clickMacro")
