@@ -126,8 +126,9 @@ define([
     };
 
     FabricExpandingV1.prototype.create = function () {
-        var videoHeight = this.closedHeight - 24;
-        var videoWidth = (videoHeight * 16) / 9;
+        var videoAspectRatio = 16 / 9;
+        var videoHeight = detect.isBreakpoint({max: 'phablet'}) ? 125 : 250;
+        var videoWidth = videoHeight * videoAspectRatio;
         var leftMargin = (this.params.videoPositionH === 'center' ?
             'margin-left: ' + videoWidth / -2 + 'px; ' : ''
         );
@@ -161,7 +162,7 @@ define([
                 this.$ad     = $('.ad-exp--expand', $fabricExpandingV1).css('height', this.closedHeight);
                 this.$button = $('.ad-exp__open', $fabricExpandingV1);
 
-                $('.ad-exp-collapse__slide.slide-1', $fabricExpandingV1).css('height', this.closedHeight);
+                $('.ad-exp-collapse__slide', $fabricExpandingV1).css('height', this.closedHeight);
 
                 if (this.params.trackingPixel) {
                     addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
