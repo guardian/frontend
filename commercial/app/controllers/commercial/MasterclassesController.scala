@@ -4,7 +4,7 @@ import model.commercial.events.{Masterclass, MasterclassAgent}
 import model.{Cached, NoCache}
 import play.api.mvc._
 
-object Masterclasses extends Controller with implicits.Requests {
+object MasterclassesController extends Controller with implicits.Requests {
 
   implicit val codec = Codec.utf_8
 
