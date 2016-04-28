@@ -20,7 +20,7 @@ object Masterclasses extends Controller with implicits.Requests {
         case masterclasses => Cached(componentMaxAge) {
           val clickMacro = request.getParameter("clickMacro")
           val omnitureId = request.getParameter("omnitureId")
-          jsonFormat.result(views.html.masterclasses.masterclassesV2(masterclasses, omnitureId, clickMacro))
+          jsonFormat.result(views.html.masterclasses.masterclasses(masterclasses, omnitureId, clickMacro))
         }
       }
     }
