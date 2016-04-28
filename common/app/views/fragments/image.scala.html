@@ -34,7 +34,7 @@
 
     <picture>
         @* IE 9 needs this workaround as per https://scottjehl.github.io/picturefill/ *@
-            <!--[if IE 9]><video style="display: none;"><![endif]-->
+        <!--[if IE 9]><video style="display: none;"><![endif]-->
 
         @widths.breakpoints.map { breakpointWidth =>
             <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (min-resolution: 120dpi)"
@@ -45,7 +45,7 @@
             srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(picture))" />
         }
 
-            <!--[if IE 9]></video><![endif]-->
+        <!--[if IE 9]></video><![endif]-->
 
         <img class="@if(isMain) {maxed responsive-img} else {gu-image} @if(isImmersiveImage) {immersive-main-media__img}"
         itemprop="contentUrl"
