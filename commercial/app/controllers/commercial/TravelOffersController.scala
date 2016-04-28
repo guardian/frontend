@@ -10,7 +10,7 @@ object TravelOffersController extends Controller with implicits.Requests {
     val travelOffers =
       (TravelOffersAgent.specificTravelOffers(specificIds) ++ TravelOffersAgent.offersTargetedAt(segment)).distinct
     travelOffers match {
-      case Nil => NoCache(jsonFormat.nilResult)
+      case Nil => NoCache(jsonFormat.nilResult.result)
       case offers => Cached(componentMaxAge) {
         val clickMacro = request.getParameter("clickMacro")
         val omnitureId = request.getParameter("omnitureId")
