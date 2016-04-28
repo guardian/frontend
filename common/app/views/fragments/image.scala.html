@@ -8,6 +8,7 @@
     widths: layout.WidthsByBreakpoint =  MainMedia.inline,
     imageAltText: String,
     isMain: Boolean = false,
+    isImmersiveImage: Boolean = false,
     amp: Boolean = false
 )
 
@@ -46,7 +47,7 @@
 
             <!--[if IE 9]></video><![endif]-->
 
-        <img class="@if(isMain) {maxed responsive-img} else {gu-image}"
+        <img class="@if(isMain) {maxed responsive-img} else {gu-image} @if(isImmersiveImage) {immersive-main-media__img}"
         itemprop="contentUrl"
         alt="@imageAltText"
         src="@ImgSrc.getFallbackUrl(picture)" />
