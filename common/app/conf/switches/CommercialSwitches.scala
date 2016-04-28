@@ -275,15 +275,6 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val v2MasterclassesTemplate = Switch(
-    SwitchGroup.CommercialRefactoring,
-    "v2-masterclasses-template",
-    "Masterclasses component using template v2",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = false
-  )
-
   val v2BooksTemplate = Switch(
     SwitchGroup.CommercialRefactoring,
     "v2-books-template",
