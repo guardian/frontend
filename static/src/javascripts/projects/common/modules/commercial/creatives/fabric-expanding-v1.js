@@ -126,34 +126,34 @@ define([
     };
 
     FabricExpandingV1.prototype.create = function () {
-        var videoHeight = this.closedHeight - 24,
-            videoWidth = (videoHeight * 16) / 9,
-            leftMargin = (this.params.videoPositionH === 'center' ?
-                'margin-left: ' + videoWidth / -2 + 'px; ' : ''
-            ),
-            leftPosition = (this.params.videoPositionH === 'left' ?
-                'left: ' + this.params.videoHorizSpace + 'px; ' : ''
-            ),
-            rightPosition = (this.params.videoPositionH === 'right' ?
-                'right: ' + this.params.videoHorizSpace + 'px; ' : ''
-            ),
-            videoDesktop = {
-                video: (this.params.videoURL !== '') ?
-                '<iframe id="myYTPlayer" width="' + videoWidth + '" height="' + videoHeight + '" src="' + this.params.videoURL + '?rel=0&amp;controls=0&amp;showinfo=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="expandable_video expandable_video--horiz-pos-' + this.params.videoPositionH + '" style="' + leftMargin + leftPosition + rightPosition + '"></iframe>' : ''
-            },
-            showmoreArrow = {
-                showArrow: (this.params.showMoreType === 'arrow-only' || this.params.showMoreType === 'plus-and-arrow') ?
-                '<button class="ad-exp__open-chevron ad-exp__open">' + svgs('arrowdownicon') + '</button>' : ''
-            },
-            showmorePlus = {
-                showPlus: (this.params.showMoreType === 'plus-only' || this.params.showMoreType === 'plus-and-arrow') ?
-                '<button class="ad-exp__close-button ad-exp__open">' + svgs('closeCentralIcon') + '</button>' : ''
-            },
-            scrollingbg = {
-                scrollbg: (this.params.backgroundImagePType !== '' || this.params.backgroundImagePType !== 'none') ?
-                '<div class="ad-exp--expand-scrolling-bg" style="background-image: url(' + this.params.backgroundImageP + '); background-position: ' + this.params.backgroundImagePPosition + ' 50%; background-repeat: ' + this.params.backgroundImagePRepeat + ';"></div>' : ''
-            },
-            $fabricExpandingV1 = $.create(template(fabricExpandingV1Html, { data: merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg) }));
+        var videoHeight = this.closedHeight - 24;
+        var videoWidth = (videoHeight * 16) / 9;
+        var leftMargin = (this.params.videoPositionH === 'center' ?
+            'margin-left: ' + videoWidth / -2 + 'px; ' : ''
+        );
+        var leftPosition = (this.params.videoPositionH === 'left' ?
+            'left: ' + this.params.videoHorizSpace + 'px; ' : ''
+        );
+        var rightPosition = (this.params.videoPositionH === 'right' ?
+            'right: ' + this.params.videoHorizSpace + 'px; ' : ''
+        );
+        var videoDesktop = {
+            video: (this.params.videoURL !== '') ?
+            '<iframe id="myYTPlayer" width="' + videoWidth + '" height="' + videoHeight + '" src="' + this.params.videoURL + '?rel=0&amp;controls=0&amp;showinfo=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="expandable_video expandable_video--horiz-pos-' + this.params.videoPositionH + '" style="' + leftMargin + leftPosition + rightPosition + '"></iframe>' : ''
+        };
+        var showmoreArrow = {
+            showArrow: (this.params.showMoreType === 'arrow-only' || this.params.showMoreType === 'plus-and-arrow') ?
+            '<button class="ad-exp__open-chevron ad-exp__open">' + svgs('arrowdownicon') + '</button>' : ''
+        };
+        var showmorePlus = {
+            showPlus: (this.params.showMoreType === 'plus-only' || this.params.showMoreType === 'plus-and-arrow') ?
+            '<button class="ad-exp__close-button ad-exp__open">' + svgs('closeCentralIcon') + '</button>' : ''
+        };
+        var scrollingbg = {
+            scrollbg: (this.params.backgroundImagePType !== '' || this.params.backgroundImagePType !== 'none') ?
+            '<div class="ad-exp--expand-scrolling-bg" style="background-image: url(' + this.params.backgroundImageP + '); background-position: ' + this.params.backgroundImagePPosition + ' 50%; background-repeat: ' + this.params.backgroundImagePRepeat + ';"></div>' : ''
+        };
+        var $fabricExpandingV1 = $.create(template(fabricExpandingV1Html, { data: merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg) }));
 
         var domPromise = new Promise(function (resolve) {
             fastdom.write(function () {
@@ -161,7 +161,7 @@ define([
                 this.$ad     = $('.ad-exp--expand', $fabricExpandingV1).css('height', this.closedHeight);
                 this.$button = $('.ad-exp__open', $fabricExpandingV1);
 
-                $('.ad-exp-collapse__slide', $fabricExpandingV1).css('height', this.closedHeight);
+                $('.ad-exp-collapse__slide.slide-1', $fabricExpandingV1).css('height', this.closedHeight);
 
                 if (this.params.trackingPixel) {
                     addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
