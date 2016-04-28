@@ -11,7 +11,7 @@ GET        /_healthcheck                                                 conf.He
 GET        /commercial/travel/offers.json                                controllers.commercial.TravelOffersController.renderTravel
 
 # Job merchandising components
-GET        /commercial/jobs.json                                         controllers.commercial.JobAds.renderJobs
+GET        /commercial/jobs.json                                         controllers.commercial.JobsController.renderJobs
 
 # Masterclass merchandising components
 GET        /commercial/masterclasses.json                                controllers.commercial.Masterclasses.renderMasterclasses
