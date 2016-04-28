@@ -1,7 +1,7 @@
 package controllers.commercial
 
 import common.{ExecutionContexts}
-import model.NoCache
+import model.{Cached, NoCache}
 import model.commercial.events.LiveEventAgent
 import play.api.mvc._
 
@@ -21,15 +21,15 @@ object LiveEventsController
 
           selectedLiveEvents match {
             case Some(event) =>
-              jsonFormat.result(views.html.liveevents.liveEvent(
+              Cached(60)(jsonFormat.result(views.html.liveevents.liveEvent(
                 event,
                 omnitureId,
-                clickMacro))
-            case None => NoCache(jsonFormat.nilResult)
+                clickMacro)))
+            case None => NoCache(jsonFormat.nilResult.result)
           }
       }
     } getOrElse {
-      Future.successful(NoCache(jsonFormat.nilResult))
+      Future.successful(NoCache(jsonFormat.nilResult.result))
     }
   }
 }

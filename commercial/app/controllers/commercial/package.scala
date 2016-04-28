@@ -1,6 +1,7 @@
 package controllers
 
 import common.{JsonNotFound, JsonComponent}
+import model.Cached.RevalidatableResult
 import model.commercial.{Context, Segment}
 import play.api.mvc._
 import scala.concurrent.duration._
@@ -26,17 +27,17 @@ package object commercial {
   }
 
   trait Format {
-    def nilResult(implicit request: RequestHeader): Result
-    def result(view: Html)(implicit request: RequestHeader): Result
+    def nilResult(implicit request: RequestHeader): RevalidatableResult
+    def result(view: Html)(implicit request: RequestHeader): RevalidatableResult
   }
 
   object htmlFormat extends Format {
-    override def nilResult(implicit request: RequestHeader): Result = Results.NotFound
-    override def result(view: Html)(implicit request: RequestHeader): Result = Results.Ok(view)
+    override def nilResult(implicit request: RequestHeader): RevalidatableResult = RevalidatableResult(Results.NotFound, "")
+    override def result(view: Html)(implicit request: RequestHeader): RevalidatableResult = RevalidatableResult.Ok(view)
   }
 
   object jsonFormat extends Format {
-    override def nilResult(implicit request: RequestHeader): Result = JsonNotFound.apply()
-    override def result(view: Html)(implicit request: RequestHeader): Result = JsonComponent(view)
+    override def nilResult(implicit request: RequestHeader): RevalidatableResult = JsonNotFound.apply()
+    override def result(view: Html)(implicit request: RequestHeader): RevalidatableResult = JsonComponent(view)
   }
 }

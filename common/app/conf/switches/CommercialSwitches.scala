@@ -235,7 +235,7 @@ trait CommercialSwitches {
     "fixed-top-above-nav",
     "Fixes size of top-above-nav ad slot on fronts.",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 28),
+    sellByDate = new LocalDate(2016, 5, 6),
     exposeClientSide = false
   )
 

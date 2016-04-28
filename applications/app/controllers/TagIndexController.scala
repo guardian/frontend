@@ -1,6 +1,7 @@
 package controllers
 
 import common.{Logging, ExecutionContexts}
+import model.Cached.RevalidatableResult
 import model._
 import play.api.mvc.{Action, Controller}
 import services._
@@ -20,7 +21,7 @@ object TagIndexController extends Controller with ExecutionContexts with Logging
 
       case Right(tagPage) =>
         Cached(TagIndexCacheTime) {
-          Ok(views.html.tagIndexPage(
+          RevalidatableResult.Ok(views.html.tagIndexPage(
             metadata,
             tagPage,
             title
@@ -35,7 +36,7 @@ object TagIndexController extends Controller with ExecutionContexts with Logging
       sectionListing <- KeywordSectionIndexAutoRefresh.get
     } yield {
       Cached(TagIndexCacheTime) {
-        Ok(views.html.subjectsIndexListing(SubjectsListing(), alphaListing))
+        RevalidatableResult.Ok(views.html.subjectsIndexListing(SubjectsListing(), alphaListing))
       }
     }) getOrElse InternalServerError("Not yet loaded alpha and section index for keywords")
   }
@@ -45,7 +46,7 @@ object TagIndexController extends Controller with ExecutionContexts with Logging
       alphaListing <- ContributorAlphaIndexAutoRefresh.get
     } yield {
       Cached(TagIndexCacheTime) {
-        Ok(views.html.contributorsIndexListing(ContributorsListing(), alphaListing))
+        RevalidatableResult.Ok(views.html.contributorsIndexListing(ContributorsListing(), alphaListing))
       }
     }) getOrElse InternalServerError("Not yet loaded contributor index listing")
   }
