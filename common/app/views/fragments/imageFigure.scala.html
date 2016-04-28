@@ -41,7 +41,7 @@
         <meta itemprop="height" content="@ImgSrc.getFallbackAsset(picture).fold(0)(_.height)">
 
         @lightbox{
-            @fragments.image(picture, isShowcase, isFeature, widthsByBreakpoint, imageOption, isMain, amp)
+            @fragments.image(picture, isShowcase, isFeature, widthsByBreakpoint, imageOption.flatMap(_.altText).getOrElse(""), isMain, amp)
         }
         @showcaseFeature{
             @caption(picture, imageOption, isMain)

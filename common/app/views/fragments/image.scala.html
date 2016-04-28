@@ -1,4 +1,3 @@
-@import model.ImageAsset
 @import layout.ContentWidths.MainMedia
 @import views.support.ImgSrc
 
@@ -7,7 +6,7 @@
     isShowcase: Boolean = false,
     isFeature: Boolean = false,
     widths: layout.WidthsByBreakpoint =  MainMedia.inline,
-    imageOption: Option[ImageAsset],
+    imageAltText: String,
     isMain: Boolean = false,
     amp: Boolean = false
 )
@@ -49,12 +48,11 @@
 
         <img class="@if(isMain) {maxed responsive-img} else {gu-image}"
         itemprop="contentUrl"
-        alt="@imageOption.flatMap(_.altText).getOrElse("")"
+        alt="@imageAltText"
         src="@ImgSrc.getFallbackUrl(picture)" />
     </picture>
 
-
     @picture.largestImage.map{ largestImage =>
-    </div>
+        </div>
     }
 }
