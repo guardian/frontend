@@ -173,6 +173,19 @@ object ContentWidths {
       desktop =         Some(1125.px),
       leftCol =         Some(1140.px),
       wide =            Some(1300.px))
+
+    /**
+      * Used when the main image is an immersive image
+      * like on galleries and immersive articles
+      */
+    override val immersive = WidthsByBreakpoint(
+      mobile =          Some(480.px),
+      mobileLandscape = Some(660.px),
+      phablet =         Some(740.px),
+      tablet =          Some(980.px),
+      desktop =         Some(1140.px),
+      leftCol =         Some(1300.px),
+      wide =            Some(1900.px))
   }
 
   object ImmersiveMedia extends ContentRelation {
