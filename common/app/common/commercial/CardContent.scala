@@ -56,7 +56,7 @@ object CardContent {
     )
   }
 
-  def fromContentItem(item: ContentType, clickMacro: Option[String]): CardContent = {
+  def fromContentItem(item: ContentType, clickMacro: Option[String], withDescription: Boolean): CardContent = {
     val tags = item.tags
     CardContent(
       icon = {
@@ -67,7 +67,10 @@ object CardContent {
       },
       headline = item.trail.headline,
       kicker = None,
-      description = item.fields.trailText,
+      description = {
+        if (withDescription) item.fields.trailText
+        else None
+      },
       image = item.trail.trailPicture,
       fallbackImageUrl = item.trail.trailPicture flatMap ImgSrc.getFallbackUrl,
       targetUrl = {
