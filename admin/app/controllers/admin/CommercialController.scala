@@ -31,8 +31,8 @@ object CommercialController extends Controller with Logging with AuthLogging wit
     NoCache(Ok(views.html.commercial.commercialMenu(environment.stage)))
   }
 
-  def renderCommercial = AuthActions.AuthActionTest { implicit request =>
-    NoCache(Ok(views.html.commercial.commercial(environment.stage)))
+  def renderCommercialRenderTimes = AuthActions.AuthActionTest { implicit request =>
+    NoCache(Ok(views.html.commercial.commercialRenderTimes(environment.stage)))
   }
 
   def renderFluidAds = AuthActions.AuthActionTest { implicit request =>
