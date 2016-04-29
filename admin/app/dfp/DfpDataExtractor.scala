@@ -1,7 +1,7 @@
 package dfp
 
 import common.Edition
-import common.dfp.{GeoTarget, GuLineItem, InlineMerchandisingTagSet, PageSkinSponsorship}
+import common.dfp._
 
 case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
 
@@ -12,6 +12,18 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
       soFar.copy(keywords = soFar.keywords ++ lineItem.inlineMerchandisingTargetedKeywords,
         series = soFar.series ++ lineItem.inlineMerchandisingTargetedSeries,
         contributors = soFar.contributors ++ lineItem.inlineMerchandisingTargetedContributors)
+    }
+  }
+
+  val highMerchandisingTargetedTags: HighMerchandisingLineItems = {
+
+    lineItems.foldLeft(HighMerchandisingLineItems(items = List.empty)) { (soFar, lineItem) =>
+      if (lineItem.highMerchandisingTargets.isEmpty) {
+        soFar
+      } else {
+        soFar.copy(items = soFar.items :+ HighMerchandisingLineItem(
+          lineItem.name, lineItem.id, lineItem.highMerchandisingTargets))
+      }
     }
   }
 

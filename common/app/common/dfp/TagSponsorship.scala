@@ -55,12 +55,38 @@ object InlineMerchandisingTargetedTagsReport {
 
 case class InlineMerchandisingTargetedTagsReport(updatedTimeStamp: String, targetedTags: InlineMerchandisingTagSet)
 
-
 object InlineMerchandisingTargetedTagsReportParser extends Logging {
   def apply(jsonString: String): Option[InlineMerchandisingTargetedTagsReport] = {
     val json = Json.parse(jsonString)
     json.validate[InlineMerchandisingTargetedTagsReport] match {
       case s: JsSuccess[InlineMerchandisingTargetedTagsReport] => Some(s.get)
+      case e: JsError => log.error("Errors: " + JsError.toJson(e).toString()); None
+    }
+  }
+}
+
+object HighMerchandisingLineItems {
+  implicit val lineItemFormat = Json.format[HighMerchandisingLineItem]
+  implicit val lineItemsFormat = Json.format[HighMerchandisingLineItems]
+}
+
+case class HighMerchandisingLineItem(name: String, id: Long, tags: Seq[String])
+
+case class HighMerchandisingLineItems(items: Seq[HighMerchandisingLineItem]) {
+  val sortedItems = items.sortBy(_.name)
+}
+
+object HighMerchandisingTargetedTagsReport {
+  implicit val jsonFormat = Json.format[HighMerchandisingTargetedTagsReport]
+}
+
+case class HighMerchandisingTargetedTagsReport(updatedTimeStamp: String, lineItems: HighMerchandisingLineItems)
+
+object HighMerchandisingTargetedTagsReportParser extends Logging {
+  def apply(jsonString: String): Option[HighMerchandisingTargetedTagsReport] = {
+    val json = Json.parse(jsonString)
+    json.validate[HighMerchandisingTargetedTagsReport] match {
+      case s: JsSuccess[HighMerchandisingTargetedTagsReport] => Some(s.get)
       case e: JsError => log.error("Errors: " + JsError.toJson(e).toString()); None
     }
   }
