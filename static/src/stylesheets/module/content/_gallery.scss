@@ -365,13 +365,9 @@
     &.tonal--tone-media {
 
         // Overwriting media tone header so that you can see the image instead
-        .tonal__header {
-            background-color: $multimedia-support-5;
-
-            .content__headline {
-                font-weight: 200;
-                padding-top: 0;
-            }
+        .content__headline {
+            font-weight: 200;
+            padding-top: 0;
         }
 
         .meta__numbers {
