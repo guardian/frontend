@@ -70,7 +70,7 @@ define([
 
         fastdom.write(function () {
             this.$adSlot.append(fabricV1Tpl({data: merge(this.params, templateOptions)}));
-
+            this.scrollingBg = $('.ad-scrolling-bg', this.$adSlot[0]);
             this.layer2 = $('.hide-until-tablet .fabric-v1_layer2', this.$adSlot[0]);
 
             // layer two animations must not have a background position, otherwise the background will
@@ -80,17 +80,12 @@ define([
             }
         }, this);
 
-        if (templateOptions.scrollbg) {
-            this.scrollingBg = $('.ad-scrolling-bg', this.$adSlot[0]);
-
-
-            if (hasScrollEnabled) {
-                // update bg position
-                fastdom.read(this.updateBgPosition, this);
-                mediator.on('window:throttledScroll', this.updateBgPosition.bind(this));
-                // to be safe, also update on window resize
-                mediator.on('window:resize', this.updateBgPosition.bind(this));
-            }
+        if (templateOptions.scrollbg && hasScrollEnabled) {
+            // update bg position
+            fastdom.read(this.updateBgPosition, this);
+            mediator.on('window:throttledScroll', this.updateBgPosition.bind(this));
+            // to be safe, also update on window resize
+            mediator.on('window:resize', this.updateBgPosition.bind(this));
         }
 
         if (this.params.trackingPixel) {
@@ -99,13 +94,21 @@ define([
     };
 
     FabricV1.prototype.updateBgPosition = function () {
-        if (this.params.backgroundImagePType === 'parallax') {
+        var scrollType = this.params.backgroundImagePType;
+
+        if (scrollType === 'parallax') {
             var scrollAmount = Math.ceil((window.pageYOffset - this.$adSlot.offset().top) * 0.3 * -1) + 20;
             fastdom.write(function () {
                 bonzo(this.scrollingBg)
                     .addClass('ad-scrolling-bg-parallax')
                     .css('background-position', '50% ' + scrollAmount + '%');
             }, this);
+        }
+
+        if (scrollType === 'fixed') {
+            fastdom.write(function () {
+                bonzo(this.scrollingBg).css('background-attachment', 'fixed');
+            }, this)
         }
 
         this.layer2Animation();
