@@ -72,12 +72,20 @@ define([
             this.$adSlot.append(fabricV1Tpl({data: merge(this.params, templateOptions)}));
             this.scrollingBg = $('.ad-scrolling-bg', this.$adSlot[0]);
             this.layer2 = $('.hide-until-tablet .fabric-v1_layer2', this.$adSlot[0]);
+            this.scrollType = this.params.backgroundImagePType;
 
             // layer two animations must not have a background position, otherwise the background will
             // be visible before the animation has been initiated.
             if (this.params.layerTwoAnimation === 'enabled' && isEnhanced && !isIE9OrLess) {
                 bonzo(this.layer2).css('background-position', '');
             }
+
+            if (this.scrollType === 'fixed') {
+                fastdom.write(function () {
+                    bonzo(this.scrollingBg).css('background-attachment', 'fixed');
+                }, this)
+            }
+
         }, this);
 
         if (templateOptions.scrollbg && hasScrollEnabled) {
@@ -94,9 +102,7 @@ define([
     };
 
     FabricV1.prototype.updateBgPosition = function () {
-        var scrollType = this.params.backgroundImagePType;
-
-        if (scrollType === 'parallax') {
+        if (this.scrollType === 'parallax') {
             var scrollAmount = Math.ceil((window.pageYOffset - this.$adSlot.offset().top) * 0.3 * -1) + 20;
             fastdom.write(function () {
                 bonzo(this.scrollingBg)
@@ -104,13 +110,6 @@ define([
                     .css('background-position', '50% ' + scrollAmount + '%');
             }, this);
         }
-
-        if (scrollType === 'fixed') {
-            fastdom.write(function () {
-                bonzo(this.scrollingBg).css('background-attachment', 'fixed');
-            }, this)
-        }
-
         this.layer2Animation();
     };
 
