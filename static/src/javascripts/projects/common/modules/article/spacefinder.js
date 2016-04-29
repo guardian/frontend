@@ -156,14 +156,10 @@ define([
     }
 
     function getReady(body) {
-        if (config.switches.viewability) {
-            return Promise.race([
-                new Promise(expire),
-                Promise.all([onImagesLoaded(body), onRichLinksUpgraded(body)])
-            ]);
-        }
-
-        return Promise.resolve(true);
+        return Promise.race([
+            new Promise(expire),
+            Promise.all([onImagesLoaded(body), onRichLinksUpgraded(body)])
+        ]);
     }
 
     // Rather than calling this directly, use spaceFiller to inject content into the page.

@@ -141,7 +141,6 @@ define([
                     return fn(arg);
                 };
 
-                config.switches.viewability = true;
                 detect.getBreakpoint = function () {return 'tablet';};
 
                 articleBodyAdverts.init().then(function () {
@@ -169,45 +168,26 @@ define([
                 config.page.hasInlineMerchandise = false; // exclude IM components from count
             });
 
-            describe('When viewability enabled', function () {
-                beforeEach(function () {
-                    config.switches.viewability = true;
-                });
-
-                describe('On mobiles and desktops', function () {
-                    it('inserts up to ten adverts', function (done) {
-                        articleBodyAdverts.init().then(function () {
-                            expect(spaceFillerStub.callCount).toBe(10);
-                            done();
-                        });
-                    });
-
-                    it('inserts the third+ adverts with greater vertical spacing', function (done) {
-                        // We do not want the same ad-density on long-read
-                        // articles that we have on shorter pieces
-                        articleBodyAdverts.init().then(function () {
-                            var longArticleInsertionCalls = spaceFillerStub.args.slice(2);
-                            var longArticleInsertionRules = longArticleInsertionCalls.map(function (call) {
-                                return call[0];
-                            });
-                            longArticleInsertionRules.forEach(function (ruleset) {
-                                var adSlotSpacing = ruleset.selectors[' .ad-slot'];
-                                expect(adSlotSpacing).toEqual({minAbove: 1300, minBelow: 1300});
-                            });
-                            done();
-                        });
-                    });
-                });
-            });
-
-            describe('When viewability disabled', function () {
-                beforeEach(function () {
-                    config.switches.viewability = false;
-                });
-
-                it('tries to add two', function (done) {
+            describe('On mobiles and desktops', function () {
+                it('inserts up to ten adverts', function (done) {
                     articleBodyAdverts.init().then(function () {
-                        expect(spaceFillerStub.callCount).toBe(2);
+                        expect(spaceFillerStub.callCount).toBe(10);
+                        done();
+                    });
+                });
+
+                it('inserts the third+ adverts with greater vertical spacing', function (done) {
+                    // We do not want the same ad-density on long-read
+                    // articles that we have on shorter pieces
+                    articleBodyAdverts.init().then(function () {
+                        var longArticleInsertionCalls = spaceFillerStub.args.slice(2);
+                        var longArticleInsertionRules = longArticleInsertionCalls.map(function (call) {
+                            return call[0];
+                        });
+                        longArticleInsertionRules.forEach(function (ruleset) {
+                            var adSlotSpacing = ruleset.selectors[' .ad-slot'];
+                            expect(adSlotSpacing).toEqual({minAbove: 1300, minBelow: 1300});
+                        });
                         done();
                     });
                 });

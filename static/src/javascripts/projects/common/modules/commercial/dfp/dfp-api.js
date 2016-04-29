@@ -123,7 +123,7 @@ define([
             stickyMpu($adSlot);
         },
         '300,250': function (event, $adSlot) {
-            if (config.switches.viewability && $adSlot.hasClass('ad-slot--right')) {
+            if ($adSlot.hasClass('ad-slot--right')) {
                 var mobileAdSizes = $adSlot.attr('data-mobile');
                 if (mobileAdSizes && mobileAdSizes.indexOf('300,251') > -1) {
                     stickyMpu($adSlot);
@@ -574,7 +574,7 @@ define([
 
     function shouldLazyLoad() {
         // We do not want lazy loading on pageskins because it messes up the roadblock
-        return config.switches.viewability && !(config.page.hasPageSkin && detect.getBreakpoint() === 'wide');
+        return !(config.page.hasPageSkin && detect.getBreakpoint() === 'wide');
     }
 
     function getCreativeIDs() {
