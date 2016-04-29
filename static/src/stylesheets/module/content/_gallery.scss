@@ -261,7 +261,7 @@
 
         @include mq(tablet) {
             margin-left: gs-span(3) + $gs-gutter;
-            margin-right: -$gs-gutter;
+            margin-right: -$gs-gutter/2;
         }
     }
 
