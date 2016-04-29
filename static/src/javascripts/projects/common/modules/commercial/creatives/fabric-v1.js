@@ -81,9 +81,7 @@ define([
             }
 
             if (this.scrollType === 'fixed') {
-                fastdom.write(function () {
-                    bonzo(this.scrollingBg).css('background-attachment', 'fixed');
-                }, this)
+                bonzo(this.scrollingBg).css('background-attachment', 'fixed');
             }
 
         }, this);
