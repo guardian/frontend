@@ -8,7 +8,7 @@
     widths: layout.WidthsByBreakpoint =  MainMedia.inline,
     imageAltText: String,
     isMain: Boolean = false,
-    isImmersiveImage: Boolean = false,
+    isImmersiveMainMedia: Boolean = false,
     amp: Boolean = false
 )
 
@@ -25,11 +25,13 @@
     }
 } else {
 
-    @picture.largestImage.map{ largestImage =>
-        <div
-        class="u-responsive-ratio@if(isFeature && isShowcase) { u-responsive-ratio--letterbox}"
-            @if(isFeature && isShowcase) {} else {style="padding-bottom: @{"%.2f".format(100 * largestImage.height.toDouble / largestImage.width)}%"}
-        >
+    @if(!isImmersiveMainMedia) {
+        @picture.largestImage.map{ largestImage =>
+            <div
+            class="u-responsive-ratio@if(isFeature && isShowcase) { u-responsive-ratio--letterbox}"
+                @if(isFeature && isShowcase) {} else {style="padding-bottom: @{"%.2f".format(100 * largestImage.height.toDouble / largestImage.width)}%"}
+            >
+        }
     }
 
     <picture>
@@ -47,13 +49,15 @@
 
         <!--[if IE 9]></video><![endif]-->
 
-        <img class="@if(isMain) {maxed responsive-img} else {gu-image} @if(isImmersiveImage) {immersive-main-media__img}"
+        <img class="@if(isMain) {maxed responsive-img} else {gu-image} @if(isImmersiveMainMedia) {immersive-main-media__img}"
         itemprop="contentUrl"
         alt="@imageAltText"
         src="@ImgSrc.getFallbackUrl(picture)" />
     </picture>
 
-    @picture.largestImage.map{ largestImage =>
-        </div>
+    @if(!isImmersiveMainMedia) {
+        @picture.largestImage.map{ largestImage =>
+            </div>
+        }
     }
 }
