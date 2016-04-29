@@ -377,6 +377,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object faciatool {
+    lazy val crossAccountSourceBucket = configuration.getMandatoryStringProperty("aws.cmsFronts.frontCollections.bucket")
+    lazy val sameAccountSourceBucket = configuration.getMandatoryStringProperty("aws.bucket")
+    lazy val outputBucket = configuration.getMandatoryStringProperty("aws.bucket")
+
     lazy val frontPressCronQueue = configuration.getStringProperty("frontpress.sqs.cron_queue_url")
     lazy val frontPressToolQueue = configuration.getStringProperty("frontpress.sqs.tool_queue_url")
     lazy val frontPressStatusNotificationStream = configuration.getStringProperty("frontpress.kinesis.status_notification_stream")
@@ -398,6 +402,32 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       Try(configuration.getStringProperty("admin.pressjob.low.push.rate.inminutes").get.toInt)
         .getOrElse(60)
 
+    lazy val stsRoleToAssume = configuration.getStringProperty("aws.cmsFronts.account.role")
+
+    def crossAccountMandatoryCredentials: AWSCredentialsProvider =
+      crossAccountCredentials.getOrElse(throw new BadConfigurationException("AWS credentials for cross account are not configured"))
+
+    lazy val crossAccountCredentials: Option[AWSCredentialsProvider] = faciatool.stsRoleToAssume.flatMap { role =>
+      val provider = new AWSCredentialsProviderChain(
+        new ProfileCredentialsProvider("cmsFronts"),
+        new STSAssumeRoleSessionCredentialsProvider(role, "frontend")
+      )
+
+      // this is a bit of a convoluted way to check whether we actually have credentials.
+      // I guess in an ideal world there would be some sort of isConfigued() method...
+      try {
+        val creds = provider.getCredentials
+        Some(provider)
+      } catch {
+        case ex: AmazonClientException =>
+          log.error("amazon client cross account exception", ex)
+
+          // We really, really want to ensure that PROD is configured before saying a box is OK
+          if (Play.isProd) throw ex
+          // this means that on dev machines you only need to configure keys if you are actually going to use them
+          None
+      }
+    }
   }
 
   object r2Press {
