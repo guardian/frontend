@@ -8,7 +8,7 @@
     @event.mainPicture.map { picture =>
         @Item300.bestFor(picture.images).map { url =>
             <div class="advert__image-container">
-                <img class="advert__image" src="@url">
+                <img class="advert__image" src="@url" alt>
             </div>
         }
     }
