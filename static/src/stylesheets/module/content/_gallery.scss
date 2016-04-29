@@ -363,6 +363,34 @@
 
     // TODO: Replace all media tones instead of overwriting the defaults
     &.tonal--tone-media {
+        background-color: $multimedia-support-5;
+
+
+        // TODO: Move this to the proper place once changes are live
+        .meta__twitter,
+        .meta__email {
+            margin-top: $gs-baseline/4;
+            margin-bottom: $gs-baseline;
+
+            & a {
+                color: $neutral-3;
+                background-color: $neutral-1;
+
+                &:hover {
+                    background-color: darken($neutral-1, 5%);
+                }
+
+                .inline-tone-fill {
+                    fill: $neutral-3;
+                }
+            }
+        }
+
+        // TODO: Make this the default for all media tones once changes are live
+        .fc-container__inner,
+        .fc-slice__item+.fc-slice__item:before {
+            border-color: $neutral-1;
+        }
 
         // Overwriting media tone header so that you can see the image instead
         .content__headline {
@@ -648,38 +676,6 @@
                     background: rgba($neutral-1, .15);
                 }
             }
-        }
-    }
-
-    // Make related content the right colour.
-    .tonal--tone-media {
-        background-color: $multimedia-support-5;
-
-
-        // TODO: Move this to the proper place once changes are live
-        .meta__twitter,
-        .meta__email {
-            margin-top: $gs-baseline/4;
-            margin-bottom: $gs-baseline;
-
-            & a {
-                color: $neutral-3;
-                background-color: $neutral-1;
-
-                &:hover {
-                    background-color: darken($neutral-1, 5%);
-                }
-
-                .inline-tone-fill {
-                    fill: $neutral-3;
-                }
-            }
-        }
-
-        // TODO: Make this the default for all media tones once changes are live
-        .fc-container__inner,
-        .fc-slice__item+.fc-slice__item:before {
-            border-color: $neutral-1;
         }
     }
 }
