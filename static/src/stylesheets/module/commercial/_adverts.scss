@@ -455,8 +455,13 @@
     @include fs-textSans(1);
     color: $neutral-2;
     font-weight: bold;
+    margin-top: $gs-baseline / 2;
     padding-right: $gs-gutter;
     text-align: right;
+
+    .adverts__more + & {
+        margin-top: 0;
+    }
 
     .has-no-flex & {
         clear: both;
