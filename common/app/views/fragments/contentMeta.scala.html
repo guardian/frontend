@@ -33,11 +33,12 @@
     @if(showExtras) {
         <div class="meta__extras">
             <div class="meta__social" data-component="share">
-            @fragments.social(item.sharelinks.pageShares, "top")
+                @fragments.social(item.sharelinks.pageShares, "top", isGallery = mvt.ABGalleryRedesignVariant.shouldShow(item.metadata.contentType))
+                @if(item.content.tags.tags.exists(_.id == "tone/news")) {
+                    @fragments.contentAgeNotice(ContentOldAgeDescriber(item.content))
+                }
             </div>
-            @if(item.content.tags.tags.exists(_.id == "tone/news")) {
-                @fragments.contentAgeNotice(ContentOldAgeDescriber(item.content))
-            }
+
             <div class="meta__numbers modern-visible">
                 <div class="u-h meta__number js-sharecount">
                 </div>
@@ -62,7 +63,7 @@
     @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty)) { content__meta-container--twitter}
     @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty)) { content__meta-container--email}">
 
-    
+
     @if(showBadge && (item.tags.isVideo || item.tags.isAudio || (item.tags.isArticle && !item.commercial.isAdvertisementFeature))) {
         @fragments.commercial.badge(item)
     }

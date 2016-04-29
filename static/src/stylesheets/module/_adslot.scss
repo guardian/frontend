@@ -480,6 +480,20 @@
         min-height: 0;
     }
 }
+.ad-slot--paid-for-badge--gallery {
+    border-top: 1px dotted $neutral-1;
+    border-bottom: 0;
+    padding-top: $gs-baseline / 3;
+
+    @include mq(desktop) {
+        width: gs-span(3);
+        position: absolute;
+    }
+
+    .ad-slot--paid-for-badge__header {
+        font-weight: normal;
+    }
+}
 .ad-slot--paid-for-badge--interactive {
     width: 140px;
     min-height: 135px;

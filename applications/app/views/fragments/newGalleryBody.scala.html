@@ -22,7 +22,7 @@
         @fragments.galleryHeader(gallery)
 
         <div class="content__main tonal__main tonal__main--@toneClass(gallery.item)">
-            <div class="gs-container">
+            <div class="gs-container new-gallery__divider">
                 <div class="content__main-column content__main-column--gallery">
                     @fragments.witnessCallToAction(gallery.item.content)
                     <ul class="gallery">
@@ -49,6 +49,8 @@
             </div>
         </div>
     }
+</div>
+<div class="l-side-margins">
     @fragments.contentFooter(gallery.item, related, "media")
 </div>
 

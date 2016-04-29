@@ -68,7 +68,7 @@
     }
 }
 .l-side-margins--media {
-    @include mq(desktop) {
+    @include mq(tablet) {
         &:after,
         &:before {
             background: rgba(0, 0, 0, .05);
