@@ -15,6 +15,7 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 import campaigns.PersonalInvestmentsCampaign
+import play.api.mvc.RequestHeader
 
 object Commercial {
 
@@ -227,7 +228,7 @@ final case class MetaData (
   description: Option[String] = None,
   rssPath: Option[String] = None,
   contentType: String = "",
-  hasHeader: Boolean = true,
+  shouldHideHeaderAndTopAds: Boolean = false,
   schemaType: Option[String] = None, // Must be one of... http://schema.org/docs/schemas.html
   cacheTime: CacheTime = CacheTime.Default,
   openGraphImages: Seq[String] = Seq(),
@@ -404,6 +405,15 @@ case class CommercialExpiryPage(
   analyticsName: String = "GFE:Gone") extends StandalonePage {
 
   override val metadata: MetaData = MetaData.make(id, section, webTitle, analyticsName, shouldGoogleIndex = false)
+}
+
+case class GalleryPage(
+  gallery: Gallery,
+  related: RelatedContent,
+  index: Int,
+  trail: Boolean)(implicit request: RequestHeader) extends ContentPage {
+  override lazy val item = gallery
+  val showBadge = item.commercial.isSponsored(Some(Edition(request))) || item.commercial.isFoundationSupported || item.commercial.isAdvertisementFeature
 }
 
 case class TagCombiner(

@@ -22,7 +22,7 @@ object ABHeadlinesTestVariant extends TestDefinition(
   Nil,
   "headlines-ab-variant",
   "To test how much of a difference changing a headline makes (variant group)",
-  new LocalDate(2016, 4, 29)
+  new LocalDate(2016, 5, 11)
   ) {
   override def isParticipating(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-hlt").contains("hlt-V") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
@@ -58,7 +58,7 @@ object ABHeadlinesTestControl extends TestDefinition(
   Nil,
   "headlines-ab-control",
   "To test how much of a difference changing a headline makes (control group)",
-  new LocalDate(2016, 4, 29)
+  new LocalDate(2016, 5, 11)
   ) {
   override def isParticipating(implicit request: RequestHeader): Boolean = {
       request.headers.get("X-GU-hlt").contains("hlt-C") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
@@ -149,20 +149,13 @@ object MultiVariateTesting {
 
   sealed case class Variant(name: String)
 
-  object Variant0 extends Variant("variant-0")
-  object Variant1 extends Variant("variant-1")
-  object Variant2 extends Variant("variant-2")
-  object Variant3 extends Variant("variant-3")
-  object Variant4 extends Variant("variant-4")
-  object Variant5 extends Variant("variant-5")
-  object Variant6 extends Variant("variant-6")
-  object Variant7 extends Variant("variant-7")
+  // buckets 0-7 are removed during testing whether having a permanently running server side ab test framework
+  // affects our caching too much - I'll put them back or come up with a new solution once I have some data! John
   object Variant8 extends Variant("variant-8")
   object Variant9 extends Variant("variant-9")
 
   private val allVariants = List(
-    Variant0, Variant1, Variant2, Variant3, Variant4,
-    Variant5, Variant6, Variant7, Variant8, Variant9)
+    Variant8, Variant9)
 
   def getVariant(request: RequestHeader): Option[Variant] = {
     val cdnVariant: Option[String] = request.headers.get("X-GU-mvt-variant")
