@@ -1,4 +1,4 @@
-@(item: model.ContentType, showBadge: Boolean = false)(implicit request: RequestHeader)
+@(item: model.ContentType, page: model.Page, showBadge: Boolean = false)(implicit request: RequestHeader)
 
 <header class="content__head u-cf">
     <div class="gs-container">
@@ -13,7 +13,7 @@
             }
 
             @if(showBadge) {
-                @fragments.commercial.badge(item)
+                @fragments.commercial.badge(item, page)
             }
 
             @if(item.tags.isInteractive && !item.trail.shouldHidePublicationDate) {

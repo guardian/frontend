@@ -6,6 +6,6 @@
     @if(mvt.ABGalleryRedesignVariant.shouldShow(gallery.metadata.contentType)) {
         @fragments.newGalleryBody(gallery, related, index)
     } else {
-        @fragments.galleryBody(gallery.item, related, index)
+        @fragments.galleryBody(gallery.item, gallery, related, index)
     }
 }

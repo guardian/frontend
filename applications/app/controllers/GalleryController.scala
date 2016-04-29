@@ -2,14 +2,12 @@ package controllers
 
 import com.gu.contentapi.client.model.v1.{Content => ApiContent, ItemResponse}
 import common._
-import contentapi.ContentApiClient
-import conf._
 import conf.switches.Switches
-import model._
+import contentapi.ContentApiClient
+import model.{GalleryPage, _}
 import play.api.mvc._
 import play.twirl.api.Html
 import views.support.RenderOtherStatus
-import model.GalleryPage
 
 import scala.concurrent.Future
 
@@ -56,7 +54,7 @@ object GalleryController extends Controller with RendersItemResponse with Loggin
     val htmlResponse: (() => Html) = () =>
       views.html.gallery(model, model.related, model.index)
     val jsonResponse = () =>
-      views.html.fragments.galleryBody(model.gallery, model.related, model.index)
+      views.html.fragments.galleryBody(model.gallery, model, model.related, model.index)
     renderFormat(htmlResponse, jsonResponse, model, Switches.all)
   }
 

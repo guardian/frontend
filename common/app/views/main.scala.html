@@ -1,10 +1,10 @@
 @(page: model.Page, projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader)
 @import common.{Edition, Navigation}
 @import conf.switches.Switches._
+@import model.GalleryPage
+@import model.Page.getContent
 @import views.support.Commercial.topBelowNavSlot
 @import views.support.{Commercial, RenderClasses}
-@import model.Page.getContent
-@import model.GalleryPage
 
 @headerAndTopAds(showAdverts: Boolean, edition: Edition, adBelowNav: Boolean) = {
     @if(!(page.metadata.shouldHideHeaderAndTopAds && getContent(page).exists(_.tags.isArticle))) {
@@ -50,7 +50,7 @@
                 }
 
                 @if(page.showBadge && !page.item.commercial.isAdvertisementFeature) {
-                    @fragments.commercial.badge(page.item)
+                    @fragments.commercial.badge(page.item, page)
                 }
 
             </div>

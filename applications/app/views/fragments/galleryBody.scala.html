@@ -1,4 +1,4 @@
-@(gallery: model.Gallery, related: model.RelatedContent, index: Int)(implicit request: RequestHeader)
+@(gallery: model.Gallery, page: model.Page, related: model.RelatedContent, index: Int)(implicit request: RequestHeader)
 @import common.{Edition, LinkTo}
 @import layout.ContentWidths.GalleryMedia
 @import views.support.TrailCssClasses.toneClass
@@ -18,12 +18,12 @@
             @fragments.guBand()
         }
 
-        @fragments.headTonal(gallery, gallery.commercial.isSponsored(Some(Edition(request))) || gallery.commercial.isFoundationSupported || gallery.commercial.isAdvertisementFeature)
+        @fragments.headTonal(gallery, page, gallery.commercial.isSponsored(Some(Edition(request))) || gallery.commercial.isFoundationSupported || gallery.commercial.isAdvertisementFeature)
 
         <div class="content__main tonal__main tonal__main--@toneClass(gallery) gs-container">
             <div class="content__main-column content__main-column--gallery">
                 @fragments.witnessCallToAction(gallery.content)
-                @fragments.contentMeta(gallery)
+                @fragments.contentMeta(gallery, page)
                 <ul class="gallery2">
                 @gallery.lightbox.largestCrops.zipWithRowInfo.map { case (image, row) =>
                     @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum, gallery.lightbox.imageContainer(row.rowNum - 1))
