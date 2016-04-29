@@ -1,4 +1,5 @@
-@(content: model.ContentType)(implicit request: RequestHeader)
+@* page param will become required once badge source has switched over to capi *@
+@(content: model.ContentType, optPage: Option[model.Page] = None)(implicit request: RequestHeader)
 @import common.Edition
 @import conf.switches.Switches.{SponsoredSwitch, staticBadgesSwitch}
 @import model.{Article, Audio, Gallery, Interactive, Video}
@@ -6,8 +7,10 @@
 
 @if(staticBadgesSwitch.isSwitchedOn) {
 
-    @for(branding <- content.findBranding(Edition(request))) {
-        @contentLogo(branding)
+    @for(page <- optPage) {
+        @for(branding <- page.branding(Edition(request))) {
+            @contentLogo(branding)
+        }
     }
 
 } else {
