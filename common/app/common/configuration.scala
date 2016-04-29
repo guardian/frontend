@@ -290,6 +290,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     private lazy val dfpRoot = s"$commercialRoot/dfp"
     lazy val dfpPaidForTagsDataKey = s"$dfpRoot/paid-for-tags-v4.json"
     lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"
+    lazy val dfpHighMerchandisingTagsDataKey = s"$dfpRoot/high-merchandising-tags.json"
     lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v6.json"
     lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v4.json"
     lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"
