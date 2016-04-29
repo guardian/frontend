@@ -7,7 +7,8 @@ define([
     'common/modules/commercial/dfp/dfp-api',
     'common/modules/commercial/track-ad',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/commercial/commercial-features'
+    'common/modules/commercial/commercial-features',
+    'lodash/functions/memoize'
 ], function (
     Promise,
     $,
@@ -17,7 +18,8 @@ define([
     dfp,
     trackAd,
     createAdSlot,
-    commercialFeatures
+    commercialFeatures,
+    memoize
 ) {
 
     /* bodyAds is a counter that keeps track of the number of inline MPUs
@@ -111,8 +113,8 @@ define([
     // the decoupling between the spacefinder algorithm and the targeting
     // in DFP: we can only know if a slot can be removed after we have
     // received a response from DFP
-    function waitForMerch() {
-        trackAd('dfp-ad--im').then(function (isLoaded) {
+    var waitForMerch = memoize(function waitForMerch() {
+        return trackAd('dfp-ad--im').then(function (isLoaded) {
             return isLoaded ? 0 : addArticleAds(2, getRules());
         }).then(function (countAdded) {
             return countAdded === 2 ?
@@ -123,7 +125,7 @@ define([
                 $('.ad-slot--inline').each(dfp.addSlot);
             }
         });
-    }
+    });
 
     function init() {
         if (!commercialFeatures.articleBodyAdverts) {
@@ -152,6 +154,10 @@ define([
     }
 
     return {
-        init: init
+        init: init,
+
+        '@@tests': {
+            waitForMerch: waitForMerch
+        }
     };
 });
