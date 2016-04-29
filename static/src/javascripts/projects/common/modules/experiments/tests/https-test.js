@@ -4,7 +4,7 @@ define([
     cookies
 ) {
     return function () {
-        this.id = 'https-test';
+        this.id = 'HttpsTest';
         this.start = '2016-04-28';
         this.expiry = '2016-05-26';
         this.author = 'Justin Pinner';
