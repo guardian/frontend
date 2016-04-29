@@ -64,6 +64,11 @@ object CommercialController extends Controller with Logging with AuthLogging wit
     NoCache(Ok(views.html.commercial.inlineMerchandisingTargetedTags(environment.stage, report)))
   }
 
+  def renderHighMerchandisingTargetedTags = AuthActions.AuthActionTest { implicit request =>
+    val report = Store.getDfpHighMerchandisingTargetedTagsReport()
+    NoCache(Ok(views.html.commercial.highMerchandisingTargetedTags(environment.stage, report)))
+  }
+
   def renderCreativeTemplates = AuthActions.AuthActionTest { implicit request =>
     val emptyTemplates = CreativeTemplateAgent.get
     val creatives = Store.getDfpTemplateCreatives
