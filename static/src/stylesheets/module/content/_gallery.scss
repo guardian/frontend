@@ -222,7 +222,7 @@
     }
 }
 
-.content__meta-container--info {
+.new-gallery__meta-container {
     &:before {
         content: '';
         border-top: 1px solid $neutral-1;
@@ -232,7 +232,7 @@
     }
 }
 
-.content .content-divider-gallery {
+.new-gallery__divider {
     border-top: 1px solid $neutral-1;
     padding-top: $gs-baseline / 2;
     margin-top: $gs-baseline;
