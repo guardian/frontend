@@ -1,7 +1,6 @@
 @(env: String, pageSkinnedAdUnits: common.dfp.PageSkinSponsorshipReport)(implicit request: RequestHeader)
-@import tools.DfpLink
-@import tools.SiteLink
 @import common.dfp._
+@import tools.{DfpLink, SiteLink}
 
 @flaggableProperty(label: String, values: Seq[String], textWhenEmpty: String, flagErrors: Boolean) = {
     @if(values.isEmpty) {
@@ -46,17 +45,16 @@
         <li>The Line Item Placeholder should target the <em>Out of Page (1x1 pixel)</em> slot.</li>
         <li>The viewport must be at least 1300px wide.</li>
     </ol>
-    <p>Some of these are not targetting fronts. They are just here so you can work it out.</p>
 
     <h2>Pageskinned Ad Units</h2>
     <p>Last updated: @pageSkinnedAdUnits.updatedTimeStamp</p>
 
-    <h3>Deliverable without test cookie</h3>
+    <h3>Live Deliverable</h3>
     <ol>
     @for(sponsorship <- pageSkinnedAdUnits.deliverableSponsorships) {@listItem(sponsorship)}
     </ol>
 
-    <h3>Deliverable with test cookie</h3>
+    <h3>Test Deliverable (behind cookie)</h3>
     @if(pageSkinnedAdUnits.testSponsorships.isEmpty) {
       <p>None</p>
     } else {

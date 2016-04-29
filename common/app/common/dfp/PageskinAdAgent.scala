@@ -10,17 +10,22 @@ trait PageskinAdAgent {
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship]
 
   private def findSponsorship(adUnitWithoutRoot: String, edition: Edition): Option[PageSkinSponsorship] = {
-    val adUnitWithRoot = s"$dfpAdUnitRoot/$adUnitWithoutRoot"
 
-    def targetsAdUnitAndMatchesTheEdition(sponsorship: PageSkinSponsorship) = {
-      val adUnits = sponsorship.adUnits map (_.stripSuffix("/ng"))
-      adUnits.contains(adUnitWithRoot) &&
-        sponsorship.editions.contains(edition) &&
-        !sponsorship.isR2Only
-    }
+    if (PageSkin.isValidAdUnit(adUnitWithoutRoot)) {
+      val adUnitWithRoot = s"$dfpAdUnitRoot/$adUnitWithoutRoot"
 
-    pageSkinSponsorships.find { sponsorship =>
-     targetsAdUnitAndMatchesTheEdition(sponsorship)
+      def targetsAdUnitAndMatchesTheEdition(sponsorship: PageSkinSponsorship) = {
+        val adUnits = sponsorship.adUnits map (_.stripSuffix("/ng"))
+        adUnits.contains(adUnitWithRoot) &&
+          sponsorship.editions.contains(edition) &&
+          !sponsorship.isR2Only
+      }
+
+      pageSkinSponsorships.find { sponsorship =>
+        targetsAdUnitAndMatchesTheEdition(sponsorship)
+      }
+    } else {
+      None
     }
   }
 

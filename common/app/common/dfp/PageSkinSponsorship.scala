@@ -45,6 +45,24 @@ object PageSkinSponsorshipReport {
 
 }
 
+object PageSkin {
+
+  def isValidAdUnit(adUnitPath: String) = getRelativePath(adUnitPath).isDefined
+
+  def getRelativePath(adUnitPath: String): Option[String] = {
+
+    def trimPath(dropFromRight: Int) = adUnitPath.split("/").drop(1).dropRight(dropFromRight).mkString("/")
+
+    if (adUnitPath endsWith "/front/ng")
+      Some(trimPath(2))
+    else if (adUnitPath endsWith "/front")
+      Some(trimPath(1))
+    else
+      None
+  }
+
+
+}
 
 object PageSkinSponsorshipReportParser extends Logging {
 
