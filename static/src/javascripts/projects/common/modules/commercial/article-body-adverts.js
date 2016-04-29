@@ -3,9 +3,9 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
-    'common/utils/mediator',
     'common/modules/article/space-filler',
     'common/modules/commercial/dfp/dfp-api',
+    'common/modules/commercial/track-ad',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features'
 ], function (
@@ -13,9 +13,9 @@ define([
     $,
     config,
     detect,
-    mediator,
     spaceFiller,
     dfp,
+    trackAd,
     createAdSlot,
     commercialFeatures
 ) {
@@ -111,17 +111,18 @@ define([
     // the decoupling between the spacefinder algorithm and the targeting
     // in DFP: we can only know if a slot can be removed after we have
     // received a response from DFP
-    function onAdRendered(event) {
-        if (event.slot.getSlotElementId() === 'dfp-ad--im' && event.isEmpty) {
-            mediator.off('modules:commercial:dfp:rendered', onAdRendered);
-            return addArticleAds(2, getRules()).then(function (countAdded) {
-                return countAdded === 2 ?
-                    addArticleAds(8, getLongArticleRules()) :
-                    countAdded;
-            }).then(function () {
+    function waitForMerch() {
+        trackAd('dfp-ad--im').then(function (isLoaded) {
+            return isLoaded ? 0 : addArticleAds(2, getRules());
+        }).then(function (countAdded) {
+            return countAdded === 2 ?
+                addArticleAds(8, getLongArticleRules()) :
+                countAdded;
+        }).then(function (countAdded) {
+            if (countAdded > 0) {
                 $('.ad-slot--inline').each(dfp.addSlot);
-            });
-        }
+            }
+        });
     }
 
     function init() {
@@ -140,7 +141,7 @@ define([
         return config.switches.viewability ?
             addArticleAds(2, rules).then(function (countAdded) {
                 if (config.page.hasInlineMerchandise && countAdded === 0) {
-                    mediator.on('modules:commercial:dfp:rendered', onAdRendered);
+                    waitForMerch();
                 }
 
                 return countAdded === 2 ?
