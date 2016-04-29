@@ -55,7 +55,7 @@ define([
                 }
 
                 if (hasFabricMobileAd && index === 0) {
-                    // It's mobile, so we needn't check for an adSlice
+                    // it's mobile, so we needn't check for an adSlice
                     return true;
                 }
 
