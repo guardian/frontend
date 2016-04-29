@@ -71,7 +71,7 @@ object CardContent {
       image = item.trail.trailPicture,
       fallbackImageUrl = item.trail.trailPicture flatMap ImgSrc.getFallbackUrl,
       targetUrl = {
-        val url = item.metadata.url
+        val url = item.metadata.webUrl
         clickMacro map { cm => s"$cm$url" } getOrElse url
       },
       branding = None
