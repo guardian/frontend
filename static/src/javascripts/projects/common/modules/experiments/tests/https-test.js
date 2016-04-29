@@ -18,17 +18,21 @@ define([
         this.hypothesis = 'We believe that most of our content should serve successfully over https, with a few known exceptions.';
 
         this.canRun = function () {
-            return !cookies.get('https_opt_in');
+            return document.location.href.startsWith('http:') && !cookies.get('https_opt_in');
         };
 
         this.variants = [
             {
-                id: 'mvt-https',
+                id: 'mvt-https-in',
                 test: function () {
-                    if(document.location.href.startsWith('http:')) {
-                        document.cookie = 'https_opt_in=true; expires=Thu, 26 May 2016 22:59:59 GMT';
-                        document.location = document.location.href.replace('http:','https:');
-                    }
+                    document.cookie = 'https_opt_in=true; expires=Thu, 26 May 2016 22:59:59 GMT';
+                    document.location = document.location.href.replace('http:','https:');
+                }
+            },
+            {
+                id: 'mvt-https-out',
+                test: function () {
+                    document.cookie = 'https_opt_in=false; expires=Thu, 26 May 2016 22:59:59 GMT';
                 }
             }
         ];
