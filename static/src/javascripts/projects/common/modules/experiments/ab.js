@@ -6,7 +6,7 @@ define([
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/dummy-test',
-    'common/modules/experiments/tests/https_test',
+    'common/modules/experiments/tests/https-test',
     'common/modules/experiments/tests/fake-series-hide-sensitive',
     'common/modules/experiments/tests/fake-series-show-sensitive',
     'common/modules/experiments/tests/fronts-on-articles2',
