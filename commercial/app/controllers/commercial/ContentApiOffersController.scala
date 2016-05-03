@@ -108,7 +108,7 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
             )
           }
         } else {
-          format.result(views.html.contentapi.itemV2(
+          format.result(views.html.contentapi.item(
             CardContent.fromContentItem(contents.head, optClickMacro, true),
             optLogo,
             optCapiTitle,
