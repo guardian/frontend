@@ -6,7 +6,7 @@
 <header class="content__head is-fixed-height tonal__head tonal__head--@toneClass(gallery.item)">
     @* Hidden because we visually show this data in the head, but needed
     here for SEO. *@
-    <h1 class="is-hidden" itemprop="headline" class="is-hidden">@Html(gallery.item.trail.headline)</h1>
+    <h1 class="is-hidden" itemprop="headline">@Html(gallery.item.trail.headline)</h1>
 
     <div class="gs-container">
         @if(gallery.showBadge && !gallery.item.commercial.isAdvertisementFeature) {
