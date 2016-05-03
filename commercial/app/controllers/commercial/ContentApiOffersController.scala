@@ -108,37 +108,20 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
             )
           }
         } else {
-          if(conf.switches.Switches.v2CapiSingleTemplate.isSwitchedOn) {
-            format.result(views.html.contentapi.itemV2(
-              CardContent.fromContentItem(contents.head, optClickMacro, true),
-              optLogo,
-              optCapiTitle,
-              optCapiLink,
-              optCapiAbout,
-              optCapiButtonText,
-              optCapiReadMoreUrl,
-              optCapiReadMoreText,
-              optSponsorTypeRefactor,
-              optSponsorLabel,
-              optClickMacro,
-              omnitureId
-            ))
-          } else {
-            format.result(views.html.contentapi.item(
-              contents.head,
-              optLogo,
-              optCapiTitle,
-              optCapiLink,
-              optCapiAbout,
-              optCapiButtonText,
-              optCapiReadMoreUrl,
-              optCapiReadMoreText,
-              optSponsorType,
-              optSponsorLabel,
-              optClickMacro,
-              optOmnitureId)
-            )
-          }
+          format.result(views.html.contentapi.itemV2(
+            CardContent.fromContentItem(contents.head, optClickMacro, true),
+            optLogo,
+            optCapiTitle,
+            optCapiLink,
+            optCapiAbout,
+            optCapiButtonText,
+            optCapiReadMoreUrl,
+            optCapiReadMoreText,
+            optSponsorTypeRefactor,
+            optSponsorLabel,
+            optClickMacro,
+            omnitureId
+          ))
         }
       }
     }
