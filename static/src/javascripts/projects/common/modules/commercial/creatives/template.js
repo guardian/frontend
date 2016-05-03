@@ -1,11 +1,8 @@
 define([
     'Promise',
-    'common/utils/$',
-    'common/utils/config',
     'common/utils/template',
     'common/utils/fastdom-promise',
     'common/views/svgs',
-    'common/modules/ui/toggles',
     'common/modules/commercial/creatives/template-preprocessor',
 
     // require templates, so they're bundled up as part of the build
@@ -21,20 +18,11 @@ define([
     'text!common/views/commercial/creatives/manual-container.html'
 ], function (
     Promise,
-    $,
-    config,
     template,
     fastdom,
     svgs,
-    Toggles,
     templatePreprocessor
 ) {
-    function createToggle(el) {
-        if (el.querySelector('.popup__toggle')) {
-            new Toggles(el).init();
-        }
-    }
-
     /**
      * Create simple templated creatives
      *
@@ -67,11 +55,6 @@ define([
         this.params.logoguardian = svgs('logoguardian');
         this.params.marque36iconCreativeMarque = svgs('marque36icon', ['creative__marque']);
         this.params.logoFeatureLabel = 'Paid for by';
-    };
-
-    Template.prototype.postLoadEvents = {
-        'manual-single': createToggle,
-        'manual-multiple': createToggle
     };
 
     Template.prototype.create = function () {
