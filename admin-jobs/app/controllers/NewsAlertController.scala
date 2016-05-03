@@ -7,6 +7,7 @@ import authentication.AuthenticationSupport
 import common.ExecutionContexts
 import conf.Configuration
 import controllers.BreakingNews.{BreakingNewsUpdater, GetAlertsRequest, NewNotificationRequest}
+import model.Cached.RevalidatableResult
 import model.{Cors, Cached}
 import models.NewsAlertNotification
 import play.api.libs.json.{JsValue, Json}
@@ -34,7 +35,7 @@ trait NewsAlertController extends Controller with AuthenticationSupport with Exe
 
   def alerts() = Action.async { implicit request =>
     (breakingNewsUpdater ? GetAlertsRequest).mapTo[Option[JsValue]].map {
-      case Some(json) => Cached(30)(Cors(Ok(json)))
+      case Some(json) => Cors(Cached(30)(RevalidatableResult.Ok(json)))
       case None => NoContent
     }.recover{
       case _ => InternalServerError(Json.toJson(NewsAlertError("Error while accessing alerts")))

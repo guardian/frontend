@@ -4,6 +4,7 @@ import common._
 import contentapi.ContentApiClient
 import contentapi.ContentApiClient.getResponse
 import contentapi.Paths
+import model.Cached.WithoutRevalidationResult
 import model._
 import org.joda.time.DateTime
 import play.api.mvc.{Action, Controller, RequestHeader}
@@ -28,7 +29,7 @@ object LatestIndexController extends Controller with ExecutionContexts with impl
           MovedPermanently(s"$url/all")
         case _ => NotFound
       }
-    }.getOrElse(NotFound)}.map(Cached(300)(_))
+    }.getOrElse(NotFound)}.map(r => Cached(300)(WithoutRevalidationResult(r)))
   }
 
   // this is simply the latest by date. No lead content, editors picks, or anything else

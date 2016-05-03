@@ -85,7 +85,7 @@ final case class Content(
   lazy val shortUrlId = fields.shortUrl.replace("http://gu.com", "")
   lazy val shortUrlPath = shortUrlId
   lazy val discussionId = Some(shortUrlPath)
-  lazy val isImmersive = fields.displayHint.contains("immersive")
+  lazy val isImmersive = fields.displayHint.contains("immersive") || metadata.contentType.toLowerCase == "gallery"
 
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {
@@ -181,7 +181,8 @@ final case class Content(
     ("wordCount", JsNumber(wordCount)),
     ("references", JsArray(javascriptReferences)),
     ("showRelatedContent", JsBoolean(if (tags.isUSMinuteSeries) { false } else showInRelated)),
-    ("productionOffice", JsString(productionOffice.getOrElse("")))
+    ("productionOffice", JsString(productionOffice.getOrElse(""))),
+    ("isImmersive", JsBoolean(isImmersive))
   )
 
   // Dynamic Meta Data may appear on the page for some content. This should be used for conditional metadata.
@@ -399,7 +400,7 @@ object Article {
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       twitterPropertiesOverrides = twitterProperties,
-      hasHeader = content.tags.isUSMinuteSeries || content.isImmersive
+      shouldHideHeaderAndTopAds = content.tags.isUSMinuteSeries || content.isImmersive
     )
   }
 
@@ -788,7 +789,6 @@ object Interactive {
       contentType = contentType,
       analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
-      hasHeader = content.isImmersive,
       javascriptConfigOverrides = Map("contentType" -> JsString(contentType)),
       twitterPropertiesOverrides = twitterProperties
     )

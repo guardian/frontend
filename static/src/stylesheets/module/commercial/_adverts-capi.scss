@@ -109,6 +109,10 @@
     .adverts__row > * + *::before {
         content: none;
     }
+
+    .adverts__badge__help {
+        color: $neutral-2-contrasted;
+    }
 }
 
 .advert--capi {

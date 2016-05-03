@@ -1,0 +1,23 @@
+@(job: model.commercial.jobs.Job,
+  clickMacro: Option[String],
+  optAdvertClassNames: Option[Seq[String]] = None)
+
+<a class="advert advert--job advert--large advert--landscape
+    @optAdvertClassNames.map { classNames => @classNames.map(c => s"advert--$c").mkString(" ")}
+    " href="@clickMacro@job.listingUrl" data-link-name="merchandising-jobs-v0_2_2014-04-30-low-job-@{job.id}">
+    <div class="advert__text">
+        <h2 class="advert__title" itemprop="name">@job.title</h2>
+        <div class="advert__meta">
+            <strong>@job.recruiterName</strong>
+        </div>
+        <div class="advert__meta">
+            @job.locationDescription - @job.shortSalaryDescription
+        </div>
+        <span class="advert__more button button--small">
+            Apply now @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
+        </span>
+    </div>
+    <div class="advert__image-container">
+        <img class="advert__image" src="@job.recruiterLogoUrl">
+    </div>
+</a>

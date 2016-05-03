@@ -235,7 +235,7 @@ trait CommercialSwitches {
     "fixed-top-above-nav",
     "Fixes size of top-above-nav ad slot on fronts.",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 28),
+    sellByDate = new LocalDate(2016, 5, 6),
     exposeClientSide = false
   )
 
@@ -264,42 +264,6 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = new LocalDate(2016, 5, 31),
     exposeClientSide = true
-  )
-
-  val v2JobsTemplate = Switch(
-    SwitchGroup.CommercialRefactoring,
-    "v2-jobs-template",
-    "Jobs component using template v2",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = false
-  )
-
-  val v2MasterclassesTemplate = Switch(
-    SwitchGroup.CommercialRefactoring,
-    "v2-masterclasses-template",
-    "Masterclasses component using template v2",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = false
-  )
-
-  val v2BooksTemplate = Switch(
-    SwitchGroup.CommercialRefactoring,
-    "v2-books-template",
-    "Books component using template v2",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = false
-  )
-
-  val v2TravelTemplate = Switch(
-    SwitchGroup.CommercialRefactoring,
-    "v2-travel-template",
-    "Travel component using template v2",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = false
   )
 
   val v2SoulmatesTemplate = Switch(
