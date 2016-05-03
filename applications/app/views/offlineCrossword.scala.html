@@ -22,16 +22,6 @@
     our own paths *@
 
     @fragments.analytics.omnitureScript(Some(offlineCrossword.metadata))
-    @if(OfflineCrosswordView.isSwitchedOn) {
-    <script>
-        try {
-            var offlineViews = parseInt(localStorage.getItem('gu.offlineViews')) || 0;
-            localStorage.setItem('gu.offlineViews', offlineViews + 1)
-        } catch (e) {
-            // do nothing
-        }
-    </script>
-    }
 
     @* NOTE the order of these includes is important  *@
     <script>
