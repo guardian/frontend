@@ -52,9 +52,9 @@ object GalleryController extends Controller with RendersItemResponse with Loggin
 
   private def renderGallery(model: GalleryPage)(implicit request: RequestHeader) = {
     val htmlResponse: (() => Html) = () =>
-      views.html.gallery(model, model.related, model.index)
+      views.html.gallery(model)
     val jsonResponse = () =>
-      views.html.fragments.galleryBody(model.gallery, model, model.related, model.index)
+      views.html.fragments.galleryBody(model)
     renderFormat(htmlResponse, jsonResponse, model, Switches.all)
   }
 
