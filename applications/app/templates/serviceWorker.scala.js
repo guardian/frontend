@@ -6,9 +6,6 @@
 /*global self*/
 /*global clients*/
 
-//
-// Offline page
-//
 "use strict";
 
 var staticCacheName = 'static';
@@ -23,7 +20,7 @@ var fetchAll = function (inputs) {
     }));
 };
 
-var cachePageAndAssetResponses = function (jsonResponse, assetResponses) {
+var cacheOfflineCrosswordAndAssetResponses = function (jsonResponse, assetResponses) {
     var cacheName = [getISODate(), staticCacheName].join('-');
     return caches.open(cacheName).then(function (cache) {
         return jsonResponse.clone().json().then(function (jsonResponseJson) {
@@ -43,7 +40,7 @@ var cachePageAndAssetResponses = function (jsonResponse, assetResponses) {
 
 // The JSON contains the HTML and asset versions. We cache the assets at
 // their specified URLs and the page HTML as '/offline-crossword'.
-var updateCache = function () {
+var updateOfflineCrosswordCache = function () {
     // Fetch page and all assets. Iff all responses are OK then cache all assets and page.
     return fetch('/offline-crossword.json').then(function (jsonResponse) {
         if (jsonResponse.ok) {
@@ -52,7 +49,7 @@ var updateCache = function () {
                     var allAssetResponsesOk = assetResponses.every(function (response) { return response.ok; });
 
                     if (allAssetResponsesOk) {
-                        return cachePageAndAssetResponses(jsonResponse, assetResponses);
+                        return cacheOfflineCrosswordAndAssetResponses(jsonResponse, assetResponses);
                     }
                 });
             });
@@ -89,7 +86,7 @@ var isCacheUpdated = function () {
 };
 
 self.addEventListener('install', function (event) {
-    event.waitUntil(updateCache());
+    event.waitUntil(updateOfflineCrosswordCache());
 });
 
 var needCredentialsWorkaround = function (url) {
@@ -105,7 +102,7 @@ this.addEventListener('fetch', function (event) {
     if (doesRequestAcceptHtml(request)) {
         isCacheUpdated().then(function (isUpdated) {
             if (!isUpdated) {
-                updateCache().then(deleteOldCaches);
+                updateOfflineCrosswordCache().then(deleteOldCaches);
             }
         });
     }
@@ -124,7 +121,7 @@ this.addEventListener('fetch', function (event) {
     // https://github.com/guardian/frontend/issues/10936
     var isRequestToDeveloperBlog = url.pathname.match(/^\/info\/developer-blog($|\/.*$)/);
     if (isRootRequest && isRequestToDeveloperBlog && doesRequestAcceptHtml(request)) {
-        // HTML pages fallback to offline page
+        // HTML pages fallback to offline crossword
         event.respondWith(
             fetch(request)
                 .catch(function () {
