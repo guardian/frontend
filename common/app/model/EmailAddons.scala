@@ -62,6 +62,12 @@ case object TheUSMinute extends EmailContent {
   def test(c: ContentType) = c.tags.series.exists(_.id == "us-news/series/the-campaign-minute-2016")
 }
 
+case object USBriefing extends EmailContent {
+  val name = "Guardian US Briefing"
+  val banner = "guardian-us-briefing.png"
+  def test(c: ContentType) = c.tags.series.exists(_.id == "sport/series/thespin")
+}
+
 object EmailAddons {
   private val defaultBanner = "generic.png"
   private val allEmails     = Seq(
@@ -73,7 +79,8 @@ object EmailAddons {
     TheFiver,
     TheSpin,
     MorningBriefing,
-    TheUSMinute)
+    TheUSMinute,
+    USBriefing)
 
   implicit class EmailContentType(c: ContentType) {
     val email = allEmails.find(_.test(c))

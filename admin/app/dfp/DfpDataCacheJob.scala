@@ -165,6 +165,10 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
       Store.putInlineMerchandisingSponsorships(stringify(toJson(
         InlineMerchandisingTargetedTagsReport(now, inlineMerchandisingTargetedTags))))
 
+      val highMerchandisingTargetedTags = data.highMerchandisingTargetedTags
+      Store.putHighMerchandisingSponsorships(stringify(toJson(
+        HighMerchandisingTargetedTagsReport(now, highMerchandisingTargetedTags))))
+
       val pageSkinSponsorships = data.pageSkinSponsorships
       Store.putDfpPageSkinAdUnits(stringify(toJson(PageSkinSponsorshipReport(now,
         pageSkinSponsorships))))

@@ -182,6 +182,14 @@
             float: left;
         }
     }
+
+    //Todo: Replace to content--gallery when gallery redesign goes live
+    .new-gallery & {
+        position: relative;
+        left: 0;
+        border-top: 0;
+        padding: $gs-baseline 0 0;
+    }
 }
 
 .meta__number:not(.u-h) + .meta__number {

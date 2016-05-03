@@ -1,10 +1,9 @@
 package jobs
 
-import common.Logging
-import services.{S3FrontsApi, FrontPressNotification}
-import play.api.libs.json.{JsString, JsObject, JsValue, Json}
-import conf.switches.Switches._
+import com.gu.facia.api.models.{CommercialPriority, EditorialPriority, TrainingPriority}
+import common.{ExecutionContexts, Logging}
 import conf.Configuration
+import services.{ConfigAgent, FrontPressNotification}
 
 sealed trait FrontType
 
@@ -17,37 +16,27 @@ object HighFrequency extends FrontType {
 
 case class CronUpdate(path: String, frontType: FrontType)
 
-object RefreshFrontsJob extends Logging {
-  def getAllCronUpdates: Option[Seq[CronUpdate]] = {
-    val masterConfigJson: Option[JsValue] = S3FrontsApi.getMasterConfig.map(Json.parse)
-    for (json <- masterConfigJson)
-      yield
-      (for {
-        path <- (json \ "fronts").asOpt[Map[String, JsValue]].getOrElse(Map.empty).keys
-    } yield {
-        CronUpdate(path, getFrontType(json, path))
-      }).toSeq
+object RefreshFrontsJob extends Logging with ExecutionContexts {
+  def getAllCronUpdates: Seq[CronUpdate] = {
+    ConfigAgent.getPathIds.map(path => CronUpdate(path, getFrontType(path)))
   }
 
-  def getFrontType(json: JsValue, path: String): FrontType = {
-    lazy val isCommercial: Boolean = (json \ "fronts" \ path \ "priority") == JsString("commercial")
-    lazy val isTraining: Boolean = (json \ "fronts" \ path \ "priority") == JsString("training")
+  def getFrontType(path: String): FrontType = {
     if (HighFrequency.highFrequencyPaths.contains(path))
       HighFrequency
-    else if (isCommercial || isTraining)
-      LowFrequency
     else
-      StandardFrequency
+      ConfigAgent.getFrontPriorityFromConfig(path) match {
+        case Some(EditorialPriority) => StandardFrequency
+        case Some(CommercialPriority) => LowFrequency
+        case Some(TrainingPriority) => LowFrequency
+        case None => LowFrequency
+      }
   }
 
   def runFrequency(frontType: FrontType): Boolean = {
     if (Configuration.aws.frontPressSns.filter(_.nonEmpty).isDefined) {
       log.info(s"Putting press jobs on Facia Cron $frontType")
-
-      for {
-        updates <- getAllCronUpdates
-        update <- updates.filter(_.frontType == frontType)
-      } {
+      for (update <- getAllCronUpdates.filter(_.frontType == frontType)) {
         log.info(s"Pressing $update")
         FrontPressNotification.sendWithoutSubject(update.path)
       }
@@ -63,8 +52,7 @@ object RefreshFrontsJob extends Logging {
   def runAll(): Option[Seq[Unit]] = {
     Configuration.aws.frontPressSns.map(Function.const {
       log.info("Putting press jobs on Facia Cron (MANUAL REQUEST)")
-
-      for {update <- getAllCronUpdates.getOrElse(Nil)}
+      for (update <- getAllCronUpdates)
         yield {
         log.info(s"Pressing $update")
         FrontPressNotification.sendWithoutSubject(update.path)}})
