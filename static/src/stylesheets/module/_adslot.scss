@@ -479,6 +479,17 @@
     .content--media--video & {
         min-height: 0;
     }
+
+    .content--immersive & {
+        @include mq(leftCol) {
+            float: left;
+            margin-left: -158px;
+        }
+
+        @include mq(wide) {
+            margin-left: -238px;
+        }
+    }
 }
 .ad-slot--paid-for-badge--gallery {
     border-top: 1px dotted $neutral-1;
