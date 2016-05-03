@@ -29,9 +29,9 @@ define([
      * * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10021527
      * * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10028127
      */
-    var Template = function ($adSlot, params) {
-        this.$adSlot = $adSlot;
-        this.params  = params;
+    var Template = function (adSlot, params) {
+        this.adSlot = adSlot instanceof HTMLElement ? adSlot : adSlot[0];
+        this.params = params;
 
         if (this.params.Toneclass) {
             this.params.isSoulmates = params.Toneclass.indexOf('soulmates') !== -1;
@@ -84,15 +84,11 @@ define([
                 }
 
                 var creativeHtml = template(creativeTpl, this.params);
-                var $ad = $.create(creativeHtml);
 
-                resolve(fastdom.write(function () {
-                    $ad.appendTo(this.$adSlot);
-                    if (this.postLoadEvents[this.params.creative]) {
-                        this.postLoadEvents[this.params.creative]($ad[0]);
-                    }
-                    return $ad;
-                }, this));
+                fastdom.write(function () {
+                    this.adSlot.insertAdjacentHTML('beforeend', creativeHtml);
+                    resolve();
+                }, this);
             }.bind(this));
         }.bind(this));
     };
