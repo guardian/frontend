@@ -284,7 +284,6 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-
   val v2ManualSingleTemplate = Switch(
     SwitchGroup.CommercialRefactoring,
     "v2-manual-single-template",
@@ -303,7 +302,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-
   val v2CapiSingleTemplate = Switch(
     SwitchGroup.CommercialRefactoring,
     "v2-capi-single-template",
@@ -319,15 +317,6 @@ trait CommercialSwitches {
     "Capi multiple component using template v2",
     safeState = Off,
     sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = false
-  )
-
-  val v2FixedContainerTemplate = Switch(
-    SwitchGroup.CommercialRefactoring,
-    "v2-fixed-container-template",
-    "Fixed paid containers using template v2",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 11),
     exposeClientSide = false
   )
 
