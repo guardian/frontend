@@ -9,17 +9,9 @@ import model._
 import play.api.mvc._
 import play.twirl.api.Html
 import views.support.RenderOtherStatus
+import model.GalleryPage
 
 import scala.concurrent.Future
-
-case class GalleryPage(
-  gallery: Gallery,
-  related: RelatedContent,
-  index: Int,
-  trail: Boolean) extends ContentPage {
-
-  override lazy val item = gallery
-}
 
 object GalleryController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 

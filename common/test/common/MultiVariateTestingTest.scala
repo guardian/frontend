@@ -20,9 +20,9 @@ class MultiVariateTestingTest extends FlatSpec with Matchers {
     TestCases.test1.switch.switchOn
     val testRequest = TestRequest("/uk")
       .withHeaders(
-        "X-GU-mvt-variant" -> "variant-2"
+        "X-GU-mvt-variant" -> "variant-9"
       )
-    MultiVariateTesting.getVariant(testRequest) should be (Some(Variant2))
+    MultiVariateTesting.getVariant(testRequest) should be (Some(Variant9))
     TestCases.isParticipatingInATest(testRequest) should be (true)
     TestCases.getParticipatingTest(testRequest) should be (Some(TestCases.test1))
     TestCases.test1.switch.switchOff
@@ -44,14 +44,14 @@ class MultiVariateTestingTest extends FlatSpec with Matchers {
 
   object TestCases extends Tests {
     object test0 extends TestDefinition(
-      List(Variant0),
+      List(Variant8),
       "test0",
       "an experiment test",
       new LocalDate(2100, 1, 1)
 
     )
     object test1 extends TestDefinition(
-      List(Variant1, Variant2),
+      List(Variant8, Variant9),
       "test1",
       "an experiment test",
       new LocalDate(2100, 1, 1)

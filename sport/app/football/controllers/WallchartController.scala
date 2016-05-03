@@ -1,6 +1,7 @@
 package football.controllers
 
 import feed.Competitions
+import model.Cached.RevalidatableResult
 import play.api.mvc.{ Action, Controller }
 import common.{ExecutionContexts, Logging}
 import model.{Cached, Page}
@@ -20,8 +21,8 @@ object WallchartController extends Controller with Logging with ExecutionContext
       val competitionStages = CompetitionStage.stagesFromCompetition(competition)
 
       Cached(60) {
-        if(embed) Ok(football.views.html.wallchart.embed(page, competition, competitionStages))
-        else Ok(football.views.html.wallchart.page(page, competition, competitionStages))
+        if(embed) RevalidatableResult.Ok(football.views.html.wallchart.embed(page, competition, competitionStages))
+        else RevalidatableResult.Ok(football.views.html.wallchart.page(page, competition, competitionStages))
       }
     }.getOrElse(NotFound)
   }

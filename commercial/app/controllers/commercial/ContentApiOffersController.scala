@@ -74,7 +74,7 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
     }
 
     futureContents.map(_.toList) map {
-      case Nil => NoCache(format.nilResult)
+      case Nil => NoCache(format.nilResult.result)
       case contents => Cached(componentMaxAge) {
 
         val omnitureId: String = optOmnitureId orElse optCapiTitle getOrElse ""
@@ -82,7 +82,7 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
         if (isMulti) {
           if(conf.switches.Switches.v2CapiMultipleTemplate.isSwitchedOn) {
             format.result(views.html.contentapi.itemsV2(
-              contents map (CardContent.fromContentItem(_, optClickMacro)),
+              contents map (CardContent.fromContentItem(_, optClickMacro, false)),
               optLogo,
               optCapiTitle,
               optCapiLink,
@@ -110,7 +110,7 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
         } else {
           if(conf.switches.Switches.v2CapiSingleTemplate.isSwitchedOn) {
             format.result(views.html.contentapi.itemV2(
-              CardContent.fromContentItem(contents.head, optClickMacro),
+              CardContent.fromContentItem(contents.head, optClickMacro, true),
               optLogo,
               optCapiTitle,
               optCapiLink,

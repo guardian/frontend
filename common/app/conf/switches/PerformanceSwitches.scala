@@ -69,6 +69,15 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
+  val ServerSideBucketsSwitch = Switch(
+    SwitchGroup.Performance,
+    "server-side-buckets",
+    "When this switch expires, we should have decided whether permanently running server side ab testing affects caching/costs too much",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 5, 10),
+    exposeClientSide = false
+  )
+
   val AutoRefreshSwitch = Switch(
     SwitchGroup.Performance,
     "auto-refresh",
@@ -204,15 +213,6 @@ trait PerformanceSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
-  )
-
-  val IphoneConfidence = Switch(
-    SwitchGroup.Performance,
-    "iphone-confidence",
-    "If this switch is on then some beacons will be dropped to gauge iPhone confidence",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
   )
 
   val ContentApiUseThrift = Switch(

@@ -63,6 +63,11 @@
     &.u-text-hyphenate {
         max-width: 100%;
     }
+
+    .advert-blended__body & {
+        font-size: 14px;
+        line-height: 18px;
+    }
 }
 
 .advert__image-container {
@@ -77,6 +82,10 @@
         left: 0;
         right: 0;
         margin: 0;
+    }
+
+    .advert-blended__body & {
+        height: auto;
     }
 }
 
@@ -112,6 +121,9 @@
         }
 
         > .advert__image-container {
+            flex-basis: calc(50% - #{$gs-gutter / 2});
+            flex-shrink: 0;
+            height: auto;
             order: 0;
             margin-bottom: 0;
             margin-left: $gs-gutter / 2;

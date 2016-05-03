@@ -147,7 +147,7 @@ object MetaDataFormat {
           meta.rssPath),
         MetaDataPart2(
           meta.contentType,
-          meta.hasHeader,
+          meta.shouldHideHeaderAndTopAds,
           meta.schemaType,
           meta.cacheTime,
           meta.openGraphImages,

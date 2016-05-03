@@ -2,6 +2,7 @@ package controllers
 
 import com.gu.contentapi.client.model.v1.ItemResponse
 import common._
+import model.Cached.WithoutRevalidationResult
 import model._
 import play.api.mvc._
 import services.{Index, IndexPage}
@@ -38,7 +39,7 @@ trait IndexControllerCommon extends Controller with Index with RendersItemRespon
     renderItem(path)
   }
 
-  private def redirect(id: String, isRss: Boolean) = Cached(60)(MovedPermanently(if (isRss) s"/$id/rss" else s"/$id"))
+  private def redirect(id: String, isRss: Boolean) = WithoutRevalidationResult(MovedPermanently(if (isRss) s"/$id/rss" else s"/$id"))
 
   def renderTrailsJson(path: String) = renderTrails(path)
 
@@ -58,7 +59,7 @@ trait IndexControllerCommon extends Controller with Index with RendersItemRespon
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = path match {
     //if this is a section tag e.g. football/football
-    case TagPattern(left, right) if left == right => successful(redirect(left, request.isRss))
+    case TagPattern(left, right) if left == right => successful(Cached(60)(redirect(left, request.isRss)))
 
     case _ =>
       logGoogleBot(request)

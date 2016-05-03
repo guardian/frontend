@@ -180,7 +180,7 @@ object Multi
           }
         }
       } else {
-        NoCache(jsonFormat.nilResult)
+        NoCache(jsonFormat.nilResult.result)
       }
     }
   }

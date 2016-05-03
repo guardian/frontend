@@ -1,6 +1,7 @@
 package football.controllers
 
 import feed.Competitions
+import model.Cached.RevalidatableResult
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.LocalDate
 import model.{TeamMap, Competition, Cached, Page}
@@ -25,7 +26,7 @@ trait MatchListController extends Controller with Requests {
           "previous" -> Html(matchesList.previousPage.getOrElse(""))
         )
       else
-        Ok(football.views.html.matchList.matchesPage(page, matchesList, filters))
+        RevalidatableResult.Ok(football.views.html.matchList.matchesPage(page, matchesList, filters))
     }
   }
 
@@ -38,7 +39,7 @@ trait MatchListController extends Controller with Requests {
           "previous" -> Html(matchesList.previousPage.getOrElse(""))
         )
       else
-        Ok(football.views.html.matchList.matchesPage(page, matchesList, filters))
+        RevalidatableResult.Ok(football.views.html.matchList.matchesPage(page, matchesList, filters))
     }
   }
 

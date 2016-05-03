@@ -1,5 +1,6 @@
 package controllers
 
+import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
 import play.api.mvc.{Action, Controller}
 import scala.concurrent.duration._
 
@@ -18,9 +19,9 @@ object SiteVerificationController extends Controller {
 
   def googleSiteVerify(account: String) = Action { implicit request =>
       if (acceptedGoogleAccounts.contains(account)) {
-        model.Cached(7.days)(Ok(s"google-site-verification: google$account.html"))
+        model.Cached(7.days)(RevalidatableResult.Ok(s"google-site-verification: google$account.html"))
       } else {
-        model.Cached(5.minutes)(NotFound)
+        model.Cached(5.minutes)(WithoutRevalidationResult(NotFound))
       }
   }
 }

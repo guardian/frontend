@@ -1,4 +1,4 @@
-@(videos: List[model.Video], seriesTitle: Option[String])(implicit request: RequestHeader)
+@(videos: List[model.Video], seriesTitle: Option[String], series: String, nextPage: Option[Int], prevPage: Option[Int])(implicit request: RequestHeader)
 
 @import views.support.Seq2zipWithRowInfo
 
@@ -8,7 +8,7 @@ data-component="most-viewed-video">
     <div class="most-viewed-container__header">
         <h3 class="most-viewed-container__heading u-cf">
             <div class="most-viewed__more-from">More from</div>
-            @seriesTitle.getOrElse("More in this series")
+               @seriesTitle.getOrElse("More in this series")
         </h3>
     </div>
     <ul class="u-cf u-unstyled most-viewed--media most-viewed--video items--media items--video items--playlist" data-link-name="Most viewed video">
@@ -16,5 +16,18 @@ data-component="most-viewed-video">
         @fragments.mediaItem(video, row.rowNum)
     }
     </ul>
-
+    <div class="u-cf most-viewed-navigation" data-link-name="most-viewed-navigation">
+            <!-- TODO: reverse routing - do we support it? -->
+            <!-- TODO: Buttons here, not really links, but it's easy for styling -->
+        @prevPage.map{ p =>
+            <a class="most-viewed-navigation__link most-viewed-navigation__link--prev" data-page="@p" data-link-name="prev" href="">
+            @fragments.inlineSvg("arrow-left", "icon")
+            </a>
+        }
+        @nextPage.map{ p =>
+            <a class="most-viewed-navigation__link most-viewed-navigation__link--next" data-page="@p" data-link-name="next" href="">
+            @fragments.inlineSvg("chevron-right", "icon")
+            </a>
+        }
+    </div>
 </div>
