@@ -192,14 +192,6 @@
 
 // New gallery stuff
 
-// The main image needs to take up 100vh and the slim header needs to sit just on top of it.
-.l-header--new-gallery {
-    position: absolute;
-    z-index: 1;
-    right: 0;
-    left: 0;
-}
-
 .content__labels--gallery {
     border: 0;
     margin-bottom: 0;
