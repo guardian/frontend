@@ -126,6 +126,7 @@ define([
     };
 
     FabricExpandingV1.prototype.create = function () {
+        var hasVideo = this.params.videoURL !== '';
         var videoAspectRatio = 16 / 9;
         var videoHeight = detect.isBreakpoint({max: 'phablet'}) ? 125 : 250;
         var videoWidth = videoHeight * videoAspectRatio;
@@ -139,8 +140,8 @@ define([
             'right: ' + this.params.videoHorizSpace + 'px; ' : ''
         );
         var videoDesktop = {
-            video: (this.params.videoURL !== '') ?
-            '<iframe id="myYTPlayer" width="' + videoWidth + '" height="' + videoHeight + '" src="' + this.params.videoURL + '?rel=0&amp;controls=0&amp;showinfo=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="expandable_video expandable_video--horiz-pos-' + this.params.videoPositionH + '" style="' + leftMargin + leftPosition + rightPosition + '"></iframe>' : ''
+            video: hasVideo ?
+            '<iframe width="' + videoWidth + '" height="' + videoHeight + '" src="' + this.params.videoURL + '?rel=0&amp;controls=0&amp;showinfo=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="js-fabric-video expandable_video expandable_video--horiz-pos-' + this.params.videoPositionH + '" style="' + leftMargin + leftPosition + rightPosition + '"></iframe>' : ''
         };
         var showmoreArrow = {
             showArrow: (this.params.showMoreType === 'arrow-only' || this.params.showMoreType === 'plus-and-arrow') ?
@@ -176,6 +177,10 @@ define([
         mediator.on('window:throttledScroll', this.listener);
 
         bean.on(this.$adSlot[0], 'click', '.ad-exp__open', function () {
+            if (!this.isClosed && hasVideo) {
+                this.stopVideo(1000);
+            }
+
             fastdom.write(function () {
                 $('.ad-exp__close-button').toggleClass('button-spin');
                 $('.ad-exp__open-chevron').removeClass('chevron-up').toggleClass('chevron-down');
@@ -195,6 +200,18 @@ define([
         }
 
         return domPromise;
+    };
+
+    FabricExpandingV1.prototype.stopVideo = function (delay) {
+        delay = delay || 0;
+
+        var videoContainer = detect.isBreakpoint({min: 'tablet'}) ? '.js-fabric-desktop-video' : '.js-fabric-mobile-video';
+        var video = $(videoContainer + ' > .js-fabric-video', this.$adSlot);
+        var videoSrc = video.attr('src');
+
+        window.setTimeout(function () {
+            video.attr('src', videoSrc + '&amp;autoplay=0');
+        }, delay);
     };
 
     return FabricExpandingV1;
