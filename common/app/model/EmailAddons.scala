@@ -65,7 +65,7 @@ case object TheUSMinute extends EmailContent {
 case object USBriefing extends EmailContent {
   val name = "Guardian US Briefing"
   val banner = "guardian-us-briefing.png"
-  def test(c: ContentType) = c.tags.series.exists(_.id == "sport/series/thespin")
+  def test(c: ContentType) = c.tags.series.exists(_.id == "us-news/series/guardian-us-briefing")
 }
 
 object EmailAddons {
