@@ -13,24 +13,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABFakeSeriesShowSensitive = Switch(
-    SwitchGroup.ABTests,
-    "ab-fake-series-show-sensitive",
-    "A fake test to target series content that's shown on sensitive articles",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 3),
-    exposeClientSide = true
-  )
-
-  val ABFakeSeriesHideSensitive = Switch(
-    SwitchGroup.ABTests,
-    "ab-fake-series-hide-sensitive",
-    "A fake test to target series content that's hidden on sensitive articles",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 3),
-    exposeClientSide = true
-  )
-
   // Owner: Dotcom Reach
   val ABFrontsOnArticles2 = Switch(
     SwitchGroup.ABTests,
