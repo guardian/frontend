@@ -34,31 +34,6 @@ object Metric extends Logging {
     ("sm-clicked-series-component", CountMetric("sm-clicked-series-component", "sm-clicked-series-component")),
     ("sm-clicked-most-popular-component", CountMetric("sm-clicked-most-popular-component", "sm-clicked-most-popular-component")),
 
-    ("ipad-old-start", CountMetric(s"ipad-old-start", s"ipad-old-start")),
-    ("ipad-old-after-5", CountMetric(s"ipad-old-after-5", s"ipad-old-after-5")),
-    ("ipad-old-after-10", CountMetric(s"ipad-old-after-10", s"ipad-old-after-10")),
-    ("ipad-old-after-60", CountMetric(s"ipad-old-after-60", s"ipad-old-after-60")),
-
-    ("ipad-2orMini-start", CountMetric(s"ipad-2orMini-start", s"ipad-2orMini-start")),
-    ("ipad-2orMini-after-5", CountMetric(s"ipad-2orMini-after-5", s"ipad-2orMini-after-5")),
-    ("ipad-2orMini-after-10", CountMetric(s"ipad-2orMini-after-10", s"ipad-2orMini-after-10")),
-    ("ipad-2orMini-after-60", CountMetric(s"ipad-2orMini-after-60", s"ipad-2orMini-after-60")),
-
-    ("ipad-retina-core-opted-in-start", CountMetric(s"ipad-retina-core-opted-in-start", s"ipad-retina-core-opted-in-start")),
-    ("ipad-retina-core-opted-in-after-5", CountMetric(s"ipad-retina-core-opted-in-after-5", s"ipad-retina-core-opted-in-after-5")),
-    ("ipad-retina-core-opted-in-after-10", CountMetric(s"ipad-retina-core-opted-in-after-10", s"ipad-retina-core-opted-in-after-10")),
-    ("ipad-retina-core-opted-in-after-60", CountMetric(s"ipad-retina-core-opted-in-after-60", s"ipad-retina-core-opted-in-after-60")),
-
-    ("ipad-retina-universal-fronts-start", CountMetric(s"ipad-retina-universal-fronts-start", s"ipad-retina-universal-fronts-start")),
-    ("ipad-retina-universal-fronts-after-5", CountMetric(s"ipad-retina-universal-fronts-after-5", s"ipad-retina-universal-fronts-after-5")),
-    ("ipad-retina-universal-fronts-after-10", CountMetric(s"ipad-retina-universal-fronts-after-10", s"ipad-retina-universal-fronts-after-10")),
-    ("ipad-retina-universal-fronts-after-60", CountMetric(s"ipad-retina-universal-fronts-after-60", s"ipad-retina-universal-fronts-after-60")),
-
-    ("android-nexus5-start", CountMetric(s"android-nexus5-start", s"android-nexus5-start")),
-    ("android-nexus5-after-5", CountMetric(s"android-nexus5-after-5", s"android-nexus5-after-5")),
-    ("windows7-chrome-start", CountMetric(s"windows7-chrome-start", s"windows7-chrome-start")),
-    ("windows7-chrome-after-5", CountMetric(s"windows7-chrome-after-5", s"windows7-chrome-after-5")),
-
     ("headlines-variant-seen", CountMetric(s"headlines-variant-seen", s"headlines-variant-seen")),
     ("headlines-control-seen", CountMetric(s"headlines-control-seen", s"headlines-control-seen")),
     ("headlines-variant-clicked", CountMetric(s"headlines-variant-clicked", s"headlines-variant-clicked")),
@@ -70,17 +45,5 @@ object Metric extends Logging {
     ("comment-http-proxy-error", CountMetric("comment-http-proxy-error", "comment-http-proxy-error")),
     ("comment-error", CountMetric("comment-error", "comment-error")),
     ("comment-post-success", CountMetric("comment-post-success", "comment-post-success"))
-  ) ++ iPhoneMetrics
-
-  private val iPhoneMetrics: Seq[(String, CountMetric)] = Seq(4, 6).flatMap( model =>
-    Seq(
-      s"iphone-$model-start" -> CountMetric(s"iphone-$model-start", s"iphone-$model-start"),
-      s"iphone-$model-after-5" -> CountMetric(s"iphone-$model-after-5", s"iphone-$model-after-5"),
-      s"iphone-$model-after-10" -> CountMetric(s"iphone-$model-after-10", s"iphone-$model-after-10"),
-      s"iphone-$model-after-60" -> CountMetric(s"iphone-$model-after-6", s"iphone-$model-after-60")
-    )
   )
-
-  //just here so that when you delete this you see this comment and delete the 'iphone' metrics above
-  private lazy val deleteIphoneMetrics = conf.switches.Switches.IphoneConfidence.isSwitchedOn
 }

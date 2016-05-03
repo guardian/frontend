@@ -215,15 +215,6 @@ trait PerformanceSwitches {
     exposeClientSide = true
   )
 
-  val IphoneConfidence = Switch(
-    SwitchGroup.Performance,
-    "iphone-confidence",
-    "If this switch is on then some beacons will be dropped to gauge iPhone confidence",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val ContentApiUseThrift = Switch(
     SwitchGroup.Performance,
     "content-api-use-thrift",
