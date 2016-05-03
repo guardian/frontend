@@ -41,15 +41,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABNextInSeries = Switch(
-    SwitchGroup.ABTests,
-    "ab-next-in-series",
-    "Show next in series",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 3),
-    exposeClientSide = true
-  )
-
   val ABIdentityRegisterMembershipStandfirst = Switch(
     SwitchGroup.ABTests,
     "ab-identity-register-membership-standfirst",
