@@ -64,14 +64,15 @@
     }
 }
 
-.advert--travel {
-    .button {
-        @include button-colour(
-            $maps-support-4,
-            null
-        );
-    }
+.adverts--tone-travel .button--legacy-single,
+.advert--travel .button {
+    @include button-colour(
+        $maps-support-4,
+        null
+    );
+}
 
+.advert--travel {
     &:hover,
     &:focus,
     &:active {
@@ -81,5 +82,16 @@
                 null
             );
         }
+    }
+}
+
+.adverts--tone-travel .button--legacy-single {
+    &:hover,
+    &:focus,
+    &:active {
+        @include button-colour(
+            darken($maps-support-4, 5%),
+            null
+        );
     }
 }

@@ -49,14 +49,17 @@
     .advert__meta[itemprop='author'] {
         margin-bottom: 1em;
     }
+}
 
-    .button {
-        @include button-colour(
-            $features-main-2,
-            null
-        );
-    }
+.adverts--tone-books .button--legacy-single,
+.advert--book .button {
+    @include button-colour(
+        $features-main-2,
+        null
+    );
+}
 
+.advert--book {
     &:hover,
     &:focus,
     &:active {
@@ -66,6 +69,17 @@
                 null
             );
         }
+    }
+}
+
+.adverts--tone-books .button--legacy-single {
+    &:hover,
+    &:focus,
+    &:active {
+        @include button-colour(
+            darken($features-main-2, 5%),
+            null
+        );
     }
 }
 
