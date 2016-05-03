@@ -250,7 +250,6 @@
     .ad-slot__label {
         @include mq(desktop) {
             text-align: left;
-            padding-left: 0;
         }
     }
 
@@ -544,12 +543,6 @@
             &:first-of-type {
                 border-top: 0;
             }
-
-            &.gallery__item--advert {
-                border-top: 0;
-                margin-left: 0;
-                margin-right: 0;
-            }
         }
 
         @include mq($until: mobileLandscape) {
@@ -565,6 +558,14 @@
             figure {
                 flex-direction: row;
             }
+        }
+    }
+
+    .gallery__item--advert {
+        @include mq($until: desktop) {
+            border-top: 0;
+            margin-left: 0;
+            margin-right: 0;
         }
     }
 
