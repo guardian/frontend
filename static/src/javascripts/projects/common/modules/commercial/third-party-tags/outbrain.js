@@ -165,6 +165,7 @@ define([
         if (commercialFeatures.outbrain &&
             !config.page.isFront &&
             !config.page.isPreview &&
+            config.page.showRelatedContent &&
             identityPolicy()
         ) {
             // if there is no merch component, load the outbrain widget right away
