@@ -188,6 +188,9 @@ object ContentWidths {
       wide =            Some(1900.px))
   }
 
+  /**
+    * Immersive media is all the media within immersive content body
+    */
   object ImmersiveMedia extends ContentRelation {
     override val inline = BodyMedia.inline
     override val supporting = BodyMedia.supporting
