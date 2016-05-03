@@ -72,12 +72,21 @@
                 @fragments.share.blockLevelSharing("img-" + rowNum.toString, gallery.item.sharelinks.elementShares("img-" + rowNum.toString, image.path), gallery.item.metadata.contentType, isNewGallery = true)
             </div>
 
-            <a class="gallery__img-container gallery__img-container@if(image.width >= image.height) {--landscape} else {--portrait} js-gallerythumbs"
-                href="@LinkTo{@gallery.item.metadata.url#img-@rowNum}"
-                data-link-name="Launch Gallery Lightbox" data-is-ajax>
-
-                @fragments.image(imageElement.images, widths = GalleryMedia.inline, imageAltText = image.altText.getOrElse(""))
-            </a>
+            @defining(
+                if(image.width >= image.height) {"--landscape"} else {"--portrait"}
+            ) { orientation =>
+                <a class="gallery__img-container gallery__img-container@orientation js-gallerythumbs"
+                    style="max-width: calc(@image.width.toFloat/@image.height * 96vh)"
+                    href="@LinkTo{@gallery.item.metadata.url#img-@rowNum}"
+                    data-link-name="Launch Gallery Lightbox" data-is-ajax>
+                    @fragments.image(
+                        imageElement.images,
+                        Seq("gallery__img", s"gallery__img$orientation"),
+                        GalleryMedia.inline,
+                        image.altText.getOrElse("")
+                    )
+                </a>
+            }
         </figure>
     </li>
 

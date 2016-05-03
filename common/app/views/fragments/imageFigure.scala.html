@@ -40,18 +40,25 @@
         <meta itemprop="width" content="@ImgSrc.getFallbackAsset(picture).fold(0)(_.width)">
         <meta itemprop="height" content="@ImgSrc.getFallbackAsset(picture).fold(0)(_.height)">
 
-        @lightbox{
-            @if(amp) {
-                @fragments.amp.ampImage(picture, imageOption.flatMap(_.altText).getOrElse(""))
+        @defining(
+            if (isMain) {
+                Seq("maxed", "responsive-img")
             } else {
-                @fragments.image(
-                    picture,
-                    isShowcase,
-                    isFeature,
-                    widths = widthsByBreakpoint,
-                    imageOption.flatMap(_.altText).getOrElse(""),
-                    isMain
-                )
+                Seq("gu-image")
+            }
+        ) { classes =>
+            @lightbox {
+                @if(amp) {
+                    @fragments.amp.ampImage(picture, imageOption.flatMap(_.altText).getOrElse(""))
+                } else {
+                    @fragments.image(
+                        picture,
+                        classes,
+                        widthsByBreakpoint,
+                        imageOption.flatMap(_.altText).getOrElse(""),
+                        isFeature && isShowcase
+                    )
+                }
             }
         }
         @showcaseFeature{

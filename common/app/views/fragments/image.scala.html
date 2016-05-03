@@ -3,20 +3,18 @@
 
 @(
     picture: model.ImageMedia,
-    isShowcase: Boolean = false,
-    isFeature: Boolean = false,
+    classes: Seq[String],
     widths: layout.WidthsByBreakpoint =  MainMedia.inline,
     imageAltText: String,
-    isMain: Boolean = false,
-    isImmersiveMainMedia: Boolean = false,
-    amp: Boolean = false
+    isFeatureAndShowcase: Boolean = false,
+    isImmersiveMainMedia: Boolean = false
 )
 
 @if(!isImmersiveMainMedia) {
     @picture.largestImage.map{ largestImage =>
         <div
-        class="u-responsive-ratio@if(isFeature && isShowcase) { u-responsive-ratio--letterbox}"
-            @if(isFeature && isShowcase) {} else {style="padding-bottom: @{"%.2f".format(100 * largestImage.height.toDouble / largestImage.width)}%"}
+        class="u-responsive-ratio@if(isFeatureAndShowcase) { u-responsive-ratio--letterbox}"
+            @if(isFeatureAndShowcase) {} else {style="padding-bottom: @{"%.2f".format(100 * largestImage.height.toDouble / largestImage.width)}%"}
         >
     }
 }
@@ -36,10 +34,10 @@
 
     <!--[if IE 9]></video><![endif]-->
 
-    <img class="@if(isMain) {maxed responsive-img} else {gu-image} @if(isImmersiveMainMedia) {immersive-main-media__img}"
-    itemprop="contentUrl"
-    alt="@imageAltText"
-    src="@ImgSrc.getFallbackUrl(picture)" />
+    <img class="@RenderClasses(classes: _*)"
+        itemprop="contentUrl"
+        alt="@imageAltText"
+        src="@ImgSrc.getFallbackUrl(picture)" />
 </picture>
 
 @if(!isImmersiveMainMedia) {
