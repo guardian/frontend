@@ -1,10 +1,10 @@
 @import common.commercial.CardContent
 @import common.{Edition, LinkTo}
-@import controllers.commercial.{SponsorType, PaidFor, Supported}
+@import controllers.commercial.{PaidFor, SponsorType, Supported}
+@import fragments.commercial.paidForMeta
 @import views.html.commercial.cards.itemCard
 @import views.html.commercial.containerWrapper
 @import views.html.fragments.inlineSvg
-@import fragments.commercial.paidForMeta
 @(cards: Seq[CardContent],
   optLogo: Option[String],
   optCapiTitle: Option[String],

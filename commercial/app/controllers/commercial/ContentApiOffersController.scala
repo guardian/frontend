@@ -73,7 +73,7 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
         val omnitureId = optOmnitureId orElse optCapiTitle getOrElse ""
 
         if (isMulti) {
-          format.result(views.html.contentapi.itemsV2(
+          format.result(views.html.contentapi.items(
             contents map (CardContent.fromContentItem(_, optClickMacro, withDescription = false)),
             optLogo,
             optCapiTitle,
