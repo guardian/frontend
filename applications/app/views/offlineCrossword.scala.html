@@ -1,4 +1,4 @@
-@(offlinePage: controllers.OfflinePage)(implicit request: RequestHeader)
+@(offlineCrossword: controllers.OfflineCrossword)(implicit request: RequestHeader)
 
 @import play.api.libs.json._
 @import conf.switches.Switches._
@@ -11,9 +11,9 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>@views.support.Title(offlinePage)</title>
+    <title>@views.support.Title(offlineCrossword)</title>
 
-    @fragments.metaData(offlinePage)
+    @fragments.metaData(offlineCrossword)
 
     @* get the stylesheets downloading ASAP *@
     @fragments.stylesheets(None)
@@ -21,8 +21,8 @@
     @* We don't use the inlineJSBlocking template because we need to specify
     our own paths *@
 
-    @fragments.analytics.omnitureScript(Some(offlinePage.metadata))
-    @if(OfflinePageView.isSwitchedOn) {
+    @fragments.analytics.omnitureScript(Some(offlineCrossword.metadata))
+    @if(OfflineCrosswordView.isSwitchedOn) {
     <script>
         try {
             var offlineViews = parseInt(localStorage.getItem('gu.offlineViews')) || 0;
@@ -70,10 +70,10 @@
         @Html(polyfills().body)
 
         // determine whether to run enhanced JS
-        @InlineJs(shouldEnhance(offlinePage.metadata).body, "shouldEnhance.js")
+        @InlineJs(shouldEnhance(offlineCrossword.metadata).body, "shouldEnhance.js")
 
         // page config
-        @Html(config(offlinePage).body)
+        @Html(config(offlineCrossword).body)
 
         // apply render conditions
         @InlineJs(applyRenderConditions().body, "applyRenderConditions.js")
@@ -90,7 +90,7 @@
         }
 
         // cloudwatch beacons
-        @InlineJs(cloudwatchBeacons(offlinePage.metadata).body, "cloudwatchBeacons.js")
+        @InlineJs(cloudwatchBeacons(offlineCrossword.metadata).body, "cloudwatchBeacons.js")
     </script>
 </head>
     <body
@@ -99,7 +99,7 @@
 
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
-        @fragments.header(offlinePage)
+        @fragments.header(offlineCrossword)
 
         <div class="l-side-margins">
             <article id="crossword" class="content content--article tonal tonal--tone-news" role="main">
@@ -111,9 +111,9 @@
                             <button class="button js-open-crossword-btn">Open crossword</button>
                         </div>
                         <div class="js-crossword-container is-hidden u-baseline-top">
-                            <h2><a href="/crosswords/@offlinePage.crossword.id">@offlinePage.crossword.name</a></h2>
+                            <h2><a href="/crosswords/@offlineCrossword.crossword.id">@offlineCrossword.crossword.name</a></h2>
                             <div class="js-crossword"
-                                data-crossword-data="@Json.stringify(Json.toJson(offlinePage.crossword))">
+                                data-crossword-data="@Json.stringify(Json.toJson(offlineCrossword.crossword))">
                             </div>
                         </div>
                     </div>
@@ -121,11 +121,11 @@
             </article>
         </div>
 
-        @fragments.footer(offlinePage)
+        @fragments.footer(offlineCrossword)
 
         @fragments.inlineJSNonBlocking()
 
-        @fragments.analytics.base(offlinePage)
+        @fragments.analytics.base(offlineCrossword)
 
     </body>
 </html>

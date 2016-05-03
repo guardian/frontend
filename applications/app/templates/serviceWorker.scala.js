@@ -27,7 +27,7 @@ var cachePageAndAssetResponses = function (jsonResponse, assetResponses) {
     var cacheName = [getISODate(), staticCacheName].join('-');
     return caches.open(cacheName).then(function (cache) {
         return jsonResponse.clone().json().then(function (jsonResponseJson) {
-            var pageRequest = new Request('/offline-page');
+            var pageRequest = new Request('/offline-crossword');
             var pageResponse = new Response(jsonResponseJson.html, { headers: { 'Content-Type': 'text/html' } });
             return Promise.all([
                 cache.put(pageRequest, pageResponse)
@@ -42,10 +42,10 @@ var cachePageAndAssetResponses = function (jsonResponse, assetResponses) {
 };
 
 // The JSON contains the HTML and asset versions. We cache the assets at
-// their specified URLs and the page HTML as '/offline-page'.
+// their specified URLs and the page HTML as '/offline-crossword'.
 var updateCache = function () {
     // Fetch page and all assets. Iff all responses are OK then cache all assets and page.
-    return fetch('/offline-page.json').then(function (jsonResponse) {
+    return fetch('/offline-crossword.json').then(function (jsonResponse) {
         if (jsonResponse.ok) {
             return jsonResponse.clone().json().then(function (json) {
                 return fetchAll(json.assets).then(function (assetResponses) {
@@ -128,7 +128,7 @@ this.addEventListener('fetch', function (event) {
         event.respondWith(
             fetch(request)
                 .catch(function () {
-                    return caches.match('/offline-page');
+                    return caches.match('/offline-crossword');
                 })
         );
     } else if (isAssetRequest) {

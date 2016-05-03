@@ -6,10 +6,10 @@ import org.joda.time.LocalDate
 trait MonitoringSwitches {
   // Monitoring
 
-  val OfflinePageView = Switch(
+  val OfflineCrosswordView = Switch(
     SwitchGroup.Monitoring,
-    "offline-page-view",
-    "If this switch is on, views of the offline page will be beaconed to cloudwatch when you come online again",
+    "offline-crossword-view",
+    "If this switch is on, views of the offline crossword will be beaconed to cloudwatch when you come online again",
     safeState = Off,
     sellByDate = new LocalDate(2016, 6, 3),
     exposeClientSide = true
