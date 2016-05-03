@@ -365,7 +365,6 @@
     &.tonal--tone-media {
         background-color: $multimedia-support-5;
 
-
         // TODO: Move this to the proper place once changes are live
         .meta__twitter,
         .meta__email {
@@ -384,12 +383,6 @@
                     fill: $neutral-3;
                 }
             }
-        }
-
-        // TODO: Make this the default for all media tones once changes are live
-        .fc-container__inner,
-        .fc-slice__item+.fc-slice__item:before {
-            border-color: $neutral-1;
         }
 
         // Overwriting media tone header so that you can see the image instead
@@ -665,6 +658,16 @@
 }
 
 .l-side-margins--new-gallery {
+    // TODO: Make this the default for all media tones once changes are live
+    .tonal--tone-media {
+        background-color: $multimedia-support-5;
+
+        .fc-container__inner,
+        .fc-slice__item+.fc-slice__item:before {
+            border-color: $neutral-1;
+        }
+    }
+
     // TODO: Make this the default for all media tones once changes are live
     &.l-side-margins--media {
         @include mq(tablet) {
