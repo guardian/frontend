@@ -14,7 +14,7 @@ GET        /commercial/travel/offers.json                                control
 GET        /commercial/jobs.json                                         controllers.commercial.JobsController.renderJobs
 
 # Masterclass merchandising components
-GET        /commercial/masterclasses.json                                controllers.commercial.Masterclasses.renderMasterclasses
+GET        /commercial/masterclasses.json                                controllers.commercial.MasterclassesController.renderMasterclasses
 
 # Soulmates merchandising components
 GET        /commercial/soulmates/$subgroup<\w+>.json                     controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
