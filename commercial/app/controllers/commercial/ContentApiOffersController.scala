@@ -30,19 +30,6 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
   private def renderItems(format: Format, isMulti: Boolean) = Action.async { implicit request =>
 
     val optKeyword = request.getParameter("k")
-    val optLogo = request.getParameter("l")
-    val optCapiTitle = request.getParameter("ct")
-    val optCapiLink = request.getParameter("cl")
-    val optCapiAbout = request.getParameter("cal")
-    val optCapiButtonText = request.getParameter("clt")
-    val optCapiReadMoreUrl = request.getParameter("rmd")
-    val optCapiReadMoreText = request.getParameter("rmt")
-    val optCapiAdFeature = request.getParameter("af")
-    val optClickMacro = request.getParameter("clickMacro")
-    val optOmnitureId = request.getParameter("omnitureId")
-
-    val optSponsorTypeRefactor = optCapiAdFeature flatMap (feature => sponsorTypeToClassRefactor.get(feature))
-    val optSponsorLabel = optCapiAdFeature flatMap (feature => sponsorTypeToLabel.get(feature))
 
     val eventualLatest = optKeyword.map { keyword =>
       // getting twice as many, as we filter out content without images
@@ -70,7 +57,19 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
       case Nil => NoCache(format.nilResult.result)
       case contents => Cached(componentMaxAge) {
 
+        val optLogo = request.getParameter("l")
+        val optCapiTitle = request.getParameter("ct")
+        val optCapiLink = request.getParameter("cl")
+        val optCapiAbout = request.getParameter("cal")
+        val optCapiButtonText = request.getParameter("clt")
+        val optCapiReadMoreUrl = request.getParameter("rmd")
+        val optCapiReadMoreText = request.getParameter("rmt")
+        val optCapiAdFeature = request.getParameter("af")
+        val optClickMacro = request.getParameter("clickMacro")
+        val optOmnitureId = request.getParameter("omnitureId")
         val omnitureId = optOmnitureId orElse optCapiTitle getOrElse ""
+        val optSponsorTypeRefactor = optCapiAdFeature flatMap (feature => sponsorTypeToClassRefactor.get(feature))
+        val optSponsorLabel = optCapiAdFeature flatMap (feature => sponsorTypeToLabel.get(feature))
 
         if (isMulti) {
           format.result(views.html.contentapi.items(
