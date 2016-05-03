@@ -266,15 +266,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val v2SoulmatesTemplate = Switch(
-    SwitchGroup.CommercialRefactoring,
-    "v2-soulmates-template",
-    "Soulmates component using template v2",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = false
-  )
-
   val v2BlendedTemplate = Switch(
     SwitchGroup.CommercialRefactoring,
     "v2-blended-template",
