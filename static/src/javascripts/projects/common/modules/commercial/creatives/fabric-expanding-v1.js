@@ -213,6 +213,7 @@ define([
 
         bean.on(this.$adSlot[0], 'click', '.ad-exp__open', function () {
             if (!this.isClosed && hasVideo) {
+                // wait 1000ms for close animation to finish
                 this.stopVideo(1000);
             }
 
