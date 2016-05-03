@@ -12,52 +12,38 @@
     amp: Boolean = false
 )
 
-@if(amp) {
-
-    @picture.largestImage.map { largestImage =>
-        <amp-img src="@ImgSrc.getAmpImageUrl(picture)"
-        layout="responsive"
-        width="@largestImage.width"
-        height="@largestImage.height"
-        class="maxed responsive-img"
-        itemprop="contentUrl"
-        alt="@ImgSrc.getFallbackAsset(picture).flatMap(_.altText).getOrElse("")" ></amp-img>
+@if(!isImmersiveMainMedia) {
+    @picture.largestImage.map{ largestImage =>
+        <div
+        class="u-responsive-ratio@if(isFeature && isShowcase) { u-responsive-ratio--letterbox}"
+            @if(isFeature && isShowcase) {} else {style="padding-bottom: @{"%.2f".format(100 * largestImage.height.toDouble / largestImage.width)}%"}
+        >
     }
-} else {
+}
 
-    @if(!isImmersiveMainMedia) {
-        @picture.largestImage.map{ largestImage =>
-            <div
-            class="u-responsive-ratio@if(isFeature && isShowcase) { u-responsive-ratio--letterbox}"
-                @if(isFeature && isShowcase) {} else {style="padding-bottom: @{"%.2f".format(100 * largestImage.height.toDouble / largestImage.width)}%"}
-            >
-        }
+<picture>
+    @* IE 9 needs this workaround as per https://scottjehl.github.io/picturefill/ *@
+    <!--[if IE 9]><video style="display: none;"><![endif]-->
+
+    @widths.breakpoints.map { breakpointWidth =>
+        <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (min-resolution: 120dpi)"
+        sizes="@breakpointWidth.width"
+        srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(picture), hidpi = true)" />
+        <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px)"
+        sizes="@breakpointWidth.width"
+        srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(picture))" />
     }
 
-    <picture>
-        @* IE 9 needs this workaround as per https://scottjehl.github.io/picturefill/ *@
-        <!--[if IE 9]><video style="display: none;"><![endif]-->
+    <!--[if IE 9]></video><![endif]-->
 
-        @widths.breakpoints.map { breakpointWidth =>
-            <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (min-resolution: 120dpi)"
-            sizes="@breakpointWidth.width"
-            srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(picture), hidpi = true)" />
-            <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px)"
-            sizes="@breakpointWidth.width"
-            srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(picture))" />
-        }
+    <img class="@if(isMain) {maxed responsive-img} else {gu-image} @if(isImmersiveMainMedia) {immersive-main-media__img}"
+    itemprop="contentUrl"
+    alt="@imageAltText"
+    src="@ImgSrc.getFallbackUrl(picture)" />
+</picture>
 
-        <!--[if IE 9]></video><![endif]-->
-
-        <img class="@if(isMain) {maxed responsive-img} else {gu-image} @if(isImmersiveMainMedia) {immersive-main-media__img}"
-        itemprop="contentUrl"
-        alt="@imageAltText"
-        src="@ImgSrc.getFallbackUrl(picture)" />
-    </picture>
-
-    @if(!isImmersiveMainMedia) {
-        @picture.largestImage.map{ largestImage =>
-            </div>
-        }
+@if(!isImmersiveMainMedia) {
+    @picture.largestImage.map{ largestImage =>
+        </div>
     }
 }
