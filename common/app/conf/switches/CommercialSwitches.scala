@@ -275,15 +275,6 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val v2BlendedTemplate = Switch(
-    SwitchGroup.CommercialRefactoring,
-    "v2-blended-template",
-    "Blended component using template v2",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = false
-  )
-
   val v2ManualSingleTemplate = Switch(
     SwitchGroup.CommercialRefactoring,
     "v2-manual-single-template",
