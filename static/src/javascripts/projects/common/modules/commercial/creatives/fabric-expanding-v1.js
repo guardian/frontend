@@ -158,6 +158,18 @@ define([
         return template(fabricExpandingVideoHtml, viewModel);
     };
 
+    FabricExpandingV1.prototype.stopVideo = function (delay) {
+        delay = delay || 0;
+
+        var videoSelector = detect.isBreakpoint({min: 'tablet'}) ? '.js-fabric-video--desktop' : '.js-fabric-video--mobile';
+        var video = $(videoSelector, this.$adSlot);
+        var videoSrc = video.attr('src');
+
+        window.setTimeout(function () {
+            video.attr('src', videoSrc + '&amp;autoplay=0');
+        }, delay);
+    };
+
     FabricExpandingV1.prototype.create = function () {
         var hasVideo = this.params.videoURL !== '';
         var videoDesktop = {
@@ -223,18 +235,6 @@ define([
         }
 
         return domPromise;
-    };
-
-    FabricExpandingV1.prototype.stopVideo = function (delay) {
-        delay = delay || 0;
-
-        var videoSelector = detect.isBreakpoint({min: 'tablet'}) ? '.js-fabric-video--desktop' : '.js-fabric-video--mobile';
-        var video = $(videoSelector, this.$adSlot);
-        var videoSrc = video.attr('src');
-
-        window.setTimeout(function () {
-            video.attr('src', videoSrc + '&amp;autoplay=0');
-        }, delay);
     };
 
     return FabricExpandingV1;
