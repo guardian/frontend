@@ -245,13 +245,18 @@
     }
 
     .ad-slot__label {
-        text-align: left;
+        @include mq(desktop) {
+            text-align: left;
+            padding-left: 0;
+        }
     }
 
     // TODO: Update _adslot.scss with this change
-    .ad-slot--gallery-inline > div:not(.ad-slot__label) {
-        margin-left: 0;
-        margin-right: auto;
+    @include mq(desktop) {
+        .ad-slot--gallery-inline > div:not(.ad-slot__label) {
+            margin-left: 0;
+            margin-right: auto;
+        }
     }
 
     .content__main-column--gallery {
@@ -526,10 +531,15 @@
             flex-direction: column-reverse;
         }
 
-        // On mobile the images should be 100% of the width of the screen
+        // On mobile/tablet the images should be 100% of the width of the screen
         @include mq($until: desktop) {
             margin-left: -$gs-gutter;
             margin-right: -$gs-gutter;
+
+            &.gallery__item--advert {
+                margin-left: 0;
+                margin-right: 0;
+            }
         }
 
         @include mq($until: mobileLandscape) {
