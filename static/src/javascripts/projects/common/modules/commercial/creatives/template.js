@@ -78,14 +78,14 @@ define([
 
     Template.prototype.create = function () {
         return new Promise(function (resolve) {
-            if( this.params.creative === 'manual-single' && config.switches.v2ManualSingleTemplate ) {
+            if( this.params.creative === 'manual-single' ) {
                 this.params.originalCreative = 'manual-single';
                 this.params.creative = 'manual-container';
                 this.params.creativeCard = 'manual-card-large';
                 this.params.classNames = ['legacy', 'legacy-single', this.params.toneClass.replace('commercial--', ''), this.params.toneClass.replace('commercial--tone-', '')];
             }
 
-            if (this.params.creative === 'manual-multiple' && config.switches.v2ManualMultipleTemplate ) {
+            if (this.params.creative === 'manual-multiple' ) {
                 // harmonise attribute names until we do this on the DFP side
                 this.params.toneClass = this.params.Toneclass;
                 this.params.baseUrl = this.params.base__url;
