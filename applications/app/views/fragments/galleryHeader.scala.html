@@ -9,7 +9,7 @@
 
     <div class="gs-container">
         @if(gallery.showBadge && !gallery.item.commercial.isAdvertisementFeature) {
-            @fragments.commercial.badge(gallery.item)
+            @fragments.commercial.badge(gallery.item, gallery)
         }
 
         @fragments.contentMeta(gallery.item, gallery)
