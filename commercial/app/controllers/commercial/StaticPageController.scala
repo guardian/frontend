@@ -38,6 +38,17 @@ case class StaticGuardianExperiencePage() extends StandalonePage {
   )
 }
 
+case class StaticGuardianAwesomePage() extends StandalonePage {
+  override val metadata: MetaData = MetaData.make(
+    id = "guardian-awesome",
+    webTitle = "Guardian Awesome",
+    section = "global",
+    contentType = GuardianContentTypes.Interactive,
+    analyticsName = "guardian-awesome",
+    shouldGoogleIndex = false
+  )
+}
+
 object StaticPageController extends Controller {
 
   // Membership Tests
@@ -51,5 +62,9 @@ object StaticPageController extends Controller {
 
   def renderGuardianExperiencePage() = Action { implicit request =>
     Cached(60)(RevalidatableResult.Ok(views.html.static.guardianExperiencePage(StaticGuardianExperiencePage().metadata)))
+  }
+
+  def renderGuardianAwesomePage() = Action { implicit request =>
+    Cached(60)(RevalidatableResult.Ok(views.html.static.guardianAwesomePage(StaticGuardianAwesomePage().metadata)))
   }
 }
