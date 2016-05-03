@@ -122,7 +122,9 @@ object Fields {
       blocks = BodyBlock.make(apiContent.blocks),
       lastModified = apiContent.fields.flatMap(_.lastModified).map(_.toJodaDateTime).getOrElse(DateTime.now),
       displayHint = apiContent.fields.flatMap(_.displayHint).getOrElse(""),
-      isLive = apiContent.fields.flatMap(_.liveBloggingNow).getOrElse(false)
+      isLive = apiContent.fields.flatMap(_.liveBloggingNow).getOrElse(false),
+      sensitive = apiContent.fields.flatMap(_.sensitive).getOrElse(false),
+      legallySensitive = apiContent.fields.flatMap(_.legallySensitive).getOrElse(false)
     )
   }
 }
@@ -137,7 +139,9 @@ final case class Fields(
   blocks: Seq[BodyBlock],
   lastModified: DateTime,
   displayHint: String,
-  isLive: Boolean
+  isLive: Boolean,
+  sensitive: Boolean,
+  legallySensitive: Boolean
 ){
   def javascriptConfig: Map[String, JsValue] = Map(("shortUrl", JsString(shortUrl)))
 }
