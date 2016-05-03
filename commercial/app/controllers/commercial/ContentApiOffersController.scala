@@ -10,16 +10,10 @@ import scala.concurrent.Future
 import scala.util.control.NonFatal
 
 sealed abstract class SponsorType(val className: String)
-final case object PaidFor extends SponsorType("paidfor")
-final case object Supported extends SponsorType("supported")
+case object PaidFor extends SponsorType("paidfor")
+case object Supported extends SponsorType("supported")
 
 object ContentApiOffersController extends Controller with ExecutionContexts with implicits.Requests with Logging {
-
-  private val sponsorTypeToClass = Map(
-    "sponsored" -> "fc-container--sponsored",
-    "advertisement-feature" -> "fc-container--advertisement-feature",
-    "foundation-supported" -> "fc-container--foundation-supported"
-  )
 
   private val sponsorTypeToClassRefactor = Map(
     "sponsored" -> Supported,
@@ -47,7 +41,6 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
     val optClickMacro = request.getParameter("clickMacro")
     val optOmnitureId = request.getParameter("omnitureId")
 
-    val optSponsorType = optCapiAdFeature flatMap (feature => sponsorTypeToClass.get(feature))
     val optSponsorTypeRefactor = optCapiAdFeature flatMap (feature => sponsorTypeToClassRefactor.get(feature))
     val optSponsorLabel = optCapiAdFeature flatMap (feature => sponsorTypeToLabel.get(feature))
 
@@ -77,39 +70,24 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
       case Nil => NoCache(format.nilResult.result)
       case contents => Cached(componentMaxAge) {
 
-        val omnitureId: String = optOmnitureId orElse optCapiTitle getOrElse ""
+        val omnitureId = optOmnitureId orElse optCapiTitle getOrElse ""
 
         if (isMulti) {
-          if(conf.switches.Switches.v2CapiMultipleTemplate.isSwitchedOn) {
-            format.result(views.html.contentapi.itemsV2(
-              contents map (CardContent.fromContentItem(_, optClickMacro, false)),
-              optLogo,
-              optCapiTitle,
-              optCapiLink,
-              optCapiAbout,
-              optClickMacro,
-              omnitureId,
-              optCapiAdFeature,
-              optSponsorTypeRefactor,
-              optSponsorLabel)
-            )
-          } else {
-            format.result(views.html.contentapi.items(
-              contents,
-              optLogo,
-              optCapiTitle,
-              optCapiLink,
-              optCapiAbout,
-              optClickMacro,
-              optOmnitureId,
-              optCapiAdFeature,
-              optSponsorType,
-              optSponsorLabel)
-            )
-          }
+          format.result(views.html.contentapi.itemsV2(
+            contents map (CardContent.fromContentItem(_, optClickMacro, withDescription = false)),
+            optLogo,
+            optCapiTitle,
+            optCapiLink,
+            optCapiAbout,
+            optClickMacro,
+            omnitureId,
+            optCapiAdFeature,
+            optSponsorTypeRefactor,
+            optSponsorLabel)
+          )
         } else {
           format.result(views.html.contentapi.item(
-            CardContent.fromContentItem(contents.head, optClickMacro, true),
+            CardContent.fromContentItem(contents.head, optClickMacro, withDescription = true),
             optLogo,
             optCapiTitle,
             optCapiLink,
