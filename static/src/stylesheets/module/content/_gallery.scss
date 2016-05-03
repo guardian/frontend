@@ -234,8 +234,11 @@
 
 .new-gallery__divider {
     border-top: 1px solid $neutral-1;
-    padding-top: $gs-baseline / 2;
     margin-top: $gs-baseline;
+
+    @include mq(desktop) {
+        padding-top: $gs-baseline / 2;
+    }
 }
 
 // TODO: When the time comes, remove `.new-gallery` class completely and remove old gallery styling
@@ -535,8 +538,15 @@
         @include mq($until: desktop) {
             margin-left: -$gs-gutter;
             margin-right: -$gs-gutter;
+            padding-top: $gs-baseline / 2;
+            border-top: 1px solid $neutral-1;
+
+            &:first-of-type {
+                border-top: 0;
+            }
 
             &.gallery__item--advert {
+                border-top: 0;
                 margin-left: 0;
                 margin-right: 0;
             }
@@ -635,6 +645,14 @@
 
         @include mq(desktop) {
             padding-bottom: 2.5rem;
+        }
+
+        @include mq($until: desktop) {
+            text-align: center;
+
+            img {
+                display: inline-block;
+            }
         }
     }
 
