@@ -1,14 +1,14 @@
-@(item: model.ContentType, showBadge: Boolean = false, showMeta: Boolean = true, amp: Boolean = false)(implicit request: RequestHeader)
+@(item: model.ContentType, page: model.Page, showBadge: Boolean = false, showMeta: Boolean = true, amp: Boolean = false)(implicit request: RequestHeader)
 
-@import views.support.TrailCssClasses.toneClass
 @import views.support.ContributorLinks
+@import views.support.TrailCssClasses.toneClass
 
 <header class="content__head tonal__head tonal__head--@toneClass(item)
     @if(item.content.hasTonalHeaderByline && item.tags.hasLargeContributorImage) { content__head--byline-pic}">
 
-    <div class="content__header tonal__header u-cf">
+    <div class="content__header tonal__header">
         <div class="gs-container">
-            <div class="content__main-column">
+            <div class="content__main-column u-cf">
 
                 @if(showMeta) {
                     @fragments.meta.metaInline(item, amp)
@@ -79,7 +79,7 @@
                 }
 
                 @if(showBadge && !item.commercial.isAdvertisementFeature) {
-                    @fragments.commercial.badge(item)
+                    @fragments.commercial.badge(item, page)
                 }
 
             </div>
@@ -92,7 +92,7 @@
                 <div class="content__main-column">
                     @if(showBadge && item.commercial.isAdvertisementFeature) {
                         <div class="content__meta-container js-content-meta js-football-meta u-cf">
-                            @fragments.commercial.badge(item)
+                            @fragments.commercial.badge(item, page)
                         </div>
                     }
                     @if(!item.tags.isVideo) {

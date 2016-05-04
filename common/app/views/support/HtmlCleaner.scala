@@ -136,7 +136,7 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
         if !article.isLiveBlog
       } yield (index, crop)
 
-      val html = views.html.fragments.img(
+      val html = views.html.fragments.imageFigure(
         container.images,
         lightboxIndex = lightboxInfo.map(_._1),
         widthsByBreakpoint = widths,
