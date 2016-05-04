@@ -135,13 +135,6 @@
     $maps-support-2
 );
 
-/* .commercial--tone-gardening */
-@include tone-commercial(
-    soulmates,
-    $soulmates-colour,
-    $soulmates-accent-colour
-);
-
 /* .commercial--tone-paidfor */
 @include tone-commercial(
     paidfor,
