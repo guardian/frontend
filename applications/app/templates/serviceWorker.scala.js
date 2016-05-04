@@ -98,15 +98,16 @@ var requestForDevBlog = (function (event) {
         var request = event.request;
         var url = new URL(request.url);
 
-        if (requestAcceptsHTML(request)) {
-            isCacheUpdated().then(function (isUpdated) {
-                if (!isUpdated) {
-                    updateOfflineCrosswordCache().then(deleteOldCaches);
-                }
-            });
-        };
-
         if (isForDevBlog(url, request)) {
+            // update the crossword on every visist the dev blog
+            if (requestAcceptsHTML(request)) {
+                isCacheUpdated().then(function (isUpdated) {
+                    if (!isUpdated) {
+                        updateOfflineCrosswordCache().then(deleteOldCaches);
+                    }
+                });
+            };
+
             event.respondWith(
                 fetch(request).catch(function () {
                     return caches.match('/offline-crossword');
