@@ -84,13 +84,6 @@
     $live-main-1
 );
 
-/* .commercial--tone-jobs */
-@include tone-commercial(
-    jobs,
-    $news-support-2,
-    $news-main-1
-);
-
 /* .commercial--tone-networks */
 @include tone-commercial(
     networks,
