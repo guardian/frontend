@@ -40,7 +40,7 @@ var deleteOldCaches = function () {
     })
 };
 
-var cacheKeyMatchesTodaysCache = (function (key) {
+var cacheKeyMatchesTodaysCache = (function () {
     var regex = new RegExp('^' + getISODate() + '-');
     return function (key) {
         return regex.test(key);
@@ -58,7 +58,7 @@ var fetchAll = function (resources) {
     }));
 };
 
-var needCredentialsWorkaround = (function (url) {
+var needCredentialsWorkaround = (function () {
     var whitelistRegexs = [
         'https://discussion.theguardian.com/discussion-api'
     ].map(function (entry) {
@@ -86,8 +86,8 @@ var isSameHost = function (host) {
  * FETCH HANDLERS
  */
 
-var requestForDevBlog = (function (event) {
-    var isForDevBlog = (function (url, request) {
+var requestForDevBlog = (function () {
+    var isForDevBlog = (function () {
         var devBlogPathRegex = /^\/info\/developer-blog($|\/.*$)/;
         return function (url, request) {
             return isSameHost(url.host) && url.pathname.match(devBlogPathRegex) && requestAcceptsHTML(request);
@@ -117,8 +117,8 @@ var requestForDevBlog = (function (event) {
     }
 })();
 
-var requestForAsset = (function (event) {
-    var isAssetRequest = (function (url) {
+var requestForAsset = (function () {
+    var isAssetRequest = (function () {
         var assetPathRegex = new RegExp('^@Configuration.assets.path');
         return function (url) {
             @if(play.Play.isDev()) {
