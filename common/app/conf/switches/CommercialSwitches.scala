@@ -266,15 +266,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val v2BlendedTemplate = Switch(
-    SwitchGroup.CommercialRefactoring,
-    "v2-blended-template",
-    "Blended component using template v2",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = false
-  )
-
   val cardsDecidePaidContainerBranding = Switch(
     SwitchGroup.CommercialRefactoring,
     "cards-decide-paid-container-branding",
