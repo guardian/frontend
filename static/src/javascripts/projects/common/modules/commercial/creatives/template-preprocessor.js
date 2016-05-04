@@ -164,8 +164,13 @@ define([
                     offerLinkText:       tpl.params.viewAllText,
                     arrowRight:          tpl.params.arrowRight
                 }) : '',
-                classNames:          ['landscape', 'large', 'inverse', tpl.params.toneClass.replace('commercial--tone', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); }).join(' ')
-            }) + manualContainerButtonTpl(tpl.params);
+                classNames:          ['single', 'landscape', 'large', 'inverse', tpl.params.toneClass.replace('commercial--tone', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); }).join(' ')
+            }) + manualContainerButtonTpl({
+                baseUrl:             tpl.params.baseUrl,
+                clickMacro:          tpl.params.clickMacro,
+                offerLinkText:       tpl.params.offerLinkText,
+                arrowRight:          tpl.params.arrowRight
+            });
         }
     }
 
