@@ -65,6 +65,21 @@ object InlineMerchandisingTargetedTagsReportParser extends Logging {
   }
 }
 
+case class HighMerchandisingTargetedTagSet(){
+
+  private def hasTagId(tag: Tag): Boolean = tag.id.split('/').lastOption exists { endPart =>
+    println(endPart)
+    false
+  }
+
+  def hasTag(tag: Tag):Boolean = tag.properties.tagType match {
+    case "Keyword" => hasTagId(tag)
+    case _ => false
+  }
+
+}
+
+
 object HighMerchandisingLineItems {
   implicit val lineItemFormat = Json.format[HighMerchandisingLineItem]
   implicit val lineItemsFormat = Json.format[HighMerchandisingLineItems]

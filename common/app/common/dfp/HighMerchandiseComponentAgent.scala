@@ -4,11 +4,10 @@ import model.Tag
 
 trait HighMerchandiseComponentAgent {
 
-//  protected def highMerchandisingTargetedTags: HighMerchandisingTargetedTagSet
+  protected def highMerchandisingTargetedTags: HighMerchandisingTargetedTagSet
 
   def hasHighMerchandiseTarget(tags: Seq[Tag]): Boolean = {
-//    tags exists inlineMerchandisingTargetedTags.hasTag
-    println(tags(0).properties)
-    false
+//    val value = tags exists highMerchandisingTargetedTags.hasTag
+    tags exists highMerchandisingTargetedTags.hasTag
   }
 }
