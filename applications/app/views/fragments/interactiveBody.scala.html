@@ -1,6 +1,8 @@
 @(page: InteractivePage)(implicit request: RequestHeader)
 @import common.Edition
+@import views.support.RenderClasses
 @import views.support.TrailCssClasses.toneClass
+
 @body(page.interactive, page.item.content.isImmersive)
 
 @bodyRaw(interactive: model.Interactive) = {
@@ -28,12 +30,12 @@
                 @fragments.guBand()
             }
 
-            @fragments.headDefault(interactive, showBadge = true)
+            @fragments.headDefault(interactive, page, showBadge = true)
 
             <div class="content__main tonal__main tonal__main--@toneClass(interactive)">
                 <div class="gs-container u-cf">
                     <div class="content__main-column">
-                        @fragments.contentMeta(interactive, showBadge = false)
+                        @fragments.contentMeta(interactive, page, showBadge = false)
                     </div>
                 </div>
 
@@ -49,7 +51,7 @@
 
                 <div class="gs-container u-cf">
                     <div class="content__main-column content__meta-footer">
-                        @fragments.contentMeta(interactive, showBadge = false)
+                        @fragments.contentMeta(interactive, page, showBadge = false)
                     </div>
                 </div>
             </div>

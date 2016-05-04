@@ -6,7 +6,6 @@ import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.facia.api.{utils => fapiutils}
 import com.gu.facia.client.models.TrailMetaData
 import common._
-import common.commercial.BrandHunter
 import common.dfp.DfpAgent
 import conf.Configuration
 import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch}
@@ -35,10 +34,6 @@ sealed trait ContentType {
   final def metadata: MetaData = content.metadata
   final def commercial: Commercial = content.commercial
   final def sharelinks: ShareLinks = content.sharelinks
-
-  def findBranding(edition: Edition): Option[Branding] = {
-    BrandHunter.findBranding(tags, publicationDate = Some(trail.webPublicationDate), edition)
-  }
 }
 
 final case class GenericContent(override val content: Content) extends ContentType

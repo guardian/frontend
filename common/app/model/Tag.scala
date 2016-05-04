@@ -2,6 +2,7 @@ package model
 
 import com.gu.contentapi.client.model.v1.{Podcast => ApiPodcast, Reference => ApiReference, Sponsorship => ApiSponsorship, SponsorshipTargeting => ApiSponsorshipTargeting, SponsorshipType => ApiSponsorshipType, Tag => ApiTag}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
+import common.commercial.BrandHunter
 import common.{Edition, Pagination, RelativePathEscaper}
 import conf.Configuration
 import contentapi.SectionTagLookUp
@@ -286,4 +287,8 @@ case class Tag (
   val isFootballTeam = properties.references.exists(_.`type` == "pa-football-team")
   val isFootballCompetition = properties.references.exists(_.`type` == "pa-football-competition")
   val contributorImagePath = properties.bylineImageUrl.map(ImgSrc(_, Contributor))
+
+  override def branding(edition: Edition): Option[Branding] = {
+    BrandHunter.findTagBranding(this, publicationDate = None, edition)
+  }
 }
