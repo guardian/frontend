@@ -49,16 +49,7 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 6, 1),
     exposeClientSide = true
   )
-
-  val ABMembership = Switch(
-    SwitchGroup.ABTests,
-    "ab-membership",
-    "Membership propositions",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = true
-  )
-
+  
   val ABLoyalAdblockingSurvey = Switch(
     SwitchGroup.ABTests,
     "ab-loyal-adblocking-survey",
