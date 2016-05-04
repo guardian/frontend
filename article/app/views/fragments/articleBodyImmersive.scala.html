@@ -1,4 +1,3 @@
-
 @(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader)
 
 @import common.LinkTo
@@ -36,7 +35,7 @@
                             data-test-id="article-review-body">
 
                             @if(article.commercial.isAdvertisementFeature || article.commercial.isSponsored(None) || article.commercial.isFoundationSupported) {
-                                @fragments.commercial.badge(article)
+                                @fragments.commercial.badge(article, model)
                             }
 
                             @BodyCleaner(article, article.fields.body, amp = amp)
