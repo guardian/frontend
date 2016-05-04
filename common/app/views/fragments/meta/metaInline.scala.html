@@ -7,7 +7,7 @@
     USElectionSwitch.isSwitchedOn &&
     item.content.tags.tags.exists(_.id == "us-news/us-elections-2016")
 ){ isUSElection =>
-    <div class="content__labels @if(isUSElection) {content__labels--us-election} @if(mvt.ABGalleryRedesignVariant.shouldShow(item.metadata.contentType)) {content__labels--gallery}">
+    <div class="content__labels @if(!item.content.isImmersive && !mvt.ABGalleryRedesignVariant.shouldShow(item.content.metadata.contentType)) { content__labels--not-immersive } @if(isUSElection) {content__labels--us-election}">
 
         @if(isUSElection) {
             <div class="badge-slot badge-slot--us-election">
@@ -19,12 +19,14 @@
             </div>
         }
 
-        <div class="content__section-label">
-            <a class="content__section-label__link" data-link-name="article section" href="@LinkTo {/@item.content.sectionLabelLink}">@Html(Localisation(item.content.sectionLabelName))</a>
-        </div>
+        @if(!(item.content.isImmersive && item.content.tags.isArticle)) {
+            <div class="content__section-label @if(item.content.tags.isGallery) { content__section-label--gallery }">
+                <a class="content__section-label__link" data-link-name="article section" href="@LinkTo {/@item.content.sectionLabelLink}">@Html(Localisation(item.content.sectionLabelName))</a>
+            </div>
+        }
 
         @item.content.blogOrSeriesTag.map { series =>
-        <div class="content__series-label">
+        <div class="content__series-label @if(item.content.isImmersive && item.content.tags.isArticle) { content__series-label--immersive--article }">
             <a class="content__series-label__link" href="@LinkTo {/@series.id}">@series.name</a>
         </div>
         }.getOrElse {

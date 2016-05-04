@@ -1,8 +1,9 @@
 @(gallery: model.GalleryPage)(implicit request: RequestHeader)
 
 @import views.support.TrailCssClasses.toneClass
+@import common.Edition
 
-<header class="content__head is-fixed-height tonal__head tonal__head--@toneClass(gallery.item)">
+<header class="content__head tonal__head tonal__head--@toneClass(gallery.item)">
     @* Hidden because we visually show this data in the head, but needed
     here for SEO. *@
     <h1 class="is-hidden" itemprop="headline">@Html(gallery.item.trail.headline)</h1>
@@ -15,9 +16,7 @@
         @fragments.contentMeta(gallery.item, gallery)
 
         @if(gallery.item.fields.standfirst.isDefined) {
-            <div class="content__wrapper--standfirst">
-                @fragments.standfirst(gallery.item)
-            </div>
+            @fragments.standfirst(gallery.item)
         }
 
             <div class="content__meta-container new-gallery__meta-container">
@@ -39,3 +38,4 @@
             </div>
     </div>
 </header>
+

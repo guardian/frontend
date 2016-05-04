@@ -192,28 +192,6 @@
 
 // New gallery stuff
 
-.content__labels--gallery {
-    border: 0;
-    margin-bottom: 0;
-    padding-bottom: 0;
-    width: auto;
-    float: none;
-
-    .content__section-label {
-        margin-right: $gs-gutter / 4;
-    }
-
-    .content__series-label {
-        font-weight: normal;
-    }
-
-    .content__series-label,
-    .content__section-label {
-        @include fs-header(1, $size-only: true);
-        float: left;
-    }
-}
-
 .new-gallery__meta-container {
     &:before {
         content: '';

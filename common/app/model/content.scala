@@ -80,7 +80,7 @@ final case class Content(
   lazy val shortUrlId = fields.shortUrl.replace("http://gu.com", "")
   lazy val shortUrlPath = shortUrlId
   lazy val discussionId = Some(shortUrlPath)
-  lazy val isImmersive = fields.displayHint.contains("immersive") || metadata.contentType.toLowerCase == "gallery"
+  lazy val isImmersive = fields.displayHint.contains("immersive")
 
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {

@@ -4,8 +4,9 @@
 @import views.support.Commercial.topBelowNavSlot
 @import views.support.{Commercial, RenderClasses}
 @import model.Page.getContent
-@import model.GalleryPage
 @import layout.ContentWidths.MainMedia
+@import model.{Gallery,Article,ContentPage,GalleryPage}
+@import views.support.TrailCssClasses.toneClass
 
 @headerAndTopAds(showAdverts: Boolean, edition: Edition, adBelowNav: Boolean) = {
     @if(!(page.metadata.shouldHideHeaderAndTopAds && getContent(page).exists(_.tags.isArticle))) {
@@ -27,34 +28,110 @@
     }
 }
 
-@immersiveMainMedia(page: GalleryPage) = {
-    <div class="new-gallery content tonal--tone-media immersive-main-media">
-        @defining(
-            page.item.content.trail.trailPicture.head
-        ) { picture =>
-            @fragments.image(
-                picture = picture,
-                classes = Seq("immersive-main-media__img"),
-                widths = MainMedia.immersive,
-                imageAltText = "",
-                isImmersiveMainMedia = true
-            )
+@immersiveMainMedia(page: ContentPage) = {
+    <div class="content content--immersive tonal tonal--@toneClass(page.item) immersive-main-media
+        @if(page.item.tags.isGallery) { new-gallery }
+        @if(page.item.tags.isArticle) { content--immersive-article }
+    ">
+        @if(!page.item.tags.isGallery) {
+            <div class="gs-container immersive-main-media__logo">
+                <a href="@LinkTo {/}">
+                    <span class="u-h">The Guardian</span>
+                    @fragments.inlineSvg("guardian-logo-160", "logo", Seq("immersive-main-media__logo__svg"))
+                </a>
+                @page.item match {
+                    case article: Article => {
+                        @if(article.isUSMinute) {
+                            <a class="logo--us-election" href="@LinkTo {/us-news/us-elections-2016}">
+                                <span class="u-h">The US Election 2016</span>
+                                @fragments.inlineSvg("us-election-logo", "logo")
+                            </a>
+                        }
+                    }
+                    case _ => {}
+                }
+            </div>
+        }
+
+        @if(page.item.tags.isArticle && (page.item.elements.hasMainEmbed || page.item.elements.elements("main").isEmpty)) {
+            <div class="immersive-main-media__media">
+                <div class="immersive-main-media__media__loading">
+                    <div class="immersive-main-media__media__loading__animation is-updating"></div>
+                    <span class="u-h">Loading header</span>
+                </div>
+                @Html(page.item.fields.main)
+            </div>
+        } else {
+            @page.item.elements.mainPicture.map(_.images).orElse(page.item.trail.trailPicture).map { picture =>
+                @fragments.image(
+                    picture = picture,
+                    classes = Seq("immersive-main-media__media"),
+                    widths = MainMedia.immersive,
+                    imageAltText = "",
+                    isImmersiveMainMedia = true
+                )
+            }
         }
         <div class="immersive-main-media__headline-container">
             <div class="gs-container">
+                @if(!page.item.content.tags.isGallery) { <div class="content__main-column"> }
 
-                @fragments.meta.metaInline(page.item)
+                    @fragments.meta.metaInline(page.item)
 
-                <h1 class="content__headline content__headline--immersive content__headline--immersive--with-main-media">
-                    @fragments.inlineSvg("camera", "icon", List("inline-tone-fill")) @Html(page.item.trail.headline)
-                </h1>
+                    <h1 class="content__headline content__headline--immersive @if(page.item.content.tags.isGallery || page.item.fields.main.nonEmpty) { content__headline--immersive--with-main-media }">
+                        @page.item match {
+                            case _: Gallery => {
+                                @fragments.inlineSvg("camera", "icon", List("inline-tone-fill"))
+                            }
+                            case article: Article => {
+                                @if(article.isUSMinute) {
+                                    <a href="@LinkTo {/us-news/series/the-campaign-minute-2016}" class="logo--minute-article">
+                                        <span class="u-h">The Minute - </span>
+                                        @fragments.inlineSvg("minute-logo", "logo")
+                                    </a>
+                                }
+                            }
+                            case _ => {}
+                        }
+                        @Html(page.item.trail.headline)
+                    </h1>
 
-                @if(page.item.content.hasTonalHeaderByline) {
-                    @page.item.trail.byline.map { text =>
-                        <span class="content__headline content__headline--byline">@ContributorLinks(text, page.item.tags.contributors)</span>
+                    @page match {
+                        case galleryPage: GalleryPage => {
+                            @if(page.item.content.hasTonalHeaderByline) {
+                                @page.item.trail.byline.map { text =>
+                                    <span class="content__headline content__headline--byline">@ContributorLinks(text, page.item.tags.contributors)</span>
+                                }
+                            }
+
+                            @if(galleryPage.showBadge && !page.item.commercial.isAdvertisementFeature) {
+                                @fragments.commercial.badge(page.item, page)
+                            }
+                        }
+                        case _ => {
+                            @page.item match {
+                                case article: Article => {
+                                    @if(article.isUSMinute) {
+
+                                        @if(!article.trail.shouldHidePublicationDate) {
+                                            @fragments.meta.dateline(article.trail.webPublicationDate, article.fields.lastModified, article.content.hasBeenModified, article.tags.isLiveBlog, article.fields.isLive, article.tags.isUSMinuteSeries)
+                                        }
+
+                                        @if(article.fields.standfirst.isDefined) {
+                                            @fragments.standfirst(article)
+                                        }
+                                    }
+
+                                    @if(!article.isUSMinute && article.fields.standfirst.isDefined) {
+                                        @fragments.standfirst(article)
+                                    }
+                                }
+                                case _ => {}
+                            }
+                        }
                     }
-                }
 
+                @if(!page.item.content.tags.isGallery) { </div> }
             </div>
         </div>
     </div>
@@ -87,7 +164,8 @@
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
         @page match {
-            case page: model.GalleryPage if mvt.ABGalleryRedesignVariant.isParticipating => {
+            case page: model.ContentPage if page.item.content.isImmersive || (mvt.ABGalleryRedesignVariant.shouldShow(page.metadata.contentType) && page.item.content.tags.isGallery) => {
+                @* When the new galleries go live, they will have the immersive flag *@
                 <div class="immersive-header-container">
                     @headerAndTopAds(showAdverts, edition, adBelowNav)
 
