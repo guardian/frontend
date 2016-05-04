@@ -91,7 +91,7 @@ define([
             return !(iframe.length && isIframeLoaded(iframe[0]));
         });
 
-        return notLoaded.length === 0 ?
+        return notLoaded.length === 0 || !('MutationObserver' in window) ?
             true :
             Promise.all(notLoaded.map(function (interactive) {
                 return new Promise(function (resolve) {
