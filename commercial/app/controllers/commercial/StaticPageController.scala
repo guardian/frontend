@@ -1,5 +1,6 @@
 package controllers.commercial
 
+import model.Cached.RevalidatableResult
 import model.{MetaData, GuardianContentTypes, Cached, StandalonePage}
 import play.api.mvc.{Action, Controller}
 
@@ -41,14 +42,14 @@ object StaticPageController extends Controller {
 
   // Membership Tests
   def renderGuardianExplainPage() = Action { implicit request =>
-    Cached(60)(Ok(views.html.static.guardianExplainPage(StaticGuardianExplainPage().metadata)))
+    Cached(60)(RevalidatableResult.Ok(views.html.static.guardianExplainPage(StaticGuardianExplainPage().metadata)))
   }
 
   def renderGuardianExplorePage() = Action { implicit request =>
-    Cached(60)(Ok(views.html.static.guardianExplorePage(StaticGuardianExplorePage().metadata)))
+    Cached(60)(RevalidatableResult.Ok(views.html.static.guardianExplorePage(StaticGuardianExplorePage().metadata)))
   }
 
   def renderGuardianExperiencePage() = Action { implicit request =>
-    Cached(60)(Ok(views.html.static.guardianExperiencePage(StaticGuardianExperiencePage().metadata)))
+    Cached(60)(RevalidatableResult.Ok(views.html.static.guardianExperiencePage(StaticGuardianExperiencePage().metadata)))
   }
 }

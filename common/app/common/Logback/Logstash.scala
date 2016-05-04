@@ -1,6 +1,7 @@
 package common.Logback
 
 import com.amazonaws.auth.AWSCredentialsProvider
+import common.ManifestData
 import conf.switches.Switches
 import conf.Configuration
 import play.api.{Logger => PlayLogger, Application => PlayApp, GlobalSettings}
@@ -26,7 +27,9 @@ object Logstash {
   val customFields = Map(
     "stack" -> "frontend",
     "app" -> Configuration.environment.projectName,
-    "stage" -> Configuration.environment.stage.toUpperCase
+    "stage" -> Configuration.environment.stage.toUpperCase,
+    "build" -> ManifestData.build,
+    "revision" -> ManifestData.revision
   )
 
   val config = for {

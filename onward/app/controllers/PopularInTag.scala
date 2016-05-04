@@ -11,7 +11,7 @@ object PopularInTag extends Controller with Related with Containers with Logging
     val edition = Edition(request)
     val excludeTags = request.queryString.getOrElse("exclude-tag", Nil)
     getPopularInTag(edition, tag, excludeTags) map {
-      case popular if popular.items.isEmpty => JsonNotFound()
+      case popular if popular.items.isEmpty => Cached(60)(JsonNotFound())
       case trails => renderPopularInTag(trails)
     }
   }

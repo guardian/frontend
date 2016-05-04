@@ -25,7 +25,7 @@ object MediaController extends Controller with RendersItemResponse with Logging 
       case Left(model)  => MediaInfo(expired = false)
       case Right(other) => MediaInfo(expired = true)
     } map { mediaInfo =>
-      JsonComponent(Json.toJson(mediaInfo).as[JsObject])
+      Cached(60)(JsonComponent(Json.toJson(mediaInfo).as[JsObject]))
     }
   }
 

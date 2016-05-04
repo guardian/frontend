@@ -5,7 +5,7 @@ import common.{Edition, ExecutionContexts, JsonNotFound}
 import contentapi.ContentApiClient
 import feed.MostPopularSocialAutoRefresh
 import layout.{CollectionEssentials, FaciaContainer}
-import model.FrontProperties
+import model.{Cached, FrontProperties}
 import model.pressed.CollectionConfig
 import play.api.mvc.{Action, Controller}
 import services.{CollectionConfigWithId, FaciaContentConvert}
@@ -64,7 +64,7 @@ object MostViewedSocialController extends Controller with ExecutionContexts {
         }
 
       case _ =>
-        unit(JsonNotFound())
+        unit(Cached(60)(JsonNotFound()))
     }
   }
 }

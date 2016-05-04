@@ -40,7 +40,12 @@ define([
                 detect = arguments[3];
 
                 config.page = {
-                    pageId: 'uk/commentisfree'
+                    pageId: 'uk/commentisfree',
+                    isFront: true
+                };
+
+                config.switches = {
+                    fabricAdverts : false
                 };
 
                 detect.getBreakpoint = function () {
@@ -179,6 +184,36 @@ define([
                 expect(qwery('.fc-container-third .ad-slot', $fixtureContainer).length).toBe(1);
                 expect(qwery('.fc-container-fifth .ad-slot', $fixtureContainer).length).toBe(1);
                 done();
+            });
+        });
+
+        describe('Fabric ads', function () {
+            beforeEach(function () {
+                config.switches.fabricAdverts = true;
+            });
+
+            it('can be added on mobile', function (done) {
+                detect.isBreakpoint = function () {
+                    // expecting check for breakpoint <= phablet
+                    return true;
+                };
+                sliceAdverts.init();
+                fastdom.defer(function () {
+                    expect(qwery('.fc-container-first .ad-slot--fabric', $fixtureContainer).length).toBe(1);
+                    done();
+                });
+            });
+
+            it('is not added on desktop', function (done) {
+                detect.isBreakpoint = function () {
+                    // expecting check for breakpoint <= phablet
+                    return false;
+                };
+                sliceAdverts.init();
+                fastdom.defer(function () {
+                    expect(qwery('.fc-container-first .ad-slot--fabric', $fixtureContainer).length).toBe(0);
+                    done();
+                });
             });
         });
 
