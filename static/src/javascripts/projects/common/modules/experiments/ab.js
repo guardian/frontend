@@ -6,13 +6,10 @@ define([
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/dummy-test',
-    'common/modules/experiments/tests/fake-series-hide-sensitive',
-    'common/modules/experiments/tests/fake-series-show-sensitive',
     'common/modules/experiments/tests/fronts-on-articles2',
     'common/modules/experiments/tests/identity-register-membership-standfirst',
     'common/modules/experiments/tests/live-blog-chrome-notifications-internal',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
-    'common/modules/experiments/tests/next-in-series',
     'common/modules/experiments/tests/membership',
     'common/modules/experiments/tests/loyal-adblocking-survey',
     'common/modules/experiments/tests/minute',
@@ -38,13 +35,10 @@ define([
     store,
     mvtCookie,
     DummyTest,
-    FakeSeriesHideSensitive,
-    FakeSeriesShowSensitive,
     FrontsOnArticles2,
     IdentityRegisterMembershipStandfirst,
     LiveBlogChromeNotificationsInternal,
     LiveBlogChromeNotificationsProd,
-    NextInSeries,
     Membership,
     LoyalAdblockingSurvey,
     Minute,
@@ -70,13 +64,10 @@ define([
         new IdentityRegisterMembershipStandfirst(),
         new LiveBlogChromeNotificationsInternal(),
         new LiveBlogChromeNotificationsProd(),
-        new NextInSeries(),
         new Membership(),
         new LoyalAdblockingSurvey(),
         new Minute(),
-        new VideoSeriesPage(),
-        new FakeSeriesHideSensitive(),
-        new FakeSeriesShowSensitive()
+        new VideoSeriesPage()
     ]);
 
     var participationsKey = 'gu.ab.participations';

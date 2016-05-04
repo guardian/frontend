@@ -1,20 +1,19 @@
 package model
 
+import campaigns.PersonalInvestmentsCampaign
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
+import common.commercial.BrandHunter
 import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
-import conf.switches.Switches._
 import cricketPa.CricketTeams
-import model.CacheTime._
 import model.liveblog.BodyBlock
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
-import campaigns.PersonalInvestmentsCampaign
 import play.api.mvc.RequestHeader
 
 object Commercial {
@@ -350,7 +349,8 @@ object Page {
 
 // A Page is something that has metadata, and anything with Metadata can be rendered.
 trait Page {
- def metadata: MetaData
+  def metadata: MetaData
+  def branding(edition: Edition): Option[Branding] = None
 }
 
 // ContentPage objects use data from a ContentApi item to populate metadata.
@@ -378,6 +378,15 @@ trait ContentPage extends Page {
     metadata.twitterProperties ++
     item.content.twitterProperties ++
     metadata.twitterPropertiesOverrides
+
+  override def branding(edition: Edition): Option[Branding] = {
+    BrandHunter.findBranding(
+      section = None,
+      item.tags,
+      publicationDate = Some(item.trail.webPublicationDate),
+      edition
+    )
+  }
 }
 case class SimpleContentPage(content: ContentType) extends ContentPage {
   override lazy val item: ContentType = content
