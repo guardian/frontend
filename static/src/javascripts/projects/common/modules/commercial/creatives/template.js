@@ -1,11 +1,8 @@
 define([
     'Promise',
-    'common/utils/$',
-    'common/utils/config',
     'common/utils/template',
     'common/utils/fastdom-promise',
     'common/views/svgs',
-    'common/modules/ui/toggles',
     'common/modules/commercial/creatives/template-preprocessor',
 
     // require templates, so they're bundled up as part of the build
@@ -15,37 +12,26 @@ define([
     'text!common/views/commercial/creatives/logo-ad-feature.html',
     'text!common/views/commercial/creatives/logo-sponsored.html',
     'text!common/views/commercial/creatives/manual-inline.html',
-    'text!common/views/commercial/creatives/manual-multiple.html',
-    'text!common/views/commercial/creatives/manual-single.html',
     'text!common/views/commercial/creatives/gimbap.html',
     'text!common/views/commercial/creatives/gimbap-simple.html',
     'text!common/views/commercial/creatives/gimbap-richmedia.html',
     'text!common/views/commercial/creatives/manual-container.html'
 ], function (
     Promise,
-    $,
-    config,
     template,
     fastdom,
     svgs,
-    Toggles,
     templatePreprocessor
 ) {
-    function createToggle(el) {
-        if (el.querySelector('.popup__toggle')) {
-            new Toggles(el).init();
-        }
-    }
-
     /**
      * Create simple templated creatives
      *
      * * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10021527
      * * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10028127
      */
-    var Template = function ($adSlot, params) {
-        this.$adSlot = $adSlot;
-        this.params  = params;
+    var Template = function (adSlot, params) {
+        this.adSlot = adSlot instanceof HTMLElement ? adSlot : adSlot[0];
+        this.params = params;
 
         if (this.params.Toneclass) {
             this.params.isSoulmates = params.Toneclass.indexOf('soulmates') !== -1;
@@ -71,21 +57,16 @@ define([
         this.params.logoFeatureLabel = 'Paid for by';
     };
 
-    Template.prototype.postLoadEvents = {
-        'manual-single': createToggle,
-        'manual-multiple': createToggle
-    };
-
     Template.prototype.create = function () {
         return new Promise(function (resolve) {
-            if( this.params.creative === 'manual-single' && config.switches.v2ManualSingleTemplate ) {
+            if( this.params.creative === 'manual-single' ) {
                 this.params.originalCreative = 'manual-single';
                 this.params.creative = 'manual-container';
                 this.params.creativeCard = 'manual-card-large';
                 this.params.classNames = ['legacy', 'legacy-single', this.params.toneClass.replace('commercial--', ''), this.params.toneClass.replace('commercial--tone-', '')];
             }
 
-            if (this.params.creative === 'manual-multiple' && config.switches.v2ManualMultipleTemplate ) {
+            if (this.params.creative === 'manual-multiple' ) {
                 // harmonise attribute names until we do this on the DFP side
                 this.params.toneClass = this.params.Toneclass;
                 this.params.baseUrl = this.params.base__url;
@@ -103,15 +84,11 @@ define([
                 }
 
                 var creativeHtml = template(creativeTpl, this.params);
-                var $ad = $.create(creativeHtml);
 
-                resolve(fastdom.write(function () {
-                    $ad.appendTo(this.$adSlot);
-                    if (this.postLoadEvents[this.params.creative]) {
-                        this.postLoadEvents[this.params.creative]($ad[0]);
-                    }
-                    return $ad;
-                }, this));
+                fastdom.write(function () {
+                    this.adSlot.insertAdjacentHTML('beforeend', creativeHtml);
+                    resolve();
+                }, this);
             }.bind(this));
         }.bind(this));
     };

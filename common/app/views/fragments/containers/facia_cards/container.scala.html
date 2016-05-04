@@ -3,10 +3,11 @@
 @import conf.switches.Switches
 @import layout.MetaDataHeader
 @import slices.{CommercialContainerType, Dynamic, Fixed, MostPopular, NavList, NavMediaList, SingleCampaign, Video}
-@import views.html.commercial.containers.paidContainerV2
+@import views.html.commercial.containers.paidContainer
 @import views.html.fragments.containers.facia_cards._
 @import views.support.Commercial.container.shouldRenderAsPaidContainer
 @import views.support.GetClasses
+
 @(containerDefinition: layout.FaciaContainer,
   frontProperties: model.FrontProperties = model.FrontProperties.empty,
   frontId: Option[String] = None,
@@ -54,10 +55,10 @@
     @containerDefinition.container match {
         case _: model.MostPopular if isPaidFront => {}
 
-        case _: Fixed if Switches.v2FixedContainerTemplate.isSwitchedOn && shouldRenderAsPaidContainer(isPaidFront, containerDefinition, maybeContainerModel) => {
+        case _: Fixed if shouldRenderAsPaidContainer(isPaidFront, containerDefinition, maybeContainerModel) => {
             @maybeContainerModel match {
                 case Some(containerModel) => {
-                    @paidContainerV2(frontId.getOrElse(""), containerDefinition.index, containerModel)
+                    @paidContainer(frontId.getOrElse(""), containerDefinition.index, containerModel)
                 }
                 case None => {}
             }
