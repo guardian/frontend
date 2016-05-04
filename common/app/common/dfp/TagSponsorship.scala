@@ -65,27 +65,31 @@ object InlineMerchandisingTargetedTagsReportParser extends Logging {
   }
 }
 
-case class HighMerchandisingTargetedTagSet(){
+object HighMerchandisingTargetedTagSet {
+  implicit val jsonReads = Json.reads[HighMerchandisingTargetedTagSet]
 
-  private def hasTagId(tag: Tag): Boolean = tag.id.split('/').lastOption exists { keyword =>
-    println(keyword)
-    val testWords = Seq("notcorrect", "oil", "alsoNotCorrect")
-    testWords contains keyword
-//    if (testWords contains keyword) {
-//      return true
-//    } else {
-//      return false
-//    }
-//    true
+  implicit val highMerchandisingTargetedTagSetWrites = new Writes[HighMerchandisingTargetedTagSet] {
+    def writes(tagSet: HighMerchandisingTargetedTagSet): JsValue = {
+      Json.obj(
+        "items" -> tagSet.items
+      )
+    }
   }
-
-  def hasTag(tag: Tag):Boolean = tag.properties.tagType match {
-    case "Keyword" => hasTagId(tag)
-    case _ => false
-  }
-
 }
 
+case class HighMerchandisingTargetedTagSet(items: Set[String] = Set.empty){
+
+  private def hasTagId(tagId: String): Boolean = tagId.split('/').lastOption exists { keyword =>
+//    println(items)
+//    val testWords = Seq("notcorrect", "oil", "alsoNotCorrect")
+    items contains keyword
+  }
+
+  def hasTag(tag: Tag):Boolean = hasTagId(tag.id)
+
+  def nonEmpty = items.nonEmpty
+
+}
 
 object HighMerchandisingLineItems {
   implicit val lineItemFormat = Json.format[HighMerchandisingLineItem]

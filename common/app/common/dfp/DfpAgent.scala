@@ -90,6 +90,23 @@ object DfpAgent
       maybeTagSet getOrElse InlineMerchandisingTagSet()
     }
 
+    def grabHighMerchandisingTargetTagsFromStore(): HighMerchandisingTargetedTagSet = {
+
+      val maybeTagList = for {
+        jsonString <- stringFromS3(dfpHighMerchandisingTagsDataKey)
+        report <- HighMerchandisingTargetedTagsReportParser(jsonString)
+      } yield report.lineItems.items
+
+      val maybeTagsSeq = maybeTagList map { tagSet =>
+        for {
+          lineItem <- tagSet
+          tag <- lineItem.tags
+        } yield tag
+      }
+
+      HighMerchandisingTargetedTagSet(maybeTagsSeq.getOrElse(Seq.empty).toSet)
+    }
+
     def updateMap(agent: Agent[Map[String, Set[String]]])(freshData: => Map[String, Set[String]]) {
       if (freshData.nonEmpty) {
         agent send freshData
@@ -99,6 +116,12 @@ object DfpAgent
     def updateInlineMerchandisingTargetedTags(freshData: InlineMerchandisingTagSet) {
       inlineMerchandisingTagsAgent sendOff { oldData =>
         if (freshData.nonEmpty) freshData else oldData
+      }
+    }
+
+    def updateHighMerchandisingTargetTags(freshData: HighMerchandisingTargetedTagSet): Unit ={
+      highMerchandisingTargetedTagsAgent sendOff { oldData =>
+        if(freshData.nonEmpty) freshData else oldData
       }
     }
 
@@ -117,6 +140,8 @@ object DfpAgent
 
 
     updateInlineMerchandisingTargetedTags(grabInlineMerchandisingTargetedTagsFromStore())
+
+    updateHighMerchandisingTargetTags(grabHighMerchandisingTargetTagsFromStore())
   }
 
   def refreshFaciaSpecificData(): Unit = {
