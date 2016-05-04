@@ -2,10 +2,8 @@
 	color: #f7b500;
 }
 
-.fc-container.awesome__container {
-	.fc-container__inner {
-		border-top: 0;
-	}
+.awesome__container {
+	background: transparent;
 }
 
 .awesome__header {
@@ -63,4 +61,22 @@
 	@include font-size(20);
 
 	line-height: 1.2;
+}
+
+.awesome__banner {
+	position: relative;
+	height: 375px;
+	background-size: cover;
+}
+
+.awesome__cta-wrapper {
+	padding-top: 150px;
+
+	@include mq(leftCol) {
+        margin-left: $left-column + $gs-gutter;
+    }
+
+    @include mq(wide) {
+        margin-left: $left-column-wide + $gs-gutter;
+    }
 }
