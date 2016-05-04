@@ -67,13 +67,15 @@ object InlineMerchandisingTargetedTagsReportParser extends Logging {
 
 case class HighMerchandisingTargetedTagSet(){
 
-  private def hasTagId(tag: Tag): Boolean = tag.id.split('/').lastOption exists { endPart =>
-    println(endPart)
-    if (endPart equals "notcorrect") {
-      return true
-    } else {
-      return false
-    }
+  private def hasTagId(tag: Tag): Boolean = tag.id.split('/').lastOption exists { keyword =>
+    println(keyword)
+    val testWords = Seq("notcorrect", "oil", "alsoNotCorrect")
+    testWords contains keyword
+//    if (testWords contains keyword) {
+//      return true
+//    } else {
+//      return false
+//    }
 //    true
   }
 
