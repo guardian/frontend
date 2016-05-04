@@ -208,7 +208,9 @@
     float: none;
 
     .content__section-label {
-        margin-right: $gs-gutter / 4;
+        @include mq(desktop) {
+            margin-right: $gs-gutter / 4;
+        }
     }
 
     .content__series-label {
@@ -217,8 +219,10 @@
 
     .content__series-label,
     .content__section-label {
-        @include fs-header(1, $size-only: true);
-        float: left;
+        @include mq(desktop) {
+            @include fs-header(1, $size-only: true);
+            float: left;
+        }
     }
 }
 
