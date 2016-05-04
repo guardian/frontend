@@ -89,16 +89,16 @@ var isSameHost = function (host) {
 var requestForDevBlog = (function () {
     var isForDevBlog = (function () {
         var devBlogPathRegex = /^\/info\/developer-blog($|\/.*$)/;
-        return function (url, request) {
+        return function (request) {
+            var url = new URL(request.url);
             return isSameHost(url.host) && devBlogPathRegex.test(url.pathname) && requestAcceptsHTML(request);
         }
     })();
 
     return function (event) {
         var request = event.request;
-        var url = new URL(request.url);
 
-        if (isForDevBlog(url, request)) {
+        if (isForDevBlog(request)) {
             // update the crossword on every visist the dev blog
             if (requestAcceptsHTML(request)) {
                 isCacheUpdated().then(function (isUpdated) {
@@ -120,7 +120,8 @@ var requestForDevBlog = (function () {
 var requestForAsset = (function () {
     var isAssetRequest = (function () {
         var assetPathRegex = new RegExp('^@Configuration.assets.path');
-        return function (url) {
+        return function (request) {
+            var url = new URL(request.url);
             @if(play.Play.isDev()) {
                 return assetPathRegex.test(url.pathname);
             } else {
@@ -131,9 +132,8 @@ var requestForAsset = (function () {
 
     return function (event) {
         var request = event.request;
-        var url = new URL(request.url);
 
-        if (isAssetRequest(url)) {
+        if (isAssetRequest(request)) {
             // Default fetch behaviour
             // Cache first for all other requests
             event.respondWith(
