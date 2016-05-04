@@ -10,7 +10,6 @@ define([
     'common/modules/experiments/tests/identity-register-membership-standfirst',
     'common/modules/experiments/tests/live-blog-chrome-notifications-internal',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
-    'common/modules/experiments/tests/membership',
     'common/modules/experiments/tests/loyal-adblocking-survey',
     'common/modules/experiments/tests/minute',
     'common/modules/experiments/tests/video-series-page',
@@ -39,7 +38,6 @@ define([
     IdentityRegisterMembershipStandfirst,
     LiveBlogChromeNotificationsInternal,
     LiveBlogChromeNotificationsProd,
-    Membership,
     LoyalAdblockingSurvey,
     Minute,
     VideoSeriesPage,
@@ -64,7 +62,6 @@ define([
         new IdentityRegisterMembershipStandfirst(),
         new LiveBlogChromeNotificationsInternal(),
         new LiveBlogChromeNotificationsProd(),
-        new Membership(),
         new LoyalAdblockingSurvey(),
         new Minute(),
         new VideoSeriesPage()
