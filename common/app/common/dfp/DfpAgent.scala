@@ -14,6 +14,7 @@ object DfpAgent
   extends PaidForTagAgent
   with PageskinAdAgent
   with InlineMerchandiseComponentAgent
+  with HighMerchandiseComponentAgent
   with AdSlotAgent
   with ExecutionContexts {
 
@@ -67,7 +68,6 @@ object DfpAgent
         jsonString <- stringFromS3(key)
         report <- Json.parse(jsonString).asOpt[PaidForTagsReport]
       } yield report
-
       reportOption.fold(Seq[PaidForTag]())(_.paidForTags)
     }
 
@@ -112,6 +112,7 @@ object DfpAgent
     }
 
     update(pageskinnedAdUnitAgent)(grabPageSkinSponsorshipsFromStore(dfpPageSkinnedAdUnitsKey))
+
 
     updateInlineMerchandisingTargetedTags(grabInlineMerchandisingTargetedTagsFromStore())
   }
