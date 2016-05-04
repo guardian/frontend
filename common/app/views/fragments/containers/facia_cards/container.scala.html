@@ -2,7 +2,7 @@
 @import common.dfp.{Keyword, Series}
 @import conf.switches.Switches
 @import layout.MetaDataHeader
-@import slices.{CommercialContainerType, Dynamic, Fixed, MostPopular, NavList, NavMediaList, SingleCampaign, Video}
+@import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList, Video}
 @import views.html.commercial.containers.paidContainer
 @import views.html.fragments.containers.facia_cards._
 @import views.support.Commercial.container.shouldRenderAsPaidContainer
@@ -13,12 +13,6 @@
   frontId: Option[String] = None,
   isPaidFront: Boolean = false,
   maybeContainerModel: Option[ContainerModel] = None)(implicit request: RequestHeader)
-
-@renderCommercialContainer(containerType: CommercialContainerType) = {
-    <div class="fc-container__inner--full-span fc-container__inner--paidfor fc-container__inner">
-    @commercialContainer(containerType, containerDefinition, frontProperties)
-    </div>
-}
 
 @renderBrandingDataAttributes() = {
     @if(Switches.cardsDecidePaidContainerBranding.isSwitchedOn) {
@@ -55,7 +49,7 @@
     @containerDefinition.container match {
         case _: model.MostPopular if isPaidFront => {}
 
-        case _: Fixed if shouldRenderAsPaidContainer(isPaidFront, containerDefinition, maybeContainerModel) => {
+        case Fixed(_) if shouldRenderAsPaidContainer(isPaidFront, containerDefinition, maybeContainerModel) => {
             @maybeContainerModel match {
                 case Some(containerModel) => {
                     @paidContainer(frontId.getOrElse(""), containerDefinition.index, containerModel)
@@ -88,10 +82,6 @@
 
             @containerDefinition.container match {
 
-                case Fixed(definition) if shouldRenderAsPaidContainer(isPaidFront, containerDefinition, None) => {
-                    @renderCommercialContainer(SingleCampaign(definition))
-                }
-
                 case _: Dynamic | _: Fixed => {
                     <div class="fc-container__inner">
                         @standardContainer(containerDefinition, frontProperties)
@@ -122,8 +112,10 @@
                     </div>
                 }
 
-                case slices.Commercial(container) => {
-                    @renderCommercialContainer(container)
+                case slices.Commercial(container) if Switches.cardsDecidePaidContainerBranding.isSwitchedOff => {
+                    <div class="fc-container__inner--full-span fc-container__inner--paidfor fc-container__inner">
+                        @commercialContainer(container, containerDefinition, frontProperties)
+                    </div>
                 }
             }
         </section>
