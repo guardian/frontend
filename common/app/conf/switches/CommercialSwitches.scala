@@ -266,28 +266,10 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val v2CapiSingleTemplate = Switch(
-    SwitchGroup.CommercialRefactoring,
-    "v2-capi-single-template",
-    "Capi single component using template v2",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = false
-  )
-
-  val v2CapiMultipleTemplate = Switch(
-    SwitchGroup.CommercialRefactoring,
-    "v2-capi-multiple-template",
-    "Capi multiple component using template v2",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = false
-  )
-
   val cardsDecidePaidContainerBranding = Switch(
     SwitchGroup.CommercialRefactoring,
     "cards-decide-paid-container-branding",
-    "If on, the cards will decide the branding of their container",
+    "DON'T TURN THIS ON! If on, the cards will decide the branding of their container",
     safeState = Off,
     sellByDate = new LocalDate(2016, 6, 1),
     exposeClientSide = false
