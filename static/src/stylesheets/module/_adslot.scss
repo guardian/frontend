@@ -479,6 +479,46 @@
     .content--media--video & {
         min-height: 0;
     }
+
+    .content--immersive & {
+        @include mq(leftCol) {
+            float: left;
+            margin-left: -158px;
+        }
+
+        @include mq(wide) {
+            margin-left: -238px;
+        }
+    }
+}
+.ad-slot--paid-for-badge--gallery {
+    border-top: 1px dotted $neutral-1;
+    border-bottom: 0;
+    padding-top: $gs-baseline / 3;
+
+    @include mq(desktop) {
+        width: gs-span(3);
+        position: absolute;
+    }
+
+    .content__main-column > & {
+        @include mq(desktop) {
+            top: 100%;
+        }
+
+        @include mq(leftCol) {
+            left: -160px;
+        }
+
+        @include mq(wide) {
+            left: -240px;
+        }
+    }
+
+
+    .ad-slot--paid-for-badge__header {
+        font-weight: normal;
+    }
 }
 .ad-slot--paid-for-badge--interactive {
     width: 140px;

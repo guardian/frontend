@@ -1,4 +1,4 @@
-@(article: model.Article, showBadge: Boolean = false)(implicit request: RequestHeader)
+@(article: model.Article)(implicit request: RequestHeader)
 
 @import views.support.TrailCssClasses.toneClass
 
@@ -53,14 +53,14 @@
         <div class="content__head--mobile">
             <div class="content__wrapper content__wrapper--headline">
                 <div class="gs-container">
-                @if(!article.isUSMinute) {
-                    @article.content.blogOrSeriesTag.map { series =>
-                        <h3 class="content__series-label">
-                            <a class="content__series-label__link" href="@LinkTo{/@series.id}">@series.name</a>
-                        </h3>
+                    @if(!article.isUSMinute) {
+                        @article.content.blogOrSeriesTag.map { series =>
+                            <h3 class="content__series-label">
+                                <a class="content__series-label__link" href="@LinkTo{/@series.id}">@series.name</a>
+                            </h3>
+                        }
                     }
-                }
-                    <h1 class="content__headline">
+                    <h1 class="content__headline content__headline--immersive @if(article.fields.main.nonEmpty) { content__headline--immersive--with-main-media }">
                         @if(article.isUSMinute) {
                             <a href="@LinkTo{/us-news/series/the-campaign-minute-2016}" class="logo--minute-article">
                                 <span class="u-h">The Minute - </span>

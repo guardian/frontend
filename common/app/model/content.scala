@@ -6,7 +6,6 @@ import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.facia.api.{utils => fapiutils}
 import com.gu.facia.client.models.TrailMetaData
 import common._
-import common.commercial.BrandHunter
 import common.dfp.DfpAgent
 import conf.Configuration
 import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch}
@@ -35,10 +34,6 @@ sealed trait ContentType {
   final def metadata: MetaData = content.metadata
   final def commercial: Commercial = content.commercial
   final def sharelinks: ShareLinks = content.sharelinks
-
-  def findBranding(edition: Edition): Option[Branding] = {
-    BrandHunter.findBranding(tags, publicationDate = Some(trail.webPublicationDate), edition)
-  }
 }
 
 final case class GenericContent(override val content: Content) extends ContentType
@@ -72,7 +67,6 @@ final case class Content(
   showByline: Boolean,
   hasStoryPackage: Boolean,
   rawOpenGraphImage: String,
-  sensitive: Boolean,
   showFooterContainers: Boolean = false
 ) {
 
@@ -85,7 +79,7 @@ final case class Content(
   lazy val shortUrlId = fields.shortUrl.replace("http://gu.com", "")
   lazy val shortUrlPath = shortUrlId
   lazy val discussionId = Some(shortUrlPath)
-  lazy val isImmersive = fields.displayHint.contains("immersive")
+  lazy val isImmersive = fields.displayHint.contains("immersive") || metadata.contentType.toLowerCase == "gallery"
 
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {
@@ -172,6 +166,8 @@ final case class Content(
 
   lazy val numberOfVideosInTheBody: Int = Jsoup.parseBodyFragment(fields.body).body().children().select("video[class=gu-video]").size()
 
+  val legallySensitive: Boolean = fields.legallySensitive.getOrElse(false)
+
   def javascriptConfig: Map[String, JsValue] = Map(
     ("publication", JsString(publication)),
     ("hasShowcaseMainElement", JsBoolean(elements.hasShowcaseMainElement)),
@@ -180,8 +176,9 @@ final case class Content(
     ("isContent", JsBoolean(true)),
     ("wordCount", JsNumber(wordCount)),
     ("references", JsArray(javascriptReferences)),
-    ("showRelatedContent", JsBoolean(if (tags.isUSMinuteSeries) { false } else showInRelated)),
-    ("productionOffice", JsString(productionOffice.getOrElse("")))
+    ("showRelatedContent", JsBoolean(if (tags.isUSMinuteSeries) { false } else (showInRelated && !legallySensitive))),
+    ("productionOffice", JsString(productionOffice.getOrElse(""))),
+    ("isImmersive", JsBoolean(isImmersive))
   )
 
   // Dynamic Meta Data may appear on the page for some content. This should be used for conditional metadata.
@@ -319,9 +316,7 @@ object Content {
           .orElse(elements.mainPicture.flatMap(_.images.largestImageUrl))
           .orElse(trail.trailPicture.flatMap(_.largestImageUrl))
           .getOrElse(Configuration.images.fallbackLogo)
-      },
-      sensitive = apifields.flatMap(_.sensitive).getOrElse(false)
-
+      }
     )
   }
 }
@@ -364,7 +359,7 @@ object Article {
       ("lightboxImages", lightbox.javascriptConfig),
       ("hasMultipleVideosInPage", JsBoolean(content.hasMultipleVideosInPage)),
       ("isImmersive", JsBoolean(content.isImmersive)),
-      ("isSensitive", JsBoolean(content.sensitive))
+      ("isSensitive", JsBoolean(fields.sensitive.getOrElse(false)))
     ) ++ bookReviewIsbn
 
     val opengraphProperties: Map[String, String] = Map(
@@ -399,7 +394,7 @@ object Article {
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       twitterPropertiesOverrides = twitterProperties,
-      hasHeader = content.tags.isUSMinuteSeries || content.isImmersive
+      shouldHideHeaderAndTopAds = content.tags.isUSMinuteSeries || content.isImmersive
     )
   }
 
@@ -788,7 +783,6 @@ object Interactive {
       contentType = contentType,
       analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
-      hasHeader = content.isImmersive,
       javascriptConfigOverrides = Map("contentType" -> JsString(contentType)),
       twitterPropertiesOverrides = twitterProperties
     )

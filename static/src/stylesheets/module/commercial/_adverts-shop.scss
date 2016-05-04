@@ -26,6 +26,11 @@
             );
         }
     }
+
+    .advert__image-container {
+        height: auto;
+        min-height: 11 * $gs-baseline;
+    }
 }
 
 .adverts--tone-shop .button--legacy-single {

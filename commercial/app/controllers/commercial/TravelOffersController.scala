@@ -18,9 +18,8 @@ object TravelOffersController extends Controller with implicits.Requests {
         val omnitureId = request.getParameter("omnitureId")
 
         request.getParameter("layout") match {
-          // TODO: implement template changes for prominent component
           case Some("prominent") =>
-            jsonFormat.result(views.html.travel.travel(offers.take(4), omnitureId, clickMacro))
+            jsonFormat.result(views.html.travel.travel(offers.take(3), omnitureId, clickMacro, isProminent = true))
           case _ =>
             jsonFormat.result(views.html.travel.travel(offers.take(4), omnitureId, clickMacro))
         }
