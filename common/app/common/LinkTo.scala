@@ -60,13 +60,19 @@ trait LinkTo extends Logging {
 
     val url = s"$host/$editionalisedPath"
     url match {
-      case ProdURL() if (isHttpsEnabled(editionalisedPath) || secure) =>  url.replace("http://", "https://")
+      case ProdURL() if (isHttpsEnabled(editionalisedPath, edition) || secure) =>  url.replace("http://", "https://")
       case _ => url
     }
   }
 
-  private def isHttpsEnabled(editionalisedPath: String) =
-    httpsEnabledSections.exists(editionalisedPath.startsWith)
+  private def isHttpsEnabled(editionalisedPath: String, edition: Edition) = {
+    val noEdPath = if(editionalisedPath.startsWith(edition.id.toLowerCase + "/")) {
+      editionalisedPath.split(s"${edition.id.toLowerCase}/")(1)
+    } else {
+      editionalisedPath
+    }
+    httpsEnabledSections.exists(noEdPath.startsWith)
+  }
 
   private def clean(path: String) = path match {
     case TagPattern(left, right) if left == right => left //clean section tags e.g. /books/books
