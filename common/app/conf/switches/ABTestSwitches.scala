@@ -77,13 +77,4 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABVideoSeriesPage = Switch(
-    SwitchGroup.ABTests,
-    "ab-video-series-page",
-    "Testing new video series layout",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = true
-  )
-
 }
