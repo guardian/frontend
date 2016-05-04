@@ -131,7 +131,7 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
       imageHeight = frontOption.flatMap(_.imageHeight).map(_.toString),
       isImageDisplayed = frontOption.flatMap(_.isImageDisplayed).getOrElse(false),
       editorialType = None, // value found in Content API
-      branding = None // value found in Content API
+      activeBrandings = None // value found in Content API
     )
   }
 
