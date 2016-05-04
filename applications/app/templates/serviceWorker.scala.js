@@ -159,8 +159,6 @@ this.addEventListener('install', function (event) {
     event.waitUntil(updateOfflineCrosswordCache());
 });
 
-self.addEventListener('activate', function (event) {});
-
 this.addEventListener('fetch', requestForDevBlog);
 this.addEventListener('fetch', requestForAsset);
 
