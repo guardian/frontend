@@ -160,8 +160,8 @@ define([
                 offerImage:          tpl.params.offerImage,
                 offerTitle:          tpl.params.offerTitle,
                 offerText:           tpl.params.offerText,
-                cta:                 tpl.params.offerlinktext ? manualCardCtaTpl({
-                    offerLinkText:       tpl.params.offerlinktext,
+                cta:                 tpl.params.viewAllText ? manualCardCtaTpl({
+                    offerLinkText:       tpl.params.viewAllText,
                     arrowRight:          tpl.params.arrowRight
                 }) : '',
                 classNames:          ['landscape', 'large', 'inverse', tpl.params.toneClass.replace('commercial--tone', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); }).join(' ')
