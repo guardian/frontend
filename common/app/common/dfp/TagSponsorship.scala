@@ -69,7 +69,12 @@ case class HighMerchandisingTargetedTagSet(){
 
   private def hasTagId(tag: Tag): Boolean = tag.id.split('/').lastOption exists { endPart =>
     println(endPart)
-    false
+    if (endPart equals "notcorrect") {
+      return true
+    } else {
+      return false
+    }
+//    true
   }
 
   def hasTag(tag: Tag):Boolean = tag.properties.tagType match {
