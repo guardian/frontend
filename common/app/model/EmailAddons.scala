@@ -6,6 +6,7 @@ sealed trait EmailContent extends Product with Serializable {
   def name: String
   def banner: String
   def test(c: ContentType): Boolean
+  def address: Option[String] = None
 }
 
 case object ArtWeekly extends EmailContent {
@@ -65,10 +66,12 @@ case object TheUSMinute extends EmailContent {
 case object USBriefing extends EmailContent {
   val name = "Guardian US Briefing"
   val banner = "guardian-us-briefing.png"
-  def test(c: ContentType) = c.tags.series.exists(_.id == "sport/series/thespin")
+  override val address = Some("222 Broadway, 22nd and 23rd Floors, New York, New York, 10038")
+  def test(c: ContentType) = c.tags.series.exists(_.id == "us-news/series/guardian-us-briefing")
 }
 
 object EmailAddons {
+  private val defaultAddress = "Kings Place, 90 York Way, London, N1 9GU. Registered in England No. 908396"
   private val defaultBanner = "generic.png"
   private val allEmails     = Seq(
     ArtWeekly,
@@ -91,5 +94,7 @@ object EmailAddons {
       val banner = email map (_.banner) getOrElse defaultBanner
       Static(s"images/email/banners/$banner").path
     }
+
+    lazy val address = email flatMap (_.address) getOrElse defaultAddress
   }
 }

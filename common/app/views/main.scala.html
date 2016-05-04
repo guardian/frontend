@@ -5,6 +5,7 @@
 @import views.support.{Commercial, RenderClasses}
 @import model.Page.getContent
 @import model.GalleryPage
+@import layout.ContentWidths.MainMedia
 
 @headerAndTopAds(showAdverts: Boolean, edition: Edition, adBelowNav: Boolean) = {
     @if(!(page.metadata.shouldHideHeaderAndTopAds && getContent(page).exists(_.tags.isArticle))) {
@@ -31,8 +32,13 @@
         @defining(
             page.item.content.trail.trailPicture.head
         ) { picture =>
-            <img src="http:@Html(ImgSrc.findNearestSrc(picture, Profile(width = Some(2200))).getOrElse(""))"
-            class="immersive-main-media__img">
+            @fragments.image(
+                picture = picture,
+                classes = Seq("immersive-main-media__img"),
+                widths = MainMedia.immersive,
+                imageAltText = "",
+                isImmersiveMainMedia = true
+            )
         }
         <div class="immersive-main-media__headline-container">
             <div class="gs-container">

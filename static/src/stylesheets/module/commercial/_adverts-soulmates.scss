@@ -149,7 +149,7 @@
 
     .adverts--manual & {
         .advert__image-container {
-            height: 11 * $gs-baseline;
+            height: auto;
         }
     }
 }

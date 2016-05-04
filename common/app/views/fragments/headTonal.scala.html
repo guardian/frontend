@@ -6,9 +6,9 @@
 <header class="content__head tonal__head tonal__head--@toneClass(item)
     @if(item.content.hasTonalHeaderByline && item.tags.hasLargeContributorImage) { content__head--byline-pic}">
 
-    <div class="content__header tonal__header u-cf">
+    <div class="content__header tonal__header">
         <div class="gs-container">
-            <div class="content__main-column">
+            <div class="content__main-column u-cf">
 
                 @if(showMeta) {
                     @fragments.meta.metaInline(item, amp)
