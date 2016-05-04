@@ -13,24 +13,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABFakeSeriesShowSensitive = Switch(
-    SwitchGroup.ABTests,
-    "ab-fake-series-show-sensitive",
-    "A fake test to target series content that's shown on sensitive articles",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 2),
-    exposeClientSide = true
-  )
-
-  val ABFakeSeriesHideSensitive = Switch(
-    SwitchGroup.ABTests,
-    "ab-fake-series-hide-sensitive",
-    "A fake test to target series content that's hidden on sensitive articles",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 2),
-    exposeClientSide = true
-  )
-
   // Owner: Dotcom Reach
   val ABFrontsOnArticles2 = Switch(
     SwitchGroup.ABTests,
@@ -38,15 +20,6 @@ trait ABTestSwitches {
     "Injects fronts on articles for the test",
     safeState = Off,
     sellByDate = new LocalDate(2016, 7, 5),
-    exposeClientSide = true
-  )
-
-  val ABNextInSeries = Switch(
-    SwitchGroup.ABTests,
-    "ab-next-in-series",
-    "Show next in series",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 3),
     exposeClientSide = true
   )
 
@@ -76,16 +49,7 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 6, 1),
     exposeClientSide = true
   )
-
-  val ABMembership = Switch(
-    SwitchGroup.ABTests,
-    "ab-membership",
-    "Membership propositions",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 2),
-    exposeClientSide = true
-  )
-
+  
   val ABLoyalAdblockingSurvey = Switch(
     SwitchGroup.ABTests,
     "ab-loyal-adblocking-survey",
@@ -101,15 +65,6 @@ trait ABTestSwitches {
     "Switch to include the minute.ly script",
     safeState = Off,
     sellByDate = new LocalDate(2016, 5, 11),
-    exposeClientSide = true
-  )
-
-  val ABVideoSeriesPage = Switch(
-    SwitchGroup.ABTests,
-    "ab-video-series-page",
-    "Testing new video series layout",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
     exposeClientSide = true
   )
 

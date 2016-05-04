@@ -6,8 +6,10 @@
 
 @containerHeader(containerDefinition, frontProperties)
 
-@for(branding <- frontProperties.branding) {
-    @contentLogo(branding)
+@if(containerDefinition.index == 0) {
+    @for(branding <- frontProperties.branding) {
+        @contentLogo(branding)
+    }
 }
 
 @for(containerLayout <- containerDefinition.containerLayout) {

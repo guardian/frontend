@@ -84,13 +84,6 @@
     $live-main-1
 );
 
-/* .commercial--tone-jobs */
-@include tone-commercial(
-    jobs,
-    $news-support-2,
-    $news-main-1
-);
-
 /* .commercial--tone-networks */
 @include tone-commercial(
     networks,
@@ -131,13 +124,6 @@
     gardening,
     $maps-main-1,
     $maps-support-2
-);
-
-/* .commercial--tone-gardening */
-@include tone-commercial(
-    soulmates,
-    $soulmates-colour,
-    $soulmates-accent-colour
 );
 
 /* .commercial--tone-paidfor */

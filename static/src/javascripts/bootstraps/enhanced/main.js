@@ -67,7 +67,7 @@ define([
             }
         }
 
-        if (config.page.contentType === 'Crossword' || config.page.pageId === 'offline-page') {
+        if (config.page.contentType === 'Crossword' || config.page.pageId === 'offline-crossword') {
             require(['bootstraps/enhanced/crosswords'], function (crosswords) {
                 bootstrapContext('crosswords', crosswords);
             });
@@ -148,7 +148,7 @@ define([
             }
         }
 
-        if (config.page.pageId === 'offline-page') {
+        if (config.page.pageId === 'offline-crossword') {
             var $button = $('.js-open-crossword-btn');
             bean.on($button[0], 'click', function () {
                 fastdom.write(function () {

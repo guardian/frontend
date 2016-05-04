@@ -1,7 +1,10 @@
 @import common.dfp.LineItemReport
 @(env: String, slotReport: LineItemReport)(implicit request: RequestHeader)
 
-@views.html.commercial.commercialMain(env, "Mobile Top Slot") {
+@admin_main("Commercial: Mobile Top Slot", env, isAuthed = true) {
+    <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")">
+    <h2>Mobile Top Slot</h2>
+
     <h4>Rules:</h4>
     <p>This slot will only open if there is an ad that:</p>
     <ul>

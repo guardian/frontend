@@ -3,6 +3,7 @@ package controllers
 import common._
 import conf._
 import feed.{MostPopularAgent, GeoMostPopularAgent, DayMostPopularAgent}
+import model.Cached.RevalidatableResult
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import views.support.FaciaToMicroFormat2Helpers._
@@ -37,7 +38,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
 
       mostPopular match {
         case Nil => NotFound
-        case popular if !request.isJson => Cached(900) { Ok(views.html.mostPopular(page, popular)) }
+        case popular if !request.isJson => Cached(900) { RevalidatableResult.Ok(views.html.mostPopular(page, popular)) }
         case popular => Cached(900) {
           JsonComponent(
             "html" ->  views.html.fragments.collections.popular(popular),

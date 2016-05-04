@@ -620,6 +620,15 @@
     }
 }
 
+.creative--fabric-expanding-v1 {
+    @include mq($until: tablet) {
+        // Smaller video should not flush to container bottom
+        .expandable_video {
+            bottom: $gs-row-height / 2;
+        }
+    }
+}
+
 .ad-slot--dfp.ad-slot__fluid250 {
     height: auto;
     width: 100%;
