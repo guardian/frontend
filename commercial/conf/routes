@@ -51,3 +51,4 @@ GET        /commercial/paid                                              control
 GET        /commercial/guardian-explain                                  controllers.commercial.StaticPageController.renderGuardianExplainPage()
 GET        /commercial/guardian-explore                                  controllers.commercial.StaticPageController.renderGuardianExplorePage()
 GET        /commercial/guardian-experience                               controllers.commercial.StaticPageController.renderGuardianExperiencePage()
+GET        /commercial/guardian-awesome                                  controllers.commercial.StaticPageController.renderGuardianAwesomePage()

@@ -1,0 +1,66 @@
+.awesome-brand-tone--renault {
+	color: #f7b500;
+}
+
+.fc-container.awesome__container {
+	.fc-container__inner {
+		border-top: 0;
+	}
+}
+
+.awesome__header {
+	position: relative;
+	color: #ffffff;
+}
+
+.awesome__video {
+	vertical-align: top;
+}
+
+.awesome__logowrap {
+	position: absolute;
+	top: 0;
+	left: calc(50% - 560px);
+	width: 132px;
+}
+
+.awesome__hosted {
+	color: #ffffff;
+	margin: 0;
+	text-align: center;
+}
+
+.awesome__logo {
+	display: block;
+}
+
+.awesome__meta {
+	position: absolute;
+	bottom: 20%;
+	width: 30%;
+	left: calc(50% - 560px);
+}
+
+.awesome__heading--small {
+	@include fs-headline(2);
+
+	margin-bottom: $gs-gutter * 1.2;
+	font-size: 32px;
+}
+
+.awesome__heading {
+	@include fs-header(5);
+	
+	margin-bottom: $gs-gutter * 1.5;
+	font-size: 68px;
+}
+
+.awesome__subheading {
+	padding-bottom: 0;
+}
+
+.awesome__headingtext {
+	@include font-size(20);
+
+	line-height: 1.2;
+}

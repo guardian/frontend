@@ -1,27 +1,128 @@
 @(metaData: model.MetaData)(implicit request: RequestHeader)
 
 @main(model.SimplePage(metaData)) { } {
-    <div class="l-side-margins">
-        <div class="membership-test membership-test--experience">
-            <div class="membership-test-bg-orange">
-                <div class="membership-test__section membership-test__section--intro">
-                    <div class="membership-test__left">
-                        <div class="membership-test__header">
-                            <div class="membership-test__logo">
-                            @fragments.inlineSvg("guardian-logo-160", "logo")
-                            </div>
-                            <h1>experience</h1>
-                        </div>
-                        <p>
-                            Think globally - report locally, with in-depth journalism that you direct
-                        </p>
+    <div class="l-side-margins awesome">
+        <div class="awesome__header">
+            <div class="awesome__logowrap" style="background-color: #f7b500;">
+                <p class="awesome__hosted">Hosted content</p>
+                <img class="awesome__logo" src="@Static("images/commercial/logo_renault.jpg")">
+            </div>
+            <video class="awesome__video" loop="" muted="" style="width: 100%"; poster="https://cdn.theguardian.tv/interactive/2015/11/13/151113title2a_2M_H264_poster.jpg"><source type="video/mp4" src="https://cdn.theguardian.tv/interactive/2015/11/13/151113title2a_220k_H264.mp4"><source type="video/webm" src="https://cdn.theguardian.tv/interactive/2015/11/13/151113title2a_220k_vp8.webm"><source type="video/ogg" src="https://cdn.theguardian.tv/interactive/mp4/1080/2015/11/13/151113title2a_mid.ogv"><source type="video/m3u8" src="http://multimedia.guardianapis.com/interactivevideos/video.php?file=151113title2a&amp;format=application/x-mpegURL&amp;maxbitrate=2000"></video>
+            <div class="awesome__meta">
+                <p class="awesome__heading--small">Episode 1</p>
+                <h1 class="awesome__heading awesome-brand-tone--renault">Renault Zoe</h1>
+                <p class="awesome__headingtext">Imagine streets without engine noise. No need to queue at petrol stations, you simply plug in your car just like your smartphone.</p>
+            </div>
+        </div>
+        <section class="fc-container awesome__container">
+            <div class="fc-container__inner">
+                <div class="fc-container__header">
+                    <div class="fc-container__header">
+                        <h2 class="awesome__heading--small awesome-brand-tone--renault"><span class="fc-container__header__description awesome__subheading">More from</span>Renault</h2>
                     </div>
                 </div>
+                <div class="fc-container__body">
+                    <div class="fc-slice-wrapper">
+                    <ul class="u-unstyled l-row l-row--cols-4 fc-slice fc-slice--h-q-q">
+                        <li class="fc-slice__item l-row__item l-row__item--span-2 u-faux-block-link">
+                            <div class="fc-item fc-item--has-image fc-item--has-metadata js-fc-item fc-item--standard-mobile fc-item--half-tablet js-snappable" data-link-name="news | group-0 | card-1" data-item-visibility="all" data-test-id="facia-card" data-id="global-development-professionals-network/2015/jul/14/business-innovation-the-leaders-committed-to-sustainable-development" data-loyalty-short-url="/p/4a2yb">
+                                <div class="fc-item__container">
+                                    <div class="fc-item__media-wrapper">
+                                        <div class="fc-item__image-container u-responsive-ratio ">
+                                            <picture>
+                                            <!--[if IE 9]><video style="display: none;"><![endif]-->
+                                            <source media="(min-width: 980px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: 980px) and (min-resolution: 120dpi)" sizes="460px" srcset="https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/pictures/2015/6/22/1434984273130/509a8ea7-8be9-490e-bebd-a27c8b9d7b40-2060x1236.jpeg?w=460&amp;q=20&amp;auto=format&amp;usm=12&amp;fit=max&amp;dpr=2&amp;s=db83b6553bfacab1c8b0bbfe04dcef2a 920w">
+                                            <source media="(min-width: 980px)" sizes="460px" srcset="https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/pictures/2015/6/22/1434984273130/509a8ea7-8be9-490e-bebd-a27c8b9d7b40-2060x1236.jpeg?w=460&amp;q=55&amp;auto=format&amp;usm=12&amp;fit=max&amp;s=13b4782a7cb5c54ee4125fe25d618396 460w">
+                                            <source media="(min-width: 740px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: 740px) and (min-resolution: 120dpi)" sizes="340px" srcset="https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/pictures/2015/6/22/1434984273130/509a8ea7-8be9-490e-bebd-a27c8b9d7b40-2060x1236.jpeg?w=340&amp;q=20&amp;auto=format&amp;usm=12&amp;fit=max&amp;dpr=2&amp;s=fbc69ca752c73cf7b2834311d484be40 680w">
+                                            <source media="(min-width: 740px)" sizes="340px" srcset="https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/pictures/2015/6/22/1434984273130/509a8ea7-8be9-490e-bebd-a27c8b9d7b40-2060x1236.jpeg?w=340&amp;q=55&amp;auto=format&amp;usm=12&amp;fit=max&amp;s=1f52815cb2aed2a7a0bc9f944a19d735 340w">
+                                            <source media="(min-width: 0px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: 0px) and (min-resolution: 120dpi)" sizes="95vw" srcset="https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/pictures/2015/6/22/1434984273130/509a8ea7-8be9-490e-bebd-a27c8b9d7b40-2060x1236.jpeg?w=460&amp;q=20&amp;auto=format&amp;usm=12&amp;fit=max&amp;dpr=2&amp;s=db83b6553bfacab1c8b0bbfe04dcef2a 920w, https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/pictures/2015/6/22/1434984273130/509a8ea7-8be9-490e-bebd-a27c8b9d7b40-2060x1236.jpeg?w=340&amp;q=20&amp;auto=format&amp;usm=12&amp;fit=max&amp;dpr=2&amp;s=fbc69ca752c73cf7b2834311d484be40 680w, https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/pictures/2015/6/22/1434984273130/509a8ea7-8be9-490e-bebd-a27c8b9d7b40-2060x1236.jpeg?w=445&amp;q=20&amp;auto=format&amp;usm=12&amp;fit=max&amp;dpr=2&amp;s=9c833dfa58e3fbc9dd0c631c7586d5f3 890w, https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/pictures/2015/6/22/1434984273130/509a8ea7-8be9-490e-bebd-a27c8b9d7b40-2060x1236.jpeg?w=605&amp;q=20&amp;auto=format&amp;usm=12&amp;fit=max&amp;dpr=2&amp;s=26f2e6982d8d1656ed35b4a2c2de66e9 1210w">
+                                            <source media="(min-width: 0px)" sizes="95vw" srcset="https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/pictures/2015/6/22/1434984273130/509a8ea7-8be9-490e-bebd-a27c8b9d7b40-2060x1236.jpeg?w=460&amp;q=55&amp;auto=format&amp;usm=12&amp;fit=max&amp;s=13b4782a7cb5c54ee4125fe25d618396 460w, https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/pictures/2015/6/22/1434984273130/509a8ea7-8be9-490e-bebd-a27c8b9d7b40-2060x1236.jpeg?w=340&amp;q=55&amp;auto=format&amp;usm=12&amp;fit=max&amp;s=1f52815cb2aed2a7a0bc9f944a19d735 340w, https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/pictures/2015/6/22/1434984273130/509a8ea7-8be9-490e-bebd-a27c8b9d7b40-2060x1236.jpeg?w=445&amp;q=55&amp;auto=format&amp;usm=12&amp;fit=max&amp;s=181afcc84ffeb6a58cf18525aed6e1d0 445w, https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/pictures/2015/6/22/1434984273130/509a8ea7-8be9-490e-bebd-a27c8b9d7b40-2060x1236.jpeg?w=605&amp;q=55&amp;auto=format&amp;usm=12&amp;fit=max&amp;s=1251a63627b2df69701fed7f747e9389 605w">
+                                            <!--[if IE 9]></video><![endif]-->
+                                            <img class="responsive-img" alt="">
+                                            </picture>
+                                        </div>
+                                    </div>
+                                    <div class="fc-item__content">
+                                        <div class="fc-item__header">
+                                            <h2 class="fc-item__title"><a href="http://www.theguardian.com/global-development-professionals-network/2015/jul/14/business-innovation-the-leaders-committed-to-sustainable-development" class="fc-item__link" data-link-name="article">
+                                                <span class="u-faux-block-link__cta fc-item__headline">
+                                                <span class="js-headline-text">Business innovation: the leaders committed to sustainable development</span></span>
+                                                </a>
+                                            </h2>
+                                        </div>
+                                        <div class="fc-item__standfirst">Seven initiatives from private enterprise for sustainable development that are genuinely inspiring<br></div>
+                                    </div>
+                                    <a href="http://www.theguardian.com/global-development-professionals-network/2015/jul/14/business-innovation-the-leaders-committed-to-sustainable-development" class="u-faux-block-link__overlay js-headline-text" data-link-name="article" tabindex="-1">Business innovation: the leaders committed to sustainable development</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="fc-slice__item l-row__item l-row__item--span-1 u-faux-block-link">
+                            <div class="fc-item fc-item--has-image fc-item--has-metadata fc-item--is-commentable js-fc-item fc-item--list-media-mobile fc-item--standard-tablet js-snappable" data-discussion-closed="true" data-discussion-url="http://www.theguardian.com/sustainable-business/2016/apr/27/led-innovation-aims-to-make-traffic-lights-mobiles-and-tvs-more-sustainable#comments" data-link-name="news | group-0 | card-2" data-item-visibility="all" data-test-id="facia-card" data-id="sustainable-business/2016/apr/27/led-innovation-aims-to-make-traffic-lights-mobiles-and-tvs-more-sustainable" data-loyalty-short-url="/p/4tdha" data-node-uid="32">
+                                <div class="fc-item__container">
+                                    <div class="fc-item__media-wrapper">
+                                        <div class="fc-item__image-container u-responsive-ratio ">
+                                            <picture>
+                                            <!--[if IE 9]><video style="display: none;"><![endif]-->
+                                            <source media="(min-width: 980px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: 980px) and (min-resolution: 120dpi)" sizes="220px" srcset="https://i.guim.co.uk/img/media/4bc01734a7f03e6bce8d1afd9f5e370ee98e46f0/20_0_600_360/600.jpg?w=220&amp;q=20&amp;auto=format&amp;usm=12&amp;fit=max&amp;dpr=2&amp;s=021db4cfcbde967b7b2aa8f2d8cb6f8b 440w">
+                                            <source media="(min-width: 980px)" sizes="220px" srcset="https://i.guim.co.uk/img/media/4bc01734a7f03e6bce8d1afd9f5e370ee98e46f0/20_0_600_360/600.jpg?w=220&amp;q=55&amp;auto=format&amp;usm=12&amp;fit=max&amp;s=2a503f0700db1becb885a79cb32d1122 220w">
+                                            <source media="(min-width: 740px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: 740px) and (min-resolution: 120dpi)" sizes="160px" srcset="https://i.guim.co.uk/img/media/4bc01734a7f03e6bce8d1afd9f5e370ee98e46f0/20_0_600_360/600.jpg?w=160&amp;q=20&amp;auto=format&amp;usm=12&amp;fit=max&amp;dpr=2&amp;s=af54c788224e7436fcb720b02b08f555 320w">
+                                            <source media="(min-width: 740px)" sizes="160px" srcset="https://i.guim.co.uk/img/media/4bc01734a7f03e6bce8d1afd9f5e370ee98e46f0/20_0_600_360/600.jpg?w=160&amp;q=55&amp;auto=format&amp;usm=12&amp;fit=max&amp;s=f02410bc04f6a2d223203a9329e854ab 160w">
+                                            <source media="(min-width: 0px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: 0px) and (min-resolution: 120dpi)" sizes="127px" srcset="https://i.guim.co.uk/img/media/4bc01734a7f03e6bce8d1afd9f5e370ee98e46f0/20_0_600_360/600.jpg?w=127&amp;q=20&amp;auto=format&amp;usm=12&amp;fit=max&amp;dpr=2&amp;s=4da3f3fa42257e5294980e4935d8fc22 254w">
+                                            <source media="(min-width: 0px)" sizes="127px" srcset="https://i.guim.co.uk/img/media/4bc01734a7f03e6bce8d1afd9f5e370ee98e46f0/20_0_600_360/600.jpg?w=127&amp;q=55&amp;auto=format&amp;usm=12&amp;fit=max&amp;s=4b7a3758d854cafd2cd53199995a3a5d 127w">
+                                            <!--[if IE 9]></video><![endif]-->
+                                            <img class="responsive-img" alt="">
+                                            </picture>
+                                        </div>
+                                    </div>
+                                    <div class="fc-item__content">
+                                        <div class="fc-item__header">
+                                            <h2 class="fc-item__title"><a href="http://www.theguardian.com/sustainable-business/2016/apr/27/led-innovation-aims-to-make-traffic-lights-mobiles-and-tvs-more-sustainable" class="fc-item__link" data-link-name="article">
+                                                <span class="u-faux-block-link__cta fc-item__headline">
+                                                <span class="js-headline-text">LED innovation aims to make traffic lights, mobiles and TVs more sustainable</span></span>
+                                            </a></h2>
+                                        </div>
+                                        <div class="fc-item__standfirst">LED lighting could play a key role in decarbonising the global economy because of its energy savings</div>
+                                    </div>
+                                    <a href="http://www.theguardian.com/sustainable-business/2016/apr/27/led-innovation-aims-to-make-traffic-lights-mobiles-and-tvs-more-sustainable" class="u-faux-block-link__overlay js-headline-text" data-link-name="article" tabindex="-1">LED innovation aims to make traffic lights, mobiles and TVs more sustainable</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="fc-slice__item l-row__item l-row__item--span-1 u-faux-block-link">
+                            <div class="fc-item fc-item--has-image fc-item--has-metadata fc-item--is-commentable js-fc-item fc-item--list-media-mobile fc-item--standard-tablet js-snappable" data-discussion-closed="true" data-discussion-url="http://www.theguardian.com/sustainable-business/2015/dec/31/top-5-sustainable-technology-trends-of-2015#comments" data-link-name="feature | group-0 | card-3" data-item-visibility="all" data-test-id="facia-card" data-id="sustainable-business/2015/dec/31/top-5-sustainable-technology-trends-of-2015" data-loyalty-short-url="/p/4fe9q" data-node-uid="35">
+                                <div class="fc-item__container">
+                                    <div class="fc-item__media-wrapper">
+                                        <div class="fc-item__image-container u-responsive-ratio ">
+                                            <picture>
+                                            <!--[if IE 9]><video style="display: none;"><![endif]-->
+                                            <source media="(min-width: 980px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: 980px) and (min-resolution: 120dpi)" sizes="220px" srcset="https://i.guim.co.uk/img/media/d1354a6078da50d84086cae5f004b6ead6e98675/0_151_5760_3467/master/5760.jpg?w=220&amp;q=20&amp;auto=format&amp;usm=12&amp;fit=max&amp;dpr=2&amp;s=2bfa0a6c8640b668ec03193e7d6542e8 440w">
+                                            <source media="(min-width: 980px)" sizes="220px" srcset="https://i.guim.co.uk/img/media/d1354a6078da50d84086cae5f004b6ead6e98675/0_151_5760_3467/master/5760.jpg?w=220&amp;q=55&amp;auto=format&amp;usm=12&amp;fit=max&amp;s=1c082b6f9c34f95f873afffa350e476f 220w">
+                                            <source media="(min-width: 740px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: 740px) and (min-resolution: 120dpi)" sizes="160px" srcset="https://i.guim.co.uk/img/media/d1354a6078da50d84086cae5f004b6ead6e98675/0_151_5760_3467/master/5760.jpg?w=160&amp;q=20&amp;auto=format&amp;usm=12&amp;fit=max&amp;dpr=2&amp;s=8616b05ed2955643a621cf14241b9305 320w">
+                                            <source media="(min-width: 740px)" sizes="160px" srcset="https://i.guim.co.uk/img/media/d1354a6078da50d84086cae5f004b6ead6e98675/0_151_5760_3467/master/5760.jpg?w=160&amp;q=55&amp;auto=format&amp;usm=12&amp;fit=max&amp;s=6a19eaf0fb52cb8fe7d32d850ee04df7 160w">
+                                            <source media="(min-width: 0px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: 0px) and (min-resolution: 120dpi)" sizes="127px" srcset="https://i.guim.co.uk/img/media/d1354a6078da50d84086cae5f004b6ead6e98675/0_151_5760_3467/master/5760.jpg?w=127&amp;q=20&amp;auto=format&amp;usm=12&amp;fit=max&amp;dpr=2&amp;s=5dc3b071f35782060cfd3ed71dd17d7e 254w">
+                                            <source media="(min-width: 0px)" sizes="127px" srcset="https://i.guim.co.uk/img/media/d1354a6078da50d84086cae5f004b6ead6e98675/0_151_5760_3467/master/5760.jpg?w=127&amp;q=55&amp;auto=format&amp;usm=12&amp;fit=max&amp;s=e61dd2db4d6a40fda4c9426507c67e05 127w">
+                                            <!--[if IE 9]></video><![endif]-->
+                                            <img class="responsive-img" alt="">
+                                            </picture>
+                                        </div>
+                                    </div>
+                                    <div class="fc-item__content">
+                                        <div class="fc-item__header">
+                                            <h2 class="fc-item__title"><a href="http://www.theguardian.com/sustainable-business/2015/dec/31/top-5-sustainable-technology-trends-of-2015" class="fc-item__link" data-link-name="article">
+                                            <span class="u-faux-block-link__cta fc-item__headline">
+                                            <span class="js-headline-text">Top five sustainable technology trends of 2015</span></span>
+                                            </a></h2>
+                                        </div>
+                                        <div class="fc-item__standfirst">A cheap water filter and an energy-producing home are some of the most promising technologies we saw this year for reducing our carbon footprint</div>
+                                    </div>
+                                    <a href="http://www.theguardian.com/sustainable-business/2015/dec/31/top-5-sustainable-technology-trends-of-2015" class="u-faux-block-link__overlay js-headline-text" data-link-name="article" tabindex="-1">Top five sustainable technology trends of 2015</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>        
             </div>
-            <div class="membership-test__image">
-                <img class="membership-test__image--narrow" src="@Static("images/commercial/migrants920x552.jpg")">
-                <img class="membership-test__image--wide" src="@Static("images/commercial/migrants2600x800.jpg")">
-            </div>
+        </section>
+        <div>
             <div class="membership-test__section membership-test__section--explanation">
                 <div class="membership-test__left">
                     <div class="membership-test__header">
@@ -48,40 +149,6 @@
                     </p>
                 </div>
                 <img class="membership-test-mobile" src="@Static("images/commercial/migrants_cutout920x552.jpg")">
-            </div>
-            <div class="membership-test-bg-grey">
-                <div class="membership-test__section membership-test__section--bullets">
-                    <div class="membership-test__header">
-                        <div class="membership-test__logo">
-                        @fragments.inlineSvg("guardian-logo-160", "logo")
-                        </div>
-                        <h1>experience</h1>
-                    </div>
-                    <ul class="u-unstyled l-row l-row--cols-4">
-                        <li class="l-row__item l-row__item--span-1">Understand how what’s taking place in your area relates to what’s going on across the UK.</li>
-                        <li class="l-row__item l-row__item--span-1">Take stories beyond soundbites: get a stronger grasp of the issues and how these might impact local communities differently.</li>
-                        <li class="l-row__item l-row__item--span-1">Help shape the direction of our news reporting and ensure it reflects the reality of experience across Britain.</li>
-                        <li class="l-row__item l-row__item--span-1">Take action on the issues you care about the most.</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="membership-test-bg-orange">
-                <div class="membership-test__section membership-test__section--interested">
-                    <div class="membership-test__left">
-                        <div class="membership-test__header">
-                            <h2>Does this interest you?</h2>
-                        </div>
-                    </div>
-                    <div class="membership-test__right">
-                        <p>
-                            The Guardian is investigating new ways to report on the world. Guardian Experience is a concept we are currently developing. If you are interested in hearing more about this idea, please register for updates.
-                        </p>
-                        <a href="https://s.userzoom.com/m/MiBDMTBTMjY5" class="button button--large">
-                            Tell me more
-                            @fragments.inlineSvg("arrow-right", "icon", Seq("i-right"))
-                        </a>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
