@@ -334,7 +334,7 @@ trait CommercialSwitches {
     "request-out-of-page-slot-always",
     "If on, the out of page slot (1x1) will be added to each page, regardless of pageskins, surveys or other dependent features",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 3),
+    sellByDate = new LocalDate(2016, 5, 4),
     exposeClientSide =  false
   )
 }
