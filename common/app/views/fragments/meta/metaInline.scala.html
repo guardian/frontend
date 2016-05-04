@@ -26,7 +26,7 @@
         }
 
         @item.content.blogOrSeriesTag.map { series =>
-        <div class="content__series-label @if(item.content.isImmersive && item.content.tags.isArticle) { content__series-label--immersive-article--article }">
+        <div class="content__series-label @if(item.content.isImmersive && item.content.tags.isArticle) { content__series-label--immersive-article }">
             <a class="content__series-label__link" href="@LinkTo {/@series.id}">@series.name</a>
         </div>
         }.getOrElse {
