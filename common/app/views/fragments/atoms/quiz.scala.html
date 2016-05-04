@@ -36,7 +36,7 @@
 
         @question.imageMedia.map { image =>
             <div class="atom-quiz__question-image">
-                @fragments.img(image.imageMedia, widthsByBreakpoint = BodyMedia.inline, image_figureClasses = image.imageClasses)
+                @fragments.imageFigure(image.imageMedia, widthsByBreakpoint = BodyMedia.inline, image_figureClasses = image.imageClasses)
             </div>
         }
 
@@ -77,7 +77,7 @@
         ))">
             @if(hasImage) {
                 @answer.imageMedia.map { image =>
-                    @fragments.img(image.imageMedia, widthsByBreakpoint = BodyMedia.inline, image_figureClasses = image.imageClasses)
+                    @fragments.imageFigure(image.imageMedia, widthsByBreakpoint = BodyMedia.inline, image_figureClasses = image.imageClasses)
                 }
                 @renderIcon(question, answer, maybeUserAnswer, "atom-quiz__answer__icon--image")
             } else {

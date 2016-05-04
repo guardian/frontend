@@ -6,8 +6,6 @@ define([
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/dummy-test',
-    'common/modules/experiments/tests/fake-series-hide-sensitive',
-    'common/modules/experiments/tests/fake-series-show-sensitive',
     'common/modules/experiments/tests/fronts-on-articles2',
     'common/modules/experiments/tests/identity-register-membership-standfirst',
     'common/modules/experiments/tests/live-blog-chrome-notifications-internal',
@@ -37,8 +35,6 @@ define([
     store,
     mvtCookie,
     DummyTest,
-    FakeSeriesHideSensitive,
-    FakeSeriesShowSensitive,
     FrontsOnArticles2,
     IdentityRegisterMembershipStandfirst,
     LiveBlogChromeNotificationsInternal,
@@ -71,9 +67,7 @@ define([
         new Membership(),
         new LoyalAdblockingSurvey(),
         new Minute(),
-        new VideoSeriesPage(),
-        new FakeSeriesHideSensitive(),
-        new FakeSeriesShowSensitive()
+        new VideoSeriesPage()
     ]);
 
     var participationsKey = 'gu.ab.participations';
