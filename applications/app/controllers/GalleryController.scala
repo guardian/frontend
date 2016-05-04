@@ -4,7 +4,7 @@ import com.gu.contentapi.client.model.v1.{Content => ApiContent, ItemResponse}
 import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
-import model.{GalleryPage, _}
+import model._
 import play.api.mvc._
 import play.twirl.api.Html
 import views.support.RenderOtherStatus
