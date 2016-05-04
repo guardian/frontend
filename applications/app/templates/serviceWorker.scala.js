@@ -1,5 +1,6 @@
 @()
 @import conf.Static
+@import views.html.offlineMetrics
 
 /*eslint quotes: [2, "single"], curly: [2, "multi-line"], strict: 0*/
 /*eslint-env browser*/
@@ -158,7 +159,7 @@ var requestForPage = function (event) {
     if (requestAcceptsHTML(request) && isSameHost(url.host)) {
         event.respondWith(
             fetch(request).catch(function () {
-                return new Response('<!DOCTYPE html><html><head> <title>Offline | The Guardian</title><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"><script>(function (){var cookies=document.cookie.split(\';\'); var offlineViews=0; for (var len=cookies.length, i=0; i<len ; i++){var data=cookies[i].split(\'=\'); if (data[0].indexOf(\'gu.offlineViews\') !==-1){offlineViews=parseInt(data[1]); break;}}document.cookie=\'gu.offlineViews=\' + (offlineViews + 1) + \';Max-Age=31536000\';})(); </script></head><body style="background-color: #005689;color:white; font-family: Helvetica,Arial,sans-serif;font-size: 12px"><div style="display: flex;align-items: center;justify-content: center;flex-direction:column;position: absolute;top:0;right:0;bottom:0;left:0"><svg width="36" height="36" viewBox="0 0 36 36" fill="white" style="height: 64px;width: 64px;"><path d="M21.3 8.8c0-4.9-1.5-5.7-3.3-5.7-1.8 0-3.2.7-3.2 5.7s1.5 5.5 3.2 5.5c1.8-.1 3.3-.6 3.3-5.5m-6.5 18.8c-2.3 0-2.9 1.7-2.9 2.9 0 1.8 1.6 3.4 6.3 3.4 5.3 0 6.8-1.5 6.8-3.4 0-1.7-1.3-2.9-3.4-2.9h-6.8zM10.5 2.4C4.3 5.2 0 11.4 0 18.7c0 4.9 2 9.4 5.2 12.6V31c0-3.2 3.1-4.4 5.9-5-2.6-.6-3.9-2.5-3.9-4.4 0-2.6 2.9-4.8 4.3-5.8l-.2-.1c-2.5-1.4-4.1-3.8-4.1-7 0-2.7 1.2-4.9 3.3-6.3M36 18.8C36 11.4 31.5 5 25.1 2.3c2.1 1.4 3.4 3.5 3.5 6.3l.1.6c0 5.4-4.4 8.2-10.7 8.2-1.6 0-2.7-.1-4.1-.5-.6.4-1.1 1.1-1.1 1.8 0 .9.8 1.6 1.8 1.6h8.8c5.5 0 8.2 2.2 8.2 7.1 0 1.6-.3 3.1-1 4.3 3.3-3.4 5.4-7.9 5.4-12.9"></path></svg><p style="padding: 2rem 2rem 0;text-align:center;">Sorry, you do not have any network at the moment.</p></div></body></html>', {
+                return new Response("@Html(offlineMetrics().body)", {
                         headers: {
                             'Content-Type': 'text/html'
                         }
