@@ -13,7 +13,6 @@ define([
     'common/modules/experiments/tests/membership',
     'common/modules/experiments/tests/loyal-adblocking-survey',
     'common/modules/experiments/tests/minute',
-    'common/modules/experiments/tests/video-series-page',
     'lodash/arrays/flatten',
     'lodash/arrays/zip',
     'lodash/collections/forEach',
@@ -42,7 +41,6 @@ define([
     Membership,
     LoyalAdblockingSurvey,
     Minute,
-    VideoSeriesPage,
     flatten,
     zip,
     forEach,
@@ -66,8 +64,7 @@ define([
         new LiveBlogChromeNotificationsProd(),
         new Membership(),
         new LoyalAdblockingSurvey(),
-        new Minute(),
-        new VideoSeriesPage()
+        new Minute()
     ]);
 
     var participationsKey = 'gu.ab.participations';
