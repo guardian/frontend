@@ -90,7 +90,7 @@ var requestForDevBlog = (function () {
     var isForDevBlog = (function () {
         var devBlogPathRegex = /^\/info\/developer-blog($|\/.*$)/;
         return function (url, request) {
-            return isSameHost(url.host) && url.pathname.match(devBlogPathRegex) && requestAcceptsHTML(request);
+            return isSameHost(url.host) && devBlogPathRegex.test(url.pathname) && requestAcceptsHTML(request);
         }
     })();
 
