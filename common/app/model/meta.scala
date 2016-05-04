@@ -122,8 +122,8 @@ object Fields {
       lastModified = apiContent.fields.flatMap(_.lastModified).map(_.toJodaDateTime).getOrElse(DateTime.now),
       displayHint = apiContent.fields.flatMap(_.displayHint).getOrElse(""),
       isLive = apiContent.fields.flatMap(_.liveBloggingNow).getOrElse(false),
-      sensitive = apiContent.fields.flatMap(_.sensitive).getOrElse(false),
-      legallySensitive = apiContent.fields.flatMap(_.legallySensitive).getOrElse(false)
+      sensitive = apiContent.fields.flatMap(_.sensitive),
+      legallySensitive = apiContent.fields.flatMap(_.legallySensitive)
     )
   }
 }
@@ -139,8 +139,8 @@ final case class Fields(
   lastModified: DateTime,
   displayHint: String,
   isLive: Boolean,
-  sensitive: Boolean,
-  legallySensitive: Boolean
+  sensitive: Option[Boolean],
+  legallySensitive: Option[Boolean]
 ){
   def javascriptConfig: Map[String, JsValue] = Map(("shortUrl", JsString(shortUrl)))
 }

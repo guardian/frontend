@@ -166,6 +166,8 @@ final case class Content(
 
   lazy val numberOfVideosInTheBody: Int = Jsoup.parseBodyFragment(fields.body).body().children().select("video[class=gu-video]").size()
 
+  val legallySensitive: Boolean = fields.legallySensitive.getOrElse(false)
+
   def javascriptConfig: Map[String, JsValue] = Map(
     ("publication", JsString(publication)),
     ("hasShowcaseMainElement", JsBoolean(elements.hasShowcaseMainElement)),
@@ -174,7 +176,7 @@ final case class Content(
     ("isContent", JsBoolean(true)),
     ("wordCount", JsNumber(wordCount)),
     ("references", JsArray(javascriptReferences)),
-    ("showRelatedContent", JsBoolean(if (tags.isUSMinuteSeries) { false } else (showInRelated && !fields.legallySensitive))),
+    ("showRelatedContent", JsBoolean(if (tags.isUSMinuteSeries) { false } else (showInRelated && !legallySensitive))),
     ("productionOffice", JsString(productionOffice.getOrElse(""))),
     ("isImmersive", JsBoolean(isImmersive))
   )
@@ -357,7 +359,7 @@ object Article {
       ("lightboxImages", lightbox.javascriptConfig),
       ("hasMultipleVideosInPage", JsBoolean(content.hasMultipleVideosInPage)),
       ("isImmersive", JsBoolean(content.isImmersive)),
-      ("isSensitive", JsBoolean(fields.sensitive))
+      ("isSensitive", JsBoolean(fields.sensitive.getOrElse(false)))
     ) ++ bookReviewIsbn
 
     val opengraphProperties: Map[String, String] = Map(
