@@ -777,10 +777,6 @@
         .submeta__head,
         .content__series-label__link {
             color: $neutral-2-contrasted;
-
-            .i {
-                @include icon(share-android);
-            }
         }
 
         .byline {

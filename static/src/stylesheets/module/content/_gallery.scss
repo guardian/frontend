@@ -339,10 +339,6 @@
         border: 0;
         flex-shrink: 0;
         position: static;
-
-        .sharecount__heading {
-            padding-left: 0;
-        }
     }
 
     .meta__number:not(.u-h) + .meta__number {
@@ -415,7 +411,8 @@
             color: $neutral-3;
         }
 
-        .inline-comment-16 {
+        .inline-comment-16,
+        .inline-share {
             fill: $neutral-2;
         }
 
