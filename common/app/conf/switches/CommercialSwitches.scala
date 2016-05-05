@@ -267,7 +267,7 @@ trait CommercialSwitches {
   )
 
   val cardsDecidePaidContainerBranding = Switch(
-    SwitchGroup.CommercialRefactoring,
+    SwitchGroup.Commercial,
     "cards-decide-paid-container-branding",
     "DON'T TURN THIS ON! If on, the cards will decide the branding of their container",
     safeState = Off,
