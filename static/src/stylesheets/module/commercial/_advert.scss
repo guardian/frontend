@@ -1,6 +1,5 @@
 .advert {
     box-sizing: border-box;
-    color: inherit;
     display: block;
     display: flex;
     align-items: flex-start;
@@ -16,6 +15,11 @@
         .advert__title {
             text-decoration: underline;
         }
+    }
+
+    &,
+    &:active {
+        color: inherit;
     }
 
     .has-no-flex &:not(.advert--small):not(.advert--landscape) {
