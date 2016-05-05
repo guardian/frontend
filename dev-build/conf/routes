@@ -296,10 +296,7 @@ GET            /commercial/capi-single-merch                                    
 GET            /commercial/paid.json                                                                                             controllers.commercial.PaidContentCardController.cardJson
 GET            /commercial/paid                                                                                                  controllers.commercial.PaidContentCardController.cardHtml
 GET            /commercial/multi.json                                                                                            controllers.commercial.Multi.renderMulti
-GET            /commercial/guardian-explain                                                                                      controllers.commercial.StaticPageController.renderGuardianExplainPage()
-GET            /commercial/guardian-explore                                                                                      controllers.commercial.StaticPageController.renderGuardianExplorePage()
-GET            /commercial/guardian-experience                                                                                   controllers.commercial.StaticPageController.renderGuardianExperiencePage()
-GET            /commercial/guardian-awesome                                                                                   controllers.commercial.StaticPageController.renderGuardianAwesomePage()
+GET            /commercial/guardian-hosted                                                                                       controllers.commercial.StaticPageController.renderGuardianHostedPage()
 GET            /$path<commercial-containers>                                                                                     controllers.FaciaController.renderFront(path)
 
 # Commercial Admin
@@ -353,7 +350,6 @@ GET            /series/*path.json                                               
 # Applications (must come before wildcard)
 GET            /sitemaps/news.xml                                                                                                controllers.SiteMapController.renderNewsSiteMap()
 GET            /sitemaps/video.xml                                                                                               controllers.SiteMapController.renderVideoSiteMap()
-GET            /offline-page.json                                                                                                controllers.WebAppController.offlinePage()
 GET            /service-worker.js                                                                                                controllers.WebAppController.serviceWorker()
 
 #Notifications Store
