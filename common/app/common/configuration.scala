@@ -60,6 +60,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val secure = Play.application.configuration.getBoolean("guardian.secure").getOrElse(false)
 
     lazy val isProd = stage.equalsIgnoreCase("prod")
+    lazy val isCode = stage.equalsIgnoreCase("code")
     lazy val isNonProd = List("dev", "code", "gudev").contains(stage.toLowerCase)
 
     lazy val isPreview = projectName == "preview"
@@ -227,6 +228,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object assets {
     lazy val path = configuration.getMandatoryStringProperty("assets.path")
+    lazy val useHashedBundles =  configuration.getStringProperty("assets.useHashedBundles")
+      .map(_.toBoolean)
+      .getOrElse(environment.isProd || environment.isCode)
   }
 
   object staticSport {

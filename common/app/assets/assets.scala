@@ -34,7 +34,10 @@ class AssetMap(base: String, assetMap: String = "assets/assets.map") {
         case None => accumulator + (entry -> Asset(base + entry))
       })
     
-    if (Play.current.mode == Mode.Dev) {
+    if (Configuration.assets.useHashedBundles) {
+      val url = AssetFinder(assetMap)
+      jsonToAssetMap(IOUtils.toString(url))
+    } else {
       // Use the grunt-generated asset map in Dev.
       val assetMapUri = new java.io.File(s"static/hash/assets/assets.map").toURI
       val serviceWorkerWhitelist = Seq(
@@ -54,9 +57,6 @@ class AssetMap(base: String, assetMap: String = "assets/assets.map") {
       ) ++ serviceWorkerWhitelist
       val map = jsonToAssetMap(IOUtils.toString(assetMapUri))
       addIfMissing(map, whitelist)
-    } else {
-      val url = AssetFinder(assetMap)
-      jsonToAssetMap(IOUtils.toString(url))
     }
   }
 

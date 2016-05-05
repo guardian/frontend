@@ -6,7 +6,38 @@ window.curlConfig = {
     baseUrl: '@{Configuration.assets.path}javascripts',
     apiName: 'require',
     paths: {
-        @if(play.Play.isDev()) {
+        @if( Configuration.assets.useHashedBundles ) {
+            'enhanced-vendor':                   '@Static("javascripts/enhanced-vendor.js")',
+            'bootstraps/enhanced/main':          '@Static("javascripts/bootstraps/enhanced/main.js")',
+            'bootstraps/enhanced/crosswords':    '@Static("javascripts/bootstraps/enhanced/crosswords.js")',
+            'bootstraps/enhanced/accessibility': '@Static("javascripts/bootstraps/enhanced/accessibility.js")',
+            'bootstraps/commercial':             '@Static("javascripts/bootstraps/commercial.js")',
+            'bootstraps/enhanced/preferences':   '@Static("javascripts/bootstraps/enhanced/preferences.js")',
+            'bootstraps/enhanced/facia':         '@Static("javascripts/bootstraps/enhanced/facia.js")',
+            'bootstraps/enhanced/football':      '@Static("javascripts/bootstraps/enhanced/football.js")',
+            'bootstraps/enhanced/image-content': '@Static("javascripts/bootstraps/enhanced/image-content.js")',
+            'bootstraps/enhanced/membership':    '@Static("javascripts/bootstraps/enhanced/membership.js")',
+            'bootstraps/enhanced/sudoku':        '@Static("javascripts/bootstraps/enhanced/sudoku.js")',
+            'bootstraps/enhanced/media/main':    '@Static("javascripts/bootstraps/enhanced/media/main.js")',
+            'bootstraps/enhanced/article':       '@Static("javascripts/bootstraps/enhanced/article.js")',
+            'bootstraps/enhanced/liveblog':      '@Static("javascripts/bootstraps/enhanced/liveblog.js")',
+            'bootstraps/enhanced/article-minute':'@Static("javascripts/bootstraps/enhanced/article-minute.js")',
+            'bootstraps/enhanced/trail':         '@Static("javascripts/bootstraps/enhanced/trail.js")',
+            'bootstraps/enhanced/gallery':       '@Static("javascripts/bootstraps/enhanced/gallery.js")',
+            'bootstraps/enhanced/profile':       '@Static("javascripts/bootstraps/enhanced/profile.js")',
+            'bootstraps/enhanced/minute':        '@Static("javascripts/bootstraps/enhanced/minute.js")',
+            'foresee.js':               'vendor/foresee/20150703/foresee-trigger.js',
+            'googletag.js':             '@{Configuration.javascript.config("googletagJsUrl")}',
+            stripe:                     '@Static("javascripts/vendor/stripe/stripe.min.js")',
+            react:                      '@Static("javascripts/components/react/react.js")',
+            'facebook.js':              '//connect.facebook.net/en_US/all.js',
+            'ophan/ng':                 '@{Configuration.javascript.config("ophanJsUrl")}',
+            'prebid.js':                '@Static("vendor/prebid/0.7.0/prebid.js")',
+
+            // plugins
+            text:                       'text', // noop
+            inlineSvg:                  'inlineSvg' // noop
+        } else {
             admin:                          'projects/admin',
             common:                         'projects/common',
             facia:                          'projects/facia',
@@ -45,39 +76,8 @@ window.curlConfig = {
             videojsplaylist:                'components/videojs-playlist-audio/videojs.playlist.js',
 
             // plugins
-            text:         'components/requirejs-text/text',
+            text:         'components/requirejs-text/text',// CANT RUN FACIA VIDEO.JS
             inlineSvg:    'projects/common/utils/inlineSvg'
-        } else {
-            'enhanced-vendor':                   '@Static("javascripts/enhanced-vendor.js")',
-            'bootstraps/enhanced/main':          '@Static("javascripts/bootstraps/enhanced/main.js")',
-            'bootstraps/enhanced/crosswords':    '@Static("javascripts/bootstraps/enhanced/crosswords.js")',
-            'bootstraps/enhanced/accessibility': '@Static("javascripts/bootstraps/enhanced/accessibility.js")',
-            'bootstraps/commercial':             '@Static("javascripts/bootstraps/commercial.js")',
-            'bootstraps/enhanced/preferences':   '@Static("javascripts/bootstraps/enhanced/preferences.js")',
-            'bootstraps/enhanced/facia':         '@Static("javascripts/bootstraps/enhanced/facia.js")',
-            'bootstraps/enhanced/football':      '@Static("javascripts/bootstraps/enhanced/football.js")',
-            'bootstraps/enhanced/image-content': '@Static("javascripts/bootstraps/enhanced/image-content.js")',
-            'bootstraps/enhanced/membership':    '@Static("javascripts/bootstraps/enhanced/membership.js")',
-            'bootstraps/enhanced/sudoku':        '@Static("javascripts/bootstraps/enhanced/sudoku.js")',
-            'bootstraps/enhanced/media/main':    '@Static("javascripts/bootstraps/enhanced/media/main.js")',
-            'bootstraps/enhanced/article':       '@Static("javascripts/bootstraps/enhanced/article.js")',
-            'bootstraps/enhanced/liveblog':      '@Static("javascripts/bootstraps/enhanced/liveblog.js")',
-            'bootstraps/enhanced/article-minute':'@Static("javascripts/bootstraps/enhanced/article-minute.js")',
-            'bootstraps/enhanced/trail':         '@Static("javascripts/bootstraps/enhanced/trail.js")',
-            'bootstraps/enhanced/gallery':       '@Static("javascripts/bootstraps/enhanced/gallery.js")',
-            'bootstraps/enhanced/profile':       '@Static("javascripts/bootstraps/enhanced/profile.js")',
-            'bootstraps/enhanced/minute':        '@Static("javascripts/bootstraps/enhanced/minute.js")',
-            'foresee.js':               'vendor/foresee/20150703/foresee-trigger.js',
-            'googletag.js':             '@{Configuration.javascript.config("googletagJsUrl")}',
-            stripe:                     '@Static("javascripts/vendor/stripe/stripe.min.js")',
-            react:                      '@Static("javascripts/components/react/react.js")',
-            'facebook.js':              '//connect.facebook.net/en_US/all.js',
-            'ophan/ng':                 '@{Configuration.javascript.config("ophanJsUrl")}',
-            'prebid.js':                'vendor/prebid/0.7.0/prebid.js',
-
-            // plugins
-            text:                       'text', // noop
-            inlineSvg:                  'inlineSvg' // noop
         }
     }
 };
