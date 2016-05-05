@@ -21,13 +21,13 @@ class HealthCheckCacheTest extends FlatSpec with Matchers {
   }
 
   "allSuccessful" should "return true if all results are successful" in {
-    val results = List(HealthCheckResult("/url", 200), HealthCheckResult("/another/url", 200))
+    val results = List(HealthCheckResult("/url", Right(200)), HealthCheckResult("/another/url", Right(200)))
     val cache = cacheWithHealthCheckResults(results)
     cache.allSuccessful should be (true)
   }
 
   "allSuccessful" should "return false if not all results are successful" in {
-    val results = List(HealthCheckResult("/url", 404), HealthCheckResult("/another/url", 200))
+    val results = List(HealthCheckResult("/url", Right(404)), HealthCheckResult("/another/url", Right(200)))
     val cache = cacheWithHealthCheckResults(results)
     cache.allSuccessful should be (false)
   }
@@ -38,7 +38,7 @@ class HealthCheckCacheTest extends FlatSpec with Matchers {
   }
 
   "anySuccessful" should "return true if one result is a success" in {
-    val results = List(HealthCheckResult("/url", 404), HealthCheckResult("/another/url", 200))
+    val results = List(HealthCheckResult("/url", Right(404)), HealthCheckResult("/another/url", Right(200)))
     val cache = cacheWithHealthCheckResults(results)
     cache.anySuccessful should be (true)
   }
@@ -46,39 +46,40 @@ class HealthCheckCacheTest extends FlatSpec with Matchers {
 
 class HealthCheckResultTest extends FlatSpec with Matchers {
 
-  "RecentlySucceed" should "return true if 200 and freshly created" in {
-    val result = HealthCheckResult("/url", 200, DateTime.now)
+  "RecentlySucceed" should "return true if Right(200) and freshly created" in {
+    val result = HealthCheckResult("/url", Right(200), DateTime.now)
     result.recentlySucceed should be (true)
   }
 
-  "RecentlySucceed" should "return false if non 200 and freshly created" in {
-    val result = HealthCheckResult("/url", 500, DateTime.now)
+  "RecentlySucceed" should "return false if non Right(200) and freshly created" in {
+    val result = HealthCheckResult("/url", Right(500), DateTime.now)
     result.recentlySucceed should be (false)
   }
 
-  "RecentlySucceed" should "return false if 200 and expired" in {
+  "RecentlySucceed" should "return false if Right(200) and expired" in {
     val expiration = 5.seconds
     val date = DateTime.now.minus(expiration.toMillis + 1)
-    val result = HealthCheckResult("/url", 200, date, expiration)
+    println(">>>>")
+    val result = HealthCheckResult("/url", Right(200), date, expiration)
     result.recentlySucceed should be (false)
   }
 
-  "RecentlySucceed" should "return false if non 200 and expired" in {
+  "RecentlySucceed" should "return false if non Right(200) and expired" in {
     val expiration = 5.seconds
     val date = DateTime.now.minus(expiration.toMillis + 1)
-    val result = HealthCheckResult("/url", 500, date, expiration)
+    val result = HealthCheckResult("/url", Right(500), date, expiration)
     result.recentlySucceed should be (false)
   }
 
   "RecentlySucceed" should "return false if error happened and freshly created" in {
-    val result = HealthCheckResult("/url", new RuntimeException(), DateTime.now)
+    val result = HealthCheckResult("/url", Left(new RuntimeException()), DateTime.now)
     result.recentlySucceed should be (false)
   }
 
   "RecentlySucceed" should "return false if error happened and expired" in {
     val expiration = 5.seconds
     val date = DateTime.now.minus(expiration.toMillis + 1)
-    val result = HealthCheckResult("/url", new RuntimeException(), date, expiration)
+    val result = HealthCheckResult("/url", Left(new RuntimeException()), date, expiration)
     result.recentlySucceed should be (false)
   }
 }

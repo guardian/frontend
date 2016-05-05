@@ -30,27 +30,6 @@ private[conf] case class HealthCheckResult(url: String,
   def formattedDate = if(expired) s"${date} (Expired)" else date
 }
 
-object HealthCheckResult {
-  def apply(url: String, status: Int) = {
-    new HealthCheckResult(url, Right(status))
-  }
-  def apply(url: String, error: Throwable) = {
-    new HealthCheckResult(url, Left(error))
-  }
-  def apply(url: String, status: Int, date: DateTime) = {
-    new HealthCheckResult(url, Right(status), date)
-  }
-  def apply(url: String, error: Throwable, date: DateTime) = {
-    new HealthCheckResult(url, Left(error), date)
-  }
-  def apply(url: String, status: Int, date: DateTime, expiration: Duration) = {
-    new HealthCheckResult(url, Right(status), date, expiration)
-  }
-  def apply(url: String, error: Throwable, date: DateTime, expiration: Duration) = {
-    new HealthCheckResult(url, Left(error), date, expiration)
-  }
-}
-
 private[conf] trait HealthCheckFetcher extends ExecutionContexts with Logging {
 
   import play.api.Play.current
