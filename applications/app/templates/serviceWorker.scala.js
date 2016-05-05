@@ -1,5 +1,6 @@
 @()
 @import conf.Static
+@import conf.switches.Switches._
 @import views.html.offlineMetrics
 
 /*eslint quotes: [2, "single"], curly: [2, "multi-line"], strict: 0*/
@@ -173,9 +174,11 @@ this.addEventListener('fetch', function (event) {
         handleDevBlogRequest(event);
     } else if (isRequestForAsset(request)) {
         handleAssetRequest(event);
-    } else if (isRequestForGenericPage(request)) {
-        handleGenericPageRequest(event);
-    };
+    } @if(OfflinePageView.isSwitchedOn) {
+        else if (isRequestForGenericPage(request)) {
+            handleGenericPageRequest(event);
+        }
+    }
 });
 
 self.addEventListener('push', function (event) {
