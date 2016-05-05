@@ -47,14 +47,6 @@ module.exports = function (grunt, options) {
                 }
             ]
         },
-        css: {
-            files: [{
-                expand: true,
-                cwd: 'static/src/stylesheets',
-                src: ['**/*.scss'],
-                dest: options.staticTargetDir + 'stylesheets'
-            }]
-        },
         images: {
             files: [{
                 expand: true,

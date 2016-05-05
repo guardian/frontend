@@ -101,9 +101,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:css', function () {
         grunt.task.run(['clean:css', 'mkdir:css', 'compile:images', 'sass:compile']);
 
-        if (options.isDev) {
-            grunt.task.run(['replace:cssSourceMaps', 'copy:css']);
-        } else {
+        if (!options.isDev) {
             grunt.task.run(['shell:updateCanIUse']);
         }
 
