@@ -4,15 +4,9 @@ module.exports = function (grunt, options) {
             files: [
                 {
                     expand: true,
-                    cwd: 'static/public/javascripts/components',
+                    cwd: 'static/public/javascripts',
                     src: ['**/*.js'],
-                    dest: options.staticTargetDir + 'javascripts/components'
-                },
-                {
-                    expand: true,
-                    cwd: 'static/public/javascripts/vendor',
-                    src: ['**/*.js'],
-                    dest: options.staticTargetDir + 'javascripts/vendor'
+                    dest: options.staticTargetDir + 'javascripts'
                 },
                 {
                     expand: true,
