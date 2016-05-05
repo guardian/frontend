@@ -80,8 +80,6 @@ object HighMerchandisingTargetedTagSet {
 case class HighMerchandisingTargetedTagSet(items: Set[String] = Set.empty){
 
   private def hasTagId(tagId: String): Boolean = tagId.split('/').lastOption exists { keyword =>
-//    println(items)
-//    val testWords = Seq("notcorrect", "oil", "alsoNotCorrect")
     items contains keyword
   }
 

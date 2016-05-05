@@ -103,7 +103,6 @@ object DfpAgent
           tag <- lineItem.tags
         } yield tag
       }
-
       HighMerchandisingTargetedTagSet(maybeTagsSeq.getOrElse(Seq.empty).toSet)
     }
 
