@@ -148,7 +148,8 @@ define([
                     offerText:           tpl.params['offer' + index + 'meta'],
                     cta:                 tpl.params['offer' + index + 'linktext'] || tpl.params.offerLinkText ? manualCardCtaTpl({
                         offerLinkText:       tpl.params['offer' + index + 'linktext'] || tpl.params.offerLinkText,
-                        arrowRight:          tpl.params.arrowRight
+                        arrowRight:          tpl.params.arrowRight,
+                        classNames:          ''
                     }) : '',
                     classNames:          [tpl.params.toneClass.replace('commercial--tone-', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); }).join(' ')
                 }) : null;
@@ -162,7 +163,8 @@ define([
                 offerText:           tpl.params.offerText,
                 cta:                 tpl.params.viewAllText ? manualCardCtaTpl({
                     offerLinkText:       tpl.params.viewAllText,
-                    arrowRight:          tpl.params.arrowRight
+                    arrowRight:          tpl.params.arrowRight,
+                    classNames:          'button--tertiary'
                 }) : '',
                 classNames:          ['single', 'landscape', 'large', 'inverse', tpl.params.toneClass.replace('commercial--tone', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); }).join(' ')
             }) + manualContainerButtonTpl({
