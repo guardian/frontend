@@ -28,7 +28,7 @@ trait ABTestSwitches {
     "ab-identity-register-membership-standfirst",
     "Membership registration page variant for Identity",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
+    sellByDate = new LocalDate(2016, 5, 12),
     exposeClientSide = true
   )
 
@@ -49,7 +49,7 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 6, 1),
     exposeClientSide = true
   )
-  
+
   val ABLoyalAdblockingSurvey = Switch(
     SwitchGroup.ABTests,
     "ab-loyal-adblocking-survey",
