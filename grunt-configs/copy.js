@@ -12,9 +12,9 @@ module.exports = function (grunt, options) {
                     expand: true,
                     cwd: 'static/src/javascripts/vendor',
                     src: [
-                        'formstack-interactive/0.1/boot.js',
-                        'vast-client.js',
-                        'stripe/stripe.min.js'
+                        'formstack-interactive/**/*',
+                        'prebid/**/*',
+                        'stripe/**/*'
                     ],
                     dest: options.staticTargetDir + 'javascripts/vendor'
                 },
@@ -22,7 +22,7 @@ module.exports = function (grunt, options) {
                     expand: true,
                     cwd: 'static/src/javascripts/vendor',
                     src: [
-                        '**/*'
+                        'foresee/**/*'
                     ],
                     dest: options.staticHashDir + 'javascripts/vendor'
                 },
