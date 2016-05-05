@@ -25,19 +25,6 @@ module.exports = function (grunt, options) {
                         'foresee/**/*'
                     ],
                     dest: options.staticHashDir + 'javascripts/vendor'
-                },
-                {
-                    expand: true,
-                    cwd: options.requirejsDir,
-                    src: [
-                        'bootstraps/commercial.js',
-                        'bootstraps/commercial.js.map',
-                        'enhanced-vendor.js',
-                        'enhanced-vendor.js.map',
-                        'bootstraps/enhanced/main.js',
-                        'bootstraps/enhanced/main.js.map'
-                    ],
-                    dest: options.staticTargetDir + 'javascripts'
                 }
             ]
         },
