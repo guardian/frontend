@@ -56,6 +56,24 @@
     }
 }
 
+.advert--single {
+    .advert__standfirst {
+        margin-top: $gs-baseline / 2;
+        opacity: .7;
+    }
+
+    &:hover,
+    &:focus {
+        .button--tertiary {
+            @include button-colour(
+                transparent,
+                null,
+                darken($neutral-3, 10%)
+            );
+        }
+    }
+}
+
 .advert__title {
     font-size: 1rem;
     line-height: 1.25;
