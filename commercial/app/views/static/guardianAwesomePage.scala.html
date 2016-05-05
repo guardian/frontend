@@ -1,5 +1,7 @@
 @(metaData: model.MetaData)(implicit request: RequestHeader)
 
+@import views.html.fragments.inlineSvg
+
 @main(model.SimplePage(metaData)) { } {
     <div class="l-side-margins awesome">
         <div class="awesome__header">
@@ -100,6 +102,10 @@
                 <div class="awesome__cta-wrapper">
                     <p class="awesome__heading--small">Renault Zoe</p>
                     <h1 class="awesome__heading awesome-brand-tone--renault">Find your Zoe</h1>
+                    <a href="" class="advert__more button button--medium button--primary awesome__cta" data-text="cta">
+                        <span>The Renault Zoe</span>
+                        @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
+                    </a>
                 </div>
             </div>
         </section>

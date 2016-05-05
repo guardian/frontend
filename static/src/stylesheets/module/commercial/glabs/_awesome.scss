@@ -39,18 +39,19 @@
 	left: calc(50% - 560px);
 }
 
-.awesome__heading--small {
-	@include fs-headline(2);
-
-	margin-bottom: $gs-gutter * 1.2;
-	font-size: 32px;
-}
-
+// Headings
 .awesome__heading {
 	@include fs-header(5);
 	
 	margin-bottom: $gs-gutter * 1.5;
 	font-size: 68px;
+}
+
+.awesome__heading--small {
+	@include fs-headline(2);
+
+	margin-bottom: $gs-gutter * 1.2;
+	font-size: 32px;
 }
 
 .awesome__subheading {
@@ -63,6 +64,7 @@
 	line-height: 1.2;
 }
 
+// Main banner
 .awesome__banner {
 	position: relative;
 	height: 375px;
@@ -79,4 +81,14 @@
     @include mq(wide) {
         margin-left: $left-column-wide + $gs-gutter;
     }
+}
+
+.awesome__cta {
+	background-color: #f7b500;
+	border-color: #f7b500;
+
+	&:hover {
+		background-color: #f7b500;
+		border-color: #f7b500;		
+	}
 }
