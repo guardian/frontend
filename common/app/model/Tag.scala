@@ -2,6 +2,7 @@ package model
 
 import com.gu.contentapi.client.model.v1.{Podcast => ApiPodcast, Reference => ApiReference, Sponsorship => ApiSponsorship, SponsorshipTargeting => ApiSponsorshipTargeting, SponsorshipType => ApiSponsorshipType, Tag => ApiTag}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
+import common.commercial.BrandHunter
 import common.{Edition, Pagination, RelativePathEscaper}
 import conf.Configuration
 import contentapi.SectionTagLookUp
@@ -135,14 +136,14 @@ case object PaidContent extends SponsorshipType {
 
 object SponsorshipType {
 
+  implicit val sponsorshipTypeFormat: Format[SponsorshipType] =
+    (__ \ "name").format[String].inmap(name => make(name), (sponsorshipType: SponsorshipType) => sponsorshipType.name)
+
   def make(name: String): SponsorshipType = name match {
     case PaidContent.name => PaidContent
     case Foundation.name => Foundation
     case _ => Sponsored
   }
-
-  implicit val format: Format[SponsorshipType] =
-    (__ \ "name").format[String].inmap(name => make(name), (sponsorshipType: SponsorshipType) => sponsorshipType.name)
 }
 
 case class SponsorshipTargeting(
@@ -151,6 +152,9 @@ case class SponsorshipTargeting(
                                )
 
 object SponsorshipTargeting {
+
+  implicit val sponsorshipTargetingFormat = Json.format[SponsorshipTargeting]
+
   def make(targeting: ApiSponsorshipTargeting): SponsorshipTargeting = {
     SponsorshipTargeting(
       targeting.validEditions.map(_.flatMap(Edition.byId)).getOrElse(Nil),
@@ -173,23 +177,32 @@ case class Branding(
     case _ => "Supported by"
   }
 
-  def isTargeting(publicationDate: DateTime, edition: Edition): Boolean = {
+  def isTargeting(optPublicationDate: Option[DateTime], edition: Edition): Boolean = {
 
     def isTargetingEdition(validEditions: Seq[Edition]): Boolean = {
       validEditions.isEmpty || validEditions.contains(edition)
     }
 
-    def isPublishedSince(threshold: Option[DateTime]): Boolean = {
-      threshold.isEmpty || threshold.exists(publicationDate.isAfter)
+    def isPublishedSince(optThreshold: Option[DateTime]): Boolean = {
+      val comparison = for {
+        publicationDate <- optPublicationDate
+        threshold <- optThreshold
+      } yield {
+        publicationDate isAfter threshold
+      }
+      comparison getOrElse true
     }
 
-    targeting exists { t =>
+    targeting.isEmpty || targeting.exists { t =>
       isTargetingEdition(t.validEditions) && isPublishedSince(t.publishedSince)
     }
   }
 }
 
 object Branding {
+
+  implicit val brandingFormat = Json.format[Branding]
+
   def make(sponsorship: ApiSponsorship): Branding = {
     Branding(
       sponsorship.sponsorshipType match {
@@ -274,4 +287,8 @@ case class Tag (
   val isFootballTeam = properties.references.exists(_.`type` == "pa-football-team")
   val isFootballCompetition = properties.references.exists(_.`type` == "pa-football-competition")
   val contributorImagePath = properties.bylineImageUrl.map(ImgSrc(_, Contributor))
+
+  override def branding(edition: Edition): Option[Branding] = {
+    BrandHunter.findTagBranding(this, publicationDate = None, edition)
+  }
 }

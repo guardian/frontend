@@ -68,18 +68,30 @@ define([
                 false
         };
 
-        this.$adSlot.append(fabricV1Tpl({ data: merge(this.params, templateOptions) }));
-        if (templateOptions.scrollbg) {
+        fastdom.write(function () {
+            this.$adSlot.append(fabricV1Tpl({data: merge(this.params, templateOptions)}));
             this.scrollingBg = $('.ad-scrolling-bg', this.$adSlot[0]);
             this.layer2 = $('.hide-until-tablet .fabric-v1_layer2', this.$adSlot[0]);
+            this.scrollType = this.params.backgroundImagePType;
 
-            if (hasScrollEnabled) {
-                // update bg position
-                fastdom.read(this.updateBgPosition, this);
-                mediator.on('window:throttledScroll', this.updateBgPosition.bind(this));
-                // to be safe, also update on window resize
-                mediator.on('window:resize', this.updateBgPosition.bind(this));
+            // layer two animations must not have a background position, otherwise the background will
+            // be visible before the animation has been initiated.
+            if (this.params.layerTwoAnimation === 'enabled' && isEnhanced && !isIE9OrLess) {
+                bonzo(this.layer2).css('background-position', '');
             }
+
+            if (this.scrollType === 'fixed' && hasScrollEnabled) {
+                bonzo(this.scrollingBg).css('background-attachment', 'fixed');
+            }
+
+        }, this);
+
+        if (templateOptions.scrollbg && hasScrollEnabled) {
+            // update bg position
+            fastdom.read(this.updateBgPosition, this);
+            mediator.on('window:throttledScroll', this.updateBgPosition.bind(this));
+            // to be safe, also update on window resize
+            mediator.on('window:resize', this.updateBgPosition.bind(this));
         }
 
         if (this.params.trackingPixel) {
@@ -88,7 +100,7 @@ define([
     };
 
     FabricV1.prototype.updateBgPosition = function () {
-        if (this.params.backgroundImagePType === 'parallax') {
+        if (this.scrollType === 'parallax') {
             var scrollAmount = Math.ceil((window.pageYOffset - this.$adSlot.offset().top) * 0.3 * -1) + 20;
             fastdom.write(function () {
                 bonzo(this.scrollingBg)
@@ -96,7 +108,6 @@ define([
                     .css('background-position', '50% ' + scrollAmount + '%');
             }, this);
         }
-
         this.layer2Animation();
     };
 

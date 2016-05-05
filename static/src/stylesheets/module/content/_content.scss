@@ -171,9 +171,10 @@
         float: none;
     }
 
-    .content__series-label__link {
-        color: $neutral-2;
-    }
+}
+
+.content__series-label__link {
+    color: $neutral-2;
 }
 
 @include mq(leftCol, wide) {

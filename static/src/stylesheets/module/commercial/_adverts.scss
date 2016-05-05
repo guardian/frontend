@@ -32,6 +32,10 @@
     .inline-commercial {
         display: block;
     }
+
+    .button {
+        transition: border-color .1s, background-color .1s;
+    }
 }
 
 .adverts--legacy {
@@ -125,6 +129,17 @@
             display: block;
             fill: #ffffff;
             max-width: 100%;
+        }
+    }
+
+    .adverts__ctas {
+        .button--tertiary {
+            border-color: rgba(255, 255, 255, .3);
+
+            &:hover,
+            &:focus {
+                border-color: rgba(255, 255, 255, 1);
+            }
         }
     }
 
@@ -440,11 +455,42 @@
     @include fs-textSans(1);
     color: $neutral-2;
     font-weight: bold;
+    margin-top: $gs-baseline / 2;
     padding-right: $gs-gutter;
     text-align: right;
 
+    .adverts__more + & {
+        margin-top: 0;
+    }
+
     .has-no-flex & {
         clear: both;
+    }
+}
+
+.adverts__badge--alt {
+    border-top: 1px dotted $neutral-5;
+    margin-top: $gs-baseline / 3;
+    padding-top: $gs-baseline / 6;
+    text-align: left;
+
+    > .adverts__badge__link,
+    .adverts__badge__logo {
+        display: block;
+    }
+
+    .adverts__badge__logo {
+        max-height: 6 * $gs-baseline;
+        margin: 0;
+    }
+
+    > .adverts__badge__link {
+        border-bottom: 1px dotted $neutral-5;
+        margin: 3 / 4 * $gs-baseline 0 $gs-baseline / 3;
+    }
+
+    > .adverts__badge__help {
+        @include font-size(11);
     }
 }
 
@@ -619,3 +665,9 @@
 @import '_adverts-brand';
 @import '_adverts-membership';
 @import '_adverts-travel';
+@import '_adverts-subscriptions';
+@import '_adverts-live';
+@import '_adverts-networks';
+@import '_adverts-shop';
+@import '_adverts-money';
+@import '_adverts-gardening';

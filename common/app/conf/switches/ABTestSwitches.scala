@@ -23,21 +23,12 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABNextInSeries = Switch(
-    SwitchGroup.ABTests,
-    "ab-next-in-series",
-    "Show next in series",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 3),
-    exposeClientSide = true
-  )
-
   val ABIdentityRegisterMembershipStandfirst = Switch(
     SwitchGroup.ABTests,
     "ab-identity-register-membership-standfirst",
     "Membership registration page variant for Identity",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
+    sellByDate = new LocalDate(2016, 5, 12),
     exposeClientSide = true
   )
 
@@ -59,15 +50,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABMembership = Switch(
-    SwitchGroup.ABTests,
-    "ab-membership",
-    "Membership propositions",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 2),
-    exposeClientSide = true
-  )
-
   val ABLoyalAdblockingSurvey = Switch(
     SwitchGroup.ABTests,
     "ab-loyal-adblocking-survey",
@@ -83,15 +65,6 @@ trait ABTestSwitches {
     "Switch to include the minute.ly script",
     safeState = Off,
     sellByDate = new LocalDate(2016, 5, 11),
-    exposeClientSide = true
-  )
-
-  val ABVideoSeriesPage = Switch(
-    SwitchGroup.ABTests,
-    "ab-video-series-page",
-    "Testing new video series layout",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 27),
     exposeClientSide = true
   )
 

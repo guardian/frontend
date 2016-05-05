@@ -1,7 +1,10 @@
 package tools
 
+import common.dfp.PageSkin
 import conf.Configuration.commercial.dfpAccountId
-import conf.Configuration.site
+import conf.Configuration.{commercial, site}
+
+import scala.language.postfixOps
 
 object DfpLink {
 
@@ -24,22 +27,18 @@ object DfpLink {
 
 object SiteLink {
 
-  def adUnit(path: String): Option[String] = {
+  def adUnit(path: String, adTest: Option[String]): Option[String] = {
 
-    def getRelativePath(dropFromRight: Int) = path.split("/").drop(1).dropRight(dropFromRight).mkString("/")
+    lazy val domain = if (adTest.isDefined) commercial.testDomain else site.host
+    val relativePath = PageSkin.getRelativePath(path)
+    val domainAndPath = relativePath map { path => s"$domain/$path" }
+    val domainAndPathWithAdTest =
+      for {
+        id <- adTest
+        baseUrl <- domainAndPath
+      } yield s"$baseUrl?adtest=$id"
 
-    lazy val relativePath = getRelativePath(1)
-    lazy val relativeEditionalisedPath = getRelativePath(2)
-
-    if (path endsWith "/front") {
-      Some(s"${site.host}/${relativePath}")
-    } else if (path endsWith "/front/ng") {
-      Some(s"${site.host}/${relativeEditionalisedPath}?view=mobile")
-    } else if (path endsWith "/front/r2") {
-      Some(s"${site.host}/${relativeEditionalisedPath}?view=classic")
-    } else {
-      None
-    }
+    domainAndPathWithAdTest orElse domainAndPath
   }
 
   def contributorTagPage(contributor: String): String = s"${site.host}/profile/$contributor"

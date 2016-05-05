@@ -5,6 +5,7 @@ import com.gu.contentapi.client.model.v1.{Content => ApiContent, ItemResponse}
 import common._
 import contentapi.ContentApiClient
 import conf.switches.Switches
+import model.Cached.WithoutRevalidationResult
 import model._
 import model.liveblog.{BodyBlock, KeyEventData}
 import org.joda.time.DateTime
@@ -68,7 +69,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
           TextBlock(id, title, publishedAt, updatedAt, html)
       }.take(number)
       Cached(page)(JsonComponent("blocks" -> Json.toJson(blocks)))
-    case _ => Cached(600)(NotFound("Can only return block text for a live blog"))
+    case _ => Cached(600)(WithoutRevalidationResult(NotFound("Can only return block text for a live blog")))
 
   }
 

@@ -2,6 +2,7 @@ package controllers
 
 import common._
 import containers.Containers
+import model.Cached.RevalidatableResult
 import model._
 import play.api.libs.json._
 import play.api.mvc.{ RequestHeader, Controller, Action }
@@ -25,7 +26,7 @@ object RelatedController extends Controller with Related with Containers with Lo
     val excludeTags = request.queryString.getOrElse("exclude-tag", Nil)
 
     related(edition, path, excludeTags) map {
-      case related if related.items.isEmpty => JsonNotFound()
+      case related if related.items.isEmpty => Cached(60)(JsonNotFound())
       case related if isMf2 => renderRelatedMf2(related.items.sortBy(-_.content.trail.webPublicationDate.getMillis), "related content")
       case trails => renderRelated(trails.items.sortBy(-_.content.trail.webPublicationDate.getMillis), containerTitle = "related content")
     }
@@ -41,7 +42,7 @@ object RelatedController extends Controller with Related with Containers with Lo
       )(request)
       JsonComponent("html" -> html)
     } else {
-      Ok(views.html.relatedContent(page, relatedTrails.map(_.faciaContent)))
+      RevalidatableResult.Ok(views.html.relatedContent(page, relatedTrails.map(_.faciaContent)))
     }
   }
 

@@ -120,7 +120,7 @@ define([
                 clickMacro: '%%CLICK_URL_ESC%%'
             };
             new Template(slot, params).create().then(function () {
-                expect(document.querySelector('.lineitem--dfp-single .button', slot)).toBe(null);
+                expect(document.querySelector('.advert--manual .button', slot)).toBe(null);
             });
         });
     });
@@ -166,7 +166,7 @@ define([
                 clickMacro: '%%CLICK_URL_ESC%%'
             };
             new Template(slot, params).create().then(function () {
-                expect(document.querySelector('.commercial', slot)).not.toBe(null);
+                expect(document.querySelector('.adverts', slot)).not.toBe(null);
             });
         });
 
@@ -200,7 +200,7 @@ define([
                 clickMacro: '%%CLICK_URL_ESC%%'
             };
             new Template(slot, params).create().then(function () {
-                expect(document.querySelector('.lineitem__link .button', slot)).toBe(null);
+                expect(document.querySelector('.advert .button', slot)).toBe(null);
             });
         });
     });

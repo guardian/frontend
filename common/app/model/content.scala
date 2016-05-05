@@ -25,24 +25,7 @@ import scala.collection.JavaConversions._
 import scala.language.postfixOps
 import scala.util.Try
 
-sealed trait Brandable {
-  def content: Content
-
-  def branding(edition: Edition): Option[Branding] = {
-
-    def findBrandingBySection(): Option[Branding] = None
-
-    def findBrandingByTag(): Option[Branding] = {
-      val activeBrandings = content.tags.tags.flatMap(_.properties.activeBrandings).flatten
-      val publicationDate = content.trail.webPublicationDate
-      activeBrandings find (_.isTargeting(publicationDate, edition))
-    }
-
-    findBrandingBySection() orElse findBrandingByTag()
-  }
-}
-
-sealed trait ContentType extends Brandable {
+sealed trait ContentType {
   def content: Content
   final def tags: Tags = content.tags
   final def elements: Elements = content.elements
@@ -84,7 +67,6 @@ final case class Content(
   showByline: Boolean,
   hasStoryPackage: Boolean,
   rawOpenGraphImage: String,
-  sensitive: Boolean,
   showFooterContainers: Boolean = false
 ) {
 
@@ -97,7 +79,7 @@ final case class Content(
   lazy val shortUrlId = fields.shortUrl.replace("http://gu.com", "")
   lazy val shortUrlPath = shortUrlId
   lazy val discussionId = Some(shortUrlPath)
-  lazy val isImmersive = fields.displayHint.contains("immersive")
+  lazy val isImmersive = fields.displayHint.contains("immersive") || metadata.contentType.toLowerCase == "gallery"
 
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {
@@ -184,6 +166,8 @@ final case class Content(
 
   lazy val numberOfVideosInTheBody: Int = Jsoup.parseBodyFragment(fields.body).body().children().select("video[class=gu-video]").size()
 
+  val legallySensitive: Boolean = fields.legallySensitive.getOrElse(false)
+
   def javascriptConfig: Map[String, JsValue] = Map(
     ("publication", JsString(publication)),
     ("hasShowcaseMainElement", JsBoolean(elements.hasShowcaseMainElement)),
@@ -192,8 +176,9 @@ final case class Content(
     ("isContent", JsBoolean(true)),
     ("wordCount", JsNumber(wordCount)),
     ("references", JsArray(javascriptReferences)),
-    ("showRelatedContent", JsBoolean(if (tags.isUSMinuteSeries) { false } else showInRelated)),
-    ("productionOffice", JsString(productionOffice.getOrElse("")))
+    ("showRelatedContent", JsBoolean(if (tags.isUSMinuteSeries) { false } else (showInRelated && !legallySensitive))),
+    ("productionOffice", JsString(productionOffice.getOrElse(""))),
+    ("isImmersive", JsBoolean(isImmersive))
   )
 
   // Dynamic Meta Data may appear on the page for some content. This should be used for conditional metadata.
@@ -331,9 +316,7 @@ object Content {
           .orElse(elements.mainPicture.flatMap(_.images.largestImageUrl))
           .orElse(trail.trailPicture.flatMap(_.largestImageUrl))
           .getOrElse(Configuration.images.fallbackLogo)
-      },
-      sensitive = apifields.flatMap(_.sensitive).getOrElse(false)
-
+      }
     )
   }
 }
@@ -376,7 +359,7 @@ object Article {
       ("lightboxImages", lightbox.javascriptConfig),
       ("hasMultipleVideosInPage", JsBoolean(content.hasMultipleVideosInPage)),
       ("isImmersive", JsBoolean(content.isImmersive)),
-      ("isSensitive", JsBoolean(content.sensitive))
+      ("isSensitive", JsBoolean(fields.sensitive.getOrElse(false)))
     ) ++ bookReviewIsbn
 
     val opengraphProperties: Map[String, String] = Map(
@@ -411,7 +394,7 @@ object Article {
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       twitterPropertiesOverrides = twitterProperties,
-      hasHeader = content.tags.isUSMinuteSeries || content.isImmersive
+      shouldHideHeaderAndTopAds = content.tags.isUSMinuteSeries || content.isImmersive
     )
   }
 
@@ -800,7 +783,6 @@ object Interactive {
       contentType = contentType,
       analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
-      hasHeader = content.isImmersive,
       javascriptConfigOverrides = Map("contentType" -> JsString(contentType)),
       twitterPropertiesOverrides = twitterProperties
     )

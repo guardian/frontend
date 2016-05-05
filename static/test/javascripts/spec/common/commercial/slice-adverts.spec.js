@@ -40,10 +40,12 @@ define([
                 detect = arguments[3];
 
                 config.page = {
-                    pageId: 'uk/commentisfree'
+                    pageId: 'uk/commentisfree',
+                    isFront: true
                 };
-                config.tests = {
-                    cmTopBannerPosition: false
+
+                config.switches = {
+                    fabricAdverts : false
                 };
 
                 detect.getBreakpoint = function () {
@@ -67,17 +69,6 @@ define([
         });
 
         it('should only create a maximum of 3 advert slots', function (done) {
-            sliceAdverts.init();
-
-            fastdom.defer(function () {
-                expect(qwery('.ad-slot', $fixtureContainer).length).toEqual(3);
-                done();
-            });
-        });
-
-        it('should create a maximum of 4 advert slots inside topBannerPosition AB test', function (done) {
-            config.tests.cmTopBannerPosition = false;
-
             sliceAdverts.init();
 
             fastdom.defer(function () {
@@ -193,6 +184,36 @@ define([
                 expect(qwery('.fc-container-third .ad-slot', $fixtureContainer).length).toBe(1);
                 expect(qwery('.fc-container-fifth .ad-slot', $fixtureContainer).length).toBe(1);
                 done();
+            });
+        });
+
+        describe('Fabric ads', function () {
+            beforeEach(function () {
+                config.switches.fabricAdverts = true;
+            });
+
+            it('can be added on mobile', function (done) {
+                detect.isBreakpoint = function () {
+                    // expecting check for breakpoint <= phablet
+                    return true;
+                };
+                sliceAdverts.init();
+                fastdom.defer(function () {
+                    expect(qwery('.fc-container-first .ad-slot--fabric', $fixtureContainer).length).toBe(1);
+                    done();
+                });
+            });
+
+            it('is not added on desktop', function (done) {
+                detect.isBreakpoint = function () {
+                    // expecting check for breakpoint <= phablet
+                    return false;
+                };
+                sliceAdverts.init();
+                fastdom.defer(function () {
+                    expect(qwery('.fc-container-first .ad-slot--fabric', $fixtureContainer).length).toBe(0);
+                    done();
+                });
             });
         });
 
