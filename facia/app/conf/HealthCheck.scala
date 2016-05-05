@@ -5,7 +5,7 @@ import play.api.mvc.Action
 
 object HealthCheckController extends CachedHealthCheckController {
   override val paths = Seq("/uk/business")
-  override val port = 9008
+  override val testPort = 9008
   override def healthCheck() = healthCheckAll()
 }
 

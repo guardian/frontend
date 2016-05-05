@@ -10,7 +10,6 @@ class HealthCheckCacheTest extends FlatSpec with Matchers {
   private def cacheWithHealthCheckResults(results: List[HealthCheckResult]) = {
     val cacheState = results.map(r => r.url -> r).toMap
     new HealthCheckCache {
-      override def testPort: Int = 1
       override val cache = AkkaAgent[Map[String, HealthCheckResult]](cacheState)
     }
   }
@@ -59,7 +58,6 @@ class HealthCheckResultTest extends FlatSpec with Matchers {
   "RecentlySucceed" should "return false if Right(200) and expired" in {
     val expiration = 5.seconds
     val date = DateTime.now.minus(expiration.toMillis + 1)
-    println(">>>>")
     val result = HealthCheckResult("/url", Right(200), date, expiration)
     result.recentlySucceed should be (false)
   }
