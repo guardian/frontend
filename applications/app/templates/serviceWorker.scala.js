@@ -1,5 +1,7 @@
 @()
 @import conf.Static
+@import conf.switches.Switches._
+@import views.html.offlineMetrics
 
 /*eslint quotes: [2, "single"], curly: [2, "multi-line"], strict: 0*/
 /*eslint-env browser*/
@@ -86,69 +88,75 @@ var isSameHost = function (host) {
  * FETCH HANDLERS
  */
 
-var requestForDevBlog = (function () {
-    var isForDevBlog = (function () {
-        var devBlogPathRegex = /^\/info\/developer-blog($|\/.*$)/;
-        return function (request) {
-            var url = new URL(request.url);
-            return isSameHost(url.host) && devBlogPathRegex.test(url.pathname) && requestAcceptsHTML(request);
-        }
-    })();
-
-    return function (event) {
-        var request = event.request;
-
-        if (isForDevBlog(request)) {
-            // update the crossword on every visist the dev blog
-            if (requestAcceptsHTML(request)) {
-                isCacheUpdated().then(function (isUpdated) {
-                    if (!isUpdated) {
-                        updateOfflineCrosswordCache().then(deleteOldCaches);
-                    }
-                });
-            };
-
-            event.respondWith(
-                fetch(request).catch(function () {
-                    return caches.match('/offline-crossword');
-                })
-            );
-        };
+var isRequestForDevBlog = (function () {
+    var devBlogPathRegex = /^\/info\/developer-blog($|\/.*$)/;
+    return function (request) {
+        var url = new URL(request.url);
+        return devBlogPathRegex.test(url.pathname) && isSameHost(url.host) && requestAcceptsHTML(request);
     }
 })();
 
-var requestForAsset = (function () {
-    var isAssetRequest = (function () {
-        var assetPathRegex = new RegExp('^@Configuration.assets.path');
-        return function (request) {
-            var url = new URL(request.url);
-            @if(play.Play.isDev()) {
-                return assetPathRegex.test(url.pathname);
-            } else {
-                return assetPathRegex.test(url.href);
+var handleDevBlogRequest = function (event) {
+    // update the crossword on every visist the dev blog
+    if (requestAcceptsHTML(event.request)) {
+        isCacheUpdated().then(function (isUpdated) {
+            if (!isUpdated) {
+                updateOfflineCrosswordCache().then(deleteOldCaches);
             }
-        }
-    })();
+        });
+    };
 
-    return function (event) {
-        var request = event.request;
+    event.respondWith(
+        fetch(event.request).catch(function () {
+            return caches.match('/offline-crossword');
+        })
+    );
+};
 
-        if (isAssetRequest(request)) {
-            // Default fetch behaviour
-            // Cache first for all other requests
-            event.respondWith(
-                caches.match(request)
-                    .then(function (response) {
-                        // Workaround Firefox bug which drops cookies
-                        // https://github.com/guardian/frontend/issues/12012
-                        return response || fetch(request, needCredentialsWorkaround(request.url) ? {
-                            credentials: 'include'
-                        } : {});
-                    })
-            );
+var isRequestForAsset = (function () {
+    var assetPathRegex = new RegExp('^@Configuration.assets.path');
+    return function (request) {
+        var url = new URL(request.url);
+        @if(play.Play.isDev()) {
+            return assetPathRegex.test(url.pathname);
+        } else {
+            return assetPathRegex.test(url.href);
         }
     }
 })();
+
+var handleAssetRequest = function (event) {
+    // Default fetch behaviour
+    // Cache first for all other requests
+    event.respondWith(
+        caches.match(event.request)
+            .then(function (response) {
+                // Workaround Firefox bug which drops cookies
+                // https://github.com/guardian/frontend/issues/12012
+                return response || fetch(event.request, needCredentialsWorkaround(event.request.url) ? {
+                    credentials: 'include'
+                } : {});
+            })
+    );
+};
+
+var isRequestForGenericPage = function (request) {
+    var url = new URL(request.url);
+    return requestAcceptsHTML(request) && isSameHost(url.host);
+}
+
+// handle requests for generic pages
+var handleGenericPageRequest = function (event) {
+    event.respondWith(
+        fetch(event.request).catch(function () {
+            return new Response("@Html(offlineMetrics().body)", {
+                headers: {
+                    'Content-Type': 'text/html'
+                }
+            });
+        })
+    );
+};
 
 /**
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -159,8 +167,19 @@ this.addEventListener('install', function (event) {
     event.waitUntil(updateOfflineCrosswordCache());
 });
 
-this.addEventListener('fetch', requestForDevBlog);
-this.addEventListener('fetch', requestForAsset);
+this.addEventListener('fetch', function (event) {
+    var request = event.request;
+
+    if(isRequestForDevBlog(request)) {
+        handleDevBlogRequest(event);
+    } else if (isRequestForAsset(request)) {
+        handleAssetRequest(event);
+    } @if(OfflinePageView.isSwitchedOn) {
+        else if (isRequestForGenericPage(request)) {
+            handleGenericPageRequest(event);
+        }
+    }
+});
 
 self.addEventListener('push', function (event) {
 
