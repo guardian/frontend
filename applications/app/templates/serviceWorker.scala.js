@@ -169,13 +169,13 @@ this.addEventListener('install', function (event) {
 this.addEventListener('fetch', function (event) {
     var request = event.request;
 
-    if(isRequestForDevBlog(request) {
+    if(isRequestForDevBlog(request)) {
         handleDevBlogRequest(event);
-    }) else if (isRequestForAsset(request) {
+    } else if (isRequestForAsset(request)) {
         handleAssetRequest(event);
-    }) else if (isRequestForGenericPage(request) {
+    } else if (isRequestForGenericPage(request)) {
         handleGenericPageRequest(event);
-    })
+    };
 });
 
 self.addEventListener('push', function (event) {
