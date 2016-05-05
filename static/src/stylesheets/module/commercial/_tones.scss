@@ -98,15 +98,6 @@
     $features-main-2
 );
 
-/* .commercial--tone-masterclasses */
-@include tone-commercial(
-    masterclasses,
-    $multimedia-main-1,
-    $multimedia-main-2,
-    $accentTextColour: $neutral-1,
-    $titleColor: $multimedia-main-2
-);
-
 /* .commercial--tone-travel */
 @include tone-commercial(
     travel,
