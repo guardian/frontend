@@ -105,11 +105,6 @@
         color: $guardian-brand-dark;
     }
 
-    // Supported by containers don't feature separators between items
-    .adverts__row > * + *::before {
-        content: none;
-    }
-
     .adverts__badge__help {
         color: $neutral-2-contrasted;
     }
@@ -117,6 +112,14 @@
 
 .advert--capi {
     border-top: 1px solid;
+    transition: background .1s;
+
+    &:hover,
+    &:focus {
+        .advert__title {
+            text-decoration: none;
+        }
+    }
 
     .advert__title,
     .advert__meta,
@@ -173,6 +176,11 @@
     background: $paid-article-subheader;
     border-top-color: $paid-article-brand;
 
+    &:hover,
+    &:focus {
+        background: darken($paid-article-subheader, 7%);
+    }
+
     .advert__title {
         @include f-headlineSans;
         font-weight: 400;
@@ -200,12 +208,23 @@
 .advert--supported {
     &.advert--text {
         border-top-color: $news-main-2;
+        background: $neutral-8;
+
+        &:hover,
+        &:focus {
+            background: $neutral-6;
+        }
     }
 
     &.advert--media {
         border-top-color: $multimedia-main-2;
         background: $multimedia-main-1;
         color: #ffffff;
+
+        &:hover,
+        &:focus {
+            background: darken($media-background, 7.5%);
+        }
 
         .advert__title {
             > .inline-icon svg {

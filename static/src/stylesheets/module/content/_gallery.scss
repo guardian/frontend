@@ -234,8 +234,11 @@
 
 .new-gallery__divider {
     border-top: 1px solid $neutral-1;
-    padding-top: $gs-baseline / 2;
     margin-top: $gs-baseline;
+
+    @include mq(desktop) {
+        padding-top: $gs-baseline / 2;
+    }
 }
 
 // TODO: When the time comes, remove `.new-gallery` class completely and remove old gallery styling
@@ -245,13 +248,17 @@
     }
 
     .ad-slot__label {
-        text-align: left;
+        @include mq(desktop) {
+            text-align: left;
+        }
     }
 
     // TODO: Update _adslot.scss with this change
-    .ad-slot--gallery-inline > div:not(.ad-slot__label) {
-        margin-left: 0;
-        margin-right: auto;
+    @include mq(desktop) {
+        .ad-slot--gallery-inline > div:not(.ad-slot__label) {
+            margin-left: 0;
+            margin-right: auto;
+        }
     }
 
     .content__main-column--gallery {
@@ -259,9 +266,9 @@
         margin-right: auto;
         padding-bottom: $gs-baseline*2;
 
-        @include mq(tablet) {
+        @include mq(desktop) {
             margin-left: gs-span(3) + $gs-gutter;
-            margin-right: -$gs-gutter/2;
+            margin-right: -$gs-gutter;
         }
     }
 
@@ -365,7 +372,6 @@
     &.tonal--tone-media {
         background-color: $multimedia-support-5;
 
-
         // TODO: Move this to the proper place once changes are live
         .meta__twitter,
         .meta__email {
@@ -384,12 +390,6 @@
                     fill: $neutral-3;
                 }
             }
-        }
-
-        // TODO: Make this the default for all media tones once changes are live
-        .fc-container__inner,
-        .fc-slice__item+.fc-slice__item:before {
-            border-color: $neutral-1;
         }
 
         // Overwriting media tone header so that you can see the image instead
@@ -515,7 +515,7 @@
         margin: 0;
         position: relative;
 
-        @include mq(tablet) {
+        @include mq(desktop) {
             &:before {
                 content: '';
                 position: absolute;
@@ -533,10 +533,16 @@
             flex-direction: column-reverse;
         }
 
-        // On mobile the images should be 100% of the width of the screen
-        @include mq($until: phablet) {
+        // On mobile/tablet the images should be 100% of the width of the screen
+        @include mq($until: desktop) {
             margin-left: -$gs-gutter;
             margin-right: -$gs-gutter;
+            padding-top: $gs-baseline / 2;
+            border-top: 1px solid $neutral-1;
+
+            &:first-of-type {
+                border-top: 0;
+            }
         }
 
         @include mq($until: mobileLandscape) {
@@ -544,7 +550,7 @@
             margin-right: -$gs-gutter / 2;
         }
 
-        @include mq(tablet) {
+        @include mq(desktop) {
             position: relative;
             border-top: 0;
             padding: 0;
@@ -552,6 +558,14 @@
             figure {
                 flex-direction: row;
             }
+        }
+    }
+
+    .gallery__item--advert {
+        @include mq($until: desktop) {
+            border-top: 0;
+            margin-left: 0;
+            margin-right: 0;
         }
     }
 
@@ -565,17 +579,17 @@
 
         @include mq($until: desktop) {
             margin-bottom: $gs-baseline * 2;
-        }
-
-        @include mq($until: phablet) {
-            padding: $gs-gutter;
+            padding-top: $gs-baseline / 2;
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
         }
 
         @include mq($until: mobileLandscape) {
-            padding: $gs-gutter / 2;
+            padding-left: $gs-gutter / 2;
+            padding-right: $gs-gutter / 2;
         }
 
-        @include mq(tablet) {
+        @include mq(desktop) {
             @include fs-textSans(2, true);
             position: absolute;
             width: gs-span(3);
@@ -589,7 +603,7 @@
         color: $neutral-4;
         margin-bottom: 0;
 
-        @include mq(tablet) {
+        @include mq(desktop) {
             padding-right: $gs-gutter / 2;
         }
 
@@ -622,7 +636,7 @@
     .gallery__credit {
         color: $neutral-2;
 
-        @include mq(tablet) {
+        @include mq(desktop) {
             padding-right: $gs-gutter / 2;
         }
     }
@@ -630,8 +644,16 @@
     .gallery__img-container {
         background-color: $multimedia-support-5;
 
-        @include mq(tablet) {
+        @include mq(desktop) {
             padding-bottom: 2.5rem;
+        }
+
+        @include mq($until: desktop) {
+            text-align: center;
+
+            img {
+                display: inline-block;
+            }
         }
     }
 
@@ -665,6 +687,16 @@
 }
 
 .l-side-margins--new-gallery {
+    // TODO: Make this the default for all media tones once changes are live
+    .tonal--tone-media {
+        background-color: $multimedia-support-5;
+
+        .fc-container__inner,
+        .fc-slice__item+.fc-slice__item:before {
+            border-color: $neutral-1;
+        }
+    }
+
     // TODO: Make this the default for all media tones once changes are live
     &.l-side-margins--media {
         @include mq(tablet) {

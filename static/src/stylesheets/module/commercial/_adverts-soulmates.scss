@@ -125,8 +125,10 @@
 }
 
 .advert--soulmate {
-    .advert__image-container {
-        height: 7 * $gs-baseline;
+    &:not(.advert--manual) {
+        .advert__image-container {
+            height: 7 * $gs-baseline;
+        }
     }
 
     .button {
@@ -144,12 +146,6 @@
                 $neutral-2,
                 null
             );
-        }
-    }
-
-    .adverts--manual & {
-        .advert__image-container {
-            height: 11 * $gs-baseline;
         }
     }
 }
