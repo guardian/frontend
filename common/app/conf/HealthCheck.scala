@@ -20,8 +20,8 @@ private[conf] case class HealthCheckResult(url: String,
                                            result: Either[Throwable, Int], // Status code if success, throwable otherwise
                                            date: DateTime = DateTime.now,
                                            expiration: Duration = 10.seconds) {
-  private def age = Duration(DateTime.now.getMillis - date.getMillis, MILLISECONDS)
-  private def expired = age > expiration
+  private val expirationDate = date.plus(expiration.toMillis)
+  private def expired = DateTime.now.getMillis > expirationDate.getMillis
   def recentlySucceed = result.fold(_ => false, _ == 200) && !expired
   def formattedResult = result match {
     case Left(t) => s"Error: ${t.getLocalizedMessage}"
