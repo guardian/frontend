@@ -150,7 +150,7 @@ define([
                         offerLinkText:       tpl.params['offer' + index + 'linktext'] || tpl.params.offerLinkText,
                         arrowRight:          tpl.params.arrowRight
                     }) : '',
-                    classNames:          [tpl.params.toneClass.replace('commercial--tone-', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); }).join(' ')
+                    classNames:          ['manual', tpl.params.toneClass.replace('commercial--tone-', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); }).join(' ')
                 }) : null;
             }).filter(identity).join('');
         } else {

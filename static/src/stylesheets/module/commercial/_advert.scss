@@ -56,6 +56,12 @@
     }
 }
 
+.advert--manual {
+    .advert__image-container {
+        height: auto;
+    }
+}
+
 .advert--single {
     .advert__standfirst {
         margin-top: $gs-baseline / 2;
