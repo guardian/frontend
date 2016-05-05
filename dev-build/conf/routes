@@ -295,11 +295,8 @@ GET            /commercial/capi-single-merch.json                               
 GET            /commercial/capi-single-merch                                                                                     controllers.commercial.ContentApiOffersController.itemHtml
 GET            /commercial/paid.json                                                                                             controllers.commercial.PaidContentCardController.cardJson
 GET            /commercial/paid                                                                                                  controllers.commercial.PaidContentCardController.cardHtml
-GET            /commercial/multi.json                                                                                            controllers.commercial.Multi.renderMulti
-GET            /commercial/guardian-explain                                                                                      controllers.commercial.StaticPageController.renderGuardianExplainPage()
-GET            /commercial/guardian-explore                                                                                      controllers.commercial.StaticPageController.renderGuardianExplorePage()
-GET            /commercial/guardian-experience                                                                                   controllers.commercial.StaticPageController.renderGuardianExperiencePage()
-GET            /commercial/guardian-awesome                                                                                   controllers.commercial.StaticPageController.renderGuardianAwesomePage()
+GET            /commercial/multi.json                                                                                            controllers.commercial.Multi.renderMulti                                                                                   controllers.commercial.StaticPageController.renderGuardianExperiencePage()
+GET            /commercial/guardian-awesome                                                                                      controllers.commercial.StaticPageController.renderGuardianAwesomePage()
 GET            /$path<commercial-containers>                                                                                     controllers.FaciaController.renderFront(path)
 
 # Commercial Admin

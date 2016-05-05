@@ -104,7 +104,8 @@ define([
         this.outbrain =
             externalAdvertising &&
             !sensitiveContent &&
-            switches.outbrain;
+            switches.outbrain &&
+            config.page.showRelatedContent;
 
         this.commentAdverts =
             this.dfpAdvertising &&

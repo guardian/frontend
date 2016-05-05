@@ -47,8 +47,5 @@ GET        /commercial/capi-single-merch                                 control
 GET        /commercial/paid.json                                         controllers.commercial.PaidContentCardController.cardJson
 GET        /commercial/paid                                              controllers.commercial.PaidContentCardController.cardHtml
 
-# Static pages
-GET        /commercial/guardian-explain                                  controllers.commercial.StaticPageController.renderGuardianExplainPage()
-GET        /commercial/guardian-explore                                  controllers.commercial.StaticPageController.renderGuardianExplorePage()
-GET        /commercial/guardian-experience                               controllers.commercial.StaticPageController.renderGuardianExperiencePage()
+# Static pages                              controllers.commercial.StaticPageController.renderGuardianExperiencePage()
 GET        /commercial/guardian-awesome                                  controllers.commercial.StaticPageController.renderGuardianAwesomePage()
