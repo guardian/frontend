@@ -55,72 +55,75 @@ class CachedHealthCheckControllerTest extends WordSpec with Matchers with Single
   }
 
   "GET /_healthcheck" when {
-    "all requests must be successful and cache results is empty" should {
-      "503" in {
-        getHealthCheck(List(), HealthCheckTypes.All) { response =>
-          status(response) should be(503)
+    "all requests must be successful" when {
+      "cache result is empty" should {
+        "503" in {
+          getHealthCheck(List(), HealthCheckTypes.All) { response =>
+            status(response) should be(503)
+          }
+        }
+      }
+      "cached result is expired" should {
+        "503" in {
+          val expiration = 5.seconds
+          val date = DateTime.now.minus(expiration.toMillis + 1)
+          val mockResults = List(mockResult(200, date, expiration))
+          getHealthCheck(mockResults, HealthCheckTypes.All) { response =>
+            status(response) should be (503)
+          }
+        }
+      }
+      "only one cached result is successful" should {
+        "503" in {
+          val mockResults = List(mockResult(500), mockResult(200))
+          getHealthCheck(mockResults, HealthCheckTypes.All) { response =>
+            status(response) should be(503)
+          }
+        }
+      }
+      "cached results are all successful" should {
+        "200" in {
+          val mockResults = List(mockResult(200), mockResult(200))
+          getHealthCheck(mockResults, HealthCheckTypes.All) { response =>
+            status(response) should be (200)
+          }
         }
       }
     }
-    "at least one request must be successful and cache results is empty" should {
-      "503" in {
-        getHealthCheck(List(), HealthCheckTypes.Any) { response =>
-          status(response) should be(503)
+    "at least one request must be successful" when {
+      "cache result is empty" should {
+        "503" in {
+          getHealthCheck(List(), HealthCheckTypes.Any) { response =>
+            status(response) should be(503)
+          }
         }
       }
-    }
-    "all requests must be successful and cached results are all successful" should {
-      "200" in {
-        val mockResults = List(mockResult(200), mockResult(200))
-        getHealthCheck(mockResults, HealthCheckTypes.All) { response =>
-          status(response) should be (200)
+      "one cached result is successful but expired" should {
+        "503" in {
+          val expiration = 5.seconds
+          val date = DateTime.now.minus(expiration.toMillis + 1)
+          val mockResults = List(mockResult(200, date, expiration), mockResult(404))
+          getHealthCheck(mockResults, HealthCheckTypes.Any) { response =>
+            status(response) should be(503)
+          }
         }
       }
-    }
-    "all requests must be successful and cached result is expired" should {
-      "503" in {
-        val expiration = 5.seconds
-        val date = DateTime.now.minus(expiration.toMillis + 1)
-        val mockResults = List(mockResult(200, date, expiration))
-        getHealthCheck(mockResults, HealthCheckTypes.All) { response =>
-          status(response) should be (503)
+      "no cached result is successful" should {
+        "503" in {
+          val mockResults = List(mockResult(400), mockResult(500))
+          getHealthCheck(mockResults, HealthCheckTypes.Any) { response =>
+            status(response) should be(503)
+          }
         }
       }
-    }
-    "all requests must be successful and only one cached result is successful" should {
-      "503" in {
-        val mockResults = List(mockResult(500), mockResult(200))
-        getHealthCheck(mockResults, HealthCheckTypes.All) { response =>
-          status(response) should be (503)
-        }
-      }
-    }
-    "at least one succesful request is required and one cached result is successful" should {
-      "200" in {
-        val mockResults = List(mockResult(200), mockResult(404))
-        getHealthCheck(mockResults, HealthCheckTypes.Any) { response =>
-          status(response) should be (200)
-        }
-      }
-    }
-    "at least one succesful request is required and one cached result is successful but expired" should {
-      "503" in {
-        val expiration = 5.seconds
-        val date = DateTime.now.minus(expiration.toMillis + 1)
-        val mockResults = List(mockResult(200, date, expiration), mockResult(404))
-        getHealthCheck(mockResults, HealthCheckTypes.Any) { response =>
-          status(response) should be (503)
-        }
-      }
-    }
-    "at least one succesful request is required and no cached result is successful" should {
-      "503" in {
-        val mockResults = List(mockResult(400), mockResult(500))
-        getHealthCheck(mockResults, HealthCheckTypes.Any) { response =>
-          status(response) should be (503)
+      "one cached result is successful" should {
+        "200" in {
+          val mockResults = List(mockResult(200), mockResult(404))
+          getHealthCheck(mockResults, HealthCheckTypes.Any) { response =>
+            status(response) should be(200)
+          }
         }
       }
     }
   }
-
 }
