@@ -123,21 +123,21 @@ object EmailForm {
     ListIds.testList -> Some(2529),
     ListIds.guardianTodayUk -> Some(2529),
     ListIds.guardianTodayUs -> Some(2564),
-    ListIds.guardianTodayAu -> Some(2563)) ++ controllers.ListIds.allWithoutTrigger.map(_ -> None).toMap
+    ListIds.guardianTodayAu -> Some(2563))
 
   def submit(form: EmailForm): Future[WSResponse] = {
     val maybeTriggeredSendKey: Option[Int] = listIdsWithMaybeTrigger.getOrElse(form.listId, None)
 
-   WS.url(Configuration.emailSignup.url).post(
-     JsObject(Json.obj(
-     "email" -> form.email,
-     "listId" -> form.listId,
-     "triggeredSendKey" -> maybeTriggeredSendKey,
-     "emailGroup" -> "email-footer-test",
-     "referrer" -> form.referrer,
-     "campaignCode" -> form.campaignCode)
-     .fields
-     .filterNot{ case (_, v) => v == JsNull}))
+    WS.url(Configuration.emailSignup.url).post(
+      JsObject(Json.obj(
+      "email" -> form.email,
+      "listId" -> form.listId,
+      "triggeredSendKey" -> maybeTriggeredSendKey,
+      "emailGroup" -> "email-footer-test",
+      "referrer" -> form.referrer,
+      "campaignCode" -> form.campaignCode)
+      .fields
+      .filterNot{ case (_, v) => v == JsNull}))
   }
 }
 
