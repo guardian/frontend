@@ -71,12 +71,12 @@
 
 .button--tone-media {
     @include button-colour(
-        $multimedia-support-4,
+        $media-mute,
         #ffffff
     );
 
     @include button-hover-colour(
-        $neutral-2
+        darken($media-mute, 5%)
     );
 }
 

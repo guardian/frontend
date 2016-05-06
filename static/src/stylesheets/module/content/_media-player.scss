@@ -2,7 +2,7 @@
 @import '../../icons/video-icons-svg';
 
 // parameterising these as they're used in a few places
-$vjs-control-colour: rgba(25, 25, 25, .8);
+$vjs-control-colour: $media-mute;
 $vjs-control-height: $gs-baseline*4;
 $vjs-progress-hitbox-height: $gs-baseline;
 $vjs-progress-visual-height-resting: $gs-baseline/2;
@@ -950,7 +950,7 @@ $ima-controls-height: 70px;
 
 .podcast-meta {
     text-align: left;
-    border-top: 1px solid lighten($neutral-1, 16%);
+    border-top: 1px solid $media-background;
     margin-top: $gs-baseline/2;
     padding: $gs-baseline/2 $gs-gutter/2;
 }
@@ -1060,7 +1060,7 @@ $ima-controls-height: 70px;
             left: 0;
             width: 1px;
             height: 100%;
-            border-left: 1px solid $neutral-2;
+            border-left: 1px solid $media-mute;
         }
     }
 

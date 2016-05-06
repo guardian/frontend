@@ -9,7 +9,7 @@
     #ffffff, // $tonal__headline-colour
     $media-default, // $tonal__headline-accent
     $media-background, // $tonal__standfirst-background
-    #ffffff, // $tonal__standfirst-text
+    $neutral-5, // $tonal__standfirst-text
     #ffffff, // $tonal__standfirst-link
     $media-background, // $tonal__article-background
     $media-default // $tonal__article-link
@@ -45,7 +45,7 @@
     .meta__numbers,
     .meta__social,
     .meta__number:not(u-h) + .meta__number {
-        border-color: $neutral-2;
+        border-color: $media-mute;
     }
 
     .from-content-api {

@@ -53,7 +53,7 @@
 
     .ad-slot--dark & {
         color: $neutral-3;
-        border-top-color: $neutral-2;
+        border-top-color: $media-mute;
         background-color: transparent;
     }
 }
@@ -492,7 +492,7 @@
     }
 }
 .ad-slot--paid-for-badge--gallery {
-    border-top: 1px dotted $neutral-1;
+    border-top: 1px dotted $media-mute;
     border-bottom: 0;
     padding-top: $gs-baseline / 3;
 
