@@ -27,7 +27,8 @@
         </div>
     } else {
         <div class="adverts__row">
-        @books.map { book => @bookCard(book, clickMacro) }
+        @books.take(2).map { book => @bookCard(book, clickMacro) }
+        @books.slice(2, 4).map { book => @bookCard(book, clickMacro, optClassNames = Some(Seq("hide-until-tablet"))) }
         </div>
     }
 
