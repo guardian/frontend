@@ -2,7 +2,7 @@ package conf
 
 import common._
 import org.joda.time.DateTime
-import play.api.{Mode, Play}
+import play.api.Play
 import play.api.libs.ws.{WSResponse, WS}
 import play.api.mvc._
 import play.api.{Application => PlayApp, GlobalSettings}
@@ -44,7 +44,7 @@ private[conf] case class HealthCheckResult(url: String,
 private[conf] trait HealthCheckFetcher extends ExecutionContexts with Logging {
   import play.api.Play.current
 
-  protected def fetchResult(baseUrl: String, port: Int, path: String): Future[HealthCheckResult] = {
+  protected def fetchResult(baseUrl: String, path: String): Future[HealthCheckResult] = {
     WS.url(s"$baseUrl$path")
       .withHeaders("User-Agent" -> "GU-HealthChecker", "X-Gu-Management-Healthcheck" -> "true")
       .withRequestTimeout(10000).get()
@@ -63,15 +63,11 @@ private[conf] trait HealthCheckFetcher extends ExecutionContexts with Logging {
       }
   }
 
-  protected def fetchResults(testPort: Int, paths: String*): Future[Seq[HealthCheckResult]] = {
-    val port = {
-      Play.current.mode match {
-        case Mode.Test => testPort
-        case _ => 9000
-      }
-    }
+  protected def fetchResults(paths: String*): Future[Seq[HealthCheckResult]] = {
+    val defaultPort = 9000
+    val port = System.getProperty(if(Play.isTest) "testserver.port" else "http.port", defaultPort.toString).toInt
     val baseUrl = s"http://localhost:$port"
-    Future.sequence(paths.map(fetchResult(baseUrl, port, _)))
+    Future.sequence(paths.map(fetchResult(baseUrl, _)))
   }
 
 }
@@ -89,21 +85,20 @@ private[conf] trait HealthCheckCache extends HealthCheckFetcher {
   }
   def anySuccessful: Boolean = get().exists(_.recentlySucceed)
 
-  def fetchPaths(testPort: Int, paths: Seq[String]): Future[Unit] = {
+  def fetchPaths(paths: String*): Future[Unit] = {
     log.info("Fetching HealthChecks...")
-    fetchResults(testPort, paths:_*).map(allResults => cache.send(allResults.toList))
+    fetchResults(paths:_*).map(allResults => cache.send(allResults.toList))
   }
 }
 
 trait CachedHealthCheckController extends Controller with Results with ExecutionContexts with Logging {
 
   val paths: Seq[String]
-  val testPort: Int
 
   def healthCheck(): Action[AnyContent]
   private[conf] val cache: HealthCheckCache = new HealthCheckCache {}
 
-  def runChecks: Future[Unit] = cache.fetchPaths(testPort, paths)
+  def runChecks: Future[Unit] = cache.fetchPaths(paths:_*)
 
   private def healthCheckResponse(condition: => Boolean): Action[AnyContent] = Action.async {
     Future.successful {

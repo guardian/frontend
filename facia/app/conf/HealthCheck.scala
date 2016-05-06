@@ -1,11 +1,7 @@
 package conf
 
-import model.NoCache
-import play.api.mvc.Action
-
 object HealthCheckController extends CachedHealthCheckController {
   override val paths = Seq("/uk/business")
-  override val testPort = 9008
   override def healthCheck() = healthCheckAll()
 }
 
