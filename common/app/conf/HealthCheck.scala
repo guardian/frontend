@@ -94,7 +94,6 @@ private[conf] trait HealthCheckCache extends HealthCheckFetcher {
     fetchResults(testPort, paths:_*).map(allResults => cache.send(allResults.toList))
   }
 }
-object HealthCheckCache extends HealthCheckCache
 
 trait CachedHealthCheckController extends Controller with Results with ExecutionContexts with Logging {
 
@@ -102,7 +101,7 @@ trait CachedHealthCheckController extends Controller with Results with Execution
   val testPort: Int
 
   def healthCheck(): Action[AnyContent]
-  private[conf] val cache: HealthCheckCache = HealthCheckCache
+  private[conf] val cache: HealthCheckCache = new HealthCheckCache {}
 
   def runChecks: Future[Unit] = cache.fetchPaths(testPort, paths)
 
