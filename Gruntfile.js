@@ -126,7 +126,7 @@ module.exports = function (grunt) {
         'compile:fonts',
         'compile:flash',
         !options.isDev && 'makeDeploysRadiator',
-        'asset_hash',
+        !options.isDev && 'asset_hash',
         'compile:conf'
     ].filter(identity));
 
