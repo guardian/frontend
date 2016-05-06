@@ -78,25 +78,20 @@ private[conf] trait HealthCheckFetcher extends ExecutionContexts with Logging {
 
 private[conf] trait HealthCheckCache extends HealthCheckFetcher {
 
-  protected val cache = AkkaAgent[Map[String, HealthCheckResult]](Map.empty)
+  protected val cache = AkkaAgent[List[HealthCheckResult]](List[HealthCheckResult]())
   def get() = cache.get()
 
   def allSuccessful: Boolean = {
-    get().values.toList match {
+    get() match {
       case Nil => false
       case nonEmpty => nonEmpty.forall(_.recentlySucceed)
     }
   }
-  def anySuccessful: Boolean = get().values.exists(_.recentlySucceed)
+  def anySuccessful: Boolean = get().exists(_.recentlySucceed)
 
   def fetchPaths(testPort: Int, paths: Seq[String]): Future[Unit] = {
     log.info("Fetching HealthChecks...")
-    fetchResults(testPort, paths:_*)
-      .map { m =>
-      m.foreach { case healthCheckResult =>
-        cache.alter(_.updated(healthCheckResult.url, healthCheckResult))
-      }
-    }
+    fetchResults(testPort, paths:_*).map(allResults => cache.send(allResults.toList))
   }
 }
 object HealthCheckCache extends HealthCheckCache
@@ -114,7 +109,7 @@ trait CachedHealthCheckController extends Controller with Results with Execution
   private def healthCheckResponse(condition: => Boolean): Action[AnyContent] = Action.async {
     Future.successful {
       val response = cache.get().map {
-        case (url, r) => s"GET ${url} '${r.formattedResult}' '${r.formattedDate}'"
+        case r: HealthCheckResult => s"GET ${r.url} '${r.formattedResult}' '${r.formattedDate}'"
       }
         .mkString("\n")
       if(condition) Ok(response) else ServiceUnavailable(response)
