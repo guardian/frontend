@@ -159,6 +159,9 @@ object AssetFinder {
 }
 
 case class AssetNotFoundException(assetPath: String) extends Exception {
-  override val getMessage: String =
-    s"Cannot find asset $assetPath. You should run `make compile-dev`. If you are running with useHashedBundles enabled, you need to `make compile`."
+  override val getMessage: String = if (Configuration.assets.useHashedBundles) {
+    s"Cannot find asset $assetPath. You should run `make compile`."
+  } else {
+    s"Cannot find asset $assetPath. You should run `make compile-dev`."
+  }
 }
