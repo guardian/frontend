@@ -380,7 +380,7 @@ trait ContentPage extends Page {
     metadata.twitterPropertiesOverrides
 
   override def branding(edition: Edition): Option[Branding] = {
-    BrandHunter.findBranding(
+    BrandHunter.findContentBranding(
       section = None,
       item.tags,
       publicationDate = Some(item.trail.webPublicationDate),
