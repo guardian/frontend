@@ -63,13 +63,13 @@ $hosted-stripe: 28px;
     background: transparent;
     color: #ffffff;
 
-    @include mq(mobile) {
+    @include mq($until: desktop) {
         padding: 0 $gs-gutter;
     }
 }
 
 .hosted__container--full {
-    @include mq(mobile) {
+    @include mq($until: desktop) {
         padding: 0;
     }
 }
@@ -80,19 +80,27 @@ $hosted-stripe: 28px;
 
 .hosted__logowrap {
     position: absolute;
-    top: -$hosted-stripe;
-    left: calc(50% - 550px);
-    width: 132px;
+    top: -$gs-gutter;
+    left: $gs-gutter;
+    width: 80px;
 
-    @include mq(mobile) {
-        top: -$gs-gutter;
-        left: $gs-gutter;
-        width: 80px;
+    @include mq(desktop) {
+        top: -$hosted-stripe;
+        left: calc(50% - 490px + #{$gs-gutter});
+        width: 132px;
+    }
+
+    @include mq(leftCol) {
+        left: calc(50% - 570px + #{$gs-gutter});
+    }
+
+    @include mq(wide) {
+        left: calc(50% - 650px + #{$gs-gutter});
     }
 }
 
 .hosted__logowrap--pusheddown {
-    @include mq(mobile) {
+    @include mq($from: desktop) {
         top: 0;
     }
 }
@@ -106,7 +114,7 @@ $hosted-stripe: 28px;
     margin: 0;
     text-align: center;
 
-    @include mq(mobile) {
+    @include mq($until: desktop) {
         height: $gs-gutter;
         line-height: $gs-gutter;
         font-size: 10px;
@@ -120,15 +128,23 @@ $hosted-stripe: 28px;
 
 .hosted__meta {
     position: absolute;
-    bottom: 20%;
-    width: 35%;
-    left: calc(50% - 550px);
+    left: $gs-gutter;
+    bottom: 10%;
+    width: 55%;
     color: #ffffff;
 
-    @include mq(mobile) {
-        left: $gs-gutter;
-        bottom: 10%;
-        width: 55%;
+    @include mq(desktop) {
+        bottom: 20%;
+        width: 35%;
+        left: calc(50% - 490px + #{$gs-gutter});
+    }
+
+    @include mq(leftCol) {
+        left: calc(50% - 570px + #{$gs-gutter});
+    }
+
+    @include mq(wide) {
+        left: calc(50% - 650px + #{$gs-gutter});
     }
 }
 
@@ -140,7 +156,7 @@ $hosted-stripe: 28px;
     font-size: 60px;
     line-height: 54px;
 
-    @include mq(mobile) {
+    @include mq($until: desktop) {
         margin: 0;
         font-size: 26px;
         line-height: 26px;
@@ -152,7 +168,7 @@ $hosted-stripe: 28px;
 
     font-size: 32px;
 
-    @include mq(mobile) {
+    @include mq($until: desktop) {
         font-size: 18px;
         line-height: 1;
         margin-bottom: 0;
@@ -169,7 +185,7 @@ $hosted-stripe: 28px;
     height: 375px;
     background-size: cover;
 
-    @include mq(mobile) {
+    @include mq($until: desktop) {
         background-position: center;
     }
 }
@@ -193,7 +209,7 @@ $hosted-stripe: 28px;
         border-color: #ffc421;       
     }
 
-    @include mq(mobile) {
+    @include mq($until: desktop) {
         height: 39px;
         margin-top: $gs-gutter / 2;
         padding: 0 20px;
@@ -212,7 +228,7 @@ $hosted-stripe: 28px;
     line-height: 1.2;
     color: #767676;
 
-    @include mq(mobile) {
+    @include mq($until: desktop) {
         font-size: 14px;
     }
 }
@@ -233,7 +249,7 @@ $hosted-stripe: 28px;
 .hosted__standfirst {
     width: 60%;
 
-    @include mq(mobile) {
+    @include mq($until: desktop) {
         width: 100%;
     }
 }
