@@ -19,7 +19,7 @@ $hosted-stripe: 28px;
 }
 
 .hosted__side {
-    @include mq($until:desktop) {
+    @include mq($until: desktop) {
         &:before,
         &:after {
             display: none;
@@ -260,7 +260,7 @@ $hosted-stripe: 28px;
 
 .hosted__standfirst {
     width: 60%;
-    padding: $gs-baseline $gs-gutter 0 $gs-gutter;
+    padding: $gs-baseline $gs-gutter 0;
 
     @include mq($until: desktop) {
         width: auto;
