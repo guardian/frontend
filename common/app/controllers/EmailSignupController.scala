@@ -125,19 +125,19 @@ object EmailForm {
     ListIds.guardianTodayUs -> Some(2564),
     ListIds.guardianTodayAu -> Some(2563)) ++ controllers.ListIds.allWithoutTrigger.map(_ -> None).toMap
 
-  def submit(form: EmailForm): Option[Future[WSResponse]] = {
-    listIdsWithMaybeTrigger.get(form.listId).map { triggeredSendKey: Option[Int] =>
-      WS.url(Configuration.emailSignup.url).post(
-        JsObject(Json.obj(
-        "email" -> form.email,
-        "listId" -> form.listId,
-        "triggeredSendKey" -> triggeredSendKey,
-        "emailGroup" -> "email-footer-test",
-        "referrer" -> form.referrer,
-        "campaignCode" -> form.campaignCode)
-        .fields
-        .filterNot{ case (_, v) => v == JsNull}))
-    }
+  def submit(form: EmailForm): Future[WSResponse] = {
+    val maybeTriggeredSendKey: Option[Int] = listIdsWithMaybeTrigger.getOrElse(form.listId, None)
+
+   WS.url(Configuration.emailSignup.url).post(
+     JsObject(Json.obj(
+     "email" -> form.email,
+     "listId" -> form.listId,
+     "triggeredSendKey" -> maybeTriggeredSendKey,
+     "emailGroup" -> "email-footer-test",
+     "referrer" -> form.referrer,
+     "campaignCode" -> form.campaignCode)
+     .fields
+     .filterNot{ case (_, v) => v == JsNull}))
   }
 }
 
@@ -198,13 +198,12 @@ object EmailSignupController extends Controller with ExecutionContexts with Logg
         EmailFormError.increment()
         Future.successful(respond(InvalidEmail))},
 
-      form => EmailForm.submit(form) match {
-        case Some(future) => future.map(_.status match {
+      form => EmailForm.submit(form).map(_.status match {
           case 200 | 201 =>
             EmailSubmission.increment()
             respond(Subscribed)
 
-          case status    =>
+          case status =>
             log.error(s"Error posting to ExactTarget: HTTP $status")
             APIHTTPError.increment()
             respond(OtherError)
@@ -214,13 +213,7 @@ object EmailSignupController extends Controller with ExecutionContexts with Logg
             log.error(s"Error posting to ExactTarget: ${e.getMessage}")
             APINetworkError.increment()
             respond(OtherError)
-        }
-
-        case None =>
-          log.error(s"Unable to find a trigger for list ID ${form.listId}")
-          ListIDError.increment()
-          Future.successful(respond(OtherError))
-      })
+        })
   }
 
   def options() = Action { implicit request =>
