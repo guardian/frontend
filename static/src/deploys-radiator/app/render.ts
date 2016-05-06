@@ -120,17 +120,12 @@ const renderGroupDeployListNode = (deploys: List<DeployRecord>) => {
     ]);
 };
 
-const renderPage: (
-    deploysPair: [ List<DeployRecord>, List<DeployRecord> ],
-    // TODO: Use tuple instead
-    deployPair: Array<DeployRecord>,
-    commits: List<GitHubCommit>
-) => VirtualDOM.VNode =
+const renderPage =
     (
-        [ codeDeploys, prodDeploys ],
-        [ latestCodeDeploy, oldestProdDeploy ],
-        commits
-    ) => {
+        [ codeDeploys, prodDeploys ]: [ List<DeployRecord>, List<DeployRecord> ],
+        [ latestCodeDeploy, oldestProdDeploy ]: [ DeployRecord, DeployRecord ],
+        commits: List<GitHubCommit>
+    ): VirtualDOM.VNode => {
         const isInSync = oldestProdDeploy.build === latestCodeDeploy.build;
         return h('.row#root', {}, [
             h('h1', [
