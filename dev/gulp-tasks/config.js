@@ -3,7 +3,6 @@ const root = '..';
 export const DIRECTORIES = {
     src: `${root}/static/src`,
     target: `${root}/static/target`,
-    hash: `${root}/static/hash`,
     public: `${root}/static/public`,
     testConf: `${root}/static/test/javascripts/conf`,
     webfonts: `${root}/static/src/fonts`

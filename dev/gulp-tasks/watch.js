@@ -10,7 +10,7 @@ import pxtorem from 'postcss-pxtorem';
 import {DIRECTORIES, PRESETS} from './config';
 
 const SRC = `${DIRECTORIES.target}/stylesheets`;
-const DEST = `${DIRECTORIES.hash}/stylesheets`;
+const DEST = `${DIRECTORIES.target}/stylesheets`;
 
 gulp.task('watch:css', (done) => {
     gulp.watch([
