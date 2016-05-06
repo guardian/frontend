@@ -1,4 +1,16 @@
 .adverts--soulmates {
+    @include mq($until: tablet) {
+        > .adverts__header {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .adverts__row > :nth-child(3),
+        .adverts__row > :nth-child(4) {
+            display: flex;
+        }
+    }
+
     > .adverts__header .inline-logo-soulmates > svg {
         width: 100px;
         height: 21px;
@@ -96,6 +108,7 @@
 
 .advert-blended--soulmates {
     background: $soulmates-background;
+    box-sizing: border-box;
     padding: 0 $gs-gutter / 4;
 
     .inline-logo-soulmates {
