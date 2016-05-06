@@ -83,7 +83,7 @@ case class HighMerchandisingTargetedTagSet(items: Set[String] = Set.empty){
     items contains keyword
   }
 
-  def hasTag(tag: Tag):Boolean = hasTagId(tag.id)
+  def hasTag (tag: Tag): Boolean = items.contains(tag.id.split('/').lastOption.get)
 
   def nonEmpty = items.nonEmpty
 

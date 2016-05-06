@@ -98,8 +98,6 @@ object DfpAgent
         lineItems <- report.lineItems.items
         tag <- lineItems.tags
       } yield tag
-
-      println(tags)
       HighMerchandisingTargetedTagSet(tags.toSet)
     }
 
