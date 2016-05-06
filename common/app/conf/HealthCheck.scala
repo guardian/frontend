@@ -3,7 +3,7 @@ package conf
 import common._
 import org.joda.time.DateTime
 import play.api.{Mode, Play}
-import play.api.libs.ws.WS
+import play.api.libs.ws.{WSResponse, WS}
 import play.api.mvc._
 import play.api.{Application => PlayApp, GlobalSettings}
 import scala.concurrent.Future
@@ -16,16 +16,27 @@ import scala.util.control.NonFatal
 * Goal: Requests made to the healthcheck endpoint by the ELBs are not 'inlined'
 * */
 
+sealed trait HealthCheckInternalRequestResult
+object HealthCheckResultTypes {
+  case class Success(statusCode: Int) extends HealthCheckInternalRequestResult
+  case class Failure(statusCode: Int, statusText: String) extends HealthCheckInternalRequestResult
+  case class Exception(exception: Throwable) extends HealthCheckInternalRequestResult
+}
+
 private[conf] case class HealthCheckResult(url: String,
-                                           result: Either[Throwable, Int], // Status code if success, throwable otherwise
+                                           result: HealthCheckInternalRequestResult,
                                            date: DateTime = DateTime.now,
                                            expiration: Duration = 10.seconds) {
   private val expirationDate = date.plus(expiration.toMillis)
   private def expired: Boolean = DateTime.now.getMillis > expirationDate.getMillis
-  def recentlySucceed: Boolean = result.fold(_ => false, _ == 200) && !expired
+  def recentlySucceed: Boolean = result match {
+    case r: HealthCheckResultTypes.Success => true
+    case _ => false
+  }
   def formattedResult: String = result match {
-    case Left(t) => s"Error: ${t.getLocalizedMessage}"
-    case Right(status) => status.toString
+    case s: HealthCheckResultTypes.Success => s.statusCode.toString
+    case f: HealthCheckResultTypes.Failure => s"${f.statusCode} ${f.statusText}"
+    case e: HealthCheckResultTypes.Exception => s"Error: ${e.exception.getLocalizedMessage}"
   }
   def formattedDate: String = if(expired) s"${date} (Expired)" else date.toString
 }
@@ -37,11 +48,18 @@ private[conf] trait HealthCheckFetcher extends ExecutionContexts with Logging {
     WS.url(s"$baseUrl$path")
       .withHeaders("User-Agent" -> "GU-HealthChecker", "X-Gu-Management-Healthcheck" -> "true")
       .withRequestTimeout(10000).get()
-      .map(result => HealthCheckResult(path, Right(result.status)))
+      .map {
+        response: WSResponse =>
+          val result = response.status match {
+          case 200 => HealthCheckResultTypes.Success(response.status)
+          case _ => HealthCheckResultTypes.Failure(response.status, response.statusText)
+        }
+          HealthCheckResult(path, result)
+      }
       .recover {
         case NonFatal(t) =>
           log.error(s"HealthCheck request to ${path} failed", t)
-          HealthCheckResult(path, Left(t))
+          HealthCheckResult(path, HealthCheckResultTypes.Exception(t))
       }
   }
 
