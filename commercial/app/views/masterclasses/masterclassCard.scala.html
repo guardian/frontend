@@ -1,7 +1,8 @@
 @(event: model.commercial.events.Masterclass,
-  clickMacro: Option[String])
+  clickMacro: Option[String],
+  optClassNames: Option[Seq[String]] = None)
 
-<a class="advert advert--masterclass" href="@clickMacro@event.url" data-link-name="merchandising-masterclasses-s-v1_0_2014-05-23-low-@event.name">
+<a class="advert advert--masterclass @optClassNames.map { classNames => @classNames.mkString(" ")}" href="@clickMacro@event.url" data-link-name="merchandising-masterclasses-s-v1_0_2014-05-23-low-@event.name">
     <h2 class="advert__title">@event.name</h2>
     @event.mainPicture.map { picture =>
         @Item300.bestFor(picture.images).map { url =>
