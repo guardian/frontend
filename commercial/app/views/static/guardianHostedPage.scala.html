@@ -10,11 +10,11 @@
             </a>
         </div>
     </div>
-    <div class="l-side-margins">
+    <div class="l-side-margins hosted__side">
         <section class="hosted-tone--dark">
             <div class="adverts hosted__container--full">
                 <div class="hosted__logowrap hosted-tone-bg--renault">
-                    <p class="hosted__hosted">Hosted content</p>
+                    <p class="hosted__hosted">Advertiser content</p>
                     <img class="hosted__logo" src="@Static("images/commercial/logo_renault.jpg")">
                 </div>
                 <div class="u-responsive-ratio u-responsive-ratio--hd">
@@ -36,17 +36,58 @@
                 </div>
             </div>
         </section>
-        <section class="fc-container">
+        <section class="fc-container hosted__container">
             <div class="adverts adverts--legacy hosted__container">
-                <header class="adverts__header">
-                    <div class="meta__social" data-component="share">
-
+                <header class="adverts__header hosted__containerheader">
+                    <div class="meta__social hosted__social" data-component="share">
+                        <ul class="social social--top u-unstyled u-cf" data-component="social">
+                            <li class="social__item social__item--facebook" data-link-name="facebook">
+                                <a  class="social__action social-icon-wrapper"
+                                data-link-name="social top"
+                                href="https://www.facebook.com/dialog/share?app_id=180444840287&href=http://address.com&redirect_uri=http://address.com"
+                                target="_blank"
+                                title="facebook">
+                                    <span class='inline-icon__fallback button share-modal__item share-modal__item--facebook'>Share on Facebook</span>
+                                    @fragments.inlineSvg("share-facebook", "icon", List("rounded-icon social-icon social-icon--facebook"))
+                                </a>
+                            </li>
+                            <li class="social__item social__item--twitter" data-link-name="twitter">
+                                <a  class="social__action social-icon-wrapper"
+                                data-link-name="social top"
+                                href="https://twitter.com/intent/tweet?text=Zoe&url=http://address.com"
+                                target="_blank"
+                                title="twitter">
+                                    <span class='inline-icon__fallback button share-modal__item share-modal__item--twitter'>Share on Twitter</span>
+                                    @fragments.inlineSvg("share-twitter", "icon", List("rounded-icon social-icon social-icon--twitter"))
+                                </a>
+                            </li>
+                            <li class="social__item social__item--email" data-link-name="email">
+                                <a  class="social__action social-icon-wrapper"
+                                data-link-name="social top"
+                                href="mailto:?subject=Zoe&body=http://address.com"
+                                target="_blank"
+                                title="email">
+                                    <span class='inline-icon__fallback button share-modal__item share-modal__item--email'>Share via email</span>
+                                    @fragments.inlineSvg("share-email", "icon", List("rounded-icon social-icon social-icon--email"))
+                                </a>
+                            </li>
+                            <li class="social__item social__item--pinterest" data-link-name="pinterest">
+                                <a  class="social__action social-icon-wrapper"
+                                data-link-name="social top"
+                                href="http://www.pinterest.com/pin/find/?url=http://address.com"
+                                target="_blank"
+                                title="pinterest">
+                                    <span class='inline-icon__fallback button share-modal__item share-modal__item--pinterest'>Share on Pinterest</span>
+                                    @fragments.inlineSvg("share-pinterest", "icon", List("rounded-icon social-icon social-icon--pinterest"))
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </header>
                 <div class="adverts__body">
                     <div class="hosted__standfirst">
                         <p class="hosted__text">ZOE integrates the most advanced electric technology. More than 60 patents have been filed under design, innovations in service autonomy, ease of use and connectivity. ZOE is fitted with a "Range Optimizer" system which enhances the battery life, whatever the driving conditions.</p>
-                        <p class="hosted__terms">Set goals that are specific and terrific and you will achieve everything you want. <a href="" class="hosted__link">Because I rock it doesn't mean my heart is made of stone.</a></p>
+                        <p class="hosted__terms">This content was paid for and produced by Renault. For more information see our <a href="" class="hosted__link">Because I rock it doesn't mean my heart is made of stone.</a></p>
                     </div>
                 </div>
             </div>
@@ -54,13 +95,13 @@
         <section class="adverts hosted__container--full">
             <div class="hosted__banner" style="background-image: url(@Static("images/commercial/zoe-1.jpg"));">
                 <div class="hosted__logowrap hosted__logowrap--pusheddown hosted-tone-bg--renault">
-                    <p class="hosted__hosted">Hosted content</p>
+                    <p class="hosted__hosted">Advertiser content</p>
                     <img class="hosted__logo" src="@Static("images/commercial/logo_renault.jpg")">
                 </div>
                 <div class="hosted__cta-wrapper">
-                    <h1 class="hosted__heading hosted-tone--renault">Find your Zoe</h1>
-                    <a href="" class="advert__more button button--medium button--primary hosted__cta" data-text="cta">
-                        <span>The Renault Zoe</span>
+                    <h1 class="hosted__heading hosted-tone--renault">Discover your Renault Zoe</h1>
+                    <a href="" class="advert__more button button--large button--primary hosted__cta" data-text="cta">
+                        <span>Explore Renault Zeo</span>
                         @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
                     </a>
                 </div>
