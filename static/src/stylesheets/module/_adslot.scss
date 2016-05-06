@@ -501,6 +501,21 @@
         position: absolute;
     }
 
+    .content__main-column > & {
+        @include mq(desktop) {
+            top: 100%;
+        }
+
+        @include mq(leftCol) {
+            left: -160px;
+        }
+
+        @include mq(wide) {
+            left: -240px;
+        }
+    }
+
+
     .ad-slot--paid-for-badge__header {
         font-weight: normal;
     }

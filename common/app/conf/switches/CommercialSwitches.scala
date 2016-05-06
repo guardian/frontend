@@ -266,55 +266,10 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val v2SoulmatesTemplate = Switch(
-    SwitchGroup.CommercialRefactoring,
-    "v2-soulmates-template",
-    "Soulmates component using template v2",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = false
-  )
-
-  val v2BlendedTemplate = Switch(
-    SwitchGroup.CommercialRefactoring,
-    "v2-blended-template",
-    "Blended component using template v2",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = false
-  )
-
-  val v2CapiSingleTemplate = Switch(
-    SwitchGroup.CommercialRefactoring,
-    "v2-capi-single-template",
-    "Capi single component using template v2",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = false
-  )
-
-  val v2CapiMultipleTemplate = Switch(
-    SwitchGroup.CommercialRefactoring,
-    "v2-capi-multiple-template",
-    "Capi multiple component using template v2",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = false
-  )
-
-  val v2FixedContainerTemplate = Switch(
-    SwitchGroup.CommercialRefactoring,
-    "v2-fixed-container-template",
-    "Fixed paid containers using template v2",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = false
-  )
-
   val cardsDecidePaidContainerBranding = Switch(
-    SwitchGroup.CommercialRefactoring,
+    SwitchGroup.Commercial,
     "cards-decide-paid-container-branding",
-    "If on, the cards will decide the branding of their container",
+    "DON'T TURN THIS ON! If on, the cards will decide the branding of their container",
     safeState = Off,
     sellByDate = new LocalDate(2016, 6, 1),
     exposeClientSide = false
@@ -334,7 +289,7 @@ trait CommercialSwitches {
     "request-out-of-page-slot-always",
     "If on, the out of page slot (1x1) will be added to each page, regardless of pageskins, surveys or other dependent features",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 3),
+    sellByDate = new LocalDate(2016, 5, 12),
     exposeClientSide =  false
   )
 }

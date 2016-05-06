@@ -107,7 +107,7 @@ $video-width-desktop: 700px;
     overflow: hidden;
 
     @include mq(desktop, leftCol) {
-        background-color: darken($media-background, 5%); 
+        background-color: darken($media-background, 5%);
     }
 }
 
@@ -350,8 +350,8 @@ $video-width-desktop: 700px;
         }
     }
 
-    .inline-video-icon {
-        display: none;
+    .inline-icon svg {
+        position: relative;
     }
 
     .fc-item__title--quoted .inline-quote {

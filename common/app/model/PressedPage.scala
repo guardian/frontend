@@ -1,5 +1,6 @@
 package model
 
+import campaigns.PersonalInvestmentsCampaign
 import com.gu.facia.api.models._
 import common.Edition
 import common.dfp.DfpAgent
@@ -8,7 +9,6 @@ import conf.Configuration.commercial.showMpuInAllContainersPageId
 import contentapi.Paths
 import model.facia.PressedCollection
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
-import campaigns.PersonalInvestmentsCampaign
 
 import scala.language.postfixOps
 
@@ -116,6 +116,8 @@ case class PressedPage (
   val navSection: String = metadata.section
 
   val keywordIds: Seq[String] = frontKeywordIds(id)
+
+  override def branding(edition: Edition): Option[Branding] = frontProperties.branding(edition)
 
   def sponsorshipType: Option[String] = {
     if (isSponsored(None)) {

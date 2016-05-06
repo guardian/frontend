@@ -1,27 +1,32 @@
-@(env: String, pageSkinnedAdUnits: dfp.PageSkinSponsorshipReport)(implicit request: RequestHeader)
-@import tools.DfpLink
-@import tools.SiteLink
+@(env: String, pageSkinnedAdUnits: common.dfp.PageSkinSponsorshipReport)(implicit request: RequestHeader)
+@import common.dfp._
+@import tools.{DfpLink, SiteLink}
 
 @flaggableProperty(label: String, values: Seq[String], textWhenEmpty: String, flagErrors: Boolean) = {
-@if(values.isEmpty && flagErrors) {
-    <br /> <span class="flagged">@textWhenEmpty</span>
-} else {
-    @if(values.isEmpty) {<br /> @textWhenEmpty} else {
+    @if(values.isEmpty) {
+        @if(flagErrors) {
+            <br /> <span class="flagged">@textWhenEmpty</span>
+        } else {
+            <br /> @textWhenEmpty
+        }
+    } else {
         <br /> <small>@label:</small> @values.mkString(" ")
     }
 }
-}
 
-@listItem(sponsorship: dfp.PageSkinSponsorship, flagErrors: Boolean = true) = {
+@listItem(sponsorship: PageSkinSponsorship, flagErrors: Boolean = true) = {
   <li class="lineItem">@sponsorship.lineItemName
     (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
     @flaggableProperty("Editions", sponsorship.editions.map(_.id), "No edition", flagErrors)
     @flaggableProperty("Countries", sponsorship.countries, "No country", flagErrors)
-    <br /> <small>Ad Units:</small>
+    <br />
+    <small>Ad Units:</small>
     <ul>
-      @if(sponsorship.adUnits.isEmpty) {<li>Run of network</li>}
+      @if(sponsorship.adUnits.isEmpty) { <li>Run of network</li> }
       @for(adUnit <- sponsorship.adUnits) {
-        <li>@SiteLink.adUnit(adUnit).map { link => <a href="@link">@adUnit</a>}.getOrElse {@adUnit}</li>
+          <li>
+              <a href="@SiteLink.adUnit(adUnit, sponsorship.adTestValue)">@adUnit</a>
+          </li>
       }
     </ul>
   </li>
@@ -29,7 +34,7 @@
 
 @admin_main("Pageskins", env, isAuthed = true) {
 
-    <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")">
+    <link rel="stylesheet" type="text/css" href="@controllers.admin.UncachedAssets.at("css/commercial.css")">
 
     <h1>Pageskins</h1>
     <p>Pages will squish to accommodate pageskins according to these criteria:</p>
@@ -40,17 +45,16 @@
         <li>The Line Item Placeholder should target the <em>Out of Page (1x1 pixel)</em> slot.</li>
         <li>The viewport must be at least 1300px wide.</li>
     </ol>
-    <p>Some of these are not targetting fronts. They are just here so you can work it out.</p>
 
     <h2>Pageskinned Ad Units</h2>
     <p>Last updated: @pageSkinnedAdUnits.updatedTimeStamp</p>
 
-    <h3>Deliverable to NGW</h3>
+    <h3>Live Deliverable</h3>
     <ol>
     @for(sponsorship <- pageSkinnedAdUnits.deliverableSponsorships) {@listItem(sponsorship)}
     </ol>
 
-    <h3>Behind Test Cookie</h3>
+    <h3>Test Deliverable (behind cookie)</h3>
     @if(pageSkinnedAdUnits.testSponsorships.isEmpty) {
       <p>None</p>
     } else {
@@ -58,9 +62,4 @@
       @for(sponsorship <- pageSkinnedAdUnits.testSponsorships) {@listItem(sponsorship, flagErrors = false)}
       </ol>
     }
-
-    <h3>R2 Only</h3>
-    <ol>
-    @for(sponsorship <- pageSkinnedAdUnits.legacySponsorships) {@listItem(sponsorship, flagErrors = false)}
-    </ol>
 }

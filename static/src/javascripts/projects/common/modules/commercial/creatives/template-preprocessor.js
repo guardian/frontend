@@ -148,9 +148,10 @@ define([
                     offerText:           tpl.params['offer' + index + 'meta'],
                     cta:                 tpl.params['offer' + index + 'linktext'] || tpl.params.offerLinkText ? manualCardCtaTpl({
                         offerLinkText:       tpl.params['offer' + index + 'linktext'] || tpl.params.offerLinkText,
-                        arrowRight:          tpl.params.arrowRight
+                        arrowRight:          tpl.params.arrowRight,
+                        classNames:          ''
                     }) : '',
-                    classNames:          [tpl.params.toneClass.replace('commercial--tone-', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); }).join(' ')
+                    classNames:          ['manual', tpl.params.toneClass.replace('commercial--tone-', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); }).join(' ')
                 }) : null;
             }).filter(identity).join('');
         } else {
@@ -160,12 +161,18 @@ define([
                 offerImage:          tpl.params.offerImage,
                 offerTitle:          tpl.params.offerTitle,
                 offerText:           tpl.params.offerText,
-                cta:                 tpl.params.offerlinktext ? manualCardCtaTpl({
-                    offerLinkText:       tpl.params.offerlinktext,
-                    arrowRight:          tpl.params.arrowRight
+                cta:                 tpl.params.viewAllText ? manualCardCtaTpl({
+                    offerLinkText:       tpl.params.viewAllText,
+                    arrowRight:          tpl.params.arrowRight,
+                    classNames:          'button--tertiary'
                 }) : '',
-                classNames:          ['landscape', 'large', 'inverse', tpl.params.toneClass.replace('commercial--tone', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); }).join(' ')
-            }) + manualContainerButtonTpl(tpl.params);
+                classNames:          ['single', 'landscape', 'large', 'inverse', tpl.params.toneClass.replace('commercial--tone', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); }).join(' ')
+            }) + manualContainerButtonTpl({
+                baseUrl:             tpl.params.baseUrl,
+                clickMacro:          tpl.params.clickMacro,
+                offerLinkText:       tpl.params.offerLinkText,
+                arrowRight:          tpl.params.arrowRight
+            });
         }
     }
 

@@ -35,20 +35,13 @@ Multi component (AKA Frankenponent)
         background-color: transparent;
     }
 
-    .commercial--travel,
-    .commercial--masterclasses {
+    .commercial--travel {
         .lineitem__image-right {
             width: gs-span(1) + $gs-gutter*2;
 
             @include mq(mobileLandscape) {
                 width: gs-span(1) + $gs-gutter;
             }
-        }
-    }
-
-    .commercial--jobs {
-        .lineitem__image {
-            max-height: 40px;
         }
     }
 
@@ -62,23 +55,6 @@ Multi component (AKA Frankenponent)
     .commercial--books {
         .lineitem__image {
             width: auto;
-        }
-    }
-
-    .commercial--soulmates {
-        .commercial--multi__body {
-            background: transparent;
-        }
-
-        .lineitem__links {
-            clear: both;
-            overflow: hidden;
-        }
-
-        .lineitem__link {
-            float: left;
-            width: 45%;
-            padding-right: 5%;
         }
     }
 
@@ -101,10 +77,6 @@ Multi component (AKA Frankenponent)
         text-align: left;
         min-height: $gs-baseline * 2.5;
         margin: $gs-baseline/3 0 (-$gs-baseline/1.5);
-
-        .commercial--soulmates & {
-            margin: 0;
-        }
 
         .commercial--tone-holidayoffers-logo {
             color: $neutral-1;

@@ -1,12 +1,11 @@
 @import model.liveblog.KeyEventData
 @(model: LiveBlogPage)(implicit request: RequestHeader)
 
-@import common.LinkTo
+@import common.{Edition, LinkTo}
+@import conf.switches.Switches._
 @import layout.{FaciaCardAndIndex, ItemClasses}
 @import views.html.fragments.items.facia_cards.item
 @import views.support.TrailCssClasses.toneClass
-@import common.Edition
-@import conf.switches.Switches._
 
 @defining((model.article, Edition(request).timezone)) { case (article, timezone) =>
 <div class="js-notifications-blocked"></div>
@@ -53,7 +52,7 @@
 
                     <div class="blog__left-col">
 
-                        @fragments.contentMeta(article)
+                        @fragments.contentMeta(article, model)
 
                         <div class="js-top-marker"></div>
                         <div class="js-live-blog__sticky-components">

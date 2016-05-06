@@ -2,13 +2,21 @@
 @import conf.switches.Switches._
 
 @if(OfflinePageView.isSwitchedOn) {
-    try {
-        var offlineViews = parseInt(localStorage.getItem('gu.offlineViews'));
-        for (var i = 0; i < offlineViews; i++) {
-            (new Image()).src = window.guardian.config.page.beaconUrl + '/count/offline-page-view.gif';
-        }
-        localStorage.removeItem('gu.offlineViews');
-    } catch (e) {
-        // do nothing
-    }
+    (function () {
+        try {
+            var cookies = document.cookie.split(';');
+            var offlineViews = 0;
+            for (var len = cookies.length, i = 0; i < len ; i++) {
+                var data = cookies[i].split('=');
+                if (data[0].indexOf('gu.offlineViews') !== -1) {
+                    offlineViews = parseInt(data[1]);
+                    break;
+                }
+            }
+            for (var i = 0; i < offlineViews; i++) {
+                (new Image()).src = window.guardian.config.page.beaconUrl + '/count/offline-page-view.gif';
+            }
+            document.cookie = 'gu.offlineViews=0;Max-Age=0';
+        } catch (e) {};
+    })();
 }
