@@ -30,7 +30,7 @@ private[conf] case class HealthCheckResult(url: String,
   private val expirationDate = date.plus(expiration.toMillis)
   private def expired: Boolean = DateTime.now.getMillis > expirationDate.getMillis
   def recentlySucceed: Boolean = result match {
-    case r: HealthCheckResultTypes.Success => true
+    case r: HealthCheckResultTypes.Success => !expired
     case _ => false
   }
   def formattedResult: String = result match {

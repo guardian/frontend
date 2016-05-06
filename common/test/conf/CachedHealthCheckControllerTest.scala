@@ -83,7 +83,7 @@ class CachedHealthCheckControllerTest extends WordSpec with Matchers with Single
         val date = DateTime.now.minus(expiration.toMillis + 1)
         val mockResults = List(mockResult(200, date, expiration))
         getHealthCheck(mockResults, HealthCheckTypes.All) { response =>
-          status(response) should be (200)
+          status(response) should be (503)
         }
       }
     }
@@ -95,11 +95,21 @@ class CachedHealthCheckControllerTest extends WordSpec with Matchers with Single
         }
       }
     }
-    "at least one succesful request is required and one cached results is successful" should {
+    "at least one succesful request is required and one cached result is successful" should {
       "200" in {
         val mockResults = List(mockResult(200), mockResult(404))
         getHealthCheck(mockResults, HealthCheckTypes.Any) { response =>
           status(response) should be (200)
+        }
+      }
+    }
+    "at least one succesful request is required and one cached result is successful but expired" should {
+      "503" in {
+        val expiration = 5.seconds
+        val date = DateTime.now.minus(expiration.toMillis + 1)
+        val mockResults = List(mockResult(200, date, expiration), mockResult(404))
+        getHealthCheck(mockResults, HealthCheckTypes.Any) { response =>
+          status(response) should be (503)
         }
       }
     }
