@@ -92,18 +92,15 @@ object DfpAgent
 
     def grabHighMerchandisingTargetTagsFromStore(): HighMerchandisingTargetedTagSet = {
 
-      val maybeTagList = for {
-        jsonString <- stringFromS3(dfpHighMerchandisingTagsDataKey)
-        report <- HighMerchandisingTargetedTagsReportParser(jsonString)
-      } yield report.lineItems.items
+      val tags = for {
+        jsonString <- stringFromS3(dfpHighMerchandisingTagsDataKey).toSeq
+        report <- HighMerchandisingTargetedTagsReportParser(jsonString).toSeq
+        lineItems <- report.lineItems.items
+        tag <- lineItems.tags
+      } yield tag
 
-      val maybeTagsSeq = maybeTagList map { tagSet =>
-        for {
-          lineItem <- tagSet
-          tag <- lineItem.tags
-        } yield tag
-      }
-      HighMerchandisingTargetedTagSet(maybeTagsSeq.getOrElse(Seq.empty).toSet)
+      println(tags)
+      HighMerchandisingTargetedTagSet(tags.toSet)
     }
 
     def updateMap(agent: Agent[Map[String, Set[String]]])(freshData: => Map[String, Set[String]]) {
