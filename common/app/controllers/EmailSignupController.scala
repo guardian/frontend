@@ -119,14 +119,14 @@ object EmailForm {
   /**
     * Associate lists with triggered send keys in ExactTarget. In our case these have a 1:1 relationship.
     */
-  val listIdsWithMaybeTrigger: Map[Int, Option[Int]] = Map(
+  val listIdsWithTrigger: Map[Int, Option[Int]] = Map(
     ListIds.testList -> Some(2529),
     ListIds.guardianTodayUk -> Some(2529),
     ListIds.guardianTodayUs -> Some(2564),
     ListIds.guardianTodayAu -> Some(2563))
 
   def submit(form: EmailForm): Future[WSResponse] = {
-    val maybeTriggeredSendKey: Option[Int] = listIdsWithMaybeTrigger.getOrElse(form.listId, None)
+    val maybeTriggeredSendKey: Option[Int] = listIdsWithTrigger.getOrElse(form.listId, None)
 
     WS.url(Configuration.emailSignup.url).post(
       JsObject(Json.obj(
