@@ -78,11 +78,7 @@ object HighMerchandisingTargetedTagSet {
 }
 
 case class HighMerchandisingTargetedTagSet(items: Set[String] = Set.empty){
-
-  private def hasTagId(tagId: String): Boolean = tagId.split('/').lastOption exists { keyword =>
-    items contains keyword
-  }
-
+  
   def hasTag (tag: Tag): Boolean = items.contains(tag.id.split('/').lastOption.get)
 
   def nonEmpty = items.nonEmpty
