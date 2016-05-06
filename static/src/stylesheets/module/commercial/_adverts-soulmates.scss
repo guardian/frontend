@@ -1,13 +1,25 @@
 .adverts--soulmates {
     @include mq($until: tablet) {
+        .adverts__row {
+            > * {
+                flex-basis: calc(33.33% - #{$gs-gutter});
+                &:nth-child(even)::before {
+                    content: none;
+                }
+                &:nth-child(3n+2)::before,
+                &:nth-child(3n+3)::before {
+                    @include separator($neutral-4, $gs-gutter / -2);
+                }
+            }
+
+            > :nth-child(3) {
+                margin-top: 0;
+            }
+        }
+
         > .adverts__header {
             flex-direction: row;
             justify-content: space-between;
-        }
-
-        .adverts__row > :nth-child(3),
-        .adverts__row > :nth-child(4) {
-            display: flex;
         }
     }
 

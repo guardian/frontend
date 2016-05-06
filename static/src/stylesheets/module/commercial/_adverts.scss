@@ -207,7 +207,7 @@
             }
 
             > :nth-child(2) ~ * {
-                display: none;
+                margin-top: $gs-baseline;
             }
 
             > * + * {
@@ -261,6 +261,7 @@
 
                 > * {
                     width: min-content;
+                    scroll-snap-align: start;
                 }
 
                 > * + * {
