@@ -43,7 +43,7 @@ object ABNewHeaderVariant extends TestDefinition(
 object ABGalleryRedesignVariant extends TestDefinition(
   variants = Nil,
   name = "ab-gallery-redesign-variant",
-  description = "Feature switch (0% test) for gallery redesign",
+  description = "Gallery redesign ab test (variant group)",
   sellByDate = new LocalDate(2016, 5, 10)
 ) {
   override def isParticipating(implicit request: RequestHeader): Boolean = {
@@ -51,6 +51,19 @@ object ABGalleryRedesignVariant extends TestDefinition(
   }
   def shouldShow(contentType: String)(implicit request: RequestHeader): Boolean = {
      isParticipating && contentType.toLowerCase == "gallery"
+  }
+}
+
+object ABGalleryRedesignControl extends TestDefinition(
+  variants = Nil,
+  name = "ab-gallery-redesign-control",
+  description = "Gallery redesign ab test (control group)",
+  sellByDate = new LocalDate(2016, 5, 10)
+) {
+  override def isParticipating(implicit request: RequestHeader): Boolean = {
+    val doesNotContainGalleryHeader = !request.headers.get("X-GU-ab-gallery-redesign").isDefined
+
+    doesNotContainGalleryHeader && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
   }
 }
 
@@ -82,6 +95,7 @@ object ActiveTests extends Tests {
   val tests: Seq[TestDefinition] = List(
     ABNewHeaderVariant,
     ABGalleryRedesignVariant,
+    ABGalleryRedesignControl,
     ABHeadlinesTestControl,
     ABHeadlinesTestVariant,
     ABIntersperseMultipleStoryPackagesStories,
@@ -94,7 +108,7 @@ object ActiveTests extends Tests {
                           .map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""}
     val newHeaderTests = List(ABNewHeaderVariant).filter(_.isParticipating)
                           .map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""}
-    val galleryRedesignTests = List(ABGalleryRedesignVariant).filter(_.isParticipating)
+    val galleryRedesignTests = List(ABGalleryRedesignControl, ABGalleryRedesignVariant).filter(_.isParticipating)
                           .map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""}
     val internationalEditionTests = List(InternationalEditionVariant(request)
                                       .map{ international => s""""internationalEditionVariant" : "$international" """}).flatten

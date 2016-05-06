@@ -112,7 +112,11 @@
                     </div>
                 }
 
-                case slices.Commercial(container) if Switches.cardsDecidePaidContainerBranding.isSwitchedOff => {
+                case slices.Commercial(container) => {
+                    @*
+                     * TODO: convert all slices.Commercial type containers to other types
+                     * and remove this case when cardsDecidePaidContainerBranding switch is removed.
+                     *@
                     <div class="fc-container__inner--full-span fc-container__inner--paidfor fc-container__inner">
                         @commercialContainer(container, containerDefinition, frontProperties)
                     </div>

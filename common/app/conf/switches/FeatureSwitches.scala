@@ -37,7 +37,7 @@ trait FeatureSwitches {
     "plista-for-outbrain-au",
     "Enable the Plista content recommendation widget to replace that of Outbrain for AU edition (for web only).",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 5),
+    sellByDate = new LocalDate(2016, 8, 9),
     exposeClientSide = true
   )
 
