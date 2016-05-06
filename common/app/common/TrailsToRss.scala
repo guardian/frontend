@@ -106,7 +106,7 @@ object TrailsToRss extends implicits.Collections {
       entry.setTitle(stripInvalidXMLCharacters(trail.fields.linkText))
       entry.setLink(trail.metadata.webUrl)
       /* set http intentionally to not break existing guid */
-      entry,setUri("http://www.theguardian.com/" + trail.metadata.id)
+      entry.setUri("http://www.theguardian.com/" + trail.metadata.id)
       
       entry.setDescription(description)
       entry.setCategories(categories)
