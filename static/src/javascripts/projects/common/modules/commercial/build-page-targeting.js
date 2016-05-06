@@ -57,6 +57,16 @@ define([
                 return parseId(page.seriesId);
             }
             var seriesIdFromUrl = /\/series\/(.+)$/.exec(page.pageId);
+            if (seriesIdFromUrl) {
+                return seriesIdFromUrl[1];
+            }
+
+            var seriesIdFromKeywords = page.keywordIds.split(',').filter(function (keyword) {
+                return keyword.indexOf('series/') === 0;
+            }).slice(0, 1);
+            if (seriesIdFromKeywords.length) {
+                return seriesIdFromKeywords[0].split('/')[1];
+            }
 
             return seriesIdFromUrl === null ? '' : seriesIdFromUrl[1];
         },
