@@ -156,9 +156,7 @@ object EmailSignupController extends Controller with ExecutionContexts with Logg
   }
 
   def renderForm(emailType: String, listId: Int) = Action { implicit request =>
-    EmailForm.listIdsWithMaybeTrigger.lift(listId) match {
-      case Some(_) => Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listId)))
-      case None => NotFound(s"List id $listId does not exist")}}
+      Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listId)))}
 
   def subscriptionResult(result: String) = Action { implicit request =>
     Cached(7.days)(result match {
