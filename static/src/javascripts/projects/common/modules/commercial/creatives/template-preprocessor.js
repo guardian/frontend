@@ -151,7 +151,7 @@ define([
                         arrowRight:          tpl.params.arrowRight,
                         classNames:          ''
                     }) : '',
-                    classNames:          ['manual', tpl.params.toneClass.replace('commercial--tone-', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); }).join(' ')
+                    classNames:          [index > 2 ? 'hide-until-tablet' : ''].concat(['manual', tpl.params.toneClass.replace('commercial--tone-', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); })).join(' ')
                 }) : null;
             }).filter(identity).join('');
         } else {
