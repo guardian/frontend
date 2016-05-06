@@ -68,7 +68,7 @@ define([
                 return seriesIdFromKeywords[0].split('/')[1];
             }
 
-            return seriesIdFromUrl === null ? '' : seriesIdFromUrl[1];
+            return null;
         },
         parseIds = function (ids) {
             if (!ids) {
