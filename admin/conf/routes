@@ -115,6 +115,7 @@ GET         /radiator/commit/*hash                                              
 
 GET         /deploys-radiator/api/deploys                                                           controllers.admin.DeploysRadiatorController.getDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String])
 GET         /deploys-radiator/api/builds/:number                                                    controllers.admin.DeploysRadiatorController.getBuild(number)
+GET         /deploys-radiator/api/builds                                                            controllers.admin.DeploysRadiatorController.getBuilds(projectName: Option[String], buildTypeName: Option[String], pageSize: Option[Int])
 GET         /deploys-radiator                                                                       controllers.admin.DeploysRadiatorController.renderDeploysRadiator()
 
 POST        /deploys-notify/api/builds/:number/notify                                               controllers.admin.DeploysNotifyController.notifyStep(number)

@@ -1,3 +1,15 @@
+// TODO: No recent deploys of router so it doesn't appear!! Increase history
+// size or filter exact matches only
+// TODO: Deal with error JSON
+// TODO: Show status if updates fail
+// TODO: Show build ID beside merge commits.
+// - We currently only request the build for the most recent CODE/PROD deploys.
+// We would have to request all builds in the range
+// http://teamcity.gu-web.net:8111/guestAuth/app/rest/buildTypes/id:dotcom_master/builds?locator=sinceBuild:(number:1205),untilBuild:(number:1209)&fields=build(number,buildType(name,projectName),revisions(revision(version)),changes(change(username,comment,version)),artifact-dependencies(build(number)))
+// TODO: Show failed deploys. Update status to say so
+// TODO: Show upcoming deploys? Flow chart?
+// Draw out requests
+
 /// <reference path="../typings/tsd.d.ts" />
 /// <reference path="../manual-typings/vdom-virtualize.d.ts" />
 /// <reference path="../manual-typings/immutable.d.ts" />
@@ -7,9 +19,11 @@
 import { VPatch, diff, patch, h, create } from 'virtual-dom';
 import { List, Map, Record, Iterable } from 'immutable';
 import renderPage from './render';
-import { getDeploys, getBuild, getDifference } from './api';
-import { DeployRecord } from './model';
+import { getDeploys, getBuild, getDifference, getBuilds } from './api';
+import { DeployRecord, BuildRecord } from './model';
 import { getMostRecentDeploys } from './model-helpers';
+import { headOption } from './helpers';
+import { Option } from 'monapt';
 
 let currentTree = h('div', {}, []);
 let rootNode: Element = create(currentTree);
@@ -57,7 +71,7 @@ const run = (): Promise<void> => {
             .sortBy(deploy => deploy.build)
             .first();
 
-        return [ latestCodeDeploy, oldestProdDeploy ];
+        return [ latestCodeDeploy, oldestProdDeploy ] as [ DeployRecord, DeployRecord ];
     });
 
     const buildsPromise = latestDeploysPromise.then(([ latestCodeDeploy, oldestProdDeploy ]) => (
@@ -67,13 +81,30 @@ const run = (): Promise<void> => {
         ])
     ));
 
-    const differencePromise = buildsPromise.then(([ codeBuild, prodBuild ]) => (
-        getDifference(prodBuild.revision, codeBuild.revision).then(gitHubCommits => gitHubCommits.reverse().toList())
-    ));
+    const maybeLatestSuccessfulBuildPromise: Promise<Option<BuildRecord>> =
+        getBuilds().then(builds => (
+            Option(
+                builds
+                    .filter(build => build.status === 'SUCCESS')
+                    .first()
+            )
+        ));
 
-    return Promise.all([ deploysPromise, latestDeploysPromise, differencePromise ])
-        .then(([ deploysPair, deployPair, commits ]) => renderPage(deploysPair, deployPair, commits))
-        .then(updateDom);
+    const differencePromise =
+        maybeLatestSuccessfulBuildPromise.then(maybeLatestSuccessfulBuild => (
+            buildsPromise.then(([ codeBuild, prodBuild ]) => (
+                maybeLatestSuccessfulBuild
+                    .map(latestSuccessfulBuild => (
+                        getDifference(prodBuild.revision, latestSuccessfulBuild.revision)
+                            .then(gitHubCommits => gitHubCommits.reverse().toList())
+                    ))
+                    .getOrElse(() => Promise.resolve(List()))
+            ))
+        ));
+
+    return Promise.all([deploysPromise, latestDeploysPromise, differencePromise, maybeLatestSuccessfulBuildPromise])
+            .then(([deploysPair, deployPair, commits, maybeLatestSuccessfulBuild]) => renderPage(deploysPair, deployPair, commits, maybeLatestSuccessfulBuild))
+            .then(updateDom);
 };
 
 const intervalSeconds = 10;

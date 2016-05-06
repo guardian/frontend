@@ -26,6 +26,8 @@ export interface Build {
     number: number;
     // TODO: This is confusing, same name as deploy.projectName
     projectName: string;
+    status: string;
+    state: string;
     revision: string;
     commits: Array<Commit>
 }
@@ -40,6 +42,10 @@ export type BuildRecord = Record.IRecord<Build>;
 export const createBuildRecord = Record<Build>({
     number: undefined,
     projectName: undefined,
+    // SUCCESS/FAILURE/ERROR(?)
+    status: undefined,
+    // running/finished
+    state: undefined,
     revision: undefined,
     commits: undefined,
 }, 'Build');
@@ -69,16 +75,23 @@ export interface DeploysJson {
     response: Array<DeployJson>;
 }
 
-interface BuildResponseJson {
+export interface BuildJsonResponse {
     number: string;
     projectName: string;
     revision: string;
+    status: string;
+    state: string;
     commits: Array<CommitJson>
 }
 
 export interface BuildJson {
     status: string;
-    response: BuildResponseJson;
+    response: BuildJsonResponse;
+}
+
+export interface BuildsJson {
+    status: string;
+    response: Array<BuildJsonResponse>;
 }
 
 interface CommitJson {

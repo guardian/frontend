@@ -1,13 +1,12 @@
 import { h } from 'virtual-dom';
 import {
     DeployGroupRecord, DeployRecord, Deploy, GitHubCommit,
-    createDeployGroupRecord
+    createDeployGroupRecord, BuildRecord
 } from './model';
 import { List, Map, Record, Iterable } from 'immutable';
-import { Option } from 'monapt';
 import { hasDeployStarted, getStartedDeploysFor, getMostRecentDeploys } from './model-helpers';
-
-const headOption = <A>(array: Array<A>): Option<A> => Option(array[0]);
+import { Option } from 'monapt';
+import { headOption } from './helpers';
 
 // https://github.com/Matt-Esch/virtual-dom/issues/276
 const ih =
@@ -106,7 +105,6 @@ const renderGroupDeployListNode = (deploys: List<DeployRecord>) => {
                                         h('a', {
                                             href: createRiffRaffDeployLink(deploy.uuid),
                                             title: previousBuild ? `Previous build: ${previousBuild.build}` : ''
-
                                         }, deploy.projectName)
                                     ]);
                                 })
@@ -120,31 +118,34 @@ const renderGroupDeployListNode = (deploys: List<DeployRecord>) => {
     ]);
 };
 
-const renderPage: (
-    deploysPair: [ List<DeployRecord>, List<DeployRecord> ],
-    // TODO: Use tuple instead
-    deployPair: Array<DeployRecord>,
-    commits: List<GitHubCommit>
-) => VirtualDOM.VNode =
+const renderPage =
     (
-        [ codeDeploys, prodDeploys ],
-        [ latestCodeDeploy, oldestProdDeploy ],
-        commits
-    ) => {
+        [ codeDeploys, prodDeploys ]: [ List<DeployRecord>, List<DeployRecord> ],
+        [ latestCodeDeploy, oldestProdDeploy ]: [ DeployRecord, DeployRecord ],
+        commits: List<GitHubCommit>,
+        maybeLatestSuccessfulBuild: Option<BuildRecord>
+    ): VirtualDOM.VNode => {
         const isInSync = oldestProdDeploy.build === latestCodeDeploy.build;
         return h('.row#root', {}, [
             h('h1', [
                 `Status: ${isInSync ? 'in sync. Ship it!' : 'out of sync.'}`
             ]),
             h('hr', {}, []),
+            maybeLatestSuccessfulBuild
+                .map(build => h('h2', {}, `Latest successful build: ${build.number}`))
+                .getOrElse(() => undefined),
             exp(commits.size > 0) && h('.col', [
-                h('h1', [
-                    'Difference (',
-                    h('span', { title: 'Oldest PROD deploy' }, `${oldestProdDeploy.build}`),
-                    '...',
-                    h('span', { title: 'Latest CODE deploy' }, `${latestCodeDeploy.build}`),
-                    ')'
-                ]),
+                maybeLatestSuccessfulBuild
+                    .map(build => (
+                        h('h1', [
+                            'Difference (',
+                            h('span', { title: 'Build of oldest PROD deploy' }, `${oldestProdDeploy.build}`),
+                            '...',
+                            h('span', { title: 'Latest successful build' }, `${build.number}`),
+                            ')'
+                        ])
+                    ))
+                    .getOrElse(() => undefined),
                 ih('ul', {}, (
                     commits
                         .groupBy(commit => commit.authorLogin)
