@@ -6,7 +6,7 @@ window.curlConfig = {
     baseUrl: '@{Configuration.assets.path}javascripts',
     apiName: 'require',
     paths: {
-        @if( Configuration.assets.useHashedBundles ) {
+        @if(Configuration.assets.useHashedBundles) {
             'enhanced-vendor':                   '@Static("javascripts/enhanced-vendor.js")',
             'bootstraps/enhanced/main':          '@Static("javascripts/bootstraps/enhanced/main.js")',
             'bootstraps/enhanced/crosswords':    '@Static("javascripts/bootstraps/enhanced/crosswords.js")',
@@ -32,7 +32,7 @@ window.curlConfig = {
             react:                      '@Static("javascripts/components/react/react.js")',
             'facebook.js':              '//connect.facebook.net/en_US/all.js',
             'ophan/ng':                 '@{Configuration.javascript.config("ophanJsUrl")}',
-            'prebid.js':                '@Static("vendor/prebid/0.7.0/prebid.js")',
+            'prebid.js':                '@Static("javascripts/vendor/prebid/0.7.0/prebid.js")',
 
             // plugins
             text:                       'text', // noop
