@@ -138,7 +138,7 @@ define([
             tpl.params.ctas = tpl.params.viewalltext ? manualContainerCtaTpl(tpl.params) : '';
         }
 
-        if (tpl.params.originalCreative === 'manual-multiple') {
+        if (tpl.params.type === 'multiple') {
             tpl.params.innards = [1, 2, 3, 4].map(function(index) {
                 return tpl.params['offer' + index + 'url'] ? manualCardTpls[tpl.params.creativeCard]({
                     clickMacro:          tpl.params.clickMacro,
