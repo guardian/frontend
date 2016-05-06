@@ -249,6 +249,7 @@ self.addEventListener('notificationclick', function (event) {
 
 // The JSON contains the HTML and asset versions. We cache the assets at
 // their specified URLs and the page HTML as '/offline-crossword'.
+// This is done to guarantee version equality between HTML and assets.
 var updateOfflineCrosswordCache = function () {
     var cacheOfflineCrosswordAndAssetResponses = function (jsonResponse, assetResponses) {
         var cacheName = [getISODate(), 'static'].join('-');
