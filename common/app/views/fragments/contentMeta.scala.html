@@ -1,5 +1,5 @@
 @(item: model.ContentType, page: model.Page, showBadge: Boolean = true, showExtras: Boolean = true)(implicit request: RequestHeader)
-@import conf.switches.Switches.SaveForLaterSwitch
+@import conf.switches.Switches.{SaveForLaterSwitch, galleryRedesign}
 @import model._
 @import views.support.ContentOldAgeDescriber
 
@@ -11,7 +11,7 @@
 }
 
 @metaBody() = {
-    @if(!mvt.ABGalleryRedesignVariant.shouldShow(item.metadata.contentType)) {
+    @if(!(galleryRedesign.isSwitchedOn && item.tags.isGallery)) {
         @if(!item.content.hasTonalHeaderByline) {
             @byline()
         }
@@ -33,7 +33,7 @@
     @if(showExtras) {
         <div class="meta__extras">
             <div class="meta__social" data-component="share">
-                @fragments.social(item.sharelinks.pageShares, "top", isGallery = mvt.ABGalleryRedesignVariant.shouldShow(item.metadata.contentType))
+                @fragments.social(item.sharelinks.pageShares, "top", isGallery = galleryRedesign.isSwitchedOn && item.tags.isGallery)
                 @if(item.content.tags.tags.exists(_.id == "tone/news")) {
                     @fragments.contentAgeNotice(ContentOldAgeDescriber(item.content))
                 }
@@ -47,7 +47,7 @@
                 }">
                 </div>
             </div>
-            @if(SaveForLaterSwitch.isSwitchedOn && !mvt.ABGalleryRedesignVariant.shouldShow(item.metadata.contentType)) {
+            @if(SaveForLaterSwitch.isSwitchedOn && !(galleryRedesign.isSwitchedOn && item.tags.isGallery)) {
                 <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
             }
         </div>
