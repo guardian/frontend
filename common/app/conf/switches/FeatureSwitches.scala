@@ -305,7 +305,7 @@ trait FeatureSwitches {
   )
 
   val AmpSwitch = Switch(
-    SwitchGroup.ServerSideABTests,
+    SwitchGroup.Feature,
     "amp-switch",
     "If this switch is on, link to amp pages will be in the metadata for articles",
     safeState = On,
