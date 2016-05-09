@@ -315,10 +315,6 @@
         position: static;
     }
 
-    .meta__number:not(.u-h) + .meta__number {
-        border-left: 1px solid $media-mute;
-    }
-
     @include mq(desktop) {
         .content__labels,
         .content__meta-container,
