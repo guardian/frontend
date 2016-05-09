@@ -23,12 +23,11 @@ define([
 
 
         if (message.startsWith('Tracker beacon: ')) {
-            reportError(new Error('###Ad Beacon'), {
+            reportError(new Error('Ad Beacon fired'), {
                 feature: 'commercial',
                 message: message,
                 source: origin
             }, false);
-            console.log("message received " + message);
         }
         return;
     }
