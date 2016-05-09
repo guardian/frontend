@@ -156,17 +156,16 @@ $hosted-stripe: 28px;
 }
 
 .hosted__cta {
-    background-color: #ffc421;
-    border-color: #ffc421;
-    color: $neutral-1;
-
     svg {
         fill: $neutral-1;
     }
 
+    &,
+    &:focus,
     &:hover {
         background-color: #ffc421;
-        border-color: #ffc421;       
+        border-color: #ffc421;
+        color: $neutral-1;
     }
 
     @include mq($until: desktop) {
