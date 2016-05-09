@@ -1,7 +1,9 @@
 @(page: model.GalleryPage)(implicit request: RequestHeader)
 
+@import conf.switches.Switches.galleryRedesign
+
 @main(page){ }{
-    @if(mvt.ABGalleryRedesignVariant.shouldShow(page.gallery.metadata.contentType)) {
+    @if(galleryRedesign.isSwitchedOn) {
         @fragments.newGalleryBody(page)
     } else {
         @fragments.galleryBody(page)

@@ -15,6 +15,7 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 import play.api.mvc.RequestHeader
+import conf.switches.Switches.galleryRedesign
 
 object Commercial {
 
@@ -270,7 +271,7 @@ final case class MetaData (
     conf.switches.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty && url.contains("/membership/")
   }
 
-  val hasSlimHeader: Boolean = contentType == "Interactive" || section == "identity"
+  val hasSlimHeader: Boolean = contentType == "Interactive" || section == "identity" || (galleryRedesign.isSwitchedOn && contentType.toLowerCase == "gallery")
 
   // Special means "Next Gen platform only".
   private val special = id.contains("-sp-")
