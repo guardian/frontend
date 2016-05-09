@@ -1,7 +1,8 @@
 @(job: model.commercial.jobs.Job,
-  clickMacro: Option[String])
+  clickMacro: Option[String],
+  optClassNames: Option[Seq[String]] = None)
 
-<a class="advert advert--job" href="@clickMacro@job.listingUrl" data-link-name="merchandising-jobs-v0_2_2014-04-30-low-job-@{job.id}">
+<a class="advert advert--job @optClassNames.map { classNames => @classNames.mkString(" ")}" href="@clickMacro@job.listingUrl" data-link-name="merchandising-jobs-v0_2_2014-04-30-low-job-@{job.id}">
     <h2 class="advert__title" itemprop="name">@job.title</h2>
     <div class="advert__image-container">
         <img class="advert__image" src="@job.recruiterLogoUrl">
