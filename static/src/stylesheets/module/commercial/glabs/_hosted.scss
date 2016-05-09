@@ -109,7 +109,7 @@ $hosted-stripe: 28px;
 }
 
 .hosted__logowrap--pusheddown {
-    @include mq($until: desktop) {
+    @include mq($until: leftCol) {
         top: 0;
     }
 }
@@ -269,4 +269,9 @@ $hosted-stripe: 28px;
 
 .hosted__social {
     border-top: 0;
+    padding-top: $gs-gutter / 2;
+
+    @include mq($until: mobileLandscape) {
+        padding: $gs-gutter / 2 $gs-gutter / 2 0 $gs-gutter / 2;
+    }
 }
