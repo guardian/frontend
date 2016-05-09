@@ -8,7 +8,7 @@ import com.gu.facia.client.models.TrailMetaData
 import common._
 import common.dfp.DfpAgent
 import conf.Configuration
-import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch}
+import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch, galleryRedesign}
 import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
 import model.content.{Atoms, Quiz}
@@ -67,7 +67,6 @@ final case class Content(
   showByline: Boolean,
   hasStoryPackage: Boolean,
   rawOpenGraphImage: String,
-  sensitive: Boolean,
   showFooterContainers: Boolean = false
 ) {
 
@@ -81,6 +80,7 @@ final case class Content(
   lazy val shortUrlPath = shortUrlId
   lazy val discussionId = Some(shortUrlPath)
   lazy val isImmersive = fields.displayHint.contains("immersive")
+  lazy val showNewGalleryDesign = galleryRedesign.isSwitchedOn && metadata.contentType.toLowerCase == "gallery" && !trail.commercial.isAdvertisementFeature
 
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {
@@ -167,6 +167,8 @@ final case class Content(
 
   lazy val numberOfVideosInTheBody: Int = Jsoup.parseBodyFragment(fields.body).body().children().select("video[class=gu-video]").size()
 
+  val legallySensitive: Boolean = fields.legallySensitive.getOrElse(false)
+
   def javascriptConfig: Map[String, JsValue] = Map(
     ("publication", JsString(publication)),
     ("hasShowcaseMainElement", JsBoolean(elements.hasShowcaseMainElement)),
@@ -175,7 +177,7 @@ final case class Content(
     ("isContent", JsBoolean(true)),
     ("wordCount", JsNumber(wordCount)),
     ("references", JsArray(javascriptReferences)),
-    ("showRelatedContent", JsBoolean(if (tags.isUSMinuteSeries) { false } else showInRelated)),
+    ("showRelatedContent", JsBoolean(if (tags.isUSMinuteSeries) { false } else (showInRelated && !legallySensitive))),
     ("productionOffice", JsString(productionOffice.getOrElse(""))),
     ("isImmersive", JsBoolean(isImmersive))
   )
@@ -315,9 +317,7 @@ object Content {
           .orElse(elements.mainPicture.flatMap(_.images.largestImageUrl))
           .orElse(trail.trailPicture.flatMap(_.largestImageUrl))
           .getOrElse(Configuration.images.fallbackLogo)
-      },
-      sensitive = apifields.flatMap(_.sensitive).getOrElse(false)
-
+      }
     )
   }
 }
@@ -360,7 +360,7 @@ object Article {
       ("lightboxImages", lightbox.javascriptConfig),
       ("hasMultipleVideosInPage", JsBoolean(content.hasMultipleVideosInPage)),
       ("isImmersive", JsBoolean(content.isImmersive)),
-      ("isSensitive", JsBoolean(content.sensitive))
+      ("isSensitive", JsBoolean(fields.sensitive.getOrElse(false)))
     ) ++ bookReviewIsbn
 
     val opengraphProperties: Map[String, String] = Map(
@@ -651,6 +651,7 @@ final case class Gallery(
   lightboxProperties: GalleryLightboxProperties) extends ContentType {
 
   val lightbox = GalleryLightbox(content.elements, content.tags, lightboxProperties)
+  val showNewGalleryDesign: Boolean = content.showNewGalleryDesign
   def apply(index: Int): ImageAsset = lightbox.galleryImages(index).images.largestImage.get
 }
 

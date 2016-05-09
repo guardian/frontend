@@ -217,7 +217,15 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
         .orElse(SeoData.descriptionFromWebTitle(webTitle))
 
       val frontProperties: FrontProperties = ConfigAgent.fetchFrontProperties(path)
-        .copy(editorialType = itemResp.flatMap(_.tag).map(_.`type`.name))
+        .copy(
+          editorialType = itemResp.flatMap(_.tag).map(_.`type`.name),
+          activeBrandings = itemResp.flatMap { response =>
+            val sectionBrandings = response.section.flatMap(_.activeSponsorships.map(_.map(Branding.make)))
+            val tagBrandings = response.tag.flatMap(_.activeSponsorships.map(_.map(Branding.make)))
+            val brandings = sectionBrandings.toList.flatten ++ tagBrandings.toList.flatten
+            if (brandings.isEmpty) None else Some(brandings)
+          }
+        )
 
       val seoData: SeoData = SeoData(path, navSection, webTitle, title, description)
       (seoData, frontProperties)

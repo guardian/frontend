@@ -15,6 +15,7 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 import play.api.mvc.RequestHeader
+import conf.switches.Switches.galleryRedesign
 
 object Commercial {
 
@@ -121,7 +122,9 @@ object Fields {
       blocks = BodyBlock.make(apiContent.blocks),
       lastModified = apiContent.fields.flatMap(_.lastModified).map(_.toJodaDateTime).getOrElse(DateTime.now),
       displayHint = apiContent.fields.flatMap(_.displayHint).getOrElse(""),
-      isLive = apiContent.fields.flatMap(_.liveBloggingNow).getOrElse(false)
+      isLive = apiContent.fields.flatMap(_.liveBloggingNow).getOrElse(false),
+      sensitive = apiContent.fields.flatMap(_.sensitive),
+      legallySensitive = apiContent.fields.flatMap(_.legallySensitive)
     )
   }
 }
@@ -136,7 +139,9 @@ final case class Fields(
   blocks: Seq[BodyBlock],
   lastModified: DateTime,
   displayHint: String,
-  isLive: Boolean
+  isLive: Boolean,
+  sensitive: Option[Boolean],
+  legallySensitive: Option[Boolean]
 ){
   def javascriptConfig: Map[String, JsValue] = Map(("shortUrl", JsString(shortUrl)))
 }
@@ -266,7 +271,7 @@ final case class MetaData (
     conf.switches.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty && url.contains("/membership/")
   }
 
-  val hasSlimHeader: Boolean = contentType == "Interactive" || section == "identity"
+  val hasSlimHeader: Boolean = contentType == "Interactive" || section == "identity" || (galleryRedesign.isSwitchedOn && contentType.toLowerCase == "gallery")
 
   // Special means "Next Gen platform only".
   private val special = id.contains("-sp-")
@@ -376,7 +381,7 @@ trait ContentPage extends Page {
     metadata.twitterPropertiesOverrides
 
   override def branding(edition: Edition): Option[Branding] = {
-    BrandHunter.findBranding(
+    BrandHunter.findContentBranding(
       section = None,
       item.tags,
       publicationDate = Some(item.trail.webPublicationDate),
