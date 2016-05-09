@@ -75,7 +75,7 @@ window.curlConfig = {
             videojspersistvolume:                       'components/videojs-persistvolume/videojs.persistvolume.js',
             videojsplaylist:                            'components/videojs-playlist-audio/videojs.playlist.js',
 
-            // These paths are for pre-fetch-modules.js performance module, used by boot.js:
+            // These paths are for the pre-fetch-modules.js performance-optimisation module, used by boot.js.
             // The resolved paths are loaded through pre-fetch-modules XHR, not curl, so they don't inherit the standard baseUrl.
             'enhanced-vendor':                          '@{Configuration.assets.path}javascripts/enhanced-vendor.js',
             'bootstraps/enhanced/main':                 '@{Configuration.assets.path}javascripts/bootstraps/enhanced/main.js',
