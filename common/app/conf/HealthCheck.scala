@@ -121,7 +121,6 @@ trait CachedHealthCheckLifeCycle extends GlobalSettings {
   val healthCheckController: CachedHealthCheckController
 
   override def onStart(app: PlayApp) = {
-    super.onStart(app)
     Jobs.deschedule("HealthCheckFetch")
     Jobs.scheduleEveryNSeconds("HealthCheckFetch", healthCheckRequestFrequencyInSec) {
       healthCheckController.runChecks
