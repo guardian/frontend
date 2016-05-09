@@ -1,10 +1,10 @@
 package conf
 
-object HealthCheckController extends CachedHealthCheckController {
-  override val paths = Seq("/uk/business")
-  override def healthCheck() = healthCheckAll()
-}
+import model.NoCache
+import play.api.mvc.Action
 
-trait FaciaHealthCheckLifeCycle extends CachedHealthCheckLifeCycle {
-  override val healthCheckController = HealthCheckController
+object HealthCheck extends AllGoodHealthcheckController(9008, "/uk") {
+  def cdnHealthcheck = Action{ request =>
+    NoCache(if (isOk) Ok("OK") else ServiceUnavailable("Service Unavailable"))
+  }
 }

@@ -44,11 +44,14 @@ object `package` {
 class FaciaTestSuite extends Suites (
   new model.FaciaPageTest,
   new controllers.front.FaciaDefaultsTest,
+  new services.FaciaHealthcheckTest,
   new slices.DynamicFastTest,
   new slices.DynamicSlowTest,
   new slices.StoryTest,
   new views.fragments.nav.NavigationTest,
   new FaciaControllerTest,
   new metadata.FaciaMetaDataTest
-) with SingleServerSuite
+) with SingleServerSuite {
 
+  override lazy val port: Int = conf.HealthCheck.testPort
+}

@@ -1,7 +1,7 @@
 import common.Logback.Logstash
 import common._
 import common.dfp.FaciaDfpAgentLifecycle
-import conf.{FaciaHealthCheckLifeCycle, Filters, SwitchboardLifecycle}
+import conf.{Filters, SwitchboardLifecycle}
 import crosswords.TodaysCrosswordGridLifecycle
 import dev.DevParametersLifecycle
 import headlines.ABHeadlinesLifecycle
@@ -19,8 +19,7 @@ object Global extends WithFilters(Filters.common: _*)
   with TodaysCrosswordGridLifecycle
   with SwitchboardLifecycle
   with ABHeadlinesLifecycle
-  with Logstash
-  with FaciaHealthCheckLifeCycle {
+  with Logstash {
 
   override lazy val applicationName = "frontend-facia"
 }
