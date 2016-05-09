@@ -292,4 +292,13 @@ trait CommercialSwitches {
     sellByDate = new LocalDate(2016, 5, 12),
     exposeClientSide =  false
   )
+
+  val highMerchandiseComponentSwitch = Switch(
+    SwitchGroup.Commercial,
+    "render-commercial-high-slot-always",
+    "If on, the commercial-high slot will always render on pageload",
+    safeState = Off,
+    sellByDate = new LocalDate(2016,5,8),
+    exposeClientSide = true
+  )
 }
