@@ -103,8 +103,8 @@ final case class Commercial(
   def isSponsored(maybeEdition: Option[Edition]): Boolean =
     DfpAgent.isSponsored(tags.tags, Some(metadata.section), maybeEdition)
 
-  def hasHighMerchandiseTarget (): Boolean = {
-    DfpAgent.hasHighMerchandiseTarget(tags.tags)
+  def hasHighMerchandisingTarget (): Boolean = {
+    DfpAgent.hasHighMerchandisingTarget(tags.tags)
   }
 
   def javascriptConfig: Map[String, JsValue] = Map(
