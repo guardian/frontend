@@ -22,3 +22,14 @@
 .media-body {
     position: relative;
 }
+
+.tonal--tone-media .content__headline {
+    .inline-icon {
+        margin-right: .1em;
+
+        svg {
+            width: .86em;
+            height: auto;
+        }
+    }
+}

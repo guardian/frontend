@@ -398,22 +398,6 @@
         color: $neutral-5;
     }
 
-    .social-icon--media {
-        background-color: transparent;
-        border: 1px solid $neutral-2;
-        box-sizing: border-box;
-        transition: border-color .15s ease-out;
-
-        &:hover {
-            background-color: transparent;
-            border-color: $neutral-6;
-        }
-
-        .inline-icon {
-            fill: $neutral-3;
-        }
-    }
-
     // TODO: Move this to _block-level-sharing.scss when .new-gallery class is removed.
     .block-share--gallery {
         position: static;
