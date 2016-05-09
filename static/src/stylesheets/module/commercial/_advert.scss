@@ -1,6 +1,5 @@
 .advert {
     box-sizing: border-box;
-    color: inherit;
     display: block;
     display: flex;
     align-items: flex-start;
@@ -16,6 +15,11 @@
         .advert__title {
             text-decoration: underline;
         }
+    }
+
+    &,
+    &:active {
+        color: inherit;
     }
 
     .has-no-flex &:not(.advert--small):not(.advert--landscape) {
@@ -56,6 +60,12 @@
     }
 }
 
+.advert--manual {
+    .advert__image-container {
+        height: auto;
+    }
+}
+
 .advert--single {
     .advert__standfirst {
         margin-top: $gs-baseline / 2;
@@ -91,8 +101,11 @@
 .advert__image-container {
     order: -1;
     margin-bottom: $gs-baseline / 2;
-    height: 11 * $gs-baseline;
     width: 100%;
+
+    @include mq(tablet) {
+        height: 11 * $gs-baseline;
+    }
 
     .has-no-flex & {
         position: absolute;

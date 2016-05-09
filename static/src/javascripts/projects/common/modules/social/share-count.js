@@ -46,15 +46,16 @@ define([
     }
 
     function addToShareCount(val) {
-        if ($shareCountEls.hasClass('js-sharecount-immersive')) {
-            shareCountTemplate = template(shareCountImmersiveTemplate, {
-                icon: svgs('share')
-            });
-        }
+        var shareSvg = svgs('share');
+        var shareTemplate = $shareCountEls.hasClass('js-sharecount-immersive') ? shareCountImmersiveTemplate : shareCountTemplate;
+
+        var html = template(shareTemplate, {
+            icon: shareSvg
+        });
 
         $shareCountEls
             .removeClass('u-h')
-            .html(shareCountTemplate)
+            .html(html)
             .css('display', '');
 
         $shortValueEls = $('.sharecount__value--short', $shareCountEls[0]); // limited to 1 el

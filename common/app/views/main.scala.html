@@ -29,9 +29,8 @@
 
 @immersiveMainMedia(page: GalleryPage) = {
     <div class="new-gallery content tonal--tone-media immersive-main-media">
-        @defining(
-            page.item.content.trail.trailPicture.head
-        ) { picture =>
+
+        @page.item.elements.mainPicture.map(_.images).orElse(page.item.trail.trailPicture).map { picture =>
             @fragments.image(
                 picture = picture,
                 classes = Seq("immersive-main-media__img"),
@@ -40,6 +39,7 @@
                 isImmersiveMainMedia = true
             )
         }
+
         <div class="immersive-main-media__headline-container">
             <div class="gs-container">
 
@@ -87,7 +87,7 @@
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
         @page match {
-            case page: model.GalleryPage if mvt.ABGalleryRedesignVariant.isParticipating => {
+            case page: model.GalleryPage if page.gallery.showNewGalleryDesign => {
                 <div class="immersive-header-container">
                     @headerAndTopAds(showAdverts, edition, adBelowNav)
 

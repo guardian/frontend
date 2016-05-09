@@ -1,4 +1,30 @@
 .adverts--soulmates {
+    @include mq($until: tablet) {
+        // In the soulmates component, we want to show rows of 3 profiles
+        // on mobile. Except if this is a manual component.
+        &:not(.adverts--manual) .adverts__row {
+            > * {
+                flex-basis: calc(33.33% - #{$gs-gutter});
+                &:nth-child(even)::before {
+                    content: none;
+                }
+                &:nth-child(3n+2)::before,
+                &:nth-child(3n+3)::before {
+                    @include separator($neutral-4, $gs-gutter / -2);
+                }
+            }
+
+            > :nth-child(3) {
+                margin-top: 0;
+            }
+        }
+
+        > .adverts__header {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
+
     > .adverts__header .inline-logo-soulmates > svg {
         width: 100px;
         height: 21px;
@@ -96,6 +122,7 @@
 
 .advert-blended--soulmates {
     background: $soulmates-background;
+    box-sizing: border-box;
     padding: 0 $gs-gutter / 4;
 
     .inline-logo-soulmates {
@@ -115,7 +142,7 @@
         display: flex;
 
         > * {
-            flex-basis: calc(50% - #{$gs-gutter / 4});
+            width: calc(50% - #{$gs-gutter / 4});
         }
 
         > * + * {
@@ -125,8 +152,10 @@
 }
 
 .advert--soulmate {
-    .advert__image-container {
-        height: 7 * $gs-baseline;
+    &:not(.advert--manual) {
+        .advert__image-container {
+            height: 7 * $gs-baseline;
+        }
     }
 
     .button {
@@ -144,12 +173,6 @@
                 $neutral-2,
                 null
             );
-        }
-    }
-
-    .adverts--manual & {
-        .advert__image-container {
-            height: auto;
         }
     }
 }

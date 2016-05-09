@@ -235,7 +235,7 @@ trait CommercialSwitches {
     "fixed-top-above-nav",
     "Fixes size of top-above-nav ad slot on fronts.",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 6),
+    sellByDate = new LocalDate(2016, 5, 9),
     exposeClientSide = false
   )
 
@@ -267,7 +267,7 @@ trait CommercialSwitches {
   )
 
   val cardsDecidePaidContainerBranding = Switch(
-    SwitchGroup.CommercialRefactoring,
+    SwitchGroup.Commercial,
     "cards-decide-paid-container-branding",
     "DON'T TURN THIS ON! If on, the cards will decide the branding of their container",
     safeState = Off,

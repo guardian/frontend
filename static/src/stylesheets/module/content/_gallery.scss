@@ -192,14 +192,6 @@
 
 // New gallery stuff
 
-// The main image needs to take up 100vh and the slim header needs to sit just on top of it.
-.l-header--new-gallery {
-    position: absolute;
-    z-index: 1;
-    right: 0;
-    left: 0;
-}
-
 .content__labels--gallery {
     border: 0;
     margin-bottom: 0;
@@ -208,7 +200,9 @@
     float: none;
 
     .content__section-label {
-        margin-right: $gs-gutter / 4;
+        @include mq(desktop) {
+            margin-right: $gs-gutter / 4;
+        }
     }
 
     .content__series-label {
@@ -217,8 +211,10 @@
 
     .content__series-label,
     .content__section-label {
-        @include fs-header(1, $size-only: true);
-        float: left;
+        @include mq(desktop) {
+            @include fs-header(1, $size-only: true);
+            float: left;
+        }
     }
 }
 
@@ -247,15 +243,22 @@
         background-color: $multimedia-support-5;
     }
 
-    .ad-slot__label {
+    .ad-slot {
         @include mq(desktop) {
             text-align: left;
+        }
+    }
+
+    .ad-slot__label {
+        @include mq(desktop) {
+            text-align: inherit;
         }
     }
 
     // TODO: Update _adslot.scss with this change
     @include mq(desktop) {
         .ad-slot--gallery-inline > div:not(.ad-slot__label) {
+            display: block;
             margin-left: 0;
             margin-right: auto;
         }
@@ -339,10 +342,6 @@
         border: 0;
         flex-shrink: 0;
         position: static;
-
-        .sharecount__heading {
-            padding-left: 0;
-        }
     }
 
     .meta__number:not(.u-h) + .meta__number {
@@ -415,7 +414,8 @@
             color: $neutral-3;
         }
 
-        .inline-comment-16 {
+        .inline-comment-16,
+        .inline-share {
             fill: $neutral-2;
         }
 
@@ -649,11 +649,8 @@
         }
 
         @include mq($until: desktop) {
-            text-align: center;
-
-            img {
-                display: inline-block;
-            }
+            margin-left: auto;
+            margin-right: auto;
         }
     }
 
