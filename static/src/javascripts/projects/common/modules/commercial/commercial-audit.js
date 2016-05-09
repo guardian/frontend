@@ -13,22 +13,23 @@ define([
 
         if (config.switches.commercialAudit) {
             window.addEventListener('message', receiveMessage, false);
-
-            function receiveMessage(event) {
-                var origin = event.origin || event.originalEvent.origin;
-                var message = event.data;
-
-
-                if (message.startsWith('Tracker beacon: ')) {
-                    reportError(new Error('###Ad Beacon'), {
-                        feature: 'commercial',
-                        message: message,
-                        source: origin
-                    }, false);
-                }
-                return;
-            }
         }
 
+    }
+
+    function receiveMessage(event) {
+        var origin = event.origin || event.originalEvent.origin;
+        var message = event.data;
+
+
+        if (message.startsWith('Tracker beacon: ')) {
+            reportError(new Error('###Ad Beacon'), {
+                feature: 'commercial',
+                message: message,
+                source: origin
+            }, false);
+            console.log("message received " + message);
+        }
+        return;
     }
 });
