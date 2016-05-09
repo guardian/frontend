@@ -8,9 +8,6 @@ define([
     };
 
     function init() {
-        var guardian = window.guardian;
-        var config = guardian.config;
-
         if (config.switches.commercialAudit) {
             window.addEventListener('message', receiveMessage, false);
         }
@@ -22,7 +19,7 @@ define([
         var message = event.data;
 
 
-        if (message.startsWith('Tracker beacon: ')) {
+        if (message.indexOf('Tracker beacon: ') === 0) {
             reportError(new Error('Ad Beacon fired'), {
                 feature: 'commercial',
                 message: message,
