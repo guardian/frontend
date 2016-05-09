@@ -2,10 +2,9 @@ package conf
 
 import common._
 import org.joda.time.DateTime
-import play.api.Play
+import play.api.{Application => PlayApp, Mode, Play, GlobalSettings}
 import play.api.libs.ws.{WSResponse, WS}
 import play.api.mvc._
-import play.api.{Application => PlayApp, GlobalSettings}
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.util.control.NonFatal
@@ -63,9 +62,14 @@ private[conf] trait HealthCheckFetcher extends ExecutionContexts with Logging {
       }
   }
 
-  protected def fetchResults(paths: String*): Future[Seq[HealthCheckResult]] = {
+  protected def fetchResults(testPort: Int, paths: String*): Future[Seq[HealthCheckResult]] = {
     val defaultPort = 9000
-    val port = System.getProperty(if(Play.isTest) "testserver.port" else "http.port", defaultPort.toString).toInt
+    val port = {
+      Play.current.mode match {
+        case Mode.Test => testPort
+        case _ => defaultPort
+      }
+    }
     val baseUrl = s"http://localhost:$port"
     Future.sequence(paths.map(fetchResult(baseUrl, _)))
   }
@@ -85,20 +89,21 @@ private[conf] trait HealthCheckCache extends HealthCheckFetcher {
   }
   def anySuccessful: Boolean = get().exists(_.recentlySucceed)
 
-  def fetchPaths(paths: String*): Future[Unit] = {
+  def fetchPaths(testPort: Int, paths: String*): Future[Unit] = {
     log.info("Fetching HealthChecks...")
-    fetchResults(paths:_*).map(allResults => cache.send(allResults.toList))
+    fetchResults(testPort, paths:_*).map(allResults => cache.send(allResults.toList))
   }
 }
 
 trait CachedHealthCheckController extends Controller with Results with ExecutionContexts with Logging {
 
   val paths: Seq[String]
+  val testPort: Int
 
   def healthCheck(): Action[AnyContent]
   private[conf] val cache: HealthCheckCache = new HealthCheckCache {}
 
-  def runChecks: Future[Unit] = cache.fetchPaths(paths:_*)
+  def runChecks: Future[Unit] = cache.fetchPaths(testPort, paths:_*)
 
   private def healthCheckResponse(condition: => Boolean): Action[AnyContent] = Action.async {
     Future.successful {
