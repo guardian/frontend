@@ -8,7 +8,7 @@ trait HighMerchandiseComponentAgent {
   protected def highMerchandisingTargetedTags: HighMerchandisingTargetedTagSet
 
   def hasHighMerchandiseTarget(tags: Seq[Tag]): Boolean = {
-    if (highMerchandiseComponentSwitch.isSwitchedOn){
+    if (highMerchandisingComponentSwitch.isSwitchedOn){
       true
     } else
     tags exists highMerchandisingTargetedTags.hasTag

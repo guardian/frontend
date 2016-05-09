@@ -293,7 +293,7 @@ trait CommercialSwitches {
     exposeClientSide =  false
   )
 
-  val highMerchandiseComponentSwitch = Switch(
+  val highMerchandisingComponentSwitch = Switch(
     SwitchGroup.Commercial,
     "render-commercial-high-slot-always",
     "If on, the commercial-high slot will always render on pageload",
