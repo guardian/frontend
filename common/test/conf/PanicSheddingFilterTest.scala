@@ -18,8 +18,8 @@ class LatencyMonitorTest extends FlatSpec with Matchers with AppendedClues {
 
   "LatencyMonitor" should "have 10000 latency after a 1001 req" in {
     val one = updateLatency(0)(initialLatency)
-    val result = (0 to 1000).foldLeft(one)({ (prev, _) => updateLatency(10)(prev) })
-    result.copy(latencies = Queue()) should be(AverageLatency(Queue(), 10000))
+    val result = (0 to LATENCY_MAX_SAMPLES).foldLeft(one)({ (prev, _) => updateLatency(10)(prev) })
+    result.copy(latencies = Queue()) should be(AverageLatency(Queue(), LATENCY_MAX_SAMPLES*10))
   }
 
 }

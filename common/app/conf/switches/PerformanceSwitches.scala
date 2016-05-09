@@ -105,6 +105,15 @@ trait PerformanceSwitches {
     exposeClientSide = true
   )
 
+  val PanicSheddingSwitch = Switch(
+    SwitchGroup.Performance,
+    "panic-shedding",
+    "If this switch is on, we try to keep response times below 1s by returning Service Unavailable errors if we're busy",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 8),
+    exposeClientSide = false
+  )
+
   val RichLinkSwitch = Switch(
     SwitchGroup.Performance,
     "rich-links",

@@ -2,7 +2,8 @@ package conf
 
 import akka.agent.Agent
 import cache.SurrogateKey
-import common.ExecutionContexts
+import common.{Logging, ExecutionContexts}
+import conf.switches.Switches
 import filters.RequestLoggingFilter
 import implicits.Responses._
 import org.joda.time.DateTime
@@ -76,23 +77,39 @@ object AmpFilter extends Filter with ExecutionContexts with implicits.Requests {
 }
 
 // this turns requests away with 5xx errors if we are too busy
-object PanicSheddingFilter extends Filter {
+object PanicSheddingFilter extends Filter with Logging {
 
   import scala.concurrent.duration._
   import scala.concurrent.ExecutionContext.Implicits.global
 
   val LATENCY_LIMIT = 1.second
+  // always allow 32 concurrent connections even in slow times
+  val MIN_CONNECTIONS = 32
 
   val averageLatency = Agent(LatencyMonitor.initialLatency)
   val inFlightLatency = Agent(InFlightLatencyMonitor.initialLatency)
 
-  def alreadyBusy =
-    inFlightLatency.get.latency(DateTime.now.getMillis) > LATENCY_LIMIT.toMillis ||
-    averageLatency.get.latency > LATENCY_LIMIT.toMillis
+  // Busy monitoring is not perfect as it only knows when things are already slow.
+  // if we get loads of requests at the same moment, it would take up to 1 second to realise
+  // and start throttling
+  // also if the request rate keeps going up there would be plenty of "young" requests to skew the average down
+  def available =
+    inFlightLatency.get.requestStarts <= MIN_CONNECTIONS || (
+      inFlightLatency.get.latency(DateTime.now.getMillis) <= LATENCY_LIMIT.toMillis &&
+        averageLatency.get.latency <= LATENCY_LIMIT.toMillis
+      )
 
   override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
     val startTime = DateTime.now.getMillis
-    val result = if (alreadyBusy) Future.successful(ServiceUnavailable) else nextFilter(request)
+    val result = if (available) {
+      nextFilter(request)
+    } else if (Switches.PanicSheddingSwitch.isSwitchedOn) {
+      log.warn("server too busy - responding 5xx")
+      Future.successful(ServiceUnavailable)
+    } else {
+      log.warn("server too busy - having a go at responding anyway")
+      nextFilter(request)
+    }
     inFlightLatency.send(InFlightLatencyMonitor.requestStarted(startTime)_)
     result.onComplete { _ =>
       inFlightLatency.send(InFlightLatencyMonitor.requestComplete(startTime)_)
@@ -132,7 +149,7 @@ object LatencyMonitor extends ExecutionContexts {
 
   val initialLatency = AverageLatency(Queue(), 0)
 
-  val LATENCY_MAX_SAMPLES = 1000
+  val LATENCY_MAX_SAMPLES = 128
 
   def updateLatency(thisRequestLatencyMs: Long)(averageLatency: AverageLatency): AverageLatency = {
     val AverageLatency(latencies, total) = averageLatency
