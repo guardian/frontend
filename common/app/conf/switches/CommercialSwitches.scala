@@ -298,7 +298,7 @@ trait CommercialSwitches {
     "render-commercial-high-slot-always",
     "If on, the commercial-high slot will always render on pageload",
     safeState = Off,
-    sellByDate = new LocalDate(2016,5,8),
+    sellByDate = new LocalDate(2016,6,8),
     exposeClientSide = true
   )
 }
