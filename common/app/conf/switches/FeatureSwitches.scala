@@ -340,6 +340,15 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
+  val AUSElectionSwitch = Switch(
+    SwitchGroup.Feature,
+    "aus-election",
+    "When ON, items tagged with australia-news/australian-election-2016 will have visual elements added",
+    safeState = On,
+    sellByDate = new LocalDate(2017, 2, 28),
+    exposeClientSide = false
+  )
+
   // Owner: Dotcom loyalty
   val EmailInArticleGtodaySwitch = Switch(
     SwitchGroup.Feature,
