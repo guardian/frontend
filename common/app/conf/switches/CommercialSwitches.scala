@@ -292,4 +292,13 @@ trait CommercialSwitches {
     sellByDate = new LocalDate(2016, 5, 12),
     exposeClientSide =  false
   )
+
+  val CommercialAuditSwitch = Switch(
+    SwitchGroup.Commercial,
+    "commercial-audit",
+    "Audit Ads",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 5, 16),
+    exposeClientSide = true
+  )
 }
