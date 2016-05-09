@@ -224,11 +224,24 @@
     }
 }
 .ad-slot--gallery-inline {
+    background-color: $media-background;
+
     @include mq(mobileLandscape) {
         width: 300px;
     }
     @include mq(tablet) {
         width: auto;
+    }
+    @include mq(desktop) {
+        &,
+        .ad-slot__label {
+            text-align: left;
+        }
+
+        & > div:not(.ad-slot__label) {
+            margin-left: 0;
+            margin-right: auto;
+        }
     }
 }
 .ad-slot--inline,
@@ -284,7 +297,6 @@
         }
     }
 }
-.ad-slot--gallery-inline,
 .ad-slot--liveblog-inline {
     @include mq(tablet) {
         padding-bottom: $gs-baseline*2;
