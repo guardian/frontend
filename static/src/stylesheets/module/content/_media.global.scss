@@ -27,11 +27,15 @@
         overflow: visible; // opacity cuts borders off on chrome otherwise
     }
 
-    .content__headline:before {
-        content: '';
-        display: inline-block;
-        height: .65em;
-        margin-right: .1em;
+    .content__headline {
+        .inline-icon {
+            margin-right: .1em;
+
+            svg {
+                width: .86em;
+                height: auto;
+            }
+        }
     }
 
     .content__main-column--video {
@@ -80,20 +84,6 @@
     // increase height if we have sponsorship logos
     &.paid-content--advertisement-feature .content__main-column--audio {
         min-height: $gs-row-height * 9;
-    }
-}
-.content__headline:before {
-    .content--media--audio & {
-        @include icon(volume-high-white, $with-width: false);
-        width: .8em;
-    }
-    .content--media--video & {
-        content: none;
-    }
-    .content--gallery &,
-    .content--image & {
-        @include icon(camera-white-large, $with-width: false);
-        width: .9em;
     }
 }
 .content--media--video .inline-video-icon {
