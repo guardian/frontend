@@ -1,0 +1,277 @@
+$hosted-stripe: 28px;
+
+.hosted-tone--renault {
+    color: #ffc421;
+}
+
+.hosted-tone-bg--renault {
+    background-color: #ffc421;   
+}
+
+.hosted-tone--dark {
+    background-color: $paid-article;
+}
+
+.hosted__header {
+    width: 100%;
+    height: $gs-row-height + $gs-baseline;
+    background-color: $neutral-1;
+}
+
+.hosted__side {
+    @include mq($until: desktop) {
+        &:before,
+        &:after {
+            display: none;
+        }
+    }
+}
+
+.hosted__headerwrap {
+    margin: 0 auto;
+
+    @include mq(tablet) {
+        max-width: gs-span(9) + $gs-gutter * 2;
+    }
+
+    @include mq(desktop) {
+        max-width: gs-span(12) + $gs-gutter * 2;
+    }
+
+    @include mq(leftCol) {
+        max-width: gs-span(14) + $gs-gutter * 2;
+    }
+
+    @include mq(wide) {
+        max-width: gs-span($gs-max-columns) + $gs-gutter * 2;
+    }
+}
+
+.hosted__glogo {
+    text-align: right;
+    display: block;
+
+    svg {
+        fill: #ffffff;
+        width: 170px;
+        height: 50px;
+    }
+
+    @include mq($until: desktop) {
+        margin-right: $gs-gutter;
+
+        svg {
+            width: 100px;
+        }
+    }
+}
+
+.hosted__container {
+    position: relative;
+    background: transparent;
+    color: #ffffff;
+
+    @include mq($until: desktop) {
+        padding: 0;
+    }
+}
+
+.hosted__container--full {
+    @include mq($until: desktop) {
+        padding: 0;
+    }
+}
+
+.hosted__video {
+    vertical-align: top;
+}
+
+.hosted__logowrap {
+    position: absolute;
+    top: -$gs-gutter;
+    left: $gs-gutter;
+    width: 80px;
+    z-index: $zindex-content;
+
+    @include mq(desktop) {
+        top: -$hosted-stripe;
+        left: calc(50% - 490px + #{$gs-gutter});
+        width: 132px;
+    }
+
+    @include mq(leftCol) {
+        left: calc(50% - 570px + #{$gs-gutter});
+    }
+
+    @include mq(wide) {
+        left: calc(50% - 650px + #{$gs-gutter});
+    }
+}
+
+.hosted__logowrap--pusheddown {
+    @include mq($until: leftCol) {
+        top: 0;
+    }
+}
+
+.hosted__hosted {
+    @include f-textSans;
+
+    height: $hosted-stripe;
+    font-size: 14px;
+    line-height: $hosted-stripe;
+    color: $neutral-1;
+    margin: 0;
+    text-align: center;
+
+    @include mq($until: desktop) {
+        height: $gs-gutter;
+        line-height: $gs-gutter;
+        font-size: 8px;
+    }
+}
+
+.hosted__logo {
+    display: block;
+    width: 100%;
+}
+
+.hosted__meta {
+    position: absolute;
+    left: $gs-gutter;
+    bottom: 10%;
+    width: 55%; // Magic. Do not touch.
+    color: #ffffff;
+
+    @include mq(desktop) {
+        bottom: 20%;
+        width: 35%;
+        left: calc(50% - 490px + #{$gs-gutter});
+    }
+
+    @include mq(leftCol) {
+        left: calc(50% - 570px + #{$gs-gutter});
+    }
+
+    @include mq(wide) {
+        left: calc(50% - 650px + #{$gs-gutter});
+    }
+}
+
+// Headings
+.hosted__heading {
+    @include f-headlineSans;
+    
+    font-size: 56px;
+    line-height: 54px;
+
+    @include mq($until: desktop) {
+        margin: 0;
+        font-size: 26px;
+        line-height: 26px;
+    }
+}
+
+.hosted__heading--small {
+    @include f-headlineSans;
+
+    font-size: 32px;
+
+    @include mq($until: desktop) {
+        font-size: 18px;
+        line-height: 1;
+        margin-bottom: 0;
+    }
+}
+
+.hosted__subheading {
+    padding-bottom: 0;
+}
+
+// Main banner
+.hosted__banner {
+    position: relative;
+    height: 375px;
+    background-size: cover;
+
+    @include mq($until: desktop) {
+        background-position: center;
+    }
+}
+
+.hosted__cta-wrapper {
+    width: 40%;
+    padding-top: 200px;
+    margin-left: 20px;
+}
+
+.hosted__cta {
+    background-color: #ffc421;
+    border-color: #ffc421;
+    color: $neutral-1;
+
+    svg {
+        fill: $neutral-1;
+    }
+
+    &:hover {
+        background-color: #ffc421;
+        border-color: #ffc421;       
+    }
+
+    @include mq($until: desktop) {
+        width: 190px;
+        height: 26px;
+        margin-top: $gs-gutter / 2;
+        padding: 0 20px;
+        font-size: 14px;
+        line-height: 26px;
+
+        svg {
+            width: 26px;
+            height: 26px;
+        }
+    }
+}
+
+.hosted__text {
+    @include f-textSans;
+
+    line-height: 1.2;
+    color: #767676;
+
+    @include mq($until: desktop) {
+        font-size: 14px;
+    }
+}
+
+.hosted__terms {
+    @include f-textSans;
+
+    margin-top: $gs-row-height / 2;
+    font-size: 12px;
+    line-height: 1.2;
+    color: #767676;
+}
+
+.hosted__link {
+    color: #ffc421;
+}
+
+.hosted__standfirst {
+    width: 60%;
+    padding: $gs-baseline $gs-gutter 0;
+
+    @include mq($until: desktop) {
+        width: auto;
+    }
+}
+
+.hosted__social {
+    border-top: 0;
+    padding-top: $gs-gutter / 2;
+
+    @include mq($until: mobileLandscape) {
+        padding: $gs-gutter / 2 $gs-gutter / 2 0 $gs-gutter / 2;
+    }
+}

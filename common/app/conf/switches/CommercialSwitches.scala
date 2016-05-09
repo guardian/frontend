@@ -292,4 +292,13 @@ trait CommercialSwitches {
     sellByDate = new LocalDate(2016, 5, 12),
     exposeClientSide =  false
   )
+
+  val HostedContent = Switch(
+    SwitchGroup.Commercial,
+    "hosted-content",
+    "If on, you can access hosted content",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 12),
+    exposeClientSide =  false
+  )
 }
