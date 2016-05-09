@@ -86,56 +86,6 @@ $hosted-stripe: 28px;
     vertical-align: top;
 }
 
-.hosted__logowrap {
-    position: absolute;
-    top: -$gs-gutter;
-    left: $gs-gutter;
-    width: 80px;
-    z-index: $zindex-content;
-
-    @include mq(desktop) {
-        top: -$hosted-stripe;
-        left: calc(50% - 490px + #{$gs-gutter});
-        width: 132px;
-    }
-
-    @include mq(leftCol) {
-        left: calc(50% - 570px + #{$gs-gutter});
-    }
-
-    @include mq(wide) {
-        left: calc(50% - 650px + #{$gs-gutter});
-    }
-}
-
-.hosted__logowrap--pusheddown {
-    @include mq($until: leftCol) {
-        top: 0;
-    }
-}
-
-.hosted__hosted {
-    @include f-textSans;
-
-    height: $hosted-stripe;
-    font-size: 14px;
-    line-height: $hosted-stripe;
-    color: $neutral-1;
-    margin: 0;
-    text-align: center;
-
-    @include mq($until: desktop) {
-        height: $gs-gutter;
-        line-height: $gs-gutter;
-        font-size: 8px;
-    }
-}
-
-.hosted__logo {
-    display: block;
-    width: 100%;
-}
-
 .hosted__meta {
     position: absolute;
     left: $gs-gutter;
