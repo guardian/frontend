@@ -296,7 +296,7 @@ trait CommercialSwitches {
   val highMerchandisingComponentSwitch = Switch(
     SwitchGroup.Commercial,
     "render-commercial-high-slot-always",
-    "If on, wil be a server side check of page keywords with high-merchandising keywords, before high-merch slot render.",
+    "If on, server will check tags for high-merchandising target before rendering high-merch slot.",
     safeState = Off,
     sellByDate = new LocalDate(2016,6,8),
     exposeClientSide = false
