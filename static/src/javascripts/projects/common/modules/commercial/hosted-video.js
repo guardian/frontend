@@ -14,17 +14,14 @@ define([
     videojs
 ) {
 
-    var $videoEl = $('.vjs-hosted__video'),
-        player;
+    var $videoEl = $('.vjs-hosted__video');
 
     function init() {
-        console.log('before');
         if (!$videoEl) {
             return;
         }
-        console.log('after');
 
-        player = videojs($videoEl.get(0), {
+        videojs($videoEl.get(0), {
             controls: true,
             autoplay: false,
             preload: 'metadata'
