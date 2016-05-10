@@ -1,3 +1,5 @@
+/* global FB */
+/* eslint no-console:0 */
 define([
     'fastdom',
     'common/utils/detect',
@@ -15,7 +17,7 @@ define([
             placementId: '978824118882656_978826235549111',
             adId: 'ad_root'
         }
-    ]
+    ];
     var facebookTpl;
 
     return {
@@ -31,14 +33,14 @@ define([
             FB.Event.subscribe(
                 'ad.loaded',
                 function(placementID) {
-                    console.log('ad loaded');
+                    console.log('ad loaded at ' + placementID);
                 }
             );
 
             FB.Event.subscribe(
                 'ad.error',
                 function(errorCode, errorMessage, placementID) {
-                    console.log('ad error ' + errorCode + ': ' + errorMessage);
+                    console.log('ad error ' + errorCode + ' at ' + placementID + ': ' + errorMessage);
                 }
             );
         };
@@ -52,7 +54,7 @@ define([
 
     function insertAdUnits() {
         facebookTpl = template(facebookStr);
-        var markups = adUnits.forEach(function (adUnit) {
+        adUnits.forEach(function (adUnit) {
             adUnit.referenceNode = document.querySelector(adUnit.referenceNode);
             adUnit.markup = facebookTpl(adUnit);
         });
