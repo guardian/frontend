@@ -21,30 +21,32 @@ define([
     }
 
     function initEvents(el, manipulationType, endpoint) {
-        var component = new Component();
         bean.on(el, 'click', '.most-viewed-navigation__link', function(ev) {
             var page = ev.currentTarget.getAttribute('data-page');
-            var paginatedEndpoint = endpoint + '?page=' + page;
 
-            component = new Component();
-            component.manipulationType = manipulationType;
-            component.endpoint = paginatedEndpoint;
-            el.innerHTML = '';
-            component.fetch(el, 'html');
+            createComponent(el, endpoint, manipulationType, page);
+
             ev.preventDefault();
             return false;
         });
     }
 
-    function init(el, mediaType) {
+    function createComponent(el, endpoint, manipulationType, page) {
         var component = new Component();
+        var paginatedEndpoint = endpoint + (page ? '?page=' + page : '');
+        component.manipulationType = manipulationType;
+        component.endpoint = paginatedEndpoint;
+
+        el.innerHTML = ''; // we have no replace in component
+
+        return component.fetch(el, 'html');
+    }
+
+    function init(el, mediaType) {
         var manipulationType = mediaType === 'video' ? 'append' : 'html';
         var endpoint = getEndpoint(mediaType);
 
-        component.manipulationType = manipulationType;
-        component.endpoint = endpoint;
-
-        component.fetch(el, 'html').then(function () {
+        createComponent(el, endpoint, manipulationType).then(function() {
             mediator.emit('page:new-content');
             initEvents(el, manipulationType, endpoint);
         });
