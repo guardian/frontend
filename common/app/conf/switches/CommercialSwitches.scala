@@ -293,6 +293,15 @@ trait CommercialSwitches {
     exposeClientSide =  false
   )
 
+  val highMerchandisingComponentSwitch = Switch(
+    SwitchGroup.Commercial,
+    "render-commercial-high-slot-always",
+    "If on, the commercial-high slot will always render on pageload",
+    safeState = Off,
+    sellByDate = new LocalDate(2016,6,8),
+    exposeClientSide = false
+  )
+
   val CommercialAuditSwitch = Switch(
     SwitchGroup.Commercial,
     "commercial-audit",
