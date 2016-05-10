@@ -338,43 +338,7 @@
             font-weight: 200;
             padding-top: 0;
         }
-    }
-
-    // TODO: Move this to _block-level-sharing.scss when .new-gallery class is removed.
-    .block-share--gallery {
-        position: static;
-
-        .block-share__item {
-            position: relative;
-            background-color: transparent;
-            border: 1px solid $neutral-2;
-            box-sizing: border-box;
-            transition: border-color .15s ease-out;
-            width: 32px;
-            height: 32px;
-
-            &:hover {
-                background-color: transparent;
-                border-color: $neutral-6;
-            }
-
-            &.inline-icon, .inline-icon {
-                fill: $neutral-3;
-
-                svg {
-                    height: 88%;
-                    width: 88%;
-                    vertical-align: middle;
-                    position: absolute;
-                    top: 0;
-                    bottom: 0;
-                    right: 0;
-                    left: 0;
-                    margin: auto;
-                }
-            }
-        }
-    }
+    }    
 
     .gallery {
         list-style: none;
