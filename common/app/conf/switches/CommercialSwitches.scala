@@ -235,7 +235,7 @@ trait CommercialSwitches {
     "fixed-top-above-nav",
     "Fixes size of top-above-nav ad slot on fronts.",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 9),
+    sellByDate = new LocalDate(2016, 5, 20),
     exposeClientSide = false
   )
 
@@ -290,6 +290,33 @@ trait CommercialSwitches {
     "If on, the out of page slot (1x1) will be added to each page, regardless of pageskins, surveys or other dependent features",
     safeState = Off,
     sellByDate = new LocalDate(2016, 5, 12),
+    exposeClientSide =  false
+  )
+
+  val highMerchandisingComponentSwitch = Switch(
+    SwitchGroup.Commercial,
+    "render-commercial-high-slot-always",
+    "If on, the commercial-high slot will always render on pageload",
+    safeState = Off,
+    sellByDate = new LocalDate(2016,6,8),
+    exposeClientSide = false
+  )
+
+  val CommercialAuditSwitch = Switch(
+    SwitchGroup.Commercial,
+    "commercial-audit",
+    "Audit Ads",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 5, 16),
+    exposeClientSide = true
+  )
+
+  val HostedContent = Switch(
+    SwitchGroup.Commercial,
+    "hosted-content",
+    "If on, you can access hosted content",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 12),
     exposeClientSide =  false
   )
 }

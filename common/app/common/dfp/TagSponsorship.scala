@@ -65,6 +65,27 @@ object InlineMerchandisingTargetedTagsReportParser extends Logging {
   }
 }
 
+object HighMerchandisingTargetedTagSet {
+  implicit val jsonReads = Json.reads[HighMerchandisingTargetedTagSet]
+
+  implicit val highMerchandisingTargetedTagSetWrites = new Writes[HighMerchandisingTargetedTagSet] {
+    def writes(tagSet: HighMerchandisingTargetedTagSet): JsValue = {
+      Json.obj(
+        "items" -> tagSet.items
+      )
+    }
+  }
+}
+
+case class HighMerchandisingTargetedTagSet(items: Set[String] = Set.empty){
+
+  def hasTag (tag: Tag): Boolean = items.exists(item => tag.id.endsWith(item))
+
+
+  def nonEmpty = items.nonEmpty
+
+}
+
 object HighMerchandisingLineItems {
   implicit val lineItemFormat = Json.format[HighMerchandisingLineItem]
   implicit val lineItemsFormat = Json.format[HighMerchandisingLineItems]
