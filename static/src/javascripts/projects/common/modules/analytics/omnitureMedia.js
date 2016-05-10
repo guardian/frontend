@@ -16,7 +16,6 @@ define([
         var mediaId = getAttribute('data-embed-path') || config.page.pageId,
             // infer type (audio/video) from what element we have
             mediaType = qwery('audio', player.el()).length ? 'audio' : 'video',
-            contentStarted = false,
             prerollPlayed = false,
             isEmbed = !!guardian.isEmbed,
             events = {
@@ -90,7 +89,6 @@ define([
         };
 
         this.onContentPlay = function () {
-            contentStarted = true;
             this.sendNamedEvent('video:play');
         };
 
