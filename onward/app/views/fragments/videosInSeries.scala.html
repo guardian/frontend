@@ -21,14 +21,14 @@ data-component="most-viewed-video">
             <!-- TODO: reverse routing - do we support it? -->
             <!-- TODO: Buttons here, not really links, but it's easy for styling -->
         @pagination.previous.map { page =>
-            <a class="most-viewed-navigation__link most-viewed-navigation__link--prev" data-page="@page" data-link-name="prev" href="">
+            <button class="most-viewed-navigation__button most-viewed-navigation__button--prev" data-page="@page" data-link-name="prev">
             @fragments.inlineSvg("arrow-left", "icon")
-            </a>
+            </button>
         }
         @pagination.next.map { page =>
-            <a class="most-viewed-navigation__link most-viewed-navigation__link--next" data-page="@page" data-link-name="next" href="">
+            <button class="most-viewed-navigation__button most-viewed-navigation__button--next" data-page="@page" data-link-name="next">
             @fragments.inlineSvg("chevron-right", "icon")
-            </a>
+            </button>
         }
     </div>
 </div>

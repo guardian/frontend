@@ -21,7 +21,7 @@ define([
     }
 
     function initEvents(el, manipulationType, endpoint) {
-        bean.on(el, 'click', '.most-viewed-navigation__link', function(ev) {
+        bean.on(el, 'click', '.most-viewed-navigation__button', function(ev) {
             var page = ev.currentTarget.getAttribute('data-page');
 
             createComponent(el, endpoint, manipulationType, page);
