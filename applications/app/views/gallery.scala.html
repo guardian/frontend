@@ -1,7 +1,7 @@
 @(page: model.GalleryPage)(implicit request: RequestHeader)
 
 @main(page){ }{
-    @if(mvt.ABGalleryRedesignVariant.shouldShow(page.gallery.metadata.contentType)) {
+    @if(page.gallery.showNewGalleryDesign) {
         @fragments.newGalleryBody(page)
     } else {
         @fragments.galleryBody(page)
