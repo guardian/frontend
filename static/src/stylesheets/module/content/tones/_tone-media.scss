@@ -9,7 +9,7 @@
     #ffffff, // $tonal__headline-colour
     $media-default, // $tonal__headline-accent
     $media-background, // $tonal__standfirst-background
-    $neutral-5, // $tonal__standfirst-text
+    $neutral-4, // $tonal__standfirst-text
     #ffffff, // $tonal__standfirst-link
     $media-background, // $tonal__article-background
     $media-default // $tonal__article-link
@@ -17,11 +17,12 @@
 
 // Podcast and media tones share page styling
 .tonal--tone-media {
-    color: $neutral-6;
+    color: $neutral-4;
     padding-top: 0;
 
     .byline,
-    .byline a,
+    .byline .tone-colour,
+    .byline .tone-colour:hover,
     .meta__numbers .sharecount__value,
     .meta__numbers .commentcount2__value {
         color: $neutral-3;
@@ -39,7 +40,8 @@
     }
 
     .commentcount2 {
-        &:hover {
+        &:hover,
+        &:focus {
             text-decoration: none;
 
             .commentcount2__heading {
@@ -57,10 +59,8 @@
     }
 
     .caption,
-    .submeta__head,
     .ad-slot--paid-for-badge__header,
-    .ad-slot--paid-for-badge__help,
-    .from-content-api {
+    .ad-slot--paid-for-badge__help {
         color: $neutral-6;
     }
 
