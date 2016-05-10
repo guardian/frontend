@@ -9,8 +9,7 @@
     AUSElectionSwitch.isSwitchedOn &&
     item.content.tags.tags.exists(_.id == "australia-news/australian-election-2016")
 ){ case (isUSElection, isAUSElection) =>
-    <div class="content__labels @if(isUSElection) {content__labels--us-election} @if(mvt.ABGalleryRedesignVariant.shouldShow(item.metadata.contentType)) {content__labels--gallery}">
-
+    <div class="content__labels @if(isUSElection) {content__labels--us-election} @if(item.content.showNewGalleryDesign) {content__labels--gallery}">
         @if(isUSElection) {
             <div class="badge-slot badge-slot--us-election">
                 @if(isAmp) {
