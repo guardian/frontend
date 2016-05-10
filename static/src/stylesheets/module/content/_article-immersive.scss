@@ -57,9 +57,7 @@
     @include fs-headline(7, true);
     line-height: 1;
 
-    @include mq(desktop) {
-        font-size: 3.25rem;
-    }
+
 }
 
 .content--immersive {
@@ -133,6 +131,12 @@
 
     .content__series-label + .content__headline {
         padding-top: 0;
+    }
+
+    .content__headline--immersive--with-main-media {
+        @include mq(desktop) {
+            font-size: 3.25rem;
+        }
     }
 
     .content__standfirst {
