@@ -98,6 +98,8 @@ define([
                     $('.ad-exp--expand-scrolling-bg', that.$adSlot).css('background-position', '50%' + (scrollAmount + '%'));
                 });
                 break;
+            case 'none' :
+                break;
         }
     };
 
@@ -186,10 +188,9 @@ define([
             showPlus: (this.params.showMoreType === 'plus-only' || this.params.showMoreType === 'plus-and-arrow') ?
             '<button class="ad-exp__close-button ad-exp__open">' + svgs('closeCentralIcon') + '</button>' : ''
         };
-        var parallaxScrollType = this.params.backgroundImagePType;
         var scrollbgDefaultY = '0%'; // used if no parallax / fixed background scroll support
         var scrollingbg = {
-            scrollbg: (parallaxScrollType !== '' && parallaxScrollType !== 'none') ?
+            scrollbg: this.params.backgroundImagePType !== 'none' ?
             '<div class="ad-exp--expand-scrolling-bg" style="background-image: url(' + this.params.backgroundImageP + '); background-position: ' + this.params.backgroundImagePPosition + ' ' + scrollbgDefaultY + '; background-repeat: ' + this.params.backgroundImagePRepeat + ';"></div>' : ''
         };
         var $fabricExpandingV1 = $.create(template(fabricExpandingV1Html, { data: merge(this.params, showmoreArrow, showmorePlus, videoDesktop, videoMobile, scrollingbg) }));
