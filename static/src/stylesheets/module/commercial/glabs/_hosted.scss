@@ -1,5 +1,15 @@
 $hosted-stripe: 28px;
 
+@mixin hosted-fade-in {
+    opacity: 1;
+    transition: opacity 1s linear;
+}
+
+@mixin hosted-fade-out {
+    opacity: 0;
+    transition: opacity 1s linear;
+}
+
 .hosted-tone--renault {
     color: #ffc421;
 }
@@ -99,6 +109,19 @@ $hosted-stripe: 28px;
         height: 88px;
     }
 
+    .vjs-fullscreen-control,
+    .vjs-menu-button {
+        margin-top: 34px;
+
+        .vjs-control-text {
+            font-size: 14px;
+        }
+    }
+
+    .vjs-time-control {
+        padding-top: 21px;
+    }
+
     &.vjs-paused,
     &.vjs-playing {
         .vjs-play-control {
@@ -128,6 +151,14 @@ $hosted-stripe: 28px;
 
     @include mq(wide) {
         left: calc(50% - 650px + #{$gs-gutter});
+    }
+
+    .vjs-playing + & {
+        @include hosted-fade-out;
+    }
+
+    .vjs-paused + & {
+        @include hosted-fade-in;
     }
 }
 
