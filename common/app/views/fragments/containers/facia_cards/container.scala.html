@@ -17,7 +17,7 @@
 @renderBrandingDataAttributes() = {
     @if(Switches.cardsDecidePaidContainerBranding.isSwitchedOn) {
         @for(container <- maybeContainerModel) {
-            @for(branding <- container.branding) {
+            @for(branding <- container.brandingAttributes) {
                 @for(sponsor <- branding.sponsor){data-sponsor="@sponsor"}
                 @for(seriesId <- branding.seriesId) { data-series="@seriesId" }
                 @for(keywordId <- branding.keywordId) { data-keywords="@keywordId" }

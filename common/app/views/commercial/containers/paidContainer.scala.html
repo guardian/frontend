@@ -9,7 +9,7 @@
 @import views.support.commercial.TrackingCodeBuilder.mkInteractionTrackingCode
 
 <div data-id="@containerModel.id" class="fc-container@if(containerModel.isSingleSponsorContainer){ js-sponsored-container}"
-    @for(branding <- containerModel.branding){
+    @for(branding <- containerModel.brandingAttributes){
         data-sponsorship="@branding.sponsorshipType"
         @for(sponsor <- branding.sponsor){ data-sponsor="@sponsor" }
         @for(keywordId <- branding.keywordId){ data-keywords="@keywordId" }
