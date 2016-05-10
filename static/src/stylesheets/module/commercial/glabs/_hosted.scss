@@ -5,7 +5,7 @@ $hosted-stripe: 28px;
 }
 
 .hosted-tone-bg--renault {
-    background-color: #ffc421;   
+    background-color: #ffc421;
 }
 
 .hosted-tone--dark {
@@ -84,6 +84,29 @@ $hosted-stripe: 28px;
 
 .hosted__video {
     vertical-align: top;
+
+    .vjs-big-play-button .vjs-control-text,
+    .vjs-fullscreen-control,
+    .vjs-volume-menu-button,
+    .vjs-progress-control {
+        display: none;
+    }
+
+    .vjs-control-bar {
+        bottom: 0;
+        background-color: unset;
+        font-size: 16px;
+        height: 88px;
+    }
+
+    &.vjs-paused,
+    &.vjs-playing {
+        .vjs-play-control {
+            width: 48px;
+            height: 48px;
+            margin: 20px 10px 20px 20px;
+        }
+    }
 }
 
 .hosted__meta {
@@ -111,7 +134,7 @@ $hosted-stripe: 28px;
 // Headings
 .hosted__heading {
     @include f-headlineSans;
-    
+
     font-size: 56px;
     line-height: 54px;
 
