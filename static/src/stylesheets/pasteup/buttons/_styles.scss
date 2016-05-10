@@ -72,7 +72,7 @@
 .button--tone-media {
     @include button-colour(
         $media-mute,
-        #ffffff
+        $neutral-4
     );
 
     @include button-hover-colour(
@@ -83,7 +83,7 @@
 .button--tone-media-variant {
     @include button-colour(
         $media-background,
-        #ffffff,
+        $neutral-4,
         $neutral-2
     );
 

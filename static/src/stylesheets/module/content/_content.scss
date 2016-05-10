@@ -986,9 +986,15 @@
 
         .tonal--tone-media & {
             border: 0;
+            color: $neutral-3;
             background-color: $media-mute;
 
+            .inline-tone-fill {
+                fill: $neutral-3;
+            }
+
             &:hover {
+                color: $neutral-3;
                 background-color: darken($media-mute, 5%);
             }
         }

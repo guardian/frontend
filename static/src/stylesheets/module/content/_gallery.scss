@@ -331,14 +331,6 @@
         .meta__email {
             margin-top: $gs-baseline/4;
             margin-bottom: $gs-baseline;
-
-            & a {
-                color: $neutral-3;
-
-                .inline-tone-fill {
-                    fill: $neutral-3;
-                }
-            }
         }
 
         // Overwriting media tone header so that you can see the image instead

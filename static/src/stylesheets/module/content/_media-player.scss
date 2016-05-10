@@ -20,7 +20,7 @@ $ima-controls-height: 70px;
     -webkit-transform: translateZ(0); // fixes iOS hover bug
 }
 .gu-media-wrapper--audio {
-    background-color: rgba($vjs-control-colour, 0.8);
+    background-color: rgba($vjs-control-colour, .8);
     padding-top: $vjs-progress-visual-height-resting;
 
     .vjs-control-bar {
@@ -198,7 +198,7 @@ $ima-controls-height: 70px;
     width: 100%;
     z-index: 4;
     left: 0;
-    background-color: rgba($media-background, 0.8);
+    background-color: rgba($media-background, .8);
     color: #ffffff;
     font-weight: bold;
     height: $vjs-control-height;
