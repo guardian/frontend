@@ -132,8 +132,9 @@ object MultiVariateTesting {
 
   sealed case class Variant(name: String)
 
-  // buckets 0-7 are removed during testing whether having a permanently running server side ab test framework
-  // affects our caching too much - I'll put them back or come up with a new solution once I have some data! John
+  // buckets 0-7 are removed because they cost $1000+ just in aws bandwidth every month, the rest
+  // will be removed once they're not in use.  In future server side ab tests will be added explicitly
+  // to target only the URLs needed for the time needed.
   object Variant8 extends Variant("variant-8")
   object Variant9 extends Variant("variant-9")
 

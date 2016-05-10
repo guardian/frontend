@@ -19,7 +19,9 @@
     } {
         <div class="js-fronts-network-2" data-link-name="fronts-on-articles | network-front | block-2"></div>
     } {
-        <div class="fc-container fc-container--commercial-high">@fragments.commercial.commercialComponentHigh()</div>
+        @if(content.commercial.hasHighMerchandisingTarget) {
+            <div class="fc-container fc-container--commercial-high">@fragments.commercial.commercialComponentHigh()</div>
+        }
     } {
         <div class="fc-container fc-container--commercial js-container--commercial">@fragments.commercial.commercialComponent()</div>
     } {
