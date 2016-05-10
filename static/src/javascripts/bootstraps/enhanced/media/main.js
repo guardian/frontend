@@ -386,16 +386,6 @@ define([
         });
     }
 
-    function getOnwardEndpoint(mediaType) {
-        var isInSeries = Boolean(config.page.seriesTags);
-
-        if (isInSeries) {
-            return '/video/in-series/' + config.page.seriesId + '.json';
-        } else {
-            return '/' + (config.page.isPodcast ? 'podcast' : mediaType) + '/most-viewed.json';
-        }
-    }
-
     function initOnwardContainer() {
         if (!config.isMedia) {
             return;
