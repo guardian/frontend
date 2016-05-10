@@ -22,9 +22,8 @@
 
     .byline,
     .byline a,
-    .sharecount__value,
-    .commentcount2__value,
-    .meta__numbers a {
+    .meta__numbers .sharecount__value,
+    .meta__numbers .commentcount2__value {
         color: $neutral-3;
     }
 
@@ -39,19 +38,29 @@
         fill: $neutral-2;
     }
 
-    .meta__numbers a.commentcount2 {
+    .commentcount2 {
         &:hover {
             text-decoration: none;
+
+            .commentcount2__heading {
+                color: $neutral-3;
+            }
+
+            .inline-comment-16 {
+                fill: $neutral-3;
+            }
+
+            .commentcount2__value {
+                color: $neutral-5;
+            }
         }
     }
 
-    .byline a,
     .caption,
     .submeta__head,
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__help,
-    .from-content-api,
-    .meta__numbers .sharecount__value {
+    .from-content-api {
         color: $neutral-6;
     }
 
