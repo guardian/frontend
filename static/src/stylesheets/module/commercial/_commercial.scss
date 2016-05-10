@@ -23,6 +23,7 @@
 @import '_capi';
 @import '_paidfor';
 @import '_brandbadge';
+@import '_hostedbadge';
 
 /* Creative styles */
 @import '_creatives';
@@ -53,3 +54,6 @@
 
 /* Facebook ads */
 @import '_facebook';
+
+/* Glabs Awesome component */
+@import 'glabs/_hosted.scss';
