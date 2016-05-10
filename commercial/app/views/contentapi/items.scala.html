@@ -41,10 +41,17 @@
 }{
 
     <div class="adverts__row">
-        @for(card <- cards){ @itemCard(
+        @cards.take(2).map { card => @itemCard(
             card,
             omnitureId,
             optAdvertClassNames = optSponsorType.map(t => Seq(t.className)),
+            useCardBranding = false)
+        }
+        @cards.slice(2, 4).map { card => @itemCard(
+            card,
+            omnitureId,
+            optAdvertClassNames = optSponsorType.map(t => Seq(t.className)),
+            optClassNames = Some(Seq("hide-until-mobile-landscape")),
             useCardBranding = false)
         }
     </div>

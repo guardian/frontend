@@ -1,6 +1,8 @@
 .adverts--soulmates {
     @include mq($until: tablet) {
-        .adverts__row {
+        // In the soulmates component, we want to show rows of 3 profiles
+        // on mobile. Except if this is a manual component.
+        &:not(.adverts--manual) .adverts__row {
             > * {
                 flex-basis: calc(33.33% - #{$gs-gutter});
                 &:nth-child(even)::before {
@@ -140,7 +142,7 @@
         display: flex;
 
         > * {
-            flex-basis: calc(50% - #{$gs-gutter / 4});
+            width: calc(50% - #{$gs-gutter / 4});
         }
 
         > * + * {

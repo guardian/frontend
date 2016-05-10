@@ -75,6 +75,17 @@ define([
                 modClass: 'end-article',
                 insertMethod: insertBottomOfArticle
             },
+            ausCampaignCatchup: {
+                listId: '3689',
+                listName: 'ausCampaignCatchup',
+                campaignCode: 'AU_campaign_signup_page',
+                headline: 'Sign up for the Campaign catchup',
+                description: 'Get the day\'s top election news and commentary coverage delivered to your inbox every afternoon',
+                successHeadline: 'Thank you for signing up',
+                successDescription: 'We will send you the latest Campaign catchup every weekday afternoon',
+                modClass: 'end-article',
+                insertMethod: insertBottomOfArticle
+            },
             theGuardianToday: {
                 listId: (function () {
                     switch (config.page.edition) {
