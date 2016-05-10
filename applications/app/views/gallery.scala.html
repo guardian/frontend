@@ -1,9 +1,7 @@
 @(page: model.GalleryPage)(implicit request: RequestHeader)
 
-@import conf.switches.Switches.galleryRedesign
-
 @main(page){ }{
-    @if(galleryRedesign.isSwitchedOn) {
+    @if(page.gallery.showNewGalleryDesign) {
         @fragments.newGalleryBody(page)
     } else {
         @fragments.galleryBody(page)
