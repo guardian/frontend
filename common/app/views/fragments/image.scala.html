@@ -40,8 +40,8 @@
 
     @if(isImmersiveMainMedia) {
         @picture.largestImage.map { largestImage =>
-          @immersivePortraitSource(largestImage)
             @immersivePortraitSource(largestImage, hidpi = true)
+            @immersivePortraitSource(largestImage)
         }
     }
 
