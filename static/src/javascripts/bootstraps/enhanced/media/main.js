@@ -21,6 +21,7 @@ define([
     'common/modules/video/supportedBrowsers',
     'common/modules/video/tech-order',
     'common/modules/video/video-container',
+    'common/modules/video/onward-container',
     // This must be the full path because we use curl config to change it based
     // on env
     'bootstraps/enhanced/media/video-player',
@@ -48,6 +49,7 @@ define([
     supportedBrowsers,
     techOrder,
     videoContainer,
+    onwardContainer,
     videojs,
     loadingTmpl
 ) {
@@ -384,22 +386,25 @@ define([
         });
     }
 
-    function initMostViewedMedia() {
+    function getOnwardEndpoint(mediaType) {
+        var isInSeries = Boolean(config.page.seriesTags);
+
+        if (isInSeries) {
+            return '/video/in-series/' + config.page.seriesId + '.json';
+        } else {
+            return '/' + (config.page.isPodcast ? 'podcast' : mediaType) + '/most-viewed.json';
+        }
+    }
+
+    function initOnwardContainer() {
         if (!config.isMedia) {
             return;
         }
 
-        var mediaType  = config.page.contentType.toLowerCase(),
-            mostViewed = new Component(),
-            attachTo   = $(mediaType === 'video' ? '.js-video-components-container' : '.js-media-popular')[0],
-            endpoint   = '/' + (config.page.isPodcast ? 'podcast' : mediaType) + '/most-viewed.json';
+        var mediaType = config.page.contentType.toLowerCase();
+        var el = $(mediaType === 'video' ? '.js-video-components-container' : '.js-media-popular')[0];
 
-        mostViewed.manipulationType = mediaType === 'video' ? 'append' : 'html';
-        mostViewed.endpoint = endpoint;
-
-        mostViewed.fetch(attachTo, 'html').then(function () {
-            mediator.emit('page:new-content');
-        });
+        onwardContainer.init(el, mediaType);
     }
 
     function initWithRaven(withPreroll) {
@@ -435,7 +440,7 @@ define([
         }
         initFacia();
         initMoreInSection();
-        initMostViewedMedia();
+        initOnwardContainer();
     }
 
     return {
