@@ -21,13 +21,28 @@
     padding-top: 0;
 
     .byline,
-    .content__dateline,
-    .meta__numbers .sharecount__heading {
+    .byline a,
+    .sharecount__value,
+    .commentcount2__value,
+    .meta__numbers a {
         color: $neutral-3;
     }
 
-    .meta__numbers .inline-share {
-        fill: $neutral-3;
+    .content__dateline,
+    .meta__numbers .sharecount__heading,
+    .meta__numbers .commentcount2__heading {
+        color: $neutral-2;
+    }
+
+    .meta__numbers .inline-share,
+    .meta__numbers .inline-comment-16 {
+        fill: $neutral-2;
+    }
+
+    .meta__numbers a.commentcount2 {
+        &:hover {
+            text-decoration: none;
+        }
     }
 
     .byline a,

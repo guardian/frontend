@@ -323,15 +323,6 @@
             margin-left: gs-span(3) + $gs-gutter;
             max-width: gs-span(8);
         }
-
-        .content__standfirst {
-            padding-bottom: 0;
-            padding-top: 0;
-
-            &:before {
-                content: none;
-            }
-        }
     }
 
     // TODO: Replace all media tones instead of overwriting the defaults
@@ -355,43 +346,6 @@
             font-weight: 200;
             padding-top: 0;
         }
-
-        .meta__numbers {
-            color: $neutral-3;
-        }
-
-        .content__dateline,
-        .sharecount__heading,
-        .commentcount2__heading {
-            color: $neutral-2;
-        }
-
-        .byline,
-        .byline a,
-        .sharecount__value,
-        .commentcount2__value {
-            color: $neutral-3;
-        }
-
-        .inline-comment-16 {
-            fill: $neutral-2;
-        }
-
-        a.commentcount2 {
-            &:hover {
-                text-decoration: none;
-            }
-        }
-    }
-
-    .content__headline {
-        &:before {
-            content: none;
-        }
-    }
-
-    .content__standfirst {
-        color: $neutral-5;
     }
 
     // TODO: Move this to _block-level-sharing.scss when .new-gallery class is removed.
