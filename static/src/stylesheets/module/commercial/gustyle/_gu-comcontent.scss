@@ -31,6 +31,10 @@
     padding: $gs-gutter/2;
 }
 
+.gu-display__content--hosted {
+    bottom: 0;
+}
+
 .gu-display__link {
     color: #ffffff;
 }
@@ -44,6 +48,14 @@
     text-align: left;
     font-weight: normal;
     margin-bottom: 5px;
+}
+
+.gu-display__content-title--hosted {
+    @include font-size(30, 32);
+
+    width: 65%;
+    margin: 0;
+    font-weight: bold;
 }
 
 .gu-display__content-text {

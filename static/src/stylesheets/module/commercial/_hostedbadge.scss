@@ -18,6 +18,10 @@
     @include mq(wide) {
         left: calc(50% - 650px + #{$gs-gutter});
     }
+
+    &:hover {
+        text-decoration: none;
+    }
 }
 
 .hostedbadge--pusheddown {
@@ -37,9 +41,9 @@
     text-align: center;
 
     @include mq($until: desktop) {
-        height: $gs-gutter;
-        line-height: $gs-gutter;
-        font-size: 8px;
+        height: auto;
+        line-height: 10px;
+        font-size: 10px;
     }
 }
 
