@@ -187,7 +187,7 @@ define([
             '<button class="ad-exp__close-button ad-exp__open">' + svgs('closeCentralIcon') + '</button>' : ''
         };
         var parallaxScrollType = this.params.backgroundImagePType;
-        var scrollbgDefaultY = '0%';
+        var scrollbgDefaultY = '0%'; // used if no parallax / fixed background scroll support
         var scrollingbg = {
             scrollbg: (parallaxScrollType !== '' || parallaxScrollType !== 'none') ?
             '<div class="ad-exp--expand-scrolling-bg" style="background-image: url(' + this.params.backgroundImageP + '); background-position: ' + this.params.backgroundImagePPosition + '' + scrollbgDefaultY + '; background-repeat: ' + this.params.backgroundImagePRepeat + ';"></div>' : ''
