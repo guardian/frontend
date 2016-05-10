@@ -18,6 +18,7 @@
     }"
 
     sizes="@{100 * largestImage.ratioDouble}vh"
+    @* This adds 15 src options to the srcset from 500 to 4000 incrementing by 250px *@
     srcset="@{(500 to 4000 by 250)
         .toList
         .map(width => ImgSrc.srcsetForProfile(views.support.Profile(width = Some(width)), picture, hidpi))
