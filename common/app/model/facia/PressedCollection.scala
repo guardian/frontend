@@ -1,7 +1,9 @@
 package model.facia
 
 import com.gu.facia.api.{models => fapi}
+import common.Edition
 import implicits.CollectionsOps._
+import model.Branding
 import model.pressed._
 import org.joda.time.DateTime
 import services.CollectionConfigWithId
@@ -29,7 +31,16 @@ case class PressedCollection(
 
   lazy val collectionConfigWithId = CollectionConfigWithId(id, config)
 
-  lazy val curatedPlusBackfillDeduplicated = (curated ++ backfill).distinctBy(c => c.properties.maybeContentId.getOrElse(c.card.id))
+  lazy val curatedPlusBackfillDeduplicated = (curated ++ backfill).distinctBy { c =>
+    c.properties.maybeContentId.getOrElse(c.card.id)
+  }
+
+  def branding(edition: Edition): Option[Branding] = {
+    val brandings = curatedPlusBackfillDeduplicated flatMap(_.branding(edition))
+    if (brandings.size == 1) {
+      brandings.headOption
+    } else None
+  }
 }
 
 object PressedCollection {
