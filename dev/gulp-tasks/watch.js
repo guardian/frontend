@@ -9,24 +9,25 @@ import pxtorem from 'postcss-pxtorem';
 
 import {DIRECTORIES, PRESETS} from './config';
 
-const SRC = `${DIRECTORIES.target}/stylesheets`;
-const DEST = `${DIRECTORIES.hash}/stylesheets`;
+const TARGET = `${DIRECTORIES.target}/stylesheets`;
 
 gulp.task('watch:css', (done) => {
+
     gulp.watch([
-            `${SRC}/**/*.css`,
-            `!${SRC}/ie9.*.css`,
-            `!${SRC}/old-ie.*.css`,
-            `!${SRC}/webfonts-*.css`
+            `${TARGET}/**/*.css`,
+            `!${TARGET}/ie9.*.css`,
+            `!${TARGET}/old-ie.*.css`,
+            `!${TARGET}/webfonts-*.css`
         ], (event) => {
-            gulp.src(event.path, {base: SRC})
+
+            gulp.src(event.path, {base: TARGET})
                 .pipe(sourcemaps.init({loadMaps: true}))
                 .pipe(postcss([
                     autoprefixer(),
                     pxtorem(PRESETS.pxtorem)
                 ]))
                 .pipe(sourcemaps.write('.'))
-                .pipe(gulp.dest(DEST))
+                .pipe(gulp.dest(TARGET))
     });
     done();
 });
