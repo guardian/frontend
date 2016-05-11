@@ -1,6 +1,6 @@
 define([
     'common/utils/config',
-    'common/modules/ui/welcomeBanner',
+    'common/modules/ui/welcome-banner',
     'common/utils/detect',
     'common/utils/cookies'
 ], function (config, welcomeHeader, detect, cookies) {
@@ -27,12 +27,12 @@ define([
         this.variants = [{
             id: 'test1',
             test: function () {
-                cookies.add(COOKIE_WELCOME_BANNER, 1);
+
             }
         }, {
             id: 'test2',
             test: function () {
-                cookies.add(COOKIE_WELCOME_BANNER, 1);
+
             }
         }];
 

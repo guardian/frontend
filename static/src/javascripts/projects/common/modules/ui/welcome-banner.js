@@ -17,8 +17,8 @@ define([
      */
     var header = document.getElementById('header'),
         message1 = '<div class="banner-message"><%=HTML%></div>',
-        DATA = {
-            MESSAGE1: {
+        data = {
+            message1: {
                 HTML: '<span class="pull-left">news website</span><span class="pull-right">of the year</span>'
             }
         };
@@ -30,14 +30,14 @@ define([
     }
 
     function createAndSetHeader(messageNumber) {
-        var headerDiv = document.createElement('DIV'),
-            msg = template(message1, DATA[messageNumber.toUpperCase()]);
+        var headerDiv = document.createElement('div'),
+            msg = template(message1, data[messageNumber]);
 
-        headerDiv.setAttribute('id', 'welcomeBanner');
+        headerDiv.setAttribute('id', 'welcome-banner');
         headerDiv.setAttribute('style', 'height:' + header.offsetHeight + 'px;');
         headerDiv.innerHTML = msg;
 
-        header.getElementsByClassName('l-header-main')[0].setAttribute('style', 'z-index:1200;');
+        header.getElementsByClassName('l-header-main')[0].style.zIndex = 1200;
 
         header.appendChild(headerDiv);
     }

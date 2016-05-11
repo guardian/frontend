@@ -1,7 +1,7 @@
 /* Test welcome header for first time users
    ========================================================================== */
 
-#welcomeBanner {
+#welcome-banner {
     color: rgb(170, 220, 230);
     background: #005689;
     position: absolute;
@@ -14,7 +14,7 @@
     font-weight: 800;
 }
 
-#welcomeBanner .banner-message {
+#welcome-banner .banner-message {
     @include mq($until: tablet) {
         margin: $gs-gutter/4 $gs-gutter/2;
     }
@@ -27,15 +27,15 @@
     bottom: 0;
 }
 
-#welcomeBanner span {
+#welcome-banner span {
     width: 100%;
     display: block;
 }
 
-#welcomeBanner .pull-left {
+#welcome-banner .pull-left {
     text-align: left;
 }
 
-#welcomeBanner .pull-right {
+#welcome-banner .pull-right {
     text-align: right;
 }
