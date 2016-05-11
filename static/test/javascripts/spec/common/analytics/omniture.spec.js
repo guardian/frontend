@@ -95,6 +95,11 @@ define([
             expect(s.events).toBe('event37');
         });
 
+        it('should not track links or pageviews when initialising the omniture module', function (){
+            omniture.go();
+            expect(s.tl).not.toHaveBeenCalled();
+            expect(s.t).not.toHaveBeenCalled();
+        });
 
         it('should log a clickstream event', function () {
             var clickSpec = {

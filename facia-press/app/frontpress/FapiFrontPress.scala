@@ -1,17 +1,16 @@
 package frontpress
 
-import com.amazonaws.services.s3.AmazonS3Client
 import com.gu.contentapi.client.ContentApiClientLogic
-import com.gu.contentapi.client.model.{ItemQuery, SearchQuery}
 import com.gu.contentapi.client.model.v1.ItemResponse
+import com.gu.contentapi.client.model.{ItemQuery, SearchQuery}
 import com.gu.facia.api.contentapi.ContentApi.{AdjustItemQuery, AdjustSearchQuery}
 import com.gu.facia.api.models.Collection
 import com.gu.facia.api.{FAPI, Response}
-import com.gu.facia.client.{AmazonSdkS3Client, ApiClient}
+import com.gu.facia.client.ApiClient
 import common._
-import conf.switches.Switches.FaciaInlineEmbeds
 import conf.Configuration
-import contentapi.{QueryDefaults, CircuitBreakingContentApiClient, ContentApiClient}
+import conf.switches.Switches.FaciaInlineEmbeds
+import contentapi.{CircuitBreakingContentApiClient, ContentApiClient, QueryDefaults}
 import fronts.FrontsApi
 import model._
 import model.facia.PressedCollection
@@ -20,6 +19,7 @@ import play.api.Play.current
 import play.api.libs.json._
 import play.api.libs.ws.WS
 import services.{ConfigAgent, S3FrontsApi}
+
 import scala.concurrent.Future
 
 object LiveFapiFrontPress extends FapiFrontPress {
@@ -51,9 +51,6 @@ object LiveFapiFrontPress extends FapiFrontPress {
 }
 
 object DraftFapiFrontPress extends FapiFrontPress {
-  val stage: String = Configuration.facia.stage.toUpperCase
-  val bucket: String = Configuration.aws.bucket
-
 
   override implicit val capiClient: ContentApiClientLogic = CircuitBreakingContentApiClient(
     httpTimingMetric = ContentApiMetrics.HttpLatencyTimingMetric,
@@ -62,8 +59,8 @@ object DraftFapiFrontPress extends FapiFrontPress {
     apiKey = Configuration.contentApi.key.getOrElse("facia-press"),
     useThrift = false
   )
-  private val amazonS3Client = new AmazonS3Client()
-  implicit val apiClient: ApiClient = ApiClient(bucket, stage, AmazonSdkS3Client(amazonS3Client))
+
+  implicit val apiClient: ApiClient = FrontsApi.amazonClient
 
   def pressByPathId(path: String): Future[Unit] =
     getPressedFrontForPath(path)
@@ -220,7 +217,15 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
         .orElse(SeoData.descriptionFromWebTitle(webTitle))
 
       val frontProperties: FrontProperties = ConfigAgent.fetchFrontProperties(path)
-        .copy(editorialType = itemResp.flatMap(_.tag).map(_.`type`.name))
+        .copy(
+          editorialType = itemResp.flatMap(_.tag).map(_.`type`.name),
+          activeBrandings = itemResp.flatMap { response =>
+            val sectionBrandings = response.section.flatMap(_.activeSponsorships.map(_.map(Branding.make)))
+            val tagBrandings = response.tag.flatMap(_.activeSponsorships.map(_.map(Branding.make)))
+            val brandings = sectionBrandings.toList.flatten ++ tagBrandings.toList.flatten
+            if (brandings.isEmpty) None else Some(brandings)
+          }
+        )
 
       val seoData: SeoData = SeoData(path, navSection, webTitle, title, description)
       (seoData, frontProperties)

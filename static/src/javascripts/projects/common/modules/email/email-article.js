@@ -61,7 +61,8 @@ define([
                 description: 'Sign up to Film Today and we\'ll deliver to you the latest movie news, blogs, big name interviews, festival coverage, reviews and more.',
                 successHeadline: 'Thank you for signing up to Film Today',
                 successDescription: 'We will send you our picks of the most important headlines tomorrow afternoon.',
-                modClass: 'end-article'
+                modClass: 'end-article',
+                insertMethod: insertBottomOfArticle
             },
             theFiver: {
                 listId: '218',
@@ -71,6 +72,17 @@ define([
                 description: 'Sign up to the Fiver, our daily email on the world of football',
                 successHeadline: 'Thank you for signing up',
                 successDescription: 'You\'ll receive the Fiver daily, around 5pm.',
+                modClass: 'end-article',
+                insertMethod: insertBottomOfArticle
+            },
+            ausCampaignCatchup: {
+                listId: '3689',
+                listName: 'ausCampaignCatchup',
+                campaignCode: 'AU_campaign_signup_page',
+                headline: 'Sign up for the Campaign catchup',
+                description: 'Get the day\'s top election news and commentary coverage delivered to your inbox every afternoon',
+                successHeadline: 'Thank you for signing up',
+                successDescription: 'We will send you the latest Campaign catchup every weekday afternoon',
                 modClass: 'end-article',
                 insertMethod: insertBottomOfArticle
             },

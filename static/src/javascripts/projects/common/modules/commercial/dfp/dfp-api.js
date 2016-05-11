@@ -10,13 +10,14 @@ define([
     'common/utils/$',
     'common/utils/$css',
     'common/utils/config',
+    'common/utils/cookies',
     'common/utils/detect',
+    'common/utils/fastdom-promise',
     'common/utils/mediator',
+    'common/utils/report-error',
+    'common/utils/sha1',
     'common/utils/url',
     'common/utils/user-timing',
-    'common/utils/sha1',
-    'common/utils/fastdom-promise',
-    'common/utils/cookies',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
     'common/modules/commercial/commercial-features',
@@ -51,13 +52,14 @@ define([
     $,
     $css,
     config,
+    cookies,
     detect,
+    fastdom,
     mediator,
+    reportError,
+    sha1,
     urlUtils,
     userTiming,
-    sha1,
-    fastdom,
-    cookies,
     stickyMpu,
     buildPageTargeting,
     commercialFeatures,
@@ -89,7 +91,7 @@ define([
      *
      * Create a new ad slot using the following code:
      *
-     * <div class="ad-slot__dfp AD_SLOT_CLASS" data-name="AD_SLOT_NAME" data-mobile="300,50|320,50"
+     * <div class="js-ad-slot AD_SLOT_CLASS" data-name="AD_SLOT_NAME" data-mobile="300,50|320,50"
      *      data-desktop="300,250" data-refresh="false" data-label="false">
      *     <div id="SLOT_ID" class="ad-container"></div>
      * </div>
@@ -182,7 +184,6 @@ define([
                 sponsorshipIdsReturned.push(value);
             }
         });
-
         return sponsorshipIdsReturned;
     }
 
@@ -683,6 +684,20 @@ define([
 
         if (event.isEmpty) {
             removeSlot(adSlotId);
+
+            // This empty slot could be caused by a targeting problem,
+            // let's report these and diagnose the problem in sentry.
+            var adUnitPath = event.slot.getAdUnitPath(),
+                adTargetingMap = event.slot.getTargetingMap(),
+                adTargetingKValues = adTargetingMap ? adTargetingMap['k'] : [],
+                adKeywords = adTargetingKValues ? adTargetingKValues.join(', ') : '';
+
+            reportError(new Error('dfp returned an empty ad response'), {
+                feature: 'commercial',
+                adUnit: adUnitPath,
+                adSlot: adSlotId,
+                adKeywords: adKeywords
+            }, false);
         } else {
             $adSlot = $('#' + adSlotId);
 

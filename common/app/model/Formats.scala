@@ -1,14 +1,14 @@
 package model
 
-import common.{NavItem, SectionLink, Pagination}
+import common.{NavItem, Pagination, SectionLink}
 import model.content._
 import model.facia.PressedCollection
 import model.liveblog.{BlockAttributes, BodyBlock}
-import quiz.{Image => _, _}
+import model.pressed._
 import org.joda.time.DateTime
-import play.api.libs.json._
 import play.api.libs.functional.syntax._
-import pressed._
+import play.api.libs.json._
+import quiz.{Image => _, _}
 
 object ElementsFormat {
 
@@ -147,7 +147,7 @@ object MetaDataFormat {
           meta.rssPath),
         MetaDataPart2(
           meta.contentType,
-          meta.hasHeader,
+          meta.shouldHideHeaderAndTopAds,
           meta.schemaType,
           meta.cacheTime,
           meta.openGraphImages,

@@ -8,11 +8,11 @@ define([
     'common/modules/commercial/badges',
     'common/modules/commercial/dfp/dfp-api',
     'common/modules/commercial/front-commercial-components',
-    'common/modules/commercial/top-banner-below-container',
     'common/modules/commercial/slice-adverts',
     'common/modules/commercial/third-party-tags',
     'common/modules/commercial/paidfor-band',
-    'common/modules/commercial/adverts'
+    'common/modules/commercial/adverts',
+    'common/modules/commercial/commercial-audit'
 ], function (
     Promise,
     config,
@@ -23,11 +23,11 @@ define([
     badges,
     dfp,
     frontCommercialComponents,
-    topBannerBelowContainer,
     sliceAdverts,
     thirdPartyTags,
     paidforBand,
-    adverts
+    adverts,
+    commercialAudit
 ) {
     var modules = [
         ['cm-dfp', dfp.init],
@@ -36,9 +36,12 @@ define([
         ['cm-articleBodyAdverts', articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
         ['cm-frontCommercialComponents', frontCommercialComponents.init],
-        ['cm-topBannerBelowContainer', topBannerBelowContainer.init],
-        ['cm-badges', badges.init]
+        ['cm-commercialAudit', commercialAudit.init]
     ];
+
+    if (!config.switches.staticBadges) {
+        modules.push(['cm-badges', badges.init]);
+    }
 
     return {
         init: function () {

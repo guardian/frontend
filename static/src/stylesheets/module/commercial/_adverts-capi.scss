@@ -1,7 +1,22 @@
 .adverts--capi {
+    .adverts__title {
+        font-size: get-font-size(headline, 3);
+    }
 }
 
-.adverts--tone-capi {
+.adverts--paidfor {
+    @include mq(mobileLandscape, desktop) {
+        > .adverts__header {
+            flex-wrap: wrap;
+        }
+
+        .adverts__kicker {
+            flex-basis: 100%;
+        }
+    }
+}
+
+.adverts--tone-paidfor {
     background-color: $neutral-6;
 
     > .adverts__header {
@@ -10,7 +25,6 @@
 
     .adverts__title {
         @include f-headlineSans;
-        font-size: get-font-size(headline, 3);
     }
 
     .adverts__logo {
@@ -70,10 +84,54 @@
     }
 }
 
+.adverts--tone-supported {
+    background: none;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        right: 0;
+        transform: translate(-50%, 0);
+        border-top: 1px solid $news-main-2;
+
+        @include mq(tablet) {
+            width: 740px;
+        }
+
+        @include mq(desktop) {
+            width: 980px;
+        }
+
+        @include mq(leftCol) {
+            width: 1140px;
+        }
+
+        @include mq(wide) {
+            width: 1300px;
+        }
+    }
+
+    .adverts__logo {
+        color: $guardian-brand-dark;
+    }
+
+    .adverts__badge__help {
+        color: $neutral-2-contrasted;
+    }
+}
+
 .advert--capi {
-    @include f-textSans;
-    background: $paid-article-subheader;
-    border-top: 1px solid $paid-article-brand;
+    border-top: 1px solid;
+    transition: background .1s;
+
+    &:hover,
+    &:focus {
+        .advert__title {
+            text-decoration: none;
+        }
+    }
 
     .advert__title,
     .advert__meta,
@@ -82,34 +140,18 @@
         padding-right: $gs-gutter / 4;
     }
 
-    .advert__title {
-        @include f-headlineSans;
-        font-weight: 400;
-        margin-bottom: .5em;
-
-        > .inline-icon svg {
-            fill: $paid-article-icon;
-            width: 1.1em;
-            height: .75em;
-            margin-right: .3em;
-        }
-    }
-
     > .advert__meta {
         margin-top: auto;
         margin-bottom: $gs-baseline / 4;
     }
 
-    .adverts--legacy-single & {
-        background: none;
-        border-top: 0;
+    .advert__title {
+        margin-bottom: .5em;
 
-        &::after {
-            background-color: $paid-article-icon;
-        }
-
-        .advert__image-container {
-            border-top: 0;
+        > .inline-icon svg {
+            width: 1.1em;
+            height: .75em;
+            margin-right: .3em;
         }
     }
 
@@ -121,6 +163,10 @@
         .advert__image {
             min-height: $gs-baseline * 11;
             width: 100%;
+        }
+
+        .advert__standfirst {
+            margin-bottom: $gs-baseline / 2;
         }
     }
 
@@ -134,5 +180,76 @@
         > :first-child {
             padding-top: 66%;
         }
+    }
+}
+
+.advert--paidfor {
+    @include f-textSans;
+    background: $paid-article-subheader;
+    border-top-color: $paid-article-brand;
+
+    &:hover,
+    &:focus {
+        background: darken($paid-article-subheader, 7%);
+    }
+
+    .advert__title {
+        @include f-headlineSans;
+        font-weight: 400;
+
+        > .inline-icon svg {
+            fill: $paid-article-icon;
+        }
+    }
+
+
+    .adverts--legacy-single & {
+        background: none;
+        border-top: 0;
+
+        &::after {
+            background-color: $paid-article-icon;
+        }
+
+        .advert__image-container {
+            border-top: 0;
+        }
+    }
+}
+
+.advert--supported {
+    &.advert--text {
+        border-top-color: $news-main-2;
+        background: $neutral-8;
+
+        &:hover,
+        &:focus {
+            background: $neutral-6;
+        }
+    }
+
+    &.advert--media {
+        border-top-color: $multimedia-main-2;
+        background: $multimedia-main-1;
+        color: #ffffff;
+
+        &:hover,
+        &:focus {
+            background: darken($media-background, 7.5%);
+        }
+
+        .advert__title {
+            > .inline-icon svg {
+                fill: $multimedia-main-2;
+            }
+        }
+    }
+
+    > .advert__title {
+        @include font-size(get-font-size(headline, 3), get-line-height(headline, 3));
+    }
+
+    > .advert__standfirst {
+        display: none;
     }
 }

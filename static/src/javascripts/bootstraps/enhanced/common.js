@@ -26,7 +26,6 @@ define([
     'common/modules/commercial/donot-use-adblock',
     'common/modules/commercial/user-features',
     'common/modules/discussion/comment-count',
-    'common/modules/experiments/ab',
     'common/modules/identity/autosignin',
     'common/modules/identity/cookierefresh',
     'common/modules/navigation/navigation',
@@ -81,7 +80,6 @@ define([
     donotUseAdblock,
     userFeatures,
     CommentCount,
-    ab,
     AutoSignin,
     CookieRefresh,
     navigation,
@@ -136,7 +134,7 @@ define([
             initialiseStickyAdBanner: function () {
                 if (config.switches.viewability
                     && !(config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile')
-                    && config.page.pageId !== 'offline-page'
+                    && config.page.pageId !== 'offline-crossword'
                     && !config.page.shouldHideAdverts
                     && config.page.section !== 'childrens-books-site'
                     && !config.tests.abNewHeaderVariant

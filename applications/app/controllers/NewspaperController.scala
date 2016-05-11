@@ -2,6 +2,7 @@ package controllers
 
 import common.{ExecutionContexts, Logging}
 import layout.FaciaContainer
+import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
 import model.{SimplePage, Cached, MetaData}
 import play.api.mvc.{Action, Controller}
 import services.NewspaperQuery
@@ -13,7 +14,7 @@ object NewspaperController extends Controller with Logging with ExecutionContext
     val guardianPage = SimplePage(MetaData.make("theguardian", "todayspaper", "Main section | News | The Guardian", "GFE: Newspaper books Main Section"))
     val todaysPaper = NewspaperQuery.fetchLatestGuardianNewspaper.map(p => TodayNewspaper(guardianPage, p))
 
-    for( tp <- todaysPaper) yield Cached(300)(Ok(views.html.newspaperPage(tp)))
+    for( tp <- todaysPaper) yield Cached(300)(RevalidatableResult.Ok(views.html.newspaperPage(tp)))
 
   }
 
@@ -22,7 +23,7 @@ object NewspaperController extends Controller with Logging with ExecutionContext
 
     val todaysPaper = NewspaperQuery.fetchLatestObserverNewspaper.map(p => TodayNewspaper(observerPage, p))
 
-    for( tp <- todaysPaper) yield Cached(300)(Ok(views.html.newspaperPage(tp)))
+    for( tp <- todaysPaper) yield Cached(300)(RevalidatableResult.Ok(views.html.newspaperPage(tp)))
 
   }
 
@@ -37,7 +38,7 @@ object NewspaperController extends Controller with Logging with ExecutionContext
 
     for( tp <- paper) yield {
       if(noContentForListExists(tp.bookSections)) Found(s"/$path")
-      else Cached(900)(Ok(views.html.newspaperPage(tp)))
+      else Cached(900)(RevalidatableResult.Ok(views.html.newspaperPage(tp)))
     }
   }
 
@@ -46,8 +47,8 @@ object NewspaperController extends Controller with Logging with ExecutionContext
     frontContainer.flatMap(_.items).isEmpty && otherContainer.flatMap(_.items).isEmpty
   }
 
-  def allOn(path: String, day: String, month: String, year: String) = Action {
-    Cached(300)(MovedPermanently(s"/$path/$year/$month/$day"))
+  def allOn(path: String, day: String, month: String, year: String) = Action { implicit request =>
+    Cached(300)(WithoutRevalidationResult(MovedPermanently(s"/$path/$year/$month/$day")))
   }
 }
 

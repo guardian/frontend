@@ -35,7 +35,7 @@
     color: #ffffff;
 }
 
-.content--immersive .from-content-api .gu-display__content-title,
+.content--immersive-article .from-content-api .gu-display__content-title,
 .gu-display__content-title {
     @include f-headlineSans;
     @include font-size(20, 20);
@@ -57,6 +57,7 @@
 .gu-display__cta {
     left: 10px;
     bottom: 10px;
+    line-height: 2.4;
 }
 
 .gu-display__logo-link {
@@ -86,7 +87,7 @@
     color: #ffffff;
 }
 
-.content--immersive .from-content-api .gu-display__content-color--dark,
+.content--immersive-article .from-content-api .gu-display__content-color--dark,
 .gu-display__content-color--dark {
     color: #000000;
 }
@@ -133,24 +134,22 @@ $mobile-max-container-width: gs-span(8);
     margin-left: $gs-gutter / 2;
     margin-right: $gs-gutter / 2;
 
-    @include mq(mobileLandscape) {
-        margin-left: $gs-gutter;
-        margin-right: $gs-gutter;
-    }
-
     @include mq(containerWidestMobile) {
         margin-left: auto;
         margin-right: auto;
-        width: $mobile-max-container-width;
+        width: 275px;
     }
 
     @include mq(tablet) {
-        margin-left: $gs-gutter / 2;
+        width: auto;
         margin-right: $gs-gutter / 2;
+        margin-left: $gs-gutter / 2;
     }
 
     @include mq(desktop) {
         max-width: 300px;
+        margin-left: $gs-gutter / 2;
+        margin-right: $gs-gutter / 2;
     }
 
     // Article styles: Right slot width is exactly the size of the banner so we don't want any margin

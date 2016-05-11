@@ -10,7 +10,7 @@ import football.feed.MatchDayRecorder
 import jobs._
 import play.api.GlobalSettings
 import services.EmailService
-import tools.{CloudWatch, LoadBalancer}
+import tools.{AssetMetricsCache, CloudWatch, LoadBalancer}
 
 import scala.concurrent.Future
 
@@ -93,6 +93,10 @@ trait AdminLifecycle extends GlobalSettings with Logging {
       VideoEncodingsJob.run()
     }
 
+    Jobs.scheduleEveryNMinutes("AssetMetricsCache", 60 * 6) {
+      AssetMetricsCache.run()
+    }
+
   }
 
   private def descheduleJobs(): Unit = {
@@ -112,6 +116,7 @@ trait AdminLifecycle extends GlobalSettings with Logging {
     Jobs.deschedule("ExpiringAdFeaturesEmailJob")
     Jobs.deschedule("VideoEncodingsJob")
     Jobs.deschedule("ExpiringSwitchesEmailJob")
+    Jobs.deschedule("AssetMetricsCache")
   }
 
   override def onStart(app: play.api.Application): Unit = {
@@ -122,6 +127,7 @@ trait AdminLifecycle extends GlobalSettings with Logging {
     AkkaAsync {
       RebuildIndexJob.run()
       VideoEncodingsJob.run()
+      AssetMetricsCache.run()
     }
   }
 

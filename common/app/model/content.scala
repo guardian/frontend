@@ -8,12 +8,10 @@ import com.gu.facia.client.models.TrailMetaData
 import common._
 import common.dfp.DfpAgent
 import conf.Configuration
-import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch}
+import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch, galleryRedesign}
 import cricketPa.CricketTeams
-import layout.ContentWidths.{ImmersiveMedia, BodyMedia, LiveBlogMedia, GalleryMedia}
-import model.content.{Quiz, Atoms}
-import model.liveblog.{LiveBlogDate, BodyBlock}
-import model.liveblog.BodyBlock.{SummaryEvent, KeyEvent}
+import layout.ContentWidths.GalleryMedia
+import model.content.{Atoms, Quiz}
 import model.pressed._
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
@@ -81,7 +79,8 @@ final case class Content(
   lazy val shortUrlId = fields.shortUrl.replace("http://gu.com", "")
   lazy val shortUrlPath = shortUrlId
   lazy val discussionId = Some(shortUrlPath)
-  lazy val isImmersive = fields.displayHint.contains("immersive")
+  lazy val isImmersive = fields.displayHint.contains("immersive") || metadata.contentType.toLowerCase == "gallery"
+  lazy val showNewGalleryDesign = galleryRedesign.isSwitchedOn && metadata.contentType.toLowerCase == "gallery" && !trail.commercial.isAdvertisementFeature
 
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {
@@ -146,7 +145,7 @@ final case class Content(
   }
 
   lazy val blogOrSeriesTag: Option[Tag] = {
-    tags.tags.find( tag => tag.showSeriesInMeta && (tag.isBlog || tag.isSeries )).headOption
+    tags.tags.find( tag => tag.showSeriesInMeta && (tag.isBlog || tag.isSeries ))
   }
 
   lazy val seriesTag: Option[Tag] = {
@@ -168,6 +167,8 @@ final case class Content(
 
   lazy val numberOfVideosInTheBody: Int = Jsoup.parseBodyFragment(fields.body).body().children().select("video[class=gu-video]").size()
 
+  val legallySensitive: Boolean = fields.legallySensitive.getOrElse(false)
+
   def javascriptConfig: Map[String, JsValue] = Map(
     ("publication", JsString(publication)),
     ("hasShowcaseMainElement", JsBoolean(elements.hasShowcaseMainElement)),
@@ -176,8 +177,9 @@ final case class Content(
     ("isContent", JsBoolean(true)),
     ("wordCount", JsNumber(wordCount)),
     ("references", JsArray(javascriptReferences)),
-    ("showRelatedContent", JsBoolean(if (tags.isUSMinuteSeries) { false } else showInRelated)),
-    ("productionOffice", JsString(productionOffice.getOrElse("")))
+    ("showRelatedContent", JsBoolean(if (tags.isUSMinuteSeries) { false } else (showInRelated && !legallySensitive))),
+    ("productionOffice", JsString(productionOffice.getOrElse(""))),
+    ("isImmersive", JsBoolean(isImmersive))
   )
 
   // Dynamic Meta Data may appear on the page for some content. This should be used for conditional metadata.
@@ -316,7 +318,6 @@ object Content {
           .orElse(trail.trailPicture.flatMap(_.largestImageUrl))
           .getOrElse(Configuration.images.fallbackLogo)
       }
-
     )
   }
 }
@@ -358,7 +359,8 @@ object Article {
       ("hasInlineMerchandise", JsBoolean(commercial.hasInlineMerchandise)),
       ("lightboxImages", lightbox.javascriptConfig),
       ("hasMultipleVideosInPage", JsBoolean(content.hasMultipleVideosInPage)),
-      ("isImmersive", JsBoolean(content.isImmersive))
+      ("isImmersive", JsBoolean(content.isImmersive)),
+      ("isSensitive", JsBoolean(fields.sensitive.getOrElse(false)))
     ) ++ bookReviewIsbn
 
     val opengraphProperties: Map[String, String] = Map(
@@ -393,7 +395,7 @@ object Article {
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       twitterPropertiesOverrides = twitterProperties,
-      hasHeader = content.tags.isUSMinuteSeries || content.isImmersive
+      shouldHideHeaderAndTopAds = content.tags.isUSMinuteSeries || content.isImmersive
     )
   }
 
@@ -499,7 +501,7 @@ object Audio {
 final case class Audio (override val content: Content) extends ContentType {
 
   lazy val downloadUrl: Option[String] = elements.mainAudio
-    .flatMap(_.audio.encodings.find(_.format == "audio/mpeg").map(_.url.replace("static.guim", "download.guardian")))
+    .flatMap(_.audio.encodings.find(_.format == "audio/mpeg").map(_.url))
 
   private lazy val podcastTag: Option[Tag] = tags.tags.find(_.properties.podcast.nonEmpty)
   lazy val iTunesSubscriptionUrl: Option[String] = podcastTag.flatMap(_.properties.podcast.flatMap(_.subscriptionUrl))
@@ -649,6 +651,7 @@ final case class Gallery(
   lightboxProperties: GalleryLightboxProperties) extends ContentType {
 
   val lightbox = GalleryLightbox(content.elements, content.tags, lightboxProperties)
+  val showNewGalleryDesign: Boolean = content.showNewGalleryDesign
   def apply(index: Int): ImageAsset = lightbox.galleryImages(index).images.largestImage.get
 }
 
@@ -782,7 +785,6 @@ object Interactive {
       contentType = contentType,
       analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
-      hasHeader = content.isImmersive,
       javascriptConfigOverrides = Map("contentType" -> JsString(contentType)),
       twitterPropertiesOverrides = twitterProperties
     )

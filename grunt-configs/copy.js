@@ -4,23 +4,17 @@ module.exports = function (grunt, options) {
             files: [
                 {
                     expand: true,
-                    cwd: 'static/public/javascripts/components',
+                    cwd: 'static/public/javascripts',
                     src: ['**/*.js'],
-                    dest: options.staticTargetDir + 'javascripts/components'
-                },
-                {
-                    expand: true,
-                    cwd: 'static/public/javascripts/vendor',
-                    src: ['**/*.js'],
-                    dest: options.staticTargetDir + 'javascripts/vendor'
+                    dest: options.staticTargetDir + 'javascripts'
                 },
                 {
                     expand: true,
                     cwd: 'static/src/javascripts/vendor',
                     src: [
-                        'formstack-interactive/0.1/boot.js',
-                        'vast-client.js',
-                        'stripe/stripe.min.js'
+                        'formstack-interactive/**/*',
+                        'prebid/**/*',
+                        'stripe/**/*'
                     ],
                     dest: options.staticTargetDir + 'javascripts/vendor'
                 },
@@ -28,32 +22,11 @@ module.exports = function (grunt, options) {
                     expand: true,
                     cwd: 'static/src/javascripts/vendor',
                     src: [
-                        '**/*'
+                        'foresee/**/*'
                     ],
                     dest: options.staticHashDir + 'javascripts/vendor'
-                },
-                {
-                    expand: true,
-                    cwd: options.requirejsDir,
-                    src: [
-                        'bootstraps/commercial.js',
-                        'bootstraps/commercial.js.map',
-                        'enhanced-vendor.js',
-                        'enhanced-vendor.js.map',
-                        'bootstraps/enhanced/main.js',
-                        'bootstraps/enhanced/main.js.map'
-                    ],
-                    dest: options.staticTargetDir + 'javascripts'
                 }
             ]
-        },
-        css: {
-            files: [{
-                expand: true,
-                cwd: 'static/src/stylesheets',
-                src: ['**/*.scss'],
-                dest: options.staticTargetDir + 'stylesheets'
-            }]
         },
         images: {
             files: [{

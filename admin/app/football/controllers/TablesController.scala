@@ -3,6 +3,7 @@ package controllers.admin
 import common.ExecutionContexts
 import football.model.PA
 import football.services.GetPaClient
+import model.Cached.RevalidatableResult
 import model.{Cors, Cached, NoCache}
 import org.joda.time.LocalDate
 import pa._
@@ -13,12 +14,12 @@ import scala.concurrent.Future
 
 object TablesController extends Controller with ExecutionContexts with GetPaClient {
 
-  def tablesIndex = AuthActions.AuthActionTest.async { request =>
+  def tablesIndex = AuthActions.AuthActionTest.async { implicit request =>
     for {
       allCompetitions <- client.competitions
     } yield {
       val filteredCompetitions = PA.filterCompetitions(allCompetitions)
-      Cached(60)(Ok(views.html.football.leagueTables.tablesIndex(filteredCompetitions, PA.teams.all)))
+      Cached(60)(RevalidatableResult.Ok(views.html.football.leagueTables.tablesIndex(filteredCompetitions, PA.teams.all)))
     }
   }
 

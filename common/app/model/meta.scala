@@ -1,20 +1,21 @@
 package model
 
+import campaigns.PersonalInvestmentsCampaign
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
+import common.commercial.BrandHunter
 import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
-import conf.switches.Switches._
 import cricketPa.CricketTeams
-import model.CacheTime._
 import model.liveblog.BodyBlock
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
-import campaigns.PersonalInvestmentsCampaign
+import play.api.mvc.RequestHeader
+import conf.switches.Switches.galleryRedesign
 
 object Commercial {
 
@@ -102,9 +103,25 @@ final case class Commercial(
   def isSponsored(maybeEdition: Option[Edition]): Boolean =
     DfpAgent.isSponsored(tags.tags, Some(metadata.section), maybeEdition)
 
+  def hasHighMerchandisingTarget: Boolean = {
+    DfpAgent.hasHighMerchandisingTarget(tags.tags)
+  }
+
+  def conditionalConfig: Map[String, JsValue] = {
+    val highMerchansisingMeta = if (hasHighMerchandisingTarget) {
+      Some("hasHighMerchandisingTarget", JsBoolean(hasHighMerchandisingTarget))
+    } else None
+
+    val meta: List[Option[(String, JsValue)]] = List(
+      highMerchansisingMeta
+    )
+    meta.flatten.toMap
+  }
+
   def javascriptConfig: Map[String, JsValue] = Map(
     ("isAdvertisementFeature", JsBoolean(isAdvertisementFeature))
-  )
+  ) ++ conditionalConfig
+
 }
 /**
  * MetaData represents a page on the site, whether facia or content
@@ -121,7 +138,9 @@ object Fields {
       blocks = BodyBlock.make(apiContent.blocks),
       lastModified = apiContent.fields.flatMap(_.lastModified).map(_.toJodaDateTime).getOrElse(DateTime.now),
       displayHint = apiContent.fields.flatMap(_.displayHint).getOrElse(""),
-      isLive = apiContent.fields.flatMap(_.liveBloggingNow).getOrElse(false)
+      isLive = apiContent.fields.flatMap(_.liveBloggingNow).getOrElse(false),
+      sensitive = apiContent.fields.flatMap(_.sensitive),
+      legallySensitive = apiContent.fields.flatMap(_.legallySensitive)
     )
   }
 }
@@ -136,7 +155,9 @@ final case class Fields(
   blocks: Seq[BodyBlock],
   lastModified: DateTime,
   displayHint: String,
-  isLive: Boolean
+  isLive: Boolean,
+  sensitive: Option[Boolean],
+  legallySensitive: Option[Boolean]
 ){
   def javascriptConfig: Map[String, JsValue] = Map(("shortUrl", JsString(shortUrl)))
 }
@@ -227,7 +248,7 @@ final case class MetaData (
   description: Option[String] = None,
   rssPath: Option[String] = None,
   contentType: String = "",
-  hasHeader: Boolean = true,
+  shouldHideHeaderAndTopAds: Boolean = false,
   schemaType: Option[String] = None, // Must be one of... http://schema.org/docs/schemas.html
   cacheTime: CacheTime = CacheTime.Default,
   openGraphImages: Seq[String] = Seq(),
@@ -245,7 +266,10 @@ final case class MetaData (
 ){
 
   def hasPageSkin(edition: Edition) = if (isPressedPage){
-    DfpAgent.isPageSkinned(adUnitSuffix, edition)
+    DfpAgent.hasPageSkin(adUnitSuffix, edition)
+  } else false
+  def hasPageSkinOrAdTestPageSkin(edition: Edition) = if (isPressedPage){
+    DfpAgent.hasPageSkinOrAdTestPageSkin(adUnitSuffix, edition)
   } else false
   def sizeOfTakeoverAdsInSlot(slot: AdSlot, edition: Edition): Seq[AdSize] = if (isPressedPage) {
     DfpAgent.sizeOfTakeoverAdsInSlot(slot, adUnitSuffix, edition)
@@ -263,7 +287,7 @@ final case class MetaData (
     conf.switches.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty && url.contains("/membership/")
   }
 
-  val hasSlimHeader: Boolean = contentType == "Interactive" || section == "identity"
+  val hasSlimHeader: Boolean = contentType == "Interactive" || section == "identity" || (galleryRedesign.isSwitchedOn && contentType.toLowerCase == "gallery")
 
   // Special means "Next Gen platform only".
   private val special = id.contains("-sp-")
@@ -287,15 +311,21 @@ final case class MetaData (
     ("videoJsFlashSwf", JsString(conf.Static("flash/components/video-js-swf/video-js.swf").path))
   )
 
-  def opengraphProperties: Map[String, String] = Map(
-    "og:site_name" -> "the Guardian",
-    "fb:app_id"    -> Configuration.facebook.appId,
-    "og:type"      -> "website",
-    "og:url"       -> webUrl) ++ (iosId("applinks") map (iosId => List(
-    "al:ios:url" -> s"gnmguardian://$iosId",
-    "al:ios:app_store_id" -> "409128287",
-    "al:ios:app_name" -> "The Guardian"
-  )) getOrElse Nil)
+  def opengraphProperties: Map[String, String] = {
+    // keep the old og:url even once the migration happens, as facebook lose the share count otherwise
+    def ogUrl = webUrl.replaceFirst("^https:", "http:")
+
+    Map(
+      "og:site_name" -> "the Guardian",
+      "fb:app_id"    -> Configuration.facebook.appId,
+      "og:type"      -> "website",
+      "og:url"       -> ogUrl
+    ) ++ (iosId("applinks") map (iosId => List(
+      "al:ios:url" -> s"gnmguardian://$iosId",
+      "al:ios:app_store_id" -> "409128287",
+      "al:ios:app_name" -> "The Guardian"
+    )) getOrElse Nil)
+  }
 
   def twitterProperties: Map[String, String] = Map(
     "twitter:site" -> "@guardian") ++ (iosId("twitter") map (iosId => List(
@@ -336,7 +366,8 @@ object Page {
 
 // A Page is something that has metadata, and anything with Metadata can be rendered.
 trait Page {
- def metadata: MetaData
+  def metadata: MetaData
+  def branding(edition: Edition): Option[Branding] = None
 }
 
 // ContentPage objects use data from a ContentApi item to populate metadata.
@@ -364,6 +395,15 @@ trait ContentPage extends Page {
     metadata.twitterProperties ++
     item.content.twitterProperties ++
     metadata.twitterPropertiesOverrides
+
+  override def branding(edition: Edition): Option[Branding] = {
+    BrandHunter.findContentBranding(
+      section = None,
+      item.tags,
+      publicationDate = Some(item.trail.webPublicationDate),
+      edition
+    )
+  }
 }
 case class SimpleContentPage(content: ContentType) extends ContentPage {
   override lazy val item: ContentType = content
@@ -388,6 +428,8 @@ trait StandalonePage extends Page {
 
 case class SimplePage(override val metadata: MetaData) extends StandalonePage
 
+case class HostedPage(override val metadata: MetaData) extends StandalonePage
+
 case class CommercialExpiryPage(
   id: String,
   section: String = "global",
@@ -395,6 +437,15 @@ case class CommercialExpiryPage(
   analyticsName: String = "GFE:Gone") extends StandalonePage {
 
   override val metadata: MetaData = MetaData.make(id, section, webTitle, analyticsName, shouldGoogleIndex = false)
+}
+
+case class GalleryPage(
+  gallery: Gallery,
+  related: RelatedContent,
+  index: Int,
+  trail: Boolean)(implicit request: RequestHeader) extends ContentPage {
+  override lazy val item = gallery
+  val showBadge = item.commercial.isSponsored(Some(Edition(request))) || item.commercial.isFoundationSupported || item.commercial.isAdvertisementFeature
 }
 
 case class TagCombiner(

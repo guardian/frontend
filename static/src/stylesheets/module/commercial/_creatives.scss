@@ -476,6 +476,159 @@
     }
 }
 
+.ad-slot--dfp.ad-slot__fabric-v1 {
+    height: auto;
+    width: auto;
+    padding-left: 0;
+    padding-bottom: 0;
+    padding-top: 0;
+
+    .ad-slot__label {
+        display: none;
+    }
+
+    .creative--fabric-v1__label {
+        width: 100%;
+        display: block;
+        text-align: left;
+        margin-top: 0;
+
+        .fc-container__inner {
+            padding-top: 0;
+            border-top: 0;
+        }
+    }
+}
+
+.creative--fabric-v1-bg-container {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 0 !important;
+
+    .ad-scrolling-bg {
+        position: absolute;
+        top: 0;
+        height: 500px;
+        width: 100%;
+        background-repeat: no-repeat;
+    }
+
+    .ad-scrolling-bg-parallax {
+        background-attachment: scroll;
+    }
+
+    .fabric-v1_layer {
+
+        .is-modern & {
+            &.ad-scrolling-text-hide {
+                background-position: 0 -250px;
+            }
+            &.ad-scrolling-text-hide-left {
+                background-position: left -250px;
+            }
+            &.ad-scrolling-text-hide-right {
+                background-position: right -250px;
+            }
+            &.ad-scrolling-text-hide-centre {
+                background-position: center -250px;
+            }
+            &.ad-scrolling-text-animate {
+                animation: textanimation 1.4s ease .4s;
+                animation-fill-mode: forwards;
+            }
+            &.ad-scrolling-text-animate-left {
+                animation: textanimation 1.4s ease .4s;
+                animation-fill-mode: forwards;
+            }
+            &.ad-scrolling-text-animate-right {
+                animation: textanimation-right 1.4s ease .4s;
+                animation-fill-mode: forwards;
+            }
+            &.ad-scrolling-text-animate-centre {
+                animation: textanimation-centre 1.4s ease .4s;
+                animation-fill-mode: forwards;
+            }
+        }
+    }
+
+    .ad-slot__label {
+        position: relative;
+        text-align: left;
+    }
+
+    .fc-container__inner {
+        padding-top: 0;
+        border-top: 0;
+    }
+}
+
+.creative--fabric-v1 {
+    height: 250px;
+
+    .gs-container {
+        height: 100%;
+    }
+
+    .fabric-v1_video {
+        position: absolute;
+        z-index: 10;
+        margin-left: 0;
+        margin-top: 0;
+
+        &.fabric-v1_video--vert-pos-top {
+            top: 0;
+        }
+        &.fabric-v1_video--vert-pos-center {
+            top: 50%;
+            /* Magic number of video height/2 */
+            margin-top: -115px;
+        }
+        &.fabric-v1_video--vert-pos-bottom {
+            top: auto;
+            bottom: 0;
+        }
+        &.fabric-v1_video--horiz-pos-left {
+            left: 0;
+        }
+        &.fabric-v1_video--horiz-pos-center {
+            /* Magic number of video width/2 */
+            margin-left: -205px;
+            left: 50%;
+        }
+        &.fabric-v1_video--horiz-pos-right {
+            left: auto;
+            right: 0;
+        }
+    }
+
+    .fabric-v1_layer {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        background-repeat: no-repeat;
+    }
+
+    .fabric-v1_layer2 {
+        z-index: 2;
+    }
+
+    .fabric-v1_layer3 {
+        z-index: 3;
+    }
+}
+
+.creative--fabric-expanding-v1 {
+    @include mq($until: tablet) {
+        // Smaller video should not flush to container bottom
+        .expandable_video {
+            bottom: $gs-row-height / 2;
+        }
+    }
+}
+
 .ad-slot--dfp.ad-slot__fluid250 {
     height: auto;
     width: 100%;
@@ -635,7 +788,8 @@
 }
 
 @include mq(tablet) {
-    .top-banner-ad-container .ad-slot--top-banner-ad__fluid250 {
+    .top-banner-ad-container .ad-slot--top-banner-ad__fluid250,
+    .top-banner-ad-container .ad-slot--top-banner-ad__fabric-v1 {
         height: auto;
         padding: 0;
     }
@@ -729,55 +883,6 @@
     }
 
 }
-
-// Fabric
-// =============================================================================
-
-// Layout
-
-.ad-slot--fabric {
-
-    &.ad-slot--top-banner-ad {
-        width: auto;
-        padding-bottom: 0;
-        padding-left: 0;
-    }
-
-    @include mq(mobile, tablet) {
-        // Full width on mobile fronts
-        width: auto;
-    }
-}
-
-.fabric {
-    height: 250px;
-    transition: height .8s;
-
-    // This is just for demonstration purposes, whilst the ad is populated with ipsum text
-    color: #f0f0f0;
-    background: #303030;
-}
-
-.fabric--expanded {
-    height: 500px;
-}
-
-// Label
-
-.fabric__label-wrapper {
-    .top-banner-ad-container--desktop & {
-        width: auto;
-    }
-}
-
-.fabric__label-wrapper .fabric__label {
-    padding: 0;
-    border-top: 0; // undoes default borders on fc-container-inner
-    text-align: left;
-}
-
-// Animations
-// =============================================================================
 
 @keyframes textanimation {
     0% {

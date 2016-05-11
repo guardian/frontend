@@ -1,7 +1,16 @@
-@(content: model.ContentType)(implicit request: RequestHeader)
+@(content: model.ContentType, page: model.Page)(implicit request: RequestHeader)
 @import common.Edition
-@import conf.switches.Switches.SponsoredSwitch
+@import conf.switches.Switches.{SponsoredSwitch, staticBadgesSwitch}
 @import model.{Article, Audio, Gallery, Interactive, Video}
+@import views.html.fragments.commercial.contentLogo
+
+@if(staticBadgesSwitch.isSwitchedOn) {
+
+    @for(branding <- page.branding(Edition(request))) {
+        @contentLogo(branding)
+    }
+
+} else {
 
 @defining(content.commercial.isSponsored(Some(Edition(request))),
     content.commercial.isAdvertisementFeature,
@@ -19,6 +28,7 @@
             },
             content match {
                 case a: Article if a.isLiveBlog => "live-blog"
+                case _: Gallery => "gallery"
                 case _: Interactive => "interactive"
                 case _ => "article"
             },
@@ -66,4 +76,6 @@
             }
         }
     }
+}
+
 }

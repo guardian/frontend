@@ -49,7 +49,7 @@ define([
         //
 
         raven.config(
-            'http://' + config.page.sentryPublicApiKey + '@' + config.page.sentryHost,
+            'https://' + config.page.sentryPublicApiKey + '@' + config.page.sentryHost,
             {
                 whitelistUrls: [
                     /localhost/, // will not actually log errors, but `shouldSendCallback` will be called
@@ -78,7 +78,7 @@ define([
                         }
                     }
 
-                    return config.switches.diagnosticsLogging &&
+                    return config.switches.enableSentryReporting &&
                         Math.random() < 0.2 &&
                         !isDev; // don't actually notify sentry in dev mode
                 }
@@ -109,6 +109,27 @@ define([
                 raven.captureException(error);
             }
         });
+
+        /*
+         *  Interactive bootstraps.
+         *
+         *  Interactives are content, we want them booting as soon (and as stable) as possible.
+         */
+
+        if (
+            config.switches.bootInteractivesFromMain &&
+            /Article|Interactive|LiveBlog/.test(config.page.contentType)
+        ) {
+            $('figure.interactive').each(function (el) {
+                require($(el).attr('data-interactive'), function (interactive) {
+                    fastdom.defer(function () {
+                        robust.catchErrorsAndLog('interactive-bootstrap', function () {
+                            interactive.boot(el, document, config, mediator);
+                        });
+                    });
+                });
+            });
+        }
 
         //
         // A/B tests

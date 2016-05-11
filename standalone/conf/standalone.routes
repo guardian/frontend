@@ -18,13 +18,13 @@ GET           /logout                                                           
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
 
 # Travel offers
-GET        /commercial/travel/offers.json                                                      controllers.commercial.TravelOffers.renderTravel
+GET        /commercial/travel/offers.json                                                      controllers.commercial.TravelOffersController.renderTravel
 
 # Jobs
-GET        /commercial/jobs.json                                                               controllers.commercial.JobAds.renderJobs
+GET        /commercial/jobs.json                                                               controllers.commercial.JobsController.renderJobs
 
 # Masterclasses
-GET        /commercial/masterclasses.json                                                      controllers.commercial.Masterclasses.renderMasterclasses
+GET        /commercial/masterclasses.json                                                      controllers.commercial.MasterclassesController.renderMasterclasses
 
 # Soulmates
 GET        /commercial/soulmates/$subgroup<\w+>.json                                           controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
@@ -61,6 +61,7 @@ GET        /tagged.json                                                         
 GET        /:mediaType/section/:sectionId/*seriesId.json                                       controllers.MediaInSectionController.renderSectionMediaWithSeries(mediaType, sectionId, seriesId)
 GET        /:mediaType/section/:sectionId.json                                                 controllers.MediaInSectionController.renderSectionMedia(mediaType, sectionId)
 GET        /video/most-viewed.json                                                             controllers.MostViewedVideoController.renderMostViewed()
+GET        /video/in-series/*series.json                                                       controllers.MostViewedVideoController.renderInSeries(series: String)
 GET        /audio/most-viewed.json                                                             controllers.MostViewedAudioController.renderMostViewed()
 GET        /embed/card/*path.json                                                              controllers.RichLinkController.render(path)
 GET        /embed/card/*path                                                                   controllers.RichLinkController.renderHtml(path)

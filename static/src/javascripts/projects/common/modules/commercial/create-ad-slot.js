@@ -13,7 +13,8 @@ define([
     isArray,
     transform
 ) {
-    var fabricSwitch = config.switches.fabricAdverts ? '|88,71' : '';
+    var fabricMapping = '88,71';
+    var fabricMappingSwitch = config.switches.fabricAdverts ? ('|' + fabricMapping) : '';
     var adSlotDefinitions = {
         right: {
             sizeMappings: {
@@ -39,11 +40,18 @@ define([
                 mobile: '1,1|88,85'
             }
         },
+        inline1: {
+            sizeMappings: {
+                mobile:             '1,1|300,250',
+                'mobile-landscape': '1,1|300,250',
+                tablet:             '1,1|300,250'
+            }
+        },
         inline: {
             sizeMappings: {
-                mobile:             '1,1|300,250' + fabricSwitch,
-                'mobile-landscape': '1,1|300,250' + fabricSwitch,
-                tablet:             '1,1|300,250' + fabricSwitch
+                mobile:             '1,1|300,250',
+                'mobile-landscape': '1,1|300,250',
+                tablet:             '1,1|300,250'
             }
         },
         mostpop: {
@@ -88,7 +96,12 @@ define([
         },
         'top-above-nav': {
             sizeMappings: {
-                desktop: '1,1|88,70|728,90|940,230|900,250|970,250'
+                desktop: '1,1|88,70|728,90|940,230|900,250|970,250' + fabricMappingSwitch
+            }
+        },
+        'fabric': {
+            sizeMappings: {
+                mobile: fabricMapping
             }
         }
     };

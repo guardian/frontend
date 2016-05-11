@@ -96,6 +96,15 @@ define([
         theFiver: function () {
             return page.keywordExists(['Football']) && allowedArticleStructure();
         },
+        ausCampaignCatchup: function () {
+            return page.keywordExists([
+                'Australia news',
+                'Australian politics',
+                'Australian election 2016',
+                'Guardian Australia\'s Morning Mail',
+                'Australian election briefing'
+            ]);
+        },
         theGuardianToday: function () {
             return config.switches.emailInArticleGtoday &&
                 !pageHasBlanketBlacklist() &&
@@ -127,6 +136,7 @@ define([
             version = detect.getUserAgent.version;
 
         return !config.page.shouldHideAdverts &&
+            !config.page.isSensitive &&
             !emailInserted &&
             !config.page.isFront &&
             config.switches.emailInArticle &&

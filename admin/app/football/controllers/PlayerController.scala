@@ -1,5 +1,6 @@
 package controllers.admin
 
+import model.Cached.RevalidatableResult
 import play.api.mvc._
 import football.services.GetPaClient
 import pa.{StatsSummary, PlayerProfile, PlayerAppearances}
@@ -16,17 +17,17 @@ import play.twirl.api.HtmlFormat
 
 object PlayerController extends Controller with ExecutionContexts with GetPaClient with Requests {
 
-  def playerIndex =AuthActions.AuthActionTest.async { request =>
+  def playerIndex = AuthActions.AuthActionTest.async { implicit request =>
     for {
       competitions <- client.competitions.map(PA.filterCompetitions)
       competitionTeams <- Future.traverse(competitions){comp => client.teams(comp.competitionId, comp.startDate, comp.endDate)}
       allTeams = competitionTeams.flatten.distinct
     } yield {
-      Cached(600)(Ok(views.html.football.player.playerIndex(competitions, allTeams)))
+      Cached(600)(RevalidatableResult.Ok(views.html.football.player.playerIndex(competitions, allTeams)))
     }
   }
 
-  def redirectToCard =AuthActions.AuthActionTest { request =>
+  def redirectToCard = AuthActions.AuthActionTest { request =>
     val submission = request.body.asFormUrlEncoded.get
     val playerCardType = submission.get("playerCardType").get.head
     val playerId = submission.get("player").get.head
@@ -79,7 +80,7 @@ object PlayerController extends Controller with ExecutionContexts with GetPaClie
     else NoCache {
       JsonComponent(
           "html" -> card
-      )
+      ).result
     }
   }
 
