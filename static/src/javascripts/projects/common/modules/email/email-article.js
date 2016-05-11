@@ -86,6 +86,17 @@ define([
                 modClass: 'end-article',
                 insertMethod: insertBottomOfArticle
             },
+            usBriefing: {
+                listId: '',
+                listName: 'usBriefing',
+                campaignCode: '',
+                headline: 'Sign up for the Guardian US briefing',
+                description: '',
+                successHeadline: 'Thank you for signing up',
+                successDescription: '',
+                modClass: 'end-article',
+                insertMethod: insertBottomOfArticle
+            },
             theGuardianToday: {
                 listId: (function () {
                     switch (config.page.edition) {
