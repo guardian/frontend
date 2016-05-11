@@ -95,11 +95,41 @@ $hosted-stripe: 28px;
 .hosted__video {
     vertical-align: top;
 
-    .vjs-big-play-button .vjs-control-text,
+    .vjs-big-play-button .vjs-control-text {
+        display: none;
+    }
+
+    //those control buttons will fade in on video play
     .vjs-fullscreen-control,
     .vjs-volume-menu-button,
     .vjs-progress-control {
-        display: none;
+        opacity: 0;
+    }
+
+    &.vjs-paused {
+        .vjs-fullscreen-control,
+        .vjs-volume-menu-button,
+        .vjs-progress-control {
+            @include hosted-fade-out;
+        }
+
+        .vjs-control-bar {
+            background-color: unset;
+            transition: background-color 1s linear;
+        }
+    }
+
+    &.vjs-playing {
+        .vjs-fullscreen-control,
+        .vjs-volume-menu-button,
+        .vjs-progress-control {
+            @include hosted-fade-in;
+        }
+
+        .vjs-control-bar {
+            background-color: rgba(25, 25, 25, .8);
+            transition: background-color 1s linear;
+        }
     }
 
     .vjs-control-bar {
