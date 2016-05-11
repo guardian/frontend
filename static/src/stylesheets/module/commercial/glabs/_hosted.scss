@@ -139,7 +139,10 @@ $hosted-stripe: 28px;
         height: 88px;
     }
 
-    .vjs-fullscreen-control,
+    .vjs-fullscreen-control {
+        margin-top: 30px;
+    }
+
     .vjs-menu-button {
         margin-top: 34px;
 
@@ -152,30 +155,31 @@ $hosted-stripe: 28px;
         padding-top: 21px;
     }
 
-    //&.vjs-paused,
-    //&.vjs-playing {
-    .vjs-play-control {
+    &.vjs .vjs-play-control {
         width: 48px;
         height: 48px;
         margin: 20px 10px 20px 20px;
     }
-   // }
 }
 
 .hosted__meta {
     position: absolute;
     left: $gs-gutter;
-    bottom: 10%;
+    bottom: 30%;
     width: 55%; // Magic. Do not touch.
     color: #ffffff;
 
-    @include mq(desktop) {
+    @include mq(tablet) {
         bottom: 20%;
+    }
+
+    @include mq(desktop) {
         width: 35%;
         left: calc(50% - 490px + #{$gs-gutter});
     }
 
     @include mq(leftCol) {
+        bottom: 18%;
         left: calc(50% - 570px + #{$gs-gutter});
     }
 
