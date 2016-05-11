@@ -23,15 +23,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABIdentityRegisterMembershipStandfirst = Switch(
-    SwitchGroup.ABTests,
-    "ab-identity-register-membership-standfirst",
-    "Membership registration page variant for Identity",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 12),
-    exposeClientSide = true
-  )
-
   val ABLiveBlogChromeNotificationsInternal = Switch(
     SwitchGroup.ABTests,
     "ab-live-blog-chrome-notifications-internal",
