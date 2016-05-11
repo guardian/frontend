@@ -186,7 +186,6 @@ define([
                 omniture.go();
                 if (config.switches.ophan) {
                     require(['ophan/ng'], function (ophan) {
-
                         if (config.switches.scrollDepth) {
                             mediator.on('scrolldepth:data', ophan.record);
 
