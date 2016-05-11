@@ -87,13 +87,13 @@ define([
                 insertMethod: insertBottomOfArticle
             },
             usBriefing: {
-                listId: '',
+                listId: '1493',
                 listName: 'usBriefing',
-                campaignCode: '',
-                headline: 'Sign up for the Guardian US briefing',
-                description: '',
-                successHeadline: 'Thank you for signing up',
-                successDescription: '',
+                campaignCode: 'guardian_today_article_bottom',
+                headline: 'Want stories like this in your inbox?',
+                description: 'Sign up to The Guardian Today daily email and get the biggest headlines each morning.',
+                successHeadline: 'Thank you for signing up to the Guardian Today',
+                successDescription: 'We will send you our picks of the most important headlines tomorrow morning.',
                 modClass: 'end-article',
                 insertMethod: insertBottomOfArticle
             },
@@ -102,9 +102,6 @@ define([
                     switch (config.page.edition) {
                         default:
                             return '37';
-
-                        case 'US':
-                            return '1493';
 
                         case 'AU':
                             return '1506';
