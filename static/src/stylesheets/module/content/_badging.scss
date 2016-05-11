@@ -92,7 +92,7 @@
    ========================================================================== */
 .content__head--aus-election {
     .content__header .gs-container {
-        background-image: url('/assets/images/Election_liveblog.png');
+        background-image: url('https://uploads.guim.co.uk/2016/05/11/Election_liveblog.jpg');
         background-position: right bottom;
         background-repeat: no-repeat;
         background-size: gs-span(4);
@@ -119,7 +119,7 @@
 
     &.tonal__head--tone-dead {
         .content__header .gs-container {
-            background-image: url('/assets/images/Election_liveblog_dead.png');
+            background-image: url('https://uploads.guim.co.uk/2016/05/11/Election_liveblog_dead.jpg');
         }
     }
 }
