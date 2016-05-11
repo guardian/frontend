@@ -552,7 +552,7 @@ object Video {
 
 final case class Video (
   override val content: Content,
-  source: Option[String] ) extends ContentType with Page {
+  source: Option[String] ) extends ContentType {
 
   lazy val bylineWithSource: Option[String] = Some(Seq(
     trail.byline,
