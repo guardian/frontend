@@ -37,7 +37,8 @@ define([
                 articleHeaderFontSize: 'gu-display__content-size--' + this.params.articleHeaderFontSize,
                 articleTextFontSize: 'gu-display__content-size--' + this.params.articleTextFontSize,
                 brandLogoPosition: 'gu-display__logo-pos--' + this.params.brandLogoPosition,
-                externalLinkIcon: externalLinkIcon
+                externalLinkIcon: externalLinkIcon,
+                isHostedBottom: this.params.adType === 'gu-style-hosted-bottom'
             };
         var templateToLoad = this.params.adType === 'gu-style' ? gustyleComcontentTpl : gustyleHostedTpl;
 

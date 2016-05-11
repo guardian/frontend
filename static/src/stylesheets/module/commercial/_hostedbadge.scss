@@ -6,9 +6,11 @@
     z-index: $zindex-content;
 
     @include mq(desktop) {
-        top: -28px;
-        left: calc(50% - 490px + #{$gs-gutter});
-        width: 132px;
+        &.hostedbadge--shouldscale {
+            top: -28px;
+            left: calc(50% - 490px + #{$gs-gutter});
+            width: 132px;
+        }
     }
 
     @include mq(leftCol) {
@@ -33,17 +35,20 @@
 .hostedbadge__info {
     @include f-textSans;
 
-    height: 28px;
-    font-size: 14px;
-    line-height: 28px;
+    height: auto;
+    padding: 2px 0;
+    line-height: 10px;
+    font-size: 10px;
     color: $neutral-1;
     margin: 0;
     text-align: center;
 
-    @include mq($until: desktop) {
-        height: auto;
-        line-height: 10px;
-        font-size: 10px;
+    @include mq(desktop) {
+        &.hostedbadge--shouldscale {
+            height: 28px;
+            font-size: 14px;
+            line-height: 28px;
+        }
     }
 }
 
