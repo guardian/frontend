@@ -58,8 +58,9 @@ $hosted-stripe: 28px;
 }
 
 .hosted__glogo {
-    text-align: right;
     display: block;
+    margin-right: $gs-gutter;
+    text-align: right;
 
     svg {
         fill: #ffffff;
@@ -67,12 +68,8 @@ $hosted-stripe: 28px;
         height: 50px;
     }
 
-    @include mq($until: desktop) {
-        margin-right: $gs-gutter;
-
-        svg {
-            width: 100px;
-        }
+    @include mq(desktop) {
+        margin: 0;
     }
 }
 
@@ -296,11 +293,12 @@ $hosted-stripe: 28px;
 }
 
 .hosted__standfirst {
-    width: 60%;
+    width: auto;
     padding: $gs-baseline $gs-gutter 0;
 
-    @include mq($until: desktop) {
-        width: auto;
+    @include mq(desktop) {
+        width: 60%;
+        margin-bottom: $gs-gutter * 1.5;
     }
 }
 
