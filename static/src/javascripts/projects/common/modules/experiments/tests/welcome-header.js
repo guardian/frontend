@@ -2,11 +2,16 @@ define([
     'common/utils/config',
     'common/modules/ui/welcome-banner',
     'common/utils/detect',
-    'common/utils/cookies'
-], function (config, welcomeHeader, detect, cookies) {
-
+    'common/utils/cookies',
+    'common/utils/storage'
+], function (
+    config,
+    welcomeHeader,
+    detect,
+    cookies,
+    storage
+) {
     return function () {
-
         var COOKIE_WELCOME_BANNER = 'GU_WELCOMEBANNER',
             cookieVal = cookies.get(COOKIE_WELCOME_BANNER);
 
@@ -17,11 +22,19 @@ define([
         this.description = 'Show a welcome header for first time users.';
         this.audience = 1;
         this.audienceOffset = 0;
-        this.audienceCriteria = 'All users';
+        this.audienceCriteria = 'First time users';
         this.idealOutcome = 'People come back more after the first visit.';
 
         this.canRun = function () {
-            return detect.isBreakpoint({max: 'mobile'}) && !cookieVal;
+            var firstTimeVisitor = false;
+            if (storage.local.isStorageAvailable()) {
+                var alreadyVisited = storage.local.get('gu.alreadyVisited');
+                if ((!alreadyVisited || alreadyVisited == 1) && !cookieVal) {
+                    firstTimeVisitor = true;
+                    cookies.add(COOKIE_WELCOME_BANNER, 1);
+                }
+            }
+            return detect.isBreakpoint({max: 'mobile'}) && firstTimeVisitor;
         };
 
         this.variants = [{
