@@ -21,7 +21,8 @@
         left: calc(50% - 650px + #{$gs-gutter});
     }
 
-    &:hover {
+    &:hover,
+    &:focus {
         text-decoration: none;
     }
 }
