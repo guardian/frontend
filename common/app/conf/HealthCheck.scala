@@ -65,7 +65,7 @@ private[conf] trait HealthCheckFetcher extends ExecutionContexts with Logging {
   protected def fetchResults(testPort: Int, paths: String*): Future[Seq[HealthCheckResult]] = {
     val defaultPort = 9000
     val port = {
-      Play.current.mode match {
+      ApplicationMode.mode match {
         case Mode.Test => testPort
         case _ => defaultPort
       }

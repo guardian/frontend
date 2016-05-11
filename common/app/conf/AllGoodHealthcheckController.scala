@@ -2,8 +2,8 @@ package conf
 
 import java.util.concurrent.atomic.AtomicBoolean
 
-import common.ExecutionContexts
-import play.api.{Mode, Play}
+import common.{ApplicationMode, ExecutionContexts}
+import play.api.Mode
 import play.api.libs.ws.WS
 import play.api.mvc._
 
@@ -15,7 +15,7 @@ trait HealthcheckController extends Controller with Results with ExecutionContex
   def testPort: Int
 
   lazy val port = {
-    Play.current.mode match {
+    ApplicationMode.mode match {
       case Mode.Test => testPort
       case _ => 9000
     }

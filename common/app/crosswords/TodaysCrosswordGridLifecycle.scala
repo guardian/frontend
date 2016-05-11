@@ -1,11 +1,12 @@
 package crosswords
 
-import play.api.{Application, GlobalSettings, Play, Mode}
+import common.ApplicationMode
+import play.api.{Application, GlobalSettings, Mode}
 
 trait TodaysCrosswordGridLifecycle extends GlobalSettings {
   override def onStart(app: Application): Unit = {
     super.onStart(app)
-    if(Play.current.mode != Mode.Test) {
+    if(ApplicationMode.mode != Mode.Test) {
       TodaysCrosswordGrid.start()
     }
   }
