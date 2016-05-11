@@ -313,6 +313,7 @@
         border: 0;
         flex-shrink: 0;
         position: static;
+        min-width: gs-span(1);
     }
 
     @include mq(desktop) {
