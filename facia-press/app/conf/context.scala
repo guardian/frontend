@@ -5,7 +5,7 @@ import org.joda.time.DateTime
 import _root_.play.api.mvc.{Results, Action}
 import scala.concurrent.Future.successful
 
-object HealthCheck extends HealthCheckGenericController with Results {
+object HealthCheck extends HealthCheckController with Results {
   val ConsecutiveProcessingErrorsThreshold = 5
   override def healthCheck() = Action.async{
     if (!ToolPressQueueWorker.lastReceipt.exists(_.plusMinutes(1).isAfter(DateTime.now))) {
