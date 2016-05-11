@@ -110,6 +110,27 @@ define([
             }
         });
 
+        /*
+         *  Interactive bootstraps.
+         *
+         *  Interactives are content, we want them booting as soon (and as stable) as possible.
+         */
+
+        if (
+            config.switches.bootInteractivesFromMain &&
+            /Article|Interactive|LiveBlog/.test(config.page.contentType)
+        ) {
+            $('figure.interactive').each(function (el) {
+                require($(el).attr('data-interactive'), function (interactive) {
+                    fastdom.defer(function () {
+                        robust.catchErrorsAndLog('interactive-bootstrap', function () {
+                            interactive.boot(el, document, config, mediator);
+                        });
+                    });
+                });
+            });
+        }
+
         //
         // A/B tests
         //
