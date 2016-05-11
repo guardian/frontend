@@ -21,7 +21,7 @@ define([
      * * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10026327
      */
     var Template = function (adSlot, params) {
-        this.adSlot        = adSlot instanceof HTMLElement ? adSlot : adSlot[0];;
+        this.adSlot        = adSlot instanceof HTMLElement ? adSlot : adSlot[0];
         this.params        = params;
     };
 

@@ -65,7 +65,7 @@ define([
             tpl.params.aboutLink = '';
         } else if (tpl.params.type === 'sponsored') {
             tpl.params.header = logoHeaderTpl({ header: 'Supported by' });
-            tpl.params.logo = logoLinkTpl(tpl.params)
+            tpl.params.logo = logoLinkTpl(tpl.params);
             tpl.params.partners = '';
             tpl.params.aboutLink = logoAboutTpl(tpl.params);
         } else {
