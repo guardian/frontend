@@ -23,7 +23,7 @@ define([
             test: function() {
                 var companions = document.querySelectorAll('figure[data-canonical-url^="https://interactive.guim.co.uk/2016/05/brexit-companion/"]');
                 for (var i = 0; i < companions.length; i++) {
-                    companions[i].remove();
+                    companions[i].parentNode.removeChild(companions[i]);
                 }
             }
         }];
