@@ -15,7 +15,7 @@ define([
      * Rules:
      * 1st visit replace nav bar with banner
      */
-    var header = document.getElementById("header"),
+    var header = document.getElementById('header'),
         message1 = '<div class="banner-message"><%=HTML%></div>',
         DATA = {
             MESSAGE1: {
@@ -30,14 +30,14 @@ define([
     }
 
     function createAndSetHeader(messageNumber) {
-        var headerDiv = document.createElement("DIV"),
+        var headerDiv = document.createElement('DIV'),
             msg = template(message1, DATA[messageNumber.toUpperCase()]);
 
-        headerDiv.setAttribute("id", "welcomeBanner");
-        headerDiv.setAttribute("style", "height:" + header.offsetHeight + "px;");
+        headerDiv.setAttribute('id', 'welcomeBanner');
+        headerDiv.setAttribute('style', 'height:' + header.offsetHeight + 'px;');
         headerDiv.innerHTML = msg;
 
-        header.getElementsByClassName("l-header-main")[0].setAttribute("style", "z-index:1200;");
+        header.getElementsByClassName('l-header-main')[0].setAttribute('style', 'z-index:1200;');
 
         header.appendChild(headerDiv);
     }
