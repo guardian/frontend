@@ -108,8 +108,12 @@ object FootballClient extends PaClient with Http with Logging with ExecutionCont
 
 }
 
-object HealthCheck extends AllGoodHealthcheckController(
+object HealthCheck extends AllGoodCachedHealthCheck(
   9013,
   "/football/live",
   "/football/premierleague/results"
 )
+
+trait SportHealthCheckLifeCycle extends CachedHealthCheckLifeCycle {
+  override val healthCheckController = HealthCheck
+}

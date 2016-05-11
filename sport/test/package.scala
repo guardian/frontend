@@ -30,7 +30,6 @@ class SportTestSuite extends Suites (
   new football.model.MatchDayListTest,
   new football.model.ResultsListTest,
   new football.model.TeamColoursTest,
-  new services.SportHealthcheckTest,
   new CompetitionAgentTest,
   new FixturesFeatureTest,
   new LeagueTablesFeatureTest,
