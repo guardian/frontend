@@ -73,7 +73,7 @@ trait ABTestSwitches {
     "ab-clever-friend-brexit",
     "Switch to trigger segmentation for clever friend exposure",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 31),
+    sellByDate = new LocalDate(2016, 7, 29),
     exposeClientSide = true
   )
 }
