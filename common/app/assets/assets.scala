@@ -41,6 +41,7 @@ class AssetMap(base: String, assetMap: String) extends Logging {
 
     val url = AssetFinder(assetMap)
     jsonToAssetMap(IOUtils.toString(url))
+  }
 }
 
 class Assets(base: String) extends Logging {
