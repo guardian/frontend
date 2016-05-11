@@ -202,6 +202,7 @@ $mobile-max-container-width: gs-span(8);
     .gu-display__content {
         width: 100%;
         min-height: 110px;
+        padding-top: $gs-gutter / 2;
         background-color: #fffcf4;
     }
 

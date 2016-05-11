@@ -34,12 +34,11 @@
 }
 
 .hostedbadge__info {
-    @include f-textSans;
+    @include f-headlineSans;
+    @include font-size(13, 11);
 
     height: auto;
-    padding: 2px 0;
-    line-height: 10px;
-    font-size: 10px;
+    padding: 3px 0 2px;
     color: $neutral-1;
     margin: 0;
     text-align: center;
