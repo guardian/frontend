@@ -21,9 +21,7 @@ define([
         this.idealOutcome = 'People come back more after the first visit.';
 
         this.canRun = function () {
-            return !config.page.isFront &&
-                ((detect.isIOS() || detect.isAndroid()) && !detect.isFireFoxOSApp()) &&
-                !cookieVal;
+            return detect.isBreakpoint({max: 'mobile'}) && !cookieVal;
         };
 
         this.variants = [{
