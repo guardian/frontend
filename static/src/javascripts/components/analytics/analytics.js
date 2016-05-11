@@ -191,7 +191,9 @@
         s.prop31    = userFromCookie ? 'registered user' : 'guest user';
         s.eVar31    = userFromCookie ? 'registered user' : 'guest user';
 
-        s.prop40    = window.guardian.adBlockers.generic || window.guardian.adBlockers.ffAdblockPlus;
+        console.log(window.guardian.adBlockers.active);
+
+        s.prop40    = window.guardian.adBlockers.active;
 
         try {
             var navInteractionData = window.sessionStorage.getItem(NG_STORAGE_KEY);
