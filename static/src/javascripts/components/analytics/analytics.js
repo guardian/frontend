@@ -243,7 +243,9 @@
     }
 
     return {
-        "getSponsoredContentTrackingData" : getSponsoredContentTrackingData,
-        "trackNavigationInteraction": trackNavigationInteraction
+        "test": {
+            "getSponsoredContentTrackingData": getSponsoredContentTrackingData,
+            "trackNavigationInteraction": trackNavigationInteraction
+        }
     }
 }));

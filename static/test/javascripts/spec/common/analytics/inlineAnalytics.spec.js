@@ -14,7 +14,7 @@ define([
 
             injector.require(['analytics'], function () {
 
-                analytics = arguments[0];
+                analytics = arguments[0].test;
 
                 s = {};
 
