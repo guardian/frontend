@@ -70,7 +70,6 @@ trait ABTestSwitches {
 
   val ABCleverFriend = Switch(
     SwitchGroup.ABTests,
-//    "A/B Tests",
     "ab-clever-friend-brexit",
     "Switch to trigger segmentation for clever friend exposure",
     safeState = Off,
