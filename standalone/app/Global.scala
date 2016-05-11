@@ -1,6 +1,6 @@
 import com.gu.googleauth.{FilterExemption, UserIdentity}
 import commercial.CommercialLifecycle
-import common.ExecutionContexts
+import common.{ApplicationMode, ExecutionContexts}
 import common.Logback.Logstash
 import common.dfp.FaciaDfpAgentLifecycle
 import conf._
@@ -63,6 +63,7 @@ object Global extends WithFilters(
     new PreviewAuthFilters.AuthFilterWithExemptions(
     FilterExemptions.loginExemption,
     FilterExemptions.exemptions):: NoCacheFilter :: conf.Filters.common: _*)
+  with ApplicationMode
   with CommercialLifecycle
   with OnwardJourneyLifecycle
   with ConfigAgentLifecycle

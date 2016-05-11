@@ -1,6 +1,6 @@
 import commercial.CommercialLifecycle
 import common.dfp.FaciaDfpAgentLifecycle
-import common.{CanonicalLink, DiagnosticsLifecycle, ExecutionContexts}
+import common.{ApplicationMode, CanonicalLink, DiagnosticsLifecycle, ExecutionContexts}
 import conf._
 import contentapi.SectionsLookUpLifecycle
 import dev.DevParametersLifecycle
@@ -58,6 +58,7 @@ object DevJsonExtensionFilter extends EssentialFilter with ExecutionContexts wit
 
 
 object Global extends WithFilters(DevJsonExtensionFilter :: DevCacheWarningFilter :: Filters.common: _*)
+  with ApplicationMode
   with DevParametersLifecycle
   with AdminLifecycle
   with DiagnosticsLifecycle

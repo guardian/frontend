@@ -6,6 +6,7 @@ import play.api.GlobalSettings
 import services.ConfigAgentLifecycle
 
 object Global extends GlobalSettings
+  with ApplicationMode
   with ConfigAgentLifecycle
   with SwitchboardLifecycle
   with CloudWatchApplicationMetrics

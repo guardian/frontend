@@ -1,6 +1,6 @@
 import common.Logback.Logstash
 import common.dfp.DfpAgentLifecycle
-import common.{CloudWatchApplicationMetrics, ContentApiMetrics}
+import common.{ApplicationMode, CloudWatchApplicationMetrics, ContentApiMetrics}
 import conf.{CorsErrorHandler, Filters, SwitchboardLifecycle}
 import dev.DevParametersLifecycle
 import metrics.FrontendMetric
@@ -10,6 +10,7 @@ import services.NewspaperBooksAndSectionsAutoRefresh
 
 object Global
   extends WithFilters(Filters.common: _*)
+  with ApplicationMode
   with NewspaperBooksAndSectionsAutoRefresh
   with DevParametersLifecycle
   with DfpAgentLifecycle

@@ -1,4 +1,4 @@
-import common.CloudWatchApplicationMetrics
+import common.{ApplicationMode, CloudWatchApplicationMetrics}
 import common.Logback.Logstash
 import common.dfp.DfpAgentLifecycle
 import conf.{Gzipper, SwitchboardLifecycle}
@@ -12,6 +12,7 @@ import services.ConfigAgentLifecycle
 import scala.concurrent.Future
 
 object Global extends WithFilters(Gzipper)
+  with ApplicationMode
   with AdminLifecycle
   with ConfigAgentLifecycle
   with SwitchboardLifecycle
