@@ -5,7 +5,6 @@ import model.commercial.books._
 import org.scalatest.Suites
 
 class CommercialTestSuite extends Suites (
-  new services.CommercialHealthcheckTest,
   new controllers.commercial.TravelOffersControllerTest,
   new MagentoBestsellersFeedTest,
   new books.MagentoExceptionTest,
