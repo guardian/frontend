@@ -55,9 +55,10 @@
 
 .content__headline--immersive--with-main-media {
     @include fs-headline(7, true);
-    line-height: 1;
 
-
+    @include mq($until: mobileLandscape) {
+        @include fs-headline(5, true);
+    }
 }
 
 .content--immersive {
