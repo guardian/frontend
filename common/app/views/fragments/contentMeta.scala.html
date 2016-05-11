@@ -11,7 +11,7 @@
 }
 
 @metaBody() = {
-    @if(!(galleryRedesign.isSwitchedOn && item.tags.isGallery)) {
+    @if(!item.content.showNewGalleryDesign) {
         @if(!item.content.hasTonalHeaderByline) {
             @byline()
         }
@@ -33,7 +33,7 @@
     @if(showExtras) {
         <div class="meta__extras">
             <div class="meta__social" data-component="share">
-                @fragments.social(item.sharelinks.pageShares, "top", isGallery = galleryRedesign.isSwitchedOn && item.tags.isGallery)
+                @fragments.social(item.sharelinks.pageShares, "top", isGallery = item.content.showNewGalleryDesign)
                 @if(item.content.tags.tags.exists(_.id == "tone/news")) {
                     @fragments.contentAgeNotice(ContentOldAgeDescriber(item.content))
                 }
@@ -47,7 +47,7 @@
                 }">
                 </div>
             </div>
-            @if(SaveForLaterSwitch.isSwitchedOn && !(galleryRedesign.isSwitchedOn && item.tags.isGallery)) {
+            @if(SaveForLaterSwitch.isSwitchedOn && !item.content.showNewGalleryDesign) {
                 <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
             }
         </div>

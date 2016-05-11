@@ -34,12 +34,13 @@ class CachedHealthCheckControllerTest extends WordSpec with Matchers with Single
     // Create a CachedHealthCheckController with mock results
     val controller = new CachedHealthCheckController {
       override val paths: Seq[String] = mockResults.map(_.url)
+      override val testPort: Int = 9008
       override def healthCheck(): Action[AnyContent] = `type` match {
         case HealthCheckTypes.All => healthCheckAll()
         case HealthCheckTypes.Any => healthCheckAny()
       }
       override val cache = new HealthCheckCache {
-        override def fetchResults(paths: String*): Future[Seq[HealthCheckResult]] = {
+        override def fetchResults(testPort: Int, paths: String*): Future[Seq[HealthCheckResult]] = {
           Future.successful(mockResults)
         }
       }
