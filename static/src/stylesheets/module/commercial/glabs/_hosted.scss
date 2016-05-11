@@ -152,14 +152,14 @@ $hosted-stripe: 28px;
         padding-top: 21px;
     }
 
-    &.vjs-paused,
-    &.vjs-playing {
-        .vjs-play-control {
-            width: 48px;
-            height: 48px;
-            margin: 20px 10px 20px 20px;
-        }
+    //&.vjs-paused,
+    //&.vjs-playing {
+    .vjs-play-control {
+        width: 48px;
+        height: 48px;
+        margin: 20px 10px 20px 20px;
     }
+   // }
 }
 
 .hosted__meta {
