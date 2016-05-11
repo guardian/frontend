@@ -67,4 +67,13 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 7, 29),
     exposeClientSide = true
   )
+
+  val ABWelcomeHeader = Switch(
+    SwitchGroup.ABTests,
+    "ab-welcome-header",
+    "Welcome header for first time users test",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 5, 31),
+    exposeClientSide = true
+  )
 }
