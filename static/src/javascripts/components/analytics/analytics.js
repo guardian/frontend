@@ -1,10 +1,14 @@
-(function (name, context, definition) {
-    if (typeof define == 'function' && define.amd) define(definition);
-    definition();
-})('analytics', this, function (name, context) {
+//This uses the named module pattern : https://github.com/umdjs/umd/blob/master/templates/amdWebGlobal.js
 
-    name    = name    || 'analytics';
-    context = context || this;
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define("analytics", function () {
+            return (root.analytics = factory());
+        });
+    } else {
+        root.analytics = factory();
+    }
+}(this, function () {
 
     var trackNavigationInteraction = function(ni) {
         var d = new Date().getTime();
@@ -241,7 +245,7 @@
     }
 
     return {
-        "getSponsoredContentTrackingData": getSponsoredContentTrackingData,
+        "getSponsoredContentTrackingData" : getSponsoredContentTrackingData,
         "trackNavigationInteraction": trackNavigationInteraction
     }
-});
+}));
