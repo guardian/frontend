@@ -88,17 +88,17 @@ private[conf] trait HealthCheckCache extends HealthCheckFetcher {
 
 }
 
-sealed trait Policy
+sealed trait HealthCheckPolicy
 object HealthCheckPolicy {
-  case object All extends Policy
-  case object Any extends Policy
+  case object All extends HealthCheckPolicy
+  case object Any extends HealthCheckPolicy
 }
 
 trait HealthCheckGenericController extends Controller {
   def healthCheck(): Action[AnyContent]
 }
 
-class CachedHealthCheck(policy: Policy, testPort: Int, paths: String*) extends HealthCheckGenericController with Results with ExecutionContexts with Logging {
+class CachedHealthCheck(policy: HealthCheckPolicy, testPort: Int, paths: String*) extends HealthCheckGenericController with Results with ExecutionContexts with Logging {
 
   private[conf] val cache: HealthCheckCache = new HealthCheckCache {}
 

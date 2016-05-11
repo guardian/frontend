@@ -24,7 +24,7 @@ class CachedHealthCheckTest extends WordSpec with Matchers with SingleServerSuit
   }
 
   // Test helper method
-  def getHealthCheck(mockResults: List[HealthCheckResult], policy: Policy)(testBlock: Future[Result] => Unit) = {
+  def getHealthCheck(mockResults: List[HealthCheckResult], policy: HealthCheckPolicy)(testBlock: Future[Result] => Unit) = {
 
     // Create a CachedHealthCheck controller with mock results
     val mockPaths: Seq[String] = mockResults.map(_.url)
