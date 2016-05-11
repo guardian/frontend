@@ -103,9 +103,25 @@ final case class Commercial(
   def isSponsored(maybeEdition: Option[Edition]): Boolean =
     DfpAgent.isSponsored(tags.tags, Some(metadata.section), maybeEdition)
 
+  def hasHighMerchandisingTarget: Boolean = {
+    DfpAgent.hasHighMerchandisingTarget(tags.tags)
+  }
+
+  def conditionalConfig: Map[String, JsValue] = {
+    val highMerchansisingMeta = if (hasHighMerchandisingTarget) {
+      Some("hasHighMerchandisingTarget", JsBoolean(hasHighMerchandisingTarget))
+    } else None
+
+    val meta: List[Option[(String, JsValue)]] = List(
+      highMerchansisingMeta
+    )
+    meta.flatten.toMap
+  }
+
   def javascriptConfig: Map[String, JsValue] = Map(
     ("isAdvertisementFeature", JsBoolean(isAdvertisementFeature))
-  )
+  ) ++ conditionalConfig
+
 }
 /**
  * MetaData represents a page on the site, whether facia or content
@@ -411,6 +427,8 @@ trait StandalonePage extends Page {
 }
 
 case class SimplePage(override val metadata: MetaData) extends StandalonePage
+
+case class HostedPage(override val metadata: MetaData) extends StandalonePage
 
 case class CommercialExpiryPage(
   id: String,
