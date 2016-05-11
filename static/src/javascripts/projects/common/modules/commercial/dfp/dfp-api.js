@@ -714,7 +714,7 @@ define([
 
             // Check if creative is a new gu style creative and place labels accordingly
             dfp.checkForBreakout($adSlot).then(function (adType) {
-                if (adType !== 'gu-style') {
+                if (!/gu-style/.test(adType)) {
                     addLabel($adSlot);
                 }
 
