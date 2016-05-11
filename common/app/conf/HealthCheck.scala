@@ -81,49 +81,64 @@ private[conf] trait HealthCheckCache extends HealthCheckFetcher {
   protected val cache = AkkaAgent[List[HealthCheckResult]](List[HealthCheckResult]())
   def get() = cache.get()
 
-  def allSuccessful: Boolean = {
-    get() match {
-      case Nil => false
-      case nonEmpty => nonEmpty.forall(_.recentlySucceed)
-    }
-  }
-  def anySuccessful: Boolean = get().exists(_.recentlySucceed)
-
   def fetchPaths(testPort: Int, paths: String*): Future[Unit] = {
     log.info("Fetching HealthChecks...")
     fetchResults(testPort, paths:_*).map(allResults => cache.send(allResults.toList))
   }
+
 }
 
-trait CachedHealthCheckController extends Controller with Results with ExecutionContexts with Logging {
+sealed trait HealthCheckPolicy
+object HealthCheckPolicy {
+  case object All extends HealthCheckPolicy
+  case object Any extends HealthCheckPolicy
+}
 
-  val paths: Seq[String]
-  val testPort: Int
-
+trait HealthCheckGenericController extends Controller {
   def healthCheck(): Action[AnyContent]
+}
+
+class CachedHealthCheck(policy: HealthCheckPolicy, testPort: Int, paths: String*) extends HealthCheckGenericController with Results with ExecutionContexts with Logging {
+
   private[conf] val cache: HealthCheckCache = new HealthCheckCache {}
 
-  def runChecks: Future[Unit] = cache.fetchPaths(testPort, paths:_*)
+  private def allSuccessful(results: List[HealthCheckResult]): Boolean = {
+    results match {
+      case Nil => false
+      case nonEmpty => nonEmpty.forall(_.recentlySucceed)
+    }
+  }
+  private def anySuccessful(results: List[HealthCheckResult]): Boolean = results.exists(_.recentlySucceed)
+  private def successful(results: List[HealthCheckResult]): Boolean = policy match {
+    case HealthCheckPolicy.All => allSuccessful(results)
+    case HealthCheckPolicy.Any => anySuccessful(results)
+  }
 
-  private def healthCheckResponse(condition: => Boolean): Action[AnyContent] = Action.async {
+  def healthCheck(): Action[AnyContent] = Action.async {
     Future.successful {
-      val response = cache.get().map {
+      val results = cache.get
+      val response = results.map {
         case r: HealthCheckResult => s"GET ${r.url} '${r.formattedResult}' '${r.formattedDate}'"
       }
         .mkString("\n")
-      if(condition) Ok(response) else ServiceUnavailable(response)
+      if(successful(results)) Ok(response) else ServiceUnavailable(response)
     }
   }
 
-  def healthCheckAll(): Action[AnyContent] = healthCheckResponse(cache.allSuccessful)
-  def healthCheckAny(): Action[AnyContent] = healthCheckResponse(cache.anySuccessful)
+  def runChecks: Future[Unit] = cache.fetchPaths(testPort, paths:_*)
 }
+
+case class AllGoodCachedHealthCheck(testPort: Int, paths: String*)
+  extends CachedHealthCheck(HealthCheckPolicy.All, testPort, paths:_*)
+
+case class AnyGoodCachedHealthCheck(testPort: Int, paths: String*)
+  extends CachedHealthCheck(HealthCheckPolicy.Any, testPort, paths:_*)
 
 trait CachedHealthCheckLifeCycle extends GlobalSettings {
 
   private val healthCheckRequestFrequencyInSec = 5
 
-  val healthCheckController: CachedHealthCheckController
+  val healthCheckController: CachedHealthCheck
 
   override def onStart(app: PlayApp) = {
     super.onStart(app)

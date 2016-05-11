@@ -3,7 +3,7 @@ package conf
 import common.ExecutionContexts
 import org.joda.time.DateTime
 import org.scalatest.{WordSpec, Matchers}
-import play.api.mvc.{AnyContent, Action, Result}
+import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import test.SingleServerSuite
@@ -12,7 +12,7 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.util.Random
 
-class CachedHealthCheckControllerTest extends WordSpec with Matchers with SingleServerSuite with ScalaFutures with ExecutionContexts {
+class CachedHealthCheckTest extends WordSpec with Matchers with SingleServerSuite with ScalaFutures with ExecutionContexts {
 
   //Helper method to construct mock Results
   def mockResult(statusCode: Int, date: DateTime = DateTime.now, expiration: Duration = 10.seconds): HealthCheckResult = {
@@ -23,34 +23,26 @@ class CachedHealthCheckControllerTest extends WordSpec with Matchers with Single
     }
   }
 
-  sealed trait HealthCheckType
-  object HealthCheckTypes {
-    object All extends HealthCheckType
-    object Any extends HealthCheckType
-  }
   // Test helper method
-  def getHealthCheck(mockResults: List[HealthCheckResult], `type`: HealthCheckType)(testBlock: Future[Result] => Unit) = {
+  def getHealthCheck(mockResults: List[HealthCheckResult], policy: HealthCheckPolicy)(testBlock: Future[Result] => Unit) = {
 
-    // Create a CachedHealthCheckController with mock results
-    val controller = new CachedHealthCheckController {
-      override val paths: Seq[String] = mockResults.map(_.url)
-      override val testPort: Int = 9008
-      override def healthCheck(): Action[AnyContent] = `type` match {
-        case HealthCheckTypes.All => healthCheckAll()
-        case HealthCheckTypes.Any => healthCheckAny()
-      }
+    // Create a CachedHealthCheck controller with mock results
+    val mockPaths: Seq[String] = mockResults.map(_.url)
+    val mockTestPort: Int = 9100
+    val controller = new CachedHealthCheck(policy, mockTestPort, mockPaths:_*) {
       override val cache = new HealthCheckCache {
         override def fetchResults(testPort: Int, paths: String*): Future[Seq[HealthCheckResult]] = {
           Future.successful(mockResults)
         }
       }
     }
-    // 2. Run the fetch to populate the cache and wait for it to finish
+
+    // Populate the cache and wait for it to finish
     whenReady(controller.runChecks) { _ =>
-      // 3. Call the /_healthcheck endpoint on this controller
+      // Call the /_healthcheck endpoint on this controller
       val healthCheckRequest = FakeRequest(method = "GET", path = "/_healthcheck")
       val response = call(controller.healthCheck(), healthCheckRequest)
-      // 4. Pass the response to the testBlock
+      // Pass the response to the testBlock
       testBlock(response)
     }
   }
@@ -59,7 +51,7 @@ class CachedHealthCheckControllerTest extends WordSpec with Matchers with Single
     "all requests must be successful" when {
       "cache result is empty" should {
         "503" in {
-          getHealthCheck(List(), HealthCheckTypes.All) { response =>
+          getHealthCheck(List(), HealthCheckPolicy.All) { response =>
             status(response) should be(503)
           }
         }
@@ -69,7 +61,7 @@ class CachedHealthCheckControllerTest extends WordSpec with Matchers with Single
           val expiration = 5.seconds
           val date = DateTime.now.minus(expiration.toMillis + 1)
           val mockResults = List(mockResult(200, date, expiration))
-          getHealthCheck(mockResults, HealthCheckTypes.All) { response =>
+          getHealthCheck(mockResults, HealthCheckPolicy.All) { response =>
             status(response) should be (503)
           }
         }
@@ -77,7 +69,7 @@ class CachedHealthCheckControllerTest extends WordSpec with Matchers with Single
       "only one cached result is successful" should {
         "503" in {
           val mockResults = List(mockResult(500), mockResult(200))
-          getHealthCheck(mockResults, HealthCheckTypes.All) { response =>
+          getHealthCheck(mockResults, HealthCheckPolicy.All) { response =>
             status(response) should be(503)
           }
         }
@@ -85,7 +77,7 @@ class CachedHealthCheckControllerTest extends WordSpec with Matchers with Single
       "cached results are all successful" should {
         "200" in {
           val mockResults = List(mockResult(200), mockResult(200))
-          getHealthCheck(mockResults, HealthCheckTypes.All) { response =>
+          getHealthCheck(mockResults, HealthCheckPolicy.All) { response =>
             status(response) should be (200)
           }
         }
@@ -94,7 +86,7 @@ class CachedHealthCheckControllerTest extends WordSpec with Matchers with Single
     "at least one request must be successful" when {
       "cache result is empty" should {
         "503" in {
-          getHealthCheck(List(), HealthCheckTypes.Any) { response =>
+          getHealthCheck(List(), HealthCheckPolicy.Any) { response =>
             status(response) should be(503)
           }
         }
@@ -104,7 +96,7 @@ class CachedHealthCheckControllerTest extends WordSpec with Matchers with Single
           val expiration = 5.seconds
           val date = DateTime.now.minus(expiration.toMillis + 1)
           val mockResults = List(mockResult(200, date, expiration), mockResult(404))
-          getHealthCheck(mockResults, HealthCheckTypes.Any) { response =>
+          getHealthCheck(mockResults, HealthCheckPolicy.Any) { response =>
             status(response) should be(503)
           }
         }
@@ -112,7 +104,7 @@ class CachedHealthCheckControllerTest extends WordSpec with Matchers with Single
       "no cached result is successful" should {
         "503" in {
           val mockResults = List(mockResult(400), mockResult(500))
-          getHealthCheck(mockResults, HealthCheckTypes.Any) { response =>
+          getHealthCheck(mockResults, HealthCheckPolicy.Any) { response =>
             status(response) should be(503)
           }
         }
@@ -120,7 +112,7 @@ class CachedHealthCheckControllerTest extends WordSpec with Matchers with Single
       "one cached result is successful" should {
         "200" in {
           val mockResults = List(mockResult(200), mockResult(404))
-          getHealthCheck(mockResults, HealthCheckTypes.Any) { response =>
+          getHealthCheck(mockResults, HealthCheckPolicy.Any) { response =>
             status(response) should be(200)
           }
         }
