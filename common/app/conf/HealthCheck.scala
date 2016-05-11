@@ -81,9 +81,8 @@ private[conf] trait HealthCheckCache extends HealthCheckFetcher {
   protected val cache = AkkaAgent[List[HealthCheckResult]](List[HealthCheckResult]())
   def get() = cache.get()
 
-  def fetchPaths(testPort: Int, paths: String*): Future[Unit] = {
-    log.info("Fetching HealthChecks...")
-    fetchResults(testPort, paths:_*).map(allResults => cache.send(allResults.toList))
+  def fetchPaths(testPort: Int, paths: String*): Future[List[HealthCheckResult]] = {
+    fetchResults(testPort, paths:_*).flatMap(allResults => cache.alter(allResults.toList))
   }
 
 }
@@ -125,7 +124,7 @@ class CachedHealthCheck(policy: HealthCheckPolicy, testPort: Int, paths: String*
     }
   }
 
-  def runChecks: Future[Unit] = cache.fetchPaths(testPort, paths:_*)
+  def runChecks: Future[Unit] = cache.fetchPaths(testPort, paths:_*).map(_ => Nil)
 }
 
 case class AllGoodCachedHealthCheck(testPort: Int, paths: String*)
