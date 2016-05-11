@@ -33,7 +33,13 @@ define([
             FB.Event.subscribe(
                 'ad.loaded',
                 function(placementID) {
-                    console.log('ad loaded at ' + placementID);
+                    var interim = document.querySelector('[data-placementid="' + placementID + '"]');
+                    var adSlot = document.getElementById(interim.getAttribute('data-nativeadid'));
+                    if (adSlot) {
+                        fastdom.write(function () {
+                            adSlot.style.display = 'block';
+                        });
+                    }
                 }
             );
 
