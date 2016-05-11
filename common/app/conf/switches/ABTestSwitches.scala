@@ -68,4 +68,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABCleverFriend = Switch(
+    SwitchGroup.ABTests,
+//    "A/B Tests",
+    "ab-clever-friend-brexit",
+    "Switch to trigger segmentation for clever friend exposure",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 31),
+    exposeClientSide = true
+  )
 }
