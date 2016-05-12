@@ -50,15 +50,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABMinute = Switch(
-    SwitchGroup.ABTests,
-    "ab-minute",
-    "Switch to include the minute.ly script",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 16),
-    exposeClientSide = true
-  )
-
   val ABCleverFriend = Switch(
     SwitchGroup.ABTests,
     "ab-clever-friend-brexit",

@@ -10,7 +10,6 @@ define([
     'common/modules/experiments/tests/live-blog-chrome-notifications-internal',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/loyal-adblocking-survey',
-    'common/modules/experiments/tests/minute',
     'common/modules/experiments/tests/clever-friend-brexit',
     'lodash/arrays/flatten',
     'lodash/arrays/zip',
@@ -37,7 +36,6 @@ define([
     LiveBlogChromeNotificationsInternal,
     LiveBlogChromeNotificationsProd,
     LoyalAdblockingSurvey,
-    Minute,
     CleverFriendBrexit,
     flatten,
     zip,
@@ -60,7 +58,6 @@ define([
         new LiveBlogChromeNotificationsInternal(),
         new LiveBlogChromeNotificationsProd(),
         new LoyalAdblockingSurvey(),
-        new Minute(),
         new CleverFriendBrexit()
     ]);
 
