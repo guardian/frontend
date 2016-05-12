@@ -189,8 +189,7 @@ define([
             mouseMoveIdle,
             playerSetupComplete,
             withPreroll,
-            blockVideoAds,
-            isPlayerExpired;
+            blockVideoAds;
 
         var videoInfo = new Promise(function(resolve) {
             // We only have the canonical URL in videos embedded in articles / main media.
@@ -205,9 +204,6 @@ define([
             }
         });
 
-        isPlayerExpired = videoInfo.expired;
-        blockVideoAds = videoInfo.shouldHideAdverts;
-        withPreroll = shouldPreroll && !blockVideoAds;
 
         player = createVideoPlayer(el, {
             techOrder: techPriority,
@@ -225,8 +221,8 @@ define([
             }
         });
 
-        isPlayerExpired.then(function(expired) {
-            if (expired) {
+        videoInfo.then(function(videoInfo) {
+            if (videoInfo.expired) {
                 player.ready(function() {
                     player.error({
                         code: 0,
@@ -238,6 +234,9 @@ define([
                     player.errorDisplay.open();
                 });
             } else {
+                blockVideoAds = videoInfo.shouldHideAdverts;
+                withPreroll = shouldPreroll && !blockVideoAds;
+
                 // Location of this is important.
                 events.bindErrorHandler(player);
                 player.guMediaType = mediaType;
