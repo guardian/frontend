@@ -414,7 +414,8 @@ define([
         // The `hasMultipleVideosInPage` flag is temporary until the # will be fixed
         var shouldPreroll = commercialFeatures.videoPreRolls &&
             !config.page.hasMultipleVideosInPage &&
-            !config.page.isAdvertisementFeature;
+            !config.page.isAdvertisementFeature &&
+            !config.page.sponsorshipType;
 
         if (config.switches.enhancedMediaPlayer) {
             if (shouldPreroll) {
