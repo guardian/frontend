@@ -25,7 +25,7 @@ define([
 ) {
     var hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
     var isEnhanced = detect.isEnhanced();
-    var isIE9OrLess = detect.getUserAgent.browser === 'MSIE' && (detect.getUserAgent.version === '9' || detect.getUserAgent.version === '8');
+    var isIE10OrLess = detect.getUserAgent.browser === 'MSIE' && (parseInt(detect.getUserAgent.version) <= 10);
 
     var fabricV1Tpl;
     var iframeVideoTpl;
@@ -70,27 +70,28 @@ define([
 
         fastdom.write(function () {
             this.$adSlot.append(fabricV1Tpl({data: merge(this.params, templateOptions)}));
-
+            this.scrollingBg = $('.ad-scrolling-bg', this.$adSlot[0]);
             this.layer2 = $('.hide-until-tablet .fabric-v1_layer2', this.$adSlot[0]);
+            this.scrollType = this.params.backgroundImagePType;
 
             // layer two animations must not have a background position, otherwise the background will
             // be visible before the animation has been initiated.
-            if (this.params.layerTwoAnimation === 'enabled' && isEnhanced && !isIE9OrLess) {
+            if (this.params.layerTwoAnimation === 'enabled' && isEnhanced && !isIE10OrLess) {
                 bonzo(this.layer2).css('background-position', '');
             }
+
+            if (this.scrollType === 'fixed' && hasScrollEnabled) {
+                bonzo(this.scrollingBg).css('background-attachment', 'fixed');
+            }
+
         }, this);
 
-        if (templateOptions.scrollbg) {
-            this.scrollingBg = $('.ad-scrolling-bg', this.$adSlot[0]);
-
-
-            if (hasScrollEnabled) {
-                // update bg position
-                fastdom.read(this.updateBgPosition, this);
-                mediator.on('window:throttledScroll', this.updateBgPosition.bind(this));
-                // to be safe, also update on window resize
-                mediator.on('window:resize', this.updateBgPosition.bind(this));
-            }
+        if (templateOptions.scrollbg && hasScrollEnabled) {
+            // update bg position
+            fastdom.read(this.updateBgPosition, this);
+            mediator.on('window:throttledScroll', this.updateBgPosition.bind(this));
+            // to be safe, also update on window resize
+            mediator.on('window:resize', this.updateBgPosition.bind(this));
         }
 
         if (this.params.trackingPixel) {
@@ -99,7 +100,7 @@ define([
     };
 
     FabricV1.prototype.updateBgPosition = function () {
-        if (this.params.backgroundImagePType === 'parallax') {
+        if (this.scrollType === 'parallax') {
             var scrollAmount = Math.ceil((window.pageYOffset - this.$adSlot.offset().top) * 0.3 * -1) + 20;
             fastdom.write(function () {
                 bonzo(this.scrollingBg)
@@ -107,13 +108,12 @@ define([
                     .css('background-position', '50% ' + scrollAmount + '%');
             }, this);
         }
-
         this.layer2Animation();
     };
 
     FabricV1.prototype.layer2Animation = function () {
         var inViewB;
-        if (this.params.layerTwoAnimation === 'enabled' && isEnhanced && !isIE9OrLess) {
+        if (this.params.layerTwoAnimation === 'enabled' && isEnhanced && !isIE10OrLess) {
             inViewB = (window.pageYOffset + bonzo.viewport().height) > this.$adSlot.offset().top;
             fastdom.write(function () {
                 bonzo(this.layer2).addClass('ad-scrolling-text-hide' + (this.params.layerTwoAnimationPosition ? '-' + this.params.layerTwoAnimationPosition : ''));

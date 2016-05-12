@@ -1,8 +1,8 @@
-@import model.{FrontProperties, PaidContent}
 @(index: services.IndexPage)(implicit request: RequestHeader)
 @import common.{Edition, PagePaths}
 @import conf.switches.Switches.staticBadgesSwitch
 @import model.FrontProperties.empty
+@import model.{FrontProperties, PaidContent}
 @import services.IndexPage
 @import views.html.fragments.containers.facia_cards.{container, containerScaffold}
 @import views.html.fragments.pagination
@@ -16,7 +16,7 @@
 
 @if(staticBadgesSwitch.isSwitchedOn) {
 
-    @index.findBranding(Edition(request)) match {
+    @index.branding(Edition(request)) match {
 
         case Some(branding) => {
             <div class="l-side-margins">

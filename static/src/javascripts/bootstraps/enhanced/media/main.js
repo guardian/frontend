@@ -21,7 +21,7 @@ define([
     'common/modules/video/supportedBrowsers',
     'common/modules/video/tech-order',
     'common/modules/video/video-container',
-    'common/modules/experiments/ab',
+    'common/modules/video/onward-container',
     // This must be the full path because we use curl config to change it based
     // on env
     'bootstraps/enhanced/media/video-player',
@@ -49,7 +49,7 @@ define([
     supportedBrowsers,
     techOrder,
     videoContainer,
-    ab,
+    onwardContainer,
     videojs,
     loadingTmpl
 ) {
@@ -386,40 +386,15 @@ define([
         });
     }
 
-    function initMostViewedMedia() {
+    function initOnwardContainer() {
         if (!config.isMedia) {
             return;
         }
 
-        var mediaType  = config.page.contentType.toLowerCase(),
-            mostViewed = new Component(),
-            isInSeriesTest = ab.isInVariant('VideoSeriesPage', 'variant'),
-            attachTo   = $(mediaType === 'video' ? '.js-video-components-container' : '.js-media-popular')[0],
-            endpoint   = isInSeriesTest ? '/video/in-series/' + config.page.seriesId + '.json' :
-                         '/' + (config.page.isPodcast ? 'podcast' : mediaType) + '/most-viewed.json';
+        var mediaType = config.page.contentType.toLowerCase();
+        var el = $(mediaType === 'video' ? '.js-video-components-container' : '.js-media-popular')[0];
 
-        mostViewed.manipulationType = mediaType === 'video' ? 'append' : 'html';
-        mostViewed.endpoint = endpoint;
-
-        mostViewed.fetch(attachTo, 'html').then(function () {
-            mediator.emit('page:new-content');
-
-            if (isInSeriesTest) {
-                // TODO: This is only for the test - please don't get this close to prod
-                bean.on(attachTo, 'click', '.most-viewed-navigation__link', function(ev) {
-                    var page = ev.currentTarget.getAttribute('data-page');
-                    var endpoint = mostViewed.endpoint.replace(/\?page=\d/, '') + '?page=' + page;
-
-                    mostViewed = new Component();
-                    mostViewed.manipulationType = mediaType === 'video' ? 'append' : 'html';
-                    mostViewed.endpoint = endpoint;
-                    attachTo.innerHTML = '';
-                    mostViewed.fetch(attachTo, 'html');
-                    ev.preventDefault();
-                    return false;
-                });
-            }
-        });
+        onwardContainer.init(el, mediaType);
     }
 
     function initWithRaven(withPreroll) {
@@ -455,7 +430,7 @@ define([
         }
         initFacia();
         initMoreInSection();
-        initMostViewedMedia();
+        initOnwardContainer();
     }
 
     return {

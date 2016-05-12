@@ -505,15 +505,6 @@ $header-image-size-desktop: 100px;
             padding-left: 0 !important;
         }
     }
-
-    .fc-item__content {
-        box-shadow: none !important;
-
-        @include mq(tablet) {
-            padding-left: 0 !important;
-            padding-right: 0 !important;
-        }
-    }
 }
 
 .fc-date-headline {

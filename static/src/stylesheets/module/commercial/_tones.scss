@@ -84,13 +84,6 @@
     $live-main-1
 );
 
-/* .commercial--tone-jobs */
-@include tone-commercial(
-    jobs,
-    $news-support-2,
-    $news-main-1
-);
-
 /* .commercial--tone-networks */
 @include tone-commercial(
     networks,
@@ -105,13 +98,11 @@
     $features-main-2
 );
 
-/* .commercial--tone-masterclasses */
+/* .commercial--tone-travel */
 @include tone-commercial(
-    masterclasses,
-    $multimedia-main-1,
-    $multimedia-main-2,
-    $accentTextColour: $neutral-1,
-    $titleColor: $multimedia-main-2
+    travel,
+    $maps-support-3,
+    $maps-support-4
 );
 
 /* .commercial--tone-shop */
@@ -133,13 +124,6 @@
     gardening,
     $maps-main-1,
     $maps-support-2
-);
-
-/* .commercial--tone-gardening */
-@include tone-commercial(
-    soulmates,
-    $soulmates-colour,
-    $soulmates-accent-colour
 );
 
 /* .commercial--tone-paidfor */

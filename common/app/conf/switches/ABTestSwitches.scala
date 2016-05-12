@@ -13,24 +13,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABFakeSeriesShowSensitive = Switch(
-    SwitchGroup.ABTests,
-    "ab-fake-series-show-sensitive",
-    "A fake test to target series content that's shown on sensitive articles",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 2),
-    exposeClientSide = true
-  )
-
-  val ABFakeSeriesHideSensitive = Switch(
-    SwitchGroup.ABTests,
-    "ab-fake-series-hide-sensitive",
-    "A fake test to target series content that's hidden on sensitive articles",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 2),
-    exposeClientSide = true
-  )
-
   // Owner: Dotcom Reach
   val ABFrontsOnArticles2 = Switch(
     SwitchGroup.ABTests,
@@ -38,24 +20,6 @@ trait ABTestSwitches {
     "Injects fronts on articles for the test",
     safeState = Off,
     sellByDate = new LocalDate(2016, 7, 5),
-    exposeClientSide = true
-  )
-
-  val ABNextInSeries = Switch(
-    SwitchGroup.ABTests,
-    "ab-next-in-series",
-    "Show next in series",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 3),
-    exposeClientSide = true
-  )
-
-  val ABIdentityRegisterMembershipStandfirst = Switch(
-    SwitchGroup.ABTests,
-    "ab-identity-register-membership-standfirst",
-    "Membership registration page variant for Identity",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
     exposeClientSide = true
   )
 
@@ -77,15 +41,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABMembership = Switch(
-    SwitchGroup.ABTests,
-    "ab-membership",
-    "Membership propositions",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 2),
-    exposeClientSide = true
-  )
-
   val ABLoyalAdblockingSurvey = Switch(
     SwitchGroup.ABTests,
     "ab-loyal-adblocking-survey",
@@ -104,13 +59,12 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABVideoSeriesPage = Switch(
+  val ABCleverFriend = Switch(
     SwitchGroup.ABTests,
-    "ab-video-series-page",
-    "Testing new video series layout",
+    "ab-clever-friend-brexit",
+    "Switch to trigger segmentation for clever friend exposure",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
+    sellByDate = new LocalDate(2016, 7, 29),
     exposeClientSide = true
   )
-
 }
