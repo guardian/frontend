@@ -55,7 +55,7 @@ trait ABTestSwitches {
     "ab-minute",
     "Switch to include the minute.ly script",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 11),
+    sellByDate = new LocalDate(2016, 5, 16),
     exposeClientSide = true
   )
 
