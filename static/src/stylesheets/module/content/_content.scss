@@ -178,13 +178,13 @@
 }
 
 @include mq(leftCol, wide) {
-    .content__section-label__link,
+    .content__section-label,
     .container__meta__title {
-        font-size: 20px !important;
-        line-height: 24px !important;
+        font-size: 20px;
+        line-height: 24px;
     }
 
-    .content__series-label__link {
+    .content__series-label {
         @include font-size(18, 22);
         display: block;
 
@@ -777,10 +777,6 @@
         .submeta__head,
         .content__series-label__link {
             color: $neutral-2-contrasted;
-
-            .i {
-                @include icon(share-android);
-            }
         }
 
         .byline {

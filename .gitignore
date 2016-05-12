@@ -57,7 +57,6 @@ developer.properties
 *-spec-runner.html
 
 static/hash
-static/requirejs
 static/target
 static/riffraff
 

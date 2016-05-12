@@ -1,0 +1,7 @@
+.adverts--blended {
+    @include mq($until: tablet) {
+        .adverts__row > :nth-child(2) ~ * {
+            display: none;
+        }
+    }
+}

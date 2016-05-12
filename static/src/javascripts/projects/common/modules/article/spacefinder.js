@@ -15,6 +15,8 @@ define([
     mediator,
     curry
 ) {
+    // total_hours_spent_maintaining_this = 56
+    // 
     // maximum time (in ms) to wait for images to be loaded and rich links
     // to be upgraded
     var LOADING_TIMEOUT = 5000;
@@ -63,7 +65,7 @@ define([
         });
 
         return notLoaded.length === 0 ?
-            Promise.resolve(true) :
+            true :
             new Promise(function (resolve) {
                 var loadedCount = 0;
                 bean.on(body, 'load', notLoaded, function onImgLoaded() {
@@ -79,10 +81,52 @@ define([
 
     function onRichLinksUpgraded(body) {
         return qwery('.element-rich-link--not-upgraded', body).length === 0 ?
-            Promise.resolve(true) :
+            true :
             new Promise(function (resolve) {
                 mediator.once('rich-link:loaded', resolve);
             });
+    }
+
+    function onInteractivesLoaded(body) {
+        var notLoaded = qwery('.element-interactive', body).filter(function (interactive) {
+            var iframe = qwery(interactive.children).filter(isIframe);
+            return !(iframe.length && isIframeLoaded(iframe[0]));
+        });
+
+        return notLoaded.length === 0 || !('MutationObserver' in window) ?
+            true :
+            Promise.all(notLoaded.map(function (interactive) {
+                return new Promise(function (resolve) {
+                    new MutationObserver(function (records, instance) {
+                        if (!(records.length > 0 &&
+                            records[0].addedNodes.length > 0 &&
+                            isIframe(records[0].addedNodes[0]))
+                        ) {
+                            return;
+                        }
+
+                        var iframe = records[0].addedNodes[0];
+                        if (isIframeLoaded(iframe)) {
+                            resolve();
+                        } else {
+                            iframe.addEventListener('load', function () {
+                                instance.disconnect();
+                                resolve();
+                            });
+                        }
+                    }).observe(interactive, { childList: true });
+                });
+            }));
+
+        function isIframe(node) {
+            return node.nodeName === 'IFRAME';
+        }
+
+        function isIframeLoaded(iframe) {
+            return iframe.contentWindow &&
+                iframe.contentWindow.document &&
+                iframe.contentWindow.document.readyState === 'complete';
+        }
     }
 
     // test one element vs another for the given rules
@@ -159,7 +203,7 @@ define([
         if (config.switches.viewability) {
             return Promise.race([
                 new Promise(expire),
-                Promise.all([onImagesLoaded(body), onRichLinksUpgraded(body)])
+                Promise.all([onImagesLoaded(body), onRichLinksUpgraded(body), onInteractivesLoaded(body)])
             ]);
         }
 

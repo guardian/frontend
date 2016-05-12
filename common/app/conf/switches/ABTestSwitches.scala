@@ -23,15 +23,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABIdentityRegisterMembershipStandfirst = Switch(
-    SwitchGroup.ABTests,
-    "ab-identity-register-membership-standfirst",
-    "Membership registration page variant for Identity",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = true
-  )
-
   val ABLiveBlogChromeNotificationsInternal = Switch(
     SwitchGroup.ABTests,
     "ab-live-blog-chrome-notifications-internal",
@@ -47,15 +38,6 @@ trait ABTestSwitches {
     "Live blog chrome notifications - prod",
     safeState = Off,
     sellByDate = new LocalDate(2016, 6, 1),
-    exposeClientSide = true
-  )
-
-  val ABMembership = Switch(
-    SwitchGroup.ABTests,
-    "ab-membership",
-    "Membership propositions",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
     exposeClientSide = true
   )
 
@@ -77,13 +59,12 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABVideoSeriesPage = Switch(
+  val ABCleverFriend = Switch(
     SwitchGroup.ABTests,
-    "ab-video-series-page",
-    "Testing new video series layout",
+    "ab-clever-friend-brexit",
+    "Switch to trigger segmentation for clever friend exposure",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
+    sellByDate = new LocalDate(2016, 7, 29),
     exposeClientSide = true
   )
-
 }

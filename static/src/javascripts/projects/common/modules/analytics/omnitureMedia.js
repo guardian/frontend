@@ -13,11 +13,9 @@ define([
             return player.el().getAttribute(attributeName);
         }
 
-        var lastDurationEvent, durationEventTimer,
-            mediaId = getAttribute('data-embed-path') || config.page.pageId,
+        var mediaId = getAttribute('data-embed-path') || config.page.pageId,
             // infer type (audio/video) from what element we have
             mediaType = qwery('audio', player.el()).length ? 'audio' : 'video',
-            contentStarted = false,
             prerollPlayed = false,
             isEmbed = !!guardian.isEmbed,
             events = {
@@ -33,9 +31,7 @@ define([
                 'video:75': 'event23',
                 'video:end': 'event18',
                 'audio:end': 'event20',
-                'video:fullscreen': 'event96',
-                // extra events with no set ordering
-                duration: 'event57'
+                'video:fullscreen': 'event96'
             },
             trackingVars = [
                 // these tracking vars are specific to media events.
@@ -53,18 +49,6 @@ define([
 
         this.getPosition = function () {
             return player.currentTime();
-        };
-
-        this.play = function () {
-            if (mediaType === 'video' && contentStarted) {
-                this.startDurationEventTimer();
-            }
-        };
-
-        this.pause = function () {
-            if (mediaType === 'video') {
-                this.stopDurationEventTimer();
-            }
         };
 
         this.sendEvent = function (event, eventName, ad) {
@@ -104,57 +88,8 @@ define([
             s.Media.open(mediaId, this.getDuration(), 'HTML5 Video');
         };
 
-        this.getDurationWatched = function () { // get the duration watched since this function was last called
-            var durationWatched = 0,
-                now = new Date(),
-                delta = (now - lastDurationEvent) / 1000.0;
-            if (durationEventTimer && contentStarted && delta > 1) {
-                durationWatched = Math.round(delta);
-            }
-            lastDurationEvent = now;
-            return durationWatched;
-        };
-
-        this.baseDurationEvent = function () {
-            var evts = [],
-                durationWatched = this.getDurationWatched();
-            if (durationWatched) {
-                evts.push(events.duration + '=' + durationWatched);
-            }
-            return evts;
-        };
-
-        this.sendSegment = function (segment) {
-            var evts = this.baseDurationEvent();
-            evts.push(segment); // custom quartile completed event
-            this.sendEvent(evts.join(','));
-        };
-
-        this.sendDurationEvent = function () {
-            var evts = this.baseDurationEvent();
-            if (evts && evts.length > 0) {
-                this.sendEvent(evts.join(','));
-            }
-        };
-
-        this.startDurationEventTimer = function () {
-            this.stopDurationEventTimer();
-            lastDurationEvent = new Date();
-            durationEventTimer = window.setInterval(this.sendDurationEvent.bind(this), 10000);
-        };
-
-        this.stopDurationEventTimer = function () {
-            this.sendDurationEvent(); // send any partial duration before stopping
-            if (durationEventTimer) {
-                window.clearInterval(durationEventTimer);
-            }
-            durationEventTimer = false;
-        };
-
         this.onContentPlay = function () {
-            contentStarted = true;
             this.sendNamedEvent('video:play');
-            this.startDurationEventTimer();
         };
 
         this.onPrerollPlay = function () {
@@ -165,9 +100,6 @@ define([
         this.init = function () {
 
             this.omnitureInit();
-
-            player.on('play', this.play.bind(this));
-            player.on('pause', this.pause.bind(this));
 
             player.one('video:preroll:request', this.sendNamedEvent.bind(this, 'preroll:request', true));
             player.one('video:preroll:play', this.onPrerollPlay.bind(this));

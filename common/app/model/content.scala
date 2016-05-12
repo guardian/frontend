@@ -8,7 +8,7 @@ import com.gu.facia.client.models.TrailMetaData
 import common._
 import common.dfp.DfpAgent
 import conf.Configuration
-import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch}
+import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch, galleryRedesign}
 import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
 import model.content.{Atoms, Quiz}
@@ -80,6 +80,7 @@ final case class Content(
   lazy val shortUrlPath = shortUrlId
   lazy val discussionId = Some(shortUrlPath)
   lazy val isImmersive = fields.displayHint.contains("immersive") || metadata.contentType.toLowerCase == "gallery"
+  lazy val showNewGalleryDesign = galleryRedesign.isSwitchedOn && metadata.contentType.toLowerCase == "gallery" && !trail.commercial.isAdvertisementFeature
 
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {
@@ -500,7 +501,7 @@ object Audio {
 final case class Audio (override val content: Content) extends ContentType {
 
   lazy val downloadUrl: Option[String] = elements.mainAudio
-    .flatMap(_.audio.encodings.find(_.format == "audio/mpeg").map(_.url.replace("static.guim", "download.guardian")))
+    .flatMap(_.audio.encodings.find(_.format == "audio/mpeg").map(_.url))
 
   private lazy val podcastTag: Option[Tag] = tags.tags.find(_.properties.podcast.nonEmpty)
   lazy val iTunesSubscriptionUrl: Option[String] = podcastTag.flatMap(_.properties.podcast.flatMap(_.subscriptionUrl))
@@ -650,6 +651,7 @@ final case class Gallery(
   lightboxProperties: GalleryLightboxProperties) extends ContentType {
 
   val lightbox = GalleryLightbox(content.elements, content.tags, lightboxProperties)
+  val showNewGalleryDesign: Boolean = content.showNewGalleryDesign
   def apply(index: Int): ImageAsset = lightbox.galleryImages(index).images.largestImage.get
 }
 

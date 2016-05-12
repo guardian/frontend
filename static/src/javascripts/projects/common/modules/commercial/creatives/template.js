@@ -6,9 +6,6 @@ define([
     'common/modules/commercial/creatives/template-preprocessor',
 
     // require templates, so they're bundled up as part of the build
-    'text!common/views/commercial/creatives/ad-feature-mpu.html',
-    'text!common/views/commercial/creatives/ad-feature-mpu-large.html',
-    'text!common/views/commercial/creatives/ad-feature-mpu-large-v2.html',
     'text!common/views/commercial/creatives/logo-ad-feature.html',
     'text!common/views/commercial/creatives/logo-sponsored.html',
     'text!common/views/commercial/creatives/manual-inline.html',
@@ -59,20 +56,18 @@ define([
 
     Template.prototype.create = function () {
         return new Promise(function (resolve) {
-            if( this.params.creative === 'manual-single' ) {
-                this.params.originalCreative = 'manual-single';
+            if( this.params.creative === 'manual-single') {
+                this.params.type = 'single';
                 this.params.creative = 'manual-container';
                 this.params.creativeCard = 'manual-card-large';
                 this.params.classNames = ['legacy', 'legacy-single', this.params.toneClass.replace('commercial--', ''), this.params.toneClass.replace('commercial--tone-', '')];
-            }
-
-            if (this.params.creative === 'manual-multiple' ) {
+            } else if (this.params.creative === 'manual-multiple') {
                 // harmonise attribute names until we do this on the DFP side
                 this.params.toneClass = this.params.Toneclass;
                 this.params.baseUrl = this.params.base__url;
                 this.params.offerLinkText = this.params.offerlinktext;
 
-                this.params.originalCreative = 'manual-multiple';
+                this.params.type = 'multiple';
                 this.params.creative = 'manual-container';
                 this.params.creativeCard = 'manual-card';
                 this.params.classNames = ['legacy', this.params.toneClass.replace('commercial--', ''), this.params.toneClass.replace('commercial--tone-', '')];
