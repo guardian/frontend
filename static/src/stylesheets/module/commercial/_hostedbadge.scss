@@ -6,9 +6,11 @@
     z-index: $zindex-content;
 
     @include mq(desktop) {
-        top: -28px;
-        left: calc(50% - 490px + #{$gs-gutter});
-        width: 132px;
+        &.hostedbadge--shouldscale {
+            top: -28px;
+            left: calc(50% - 490px + #{$gs-gutter});
+            width: 132px;
+        }
     }
 
     @include mq(leftCol) {
@@ -17,6 +19,11 @@
 
     @include mq(wide) {
         left: calc(50% - 650px + #{$gs-gutter});
+    }
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
     }
 }
 
@@ -27,19 +34,21 @@
 }
 
 .hostedbadge__info {
-    @include f-textSans;
+    @include f-headlineSans;
+    @include font-size(13, 11);
 
-    height: 28px;
-    font-size: 14px;
-    line-height: 28px;
+    height: auto;
+    padding: 3px 0 2px;
     color: $neutral-1;
     margin: 0;
     text-align: center;
 
-    @include mq($until: desktop) {
-        height: $gs-gutter;
-        line-height: $gs-gutter;
-        font-size: 8px;
+    @include mq(desktop) {
+        &.hostedbadge--shouldscale {
+            height: 28px;
+            font-size: 14px;
+            line-height: 28px;
+        }
     }
 }
 

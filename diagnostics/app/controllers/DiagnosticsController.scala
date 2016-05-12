@@ -43,7 +43,7 @@ object DiagnosticsController extends Controller with Logging {
   }
 
   def csp = Action(jsonParser) { implicit request =>
-    if (conf.switches.Switches.CspReporting.isSwitchedOn && r.nextInt(100) == 1) {
+    if (conf.switches.Switches.CspReporting.isSwitchedOn) {
       CSP.report(request.body)
     }
 
