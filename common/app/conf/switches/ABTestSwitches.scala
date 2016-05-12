@@ -4,15 +4,6 @@ import org.joda.time.LocalDate
 
 trait ABTestSwitches {
 
-  val ABDummyTest = Switch(
-    SwitchGroup.ABTests,
-    "ab-dummy-test",
-    "A do-nothing AA test, for the data team",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 12),
-    exposeClientSide = true
-  )
-
   // Owner: Dotcom Reach
   val ABFrontsOnArticles2 = Switch(
     SwitchGroup.ABTests,
