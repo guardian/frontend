@@ -243,6 +243,9 @@
         (new Image()).src = guardian.config.page.beaconUrl + '/count/omniture-pageview-error.gif';
     }
 
+    // in lieu of a build step that would enable these to be seperate modules
+    // these are exported for testing
+    
     return {
         'test': {
             'getSponsoredContentTrackingData': getSponsoredContentTrackingData,
