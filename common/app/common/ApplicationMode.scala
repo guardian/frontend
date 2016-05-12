@@ -15,5 +15,6 @@ trait ApplicationMode extends GlobalSettings with Logging {
   override def onStart(app: Application): Unit = {
     log.info(s"Setting the application mode to ${app.mode}")
     ApplicationMode.setMode(app.mode)
+    super.onStart(app)
   }
 }
