@@ -1,5 +1,5 @@
 import common.Logback.Logstash
-import common.{CloudWatchApplicationMetrics, ContentApiMetrics}
+import common.{ApplicationMode, CloudWatchApplicationMetrics, ContentApiMetrics}
 import conf.{Filters, SwitchboardLifecycle}
 import contentapi.SectionsLookUpLifecycle
 import dev.DevParametersLifecycle
@@ -9,6 +9,7 @@ import play.api.mvc.WithFilters
 import services.ConfigAgentLifecycle
 
 object Global extends WithFilters(Filters.common: _*)
+  with ApplicationMode
   with ConfigAgentLifecycle
   with DevParametersLifecycle
   with CloudWatchApplicationMetrics

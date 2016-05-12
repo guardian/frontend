@@ -1,4 +1,4 @@
-import common.CloudWatchApplicationMetrics
+import common.{ApplicationMode, CloudWatchApplicationMetrics}
 import common.Logback.Logstash
 import conf.{SwitchboardLifecycle, CorsErrorHandler, Filters}
 import dev.DevParametersLifecycle
@@ -6,6 +6,7 @@ import play.api.mvc.WithFilters
 import services.ArchiveMetrics
 
 object Global extends WithFilters(Filters.common: _*)
+  with ApplicationMode
   with DevParametersLifecycle
   with CloudWatchApplicationMetrics
   with ArchiveMetrics

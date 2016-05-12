@@ -1,14 +1,15 @@
 package common.Assets
 
 import java.net.URL
-import common.{Logging, RelativePathEscaper}
+
+import common.{ApplicationMode, Logging, RelativePathEscaper}
 import conf.Configuration
 import org.apache.commons.io.IOUtils
 import play.api.libs.json._
 import play.api.{Mode, Play}
 import play.api.Play.current
 
-import scala.collection.concurrent.{Map => ConcurrentMap, TrieMap}
+import scala.collection.concurrent.{TrieMap, Map => ConcurrentMap}
 import scala.util.control.NonFatal
 
 case class Asset(path: String) {
@@ -106,7 +107,7 @@ class Assets(base: String) extends Logging {
       val url = AssetFinder(resourceName)
 
       // Reload css on every access in DEV
-      if (Play.current.mode == Mode.Dev) {
+      if (ApplicationMode.mode == Mode.Dev) {
         memoizedCss.remove(url)
       }
 

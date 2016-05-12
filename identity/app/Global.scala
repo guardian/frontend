@@ -1,5 +1,5 @@
 import com.google.inject.Guice
-import common.CloudWatchApplicationMetrics
+import common.{ApplicationMode, CloudWatchApplicationMetrics}
 import common.Logback.Logstash
 import conf._
 import filters.{StrictTransportSecurityHeaderFilter, HeaderLoggingFilter}
@@ -13,6 +13,7 @@ import scala.concurrent.Future
 import utils.SafeLogging
 
 object Global extends WithFilters(HeaderLoggingFilter :: StrictTransportSecurityHeaderFilter :: conf.Filters.common: _*)
+  with ApplicationMode
   with SafeLogging
   with CloudWatchApplicationMetrics
   with IdentityLifecycle
@@ -23,7 +24,7 @@ object Global extends WithFilters(HeaderLoggingFilter :: StrictTransportSecurity
 
   override def onError(request: RequestHeader, ex: Throwable) = {
     logger.error("Serving error page", ex)
-    if (Play.mode == Mode.Prod) {
+    if (ApplicationMode.mode == Mode.Prod) {
       Future.successful(InternalServerError(views.html.errors._50x()))
     } else {
       super.onError(request, ex)
@@ -32,7 +33,7 @@ object Global extends WithFilters(HeaderLoggingFilter :: StrictTransportSecurity
 
   override def onHandlerNotFound(request: RequestHeader) = {
     logger.info(s"Serving 404, no handler found for ${request.path}")
-    if (Play.mode == Mode.Prod) {
+    if (ApplicationMode.mode == Mode.Prod) {
       Future.successful(NotFound(views.html.errors._404()))
     } else {
       super.onHandlerNotFound(request)
@@ -41,7 +42,7 @@ object Global extends WithFilters(HeaderLoggingFilter :: StrictTransportSecurity
 
   override def onBadRequest(request: RequestHeader, error: String) = {
     logger.info(s"Serving 400, could not bind request to handler for ${request.uri}")
-    if (Play.mode == Mode.Prod) {
+    if (ApplicationMode.mode == Mode.Prod) {
       Future.successful(BadRequest("Bad Request: " + error))
     } else {
       super.onBadRequest(request, error)

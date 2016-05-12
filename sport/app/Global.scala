@@ -1,4 +1,4 @@
-import common.CloudWatchApplicationMetrics
+import common.{ApplicationMode, CloudWatchApplicationMetrics}
 import common.Logback.Logstash
 import conf._
 import dev.DevParametersLifecycle
@@ -7,6 +7,7 @@ import play.api.mvc.WithFilters
 import rugby.conf.RugbyLifecycle
 
 object Global extends WithFilters(Filters.common: _*)
+  with ApplicationMode
   with DevParametersLifecycle
   with CloudWatchApplicationMetrics
   with SurgingContentAgentLifecycle

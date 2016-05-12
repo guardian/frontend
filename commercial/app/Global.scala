@@ -12,6 +12,7 @@ package object CommercialMetrics {
 }
 
 object Global extends WithFilters(Filters.common: _*)
+  with ApplicationMode
   with CommercialLifecycle
   with DevParametersLifecycle
   with SwitchboardLifecycle

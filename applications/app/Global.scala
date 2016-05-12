@@ -1,6 +1,6 @@
 import common.Logback.Logstash
 import common.dfp.DfpAgentLifecycle
-import common.{CloudWatchApplicationMetrics, ContentApiMetrics, EmailSubsciptionMetrics}
+import common.{ApplicationMode, CloudWatchApplicationMetrics, ContentApiMetrics, EmailSubsciptionMetrics}
 import conf.{CorsErrorHandler, Filters, SwitchboardLifecycle}
 import contentapi.SectionsLookUpLifecycle
 import dev.DevParametersLifecycle
@@ -11,6 +11,7 @@ import play.api.mvc.WithFilters
 import services.{ConfigAgentLifecycle, IndexListingsLifecycle}
 
 object Global extends WithFilters(Filters.common: _*)
+  with ApplicationMode
   with ConfigAgentLifecycle
   with DevParametersLifecycle
   with CloudWatchApplicationMetrics
