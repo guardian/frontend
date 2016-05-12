@@ -39,7 +39,7 @@ define([
         this.audience = 1;
         this.audienceOffset = 0;
         this.successMeasure = '';
-        this.audienceCriteria = 'Users on film and music review pages that have comments turned on';
+        this.audienceCriteria = 'Users on film review pages that have comments turned on';
         this.dataLinkNames = '';
         this.idealOutcome = '';
 
