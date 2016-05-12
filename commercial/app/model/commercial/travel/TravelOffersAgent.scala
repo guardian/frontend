@@ -15,7 +15,14 @@ object TravelOffersAgent extends MerchandiseAgent[TravelOffer] with ExecutionCon
   }
 
   def specificTravelOffers(offerIdStrings: Seq[String]): Seq[TravelOffer] = {
-    available filter (offer => offerIdStrings contains offer.id)
+
+    def sortByRequestOrder(a: TravelOffer, b: TravelOffer) = {
+
+      def getOriginalPositionOfId(offer: TravelOffer) = offerIdStrings.indexOf(offer.id)
+      getOriginalPositionOfId(a) < getOriginalPositionOfId(b)
+    }
+
+    available filter (offer => offerIdStrings contains offer.id) sortWith sortByRequestOrder
   }
 
   def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[TravelOffer]] = {
