@@ -24,11 +24,13 @@ object BrandHunter {
     findBranding(frontProps.activeBrandings, publicationDate = None, edition)
   }
 
-  def findContentBranding(content: ContentType, edition: Edition): Option[Branding] = {
-    // TODO: incorporate branding by section - needs capi change to get section element in content results
-    val tags = content.tags
-    val publicationDate = Some(content.trail.webPublicationDate)
-    val brandingByTags = tags.tags.flatMap(findTagBranding(_, publicationDate, edition)).headOption
-    brandingByTags
+  // difficult to find content's section at the moment so this param is temporarily optional
+  def findContentBranding(section: Option[Section],
+                          tags: Tags,
+                          publicationDate: Option[DateTime],
+                          edition: Edition): Option[Branding] = {
+    lazy val brandingBySection = section flatMap (findSectionBranding(_, publicationDate, edition))
+    lazy val brandingByTags = tags.tags.flatMap(findTagBranding(_, publicationDate, edition)).headOption
+    brandingBySection orElse brandingByTags
   }
 }
