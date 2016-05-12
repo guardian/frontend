@@ -7,6 +7,7 @@ define([
 
     'common/modules/commercial/creatives/commercial-component',
     'common/modules/commercial/creatives/gu-style-comcontent',
+    'common/modules/commercial/creatives/frame',
     'common/modules/commercial/creatives/expandable',
     'common/modules/commercial/creatives/expandable-v2',
     'common/modules/commercial/creatives/expandable-v3',
