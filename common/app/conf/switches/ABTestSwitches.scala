@@ -59,6 +59,15 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABParticipationLowFricMusic = Switch(
+    SwitchGroup.ABTests,
+    "ab-participation-low-fric-music",
+    "AB test switch to insert low friction participation into music",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 11),
+    exposeClientSide = true
+  )
+
   val ABCleverFriend = Switch(
     SwitchGroup.ABTests,
     "ab-clever-friend-brexit",
