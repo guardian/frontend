@@ -16,6 +16,8 @@
                     <th>Line Item Name</th>
                     <th>DFP link</th>
                     <th>Keywords</th>
+                    <th>adUnits</th>
+                    <th>DFP adUnit Links</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,6 +26,9 @@
                         <td>@{lineItem.name}</td>
                         <td><a href="@DfpLink.lineItem(lineItem.id)">@{lineItem.id}</a></td>
                         <td>@{lineItem.tags.mkString(", ")}</td>
+                        <td>@{lineItem.adUnitString.mkString(", ")}</td>
+                        <td>@{lineItem.adUnitId + ", "}</td>
+
                     </tr>
                 }
             </tbody>

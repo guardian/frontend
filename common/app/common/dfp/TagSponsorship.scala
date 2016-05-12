@@ -91,7 +91,16 @@ object HighMerchandisingLineItems {
   implicit val lineItemsFormat = Json.format[HighMerchandisingLineItems]
 }
 
-case class HighMerchandisingLineItem(name: String, id: Long, tags: Seq[String])
+case class HighMerchandisingLineItem(
+  name: String,
+  id: Long,
+  tags: Seq[String],
+  adUnits: Seq[GuAdUnit]) {
+
+  val adUnitId = adUnits.map(adUnit => adUnit.id)
+  val adUnitString = adUnits.map(adUnit =>
+    adUnit.path.foldLeft(""){(theGuardian, tail) => theGuardian +"/" + tail})
+}
 
 case class HighMerchandisingLineItems(items: Seq[HighMerchandisingLineItem]) {
   val sortedItems = items.sortBy(_.name)

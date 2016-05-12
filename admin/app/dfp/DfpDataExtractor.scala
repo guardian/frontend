@@ -16,14 +16,14 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
   }
 
   val highMerchandisingTargetedTags: HighMerchandisingLineItems = {
-
     val highMerchLineItems: Seq[HighMerchandisingLineItem] = lineItems
       .filter(_.highMerchandisingTargets.nonEmpty)
       .foldLeft(List.empty[HighMerchandisingLineItem]) { (soFar, lineItem) =>
         soFar :+ HighMerchandisingLineItem(
           name = lineItem.name,
           id = lineItem.id,
-          tags = lineItem.highMerchandisingTargets)
+          tags = lineItem.highMerchandisingTargets,
+          adUnits = lineItem.targeting.adUnits)
       }
 
     HighMerchandisingLineItems(items = highMerchLineItems)
