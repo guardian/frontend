@@ -407,7 +407,9 @@ define([
     }
 
     function shouldRenderLabel($adSlot) {
-        return $adSlot.data('label') !== false && qwery('.ad-slot__label', $adSlot[0]).length === 0;
+        return !$adSlot.hasClass('ad-slot--frame') &&
+            !$adSlot.hasClass('gu-style') &&
+            ($adSlot.data('label') !== false && qwery('.ad-slot__label', $adSlot[0]).length === 0);
     }
 
     function lazyLoad() {
@@ -713,10 +715,8 @@ define([
             });
 
             // Check if creative is a new gu style creative and place labels accordingly
-            dfp.checkForBreakout($adSlot).then(function (adType) {
-                if (!/gu-style/.test(adType)) {
-                    addLabel($adSlot);
-                }
+            dfp.checkForBreakout($adSlot).then(function () {
+                addLabel($adSlot);
 
                 size = event.size.join(',');
                 // is there a callback for this size

@@ -1,5 +1,5 @@
 define([
-    'fastdom',
+    'common/utils/fastdom-promise',
     'common/utils/$',
     'common/utils/detect',
     'common/utils/mediator',
@@ -41,14 +41,16 @@ define([
                 isHostedBottom: this.params.adType === 'gu-style-hosted-bottom'
             };
         var templateToLoad = this.params.adType === 'gu-style' ? gustyleComcontentTpl : gustyleHostedTpl;
+        var markup = template(templateToLoad, { data: merge(this.params, templateOptions) });
+        var gustyle = new GuStyle(this.$adSlot, this.params);
 
-        $.create(template(templateToLoad, { data: merge(this.params, templateOptions) })).appendTo(this.$adSlot);
-        new GuStyle(this.$adSlot, this.params).addLabel();
+        return fastdom.write(function () {
+            this.$adSlot[0].insertAdjacentHTML('beforeend', markup);
 
-        if (this.params.trackingPixel) {
-            addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
-        }
-
+            if (this.params.trackingPixel) {
+                addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
+            }
+        }, this).then(gustyle.addLabel.bind(gustyle));
     };
 
     return GustyleComcontent;
