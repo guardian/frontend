@@ -13,7 +13,6 @@ object `package` {
 }
 
 class ApplicationsTestSuite extends Suites (
-  new services.ApplicationsHealthcheckTest,
   new services.IndexPageGroupingTest,
   new common.CombinerControllerTest,
   new common.CombinerFeatureTest,
