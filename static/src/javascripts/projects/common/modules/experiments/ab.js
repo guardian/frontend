@@ -13,6 +13,7 @@ define([
     'common/modules/experiments/tests/participation-star-ratings',
     'common/modules/experiments/tests/participation-low-fric-music',
     'common/modules/experiments/tests/participation-low-fric-tv',
+    'common/modules/experiments/tests/participation-low-fric-recipes',
     'common/modules/experiments/tests/clever-friend-brexit',
     'common/modules/experiments/tests/welcome-header',
     'lodash/arrays/flatten',
@@ -43,6 +44,7 @@ define([
     ParticipationStarRatings,
     ParticipationLowFricMusic,
     ParticipationLowFricTv,
+    ParticipationLowFricRecipes,
     CleverFriendBrexit,
     WelcomeHeader,
     flatten,
@@ -69,6 +71,7 @@ define([
         new ParticipationStarRatings(),
         new ParticipationLowFricMusic(),
         new ParticipationLowFricTv(),
+        new ParticipationLowFricRecipes(),
         new CleverFriendBrexit(),
         new WelcomeHeader()
     ]);
