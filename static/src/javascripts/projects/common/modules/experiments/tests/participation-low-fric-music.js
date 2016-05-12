@@ -45,7 +45,10 @@ define([
 
         this.canRun = function () {
             // Commentable, album reviews
-            return config.page.section === 'music' && config.page.toneIds.indexOf('tone/albumreview') !== -1 && config.page.commentable;
+            return config.page.section === 'music' &&
+                config.page.toneIds &&
+                config.page.toneIds.indexOf('tone/albumreview') !== -1 &&
+                config.page.commentable;
         };
 
         this.variants = [
