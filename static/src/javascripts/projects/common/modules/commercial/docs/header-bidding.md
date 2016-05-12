@@ -32,7 +32,7 @@ Most of this will be done with the help of a library - currently we use [Prebid.
 proxied by a module named `PrebidService.js`.
 
 Whenever we want to load a slot, we queue a request with PrebidService. Prebid can only run one auction at a time; this
-is probably a reasonable given the small size of most browsers' HTTP connection pools (10 concurrent requests on desktop
+is probably reasonable given the small size of most browsers' HTTP connection pools (10 concurrent requests on desktop
 Chrome).
 
 How partners are actually requested is a detail of that partner's prebid adapter, but typically you might expect a
