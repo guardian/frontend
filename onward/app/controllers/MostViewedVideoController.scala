@@ -16,6 +16,7 @@ object MostViewedVideoController extends Controller with Logging with ExecutionC
 
     getResponse(ContentApiClient.search(edition)
       .tag(series)
+      .contentType("video")
       .showTags("series")
       .showFields("headline")
       .page(page)
