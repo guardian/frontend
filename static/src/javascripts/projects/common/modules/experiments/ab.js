@@ -12,6 +12,7 @@ define([
     'common/modules/experiments/tests/minute',
     'common/modules/experiments/tests/participation-star-ratings',
     'common/modules/experiments/tests/participation-low-fric-music',
+    'common/modules/experiments/tests/participation-low-fric-tv',
     'common/modules/experiments/tests/clever-friend-brexit',
     'lodash/arrays/flatten',
     'lodash/arrays/zip',
@@ -40,6 +41,7 @@ define([
     Minute,
     ParticipationStarRatings,
     ParticipationLowFricMusic,
+    ParticipationLowFricTv,
     CleverFriendBrexit,
     flatten,
     zip,
@@ -64,6 +66,7 @@ define([
         new Minute(),
         new ParticipationStarRatings(),
         new ParticipationLowFricMusic(),
+        new ParticipationLowFricTv(),
         new CleverFriendBrexit()
     ]);
 
