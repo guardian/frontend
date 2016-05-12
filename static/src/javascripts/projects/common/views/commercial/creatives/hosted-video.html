@@ -1,0 +1,64 @@
+<%if (data.hasContainer) {%><div class="creative--hosted-video-bg-container"><%}%>
+<%if (data.showLabel) {%>
+<div class="ad-slot__label creative--hosted-video__label fc-container--layout-front" data-test-id="ad-slot-label">
+    <div class="fc-container__inner">Advertisement</div>
+</div>
+<%}%>
+<div class="creative--hosted-video l-side-margins fc-container__inner
+    <%if (!data.isFixedHeight) {%>hide-until-tablet<%}%>
+    creative--hosted-video__height--<%=data.creativeHeight%>" style="
+        background-color: <%=data.backgroundColor%>;
+        /*background-image: url(<%=data.asset%>);*/
+        /*background-position: <%=data.backgroundPosition%>;*/
+        /*background-repeat: <%=data.backgroundRepeat%>;*/
+        /*background-size: <%=data.backgroundSize%>;*/
+    ">
+    <div class="fc-container__header">
+        <a href="/uk/sport" class="fc-container__header__title">
+            from our advertisers
+        </a>
+    </div>
+    <a href="<%=data.clickMacro%><%=data.link%>" target="_blank">
+        <div class="gs-container fc-container__body">
+            <div class="u-responsive-ratio u-responsive-ratio--hd">
+                <video
+                    data-duration="93"
+                    data-media-id="gu-video-57234522e4b02046f02ec015"
+                    controls="controls"
+                    preload="auto"
+                    muted="no"
+                    style="width: 100%;"
+                    data-block-video-ads="true"
+                    poster="https://cdn.theguardian.tv/interactive/2015/11/13/151113title2a_2M_H264_poster.jpg"
+                    class="vjs-hosted__video hosted__video gu-media--show-controls-at-start gu-media--video vjs vjs-tech-html5 vjs-paused vjs-controls-enabled vjs_video_1-dimensions vjs-user-active">
+                    <source type="video/mp4" src="https://cdn.theguardian.tv/interactive/2015/11/13/151113title2a_220k_H264.mp4">
+                    <source type="video/webm" src="https://cdn.theguardian.tv/interactive/2015/11/13/151113title2a_220k_vp8.webm">
+                    <source type="video/ogg" src="https://cdn.theguardian.tv/interactive/mp4/1080/2015/11/13/151113title2a_mid.ogv">
+                    <source type="video/m3u8" src="http://multimedia.guardianapis.com/interactivevideos/video.php?file=151113title2a&amp;format=application/x-mpegURL&amp;maxbitrate=2000">
+                </video>
+                <div class="hosted__meta fc-container__body">
+                    <p class="hosted__heading--small"><%=data.header1%></p>
+                    <h1 class="hosted__heading hosted-tone--renault"><%=data.header2%></h1>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+<%if (!data.isFixedHeight) {%>
+<div class="creative--hosted-video l-side-margins mobile-only" style="
+        background-color: <%=data.backgroundColor%>;
+        background-image: url(<%=data.backgroundImageM%>);
+        background-position: <%=data.backgroundPositionM%>;
+        background-repeat: <%=data.backgroundRepeatM%>;
+    ">
+    <a href="<%=data.link%>" target="_blank">
+        <div class="gs-container">
+            <div class="hosted-video_layer hosted-video_layer1" style="
+                background-image: url(<%=data.layerOneBGImageM%>);
+                background-position: <%=data.layerOneBGPositionM%>;
+            "></div>
+        </div>
+    </a>
+</div>
+<%}%>
+<%if (data.hasContainer) {%></div><%}%>
