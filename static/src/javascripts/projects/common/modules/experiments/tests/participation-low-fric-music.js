@@ -33,7 +33,7 @@ define([
     return function () {
         this.id = 'ParticipationLowFricMusic';
         this.start = '2016-05-11';
-        this.expiry = '2016-06-11';
+        this.expiry = '2016-06-15';
         this.author = 'Gareth Trufitt - Participation';
         this.description = 'Initial user segmentation to ensure statistical significance';
         this.audience = 1;

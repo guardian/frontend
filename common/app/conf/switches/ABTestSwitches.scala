@@ -64,7 +64,7 @@ trait ABTestSwitches {
     "ab-participation-low-fric-music",
     "AB test switch to insert low friction participation into music",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 11),
+    sellByDate = new LocalDate(2016, 6, 15),
     exposeClientSide = true
   )
 
