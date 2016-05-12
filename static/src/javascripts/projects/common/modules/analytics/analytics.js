@@ -1,8 +1,9 @@
+/* eslint-disable no-empty, no-undef */
 //This uses the named module pattern : https://github.com/umdjs/umd/blob/master/templates/amdWebGlobal.js
 
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
-        define("analytics", function () {
+        define('analytics', function () {
             return (root.analytics = factory());
         });
     } else {
@@ -92,7 +93,7 @@
         s.prop8     = config.page.pageCode || '';
         s.prop9     = config.page.contentType || '';
         // Previous Content type
-        s.prop70    = s.getPreviousValue(s.prop9, "s_prev_ct");
+        s.prop70    = s.getPreviousValue(s.prop9, 's_prev_ct');
         s.prop10    = config.page.tones || '';
         s.prop5     = config.page.trackingNames || '';
 
@@ -243,9 +244,9 @@
     }
 
     return {
-        "test": {
-            "getSponsoredContentTrackingData": getSponsoredContentTrackingData,
-            "trackNavigationInteraction": trackNavigationInteraction
+        'test': {
+            'getSponsoredContentTrackingData': getSponsoredContentTrackingData,
+            'trackNavigationInteraction': trackNavigationInteraction
         }
-    }
+    };
 }));
