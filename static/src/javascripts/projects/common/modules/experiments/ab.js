@@ -5,7 +5,6 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/dummy-test',
     'common/modules/experiments/tests/fronts-on-articles2',
     'common/modules/experiments/tests/live-blog-chrome-notifications-internal',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
@@ -32,7 +31,6 @@ define([
     mediator,
     store,
     mvtCookie,
-    DummyTest,
     FrontsOnArticles2,
     LiveBlogChromeNotificationsInternal,
     LiveBlogChromeNotificationsProd,
@@ -55,7 +53,6 @@ define([
 ) {
 
     var TESTS = flatten([
-        new DummyTest(),
         new FrontsOnArticles2(),
         new LiveBlogChromeNotificationsInternal(),
         new LiveBlogChromeNotificationsProd(),
