@@ -25,7 +25,7 @@ define([
 ) {
     var hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
     var isEnhanced = detect.isEnhanced();
-    var isIE9OrLess = detect.getUserAgent.browser === 'MSIE' && (detect.getUserAgent.version === '9' || detect.getUserAgent.version === '8');
+    var isIE10OrLess = detect.getUserAgent.browser === 'MSIE' && (parseInt(detect.getUserAgent.version) <= 10);
 
     var fabricV1Tpl;
     var iframeVideoTpl;
@@ -76,7 +76,7 @@ define([
 
             // layer two animations must not have a background position, otherwise the background will
             // be visible before the animation has been initiated.
-            if (this.params.layerTwoAnimation === 'enabled' && isEnhanced && !isIE9OrLess) {
+            if (this.params.layerTwoAnimation === 'enabled' && isEnhanced && !isIE10OrLess) {
                 bonzo(this.layer2).css('background-position', '');
             }
 
@@ -113,7 +113,7 @@ define([
 
     FabricV1.prototype.layer2Animation = function () {
         var inViewB;
-        if (this.params.layerTwoAnimation === 'enabled' && isEnhanced && !isIE9OrLess) {
+        if (this.params.layerTwoAnimation === 'enabled' && isEnhanced && !isIE10OrLess) {
             inViewB = (window.pageYOffset + bonzo.viewport().height) > this.$adSlot.offset().top;
             fastdom.write(function () {
                 bonzo(this.layer2).addClass('ad-scrolling-text-hide' + (this.params.layerTwoAnimationPosition ? '-' + this.params.layerTwoAnimationPosition : ''));
