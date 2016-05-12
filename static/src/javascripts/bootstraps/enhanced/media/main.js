@@ -179,20 +179,19 @@ define([
         var mediaType = el.tagName.toLowerCase(),
             $el = bonzo(el).addClass('vjs vjs-tech-' + videojs.options.techOrder[0]),
             mediaId = $el.attr('data-media-id'),
-            blockVideoAds = $el.attr('data-block-video-ads') === 'true',
             showEndSlate = $el.attr('data-show-end-slate') === 'true',
             endSlateUri = $el.attr('data-end-slate'),
             embedPath = $el.attr('data-embed-path'),
             // we need to look up the embedPath for main media videos
             canonicalUrl = $el.attr('data-canonical-url') || (embedPath ? '/' + embedPath : null),
             techPriority = techOrder(el),
-            withPreroll = shouldPreroll && !blockVideoAds,
             player,
             mouseMoveIdle,
             playerSetupComplete,
-            isPlayerExpired;
+            withPreroll,
+            blockVideoAds;
 
-        isPlayerExpired = new Promise(function(resolve) {
+        var videoInfo = new Promise(function(resolve) {
             // We only have the canonical URL in videos embedded in articles / main media.
             if (!canonicalUrl) {
                 resolve(false);
@@ -200,10 +199,11 @@ define([
                 ajax({
                     url: canonicalUrl + '/info.json'
                 }).then(function(videoInfo) {
-                    resolve(videoInfo.expired);
+                    resolve(videoInfo);
                 });
             }
         });
+
 
         player = createVideoPlayer(el, {
             techOrder: techPriority,
@@ -221,8 +221,8 @@ define([
             }
         });
 
-        isPlayerExpired.then(function(expired) {
-            if (expired) {
+        videoInfo.then(function(videoInfo) {
+            if (videoInfo.expired) {
                 player.ready(function() {
                     player.error({
                         code: 0,
@@ -234,6 +234,9 @@ define([
                     player.errorDisplay.open();
                 });
             } else {
+                blockVideoAds = videoInfo.shouldHideAdverts;
+                withPreroll = shouldPreroll && !blockVideoAds;
+
                 // Location of this is important.
                 events.bindErrorHandler(player);
                 player.guMediaType = mediaType;
