@@ -11,6 +11,7 @@ define([
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/loyal-adblocking-survey',
     'common/modules/experiments/tests/minute',
+    'common/modules/experiments/tests/participation-star-ratings',
     'lodash/arrays/flatten',
     'lodash/arrays/zip',
     'lodash/collections/forEach',
@@ -37,6 +38,7 @@ define([
     LiveBlogChromeNotificationsProd,
     LoyalAdblockingSurvey,
     Minute,
+    ParticipationStarRatings,
     flatten,
     zip,
     forEach,
@@ -58,7 +60,8 @@ define([
         new LiveBlogChromeNotificationsInternal(),
         new LiveBlogChromeNotificationsProd(),
         new LoyalAdblockingSurvey(),
-        new Minute()
+        new Minute(),
+        new ParticipationStarRatings()
     ]);
 
     var participationsKey = 'gu.ab.participations';
