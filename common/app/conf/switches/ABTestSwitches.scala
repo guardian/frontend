@@ -50,6 +50,15 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABParticipationStarRatings = Switch(
+    SwitchGroup.ABTests,
+    "ab-participation-star-ratings",
+    "AB test switch to insert star ratings into film articles",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 11),
+    exposeClientSide = true
+  )
+
   val ABCleverFriend = Switch(
     SwitchGroup.ABTests,
     "ab-clever-friend-brexit",
