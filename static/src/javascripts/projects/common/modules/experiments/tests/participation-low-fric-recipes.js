@@ -45,8 +45,8 @@ define([
 
         this.canRun = function () {
             // Commentable, recipes
-            return guardian.config.page.toneIds &&
-                guardian.config.page.toneIds.indexOf('tone/recipes') !== -1 &&
+            return config.page.toneIds &&
+                config.page.toneIds.indexOf('tone/recipes') !== -1 &&
                 config.page.commentable;
         };
 
