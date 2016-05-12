@@ -14,11 +14,11 @@ send back a creative that displays the auction's winning ad, or - if it can trum
 This document will explain how the browser performs auctions, how DFP responds to them, and how the adverts are
 displayed.
 
-#Overview
+##Overview
 
 ![Header bidding workflow diagram](https://cloud.githubusercontent.com/assets/3148617/13568947/e35ab8cc-e45c-11e5-89a0-6413312e30e0.png)
 
-#Step 1: The browser auctions an ad-slot
+##Step 1: The browser auctions an ad-slot
 
 The browser needs to
 
@@ -52,7 +52,7 @@ takes the auction response JSON and returns some  string value:
  - the winner's name (e.g. AppNexus) is passed under `hb_bidder`
  - the winning value is aliased to a bucket (e.g. $6.33 => '6.00') and passed as `hb_pb`.
 
-#Step 2: DFP executes a competition
+##Step 2: DFP executes a competition
 
 DFP doesn't know anything about Prebid or any of the targeting values we pass. To make them work, we must create line
 items that target them and are configured with inherent price values that Doubleclick _can_ use.
@@ -64,7 +64,7 @@ As an example, we might have a line item that:
  - only matches when `hb_bidder` equals "Rubicon", so AdOps can turn off _only_ that provider's ads if something goes wrong
 
 
-#Step 3: Displaying the advert
+##Step 3: Displaying the advert
 
 Each line item points to a single, shared 'proxy creative' that has no content of its own, but only a script tag like
 the following:
