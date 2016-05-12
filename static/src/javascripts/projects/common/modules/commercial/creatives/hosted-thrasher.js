@@ -23,9 +23,7 @@ define([
     scrollBgStr,
     merge
 ) {
-    var hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
     var isEnhanced = detect.isEnhanced();
-    var isIE9OrLess = detect.getUserAgent.browser === 'MSIE' && (detect.getUserAgent.version === '9' || detect.getUserAgent.version === '8');
 
     var hostedVideoTpl;
     var iframeVideoTpl;
