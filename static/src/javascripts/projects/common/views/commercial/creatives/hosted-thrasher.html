@@ -1,17 +1,8 @@
 <%if (data.hasContainer) {%><div class="creative--hosted-video-bg-container"><%}%>
-<%if (data.showLabel) {%>
-<div class="ad-slot__label creative--hosted-video__label fc-container--layout-front" data-test-id="ad-slot-label">
-    <div class="fc-container__inner">Advertisement</div>
-</div>
-<%}%>
 <div class="creative--hosted-video l-side-margins fc-container__inner
     <%if (!data.isFixedHeight) {%>hide-until-tablet<%}%>
     creative--hosted-video__height--<%=data.creativeHeight%>" style="
         background-color: <%=data.backgroundColor%>;
-        /*background-image: url(<%=data.asset%>);*/
-        /*background-position: <%=data.backgroundPosition%>;*/
-        /*background-repeat: <%=data.backgroundRepeat%>;*/
-        /*background-size: <%=data.backgroundSize%>;*/
     ">
     <div class="fc-container__header">
         <a href="/uk/sport" class="fc-container__header__title">
@@ -44,21 +35,4 @@
         </div>
     </a>
 </div>
-<%if (!data.isFixedHeight) {%>
-<div class="creative--hosted-video l-side-margins mobile-only" style="
-        background-color: <%=data.backgroundColor%>;
-        background-image: url(<%=data.backgroundImageM%>);
-        background-position: <%=data.backgroundPositionM%>;
-        background-repeat: <%=data.backgroundRepeatM%>;
-    ">
-    <a href="<%=data.link%>" target="_blank">
-        <div class="gs-container">
-            <div class="hosted-video_layer hosted-video_layer1" style="
-                background-image: url(<%=data.layerOneBGImageM%>);
-                background-position: <%=data.layerOneBGPositionM%>;
-            "></div>
-        </div>
-    </a>
-</div>
-<%}%>
 <%if (data.hasContainer) {%></div><%}%>

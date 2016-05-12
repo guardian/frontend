@@ -6,7 +6,7 @@ define([
     'common/utils/template',
     'common/utils/mediator',
     'common/modules/commercial/creatives/add-tracking-pixel',
-    'text!common/views/commercial/creatives/hosted-video.html',
+    'text!common/views/commercial/creatives/hosted-thrasher.html',
     'text!common/views/commercial/creatives/iframe-video.html',
     'text!common/views/commercial/creatives/scrollbg.html',
     'lodash/objects/merge'
