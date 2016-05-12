@@ -6,30 +6,30 @@ import common.Logging
 import net.logstash.logback.marker.Markers._
 
 case class CSPReport(
-  documentUri: String,
-  referrer: String,
-  blockedUri: String,
-  violatedDirective: String,
-  effectiveDirective: String,
-  originalPolicy: String)
+  documentUri: Option[String],
+  referrer: Option[String],
+  blockedUri: Option[String],
+  violatedDirective: Option[String],
+  effectiveDirective: Option[String],
+  originalPolicy: Option[String])
 
 object CSPReport {
   implicit val jsonReads: Reads[CSPReport] = (
-    (__ \ "document-uri").read[String] and
-      (__ \ "referrer").read[String] and
-      (__ \ "blocked-uri").read[String] and
-      (__ \ "violated-directive").read[String] and
-      (__ \ "effective-directive").read[String] and
-      (__ \ "original-policy").read[String]
+    (__ \ "document-uri").readNullable[String] and
+      (__ \ "referrer").readNullable[String] and
+      (__ \ "blocked-uri").readNullable[String] and
+      (__ \ "violated-directive").readNullable[String] and
+      (__ \ "effective-directive").readNullable[String] and
+      (__ \ "original-policy").readNullable[String]
     )(CSPReport.apply _)
 
   implicit val jsonWrites: Writes[CSPReport] = (
-    (__ \ "document-uri").write[String] and
-      (__ \ "referrer").write[String] and
-      (__ \ "blocked-uri").write[String] and
-      (__ \ "violated-directive").write[String] and
-      (__ \ "effective-directive").write[String] and
-      (__ \ "original-policy").write[String]
+    (__ \ "document-uri").writeNullable[String] and
+      (__ \ "referrer").writeNullable[String] and
+      (__ \ "blocked-uri").writeNullable[String] and
+      (__ \ "violated-directive").writeNullable[String] and
+      (__ \ "effective-directive").writeNullable[String] and
+      (__ \ "original-policy").writeNullable[String]
     )(unlift(CSPReport.unapply))
 }
 
