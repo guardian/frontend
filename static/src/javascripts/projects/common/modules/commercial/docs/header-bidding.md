@@ -29,7 +29,8 @@ The browser needs to
  - dispatch a request for that advert as per usual
 
 Most of this will be done with the help of a library - currently we use [Prebid.js](http://prebid.org), loaded and
-proxied by a module named `PrebidService.js`.
+proxied by a module named `PrebidService.js`. Prebid calls third party services like AppNexus and Rubicon with the help
+of plugins termed [adapters](https://github.com/prebid/Prebid.js/tree/master/src/adapters).
 
 Whenever we want to load a slot, we queue a request with PrebidService. Prebid can only run one auction at a time; this
 is probably reasonable given the small size of most browsers' HTTP connection pools (10 concurrent requests on desktop
