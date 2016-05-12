@@ -32,7 +32,11 @@
 
 @renderQuestion(question: Question, field: play.api.data.Field, maybeUserAnswer: Option[Answer]) = {
     <fieldset class="atom-quiz__question">
-        <legend class="atom-quiz__question-text">@question.text</legend>
+        <legend class="atom-quiz__question-text">@if(question.text.trim.isEmpty()) {
+            &nbsp;
+        } else {
+            @question.text
+        }</legend>
 
         @question.imageMedia.map { image =>
             <div class="atom-quiz__question-image">
