@@ -45,8 +45,8 @@ DFP request.
 
 **Targeting data**
 
-Winner details are added as key-value pairs on the adslot's targeting. Prebid lets us map each key to a function that
-takes the auction response JSON and returns some  string value:
+Winner details are added as key-value pairs on the adslot's targeting. Prebid lets us map each key to a function of our
+own that takes the auction response JSON and returns some  string value:
 
  - a Prebid-specific identifier is passed as an `hb_adid` string
  - the winner's name (e.g. AppNexus) is passed under `hb_bidder`
