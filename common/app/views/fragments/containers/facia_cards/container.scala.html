@@ -100,7 +100,7 @@
 
                 case _: Dynamic | _: Fixed => {
                     <div class="fc-container__inner">
-                        @standardContainer(containerDefinition, frontProperties)
+                        @standardContainer(containerDefinition, frontProperties, maybeContainerModel)
                     </div>
                 }
 
