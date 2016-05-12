@@ -45,7 +45,7 @@ define([
     }
 
     function init() {
-        if (!$videoEl) {
+        if ($videoEl.length === 0) {
             return;
         }
 

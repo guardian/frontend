@@ -14,6 +14,7 @@ define([
     'common/modules/experiments/tests/participation-low-fric-music',
     'common/modules/experiments/tests/participation-low-fric-tv',
     'common/modules/experiments/tests/clever-friend-brexit',
+    'common/modules/experiments/tests/welcome-header',
     'lodash/arrays/flatten',
     'lodash/arrays/zip',
     'lodash/collections/forEach',
@@ -43,6 +44,7 @@ define([
     ParticipationLowFricMusic,
     ParticipationLowFricTv,
     CleverFriendBrexit,
+    WelcomeHeader,
     flatten,
     zip,
     forEach,
@@ -67,7 +69,8 @@ define([
         new ParticipationStarRatings(),
         new ParticipationLowFricMusic(),
         new ParticipationLowFricTv(),
-        new CleverFriendBrexit()
+        new CleverFriendBrexit(),
+        new WelcomeHeader()
     ]);
 
     var participationsKey = 'gu.ab.participations';

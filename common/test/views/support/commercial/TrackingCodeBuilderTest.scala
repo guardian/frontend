@@ -25,7 +25,7 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers {
     branding
   )
 
-  def mkContainerModel(brandingAttributes: Option[SponsorDataAttributes] = None) = {
+  def mkContainerModel(branding: Option[SponsorDataAttributes] = None) = {
 
     def mkContainerContent() = ContainerContent(
       title = "container-title",
@@ -49,8 +49,7 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers {
       id = "",
       layoutName = "",
       mkContainerContent(),
-      brandingAttributes,
-      branding = None
+      branding
     )
   }
 
@@ -58,7 +57,7 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers {
     val code = TrackingCodeBuilder.mkInteractionTrackingCode(
       frontId = "front-id",
       containerIndex = 2,
-      container = mkContainerModel(brandingAttributes = Some(mkBranding("sponsor-name"))),
+      container = mkContainerModel(branding = Some(mkBranding("sponsor-name"))),
       card = mkCardContent(5)
     )(request = FakeRequest().withHeaders("X-Gu-Edition" -> "US"))
     code shouldBe
@@ -80,7 +79,7 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers {
     val code = TrackingCodeBuilder.mkInteractionTrackingCode(
       frontId = "front-id",
       containerIndex = 2,
-      container = mkContainerModel(brandingAttributes = Some(mkBranding("sponsor-name"))),
+      container = mkContainerModel(branding = Some(mkBranding("sponsor-name"))),
       card = mkCardContent(5)
     )(request = FakeRequest().withHeaders("X-Gu-Edition" -> "US"))
     code shouldBe
