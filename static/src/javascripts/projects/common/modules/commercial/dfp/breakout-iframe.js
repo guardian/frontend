@@ -17,7 +17,6 @@ define([
     'common/modules/commercial/creatives/fabric-expandable-video-v1',
     'common/modules/commercial/creatives/fluid250',
     'common/modules/commercial/creatives/fluid250GoogleAndroid',
-    'common/modules/commercial/creatives/foundation-funded-logo',
     'common/modules/commercial/creatives/scrollable-mpu',
     'common/modules/commercial/creatives/scrollable-mpu-v2',
     'common/modules/commercial/creatives/template'
@@ -61,6 +60,10 @@ define([
                         var creativeConfig = JSON.parse(breakoutContent);
                         if (creativeConfig.name === 'fluid250-v4' || creativeConfig.name === 'fluid250-v3') {
                             creativeConfig.name = 'fluid250';
+                        } else if (creativeConfig.name === 'foundation-funded-logo') {
+                            creativeConfig.name = 'template';
+                            creativeConfig.params.creative = 'logo';
+                            creativeConfig.params.type = 'funded';
                         }
                         require(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
                             new Creative($slot, creativeConfig.params, creativeConfig.opts).create();

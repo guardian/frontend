@@ -68,7 +68,7 @@ define([
             tpl.params.logo = logoLinkTpl(tpl.params);
             tpl.params.partners = '';
             tpl.params.aboutLink = logoAboutTpl(tpl.params);
-        } else {
+        } else if (tpl.params.type === 'funded'){
             tpl.params.header = logoHeaderTpl({
                 header: !config.page.isFront && config.page.sponsorshipTag ?
                     config.page.sponsorshipTag + ' is supported by' :
