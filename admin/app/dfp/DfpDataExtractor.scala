@@ -17,14 +17,16 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
 
   val highMerchandisingTargetedTags: HighMerchandisingLineItems = {
 
-    lineItems.foldLeft(HighMerchandisingLineItems(items = List.empty)) { (soFar, lineItem) =>
-      if (lineItem.highMerchandisingTargets.isEmpty) {
-        soFar
-      } else {
-        soFar.copy(items = soFar.items :+ HighMerchandisingLineItem(
-          lineItem.name, lineItem.id, lineItem.highMerchandisingTargets))
+    val highMerchLineItems: Seq[HighMerchandisingLineItem] = lineItems
+      .filter(_.highMerchandisingTargets.nonEmpty)
+      .foldLeft(List.empty[HighMerchandisingLineItem]) { (soFar, lineItem) =>
+        soFar :+ HighMerchandisingLineItem(
+          name = lineItem.name,
+          id = lineItem.id,
+          tags = lineItem.highMerchandisingTargets)
       }
-    }
+
+    HighMerchandisingLineItems(items = highMerchLineItems)
   }
 
   val pageSkinSponsorships: Seq[PageSkinSponsorship] = {
