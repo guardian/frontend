@@ -5,6 +5,13 @@
 @main(model.HostedPage(metaData)) { } {
     <div class="hosted__header">
         <div class="hosted__headerwrap">
+            <div class="hosted__label">
+                <button class="u-button-reset hosted__labelbtn popup__toggle" data-toggle="hosted-popup">About @fragments.inlineSvg("arrow-down", "icon", List("hosted__labelicon"))</button>
+                <div class="popup popup--default is-off hosted__popup">
+                    <h3 class="hosted__labektitle">Super title</h3>
+                    <p class="hosted__labeltext">Super text</p>
+                </div>
+            </div>
             <a href="" class="hosted__glogo">
                 @fragments.inlineSvg("logo-guardian", "logo")
             </a>

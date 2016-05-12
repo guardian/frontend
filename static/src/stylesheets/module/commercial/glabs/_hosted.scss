@@ -25,6 +25,7 @@ $hosted-stripe: 28px;
 .hosted__header {
     width: 100%;
     height: $gs-row-height + $gs-baseline;
+    overflow: hidden;
     background-color: $neutral-1;
 }
 
@@ -59,7 +60,7 @@ $hosted-stripe: 28px;
 
 .hosted__glogo {
     text-align: right;
-    display: block;
+    float: right;
 
     svg {
         fill: #ffffff;
@@ -311,4 +312,38 @@ $hosted-stripe: 28px;
     @include mq($until: mobileLandscape) {
         padding: $gs-gutter / 2 $gs-gutter / 2 0 $gs-gutter / 2;
     }
+}
+
+.hosted__label {
+    float: left;
+    margin-left: 120px;
+}
+
+.hosted__labelicon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 2px;
+}
+
+.hosted__labelbtn {
+    @include f-headlineSans;
+    @include font-size(13);
+
+    margin-top: 25px;
+    color: #ffffff;
+
+    &:before,
+    &:after {
+        display: none;
+    }
+
+    svg {
+        width: 10px;
+        padding-top: 2px;
+    }
+}
+
+.hosted__popup {
+    left: auto;
+    box-shadow: none;
 }
