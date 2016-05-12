@@ -66,7 +66,7 @@ As an example, we might have a line item that:
 
 #Step 3: Displaying the advert
 
-Each line item points to a single, shared **proxy creative** that has no content of its own, but only a script tag like
+Each line item points to a single, shared 'proxy creative' that has no content of its own, but only a script tag like
 the following:
 
 ```
