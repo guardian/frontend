@@ -22,7 +22,7 @@ displayed.
 
 The browser needs to
 
- - ask partners what they can pay for an ad-slot that support particular sizes, with particular targeting keywords
+ - ask partners what they can pay for an ad-slot that support particular sizes, with certain page targeting data
  - wait for their responses
  - choose the winning bid
  - put information about the winning bid on the DFP slot's targeting data
