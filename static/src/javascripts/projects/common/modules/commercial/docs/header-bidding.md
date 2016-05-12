@@ -50,7 +50,7 @@ takes the auction response JSON and returns some  string value:
 
  - a Prebid-specific identifier is passed as an `hb_adid` string
  - the winner's name (e.g. AppNexus) is passed under `hb_bidder`
- - the winning value is aliased to a bucket (e.g. $6.33 => '6.50') and passed as `hb_pb`.
+ - the winning value is aliased to a bucket (e.g. $6.33 => '6.00') and passed as `hb_pb`.
 
 #Step 2: DFP executes a competition
 
@@ -59,7 +59,7 @@ items that target them and are configured with inherent price values that Double
 
 As an example, we might have a line item that:
 
- - matches when `hb_pb` equals "6.50", to represent a bid in the $6.00 to $6.50 bucket;
+ - matches when `hb_pb` equals "6.00", to represent a bid in the $6.00 to $6.49 bucket;
  - has a native value of $6.50, so that DFP can compare it to other line items and running campaigns;
  - only matches when `hb_bidder` equals "Rubicon", so AdOps can turn off _only_ that provider's ads if something goes wrong
 
