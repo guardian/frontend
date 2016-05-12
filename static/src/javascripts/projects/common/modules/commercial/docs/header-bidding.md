@@ -14,6 +14,10 @@ send back a creative that displays the auction's winning ad, or - if it can trum
 This document will explain how the browser performs auctions, how DFP responds to them, and how the adverts are
 displayed.
 
+#Overview
+
+![Header bidding workflow diagram](https://cloud.githubusercontent.com/assets/3148617/13568947/e35ab8cc-e45c-11e5-89a0-6413312e30e0.png)
+
 #Step 1: The browser auctions an ad-slot
 
 The browser needs to
