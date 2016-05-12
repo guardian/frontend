@@ -11,7 +11,7 @@
                   optBlurb = Some(Html("Courses from the Guardian")),
                   optActions = Some(actions)){
 
-    <a class="adverts__logo" href="@clickMacro@Configuration.commercial.masterclasses_url" data-link-name="merchandising-masterclasses-s-v1_0_2014-05-23-low-browse-all-masterclasses">
+    <a class="commodel__logo" href="@clickMacro@Configuration.commercial.masterclasses_url" data-link-name="merchandising-masterclasses-s-v1_0_2014-05-23-low-browse-all-masterclasses">
         @fragments.inlineSvg("marque-54", "icon")
         @fragments.inlineSvg("logo-guardian", "logo")
         @fragments.inlineSvg("logo-masterclasses", "commercial", List("inline-commercial-brand"))
@@ -20,7 +20,7 @@
 
 }{
 
-    <div class="adverts__row">
+    <div class="commodel__row">
         @events.take(2).map { event => @masterclassCard(event, clickMacro) }
         @events.slice(2, 4).map { event => @masterclassCard(event, clickMacro, optClassNames = Some(Seq("hide-until-tablet"))) }
     </div>

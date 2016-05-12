@@ -1,49 +1,49 @@
-.adverts--capi {
-    .adverts__title {
+.commodel--capi {
+    .commodel__title {
         font-size: get-font-size(headline, 3);
     }
 }
 
-.adverts--paidfor {
+.commodel--paidfor {
     @include mq(mobileLandscape, desktop) {
-        > .adverts__header {
+        > .commodel__header {
             flex-wrap: wrap;
         }
 
-        .adverts__kicker {
+        .commodel__kicker {
             flex-basis: 100%;
         }
     }
 }
 
-.adverts--tone-paidfor {
+.commodel--tone-paidfor {
     background-color: $neutral-6;
 
-    > .adverts__header {
+    > .commodel__header {
         background: $paidfor-background;
     }
 
-    .adverts__title {
+    .commodel__title {
         @include f-headlineSans;
     }
 
-    .adverts__logo {
+    .commodel__logo {
         color: #ffffff;
     }
 
-    .adverts__stamp {
+    .commodel__stamp {
         text-align: right;
     }
 
-    .adverts__row > * + *::before,
-    .adverts__row--legacy > .advert::after,
-    .adverts__2cols::after,
-    .adverts__3cols::before,
-    .adverts__3cols::after {
+    .commodel__row > * + *::before,
+    .commodel__row--legacy > .advert::after,
+    .commodel__2cols::after,
+    .commodel__3cols::before,
+    .commodel__3cols::after {
         background: $paid-article-subheader-bg;
     }
 
-    .adverts__more > summary {
+    .commodel__more > summary {
         background: $paidfor-background;
         border-color: $paidfor-background;
 
@@ -61,7 +61,7 @@
         }
     }
 
-    .adverts__more[open] > summary {
+    .commodel__more[open] > summary {
         background: none;
         border-color: $neutral-4;
         color: $neutral-1;
@@ -84,7 +84,7 @@
     }
 }
 
-.adverts--tone-supported {
+.commodel--tone-supported {
     background: none;
 
     &::before {
@@ -113,11 +113,11 @@
         }
     }
 
-    .adverts__logo {
+    .commodel__logo {
         color: $guardian-brand-dark;
     }
 
-    .adverts__badge__help {
+    .commodel__badge__help {
         color: $neutral-2-contrasted;
     }
 }
@@ -203,7 +203,7 @@
     }
 
 
-    .adverts--legacy-single & {
+    .commodel--legacy-single & {
         background: none;
         border-top: 0;
 

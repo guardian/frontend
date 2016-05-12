@@ -11,7 +11,7 @@
                   optBlurb = Some(blurb),
                   optActions = Some(actions)){
 
-    <a class="adverts__logo" href="@clickMacro@Configuration.commercial.soulmates_url" data-link-name="merchandising-soulmates-v2_2_2014-03-28-join-now">
+    <a class="commodel__logo" href="@clickMacro@Configuration.commercial.soulmates_url" data-link-name="merchandising-soulmates-v2_2_2014-03-28-join-now">
         @fragments.inlineSvg("marque-54", "icon")
         @fragments.inlineSvg("logo-soulmates", "commercial")
         <span class="u-h">The Guardian Soulmates</span>
@@ -19,7 +19,7 @@
 
 }{
 
-    <div class="adverts__row">
+    <div class="commodel__row">
         @members.take(6).map { member => @soulmateCard(member, clickMacro) }
         @members.drop(6).map { member => @soulmateCard(member, clickMacro, optClassNames = Some(Seq("hide-until-tablet"))) }
         @soulmateForm()

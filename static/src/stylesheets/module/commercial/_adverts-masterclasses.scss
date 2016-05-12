@@ -1,8 +1,8 @@
-.adverts--masterclasses {
+.commodel--masterclasses {
 }
 
-.adverts--tone-masterclasses {
-    > .adverts__header {
+.commodel--tone-masterclasses {
+    > .commodel__header {
         background: $multimedia-main-1;
 
         .button {
@@ -22,7 +22,7 @@
     }
 }
 
-.adverts--tone-masterclasses .button--legacy-single,
+.commodel--tone-masterclasses .button--legacy-single,
 .advert--masterclass .button {
     @include button-colour(
         $multimedia-main-2,
@@ -43,7 +43,7 @@
     }
 }
 
-.adverts--tone-masterclasses .button--legacy-single {
+.commodel--tone-masterclasses .button--legacy-single {
     &:hover,
     &:focus,
     &:active {

@@ -1,13 +1,13 @@
-.adverts--networks {
+.commodel--networks {
 }
 
-.adverts--tone-networks {
-    > .adverts__header {
+.commodel--tone-networks {
+    > .commodel__header {
         background: $news-support-4;
     }
 }
 
-.adverts--tone-networks .button--legacy-single,
+.commodel--tone-networks .button--legacy-single,
 .advert--network .button {
     @include button-colour(
         $news-main-1,
@@ -28,7 +28,7 @@
     }
 }
 
-.adverts--tone-networks .button--legacy-single {
+.commodel--tone-networks .button--legacy-single {
     &:hover,
     &:focus,
     &:active {

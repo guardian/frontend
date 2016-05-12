@@ -10,23 +10,23 @@
   optBadge: Option[Html] = None
  )(title: Html)(innards: Html)
 
-<aside class="adverts @classNames.map(c => s"adverts--$c").mkString(" ")"
+<aside class="commodel @classNames.map(c => s"commodel--$c").mkString(" ")"
     @for(dln <- dataLinkName){data-link-name="@dln"}
     >
-    <header class="adverts__header">
-        @for(kicker   <- optKicker)  {<div class="adverts__kicker">@kicker</div>}
-        <h1 class="adverts__title">@title</h1>
+    <header class="commodel__header">
+        @for(kicker   <- optKicker)  {<div class="commodel__kicker">@kicker</div>}
+        <h1 class="commodel__title">@title</h1>
         @if(badgeInHeader) {
-            @for(badge        <- optBadge)   {<div class="adverts__badge adverts__badge--alt js-badge">@badge</div>}
+            @for(badge        <- optBadge)   {<div class="commodel__badge commodel__badge--alt js-badge">@badge</div>}
         }
-        @for(blurb    <- optBlurb)   {<div class="adverts__blurb">@blurb</div>}
-        @for(actions  <- optActions) {<div class="adverts__ctas">@actions</div>}
-        @for(stamp    <- optStamp)   {<div class="adverts__stamp">@stamp</div>}
+        @for(blurb    <- optBlurb)   {<div class="commodel__blurb">@blurb</div>}
+        @for(actions  <- optActions) {<div class="commodel__ctas">@actions</div>}
+        @for(stamp    <- optStamp)   {<div class="commodel__stamp">@stamp</div>}
     </header>
-    <div class="adverts__body">
+    <div class="commodel__body">
         @innards
         @if(!badgeInHeader) {
-            @for(badge        <- optBadge)   {<div class="adverts__badge js-badge">@badge</div>}
+            @for(badge        <- optBadge)   {<div class="commodel__badge js-badge">@badge</div>}
         }
     </div>
 </aside>

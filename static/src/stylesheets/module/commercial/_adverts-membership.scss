@@ -1,10 +1,10 @@
-.adverts--tone-membership {
-    > .adverts__header {
+.commodel--tone-membership {
+    > .commodel__header {
         background: $membership-default;
     }
 }
 
-.adverts--tone-membership .button--legacy-single,
+.commodel--tone-membership .button--legacy-single,
 .advert--membership .button {
     @include button-colour(
         $membership-default,
@@ -25,7 +25,7 @@
     }
 }
 
-.adverts--tone-membership .button--legacy-single {
+.commodel--tone-membership .button--legacy-single {
     &:hover,
     &:focus,
     &:active {

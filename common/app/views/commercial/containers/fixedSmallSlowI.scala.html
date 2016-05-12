@@ -3,7 +3,7 @@
   containerIndex: Int,
   containerModel: common.commercial.ContainerModel)(implicit request: RequestHeader)
 
-<div class="adverts__row">
+<div class="commodel__row">
     @containerModel.content.initialCards.take(1).map(card => views.html.commercial.cards.itemLargeCard(
                             card,
                             cardType = cards.FullMedia75,

@@ -1,8 +1,8 @@
-.adverts--soulmates {
+.commodel--soulmates {
     @include mq($until: tablet) {
         // In the soulmates component, we want to show rows of 3 profiles
         // on mobile. Except if this is a manual component.
-        &:not(.adverts--manual) .adverts__row {
+        &:not(.commodel--manual) .commodel__row {
             > * {
                 flex-basis: calc(33.33% - #{$gs-gutter});
                 &:nth-child(even)::before {
@@ -19,13 +19,13 @@
             }
         }
 
-        > .adverts__header {
+        > .commodel__header {
             flex-direction: row;
             justify-content: space-between;
         }
     }
 
-    > .adverts__header .inline-logo-soulmates > svg {
+    > .commodel__header .inline-logo-soulmates > svg {
         width: 100px;
         height: 21px;
 
@@ -41,11 +41,11 @@
         }
     }
 
-    .adverts__blurb {
+    .commodel__blurb {
         margin-bottom: $gs-baseline;
     }
 
-    .adverts__ctas {
+    .commodel__ctas {
         .button {
             display: flex;
             align-items: center;
@@ -87,14 +87,14 @@
     }
 }
 
-.adverts--tone-soulmates {
+.commodel--tone-soulmates {
     background: $soulmates-background;
 
-    > .adverts__header {
+    > .commodel__header {
         background: $soulmates-colour;
     }
 
-    .adverts__blurb {
+    .commodel__blurb {
         @include fs-headline(2);
         font-weight: bold;
 
@@ -108,7 +108,7 @@
         }
     }
 
-    .adverts__ctas {
+    .commodel__ctas {
         .button {
             background: none;
             border: 0;

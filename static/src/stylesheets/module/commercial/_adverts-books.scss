@@ -1,5 +1,5 @@
-.adverts--books {
-    > .adverts__header {
+.commodel--books {
+    > .commodel__header {
         .search {
             position: relative;
         }
@@ -39,8 +39,8 @@
 
 }
 
-.adverts--tone-books {
-    > .adverts__header {
+.commodel--tone-books {
+    > .commodel__header {
         background: $features-main-1;
     }
 }
@@ -51,7 +51,7 @@
     }
 }
 
-.adverts--tone-books .button--legacy-single,
+.commodel--tone-books .button--legacy-single,
 .advert--book .button {
     @include button-colour(
         $features-main-2,
@@ -72,7 +72,7 @@
     }
 }
 
-.adverts--tone-books .button--legacy-single {
+.commodel--tone-books .button--legacy-single {
     &:hover,
     &:focus,
     &:active {

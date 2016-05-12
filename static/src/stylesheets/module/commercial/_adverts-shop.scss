@@ -1,13 +1,13 @@
-.adverts--shop {
+.commodel--shop {
 }
 
-.adverts--tone-shop {
-    > .adverts__header {
+.commodel--tone-shop {
+    > .commodel__header {
         background: $features-main-1;
     }
 }
 
-.adverts--tone-shop .button--legacy-single,
+.commodel--tone-shop .button--legacy-single,
 .advert--shop .button {
     @include button-colour(
         $features-support-4,
@@ -33,7 +33,7 @@
     }
 }
 
-.adverts--tone-shop .button--legacy-single {
+.commodel--tone-shop .button--legacy-single {
     &:hover,
     &:focus,
     &:active {

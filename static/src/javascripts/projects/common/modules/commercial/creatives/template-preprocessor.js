@@ -116,7 +116,7 @@ define([
         manualContainerButtonTpl || (manualContainerButtonTpl = template(manualContainerButtonStr));
         manualCardTpls[tpl.params.creativeCard] || (manualCardTpls[tpl.params.creativeCard] = template(manualCardStrs[tpl.params.creativeCard]));
         manualCardCtaTpl || (manualCardCtaTpl = template(manualCardCtaStr));
-        tpl.params.classNames = ['manual'].concat(tpl.params.classNames).map(function (cn) { return 'adverts--' + cn; }).join(' ');
+        tpl.params.classNames = ['manual'].concat(tpl.params.classNames).map(function (cn) { return 'commodel--' + cn; }).join(' ');
         tpl.params.title || (tpl.params.title = '');
 
         if (tpl.params.isSoulmates) {
