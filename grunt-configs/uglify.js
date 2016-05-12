@@ -38,7 +38,7 @@ module.exports = function (grunt, options) {
                 expand: true,
                 cwd: 'static/src/javascripts/',
                 src: [
-                    'components/analytics/analytics.js'
+                    'projects/common/modules/analytics/analytics.js'
                 ],
                 dest: 'common/conf/assets'
             }
