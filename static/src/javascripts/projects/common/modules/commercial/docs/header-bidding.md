@@ -73,4 +73,4 @@ the following:
 window.top.pbjs.renderAd(document, '%%PATTERN:hb_adid%%');
 ```
 
-This tells the prebid.js script loaded in the browser to go ahead and display the advert is has waiting in memory.
+This tells the prebid.js script loaded in the browser to go ahead and display the advert it has waiting in memory.
