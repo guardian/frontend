@@ -6,13 +6,13 @@ define([
         this.start = '2016-05-09';
         this.expiry = '2016-07-31';
         this.author = 'Anne Byrne';
-        this.description = 'Segmentation to target users with Clever Friend';
-        this.audience = 0.0;
+        this.description = 'Only expose the clever friend embed to 10% of people, by removing it for 90%';
+        this.audience = 0.9;
         this.audienceOffset = 0.0;
-        this.successMeasure = 'We want to segment users, so that only 1% are targeted with Clever Friend - the Brexit Companion.';
+        this.successMeasure = 'Not really an a/b test, just using the audience segmentation for a soft launch';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
-        this.idealOutcome = 'We want a sample of users, 1% of our audience, to see Clever Friend on Brexit news articles.';
+        this.idealOutcome = '';
 
         this.canRun = function () {
             return true;
