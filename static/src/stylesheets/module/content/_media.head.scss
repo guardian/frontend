@@ -23,13 +23,12 @@
     position: relative;
 }
 
-.tonal--tone-media .content__headline {
-    .inline-icon {
-        margin-right: .1em;
+.inline-icon--media {
+    // Sizes in ems to keep scale proportionate as the text size grows or shrinks
+    margin-right: .1em;
 
-        svg {
-            width: .86em;
-            height: 100%;
-        }
+    svg {
+        width: .86em;
+        height: 100%;
     }
 }

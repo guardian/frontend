@@ -339,7 +339,7 @@
             font-weight: 200;
             padding-top: 0;
         }
-    }    
+    }
 
     .gallery {
         list-style: none;
@@ -465,7 +465,7 @@
     }
 
     .gallery__credit {
-        color: $neutral-2;
+        color: $neutral-3;
 
         @include mq(desktop) {
             padding-right: $gs-gutter / 2;

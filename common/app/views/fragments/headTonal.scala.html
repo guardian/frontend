@@ -24,7 +24,7 @@
                                 case _ => "camera"
                             }
                         ) { mediaIcon =>
-                            @fragments.inlineSvg(mediaIcon, "icon", List("inline-tone-fill"))
+                            @fragments.inlineSvg(mediaIcon, "icon", List("inline-tone-fill", "inline-icon--media"))
                         }
                     }
                     @Html(item.trail.headline)

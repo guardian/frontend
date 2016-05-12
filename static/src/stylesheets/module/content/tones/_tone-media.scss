@@ -23,20 +23,20 @@
     .byline,
     .byline .tone-colour,
     .byline .tone-colour:hover,
-    .meta__numbers .sharecount__value,
-    .meta__numbers .commentcount2__value {
-        color: $neutral-3;
-    }
-
     .content__dateline,
     .meta__numbers .sharecount__heading,
     .meta__numbers .commentcount2__heading {
-        color: $neutral-2;
+        color: $neutral-3;
+    }
+
+    .meta__numbers .sharecount__value,
+    .meta__numbers .commentcount2__value {
+        color: $neutral-4;
     }
 
     .meta__numbers .inline-share,
     .meta__numbers .inline-comment-16 {
-        fill: $neutral-2;
+        fill: $neutral-3;
     }
 
     .commentcount2 {
@@ -45,15 +45,15 @@
             text-decoration: none;
 
             .commentcount2__heading {
-                color: $neutral-3;
+                color: $neutral-4;
             }
 
             .inline-comment-16 {
-                fill: $neutral-3;
+                fill: $neutral-4;
             }
 
             .commentcount2__value {
-                color: $neutral-5;
+                color: $neutral-6;
             }
         }
     }

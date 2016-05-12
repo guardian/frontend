@@ -254,9 +254,10 @@
             border-color: $neutral-6;
         }
 
-        &.inline-icon, .inline-icon {
+        .inline-icon {
             fill: $neutral-3;
 
+            // Directly referencing the sizes in _social.scss
             svg {
                 height: 88%;
                 width: 88%;
