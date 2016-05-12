@@ -396,7 +396,14 @@ trait ContentPage extends Page {
     item.content.twitterProperties ++
     metadata.twitterPropertiesOverrides
 
-  override def branding(edition: Edition): Option[Branding] = BrandHunter.findContentBranding(item, edition)
+  override def branding(edition: Edition): Option[Branding] = {
+    BrandHunter.findContentBranding(
+      section = None,
+      item.tags,
+      publicationDate = Some(item.trail.webPublicationDate),
+      edition
+    )
+  }
 }
 case class SimpleContentPage(content: ContentType) extends ContentPage {
   override lazy val item: ContentType = content

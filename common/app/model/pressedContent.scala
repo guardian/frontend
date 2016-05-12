@@ -3,9 +3,7 @@ package model.pressed
 import com.gu.facia.api.utils.FaciaContentUtils
 import com.gu.facia.api.{models => fapi, utils => fapiutils}
 import com.gu.facia.client.models.{Backfill, CollectionConfigJson}
-import common.Edition
-import common.commercial.BrandHunter
-import model.{Branding, ContentType, SupportedUrl}
+import model.{ContentType, SupportedUrl}
 import org.joda.time.DateTime
 
 object CollectionConfig {
@@ -159,11 +157,7 @@ final case class PressedProperties(
   maybeFrontPublicationDate: Option[Long],
   href: Option[String],
   webUrl: Option[String]
-) {
-  def branding(edition: Edition): Option[Branding] = {
-    maybeContent map (BrandHunter.findContentBranding(_, edition)) getOrElse None
-  }
-}
+)
 
 object PressedCardHeader {
   def make(content: fapi.FaciaContent): PressedCardHeader = {
@@ -282,8 +276,6 @@ sealed trait PressedContent {
   def card: PressedCard
   def discussion: PressedDiscussionSettings
   def display: PressedDisplaySettings
-
-  def branding(edition: Edition): Option[Branding] = properties.branding(edition)
 }
 sealed trait Snap extends PressedContent
 
