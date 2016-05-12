@@ -55,7 +55,7 @@ trait ABTestSwitches {
     "ab-participation-star-ratings",
     "AB test switch to insert star ratings into film articles",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 11),
+    sellByDate = new LocalDate(2016, 6, 12),
     exposeClientSide = true
   )
 
