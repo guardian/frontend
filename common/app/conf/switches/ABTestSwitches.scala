@@ -23,15 +23,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABIdentityRegisterMembershipStandfirst = Switch(
-    SwitchGroup.ABTests,
-    "ab-identity-register-membership-standfirst",
-    "Membership registration page variant for Identity",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 12),
-    exposeClientSide = true
-  )
-
   val ABLiveBlogChromeNotificationsInternal = Switch(
     SwitchGroup.ABTests,
     "ab-live-blog-chrome-notifications-internal",
@@ -64,8 +55,16 @@ trait ABTestSwitches {
     "ab-minute",
     "Switch to include the minute.ly script",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 11),
+    sellByDate = new LocalDate(2016, 5, 16),
     exposeClientSide = true
   )
 
+  val ABCleverFriend = Switch(
+    SwitchGroup.ABTests,
+    "ab-clever-friend-brexit",
+    "Switch to trigger segmentation for clever friend exposure",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 29),
+    exposeClientSide = true
+  )
 }

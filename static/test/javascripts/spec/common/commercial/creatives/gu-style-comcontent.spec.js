@@ -28,7 +28,9 @@ define([
         it('can render slot', function () {
             $fixturesContainer = fixtures.render(fixturesConfig);
 
-            gustyleComcontent = new GustyleComcontent($('.ad-slot', $fixturesContainer), {});
+            gustyleComcontent = new GustyleComcontent($('.ad-slot', $fixturesContainer), {
+                adType: 'gu-style'
+            });
             expect(gustyleComcontent).toBeDefined();
         });
 
@@ -36,6 +38,7 @@ define([
             $fixturesContainer = fixtures.render(fixturesConfig);
 
             new GustyleComcontent($('.ad-slot', $fixturesContainer), {
+                adType: 'gu-style',
                 articleContentPosition: 'bottom'
             }).create();
             expect(qwery('.gu-display__content-position--bottom', '.ad-slot').length).toBe(1);
@@ -45,6 +48,7 @@ define([
             $fixturesContainer = fixtures.render(fixturesConfig);
 
             new GustyleComcontent($('.ad-slot', $fixturesContainer), {
+                adType: 'gu-style',
                 articleContentPosition: 'top'
             }).create();
             expect(qwery('.gu-display__content-position--top', '.ad-slot').length).toBe(1);
@@ -54,6 +58,7 @@ define([
             $fixturesContainer = fixtures.render(fixturesConfig);
 
             new GustyleComcontent($('.ad-slot', $fixturesContainer), {
+                adType: 'gu-style',
                 articleContentColor: 'bright'
             }).create();
             expect(qwery('.gu-display__content-color--bright', '.ad-slot').length).toBe(4);
@@ -63,6 +68,7 @@ define([
             $fixturesContainer = fixtures.render(fixturesConfig);
 
             new GustyleComcontent($('.ad-slot', $fixturesContainer), {
+                adType: 'gu-style',
                 articleContentColor: 'dark'
             }).create();
             expect(qwery('.gu-display__content-color--dark', '.ad-slot').length).toBe(4);
@@ -72,6 +78,7 @@ define([
             $fixturesContainer = fixtures.render(fixturesConfig);
 
             new GustyleComcontent($('.ad-slot', $fixturesContainer), {
+                adType: 'gu-style',
                 articleHeaderFontSize: 'regular'
             }).create();
             expect(qwery('.gu-display__content-size--regular', '.ad-slot').length).toBe(1);
@@ -81,6 +88,7 @@ define([
             $fixturesContainer = fixtures.render(fixturesConfig);
 
             new GustyleComcontent($('.ad-slot', $fixturesContainer), {
+                adType: 'gu-style',
                 articleHeaderFontSize: 'big'
             }).create();
             expect(qwery('.gu-display__content-size--big', '.ad-slot').length).toBe(1);
@@ -90,6 +98,7 @@ define([
             $fixturesContainer = fixtures.render(fixturesConfig);
 
             new GustyleComcontent($('.ad-slot', $fixturesContainer), {
+                adType: 'gu-style',
                 articleTextFontSize: 'small'
             }).create();
             expect(qwery('.gu-display__content-size--small', '.ad-slot').length).toBe(1);
@@ -99,6 +108,7 @@ define([
             $fixturesContainer = fixtures.render(fixturesConfig);
 
             new GustyleComcontent($('.ad-slot', $fixturesContainer), {
+                adType: 'gu-style',
                 articleTextFontSize: 'big',
                 articleHeaderFontSize: 'big'
             }).create();
@@ -109,6 +119,7 @@ define([
             $fixturesContainer = fixtures.render(fixturesConfig);
 
             new GustyleComcontent($('.ad-slot', $fixturesContainer), {
+                adType: 'gu-style',
                 brandLogoPosition: 'top-left'
             }).create();
             expect(qwery('.gu-display__logo-pos--top-left', '.ad-slot').length).toBe(1);
@@ -118,6 +129,7 @@ define([
             $fixturesContainer = fixtures.render(fixturesConfig);
 
             new GustyleComcontent($('.ad-slot', $fixturesContainer), {
+                adType: 'gu-style',
                 brandLogoPosition: 'bottom-right'
             }).create();
             expect(qwery('.gu-display__logo-pos--bottom-right', '.ad-slot').length).toBe(1);
