@@ -16,8 +16,8 @@ define([
             cookieVal = cookies.get(COOKIE_WELCOME_BANNER);
 
         this.id = 'WelcomeHeader';
-        this.start = '2016-05-12';
-        this.expiry = '2016-05-13';
+        this.start = '2016-05-13';
+        this.expiry = '2016-05-14';
         this.author = 'Maria Livia Chiorean';
         this.description = 'Show a welcome header for first time users.';
         this.audience = 1;
