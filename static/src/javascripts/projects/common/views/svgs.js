@@ -52,6 +52,7 @@ define([
     'inlineSvg!svgs/notifications-explainer-desktop',
     'inlineSvg!svgs/notifications-explainer-mobile',
     'inlineSvg!svgs/commercial/adblock-coins-us',
+    'inlineSvg!svgs/icon/star',
     'lodash/objects/isArray'
 ], function (
     commentCount16icon,
@@ -103,6 +104,7 @@ define([
     notificationsExplainerDesktop,
     notificationsExplainerMobile,
     adblockCoinsUS,
+    star,
     isArray
 ) {
     var svgs = {
@@ -154,6 +156,7 @@ define([
         logomembership: membershipLogo,
         notificationsExplainerDesktop: notificationsExplainerDesktop,
         notificationsExplainerMobile: notificationsExplainerMobile,
+        star: star,
         logomembershipwhite: membershipLogoWhite
     };
 
