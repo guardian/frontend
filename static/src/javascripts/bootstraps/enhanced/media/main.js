@@ -337,7 +337,7 @@ define([
                 });
 
                 playerSetupComplete.then(function () {
-                    if (true) {
+                    if (autoplay) {
                         player.play();
                     }
                 });
