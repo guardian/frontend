@@ -15,7 +15,7 @@ define([
     }
 
     function receiveMessage(event) {
-        var message = event.data;
+        var message = event.data || '';
 
         if (message.indexOf('Tracker beacon:') === 0) {
           var variantName = message.split(':')[1];
