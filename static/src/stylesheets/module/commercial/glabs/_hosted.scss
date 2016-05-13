@@ -344,6 +344,13 @@ $hosted-stripe: 28px;
 }
 
 .hosted__popup {
+    top: 58px;
     left: auto;
+    z-index: $zindex-modal;
+    padding: $gs-gutter / 2;
     box-shadow: none;
+}
+
+.hosted__labeltext {
+    @include font-size(12, 14);
 }
