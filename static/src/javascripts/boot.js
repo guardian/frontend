@@ -66,7 +66,7 @@ define([
                 .then(function (boot) {
                     boot();
                 });
-        } else Promise.resolve()
+        } else Promise.resolve();
     };
 
     domReadyPromise
