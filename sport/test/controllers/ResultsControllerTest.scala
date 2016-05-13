@@ -1,5 +1,6 @@
 package controllers
 
+import akka.stream.Materializer
 import football.controllers.ResultsController
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, Matchers, WordSpec}
 import play.api.libs.json.JsValue
@@ -19,6 +20,8 @@ import scala.concurrent.Future
     with WithTestWsClient {
 
   val resultsController = new ResultsController(testCompetitionsService)
+
+  implicit lazy val mat: Materializer = app.materializer
 
   "GET all results" should {
     val request = FakeRequest(method = "GET", path = "/football/results.json")
