@@ -97,7 +97,7 @@ case class HighMerchandisingLineItem(
   tags: Seq[String],
   adUnits: Seq[GuAdUnit]) {
 
-  val adUnitId = adUnits.map(adUnit => adUnit.id)
+  val adUnitIds = adUnits.map(adUnit => adUnit.id)
   val adUnitString = adUnits.map(adUnit =>
     adUnit.path.foldLeft(""){(theGuardian, tail) => theGuardian +"/" + tail})
 }

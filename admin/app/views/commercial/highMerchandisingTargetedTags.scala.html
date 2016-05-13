@@ -27,7 +27,9 @@
                         <td><a href="@DfpLink.lineItem(lineItem.id)">@{lineItem.id}</a></td>
                         <td>@{lineItem.tags.mkString(", ")}</td>
                         <td>@{lineItem.adUnitString.mkString(", ")}</td>
-                        <td>@{lineItem.adUnitId + ", "}</td>
+                        <td>@for(adUnitId <- lineItem.adUnitIds) {
+                            <a href="@DfpLink.adUnit(adUnitId)">@{adUnitId}</a>
+                        }</td>
 
                     </tr>
                 }
