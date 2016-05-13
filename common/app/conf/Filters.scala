@@ -2,7 +2,7 @@ package conf
 
 import akka.agent.Agent
 import cache.SurrogateKey
-import common.{Logging, ExecutionContexts}
+import common.{RequestMetrics, Logging, ExecutionContexts}
 import conf.switches.Switches
 import filters.RequestLoggingFilter
 import implicits.Responses._
@@ -82,9 +82,10 @@ object PanicSheddingFilter extends Filter with Logging {
   import scala.concurrent.duration._
   import scala.concurrent.ExecutionContext.Implicits.global
 
-  val LATENCY_LIMIT = 1.second
-  // always allow 32 concurrent connections even in slow times
-  val MIN_CONNECTIONS = 32
+  val ALL_200s_MAX_LATENCY = 1.second.toMillis
+  val PANICING_MIN_LATENCY = 3.seconds.toMillis
+  // always allow a few concurrent connections even in slow times
+  val MIN_CONNECTIONS = 4
 
   val averageLatency = Agent(LatencyMonitor.initialLatency)
   val inFlightLatency = Agent(InFlightLatencyMonitor.initialLatency)
@@ -93,29 +94,57 @@ object PanicSheddingFilter extends Filter with Logging {
   // if we get loads of requests at the same moment, it would take up to 1 second to realise
   // and start throttling
   // also if the request rate keeps going up there would be plenty of "young" requests to skew the average down
-  def available =
-    inFlightLatency.get.requestStarts <= MIN_CONNECTIONS || (
-      inFlightLatency.get.latency(DateTime.now.getMillis) <= LATENCY_LIMIT.toMillis &&
-        averageLatency.get.latency <= LATENCY_LIMIT.toMillis
-      )
+  def available(request: RequestHeader) = {
+    import implicits.Requests._
+    // assume uncompleted requests are half way through on average, although if we get a sudden flood this assumption doesn't hold
+    val currentInflightLatency = inFlightLatency.get.latency(DateTime.now.getMillis) * 2
+    val previousLatency = averageLatency.get.latency
+    log.info(s"currentInFlightLatency = $currentInflightLatency and averageLatency = $previousLatency")
+    if (inFlightLatency.get.requestStarts <= MIN_CONNECTIONS) {
+      true
+    } else {
+      val worstLatency = Math.max(currentInflightLatency, previousLatency)
+      if (worstLatency <= ALL_200s_MAX_LATENCY) {
+        true
+      } else if (worstLatency > PANICING_MIN_LATENCY) {
+        log.warn(s"server busy, not serving more than $MIN_CONNECTIONS concurrent requests")
+        false // even health checks fail
+      } else if (request.isHealthcheck) {
+        log.warn(s"server busy, allowing health checks through")
+        true // if we're partially open serve health checks
+      } else {
+        val openingRange = PANICING_MIN_LATENCY - ALL_200s_MAX_LATENCY
+        val msAwayFromFullyOff = PANICING_MIN_LATENCY - worstLatency
+        val percentageOfRequestsToServe = msAwayFromFullyOff * 100 / openingRange
+        log.warn(s"server busy, only serving $percentageOfRequestsToServe% of requests")
+        scala.util.Random.nextInt(100) < percentageOfRequestsToServe
+      }
+    }
+  }
 
   override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
-    val startTime = DateTime.now.getMillis
-    val result = if (available) {
-      nextFilter(request)
+    if (available(request)) {
+      monitor(nextFilter(request))
     } else if (Switches.PanicSheddingSwitch.isSwitchedOn) {
-      log.warn("server too busy - responding 5xx")
+      RequestMetrics.RequestsShedMetric.increment()
       Future.successful(ServiceUnavailable)
     } else {
-      log.warn("server too busy - having a go at responding anyway")
-      nextFilter(request)
+      log.warn("panic switch disabled - having a go at responding anyway")
+      RequestMetrics.RequestsShedMetric.increment()
+      monitor(nextFilter(request))
     }
+  }
+
+  def monitor(result: => Future[Result]) = {
+    val startedResult = result
+    val startTime = DateTime.now.getMillis
     inFlightLatency.send(InFlightLatencyMonitor.requestStarted(startTime)_)
-    result.onComplete { _ =>
+    startedResult.onComplete { _ =>
       inFlightLatency.send(InFlightLatencyMonitor.requestComplete(startTime)_)
       averageLatency.send(LatencyMonitor.updateLatency(DateTime.now.getMillis - startTime)_)
+      log.info(s"request complete in: ${DateTime.now.getMillis - startTime}")
     }
-    result
+    startedResult
   }
 
 }
@@ -144,24 +173,25 @@ object InFlightLatencyMonitor extends ExecutionContexts {
 object LatencyMonitor extends ExecutionContexts {
 
   case class AverageLatency(latencies: Queue[Long], total: Long) {
-    def latency = total / latencies.length
+    def latency = total / 99
   }
 
   val initialLatency = AverageLatency(Queue(), 0)
 
-  val LATENCY_MAX_SAMPLES = 128
+  val DECAY_PERCENT = 99
+  //val LATENCY_MAX_SAMPLES = 128
 
   def updateLatency(thisRequestLatencyMs: Long)(averageLatency: AverageLatency): AverageLatency = {
     val AverageLatency(latencies, total) = averageLatency
-    val newLatencies = latencies.enqueue(thisRequestLatencyMs)
-    val newTotal = total + thisRequestLatencyMs
-    val newLatency = if (newLatencies.length > LATENCY_MAX_SAMPLES) {
-      val (removed, removedQueue) = newLatencies.dequeue
-      AverageLatency(removedQueue, newTotal - removed)
-    } else {
+    val newLatencies = Queue()//latencies.enqueue(thisRequestLatencyMs)
+    val newTotal = ((total * 100) / DECAY_PERCENT) + thisRequestLatencyMs
+//    val newLatency = if (newLatencies.length > LATENCY_MAX_SAMPLES) {
+//      val (removed, removedQueue) = newLatencies.dequeue
+//      AverageLatency(removedQueue, newTotal - removed)
+//    } else {
       AverageLatency(newLatencies, newTotal)
-    }
-    newLatency
+//    }
+//    newLatency
   }
 }
 

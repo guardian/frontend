@@ -99,6 +99,16 @@ object SystemMetrics extends implicits.Numbers {
     get = () => buildNumber,
     metricUnit = StandardUnit.None
   )
+
+}
+
+object RequestMetrics {
+
+  val RequestsShedMetric = CountMetric(
+    name = "requests-shed",
+    description = "Number of requests we returned 503 because the server was overloaded"
+  )
+
 }
 
 object ContentApiMetrics {
@@ -150,7 +160,9 @@ trait CloudWatchApplicationMetrics extends GlobalSettings with Logging {
   val applicationDimension = List(new Dimension().withName("ApplicationName").withValue(applicationName))
 
   def applicationName: String
-  def applicationMetrics: List[FrontendMetric] = Nil
+  def applicationMetrics: List[FrontendMetric] = List(
+    RequestMetrics.RequestsShedMetric
+  )
 
   def systemMetrics: List[FrontendMetric] = List(
     SystemMetrics.MaxHeapMemoryMetric,
