@@ -7,7 +7,7 @@ import scala.concurrent.Future
 import scala.util.{Failure, Random, Success}
 import conf.switches.Switches
 
-object RequestLoggingFilter extends Filter with Logging with ExecutionContexts {
+class RequestLoggingFilter extends Filter with Logging with ExecutionContexts {
   override def apply(next: (RequestHeader) => Future[Result])(rh: RequestHeader): Future[Result] = {
     val stopWatch = new StopWatch
 
@@ -31,7 +31,7 @@ object RequestLoggingFilter extends Filter with Logging with ExecutionContexts {
   }
 }
 
-object DiscussionRequestLoggingFilter extends Filter with Logging with ExecutionContexts {
+class DiscussionRequestLoggingFilter extends Filter with Logging with ExecutionContexts {
   override def apply(next: (RequestHeader) => Future[Result])(rh: RequestHeader): Future[Result] = {
 
     val requestId = Random.nextInt(Integer.MAX_VALUE)

@@ -1,14 +1,12 @@
 import business.StocksDataLifecycle
 import common.Logback.Logstash
 import common.{CloudWatchApplicationMetrics, ContentApiMetrics}
-import conf.{CorsErrorHandler, Filters, OnwardHealthCheckLifeCycle, SwitchboardLifecycle}
+import conf.{CorsErrorHandler, OnwardHealthCheckLifeCycle, SwitchboardLifecycle}
 import dev.DevParametersLifecycle
 import feed.{MostPopularFacebookAutoRefreshLifecycle, MostReadLifecycle, OnwardJourneyLifecycle}
 import metrics.FrontendMetric
-import play.api.mvc.WithFilters
 
-object Global extends WithFilters(Filters.common: _*)
-  with OnwardJourneyLifecycle
+object Global extends OnwardJourneyLifecycle
   with DevParametersLifecycle
   with CloudWatchApplicationMetrics
   with MostReadLifecycle

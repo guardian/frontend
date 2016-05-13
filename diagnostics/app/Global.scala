@@ -1,11 +1,9 @@
-
 import common.Logback.Logstash
 import common.{CloudWatchApplicationMetrics, DiagnosticsLifecycle}
-import conf.{DiagnosticsHealthCheckLifeCycle, Gzipper, SwitchboardLifecycle}
-import play.api.mvc.WithFilters
+import conf.{DiagnosticsHealthCheckLifeCycle, SwitchboardLifecycle}
 
-object Global extends WithFilters(Gzipper)
-  with DiagnosticsLifecycle
+object Global
+  extends DiagnosticsLifecycle
   with SwitchboardLifecycle
   with CloudWatchApplicationMetrics
   with Logstash
