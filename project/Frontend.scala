@@ -1,11 +1,12 @@
 package com.gu
 
-import com.gu.Dependencies._
-import com.typesafe.sbt.web.Import._
+import play.sbt.PlayImport._
 import play.routes.compiler.InjectedRoutesGenerator
 import play.sbt.Play.autoImport._
 import play.sbt.routes.RoutesKeys
 import play.twirl.sbt.Import._
+import com.typesafe.sbt.web.Import._
+import Dependencies._
 import sbt.Keys._
 import sbt._
 
