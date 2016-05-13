@@ -1,7 +1,6 @@
-<%if (data.hasContainer) {%><div class="creative--hosted-video-bg-container"><%}%>
 <div class="creative--hosted-video l-side-margins fc-container__inner
     creative--hosted-video__height--<%=data.creativeHeight%>" style="
-        background-color: <%=data.backgroundColor%>;
+        background-color: <%=data.backgroundColour%>;
     ">
     <div class="fc-container__header">
         <a href="/uk/sport" class="fc-container__header__title">
@@ -17,7 +16,7 @@
                     controls="controls"
                     preload="auto"
                     muted="no"
-                    style="width: 100%;"
+                    style="width: 100%; border-color: <%=data.bannerColour%>"
                     data-block-video-ads="true"
                     poster="https://cdn.theguardian.tv/interactive/2015/11/13/151113title2a_2M_H264_poster.jpg"
                     class="vjs-hosted__video hosted__video gu-media--show-controls-at-start gu-media--video vjs vjs-tech-html5 vjs-paused vjs-controls-enabled vjs_video_1-dimensions vjs-user-active">
@@ -27,11 +26,14 @@
                     <source type="video/m3u8" src="http://multimedia.guardianapis.com/interactivevideos/video.php?file=151113title2a&amp;format=application/x-mpegURL&amp;maxbitrate=2000">
                 </video>
                 <div class="hosted__meta">
-                    <p class="hosted__heading--small"><%=data.header1%></p>
-                    <h1 class="hosted__heading hosted-tone--renault"><%=data.header2%></h1>
+                    <p class="hosted__heading--small" style="
+                            color: <%=data.header1colour%>;
+                        "><%=data.header1%></p>
+                    <h1 class="hosted__heading" style="
+                            color: <%=data.header2colour%>;
+                        "><%=data.header2%></h1>
                 </div>
             </div>
         </div>
     </a>
 </div>
-<%if (data.hasContainer) {%></div><%}%>

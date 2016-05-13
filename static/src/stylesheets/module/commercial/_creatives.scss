@@ -797,6 +797,10 @@
         z-index: 1;
         background-repeat: no-repeat;
     }
+
+    video {
+        border-top: 3px solid transparent;
+    }
 }
 
 .creative--hosted-video__height--fixed {
