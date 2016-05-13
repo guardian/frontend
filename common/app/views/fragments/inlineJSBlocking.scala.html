@@ -11,11 +11,7 @@
 <script id="gu">
     @Html(curlConfig().body)
 
-    @if(play.Play.isDev()) {
-        @Html(Static.js.curl);
-
-        require(['boot']);
-    } else {
+    @if(conf.Configuration.assets.useHashedBundles) {
         // Polyfill for async script
         (function (document) {
             var script = document.createElement('script');
@@ -23,6 +19,10 @@
             var ref = document.getElementsByTagName('script')[0];
             ref.parentNode.insertBefore(script, ref);
         })(document);
+    } else {
+        @Html(Static.js.curl);
+
+        require(['boot']);
     }
 
     // render-critical blocking JS

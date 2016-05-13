@@ -1,7 +1,7 @@
 import common.Logback.Logstash
 import common.dfp.DfpAgentLifecycle
 import common.{CloudWatchApplicationMetrics, ContentApiMetrics}
-import conf.{CorsErrorHandler, Filters, SwitchboardLifecycle}
+import conf.{ArticleHealthCheckLifeCycle, CorsErrorHandler, Filters, SwitchboardLifecycle}
 import dev.DevParametersLifecycle
 import metrics.FrontendMetric
 import ophan.SurgingContentAgentLifecycle
@@ -17,7 +17,8 @@ object Global
   with SurgingContentAgentLifecycle
   with CorsErrorHandler
   with SwitchboardLifecycle
-  with Logstash {
+  with Logstash
+  with ArticleHealthCheckLifeCycle {
   override lazy val applicationName = "frontend-article"
 
   override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ::: List(

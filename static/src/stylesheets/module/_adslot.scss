@@ -321,50 +321,6 @@
         display: block;
     }
 }
-.ad-slot--sponsored {
-    min-height: 250px;
-    box-sizing: border-box;
-    background-color: $neutral-8;
-    overflow: hidden;
-    border-top: 1px solid $neutral-5;
-    padding-top: $gs-baseline/2;
-}
-.ad-slot--sponsored__article {
-    text-align: left;
-    display: block;
-    position: relative;
-    min-height: gs-height(2);
-    padding: 0 $gs-gutter/2 $gs-baseline/2 (gs-span(2) + $gs-gutter);
-    margin-bottom: $gs-baseline/2;
-    border-bottom: 1px solid $neutral-5;
-}
-.ad-slot--sponsored__image {
-    position: absolute;
-    top: 0;
-    left: $gs-gutter/2;
-}
-.ad-slot--sponsored__article,
-.ad-slot--sponsored__label,
-.ad-slot--sponsored__help {
-    color: $neutral-2;
-}
-.ad-slot--sponsored__article {
-    @include f-headlineSans;
-    @include font-size(16, 20);
-}
-.ad-slot--sponsored__label,
-.ad-slot--sponsored__help {
-    @include fs-textSans(3);
-    float: left;
-    clear: left;
-    padding-left: $gs-gutter/2;
-}
-.ad-slot--sponsored__label {
-    margin-bottom: $gs-baseline/3;
-}
-.ad-slot--sponsored__link {
-    float: right;
-}
 
 /**
  * Commercial Components

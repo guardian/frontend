@@ -5,13 +5,14 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/dummy-test',
     'common/modules/experiments/tests/fronts-on-articles2',
-    'common/modules/experiments/tests/identity-register-membership-standfirst',
     'common/modules/experiments/tests/live-blog-chrome-notifications-internal',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/loyal-adblocking-survey',
     'common/modules/experiments/tests/minute',
+    'common/modules/experiments/tests/participation-star-ratings',
+    'common/modules/experiments/tests/clever-friend-brexit',
+    'common/modules/experiments/tests/welcome-header',
     'lodash/arrays/flatten',
     'lodash/arrays/zip',
     'lodash/collections/forEach',
@@ -32,13 +33,14 @@ define([
     mediator,
     store,
     mvtCookie,
-    DummyTest,
     FrontsOnArticles2,
-    IdentityRegisterMembershipStandfirst,
     LiveBlogChromeNotificationsInternal,
     LiveBlogChromeNotificationsProd,
     LoyalAdblockingSurvey,
     Minute,
+    ParticipationStarRatings,
+    CleverFriendBrexit,
+    WelcomeHeader,
     flatten,
     zip,
     forEach,
@@ -55,13 +57,14 @@ define([
 ) {
 
     var TESTS = flatten([
-        new DummyTest(),
         new FrontsOnArticles2(),
-        new IdentityRegisterMembershipStandfirst(),
         new LiveBlogChromeNotificationsInternal(),
         new LiveBlogChromeNotificationsProd(),
         new LoyalAdblockingSurvey(),
-        new Minute()
+        new Minute(),
+        new ParticipationStarRatings(),
+        new CleverFriendBrexit(),
+        new WelcomeHeader()
     ]);
 
     var participationsKey = 'gu.ab.participations';

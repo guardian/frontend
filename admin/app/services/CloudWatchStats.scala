@@ -32,13 +32,7 @@ object CloudWatchStats extends Logging with ExecutionContexts {
 
     ftr onFailure {
       case exception: Exception =>
-        log.info(s"CloudWatch GetMetricStatisticsRequest error: ${exception.getMessage}")
-
-        // temporary till JVM bug fix comes out
-        // see https://blogs.oracle.com/joew/entry/jdk_7u45_aws_issue_123
-        if (exception.getMessage.contains("JAXP00010001")) {
-          HealthCheck.break()
-        }
+        log.error(s"CloudWatch GetMetricStatisticsRequest error: ${exception.getMessage}", exception)
     }
 
     ftr
