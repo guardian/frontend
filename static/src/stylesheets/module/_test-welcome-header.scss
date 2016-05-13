@@ -1,0 +1,41 @@
+/* Test welcome header for first time users
+   ========================================================================== */
+
+#welcome-banner {
+    color: rgb(170, 220, 230);
+    background: #005689;
+    position: absolute;
+    top: 0;
+    z-index: 1100;
+    width: 100%;
+    font-size: 1.7rem;
+    line-height: 1.65rem;
+    font-family: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;
+    font-weight: 800;
+}
+
+#welcome-banner .banner-message {
+    @include mq($until: tablet) {
+        margin: $gs-gutter/4 $gs-gutter/2;
+    }
+    @include mq(tablet, desktop) {
+        margin: $gs-gutter/4 $gs-gutter;
+    }
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+#welcome-banner span {
+    width: 100%;
+    display: block;
+}
+
+#welcome-banner .pull-left {
+    text-align: left;
+}
+
+#welcome-banner .pull-right {
+    text-align: right;
+}
