@@ -71,7 +71,7 @@
     @include mq(tablet) {
         &:after,
         &:before {
-            background: rgba(0, 0, 0, .05);
+            background: rgba(0, 0, 0, .25);
 
             .container__banding + .container__banding & {
                 background: rgba($neutral-1, .15);

@@ -1,4 +1,4 @@
-GET        /_healthcheck        conf.HealthCheck.healthcheck()
+GET        /_healthcheck        conf.HealthCheck.healthCheck()
 GET        /                    controllers.Application.index
 GET        /debug/config        controllers.Application.showCurrentConfig
 

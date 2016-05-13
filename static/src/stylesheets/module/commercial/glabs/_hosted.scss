@@ -24,7 +24,7 @@ $hosted-stripe: 28px;
 
 .hosted__header {
     width: 100%;
-    height: $gs-row-height + $gs-baseline;
+    height: 58px;
     background-color: $neutral-1;
 }
 
@@ -39,10 +39,7 @@ $hosted-stripe: 28px;
 
 .hosted__headerwrap {
     margin: 0 auto;
-
-    @include mq(tablet) {
-        max-width: gs-span(9) + $gs-gutter * 2;
-    }
+    text-align: right;
 
     @include mq(desktop) {
         max-width: gs-span(12) + $gs-gutter * 2;
@@ -58,22 +55,30 @@ $hosted-stripe: 28px;
 }
 
 .hosted__glogo {
+    display: inline-block;
+    padding: 4px $gs-gutter / 2;
+    background-color: $guardian-brand;
     text-align: right;
-    display: block;
 
     svg {
         fill: #ffffff;
-        width: 170px;
+        width: 185px;
         height: 50px;
     }
 
-    @include mq($until: desktop) {
-        margin-right: $gs-gutter;
-
-        svg {
-            width: 100px;
-        }
+    .inline-logo {
+        display: inline-block;
+        margin-top: -5px;
     }
+}
+
+.hosted__glogotext {
+    @include f-headlineSans;
+    @include font-size(14);
+
+    margin: 0;
+    text-align: left;
+    color: rgba(255, 255, 255, .5);
 }
 
 .hosted__container {
@@ -296,11 +301,12 @@ $hosted-stripe: 28px;
 }
 
 .hosted__standfirst {
-    width: 60%;
+    width: auto;
     padding: $gs-baseline $gs-gutter 0;
 
-    @include mq($until: desktop) {
-        width: auto;
+    @include mq(desktop) {
+        width: 60%;
+        margin-bottom: $gs-gutter * 1.5;
     }
 }
 

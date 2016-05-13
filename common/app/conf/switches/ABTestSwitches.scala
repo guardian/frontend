@@ -50,12 +50,30 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABParticipationStarRatings = Switch(
+    SwitchGroup.ABTests,
+    "ab-participation-star-ratings",
+    "AB test switch to insert star ratings into film articles",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 13),
+    exposeClientSide = true
+  )
+
   val ABCleverFriend = Switch(
     SwitchGroup.ABTests,
     "ab-clever-friend-brexit",
     "Switch to trigger segmentation for clever friend exposure",
     safeState = Off,
     sellByDate = new LocalDate(2016, 7, 29),
+    exposeClientSide = true
+  )
+
+  val ABWelcomeHeader = Switch(
+    SwitchGroup.ABTests,
+    "ab-welcome-header",
+    "Welcome header for first time users test",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 5, 19),
     exposeClientSide = true
   )
 }
