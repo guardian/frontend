@@ -30,6 +30,16 @@ create_install_vars() {
   fi
 }
 
+install_awscli() {
+  if ! installed aws; then
+    if linux; then
+      sudo apt-get install -y awscli
+    elif mac; then
+      brew install awscli
+    fi
+  fi
+}
+
 create_frontend_properties() {
   local path="$HOME/.gu"
   local filename="frontend.properties"
@@ -132,9 +142,10 @@ report() {
 
 main() {
   create_install_vars
-  create_frontend_properties
   create_aws_config
   install_homebrew
+  install_awscli
+  create_frontend_properties
   install_jdk
   install_node
   install_gcc
