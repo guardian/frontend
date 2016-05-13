@@ -31,7 +31,7 @@
                         <td>@for(adUnitId <- lineItem.adUnitIds) {
                             <a href="@DfpLink.adUnit(adUnitId)">@{adUnitId}</a>
                         }</td>
-                        <td>@{lineItem.customTargets.distinct}</td>
+                        <td>@{lineItem.editionIfSet.distinct}</td>
 
                     </tr>
                 }

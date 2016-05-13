@@ -102,10 +102,10 @@ case class HighMerchandisingLineItem(
   val adUnitIds = adUnits.map(adUnit => adUnit.id)
   val adUnitString = adUnits.map(adUnit =>
     adUnit.path.foldLeft(""){(theGuardian, tail) => theGuardian.drop(1) +"/" + tail})
-  val customTargetSeq = customTargetSet.map(target =>
-    target.targets
+  val customTargets = customTargetSet.map(set =>
+    set.targets
   )
-  val customTargets = customTargetSeq.flatMap(sequence => sequence.filter((target) => target.name == "edition")).map(seq => seq.values)
+  val editionIfSet = customTargets.flatMap(sequence => sequence.filter((target) => target.name == "edition")).map(seq => seq.values)
 
 }
 
