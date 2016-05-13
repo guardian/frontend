@@ -369,7 +369,7 @@ define([
 
         var mediaType = config.page.contentType.toLowerCase(),
             section   = new Component(),
-            attachTo  = $('.js-onward')[0],
+            attachTo  = $('.js-more-in-section')[0],
             endpoint  = '/' + mediaType + '/section/' + config.page.section;
 
         if ('seriesId' in config.page) {
