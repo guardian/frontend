@@ -10,7 +10,7 @@ import play.filters.gzip.GzipFilter
 
 import scala.concurrent.Future
 
-class Gzipper extends GzipFilter(shouldGzip = (_, result) => !result.isImage)
+class Gzipper extends GzipFilter(shouldGzip = (_, result) => !result.header.isImage)
 
 class JsonVaryHeadersFilter extends Filter with ExecutionContexts with implicits.Requests {
 

@@ -61,7 +61,7 @@ class CapiHttpClient(wsClient: WSClient)
     }
 
     response map { wsResponse =>
-      Response(wsResponse.bodyAsBytes, wsResponse.status, wsResponse.statusText)
+      Response(wsResponse.bodyAsBytes.toArray, wsResponse.status, wsResponse.statusText)
     }
   }
 }

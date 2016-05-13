@@ -12,7 +12,7 @@ import play.api.mvc.Security.AuthenticatedRequest
 import play.api.mvc._
 import purge.CdnPurge
 import tools.LoadBalancer
-
+import scala.concurrent.duration._
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
@@ -30,7 +30,7 @@ class PageDecacheController(wsClient: WSClient) extends Controller with Logging 
   private def renderPrePurgeTestResult(purgeUrl: String)(implicit request: Request[AnyContent]) = {
     getRouterUrl(purgeUrl).map { routerUrl =>
       wsClient.url(routerUrl)
-        .withRequestTimeout(2000)
+        .withRequestTimeout(2.second)
         .withVirtualHost("www.theguardian.com")
         .withFollowRedirects(true)
         .get()

@@ -5,7 +5,7 @@ import org.scalatest.Suites
 import recorder.DefaultHttpRecorder
 import play.api.libs.ws.WSClient
 import java.io.File
-
+import scala.concurrent.duration._
 import discussion.api.DiscussionApiLike
 
 
@@ -25,7 +25,7 @@ class DiscussionApiStub(val wsClient: WSClient) extends DiscussionApiLike {
   protected val apiTimeout = conf.Configuration.discussion.apiTimeout
 
   override protected def GET(url: String, headers: (String, String)*) = DiscussionApiHttpRecorder.load(url, Map.empty){
-    wsClient.url(url).withRequestTimeout(2000).get()
+    wsClient.url(url).withRequestTimeout(2.seconds).get()
   }
 }
 
