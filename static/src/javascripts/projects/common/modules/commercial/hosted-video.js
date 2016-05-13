@@ -19,8 +19,7 @@ define([
     videojs,
     loadingTmpl
 ) {
-
-    var $videoEl = $('.vjs-hosted__video');
+    var $videoEl;
     var player;
 
     function initLoadingSpinner(player) {
@@ -45,6 +44,8 @@ define([
     }
 
     function init() {
+        $videoEl = $('.vjs-hosted__video');
+
         if (!$videoEl || !$videoEl.length) {
             return;
         }

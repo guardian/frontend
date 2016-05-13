@@ -1,10 +1,11 @@
 define([
     'qwery',
     'bonzo',
-    'fastdom',
     'common/utils/detect',
+    'common/utils/fastdom-promise',
     'common/utils/template',
     'common/utils/mediator',
+    'common/modules/commercial/hosted-video',
     'common/modules/commercial/creatives/add-tracking-pixel',
     'text!common/views/commercial/creatives/hosted-thrasher.html',
     'text!common/views/commercial/creatives/iframe-video.html',
@@ -13,10 +14,11 @@ define([
 ], function (
     $,
     bonzo,
-    fastdom,
     detect,
+    fastdom,
     template,
     mediator,
+    hostedVideo,
     addTrackingPixel,
     hostedVideoStr,
     iframeVideoStr,
@@ -65,7 +67,13 @@ define([
                 false
         };
 
-        this.$adSlot.append(hostedVideoTpl({ data: merge(this.params, templateOptions) }));
+        var domPromise = fastdom.write(function () {
+            this.$adSlot.append(hostedVideoTpl({ data: merge(this.params, templateOptions) }));
+        }.bind(this));
+
+        domPromise.then(function () {
+            hostedVideo.init();
+        });
 
         if (this.params.trackingPixel) {
             addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
