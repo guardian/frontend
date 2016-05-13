@@ -97,8 +97,9 @@ define([
 
         function insertInlineAd(paras) {
             bodyAds += 1;
-            var isFabricTopReplacement = (bodyAds === 1) && detect.isBreakpoint({max: 'phablet'});
+            var isFabricTopReplacement = config.switches.fabricAdverts && (bodyAds === 1) && detect.isBreakpoint({max: 'phablet'});
             var adDefinition = isFabricTopReplacement ? 'inline-fabric-top' : ('inline' + bodyAds);
+
             insertAdAtPara(paras[0], adDefinition, 'inline');
         }
     }
