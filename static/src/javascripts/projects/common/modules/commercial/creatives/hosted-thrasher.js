@@ -7,8 +7,7 @@ define([
     'common/utils/mediator',
     'common/modules/commercial/hosted-video',
     'common/modules/commercial/creatives/add-tracking-pixel',
-    'text!common/views/commercial/creatives/hosted-thrasher.html',
-    'lodash/objects/merge'
+    'text!common/views/commercial/creatives/hosted-thrasher.html'
 ], function (
     $,
     bonzo,
@@ -18,8 +17,7 @@ define([
     mediator,
     hostedVideo,
     addTrackingPixel,
-    hostedVideoStr,
-    merge
+    hostedVideoStr
 ) {
     var hostedVideoTpl;
 
