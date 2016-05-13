@@ -53,7 +53,7 @@
 
     .ad-slot--dark & {
         color: $neutral-3;
-        border-top-color: $neutral-2;
+        border-top-color: $media-mute;
         background-color: transparent;
     }
 }
@@ -224,11 +224,19 @@
     }
 }
 .ad-slot--gallery-inline {
+    background-color: $media-background;
+
     @include mq(mobileLandscape) {
         width: 300px;
     }
     @include mq(tablet) {
         width: auto;
+    }
+    @include mq(desktop) {
+        &,
+        .ad-slot__label {
+            text-align: left;
+        }
     }
 }
 .ad-slot--inline,
@@ -284,7 +292,6 @@
         }
     }
 }
-.ad-slot--gallery-inline,
 .ad-slot--liveblog-inline {
     @include mq(tablet) {
         padding-bottom: $gs-baseline*2;
@@ -448,7 +455,7 @@
     }
 }
 .ad-slot--paid-for-badge--gallery {
-    border-top: 1px dotted $neutral-1;
+    border-top: 1px dotted $media-mute;
     border-bottom: 0;
     padding-top: $gs-baseline / 3;
 
