@@ -9,7 +9,6 @@ bundle).
 define([
     'bean',
     'bonzo',
-    'enhancer',
     'EventEmitter',
     'fastdom',
     'fence',

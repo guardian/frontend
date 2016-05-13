@@ -1,7 +1,6 @@
 /*eslint-disable no-new*/
 /** Bootstrap for functionality common to all trail pages: article, live blogs, podcasts, videos, etc. */
 define([
-    'enhancer',
     'fastdom',
     'qwery',
     'common/utils/$',
@@ -22,7 +21,6 @@ define([
     'common/modules/social/share-count',
     'common/modules/experiments/ab'
 ], function (
-    enhancer,
     fastdom,
     qwery,
     $,
@@ -124,19 +122,6 @@ define([
         }
     }
 
-    function augmentInteractive() {
-        if (
-            !config.switches.bootInteractivesFromMain &&
-            /Article|Interactive|LiveBlog/.test(config.page.contentType)
-        ) {
-            $('figure.interactive').each(function (el) {
-                fastdom.defer(function () {
-                    enhancer.render(el, document, config, mediator);
-                });
-            });
-        }
-    }
-
     function repositionComments() {
         if (!identityApi.isUserLoggedIn()) {
             fastdom.write(function () {
@@ -150,7 +135,6 @@ define([
             ['c-discussion', initDiscussion],
             ['c-comments', repositionComments],
             ['c-fronts-containers', initFrontsContainers],
-            ['c-enhance', augmentInteractive],
             ['c-shares', shareCount],
             ['c-popular', initPopular],
             ['c-related', initRelated],
