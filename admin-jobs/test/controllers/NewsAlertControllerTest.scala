@@ -6,6 +6,7 @@ import java.util.UUID
 
 import akka.actor.Status.{Failure => ActorFailure}
 import akka.actor.{Actor, ActorSystem, Props}
+import akka.stream.Materializer
 import common.ExecutionContexts
 import controllers.BreakingNews.{BreakingNewsApi, S3BreakingNews}
 import models.{NewsAlertNotification, NewsAlertTypes}
@@ -22,6 +23,8 @@ import test.{ConfiguredTestSuite, WithTestEnvironment}
     with Matchers
     with ConfiguredTestSuite
     with WithTestEnvironment {
+
+  implicit lazy val mat: Materializer = app.materializer
 
   val testApiKey = "test-api-key"
 

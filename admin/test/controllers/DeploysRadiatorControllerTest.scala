@@ -1,5 +1,6 @@
 package controllers.admin
 
+import akka.stream.Materializer
 import common.ExecutionContexts
 import controllers.Helpers.DeploysTestHttpRecorder
 import model.deploys._
@@ -19,6 +20,8 @@ import scala.concurrent.duration._
   with ExecutionContexts
   with BeforeAndAfterAll
   with WithTestWsClient {
+
+  implicit lazy val materializer: Materializer = app.materializer
 
   val existingBuild = "3123"
 

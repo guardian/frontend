@@ -30,12 +30,13 @@ object FilterExemptions {
 }
 
 class StandaloneFilters(
-    environment: Environment
+  mat: Materializer,
+  env: Environment
 ) extends HttpFilters {
 
   val previewAuthFilter = new GoogleAuthFilters.AuthFilterWithExemptions(
     FilterExemptions.loginExemption,
-    FilterExemptions.exemptions)(environment)
+    FilterExemptions.exemptions)(mat, env)
 
-  val filters = previewAuthFilter :: new NoCacheFilter() :: Filters.common
+  val filters = previewAuthFilter :: new NoCacheFilter()(mat) :: Filters.common(mat)
 }

@@ -1,5 +1,6 @@
 package conf
 
+import akka.stream.{ActorMaterializer, Materializer}
 import common.ExecutionContexts
 import org.joda.time.DateTime
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, Matchers, WordSpec}
@@ -21,6 +22,8 @@ import scala.util.Random
   with ExecutionContexts
   with BeforeAndAfterAll
   with WithTestWsClient {
+
+  implicit def materializer: Materializer = app.materializer
 
   //Helper method to construct mock Results
   def mockResult(statusCode: Int, date: DateTime = DateTime.now, expiration: HealthCheckExpiration = HealthCheckExpires.Duration(10.seconds)): HealthCheckResult = {
