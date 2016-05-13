@@ -17,7 +17,7 @@ import play.api.libs.ws.{WS, WSClient}
 
     override def GET(url: String, headers: (String, String)*) = {
       headersReceived = Map(headers:_*)
-      wsClient.url(testUrl).withRequestTimeout(1).get()
+      wsClient.url(testUrl).withRequestTimeout(1.millisecond).get()
     }
 
     var headersReceived: Map[String,String] = Map.empty

@@ -8,6 +8,7 @@ import play.api.libs.json._
 import play.api.libs.ws.WSClient
 
 import scala.concurrent.Future
+import scala.concurrent.duration.DurationInt
 
 object MostReadItem {
   implicit val jsonReads = Json.reads[MostReadItem]
@@ -27,7 +28,7 @@ class OphanApi(wsClient: WSClient) extends ExecutionContexts with Logging with i
         } mkString "&"
         val url = s"$host/$path?$queryString&api-key=$key"
         log.info(s"Making request to Ophan API: $url")
-        wsClient.url(url).withRequestTimeout(10000).getOKResponse().map(_.json)
+        wsClient.url(url).withRequestTimeout(10.seconds).getOKResponse().map(_.json)
       }
 
     maybeJson getOrElse {

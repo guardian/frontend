@@ -23,7 +23,6 @@ trait StandaloneControllerComponents
   self: BuiltInComponents =>
 
   def wsClient: WSClient
-  def frontJsonFapiDraft: FrontJsonFapiDraft
 
   lazy val assets = wire[Assets]
   lazy val devAssetsController = wire[DevAssetsController]

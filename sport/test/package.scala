@@ -1,5 +1,6 @@
 package test
 
+import common.ExecutionContexts
 import java.io.File
 
 import common.ExecutionContexts
@@ -10,9 +11,8 @@ import org.scalatest.Suites
 import pa.{Http, Response => PaResponse}
 import play.api.libs.ws.WSClient
 import recorder.{DefaultHttpRecorder, HttpRecorder}
-
 import scala.concurrent.Future
-import scala.io.Codec.UTF8
+import scala.concurrent.duration._
 
 class SportTestSuite extends Suites (
   new CompetitionListControllerTest,
@@ -67,7 +67,7 @@ class TestHttp(wsClient: WSClient) extends Http with ExecutionContexts {
     val sanitisedUrl = url.replace(SportConfiguration.pa.footballKey, "apikey")
     FootballHttpRecorder.load(sanitisedUrl) {
       wsClient.url(url)
-        .withRequestTimeout(10000)
+        .withRequestTimeout(10.seconds)
         .get()
         .map { wsResponse =>
           pa.Response(wsResponse.status, wsResponse.body, wsResponse.statusText)

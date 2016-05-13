@@ -10,6 +10,8 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import test.{ConfiguredTestSuite, WithTestWsClient}
 
+import scala.concurrent.duration._
+
 @DoNotDiscover class DeploysRadiatorControllerTest
   extends WordSpec
   with Matchers
