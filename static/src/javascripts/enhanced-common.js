@@ -1,5 +1,6 @@
 define([
-    // The following modules are here for bundling purposes only
+    // The following modules are here for bundling purposes only.
+    // We add this to enhanced/main, and subtract enhanced/main from other enhanced bootstraps to reduce module redundancy.
 
     // utilities
     'common/utils/$',
