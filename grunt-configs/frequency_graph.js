@@ -6,7 +6,7 @@ module.exports = function () {
             seeds: [
                 'bootstraps/standard/main.js',
                 'bootstraps/enhanced/main.js',
-                'bootstraps/commercial.js',
+                'bootstraps/commercial.js'
             ],
             requireConfig: '/grunt-configs/requirejs.js',
             gruntJit: true,
