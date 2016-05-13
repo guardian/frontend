@@ -305,11 +305,22 @@ trait FeatureSwitches {
   )
 
   val AmpSwitch = Switch(
-    SwitchGroup.ServerSideABTests,
+    SwitchGroup.Feature,
     "amp-switch",
     "If this switch is on, link to amp pages will be in the metadata for articles",
     safeState = On,
     sellByDate = never,
+    exposeClientSide = false
+  )
+
+  // Owner: First impressions
+  val galleryRedesign = Switch(
+    SwitchGroup.Feature,
+    "gallery-redesign-switch",
+    "If this switch is on, the new gallery redesign displays",
+    safeState = On,
+    // Tuesday
+    sellByDate = new LocalDate(2016, 5, 31),
     exposeClientSide = false
   )
 
@@ -337,6 +348,15 @@ trait FeatureSwitches {
     "When ON, items tagged with us-news/us-elections-2016 will have visual elements added",
     safeState = On,
     sellByDate = new LocalDate(2017, 1, 5),
+    exposeClientSide = false
+  )
+  // Owner: Ben Longden 
+  val AUSElectionSwitch = Switch(
+    SwitchGroup.Feature,
+    "aus-election",
+    "When ON, items tagged with australia-news/australian-election-2016 will have visual elements added",
+    safeState = On,
+    sellByDate = new LocalDate(2017, 2, 28),
     exposeClientSide = false
   )
 

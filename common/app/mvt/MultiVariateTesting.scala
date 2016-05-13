@@ -22,7 +22,7 @@ object ABHeadlinesTestVariant extends TestDefinition(
   Nil,
   "headlines-ab-variant",
   "To test how much of a difference changing a headline makes (variant group)",
-  new LocalDate(2016, 5, 11)
+  new LocalDate(2016, 6, 10)
   ) {
   override def isParticipating(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-hlt").contains("hlt-V") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
@@ -40,38 +40,11 @@ object ABNewHeaderVariant extends TestDefinition(
   }
 }
 
-object ABGalleryRedesignVariant extends TestDefinition(
-  variants = Nil,
-  name = "ab-gallery-redesign-variant",
-  description = "Gallery redesign ab test (variant group)",
-  sellByDate = new LocalDate(2016, 5, 10)
-) {
-  override def isParticipating(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-gallery-redesign").contains("variant") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
-  }
-  def shouldShow(contentType: String)(implicit request: RequestHeader): Boolean = {
-     isParticipating && contentType.toLowerCase == "gallery"
-  }
-}
-
-object ABGalleryRedesignControl extends TestDefinition(
-  variants = Nil,
-  name = "ab-gallery-redesign-control",
-  description = "Gallery redesign ab test (control group)",
-  sellByDate = new LocalDate(2016, 5, 10)
-) {
-  override def isParticipating(implicit request: RequestHeader): Boolean = {
-    val doesNotContainGalleryHeader = !request.headers.get("X-GU-ab-gallery-redesign").isDefined
-
-    doesNotContainGalleryHeader && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
-  }
-}
-
 object ABHeadlinesTestControl extends TestDefinition(
   Nil,
   "headlines-ab-control",
   "To test how much of a difference changing a headline makes (control group)",
-  new LocalDate(2016, 5, 11)
+  new LocalDate(2016, 6, 10)
   ) {
   override def isParticipating(implicit request: RequestHeader): Boolean = {
       request.headers.get("X-GU-hlt").contains("hlt-C") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
@@ -94,8 +67,6 @@ object ABIntersperseMultipleStoryPackagesStoriesControl extends TestDefinition(
 object ActiveTests extends Tests {
   val tests: Seq[TestDefinition] = List(
     ABNewHeaderVariant,
-    ABGalleryRedesignVariant,
-    ABGalleryRedesignControl,
     ABHeadlinesTestControl,
     ABHeadlinesTestVariant,
     ABIntersperseMultipleStoryPackagesStories,
@@ -108,15 +79,13 @@ object ActiveTests extends Tests {
                           .map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""}
     val newHeaderTests = List(ABNewHeaderVariant).filter(_.isParticipating)
                           .map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""}
-    val galleryRedesignTests = List(ABGalleryRedesignControl, ABGalleryRedesignVariant).filter(_.isParticipating)
-                          .map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""}
     val internationalEditionTests = List(InternationalEditionVariant(request)
                                       .map{ international => s""""internationalEditionVariant" : "$international" """}).flatten
 
     val activeTest = List(ActiveTests.getParticipatingTest(request)
                         .map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""}).flatten
 
-    val configEntries = activeTest ++ internationalEditionTests ++ headlineTests ++ newHeaderTests ++ galleryRedesignTests
+    val configEntries = activeTest ++ internationalEditionTests ++ headlineTests ++ newHeaderTests
 
     configEntries.mkString(",")
   }
@@ -163,8 +132,9 @@ object MultiVariateTesting {
 
   sealed case class Variant(name: String)
 
-  // buckets 0-7 are removed during testing whether having a permanently running server side ab test framework
-  // affects our caching too much - I'll put them back or come up with a new solution once I have some data! John
+  // buckets 0-7 are removed because they cost $1000+ just in aws bandwidth every month, the rest
+  // will be removed once they're not in use.  In future server side ab tests will be added explicitly
+  // to target only the URLs needed for the time needed.
   object Variant8 extends Variant("variant-8")
   object Variant9 extends Variant("variant-9")
 

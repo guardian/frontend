@@ -15,6 +15,8 @@ define([
     mediator,
     curry
 ) {
+    // total_hours_spent_maintaining_this = 56
+    // 
     // maximum time (in ms) to wait for images to be loaded and rich links
     // to be upgraded
     var LOADING_TIMEOUT = 5000;
