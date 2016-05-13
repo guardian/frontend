@@ -15,7 +15,7 @@ define([
             bean.on(document, 'keypress', 'summary', onKeyPress(onClick));
         }
 
-        var showMores = qwery('.adverts__more > summary');
+        var showMores = qwery('.commodel__more > summary');
         bean.on(document, 'click', showMores, onOpenClick);
         bean.on(document, 'click', showMores, onKeyPress(onOpenClick));
     }

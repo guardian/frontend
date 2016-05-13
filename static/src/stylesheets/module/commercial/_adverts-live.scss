@@ -1,13 +1,13 @@
-.adverts--live {
+.commodel--live {
 }
 
-.adverts--tone-live {
-    > .adverts__header {
+.commodel--tone-live {
+    > .commodel__header {
         background: $live-main-1;
     }
 }
 
-.adverts--tone-live .button--legacy-single,
+.commodel--tone-live .button--legacy-single,
 .advert--live .button {
     @include button-colour(
         $live-main-1,
@@ -28,7 +28,7 @@
     }
 }
 
-.adverts--tone-live .button--legacy-single {
+.commodel--tone-live .button--legacy-single {
     &:hover,
     &:focus,
     &:active {

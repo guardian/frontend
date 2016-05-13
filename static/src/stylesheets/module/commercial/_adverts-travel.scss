@@ -1,5 +1,5 @@
-.adverts--travel {
-    > .adverts__header {
+.commodel--travel {
+    > .commodel__header {
         .search {
             position: relative;
         }
@@ -58,13 +58,13 @@
 
 }
 
-.adverts--tone-travel {
-    > .adverts__header {
+.commodel--tone-travel {
+    > .commodel__header {
         background: $maps-support-3;
     }
 }
 
-.adverts--tone-travel .button--legacy-single,
+.commodel--tone-travel .button--legacy-single,
 .advert--travel .button {
     @include button-colour(
         $maps-support-4,
@@ -85,7 +85,7 @@
     }
 }
 
-.adverts--tone-travel .button--legacy-single {
+.commodel--tone-travel .button--legacy-single {
     &:hover,
     &:focus,
     &:active {

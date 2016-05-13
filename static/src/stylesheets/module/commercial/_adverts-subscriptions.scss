@@ -1,13 +1,13 @@
-.adverts--subscriptions {
+.commodel--subscriptions {
 }
 
-.adverts--tone-subscriptions {
-    > .adverts__header {
+.commodel--tone-subscriptions {
+    > .commodel__header {
         background: $news-support-2;
     }
 }
 
-.adverts--tone-subscriptions .button--legacy-single,
+.commodel--tone-subscriptions .button--legacy-single,
 .advert--subscription .button {
     @include button-colour(
         $news-main-2,
@@ -28,7 +28,7 @@
     }
 }
 
-.adverts--tone-subscriptions .button--legacy-single {
+.commodel--tone-subscriptions .button--legacy-single {
     &:hover,
     &:focus,
     &:active {

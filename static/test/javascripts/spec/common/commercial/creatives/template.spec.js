@@ -166,7 +166,7 @@ define([
                 clickMacro: '%%CLICK_URL_ESC%%'
             };
             new Template(slot, params).create().then(function () {
-                expect(document.querySelector('.adverts', slot)).not.toBe(null);
+                expect(document.querySelector('.commodel', slot)).not.toBe(null);
             });
         });
 

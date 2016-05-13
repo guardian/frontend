@@ -1,13 +1,13 @@
-.adverts--money {
+.commodel--money {
 }
 
-.adverts--tone-money {
-    > .adverts__header {
+.commodel--tone-money {
+    > .commodel__header {
         background: $news-main-2;
     }
 }
 
-.adverts--tone-money .button--legacy-single,
+.commodel--tone-money .button--legacy-single,
 .advert--money .button {
     @include button-colour(
         $news-support-2,
@@ -28,7 +28,7 @@
     }
 }
 
-.adverts--tone-money .button--legacy-single {
+.commodel--tone-money .button--legacy-single {
     &:hover,
     &:focus,
     &:active {

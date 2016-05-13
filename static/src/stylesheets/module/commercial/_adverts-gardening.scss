@@ -1,13 +1,13 @@
-.adverts--gardening {
+.commodel--gardening {
 }
 
-.adverts--tone-gardening {
-    > .adverts__header {
+.commodel--tone-gardening {
+    > .commodel__header {
         background: $maps-main-1;
     }
 }
 
-.adverts--tone-gardening .button--legacy-single,
+.commodel--tone-gardening .button--legacy-single,
 .advert--gardening .button {
     @include button-colour(
         $maps-support-2,
@@ -28,7 +28,7 @@
     }
 }
 
-.adverts--tone-gardening .button--legacy-single {
+.commodel--tone-gardening .button--legacy-single {
     &:hover,
     &:focus,
     &:active {

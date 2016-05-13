@@ -1,6 +1,6 @@
-.adverts--blended {
+.commodel--blended {
     @include mq($until: tablet) {
-        .adverts__row > :nth-child(2) ~ * {
+        .commodel__row > :nth-child(2) ~ * {
             display: none;
         }
     }

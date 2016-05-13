@@ -1,4 +1,4 @@
-.adverts--jobs {
+.commodel--jobs {
     .advert__image-container {
         height: $gs-baseline * 10;
     }
@@ -34,7 +34,7 @@
     }
 }
 
-.adverts--tone-jobs .button--legacy-single,
+.commodel--tone-jobs .button--legacy-single,
 .advert--job .button {
     @include button-colour(
         $news-main-1,
@@ -55,7 +55,7 @@
     }
 }
 
-.adverts--tone-jobs .button--legacy-single {
+.commodel--tone-jobs .button--legacy-single {
     &:hover,
     &:focus,
     &:active {
@@ -71,8 +71,8 @@
     padding-bottom: 4px;
 }
 
-.adverts--tone-jobs {
-    > .adverts__header {
+.commodel--tone-jobs {
+    > .commodel__header {
         background: $news-support-2;
     }
 }

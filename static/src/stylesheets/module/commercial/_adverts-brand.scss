@@ -1,10 +1,10 @@
-.adverts--tone-brand {
-    > .adverts__header {
+.commodel--tone-brand {
+    > .commodel__header {
         background: $news-support-2;
     }
 }
 
-.adverts--tone-brand .button--legacy-single,
+.commodel--tone-brand .button--legacy-single,
 .advert--brand .button {
     @include button-colour(
         $news-main-2,
@@ -25,7 +25,7 @@
     }
 }
 
-.adverts--tone-brand .button--legacy-single {
+.commodel--tone-brand .button--legacy-single {
     &:hover,
     &:focus,
     &:active {

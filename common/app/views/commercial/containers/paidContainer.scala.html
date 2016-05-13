@@ -25,7 +25,7 @@
         optBadge = if(containerModel.isSingleSponsorContainer){ Some(logoSlot) } else { None }
     ){
 
-        <a class="adverts__logo u-text-hyphenate" href="/@containerModel.content.targetUrl">@containerModel.content.title</a>
+        <a class="commodel__logo u-text-hyphenate" href="/@containerModel.content.targetUrl">@containerModel.content.title</a>
 
     }{
 
@@ -46,13 +46,13 @@
         }
 
         @if(containerModel.content.showMoreCards.nonEmpty){
-            <details class="adverts__more">
+            <details class="commodel__more">
                 <summary class="button button--medium button--primary button--show-more" data-text="@containerModel.content.title">
                     @fragments.inlineSvg("plus", "icon")
                     @fragments.inlineSvg("minus", "icon")
                     <span class="js-button__label">More @containerModel.content.title</span>
                 </summary>
-                <div class="adverts__row adverts__row--wrap adverts__3cols">
+                <div class="commodel__row commodel__row--wrap commodel__3cols">
                     @containerModel.content.showMoreCards.map(card => views.html.commercial.cards.itemSmallCard(
                                             card,
                                             optAdvertClassNames = Some(Seq("paidfor")),
