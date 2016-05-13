@@ -98,15 +98,13 @@ case class HighMerchandisingLineItem(
   adUnits: Seq[GuAdUnit],
   customTargetSet: Seq[CustomTargetSet]
   ) {
-
   val adUnitIds = adUnits.map(adUnit => adUnit.id)
   val adUnitString = adUnits.map(adUnit =>
     adUnit.path.foldLeft(""){(theGuardian, tail) => theGuardian.drop(1) +"/" + tail})
   val customTargets = customTargetSet.map(set =>
     set.targets
   )
-  val editionIfSet = customTargets.flatMap(sequence => sequence.filter((target) => target.name == "edition")).map(seq => seq.values)
-
+  val editionIfSet = customTargets.flatMap(sequence => sequence.filter((target) => target.name == "edition")).map(target => target.values)
 }
 
 case class HighMerchandisingLineItems(items: Seq[HighMerchandisingLineItem]) {
