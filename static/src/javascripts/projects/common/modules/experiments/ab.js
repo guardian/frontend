@@ -19,6 +19,7 @@ define([
     'common/modules/experiments/tests/welcome-header',
     'common/modules/experiments/tests/play-video-on-fronts',
     'common/modules/experiments/tests/video-controls-on-main-media',
+    'common/modules/experiments/tests/new-user-adverts-disabled',
     'lodash/arrays/flatten',
     'lodash/arrays/zip',
     'lodash/collections/forEach',
@@ -53,6 +54,7 @@ define([
     WelcomeHeader,
     PlayVideoOnFronts,
     VideoControlsOnMainMedia,
+    NewUserAdvertsDisabled,
     flatten,
     zip,
     forEach,
@@ -82,7 +84,8 @@ define([
         new CleverFriendBrexit(),
         new WelcomeHeader(),
         new PlayVideoOnFronts(),
-        new VideoControlsOnMainMedia()
+        new VideoControlsOnMainMedia(),
+        new NewUserAdvertsDisabled()
     ]);
 
     var participationsKey = 'gu.ab.participations';

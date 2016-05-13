@@ -131,4 +131,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABNewUserAdvertsDisabled = Switch(
+    SwitchGroup.ABTests,
+    "ab-new-user-adverts-disabled",
+    "Enable adfree experience for 3 days for new users",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 1),
+    exposeClientSide = true
+  )
+
 }

@@ -17,6 +17,7 @@ define([
 
     userFeatures = {
         refresh : refresh,
+        isAdfree : isAdfree,
         isPayingMember : isPayingMember,
 
         /* Test methods */
@@ -36,6 +37,18 @@ define([
         }
         if (haveDataAfterSignout()) {
             userFeatures._deleteOldData();
+        }
+    }
+
+    function isAdfree() {
+        // Defer to the value set by the preflight scripts
+        // They need to determine how the page will appear before it starts rendering
+
+        // This field might not be added if the feature switch is off
+        if (config.commercial === undefined || config.commercial.showingAdfree === undefined) {
+            return false;
+        } else {
+            return config.commercial.showingAdfree;
         }
     }
 
@@ -71,7 +84,6 @@ define([
     }
 
     function deleteOldData() {
-        // We expect adfree cookies to be cleaned up by the logout process, but what if the user's login simply times out?
         cookies.remove(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
         cookies.remove(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
     }
