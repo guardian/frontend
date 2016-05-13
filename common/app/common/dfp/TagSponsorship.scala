@@ -99,7 +99,7 @@ case class HighMerchandisingLineItem(
 
   val adUnitIds = adUnits.map(adUnit => adUnit.id)
   val adUnitString = adUnits.map(adUnit =>
-    adUnit.path.foldLeft(""){(theGuardian, tail) => theGuardian +"/" + tail})
+    adUnit.path.foldLeft(""){(theGuardian, tail) => theGuardian.drop(1) +"/" + tail})
 }
 
 case class HighMerchandisingLineItems(items: Seq[HighMerchandisingLineItem]) {
