@@ -1,0 +1,24 @@
+.participation-low-fric--button {
+    border: 0;
+    background: none;
+    padding: 0;
+}
+
+.participation-low-fric--button__star {
+
+    &:hover .inline-star {
+        fill: #ffce4b;
+        opacity: 1;
+    }
+
+    svg {
+        height: 30px;
+        width: 30px;
+    }
+}
+
+.participation-low-fric--button__star:hover .inline-star,
+.participation-low-fric--button__is-highlighted .inline-star {
+    fill: #ffce4b;
+    opacity: 1;
+}

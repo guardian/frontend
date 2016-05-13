@@ -1,11 +1,13 @@
 define([
     'common/utils/config',
     'common/utils/mediator',
-    'Promise'
+    'Promise',
+    'common/modules/experiments/low-friction-participation'
 ], function (
     config,
     mediator,
-    Promise
+    Promise,
+    lowFrictionParticipation
 ) {
 
     var omniture;
@@ -44,6 +46,7 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function () {
+            return true
             // Commentable, Film reviews
             return config.page.section === 'film' && config.page.toneIds === 'tone/reviews' && config.page.commentable;
         };
@@ -51,7 +54,12 @@ define([
         this.variants = [
             {
                 id: 'control',
-                test: function () {},
+                test: function () {
+                    var starRatings = Object.create(lowFrictionParticipation);
+                    starRatings.init({
+                        
+                    });
+                },
                 success: function (complete) {
                     mediator.on('discussion:commentbox:post:success', function (){
                         // Data lake
