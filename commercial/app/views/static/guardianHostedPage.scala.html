@@ -1,8 +1,8 @@
-@(hostedPage: model.commercial.HostedPage)(implicit request: RequestHeader)
+@()(implicit request: RequestHeader)
+@import common.commercial.HostedPage
+@import conf.Static
 
-@import views.html.fragments.inlineSvg
-
-@main(hostedPage) { } {
+@main(HostedPage) { } {
     <div class="hosted__header">
         <div class="hosted__headerwrap">
             <a href="" class="hosted__glogo">
