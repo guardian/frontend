@@ -33,7 +33,7 @@ object Dependencies {
   val dispatch = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3"
   val dispatchTest = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3" % Test
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.24"
-  val faciaFapiScalaClient = "com.gu" %% "fapi-client" % faciaVersion
+  val faciaFapiScalaClient = "com.gu" %% "fapi-client-play25" % faciaVersion
   val configMagic = "com.gu" %% "configuration-magic-core" %  "1.2.2"
   val configMagicPlay = "com.gu" %% "configuration-magic-play2-4" % "1.2.2"
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
@@ -56,7 +56,7 @@ object Dependencies {
   val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.11.5" % "test"
   val scalajTime = "org.scalaj" % "scalaj-time_2.10.2" % "0.7"
   val scalaTest = "org.scalatest" %% "scalatest" % "2.2.6" % Test
-  val scalaTestPlus = "org.scalatestplus" %% "play" % "1.4.0" % Test
+  val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
   val scalaz = "org.scalaz" %% "scalaz-core" % "7.0.6"
   val scalaUri = "com.netaporter" % "scala-uri_2.11" % "0.4.11"
   val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % seleniumVersion

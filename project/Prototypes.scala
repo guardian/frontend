@@ -1,16 +1,18 @@
 package com.gu
 
-import com.gu.Dependencies._
-import com.gu.riffraff.artifact.RiffRaffArtifact
-import com.gu.riffraff.artifact.RiffRaffArtifact.autoImport._
 import com.gu.versioninfo.VersionInfo
+import com.typesafe.sbt.packager.universal.UniversalPlugin
+import sbt._
+import sbt.Keys._
+import com.typesafe.sbt.web.SbtWeb.autoImport._
 import com.typesafe.sbt.SbtNativePackager._
 import com.typesafe.sbt.packager.Keys._
-import com.typesafe.sbt.packager.universal.UniversalPlugin
-import play.sbt.PlayScala
+import com.gu.riffraff.artifact.RiffRaffArtifact
+import com.gu.riffraff.artifact.RiffRaffArtifact.autoImport._
 import play.twirl.sbt.Import._
-import sbt.Keys._
-import sbt._
+import Dependencies._
+import play.sbt.routes.RoutesKeys._
+import play.sbt.PlayScala
 
 trait Prototypes {
   val version = "1-SNAPSHOT"
@@ -28,7 +30,8 @@ trait Prototypes {
       val _ = initialize.value
       assert(sys.props("java.specification.version") == "1.8",
         "Java 8 is required for this project.")
-    }
+    },
+    routesGenerator := StaticRoutesGenerator
   )
 
   val frontendIntegrationTestsSettings = Seq (
