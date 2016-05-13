@@ -47,7 +47,9 @@ define([
             // Commentable, episode by episode reviews
             return config.page.section === 'tv-and-radio' &&
                 (config.page.nonKeywordTagIds || config.page.keywordIds) &&
-                (config.page.nonKeywordTagIds.indexOf('episode-by-episode') !== -1 || config.page.keywordIds.indexOf('episode-by-episode') !== -1) &&
+                (config.page.nonKeywordTagIds.indexOf('episode-by-episode') !== -1 ||
+                config.page.keywordIds.indexOf('episode-by-episode') !== -1 ||
+                config.page.nonKeywordTagIds.indexOf('lastnightstv') !== -1) &&
                 config.page.commentable;
         };
 
