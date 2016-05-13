@@ -59,14 +59,9 @@ define([
         new LiveBlogChromeNotificationsInternal(),
         new LiveBlogChromeNotificationsProd(),
         new LoyalAdblockingSurvey(),
-<<<<<<< HEAD
-        new CleverFriendBrexit()
-=======
-        new Minute(),
         new ParticipationStarRatings(),
         new CleverFriendBrexit(),
         new WelcomeHeader()
->>>>>>> 49c494602e75fb3261d92c1a1a5a1774f107d519
     ]);
 
     var participationsKey = 'gu.ab.participations';
