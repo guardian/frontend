@@ -101,7 +101,7 @@ case class HighMerchandisingLineItem(
   val adUnitIds = adUnits.map(_.id)
   val adUnitString  = adUnits map (_.path.mkString("/"))
   val customTargets = customTargetSet.map(_.targets)
-  val editionIfSet = customTargets.flatMap(sequence => sequence.filter((target) => target.name == "edition")).map(target => target.values)
+  val edition = customTargets.flatMap(sequence => sequence.filter((target) => target.name == "edition")).map(target => target.values)
 }
 
 case class HighMerchandisingLineItems(items: Seq[HighMerchandisingLineItem]) {

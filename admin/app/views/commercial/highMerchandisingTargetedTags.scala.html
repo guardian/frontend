@@ -31,9 +31,9 @@
                         <td>@for(adUnitId <- lineItem.adUnitIds) {
                             <a href="@DfpLink.adUnit(adUnitId)">@{adUnitId}</a>
                         }</td>
-                        @if(lineItem.editionIfSet.isEmpty){
+                        @if(lineItem.edition.isEmpty){
                         <td>non</td>} else {
-                        <td>@{lineItem.editionIfSet.distinct}</td>}
+                        <td>@{lineItem.edition.distinct}</td>}
                     </tr>
                 }
             </tbody>
