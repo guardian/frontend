@@ -855,27 +855,3 @@
         transform: (translateY(5px));
     }
 }
-
-.creative--hosted-video {
-    .gs-container {
-        height: 100%;
-    }
-
-    .hosted-video_layer {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 1;
-        background-repeat: no-repeat;
-    }
-
-    .hosted__video {
-        border-top: 3px solid transparent;
-    }
-}
-
-.creative--hosted-video__height--fixed {
-    height: 250px;
-}

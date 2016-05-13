@@ -207,6 +207,7 @@ $hosted-stripe: 28px;
 .hosted__heading--small {
     @include f-headlineSans;
 
+    line-height: 32px;
     font-size: 32px;
 
     @include mq($until: desktop) {
@@ -326,8 +327,9 @@ $hosted-stripe: 28px;
     .hosted__video {
         border-top: 3px solid transparent;
     }
-}
 
-.creative--hosted-video__height--fixed {
-    height: 250px;
+    .hosted__heading {
+        font-size: 46px;
+        line-height: 46px;
+    }
 }
