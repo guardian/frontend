@@ -24,14 +24,13 @@ window.curlConfig = {
             'bootstraps/enhanced/trail':         '@Static("javascripts/bootstraps/enhanced/trail.js")',
             'bootstraps/enhanced/gallery':       '@Static("javascripts/bootstraps/enhanced/gallery.js")',
             'bootstraps/enhanced/profile':       '@Static("javascripts/bootstraps/enhanced/profile.js")',
-            'bootstraps/enhanced/minute':        '@Static("javascripts/bootstraps/enhanced/minute.js")',
             'foresee.js':                        'vendor/foresee/20150703/foresee-trigger.js',
             'googletag.js':                      '@{Configuration.javascript.config("googletagJsUrl")}',
             stripe:                              '@Static("javascripts/vendor/stripe/stripe.min.js")',
             react:                               '@Static("javascripts/components/react/react.js")',
             'facebook.js':                       '//connect.facebook.net/en_US/all.js',
             'ophan/ng':                          '@{Configuration.javascript.config("ophanJsUrl")}',
-            'prebid.js':                         '@Static("javascripts/vendor/prebid/0.7.0/prebid.js")',
+            'prebid.js':                         '@Static("javascripts/vendor/prebid/0.8.1/prebid.js")',
 
             // plugins
             text:                                'text', // noop
@@ -62,7 +61,7 @@ window.curlConfig = {
             'foresee.js':                   'vendor/foresee/20150703/foresee-trigger.js',
             'googletag.js':                 '@{Configuration.javascript.config("googletagJsUrl")}',
             'ophan/ng':                     '@{Configuration.javascript.config("ophanJsUrl")}',
-            'prebid.js':                    'vendor/prebid/0.7.0/prebid.js',
+            'prebid.js':                    'vendor/prebid/0.8.1/prebid.js',
             svgs:                           '../inline-svgs',
 
             // video

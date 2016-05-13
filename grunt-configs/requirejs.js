@@ -242,20 +242,6 @@ module.exports = function (grunt, options) {
                 ]
             }
         },
-        minutely: {
-            options: {
-                name: 'bootstraps/enhanced/minute',
-                out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/minute.js',
-                exclude: [
-                    'boot',
-                    'bootstraps/standard/main',
-                    'bootstraps/commercial',
-                    'bootstraps/enhanced/main',
-                    'text',
-                    'inlineSvg'
-                ]
-            }
-        },
         football: {
             options: {
                 name: 'bootstraps/enhanced/football',
