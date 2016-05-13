@@ -8,7 +8,13 @@
     right: $gs-baseline / 2;
     z-index: $zindex-modal;
     text-align: left;
+    max-width: 16em;
     background-color: $gustyle-tone;
+
+    @include mq(gs-span(5) + $gs-gutter, phablet) {
+        padding: $gs-baseline $gs-gutter / 4 * 3;
+        top: 62px;
+    }
 }
 
 .gu-compopup__title {

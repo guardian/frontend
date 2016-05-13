@@ -9,13 +9,13 @@ import play.api.mvc._
 import scala.concurrent.Future
 import contentapi.ContentApiClient
 
-case class EmbedPage(model: Option[Video], title: String, isExpired: Boolean = false)
+case class EmbedPage(item: Video, title: String, isExpired: Boolean = false) extends ContentPage
 
 object EmbedController extends Controller with Logging with ExecutionContexts {
 
   def render(path: String) = Action.async { implicit request =>
     lookup(path) map {
-      case Left(model) => renderVideo(EmbedPage(Some(model), model.trail.headline))
+      case Left(model) => renderVideo(EmbedPage(model, model.trail.headline))
       case Right(other) => renderOther(other)
     }
   }
@@ -43,7 +43,7 @@ object EmbedController extends Controller with Logging with ExecutionContexts {
 
   private def renderOther(result: Result)(implicit request: RequestHeader) = result.header.status match {
     case 404 => NoCache(NotFound)
-    case 410 => Cached(60)(WithoutRevalidationResult(Gone(views.html.videoEmbed(EmbedPage(None, "Content expired", true)))))
+    case 410 => Cached(60)(WithoutRevalidationResult(Gone(views.html.videoEmbedMissing())))
     case _ => result
   }
 
