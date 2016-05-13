@@ -29,4 +29,5 @@ object GuardianContentTypes {
   val LiveBlog = "LiveBlog"
   val TagIndex = "Index"
   val Crossword = "Crossword"
+  val Hosted = "Hosted"
 }

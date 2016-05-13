@@ -5,6 +5,7 @@
 @import views.support.{Commercial, RenderClasses}
 @import model.Page.getContent
 @import model.GalleryPage
+@import model.commercial.HostedPage
 @import layout.ContentWidths.MainMedia
 
 @headerAndTopAds(showAdverts: Boolean, edition: Edition, adBelowNav: Boolean) = {
@@ -94,7 +95,7 @@
                     @immersiveMainMedia(page)
                 </div>
             }
-            case page: model.HostedPage => {}
+            case page: model.commercial.HostedPage => {}
             case _ => {
                 @headerAndTopAds(showAdverts, edition, adBelowNav)
             }
