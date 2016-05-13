@@ -18,7 +18,7 @@
                     <th>Keywords</th>
                     <th>adUnits</th>
                     <th>DFP adUnit Links</th>
-                    <th>Editions Targets(if set)</th>
+                    <th>Editions Targets</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,7 +31,9 @@
                         <td>@for(adUnitId <- lineItem.adUnitIds) {
                             <a href="@DfpLink.adUnit(adUnitId)">@{adUnitId}</a>
                         }</td>
-                        <td>@{lineItem.editionIfSet.distinct}</td>
+                        @if(lineItem.editionIfSet.isEmpty){
+                        <td>non</td>} else {
+                        <td>@{lineItem.editionIfSet.distinct}</td>}
                     </tr>
                 }
             </tbody>
