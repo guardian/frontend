@@ -62,13 +62,19 @@ $hosted-stripe: 28px;
 
     svg {
         fill: #ffffff;
-        width: 185px;
+        width: 135px;
         height: 50px;
     }
 
     .inline-logo {
         display: inline-block;
         margin-top: -5px;
+    }
+
+    @include mq(tablet) {
+        svg {
+            width: 185px;
+        }
     }
 }
 
@@ -170,7 +176,7 @@ $hosted-stripe: 28px;
 .hosted__meta {
     position: absolute;
     left: $gs-gutter;
-    bottom: 30%;
+    bottom: 15%;
     width: 55%; // Magic. Do not touch.
     color: #ffffff;
 
