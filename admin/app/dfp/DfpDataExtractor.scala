@@ -23,7 +23,9 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
           name = lineItem.name,
           id = lineItem.id,
           tags = lineItem.highMerchandisingTargets,
-          adUnits = lineItem.targeting.adUnits)
+          adUnits = lineItem.targeting.adUnits,
+          customTargetSet = lineItem.targeting.customTargetSets
+        )
       }
 
     HighMerchandisingLineItems(items = highMerchLineItems)

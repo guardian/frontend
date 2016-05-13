@@ -18,6 +18,7 @@
                     <th>Keywords</th>
                     <th>adUnits</th>
                     <th>DFP adUnit Links</th>
+                    <th>Editions Targets(if set)</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,6 +31,7 @@
                         <td>@for(adUnitId <- lineItem.adUnitIds) {
                             <a href="@DfpLink.adUnit(adUnitId)">@{adUnitId}</a>
                         }</td>
+                        <td>@{lineItem.customTargets.distinct}</td>
 
                     </tr>
                 }
