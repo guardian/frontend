@@ -108,8 +108,11 @@ final case class Commercial(
   }
 
   def hasHighMerchandisingAdunit: Boolean = {
-    println("in meta function")
     DfpAgent.hasHighMerchandisingAdUnit(metadata.adUnitSuffix)
+  }
+
+  def hasHighMerchandisingAdUnitAndTag: Boolean = {
+    DfpAgent.hasHighMerchAdAndTag(metadata.adUnitSuffix,tags.tags)
   }
 
   def conditionalConfig: Map[String, JsValue] = {

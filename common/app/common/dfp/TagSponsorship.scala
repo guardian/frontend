@@ -112,15 +112,25 @@ case class HighMerchandisingLineItemTargetsSeq(lineItems : Seq[HighMerchandising
 
   def hasTag (tag: Tag): Boolean = {
     val tf = targetingTags.exists(item => tag.id.endsWith(item))
-    println(tf)
+//    println(tf)
     targetingTags.exists(item => tag.id.endsWith(item))
   }
 
 
   def hasAdUnit (adUnitSuffix : String): Boolean = {
     val tf = targetedAdUnitsPath.exists(item =>adUnitSuffix.endsWith(item))
-    println(tf)
+//    println(tf)
     targetedAdUnitsPath.exists(item =>adUnitSuffix.endsWith(item))
+  }
+
+  def hasAdUnitAndTag (adUnitSuffix: String, tags:Seq[Tag]): Boolean = {
+
+    val HighMerchLineItemsWithTagMatch = lineItems.filter(_.tags.contains("cycling"))
+    val HighMerchLineItemsWithTagMatchAndAdUnitMatch = HighMerchLineItemsWithTagMatch.filter(_.adUnits.flatMap(ads => ads.path).contains("lifeandstyle"))
+    
+    println(HighMerchLineItemsWithTagMatchAndAdUnitMatch.isEmpty)
+//    println(lineitemsWithTagMatch)
+    true
   }
 
   def nonEmpty = lineItems.nonEmpty
