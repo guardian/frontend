@@ -373,7 +373,7 @@ define([
             return;
         }
 
-        var el  = $('.js-onward')[0];
+        var el  = $('.js-more-in-section')[0];
         moreInSeriesContainer.init(
             el, getMediaType(),
             config.page.section,
