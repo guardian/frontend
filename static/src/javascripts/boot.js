@@ -7,7 +7,11 @@ Bundles we need to run: commercial + enhanced
 Only if we detect we should run enhance.
  */
 
-define(function () {
+define([
+    'domReady'
+], function (
+    domReady
+) {
     var guardian = window.guardian;
     var config = guardian.config;
 
@@ -15,20 +19,21 @@ define(function () {
     var commercialBootstrap = ['bootstraps/commercial'];
     var enhancedBootstrap = guardian.isEnhanced ? ['bootstraps/enhanced/main'] : [];
 
-    // domReady! is a curl plugin
-    require([standardBootstrap, 'domReady!'], function (bootStandard) {
-        bootStandard();
+    domReady(function () {
+        require(standardBootstrap, function (bootStandard) {
+            bootStandard();
 
-        // 'raven' is included in standard already, but we need a reference to it
-        require(['raven'].concat(commercialBootstrap, enhancedBootstrap), function (raven, commercialBootrstrap, bootEnhanced) {
-            if (bootEnhanced) {
-                bootEnhanced();
-            }
-            if (config.switches.commercial) {
-                raven.wrap({tags: { feature: 'commercial' }}, function () {
-                    commercialBootrstrap.init();
-                });
-            }
-        })
+            // 'raven' is included in standard already, but we need a reference to it
+            require(['raven'].concat(commercialBootstrap, enhancedBootstrap), function (raven, commercialBootrstrap, bootEnhanced) {
+                if (bootEnhanced) {
+                    bootEnhanced();
+                }
+                if (config.switches.commercial) {
+                    raven.wrap({tags: { feature: 'commercial' }}, function () {
+                        commercialBootrstrap.init();
+                    });
+                }
+            });
+        });
     });
 });
