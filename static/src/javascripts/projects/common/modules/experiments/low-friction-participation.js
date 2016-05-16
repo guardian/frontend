@@ -7,8 +7,11 @@ define([
     'common/utils/fastdom-promise',
     'common/views/svgs',
     'text!common/views/experiments/participation/low-friction-initial.html',
+    'text!common/views/experiments/participation/low-friction-confirming.html',
+    'text!common/views/experiments/participation/low-friction-complete.html',
     'text!common/views/experiments/participation/low-friction-buttons.html',
-    'common/utils/template'
+    'common/utils/template',
+    'bean'
 ], function (
     merge,
     memoize,
@@ -18,8 +21,11 @@ define([
     fastdomPromise,
     svgs,
     lowFrictionInitial,
+    lowFrictionConfirming,
+    lowFrictionComplete,
     lowFrictionButtons,
-    template
+    template,
+    bean
 ) {
 
     var currentState = {
@@ -44,58 +50,11 @@ define([
         $lowFricContainer: null
     };
 
-    var init = function (options) {
-        var userVote = getUserVote();
+    // Tear everything down
 
-        // If we can't store the user's value, don't render
-        if (userVote === 'no-storage') {
-            return;
-        }
-
-        // Create instance options
-        this.options = merge(settings, options);
-
-        createInitContainer().then(function() {
-
-            els.$lowFricContainer = $('.js-participation-low-fric');
-
-            if (userVote) {
-                // Render with selected item
-                updateState ({
-                    complete: true,
-                    selectedItem: userVote
-                })
-            } else {
-                // Set and render initial state
-                updateState({});
-            }
-        }.bind(this));
-
-    };
-
-    var updateState = function (state) {
-        // Render with merged state
-        render(merge(currentState, state));
-    };
-
-    var render = function (state) {
-
-        if (state.complete) {
-            console.log('render completed view')
-        }
-
-        else if (state.confirming) {
-            console.log('render confirming view')
-        }
-
-        else {
-            var firstView = template(lowFrictionInitial, merge(settings.templateVars, {
-                buttons: createButtons(state)
-            }));
-
-            els.$lowFricContainer.html(firstView);
-        }
-
+    var tearDown = function () {
+        bean.off(document, 'click', '.js-participation-low-fric--button');
+        bean.off(document, 'click', '.js-participation-low-fric__confirm');
     };
 
     // Mark-up Building
@@ -115,13 +74,100 @@ define([
             var inactiveClass = 'star__item--grey',
                 templateVars = {};
 
+            templateVars.extraClasses = '';
             templateVars.itemIcon = svgs(settings.itemIconId, [inactiveClass]);
-            templateVars.highlightClass =  (state.complete && state.selectedItem === i) ? 'participation-low-fric--button__is-highlighted' : '';
+
+            if (state.confirming || state.complete) {
+                if ((settings.prevItemsHighlight && state.selectedItem >= i) || state.selectedItem === i) {
+                    templateVars.extraClasses += 'participation-low-fric--button__is-highlighted ';
+                }
+            } else {
+                templateVars.extraClasses += 'participation-low-fric--button__is-active';
+            }
+
+            // Completion
+            if (state.complete) {
+                templateVars.elType = 'span';
+            } else {
+                templateVars.elType = 'button';
+            }
+
+            templateVars.itemId = i;
 
             buttonString += template(lowFrictionButtons, merge(settings.templateVars, templateVars));
         }
 
         return buttonString;
+    };
+
+    // Rendering
+
+    var render = function (state) {
+
+        var renderPromise;
+
+        if (state.complete) {
+            var completedView = template(lowFrictionComplete, merge(settings.templateVars, {
+                buttons: createButtons(state)
+            }));
+
+            renderPromise = fastdomPromise.write(function(){
+                els.$lowFricContainer.html(completedView);
+
+                // Remove bindings
+                tearDown();
+            });
+        }
+
+        else if (state.confirming) {
+            var confirmingView = template(lowFrictionConfirming, merge(settings.templateVars, {
+                buttons: createButtons(state)
+            }));
+
+            renderPromise = fastdomPromise.write(function(){
+                els.$lowFricContainer.html(confirmingView);
+            });
+        }
+
+        else {
+            var firstView = template(lowFrictionInitial, merge(settings.templateVars, {
+                buttons: createButtons(state)
+            }));
+
+            renderPromise = fastdomPromise.write(function(){
+                els.$lowFricContainer.html(firstView);
+            });
+        }
+
+        return renderPromise;
+    };
+
+    // State Handling
+
+    var updateState = function (state) {
+        // Render with merged state
+        render(merge(currentState, state));
+    };
+
+    // Binding & Events
+
+    var itemClicked = function (event) {
+        updateState({
+            confirming: true,
+            selectedItem: $(event.currentTarget).data().itemId
+        });
+    };
+
+    var confirmClicked = function () {
+        updateState({
+            confirming: false,
+            complete: true
+        });
+    };
+
+    var bindEvents = function () {
+        bean.on(document, 'click', '.js-participation-low-fric--button', itemClicked);
+        bean.on(document, 'click', '.js-participation-low-fric__confirm', confirmClicked);
     };
 
     // Getters
@@ -136,6 +182,39 @@ define([
 
         // Will return result for current page if available
         return votedPages && votedPages[currentPage];
+
+    };
+
+    // Initalise it.
+
+    var init = function (options) {
+        var userVote = getUserVote();
+
+        // If we can't store the user's value, don't render
+        if (userVote === 'no-storage') {
+            return;
+        }
+
+        // Create instance options
+        settings = merge(settings, options);
+
+        createInitContainer().then(function() {
+
+            els.$lowFricContainer = $('.js-participation-low-fric');
+
+            if (userVote) {
+                // Render with selected item
+                updateState ({
+                    complete: true,
+                    selectedItem: userVote
+                });
+            } else {
+                // Set and render initial state
+                updateState({});
+            }
+
+            bindEvents(currentState);
+        });
 
     };
 

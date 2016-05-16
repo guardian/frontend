@@ -46,7 +46,6 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function () {
-            return true
             // Commentable, Film reviews
             return config.page.section === 'film' && config.page.toneIds === 'tone/reviews' && config.page.commentable;
         };
@@ -56,9 +55,7 @@ define([
                 id: 'control',
                 test: function () {
                     var starRatings = Object.create(lowFrictionParticipation);
-                    starRatings.init({
-                        
-                    });
+                    starRatings.init({});
                 },
                 success: function (complete) {
                     mediator.on('discussion:commentbox:post:success', function (){
