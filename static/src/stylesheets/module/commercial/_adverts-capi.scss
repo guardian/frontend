@@ -4,6 +4,18 @@
     }
 }
 
+.adverts--paidfor {
+    @include mq(mobileLandscape, desktop) {
+        > .adverts__header {
+            flex-wrap: wrap;
+        }
+
+        .adverts__kicker {
+            flex-basis: 100%;
+        }
+    }
+}
+
 .adverts--tone-paidfor {
     background-color: $neutral-6;
 

@@ -5,7 +5,7 @@
 # For dev machines
 GET        /assets/*path                                                 dev.DevAssetsController.at(path)
 GET        /commercial/test-page                                         controllers.commercial.CreativeTestPage.allComponents(k: List[String])
-GET        /_healthcheck                                                 conf.HealthCheck.healthcheck()
+GET        /_healthcheck                                                 conf.HealthCheck.healthCheck()
 
 # Travel offer merchandising components
 GET        /commercial/travel/offers.json                                controllers.commercial.TravelOffersController.renderTravel
@@ -46,3 +46,6 @@ GET        /commercial/capi-single-merch.json                            control
 GET        /commercial/capi-single-merch                                 controllers.commercial.ContentApiOffersController.itemHtml
 GET        /commercial/paid.json                                         controllers.commercial.PaidContentCardController.cardJson
 GET        /commercial/paid                                              controllers.commercial.PaidContentCardController.cardHtml
+
+# Static pages
+GET        /commercial/guardian-hosted                                   controllers.commercial.StaticPageController.renderGuardianHostedPage()

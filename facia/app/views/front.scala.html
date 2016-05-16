@@ -1,7 +1,12 @@
 @(page: model.PressedPage)(implicit request: RequestHeader)
+@import conf.switches.Switches.staticBadgesSwitch
 
 @main(page, projectName = Option("facia")){
     @fragments.frontHead(page)
 }{
-    @fragments.frontBody(page)
+    @if(staticBadgesSwitch.isSwitchedOn) {
+        @fragments.brandedFrontBody(page)
+    } else {
+        @fragments.frontBody(page)
+    }
 }

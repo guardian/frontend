@@ -20,7 +20,8 @@
 }{
 
     <div class="adverts__row">
-        @members.map { member => @soulmateCard(member, clickMacro) }
+        @members.take(6).map { member => @soulmateCard(member, clickMacro) }
+        @members.drop(6).map { member => @soulmateCard(member, clickMacro, optClassNames = Some(Seq("hide-until-tablet"))) }
         @soulmateForm()
     </div>
 

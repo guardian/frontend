@@ -28,7 +28,6 @@
     &:before {
         counter-increment: quiz-question;
         content: counter(quiz-question) '.';
-        float: left;
         padding-right: .5ch;
     }
 }

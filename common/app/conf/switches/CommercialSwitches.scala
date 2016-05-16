@@ -235,7 +235,7 @@ trait CommercialSwitches {
     "fixed-top-above-nav",
     "Fixes size of top-above-nav ad slot on fronts.",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 6),
+    sellByDate = new LocalDate(2016, 5, 20),
     exposeClientSide = false
   )
 
@@ -267,7 +267,7 @@ trait CommercialSwitches {
   )
 
   val cardsDecidePaidContainerBranding = Switch(
-    SwitchGroup.CommercialRefactoring,
+    SwitchGroup.Commercial,
     "cards-decide-paid-container-branding",
     "DON'T TURN THIS ON! If on, the cards will decide the branding of their container",
     safeState = Off,
@@ -284,12 +284,30 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val requestOutOfPageSlotAlways = Switch(
+  val highMerchandisingComponentSwitch = Switch(
     SwitchGroup.Commercial,
-    "request-out-of-page-slot-always",
-    "If on, the out of page slot (1x1) will be added to each page, regardless of pageskins, surveys or other dependent features",
+    "render-commercial-high-slot-always",
+    "If on, server will check tags for high-merchandising target before rendering high-merch slot.",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 12),
+    sellByDate = new LocalDate(2016,6,8),
+    exposeClientSide = false
+  )
+
+  val CommercialAuditSwitch = Switch(
+    SwitchGroup.Commercial,
+    "commercial-audit",
+    "Audit Ads",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 5, 23),
+    exposeClientSide = true
+  )
+
+  val HostedContent = Switch(
+    SwitchGroup.Commercial,
+    "hosted-content",
+    "If on, you can access hosted content",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 12),
     exposeClientSide =  false
   )
 }

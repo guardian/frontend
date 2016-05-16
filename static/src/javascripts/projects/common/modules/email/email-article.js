@@ -75,14 +75,33 @@ define([
                 modClass: 'end-article',
                 insertMethod: insertBottomOfArticle
             },
+            ausCampaignCatchup: {
+                listId: '3689',
+                listName: 'ausCampaignCatchup',
+                campaignCode: 'AU_campaign_signup_page',
+                headline: 'Sign up for the Campaign catchup',
+                description: 'Get the day\'s top election news and commentary coverage delivered to your inbox every afternoon',
+                successHeadline: 'Thank you for signing up',
+                successDescription: 'We will send you the latest Campaign catchup every weekday afternoon',
+                modClass: 'end-article',
+                insertMethod: insertBottomOfArticle
+            },
+            usBriefing: {
+                listId: '1493',
+                listName: 'usBriefing',
+                campaignCode: 'guardian_today_article_bottom',
+                headline: 'Want stories like this in your inbox?',
+                description: 'Sign up to The Guardian Today daily email and get the biggest headlines each morning.',
+                successHeadline: 'Thank you for signing up to the Guardian Today',
+                successDescription: 'We will send you our picks of the most important headlines tomorrow morning.',
+                modClass: 'end-article',
+                insertMethod: insertBottomOfArticle
+            },
             theGuardianToday: {
                 listId: (function () {
                     switch (config.page.edition) {
                         default:
                             return '37';
-
-                        case 'US':
-                            return '1493';
 
                         case 'AU':
                             return '1506';

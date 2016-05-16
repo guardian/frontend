@@ -29,9 +29,8 @@
 
 @immersiveMainMedia(page: GalleryPage) = {
     <div class="new-gallery content tonal--tone-media immersive-main-media">
-        @defining(
-            page.item.content.trail.trailPicture.head
-        ) { picture =>
+
+        @page.item.elements.mainPicture.map(_.images).orElse(page.item.trail.trailPicture).map { picture =>
             @fragments.image(
                 picture = picture,
                 classes = Seq("immersive-main-media__img"),
@@ -40,13 +39,14 @@
                 isImmersiveMainMedia = true
             )
         }
+
         <div class="immersive-main-media__headline-container">
             <div class="gs-container">
 
                 @fragments.meta.metaInline(page.item)
 
                 <h1 class="content__headline content__headline--immersive content__headline--immersive--with-main-media">
-                    @fragments.inlineSvg("camera", "icon", List("inline-tone-fill")) @Html(page.item.trail.headline)
+                    @fragments.inlineSvg("camera", "icon", List("inline-tone-fill", "inline-icon--media")) @Html(page.item.trail.headline)
                 </h1>
 
                 @if(page.item.content.hasTonalHeaderByline) {
@@ -87,13 +87,14 @@
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
         @page match {
-            case page: model.GalleryPage if mvt.ABGalleryRedesignVariant.isParticipating => {
+            case page: model.GalleryPage if page.gallery.showNewGalleryDesign => {
                 <div class="immersive-header-container">
                     @headerAndTopAds(showAdverts, edition, adBelowNav)
 
                     @immersiveMainMedia(page)
                 </div>
             }
+            case page: model.HostedPage => {}
             case _ => {
                 @headerAndTopAds(showAdverts, edition, adBelowNav)
             }
@@ -130,7 +131,7 @@
 
         @fragments.analytics.base(page)
 
-        @if(requestOutOfPageSlotAlways.isSwitchedOn || page.metadata.hasPageSkinOrAdTestPageSkin(edition)) {
+        @if(page.metadata.hasPageSkinOrAdTestPageSkin(edition)) {
             @fragments.commercial.pageSkin()
         }
 

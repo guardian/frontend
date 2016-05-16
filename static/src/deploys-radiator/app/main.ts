@@ -57,7 +57,7 @@ const run = (): Promise<void> => {
             .sortBy(deploy => deploy.build)
             .first();
 
-        return [ latestCodeDeploy, oldestProdDeploy ];
+        return [ latestCodeDeploy, oldestProdDeploy ] as [ DeployRecord, DeployRecord ];
     });
 
     const buildsPromise = latestDeploysPromise.then(([ latestCodeDeploy, oldestProdDeploy ]) => (
