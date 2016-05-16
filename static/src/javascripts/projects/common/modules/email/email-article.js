@@ -32,10 +32,8 @@ define([
     find
 ) {
 
-    var insertBottomOfArticle = function () {
-            return function ($iframeEl) {
-                $iframeEl.appendTo('.js-article__body');
-            };
+    var insertBottomOfArticle = function ($iframeEl) {
+            $iframeEl.appendTo('.js-article__body');
         },
         listConfigs = {
             theCampaignMinute: {
@@ -47,13 +45,11 @@ define([
                 successHeadline: 'Thank you for signing up to the Guardian US Campaign minute',
                 successDescription: 'We will send you the biggest political story lines of the day',
                 modClass: config.page.isMinuteArticle ? 'post-article' : 'end-article',
-                insertMethod: function () {
+                insertMethod: function ($iframeEl) {
                     if (config.page.isMinuteArticle) {
-                        return function ($iframeEl) {
-                            $iframeEl.insertAfter('.js-article__container');
-                        };
+                        $iframeEl.insertAfter('.js-article__container');
                     } else {
-                        return insertBottomOfArticle();
+                        insertBottomOfArticle($iframeEl);
                     }
                 }
             },
@@ -145,9 +141,9 @@ define([
                 bean.on(iframe, 'load', function () {
                     email.init(iframe);
                 });
-                if (listConfig.insertMethod && listConfig.insertMethod()) {
+                if (listConfig.insertMethod) {
                     fastdom.write(function () {
-                        listConfig.insertMethod()($iframeEl);
+                        listConfig.insertMethod($iframeEl);
 
                         omniture.trackLinkImmediate('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
                         emailRunChecks.setEmailInserted();
