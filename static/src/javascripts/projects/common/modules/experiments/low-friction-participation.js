@@ -53,7 +53,8 @@ define([
         $articleBody: $('.js-article__body'),
         $lowFricContainer: null,
         $lowFricContents: null
-    };
+    },
+    prefs = 'gu.lowFricParticipation';
 
     // Tear everything down
 
@@ -106,7 +107,8 @@ define([
         if (state.complete) {
 
             view = template(lowFrictionComplete, merge(settings.templateVars, {
-                buttons: createButtons(state)
+                buttons: createButtons(state),
+                voteTitle: 'You gave this ' + (state.selectedItem + 1) + ' stars'
             }));
 
             // Remove bindings
@@ -132,14 +134,13 @@ define([
                 contents: view
             }));
 
-            return fastdomPromise.write(function() {
+            fastdomPromise.write(function() {
                 els.$articleBody.append(fullView);
-                bindEvents(currentState);
                 els.$lowFricContents = $('.js-participation-low-friction__contents');
             });
 
         } else {
-            return fastdomPromise.write(function() {
+            fastdomPromise.write(function() {
                 els.$lowFricContents.html(view);
             });
         }
@@ -151,6 +152,37 @@ define([
     var updateState = function (state) {
         // Render with merged state
         render(merge(currentState, state));
+    };
+
+    // Getters
+
+    var getUserVote = function () {
+        if (!storage.local.isStorageAvailable()) {
+            return 'no-storage';
+        }
+
+        var currentPage = config.page.pageId,
+            votedPages = JSON.parse(storage.local.get(prefs));
+
+        // Will return result for current page if available
+        return votedPages && votedPages[currentPage];
+
+    };
+
+    // Setters
+
+    var setUserVote = function () {
+        var currentPage = config.page.pageId,
+            votedPages = JSON.parse(storage.local.get(prefs));
+
+        // If the prefs object doesn't exist, lets create one
+        if (!votedPages) {
+            votedPages = {};
+        }
+
+        votedPages[currentPage] = currentState.selectedItem;
+
+        storage.local.set(prefs, JSON.stringify(votedPages));
     };
 
     // Binding & Events
@@ -168,26 +200,13 @@ define([
             confirming: false,
             complete: true
         });
+
+        setUserVote();
     };
 
     var bindEvents = function () {
         bean.on(document, 'click.particpation-low-fric', '.js-participation-low-fric--button', itemClicked);
         bean.on(document, 'click.particpation-low-fric', '.js-participation-low-fric__confirm', confirmClicked);
-    };
-
-    // Getters
-
-    var getUserVote = function () {
-        if (!storage.local.isStorageAvailable()) {
-            return 'no-storage';
-        }
-
-        var currentPage = config.page.pageId,
-            votedPages = JSON.parse(storage.local.get('gu.lowFricParticipation'));
-
-        // Will return result for current page if available
-        return votedPages && votedPages[currentPage];
-
     };
 
     // Initalise it.
@@ -215,6 +234,8 @@ define([
             // Set and render initial state
             updateState({});
         }
+
+        bindEvents(currentState);
 
     };
 
