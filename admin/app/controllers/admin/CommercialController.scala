@@ -78,21 +78,6 @@ object CommercialController extends Controller with Logging with AuthLogging wit
     NoCache(Ok(views.html.commercial.templates(environment.stage, templates)))
   }
 
-  def sponsoredContainers = AuthActions.AuthActionTest.async { implicit request =>
-    // get some example trails
-    lazy val trailsFuture = ContentApiClient.getResponse(
-      ContentApiClient.search(Edition(request))
-        .pageSize(2)
-    ).map { response  =>
-      response.results.map { item =>
-        FaciaContentConvert.contentToFaciaContent(item)
-      }
-    }
-    trailsFuture map { trails =>
-      NoCache(Ok(views.html.commercial.sponsoredContainers(environment.stage, CommercialPage(), trails)))
-    }
-  }
-
   def renderAdTests = AuthActions.AuthActionTest { implicit request =>
     val report = Store.getDfpLineItemsReport() flatMap (Json.parse(_).asOpt[LineItemReport])
 
