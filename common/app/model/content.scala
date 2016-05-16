@@ -233,6 +233,7 @@ final case class Content(
     meta.flatten.toMap
   }
 
+  val blendOverlay = "?fit=crop&blend64=aHR0cDovL3MxNC5wb3N0aW1nLm9yZy80YnA4cDJ4cjUvV2hpdGVfbG9nb193aXRoX3NoYWRvdy5wbmc&bp=20&bw=300&ba=bottom%2C%20left&bm=normal&h=632&w=1200"
   val opengraphProperties = Map(
     "og:title" -> metadata.webTitle,
     "og:description" -> fields.trailText.map(StripHtmlTagsAndUnescapeEntities(_)).getOrElse(""),

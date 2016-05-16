@@ -17,6 +17,7 @@ define([
     'common/modules/experiments/tests/loyal-adblocking-survey',
     'common/modules/experiments/tests/minute',
     'common/modules/experiments/tests/video-series-page',
+    'common/modules/experiments/tests/facebook-share-params',
     'lodash/arrays/flatten',
     'lodash/arrays/zip',
     'lodash/collections/forEach',
@@ -49,6 +50,7 @@ define([
     LoyalAdblockingSurvey,
     Minute,
     VideoSeriesPage,
+    FacebookShareParams,
     flatten,
     zip,
     forEach,
@@ -76,7 +78,8 @@ define([
         new Minute(),
         new VideoSeriesPage(),
         new FakeSeriesHideSensitive(),
-        new FakeSeriesShowSensitive()
+        new FakeSeriesShowSensitive(),
+        new FacebookShareParams()
     ]);
 
     var participationsKey = 'gu.ab.participations';
@@ -279,7 +282,8 @@ define([
     }
 
     function isTestSwitchedOn(test) {
-        return config.switches['ab' + test.id];
+        return true;
+        // return config.switches['ab' + test.id];
     }
 
     function getTestVariantId(testId) {
