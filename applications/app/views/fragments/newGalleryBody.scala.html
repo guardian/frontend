@@ -79,7 +79,7 @@
                     @*
                      * This ensures that the image height never goes above 96vh
                      *@
-                    style="max-width: calc(@image.width.toFloat/@image.height * 96vh)"
+                    style="max-width: calc(@image.ratioDouble * 96vh)"
                     href="@LinkTo{@page.item.metadata.url#img-@rowNum}"
                     data-link-name="Launch Gallery Lightbox" data-is-ajax>
                     @fragments.image(

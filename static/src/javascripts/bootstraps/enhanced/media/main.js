@@ -22,6 +22,7 @@ define([
     'common/modules/video/tech-order',
     'common/modules/video/video-container',
     'common/modules/video/onward-container',
+    'common/modules/video/more-in-series-container',
     // This must be the full path because we use curl config to change it based
     // on env
     'bootstraps/enhanced/media/video-player',
@@ -50,6 +51,7 @@ define([
     techOrder,
     videoContainer,
     onwardContainer,
+    moreInSeriesContainer,
     videojs,
     loadingTmpl
 ) {
@@ -360,33 +362,22 @@ define([
         });
     }
 
+    function getMediaType() {
+        return config.page.contentType.toLowerCase();
+    }
+
     function initMoreInSection() {
         if (!config.isMedia || !config.page.showRelatedContent) {
             return;
         }
 
-        var mediaType = config.page.contentType.toLowerCase(),
-            section   = new Component(),
-            attachTo  = $('.js-onward')[0],
-            endpoint  = '/' + mediaType + '/section/' + config.page.section;
-
-        if ('seriesId' in config.page) {
-            endpoint += '/' + config.page.seriesId;
-        }
-
-        endpoint += '.json?shortUrl=' + config.page.shortUrl;
-
-        // exclude professional network content from video pages
-        if (mediaType === 'video') {
-            endpoint += '&exclude-tag=guardian-professional/guardian-professional';
-        }
-
-        section.endpoint = endpoint;
-
-        section.fetch(attachTo).then(function () {
-            mediator.emit('page:media:moreinloaded', attachTo);
-            mediator.emit('page:new-content', attachTo);
-        });
+        var el  = $('.js-more-in-section')[0];
+        moreInSeriesContainer.init(
+            el, getMediaType(),
+            config.page.section,
+            config.page.shortUrl,
+            config.page.seriesId
+        );
     }
 
     function initOnwardContainer() {
@@ -394,9 +385,8 @@ define([
             return;
         }
 
-        var mediaType = config.page.contentType.toLowerCase();
+        var mediaType = getMediaType();
         var el = $(mediaType === 'video' ? '.js-video-components-container' : '.js-media-popular')[0];
-
         onwardContainer.init(el, mediaType);
     }
 

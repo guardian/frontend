@@ -986,10 +986,16 @@
 
         .tonal--tone-media & {
             border: 0;
-            background-color: $multimedia-support-4;
+            color: $neutral-3;
+            background-color: $media-mute;
+
+            .inline-tone-fill {
+                fill: $neutral-3;
+            }
 
             &:hover {
-                background-color: $neutral-2;
+                color: $neutral-3;
+                background-color: darken($media-mute, 5%);
             }
         }
 

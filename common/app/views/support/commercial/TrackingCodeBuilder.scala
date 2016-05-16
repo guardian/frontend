@@ -10,7 +10,7 @@ object TrackingCodeBuilder {
                                 containerIndex: Int,
                                 container: ContainerModel,
                                 card: CardContent)(implicit request: RequestHeader): String = {
-    val sponsor = container.branding.flatMap(_.sponsor) orElse card.branding.flatMap(_.sponsor) getOrElse ""
+    val sponsor = container.brandingAttributes.flatMap(_.sponsor) orElse card.branding.flatMap(_.sponsor) getOrElse ""
     val cardIndex =
       (container.content.initialCards ++ container.content.showMoreCards).indexWhere(_.headline == card.headline)
     Seq(
