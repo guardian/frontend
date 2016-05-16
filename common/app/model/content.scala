@@ -807,7 +807,6 @@ object ImageContent {
       standfirst = fields.standfirst)
     val lightbox = GenericLightbox(content.elements, content.fields, content.trail, lightboxProperties)
     val javascriptConfig: Map[String, JsValue] = Map(
-      "contentType" -> JsString(contentType),
       "lightboxImages" -> lightbox.javascriptConfig
     )
     val metadata = content.metadata.copy(
