@@ -21,6 +21,8 @@
     } {
         @if(content.commercial.hasHighMerchandisingTarget) {
             <div class="fc-container fc-container--commercial-high">@fragments.commercial.commercialComponentHigh()</div>
+        } @if(content.commercial.hasHighMerchandisingAdunit) {
+            <div>TEST TEST</div>
         }
     } {
         <div class="fc-container fc-container--commercial js-container--commercial">@fragments.commercial.commercialComponent()</div>

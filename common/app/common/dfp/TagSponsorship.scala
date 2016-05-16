@@ -66,12 +66,15 @@ object InlineMerchandisingTargetedTagsReportParser extends Logging {
 }
 
 object HighMerchandisingLineItemSeq {
-  implicit val jsonReads = Json.reads[HighMerchandisingLineItemSeq]
 
-  implicit val highMerchandisingTargetedSetWrites = new Writes[HighMerchandisingLineItemSeq] {
-    def writes(items: HighMerchandisingLineItemSeq): JsValue = {
+  implicit val jsonReads = Json.reads[HighMerchandisingLineItem]
+
+  implicit val highMerchandisingTargetedSetWrites = new Writes[HighMerchandisingLineItem] {
+    def writes(items: HighMerchandisingLineItem): JsValue = {
       Json.obj(
-        "tags" -> items.lineItems
+        "tags" -> items.tags,
+        "adUnits" -> items.adUnitString,
+        "edition" -> items.editions
       )
     }
   }
@@ -94,12 +97,25 @@ case class HighMerchandisingTargetedTagSet(items: Set[String] = Set.empty){
 
   def hasTag (tag: Tag): Boolean = items.exists(item => tag.id.endsWith(item))
 
+  def hasAdUnit (adUnitSuffix : String): Boolean = {
+    println(adUnitSuffix)
+    true
+  }
+
 
   def nonEmpty = items.nonEmpty
 }
 
-case class HighMerchandisingLineItemSeq(lineItems : Seq[HighMerchandisingLineItem] = Seq.empty) {
+case class HighMerchandisingLineItemTargetsSeq(lineItems : Seq[HighMerchandisingLineItem] = Seq.empty) {
+  val targetingTags = lineItems.flatMap(_.tags)
+  val targetedAdUnitsPath = lineItems.flatMap((_.adUnits.flatMap(unit => unit.path)))
 
+  def hasTag (tag: Tag): Boolean = targetingTags.exists(item => tag.id.endsWith(item))
+
+
+  def hasAdUnit (adUnitSuffix : String): Boolean = targetedAdUnitsPath.exists(item =>adUnitSuffix.endsWith(item))
+
+  def nonEmpty = lineItems.nonEmpty
 }
 
 object HighMerchandisingLineItems {

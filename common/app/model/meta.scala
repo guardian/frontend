@@ -107,6 +107,10 @@ final case class Commercial(
     DfpAgent.hasHighMerchandisingTarget(tags.tags)
   }
 
+  def hasHighMerchandisingAdunit: Boolean = {
+    DfpAgent.hasHighMerchandisingAdUnit(metadata.adUnitSuffix)
+  }
+
   def conditionalConfig: Map[String, JsValue] = {
     val highMerchansisingMeta = if (hasHighMerchandisingTarget) {
       Some("hasHighMerchandisingTarget", JsBoolean(hasHighMerchandisingTarget))

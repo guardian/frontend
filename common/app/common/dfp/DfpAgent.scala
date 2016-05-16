@@ -28,8 +28,10 @@ object DfpAgent
   private lazy val tagToSponsorsMapAgent = AkkaAgent[Map[String, Set[String]]](Map[String, Set[String]]())
   private lazy val tagToAdvertisementFeatureSponsorsMapAgent = AkkaAgent[Map[String, Set[String]]](Map[String, Set[String]]())
   private lazy val inlineMerchandisingTagsAgent = AkkaAgent[InlineMerchandisingTagSet](InlineMerchandisingTagSet())
-  private lazy val highMerchandisingTargetedTagsAgent = AkkaAgent[HighMerchandisingTargetedTagSet](HighMerchandisingTargetedTagSet())
-//  private lazy val HighMerchandisingTargetedAgent = AkkaAgent[HighMerchandisingTargetedSeq](HighMerchandisingTargetedSeq())
+  private lazy val highMerchandisingTargetedTagsAgent = AkkaAgent[HighMerchandisingLineItemTargetsSeq](HighMerchandisingLineItemTargetsSeq())
+
+  private lazy val highMerchandisingTargetedLineItemsAgent = AkkaAgent[HighMerchandisingLineItemTargetsSeq](HighMerchandisingLineItemTargetsSeq())
+
   private lazy val pageskinnedAdUnitAgent = AkkaAgent[Seq[PageSkinSponsorship]](Nil)
   private lazy val lineItemAgent = AkkaAgent[Map[AdSlot, Seq[GuLineItem]]](Map.empty)
   private lazy val takeoverWithEmptyMPUsAgent = AkkaAgent[Seq[TakeoverWithEmptyMPUs]](Nil)
@@ -38,8 +40,10 @@ object DfpAgent
   protected def tagToSponsorsMap = tagToSponsorsMapAgent get()
   protected def tagToAdvertisementFeatureSponsorsMap = tagToAdvertisementFeatureSponsorsMapAgent get()
   protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = inlineMerchandisingTagsAgent get()
-  protected def highMerchandisingTargetedTags: HighMerchandisingTargetedTagSet = highMerchandisingTargetedTagsAgent get()
-//  protected def highMerchandisingTargets: HighMerchandisingTargetedSeq = highMerchandisingTargetedTagsAgent get()
+  protected def highMerchandisingTargetedTags: HighMerchandisingLineItemTargetsSeq = highMerchandisingTargetedTagsAgent get()
+
+  protected def highMerchandisingTargets: HighMerchandisingLineItemTargetsSeq = highMerchandisingTargetedLineItemsAgent get()
+
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent get()
   protected def lineItemsBySlot: Map[AdSlot, Seq[GuLineItem]] = lineItemAgent get()
   protected def takeoversWithEmptyMPUs: Seq[TakeoverWithEmptyMPUs] =
@@ -101,26 +105,16 @@ object DfpAgent
         tag <- lineItems.tags
       } yield tag
 
-      val lineItems = for {
-        jsonString <- stringFromS3(dfpHighMerchandisingTagsDataKey).toSeq
-        report <- HighMerchandisingTargetedTagsReportParser(jsonString).toSeq
-        lineItems <- report.lineItems.items
-      } yield lineItems
-
-      println(lineItems)
-//      HighMerchandisingTargetedSeq(lineItems)
       HighMerchandisingTargetedTagSet(tags.toSet)
     }
 
-    def grabHighMerchandisingLineItemsFromStore(): HighMerchandisingLineItemSeq ={
+    def grabHighMerchandisingLineItemTargetsFromStore(): HighMerchandisingLineItemTargetsSeq ={
       val lineItems = for {
         jsonString <- stringFromS3(dfpHighMerchandisingTagsDataKey).toSeq
         report <- HighMerchandisingTargetedTagsReportParser(jsonString).toSeq
         lineItems <- report.lineItems.items
       } yield lineItems
-
-      println(lineItems)
-      HighMerchandisingLineItemSeq(lineItems)
+      HighMerchandisingLineItemTargetsSeq(lineItems)
     }
 
     def updateMap(agent: Agent[Map[String, Set[String]]])(freshData: => Map[String, Set[String]]) {
@@ -135,11 +129,17 @@ object DfpAgent
       }
     }
 
-    def updateHighMerchandisingTargetTags(freshData: HighMerchandisingTargetedTagSet): Unit ={
+    def updateHighMerchandisingTargetTags(freshData: HighMerchandisingLineItemTargetsSeq): Unit ={
       highMerchandisingTargetedTagsAgent sendOff { oldData =>
-        if(freshData.nonEmpty) freshData else oldData
+        if(freshData.lineItems.nonEmpty) freshData else oldData
       }
     }
+
+//    def updateHighMerchandisingLineItemTargets(freshData: HighMerchandisingLineItemTargetsSeq): Unit ={
+//      highMerchandisingTargetedLineItemsAgent sendOff { oldData =>
+//        if(freshData.lineItems.nonEmpty) freshData else oldData
+//      }
+//    }
 
     val paidForTags: Seq[PaidForTag] = grabPaidForTagsFromStore(dfpPaidForTagsDataKey)
     update(currentPaidForTagsAgent)(paidForTags)
@@ -157,7 +157,8 @@ object DfpAgent
 
     updateInlineMerchandisingTargetedTags(grabInlineMerchandisingTargetedTagsFromStore())
 
-    updateHighMerchandisingTargetTags(grabHighMerchandisingTargetTagsFromStore())
+    updateHighMerchandisingTargetTags(grabHighMerchandisingLineItemTargetsFromStore())
+
   }
 
   def refreshFaciaSpecificData(): Unit = {
