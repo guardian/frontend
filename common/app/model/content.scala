@@ -585,7 +585,6 @@ object Gallery {
       standfirst = fields.standfirst)
     val lightbox = GalleryLightbox(elements, tags, lightboxProperties)
     val javascriptConfig: Map[String, JsValue] = Map(
-      "contentType" -> JsString(contentType),
       "gallerySize" -> JsNumber(lightbox.size),
       "lightboxImages" -> lightbox.javascriptConfig
     )
