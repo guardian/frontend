@@ -333,7 +333,7 @@ $hosted-stripe: 28px;
     border-top: 0;
     padding-top: $gs-gutter / 2;
 
-    @include mq($until: mobileLandscape) {
-        padding: $gs-gutter / 2;
+    @include mq($until: tablet) {
+        padding: $gs-gutter / 2 0;
     }
 }
