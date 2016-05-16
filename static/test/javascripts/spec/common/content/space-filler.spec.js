@@ -70,12 +70,23 @@ define([
         it('If there are no spaces, it rejects the promise and does not call the writer', function (done) {
             spacefinderResult = Promise.reject(new spaceFinder.SpaceError({}));
 
-            var mockWriter = jasmine.createSpy('mockWriter'),
-            insertion = spaceFiller.fillSpace(rules, mockWriter);
+            var mockWriter = jasmine.createSpy('mockWriter');
+            var insertion = spaceFiller.fillSpace(rules, mockWriter);
 
             insertion.then(function (result) {
                 expect(result).toBe(false);
                 expect(mockWriter).not.toHaveBeenCalled();
+                done();
+            });
+        });
+
+        it('If there are no spaces, the spacefinder exception is not recorded by Raven', function (done) {
+            // These exceptions are 'expected' and therefore shouldn't go into logging
+            spacefinderResult = Promise.reject(new spaceFinder.SpaceError({}));
+            var insertion = spaceFiller.fillSpace(rules, function writer() {});
+
+            insertion.then(function () {
+                expect(raven.captureException).not.toHaveBeenCalled();
                 done();
             });
         });
@@ -152,8 +163,8 @@ define([
             it('Records the exception', function (done) {
                 insertion.then(function () {
                     expect(raven.captureException).toHaveBeenCalledWith(spaceFinderError);
+                    done();
                 });
-                done();
             });
         })
     });
