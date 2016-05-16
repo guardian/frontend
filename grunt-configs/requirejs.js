@@ -50,15 +50,7 @@ module.exports = function (grunt, options) {
                 exclude: [
                     'text',
                     'inlineSvg'
-                ],
-                shim: {
-                    videojsima: {
-                        deps: ['videojsads']
-                    },
-                    videojsads: {
-                        deps: ['bootstraps/enhanced/media/videojs-global']
-                    }
-                }
+                ]
             }
         },
         commercial: {
@@ -70,15 +62,7 @@ module.exports = function (grunt, options) {
                     'bootstraps/standard/main',
                     'text',
                     'inlineSvg'
-                ],
-                shim: {
-                    videojsima: {
-                        deps: ['videojsads']
-                    },
-                    videojsads: {
-                        deps: ['bootstraps/enhanced/media/videojs-global']
-                    }
-                }
+                ]
             }
         },
         enhanced: {
@@ -91,15 +75,7 @@ module.exports = function (grunt, options) {
                     'bootstraps/commercial',
                     'text',
                     'inlineSvg'
-                ],
-                shim: {
-                    videojsima: {
-                        deps: ['videojsads']
-                    },
-                    videojsads: {
-                        deps: ['bootstraps/enhanced/media/videojs-global']
-                    }
-                }
+                ]
             }
         },
         article: {
@@ -315,7 +291,15 @@ module.exports = function (grunt, options) {
                     'inlineSvg'
                 ],
                 generateSourceMaps: true,
-                preserveLicenseComments: false
+                preserveLicenseComments: false,
+                shim: {
+                    videojsima: {
+                        deps: ['videojsads']
+                    },
+                    videojsads: {
+                        deps: ['bootstraps/enhanced/media/videojs-global']
+                    }
+                }
             }
         },
         videoEmbed : {
