@@ -47,14 +47,14 @@ define([
         }
     },
     els = {
-        $lowFricContainer: null
+        $lowFricContainer: null,
+        $lowFricContents: null
     };
 
     // Tear everything down
 
     var tearDown = function () {
-        bean.off(document, 'click', '.js-participation-low-fric--button');
-        bean.off(document, 'click', '.js-participation-low-fric__confirm');
+        bean.off(document, 'click.particpation-low-fric');
     };
 
     // Mark-up Building
@@ -112,7 +112,7 @@ define([
             }));
 
             renderPromise = fastdomPromise.write(function(){
-                els.$lowFricContainer.html(completedView);
+                els.$lowFricContents.html(completedView);
 
                 // Remove bindings
                 tearDown();
@@ -120,12 +120,13 @@ define([
         }
 
         else if (state.confirming) {
+            console.log(els.$lowFricContents)
             var confirmingView = template(lowFrictionConfirming, merge(settings.templateVars, {
                 buttons: createButtons(state)
             }));
 
             renderPromise = fastdomPromise.write(function(){
-                els.$lowFricContainer.html(confirmingView);
+                els.$lowFricContents.html(confirmingView);
             });
         }
 
@@ -142,11 +143,17 @@ define([
         return renderPromise;
     };
 
+    var afterRender = function () {
+        if (!currentState.confirming || !currentState.complete) {
+            els.$lowFricContents = $('.js-participation-low-friction__contents');
+        }
+    };
+
     // State Handling
 
     var updateState = function (state) {
         // Render with merged state
-        render(merge(currentState, state));
+        render(merge(currentState, state)).then(afterRender);
     };
 
     // Binding & Events
@@ -166,8 +173,8 @@ define([
     };
 
     var bindEvents = function () {
-        bean.on(document, 'click', '.js-participation-low-fric--button', itemClicked);
-        bean.on(document, 'click', '.js-participation-low-fric__confirm', confirmClicked);
+        bean.on(document, 'click.particpation-low-fric', '.js-participation-low-fric--button', itemClicked);
+        bean.on(document, 'click.particpation-low-fric', '.js-participation-low-fric__confirm', confirmClicked);
     };
 
     // Getters
