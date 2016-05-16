@@ -137,7 +137,9 @@ object GeoTarget {
 }
 
 
-case class GuAdUnit(id: String, path: Seq[String])
+case class GuAdUnit(id: String, path: Seq[String]) {
+  val fullPath = path.mkString("/")
+}
 
 object GuAdUnit {
 
