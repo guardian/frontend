@@ -31,10 +31,7 @@ private object ItemOrRedirect extends ItemResponses with Logging {
     canonicalPath(response) match {
       case Some(canonicalPath) if canonicalPath != request.pathWithoutModifiers && !(request.isModified) =>
         Right(Found(canonicalPath + paramString(request)))
-      case _ => {
-        if() {}
-        else {Left(item)}
-      }
+      case _ => Left(item)
     }
 
   }

@@ -113,7 +113,7 @@ final case class Content(
   // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
   lazy val openGraphImage = {
     // val shouldOverlay = ABOpenGraphOverlay.isParticipating
-    ImgSrc(rawOpenGraphImage, FacebookOpenGraphImage, true)
+    ImgSrc(rawOpenGraphImage, FacebookOpenGraphImage)
   }
 
   lazy val syndicationType = {

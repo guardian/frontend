@@ -1,13 +1,14 @@
 package controllers
 
 import _root_.liveblog.LiveBlogCurrentPage
-import com.gu.contentapi.client.model.v1.{Content => ApiContent, ItemResponse}
+import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
 import common._
 import contentapi.ContentApiClient
 import conf.switches.Switches
 import model.Cached.WithoutRevalidationResult
 import model._
 import model.liveblog.{BodyBlock, KeyEventData}
+import mvt.ABOpenGraphOverlay
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.functional.syntax._
@@ -175,7 +176,9 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
    * @return Either[PageWithStoryPackage, Result]
    */
   def responseToModelOrResult(pageParam: Option[String])(response: ItemResponse)(implicit request: RequestHeader): Either[PageWithStoryPackage, Result] = {
+
     val supportedContent = response.content.filter(isSupported).map(Content(_))
+
     val page = pageParam.map(ParseBlockId.apply)
     val supportedContentResult = ModelOrResult(supportedContent, response)
     val content: Either[PageWithStoryPackage, Result] = supportedContentResult.left.flatMap { content =>
@@ -191,10 +194,18 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
             Left(ArticlePage(article, StoryPackages(article, response)))
           }
           else {
-            if(mvt.ABOpenGraphOverlay.isParticipating) {
-              // rewrite the opengraph meta data
-            }
-            Left(ArticlePage(article, RelatedContent(article, response)))
+            val overlay = mvt.ABOpenGraphOverlay.isParticipating
+            val newArticle = article.copy(
+              content = article.content.copy(
+                metadata = article.content.metadata.copy(
+                  opengraphPropertiesOverrides = {
+                    val openGraph = article.content.metadata.opengraphProperties
+                    openGraph ++ Map("og:image" -> ImgSrc(article.content.rawOpenGraphImage, FacebookOpenGraphImage, true))
+                  }
+                )
+              )
+            )
+            Left(ArticlePage(newArticle, RelatedContent(newArticle, response)))
           }
         case _ =>
           Right(NotFound)
