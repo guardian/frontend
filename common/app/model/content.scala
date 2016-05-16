@@ -517,7 +517,6 @@ object Video {
     val source: Option[String] = elements.videos.find(_.properties.isMain).flatMap(_.videos.source)
 
     val javascriptConfig: Map[String, JsValue] = Map(
-      "contentType" -> JsString(contentType),
       "isPodcast" -> JsBoolean(content.tags.isPodcast),
       "source" -> JsString(source.getOrElse("")),
       "embeddable" -> JsBoolean(elements.videos.find(_.properties.isMain).map(_.videos.embeddable).getOrElse(false)),
