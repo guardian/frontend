@@ -25,14 +25,14 @@ define([
         };
 
         function alterCanonicalUrlSent(hrefContent, additionalParam) {
-            var urlhalves = hrefContent.split("&redirect_uri=");
-            return urlhalves[0] + additionalParam + "&redirect_uri=" + urlhalves[1];
+            var urlhalves = hrefContent.split('&redirect_uri=');
+            return urlhalves[0] + additionalParam + '&redirect_uri=' + urlhalves[1];
         }
 
         function alterFacebookShareItems(additionalParam) {
-            var facebookShareItem = document.getElementsByClassName("social__item--facebook");
+            var facebookShareItem = document.getElementsByClassName('social__item--facebook');
             for (var i = 0; i < facebookShareItem.length; i++) {
-                var redirectUrl = facebookShareItem[i].getElementsByClassName("social__action");
+                var redirectUrl = facebookShareItem[i].getElementsByClassName('social__action');
                 redirectUrl[0].href = alterCanonicalUrlSent(redirectUrl[0].href, additionalParam);
             }
 
@@ -42,13 +42,13 @@ define([
             {
                 id: 'variant',
                 test: function () {
-                    alterFacebookShareItems("?page=variant");
+                    alterFacebookShareItems('?page=variant');
                 }
             },
             {
                 id: 'control',
                 test: function () {
-                    alterFacebookShareItems("?page=control");
+                    alterFacebookShareItems('?page=control');
                 }
             }
         ];

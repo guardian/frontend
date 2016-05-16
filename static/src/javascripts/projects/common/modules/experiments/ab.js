@@ -281,10 +281,10 @@ define([
         }
     }
 
-    function isTestSwitchedOn(test) {
-        return true;
-        // return config.switches['ab' + test.id];
-    }
+    // function isTestSwitchedOn(test) {
+    //     return true;
+    //     // return config.switches['ab' + test.id];
+    // }
 
     function getTestVariantId(testId) {
         var participation = getParticipations()[testId];
