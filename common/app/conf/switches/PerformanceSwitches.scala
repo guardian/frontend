@@ -24,6 +24,15 @@ trait PerformanceSwitches {
     exposeClientSide = true
   )
 
+  val BootInteractivesFromMainSwitch = Switch(
+    SwitchGroup.Performance,
+    "boot-interactives-from-main",
+    "If this switch is on then interactive bootstraps will be booted from main.js for perf and stability reasons",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 8),
+    exposeClientSide = true
+  )
+
   val TagPageSizeSwitch = Switch(
     SwitchGroup.Performance,
     "tag-page-size",
@@ -51,15 +60,6 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
-  val CheckETagsSwitch = Switch(
-    SwitchGroup.Performance,
-    "check-etags",
-    "If this switch is on, empty 304 not modified responses will be returned for requests with the correct etag",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 20),
-    exposeClientSide = false
-  )
-
   val CircuitBreakerSwitch = Switch(
     SwitchGroup.Performance,
     "circuit-breaker",
@@ -72,9 +72,9 @@ trait PerformanceSwitches {
   val ServerSideBucketsSwitch = Switch(
     SwitchGroup.Performance,
     "server-side-buckets",
-    "When this switch expires, we should have decided whether permanently running server side ab testing affects caching/costs too much",
+    "When this switch expires, remove the remaining predefined server side testing buckets",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 10),
+    sellByDate = new LocalDate(2016, 5, 20),
     exposeClientSide = false
   )
 

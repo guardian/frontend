@@ -6,7 +6,7 @@ module.exports = function (grunt, options) {
             // options: { sourceMap: true },
             src: [
                 options.staticSrcDir + 'javascripts/components/curl/curl-domReady.js',
-                options.requirejsDir + '/boot.js'
+                options.staticTargetDir + 'javascripts/boot.js'
             ],
             dest: options.staticTargetDir + 'javascripts/app.js'
         }

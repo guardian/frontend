@@ -1,7 +1,6 @@
 .tone-media--item {
     $c-headline: #ffffff;
-
-    background-color: $media-background;
+    background-color: $media-mute;
 
     &,
     .fc-sublink__title {
@@ -10,14 +9,14 @@
 
     .u-faux-block-link--hover,
     .fc-item__image-container {
-        background-color: darken($media-background, 7.5%);
+        background-color: darken($media-mute, 7.5%);
     }
 
     .fc-item__link,
     .rich-link__link,
     .fc-sublink__link {
         &:visited {
-            color: mix($c-headline, $media-background, 80%);
+            color: mix($c-headline, $media-mute, 80%);
         }
     }
 

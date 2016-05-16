@@ -284,7 +284,7 @@ final case class MetaData (
   val isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(id)
 
   val requiresMembershipAccess: Boolean = {
-    conf.switches.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty && url.contains("/membership/")
+    conf.switches.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty
   }
 
   val hasSlimHeader: Boolean = contentType == "Interactive" || section == "identity" || (galleryRedesign.isSwitchedOn && contentType.toLowerCase == "gallery")
@@ -396,14 +396,7 @@ trait ContentPage extends Page {
     item.content.twitterProperties ++
     metadata.twitterPropertiesOverrides
 
-  override def branding(edition: Edition): Option[Branding] = {
-    BrandHunter.findContentBranding(
-      section = None,
-      item.tags,
-      publicationDate = Some(item.trail.webPublicationDate),
-      edition
-    )
-  }
+  override def branding(edition: Edition): Option[Branding] = BrandHunter.findContentBranding(item, edition)
 }
 case class SimpleContentPage(content: ContentType) extends ContentPage {
   override lazy val item: ContentType = content

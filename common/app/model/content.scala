@@ -501,7 +501,7 @@ object Audio {
 final case class Audio (override val content: Content) extends ContentType {
 
   lazy val downloadUrl: Option[String] = elements.mainAudio
-    .flatMap(_.audio.encodings.find(_.format == "audio/mpeg").map(_.url.replace("static.guim", "download.guardian")))
+    .flatMap(_.audio.encodings.find(_.format == "audio/mpeg").map(_.url))
 
   private lazy val podcastTag: Option[Tag] = tags.tags.find(_.properties.podcast.nonEmpty)
   lazy val iTunesSubscriptionUrl: Option[String] = podcastTag.flatMap(_.properties.podcast.flatMap(_.subscriptionUrl))
@@ -717,7 +717,7 @@ case class GenericLightbox(
   properties: GenericLightboxProperties
 ) {
   lazy val mainFiltered = elements.mainPicture
-    .filter(_.images.largestEditorialCrop.map(_.ratio).getOrElse(0) > 0.7)
+    .filter(_.images.largestEditorialCrop.map(_.ratioWholeNumber).getOrElse(0) > 0.7)
     .filter(_.images.largestEditorialCrop.map(_.width).getOrElse(1) > properties.lightboxableCutoffWidth).toSeq
   lazy val bodyFiltered: Seq[ImageElement] = elements.bodyImages.filter(_.images.largestEditorialCrop.map(_.width).getOrElse(1) > properties.lightboxableCutoffWidth).toSeq
 

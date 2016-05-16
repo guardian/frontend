@@ -1,11 +1,7 @@
 package conf
 
-object HealthCheckController extends CachedHealthCheckController {
-  override val paths = Seq("/uk/business")
-  override val testPort = 9008
-  override def healthCheck() = healthCheckAll()
-}
+object HealthCheck extends AllGoodCachedHealthCheck(9008, "/uk/business")
 
 trait FaciaHealthCheckLifeCycle extends CachedHealthCheckLifeCycle {
-  override val healthCheckController = HealthCheckController
+  override val healthCheckController = HealthCheck
 }

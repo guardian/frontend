@@ -60,6 +60,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val secure = Play.application.configuration.getBoolean("guardian.secure").getOrElse(false)
 
     lazy val isProd = stage.equalsIgnoreCase("prod")
+    lazy val isCode = stage.equalsIgnoreCase("code")
     lazy val isNonProd = List("dev", "code", "gudev").contains(stage.toLowerCase)
 
     lazy val isPreview = projectName == "preview"
@@ -227,6 +228,13 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object assets {
     lazy val path = configuration.getMandatoryStringProperty("assets.path")
+
+    // This configuration value determines if this server will load and resolve assets using the asset map.
+    // Set this to true if you want to run the Play server in dev, and emulate prod mode asset-loading.
+    // If true in dev, assets are locally loaded from the `hash` build output, otherwise assets come from 'target' for css, and 'src' for js.
+    lazy val useHashedBundles =  configuration.getStringProperty("assets.useHashedBundles")
+      .map(_.toBoolean)
+      .getOrElse(environment.isProd || environment.isCode)
   }
 
   object staticSport {

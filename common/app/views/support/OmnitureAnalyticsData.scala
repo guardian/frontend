@@ -60,7 +60,7 @@ object OmnitureAnalyticsData {
       ("c11", section),
       ("c13", data.getOrElse("series", "")),
       ("c25", data.getOrElse("blogs", "")),
-      ("c14", data("buildNumber")),
+      ("c14", data.getOrElse("buildNumber", "")),
       ("c19", platform),
       ("c67", "nextgenServed"),
       ("c30", if (isContent) "content" else "non-content"),
