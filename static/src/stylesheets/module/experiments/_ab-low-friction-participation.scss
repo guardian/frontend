@@ -3,6 +3,13 @@
     border-top: 1px dotted #dcdcdc;
 }
 
+// When we hover our content, we tell the browser
+// that a change may happen soon so it can optimise
+// the paint area
+.participation-low-friction__contents:hover {
+    will-change: transform;
+}
+
 .participation-low-fric__desc,
 .participation-low-fric__after {
     @include fs-textSans(1);
