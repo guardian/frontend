@@ -15,22 +15,20 @@ define([
     var guardian = window.guardian;
     var config = guardian.config;
 
-    var standardBootstrap = ['bootstraps/standard/main'];
-    var commercialBootstrap = ['bootstraps/commercial'];
     var enhancedBootstrap = guardian.isEnhanced ? ['bootstraps/enhanced/main'] : [];
 
     domReady(function () {
-        require(standardBootstrap, function (bootStandard) {
+        require(['bootstraps/standard/main'], function (bootStandard) {
             bootStandard();
 
             // 'raven' is included in standard already, but we need a reference to it
-            require(['raven'].concat(commercialBootstrap, enhancedBootstrap), function (raven, commercialBootrstrap, bootEnhanced) {
+            require(['raven', 'bootstraps/commercial'].concat(enhancedBootstrap), function (raven, commercialBootstrap, bootEnhanced) {
                 if (bootEnhanced) {
                     bootEnhanced();
                 }
                 if (config.switches.commercial) {
                     raven.wrap({tags: { feature: 'commercial' }}, function () {
-                        commercialBootrstrap.init();
+                        commercialBootstrap.init();
                     });
                 }
             });
