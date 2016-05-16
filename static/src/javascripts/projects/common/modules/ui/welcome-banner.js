@@ -1,15 +1,19 @@
 define([
+    'bean',
     'fastdom',
     'common/utils/$',
     'common/utils/storage',
     'common/utils/template',
-    'common/utils/load-css-promise'
+    'common/utils/load-css-promise',
+    'common/views/svgs'
 ], function (
+    bean,
     fastdom,
     $,
     storage,
     template,
-    loadCssPromise
+    loadCssPromise,
+    svgs
 ) {
     /**
      * Rules:
@@ -18,28 +22,47 @@ define([
     var header = document.getElementById('header'),
         message1 = '<div class="banner-message"><%=HTML%></div>',
         data = {
-            message1: {
-                HTML: '<span class="pull-left">news website</span><span class="pull-right">of the year</span>'
+            'liberal-newspaper': {
+                HTML: '<span class="pull-left">the world\'s leading</span><span class="pull-right">liberal newspaper</span>'
+            },
+            'award-winning': {
+                HTML: '<span class="pull-left">award-winning</span><span class="pull-right">news, sport and culture</span>'
+            },
+            'since-1821': {
+                HTML: '<span class="pull-left">quality news</span><span class="pull-right">since 1821</span>'
             }
         };
 
-    function showWelcomeMessage(messageNumber) {
+    function showWelcomeMessage(messageName) {
         loadCssPromise.then(function () {
-            createAndSetHeader(messageNumber);
+            createAndSetHeader(messageName);
         });
     }
 
-    function createAndSetHeader(messageNumber) {
-        var headerDiv = document.createElement('div'),
-            msg = template(message1, data[messageNumber]);
+    function createAndSetHeader(messageName) {
+        var headerDiv = document.createElement('button'),
+            msg = template(message1, data[messageName]);
+
+        var closeBtn = '<div class="banner-close-icon"><button class="js-welcome-message__item__close button button--tertiary u-faux-block-link__promote" aria-label="Dismiss" data-link-name="close button">' + svgs('closeCentralIcon') + '</button></div>';
 
         headerDiv.setAttribute('id', 'welcome-banner');
+        headerDiv.setAttribute('data-link-name', 'welcome-banner');
         headerDiv.setAttribute('style', 'height:' + header.offsetHeight + 'px;');
-        headerDiv.innerHTML = msg;
+        headerDiv.innerHTML = closeBtn + msg;
+        headerDiv.className += 'u-faux-block-link__promote';
+
+        bean.on($(headerDiv)[0], 'click', function () {
+            fastdom.write(function () {
+                headerDiv.style.opacity = 0;
+            });
+        });
 
         header.getElementsByClassName('l-header-main')[0].style.zIndex = 1200;
-
         header.appendChild(headerDiv);
+
+        setTimeout(function(){
+            headerDiv.style.opacity = 1;
+        }, 0);
     }
 
     return {
