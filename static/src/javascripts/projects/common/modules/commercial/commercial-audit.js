@@ -16,11 +16,13 @@ define([
 
     function receiveMessage(event) {
         var message = event.data || '';
+        if (typeof message !== 'string') {
+            return;
+        }
 
         if (message.indexOf('Tracker beacon:') === 0) {
           var variantName = message.split(':')[1];
           beacon.beaconCounts(variantName);
         }
-        return;
     }
 });
