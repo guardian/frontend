@@ -1,20 +1,12 @@
 define([
-    'qwery',
-    'bonzo',
-    'common/utils/detect',
     'common/utils/fastdom-promise',
     'common/utils/template',
-    'common/utils/mediator',
     'common/modules/commercial/hosted-video',
     'common/modules/commercial/creatives/add-tracking-pixel',
     'text!common/views/commercial/creatives/hosted-thrasher.html'
 ], function (
-    $,
-    bonzo,
-    detect,
     fastdom,
     template,
-    mediator,
     hostedVideo,
     addTrackingPixel,
     hostedVideoStr
