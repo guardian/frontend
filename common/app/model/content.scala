@@ -843,8 +843,7 @@ object CrosswordContent {
       analyticsName = crossword.id,
       webTitle = crossword.name,
       contentType = contentType,
-      iosType = None,
-      javascriptConfigOverrides = Map("contentType" -> JsString(contentType))
+      iosType = None
     )
 
     val contentOverrides = content.content.copy(metadata = metadata)
