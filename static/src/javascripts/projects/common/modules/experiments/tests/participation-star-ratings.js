@@ -47,15 +47,20 @@ define([
 
         this.canRun = function () {
             // Commentable, Film reviews
-            return config.page.section === 'film' && config.page.toneIds === 'tone/reviews' && config.page.commentable;
+            return config.page.section === 'film' &&
+                config.page.toneIds === 'tone/reviews' &&
+                config.page.commentable &&
+                Object.create; // Filters out IE8.
         };
 
         this.variants = [
             {
                 id: 'control',
                 test: function () {
-                    var starRatings = Object.create(lowFrictionParticipation);
-                    starRatings.init({});
+                    if (Object.create) {
+                        var starRatings = Object.create(lowFrictionParticipation);
+                        starRatings.init({});
+                    }
                 },
                 success: function (complete) {
                     mediator.on('discussion:commentbox:post:success', function (){
