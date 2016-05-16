@@ -14,7 +14,7 @@ define([
     var queue;
 
     function SpaceFiller() {
-        queue = new QueueAsync(onWriterError);
+        queue = new QueueAsync(onError);
     }
 
     /**
@@ -32,23 +32,29 @@ define([
         return queue.add(insertNextContent);
 
         function insertNextContent() {
-            return spacefinder
-                .findSpace(rules)
-                    .then(function onSpacesFound(paragraphs) {
-                        return fastdom.write(function () {
-                            writer(paragraphs);
-                            return true;
-                        });
-                    })
-                    .catch(function onNoSpacesFound() {
-                        return false;
-                    });
+            return spacefinder.findSpace(rules).then(onSpacesFound, onNoSpacesFound);
+        }
+
+        function onSpacesFound(paragraphs) {
+            return fastdom.write(function () {
+                writer(paragraphs);
+                return true;
+            });
+        }
+
+        function onNoSpacesFound(ex) {
+            if (ex instanceof spacefinder.SpaceError) {
+                return false;
+            } else {
+                throw ex;
+            }
         }
     };
 
-    function onWriterError(e) {
+    function onError(e) {
+        // e.g. if writer fails
         raven.captureException(e);
-        return false; // fillSpace should resolve to false
+        return false;
     }
 
     return new SpaceFiller();
