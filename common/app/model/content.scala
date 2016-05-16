@@ -479,7 +479,6 @@ object Audio {
     val id = content.metadata.id
     val section = content.metadata.section
     val javascriptConfig: Map[String, JsValue] = Map(
-      "contentType" -> JsString(contentType),
       "isPodcast" -> JsBoolean(content.tags.isPodcast))
 
     val metadata = content.metadata.copy(
