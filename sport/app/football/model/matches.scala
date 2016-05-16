@@ -125,6 +125,7 @@ case class ResultsList(date: LocalDate, competitions: CompetitionSupport) extend
     fMatch.isResult
 }
 case class CompetitionResultsList(date: LocalDate, competitions: CompetitionSupport, competitionId: String) extends Results with CompetitionList {
+  override val baseUrl: String = competition.fold("/football/results")(_.url + "/results")
   override val daysToDisplay = 20
   override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
     competition.id == competitionId && fMatch.isResult
@@ -135,7 +136,8 @@ object TeamResultsList {
     TeamResultsList(LocalDate.now(Edition.defaultEdition.timezone), Competitions(), teamId)
 }
 
-case class TeamResultsList(date: LocalDate, competitions: CompetitionSupport, teamId: String) extends Results with TeamList {
+case class TeamResultsList(date: LocalDate, competitions: CompetitionSupport, teamId: String, teamUrl:Option[String] = None) extends Results with TeamList {
+  override val baseUrl: String = teamUrl.fold("/football/results")(url => s"${url}/results")
   override val daysToDisplay = 20
   override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
     fMatch.isResult && fMatch.hasTeam(teamId)
