@@ -45,19 +45,16 @@ define([
         }, {
             id: 'liberal-newspaper',
             test: function () {
-                console.log("liberal-newspaper");
                 welcomeHeader.showWelcomeMessage(this.id);
             }
         }, {
             id: 'award-winning',
             test: function () {
-                console.log("award-winning");
                 welcomeHeader.showWelcomeMessage(this.id);
             }
         }, {
             id: 'since-1821',
             test: function () {
-                console.log("since-1821");
                 welcomeHeader.showWelcomeMessage(this.id);
             }
         }];
