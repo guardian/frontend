@@ -42,10 +42,6 @@ $hosted-stripe: 28px;
     margin: 0 auto;
     text-align: right;
 
-    @include mq(tablet) {
-        max-width: gs-span(9) + $gs-gutter * 2;
-    }
-
     @include mq(desktop) {
         max-width: gs-span(12) + $gs-gutter * 2;
     }
@@ -68,13 +64,19 @@ $hosted-stripe: 28px;
 
     svg {
         fill: #ffffff;
-        width: 185px;
+        width: 140px;
         height: 50px;
     }
 
     .inline-logo {
         display: inline-block;
         margin-top: -5px;
+    }
+
+    @include mq(desktop) {
+        svg {
+            width: 185px;
+        }
     }
 }
 
@@ -327,7 +329,11 @@ $hosted-stripe: 28px;
 
 .hosted__label {
     float: left;
-    margin-left: 170px;
+    margin-left: 115px;
+
+    @include mq(desktop) {
+        margin-left: 170px;
+    }
 }
 
 .hosted__labelicon {
@@ -348,6 +354,12 @@ $hosted-stripe: 28px;
         display: none;
     }
 
+    &.is-active {
+        &:before {
+            display: none;
+        }
+    }
+
     svg {
         width: 14px;
         padding-top: 2px;
@@ -357,9 +369,16 @@ $hosted-stripe: 28px;
 .hosted__popup {
     top: 58px;
     left: auto;
+    max-width: 65%;
     z-index: $zindex-modal;
     padding: $gs-gutter / 2;
+    background-color: #ffffff;
+    text-align: left;
     box-shadow: none;
+
+    @include mq(tablet) {
+        max-width: 30%;
+    }
 }
 
 .hosted__labeltext {

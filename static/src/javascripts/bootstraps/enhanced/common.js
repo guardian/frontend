@@ -147,8 +147,8 @@ define([
                         && !config.page.isAdvertisementFeature
                         )
                 ) {
-                    stickyAdBanner.initialise();
-                    config.page.hasStickyAdBanner = true;
+                    //stickyAdBanner.initialise();
+                    //config.page.hasStickyAdBanner = true;
                 } else {
                     config.page.hasStickyAdBanner = false;
                 }
