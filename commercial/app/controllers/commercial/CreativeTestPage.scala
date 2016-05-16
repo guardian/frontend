@@ -1,9 +1,9 @@
 package controllers.commercial
 
-import model.{MetaData, GuardianContentTypes, NoCache, Cached}
+import conf.Configuration
+import model.{GuardianContentTypes, MetaData}
 import play.api.libs.json.{JsString, JsValue}
 import play.api.mvc._
-import conf.Configuration
 
 case class TestPage(specifiedKeywords : List[String] = Nil) extends model.StandalonePage {
 
@@ -17,8 +17,7 @@ case class TestPage(specifiedKeywords : List[String] = Nil) extends model.Standa
 
   val newMetaData: Map[String, JsValue] = Map(
     "keywords" -> JsString(capitalisedKeywords),
-    "keywordIds" -> JsString(lowerCaseKeywords),
-    "contentType" -> JsString(contentType)
+    "keywordIds" -> JsString(lowerCaseKeywords)
   )
 
   override val metadata = MetaData.make(
