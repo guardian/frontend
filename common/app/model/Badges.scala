@@ -1,6 +1,7 @@
 package model
 
 import conf.{Configuration, Static}
+import layout.FaciaContainer
 
 case class Badge(seriesTag: String, imageUrl: String)
 
@@ -10,7 +11,6 @@ object Badges {
 
   val allBadges = Seq(usElection, ausElection)
 
-  implicit class ContentTypeBadge(c: ContentType) {
-    val badge = allBadges.find(badge => c.tags.series.exists(tag => tag == badge.seriesTag))
-  }
+  def badgeFor(c: ContentType) = allBadges.find(badge => c.tags.series.exists(tag => tag == badge.seriesTag))
+  def badgeFor(fc: FaciaContainer) = fc.href.flatMap(href => allBadges.find(badge => href == badge.seriesTag))
 }
