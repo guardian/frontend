@@ -81,25 +81,6 @@ module.exports = function (grunt, options) {
                 }
             }
         },
-        vendor: {
-            options: {
-                name: 'enhanced-vendor',
-                out: options.staticTargetDir + 'javascripts/enhanced-vendor.js',
-                exclude: [
-                    'boot',
-                    'bootstraps/standard/main',
-                    'bootstraps/commercial'
-                ],
-                shim: {
-                    videojsima: {
-                        deps: ['videojsads']
-                    },
-                    videojsads: {
-                        deps: ['bootstraps/enhanced/media/videojs-global']
-                    }
-                }
-            }
-        },
         enhanced: {
             options: {
                 name: 'bootstraps/enhanced/main',
@@ -108,7 +89,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'text',
                     'inlineSvg'
                 ],
@@ -130,7 +110,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
@@ -145,7 +124,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
@@ -160,7 +138,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
@@ -175,7 +152,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
@@ -190,7 +166,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
@@ -205,7 +180,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
@@ -220,7 +194,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
@@ -235,7 +208,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
@@ -250,7 +222,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
@@ -265,7 +236,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
@@ -280,7 +250,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
@@ -295,7 +264,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
@@ -310,7 +278,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'vendor/stripe/stripe.min',
                     'text',
@@ -343,7 +310,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
@@ -372,7 +338,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'bootstraps/enhanced/facia',
                     'text',

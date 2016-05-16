@@ -295,14 +295,8 @@ define([
                                         player.ima({
                                             id: mediaId,
                                             adTagUrl: getAdUrl(),
-                                            prerollTimeout: 1000,
-                                            contribAdsSettings: {
-                                                // This is higher than the `prerollTimeout` to so as not to
-                                                // trigger the `adtimeout` before the `prerollTimeout`.
-                                                timeout: 2000
-                                            }
+                                            prerollTimeout: 1000
                                         });
-
                                         player.ima.requestAds();
 
                                         // Video analytics event.
@@ -313,6 +307,10 @@ define([
                             } else {
                                 resolve();
                             }
+
+
+
+
                         } else {
                             player.playlist({
                                 mediaType: 'audio',
@@ -373,7 +371,7 @@ define([
             return;
         }
 
-        var el  = $('.js-onward')[0];
+        var el  = $('.js-more-in-section')[0];
         moreInSeriesContainer.init(
             el, getMediaType(),
             config.page.section,
