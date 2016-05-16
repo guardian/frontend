@@ -42,7 +42,7 @@ define([
             description: 'Have you seen this film? Let us know how you would rate it!',
             voteTitle: 'Vote now:',
             itemClassSuffix: 'star',
-            confirmButton: 'confirm',
+            confirmButton: 'Confirm',
             testMessage: 'This is a test. We\'re currently evaluating this as a potential new feature on theguardian.com'
         }
     },
@@ -62,7 +62,7 @@ define([
     var createInitContainer = function () {
         return fastdomPromise.write(function () {
             // Add the container for our low friction component
-            $('.js-article__body').append('<div class="js-participation-low-fric"></div>');
+            $('.js-article__body').append('<div class="participation-low-fric js-participation-low-fric"></div>');
         });
     };
 
