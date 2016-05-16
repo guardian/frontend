@@ -120,8 +120,8 @@ object ImgSrc extends Logging with implicits.Strings {
 
   private val supportedImages = Set(".jpg", ".jpeg", ".png")
 
-  def apply(url: String, imageType: ElementProfile): String = {
-    if (imageType == FacebookOpenGraphImage && true) {
+  def apply(url: String, imageType: ElementProfile, overlayTest: Boolean = false): String = {
+    if (imageType == FacebookOpenGraphImage && overlayTest) {
       try {
         val uri = new URI(url.trim.encodeURI)
         val imageOverlay = "&bm=normal&ba=bottom%2C%20left&bw=350&bp=20&blend64=aHR0cDovL3MxNC5wb3N0aW1nLm9yZy80YnA4cDJ4cjUvV2hpdGVfbG9nb193aXRoX3NoYWRvdy5wbmc"

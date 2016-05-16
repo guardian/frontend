@@ -102,6 +102,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
         if (request.isEmail) views.html.articleEmail(article)
         else if (article.article.isImmersive) views.html.articleImmersive(article)
         else if (request.isAmp) views.html.articleAMP(article)
+        else if (request.isOpenGraphTest) views.html.articleAMP(article)
         else views.html.article(article)
       }
 
@@ -190,6 +191,9 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
             Left(ArticlePage(article, StoryPackages(article, response)))
           }
           else {
+            if(mvt.ABOpenGraphOverlay.isParticipating) {
+              // rewrite the opengraph meta data
+            }
             Left(ArticlePage(article, RelatedContent(article, response)))
           }
         case _ =>
