@@ -6,6 +6,7 @@ define([
     'common/utils/$',
     'common/utils/fastdom-promise',
     'common/views/svgs',
+    'text!common/views/experiments/participation/low-friction-wrapper.html',
     'text!common/views/experiments/participation/low-friction-initial.html',
     'text!common/views/experiments/participation/low-friction-confirming.html',
     'text!common/views/experiments/participation/low-friction-complete.html',
@@ -20,6 +21,7 @@ define([
     $,
     fastdomPromise,
     svgs,
+    lowFrictionWrapper,
     lowFrictionInitial,
     lowFrictionConfirming,
     lowFrictionComplete,
@@ -29,6 +31,7 @@ define([
 ) {
 
     var currentState = {
+        initialRender: true,
         complete: false,
         confirming: false,
         selectedItem: null
@@ -47,6 +50,7 @@ define([
         }
     },
     els = {
+        $articleBody: $('.js-article__body'),
         $lowFricContainer: null,
         $lowFricContents: null
     };
@@ -58,13 +62,6 @@ define([
     };
 
     // Mark-up Building
-
-    var createInitContainer = function () {
-        return fastdomPromise.write(function () {
-            // Add the container for our low friction component
-            $('.js-article__body').append('<div class="participation-low-fric js-participation-low-fric"></div>');
-        });
-    };
 
     var createButtons = function (state) {
         var buttonString = '';
@@ -104,56 +101,56 @@ define([
 
     var render = function (state) {
 
-        var renderPromise;
+        var view;
 
         if (state.complete) {
-            var completedView = template(lowFrictionComplete, merge(settings.templateVars, {
+
+            view = template(lowFrictionComplete, merge(settings.templateVars, {
                 buttons: createButtons(state)
             }));
 
-            renderPromise = fastdomPromise.write(function(){
-                els.$lowFricContents.html(completedView);
+            // Remove bindings
+            tearDown();
 
-                // Remove bindings
-                tearDown();
-            });
-        }
+        }  else if (state.confirming) {
 
-        else if (state.confirming) {
-            console.log(els.$lowFricContents)
-            var confirmingView = template(lowFrictionConfirming, merge(settings.templateVars, {
+            view = template(lowFrictionConfirming, merge(settings.templateVars, {
                 buttons: createButtons(state)
             }));
 
-            renderPromise = fastdomPromise.write(function(){
-                els.$lowFricContents.html(confirmingView);
-            });
-        }
+        } else {
 
-        else {
-            var firstView = template(lowFrictionInitial, merge(settings.templateVars, {
+            view = template(lowFrictionInitial, merge(settings.templateVars, {
                 buttons: createButtons(state)
             }));
 
-            renderPromise = fastdomPromise.write(function(){
-                els.$lowFricContainer.html(firstView);
+        }
+
+
+        if (state.initialRender) {
+            var fullView = template(lowFrictionWrapper, merge(settings.templateVars, {
+                contents: view
+            }));
+
+            return fastdomPromise.write(function() {
+                els.$articleBody.append(fullView);
+                bindEvents(currentState);
+                els.$lowFricContents = $('.js-participation-low-friction__contents');
+            });
+
+        } else {
+            return fastdomPromise.write(function() {
+                els.$lowFricContents.html(view);
             });
         }
 
-        return renderPromise;
-    };
-
-    var afterRender = function () {
-        if (!currentState.confirming || !currentState.complete) {
-            els.$lowFricContents = $('.js-participation-low-friction__contents');
-        }
     };
 
     // State Handling
 
     var updateState = function (state) {
         // Render with merged state
-        render(merge(currentState, state)).then(afterRender);
+        render(merge(currentState, state));
     };
 
     // Binding & Events
@@ -161,7 +158,8 @@ define([
     var itemClicked = function (event) {
         updateState({
             confirming: true,
-            selectedItem: $(event.currentTarget).data().itemId
+            selectedItem: $(event.currentTarget).data().itemId,
+            initialRender: false
         });
     };
 
@@ -205,23 +203,18 @@ define([
         // Create instance options
         settings = merge(settings, options);
 
-        createInitContainer().then(function() {
+        els.$lowFricContainer = $('.js-participation-low-fric');
 
-            els.$lowFricContainer = $('.js-participation-low-fric');
-
-            if (userVote) {
-                // Render with selected item
-                updateState ({
-                    complete: true,
-                    selectedItem: userVote
-                });
-            } else {
-                // Set and render initial state
-                updateState({});
-            }
-
-            bindEvents(currentState);
-        });
+        if (userVote) {
+            // Render with selected item
+            updateState ({
+                complete: true,
+                selectedItem: userVote
+            });
+        } else {
+            // Set and render initial state
+            updateState({});
+        }
 
     };
 
