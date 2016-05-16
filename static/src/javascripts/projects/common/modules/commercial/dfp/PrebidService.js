@@ -15,6 +15,7 @@ define([
     values
 ) {
     var PREBID_TIMEOUT = 2000;
+    var supportedAdvertSizes = [[728,90], [300,250], [300,600], [970,250]];
 
     return function PrebidService() {
         // We create a stub interface to use while Prebid.js is loading, passing commands it will run when it
@@ -88,13 +89,10 @@ define([
     }
 
     function getMatchingSizes(advert) {
-        var sizes = [[728,90], [300,250], [300,600], [970,250]];
         var advertSizes = concatAll(values(advert.sizes));
 
-        return sizes.filter(function (size) {
-            return advertSizes.some(function (advertSize) {
-                return sizesMatch(size, advertSize);
-            });
+        return supportedAdvertSizes.filter(function (size) {
+            return advertSizes.some(sizesMatch.bind(undefined, size));
         });
 
         function concatAll(arrays) {
