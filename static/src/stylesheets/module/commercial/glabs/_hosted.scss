@@ -165,6 +165,7 @@ $hosted-stripe: 28px;
 .hosted__meta {
     position: absolute;
     left: $gs-gutter;
+    padding-left: $gs-gutter;
     bottom: 30%;
     width: 55%; // Magic. Do not touch.
     color: #ffffff;
@@ -312,6 +313,7 @@ $hosted-stripe: 28px;
 .creative--hosted-video {
     .gs-container {
         height: 100%;
+        padding-top: 0;
     }
 
     .hosted-video_layer {
@@ -324,12 +326,36 @@ $hosted-stripe: 28px;
         background-repeat: no-repeat;
     }
 
-    .hosted__video {
-        border-top: 3px solid transparent;
+    .hosted__heading {
+        @include mq(desktop) {
+            font-size: 46px;
+            line-height: 46px;
+        }
     }
 
-    .hosted__heading {
-        font-size: 46px;
-        line-height: 46px;
+    .hosted-video--image-container {
+        height: 339px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .hostedbadge {
+        top: 0;
+        left: $gs-gutter;
+        @include mq(leftCol) {
+            top: 170px;
+            left: -155px;
+            width: 132px;
+        }
+    }
+
+    .hosted-banner {
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        position: absolute;
     }
 }
+
