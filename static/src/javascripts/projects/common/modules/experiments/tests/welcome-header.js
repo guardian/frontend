@@ -20,7 +20,7 @@ define([
         this.expiry = '2016-05-18';
         this.author = 'Maria Livia Chiorean';
         this.description = 'Show a welcome header for first time users.';
-        this.audience = 1;
+        this.audience = 0;
         this.audienceOffset = 0;
         this.audienceCriteria = 'First time users';
         this.idealOutcome = 'People come back more after the first visit.';
@@ -38,14 +38,27 @@ define([
         };
 
         this.variants = [{
-            id: 'test1',
+            id: 'control',
             test: function () {
 
             }
         }, {
-            id: 'test2',
+            id: 'liberal-newspaper',
             test: function () {
-
+                console.log("liberal-newspaper");
+                welcomeHeader.showWelcomeMessage(this.id);
+            }
+        }, {
+            id: 'award-winning',
+            test: function () {
+                console.log("award-winning");
+                welcomeHeader.showWelcomeMessage(this.id);
+            }
+        }, {
+            id: 'since-1821',
+            test: function () {
+                console.log("since-1821");
+                welcomeHeader.showWelcomeMessage(this.id);
             }
         }];
 

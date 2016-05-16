@@ -11,24 +11,31 @@
     font-size: 1.7rem;
     line-height: 1.65rem;
     font-family: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;
-    font-weight: 800;
+    font-weight: 200;
+    letter-spacing: -1px;
+    opacity: 0;
+    transition: opacity 0.5s linear;
+    cursor: pointer;
+    border: 0;
+    margin: 0;
+    padding: 0;
 }
 
 #welcome-banner .banner-message {
-    @include mq($until: tablet) {
-        margin: $gs-gutter/4 $gs-gutter/2;
-    }
-    @include mq(tablet, desktop) {
-        margin: $gs-gutter/4 $gs-gutter;
-    }
+    margin: $gs-gutter/4 $gs-gutter/2;
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
 }
 
+#welcome-banner .banner-close-icon {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
 #welcome-banner span {
-    width: 100%;
     display: block;
 }
 
@@ -38,4 +45,15 @@
 
 #welcome-banner .pull-right {
     text-align: right;
+}
+
+#welcome-banner .button--tertiary {
+    padding: 0 !important;
+    border: 0;
+}
+
+@include mq($from: tablet) {
+    #welcome-banner {
+        display: none;
+    }
 }
