@@ -165,7 +165,6 @@ $hosted-stripe: 28px;
 .hosted__meta {
     position: absolute;
     left: $gs-gutter;
-    padding-left: $gs-gutter;
     bottom: 30%;
     width: 55%; // Magic. Do not touch.
     color: #ffffff;
@@ -333,20 +332,31 @@ $hosted-stripe: 28px;
         }
     }
 
+    .hosted__meta {
+        left: $gs-gutter/2;
+        @include mq($until: desktop) {
+            bottom: 15%;
+        }
+    }
+
     .hosted-video--image-container {
         height: 339px;
         background-position: center center;
         background-repeat: no-repeat;
         background-size: cover;
+        position: relative;
     }
 
     .hostedbadge {
         top: 0;
-        left: $gs-gutter;
+        left: $gs-gutter/2;
         @include mq(leftCol) {
-            top: 170px;
-            left: -155px;
-            width: 132px;
+            top: 210px;
+            left: - $left-column - $gs-gutter;
+            width: 112px;
+        }
+        @include mq(wide) {
+            left: - $left-column-wide - $gs-gutter;
         }
     }
 
@@ -354,8 +364,36 @@ $hosted-stripe: 28px;
         top: 0;
         left: 0;
         right: 0;
-        height: 2px;
+        bottom: 0;
         position: absolute;
+        background-image: linear-gradient(to bottom, rgba(238, 238, 238, 0), rgba(0, 0, 0, .4));
+        border-top: 2px solid transparent;
+    }
+
+    .faux-controls  {
+        position: absolute;
+        bottom: 0;
+        left: $gs-gutter/2;
+        .time {
+            color: #ffffff;
+            display: inline-block;
+            vertical-align: top;
+            line-height: 36px;
+            margin-left: $gs-gutter/2;
+            @include mq(desktop) {
+                line-height: 49px;
+            }
+        }
+        .length {
+            color: #bdbdbd;
+        }
+    }
+
+    .play-button {
+        @include icon(play-32--tone-media);
+        @include mq(desktop) {
+            padding: 9px;
+        }
     }
 }
 
