@@ -38,7 +38,7 @@ define([
         this.expiry = '2016-06-13';
         this.author = 'Gareth Trufitt - Participation';
         this.description = 'Initial user segmentation to ensure statistical significance';
-        this.audience = 1;
+        this.audience = 0;
         this.audienceOffset = 0;
         this.successMeasure = '';
         this.audienceCriteria = 'Users on film review pages that have comments turned on';
