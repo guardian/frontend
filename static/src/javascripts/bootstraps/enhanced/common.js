@@ -141,13 +141,14 @@ define([
                     && (config.page.hasSuperStickyBanner
                         || config.page.contentType !== 'Interactive'
                         && config.page.contentType !== 'Crossword'
+                        && config.page.contentType !== 'Hosted'
                         && !config.page.isImmersive
                         && !config.page.isUsMinute
                         && !config.page.isAdvertisementFeature
                         )
                 ) {
-                    stickyAdBanner.initialise();
-                    config.page.hasStickyAdBanner = true;
+                    //stickyAdBanner.initialise();
+                    //config.page.hasStickyAdBanner = true;
                 } else {
                     config.page.hasStickyAdBanner = false;
                 }

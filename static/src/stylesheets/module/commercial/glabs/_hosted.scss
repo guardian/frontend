@@ -25,6 +25,7 @@ $hosted-stripe: 28px;
 .hosted__header {
     width: 100%;
     height: 58px;
+    overflow: hidden;
     background-color: $neutral-1;
 }
 
@@ -59,16 +60,23 @@ $hosted-stripe: 28px;
     padding: 4px $gs-gutter / 2;
     background-color: $guardian-brand;
     text-align: right;
+    float: right;
 
     svg {
         fill: #ffffff;
-        width: 185px;
+        width: 140px;
         height: 50px;
     }
 
     .inline-logo {
         display: inline-block;
         margin-top: -5px;
+    }
+
+    @include mq(desktop) {
+        svg {
+            width: 185px;
+        }
     }
 }
 
@@ -317,4 +325,62 @@ $hosted-stripe: 28px;
     @include mq($until: mobileLandscape) {
         padding: $gs-gutter / 2 $gs-gutter / 2 0 $gs-gutter / 2;
     }
+}
+
+.hosted__label {
+    float: left;
+    margin-left: 115px;
+
+    @include mq(desktop) {
+        margin-left: 170px;
+    }
+}
+
+.hosted__labelicon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 2px;
+}
+
+.hosted__labelbtn {
+    @include f-headlineSans;
+    @include font-size(16);
+
+    margin-top: 33px;
+    color: #ffffff;
+
+    &:before,
+    &:after {
+        display: none;
+    }
+
+    &.is-active {
+        &:before {
+            display: none;
+        }
+    }
+
+    svg {
+        width: 14px;
+        padding-top: 2px;
+    }
+}
+
+.hosted__popup {
+    top: 58px;
+    left: auto;
+    max-width: 65%;
+    z-index: $zindex-modal;
+    padding: $gs-gutter / 2;
+    background-color: #ffffff;
+    text-align: left;
+    box-shadow: none;
+
+    @include mq(tablet) {
+        max-width: 30%;
+    }
+}
+
+.hosted__labeltext {
+    @include font-size(12, 14);
 }
