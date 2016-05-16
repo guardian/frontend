@@ -351,7 +351,6 @@ object Article {
     val bookReviewIsbn = content.isbn.map { i: String => Map("isbn" -> JsString(i)) }.getOrElse(Map())
 
     val javascriptConfig: Map[String, JsValue] = Map(
-      ("contentType", JsString(contentType)),
       ("isLiveBlog", JsBoolean(content.tags.isLiveBlog)),
       ("inBodyInternalLinkCount", JsNumber(content.linkCounts.internal)),
       ("inBodyExternalLinkCount", JsNumber(content.linkCounts.external)),
