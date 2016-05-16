@@ -281,7 +281,7 @@ define([
         }
     }
 
-    function isTestSwitchedOn(test) {
+    function isTestSwitchedOn() {
         return true;
     }
 
