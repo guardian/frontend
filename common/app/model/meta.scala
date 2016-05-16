@@ -108,6 +108,7 @@ final case class Commercial(
   }
 
   def hasHighMerchandisingAdunit: Boolean = {
+    println("in meta function")
     DfpAgent.hasHighMerchandisingAdUnit(metadata.adUnitSuffix)
   }
 

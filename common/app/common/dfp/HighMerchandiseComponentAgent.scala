@@ -13,6 +13,7 @@ trait HighMerchandiseComponentAgent {
   }
 
   def hasHighMerchandisingAdUnit(adUnitSuffix: String) = {
+    println("in highmerchcomponent agent method")
     highMerchandisingTargetedTags.hasAdUnit(adUnitSuffix)
   }
 }

@@ -110,10 +110,18 @@ case class HighMerchandisingLineItemTargetsSeq(lineItems : Seq[HighMerchandising
   val targetingTags = lineItems.flatMap(_.tags)
   val targetedAdUnitsPath = lineItems.flatMap((_.adUnits.flatMap(unit => unit.path)))
 
-  def hasTag (tag: Tag): Boolean = targetingTags.exists(item => tag.id.endsWith(item))
+  def hasTag (tag: Tag): Boolean = {
+    val tf = targetingTags.exists(item => tag.id.endsWith(item))
+    println(tf)
+    targetingTags.exists(item => tag.id.endsWith(item))
+  }
 
 
-  def hasAdUnit (adUnitSuffix : String): Boolean = targetedAdUnitsPath.exists(item =>adUnitSuffix.endsWith(item))
+  def hasAdUnit (adUnitSuffix : String): Boolean = {
+    val tf = targetedAdUnitsPath.exists(item =>adUnitSuffix.endsWith(item))
+    println(tf)
+    targetedAdUnitsPath.exists(item =>adUnitSuffix.endsWith(item))
+  }
 
   def nonEmpty = lineItems.nonEmpty
 }
