@@ -27,8 +27,8 @@
 /* Confirm Button */
 
 .participation-low-fric__confirm {
+    @include button-colour($neutral-1, #ffffff, $neutral-1);
     margin-top: 10px;
-    @include button-colour($neutral-1, #ffffff, $neutral-1)
 }
 
 /* Star Ratings */
