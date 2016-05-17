@@ -2,24 +2,14 @@ package controllers
 
 import com.gu.contentapi.client.model.v1.{Content => ApiContent, ItemResponse}
 import common._
-import contentapi.ContentApiClient
-import conf._
 import conf.switches.Switches
+import contentapi.ContentApiClient
 import model._
 import play.api.mvc._
 import play.twirl.api.Html
 import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
-
-case class GalleryPage(
-  gallery: Gallery,
-  related: RelatedContent,
-  index: Int,
-  trail: Boolean) extends ContentPage {
-
-  override lazy val item = gallery
-}
 
 object GalleryController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
@@ -62,9 +52,9 @@ object GalleryController extends Controller with RendersItemResponse with Loggin
 
   private def renderGallery(model: GalleryPage)(implicit request: RequestHeader) = {
     val htmlResponse: (() => Html) = () =>
-      views.html.gallery(model, model.related, model.index)
+      views.html.gallery(model)
     val jsonResponse = () =>
-      views.html.fragments.galleryBody(model.gallery, model.related, model.index)
+      views.html.fragments.galleryBody(model)
     renderFormat(htmlResponse, jsonResponse, model, Switches.all)
   }
 

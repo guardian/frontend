@@ -88,13 +88,27 @@ define([
 
     var canRunList = {
         theCampaignMinute: function () {
-            return config.page.isMinuteArticle && page.keywordExists(['US elections 2016']);
+            return (page.keywordExists(['US elections 2016']) || config.page.isMinuteArticle)
+                && config.page.series != 'Guardian US briefing';
         },
         theFilmToday: function () {
             return config.page.section === 'film';
         },
         theFiver: function () {
             return page.keywordExists(['Football']) && allowedArticleStructure();
+        },
+        usBriefing: function () {
+            return (config.page.section === 'us-news' || config.page.series === 'Guardian US briefing') &&
+                allowedArticleStructure();
+        },
+        ausCampaignCatchup: function () {
+            return page.keywordExists([
+                'Australia news',
+                'Australian politics',
+                'Australian election 2016',
+                'Guardian Australia\'s Morning Mail',
+                'Australian election briefing'
+            ]);
         },
         theGuardianToday: function () {
             return config.switches.emailInArticleGtoday &&

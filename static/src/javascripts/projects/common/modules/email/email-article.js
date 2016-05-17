@@ -32,10 +32,8 @@ define([
     find
 ) {
 
-    var insertBottomOfArticle = function () {
-            return function ($iframeEl) {
-                $iframeEl.appendTo('.js-article__body');
-            };
+    var insertBottomOfArticle = function ($iframeEl) {
+            $iframeEl.appendTo('.js-article__body');
         },
         listConfigs = {
             theCampaignMinute: {
@@ -46,11 +44,13 @@ define([
                 description: 'Sign up and we\'ll send you the Guardian US Campaign Minute, once per day.',
                 successHeadline: 'Thank you for signing up to the Guardian US Campaign minute',
                 successDescription: 'We will send you the biggest political story lines of the day',
-                modClass: 'post-article',
-                insertMethod: function () {
-                    return function ($iframeEl) {
+                modClass: config.page.isMinuteArticle ? 'post-article' : 'end-article',
+                insertMethod: function ($iframeEl) {
+                    if (config.page.isMinuteArticle) {
                         $iframeEl.insertAfter('.js-article__container');
-                    };
+                    } else {
+                        insertBottomOfArticle($iframeEl);
+                    }
                 }
             },
             theFilmToday: {
@@ -75,14 +75,33 @@ define([
                 modClass: 'end-article',
                 insertMethod: insertBottomOfArticle
             },
+            ausCampaignCatchup: {
+                listId: '3689',
+                listName: 'ausCampaignCatchup',
+                campaignCode: 'AU_campaign_signup_page',
+                headline: 'Sign up for the Campaign catchup',
+                description: 'Get the day\'s top election news and commentary coverage delivered to your inbox every afternoon',
+                successHeadline: 'Thank you for signing up',
+                successDescription: 'We will send you the latest Campaign catchup every weekday afternoon',
+                modClass: 'end-article',
+                insertMethod: insertBottomOfArticle
+            },
+            usBriefing: {
+                listId: '1493',
+                listName: 'usBriefing',
+                campaignCode: 'guardian_today_article_bottom',
+                headline: 'Want stories like this in your inbox?',
+                description: 'Sign up to the Guardian US briefing to get the top stories in your inbox every weekday.',
+                successHeadline: 'Thank you for signing up to the Guardian US briefing',
+                successDescription: 'We will send you our pick of the most important stories.',
+                modClass: 'end-article',
+                insertMethod: insertBottomOfArticle
+            },
             theGuardianToday: {
                 listId: (function () {
                     switch (config.page.edition) {
                         default:
                             return '37';
-
-                        case 'US':
-                            return '1493';
 
                         case 'AU':
                             return '1506';
@@ -122,9 +141,9 @@ define([
                 bean.on(iframe, 'load', function () {
                     email.init(iframe);
                 });
-                if (listConfig.insertMethod && listConfig.insertMethod()) {
+                if (listConfig.insertMethod) {
                     fastdom.write(function () {
-                        listConfig.insertMethod()($iframeEl);
+                        listConfig.insertMethod($iframeEl);
 
                         omniture.trackLinkImmediate('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
                         emailRunChecks.setEmailInserted();

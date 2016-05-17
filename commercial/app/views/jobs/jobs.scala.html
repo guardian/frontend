@@ -28,7 +28,8 @@
             <li><a class="job-sector__all" href="@{clickMacro}http://jobs.theguardian.com/" data-link-name="merchandising-jobs-v0_2_2014-04-30-low-sector-all">All sectors</a></li>
         </ul>
 
-        @jobs.map { job => @jobCard(job, clickMacro) }
+        @jobs.take(1).map { job => @jobCard(job, clickMacro) }
+        @jobs.slice(1, 2).map { job => @jobCard(job, clickMacro, optClassNames = Some(Seq("hide-until-tablet"))) }
     </div>
 
 }

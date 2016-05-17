@@ -159,7 +159,7 @@ object ImgSrc extends Logging with implicits.Strings {
   }
 
   def srcset(imageContainer: ImageMedia, widths: WidthsByBreakpoint): String = {
-    widths.profiles.map { profile => srcsetForProfile(profile, imageContainer) } mkString ", "
+    widths.profiles.map { profile => srcsetForProfile(profile, imageContainer, hidpi = false) } mkString ", "
   }
 
   def srcsetForBreakpoint(breakpointWidth: BreakpointWidth, breakpointWidths: Seq[BreakpointWidth], maybePath: Option[String] = None, maybeImageMedia: Option[ImageMedia] = None, hidpi: Boolean = false) = {
@@ -168,23 +168,23 @@ object ImgSrc extends Logging with implicits.Strings {
       .map(browserWidth => Profile(width = Some(browserWidth), hidpi = hidpi, isPng = isPng))
       .map { profile => {
         maybePath
-          .map(url => srcsetForProfile(profile, url))
-          .orElse(maybeImageMedia.map(imageContainer => srcsetForProfile(profile, imageContainer)))
+          .map(url => srcsetForProfile(profile, url, hidpi))
+          .orElse(maybeImageMedia.map(imageContainer => srcsetForProfile(profile, imageContainer, hidpi)))
           .getOrElse("")
       } }
       .mkString(", ")
   }
 
-  def srcsetForProfile(profile: Profile, imageContainer: ImageMedia): String = {
+  def srcsetForProfile(profile: Profile, imageContainer: ImageMedia, hidpi: Boolean): String = {
     if(ImageServerSwitch.isSwitchedOn) {
-      s"${findLargestSrc(imageContainer, profile).get} ${profile.width.get}w"
+      s"${findLargestSrc(imageContainer, profile).get} ${profile.width.get * (if (hidpi) 2 else 1)}w"
     } else {
-      s"${findNearestSrc(imageContainer, profile).get} ${profile.width.get}w"
+      s"${findNearestSrc(imageContainer, profile).get} ${profile.width.get * (if (hidpi) 2 else 1)}w"
     }
   }
 
-  def srcsetForProfile(profile: Profile, path: String): String = {
-    s"${ImgSrc(path, profile)} ${profile.width.get}w"
+  def srcsetForProfile(profile: Profile, path: String, hidpi: Boolean): String = {
+    s"${ImgSrc(path, profile)} ${profile.width.get * (if (hidpi) 2 else 1)}w"
   }
 
   def getFallbackUrl(ImageElement: ImageMedia): Option[String] = {

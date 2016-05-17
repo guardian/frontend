@@ -5,7 +5,7 @@
 # For dev machines
 GET        /assets/*path                                                 dev.DevAssetsController.at(path)
 GET        /commercial/test-page                                         controllers.commercial.CreativeTestPage.allComponents(k: List[String])
-GET        /_healthcheck                                                 conf.HealthCheck.healthcheck()
+GET        /_healthcheck                                                 conf.HealthCheck.healthCheck()
 
 # Travel offer merchandising components
 GET        /commercial/travel/offers.json                                controllers.commercial.TravelOffersController.renderTravel
@@ -14,7 +14,7 @@ GET        /commercial/travel/offers.json                                control
 GET        /commercial/jobs.json                                         controllers.commercial.JobsController.renderJobs
 
 # Masterclass merchandising components
-GET        /commercial/masterclasses.json                                controllers.commercial.Masterclasses.renderMasterclasses
+GET        /commercial/masterclasses.json                                controllers.commercial.MasterclassesController.renderMasterclasses
 
 # Soulmates merchandising components
 GET        /commercial/soulmates/$subgroup<\w+>.json                     controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
@@ -48,6 +48,4 @@ GET        /commercial/paid.json                                         control
 GET        /commercial/paid                                              controllers.commercial.PaidContentCardController.cardHtml
 
 # Static pages
-GET        /commercial/guardian-explain                                  controllers.commercial.StaticPageController.renderGuardianExplainPage()
-GET        /commercial/guardian-explore                                  controllers.commercial.StaticPageController.renderGuardianExplorePage()
-GET        /commercial/guardian-experience                               controllers.commercial.StaticPageController.renderGuardianExperiencePage()
+GET        /commercial/guardian-hosted                                   controllers.commercial.StaticPageController.renderGuardianHostedPage()

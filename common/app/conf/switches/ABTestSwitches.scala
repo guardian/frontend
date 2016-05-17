@@ -4,33 +4,6 @@ import org.joda.time.LocalDate
 
 trait ABTestSwitches {
 
-  val ABDummyTest = Switch(
-    SwitchGroup.ABTests,
-    "ab-dummy-test",
-    "A do-nothing AA test, for the data team",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 12),
-    exposeClientSide = true
-  )
-
-  val ABFakeSeriesShowSensitive = Switch(
-    SwitchGroup.ABTests,
-    "ab-fake-series-show-sensitive",
-    "A fake test to target series content that's shown on sensitive articles",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 2),
-    exposeClientSide = true
-  )
-
-  val ABFakeSeriesHideSensitive = Switch(
-    SwitchGroup.ABTests,
-    "ab-fake-series-hide-sensitive",
-    "A fake test to target series content that's hidden on sensitive articles",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 2),
-    exposeClientSide = true
-  )
-
   // Owner: Dotcom Reach
   val ABFrontsOnArticles2 = Switch(
     SwitchGroup.ABTests,
@@ -38,24 +11,6 @@ trait ABTestSwitches {
     "Injects fronts on articles for the test",
     safeState = Off,
     sellByDate = new LocalDate(2016, 7, 5),
-    exposeClientSide = true
-  )
-
-  val ABNextInSeries = Switch(
-    SwitchGroup.ABTests,
-    "ab-next-in-series",
-    "Show next in series",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 3),
-    exposeClientSide = true
-  )
-
-  val ABIdentityRegisterMembershipStandfirst = Switch(
-    SwitchGroup.ABTests,
-    "ab-identity-register-membership-standfirst",
-    "Membership registration page variant for Identity",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
     exposeClientSide = true
   )
 
@@ -77,15 +32,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABMembership = Switch(
-    SwitchGroup.ABTests,
-    "ab-membership",
-    "Membership propositions",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 2),
-    exposeClientSide = true
-  )
-
   val ABLoyalAdblockingSurvey = Switch(
     SwitchGroup.ABTests,
     "ab-loyal-adblocking-survey",
@@ -95,21 +41,66 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABMinute = Switch(
+  val ABParticipationStarRatings = Switch(
     SwitchGroup.ABTests,
-    "ab-minute",
-    "Switch to include the minute.ly script",
+    "ab-participation-star-ratings",
+    "AB test switch to insert star ratings into film articles",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 11),
+    sellByDate = new LocalDate(2016, 6, 13),
     exposeClientSide = true
   )
 
-  val ABVideoSeriesPage = Switch(
+  val ABParticipationLowFricMusic = Switch(
     SwitchGroup.ABTests,
-    "ab-video-series-page",
-    "Testing new video series layout",
+    "ab-participation-low-fric-music",
+    "AB test switch to insert low friction participation into music",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
+    sellByDate = new LocalDate(2016, 6, 15),
+    exposeClientSide = true
+  )
+
+  val ABParticipationLowFricTv = Switch(
+    SwitchGroup.ABTests,
+    "ab-participation-low-fric-tv",
+    "AB test switch to insert low friction participation into tv",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 15),
+    exposeClientSide = true
+  )
+
+  val ABParticipationLowFricRecipes = Switch(
+    SwitchGroup.ABTests,
+    "ab-participation-low-fric-recipes",
+    "AB test switch to insert low friction participation into recipes",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 15),
+    exposeClientSide = true
+  )
+
+  val ABParticipationLowFricFashion = Switch(
+    SwitchGroup.ABTests,
+    "ab-participation-low-fric-fashion",
+    "AB test switch to insert low friction participation into fashion",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 15),
+    exposeClientSide = true
+  )
+
+  val ABCleverFriend = Switch(
+    SwitchGroup.ABTests,
+    "ab-clever-friend-brexit",
+    "Switch to trigger segmentation for clever friend exposure",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 29),
+    exposeClientSide = true
+  )
+
+  val ABWelcomeHeader = Switch(
+    SwitchGroup.ABTests,
+    "ab-welcome-header",
+    "Welcome header for first time users test",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 5, 19),
     exposeClientSide = true
   )
 

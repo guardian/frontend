@@ -493,25 +493,16 @@ $header-image-size-desktop: 100px;
 .fc-container--media {
     .fc-container__inner,
     .fc-slice__item+.fc-slice__item:before {
-        border-color: $neutral-2;
+        border-color: $media-mute;
     }
 
     .fc-container__header__title {
-        color: #ffffff;
+        color: $neutral-6;
     }
 
     .fc-item__media-wrapper {
         @include mq($until: tablet) {
             padding-left: 0 !important;
-        }
-    }
-
-    .fc-item__content {
-        box-shadow: none !important;
-
-        @include mq(tablet) {
-            padding-left: 0 !important;
-            padding-right: 0 !important;
         }
     }
 }

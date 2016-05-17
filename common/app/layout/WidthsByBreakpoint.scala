@@ -173,8 +173,24 @@ object ContentWidths {
       desktop =         Some(1125.px),
       leftCol =         Some(1140.px),
       wide =            Some(1300.px))
+
+    /**
+      * Used when the main image is an immersive image
+      * like on galleries and immersive articles
+      */
+    override val immersive = WidthsByBreakpoint(
+      mobile =          Some(480.px),
+      mobileLandscape = Some(660.px),
+      phablet =         Some(740.px),
+      tablet =          Some(980.px),
+      desktop =         Some(1140.px),
+      leftCol =         Some(1300.px),
+      wide =            Some(1900.px))
   }
 
+  /**
+    * Immersive media is all the media within immersive content body
+    */
   object ImmersiveMedia extends ContentRelation {
     override val inline = BodyMedia.inline
     override val supporting = BodyMedia.supporting
@@ -236,10 +252,13 @@ object ContentWidths {
 
   object GalleryMedia {
     val inline = WidthsByBreakpoint(
-      mobile          = Some(445.px),
-      mobileLandscape = Some(610.px),
-      phablet =         Some(620.px),
-      tablet =          Some(700.px)) // desktop, leftCol, and wide are also 700px
+      mobile          = Some(480.px),
+      mobileLandscape = Some(660.px),
+      phablet =         Some(700.px),
+      tablet =          Some(700.px), // TODO: Change to 480 when new galleries is merged
+      desktop =         Some(720.px),
+      leftCol =         Some(880.px),
+      wide =            Some(1010.px))
 
     val lightbox = WidthsByBreakpoint(
       mobile =          Some(465.px),

@@ -9,6 +9,7 @@ define([
     'common/utils/template',
     'common/views/svgs',
     'text!common/views/commercial/creatives/fabric-expanding-v1.html',
+    'text!common/views/commercial/creatives/fabric-expanding-video.html',
     'lodash/functions/bindAll',
     'lodash/objects/merge',
     'common/modules/commercial/creatives/add-tracking-pixel',
@@ -24,6 +25,7 @@ define([
     template,
     svgs,
     fabricExpandingV1Html,
+    fabricExpandingVideoHtml,
     bindAll,
     merge,
     addTrackingPixel,
@@ -96,6 +98,8 @@ define([
                     $('.ad-exp--expand-scrolling-bg', that.$adSlot).css('background-position', '50%' + (scrollAmount + '%'));
                 });
                 break;
+            case 'none' :
+                break;
         }
     };
 
@@ -125,35 +129,71 @@ define([
         }
     };
 
+    FabricExpandingV1.prototype.buildVideo = function (customClass) {
+        var videoAspectRatio = 16 / 9;
+        var videoHeight = detect.isBreakpoint({max: 'phablet'})
+            ? 125
+            : 250;
+        var videoWidth = videoHeight * videoAspectRatio;
+        var leftMargin = this.params.videoPositionH === 'center'
+            ? 'margin-left: ' + videoWidth / -2 + 'px'
+            : '';
+        var leftPosition = this.params.videoPositionH === 'left'
+            ? 'left: ' + this.params.videoHorizSpace + 'px'
+            : '';
+        var rightPosition = this.params.videoPositionH === 'right'
+            ? 'right: ' + this.params.videoHorizSpace + 'px'
+            : '';
+
+        var viewModel = {
+            width : videoWidth,
+            height : videoHeight,
+            src : this.params.videoURL + '?rel=0&amp;controls=0&amp;showinfo=0&amp;title=0&amp;byline=0&amp;portrait=0',
+            className : [
+                'expandable_video',
+                'expandable_video--horiz-pos-' + this.params.videoPositionH,
+                customClass
+            ].join(' '),
+            inlineStyle : [leftMargin, leftPosition, rightPosition].join('; ')
+        };
+
+        return template(fabricExpandingVideoHtml, viewModel);
+    };
+
+    FabricExpandingV1.prototype.stopVideo = function (delay) {
+        delay = delay || 0;
+
+        var videoSelector = detect.isBreakpoint({min: 'tablet'}) ? '.js-fabric-video--desktop' : '.js-fabric-video--mobile';
+        var video = $(videoSelector, this.$adSlot);
+        var videoSrc = video.attr('src');
+
+        window.setTimeout(function () {
+            video.attr('src', videoSrc + '&amp;autoplay=0');
+        }, delay);
+    };
+
     FabricExpandingV1.prototype.create = function () {
-        var videoHeight = this.closedHeight - 24,
-            videoWidth = (videoHeight * 16) / 9,
-            leftMargin = (this.params.videoPositionH === 'center' ?
-                'margin-left: ' + videoWidth / -2 + 'px; ' : ''
-            ),
-            leftPosition = (this.params.videoPositionH === 'left' ?
-                'left: ' + this.params.videoHorizSpace + 'px; ' : ''
-            ),
-            rightPosition = (this.params.videoPositionH === 'right' ?
-                'right: ' + this.params.videoHorizSpace + 'px; ' : ''
-            ),
-            videoDesktop = {
-                video: (this.params.videoURL !== '') ?
-                '<iframe id="myYTPlayer" width="' + videoWidth + '" height="' + videoHeight + '" src="' + this.params.videoURL + '?rel=0&amp;controls=0&amp;showinfo=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="expandable_video expandable_video--horiz-pos-' + this.params.videoPositionH + '" style="' + leftMargin + leftPosition + rightPosition + '"></iframe>' : ''
-            },
-            showmoreArrow = {
-                showArrow: (this.params.showMoreType === 'arrow-only' || this.params.showMoreType === 'plus-and-arrow') ?
-                '<button class="ad-exp__open-chevron ad-exp__open">' + svgs('arrowdownicon') + '</button>' : ''
-            },
-            showmorePlus = {
-                showPlus: (this.params.showMoreType === 'plus-only' || this.params.showMoreType === 'plus-and-arrow') ?
-                '<button class="ad-exp__close-button ad-exp__open">' + svgs('closeCentralIcon') + '</button>' : ''
-            },
-            scrollingbg = {
-                scrollbg: (this.params.backgroundImagePType !== '' || this.params.backgroundImagePType !== 'none') ?
-                '<div class="ad-exp--expand-scrolling-bg" style="background-image: url(' + this.params.backgroundImageP + '); background-position: ' + this.params.backgroundImagePPosition + ' 50%; background-repeat: ' + this.params.backgroundImagePRepeat + ';"></div>' : ''
-            },
-            $fabricExpandingV1 = $.create(template(fabricExpandingV1Html, { data: merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg) }));
+        var hasVideo = this.params.videoURL !== '';
+        var videoDesktop = {
+            videoDesktop: hasVideo ? this.buildVideo('js-fabric-video--desktop') : ''
+        };
+        var videoMobile = {
+            videoMobile: hasVideo ? this.buildVideo('js-fabric-video--mobile') : ''
+        };
+        var showmoreArrow = {
+            showArrow: (this.params.showMoreType === 'arrow-only' || this.params.showMoreType === 'plus-and-arrow') ?
+            '<button class="ad-exp__open-chevron ad-exp__open">' + svgs('arrowdownicon') + '</button>' : ''
+        };
+        var showmorePlus = {
+            showPlus: (this.params.showMoreType === 'plus-only' || this.params.showMoreType === 'plus-and-arrow') ?
+            '<button class="ad-exp__close-button ad-exp__open">' + svgs('closeCentralIcon') + '</button>' : ''
+        };
+        var scrollbgDefaultY = '0%'; // used if no parallax / fixed background scroll support
+        var scrollingbg = {
+            scrollbg: this.params.backgroundImagePType !== 'none' ?
+            '<div class="ad-exp--expand-scrolling-bg" style="background-image: url(' + this.params.backgroundImageP + '); background-position: ' + this.params.backgroundImagePPosition + ' ' + scrollbgDefaultY + '; background-repeat: ' + this.params.backgroundImagePRepeat + ';"></div>' : ''
+        };
+        var $fabricExpandingV1 = $.create(template(fabricExpandingV1Html, { data: merge(this.params, showmoreArrow, showmorePlus, videoDesktop, videoMobile, scrollingbg) }));
 
         var domPromise = new Promise(function (resolve) {
             fastdom.write(function () {
@@ -175,6 +215,11 @@ define([
         mediator.on('window:throttledScroll', this.listener);
 
         bean.on(this.$adSlot[0], 'click', '.ad-exp__open', function () {
+            if (!this.isClosed && hasVideo) {
+                // wait 1000ms for close animation to finish
+                this.stopVideo(1000);
+            }
+
             fastdom.write(function () {
                 $('.ad-exp__close-button').toggleClass('button-spin');
                 $('.ad-exp__open-chevron').removeClass('chevron-up').toggleClass('chevron-down');

@@ -10,7 +10,8 @@ trait PageskinAdAgent {
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship]
 
   private def findSponsorship(adUnitWithoutRoot: String, edition: Edition): Option[PageSkinSponsorship] = {
-    if (PageSkin.isValidForNextGenPageSkin(adUnitWithoutRoot)) {
+
+    if (PageSkin.isValidAdUnit(adUnitWithoutRoot)) {
       val adUnitWithRoot = s"$dfpAdUnitRoot/$adUnitWithoutRoot"
 
       def targetsAdUnitAndMatchesTheEdition(sponsorship: PageSkinSponsorship) = {
@@ -21,9 +22,11 @@ trait PageskinAdAgent {
       }
 
       pageSkinSponsorships.find { sponsorship =>
-       targetsAdUnitAndMatchesTheEdition(sponsorship)
+        targetsAdUnitAndMatchesTheEdition(sponsorship)
       }
-    } else None
+    } else {
+      None
+    }
   }
 
   // The ad unit is considered to have a page skin if it has a corresponding sponsorship.

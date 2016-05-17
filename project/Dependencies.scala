@@ -8,7 +8,7 @@ object Dependencies {
   val seleniumVersion = "2.44.0"
   val slf4jVersion = "1.7.5"
   val awsVersion = "1.10.58"
-  val faciaVersion = "1.5.2"
+  val faciaVersion = "1.6.1"
 
   val akkaAgent = "com.typesafe.akka" %% "akka-agent" % "2.3.4"
   val akkaContrib = "com.typesafe.akka" %% "akka-contrib" % "2.3.5"
@@ -20,6 +20,7 @@ object Dependencies {
   val awsS3 = "com.amazonaws" % "aws-java-sdk-s3" % awsVersion
   val awsSes = "com.amazonaws" % "aws-java-sdk-ses" % awsVersion
   val awsSns = "com.amazonaws" % "aws-java-sdk-sns" % awsVersion
+  val awsSts = "com.amazonaws" % "aws-java-sdk-sts" % awsVersion
   val awsSqs = "com.amazonaws" % "aws-java-sdk-sqs" % awsVersion
   val awsElasticloadbalancing = "com.amazonaws" % "aws-java-sdk-elasticloadbalancing" % awsVersion
   val closureCompiler = "com.google.javascript" % "closure-compiler" % "v20150901"

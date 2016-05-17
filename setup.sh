@@ -30,6 +30,16 @@ create_install_vars() {
   fi
 }
 
+install_awscli() {
+  if ! installed aws; then
+    if linux; then
+      sudo apt-get install -y awscli
+    elif mac; then
+      brew install awscli
+    fi
+  fi
+}
+
 create_frontend_properties() {
   local path="$HOME/.gu"
   local filename="frontend.properties"
@@ -39,8 +49,7 @@ create_frontend_properties() {
       mkdir "$path"
     fi
 
-    touch "$path/$filename"
-    EXTRA_STEPS+=("Ask a colleague for frontend.properties and add the contents to $path/$filename")
+    aws s3 cp --profile frontend s3://aws-frontend-store/template-frontend.properties "$path/$filename"
   fi
 }
 
@@ -55,22 +64,6 @@ create_aws_config() {
 
     echo "[profile nextgen]
 region = eu-west-1" > "$path/$filename"
-  fi
-}
-
-create_aws_credentials() {
-  local path="$HOME/.aws"
-  local filename="credentials"
-
-  if [[ ! -f "$path/$filename" ]]; then
-    if [[ ! -d "$path" ]]; then
-      mkdir "$path"
-    fi
-
-    echo "[nextgen]
-aws_access_key_id = [YOUR_AWS_ACCESS_KEY]
-aws_secret_access_key = [YOUR_AWS_SECRET_ACCESS_KEY]" > "$path/$filename"
-    EXTRA_STEPS+=("Add your AWS keys to $path/$filename")
   fi
 }
 
@@ -149,10 +142,10 @@ report() {
 
 main() {
   create_install_vars
-  create_frontend_properties
   create_aws_config
-  create_aws_credentials
   install_homebrew
+  install_awscli
+  create_frontend_properties
   install_jdk
   install_node
   install_gcc

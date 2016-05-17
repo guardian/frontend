@@ -1,0 +1,483 @@
+$hosted-stripe: 28px;
+
+@mixin hosted-fade-in {
+    opacity: 1;
+    transition: opacity 1s linear;
+}
+
+@mixin hosted-fade-out {
+    opacity: 0;
+    transition: opacity 1s linear;
+}
+
+.hosted-tone--renault {
+    color: #ffc421;
+}
+
+.hosted-tone-bg--renault {
+    background-color: #ffc421;
+}
+
+.hosted-tone--dark {
+    background-color: $paid-article;
+}
+
+.hosted__header {
+    width: 100%;
+    height: 58px;
+    background-color: $neutral-1;
+}
+
+.hosted__side {
+    @include mq($until: desktop) {
+        &:before,
+        &:after {
+            display: none;
+        }
+    }
+}
+
+.hosted__headerwrap {
+    margin: 0 auto;
+    text-align: right;
+
+    @include mq(desktop) {
+        max-width: gs-span(12) + $gs-gutter * 2;
+    }
+
+    @include mq(leftCol) {
+        max-width: gs-span(14) + $gs-gutter * 2;
+    }
+
+    @include mq(wide) {
+        max-width: gs-span($gs-max-columns) + $gs-gutter * 2;
+    }
+}
+
+.hosted__glogo {
+    display: inline-block;
+    padding: 4px $gs-gutter / 2;
+    background-color: $guardian-brand;
+    text-align: right;
+
+    svg {
+        fill: #ffffff;
+        width: 135px;
+        height: 50px;
+    }
+
+    .inline-logo {
+        display: inline-block;
+        margin-top: -5px;
+    }
+
+    @include mq(tablet) {
+        svg {
+            width: 185px;
+        }
+    }
+}
+
+.hosted__glogotext {
+    @include f-headlineSans;
+    @include font-size(14);
+
+    margin: 0;
+    text-align: left;
+    color: rgba(255, 255, 255, .5);
+}
+
+.hosted__container {
+    position: relative;
+    background: transparent;
+    color: #ffffff;
+
+    @include mq($until: desktop) {
+        padding: 0;
+    }
+}
+
+.hosted__container--content {
+    @include mq($until: leftCol) {
+        display: flex;
+        flex-direction: column-reverse;
+
+        .adverts__header {
+            padding-top: 0;
+            padding-bottom: 0;
+            border-top: 1px solid rgba(0, 0, 0, .2);
+        }
+    }
+}
+
+.hosted__container--full {
+    @include mq($until: desktop) {
+        padding: 0;
+    }
+}
+
+.hosted__video {
+    vertical-align: top;
+
+    .vjs-big-play-button .vjs-control-text {
+        display: none;
+    }
+
+    //those control buttons will fade in on video play
+    .vjs-fullscreen-control,
+    .vjs-volume-menu-button,
+    .vjs-progress-control {
+        opacity: 0;
+    }
+
+    &.vjs-paused {
+        .vjs-fullscreen-control,
+        .vjs-volume-menu-button,
+        .vjs-progress-control {
+            @include hosted-fade-out;
+        }
+
+        .vjs-control-bar {
+            background-color: unset;
+            transition: background-color 1s linear;
+        }
+    }
+
+    &.vjs-playing {
+        .vjs-fullscreen-control,
+        .vjs-volume-menu-button,
+        .vjs-progress-control {
+            @include hosted-fade-in;
+        }
+
+        .vjs-control-bar {
+            background-color: rgba(25, 25, 25, .8);
+            transition: background-color 1s linear;
+        }
+    }
+
+    .vjs-control-bar {
+        bottom: 0;
+        background-color: unset;
+        font-size: 16px;
+        height: 88px;
+    }
+
+    .vjs-fullscreen-control {
+        margin-top: 30px;
+    }
+
+    .vjs-menu-button {
+        margin-top: 34px;
+
+        .vjs-control-text {
+            font-size: 14px;
+        }
+    }
+
+    .vjs-time-control {
+        padding-top: 21px;
+    }
+
+    &.vjs .vjs-play-control {
+        width: 48px;
+        height: 48px;
+        margin: 20px 10px 20px 20px;
+    }
+}
+
+.hosted__meta {
+    position: absolute;
+    left: $gs-gutter;
+    bottom: 15%;
+    width: 55%; // Magic. Do not touch.
+    color: #ffffff;
+
+    @include mq(tablet) {
+        bottom: 20%;
+    }
+
+    @include mq(desktop) {
+        width: 35%;
+        left: calc(50% - 490px + #{$gs-gutter});
+    }
+
+    @include mq(leftCol) {
+        bottom: 18%;
+        left: calc(50% - 570px + #{$gs-gutter});
+    }
+
+    @include mq(wide) {
+        left: calc(50% - 650px + #{$gs-gutter});
+    }
+
+    .vjs-playing + & {
+        @include hosted-fade-out;
+    }
+
+    .vjs-paused + & {
+        @include hosted-fade-in;
+    }
+}
+
+// Headings
+.hosted__heading {
+    @include f-headlineSans;
+
+    font-size: 56px;
+    line-height: 54px;
+
+    @include mq($until: desktop) {
+        margin: 0;
+        font-size: 26px;
+        line-height: 26px;
+    }
+}
+
+.hosted__heading--small {
+    @include f-headlineSans;
+
+    font-size: 32px;
+
+    @include mq($until: desktop) {
+        font-size: 18px;
+        line-height: 1;
+        margin-bottom: 0;
+    }
+}
+
+.hosted__subheading {
+    padding-bottom: 0;
+}
+
+// Main banner
+.hosted__banner {
+    position: relative;
+    height: 375px;
+    background-size: cover;
+
+    @include mq($until: desktop) {
+        background-position: center;
+    }
+}
+
+.hosted__cta-wrapper {
+    width: 40%;
+    padding-top: 200px;
+    margin-left: 20px;
+}
+
+.hosted__cta {
+    svg {
+        fill: $neutral-1;
+    }
+
+    &,
+    &:focus,
+    &:hover {
+        background-color: #ffc421;
+        border-color: #ffc421;
+        color: $neutral-1;
+    }
+
+    @include mq($until: desktop) {
+        width: 190px;
+        height: 26px;
+        margin-top: $gs-gutter / 2;
+        padding: 0 20px;
+        font-size: 14px;
+        line-height: 26px;
+
+        svg {
+            width: 26px;
+            height: 26px;
+        }
+    }
+}
+
+.hosted__text {
+    @include f-textSans;
+
+    line-height: 1.2;
+    color: #767676;
+
+    @include mq($until: tablet) {
+        font-size: 14px;
+    }
+
+    @include mq(tablet) {
+        font-size: 18px;
+    }
+
+    @include mq(leftCol) {
+        font-size: 14px;
+    }
+}
+
+.hosted__terms {
+    @include f-textSans;
+
+    margin-top: $gs-row-height / 2;
+    font-size: 12px;
+    line-height: 1.2;
+    color: #767676;
+}
+
+.hosted__link {
+    color: #ffc421;
+}
+
+.hosted__standfirst {
+    width: auto;
+    padding: $gs-baseline $gs-gutter 0;
+
+    @include mq(desktop) {
+        width: 60%;
+        margin-bottom: $gs-gutter * 1.5;
+    }
+}
+
+.hosted__social {
+    border-top: 0;
+    padding-left: $gs-gutter / 2;
+
+    @include mq($until: leftCol) {
+        padding: $gs-gutter / 2;
+    }
+
+    @include mq(tablet) {
+        padding-left: 0;
+    }
+
+    @include mq($from: leftCol, $until: wide) {
+        padding-left: $gs-gutter / 2;
+
+        .social__item {
+            min-width: 30px;
+        }
+
+        .social-icon {
+            min-width: 30px;
+            height: 30px;
+        }
+    }
+}
+
+/*Hosted thrasher*/
+.creative--hosted-video {
+    .gs-container {
+        height: 100%;
+        padding-top: 0;
+    }
+
+    .hosted-video_layer {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        background-repeat: no-repeat;
+    }
+
+    .hosted__heading {
+        @include mq(desktop) {
+            font-size: 46px;
+            line-height: 46px;
+            margin-top: -12px;
+            margin-bottom: 10px;
+        }
+    }
+
+    .hosted__meta {
+        left: $gs-gutter/2;
+        @include mq($until: desktop) {
+            bottom: 15%;
+        }
+    }
+
+    .hosted-video--image-container {
+        height: 339px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+    }
+
+    .hostedbadge {
+        top: 0;
+        left: $gs-gutter/2;
+        @include mq(leftCol) {
+            top: 210px;
+            left: - $left-column - $gs-gutter;
+            width: 112px;
+        }
+        @include mq(wide) {
+            left: - $left-column-wide - $gs-gutter;
+        }
+    }
+
+    .hosted-banner {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        position: absolute;
+        background-image: linear-gradient(to bottom, rgba(238, 238, 238, 0), rgba(0, 0, 0, .4));
+        border-top: 2px solid transparent;
+    }
+
+    .play-button {
+        @include icon(play-32--tone-media);
+        @include mq(desktop) {
+            padding: 9px;
+        }
+        position: absolute;
+        margin: $gs-gutter/2;
+        bottom: 0;
+    }
+}
+
+.hosted__label {
+    float: left;
+    margin-left: 110px;
+    margin-top: 29px;
+    color: #ffffff;
+    border: 0;
+
+    @include mq(desktop) {
+        margin-left: 170px;
+    }
+}
+
+.hosted__label-btn {
+    @include f-headlineSans;
+
+    font-size: 16px;
+
+    .inline-icon {
+        padding-left: 2px;
+    }
+
+    &.popup__toggle {
+        border: 0;
+        padding-bottom: 0;
+
+        svg {
+            fill: #ffffff;
+        }
+    }
+}
+
+.hosted__popup {
+    top: 110%;
+    left: 174%;
+    background: #ffffff;
+    color: $neutral-1;
+    text-align: left;
+
+    &:before {
+        left: 12%;
+        border-bottom-color: #ffffff;
+    }
+}

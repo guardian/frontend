@@ -1,7 +1,10 @@
 @(book: model.commercial.books.Book,
-  clickMacro: Option[String])
+  clickMacro: Option[String],
+  optAdvertClassNames: Option[Seq[String]] = None)
 
-<a class="advert advert--book advert--large advert--landscape advert--inverse advert--large--1x2" href="@clickMacro@book.buyUrl" data-link-name="merchandising-bookshop-v2_0_2014-10-15-medium-@{book.isbn}-@{book.author}-@{book.title}" itemscope itemtype="http://schema.org/Book">
+<a class="advert advert--book advert--large advert--landscape
+    @optAdvertClassNames.map { classNames => @classNames.map(c => s"advert--$c").mkString(" ")}
+    " href="@clickMacro@book.buyUrl" data-link-name="merchandising-bookshop-v2_0_2014-10-15-medium-@{book.isbn}-@{book.author}-@{book.title}" itemscope itemtype="http://schema.org/Book">
     <meta itemprop="isbn" content="@{book.isbn}">
     <div class="advert__text">
         <h2 class="advert__title" itemprop="name">@book.title</h2>

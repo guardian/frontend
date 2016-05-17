@@ -37,7 +37,7 @@ trait FeatureSwitches {
     "plista-for-outbrain-au",
     "Enable the Plista content recommendation widget to replace that of Outbrain for AU edition (for web only).",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 5),
+    sellByDate = new LocalDate(2016, 8, 9),
     exposeClientSide = true
   )
 
@@ -305,11 +305,22 @@ trait FeatureSwitches {
   )
 
   val AmpSwitch = Switch(
-    SwitchGroup.ServerSideABTests,
+    SwitchGroup.Feature,
     "amp-switch",
     "If this switch is on, link to amp pages will be in the metadata for articles",
     safeState = On,
     sellByDate = never,
+    exposeClientSide = false
+  )
+
+  // Owner: First impressions
+  val galleryRedesign = Switch(
+    SwitchGroup.Feature,
+    "gallery-redesign-switch",
+    "If this switch is on, the new gallery redesign displays",
+    safeState = On,
+    // Tuesday
+    sellByDate = new LocalDate(2016, 5, 31),
     exposeClientSide = false
   )
 
@@ -331,12 +342,13 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val USElectionSwitch = Switch(
+    // Owner: Frank Longden
+  val ArticleBadgesSwitch = Switch(
     SwitchGroup.Feature,
-    "us-election",
-    "When ON, items tagged with us-news/us-elections-2016 will have visual elements added",
+    "article-header-badge",
+    "When ON, articles specified in the badges file will have visual elements added",
     safeState = On,
-    sellByDate = new LocalDate(2017, 1, 5),
+    sellByDate = new LocalDate(2017, 2, 28),
     exposeClientSide = false
   )
 

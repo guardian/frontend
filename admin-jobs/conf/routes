@@ -2,7 +2,7 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-GET     /_healthcheck                                                           conf.HealthCheck.healthcheck()
+GET     /_healthcheck                                                           conf.HealthCheck.healthCheck()
 
 GET     /news-alert/alerts                                                      controllers.NewsAlertController.alerts()
 POST    /news-alert/alert                                                       controllers.NewsAlertController.create()

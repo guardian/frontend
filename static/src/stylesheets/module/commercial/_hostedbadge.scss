@@ -1,0 +1,59 @@
+.hostedbadge {
+    position: absolute;
+    top: -27px;
+    left: $gs-gutter;
+    width: 80px;
+    z-index: $zindex-content;
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
+}
+
+.hostedbadge--shouldscale {
+    @include mq(desktop) {
+        top: -28px;
+        left: calc(50% - 490px + #{$gs-gutter});
+        width: 132px;
+    }
+
+    @include mq(leftCol) {
+        left: calc(50% - 570px + #{$gs-gutter});
+    }
+
+    @include mq(wide) {
+        left: calc(50% - 650px + #{$gs-gutter});
+    }
+}
+
+.hostedbadge--pushdown {
+    @include mq($until: leftCol) {
+        top: 0;
+    }
+}
+
+.hostedbadge__info {
+    @include f-headlineSans;
+    @include font-size(13, 11);
+
+    height: auto;
+    padding: 3px 0 2px;
+    color: $neutral-1;
+    margin: 0;
+    text-align: center;
+
+    @include mq(desktop) {
+        .hostedbadge--shouldscale & {
+            height: 28px;
+            padding: 0;
+            font-size: 16px;
+            line-height: 28px;
+        }
+    }
+}
+
+.hostedbadge__logo {
+    display: block;
+    width: 100%;
+}

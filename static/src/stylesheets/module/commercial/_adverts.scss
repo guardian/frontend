@@ -32,11 +32,22 @@
     .inline-commercial {
         display: block;
     }
+
+    .button {
+        transition: border-color .1s, background-color .1s;
+    }
 }
 
 .adverts--legacy {
     @include mq($until: tablet) {
         padding: 0;
+    }
+
+    @include mq(mobileLandscape, desktop) {
+        > .adverts__header {
+            flex-direction: row;
+            justify-content: space-between;
+        }
     }
 
     @include mq(leftCol) {
@@ -100,6 +111,7 @@
         }
         @include mq(tablet) {
             max-width: gs-span(9) + ($gs-gutter * 2);
+            padding-bottom: $gs-baseline;
         }
         @include mq(desktop) {
             max-width: gs-span(12) + ($gs-gutter * 2);
@@ -114,11 +126,31 @@
     .adverts__logo {
         color: #ffffff;
         display: flex;
-        flex-direction: column;
 
-        /* http://alistapart.com/article/axiomatic-css-and-lobotomized-owls */
-        > * + * {
-            margin-top: $gs-baseline / 2;
+        @include mq($until: desktop) {
+            align-items: center;
+
+            .inline-marque-54 {
+                margin-right: $gs-gutter / 2;
+            }
+
+            .inline-marque-54 > svg {
+                width: 36px;
+                height: 36px;
+            }
+
+            .inline-logo-guardian {
+                margin-right: $gs-gutter / 4;
+            }
+        }
+
+        @include mq(desktop) {
+            flex-direction: column;
+
+            /* http://alistapart.com/article/axiomatic-css-and-lobotomized-owls */
+            > * + * {
+                margin-top: $gs-baseline / 2;
+            }
         }
 
         svg {
@@ -128,34 +160,53 @@
         }
     }
 
+    .adverts__ctas {
+        @include mq($until: tablet) {
+            margin-top: $gs-baseline / 3;
+        }
+
+        .button--tertiary {
+            border-color: rgba(255, 255, 255, .3);
+
+            &:hover,
+            &:focus {
+                border-color: rgba(255, 255, 255, 1);
+            }
+        }
+    }
+
     .advert {
         position: relative;
     }
 
+    /* [1] Forces text wrap in IE11 */
+    .advert__title,
+    .advert__standfirst,
+    .advert__meta {
+        max-width: 100%; /* [1] */
+    }
+
     .adverts__row {
-        padding: $gs-baseline $gs-gutter / 2;
+        padding: $gs-baseline / 2 0;
+        display: flex;
 
-        @include mq(mobileLandscape) {
-            display: flex;
+        > * {
+            margin: 0 $gs-gutter / 2;
 
-            > * {
-                margin: 0 $gs-gutter / 2;
-
-                /* In Firefox, flex items have a min-width: auto, which prevents
-                   them from shrinking when they have an image larger than the
-                   size the item would normally fill. The only workaround to
-                   solve this is to overwrite min-width on the flex item.
-                   Additionnally, we put a max-width constraint on the container
-                   otherwise it will overflow.
-                   See https://bugzilla.mozilla.org/show_bug.cgi?id=1139931 */
-                min-width: 0;
-                > .advert__image-container {
-                    max-width: 100%;
-                }
+            /* In Firefox, flex items have a min-width: auto, which prevents
+               them from shrinking when they have an image larger than the
+               size the item would normally fill. The only workaround to
+               solve this is to overwrite min-width on the flex item.
+               Additionnally, we put a max-width constraint on the container
+               otherwise it will overflow.
+               See https://bugzilla.mozilla.org/show_bug.cgi?id=1139931 */
+            min-width: 0;
+            > .advert__image-container {
+                max-width: 100%;
             }
         }
 
-        @include mq(mobileLandscape, $until: tablet) {
+        @include mq($until: tablet) {
             flex-flow: row wrap;
 
             > * {
@@ -176,6 +227,8 @@
         }
 
         @include mq(tablet) {
+            padding: $gs-baseline $gs-gutter / 2;
+
             > * + * {
                 position: relative;
 
@@ -204,6 +257,23 @@
                 > :first-child:nth-last-child(2),
                 > :nth-child(2):last-child {
                     width: calc(50% - #{$gs-gutter});
+                }
+            }
+        }
+
+        @supports(scroll-snap-type: mandatory) {
+            @include mq($until: tablet) {
+                display: flex;
+                scroll-snap-type: mandatory;
+
+                > * {
+                    width: min-content;
+                    scroll-snap-align: start;
+                }
+
+                > * + * {
+                    margin-top: 0;
+                    margin-left: $gs-gutter;
                 }
             }
         }
@@ -253,21 +323,32 @@
 
 .adverts--legacy-single {
     .advert {
-        flex-basis: calc(75% - #{$gs-gutter});
-        flex-grow: 0;
+        flex-basis: calc(100% - #{$gs-gutter});
     }
 
-    .advert--inverse > .advert__image-container {
-        flex-basis: calc(33.33% - #{$gs-gutter / 2});
-        margin-right: 0;
-    }
+    @include mq(mobileLandscape) {
+        .advert {
+            flex-basis: calc(75% - #{$gs-gutter});
+            flex-grow: 0;
+        }
 
-    .adverts__row > .advert::after {
-        @include separator($neutral-4, 100%, $gs-gutter / 2);
-    }
+        .advert--inverse > .advert__image-container {
+            flex-basis: calc(33.33% - #{$gs-gutter / 2});
+            margin-right: 0;
+        }
 
-    .adverts__row > .button::before {
-        content: none;
+        .adverts__row > .advert::after {
+            @include separator($neutral-4, 100%, $gs-gutter / 2);
+        }
+
+        .adverts__row > .button {
+            flex-basis: auto;
+            flex-grow: 1;
+        }
+
+        .adverts__row > .button::before {
+            content: none;
+        }
     }
 
     .has-no-flex & {
@@ -324,7 +405,6 @@
 
 .adverts__body {
     position: relative;
-    padding-bottom: $gs-baseline;
 }
 
 .adverts__row {
@@ -440,8 +520,13 @@
     @include fs-textSans(1);
     color: $neutral-2;
     font-weight: bold;
+    margin-top: $gs-baseline / 2;
     padding-right: $gs-gutter;
     text-align: right;
+
+    .adverts__more + & {
+        margin-top: 0;
+    }
 
     .has-no-flex & {
         clear: both;
@@ -529,6 +614,10 @@
     .adverts__blurb {
         @include fs-headline(1);
         color: #ffffff;
+
+        @include mq($until: desktop) {
+            display: none;
+        }
 
         @include mq(leftCol) {
             @include fs-headline(2);
@@ -651,3 +740,4 @@
 @import '_adverts-shop';
 @import '_adverts-money';
 @import '_adverts-gardening';
+@import '_adverts-blended';

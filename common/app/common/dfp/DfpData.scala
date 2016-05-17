@@ -28,6 +28,8 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
 
   val isInlineMerchandisingSlot = isSlot("im")
 
+  val isHighMerchandisingSlot = isSlot("merchandising-high")
+
   val isAdTest = isPositive("at")
 
   val isKeywordTag = isPositive("k")
@@ -76,6 +78,8 @@ case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
   val inlineMerchandisingTargetedKeywords = filterTags(tag => tag.isKeywordTag)(_.isInlineMerchandisingSlot)
   val inlineMerchandisingTargetedSeries = filterTags(tag => tag.isSeriesTag)(_.isInlineMerchandisingSlot)
   val inlineMerchandisingTargetedContributors = filterTags(tag => tag.isContributorTag)(_.isInlineMerchandisingSlot)
+
+  val highMerchandisingTargets = filterTags(tag => tag.isKeywordTag || tag.isSeriesTag || tag.isContributorTag)(_.isHighMerchandisingSlot)
 
   val targetsR2Only: Boolean = targets exists (_.targetsR2Only)
 }
@@ -133,7 +137,9 @@ object GeoTarget {
 }
 
 
-case class GuAdUnit(id: String, path: Seq[String])
+case class GuAdUnit(id: String, path: Seq[String]) {
+  val fullPath = path.mkString("/")
+}
 
 object GuAdUnit {
 
@@ -268,6 +274,8 @@ case class GuLineItem(id: Long,
   val inlineMerchandisingTargetedKeywords: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedKeywords).distinct
   val inlineMerchandisingTargetedSeries: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedSeries).distinct
   val inlineMerchandisingTargetedContributors: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedContributors).distinct
+
+  val highMerchandisingTargets: Seq[String] = targeting.customTargetSets.flatMap(_.highMerchandisingTargets).distinct
 
   lazy val targetsNetworkOrSectionFrontDirectly: Boolean = {
     targeting.adUnits.exists { adUnit =>

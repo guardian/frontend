@@ -1,6 +1,5 @@
 .advert {
     box-sizing: border-box;
-    color: inherit;
     display: block;
     display: flex;
     align-items: flex-start;
@@ -16,6 +15,11 @@
         .advert__title {
             text-decoration: underline;
         }
+    }
+
+    &,
+    &:active {
+        color: inherit;
     }
 
     .has-no-flex &:not(.advert--small):not(.advert--landscape) {
@@ -56,6 +60,30 @@
     }
 }
 
+.advert--manual {
+    .advert__image-container {
+        height: auto;
+    }
+}
+
+.advert--single {
+    .advert__standfirst {
+        margin-top: $gs-baseline / 2;
+        opacity: .7;
+    }
+
+    &:hover,
+    &:focus {
+        .button--tertiary {
+            @include button-colour(
+                transparent,
+                null,
+                darken($neutral-3, 10%)
+            );
+        }
+    }
+}
+
 .advert__title {
     font-size: 1rem;
     line-height: 1.25;
@@ -63,13 +91,23 @@
     &.u-text-hyphenate {
         max-width: 100%;
     }
+
+    .advert-blended__body & {
+        font-size: 14px;
+        line-height: 18px;
+    }
 }
 
+/* [1] Prevents IE11 bug where the image container's height would go ballooney */
 .advert__image-container {
     order: -1;
+    overflow: auto; /* [1] */
     margin-bottom: $gs-baseline / 2;
-    height: 11 * $gs-baseline;
     width: 100%;
+
+    @include mq(tablet) {
+        height: 11 * $gs-baseline;
+    }
 
     .has-no-flex & {
         position: absolute;
@@ -77,6 +115,10 @@
         left: 0;
         right: 0;
         margin: 0;
+    }
+
+    .advert-blended__body & {
+        height: auto;
     }
 }
 
@@ -112,6 +154,8 @@
         }
 
         > .advert__image-container {
+            flex-basis: calc(50% - #{$gs-gutter / 2});
+            flex-shrink: 0;
             height: auto;
             order: 0;
             margin-bottom: 0;

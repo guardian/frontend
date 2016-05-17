@@ -36,6 +36,7 @@ object Au extends Edition(
   override val navigation: Seq[NavItem] = {
     Seq(
       NavItem(home),
+      NavItem(auElection2016),
       NavItem(australia),
       NavItem(world, Seq(uk, us, asia, europeNews, americas, africa, middleEast)),
       NavItem(opinion),
@@ -57,6 +58,7 @@ object Au extends Edition(
 
   override val briefNav: Seq[NavItem] = Seq(
     NavItem(home),
+    NavItem(auElection2016),
     NavItem(australia),
     NavItem(world, Seq(uk, us, asia, europeNews, americas, africa, middleEast)),
     NavItem(opinion),
@@ -66,8 +68,9 @@ object Au extends Edition(
     NavItem(culture, cultureLocalNav),
     NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women)),
     NavItem(fashion),
-    NavItem(economy, economyLocalNav),
-    NavItem(travel, Seq(australasiaTravel, asiaTravel, uktravel, europetravel, usTravel)),
+    // add back when the AU election is over
+    // NavItem(economy, economyLocalNav),
+    // NavItem(travel, Seq(australasiaTravel, asiaTravel, uktravel, europetravel, usTravel)),
     NavItem(media),
     NavItem(environment, Seq(cities, globalDevelopment, ausustainablebusiness))
   )

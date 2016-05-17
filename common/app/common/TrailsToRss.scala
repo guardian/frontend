@@ -28,10 +28,10 @@ object TrailsToRss extends implicits.Collections {
   val image: SyndImageImpl = {
     // Feed: image
     val image = new SyndImageImpl
-    image.setLink("http://www.theguardian.com")
+    image.setLink("https://www.theguardian.com")
 
     // This image fits this spec. - https://support.google.com/news/publisher/answer/1407682
-    image.setUrl("http://assets.guim.co.uk/images/guardian-logo-rss.c45beb1bafa34b347ac333af2e6fe23f.png")
+    image.setUrl("https://assets.guim.co.uk/images/guardian-logo-rss.c45beb1bafa34b347ac333af2e6fe23f.png")
     image.setTitle("The Guardian")
     image
   }
@@ -47,7 +47,7 @@ object TrailsToRss extends implicits.Collections {
     feed.setFeedType("rss_2.0")
     feed.setTitle(feedTitle)
     feed.setDescription(description.getOrElse("Latest news and features from theguardian.com, the world's leading liberal voice"))
-    feed.setLink("http://www.theguardian.com" + url.getOrElse(""))
+    feed.setLink("https://www.theguardian.com" + url.getOrElse(""))
     feed.setLanguage("en-gb")
     feed.setCopyright(s"Guardian News and Media Limited or its affiliated companies. All rights reserved. ${DateTime.now.getYear}")
     feed.setImage(image)
@@ -105,6 +105,9 @@ object TrailsToRss extends implicits.Collections {
       val entry = new SyndEntryImpl
       entry.setTitle(stripInvalidXMLCharacters(trail.fields.linkText))
       entry.setLink(trail.metadata.webUrl)
+      /* set http intentionally to not break existing guid */
+      entry.setUri("http://www.theguardian.com/" + trail.metadata.id)
+      
       entry.setDescription(description)
       entry.setCategories(categories)
       entry.setModules(new java.util.ArrayList(mediaModules ++ Seq(dc)))
@@ -149,7 +152,7 @@ object TrailsToRss extends implicits.Collections {
     feed.setFeedType("rss_2.0")
     feed.setTitle(webTitle)
     feed.setDescription(description.getOrElse("Latest news and features from theguardian.com, the world's leading liberal voice"))
-    feed.setLink("http://www.theguardian.com" + url)
+    feed.setLink("https://www.theguardian.com" + url)
     feed.setLanguage("en-gb")
     feed.setCopyright(s"Guardian News and Media Limited or its affiliated companies. All rights reserved. ${DateTime.now.getYear}")
     feed.setImage(image)

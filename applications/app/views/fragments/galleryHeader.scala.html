@@ -1,89 +1,41 @@
-@(item: model.ContentType, showBadge: Boolean = false, showMeta: Boolean = true)(implicit request: RequestHeader)
+@(gallery: model.GalleryPage)(implicit request: RequestHeader)
 
 @import views.support.TrailCssClasses.toneClass
-@import views.support.ContributorLinks
 
-<header class="content__head is-fixed-height tonal__head tonal__head--@toneClass(item)">
-
-    <style>
-        @defining(
-            item.content.trail.trailPicture.head
-        ) { picture =>
-
-            .content__header__background-image {
-                background-image: url('http:@Html(ImgSrc.findNearestSrc(picture, Profile(width = Some(1000))).getOrElse(""))');
-            }
-            @@media (min-width: @{layout.Phablet.minWidth}px) {
-                .content__header__background-image {
-                    background-image: url('http:@Html(ImgSrc.findNearestSrc(picture, Profile(width = Some(1300))).getOrElse(""))');
-                }
-            }
-            @@media (min-width: @{layout.Wide.minWidth}px) {
-                .content__header__background-image {
-                    background-image: url('http:@Html(ImgSrc.findNearestSrc(picture, Profile(width = Some(2200))).getOrElse(""))');
-                }
-            }
-        }
-    </style>
-
-    <div class="content__header tonal__header">
-        <div class="content__header__background-image">
-            <div class="content__wrapper content__wrapper--headline">
-                <div class="gs-container">
-
-                    @if(showMeta) {
-                        @fragments.meta.metaInline(item)
-                    }
-
-                    <h1 class="content__headline" itemprop="headline">
-                        @fragments.inlineSvg("camera", "icon", List("inline-tone-fill")) @Html(item.trail.headline)
-                    </h1>
-
-                    @if(item.content.hasTonalHeaderByline) {
-                        @item.trail.byline.map { text =>
-                            <span class="content__headline content__headline--byline">@ContributorLinks(text, item.tags.contributors)</span>
-                        }
-                    }
-
-                    @if(showBadge && !item.commercial.isAdvertisementFeature) {
-                        @fragments.commercial.badge(item)
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
+<header class="content__head is-fixed-height tonal__head tonal__head--@toneClass(gallery.item)">
+    @* Hidden because we visually show this data in the head, but needed
+    here for SEO. *@
+    <h1 class="is-hidden" itemprop="headline">@Html(gallery.item.trail.headline)</h1>
 
     <div class="gs-container">
+        @if(gallery.showBadge && !gallery.item.commercial.isAdvertisementFeature) {
+            @fragments.commercial.badge(gallery.item, gallery)
+        }
 
-        @fragments.contentMeta(item)
+        @fragments.contentMeta(gallery.item, gallery)
 
-        @if(item.fields.standfirst.isDefined) {
-            <div class="content__wrapper--standfirst">
-                @if(showBadge && item.commercial.isAdvertisementFeature) {
-                    <div class="content__meta-container js-content-meta js-football-meta">
-                        @fragments.commercial.badge(item)
-                    </div>
-                }
-                @fragments.standfirst(item)
+        @if(gallery.item.fields.standfirst.isDefined) {
+            <div class="content__wrapper--standfirst tonal__standfirst">
+                @fragments.standfirst(gallery.item)
             </div>
         }
 
-        <span class="meta__break"></span>
+            <div class="content__meta-container new-gallery__meta-container">
 
-        @if(!item.content.hasTonalHeaderByline) {
-            @fragments.meta.byline(item.trail.byline, item.tags)
-        }
+                @if(!gallery.item.content.hasTonalHeaderByline) {
+                    @fragments.meta.byline(gallery.item.trail.byline, gallery.item.tags)
+                }
 
-        @if(item.content.tags.contributors.length == 1) {
-            @if(item.content.hasTonalHeaderByline && (item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty) || item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty))) { <p class="meta__contact-header hide-until-leftcol">Contact author</p> }
-            @fragments.meta.contactAuthor(item.tags)
-        }
+                @if(gallery.item.content.tags.contributors.length == 1) {
+                    @if(gallery.item.content.hasTonalHeaderByline && (gallery.item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty) || gallery.item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty))) { <p class="meta__contact-header hide-until-leftcol">Contact author</p> }
+                    @fragments.meta.contactAuthor(gallery.item.tags)
+                }
 
-        @if(!item.trail.shouldHidePublicationDate) {
-            @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.tags.isLiveBlog, item.fields.isLive)
-        }
+                @if(!gallery.item.trail.shouldHidePublicationDate) {
+                    @fragments.meta.dateline(gallery.item.trail.webPublicationDate, gallery.item.fields.lastModified, gallery.item.content.hasBeenModified, gallery.item.tags.isLiveBlog, gallery.item.fields.isLive)
+                }
 
-        <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
-
+                <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
+            </div>
     </div>
 </header>

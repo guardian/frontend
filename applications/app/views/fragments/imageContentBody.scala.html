@@ -21,28 +21,29 @@
             @fragments.guBand()
         }
 
-        @fragments.headTonal(image, showBadge = true)
+        @fragments.headTonal(image, page, showBadge = true)
 
         <div class="content__main tonal__main tonal__main--tone-media">
             <div class="gs-container">
                 <div class="content__main-column content__main-column--image">
 
                     @image.elements.mainPicture.map { picture =>
-                        @fragments.img(
+                        @fragments.imageFigure(
                             picture.images,
                             lightboxIndex = if(image.lightBox.isMainMediaLightboxable) Some(1) else None,
                             widthsByBreakpoint = ImageContentMedia.inline
                         )
                     }
 
-                    @fragments.contentMeta(image)
+                    @fragments.contentMeta(image, page)
 
                     @fragments.submeta(image)
                 </div>
             </div>
         </div>
     </article>
-
+</div>
+<div class="l-side-margins">
     @fragments.contentFooter(image, page.related)
 </div>
 

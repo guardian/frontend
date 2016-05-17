@@ -620,6 +620,15 @@
     }
 }
 
+.creative--fabric-expanding-v1 {
+    @include mq($until: tablet) {
+        // Smaller video should not flush to container bottom
+        .expandable_video {
+            bottom: $gs-row-height / 2;
+        }
+    }
+}
+
 .ad-slot--dfp.ad-slot__fluid250 {
     height: auto;
     width: 100%;
@@ -794,86 +803,6 @@
     }
 }
 
-.creative--ad-feature-mpu-large {
-    background-color: $neutral-8;
-    padding: $gs-baseline / 2 0;
-    overflow: hidden;
-    max-height: 250px;
-    position: relative;
-
-    .creative__article {
-        display: block;
-        padding: 0 $gs-gutter $gs-baseline / 2;
-        border-bottom: 1px solid $neutral-5;
-        color: $neutral-2-contrasted;
-    }
-    .creative__article__image {
-        width: 100%;
-    }
-    .creative__article__title {
-        @include f-headlineSans;
-        @include font-size(14, 18);
-        text-align: left;
-    }
-    .creative__logo-text,
-    .creative__logo-info {
-        @include fs-textSans(1);
-        margin-left: $gs-gutter;
-        float: left;
-        color: $neutral-2-contrasted;
-    }
-    .creative__logo-text,
-    .creative__logo {
-        margin-top: $gs-baseline/ 2;
-    }
-    .creative__logo-text {
-        margin-bottom: 0;
-        font-weight: bold;
-    }
-    .creative__logo {
-        margin-right: $gs-gutter;
-        float: right;
-    }
-    .creative__logo-info {
-        display: block;
-        clear: left;
-    }
-
-}
-
-.creative--ad-feature-mpu-large-v2 {
-    padding: 0;
-
-    .creative__article {
-        padding: 0;
-
-        h2 {
-            padding: $gs-baseline / 2;
-            font-size: get-font-size(headline, 2);
-            line-height: get-line-height(headline, 1);
-            height: $gs-row-height;
-        }
-    }
-
-    .creative__logo-text,
-    .creative__logo-info {
-        margin-left: $gs-baseline / 2;
-    }
-
-    .creative__logo-info {
-        margin-bottom: $gs-baseline / 2;
-    }
-
-    .creative__logo {
-        margin-right: $gs-baseline / 2;
-    }
-
-    .creative__article__image-container {
-        max-height: 156px;
-        overflow: hidden;
-    }
-
-}
 
 @keyframes textanimation {
     0% {

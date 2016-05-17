@@ -22,6 +22,7 @@ object Frontend extends Build with Prototypes {
       awsDynamodb,
       awsS3,
       awsSns,
+      awsSts,
       awsSqs,
       contentApiClient,
       faciaScalaClient,
@@ -189,11 +190,11 @@ object Frontend extends Build with Prototypes {
     adminJobs
   )
 
-  val preview = application("preview").dependsOn(withTests(common), standalone).settings(
+  val preview = application("preview").dependsOn(commonWithTests, standalone).settings(
     RoutesKeys.routesImport += "scala.language.reflectiveCalls"
   )
 
-  val trainingPreview = application("training-preview").dependsOn(withTests(common), standalone).settings(
+  val trainingPreview = application("training-preview").dependsOn(commonWithTests, standalone).settings(
     RoutesKeys.routesImport += "scala.language.reflectiveCalls"
   )
 

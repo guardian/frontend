@@ -31,6 +31,10 @@
     padding: $gs-gutter/2;
 }
 
+.gu-display__content--hosted {
+    bottom: 0;
+}
+
 .gu-display__link {
     color: #ffffff;
 }
@@ -46,6 +50,14 @@
     margin-bottom: 5px;
 }
 
+.gu-display__content-title--hosted {
+    @include font-size(30, 32);
+
+    width: 80%;
+    margin: 0;
+    font-weight: bold;
+}
+
 .gu-display__content-text {
     @include f-headlineSans;
     @include font-size(20, 20);
@@ -57,6 +69,7 @@
 .gu-display__cta {
     left: 10px;
     bottom: 10px;
+    line-height: 2.4;
 }
 
 .gu-display__logo-link {
@@ -127,30 +140,29 @@
 $mobile-max-container-width: gs-span(8);
 @include mq-add-breakpoint(containerWidestMobile, $mobile-max-container-width + $gs-gutter * 2);
 
+.ad-slot--frame,
 .gu-style {
     width: auto;
     border-top: #fedd79 1px solid;
     margin-left: $gs-gutter / 2;
     margin-right: $gs-gutter / 2;
 
-    @include mq(mobileLandscape) {
-        margin-left: $gs-gutter;
-        margin-right: $gs-gutter;
-    }
-
     @include mq(containerWidestMobile) {
         margin-left: auto;
         margin-right: auto;
-        width: $mobile-max-container-width;
+        width: 275px;
     }
 
     @include mq(tablet) {
-        margin-left: $gs-gutter / 2;
+        width: auto;
         margin-right: $gs-gutter / 2;
+        margin-left: $gs-gutter / 2;
     }
 
     @include mq(desktop) {
         max-width: 300px;
+        margin-left: $gs-gutter / 2;
+        margin-right: $gs-gutter / 2;
     }
 
     // Article styles: Right slot width is exactly the size of the banner so we don't want any margin
@@ -178,5 +190,28 @@ $mobile-max-container-width: gs-span(8);
 
     @include mq(tablet) {
         max-width: 300px;
+    }
+}
+
+// Hosted (bottom) version 2 - this is purely for testing purposes
+.gu-display--hostedbottom {
+    .gu-display__logo-pos--bottom-right {
+        top: auto;
+        bottom: 49px;
+    }
+
+    .gu-display__content {
+        width: 100%;
+        min-height: 110px;
+        padding-top: $gs-gutter / 2;
+        background-color: #fffcf4;
+    }
+
+    .gu-display__content-title--hosted {
+        @include font-size(22, 24);
+
+        width: 60%;
+        font-weight: normal;
+        color: #333333;
     }
 }

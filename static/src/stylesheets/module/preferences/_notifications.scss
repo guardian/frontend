@@ -19,7 +19,7 @@
 
         &:focus,
         &:hover {
-            background-color: darken($foreground, 10%);
+            background-color: $foreground;
             .inline-icon {
                 background-color: darken($foreground, 10%);
             }
@@ -31,14 +31,14 @@
         background-color: transparent;
         .inline-icon {
             fill: $foreground;
-            background-color: $background;
         }
 
         &:focus,
         &:hover {
-            background-color: darken($background, 10%);
+            color: darken($foreground, 10%);
+            border-color: darken($foreground, 10%);
             .inline-icon {
-                background-color: darken($background, 10%);
+                fill: darken($foreground, 10%);
             }
 
         }
@@ -145,13 +145,15 @@ $notifications-button-height: 28px;
     background: $live-default;
     color: $neutral-8;
     display: block;
-    padding: $gs-baseline $gs-gutter;
+    padding-left: $gs-gutter/2;
+    padding-top: $gs-gutter/2;
+    padding-right: $gs-gutter/2;    
 
     .button {
         padding: 0;
         width: $live-notifications-icon-width;
         height: $live-notifications-icon-width;
-        border-color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, .5);
 
         @include mq(tablet) {
             border-color: colour(live-mute);
@@ -159,7 +161,10 @@ $notifications-button-height: 28px;
 
         &:focus,
         &:hover {
-            border-color: #ffffff;
+            svg {
+                fill: #ffffff
+            }
+            border-color: #ffffff
         }
     }
 }
@@ -179,6 +184,7 @@ $notifications-button-height: 28px;
 }
 
 .live-notifications-explainer-svg {
+
     svg {
         @include fs-textSans(3);
         width: 100%;
@@ -214,11 +220,11 @@ $notifications-button-height: 28px;
 
 .live-notifications-explainer__header-blurb {
     @include fs-textSans(3);
-    margin-top: $gs-baseline /2;
+    padding-bottom: $gs-baseline;
 }
 
 .live-notifications-explainer__headline {
-    @include fs-headline(3);
+    @include fs-header(2);
     color: #ffffff;
     position: relative;
     display: block;
@@ -228,6 +234,7 @@ $notifications-button-height: 28px;
 .live-notifications-denied__item-options,
 .live-notifications-explainer__item-options {
     position: absolute;
+    margin: -$gs-gutter / 3;
 }
 
 .live-notifications-denied__item-options {
@@ -238,7 +245,7 @@ $notifications-button-height: 28px;
 
 .live-notifications-explainer__item-options {
     top: $gs-baseline / 50;
-    right: -$gs-gutter;
+    right: -$gs-gutter / 2;
 
 }
 

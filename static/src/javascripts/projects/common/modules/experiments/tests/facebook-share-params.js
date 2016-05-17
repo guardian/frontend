@@ -17,11 +17,7 @@ define([
         this.idealOutcome = 'Increase in guardian traffic from facebook cards with image overlays';
 
         this.canRun = function () {
-            if (!config.page.isFront) {
-                // && server side test open-graph-overlay is running
-                return true;
-            }
-            return false;
+            return config.page.isArticle
         };
 
         function alterCanonicalUrlSent(hrefContent, additionalParam) {
@@ -42,12 +38,13 @@ define([
             {
                 id: 'variant',
                 test: function () {
-                    alterFacebookShareItems('?page=facebookOverlayTest');
+                    alterFacebookShareItems('?page=facebookOverlayVariant');
                 }
             },
             {
                 id: 'control',
                 test: function () {
+                    alterFacebookShareItems('?page=facebookOverlayControl');
                 }
             }
         ];
