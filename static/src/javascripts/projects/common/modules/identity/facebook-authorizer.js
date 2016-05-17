@@ -3,6 +3,7 @@
 define(function () {
 
     var scriptId = 'facebook-jssdk';
+    var scriptSrc = '//connect.facebook.net/en_US/sdk/xfbml.ad.js#xfbml=1&version=v2.5';
 
     function FacebookAuthorizer(appId) {
         this.appId = appId;
