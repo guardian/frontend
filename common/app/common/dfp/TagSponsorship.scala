@@ -65,29 +65,13 @@ object InlineMerchandisingTargetedTagsReportParser extends Logging {
   }
 }
 
-case class TargetedHighMerchandisingLineItems(lineItems : Seq[HighMerchandisingLineItem] = Seq.empty) {
-
-  def hasAdUnitAndTag (adUnitSuffix: String, tags:Seq[Tag]): Boolean = {
-
-      def fixedTagNames = tags map (_.name) map (_.replaceAll(" ","-").toLowerCase)
-
-      def lineItemsWithTagMatch = {
-        fixedTagNames.flatMap(tag =>
-          lineItems.filter(_.tags.contains(tag))
-        )
-      }
-
-      def adUnitInPath(lineItem: HighMerchandisingLineItem): Boolean = lineItem.adUnits.exists(_.path contains adUnitSuffix)
-
-      lineItemsWithTagMatch exists adUnitInPath
-  }
-
-  def nonEmpty = lineItems.nonEmpty
-}
-
 object HighMerchandisingLineItems {
   implicit val lineItemFormat = Json.format[HighMerchandisingLineItem]
   implicit val lineItemsFormat = Json.format[HighMerchandisingLineItems]
+}
+
+case class HighMerchandisingLineItems(items: Seq[HighMerchandisingLineItem] = Seq.empty) {
+  val sortedItems = items.sortBy(_.name)
 }
 
 case class HighMerchandisingLineItem(
@@ -101,10 +85,18 @@ case class HighMerchandisingLineItem(
   val adUnitString  = adUnits map (_.path.mkString("/"))
   val customTargets = customTargetSet.map(_.targets)
   val editions = customTargets.flatMap(sequence => sequence.filter((target) => target.name == "edition")).map(target => target.values)
-}
 
-case class HighMerchandisingLineItems(items: Seq[HighMerchandisingLineItem]) {
-  val sortedItems = items.sortBy(_.name)
+
+  def matchesAdUnitAndTag (adUnitSuffix: String, pageTags:Seq[Tag]): Boolean = {
+
+    def tagNames = pageTags map (_.name) map (_.replaceAll(" ","-").toLowerCase)
+
+    def matchesTag: Boolean = tagNames.exists(tags.contains)
+
+    def matchesAdUnit: Boolean = adUnits.exists(_.path contains adUnitSuffix)
+
+    matchesTag && matchesAdUnit
+  }
 }
 
 object HighMerchandisingTargetedTagsReport {
