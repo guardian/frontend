@@ -37,10 +37,12 @@ define([
         selectedItem: null
     },
     settings = {
-        prevItemsHighlight: true,
-        itemCount: 5,
-        itemIconId: 'star',
-        templateVars: {
+        prevItemsHighlight: true, // Add the highlight class the items before the selected one
+        itemCount: 5, // Amount of items
+        itemIconId: 'star', // SVG icon ID
+        inactiveIconClass: 'star__item--grey', // The inactive class added to the icon
+        buttonTextArray: [], // An array of strings to use as the button text, if array is empty will use current iteration value+1
+        templateVars: { // Variables that will be passed through to all views
             title: 'Do you agree? Tell us what you think',
             description: 'Have you seen this film? Let us know how you would rate it!',
             voteTitle: 'Vote now:',
@@ -69,13 +71,13 @@ define([
 
         // Build our participation buttons
         for (var i = 0; i < settings.itemCount; i++) {
-            var inactiveClass = 'star__item--grey',
-                templateVars = {};
+            var templateVars = {};
 
             templateVars.extraClasses = '';
-            templateVars.itemIcon = svgs(settings.itemIconId, [inactiveClass]);
+            templateVars.itemIcon = svgs(settings.itemIconId, [settings.inactiveIconClass]);
 
             if (state.confirming || state.complete) {
+                // Add the highlight class to the previous items
                 if ((settings.prevItemsHighlight && state.selectedItem >= i) || state.selectedItem === i) {
                     templateVars.extraClasses += 'participation-low-fric--button__is-highlighted ';
                 }
@@ -83,14 +85,12 @@ define([
                 templateVars.extraClasses += 'participation-low-fric--button__is-active';
             }
 
-            // Completion
-            if (state.complete) {
-                templateVars.elType = 'span';
-            } else {
-                templateVars.elType = 'button';
-            }
+            // We want to use the semantically correct el here
+            templateVars.elType = (state.complete) ? 'span' : 'button';
 
             templateVars.itemId = i;
+
+            templateVars.buttonText = 'Choose ' + (settings.buttonTextArray.length && settings.buttonTextArray[i]) || (i + 1);
 
             buttonString += template(lowFrictionButtons, merge(settings.templateVars, templateVars));
         }
