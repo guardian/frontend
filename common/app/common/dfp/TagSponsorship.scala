@@ -87,11 +87,11 @@ case class HighMerchandisingLineItem(
 
   def matchesAdUnitAndTag (adUnitSuffix: String, pageTags:Seq[Tag]): Boolean = {
 
-    def tagNames = pageTags map (_.name) map (_.replaceAll(" ","-").toLowerCase)
+    val tagNames = pageTags map (_.name) map (_.replaceAll(" ","-").toLowerCase)
 
-    def matchesTag: Boolean = tagNames.exists(tags.contains)
+    val matchesTag: Boolean = tagNames.exists(tags.contains)
 
-    def matchesAdUnit: Boolean = adUnits.exists(_.path contains adUnitSuffix)
+    lazy val matchesAdUnit: Boolean = adUnits.exists(_.path contains adUnitSuffix)
 
     matchesTag && matchesAdUnit
   }
