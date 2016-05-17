@@ -12,10 +12,10 @@
         <div class="hosted-video--image-container"  style="
             background-image: url(<%=data.asset%>);
         ">
-            <div class="hosted-banner" style="
-                border-color: <%=data.bannerColour%>;
-            "></div>
             <a href="<%=data.clickMacro%><%=data.link%>" target="_blank" data-link-name="hosted content">
+                <div class="hosted-banner" style="
+                    border-color: <%=data.bannerColour%>;
+                    "></div>
                 <div class="hosted__meta">
                     <p class="hosted__heading--small" style="
                             color: <%=data.header1colour%>;
@@ -24,8 +24,8 @@
                             color: <%=data.header2colour%>;
                         "><%=data.header2%></h1>
                 </div>
+                <div class="play-button"></div>
             </a>
-            <div class="play-button"></div>
         </div>
         <div class="hostedbadge hosted-tone-bg--renault">
             <p class="hostedbadge__info">Advertiser content</p>
