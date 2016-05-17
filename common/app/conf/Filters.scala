@@ -86,9 +86,11 @@ object PanicSheddingFilter extends Filter with Logging {
   val PANICING_MIN_LATENCY = 3.seconds.toMillis
   // always allow a few concurrent connections even in slow times
   val MIN_CONNECTIONS = 4
+  val INITIAL_CONNECTIONS = 512
 
   val averageLatency = Agent(LatencyMonitor.initialLatency)
   val inFlightLatency = Agent(InFlightLatencyMonitor.initialLatency)
+  val concurrentConnections = Agent(INITIAL_CONNECTIONS)
 
   // Busy monitoring is not perfect as it only knows when things are already slow.
   // if we get loads of requests at the same moment, it would take up to 1 second to realise
@@ -99,27 +101,35 @@ object PanicSheddingFilter extends Filter with Logging {
     // assume uncompleted requests are half way through on average, although if we get a sudden flood this assumption doesn't hold
     val currentInflightLatency = inFlightLatency.get.latency(DateTime.now.getMillis) * 2
     val previousLatency = averageLatency.get.latency
-    log.info(s"currentInFlightLatency = $currentInflightLatency and averageLatency = $previousLatency")
-    if (inFlightLatency.get.requestStarts <= MIN_CONNECTIONS) {
-      true
-    } else {
+    val requestsInProgress = inFlightLatency.get.requestStarts
+    log.info(s"$requestsInProgress: currentInFlightLatency = $currentInflightLatency and averageLatency = $previousLatency")
+//    if (inFlightLatency.get.requestStarts <= MIN_CONNECTIONS) {
+//      true
+//    } else {
       val worstLatency = Math.max(currentInflightLatency, previousLatency)
       if (worstLatency <= ALL_200s_MAX_LATENCY) {
+        if (requestsInProgress >= concurrentConnections.get) {
+          concurrentConnections.alter(_ + 1)
+        }
         true
       } else if (worstLatency > PANICING_MIN_LATENCY) {
         log.warn(s"server busy, not serving more than $MIN_CONNECTIONS concurrent requests")
+        if (requestsInProgress <= concurrentConnections.get) {
+          concurrentConnections.alter(Math.max(MIN_CONNECTIONS, requestsInProgress))
+        }
         false // even health checks fail
       } else if (request.isHealthcheck) {
         log.warn(s"server busy, allowing health checks through")
         true // if we're partially open serve health checks
       } else {
+        concurrentConnections.alter(old => Math.max(MIN_CONNECTIONS, old - 1))
         val openingRange = PANICING_MIN_LATENCY - ALL_200s_MAX_LATENCY
         val msAwayFromFullyOff = PANICING_MIN_LATENCY - worstLatency
         val percentageOfRequestsToServe = msAwayFromFullyOff * 100 / openingRange
         log.warn(s"server busy, only serving $percentageOfRequestsToServe% of requests")
         scala.util.Random.nextInt(100) < percentageOfRequestsToServe
       }
-    }
+//    }
   }
 
   override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
@@ -151,7 +161,7 @@ object PanicSheddingFilter extends Filter with Logging {
 
 object InFlightLatencyMonitor extends ExecutionContexts {
 
-  case class InFlightLatency(requestStarts: Long, lastUpdateTime: Long, totalLatency: Long) {
+  case class InFlightLatency(requestStarts: Int, lastUpdateTime: Long, totalLatency: Long) {
     def latency(now: Long) = ((now - lastUpdateTime) * requestStarts) + (if (requestStarts == 0) 0 else totalLatency / requestStarts)
   }
 
