@@ -14,6 +14,7 @@ import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
 import model.content.{Atoms, Quiz}
 import model.pressed._
+import mvt.ABOpenGraphOverlay
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
@@ -74,7 +75,7 @@ final case class Content(
   rawOpenGraphImage: String,
   sensitive: Boolean,
   showFooterContainers: Boolean = false,
-  showOverlayTestImage: Boolean = false
+  showOverlayTest: Boolean = false
 ) {
 
   lazy val isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(metadata.id)
@@ -110,7 +111,8 @@ final case class Content(
     cardStyle == Feature && tags.hasLargeContributorImage && tags.contributors.length == 1
 
   // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
-  lazy val openGraphImage: String = {
+  lazy val openGraphImage = {
+    // val shouldOverlay = ABOpenGraphOverlay.isParticipating
     ImgSrc(rawOpenGraphImage, FacebookOpenGraphImage)
   }
 
@@ -234,7 +236,6 @@ final case class Content(
     meta.flatten.toMap
   }
 
-  val blendOverlay = "?fit=crop&blend64=aHR0cDovL3MxNC5wb3N0aW1nLm9yZy80YnA4cDJ4cjUvV2hpdGVfbG9nb193aXRoX3NoYWRvdy5wbmc&bp=20&bw=300&ba=bottom%2C%20left&bm=normal&h=632&w=1200"
   val opengraphProperties = Map(
     "og:title" -> metadata.webTitle,
     "og:description" -> fields.trailText.map(StripHtmlTagsAndUnescapeEntities(_)).getOrElse(""),
@@ -371,6 +372,7 @@ object Article {
 
     val opengraphProperties: Map[String, String] = Map(
       ("og:type", "article"),
+      ("og:image", ImgSrc(content.rawOpenGraphImage, FacebookOpenGraphImage, true)),
       ("article:published_time", trail.webPublicationDate.toString()),
       ("article:modified_time", content.fields.lastModified.toString()),
       ("article:tag", tags.keywords.map(_.name).mkString(",")),
