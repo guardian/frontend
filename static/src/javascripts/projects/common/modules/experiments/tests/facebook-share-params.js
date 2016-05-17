@@ -17,7 +17,7 @@ define([
         this.idealOutcome = 'Increase in guardian traffic from facebook cards with image overlays';
 
         this.canRun = function () {
-            return config.page.isArticle
+            return config.page.isArticle;
         };
 
         function alterCanonicalUrlSent(hrefContent, additionalParam) {
