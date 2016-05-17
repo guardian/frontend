@@ -46,7 +46,7 @@
                 @fragments.meta.metaInline(page.item)
 
                 <h1 class="content__headline content__headline--immersive content__headline--immersive--with-main-media">
-                    @fragments.inlineSvg("camera", "icon", List("inline-tone-fill")) @Html(page.item.trail.headline)
+                    @fragments.inlineSvg("camera", "icon", List("inline-tone-fill", "inline-icon--media")) @Html(page.item.trail.headline)
                 </h1>
 
                 @if(page.item.content.hasTonalHeaderByline) {
@@ -131,7 +131,7 @@
 
         @fragments.analytics.base(page)
 
-        @if(requestOutOfPageSlotAlways.isSwitchedOn || page.metadata.hasPageSkinOrAdTestPageSkin(edition)) {
+        @if(page.metadata.hasPageSkinOrAdTestPageSkin(edition)) {
             @fragments.commercial.pageSkin()
         }
 

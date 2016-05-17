@@ -59,8 +59,8 @@ object PreviewAuthFilters {
   }
 }
 
-object Global extends WithFilters(
-    new PreviewAuthFilters.AuthFilterWithExemptions(
+class StandaloneGlobal extends WithFilters(
+  new PreviewAuthFilters.AuthFilterWithExemptions(
     FilterExemptions.loginExemption,
     FilterExemptions.exemptions):: NoCacheFilter :: conf.Filters.common: _*)
   with CommercialLifecycle

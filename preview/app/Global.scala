@@ -1,0 +1,3 @@
+import controllers.PreviewHealthCheckLifeCycle
+
+object Global extends StandaloneGlobal with PreviewHealthCheckLifeCycle

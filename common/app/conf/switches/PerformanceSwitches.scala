@@ -24,6 +24,15 @@ trait PerformanceSwitches {
     exposeClientSide = true
   )
 
+  val BootInteractivesFromMainSwitch = Switch(
+    SwitchGroup.Performance,
+    "boot-interactives-from-main",
+    "If this switch is on then interactive bootstraps will be booted from main.js for perf and stability reasons",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 8),
+    exposeClientSide = true
+  )
+
   val TagPageSizeSwitch = Switch(
     SwitchGroup.Performance,
     "tag-page-size",
@@ -48,15 +57,6 @@ trait PerformanceSwitches {
     "If this switch is on then articles will get a longer cache time",
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val CheckETagsSwitch = Switch(
-    SwitchGroup.Performance,
-    "check-etags",
-    "If this switch is on, empty 304 not modified responses will be returned for requests with the correct etag",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 20),
     exposeClientSide = false
   )
 

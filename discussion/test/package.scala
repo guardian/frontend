@@ -73,7 +73,6 @@ class DiscussionApiStub extends DiscussionApi {
 }
 
 class DiscussionTestSuite extends Suites (
-  new services.DiscussionHealthcheckTest,
   new CommentPageControllerTest,
   new controllers.DiscussionApiPluginIntegrationTest,
   new controllers.ProfileActivityControllerTest,

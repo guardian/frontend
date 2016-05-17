@@ -1,8 +1,12 @@
 define([
     'common/views/svgs',
+    'common/utils/config',
     'common/utils/template',
     'lodash/objects/assign',
     'lodash/utilities/identity',
+    'text!common/views/commercial/creatives/logo-header.html',
+    'text!common/views/commercial/creatives/logo-link.html',
+    'text!common/views/commercial/creatives/logo-about.html',
     'text!common/views/commercial/creatives/manual-inline-button.html',
     'text!common/views/commercial/creatives/gimbap/gimbap-simple-blob.html',
     'text!common/views/commercial/creatives/gimbap/gimbap-richmedia-blob.html',
@@ -15,9 +19,13 @@ define([
     'text!common/views/commercial/creatives/manual-container-cta-membership.html'
 ], function (
     svgs,
+    config,
     template,
     assign,
     identity,
+    logoHeaderStr,
+    logoLinkStr,
+    logoAboutStr,
     manualInlineButtonStr,
     gimbapSimpleStr,
     gimbapRichmediaStr,
@@ -29,6 +37,9 @@ define([
     manualContainerCtaSoulmatesStr,
     manualContainerCtaMembershipStr
 ) {
+    var logoAboutTpl;
+    var logoLinkTpl;
+    var logoHeaderTpl;
     var manualInlineButtonTpl;
     var gimbapSimpleTpl;
     var gimbapRichmediaTpl;
@@ -42,6 +53,41 @@ define([
     var manualContainerCtaTpl;
     var manualContainerCtaSoulmatesTpl;
     var manualContainerCtaMembershipTpl;
+
+    function preprocessLogo(tpl) {
+        logoHeaderTpl || (logoHeaderTpl = template(logoHeaderStr));
+        logoLinkTpl || (logoLinkTpl = template(logoLinkStr));
+        logoAboutTpl || (logoAboutTpl = template(logoAboutStr));
+        if (tpl.params.type === 'ad-feature') {
+            tpl.params.header = logoHeaderTpl({ header: 'Paid for by' });
+            tpl.params.logo = logoLinkTpl(tpl.params);
+            tpl.params.partners = '';
+            tpl.params.aboutLink = '';
+        } else if (tpl.params.type === 'sponsored') {
+            tpl.params.header = logoHeaderTpl({ header: 'Supported by' });
+            tpl.params.logo = logoLinkTpl(tpl.params);
+            tpl.params.partners = '';
+            tpl.params.aboutLink = logoAboutTpl(tpl.params);
+        } else if (tpl.params.type === 'funded'){
+            tpl.params.header = logoHeaderTpl({
+                header: !config.page.isFront && config.page.sponsorshipTag ?
+                    config.page.sponsorshipTag + ' is supported by' :
+                    'Supported by'
+            });
+            tpl.params.logo = logoLinkTpl(tpl.params);
+            tpl.params.partners = !tpl.params.hasPartners ? '' :
+                logoHeaderTpl({ header: 'In partnership with:' }) +
+                logoLinkTpl({
+                    clickMacro: tpl.params.clickMacro,
+                    logoUrl: tpl.params.partnerOneLogoUrl,
+                    logoImage: tpl.params.partnerOneLogoImage }) +
+                logoLinkTpl({
+                    clickMacro: tpl.params.clickMacro,
+                    logoUrl: tpl.params.partnerTwoLogoUrl,
+                    logoImage: tpl.params.partnerTwoLogoImage });
+            tpl.params.aboutLink = logoAboutTpl(tpl.params);
+        }
+    }
 
     function preprocessManualInline(tpl) {
         if (!manualInlineButtonTpl) {
@@ -207,6 +253,7 @@ define([
     }
 
     return {
+        'logo': preprocessLogo,
         'manual-inline': preprocessManualInline,
         'gimbap': preprocessGimbap,
         'gimbap-simple': preprocessGimbapSimple,

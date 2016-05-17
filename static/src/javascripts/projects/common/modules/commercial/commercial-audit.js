@@ -1,7 +1,7 @@
 define([
     'common/utils/config',
-    'common/utils/report-error'
-], function (config, reportError) {
+    'common/modules/analytics/beacon'
+], function (config, beacon) {
 
     return {
         init: init
@@ -15,17 +15,15 @@ define([
     }
 
     function receiveMessage(event) {
-        var origin = event.origin || event.originalEvent.origin;
-        var message = event.data;
-
-
-        if (message.indexOf('Tracker beacon: ') === 0) {
-            reportError(new Error('Ad Beacon fired'), {
-                feature: 'commercial',
-                message: message,
-                source: origin
-            }, false);
+        var message = event.data || '';
+        var probe = 'Tracker beacon:';
+        if (typeof message !== 'string') {
+            return;
         }
-        return;
+
+        if (message.indexOf(probe) === 0) {
+          var variantName = message.substring(probe.length);
+          beacon.beaconCounts(variantName);
+        }
     }
 });

@@ -96,6 +96,9 @@ define([
         theFiver: function () {
             return page.keywordExists(['Football']) && allowedArticleStructure();
         },
+        usBriefing: function () {
+            return config.page.section === 'us-news' && allowedArticleStructure();
+        },
         ausCampaignCatchup: function () {
             return page.keywordExists([
                 'Australia news',

@@ -27,7 +27,8 @@ trait LinkTo extends Logging {
   /**
     * email is here to allow secure POSTs from the footer signup form
     */
-  val httpsEnabledSections: Seq[String] = Seq("info", "email", "science", "crosswords", "technology", "business")
+  val httpsEnabledSections: Seq[String] =
+    Seq("info", "email", "science", "crosswords", "technology", "business", "sport", "football")
 
   def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request))
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request))

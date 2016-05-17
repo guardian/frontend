@@ -1,7 +1,7 @@
 package controllers
 
 import common.ExecutionContexts
-import conf.AllGoodHealthcheckController
+import conf.{AllGoodCachedHealthCheck, CachedHealthCheckLifeCycle}
 import dispatch.{FunctionHandler, Http}
 import scala.concurrent.Future
 import contentapi.{ContentApiClient, Response}
@@ -38,19 +38,15 @@ class TrainingHttp extends contentapi.Http with ExecutionContexts {
   }
 }
 
-object TrainingHealthCheck extends AllGoodHealthcheckController(
+object HealthCheck extends AllGoodCachedHealthCheck(
  9016,
  "/info/developer-blog/2016/apr/14/training-preview-healthcheck"
 ) {
+  init()
 
-  def init: Unit = {
-    ContentApiClient.setHttp(new TrainingHttp)
-  }
+  def init(): Unit = ContentApiClient.setHttp(new TrainingHttp)
+}
 
-  override def healthcheck() = {
-    if (!isOk) {
-      init
-    }
-    super.healthcheck()
-  }
+trait TrainingPreviewHealthCheckLifeCycle extends CachedHealthCheckLifeCycle {
+  override val healthCheckController = HealthCheck
 }

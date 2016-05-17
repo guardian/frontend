@@ -10,7 +10,6 @@ define([
     'common/utils/user-timing',
     './common',
     './sport',
-    'common/modules/experiments/ab',
     'enhanced-common'
 ], function (
     fastdom,
@@ -23,8 +22,7 @@ define([
     mediator,
     userTiming,
     common,
-    sport,
-    ab
+    sport
 ) {
     return function () {
         var bootstrapContext = function (featureName, bootstrap) {
@@ -44,10 +42,6 @@ define([
             require(['bootstraps/enhanced/facia'], function (facia) {
                 bootstrapContext('facia', facia);
             });
-
-            if (ab.isInVariant('Minute', 'on')) {
-                require('bootstraps/enhanced/minute', function() {});
-            }
         }
 
         if (config.page.section === 'lifeandstyle' && config.page.series === 'Sudoku') {
@@ -61,10 +55,6 @@ define([
                 bootstrapContext('article', article);
                 bootstrapContext('article : image-content', imageContent);
             });
-
-            if (ab.isInVariant('Minute', 'on')) {
-                require('bootstraps/enhanced/minute', function() {});
-            }
         }
 
         if (config.page.contentType === 'Crossword' || config.page.pageId === 'offline-crossword') {
