@@ -15,8 +15,8 @@ define([
     mediator,
     curry
 ) {
-    // total_hours_spent_maintaining_this = 56
-    // 
+    // total_hours_spent_maintaining_this = 60
+    //
     // maximum time (in ms) to wait for images to be loaded and rich links
     // to be upgraded
     var LOADING_TIMEOUT = 5000;
@@ -210,6 +210,12 @@ define([
         return Promise.resolve(true);
     }
 
+    function SpaceError(rules) {
+        this.name = 'SpaceError';
+        this.message = 'There is no space left matching rules ' + JSON.stringify(rules);
+        this.stack = (new Error()).stack;
+    }
+
     // Rather than calling this directly, use spaceFiller to inject content into the page.
     // SpaceFiller will safely queue up all the various asynchronous DOM actions to avoid any race conditions.
     function findSpace(rules) {
@@ -295,13 +301,15 @@ define([
             if (candidates.length) {
                 return candidates.map(function (candidate) { return candidate.element; });
             } else {
-                throw new Error('There is no space left matching rules ' + JSON.stringify(rules));
+                throw new SpaceError(rules);
             }
         }
     }
 
     return {
         findSpace: findSpace,
+        SpaceError: SpaceError,
+
         _testCandidate: _testCandidate, // exposed for unit testing
         _testCandidates: _testCandidates // exposed for unit testing
     };
