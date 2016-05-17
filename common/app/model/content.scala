@@ -677,7 +677,7 @@ case class GalleryLightbox(
 
   val galleryImages: Seq[ImageElement] = elements.images.filter(_.properties.isGallery)
   val largestCrops: Seq[ImageAsset] = galleryImages.flatMap(_.images.largestImage)
-  val openGraphImages: Seq[String] = largestCrops.flatMap(_.url).map(ImgSrc(_, FacebookOpenGraphImage))
+  val openGraphImages: Seq[String] = largestCrops.flatMap(crop => crop.url).map( url => ImgSrc(url , FacebookOpenGraphImage))
   val size = galleryImages.size
   val landscapes = largestCrops.filter(i => i.width > i.height).sortBy(_.index)
   val portraits = largestCrops.filter(i => i.width < i.height).sortBy(_.index)
