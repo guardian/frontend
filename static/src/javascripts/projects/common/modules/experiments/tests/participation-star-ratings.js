@@ -74,7 +74,11 @@ define([
                 test: function () {
                     if (Object.create) {
                         var starRatings = Object.create(lowFrictionParticipation);
-                        starRatings.init({});
+                        starRatings.init({
+                            templateVars: {
+                                description: 'Let us know whether you agree with "' + config.page.headline + '"'
+                            }
+                        });
                     }
                 },
                 success: function (complete) {
