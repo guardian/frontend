@@ -45,9 +45,8 @@ define([
         inactiveIconClass: 'star__item--grey', // The inactive class added to the icon
         buttonTextArray: [], // An array of strings to use as the button text, if array is empty will use current iteration value+1
         templateVars: { // Variables that will be passed through to all views
-            title: 'Do you agree? Tell us what you think',
-            description: 'Have you seen this film? Let us know how you would rate it!',
-            voteTitle: 'Vote now:',
+            title: 'Do you agree? Rate this film now',
+            description: 'Let us know what you think!',
             itemClassSuffix: 'star',
             confirmButton: 'Confirm',
             testMessage: 'This is a test. We\'re currently evaluating this as a potential new feature on theguardian.com'
@@ -117,8 +116,7 @@ define([
         if (state.complete) {
 
             view = template(lowFrictionComplete, merge(settings.templateVars, {
-                buttons: createButtons(state),
-                voteTitle: 'You gave this ' + (state.selectedItem + 1) + ' stars'
+                buttons: createButtons(state)
             }));
 
             // Remove bindings
