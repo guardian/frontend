@@ -180,12 +180,18 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
     val content: Either[PageWithStoryPackage, Result] = supportedContentResult.left.flatMap { content =>
       (content, page) match {
         case (minute: Article, None) if minute.isUSMinute =>
-          Left(MinutePage(minute, StoryPackages(minute, response)))
+          Left(MinutePage(minute, RelatedContent(minute, response)))
         case (liveBlog: Article, None/*no page param*/) if liveBlog.isLiveBlog =>
           createLiveBlogModel(liveBlog, response, None)
         case (liveBlog: Article, Some(Some(requiredBlockId))/*page param specified and valid format*/) if liveBlog.isLiveBlog =>
           createLiveBlogModel(liveBlog, response, Some(requiredBlockId))
-        case (article: Article, None) => Left(ArticlePage(article, StoryPackages(article, response)))
+        case (article: Article, None) =>
+          if(mvt.ABIntersperseMultipleStoryPackagesStories.isParticipating) {
+            Left(ArticlePage(article, StoryPackages(article, response)))
+          }
+          else {
+            Left(ArticlePage(article, RelatedContent(article, response)))
+          }
         case _ =>
           Right(NotFound)
       }
@@ -224,7 +230,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
           content = liveBlog.content.copy(
             metadata = liveBlog.content.metadata.copy(
               cacheTime = cacheTime)))
-        Left(LiveBlogPage(liveBlogCache, pageModel, StoryPackages(liveBlog, response)))
+        Left(LiveBlogPage(liveBlogCache, pageModel, RelatedContent(liveBlog, response)))
       case None => Right(NotFound)
     }
 

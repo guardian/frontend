@@ -40,7 +40,7 @@ object MediaController extends Controller with RendersItemResponse with Logging 
 
     val result = response map { response =>
       val mediaOption: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
-      val model = mediaOption map { media => MediaPage(media, StoryPackages(media, response)) }
+      val model = mediaOption map { media => MediaPage(media, RelatedContent(media, response)) }
 
       ModelOrResult(model, response)
     }
