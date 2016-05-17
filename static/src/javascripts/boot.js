@@ -27,7 +27,7 @@ define([
                     bootEnhanced();
                 }
                 if (config.switches.commercial) {
-                    raven.wrap({tags: { feature: 'commercial' }}, commercialBootstrap.init);
+                    raven.context({tags: { feature: 'commercial' }}, commercialBootstrap.init);
                 }
             });
         });
