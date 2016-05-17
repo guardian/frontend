@@ -5,6 +5,7 @@ import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
 import common._
 import contentapi.ContentApiClient
 import conf.switches.Switches
+import facebookimages.openGraphOverlay
 import model.Cached.WithoutRevalidationResult
 import model._
 import model.liveblog.{BodyBlock, KeyEventData}
@@ -103,7 +104,6 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
         if (request.isEmail) views.html.articleEmail(article)
         else if (article.article.isImmersive) views.html.articleImmersive(article)
         else if (request.isAmp) views.html.articleAMP(article)
-        else if (request.isOpenGraphTest) views.html.articleAMP(article)
         else views.html.article(article)
       }
 
@@ -193,19 +193,12 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
           if(mvt.ABIntersperseMultipleStoryPackagesStories.isParticipating) {
             Left(ArticlePage(article, StoryPackages(article, response)))
           }
-          else {
-            val overlay = mvt.ABOpenGraphOverlay.isParticipating
-            val newArticle = article.copy(
-              content = article.content.copy(
-                metadata = article.content.metadata.copy(
-                  opengraphPropertiesOverrides = {
-                    val openGraph = article.content.metadata.opengraphProperties
-                    openGraph ++ Map("og:image" -> ImgSrc(article.content.rawOpenGraphImage, FacebookOpenGraphImage, true))
-                  }
-                )
-              )
-            )
+          else if(mvt.ABOpenGraphOverlay.isParticipating) {
+            val newArticle = openGraphOverlay.overlayImage(article)
             Left(ArticlePage(newArticle, RelatedContent(newArticle, response)))
+          }
+          else {
+            Left(ArticlePage(article, RelatedContent(article, response)))
           }
         case _ =>
           Right(NotFound)

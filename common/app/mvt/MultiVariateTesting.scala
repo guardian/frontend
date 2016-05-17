@@ -25,8 +25,7 @@ object ABOpenGraphOverlay extends TestDefinition(
   sellByDate = new LocalDate(2016, 6, 29)
 ) {
   override def isParticipating(implicit request: RequestHeader): Boolean = {
-    request.queryString.get("page").contains("overlay") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
-    // request.headers.get("X-GU-hlt").contains("hlt-V") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
+    request.queryString.get("page").exists(_.contains("overlay")) && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
   }
 }
 
@@ -93,6 +92,7 @@ object ABIntersperseMultipleStoryPackagesStoriesControl extends TestDefinition(
 
 object ActiveTests extends Tests {
   val tests: Seq[TestDefinition] = List(
+    ABOpenGraphOverlay,
     ABNewHeaderVariant,
     ABGalleryRedesignVariant,
     ABHeadlinesTestControl,
