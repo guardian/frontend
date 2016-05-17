@@ -112,7 +112,6 @@ final case class Content(
 
   // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
   lazy val openGraphImage = {
-    // val shouldOverlay = ABOpenGraphOverlay.isParticipating
     ImgSrc(rawOpenGraphImage, FacebookOpenGraphImage)
   }
 
@@ -372,7 +371,6 @@ object Article {
 
     val opengraphProperties: Map[String, String] = Map(
       ("og:type", "article"),
-      ("og:image", ImgSrc(content.rawOpenGraphImage, FacebookOpenGraphImage, true)),
       ("article:published_time", trail.webPublicationDate.toString()),
       ("article:modified_time", content.fields.lastModified.toString()),
       ("article:tag", tags.keywords.map(_.name).mkString(",")),
@@ -677,7 +675,7 @@ case class GalleryLightbox(
 
   val galleryImages: Seq[ImageElement] = elements.images.filter(_.properties.isGallery)
   val largestCrops: Seq[ImageAsset] = galleryImages.flatMap(_.images.largestImage)
-  val openGraphImages: Seq[String] = largestCrops.flatMap(crop => crop.url).map( url => ImgSrc(url , FacebookOpenGraphImage))
+  val openGraphImages: Seq[String] = largestCrops.flatMap(_.url).map(ImgSrc(_, FacebookOpenGraphImage))
   val size = galleryImages.size
   val landscapes = largestCrops.filter(i => i.width > i.height).sortBy(_.index)
   val portraits = largestCrops.filter(i => i.width < i.height).sortBy(_.index)
