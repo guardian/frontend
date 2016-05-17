@@ -104,7 +104,7 @@ define([
                 mobile: fabricTopSlot
             }
         },
-        'inline-fabric-top': {
+        'inline1-fabric': {
             sizeMappings: {
                 mobile: ('1,1|300,250|' + fabricTopSlot)
             },
