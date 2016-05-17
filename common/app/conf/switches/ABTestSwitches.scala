@@ -103,4 +103,13 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 5, 19),
     exposeClientSide = true
   )
+
+  val HideEvenComments = Switch(
+    SwitchGroup.ABTests,
+    "ab-hide-even-comments",
+    "We are going to hide comments on a random half of articles",
+    safeState = On,
+    sellByDate = new LocalDate(2016, 6, 6),
+    exposeClientSide = true
+  )
 }
