@@ -35,7 +35,6 @@ object PressedPage {
       "keywords" -> JsString(seoData.webTitle.capitalize),
       "keywordIds" -> JsString(keywordIds.mkString(",")),
       "hasSuperStickyBanner" -> JsBoolean(PersonalInvestmentsCampaign.isRunning(keywordIds)),
-      "contentType" -> JsString(contentType),
       "isAdvertisementFeature" -> JsBoolean(isAdvertisementFeature)
     ) ++ (if (showMpuInAllContainers) Map("showMpuInAllContainers" -> JsBoolean(true)) else Nil)
 
