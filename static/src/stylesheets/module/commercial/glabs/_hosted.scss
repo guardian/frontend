@@ -179,7 +179,7 @@ $hosted-stripe: 28px;
         padding-top: 21px;
     }
 
-    &.vjs .vjs-button.vjs-play-control {
+    &.vjs .vjs-play-control {
         width: 48px;
         height: 48px;
         margin: 20px 10px 20px 20px;
@@ -199,10 +199,16 @@ $hosted-stripe: 28px;
 
     @include mq(desktop) {
         width: 35%;
+        left: calc(50% - 490px + #{$gs-gutter});
     }
 
     @include mq(leftCol) {
         bottom: 18%;
+        left: calc(50% - 570px + #{$gs-gutter});
+    }
+
+    @include mq(wide) {
+        left: calc(50% - 650px + #{$gs-gutter});
     }
 
     .vjs-playing + & {
@@ -231,7 +237,6 @@ $hosted-stripe: 28px;
 .hosted__heading--small {
     @include f-headlineSans;
 
-    line-height: 32px;
     font-size: 32px;
 
     @include mq($until: desktop) {
@@ -431,3 +436,46 @@ $hosted-stripe: 28px;
     }
 }
 
+.hosted__label {
+    float: left;
+    margin-left: 110px;
+    margin-top: 29px;
+    color: #ffffff;
+    border: 0;
+
+    @include mq(desktop) {
+        margin-left: 170px;
+    }
+}
+
+.hosted__label-btn {
+    @include f-headlineSans;
+
+    font-size: 16px;
+
+    .inline-icon {
+        padding-left: 2px;
+    }
+
+    &.popup__toggle {
+        border: 0;
+        padding-bottom: 0;
+
+        svg {
+            fill: #ffffff;
+        }
+    }
+}
+
+.hosted__popup {
+    top: 110%;
+    left: 174%;
+    background: #ffffff;
+    color: $neutral-1;
+    text-align: left;
+
+    &:before {
+        left: 12%;
+        border-bottom-color: #ffffff;
+    }
+}
