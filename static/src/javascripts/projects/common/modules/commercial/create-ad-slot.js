@@ -13,8 +13,8 @@ define([
     isArray,
     transform
 ) {
-    var fabricMapping = '88,71';
-    var fabricMappingSwitch = config.switches.fabricAdverts ? ('|' + fabricMapping) : '';
+    var fabricTopSlot = '88,71';
+    var fabricMappingSwitch = config.switches.fabricAdverts ? ('|' + fabricTopSlot) : '';
     var adSlotDefinitions = {
         right: {
             sizeMappings: {
@@ -101,7 +101,12 @@ define([
         },
         'fabric': {
             sizeMappings: {
-                mobile: fabricMapping
+                mobile: fabricTopSlot
+            }
+        },
+        'inline-fabric-top': {
+            sizeMappings: {
+                mobile: ('1,1|300,250|' + fabricTopSlot)
             }
         }
     };

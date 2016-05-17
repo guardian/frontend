@@ -41,21 +41,48 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABMinute = Switch(
-    SwitchGroup.ABTests,
-    "ab-minute",
-    "Switch to include the minute.ly script",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 16),
-    exposeClientSide = true
-  )
-
   val ABParticipationStarRatings = Switch(
     SwitchGroup.ABTests,
     "ab-participation-star-ratings",
     "AB test switch to insert star ratings into film articles",
     safeState = Off,
     sellByDate = new LocalDate(2016, 6, 13),
+    exposeClientSide = true
+  )
+
+  val ABParticipationLowFricMusic = Switch(
+    SwitchGroup.ABTests,
+    "ab-participation-low-fric-music",
+    "AB test switch to insert low friction participation into music",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 15),
+    exposeClientSide = true
+  )
+
+  val ABParticipationLowFricTv = Switch(
+    SwitchGroup.ABTests,
+    "ab-participation-low-fric-tv",
+    "AB test switch to insert low friction participation into tv",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 15),
+    exposeClientSide = true
+  )
+
+  val ABParticipationLowFricRecipes = Switch(
+    SwitchGroup.ABTests,
+    "ab-participation-low-fric-recipes",
+    "AB test switch to insert low friction participation into recipes",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 15),
+    exposeClientSide = true
+  )
+
+  val ABParticipationLowFricFashion = Switch(
+    SwitchGroup.ABTests,
+    "ab-participation-low-fric-fashion",
+    "AB test switch to insert low friction participation into fashion",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 15),
     exposeClientSide = true
   )
 
