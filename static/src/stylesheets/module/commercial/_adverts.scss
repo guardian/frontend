@@ -179,6 +179,13 @@
         position: relative;
     }
 
+    /* [1] Forces text wrap in IE11 */
+    .advert__title,
+    .advert__standfirst,
+    .advert__meta {
+        max-width: 100%; /* [1] */
+    }
+
     .adverts__row {
         padding: $gs-baseline / 2 0;
         display: flex;
