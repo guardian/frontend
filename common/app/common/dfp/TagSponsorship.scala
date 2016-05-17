@@ -120,7 +120,6 @@ case class HighMerchandisingLineItemTargetsSeq(lineItems : Seq[HighMerchandising
     }
     val HighMerchLineItemsWithTagMatchAndAdUnitMatch: Seq[HighMerchandisingLineItem] = HighMerchLineItemsWithTagMatch.filter(_.adUnits.flatMap(ads => ads.path).contains(adUnitSuffix))
 
-    println(HighMerchLineItemsWithTagMatchAndAdUnitMatch)
     HighMerchLineItemsWithTagMatchAndAdUnitMatch.nonEmpty
   }
 
