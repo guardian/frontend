@@ -1,8 +1,10 @@
-<div class="creative--hosted-video l-side-margins fc-container__inner" style="
+<div class="creative--hosted-video l-side-margins fc-container__inner"
+     data-link-name="Hosted Thrasher"
+     style="
         background-color: <%=data.backgroundColour%>;
     ">
     <div class="fc-container__header">
-        <a href="/guardian-labs" class="fc-container__header__title">
+        <a href="/guardian-labs" class="fc-container__header__title" data-link-name="from our advertisers">
             from our advertisers
         </a>
     </div>
@@ -13,7 +15,7 @@
             <div class="hosted-banner" style="
                 border-color: <%=data.bannerColour%>;
             "></div>
-            <a href="<%=data.clickMacro%><%=data.link%>" target="_blank">
+            <a href="<%=data.clickMacro%><%=data.link%>" target="_blank" data-link-name="hosted content">
                 <div class="hosted__meta">
                     <p class="hosted__heading--small" style="
                             color: <%=data.header1colour%>;
@@ -23,12 +25,7 @@
                         "><%=data.header2%></h1>
                 </div>
             </a>
-            <div class="faux-controls">
-                <div class="play-button"></div>
-                <div class="time">
-                    0:00 / <span class="length">1:26</span>
-                </div>
-            </div>
+            <div class="play-button"></div>
         </div>
         <div class="hostedbadge hosted-tone-bg--renault">
             <p class="hostedbadge__info">Advertiser content</p>

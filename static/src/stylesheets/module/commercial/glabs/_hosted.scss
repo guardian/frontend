@@ -370,30 +370,14 @@ $hosted-stripe: 28px;
         border-top: 2px solid transparent;
     }
 
-    .faux-controls  {
-        position: absolute;
-        bottom: 0;
-        left: $gs-gutter/2;
-        .time {
-            color: #ffffff;
-            display: inline-block;
-            vertical-align: top;
-            line-height: 36px;
-            margin-left: $gs-gutter/2;
-            @include mq(desktop) {
-                line-height: 49px;
-            }
-        }
-        .length {
-            color: #bdbdbd;
-        }
-    }
-
     .play-button {
         @include icon(play-32--tone-media);
         @include mq(desktop) {
             padding: 9px;
         }
+        position: absolute;
+        margin: $gs-gutter/2;
+        bottom: 0;
     }
 }
 

@@ -9,9 +9,9 @@ define([
     template,
     hostedVideo,
     addTrackingPixel,
-    hostedVideoStr
+    hostedThrasherStr
 ) {
-    var hostedVideoTpl;
+    var hostedThrasherTemplate;
 
     var HostedThrasher = function ($adSlot, params) {
         this.$adSlot = $adSlot;
@@ -19,17 +19,11 @@ define([
     };
 
     HostedThrasher.prototype.create = function () {
-        if (!hostedVideoTpl) {
-            hostedVideoTpl = template(hostedVideoStr);
-        }
+        hostedThrasherTemplate = hostedThrasherTemplate || template(hostedThrasherStr);
 
-        var domPromise = fastdom.write(function () {
-            this.$adSlot.append(hostedVideoTpl({ data: this.params}));
-        }.bind(this));
-
-        domPromise.then(function () {
-            hostedVideo.init();
-        });
+        fastdom.write(function () {
+            this.$adSlot.append(hostedThrasherTemplate({ data: this.params}));
+        }, this).then(hostedVideo.init);
 
         if (this.params.trackingPixel) {
             addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
