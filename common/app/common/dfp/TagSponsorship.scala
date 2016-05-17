@@ -80,32 +80,6 @@ object HighMerchandisingLineItemSeq {
   }
 }
 
-object HighMerchandisingTargetedTagSet {
-  implicit val jsonReads = Json.reads[HighMerchandisingTargetedTagSet]
-
-  implicit val highMerchandisingTargetedTagSetWrites = new Writes[HighMerchandisingTargetedTagSet] {
-    def writes(tagSet: HighMerchandisingTargetedTagSet): JsValue = {
-      Json.obj(
-        "items" -> tagSet.items
-      )
-    }
-  }
-}
-
-
-case class HighMerchandisingTargetedTagSet(items: Set[String] = Set.empty){
-
-  def hasTag (tag: Tag): Boolean = items.exists(item => tag.id.endsWith(item))
-
-  def hasAdUnit (adUnitSuffix : String): Boolean = {
-    println(adUnitSuffix)
-    true
-  }
-
-
-  def nonEmpty = items.nonEmpty
-}
-
 case class HighMerchandisingLineItemTargetsSeq(lineItems : Seq[HighMerchandisingLineItem] = Seq.empty) {
 
   def hasAdUnitAndTag (adUnitSuffix: String, tags:Seq[Tag]): Boolean = {
@@ -119,7 +93,6 @@ case class HighMerchandisingLineItemTargetsSeq(lineItems : Seq[HighMerchandising
       )
     }
     val HighMerchLineItemsWithTagMatchAndAdUnitMatch: Seq[HighMerchandisingLineItem] = HighMerchLineItemsWithTagMatch.filter(_.adUnits.flatMap(ads => ads.path).contains(adUnitSuffix))
-
     HighMerchLineItemsWithTagMatchAndAdUnitMatch.nonEmpty
   }
 
