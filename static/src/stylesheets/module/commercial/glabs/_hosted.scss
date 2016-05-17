@@ -339,13 +339,17 @@ $hosted-stripe: 28px;
 
 .hosted__social {
     border-top: 0;
-    padding-left: $gs-gutter / 2;
 
-    @include mq($until: mobileLandscape) {
-        padding: $gs-gutter / 2 $gs-gutter / 2 0 $gs-gutter / 2;
+    @include mq($until: tablet) {
+        padding: $gs-gutter / 2;
+    }
+
+    @include mq(tablet) {
+        padding: $gs-gutter / 2 0;
     }
 
     @include mq(leftCol) {
+        padding-left: $gs-gutter / 2;
 
         .social__item {
             min-width: 30px;
@@ -370,20 +374,34 @@ $hosted-stripe: 28px;
     }
 }
 
-.hosted__label-btn.popup__toggle {
-    border: 0;
+.hosted__label-btn {
+    @include f-headlineSans;
 
-    svg {
-        fill: #ffffff;
+    .inline-icon {
+        display: inline-block;
+        vertical-align: middle;
+        padding: 2px 0 0 2px;
+    }
+
+    &.popup__toggle {
+        border: 0;
+        padding-bottom: 0;
+
+        svg {
+            fill: #ffffff;
+        }
     }
 }
 
 .hosted__popup {
+    top: 110%;
+    left: 200%;
     background: #ffffff;
     color: $neutral-1;
     text-align: left;
 
     &:before {
+        left: 12%;
         border-bottom-color: #ffffff;
     }
 }
