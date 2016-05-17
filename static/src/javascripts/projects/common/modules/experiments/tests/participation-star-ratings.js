@@ -56,12 +56,7 @@ define([
         this.variants = [
             {
                 id: 'control',
-                test: function () {
-                    if (Object.create) {
-                        var starRatings = Object.create(lowFrictionParticipation);
-                        starRatings.init({});
-                    }
-                },
+                test: function () {},
                 success: function (complete) {
                     mediator.on('discussion:commentbox:post:success', function (){
                         // Data lake
@@ -76,7 +71,23 @@ define([
             },
             {
                 id: 'star-rating',
-                test: function () {}
+                test: function () {
+                    if (Object.create) {
+                        var starRatings = Object.create(lowFrictionParticipation);
+                        starRatings.init({});
+                    }
+                },
+                success: function (complete) {
+                    mediator.on('modules:participation:clicked', function (){
+                        // Data lake
+                        complete();
+
+                        // Omniture
+                        getOmniture().then(function (omniture) {
+                            omniture.trackLinkImmediate('ab | participationStarRatings | star-rating');
+                        });
+                    });
+                }
             }
         ];
     };
