@@ -18,7 +18,6 @@ object Tag {
     val javascriptConfigOverrides: Map[String, JsValue] = Map(
       ("keywords", JsString(tag.webTitle)),
       ("keywordIds", JsString(tag.id)),
-      ("contentType", JsString("Tag")),
       ("references", JsArray(tag.references.map(ref => Reference.toJavaScript(ref.id))))
     )
 
@@ -43,6 +42,7 @@ object Tag {
       adUnitSuffix = AdSuffixHandlingForFronts.extractAdUnitSuffixFrom(tag.id, tag.sectionId),
       description = tag.description,
       pagination = pagination,
+      contentType = "Tag",
       isFront = true,
       rssPath = Some(s"/${tag.id}/rss"),
       iosType = tag.sectionId match {
