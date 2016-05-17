@@ -26,8 +26,6 @@ trait Requests {
 
     lazy val isEmail: Boolean = r.path.endsWith(EMAIL_SUFFIX)
 
-    lazy val isOpenGraphTest: Boolean = r.getQueryString("page").isDefined
-
     lazy val isModified = isJson || isRss || isEmail
 
     lazy val pathWithoutModifiers: String =

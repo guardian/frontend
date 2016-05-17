@@ -14,7 +14,6 @@ import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
 import model.content.{Atoms, Quiz}
 import model.pressed._
-import mvt.ABOpenGraphOverlay
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
@@ -74,8 +73,7 @@ final case class Content(
   hasStoryPackage: Boolean,
   rawOpenGraphImage: String,
   sensitive: Boolean,
-  showFooterContainers: Boolean = false,
-  showOverlayTest: Boolean = false
+  showFooterContainers: Boolean = false
 ) {
 
   lazy val isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(metadata.id)
@@ -111,7 +109,7 @@ final case class Content(
     cardStyle == Feature && tags.hasLargeContributorImage && tags.contributors.length == 1
 
   // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
-  lazy val openGraphImage = {
+  lazy val openGraphImage: String = {
     ImgSrc(rawOpenGraphImage, FacebookOpenGraphImage)
   }
 

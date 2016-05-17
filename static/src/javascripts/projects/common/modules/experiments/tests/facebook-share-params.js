@@ -9,8 +9,8 @@ define([
         this.expiry = '2016-06-13';
         this.author = 'Kate Whalen';
         this.description = 'Change the URL sent to the facebook crawler to manipulate FB caching';
-        this.audience = 1;
-        this.audienceOffset = 0.75;
+        this.audience = 0;
+        this.audienceOffset = 0;
         this.successMeasure = 'We want to see how image branding affects Facebook shares and click-through';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = 'Open Graph';
@@ -42,13 +42,12 @@ define([
             {
                 id: 'variant',
                 test: function () {
-                    alterFacebookShareItems('?page=variant');
+                    alterFacebookShareItems('?page=facebookOverlayTest');
                 }
             },
             {
                 id: 'control',
                 test: function () {
-                    alterFacebookShareItems('?page=control');
                 }
             }
         ];

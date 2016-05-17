@@ -1,7 +1,7 @@
 package controllers
 
 import _root_.liveblog.LiveBlogCurrentPage
-import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
+import com.gu.contentapi.client.model.v1.{Content => ApiContent, ItemResponse}
 import common._
 import contentapi.ContentApiClient
 import conf.switches.Switches
@@ -176,9 +176,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
    * @return Either[PageWithStoryPackage, Result]
    */
   def responseToModelOrResult(pageParam: Option[String])(response: ItemResponse)(implicit request: RequestHeader): Either[PageWithStoryPackage, Result] = {
-
     val supportedContent = response.content.filter(isSupported).map(Content(_))
-
     val page = pageParam.map(ParseBlockId.apply)
     val supportedContentResult = ModelOrResult(supportedContent, response)
     val content: Either[PageWithStoryPackage, Result] = supportedContentResult.left.flatMap { content =>

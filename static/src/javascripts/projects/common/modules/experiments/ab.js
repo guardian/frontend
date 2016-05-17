@@ -281,8 +281,8 @@ define([
         }
     }
 
-    function isTestSwitchedOn() {
-        return true;
+    function isTestSwitchedOn(test) {
+        return config.switches['ab' + test.id];
     }
 
     function getTestVariantId(testId) {

@@ -25,7 +25,7 @@ object ABOpenGraphOverlay extends TestDefinition(
   sellByDate = new LocalDate(2016, 6, 29)
 ) {
   override def isParticipating(implicit request: RequestHeader): Boolean = {
-    request.queryString.get("page").exists(_.contains("overlay")) && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
+    request.queryString.get("page").exists(_.contains("facebookOverlayTest")) && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
   }
 }
 
