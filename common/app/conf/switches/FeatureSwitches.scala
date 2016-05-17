@@ -345,7 +345,7 @@ trait FeatureSwitches {
     // Owner: Frank Longden
   val ArticleBadgesSwitch = Switch(
     SwitchGroup.Feature,
-    "eu-referendum",
+    "article-header-badge",
     "When ON, articles specified in the badges file will have visual elements added",
     safeState = On,
     sellByDate = new LocalDate(2017, 2, 28),
