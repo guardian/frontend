@@ -361,8 +361,8 @@ $hosted-stripe: 28px;
 
 .hosted__label {
     float: left;
-    margin-left: 115px;
-    margin-top: 31px;
+    margin-left: 110px;
+    margin-top: 29px;
     color: #ffffff;
     border: 0;
 
@@ -374,10 +374,10 @@ $hosted-stripe: 28px;
 .hosted__label-btn {
     @include f-headlineSans;
 
+    font-size: 16px;
+
     .inline-icon {
-        display: inline-block;
-        vertical-align: middle;
-        padding: 2px 0 0 2px;
+        padding-left: 2px;
     }
 
     &.popup__toggle {
@@ -392,7 +392,7 @@ $hosted-stripe: 28px;
 
 .hosted__popup {
     top: 110%;
-    left: 200%;
+    left: 174%;
     background: #ffffff;
     color: $neutral-1;
     text-align: left;
