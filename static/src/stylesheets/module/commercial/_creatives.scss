@@ -783,6 +783,10 @@
     }
 }
 
+.creative--fluid250__height--fixed {
+    height: 250px;
+}
+
 @include mq(tablet) {
     .top-banner-ad-container .ad-slot--top-banner-ad__fluid250,
     .top-banner-ad-container .ad-slot--top-banner-ad__fabric-v1 {
