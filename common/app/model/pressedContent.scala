@@ -54,7 +54,7 @@ final case class CollectionConfig(
   showTimestamps: Boolean,
   hideShowMore: Boolean
 ) {
-  def showBranding = metadata contains Branded
+  def showBranding = metadata exists (_ contains Branded)
 }
 
 object CardStyle {
