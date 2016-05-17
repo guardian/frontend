@@ -9,7 +9,6 @@ import facebookimages.openGraphOverlay
 import model.Cached.WithoutRevalidationResult
 import model._
 import model.liveblog.{BodyBlock, KeyEventData}
-import mvt.ABOpenGraphOverlay
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.functional.syntax._
@@ -190,10 +189,10 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
         case (article: Article, None) =>
           if(mvt.ABOpenGraphOverlay.isParticipating) {
             val newArticle = openGraphOverlay.overlayImage(article)
-            Left(ArticlePage(newArticle, RelatedContent(newArticle, response)))
+            Left(ArticlePage(newArticle, StoryPackages(newArticle, response)))
           }
           else {
-            Left(ArticlePage(article, RelatedContent(article, response)))
+            Left(ArticlePage(article, StoryPackages(article, response)))
           }
         case _ =>
           Right(NotFound)
