@@ -8,7 +8,6 @@ define([
     'common/utils/defer-to-analytics',
     'common/modules/video/events',
     'common/modules/video/supportedBrowsers',
-    'bootstraps/enhanced/media/video-player',
     'text!common/views/ui/loading.html'
 ], function (
     bean,
@@ -16,7 +15,6 @@ define([
     deferToAnalytics,
     events,
     supportedBrowsers,
-    videojs,
     loadingTmpl
 ) {
     var player;
@@ -49,26 +47,31 @@ define([
             return;
         }
 
-        var mediaId = $videoEl.attr('data-media-id');
+        require(['bootstraps/enhanced/media/main'], function () {
+            require(['bootstraps/enhanced/media/video-player'], function(videojs){
 
-        player = videojs($videoEl.get(0), {
-            controls: true,
-            autoplay: false,
-            preload: 'metadata'
-        });
+                var mediaId = $videoEl.attr('data-media-id');
 
-        player.ready(function () {
-            deferToAnalytics(function () {
-                events.initOmnitureTracking(player);
-                events.initOphanTracking(player, mediaId);
+                player = videojs($videoEl.get(0), {
+                    controls: true,
+                    autoplay: false,
+                    preload: 'metadata'
+                });
 
-                events.bindGlobalEvents(player);
-                events.bindContentEvents(player);
+                player.ready(function () {
+                    deferToAnalytics(function () {
+                        events.initOmnitureTracking(player);
+                        events.initOphanTracking(player, mediaId);
+
+                        events.bindGlobalEvents(player);
+                        events.bindContentEvents(player);
+                    });
+
+                    initLoadingSpinner(player);
+                    upgradeVideoPlayerAccessibility(player);
+                    supportedBrowsers(player);
+                });
             });
-
-            initLoadingSpinner(player);
-            upgradeVideoPlayerAccessibility(player);
-            supportedBrowsers(player);
         });
     }
 

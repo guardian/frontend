@@ -17,7 +17,7 @@
 @renderBrandingDataAttributes() = {
     @if(Switches.cardsDecidePaidContainerBranding.isSwitchedOn) {
         @for(container <- maybeContainerModel) {
-            @for(branding <- container.branding) {
+            @for(branding <- container.brandingAttributes) {
                 @for(sponsor <- branding.sponsor){data-sponsor="@sponsor"}
                 @for(seriesId <- branding.seriesId) { data-series="@seriesId" }
                 @for(keywordId <- branding.keywordId) { data-keywords="@keywordId" }
@@ -100,7 +100,7 @@
 
                 case _: Dynamic | _: Fixed => {
                     <div class="fc-container__inner">
-                        @standardContainer(containerDefinition, frontProperties)
+                        @standardContainer(containerDefinition, frontProperties, maybeContainerModel)
                     </div>
                 }
 

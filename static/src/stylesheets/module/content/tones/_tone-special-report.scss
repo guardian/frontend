@@ -18,17 +18,15 @@
 .tonal--tone-special-report {
     // Interactives need help because their headers are not tonal
     &.content--interactive {
-        .commentcount i {
-            @extend %i-comment--tone-neutral2;
-
-            @if $svg-support {
-                .svg & {
-                    @extend %svg-i-comment--tone-neutral2;
-                }
-            }
+        .content__headline {
+            font-weight: normal;
+            color: $neutral-1;
         }
 
-        .tone-colour,
+        .content__series-label__link {
+            color: $neutral-2;
+        }
+
         .content__section-label__link {
             color: $special-report-accent;
         }

@@ -24,7 +24,7 @@ $hosted-stripe: 28px;
 
 .hosted__header {
     width: 100%;
-    height: $gs-row-height + $gs-baseline;
+    height: 58px;
     background-color: $neutral-1;
 }
 
@@ -39,10 +39,7 @@ $hosted-stripe: 28px;
 
 .hosted__headerwrap {
     margin: 0 auto;
-
-    @include mq(tablet) {
-        max-width: gs-span(9) + $gs-gutter * 2;
-    }
+    text-align: right;
 
     @include mq(desktop) {
         max-width: gs-span(12) + $gs-gutter * 2;
@@ -58,22 +55,36 @@ $hosted-stripe: 28px;
 }
 
 .hosted__glogo {
+    display: inline-block;
+    padding: 4px $gs-gutter / 2;
+    background-color: $guardian-brand;
     text-align: right;
-    display: block;
 
     svg {
         fill: #ffffff;
-        width: 170px;
+        width: 135px;
         height: 50px;
     }
 
-    @include mq($until: desktop) {
-        margin-right: $gs-gutter;
+    .inline-logo {
+        display: inline-block;
+        margin-top: -5px;
+    }
 
+    @include mq(tablet) {
         svg {
-            width: 100px;
+            width: 185px;
         }
     }
+}
+
+.hosted__glogotext {
+    @include f-headlineSans;
+    @include font-size(14);
+
+    margin: 0;
+    text-align: left;
+    color: rgba(255, 255, 255, .5);
 }
 
 .hosted__container {
@@ -83,6 +94,19 @@ $hosted-stripe: 28px;
 
     @include mq($until: desktop) {
         padding: 0;
+    }
+}
+
+.hosted__container--content {
+    @include mq($until: leftCol) {
+        display: flex;
+        flex-direction: column-reverse;
+
+        .adverts__header {
+            padding-top: 0;
+            padding-bottom: 0;
+            border-top: 1px solid rgba(0, 0, 0, .2);
+        }
     }
 }
 
@@ -165,7 +189,7 @@ $hosted-stripe: 28px;
 .hosted__meta {
     position: absolute;
     left: $gs-gutter;
-    bottom: 30%;
+    bottom: 15%;
     width: 55%; // Magic. Do not touch.
     color: #ffffff;
 
@@ -272,7 +296,15 @@ $hosted-stripe: 28px;
     line-height: 1.2;
     color: #767676;
 
-    @include mq($until: desktop) {
+    @include mq($until: tablet) {
+        font-size: 14px;
+    }
+
+    @include mq(tablet) {
+        font-size: 18px;
+    }
+
+    @include mq(leftCol) {
         font-size: 14px;
     }
 }
@@ -291,20 +323,38 @@ $hosted-stripe: 28px;
 }
 
 .hosted__standfirst {
-    width: 60%;
+    width: auto;
     padding: $gs-baseline $gs-gutter 0;
 
-    @include mq($until: desktop) {
-        width: auto;
+    @include mq(desktop) {
+        width: 60%;
+        margin-bottom: $gs-gutter * 1.5;
     }
 }
 
 .hosted__social {
     border-top: 0;
-    padding-top: $gs-gutter / 2;
+    padding-left: $gs-gutter / 2;
 
-    @include mq($until: mobileLandscape) {
-        padding: $gs-gutter / 2 $gs-gutter / 2 0 $gs-gutter / 2;
+    @include mq($until: leftCol) {
+        padding: $gs-gutter / 2;
+    }
+
+    @include mq(tablet) {
+        padding-left: 0;
+    }
+
+    @include mq($from: leftCol, $until: wide) {
+        padding-left: $gs-gutter / 2;
+
+        .social__item {
+            min-width: 30px;
+        }
+
+        .social-icon {
+            min-width: 30px;
+            height: 30px;
+        }
     }
 }
 

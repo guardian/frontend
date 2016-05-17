@@ -1,11 +1,12 @@
-@(metaData: model.MetaData)(implicit request: RequestHeader)
+@()(implicit request: RequestHeader)
+@import common.commercial.HostedPage
+@import conf.Static
 
-@import views.html.fragments.inlineSvg
-
-@main(model.HostedPage(metaData)) { } {
+@main(HostedPage) { } {
     <div class="hosted__header">
         <div class="hosted__headerwrap">
             <a href="" class="hosted__glogo">
+                <p class="hosted__glogotext">Hosted by</p>
                 @fragments.inlineSvg("logo-guardian", "logo")
             </a>
         </div>
@@ -13,7 +14,7 @@
     <div class="l-side-margins hosted__side">
         <section class="hosted-tone--dark">
             <div class="adverts hosted__container--full">
-                <div class="hostedbadge hosted-tone-bg--renault">
+                <div class="hostedbadge hostedbadge--shouldscale hosted-tone-bg--renault">
                     <p class="hostedbadge__info">Advertiser content</p>
                     <img class="hostedbadge__logo" src="@Static("images/commercial/logo_renault.jpg")">
                 </div>
@@ -40,7 +41,7 @@
                 </div>
             </div>
         </section>
-        <section class="adverts adverts--legacy hosted__container">
+        <section class="adverts adverts--legacy hosted__container hosted__container--content">
             <header class="adverts__header">
                 <div class="meta__social hosted__social" data-component="share">
                     <ul class="social social--top u-unstyled u-cf" data-component="social">
@@ -96,8 +97,7 @@
         </section>
         <section class="adverts hosted__container--full">
             <div class="hosted__banner" style="background-image: url(@Static("images/commercial/zoe-1.jpg"));">
-                <div class="hostedbadge hostedbadge--pushdown hosted-tone-bg--renault">
-                    <p class="hostedbadge__info">Advertiser content</p>
+                <div class="hostedbadge hostedbadge--shouldscale hostedbadge--pushdown hosted-tone-bg--renault">
                     <img class="hostedbadge__logo" src="@Static("images/commercial/logo_renault.jpg")">
                 </div>
                 <div class="hosted__cta-wrapper">

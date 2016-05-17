@@ -1,5 +1,5 @@
 define([
-    'fastdom',
+    'common/utils/fastdom-promise',
     'common/utils/$',
     'common/utils/config',
     'common/utils/template',
@@ -35,7 +35,7 @@ define([
                 dataAttr: this.$slot.attr('id')
             };
 
-        fastdom.write(function () {
+        return fastdom.write(function () {
             var classList = 'gu-style' + ((this.isContentPage) ? ' gu-style--unboxed' : '');
 
             this.$slot.addClass(classList);
@@ -43,7 +43,7 @@ define([
 
             toggles = new Toggles(this.$slot[0]);
             toggles.init();
-        }.bind(this));
+        }, this);
     };
 
     return Gustyle;

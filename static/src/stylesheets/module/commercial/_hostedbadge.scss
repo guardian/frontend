@@ -1,16 +1,21 @@
 .hostedbadge {
     position: absolute;
-    top: -$gs-gutter;
+    top: -27px;
     left: $gs-gutter;
     width: 80px;
     z-index: $zindex-content;
 
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
+}
+
+.hostedbadge--shouldscale {
     @include mq(desktop) {
-        &.hostedbadge--shouldscale {
-            top: -28px;
-            left: calc(50% - 490px + #{$gs-gutter});
-            width: 132px;
-        }
+        top: -28px;
+        left: calc(50% - 490px + #{$gs-gutter});
+        width: 132px;
     }
 
     @include mq(leftCol) {
@@ -20,14 +25,9 @@
     @include mq(wide) {
         left: calc(50% - 650px + #{$gs-gutter});
     }
-
-    &:hover,
-    &:focus {
-        text-decoration: none;
-    }
 }
 
-.hostedbadge--pusheddown {
+.hostedbadge--pushdown {
     @include mq($until: leftCol) {
         top: 0;
     }
@@ -44,9 +44,10 @@
     text-align: center;
 
     @include mq(desktop) {
-        &.hostedbadge--shouldscale {
+        .hostedbadge--shouldscale & {
             height: 28px;
-            font-size: 14px;
+            padding: 0;
+            font-size: 16px;
             line-height: 28px;
         }
     }

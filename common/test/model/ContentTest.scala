@@ -121,25 +121,11 @@ class ContentTest extends FlatSpec with Matchers with OneAppPerSuite with implic
 
     conf.switches.Switches.MembersAreaSwitch.switchOn()
 
-    val membershipArticle = ApiContent(id = "membership/2015/jan/01/foo",
-      sectionId = None,
-      sectionName = None,
-      webPublicationDate = Some(new DateTime().toCapiDateTime),
-      webTitle = "Some article",
-      webUrl = "http://www.guardian.co.uk/membership/2015/jan/01/foo",
-      apiUrl = "http://content.guardianapis.com/membership/2015/jan/01/foo",
-      tags = List(tag("type/article")),
-      fields = Some(ContentFields(membershipAccess = Some(MembershipTier.MembersOnly))),
-      elements = None
-    )
-
-    Content(membershipArticle).metadata.requiresMembershipAccess should be(true)
-
     val noAccess = article.copy(fields = None)
     Content(noAccess).metadata.requiresMembershipAccess should be(false)
 
-    val outsideMembership = article.copy(fields = Some(ContentFields(membershipAccess = Some(MembershipTier.MembersOnly))))
-    Content(outsideMembership).metadata.requiresMembershipAccess should be(false)
+    val membershipArticle = article.copy(fields = Some(ContentFields(membershipAccess = Some(MembershipTier.MembersOnly))))
+    Content(membershipArticle).metadata.requiresMembershipAccess should be(true)
 
   }
 

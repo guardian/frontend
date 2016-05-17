@@ -2,6 +2,7 @@ import common.CloudWatchApplicationMetrics
 import common.Logback.Logstash
 import common.dfp.DfpAgentLifecycle
 import conf.{Gzipper, SwitchboardLifecycle}
+import controllers.AdminHealthCheckLifeCycle
 import dfp.DfpDataCacheLifecycle
 import model.AdminLifecycle
 import ophan.SurgingContentAgentLifecycle
@@ -21,7 +22,8 @@ object Global extends WithFilters(Gzipper)
   with DfpAgentLifecycle
   with DfpDataCacheLifecycle
   with SoftPurge
-  with Logstash {
+  with Logstash
+  with AdminHealthCheckLifeCycle {
 
   override lazy val applicationName = "frontend-admin"
 

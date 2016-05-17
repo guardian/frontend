@@ -140,6 +140,7 @@
 $mobile-max-container-width: gs-span(8);
 @include mq-add-breakpoint(containerWidestMobile, $mobile-max-container-width + $gs-gutter * 2);
 
+.ad-slot--frame,
 .gu-style {
     width: auto;
     border-top: #fedd79 1px solid;

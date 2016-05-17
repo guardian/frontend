@@ -102,7 +102,6 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
 
   it should "etag should be added" in {
     DoubleCacheTimesSwitch.switchOff()
-    Switches.CheckETagsSwitch.switchOn()
 
     val result = Cached(5, RevalidatableResult(Ok("foo"), "A"), None)
     val headers = result.header.headers
@@ -114,7 +113,6 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
 
   it should "wrong etag should be ignored" in {
     DoubleCacheTimesSwitch.switchOff()
-    Switches.CheckETagsSwitch.switchOn()
 
     val result = Cached(5, RevalidatableResult(Ok("foo"), "A"), Some("""W/"hasheroo""""))
     val headers = result.header.headers
@@ -126,7 +124,6 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
 
   it should "correct etag should not be ignored" in {
     DoubleCacheTimesSwitch.switchOff()
-    Switches.CheckETagsSwitch.switchOn()
 
     val result = Cached(5, RevalidatableResult(Ok("foo"), "A"), Some("""W/"hash96""""))
     val headers = result.header.headers

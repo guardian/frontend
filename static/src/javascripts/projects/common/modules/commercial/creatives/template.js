@@ -6,8 +6,7 @@ define([
     'common/modules/commercial/creatives/template-preprocessor',
 
     // require templates, so they're bundled up as part of the build
-    'text!common/views/commercial/creatives/logo-ad-feature.html',
-    'text!common/views/commercial/creatives/logo-sponsored.html',
+    'text!common/views/commercial/creatives/logo.html',
     'text!common/views/commercial/creatives/manual-inline.html',
     'text!common/views/commercial/creatives/gimbap.html',
     'text!common/views/commercial/creatives/gimbap-simple.html',
@@ -51,7 +50,6 @@ define([
         this.params.arrowRight = svgs('arrowRight', ['i-right']);
         this.params.logoguardian = svgs('logoguardian');
         this.params.marque36iconCreativeMarque = svgs('marque36icon', ['creative__marque']);
-        this.params.logoFeatureLabel = 'Paid for by';
     };
 
     Template.prototype.create = function () {
@@ -71,6 +69,12 @@ define([
                 this.params.creative = 'manual-container';
                 this.params.creativeCard = 'manual-card';
                 this.params.classNames = ['legacy', this.params.toneClass.replace('commercial--', ''), this.params.toneClass.replace('commercial--tone-', '')];
+            } else if (this.params.creative === 'logo-ad-feature') {
+                this.params.creative = 'logo';
+                this.params.type = 'ad-feature';
+            } else if (this.params.creative === 'logo-sponsored') {
+                this.params.creative = 'logo';
+                this.params.type = 'sponsored';
             }
 
             require(['text!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {

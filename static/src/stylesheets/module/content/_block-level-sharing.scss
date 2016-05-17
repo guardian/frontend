@@ -238,48 +238,37 @@
 // Gallery
 
 .block-share--gallery {
-    margin-top: $gs-baseline;
-    white-space: nowrap;
-    clear: both;
-
-    @include mq(tablet, desktop) {
-        position: absolute;
-        top: -$gs-baseline / 3;
-        right: 0;
-
-        .gallery-lightbox & {
-            right: $gs-gutter / 2;
-        }
-    }
+    position: static;
 
     .block-share__item {
-        transition: opacity .15s linear;
+        position: relative;
+        background-color: transparent;
+        border: 1px solid $neutral-2;
+        box-sizing: border-box;
+        transition: border-color .15s ease-out;
+        width: 32px;
+        height: 32px;
+
+        &:hover {
+            background-color: transparent;
+            border-color: $neutral-6;
+        }
+
         .inline-icon {
-            fill: #ffffff;
-        }
-    }
+            fill: $neutral-3;
 
-    .block-share__item--facebook {
-        background-color: $social-facebook;
-
-        &:hover {
-            background-color: colour-hover($social-facebook);
-        }
-    }
-
-    .block-share__item--twitter {
-        background-color: $social-twitter;
-
-        &:hover {
-            background-color: colour-hover($social-twitter);
-        }
-    }
-
-    .block-share__item--pinterest {
-        background-color: $social-pinterest;
-
-        &:hover {
-            background-color: colour-hover($social-pinterest);
+            // Directly referencing the sizes in _social.scss
+            svg {
+                height: 88%;
+                width: 88%;
+                vertical-align: middle;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: 0;
+                margin: auto;
+            }
         }
     }
 }

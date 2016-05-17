@@ -55,7 +55,8 @@ case class ImageAsset(
 
   val width: Int = fields.get("width").map(_.toInt).getOrElse(1)
   val height: Int = fields.get("height").map(_.toInt).getOrElse(1)
-  lazy val ratio: Int = width/height
+  lazy val ratioWholeNumber: Int = width/height
+  lazy val ratioDouble: Double = width.toDouble/height
   val role: Option[String] = fields.get("role")
   val orientation: Orientation = Orientation.fromDimensions(width, height)
 
