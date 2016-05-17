@@ -28,7 +28,7 @@ window.curlConfig = {
             'googletag.js':                      '@{Configuration.javascript.config("googletagJsUrl")}',
             stripe:                              '@Static("javascripts/vendor/stripe/stripe.min.js")',
             react:                               '@Static("javascripts/components/react/react.js")',
-            'facebook.js':                       '//connect.facebook.net/en_US/all.js',
+            'facebook.js':                       '//connect.facebook.net/en_US/sdk/xfbml.ad.js#xfbml=1&version=v2.5',
             'ophan/ng':                          '@{Configuration.javascript.config("ophanJsUrl")}',
             'prebid.js':                         '@Static("javascripts/vendor/prebid/0.8.1/prebid.js")',
 

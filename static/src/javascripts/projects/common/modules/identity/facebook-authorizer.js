@@ -102,7 +102,12 @@ define(function () {
     FacebookAuthorizer.prototype._loadFacebookScript = function () {
         // don't tell Facebook about pages that have not launched yet
         if (!guardian.config.page.isPreview) {
-            require(['js!facebook.js'], this._handleScriptLoaded.bind(this));
+            var ref = document.scripts[0];
+            var script = document.createElement('script');
+            script.id = scriptId;
+            script.src = scriptSrc + '&appId=' + appNetworkId;
+            script.onload = this._handleScriptLoaded.bind(this);
+            ref.parentNode.insertBefore(script, ref);
         }
     };
 
