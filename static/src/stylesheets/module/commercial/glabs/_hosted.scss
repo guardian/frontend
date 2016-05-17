@@ -1,11 +1,21 @@
 $hosted-stripe: 28px;
 
+@mixin hosted-fade-in {
+    opacity: 1;
+    transition: opacity 1s linear;
+}
+
+@mixin hosted-fade-out {
+    opacity: 0;
+    transition: opacity 1s linear;
+}
+
 .hosted-tone--renault {
     color: #ffc421;
 }
 
 .hosted-tone-bg--renault {
-    background-color: #ffc421;   
+    background-color: #ffc421;
 }
 
 .hosted-tone--dark {
@@ -14,7 +24,7 @@ $hosted-stripe: 28px;
 
 .hosted__header {
     width: 100%;
-    height: $gs-row-height + $gs-baseline;
+    height: 58px;
     background-color: $neutral-1;
 }
 
@@ -29,10 +39,7 @@ $hosted-stripe: 28px;
 
 .hosted__headerwrap {
     margin: 0 auto;
-
-    @include mq(tablet) {
-        max-width: gs-span(9) + $gs-gutter * 2;
-    }
+    text-align: right;
 
     @include mq(desktop) {
         max-width: gs-span(12) + $gs-gutter * 2;
@@ -48,22 +55,36 @@ $hosted-stripe: 28px;
 }
 
 .hosted__glogo {
+    display: inline-block;
+    padding: 4px $gs-gutter / 2;
+    background-color: $guardian-brand;
     text-align: right;
-    display: block;
 
     svg {
         fill: #ffffff;
-        width: 170px;
+        width: 135px;
         height: 50px;
     }
 
-    @include mq($until: desktop) {
-        margin-right: $gs-gutter;
+    .inline-logo {
+        display: inline-block;
+        margin-top: -5px;
+    }
 
+    @include mq(tablet) {
         svg {
-            width: 100px;
+            width: 185px;
         }
     }
+}
+
+.hosted__glogotext {
+    @include f-headlineSans;
+    @include font-size(14);
+
+    margin: 0;
+    text-align: left;
+    color: rgba(255, 255, 255, .5);
 }
 
 .hosted__container {
@@ -76,6 +97,19 @@ $hosted-stripe: 28px;
     }
 }
 
+.hosted__container--content {
+    @include mq($until: leftCol) {
+        display: flex;
+        flex-direction: column-reverse;
+
+        .adverts__header {
+            padding-top: 0;
+            padding-bottom: 0;
+            border-top: 1px solid rgba(0, 0, 0, .2);
+        }
+    }
+}
+
 .hosted__container--full {
     @include mq($until: desktop) {
         padding: 0;
@@ -84,34 +118,112 @@ $hosted-stripe: 28px;
 
 .hosted__video {
     vertical-align: top;
+
+    .vjs-big-play-button .vjs-control-text {
+        display: none;
+    }
+
+    //those control buttons will fade in on video play
+    .vjs-fullscreen-control,
+    .vjs-volume-menu-button,
+    .vjs-progress-control {
+        opacity: 0;
+    }
+
+    &.vjs-paused {
+        .vjs-fullscreen-control,
+        .vjs-volume-menu-button,
+        .vjs-progress-control {
+            @include hosted-fade-out;
+        }
+
+        .vjs-control-bar {
+            background-color: unset;
+            transition: background-color 1s linear;
+        }
+    }
+
+    &.vjs-playing {
+        .vjs-fullscreen-control,
+        .vjs-volume-menu-button,
+        .vjs-progress-control {
+            @include hosted-fade-in;
+        }
+
+        .vjs-control-bar {
+            background-color: rgba(25, 25, 25, .8);
+            transition: background-color 1s linear;
+        }
+    }
+
+    .vjs-control-bar {
+        bottom: 0;
+        background-color: unset;
+        font-size: 16px;
+        height: 88px;
+    }
+
+    .vjs-fullscreen-control {
+        margin-top: 30px;
+    }
+
+    .vjs-menu-button {
+        margin-top: 34px;
+
+        .vjs-control-text {
+            font-size: 14px;
+        }
+    }
+
+    .vjs-time-control {
+        padding-top: 21px;
+    }
+
+    &.vjs .vjs-play-control {
+        width: 48px;
+        height: 48px;
+        margin: 20px 10px 20px 20px;
+    }
 }
 
 .hosted__meta {
     position: absolute;
     left: $gs-gutter;
-    bottom: 10%;
+    bottom: 15%;
     width: 55%; // Magic. Do not touch.
     color: #ffffff;
 
-    @include mq(desktop) {
+    @include mq(tablet) {
         bottom: 20%;
+    }
+
+    @include mq(desktop) {
         width: 35%;
         left: calc(50% - 490px + #{$gs-gutter});
     }
 
     @include mq(leftCol) {
+        bottom: 18%;
         left: calc(50% - 570px + #{$gs-gutter});
     }
 
     @include mq(wide) {
         left: calc(50% - 650px + #{$gs-gutter});
     }
+
+    .vjs-playing + & {
+        @include hosted-fade-out;
+    }
+
+    .vjs-paused + & {
+        @include hosted-fade-in;
+    }
 }
 
 // Headings
 .hosted__heading {
     @include f-headlineSans;
-    
+
     font-size: 56px;
     line-height: 54px;
 
@@ -189,7 +301,15 @@ $hosted-stripe: 28px;
     line-height: 1.2;
     color: #767676;
 
-    @include mq($until: desktop) {
+    @include mq($until: tablet) {
+        font-size: 14px;
+    }
+
+    @include mq(tablet) {
+        font-size: 18px;
+    }
+
+    @include mq(leftCol) {
         font-size: 14px;
     }
 }
@@ -208,19 +328,37 @@ $hosted-stripe: 28px;
 }
 
 .hosted__standfirst {
-    width: 60%;
+    width: auto;
     padding: $gs-baseline $gs-gutter 0;
 
-    @include mq($until: desktop) {
-        width: auto;
+    @include mq(desktop) {
+        width: 60%;
+        margin-bottom: $gs-gutter * 1.5;
     }
 }
 
 .hosted__social {
     border-top: 0;
-    padding-top: $gs-gutter / 2;
+    padding-left: $gs-gutter / 2;
 
-    @include mq($until: mobileLandscape) {
-        padding: $gs-gutter / 2 $gs-gutter / 2 0 $gs-gutter / 2;
+    @include mq($until: leftCol) {
+        padding: $gs-gutter / 2;
+    }
+
+    @include mq(tablet) {
+        padding-left: 0;
+    }
+
+    @include mq($from: leftCol, $until: wide) {
+        padding-left: $gs-gutter / 2;
+
+        .social__item {
+            min-width: 30px;
+        }
+
+        .social-icon {
+            min-width: 30px;
+            height: 30px;
+        }
     }
 }

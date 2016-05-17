@@ -93,7 +93,7 @@ object Commercial {
         val content = container.content
         val paidCards = content.initialCards.filter(card => isPaid(card.branding))
 
-        isPaid(container.branding) || paidCards.nonEmpty
+        isPaid(container.brandingAttributes) || paidCards.nonEmpty
       }
 
       !isPaidFront &&

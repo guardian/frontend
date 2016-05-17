@@ -1,10 +1,17 @@
 .hostedbadge {
     position: absolute;
-    top: -$gs-gutter;
+    top: -27px;
     left: $gs-gutter;
     width: 80px;
     z-index: $zindex-content;
 
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
+}
+
+.hostedbadge--shouldscale {
     @include mq(desktop) {
         top: -28px;
         left: calc(50% - 490px + #{$gs-gutter});
@@ -20,26 +27,29 @@
     }
 }
 
-.hostedbadge--pusheddown {
+.hostedbadge--pushdown {
     @include mq($until: leftCol) {
         top: 0;
     }
 }
 
 .hostedbadge__info {
-    @include f-textSans;
+    @include f-headlineSans;
+    @include font-size(13, 11);
 
-    height: 28px;
-    font-size: 14px;
-    line-height: 28px;
+    height: auto;
+    padding: 3px 0 2px;
     color: $neutral-1;
     margin: 0;
     text-align: center;
 
-    @include mq($until: desktop) {
-        height: $gs-gutter;
-        line-height: $gs-gutter;
-        font-size: 8px;
+    @include mq(desktop) {
+        .hostedbadge--shouldscale & {
+            height: 28px;
+            padding: 0;
+            font-size: 16px;
+            line-height: 28px;
+        }
     }
 }
 

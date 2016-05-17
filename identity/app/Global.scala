@@ -17,7 +17,8 @@ object Global extends WithFilters(HeaderLoggingFilter :: StrictTransportSecurity
   with CloudWatchApplicationMetrics
   with IdentityLifecycle
   with SwitchboardLifecycle
-  with Logstash {
+  with Logstash
+  with IdentityHealthCheckLifeCycle {
 
   override lazy val applicationName = "frontend-identity"
 

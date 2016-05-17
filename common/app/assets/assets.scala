@@ -6,8 +6,10 @@ import conf.Configuration
 import org.apache.commons.io.IOUtils
 import play.api.libs.json._
 import play.api.{Mode, Play}
+import play.api.Play.current
 
 import scala.collection.concurrent.{Map => ConcurrentMap, TrieMap}
+import scala.util.control.NonFatal
 
 case class Asset(path: String) {
   val asModulePath = path.replace(".js", "")
@@ -16,56 +18,40 @@ case class Asset(path: String) {
   override def toString = path
 }
 
-class AssetMap(base: String, assetMap: String = "assets/assets.map") {
+class AssetMap(base: String, assetMap: String) extends Logging {
 
-  def apply(path: String): Asset = memoizedAssets(path)
+  def apply(path: String): Asset = try {
+    assets(path)
+  } catch {
+    case NonFatal(e) => {
+      log.error(e.getMessage)
+      if (Play.isDev) {
+        println(e.getMessage)
+      }
+      throw e
+    }
+  }
 
-  def assets(): Map[String, Asset] = {
+  private val assets: Map[String, Asset] = {
 
     def jsonToAssetMap(json: String): Map[String, Asset] = Json.parse(json).validate[Map[String, String]] match {
       case JsSuccess(m, _) => m mapValues { path => Asset(base + path) }
       case JsError(_) => Map.empty
     }
 
-    // Given a map, add a pair for missing entries where key and value are identical
-    def addIfMissing(map: Map[String, Asset], entries: Seq[String]): Map[String, Asset] =
-      entries.foldLeft(map)((accumulator, entry) => accumulator.get(entry) match {
-        case Some(_) => accumulator
-        case None => accumulator + (entry -> Asset(base + entry))
-      })
-    
-    if (Play.current.mode == Mode.Dev) {
-      // Use the grunt-generated asset map in Dev.
-      val assetMapUri = new java.io.File(s"static/hash/assets/assets.map").toURI
-      val serviceWorkerWhitelist = Seq(
-        "javascripts/app.js",
-        "javascripts/enhanced-vendor.js",
-        "javascripts/bootstraps/enhanced/main.js",
-        "javascripts/bootstraps/enhanced/crosswords.js",
-        "javascripts/bootstraps/commercial.js",
-        "javascripts/components/react/react.js"
-      )
-      // We reference these files using the asset map in dev, but because they're not compiled,
-      // they don't exist as entries in the asset map.
-      // To test the service worker in dev, one must compile the JS.
-      val whitelist = Seq(
-        "javascripts/bootstraps/enhanced/ophan.js",
-        "javascripts/bootstraps/admin.js"
-      ) ++ serviceWorkerWhitelist
-      val map = jsonToAssetMap(IOUtils.toString(assetMapUri))
-      addIfMissing(map, whitelist)
-    } else {
-      val url = AssetFinder(assetMap)
-      jsonToAssetMap(IOUtils.toString(url))
-    }
+    val url = AssetFinder(assetMap)
+    jsonToAssetMap(IOUtils.toString(url))
   }
-
-  private lazy val memoizedAssets = assets()
 }
 
 class Assets(base: String) extends Logging {
-  val lookup = new AssetMap(base)
-  def apply(path: String): Asset = lookup(path)
+  lazy val lookup = new AssetMap(base, "assets/assets.map")
+
+  def apply(path: String): Asset = if (Configuration.assets.useHashedBundles) {
+    lookup(path)
+  } else {
+    Asset(base + path)
+  }
 
   object inlineSvg {
 
@@ -161,6 +147,7 @@ class Assets(base: String) extends Logging {
 
      val curl: String = RelativePathEscaper.escapeLeadingDotPaths(inlineJs("assets/curl-domReady.js"))
      val omnitureJs: String = inlineJs("assets/vendor/omniture.js")
+     val analyticsJs: String =  inlineJs("assets/projects/common/modules/analytics/analytics.js")
   }
 }
 
@@ -173,6 +160,9 @@ object AssetFinder {
 }
 
 case class AssetNotFoundException(assetPath: String) extends Exception {
-  override val getMessage: String =
-    s"Cannot find asset $assetPath. Have you got the right path? Or do you need to run 'make compile', or 'make compile-dev'?."
+  override val getMessage: String = if (Configuration.assets.useHashedBundles) {
+    s"Cannot find asset $assetPath. You should run `make compile`."
+  } else {
+    s"Cannot find asset $assetPath. You should run `make compile-dev`."
+  }
 }

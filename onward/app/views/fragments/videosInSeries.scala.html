@@ -1,4 +1,5 @@
-@(videos: List[model.Video], seriesTitle: Option[String], series: String, nextPage: Option[Int], prevPage: Option[Int])(implicit request: RequestHeader)
+@import common.Pagination
+@(videos: List[model.Video], seriesTitle: Option[String], series: String, pagination: Pagination)(implicit request: RequestHeader)
 
 @import views.support.Seq2zipWithRowInfo
 
@@ -19,15 +20,15 @@ data-component="most-viewed-video">
     <div class="u-cf most-viewed-navigation" data-link-name="most-viewed-navigation">
             <!-- TODO: reverse routing - do we support it? -->
             <!-- TODO: Buttons here, not really links, but it's easy for styling -->
-        @prevPage.map{ p =>
-            <a class="most-viewed-navigation__link most-viewed-navigation__link--prev" data-page="@p" data-link-name="prev" href="">
+        @pagination.previous.map { page =>
+            <button class="most-viewed-navigation__button most-viewed-navigation__button--prev" data-page="@page" data-link-name="prev">
             @fragments.inlineSvg("arrow-left", "icon")
-            </a>
+            </button>
         }
-        @nextPage.map{ p =>
-            <a class="most-viewed-navigation__link most-viewed-navigation__link--next" data-page="@p" data-link-name="next" href="">
+        @pagination.next.map { page =>
+            <button class="most-viewed-navigation__button most-viewed-navigation__button--next" data-page="@page" data-link-name="next">
             @fragments.inlineSvg("chevron-right", "icon")
-            </a>
+            </button>
         }
     </div>
 </div>

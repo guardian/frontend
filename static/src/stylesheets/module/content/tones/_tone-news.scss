@@ -17,17 +17,5 @@
     .tone-accent-border {
         border-color: $news-accent;
     }
-
-    // Interactives need help because their headers are not tonal
-    &.content--interactive {
-        .commentcount i {
-            @extend %i-comment--tone-news;
-
-            @if $svg-support {
-                .svg & {
-                    @extend %svg-i-comment--tone-news;
-                }
-            }
-        }
-    }
 }
+

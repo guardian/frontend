@@ -24,7 +24,8 @@ define([
     'common/modules/identity/api',
     'common/utils/url',
     'common/utils/cookies',
-    'common/utils/robust'
+    'common/utils/robust',
+    'common/utils/user-timing'
 ], function (
     raven,
     fastdom,
@@ -38,11 +39,14 @@ define([
     identity,
     url,
     cookies,
-    robust
+    robust,
+    userTiming
 ) {
     return function () {
         var guardian = window.guardian;
         var config = guardian.config;
+
+        userTiming.mark('standard start');
 
         //
         // Raven
@@ -109,6 +113,27 @@ define([
                 raven.captureException(error);
             }
         });
+
+        /*
+         *  Interactive bootstraps.
+         *
+         *  Interactives are content, we want them booting as soon (and as stable) as possible.
+         */
+
+        if (
+            config.switches.bootInteractivesFromMain &&
+            /Article|Interactive|LiveBlog/.test(config.page.contentType)
+        ) {
+            $('figure.interactive').each(function (el) {
+                require($(el).attr('data-interactive'), function (interactive) {
+                    fastdom.defer(function () {
+                        robust.catchErrorsAndLog('interactive-bootstrap', function () {
+                            interactive.boot(el, document, config, mediator);
+                        });
+                    });
+                });
+            });
+        }
 
         //
         // A/B tests
@@ -245,5 +270,7 @@ define([
         } catch (e) {
             // do nothing
         }
+
+        userTiming.mark('standard end');
     };
 });

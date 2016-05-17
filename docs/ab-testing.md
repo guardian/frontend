@@ -27,7 +27,10 @@ val ABFontDelaySwitch = Switch("A/B Tests", "ab-web-fonts-delay",
     safeState = Off)
 ```
 
-The only convention is that the test id has to start with the characters _'ab-'_.
+The convention is that the test id has to start with the characters _'ab-'_.
+
+**The hyphen-separated id that follows `ab-` must correspond to the TitleCased id defined in the JS test module.
+e.g. if the switch id is `ab-geo-most-popular`, the test id must be `GeoMostPopular`**
 
 
 You will notice here that the switches we use to run our AB testing are the same switches we use to toggle features.
@@ -93,7 +96,7 @@ define(['bonzo'], function (bonzo) {
 
 The AMD module must return an object with the following properties,
 
-- `id`: The unique name of the test.
+- `id`: The unique name of the test. **This must be TitleCased and correspond to the hyphen-separated portion of the switch id that follows `ab-`. e.g. if the switch id is `ab-geo-most-popular`, this id must be `GeoMostPopular`**
 - `start`: The planned start date of the test, the day when the test will be turned on.
 - `expiry`: The date on which this test is due to stop running.
 - `author`: The author of the test. They have responsibility for fixing and removing the test.

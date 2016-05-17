@@ -7,6 +7,7 @@ import common.commercial.BrandHunter
 import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
+import conf.switches.Switches.galleryRedesign
 import cricketPa.CricketTeams
 import model.liveblog.BodyBlock
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
@@ -15,7 +16,6 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 import play.api.mvc.RequestHeader
-import conf.switches.Switches.galleryRedesign
 
 object Commercial {
 
@@ -284,7 +284,7 @@ final case class MetaData (
   val isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(id)
 
   val requiresMembershipAccess: Boolean = {
-    conf.switches.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty && url.contains("/membership/")
+    conf.switches.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty
   }
 
   val hasSlimHeader: Boolean = contentType == "Interactive" || section == "identity" || (galleryRedesign.isSwitchedOn && contentType.toLowerCase == "gallery")
@@ -308,7 +308,8 @@ final case class MetaData (
     ("analyticsName", JsString(analyticsName)),
     ("isFront", JsBoolean(isFront)),
     ("isSurging", JsString(isSurging.mkString(","))),
-    ("videoJsFlashSwf", JsString(conf.Static("flash/components/video-js-swf/video-js.swf").path))
+    ("videoJsFlashSwf", JsString(conf.Static("flash/components/video-js-swf/video-js.swf").path)),
+    ("contentType", JsString(contentType))
   )
 
   def opengraphProperties: Map[String, String] = {
@@ -396,14 +397,7 @@ trait ContentPage extends Page {
     item.content.twitterProperties ++
     metadata.twitterPropertiesOverrides
 
-  override def branding(edition: Edition): Option[Branding] = {
-    BrandHunter.findContentBranding(
-      section = None,
-      item.tags,
-      publicationDate = Some(item.trail.webPublicationDate),
-      edition
-    )
-  }
+  override def branding(edition: Edition): Option[Branding] = BrandHunter.findContentBranding(item, edition)
 }
 case class SimpleContentPage(content: ContentType) extends ContentPage {
   override lazy val item: ContentType = content
@@ -427,8 +421,6 @@ trait StandalonePage extends Page {
 }
 
 case class SimplePage(override val metadata: MetaData) extends StandalonePage
-
-case class HostedPage(override val metadata: MetaData) extends StandalonePage
 
 case class CommercialExpiryPage(
   id: String,

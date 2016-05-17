@@ -28,7 +28,7 @@
                                 faciaPage.collections.find {
                                     _.id == containerDefinition.dataId
                                 }.map {
-                                    ContainerModel.fromPressedCollection
+                                    ContainerModel.fromPressedCollection(Edition(request))
                                 }
                             )
                         }

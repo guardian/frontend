@@ -1,6 +1,6 @@
 package controllers
 
-import common.{Edition, ExecutionContexts, JsonComponent, Logging}
+import common._
 import feed.MostViewedVideoAgent
 import model.{Content, Video, Cached}
 import play.api.mvc.{Action, Controller}
@@ -13,13 +13,12 @@ object MostViewedVideoController extends Controller with Logging with ExecutionC
   def renderInSeries(series: String) = Action.async { implicit request =>
     val page = (request.getQueryString("page") getOrElse "1").toInt
     val edition = Edition(request)
-    val nextPage = Some(page + 1)
-    val prevPage = if (page > 1) Some(page - 1) else None
 
     getResponse(ContentApiClient.search(edition)
       .tag(series)
-      .showTags("all")
-      .showFields("all")
+      .contentType("video")
+      .showTags("series")
+      .showFields("headline")
       .page(page)
       .pageSize(6)
     ).map { response =>
@@ -32,9 +31,11 @@ object MostViewedVideoController extends Controller with Logging with ExecutionC
         result.tags.find(tag => tag.id == series).map(tag => tag.webTitle)
       }
 
+      val pagination = Pagination(page, response.pages, response.total)
+
       Cached(900) {
         JsonComponent(
-          "html" -> views.html.fragments.videosInSeries(videos, seriesTitle, series, nextPage, prevPage)
+          "html" -> views.html.fragments.videosInSeries(videos, seriesTitle, series, pagination)
         )
       }
     }

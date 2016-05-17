@@ -20,7 +20,7 @@ package object commercial {
   }
 
   def specificId(implicit request: RequestHeader): Option[String] = request.queryString.get("t").map(_.head)
-  def specificIds(implicit request: RequestHeader): Seq[String] = request.queryString.getOrElse("t", Nil).reverse
+  def specificIds(implicit request: RequestHeader): Seq[String] = request.queryString.getOrElse("t", Nil)
 
   trait Relevance[T] {
     def view(ads: Seq[T])(implicit request: RequestHeader): Html

@@ -43,26 +43,20 @@
 }
 
 .content__headline--immersive {
-    @include fs-headline(9);
     font-weight: 200;
-    line-height: 1;
     padding-bottom: 1.5rem;
-
-    @include mq(desktop) {
-        font-size: 4rem;
-    }
-}
-
-.content__headline--immersive--with-main-media {
-    @include fs-headline(7, true);
-    line-height: 1;
-
-    @include mq(desktop) {
-        font-size: 3.25rem;
-    }
 }
 
 .content--immersive {
+    .content__headline--immersive {
+        @include fs-headline(9);
+        font-weight: 200;
+
+        @include mq(desktop) {
+            font-size: 4rem;
+        }
+    }
+
     .content__series-label {
         @include fs-header(1);
         float: none;
@@ -133,6 +127,12 @@
 
     .content__series-label + .content__headline {
         padding-top: 0;
+    }
+
+    .content__headline--immersive--with-main-media {
+        @include mq(desktop) {
+            font-size: 3.25rem;
+        }
     }
 
     .content__standfirst {

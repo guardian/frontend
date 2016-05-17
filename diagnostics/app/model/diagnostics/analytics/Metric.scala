@@ -19,6 +19,11 @@ object Metric extends Logging {
     ("ad-render", CountMetric("first-ad-rendered", "first-ad-rendered")),
     ("ad-wrapper", CountMetric("dfp-served-ad", "dfp-served-ad")),
 
+    // Commercial audit
+    ("comm-audit-alpha", CountMetric("comm-audit-alpha", "Variant Alpha of ad serve audit")),
+    ("comm-audit-beta", CountMetric("comm-audit-beta", "Variant Beta of ad serve audit")),
+    ("comm-audit-delta", CountMetric("comm-audit-delta", "Variant Delta of ad serve audit")),
+
     // error pages
     ("50x", CountMetric("kpis-user-50x", "beacon on the 50x page that tells us that real users are getting 500 errors")),
     ("404", CountMetric("kpis-user-404", "beacon on the 404 page that tells us that real users are getting 404 not found")),

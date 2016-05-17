@@ -31,6 +31,10 @@
     padding: $gs-gutter/2;
 }
 
+.gu-display__content--hosted {
+    bottom: 0;
+}
+
 .gu-display__link {
     color: #ffffff;
 }
@@ -44,6 +48,14 @@
     text-align: left;
     font-weight: normal;
     margin-bottom: 5px;
+}
+
+.gu-display__content-title--hosted {
+    @include font-size(30, 32);
+
+    width: 80%;
+    margin: 0;
+    font-weight: bold;
 }
 
 .gu-display__content-text {
@@ -128,6 +140,7 @@
 $mobile-max-container-width: gs-span(8);
 @include mq-add-breakpoint(containerWidestMobile, $mobile-max-container-width + $gs-gutter * 2);
 
+.ad-slot--frame,
 .gu-style {
     width: auto;
     border-top: #fedd79 1px solid;
@@ -177,5 +190,28 @@ $mobile-max-container-width: gs-span(8);
 
     @include mq(tablet) {
         max-width: 300px;
+    }
+}
+
+// Hosted (bottom) version 2 - this is purely for testing purposes
+.gu-display--hostedbottom {
+    .gu-display__logo-pos--bottom-right {
+        top: auto;
+        bottom: 49px;
+    }
+
+    .gu-display__content {
+        width: 100%;
+        min-height: 110px;
+        padding-top: $gs-gutter / 2;
+        background-color: #fffcf4;
+    }
+
+    .gu-display__content-title--hosted {
+        @include font-size(22, 24);
+
+        width: 60%;
+        font-weight: normal;
+        color: #333333;
     }
 }

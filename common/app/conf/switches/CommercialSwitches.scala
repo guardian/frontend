@@ -284,15 +284,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val requestOutOfPageSlotAlways = Switch(
-    SwitchGroup.Commercial,
-    "request-out-of-page-slot-always",
-    "If on, the out of page slot (1x1) will be added to each page, regardless of pageskins, surveys or other dependent features",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 12),
-    exposeClientSide =  false
-  )
-
   val highMerchandisingComponentSwitch = Switch(
     SwitchGroup.Commercial,
     "render-commercial-high-slot-always",
@@ -307,7 +298,7 @@ trait CommercialSwitches {
     "commercial-audit",
     "Audit Ads",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 16),
+    sellByDate = new LocalDate(2016, 5, 23),
     exposeClientSide = true
   )
 

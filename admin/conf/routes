@@ -3,7 +3,7 @@
 # ~~~~
 
 
-GET         /_healthcheck                                                                           controllers.HealthCheck.healthcheck()
+GET         /_healthcheck                                                                           controllers.HealthCheck.healthCheck()
 
 # authentication endpoints
 GET         /login                                                                                  controllers.admin.OAuthLoginController.login
@@ -83,7 +83,6 @@ GET         /commercial/surging                                                 
 GET         /commercial/inline-merchandising                                                        controllers.admin.CommercialController.renderInlineMerchandisingTargetedTags()
 GET         /commercial/high-merchandising                                                          controllers.admin.CommercialController.renderHighMerchandisingTargetedTags()
 GET         /commercial/templates                                                                   controllers.admin.CommercialController.renderCreativeTemplates()
-GET         /commercial/sponsored-containers                                                        controllers.admin.CommercialController.sponsoredContainers()
 GET         /commercial/adunits/toapprove                                                           controllers.admin.CommercialAdUnitController.renderToApprove()
 POST        /commercial/adunits/toapprove                                                           controllers.admin.CommercialAdUnitController.approve()
 GET         /commercial/fluid250                                                                    controllers.admin.CommercialController.renderFluidAds()

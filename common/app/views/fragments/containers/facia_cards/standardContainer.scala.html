@@ -1,15 +1,26 @@
-@(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit request: RequestHeader)
+@import common.commercial.ContainerModel
 @import common.{Edition, Localisation}
 @import conf.switches.Switches.staticBadgesSwitch
 @import views.html.fragments.commercial.contentLogo
 @import views.html.fragments.containers.facia_cards.{containerHeader, showMore, showMoreButton, slice}
 @import views.support.RenderClasses
+@(containerDefinition: layout.FaciaContainer,
+  frontProperties: model.FrontProperties,
+  maybeContainerModel: Option[ContainerModel])(implicit request: RequestHeader)
 
 @containerHeader(containerDefinition, frontProperties)
 
-@if(containerDefinition.index == 0 && staticBadgesSwitch.isSwitchedOn) {
-    @for(branding <- frontProperties.branding(Edition(request))) {
-        @contentLogo(branding)
+@if(staticBadgesSwitch.isSwitchedOn) {
+    @if(containerDefinition.index == 0) {
+        @for(frontBranding <- frontProperties.branding(Edition(request))) {
+            @contentLogo(frontBranding)
+        }
+    } else {
+        @for(containerModel <- maybeContainerModel) {
+            @for(containerBranding <- containerModel.branding) {
+                @contentLogo(containerBranding)
+            }
+        }
     }
 }
 
