@@ -384,6 +384,8 @@ $hosted-stripe: 28px;
         @include mq(desktop) {
             font-size: 46px;
             line-height: 46px;
+            margin-top: -12px;
+            margin-bottom: 10px;
         }
     }
 
