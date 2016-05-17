@@ -1,11 +1,11 @@
 @(page: model.Page, projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader)
-@import common.{Edition, Navigation}
+@import common.{Edition, Navigation, commercial}
 @import conf.switches.Switches._
-@import views.support.Commercial.topBelowNavSlot
-@import views.support.{Commercial, RenderClasses}
-@import model.Page.getContent
-@import model.GalleryPage
 @import layout.ContentWidths.MainMedia
+@import model.GalleryPage
+@import model.Page.getContent
+@import views.support.Commercial.topBelowNavSlot
+@import views.support.{Commercial, ContributorLinks, RenderClasses}
 
 @headerAndTopAds(showAdverts: Boolean, edition: Edition, adBelowNav: Boolean) = {
     @if(!(page.metadata.shouldHideHeaderAndTopAds && getContent(page).exists(_.tags.isArticle))) {
@@ -94,7 +94,7 @@
                     @immersiveMainMedia(page)
                 </div>
             }
-            case page: model.HostedPage => {}
+            case commercial.HostedPage => {}
             case _ => {
                 @headerAndTopAds(showAdverts, edition, adBelowNav)
             }

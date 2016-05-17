@@ -141,6 +141,7 @@ define([
                     && (config.page.hasSuperStickyBanner
                         || config.page.contentType !== 'Interactive'
                         && config.page.contentType !== 'Crossword'
+                        && config.page.contentType !== 'Hosted'
                         && !config.page.isImmersive
                         && !config.page.isUsMinute
                         && !config.page.isAdvertisementFeature

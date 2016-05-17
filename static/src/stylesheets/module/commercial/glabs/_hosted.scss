@@ -55,20 +55,28 @@ $hosted-stripe: 28px;
 }
 
 .hosted__glogo {
-    display: inline-block;
+    height: 50px;
+    overflow: hidden;
     padding: 4px $gs-gutter / 2;
     background-color: $guardian-brand;
     text-align: right;
+    float: right;
 
     svg {
         fill: #ffffff;
-        width: 185px;
+        width: 140px;
         height: 50px;
     }
 
     .inline-logo {
         display: inline-block;
         margin-top: -5px;
+    }
+
+    @include mq(desktop) {
+        svg {
+            width: 185px;
+        }
     }
 }
 
@@ -88,6 +96,17 @@ $hosted-stripe: 28px;
 
     @include mq($until: desktop) {
         padding: 0;
+    }
+}
+
+.hosted__container--content {
+    @include mq($until: leftCol) {
+        display: flex;
+        flex-direction: column-reverse;
+
+        .adverts__header {
+            border-top: 1px solid rgba(0, 0, 0, .2);
+        }
     }
 }
 
@@ -170,7 +189,7 @@ $hosted-stripe: 28px;
 .hosted__meta {
     position: absolute;
     left: $gs-gutter;
-    bottom: 30%;
+    bottom: 15%;
     width: 55%; // Magic. Do not touch.
     color: #ffffff;
 
@@ -280,9 +299,17 @@ $hosted-stripe: 28px;
     @include f-textSans;
 
     line-height: 1.2;
-    color: #767676;
+    color: $neutral-1;
 
-    @include mq($until: desktop) {
+    @include mq($until: tablet) {
+        font-size: 14px;
+    }
+
+    @include mq(tablet) {
+        font-size: 18px;
+    }
+
+    @include mq(leftCol) {
         font-size: 14px;
     }
 }
@@ -293,7 +320,7 @@ $hosted-stripe: 28px;
     margin-top: $gs-row-height / 2;
     font-size: 12px;
     line-height: 1.2;
-    color: #767676;
+    color: $neutral-1;
 }
 
 .hosted__link {
@@ -312,9 +339,66 @@ $hosted-stripe: 28px;
 
 .hosted__social {
     border-top: 0;
-    padding-top: $gs-gutter / 2;
+    padding-left: $gs-gutter / 2;
 
-    @include mq($until: mobileLandscape) {
-        padding: $gs-gutter / 2 $gs-gutter / 2 0 $gs-gutter / 2;
+    @include mq(mobileLandscape) {
+        padding: $gs-gutter / 2 0;
+    }
+
+    @include mq(leftCol) {
+        padding-left: $gs-gutter / 2;
+
+        .social__item {
+            min-width: 30px;
+        }
+
+        .social-icon {
+            min-width: 30px;
+            height: 30px;
+        }
+    }
+}
+
+.hosted__label {
+    float: left;
+    margin-left: 110px;
+    margin-top: 29px;
+    color: #ffffff;
+    border: 0;
+
+    @include mq(desktop) {
+        margin-left: 170px;
+    }
+}
+
+.hosted__label-btn {
+    @include f-headlineSans;
+
+    font-size: 16px;
+
+    .inline-icon {
+        padding-left: 2px;
+    }
+
+    &.popup__toggle {
+        border: 0;
+        padding-bottom: 0;
+
+        svg {
+            fill: #ffffff;
+        }
+    }
+}
+
+.hosted__popup {
+    top: 110%;
+    left: 174%;
+    background: #ffffff;
+    color: $neutral-1;
+    text-align: left;
+
+    &:before {
+        left: 12%;
+        border-bottom-color: #ffffff;
     }
 }
