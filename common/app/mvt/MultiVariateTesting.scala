@@ -117,7 +117,7 @@ object MultiVariateTesting {
 
   sealed case class Variant(name: String)
 
-  private val allVariants = List[Variant]()
+  private[mvt] val allVariants = List[Variant]()
 
   def getVariant(request: RequestHeader): Option[Variant] = {
     val cdnVariant: Option[String] = request.headers.get("X-GU-mvt-variant")
