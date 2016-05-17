@@ -12,7 +12,8 @@ define([
     'text!common/views/experiments/participation/low-friction-complete.html',
     'text!common/views/experiments/participation/low-friction-buttons.html',
     'common/utils/template',
-    'bean'
+    'bean',
+    'common/utils/mediator'
 ], function (
     merge,
     memoize,
@@ -27,7 +28,8 @@ define([
     lowFrictionComplete,
     lowFrictionButtons,
     template,
-    bean
+    bean,
+    mediator
 ) {
 
     var currentState = {
@@ -215,6 +217,8 @@ define([
         });
 
         setUserVote();
+
+        mediator.emit('modules:participation:clicked', currentState.selectedItem);
     };
 
     var bindEvents = function () {
