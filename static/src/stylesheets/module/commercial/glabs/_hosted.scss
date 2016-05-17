@@ -105,8 +105,6 @@ $hosted-stripe: 28px;
         flex-direction: column-reverse;
 
         .adverts__header {
-            padding-top: 0;
-            padding-bottom: 0;
             border-top: 1px solid rgba(0, 0, 0, .2);
         }
     }
@@ -345,6 +343,18 @@ $hosted-stripe: 28px;
 
     @include mq($until: mobileLandscape) {
         padding: $gs-gutter / 2 $gs-gutter / 2 0 $gs-gutter / 2;
+    }
+
+    @include mq(leftCol) {
+
+        .social__item {
+            min-width: 30px;
+        }
+
+        .social-icon {
+            min-width: 30px;
+            height: 30px;
+        }
     }
 }
 
