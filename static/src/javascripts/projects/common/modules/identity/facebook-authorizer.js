@@ -4,6 +4,8 @@ define(function () {
 
     var scriptId = 'facebook-jssdk';
     var scriptSrc = '//connect.facebook.net/en_US/sdk/xfbml.ad.js#xfbml=1&version=v2.5';
+    /* this is temporary and will be removed once we finish testing the FB native ads */
+    var appNetworkId = '978824118882656';
 
     function FacebookAuthorizer(appId) {
         this.appId = appId;

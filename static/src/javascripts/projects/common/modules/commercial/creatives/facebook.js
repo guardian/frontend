@@ -4,9 +4,10 @@ define([
     'common/utils/detect',
     'common/utils/cookies',
     'common/utils/template',
+    'common/utils/report-error',
     'common/modules/commercial/creatives/add-tracking-pixel',
     'text!common/views/commercial/creatives/facebook.html'
-], function(fastdom, detect, cookies, template, addTrackingPixel, facebookStr) {
+], function(fastdom, detect, cookies, template, reportError, addTrackingPixel, facebookStr) {
     var scriptId = 'facebook-jssdk';
     var scriptSrc = '//connect.facebook.net/en_US/sdk/xfbml.ad.js#xfbml=1&version=v2.5';
     var appNetworkId = '978824118882656';
@@ -39,7 +40,11 @@ define([
             FB.Event.subscribe(
                 'ad.error',
                 function(errorCode, errorMessage, placementID) {
-                    //console.log('ad error ' + errorCode + ' at ' + placementID + ': ' + errorMessage);
+                    reportError(new Error('Facebook returned an empty ad response'), {
+                        feature: 'commercial',
+                        placementID: placementID,
+                        errorMessage: errorMessage
+                    }, false);
                 }
             );
         });
@@ -54,7 +59,7 @@ define([
 
             insertFbScript();
         }, this);
-    }
+    };
 
     function insertFbScript() {
         if (document.getElementById(scriptId)) {
