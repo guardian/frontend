@@ -17,8 +17,6 @@ define([
     supportedBrowsers,
     loadingTmpl
 ) {
-
-    var $videoEl = $('.vjs-hosted__video');
     var player;
 
     function initLoadingSpinner(player) {
@@ -43,7 +41,9 @@ define([
     }
 
     function init() {
-        if ($videoEl.length === 0) {
+        var $videoEl = $('.vjs-hosted__video');
+
+        if (!$videoEl.length) {
             return;
         }
 
