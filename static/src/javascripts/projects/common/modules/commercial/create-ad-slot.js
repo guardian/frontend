@@ -107,7 +107,8 @@ define([
         'inline-fabric-top': {
             sizeMappings: {
                 mobile: ('1,1|300,250|' + fabricTopSlot)
-            }
+            },
+            name : 'inline1' // needed for third party passbacks
         }
     };
 
