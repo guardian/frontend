@@ -91,7 +91,16 @@ object HighMerchandisingLineItems {
   implicit val lineItemsFormat = Json.format[HighMerchandisingLineItems]
 }
 
-case class HighMerchandisingLineItem(name: String, id: Long, tags: Seq[String])
+case class HighMerchandisingLineItem(
+  name: String,
+  id: Long,
+  tags: Seq[String],
+  adUnits: Seq[GuAdUnit],
+  customTargetSet: Seq[CustomTargetSet]
+  ) {
+  val customTargets = customTargetSet.map(_.targets)
+  val editions = customTargets.flatMap(sequence => sequence.filter((target) => target.name == "edition")).map(target => target.values)
+}
 
 case class HighMerchandisingLineItems(items: Seq[HighMerchandisingLineItem]) {
   val sortedItems = items.sortBy(_.name)

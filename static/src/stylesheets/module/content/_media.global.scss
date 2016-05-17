@@ -25,13 +25,20 @@
 
     .social-icon {
         overflow: visible; // opacity cuts borders off on chrome otherwise
-    }
+        background-color: transparent;
+        fill: $neutral-3;
+        border: 1px solid $neutral-2;
+        box-sizing: border-box;
+        transition: border-color .15s ease-out;
 
-    .content__headline:before {
-        content: '';
-        display: inline-block;
-        height: .65em;
-        margin-right: .1em;
+        &:hover {
+            background-color: transparent;
+            border-color: $neutral-6;
+        }
+
+        .inline-icon {
+            fill: $neutral-3;
+        }
     }
 
     .content__main-column--video {
@@ -54,7 +61,7 @@
         }
         @include mq(desktop) {
             padding-left: $gs-gutter/2;
-            border-left: 1px solid $neutral-2;
+            border-left: 1px solid $media-mute;
         }
     }
     .content__secondary-column--video {
@@ -82,20 +89,6 @@
         min-height: $gs-row-height * 9;
     }
 }
-.content__headline:before {
-    .content--media--audio & {
-        @include icon(volume-high-white, $with-width: false);
-        width: .8em;
-    }
-    .content--media--video & {
-        content: none;
-    }
-    .content--gallery &,
-    .content--image & {
-        @include icon(camera-white-large, $with-width: false);
-        width: .9em;
-    }
-}
 .content--media--video .inline-video-icon {
     margin-right: .1em;
 }
@@ -108,7 +101,7 @@
    ========================================================================== */
 
 .most-viewed-container--media {
-    border-top: 1px solid $neutral-2;
+    border-top: 1px solid $media-mute;
 
     @include mq($until: desktop) {
         margin-top: $gs-baseline*2;
