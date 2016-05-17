@@ -19,9 +19,13 @@
     } {
         <div class="js-fronts-network-2" data-link-name="fronts-on-articles | network-front | block-2"></div>
     } {
+        <script>
+            console.log(@content.metadata.)
+        </script>
         @if(content.commercial.hasHighMerchandisingTarget) {
             <div class="fc-container fc-container--commercial-high">@fragments.commercial.commercialComponentHigh()</div>
-        } @if(content.commercial.hasHighMerchandisingAdUnitAndTag) {
+        }
+        @if(content.commercial.hasHighMerchandisingAdUnitAndTag) {
             <div>TEST TEST</div>
         }
     } {

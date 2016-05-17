@@ -113,12 +113,15 @@ case class HighMerchandisingLineItemTargetsSeq(lineItems : Seq[HighMerchandising
 
   def hasAdUnitAndTag (adUnitSuffix: String, tags:Seq[Tag]): Boolean = {
 
+    val tagSeq = tags.map(tag => tag.name)
+    val tagSeqModify = tagSeq.map(oldTag => oldTag.replaceAll(" ","-").toLowerCase)
+
     val HighMerchLineItemsWithTagMatch = {
-      tags.flatMap(tag =>
-        lineItems.filter(_.tags.contains(tag.toString))
+      tagSeqModify.flatMap(tag =>
+        lineItems.filter(_.tags.contains(tag))
       )
     }
-    val HighMerchLineItemsWithTagMatchAndAdUnitMatch = HighMerchLineItemsWithTagMatch.filter(_.adUnits.flatMap(ads => ads.path).contains(adUnitSuffix))
+    val HighMerchLineItemsWithTagMatchAndAdUnitMatch: Seq[HighMerchandisingLineItem] = HighMerchLineItemsWithTagMatch.filter(_.adUnits.flatMap(ads => ads.path).contains(adUnitSuffix))
 
     println(HighMerchLineItemsWithTagMatchAndAdUnitMatch)
     HighMerchLineItemsWithTagMatchAndAdUnitMatch.nonEmpty
