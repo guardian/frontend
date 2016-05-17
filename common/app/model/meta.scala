@@ -622,6 +622,10 @@ final case class Tags(
   lazy val isClimateChangeSeries = tags.exists(t => t.id =="environment/series/keep-it-in-the-ground")
   lazy val isUSMinuteSeries = tags.exists(t => t.id == "us-news/series/the-campaign-minute-2016")
 
+  lazy val isUSElection = tags.exists(t => t.id == "us-news/us-elections-2016")
+  lazy val isAusElection = tags.exists(t => t.id == "australia-news/australian-election-2016")
+  lazy val isElection = isUSElection || isAusElection
+
   lazy val keywordIds = keywords.map { _.id }
 
   def javascriptConfig: Map[String, JsValue] = Map(
