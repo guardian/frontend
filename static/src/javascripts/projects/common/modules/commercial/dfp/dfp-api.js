@@ -583,10 +583,6 @@ define([
         return creativeIDs;
     }
 
-    /**
-     * Public functions
-     */
-
     function load() {
         return commercialFeatures.dfpAdvertising ? loadAdvertising() : Promise.resolve();
     }
@@ -651,31 +647,6 @@ define([
             return adverts[key];
         });
     }
-
-    /**
-     * Module
-     */
-    var dfp = {
-        init:           init,
-        loadAds:        load,
-        addSlot:        addSlot,
-
-        // Used privately but exposed only for unit testing
-        getAdverts:     getAdverts,
-        shouldLazyLoad: shouldLazyLoad,
-        getCreativeIDs: getCreativeIDs,
-        checkForBreakout: checkForBreakout,
-
-        // testing
-        reset: function () {
-            displayed = false;
-            rendered = false;
-            adverts = {};
-            slotsToRefresh = [];
-            mediator.off('window:resize', windowResize);
-            hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
-        }
-    };
 
     function parseAd(event) {
         var size,
@@ -754,6 +725,32 @@ define([
                 $(adSlotSelector).remove();
             });
     }
+
+    /**
+     * Module
+     */
+
+    var dfp = {
+        init:           init,
+        loadAds:        load,
+        addSlot:        addSlot,
+
+        // Used privately but exposed only for unit testing
+        getAdverts:     getAdverts,
+        shouldLazyLoad: shouldLazyLoad,
+        getCreativeIDs: getCreativeIDs,
+        checkForBreakout: checkForBreakout,
+
+        // testing
+        reset: function () {
+            displayed = false;
+            rendered = false;
+            adverts = {};
+            slotsToRefresh = [];
+            mediator.off('window:resize', windowResize);
+            hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
+        }
+    };
 
     return dfp;
 
