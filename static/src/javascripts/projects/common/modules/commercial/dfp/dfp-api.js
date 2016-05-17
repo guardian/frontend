@@ -155,9 +155,6 @@ define([
     });
     var prebidEnabled = config.switches.headerBiddingUs && config.page.edition === 'US';
 
-    /**
-     * Initial commands
-     */
     function setListeners() {
         ophanTracking.trackPerformance(googletag, renderStartTime);
 
