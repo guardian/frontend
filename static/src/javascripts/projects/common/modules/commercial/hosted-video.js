@@ -57,7 +57,7 @@ define([
                     autoplay: false,
                     preload: 'metadata'
                 });
-                player.guMediaType = 'Hosted';
+                player.guMediaType = 'video';
 
                 player.ready(function () {
                     deferToAnalytics(function () {
