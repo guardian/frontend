@@ -71,9 +71,12 @@ define([
 
         // Build our participation buttons
         for (var i = 0; i < settings.itemCount; i++) {
-            var templateVars = {};
+            var templateVars = {
+                extraClasses: '',
+                buttonText: ''
+            },
+            buttonTextVal = (settings.buttonTextArray.length > 0 && settings.buttonTextArray[i]) || i + 1;
 
-            templateVars.extraClasses = '';
             templateVars.itemIcon = svgs(settings.itemIconId, [settings.inactiveIconClass]);
 
             if (state.confirming || state.complete) {
@@ -90,7 +93,12 @@ define([
 
             templateVars.itemId = i;
 
-            templateVars.buttonText = 'Choose ' + (settings.buttonTextArray.length && settings.buttonTextArray[i]) || (i + 1);
+            if (!state.complete) {
+                templateVars.buttonText = 'Choose ' + buttonTextVal;
+                templateVars.elType = 'button';
+            } else {
+                templateVars.elType = 'span';
+            }
 
             buttonString += template(lowFrictionButtons, merge(settings.templateVars, templateVars));
         }
@@ -142,6 +150,11 @@ define([
         } else {
             fastdomPromise.write(function() {
                 els.$lowFricContents.html(view);
+
+                if (state.confirming) {
+                    // Move focus to the confirm button
+                    $('.js-participation-low-fric__confirm').focus();
+                }
             });
         }
 

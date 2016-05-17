@@ -6,7 +6,8 @@
 // When we hover our content, we tell the browser
 // that a change may happen soon so it can optimise
 // the paint area
-.participation-low-friction__contents:hover {
+.participation-low-friction__contents:hover,
+.participation-low-friction__contents:focus {
     will-change: transform;
 }
 
@@ -39,6 +40,9 @@
 }
 
 .participation-low-fric--button__is-active:hover .inline-star,
+
+.participation-low-fric--button__is-active:focus .inline-star,
+.participation-low-fric--button__is-active:active .inline-star,
 .participation-low-fric--button__is-highlighted .inline-star {
     fill: #ffce4b;
     opacity: 1;
