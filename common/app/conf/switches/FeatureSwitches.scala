@@ -342,23 +342,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val USElectionSwitch = Switch(
-    SwitchGroup.Feature,
-    "us-election",
-    "When ON, items tagged with us-news/us-elections-2016 will have visual elements added",
-    safeState = On,
-    sellByDate = new LocalDate(2017, 1, 5),
-    exposeClientSide = false
-  )
-  // Owner: Ben Longden
-  val AUSElectionSwitch = Switch(
-    SwitchGroup.Feature,
-    "aus-election",
-    "When ON, items tagged with australia-news/australian-election-2016 will have visual elements added",
-    safeState = On,
-    sellByDate = new LocalDate(2017, 2, 28),
-    exposeClientSide = false
-  )
     // Owner: Frank Longden
   val ArticleBadgesSwitch = Switch(
     SwitchGroup.Feature,
