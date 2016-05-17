@@ -63,27 +63,12 @@ object ABHeadlinesTestControl extends TestDefinition(
     }
 }
 
-object ABIntersperseMultipleStoryPackagesStories extends TestDefinition(
-  List(Variant8), // 1% of our audience
-  "intersperse-multiple-story-packages-stories",
-  "To test if mixing storyPackages stories (when article has more than one storyPackage) results in more clicks",
-  new LocalDate(2016, 5, 17)
-)
-object ABIntersperseMultipleStoryPackagesStoriesControl extends TestDefinition(
-  List(Variant9), // 1% of our audience
-  "intersperse-multiple-story-packages-stories-control",
-  "Control for the intersperse-multiple-story-packages-stories A/B test",
-  new LocalDate(2016, 5, 17)
-)
-
 object ActiveTests extends Tests {
   val tests: Seq[TestDefinition] = List(
     ABOpenGraphOverlay,
     ABNewHeaderVariant,
     ABHeadlinesTestControl,
-    ABHeadlinesTestVariant,
-    ABIntersperseMultipleStoryPackagesStories,
-    ABIntersperseMultipleStoryPackagesStoriesControl
+    ABHeadlinesTestVariant
   )
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
@@ -145,14 +130,7 @@ object MultiVariateTesting {
 
   sealed case class Variant(name: String)
 
-  // buckets 0-7 are removed because they cost $1000+ just in aws bandwidth every month, the rest
-  // will be removed once they're not in use.  In future server side ab tests will be added explicitly
-  // to target only the URLs needed for the time needed.
-  object Variant8 extends Variant("variant-8")
-  object Variant9 extends Variant("variant-9")
-
-  private val allVariants = List(
-    Variant8, Variant9)
+  private[mvt] val allVariants = List[Variant]()
 
   def getVariant(request: RequestHeader): Option[Variant] = {
     val cdnVariant: Option[String] = request.headers.get("X-GU-mvt-variant")
