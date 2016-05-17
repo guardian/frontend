@@ -7,6 +7,7 @@ import common.commercial.BrandHunter
 import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
+import conf.switches.Switches.galleryRedesign
 import cricketPa.CricketTeams
 import model.liveblog.BodyBlock
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
@@ -15,7 +16,6 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 import play.api.mvc.RequestHeader
-import conf.switches.Switches.galleryRedesign
 
 object Commercial {
 
@@ -308,7 +308,8 @@ final case class MetaData (
     ("analyticsName", JsString(analyticsName)),
     ("isFront", JsBoolean(isFront)),
     ("isSurging", JsString(isSurging.mkString(","))),
-    ("videoJsFlashSwf", JsString(conf.Static("flash/components/video-js-swf/video-js.swf").path))
+    ("videoJsFlashSwf", JsString(conf.Static("flash/components/video-js-swf/video-js.swf").path)),
+    ("contentType", JsString(contentType))
   )
 
   def opengraphProperties: Map[String, String] = {

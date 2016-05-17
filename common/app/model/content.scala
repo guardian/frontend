@@ -351,7 +351,6 @@ object Article {
     val bookReviewIsbn = content.isbn.map { i: String => Map("isbn" -> JsString(i)) }.getOrElse(Map())
 
     val javascriptConfig: Map[String, JsValue] = Map(
-      ("contentType", JsString(contentType)),
       ("isLiveBlog", JsBoolean(content.tags.isLiveBlog)),
       ("inBodyInternalLinkCount", JsNumber(content.linkCounts.internal)),
       ("inBodyExternalLinkCount", JsNumber(content.linkCounts.external)),
@@ -479,7 +478,6 @@ object Audio {
     val id = content.metadata.id
     val section = content.metadata.section
     val javascriptConfig: Map[String, JsValue] = Map(
-      "contentType" -> JsString(contentType),
       "isPodcast" -> JsBoolean(content.tags.isPodcast))
 
     val metadata = content.metadata.copy(
@@ -519,7 +517,6 @@ object Video {
     val source: Option[String] = elements.videos.find(_.properties.isMain).flatMap(_.videos.source)
 
     val javascriptConfig: Map[String, JsValue] = Map(
-      "contentType" -> JsString(contentType),
       "isPodcast" -> JsBoolean(content.tags.isPodcast),
       "source" -> JsString(source.getOrElse("")),
       "embeddable" -> JsBoolean(elements.videos.find(_.properties.isMain).map(_.videos.embeddable).getOrElse(false)),
@@ -588,7 +585,6 @@ object Gallery {
       standfirst = fields.standfirst)
     val lightbox = GalleryLightbox(elements, tags, lightboxProperties)
     val javascriptConfig: Map[String, JsValue] = Map(
-      "contentType" -> JsString(contentType),
       "gallerySize" -> JsNumber(lightbox.size),
       "lightboxImages" -> lightbox.javascriptConfig
     )
@@ -785,7 +781,6 @@ object Interactive {
       contentType = contentType,
       analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
-      javascriptConfigOverrides = Map("contentType" -> JsString(contentType)),
       twitterPropertiesOverrides = twitterProperties
     )
     val contentOverrides = content.copy(
@@ -812,7 +807,6 @@ object ImageContent {
       standfirst = fields.standfirst)
     val lightbox = GenericLightbox(content.elements, content.fields, content.trail, lightboxProperties)
     val javascriptConfig: Map[String, JsValue] = Map(
-      "contentType" -> JsString(contentType),
       "lightboxImages" -> lightbox.javascriptConfig
     )
     val metadata = content.metadata.copy(
@@ -849,8 +843,7 @@ object CrosswordContent {
       analyticsName = crossword.id,
       webTitle = crossword.name,
       contentType = contentType,
-      iosType = None,
-      javascriptConfigOverrides = Map("contentType" -> JsString(contentType))
+      iosType = None
     )
 
     val contentOverrides = content.content.copy(metadata = metadata)

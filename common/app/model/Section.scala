@@ -21,7 +21,6 @@ object Section {
         "keywords" -> JsString(webTitle),
         "keywordIds" -> JsString(keywordIds.mkString(",")),
         "hasSuperStickyBanner" -> JsBoolean(PersonalInvestmentsCampaign.isRunning(keywordIds)),
-        "contentType" -> JsString("Section"),
         "isAdvertisementFeature" -> JsBoolean(keywordSponsorship.isAdvertisementFeature)
       )
 
@@ -34,6 +33,7 @@ object Section {
       webTitle = webTitle,
       analyticsName = s"GFE:$sectionName",
       adUnitSuffix = adUnitSuffix,
+      contentType = "Section",
       isFront = true,
       rssPath = Some(s"/$id/rss"),
       iosType = sectionName match {
