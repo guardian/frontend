@@ -286,7 +286,7 @@ trait CommercialSwitches {
 
   val highMerchandisingComponentSwitch = Switch(
     SwitchGroup.Commercial,
-    "optomise-High-Merchandising",
+    "optimise-high-merchandising",
     "If on, server will check tags for high-merchandising target before rendering high-merch slot.",
     safeState = Off,
     sellByDate = new LocalDate(2016,6,8),
