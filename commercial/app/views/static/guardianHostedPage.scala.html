@@ -1,8 +1,8 @@
-@(metaData: model.MetaData)(implicit request: RequestHeader)
+@()(implicit request: RequestHeader)
+@import common.commercial.HostedPage
+@import conf.Static
 
-@import views.html.fragments.inlineSvg
-
-@main(model.HostedPage(metaData)) { } {
+@main(HostedPage) { } {
     <div class="hosted__header">
         <div class="hosted__headerwrap">
             <a href="" class="hosted__glogo">
@@ -41,7 +41,7 @@
                 </div>
             </div>
         </section>
-        <section class="adverts adverts--legacy hosted__container">
+        <section class="adverts adverts--legacy hosted__container hosted__container--content">
             <header class="adverts__header">
                 <div class="meta__social hosted__social" data-component="share">
                     <ul class="social social--top u-unstyled u-cf" data-component="social">
