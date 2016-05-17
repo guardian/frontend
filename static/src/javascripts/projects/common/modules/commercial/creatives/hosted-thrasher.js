@@ -23,11 +23,10 @@ define([
 
         fastdom.write(function () {
             this.$adSlot.append(hostedThrasherTemplate({ data: this.params}));
+            if (this.params.trackingPixel) {
+                addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
+            }
         }, this).then(hostedVideo.init);
-
-        if (this.params.trackingPixel) {
-            addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
-        }
     };
 
     return HostedThrasher;
