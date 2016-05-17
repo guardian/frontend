@@ -196,7 +196,10 @@ define([
         var videoInfo = new Promise(function(resolve) {
             // We only have the canonical URL in videos embedded in articles / main media.
             if (!canonicalUrl) {
-                resolve(false);
+                resolve({
+                    expired: false,
+                    shouldHideAdverts: false
+                });
             } else {
                 ajax({
                     url: canonicalUrl + '/info.json'
