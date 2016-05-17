@@ -7,16 +7,8 @@ trait HighMerchandiseComponentAgent {
 
   protected def highMerchandisingTargetedTags: HighMerchandisingLineItemTargetsSeq
 
-  def hasHighMerchandisingTarget(tags: Seq[Tag]): Boolean = {
-    highMerchandisingComponentSwitch.isSwitchedOff ||
-      (tags exists highMerchandisingTargetedTags.hasTag)
-  }
-
-  def hasHighMerchandisingAdUnit(adUnitSuffix: String) = {
-    highMerchandisingTargetedTags.hasAdUnit(adUnitSuffix)
-  }
-
   def hasHighMerchAdAndTag(adUnitSuffix:String, tags: Seq[Tag]) = {
+    highMerchandisingComponentSwitch.isSwitchedOff ||
     highMerchandisingTargetedTags.hasAdUnitAndTag(adUnitSuffix, tags)
   }
 }

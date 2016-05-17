@@ -108,9 +108,6 @@ case class HighMerchandisingTargetedTagSet(items: Set[String] = Set.empty){
 
 case class HighMerchandisingLineItemTargetsSeq(lineItems : Seq[HighMerchandisingLineItem] = Seq.empty) {
 
-  def hasTag(tag: Tag) = true
-  def hasAdUnit(adUnitSuffix : String)= true
-
   def hasAdUnitAndTag (adUnitSuffix: String, tags:Seq[Tag]): Boolean = {
 
     val tagSeq = tags.map(tag => tag.name)
