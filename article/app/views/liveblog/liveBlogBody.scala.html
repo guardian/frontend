@@ -17,7 +17,7 @@
         <meta itemprop="url" content="@LinkTo(article.metadata.url)">
 
         <header class="content__head tonal__head tonal__head--@toneClass(article)
-                      @if(USElectionSwitch.isSwitchedOn || AUSElectionSwitch.isSwitchedOn) {
+                      @if(ArticleBadgesSwitch.isSwitchedOn) {
                           @if(article.content.tags.isElection) { content__head--election }
                           @if(article.content.tags.isUSElection) { us-election }
                           @if(article.content.tags.isAusElection) { aus-election }
