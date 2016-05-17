@@ -350,11 +350,20 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2017, 1, 5),
     exposeClientSide = false
   )
-  // Owner: Ben Longden 
+  // Owner: Ben Longden
   val AUSElectionSwitch = Switch(
     SwitchGroup.Feature,
     "aus-election",
     "When ON, items tagged with australia-news/australian-election-2016 will have visual elements added",
+    safeState = On,
+    sellByDate = new LocalDate(2017, 2, 28),
+    exposeClientSide = false
+  )
+    // Owner: Frank Longden
+  val ArticleBadgesSwitch = Switch(
+    SwitchGroup.Feature,
+    "eu-referendum",
+    "When ON, articles specified in the badges file will have visual elements added",
     safeState = On,
     sellByDate = new LocalDate(2017, 2, 28),
     exposeClientSide = false
