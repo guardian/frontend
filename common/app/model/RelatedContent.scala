@@ -15,26 +15,9 @@ case class RelatedContentItem (
   faciaContent: PressedContent
 )
 
-case class RelatedContent ( items: Seq[RelatedContentItem], storyPackagesCount: Int = 0) {
+case class RelatedContent (items: Seq[RelatedContentItem]) {
   val hasStoryPackage: Boolean = items.nonEmpty
   val faciaItems: Seq[PressedContent] = items.map(_.faciaContent)
-}
-
-object RelatedContent {
-  def apply(parent: ContentType, response: ItemResponse): RelatedContent = {
-    // It's misleading to use storyPackage here rather than relatedContent. A tidy up should rename this object
-    val storyPackagesContent = response.packages.map { packages =>
-      packages.flatMap { p =>
-        p.articles.map(_.content)
-      }
-    }.getOrElse(List.empty)
-
-    val items = storyPackagesContent.map { item =>
-      val frontendContent = Content(item)
-      RelatedContentItem(frontendContent, FaciaContentConvert.contentToFaciaContent(item))
-    }
-    RelatedContent(items.filterNot(_.content.metadata.id == parent.metadata.id))
-  }
 }
 
 object StoryPackages {
@@ -52,6 +35,6 @@ object StoryPackages {
       val frontendContent = Content(item)
       RelatedContentItem(frontendContent, FaciaContentConvert.contentToFaciaContent(item))
     }
-    RelatedContent(items.filterNot(_.content.metadata.id == parent.metadata.id), response.packages.fold(0)(_.size))
+    RelatedContent(items.filterNot(_.content.metadata.id == parent.metadata.id))
   }
 }

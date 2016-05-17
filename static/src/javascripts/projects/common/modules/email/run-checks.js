@@ -98,8 +98,8 @@ define([
             return page.keywordExists(['Football']) && allowedArticleStructure();
         },
         usBriefing: function () {
-            return (config.page.section === 'us-news' || config.page.series === 'Guardian US briefing') &&
-                allowedArticleStructure();
+            return (config.page.section === 'us-news' && allowedArticleStructure()) ||
+                config.page.series === 'Guardian US briefing';
         },
         ausCampaignCatchup: function () {
             return page.keywordExists([
