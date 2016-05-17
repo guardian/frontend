@@ -2,7 +2,7 @@ package model.pressed
 
 import com.gu.facia.api.utils.FaciaContentUtils
 import com.gu.facia.api.{models => fapi, utils => fapiutils}
-import com.gu.facia.client.models.{Backfill, CollectionConfigJson}
+import com.gu.facia.client.models.{Backfill, Branded, CollectionConfigJson, Metadata}
 import common.Edition
 import common.commercial.BrandHunter
 import model.{Branding, ContentType, SupportedUrl}
@@ -13,6 +13,7 @@ object CollectionConfig {
     CollectionConfig(
       displayName = config.displayName,
       backfill = config.backfill,
+      metadata = config.metadata,
       collectionType = config.collectionType,
       href = config.href,
       description = config.description,
@@ -38,6 +39,7 @@ object CollectionConfig {
 final case class CollectionConfig(
   displayName: Option[String],
   backfill: Option[Backfill],
+  metadata: Option[Seq[Metadata]],
   collectionType: String,
   href: Option[String],
   description: Option[String],
@@ -51,7 +53,9 @@ final case class CollectionConfig(
   excludeFromRss: Boolean,
   showTimestamps: Boolean,
   hideShowMore: Boolean
-)
+) {
+  def showBranding = metadata exists (_ contains Branded)
+}
 
 object CardStyle {
   def make(cardStyle: fapiutils.CardStyle): CardStyle = cardStyle match {
