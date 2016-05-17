@@ -65,35 +65,21 @@ object InlineMerchandisingTargetedTagsReportParser extends Logging {
   }
 }
 
-object HighMerchandisingLineItemSeq {
-
-  implicit val jsonReads = Json.reads[HighMerchandisingLineItem]
-
-  implicit val highMerchandisingTargetedSetWrites = new Writes[HighMerchandisingLineItem] {
-    def writes(items: HighMerchandisingLineItem): JsValue = {
-      Json.obj(
-        "tags" -> items.tags,
-        "adUnits" -> items.adUnitString,
-        "edition" -> items.editions
-      )
-    }
-  }
-}
-
-case class HighMerchandisingLineItemTargetsSeq(lineItems : Seq[HighMerchandisingLineItem] = Seq.empty) {
+case class TargetedHighMerchandisingLineItems(lineItems : Seq[HighMerchandisingLineItem] = Seq.empty) {
 
   def hasAdUnitAndTag (adUnitSuffix: String, tags:Seq[Tag]): Boolean = {
 
-    val tagSeq = tags.map(tag => tag.name)
-    val tagSeqModify = tagSeq.map(oldTag => oldTag.replaceAll(" ","-").toLowerCase)
+      def fixedTagNames = tags map (_.name) map (_.replaceAll(" ","-").toLowerCase)
 
-    val HighMerchLineItemsWithTagMatch = {
-      tagSeqModify.flatMap(tag =>
-        lineItems.filter(_.tags.contains(tag))
-      )
-    }
-    val HighMerchLineItemsWithTagMatchAndAdUnitMatch: Seq[HighMerchandisingLineItem] = HighMerchLineItemsWithTagMatch.filter(_.adUnits.flatMap(ads => ads.path).contains(adUnitSuffix))
-    HighMerchLineItemsWithTagMatchAndAdUnitMatch.nonEmpty
+      def lineItemsWithTagMatch = {
+        fixedTagNames.flatMap(tag =>
+          lineItems.filter(_.tags.contains(tag))
+        )
+      }
+
+      def adUnitInPath(lineItem: HighMerchandisingLineItem): Boolean = lineItem.adUnits.exists(_.path contains adUnitSuffix)
+
+      lineItemsWithTagMatch exists adUnitInPath
   }
 
   def nonEmpty = lineItems.nonEmpty

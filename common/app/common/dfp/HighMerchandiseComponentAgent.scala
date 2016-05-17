@@ -5,7 +5,7 @@ import conf.switches.Switches._
 
 trait HighMerchandiseComponentAgent {
 
-  protected def highMerchandisingTargetedTags: HighMerchandisingLineItemTargetsSeq
+  protected def highMerchandisingTargetedTags: TargetedHighMerchandisingLineItems
 
   def hasHighMerchAdAndTag(adUnitSuffix:String, tags: Seq[Tag]) = {
     highMerchandisingComponentSwitch.isSwitchedOff ||
