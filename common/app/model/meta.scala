@@ -422,8 +422,6 @@ trait StandalonePage extends Page {
 
 case class SimplePage(override val metadata: MetaData) extends StandalonePage
 
-case class HostedPage(override val metadata: MetaData) extends StandalonePage
-
 case class CommercialExpiryPage(
   id: String,
   section: String = "global",
