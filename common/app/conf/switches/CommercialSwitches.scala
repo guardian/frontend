@@ -286,7 +286,7 @@ trait CommercialSwitches {
 
   val highMerchandisingComponentSwitch = Switch(
     SwitchGroup.Commercial,
-    "render-commercial-high-slot-always",
+    "optimise-high-merchandising",
     "If on, server will check tags for high-merchandising target before rendering high-merch slot.",
     safeState = Off,
     sellByDate = new LocalDate(2016,6,8),
@@ -298,7 +298,7 @@ trait CommercialSwitches {
     "commercial-audit",
     "Audit Ads",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 16),
+    sellByDate = new LocalDate(2016, 5, 23),
     exposeClientSide = true
   )
 

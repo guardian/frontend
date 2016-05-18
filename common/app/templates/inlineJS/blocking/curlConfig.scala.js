@@ -7,7 +7,6 @@ window.curlConfig = {
     apiName: 'require',
     paths: {
         @if(Configuration.assets.useHashedBundles) {
-            'enhanced-vendor':                   '@Static("javascripts/enhanced-vendor.js")',
             'bootstraps/enhanced/main':          '@Static("javascripts/bootstraps/enhanced/main.js")',
             'bootstraps/enhanced/crosswords':    '@Static("javascripts/bootstraps/enhanced/crosswords.js")',
             'bootstraps/enhanced/accessibility': '@Static("javascripts/bootstraps/enhanced/accessibility.js")',
@@ -76,7 +75,6 @@ window.curlConfig = {
 
             // These paths are for the pre-fetch-modules.js performance-optimisation module, used by boot.js.
             // The resolved paths are loaded through pre-fetch-modules XHR, not curl, so they don't inherit the standard baseUrl.
-            'enhanced-vendor':                          '@{Configuration.assets.path}javascripts/enhanced-vendor.js',
             'bootstraps/enhanced/main':                 '@{Configuration.assets.path}javascripts/bootstraps/enhanced/main.js',
             'bootstraps/commercial':                    '@{Configuration.assets.path}javascripts/bootstraps/commercial.js',
 

@@ -3,6 +3,7 @@ files:
   ignore:
     # Do not lint external files.
     - 'static/src/stylesheets/components/**/*.scss'
+    - 'static/src/stylesheets/module/commercial/_facebook.scss'
     # The following files are not parseable by the linter, omitting for now.
     # A fix will soon be published in sass-lint 1.6.0.
     - 'static/src/stylesheets/icons/**/*.scss'
