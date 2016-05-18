@@ -1,6 +1,6 @@
 .participation-low-fric {
-    padding-top: 6px;
-    border-top: 1px dotted #dcdcdc;
+    padding-top: $gs-gutter / 4;
+    border-top: 1px dotted $neutral-4;
 }
 
 // When we hover our content, we tell the browser
@@ -43,6 +43,6 @@
 .participation-low-fric--button__is-active:focus .inline-star,
 .participation-low-fric--button__is-active:active .inline-star,
 .participation-low-fric--button__is-highlighted .inline-star {
-    fill: #ffce4b;
+    fill: $comment-support-3;
     opacity: 1;
 }
