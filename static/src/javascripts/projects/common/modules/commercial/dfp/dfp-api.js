@@ -410,8 +410,6 @@ define([
         return prebidEnabled && shouldLazyLoad() && !contains(excludedSlotIds, advert.adSlotId);
     }
 
-
-
     /**
      * REFRESH ON WINDOW RESIZE
      */
