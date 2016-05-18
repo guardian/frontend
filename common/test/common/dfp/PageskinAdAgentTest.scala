@@ -43,12 +43,12 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
   )
 
   private object TestPageskinAdAgent extends PageskinAdAgent {
-    override protected val isProd: Boolean = true
+    override protected val environmentIsProd: Boolean = true
     override protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = examplePageSponsorships
   }
 
   private object NotProductionTestPageskinAdAgent extends PageskinAdAgent {
-    override protected val isProd: Boolean = false
+    override protected val environmentIsProd: Boolean = false
     override protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = examplePageSponsorships
   }
 

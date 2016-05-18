@@ -256,6 +256,17 @@ $hosted-stripe: 28px;
     height: 375px;
     background-size: cover;
 
+    &:after {
+        content: '';
+        width: 100%;
+        height: 100%;    
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 0;
+        background: linear-gradient(transparent 200px, rgba(0, 0, 0, .7));
+    }
+
     @include mq($until: desktop) {
         background-position: center;
     }
@@ -263,6 +274,8 @@ $hosted-stripe: 28px;
 
 .hosted__cta-wrapper {
     width: 40%;
+    position: relative;
+    z-index: 1;
     padding-top: 200px;
     margin-left: 20px;
 }
@@ -310,7 +323,7 @@ $hosted-stripe: 28px;
     }
 
     @include mq(leftCol) {
-        font-size: 14px;
+        font-size: 16px;
     }
 }
 
@@ -339,17 +352,14 @@ $hosted-stripe: 28px;
 
 .hosted__social {
     border-top: 0;
-    padding-left: $gs-gutter / 2;
+    padding: $gs-gutter / 2 0 $gs-gutter / 2 $gs-gutter / 2;
 
-    @include mq($until: leftCol) {
-        padding: $gs-gutter / 2;
+    @include mq(mobileLandscape) {
+        padding: $gs-gutter / 2 0;
     }
 
-    @include mq(tablet) {
-        padding-left: 0;
-    }
-
-    @include mq($from: leftCol, $until: wide) {
+    @include mq(leftCol) {
+        padding-top: 0;
         padding-left: $gs-gutter / 2;
 
         .social__item {
@@ -359,6 +369,137 @@ $hosted-stripe: 28px;
         .social-icon {
             min-width: 30px;
             height: 30px;
+        }
+    }
+}
+
+/*Hosted thrasher*/
+.creative--hosted-video {
+    .gs-container {
+        height: 100%;
+        padding-top: 0;
+    }
+
+    .hosted-video_layer {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        background-repeat: no-repeat;
+    }
+
+    .hosted__heading {
+        @include mq(desktop) {
+            font-size: 46px;
+            line-height: 46px;
+            margin-top: -12px;
+            margin-bottom: 10px;
+        }
+    }
+
+    .hosted__meta {
+        left: $gs-gutter/2;
+        @include mq($until: desktop) {
+            bottom: 15%;
+        }
+    }
+
+    .hosted-video--image-container {
+        height: 339px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+    }
+
+    .hostedbadge {
+        top: 0;
+        left: $gs-gutter/2;
+        @include mq(leftCol) {
+            top: 210px;
+            left: - $left-column - $gs-gutter;
+            width: 112px;
+        }
+        @include mq(wide) {
+            left: - $left-column-wide - $gs-gutter;
+        }
+    }
+
+    .hosted-banner {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        position: absolute;
+        background-image: linear-gradient(to bottom, rgba(238, 238, 238, 0), rgba(0, 0, 0, .4));
+        border-top: 2px solid transparent;
+    }
+
+    .play-button {
+        @include icon(play-32--tone-media);
+        @include mq(desktop) {
+            padding: 9px;
+        }
+        position: absolute;
+        margin: $gs-gutter/2;
+        bottom: 0;
+    }
+}
+
+.hosted__label {
+    float: left;
+    margin-left: 110px;
+    margin-top: 29px;
+    color: #ffffff;
+    border: 0;
+
+    @include mq(desktop) {
+        margin-left: 160px;
+    }
+}
+
+.hosted__label-btn {
+    @include f-headlineSans;
+
+    font-size: 16px;
+
+    .inline-icon {
+        padding-left: 2px;
+    }
+
+    &.popup__toggle {
+        border: 0;
+        padding-bottom: 0;
+
+        svg {
+            fill: #ffffff;
+        }
+    }
+}
+
+.hosted__popup {
+    top: 110%;
+    left: 264%;
+    width: 350px;
+    padding: $gs-gutter / 2 $gs-gutter / 2 $gs-gutter $gs-gutter / 2;
+    background: #ffffff;
+    color: $neutral-1;
+    text-align: left;
+    border-radius: 0;
+
+    &:before {
+        left: 8%;
+        border-bottom-color: #ffffff;
+    }
+
+    @include mq($until: tablet) {
+        width: 250px;
+        left: 125%;
+
+        &:before {
+            left: 29%;
         }
     }
 }

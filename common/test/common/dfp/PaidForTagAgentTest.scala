@@ -61,7 +61,7 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
 
   private object TestPaidForTagAgent extends PaidForTagAgent {
 
-    override protected def isPreview: Boolean = false
+    override protected def environmentIsPreview: Boolean = false
 
     val sponsorships: Seq[PaidForTag] = Seq(
       paidForTag("business-essentials", Sponsored, Keyword, toLineItem(sponsor = Some("spon"))),

@@ -295,6 +295,13 @@ case class ContentCard(
   val analyticsPrefix = s"${cardStyle.toneString} | group-$group${if(displaySettings.isBoosted) "+" else ""}"
 
   val hasInlineSnapHtml = snapStuff.exists(_.embedHtml.isDefined)
+
+  val isMediaLink = mediaType.nonEmpty
+
+  val hasVideoMainMedia = displayElement match {
+    case Some(a: InlineVideo) if (!isMediaLink) => true
+    case _ => false
+  }
 }
 
 case class HtmlBlob(html: Html, customCssClasses: Seq[String], cardTypes: ItemClasses) extends FaciaCard
