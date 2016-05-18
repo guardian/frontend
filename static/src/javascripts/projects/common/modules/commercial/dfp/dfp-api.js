@@ -410,129 +410,7 @@ define([
         return prebidEnabled && shouldLazyLoad() && !contains(excludedSlotIds, advert.adSlotId);
     }
 
-    /**
-     * ADVERT DOMAIN OBJECTS
-     */
 
-    function getAdverts() {
-        return adverts;
-    }
-
-    function getAdvertArray() {
-        return Object.keys(adverts).map(function (key) {
-            return adverts[key];
-        });
-    }
-
-    function Advert($adSlot) {
-        this.isRendered = false;
-        this.isLoading = false;
-        this.adSlotId = $adSlot.attr('id');
-        this.sizes = getAdBreakpointSizes($adSlot);
-        this.slot = defineSlot($adSlot, this.sizes);
-    }
-
-    function getAdBreakpointSizes($adSlot) {
-        var sizes = {};
-        detect.breakpoints.forEach(function (breakpoint) {
-            var data = $adSlot.data(breakpointNameToAttribute(breakpoint.name));
-            if (data) {
-                sizes[breakpoint.name] = createSizeMapping(data);
-            }
-        });
-        return sizes;
-    }
-
-    function breakpointNameToAttribute(breakpointName) {
-        return breakpointName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-    }
-
-    /** A breakpoint can have various sizes assigned to it. You can assign either on
-     * set of sizes or multiple.
-     *
-     * One size       - `data-mobile="300,50"`
-     * Multiple sizes - `data-mobile="300,50|320,50"`
-     */
-    function createSizeMapping(attr) {
-        return map(attr.split('|'), function (size) {
-            return map(size.split(','), Number);
-        });
-    }
-
-    function defineSlot($adSlot, sizes) {
-        var slotTarget     = $adSlot.data('slot-target') || $adSlot.data('name'),
-            adUnitOverride = urlUtils.getUrlVars()['ad-unit'],
-        // if ?ad-unit=x, use that
-            adUnit         = adUnitOverride ?
-                ['/', config.page.dfpAccountId, '/', adUnitOverride].join('') : config.page.adUnit,
-            id             = $adSlot.attr('id'),
-            slot,
-            size,
-            sizeMapping;
-
-        if ($adSlot.data('out-of-page')) {
-            slot = googletag.defineOutOfPageSlot(adUnit, id);
-        } else {
-            sizeMapping = buildSizeMapping(sizes);
-            // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
-            size = uniq(
-                flatten(sizeMapping, true, function (map) { return map[1]; }),
-                function (size) { return size[0] + '-' + size[1]; }
-            );
-            slot = googletag.defineSlot(adUnit, size, id).defineSizeMapping(sizeMapping);
-        }
-
-        if ($adSlot.data('series')) {
-            slot.setTargeting('se', parseKeywords($adSlot.data('series')));
-        }
-
-        if ($adSlot.data('keywords')) {
-            slot.setTargeting('k', parseKeywords($adSlot.data('keywords')));
-        }
-
-        slot.addService(googletag.pubads())
-            .setTargeting('slot', slotTarget);
-
-        // Add to the array of ads to be refreshed (when the breakpoint changes)
-        // only if it's `data-refresh` attribute isn't set to false.
-        if ($adSlot.data('refresh') !== false) {
-            slotsToRefresh.push({
-                $adSlot: $adSlot,
-                slot: slot
-            });
-        }
-
-        return slot;
-    }
-
-    /**
-     * Builds and assigns the correct size map for a slot based on the breakpoints
-     * attached to the element via data attributes.
-     *
-     * A new size map is created for a given slot. We then loop through each breakpoint
-     * defined in the config, checking if that breakpoint has been set on the slot.
-     *
-     * If it has been defined, then we add that size to the size mapping.
-     *
-     */
-    function buildSizeMapping(sizes) {
-        var mapping = googletag.sizeMapping();
-
-        detect.breakpoints.forEach(function (breakpoint) {
-            var sizesForBreakpoint = sizes[breakpoint.name];
-            if (sizesForBreakpoint) {
-                mapping.addSize([breakpoint.width, 0], sizesForBreakpoint);
-            }
-        });
-
-        return mapping.build();
-    }
-
-    function parseKeywords(keywords) {
-        return map((keywords || '').split(','), function (keyword) {
-            return keyword.split('/').pop();
-        });
-    }
 
     /**
      * REFRESH ON WINDOW RESIZE
@@ -756,6 +634,130 @@ define([
 
     function getCreativeIDs() {
         return creativeIDs;
+    }
+
+    /**
+     * ADVERT DOMAIN OBJECTS
+     */
+
+    function getAdverts() {
+        return adverts;
+    }
+
+    function getAdvertArray() {
+        return Object.keys(adverts).map(function (key) {
+            return adverts[key];
+        });
+    }
+
+    function Advert($adSlot) {
+        this.isRendered = false;
+        this.isLoading = false;
+        this.adSlotId = $adSlot.attr('id');
+        this.sizes = getAdBreakpointSizes($adSlot);
+        this.slot = defineSlot($adSlot, this.sizes);
+    }
+
+    function getAdBreakpointSizes($adSlot) {
+        var sizes = {};
+        detect.breakpoints.forEach(function (breakpoint) {
+            var data = $adSlot.data(breakpointNameToAttribute(breakpoint.name));
+            if (data) {
+                sizes[breakpoint.name] = createSizeMapping(data);
+            }
+        });
+        return sizes;
+    }
+
+    function breakpointNameToAttribute(breakpointName) {
+        return breakpointName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+    }
+
+    /** A breakpoint can have various sizes assigned to it. You can assign either on
+     * set of sizes or multiple.
+     *
+     * One size       - `data-mobile="300,50"`
+     * Multiple sizes - `data-mobile="300,50|320,50"`
+     */
+    function createSizeMapping(attr) {
+        return map(attr.split('|'), function (size) {
+            return map(size.split(','), Number);
+        });
+    }
+
+    function defineSlot($adSlot, sizes) {
+        var slotTarget     = $adSlot.data('slot-target') || $adSlot.data('name'),
+            adUnitOverride = urlUtils.getUrlVars()['ad-unit'],
+        // if ?ad-unit=x, use that
+            adUnit         = adUnitOverride ?
+                ['/', config.page.dfpAccountId, '/', adUnitOverride].join('') : config.page.adUnit,
+            id             = $adSlot.attr('id'),
+            slot,
+            size,
+            sizeMapping;
+
+        if ($adSlot.data('out-of-page')) {
+            slot = googletag.defineOutOfPageSlot(adUnit, id);
+        } else {
+            sizeMapping = buildSizeMapping(sizes);
+            // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
+            size = uniq(
+                flatten(sizeMapping, true, function (map) { return map[1]; }),
+                function (size) { return size[0] + '-' + size[1]; }
+            );
+            slot = googletag.defineSlot(adUnit, size, id).defineSizeMapping(sizeMapping);
+        }
+
+        if ($adSlot.data('series')) {
+            slot.setTargeting('se', parseKeywords($adSlot.data('series')));
+        }
+
+        if ($adSlot.data('keywords')) {
+            slot.setTargeting('k', parseKeywords($adSlot.data('keywords')));
+        }
+
+        slot.addService(googletag.pubads())
+            .setTargeting('slot', slotTarget);
+
+        // Add to the array of ads to be refreshed (when the breakpoint changes)
+        // only if it's `data-refresh` attribute isn't set to false.
+        if ($adSlot.data('refresh') !== false) {
+            slotsToRefresh.push({
+                $adSlot: $adSlot,
+                slot: slot
+            });
+        }
+
+        return slot;
+    }
+
+    /**
+     * Builds and assigns the correct size map for a slot based on the breakpoints
+     * attached to the element via data attributes.
+     *
+     * A new size map is created for a given slot. We then loop through each breakpoint
+     * defined in the config, checking if that breakpoint has been set on the slot.
+     *
+     * If it has been defined, then we add that size to the size mapping.
+     *
+     */
+    function buildSizeMapping(sizes) {
+        var mapping = googletag.sizeMapping();
+
+        detect.breakpoints.forEach(function (breakpoint) {
+            var sizesForBreakpoint = sizes[breakpoint.name];
+            if (sizesForBreakpoint) {
+                mapping.addSize([breakpoint.width, 0], sizesForBreakpoint);
+            }
+        });
+
+        return mapping.build();
+    }
+
+    function parseKeywords(keywords) {
+        return map((keywords || '').split(','), function (keyword) {
+            return keyword.split('/').pop();
+        });
     }
 
     /**
