@@ -35,6 +35,16 @@ $hosted-stripe: 28px;
             display: none;
         }
     }
+    @include mq(wide) {
+        &:before,
+        &:after {
+            $size: gs-span(14) + $gs-gutter * 2;
+            width: calc((100% - #{$size}) / 2);
+        }
+        .adverts {
+            padding: 0 calc(50% - 570px);
+        }
+    }
 }
 
 .hosted__headerwrap {
@@ -47,10 +57,6 @@ $hosted-stripe: 28px;
 
     @include mq(leftCol) {
         max-width: gs-span(14) + $gs-gutter * 2;
-    }
-
-    @include mq(wide) {
-        max-width: gs-span($gs-max-columns) + $gs-gutter * 2;
     }
 }
 
@@ -207,10 +213,6 @@ $hosted-stripe: 28px;
         left: calc(50% - 570px + #{$gs-gutter});
     }
 
-    @include mq(wide) {
-        left: calc(50% - 650px + #{$gs-gutter});
-    }
-
     .vjs-playing + & {
         @include hosted-fade-out;
     }
@@ -361,7 +363,8 @@ $hosted-stripe: 28px;
 
 /*Hosted thrasher*/
 .creative--hosted-video {
-    .gs-container {
+    .hosted-video__body {
+        position: relative;
         height: 100%;
         padding-top: 0;
     }
