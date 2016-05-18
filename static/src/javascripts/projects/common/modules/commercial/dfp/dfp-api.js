@@ -689,15 +689,15 @@ define([
     }
 
     function defineSlot($adSlot, sizes) {
-        var slotTarget     = $adSlot.data('slot-target') || $adSlot.data('name'),
-            adUnitOverride = urlUtils.getUrlVars()['ad-unit'],
+        var slotTarget     = $adSlot.data('slot-target') || $adSlot.data('name');
+        var adUnitOverride = urlUtils.getUrlVars()['ad-unit'];
         // if ?ad-unit=x, use that
-            adUnit         = adUnitOverride ?
-                ['/', config.page.dfpAccountId, '/', adUnitOverride].join('') : config.page.adUnit,
-            id             = $adSlot.attr('id'),
-            slot,
-            size,
-            sizeMapping;
+        var adUnit         = adUnitOverride ?
+                ['/', config.page.dfpAccountId, '/', adUnitOverride].join('') : config.page.adUnit;
+        var id             = $adSlot.attr('id');
+        var slot;
+        var size;
+        var sizeMapping;
 
         if ($adSlot.data('out-of-page')) {
             slot = googletag.defineOutOfPageSlot(adUnit, id);
