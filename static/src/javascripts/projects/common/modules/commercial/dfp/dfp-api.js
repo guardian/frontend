@@ -119,9 +119,6 @@ define([
     var googletag;
 
     var renderStartTime = null;
-    var recordFirstAdRendered = once(function () {
-        beacon.beaconCounts('ad-render');
-    });
 
     /**
      * INIT
@@ -166,6 +163,10 @@ define([
 
     function setListeners() {
         ophanTracking.trackPerformance(googletag, renderStartTime);
+
+        var recordFirstAdRendered = once(function () {
+            beacon.beaconCounts('ad-render');
+        });
 
         googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
             rendered = true;
