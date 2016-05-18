@@ -339,17 +339,13 @@ $hosted-stripe: 28px;
 
 .hosted__social {
     border-top: 0;
-    padding-left: $gs-gutter / 2;
+    padding: $gs-gutter / 2 0 $gs-gutter / 2 $gs-gutter / 2;
 
-    @include mq($until: leftCol) {
-        padding: $gs-gutter / 2;
+    @include mq(mobileLandscape) {
+        padding: $gs-gutter / 2 0;
     }
 
-    @include mq(tablet) {
-        padding-left: 0;
-    }
-
-    @include mq($from: leftCol, $until: wide) {
+    @include mq(leftCol) {
         padding-left: $gs-gutter / 2;
 
         .social__item {
