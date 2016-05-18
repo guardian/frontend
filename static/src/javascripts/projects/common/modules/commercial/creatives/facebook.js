@@ -11,7 +11,7 @@ define([
     var scriptId = 'facebook-jssdk';
     var scriptSrc = '//connect.facebook.net/en_US/sdk/xfbml.ad.js#xfbml=1&version=v2.5';
     var adUnits = {
-        mpu: { placementId: '978824118882656_978826235549111', adId: 'fb_ad_root_mpu' }
+        mpu: { placementId: '180444840287_10154600557405288', adId: 'fb_ad_root_mpu' }
     };
     var facebookTpl;
 
