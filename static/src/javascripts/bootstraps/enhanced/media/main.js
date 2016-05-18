@@ -303,8 +303,14 @@ define([
                                         player.ima({
                                             id: mediaId,
                                             adTagUrl: getAdUrl(),
-                                            prerollTimeout: 1000
+                                            prerollTimeout: 1000,
+                                            contribAdsSettings: {
+                                                // This is higher than the `prerollTimeout` to so as not to
+                                                // trigger the `adtimeout` before the `prerollTimeout`.
+                                                timeout: 2000
+                                            }
                                         });
+
                                         player.ima.requestAds();
 
                                         // Video analytics event.
@@ -315,10 +321,6 @@ define([
                             } else {
                                 resolve();
                             }
-
-
-
-
                         } else {
                             player.playlist({
                                 mediaType: 'audio',
