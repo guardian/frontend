@@ -256,6 +256,17 @@ $hosted-stripe: 28px;
     height: 375px;
     background-size: cover;
 
+    &:after {
+        content: '';
+        width: 100%;
+        height: 100%;    
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 0;
+        background: linear-gradient(transparent 200px, rgba(0, 0, 0, .7));
+    }
+
     @include mq($until: desktop) {
         background-position: center;
     }
@@ -263,6 +274,8 @@ $hosted-stripe: 28px;
 
 .hosted__cta-wrapper {
     width: 40%;
+    position: relative;
+    z-index: 1;
     padding-top: 200px;
     margin-left: 20px;
 }
@@ -310,7 +323,7 @@ $hosted-stripe: 28px;
     }
 
     @include mq(leftCol) {
-        font-size: 14px;
+        font-size: 16px;
     }
 }
 
@@ -346,6 +359,7 @@ $hosted-stripe: 28px;
     }
 
     @include mq(leftCol) {
+        padding-top: 0;
         padding-left: $gs-gutter / 2;
 
         .social__item {
@@ -442,7 +456,7 @@ $hosted-stripe: 28px;
     border: 0;
 
     @include mq(desktop) {
-        margin-left: 170px;
+        margin-left: 160px;
     }
 }
 
@@ -467,13 +481,25 @@ $hosted-stripe: 28px;
 
 .hosted__popup {
     top: 110%;
-    left: 174%;
+    left: 264%;
+    width: 350px;
+    padding: $gs-gutter / 2 $gs-gutter / 2 $gs-gutter $gs-gutter / 2;
     background: #ffffff;
     color: $neutral-1;
     text-align: left;
+    border-radius: 0;
 
     &:before {
-        left: 12%;
+        left: 8%;
         border-bottom-color: #ffffff;
+    }
+
+    @include mq($until: tablet) {
+        width: 250px;
+        left: 125%;
+
+        &:before {
+            left: 29%;
+        }
     }
 }
