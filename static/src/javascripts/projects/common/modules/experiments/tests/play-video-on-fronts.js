@@ -8,7 +8,7 @@ define([
     return function () {
         this.id = 'PlayVideoOnFronts';
         this.start = '2016-05-18';
-        this.expiry = '2016-06-25';
+        this.expiry = '2016-05-25';
         this.author = 'James Gorrie';
         this.description = 'Test if autoplaying on fronts is bad.';
         this.audience = 1;
