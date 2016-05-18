@@ -32,6 +32,13 @@ define([
         });
     }
 
+    // Jimmy is good at grammar and JS
+    function possessive(name) {
+        var lastChar = name.substr(-1);
+        var postfix = (lastChar === 's') ? "'" : "'s";
+        return name + postfix;
+    }
+
     return function () {
         this.id = 'ParticipationStarRatings';
         this.start = '2016-05-11';
@@ -46,6 +53,7 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function () {
+            return true
             // Commentable, Film reviews
             return config.page.section === 'film' &&
                 config.page.toneIds === 'tone/reviews' &&
@@ -77,7 +85,7 @@ define([
                             description = '';
 
                         if (config.page.headline && config.page.author) {
-                            description = 'Is your rating the same as ' + config.page.author + ' on "' + config.page.headline + '"?';
+                            description = 'Is your rating the same as ' + possessive(config.page.author) + ' on "' + config.page.headline + '"?';
                         }
 
                         starRatings.init({
