@@ -35,7 +35,7 @@ define([
     // Jimmy is good at grammar and JS
     function possessive(name) {
         var lastChar = name.substr(-1);
-        var postfix = (lastChar === 's') ? "'" : "'s";
+        var postfix = (lastChar === 's') ? '\'' : '\'s';
         return name + postfix;
     }
 
@@ -53,7 +53,6 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function () {
-            return true
             // Commentable, Film reviews
             return config.page.section === 'film' &&
                 config.page.toneIds === 'tone/reviews' &&
