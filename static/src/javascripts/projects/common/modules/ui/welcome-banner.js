@@ -40,11 +40,12 @@ define([
 
         var closeBtn = '<div class="banner-close-icon"><button class="js-welcome-message__item__close button button--tertiary u-faux-block-link__promote" aria-label="Dismiss" data-link-name="close button">' + svgs('closeCentralIcon') + '</button></div>';
 
-        headerDiv.setAttribute('id', 'welcome-banner');
-        headerDiv.setAttribute('data-link-name', 'welcome-banner');
-        headerDiv.setAttribute('style', 'height:' + header.offsetHeight + 'px;');
+        headerDiv.id = 'welcome-banner';
+        headerDiv.style.height = header.offsetHeight + 'px';
         headerDiv.innerHTML = closeBtn + msg;
         headerDiv.className += 'u-faux-block-link__promote';
+
+        headerDiv.setAttribute('data-link-name', 'welcome-banner');
 
         bean.on($(headerDiv)[0], 'click', function () {
             fastdom.write(function () {

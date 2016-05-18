@@ -34,9 +34,9 @@ define([
                     cookies.add(COOKIE_WELCOME_BANNER, 1);
                 }
             }
-            return detect.isBreakpoint({max: 'mobile'}) && firstTimeVisitor &&
+            return detect.isBreakpoint({max: 'mobile'}) && !config.page.isFront && firstTimeVisitor &&
                 !detect.isIOS() && detect.getUserAgent.browser !== 'Safari' &&
-                config.page.edition !== 'UK';
+                config.page.edition === 'US';
         };
 
         this.variants = [{
