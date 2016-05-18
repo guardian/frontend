@@ -7,9 +7,7 @@ define([
     'common/utils/fastdom-promise',
     'common/views/svgs',
     'text!common/views/experiments/participation/low-friction-wrapper.html',
-    'text!common/views/experiments/participation/low-friction-initial.html',
-    'text!common/views/experiments/participation/low-friction-confirming.html',
-    'text!common/views/experiments/participation/low-friction-complete.html',
+    'text!common/views/experiments/participation/low-friction-contents.html',
     'text!common/views/experiments/participation/low-friction-buttons.html',
     'common/utils/template',
     'bean',
@@ -23,9 +21,7 @@ define([
     fastdomPromise,
     svgs,
     lowFrictionWrapper,
-    lowFrictionInitial,
-    lowFrictionConfirming,
-    lowFrictionComplete,
+    lowFrictionContents,
     lowFrictionButtons,
     template,
     bean,
@@ -76,33 +72,14 @@ define([
         // Build our participation buttons
         for (var i = 0; i < settings.itemCount; i++) {
             var templateVars = {
-                extraClasses: '',
-                buttonText: ''
-            },
-            buttonTextVal = (settings.buttonTextArray.length > 0 && settings.buttonTextArray[i]) || i + 1;
-
-            templateVars.itemIcon = svgs(settings.itemIconId, [settings.inactiveIconClass]);
-
-            if (state.confirming || state.complete) {
-                // Add the highlight class to the previous items
-                if ((settings.prevItemsHighlight && state.selectedItem >= i) || state.selectedItem === i) {
-                    templateVars.extraClasses += 'participation-low-fric--button__is-highlighted ';
-                }
-            } else {
-                templateVars.extraClasses += 'participation-low-fric--button__is-active';
-            }
-
-            // We want to use the semantically correct el here
-            templateVars.elType = (state.complete) ? 'span' : 'button';
-
-            templateVars.itemId = i;
-
-            if (!state.complete) {
-                templateVars.buttonText = 'Choose ' + buttonTextVal;
-                templateVars.elType = 'button';
-            } else {
-                templateVars.elType = 'span';
-            }
+                buttonText: 'Choose' +  (settings.buttonTextArray.length > 0 && settings.buttonTextArray[i]) || i + 1,
+                shouldBeActive: !state.confirming && !state.complete,
+                shouldBeHighlighted: (state.confirming || state.complete) &&
+                    ((settings.prevItemsHighlight && state.selectedItem >= i) || state.selectedItem === i),
+                itemIcon: svgs(settings.itemIconId, [settings.inactiveIconClass]),
+                itemId: i,
+                state: state
+            };
 
             buttonString += template(lowFrictionButtons, merge(settings.templateVars, templateVars));
         }
@@ -114,31 +91,15 @@ define([
 
     function render (state) {
 
-        var view;
+        var view = template(lowFrictionContents, merge(settings.templateVars, {
+                buttons: createButtons(state),
+                confirming: state.confirming,
+                complete: state.complete
+            }));
 
         if (state.complete) {
-
-            view = template(lowFrictionComplete, merge(settings.templateVars, {
-                buttons: createButtons(state)
-            }));
-
-            // Remove bindings
             tearDown();
-
-        }  else if (state.confirming) {
-
-            view = template(lowFrictionConfirming, merge(settings.templateVars, {
-                buttons: createButtons(state)
-            }));
-
-        } else {
-
-            view = template(lowFrictionInitial, merge(settings.templateVars, {
-                buttons: createButtons(state)
-            }));
-
         }
-
 
         if (state.initialRender) {
             var fullView = template(lowFrictionWrapper, merge(settings.templateVars, {
@@ -251,9 +212,9 @@ define([
         } else {
             // Set and render initial state
             updateState({});
-        }
 
-        bindEvents(currentState);
+            bindEvents(currentState);
+        }
 
     }
 

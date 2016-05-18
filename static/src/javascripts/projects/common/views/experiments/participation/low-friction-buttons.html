@@ -1,6 +1,10 @@
-<<%=elType%>
-    class="js-participation-low-fric--button participation-low-fric--button participation-low-fric--button__<%=itemClassSuffix%> <%=extraClasses%>"
+<%if (state.complete) { %><span<% } else { %><button<% } %>
+    class="js-participation-low-fric--button
+    participation-low-fric--button
+    participation-low-fric--button__<%=itemClassSuffix%>
+    <%if (shouldBeActive) {%>participation-low-fric--button__is-active<% } %>
+    <%if (shouldBeHighlighted) {%>participation-low-fric--button__is-highlighted<% } %>"
     data-item-id="<%=itemId%>">
     <%=itemIcon%>
-    <span class="u-h"><%=buttonText%></span>
-</<%=elType%>>
+    <% if (!state.complete) {%><span class="u-h"><%=buttonText%></span><% } %>
+<%if (state.complete) { %></span><% } else { %></button><% } %>
