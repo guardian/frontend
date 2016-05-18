@@ -20,10 +20,11 @@ define([
      * 1st visit replace nav bar with banner
      */
     var header = document.getElementById('header'),
-        message1 = '<div class="banner-message"><%=HTML%></div>',
+        message1 = '<div class="banner-message"><span class="line-1"><%=first%></span><span class="line-2"><%=second%></span></div>',
         data = {
             'award-winning': {
-                HTML: '<span class="line-1">award-winning news,</span><span class="line-2">sport and culture</span>'
+                'first': 'award-winning news,',
+                'second': 'sport and culture'
             }
         };
 
@@ -47,7 +48,7 @@ define([
 
         bean.on($(headerDiv)[0], 'click', function () {
             fastdom.write(function () {
-                headerDiv.style.opacity = 0;
+                headerDiv.style.display = 'none';
             });
         });
 
