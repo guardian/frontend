@@ -8,15 +8,12 @@ define([
 
     var CommentBlocker = {};
 
-    CommentBlocker.hideComments = function() {
+    CommentBlocker.hideComments = function(shortUrlSlug) {
 
-        console.log("+++++++++++++++++++++++++++++++ GETIR!!!!!!!!!!!!!!")
-        var shortUrl = (config.page.shortUrl || '').replace('http://gu.com', '');
-            sUrlInt = reduce(shortUrl.split(''), function(sum, ch) {
+        var sUrlInt = shortUrlSlug !== null ? reduce(shortUrlSlug.split(''), function(sum, ch) {
             return sum + ch.charCodeAt(0);
-        }, 0);
+        }, 0) : 2;
 
-        console.log("+++ Code for "  + shortUrl + " " + sUrlInt)
         return sUrlInt % 2 == 0;
     };
 
