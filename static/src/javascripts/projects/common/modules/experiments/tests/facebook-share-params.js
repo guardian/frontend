@@ -5,7 +5,7 @@ define([
 ) {
     return function () {
         this.id = 'FacebookShareParams';
-        this.start = '2016-06-06';
+        this.start = '2016-05-18';
         this.expiry = '2016-06-13';
         this.author = 'Kate Whalen';
         this.description = 'Change the URL sent to the facebook crawler to manipulate FB caching';

@@ -4,8 +4,8 @@ import model.Article
 import views.support.{FacebookOpenGraphImage, ImgSrc}
 
 
-object openGraphOverlay {
-  def overlayImage(article: Article): Article = {
+object ArticleWithOpenGraphOverlay {
+  def apply(article: Article): Article = {
     article.copy(
       content = article.content.copy(
         metadata = article.content.metadata.copy(
