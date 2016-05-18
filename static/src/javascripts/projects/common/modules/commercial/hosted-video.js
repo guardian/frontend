@@ -57,6 +57,7 @@ define([
                     autoplay: false,
                     preload: 'metadata'
                 });
+                player.guMediaType = 'video';
 
                 player.ready(function () {
                     deferToAnalytics(function () {

@@ -432,7 +432,6 @@
 
     .gallery__caption {
         color: $neutral-4;
-        margin-bottom: 0;
 
         @include mq(desktop) {
             padding-right: $gs-gutter / 2;

@@ -14,7 +14,6 @@ define([
     'common/modules/commercial/third-party-tags/audience-science-pql',
     'common/modules/commercial/third-party-tags/imr-worldwide',
     'common/modules/commercial/third-party-tags/remarketing',
-    'common/modules/commercial/third-party-tags/facebook',
     'common/modules/commercial/third-party-tags/krux',
     'common/modules/identity/api',
     'common/modules/commercial/third-party-tags/outbrain',
@@ -33,7 +32,6 @@ define([
     audienceSciencePql,
     imrWorldwide,
     remarketing,
-    facebook,
     krux,
     identity,
     outbrain,
@@ -84,7 +82,6 @@ define([
     function loadOther() {
         imrWorldwide.load();
         remarketing.load();
-        facebook.load();
         krux.load();
     }
 
