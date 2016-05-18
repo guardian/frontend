@@ -3,6 +3,7 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/utils/robust',
+    'common/utils/user-timing',
     'common/modules/commercial/article-aside-adverts',
     'common/modules/commercial/article-body-adverts',
     'common/modules/commercial/badges',
@@ -19,6 +20,7 @@ define([
     config,
     mediator,
     robust,
+    userTiming,
     articleAsideAdverts,
     articleBodyAdverts,
     badges,
@@ -52,6 +54,8 @@ define([
                 return;
             }
 
+            userTiming.mark('commercial start');
+
             var modulePromises = [];
 
             modules.forEach(function (pair) {
@@ -67,6 +71,7 @@ define([
                     ['cm-new-adverts', adverts.init],
                     ['cm-ready', function () {
                         mediator.emit('page:commercial:ready');
+                        userTiming.mark('commercial end')
                     }]
                 ]);
             });
