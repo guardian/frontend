@@ -13,12 +13,12 @@
 
 define([
     'raven',
+    'qwery',
     'fastdom',
     'common/modules/user-prefs',
     'common/modules/experiments/ab',
     'common/modules/ui/images',
     'common/utils/storage',
-    'common/utils/$',
     'common/utils/ajax',
     'common/utils/mediator',
     'common/modules/identity/api',
@@ -28,12 +28,12 @@ define([
     'common/utils/user-timing'
 ], function (
     raven,
+    qwery,
     fastdom,
     userPrefs,
     ab,
     images,
     storage,
-    $,
     ajax,
     mediator,
     identity,
@@ -124,8 +124,8 @@ define([
             config.switches.bootInteractivesFromMain &&
             /Article|Interactive|LiveBlog/.test(config.page.contentType)
         ) {
-            $('figure.interactive').each(function (el) {
-                require($(el).attr('data-interactive'), function (interactive) {
+            qwery('figure.interactive').forEach(function (el) {
+                require([el.getAttribute('data-interactive')], function (interactive) {
                     fastdom.defer(function () {
                         robust.catchErrorsAndLog('interactive-bootstrap', function () {
                             interactive.boot(el, document, config, mediator);
