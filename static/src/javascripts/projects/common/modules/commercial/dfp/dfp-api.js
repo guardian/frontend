@@ -689,11 +689,12 @@ define([
     }
 
     function defineSlot($adSlot, sizes) {
-        var slotTarget     = $adSlot.data('slot-target') || $adSlot.data('name');
+        var slotTarget = $adSlot.data('slot-target') || $adSlot.data('name');
         var adUnitOverride = urlUtils.getUrlVars()['ad-unit'];
         // if ?ad-unit=x, use that
-        var adUnit         = adUnitOverride ?
-                ['/', config.page.dfpAccountId, '/', adUnitOverride].join('') : config.page.adUnit;
+        var adUnit = adUnitOverride ?
+            ['/', config.page.dfpAccountId, '/', adUnitOverride].join('')
+            : config.page.adUnit;
         var id             = $adSlot.attr('id');
         var slot;
         var size;
