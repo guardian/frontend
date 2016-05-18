@@ -2,58 +2,100 @@
    ========================================================================== */
 
 #welcome-banner {
-    color: rgb(170, 220, 230);
-    background: #005689;
+    color: #AADCE6;
+    background: $guardian-brand;
     position: absolute;
     top: 0;
     z-index: 1100;
     width: 100%;
-    font-size: 1.7rem;
-    line-height: 1.65rem;
-    font-family: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;
+    font-family: "Guardian Egyptian Web","Guardian Text Egyptian Web",Georgia,serif;
+    font-size: 1.75rem;
+    line-height: 1.6rem;
     font-weight: 200;
-    letter-spacing: -1px;
     opacity: 0;
-    transition: opacity .5s linear;
+    transition: opacity .5s ease-in-out;
     cursor: pointer;
     border: 0;
     margin: 0;
     padding: 0;
-}
 
-#welcome-banner .banner-message {
-    margin: $gs-gutter/4 $gs-gutter/2;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-}
-
-#welcome-banner .banner-close-icon {
-    position: absolute;
-    left: 0;
-    top: 0;
-}
-
-#welcome-banner span {
-    display: block;
-}
-
-#welcome-banner .pull-left {
-    text-align: left;
-}
-
-#welcome-banner .pull-right {
-    text-align: right;
-}
-
-#welcome-banner .button--tertiary {
-    padding: 0 !important;
-    border: 0;
-}
-
-@include mq($from: tablet) {
-    #welcome-banner {
+    @include mq($from: tablet) {
         display: none;
+    }
+
+    .banner-message {
+        position: absolute;
+        text-align: right;
+        bottom: $gs-baseline/1.7;
+        left: $gs-gutter;
+        right: $gs-gutter;
+
+        @include mq($until: mobileLandscape) {
+            left: $gs-gutter/2;
+            right: $gs-gutter/2;
+        }
+    }
+
+    .banner-close-icon {
+        position: absolute;
+        left: $gs-gutter;
+        top: $gs-baseline/3;
+
+        @include mq($until: mobileLandscape) {
+            left: $gs-gutter/2;
+        }
+
+        .button--tertiary {
+            padding: 0 !important;
+            height: 2rem;
+            width: 2rem;
+            border: 0;
+            background: $guardian-brand-dark;
+
+            .inline-icon {
+                margin-top: 1px;
+            }
+        }
+    }
+
+    span {
+        display: block;
+    }
+
+    .line-1 {
+        margin-right: $gs-gutter*2;
+
+        //Slide left animation
+        animation-name: slideleft;
+        animation-duration: 2s;
+        animation-timing-function: ease-out;
+
+        @keyframes slideleft {
+            from {margin-right: 0;}
+            to {margin-right: $gs-gutter*2;}
+        }
+
+        @include mq($until: 350px) {
+            margin-right: $gs-gutter*1.2;
+
+            @keyframes slideleft {
+                from {margin-right: 0;}
+                to {margin-right: $gs-gutter*1.2;}
+            }
+        }
+    }
+
+    .line-2 {
+        margin-right: 0;
+
+        //Slide right animation
+        animation-name: slideright;
+        animation-duration: 2s;
+        animation-timing-function: ease-out;
+    }
+
+    @keyframes slideright {
+        from {margin-right: $gs-gutter*2;}
+        to {margin-right: 0;}
     }
 }

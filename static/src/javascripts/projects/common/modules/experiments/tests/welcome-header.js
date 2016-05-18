@@ -40,20 +40,9 @@ define([
         this.variants = [{
             id: 'control',
             test: function () {
-
-            }
-        }, {
-            id: 'liberal-newspaper',
-            test: function () {
-                welcomeHeader.showWelcomeMessage(this.id);
             }
         }, {
             id: 'award-winning',
-            test: function () {
-                welcomeHeader.showWelcomeMessage(this.id);
-            }
-        }, {
-            id: 'since-1821',
             test: function () {
                 welcomeHeader.showWelcomeMessage(this.id);
             }
