@@ -22,14 +22,8 @@ define([
     var header = document.getElementById('header'),
         message1 = '<div class="banner-message"><%=HTML%></div>',
         data = {
-            'liberal-newspaper': {
-                HTML: '<span class="pull-left">the world\'s leading</span><span class="pull-right">liberal newspaper</span>'
-            },
             'award-winning': {
-                HTML: '<span class="pull-left">award-winning</span><span class="pull-right">news, sport and culture</span>'
-            },
-            'since-1821': {
-                HTML: '<span class="pull-left">quality news</span><span class="pull-right">since 1821</span>'
+                HTML: '<span class="line-1">award-winning news,</span><span class="line-2">sport and culture</span>'
             }
         };
 
