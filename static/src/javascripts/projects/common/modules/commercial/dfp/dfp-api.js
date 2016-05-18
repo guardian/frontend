@@ -121,6 +121,13 @@ define([
     var renderStartTime = null;
     var prebidEnabled = config.switches.headerBiddingUs && config.page.edition === 'US';
 
+    var windowResize = debounce(
+        function () {
+            // refresh on resize
+            hasBreakpointChanged(refresh);
+        }, resizeTimeout
+    );
+
     /**
      * INIT
      * - Set up dependencies, targeting, and response listeners
@@ -416,12 +423,7 @@ define([
      * REFRESH ON WINDOW RESIZE
      */
 
-    var windowResize = debounce(
-        function () {
-            // refresh on resize
-            hasBreakpointChanged(refresh);
-        }, resizeTimeout
-    );
+
 
     function refresh(breakpoint, previousBreakpoint) {
         googletag.pubads().refresh(
