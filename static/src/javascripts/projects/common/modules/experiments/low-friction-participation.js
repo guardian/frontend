@@ -37,8 +37,9 @@ define([
         complete: false,
         confirming: false,
         selectedItem: null
-    },
-    settings = {
+    };
+
+    var settings = {
         prevItemsHighlight: true, // Add the highlight class the items before the selected one
         itemCount: 5, // Amount of items
         itemIconId: 'star', // SVG icon ID
@@ -51,23 +52,25 @@ define([
             confirmButton: 'Confirm',
             testMessage: 'This is a test. We\'re currently evaluating this as a potential new feature on theguardian.com'
         }
-    },
-    els = {
+    };
+
+    var els = {
         $articleBody: $('.js-article__body'),
         $lowFricContainer: null,
         $lowFricContents: null
-    },
-    prefs = 'gu.lowFricParticipation';
+    };
+
+    var prefs = 'gu.lowFricParticipation';
 
     // Tear everything down
 
-    var tearDown = function () {
+    function tearDown () {
         bean.off(document, 'click.particpation-low-fric');
-    };
+    }
 
     // Mark-up Building
 
-    var createButtons = function (state) {
+    function createButtons (state) {
         var buttonString = '';
 
         // Build our participation buttons
@@ -105,11 +108,11 @@ define([
         }
 
         return buttonString;
-    };
+    }
 
     // Rendering
 
-    var render = function (state) {
+    function render (state) {
 
         var view;
 
@@ -158,18 +161,18 @@ define([
             });
         }
 
-    };
+    }
 
     // State Handling
 
-    var updateState = function (state) {
+    function updateState (state) {
         // Render with merged state
         render(merge(currentState, state));
-    };
+    }
 
     // Getters
 
-    var getUserVote = function () {
+    function getUserVote () {
         if (!storage.local.isStorageAvailable()) {
             return 'no-storage';
         }
@@ -180,11 +183,11 @@ define([
         // Will return result for current page if available
         return votedPages && votedPages[currentPage];
 
-    };
+    }
 
     // Setters
 
-    var setUserVote = function () {
+    function setUserVote () {
         var currentPage = config.page.pageId,
             votedPages = JSON.parse(storage.local.get(prefs));
 
@@ -196,19 +199,19 @@ define([
         votedPages[currentPage] = currentState.selectedItem;
 
         storage.local.set(prefs, JSON.stringify(votedPages));
-    };
+    }
 
     // Binding & Events
 
-    var itemClicked = function (event) {
+    function itemClicked (event) {
         updateState({
             confirming: true,
             selectedItem: $(event.currentTarget).data().itemId,
             initialRender: false
         });
-    };
+    }
 
-    var confirmClicked = function () {
+    function confirmClicked () {
         updateState({
             confirming: false,
             complete: true
@@ -217,16 +220,16 @@ define([
         setUserVote();
 
         mediator.emit('modules:participation:clicked');
-    };
+    }
 
-    var bindEvents = function () {
+    function bindEvents () {
         bean.on(document, 'click.particpation-low-fric', '.js-participation-low-fric--button', itemClicked);
         bean.on(document, 'click.particpation-low-fric', '.js-participation-low-fric__confirm', confirmClicked);
-    };
+    }
 
     // Initalise it.
 
-    var init = function (options) {
+    function init (options) {
         var userVote = getUserVote();
 
         // If we can't store the user's value, don't render
@@ -252,7 +255,7 @@ define([
 
         bindEvents(currentState);
 
-    };
+    }
 
     return {
         init: init
