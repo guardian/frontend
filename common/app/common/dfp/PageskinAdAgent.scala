@@ -37,6 +37,6 @@ trait PageskinAdAgent {
 
   // True if there is any candidate sponsorship for this ad unit. Used to decide when to render the out-of-page ad slot.
   def hasPageSkinOrAdTestPageSkin(adUnitWithoutRoot: String, edition: Edition): Boolean = {
-    findSponsorships(adUnitWithoutRoot, edition) nonEmpty
+    findSponsorships(adUnitWithoutRoot, edition).nonEmpty
   }
 }
