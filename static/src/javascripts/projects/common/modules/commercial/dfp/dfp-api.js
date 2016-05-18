@@ -283,8 +283,8 @@ define([
     }
 
     function isSponsorshipContainerTest() {
-        var sponsorshipIds = ['#dfp-ad--adbadge', '#dfp-ad--spbadge', '#dfp-ad--fobadge', '#dfp-ad--adbadge1', '#dfp-ad--spbadge1', '#dfp-ad--fobadge1', '#dfp-ad--adbadge2', '#dfp-ad--spbadge2', '#dfp-ad--fobadge2', '#dfp-ad--adbadge3', '#dfp-ad--spbadge3', '#dfp-ad--fobadge3', '#dfp-ad--adbadge4', '#dfp-ad--spbadge4', '#dfp-ad--fobadge4', '#dfp-ad--adbadge5', '#dfp-ad--spbadge5', '#dfp-ad--fobadge5'],
-            sponsorshipIdsReturned = [];
+        var sponsorshipIds = ['#dfp-ad--adbadge', '#dfp-ad--spbadge', '#dfp-ad--fobadge', '#dfp-ad--adbadge1', '#dfp-ad--spbadge1', '#dfp-ad--fobadge1', '#dfp-ad--adbadge2', '#dfp-ad--spbadge2', '#dfp-ad--fobadge2', '#dfp-ad--adbadge3', '#dfp-ad--spbadge3', '#dfp-ad--fobadge3', '#dfp-ad--adbadge4', '#dfp-ad--spbadge4', '#dfp-ad--fobadge4', '#dfp-ad--adbadge5', '#dfp-ad--spbadge5', '#dfp-ad--fobadge5'];
+        var sponsorshipIdsReturned = [];
 
         sponsorshipIds.forEach(function (value) {
             if ($(value).length) {
@@ -374,17 +374,19 @@ define([
      */
 
     function addSlot(adSlot) {
-        var $adSlot = bonzo(adSlot),
-            slotId = $adSlot.attr('id'),
-            displayAd = function ($adSlot) {
-                var advert = new Advert($adSlot);
-                adverts[slotId] = advert;
-                if (shouldLazyLoad()) {
-                    enableLazyLoad();
-                } else {
-                    loadSlot(advert);
-                }
-            };
+        var $adSlot = bonzo(adSlot);
+        var slotId = $adSlot.attr('id');
+
+        function displayAd ($adSlot) {
+            var advert = new Advert($adSlot);
+            adverts[slotId] = advert;
+            if (shouldLazyLoad()) {
+                enableLazyLoad();
+            } else {
+                loadSlot(advert);
+            }
+        }
+
         if (displayed && !adverts[slotId]) { // dynamically add ad slot
             // this is horrible, but if we do this before the initial ads have loaded things go awry
             if (rendered) {
@@ -488,11 +490,11 @@ define([
     };
 
     function parseAd(event) {
-        var size,
-            adSlotId = event.slot.getSlotElementId(),
-            $adSlot,
-            $placeholder,
-            $adSlotContent;
+        var size;
+        var adSlotId = event.slot.getSlotElementId();
+        var $adSlot;
+        var $placeholder;
+        var $adSlotContent;
 
         if (event.isEmpty) {
             removeSlot(adSlotId);
