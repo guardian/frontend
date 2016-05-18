@@ -647,8 +647,9 @@ define([
                 $adSlotContent.addClass('ad-slot__content');
             });
 
-            // Check if creative is a new gu style creative and place labels accordingly
-            checkForBreakout($adSlot).then(function () {
+            // Check if creative is a new gu style creative and place labels accordingly.
+            // Use public method so that tests can stub it out.
+            dfp.checkForBreakout($adSlot).then(function () {
                 addLabel($adSlot);
 
                 size = event.size.join(',');
