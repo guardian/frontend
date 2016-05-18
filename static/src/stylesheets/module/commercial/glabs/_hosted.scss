@@ -166,15 +166,15 @@ $hosted-stripe: 28px;
         bottom: 0;
         background-color: unset;
         font-size: 16px;
-        height: 88px;
+        height: 48px;
     }
 
     .vjs-fullscreen-control {
-        margin-top: 30px;
+        margin-top: 14px;
     }
 
     .vjs-menu-button {
-        margin-top: 34px;
+        margin-top: 17px;
 
         .vjs-control-text {
             font-size: 14px;
@@ -182,13 +182,13 @@ $hosted-stripe: 28px;
     }
 
     .vjs-time-control {
-        padding-top: 21px;
+        padding-top: 2px;
     }
 
     &.vjs .vjs-play-control {
-        width: 48px;
-        height: 48px;
-        margin: 20px 10px 20px 20px;
+        width: 37px;
+        height: 37px;
+        margin: 6px 20px 6px $gs-gutter;
     }
 }
 
@@ -213,13 +213,29 @@ $hosted-stripe: 28px;
         left: calc(50% - 570px + #{$gs-gutter});
     }
 
-    .vjs-playing + & {
+}
+
+.vjs-playing + .hosted-fading {
+    .hosted__meta {
         @include hosted-fade-out;
     }
+    @include mq($until: tablet) {
+        .hostedbadge__logo {
+            @include hosted-fade-out;
+        }
+    }
+}
 
-    .vjs-paused + & {
+.vjs-paused + .hosted-fading {
+    .hosted__meta,
+    .hostedbadge__logo {
         @include hosted-fade-in;
     }
+}
+
+.hosted-fading .hostedbadge__logo {
+    margin-top: 27px;
+    position: relative;
 }
 
 // Headings
