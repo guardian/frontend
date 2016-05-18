@@ -11,7 +11,7 @@ object ArticleWithOpenGraphOverlay {
         metadata = article.content.metadata.copy(
           opengraphPropertiesOverrides = {
             val openGraph = article.content.metadata.opengraphProperties
-            openGraph ++ Map("og:image" -> ImgSrc(article.content.rawOpenGraphImage, FacebookOpenGraphImage, true))
+            openGraph + ("og:image" -> ImgSrc(article.content.rawOpenGraphImage, FacebookOpenGraphImage, true))
           }
         )
       )
