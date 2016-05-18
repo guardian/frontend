@@ -195,13 +195,21 @@ define([
 
         var videoInfo = new Promise(function(resolve) {
             // We only have the canonical URL in videos embedded in articles / main media.
+            var defaultVideoInfo = {
+                expired: false,
+                shouldHideAdverts: false
+            };
+
             if (!canonicalUrl) {
-                resolve(false);
+                resolve(defaultVideoInfo);
             } else {
                 ajax({
                     url: canonicalUrl + '/info.json'
                 }).then(function(videoInfo) {
                     resolve(videoInfo);
+                }, function() {
+                    // if this fails, don't stop, keep going.
+                    resolve(defaultVideoInfo);
                 });
             }
         });
@@ -295,8 +303,14 @@ define([
                                         player.ima({
                                             id: mediaId,
                                             adTagUrl: getAdUrl(),
-                                            prerollTimeout: 1000
+                                            prerollTimeout: 1000,
+                                            contribAdsSettings: {
+                                                // This is higher than the `prerollTimeout` to so as not to
+                                                // trigger the `adtimeout` before the `prerollTimeout`.
+                                                timeout: 2000
+                                            }
                                         });
+
                                         player.ima.requestAds();
 
                                         // Video analytics event.
@@ -307,10 +321,6 @@ define([
                             } else {
                                 resolve();
                             }
-
-
-
-
                         } else {
                             player.playlist({
                                 mediaType: 'audio',

@@ -64,6 +64,7 @@
 
         s.trackingServer = 'hits.theguardian.com';
         s.trackingServerSecure = 'hits-secure.theguardian.com';
+        s.ssl = true;
 
         /* Omniture library version */
         s.prop62    = 'Guardian JS-1.4.1 20140914';
