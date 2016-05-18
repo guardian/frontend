@@ -20,7 +20,7 @@ define([
 
         this.canRun = function () {
             // Only videos that are links to video pages have data-embed-paths
-            return config.page.isFront && qwery('video:not([data-embed-path])').length > 0;
+            return config.page.isFront && qwery('.fc-item--has-video-main-media').length > 0;
         };
 
         this.variants = [
