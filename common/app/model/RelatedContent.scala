@@ -22,13 +22,17 @@ case class RelatedContent (items: Seq[RelatedContentItem]) {
 
 object StoryPackages {
   def apply(parent: ContentType, response: ItemResponse): RelatedContent = {
-    val storyPackagesContent = response.packages.map { packages =>
-      packages.map { p =>
-        p.articles.map(_.content)
+
+    val storyPackagesContent: Seq[ApiContent] = response.packages.map { packages =>
+      val allContentsPerPackage: Seq[Seq[ApiContent]] = packages.map(_.articles.map(_.content))
+      if(packages.size > 1) { //intermix packages only if more than one
+        allContentsPerPackage
+         .flatMap(_.zipWithIndex) // zip content with its position
+         .sortBy(_._2).map(_._1)  // sort by position and extract content
+         .distinct                // remove duplicates
+      } else {
+        allContentsPerPackage.flatten
       }
-       .flatMap(_.zipWithIndex) // zip content with its position
-       .sortBy(_._2).map(_._1) // sort by position and extract content to intermix stories from all packages
-       .distinct // remove duplicates
     }.getOrElse(List.empty)
 
     val items = storyPackagesContent.map { item =>
