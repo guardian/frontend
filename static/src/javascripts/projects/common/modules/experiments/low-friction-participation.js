@@ -216,7 +216,7 @@ define([
 
         setUserVote();
 
-        mediator.emit('modules:participation:clicked', currentState.selectedItem);
+        mediator.emit('modules:participation:clicked');
     };
 
     var bindEvents = function () {
