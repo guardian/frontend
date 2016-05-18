@@ -13,7 +13,7 @@ object Badges {
   val euRealityCheck = Badge("politics/series/eu-referendum-reality-check", Static("images/EU_Ref_Logo.svg").path)
   
 
-  val allBadges = Seq(usElection, ausElection, euElection, euRealityCheck)
+  val allBadges = Seq(usElection, ausElection, euRealityCheck)
 
   def badgeFor(c: ContentType) = allBadges.find(badge => c.tags.tags.exists(tag => tag.id == badge.seriesTag))
   def badgeFor(fc: FaciaContainer) = fc.href.flatMap(href => allBadges.find(badge => href == badge.seriesTag))
