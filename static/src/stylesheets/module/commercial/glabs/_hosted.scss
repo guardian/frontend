@@ -310,7 +310,7 @@ $hosted-stripe: 28px;
     }
 
     @include mq(leftCol) {
-        font-size: 14px;
+        font-size: 16px;
     }
 }
 
@@ -346,6 +346,7 @@ $hosted-stripe: 28px;
     }
 
     @include mq(leftCol) {
+        padding-top: 0;
         padding-left: $gs-gutter / 2;
 
         .social__item {
