@@ -268,9 +268,9 @@ define([
         if (detect.adblockInUseSync() && sponsorshipIdsFound.length) {
             fastdom.write(function () {
                 sponsorshipIdsFound.forEach(function (value) {
-                    var sponsorshipIdFoundEl = $(value),
-                        sponsorshipIdClasses = sponsorshipIdFoundEl.attr('class').replace('ad-slot ', ''),
-                        sponsorshipBadge = '<div class="' + sponsorshipIdClasses + '">' + sponsorshipIdFoundEl.html() + '</div>';
+                    var sponsorshipIdFoundEl = $(value);
+                    var sponsorshipIdClasses = sponsorshipIdFoundEl.attr('class').replace('ad-slot ', '');
+                    var sponsorshipBadge = '<div class="' + sponsorshipIdClasses + '">' + sponsorshipIdFoundEl.html() + '</div>';
 
                     if (sponsorshipIdFoundEl.previous().length) {
                         sponsorshipIdFoundEl.previous().append(sponsorshipBadge);
