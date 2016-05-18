@@ -5,7 +5,7 @@ import conf.Configuration.commercial._
 
 trait PageskinAdAgent {
 
-  protected val isProd: Boolean
+  protected val environmentIsProd: Boolean
 
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship]
 
@@ -32,7 +32,7 @@ trait PageskinAdAgent {
   // The ad unit is considered to have a page skin if it has a corresponding sponsorship.
   // If the sponsorship is an adTest, it is only considered outside of production.
   def hasPageSkin(adUnitWithoutRoot: String, edition: Edition): Boolean = {
-    findSponsorships(adUnitWithoutRoot, edition) exists (sponsorship => !(isProd && sponsorship.targetsAdTest))
+    findSponsorships(adUnitWithoutRoot, edition) exists (sponsorship => !(environmentIsProd && sponsorship.targetsAdTest))
   }
 
   // True if there is any candidate sponsorship for this ad unit. Used to decide when to render the out-of-page ad slot.
