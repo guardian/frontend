@@ -442,7 +442,7 @@ $hosted-stripe: 28px;
     border: 0;
 
     @include mq(desktop) {
-        margin-left: 170px;
+        margin-left: 160px;
     }
 }
 
@@ -467,13 +467,16 @@ $hosted-stripe: 28px;
 
 .hosted__popup {
     top: 110%;
-    left: 174%;
+    left: 264%;
+    width: 350px;
+    padding: $gs-gutter / 2 $gs-gutter / 2 $gs-gutter $gs-gutter / 2;
     background: #ffffff;
     color: $neutral-1;
     text-align: left;
+    border-radius: 0;
 
     &:before {
-        left: 12%;
+        left: 8%;
         border-bottom-color: #ffffff;
     }
 }
