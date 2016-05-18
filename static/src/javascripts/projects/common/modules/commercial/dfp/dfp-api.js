@@ -119,6 +119,7 @@ define([
     var googletag;
 
     var renderStartTime = null;
+    var prebidEnabled = config.switches.headerBiddingUs && config.page.edition === 'US';
 
     /**
      * INIT
@@ -401,7 +402,7 @@ define([
         }
     }
 
-    var prebidEnabled = config.switches.headerBiddingUs && config.page.edition === 'US';
+
 
     function shouldPrebidAdvert(advert) {
         var excludedSlotIds = [
