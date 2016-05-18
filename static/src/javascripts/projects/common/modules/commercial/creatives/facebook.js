@@ -1,16 +1,15 @@
 /* global FB */
 define([
     'fastdom',
-    'common/utils/detect',
-    'common/utils/cookies',
+    'common/utils/config',
     'common/utils/template',
+    'common/utils/load-script',
     'common/utils/report-error',
     'common/modules/commercial/creatives/add-tracking-pixel',
     'text!common/views/commercial/creatives/facebook.html'
-], function(fastdom, detect, cookies, template, reportError, addTrackingPixel, facebookStr) {
+], function(fastdom, config, template, loadScript, reportError, addTrackingPixel, facebookStr) {
     var scriptId = 'facebook-jssdk';
     var scriptSrc = '//connect.facebook.net/en_US/sdk/xfbml.ad.js#xfbml=1&version=v2.5';
-    var appNetworkId = '978824118882656';
     var adUnits = {
         mpu: { placementId: '978824118882656_978826235549111', adId: 'fb_ad_root_mpu' }
     };
@@ -57,22 +56,10 @@ define([
                 addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
             }
 
-            insertFbScript();
+            loadScript({ id: scriptId, src: scriptSrc + '&appId=' + config.page.fbAppId});
         }, this);
     };
 
-    function insertFbScript() {
-        if (document.getElementById(scriptId)) {
-            return;
-        }
-        // we need the SCRIPT element to have an ID so we won't be using curl.js
-        // this time, sorry guys
-        var ref = document.scripts[0];
-        var script = document.createElement('script');
-        script.id = scriptId;
-        script.src = scriptSrc + '&appId=' + appNetworkId;
-        ref.parentNode.insertBefore(script, ref);
-    }
 
     return Facebook;
 });

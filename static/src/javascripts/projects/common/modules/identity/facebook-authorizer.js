@@ -1,11 +1,10 @@
 /*global FB:false*/
 /*global guardian*/
-define(function () {
-
+define([
+    'common/utils/load-script'
+], function (loadScript) {
     var scriptId = 'facebook-jssdk';
     var scriptSrc = '//connect.facebook.net/en_US/sdk/xfbml.ad.js#xfbml=1&version=v2.5';
-    /* this is temporary and will be removed once we finish testing the FB native ads */
-    var appNetworkId = '978824118882656';
 
     function FacebookAuthorizer(appId) {
         this.appId = appId;
@@ -105,12 +104,7 @@ define(function () {
     FacebookAuthorizer.prototype._loadFacebookScript = function () {
         // don't tell Facebook about pages that have not launched yet
         if (!guardian.config.page.isPreview) {
-            var ref = document.scripts[0];
-            var script = document.createElement('script');
-            script.id = scriptId;
-            script.src = scriptSrc + '&appId=' + appNetworkId;
-            script.onload = this._handleScriptLoaded.bind(this);
-            ref.parentNode.insertBefore(script, ref);
+            loadScript({ id: scriptId, src: scriptSrc + '&appId=' + this.appId});
         }
     };
 
