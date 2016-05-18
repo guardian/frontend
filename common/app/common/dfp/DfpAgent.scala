@@ -18,8 +18,8 @@ object DfpAgent
   with AdSlotAgent
   with ExecutionContexts {
 
-  override protected val isProd: Boolean = environment.isProd
-  override protected val isPreview: Boolean = {
+  override protected val environmentIsProd: Boolean = environment.isProd
+  override protected val environmentIsPreview: Boolean = {
     if (Play.maybeApplication.isDefined) environment.isPreview
     else false
   }
