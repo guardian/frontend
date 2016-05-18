@@ -291,7 +291,7 @@ object Content {
       isExpired = apiContent.isExpired.getOrElse(false),
       productionOffice = apifields.flatMap(_.productionOffice.map(_.name)),
       tweets = apiContent.elements.getOrElse(Nil).filter(_.`type`.name == "Tweet").map{ tweet =>
-        val images = tweet.assets.filter(_.`type`.name == "Image").map(_.file).flatten
+        val images = tweet.assets.filter(_.`type`.name == "Image").flatMap(asset => asset.typeData.flatMap(_.secureFile).orElse(asset.file))
         Tweet(tweet.id, images)
       },
       showInRelated = apifields.flatMap(_.showInRelatedContent).getOrElse(false),

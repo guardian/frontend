@@ -68,17 +68,6 @@ object ContainerModel {
       )
     }
 
-    val branding = {
-      if (Switches.cardsDecidePaidContainerBranding.isSwitchedOn) {
-        val singleSponsorContainer = {
-          cards.nonEmpty && cards.forall(card => card.branding == cards.head.branding)
-        }
-        if (singleSponsorContainer) cards.head.branding else None
-      } else {
-        Commercial.container.mkSponsorDataAttributes(collection.config)
-      }
-    }
-
     ContainerModel(
       id = collection.id,
       layoutName,

@@ -7,7 +7,7 @@
 @import play.api.Play
 @import play.api.Play.current
 @import views.support.{SeoThumbnail, StripHtmlTags}
-@import conf.switches.Switches.AmpSwitch
+@import conf.switches.Switches.{AmpSwitch, UseLinkPreconnect, GoogleAnalyticsSwitch}
 
 @* Critical meta data that have an impact on rendering speed *@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
@@ -23,8 +23,25 @@
     <link rel="dns-prefetch" href="@AnalyticsHost()" />
     <link rel="dns-prefetch" href="//j.ophan.co.uk" />
     <link rel="dns-prefetch" href="//ophan.theguardian.com" />
-    <link rel="dns-prefetch" href="//oas.theguardian.com" />
     <link rel="dns-prefetch" href="@Configuration.debug.beaconUrl" />
+
+    @if(GoogleAnalyticsSwitch.isSwitchedOn) {
+        <link rel="dns-prefetch" href="//www.google-analytics.com" />
+    }
+
+    @if(UseLinkPreconnect.isSwitchedOn) {
+        <link rel="preconnect" crossorigin href="@Configuration.assets.path" />
+        <link rel="preconnect" crossorigin href="@Configuration.images.path" />
+        <link rel="preconnect" crossorigin href="@Configuration.ajax.url" />
+        <link rel="preconnect" crossorigin href="@AnalyticsHost()" />
+        <link rel="preconnect" crossorigin href="//j.ophan.co.uk" />
+        <link rel="preconnect" crossorigin href="//ophan.theguardian.com" />
+        <link rel="preconnect" crossorigin href="@Configuration.debug.beaconUrl" />
+
+        @if(GoogleAnalyticsSwitch.isSwitchedOn) {
+            <link rel="preconnect" crossorigin href="//www.google-analytics.com" />
+        }
+    }
 
     <link rel="apple-touch-icon" sizes="152x152" href="@Static("images/favicons/152x152.png")" />
     <link rel="apple-touch-icon" sizes="144x144" href="@Static("images/favicons/144x144.png")" />

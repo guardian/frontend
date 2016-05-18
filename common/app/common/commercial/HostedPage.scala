@@ -7,8 +7,8 @@ case object HostedPage extends StandalonePage {
   override val metadata: MetaData = MetaData.make(
     id = "guardian-hosted",
     webTitle = "Guardian Hosted",
-    section = "Hosted",
+    section = "Renault-campaign-test",
     contentType = GuardianContentTypes.Hosted,
-    analyticsName = "hosted"
+    analyticsName = "renault-campaign:hosted:renault-is-epic"
   )
 }
