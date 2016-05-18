@@ -1,6 +1,6 @@
 package common.dfp
 
-import common.Logging
+import common.{Edition, Logging}
 import model.Tag
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
@@ -92,7 +92,7 @@ case class HighMerchandisingLineItem(
     val matchesTag: Boolean = tagNames.exists(tags.contains)
 
     lazy val matchesAdUnit: Boolean = adUnits.exists(_.path contains adUnitSuffix)
-
+    
     matchesTag && matchesAdUnit
   }
 }
