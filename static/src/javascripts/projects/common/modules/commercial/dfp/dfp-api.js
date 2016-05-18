@@ -410,8 +410,6 @@ define([
         }
     }
 
-
-
     function shouldPrebidAdvert(advert) {
         var excludedSlotIds = [
             'dfp-ad--pageskin-inread',
@@ -423,8 +421,6 @@ define([
     /**
      * REFRESH ON WINDOW RESIZE
      */
-
-
 
     function refresh(breakpoint, previousBreakpoint) {
         googletag.pubads().refresh(
