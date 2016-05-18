@@ -107,6 +107,7 @@ define([
     /**
      * Private variables
      */
+    var dfp;
     var resizeTimeout        = 2000;
     var adSlotSelector       = '.js-ad-slot';
     var displayed            = false;
@@ -766,7 +767,7 @@ define([
      * Module
      */
 
-    var dfp = {
+    dfp = {
         init:           init,
         loadAds:        load,
         addSlot:        addSlot,
