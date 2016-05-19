@@ -23,21 +23,23 @@
         margin-bottom: 0;
     }
 
-    .social-icon {
-        overflow: visible; // opacity cuts borders off on chrome otherwise
-        background-color: transparent;
-        fill: $neutral-3;
-        border: 1px solid $neutral-2;
-        box-sizing: border-box;
-        transition: border-color .15s ease-out;
-
-        &:hover {
+     &:not(.paid-content--advertisement-feature) {
+        .social-icon {
+            overflow: visible; // opacity cuts borders off on chrome otherwise
             background-color: transparent;
-            border-color: $neutral-6;
-        }
-
-        .inline-icon {
             fill: $neutral-3;
+            border: 1px solid $neutral-2;
+            box-sizing: border-box;
+            transition: border-color .15s ease-out;
+
+            &:hover {
+                background-color: transparent;
+                border-color: $neutral-6;
+            }
+
+            .inline-icon {
+                fill: $neutral-3;
+            }
         }
     }
 
