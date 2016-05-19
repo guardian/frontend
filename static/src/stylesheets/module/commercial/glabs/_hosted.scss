@@ -221,25 +221,19 @@ $hosted-stripe: 28px;
 .hosted__meta {
     position: absolute;
     left: $gs-gutter;
-    bottom: 15%;
+    bottom: 50px;
     width: 55%; // Magic. Do not touch.
     color: #ffffff;
-
-    @include mq(tablet) {
-        bottom: 20%;
-    }
 
     @include mq(desktop) {
         width: 35%;
     }
 
-    @include mq(leftCol) {
-        bottom: 18%;
-    }
-
     @include mq($until: tablet) {
         left: 76px;
-        bottom: 10px;
+        right: $gs-gutter;
+        bottom: 3px;
+        width: auto;
     }
 }
 
@@ -469,6 +463,7 @@ $hosted-stripe: 28px;
 
     .hosted__meta {
         left: $gs-gutter/2;
+        bottom: 60px;
         @include mq(desktop) {
             width: 55%;
         }
