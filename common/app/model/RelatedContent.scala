@@ -28,8 +28,10 @@ object StoryPackages {
       if(packages.size > 1) { //intermix packages only if more than one
         allContentsPerPackage
          .flatMap(_.zipWithIndex) // zip content with its position
+         .groupBy(_._1.id).map(_._2.head).toSeq // remove duplicates (Note: not using `distinct` here that would require
+                                                // hashing/comparing the whole ApiContent object but instead grouping based on `id`
+                                                // and then collecting the first element of each group of duplicates)
          .sortBy(_._2).map(_._1)  // sort by position and extract content
-         .distinct                // remove duplicates
       } else {
         allContentsPerPackage.flatten
       }
