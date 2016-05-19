@@ -1,16 +1,12 @@
 define([
-    'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/storage',
-    'common/modules/commercial/user-features',
     'common/modules/commercial/survey/survey-simple'
 ], function (
-    $,
     config,
     detect,
     storage,
-    userFeatures,
     SurveySimple
 ) {
     function getSurveyLink(adblockUsed) {

@@ -1,12 +1,10 @@
 define([
     'fastdom',
-    'common/utils/$',
     'common/utils/storage',
     'common/utils/template',
     'common/utils/load-css-promise'
 ], function (
     fastdom,
-    $,
     storage,
     template,
     loadCssPromise
