@@ -81,23 +81,22 @@ case class HighMerchandisingLineItem(
   adUnits: Seq[GuAdUnit],
   customTargetSet: Seq[CustomTargetSet]
   ) {
+
   val customTargets = customTargetSet.map(_.targets)
-  val editions = customTargets.flatMap(sequence => sequence.filter((target) => target.name == "edition")).map(_.values)
+  val editions = customTargets.flatMap(_.filter( _.name == "edition")).map(_.values).distinct
 
+  def matchesPageTargeting (adUnitSuffix: String, pageTags:Seq[Tag], edition:String): Boolean = {
 
-  def matchesAdUnitAndTagAndEdition (adUnitSuffix: String, pageTags:Seq[Tag],edition:String): Boolean = {
+    // edition comes in the form "UK edition" and "US edition"
+    val cleansedPageEdition = edition.split(" ", 2).head.toLowerCase
 
-    val cleansedHighMerchEdition = editions.flatMap(_.distinct)
+    val cleansedPageTagNames = pageTags map (_.name) map (_.replaceAll(" ","-").toLowerCase)
 
-    val cleansedPageEdition = edition.split(" ", 2)(0).toLowerCase
-
-    val tagNames = pageTags map (_.name) map (_.replaceAll(" ","-").toLowerCase)
-
-    val matchesTag: Boolean = tagNames.exists(tags.contains)
+    val matchesTag: Boolean = cleansedPageTagNames.exists(tags.contains)
 
     lazy val matchesAdUnit: Boolean = adUnits.exists(_.path contains adUnitSuffix)
 
-    lazy val matchesEdition: Boolean = cleansedHighMerchEdition.isEmpty || cleansedHighMerchEdition.contains(cleansedPageEdition)
+    lazy val matchesEdition: Boolean = editions.isEmpty || editions.flatten.contains(cleansedPageEdition)
 
     matchesTag && matchesAdUnit && matchesEdition
   }
