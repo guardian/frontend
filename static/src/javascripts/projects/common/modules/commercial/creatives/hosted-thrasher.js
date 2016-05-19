@@ -1,11 +1,13 @@
 define([
     'common/utils/fastdom-promise',
+    'common/utils/config',
     'common/utils/template',
     'common/modules/commercial/hosted-video',
     'common/modules/commercial/creatives/add-tracking-pixel',
     'text!common/views/commercial/creatives/hosted-thrasher.html'
 ], function (
     fastdom,
+    config,
     template,
     hostedVideo,
     addTrackingPixel,
@@ -22,7 +24,14 @@ define([
         hostedThrasherTemplate = hostedThrasherTemplate || template(hostedThrasherStr);
 
         fastdom.write(function () {
-            this.$adSlot.append(hostedThrasherTemplate({ data: this.params}));
+            var title = this.params.header2;
+            var sponsor = "Renault";
+            this.params.linkTracking = "GLabs-hosted-container" +
+                " | " + config.page.edition +
+                " | " + config.page.section +
+                " | " + title +
+                " | " + sponsor;
+            this.$adSlot.append(hostedThrasherTemplate({ data: this.params }));
             if (this.params.trackingPixel) {
                 addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
             }

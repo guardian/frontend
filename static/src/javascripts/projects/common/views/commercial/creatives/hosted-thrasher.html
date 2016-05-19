@@ -1,10 +1,9 @@
 <div class="creative--hosted-video l-side-margins fc-container__inner"
-     data-link-name="Hosted Thrasher"
      style="
         background-color: <%=data.backgroundColour%>;
     ">
     <div class="fc-container__header">
-        <a href="/guardian-labs" class="fc-container__header__title" data-link-name="from our advertisers">
+        <a href="/guardian-labs" class="fc-container__header__title" data-link-name="<%=data.linkTracking%>">
             from our advertisers
         </a>
     </div>
@@ -12,7 +11,7 @@
         <div class="hosted-video--image-container"  style="
             background-image: url(<%=data.asset%>);
         ">
-            <a href="<%=data.clickMacro%><%=data.link%>" target="_blank" data-link-name="hosted content">
+            <a href="<%=data.clickMacro%><%=data.link%>" target="_blank" data-link-name="<%=data.linkTracking%>">
                 <div class="hosted-banner" style="
                     border-color: <%=data.bannerColour%>;
                     "></div>
