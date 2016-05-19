@@ -328,11 +328,14 @@ $hosted-stripe: 28px;
 }
 
 .hosted__cta-wrapper {
-    width: 40%;
     position: relative;
     z-index: 1;
     padding-top: 270px;
     margin-left: 20px;
+
+    @include mq(tablet) {
+        width: 40%;
+    }
 }
 
 .hosted__cta {
@@ -354,16 +357,14 @@ $hosted-stripe: 28px;
     }
 
     @include mq($until: desktop) {
-        width: 190px;
         height: 26px;
-        margin-top: $gs-gutter / 2;
-        padding: 0 20px;
+        margin: 6px;
         font-size: 14px;
         line-height: 26px;
 
         svg {
-            width: 26px;
-            height: 26px;
+            width: 24px;
+            height: 24px;
         }
     }
 }
@@ -371,8 +372,12 @@ $hosted-stripe: 28px;
 .hosted__cta-text {
     @include f-headlineSans;
 
-    font-size: 38px;
+    font-size: 25px;
     color: #ffc421;
+
+    @include mq(tablet) {
+        font-size: 38px;
+    }
 }
 
 .hosted__text {
