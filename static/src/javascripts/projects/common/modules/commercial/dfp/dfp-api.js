@@ -108,25 +108,16 @@ define([
      * Private variables
      */
     var dfp;
-    var resizeTimeout        = 2000;
     var adSlotSelector       = '.js-ad-slot';
     var displayed            = false;
     var rendered             = false;
     var adverts              = {};
     var creativeIDs          = [];
-    var hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
     var prebidService        = null;
     var googletag;
 
     var renderStartTime = null;
     var prebidEnabled = config.switches.headerBiddingUs && config.page.edition === 'US';
-
-    var windowResize = debounce(
-        function () {
-            // refresh on resize
-            hasBreakpointChanged(refresh);
-        }, resizeTimeout
-    );
 
     /**
      * INIT
@@ -206,7 +197,7 @@ define([
             setPublisherProvidedId,
             shouldLazyLoad() ? displayLazyAds : displayAds,
             // anything we want to happen after displaying ads
-            postDisplay
+            refreshOnResize
         );
 
         // show sponsorship placeholder if adblock detected
@@ -264,10 +255,6 @@ define([
     function shouldLazyLoad() {
         // We do not want lazy loading on pageskins because it messes up the roadblock
         return config.switches.viewability && !(config.page.hasPageSkin && detect.getBreakpoint() === 'wide');
-    }
-
-    function postDisplay() {
-        mediator.on('window:resize', windowResize);
     }
 
     function showSponsorshipPlaceholder() {
@@ -423,6 +410,17 @@ define([
      */
 
     var slotsToRefresh = [];
+    var hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
+
+    function refreshOnResize() {
+        mediator.on(
+            'window:resize',
+            debounce(
+                hasBreakpointChanged.bind({}, refresh),
+                2000
+            )
+        );
+    }
 
     function refresh(breakpoint, previousBreakpoint) {
         googletag.pubads().refresh(
@@ -783,7 +781,7 @@ define([
             rendered = false;
             adverts = {};
             slotsToRefresh = [];
-            mediator.off('window:resize', windowResize);
+            mediator.removeAllListeners('window:resize');
             hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
         }
     };
