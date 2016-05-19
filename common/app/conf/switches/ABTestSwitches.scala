@@ -100,7 +100,7 @@ trait ABTestSwitches {
     "ab-welcome-header",
     "Welcome header for first time users test",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 1),
+    sellByDate = new LocalDate(2016, 6, 30),
     exposeClientSide = true
   )
 
