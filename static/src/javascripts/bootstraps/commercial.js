@@ -71,7 +71,7 @@ define([
                     ['cm-new-adverts', adverts.init],
                     ['cm-ready', function () {
                         mediator.emit('page:commercial:ready');
-                        userTiming.mark('commercial end')
+                        userTiming.mark('commercial end');
                     }]
                 ]);
             });

@@ -238,7 +238,12 @@ define([
                     // Check the users access matches the content
                     var canViewContent = (requiresPaidTier) ? !!resp.tier && resp.isPaidTier : !!resp.tier;
                     if (canViewContent) {
-                        $('body').removeClass('has-membership-access-requirement');
+                        var body = document.getElementsByTagName('body')[0];
+                        if ('classList' in body) {
+                            body.classList.remove('has-membership-access-requirement');
+                        } else {
+                            body.className = body.className.replace('has-membership-access-requirement', '');
+                        }
                     } else {
                         redirect();
                     }

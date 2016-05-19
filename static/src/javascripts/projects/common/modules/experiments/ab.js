@@ -77,7 +77,7 @@ define([
     function removeParticipation(test) {
         var participations = getParticipations();
         var filteredParticipations = Object.keys(participations)
-            .filter(function (participation) { return participation !== test.id })
+            .filter(function (participation) { return participation !== test.id; })
             .reduce(function (result, input) {
                 result[input] = participations[input];
                 return result;
@@ -187,7 +187,7 @@ define([
                 });
 
             getServerSideTests().forEach(function (test) {
-                log['ab' + server] = abData('inTest', 'false');
+                log['ab' + test] = abData('inTest', 'false');
             });
 
             return log;
