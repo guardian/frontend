@@ -24,7 +24,7 @@ define([
         hostedThrasherTemplate = hostedThrasherTemplate || template(hostedThrasherStr);
 
         fastdom.write(function () {
-            var title = this.params.header2;
+            var title = this.params.header2 || 'unknown';
             var sponsor = 'Renault';
             this.params.linkTracking = 'GLabs-hosted-container' +
                 ' | ' + config.page.edition +
