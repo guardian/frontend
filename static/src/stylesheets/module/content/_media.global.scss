@@ -23,7 +23,7 @@
         margin-bottom: 0;
     }
 
-     &:not(.paid-content--advertisement-feature) {
+    &:not(.paid-content--advertisement-feature) {
         .social-icon {
             overflow: visible; // opacity cuts borders off on chrome otherwise
             background-color: transparent;
