@@ -225,16 +225,14 @@ $hosted-stripe: 28px;
 
     @include mq(desktop) {
         width: 35%;
-        left: calc(50% - 490px + #{$gs-gutter});
     }
 
     @include mq(leftCol) {
         bottom: 18%;
-        left: calc(50% - 570px + #{$gs-gutter});
     }
 
     @include mq($until: tablet) {
-        margin-left: 57px;
+        left: 76px;
         bottom: 10px;
     }
 }
@@ -310,7 +308,7 @@ $hosted-stripe: 28px;
     &:after {
         content: '';
         width: 100%;
-        height: 100%;    
+        height: 100%;
         position: absolute;
         left: 0;
         top: 0;
@@ -446,7 +444,6 @@ $hosted-stripe: 28px;
         @include mq(desktop) {
             font-size: 46px;
             line-height: 46px;
-            margin-top: -12px;
             margin-bottom: 10px;
         }
     }
