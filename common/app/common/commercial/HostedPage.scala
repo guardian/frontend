@@ -6,7 +6,7 @@ import play.api.libs.json.JsString
 case object HostedPage extends StandalonePage {
 
   override val metadata: MetaData = MetaData.make(
-    id = "guardian-hosted",
+    id = "commercial/advertiser-content/renault-car-of-the-future/design-competition-teaser",
     webTitle = "Guardian Hosted",
     section = "renault-car-of-the-future",
     contentType = GuardianContentTypes.Hosted,
