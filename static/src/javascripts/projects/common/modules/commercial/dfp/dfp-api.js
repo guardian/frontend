@@ -412,14 +412,16 @@ define([
     var slotsToRefresh = [];
     var hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
 
+    var resizeTimeout = 2000;
+    var windowResize = debounce(
+        function () {
+            // refresh on resize
+            hasBreakpointChanged(refresh);
+        }, resizeTimeout
+    );
+
     function refreshOnResize() {
-        mediator.on(
-            'window:resize',
-            debounce(
-                hasBreakpointChanged.bind({}, refresh),
-                2000
-            )
-        );
+        mediator.on('window:resize', windowResize);
     }
 
     function refresh(breakpoint, previousBreakpoint) {
@@ -781,6 +783,7 @@ define([
             rendered = false;
             adverts = {};
             slotsToRefresh = [];
+            mediator.off('window:resize', windowResize);
             mediator.removeAllListeners('window:resize');
             hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
         }
