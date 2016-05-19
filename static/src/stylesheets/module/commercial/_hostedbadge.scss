@@ -24,9 +24,7 @@
 }
 
 .hostedbadge--pushdown {
-    @include mq($until: leftCol) {
-        top: 0;
-    }
+    top: 0;
 }
 
 .hostedbadge__info {

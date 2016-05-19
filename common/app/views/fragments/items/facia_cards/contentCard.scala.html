@@ -44,7 +44,6 @@
             @kicker(item.header, List("fc-item__kicker--dreamsnap", "fc-item__kicker--dreamsnap-list"))
         }
 
-
         @item.displayElement.filter(const(item.showDisplayElement)) match {
             case Some(InlineVideo(videoElement, title, endSlatePath, fallback)) if item.cardTypes.showVideoPlayer => {
                 @defining(VideoPlayer(
@@ -59,7 +58,7 @@
                     // ID is actually pointing to the article, which is wrong. It would be nice to have the ID on the
                     // ContentCard, but we don't for now. Annoyingly this doesn't allow us to check for if we should
                     // play ads or if the video is expired, but as fronts change really often, this is a non-problem.
-                    item.mediaType.flatMap(_ => item.id)
+                    if (item.isMediaLink) item.id else None
                 )) { player =>
                     <div class="fc-item__media-wrapper u-faux-block-link__promote media__container--hidden js-video-player">
                         <div class="fc-item__video-container">

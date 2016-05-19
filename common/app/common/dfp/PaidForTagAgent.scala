@@ -9,7 +9,7 @@ import model.pressed.CollectionConfig
 
 trait PaidForTagAgent {
 
-  protected def isPreview: Boolean
+  protected def environmentIsPreview: Boolean
 
   protected def currentPaidForTags: Seq[PaidForTag]
   protected def tagToSponsorsMap: Map[String, Set[String]]

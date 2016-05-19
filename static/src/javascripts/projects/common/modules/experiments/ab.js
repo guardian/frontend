@@ -9,6 +9,7 @@ define([
     'common/modules/experiments/tests/live-blog-chrome-notifications-internal',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/loyal-adblocking-survey',
+    'common/modules/experiments/tests/facebook-share-params',
     'common/modules/experiments/tests/participation-star-ratings',
     'common/modules/experiments/tests/participation-low-fric-music',
     'common/modules/experiments/tests/participation-low-fric-tv',
@@ -16,6 +17,8 @@ define([
     'common/modules/experiments/tests/participation-low-fric-fashion',
     'common/modules/experiments/tests/clever-friend-brexit',
     'common/modules/experiments/tests/welcome-header',
+    'common/modules/experiments/tests/play-video-on-fronts',
+    'common/modules/experiments/tests/video-controls-on-main-media',
     'lodash/arrays/flatten',
     'lodash/arrays/zip',
     'lodash/collections/forEach',
@@ -40,6 +43,7 @@ define([
     LiveBlogChromeNotificationsInternal,
     LiveBlogChromeNotificationsProd,
     LoyalAdblockingSurvey,
+    FacebookShareParams,
     ParticipationStarRatings,
     ParticipationLowFricMusic,
     ParticipationLowFricTv,
@@ -47,6 +51,8 @@ define([
     ParticipationLowFricFashion,
     CleverFriendBrexit,
     WelcomeHeader,
+    PlayVideoOnFronts,
+    VideoControlsOnMainMedia,
     flatten,
     zip,
     forEach,
@@ -67,13 +73,16 @@ define([
         new LiveBlogChromeNotificationsInternal(),
         new LiveBlogChromeNotificationsProd(),
         new LoyalAdblockingSurvey(),
+        new FacebookShareParams(),
         new ParticipationStarRatings(),
         new ParticipationLowFricMusic(),
         new ParticipationLowFricTv(),
         new ParticipationLowFricRecipes(),
         new ParticipationLowFricFashion(),
         new CleverFriendBrexit(),
-        new WelcomeHeader()
+        new WelcomeHeader(),
+        new PlayVideoOnFronts(),
+        new VideoControlsOnMainMedia()
     ]);
 
     var participationsKey = 'gu.ab.participations';
