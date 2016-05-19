@@ -348,7 +348,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object interactive {
-    lazy val url = "http://interactive.guim.co.uk/next-gen/"
+    lazy val url = "https://interactive.guim.co.uk/next-gen/"
   }
 
   object javascript {
