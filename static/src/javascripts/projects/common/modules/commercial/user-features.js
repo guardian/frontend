@@ -45,7 +45,7 @@ define([
         // They need to determine how the page will appear before it starts rendering
 
         // This field might not be added if the feature switch is off
-        if (config.commercial === undefined || config.commercial.showingAdfree === undefined) {
+        if (config.commercial === undefined || config.commercial.showingAdfree === undefined || config.commercial.showingAdfree === null) {
             return false;
         } else {
             return config.commercial.showingAdfree;
