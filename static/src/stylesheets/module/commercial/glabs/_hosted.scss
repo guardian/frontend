@@ -190,6 +190,13 @@ $hosted-stripe: 28px;
         height: 37px;
         margin: 6px 20px 6px $gs-gutter;
     }
+
+
+    .vjs-time-control {
+        @include mq($until: tablet) {
+            display: none;
+        }
+    }
 }
 
 .hosted__meta {
@@ -213,6 +220,10 @@ $hosted-stripe: 28px;
         left: calc(50% - 570px + #{$gs-gutter});
     }
 
+    @include mq($until: tablet) {
+        margin-left: 57px;
+        bottom: 10px;
+    }
 }
 
 .vjs-playing + .hosted-fading {
