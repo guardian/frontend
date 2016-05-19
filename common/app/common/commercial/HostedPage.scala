@@ -1,19 +1,25 @@
 package common.commercial
 
-import model.{GuardianContentTypes, MetaData, StandalonePage}
+import model.GuardianContentTypes.Hosted
+import model.{MetaData, StandalonePage}
 import play.api.libs.json.JsString
 
 case object HostedPage extends StandalonePage {
 
-  override val metadata: MetaData = MetaData.make(
-    id = "commercial/advertiser-content/renault-car-of-the-future/design-competition-teaser",
-    webTitle = "Guardian Hosted",
-    section = "renault-car-of-the-future",
-    contentType = GuardianContentTypes.Hosted,
-    analyticsName = "GFE:renault-car-of-the-future:hosted:design-competition-teaser",
-    javascriptConfigOverrides = Map(
-      "keywords" -> JsString("renault-car-of-the-future"),
-      "tones" -> JsString("advertiser-content")
+  override val metadata: MetaData = {
+    val toneName = "Hosted content"
+    val sectionId = "renault-car-of-the-future"
+    val urlSuffix = "design-competition-teaser"
+    MetaData.make(
+      id = s"commercial/advertiser-content/$sectionId/$urlSuffix",
+      webTitle = "Design competition",
+      section = sectionId,
+      contentType = Hosted,
+      analyticsName = s"GFE:$sectionId:$Hosted:$urlSuffix",
+      javascriptConfigOverrides = Map(
+        "keywords" -> JsString(sectionId),
+        "tones" -> JsString(toneName)
+      )
     )
-  )
+  }
 }
