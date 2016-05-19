@@ -36,9 +36,8 @@ define([
 
     function createAndSetHeader(messageName) {
         var headerDiv = document.createElement('button'),
-            msg = template(message1, data[messageName]);
-
-        var closeBtn = '<div class="banner-close-icon"><button class="js-welcome-message__item__close button button--tertiary u-faux-block-link__promote" aria-label="Dismiss" data-link-name="close button">' + svgs('closeCentralIcon') + '</button></div>';
+            msg = template(message1, data[messageName]),
+            closeBtn = '<div class="banner-close-icon"><button class="js-welcome-message__item__close button button--tertiary u-faux-block-link__promote" aria-label="Dismiss" data-link-name="close button">' + svgs('closeCentralIcon') + '</button></div>';
 
         headerDiv.id = 'welcome-banner';
         headerDiv.style.height = header.offsetHeight + 'px';
