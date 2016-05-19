@@ -5,9 +5,8 @@
  */
 define([
     'common/utils/pad',
-    'common/utils/url',
-    'lodash/objects/assign'
-], function (pad, urlUtils, assign) {
+    'common/utils/url'
+], function (pad, urlUtils) {
     var config         = guardian.config,
         adUnitOverride = urlUtils.getUrlVars()['ad-unit'];
 
@@ -21,6 +20,17 @@ define([
     config.ophan = {pageViewId: new Date().getTime().toString(36) + 'xxxxxxxxxxxx'.replace(/x/g, function () {
         return Math.floor(Math.random() * 36).toString(36);
     })};
+
+    function assign(dest, source) {
+        if ('assign' in Object) {
+            return Object.assign(dest, source);
+        } else {
+            Object.keys(source).forEach(function (param) {
+                dest[param] = source[param];
+            });
+            return dest;
+        }
+    }
 
     return assign({
         hasTone: function (name) {
