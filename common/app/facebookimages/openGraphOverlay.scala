@@ -11,7 +11,8 @@ object ArticleWithOpenGraphOverlay {
         metadata = article.content.metadata.copy(
           opengraphPropertiesOverrides = {
             val openGraph = article.content.metadata.opengraphProperties
-            openGraph + ("og:image" -> ImgSrc(article.content.rawOpenGraphImage, FacebookOpenGraphImage, true))
+            openGraph ++ Map("og:image" -> ImgSrc(article.content.rawOpenGraphImage, FacebookOpenGraphImage, true),
+              "og:url" -> s"${openGraph.getOrElse("og:url", "")}?page=facebookOverlayVariant")
           }
         )
       )
