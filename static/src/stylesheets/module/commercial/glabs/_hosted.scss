@@ -156,6 +156,12 @@ $hosted-stripe: 28px;
             @include hosted-fade-out;
         }
 
+        .vjs-time-control {
+            @include mq($until: tablet) {
+                @include hosted-fade-out;
+            }
+        }
+
         .vjs-control-bar {
             background-color: unset;
             transition: background-color 1s linear;
@@ -167,6 +173,12 @@ $hosted-stripe: 28px;
         .vjs-volume-menu-button,
         .vjs-progress-control {
             @include hosted-fade-in;
+        }
+
+        @include mq($until: tablet) {
+            .vjs-time-control {
+                @include hosted-fade-in;
+            }
         }
 
         .vjs-control-bar {
@@ -204,12 +216,6 @@ $hosted-stripe: 28px;
         margin: 6px 20px 6px $gs-gutter;
     }
 
-
-    .vjs-time-control {
-        @include mq($until: tablet) {
-            display: none;
-        }
-    }
 }
 
 .hosted__meta {
