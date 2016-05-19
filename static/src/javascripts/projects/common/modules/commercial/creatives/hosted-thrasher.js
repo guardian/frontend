@@ -25,12 +25,12 @@ define([
 
         fastdom.write(function () {
             var title = this.params.header2;
-            var sponsor = "Renault";
-            this.params.linkTracking = "GLabs-hosted-container" +
-                " | " + config.page.edition +
-                " | " + config.page.section +
-                " | " + title +
-                " | " + sponsor;
+            var sponsor = 'Renault';
+            this.params.linkTracking = 'GLabs-hosted-container' +
+                ' | ' + config.page.edition +
+                ' | ' + config.page.section +
+                ' | ' + title +
+                ' | ' + sponsor;
             this.$adSlot.append(hostedThrasherTemplate({ data: this.params }));
             if (this.params.trackingPixel) {
                 addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
