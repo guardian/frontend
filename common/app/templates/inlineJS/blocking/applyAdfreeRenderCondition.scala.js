@@ -19,7 +19,7 @@
     }
 
     function isFirst3VisitDays() {
-        var firstVisit = readLocalStorage('gu.firstVisitTime') || 0;
+        var firstVisit = readLocalStorage(FIRST_TIME_VISIT_KEY) || 0;
         return (new Date().getTime() - firstVisit) < 259200000;
     }
 
