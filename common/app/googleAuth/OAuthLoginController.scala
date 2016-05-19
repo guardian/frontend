@@ -6,11 +6,11 @@ import conf.Configuration
 import org.joda.time.DateTime
 import play.api.libs.Crypto
 import play.api.libs.json.Json
-import play.api.mvc._
+import play.api.libs.ws.WSClient
+import play.api.mvc.{Cookie, RequestHeader, Action, Controller}
 import scala.concurrent.Future
 
-trait OAuthLoginController extends Controller with ExecutionContexts with implicits.Requests {
-  import play.api.Play.current
+class OAuthLoginController(wsClient: WSClient) extends Controller with ExecutionContexts with implicits.Requests {
 
   def login: Action[AnyContent]
   def googleAuthConfig(request: Request[AnyContent]): Option[GoogleAuthConfig]
