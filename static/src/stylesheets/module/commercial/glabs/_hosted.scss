@@ -343,6 +343,7 @@ $hosted-stripe: 28px;
 .hosted__terms {
     @include f-textSans;
 
+    display: inline-block;
     margin-top: $gs-row-height / 2;
     font-size: 12px;
     line-height: 1.2;
@@ -497,6 +498,10 @@ $hosted-stripe: 28px;
             fill: #ffffff;
         }
     }
+}
+
+.hosted__label-btn--small {
+    font-size: 12px;
 }
 
 .hosted__popup {
