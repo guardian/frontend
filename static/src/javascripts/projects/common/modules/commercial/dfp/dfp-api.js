@@ -113,7 +113,6 @@ define([
     var displayed            = false;
     var rendered             = false;
     var adverts              = {};
-    var slotsToRefresh       = [];
     var creativeIDs          = [];
     var hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
     var prebidService        = null;
@@ -422,6 +421,8 @@ define([
     /**
      * REFRESH ON WINDOW RESIZE
      */
+
+    var slotsToRefresh = [];
 
     function refresh(breakpoint, previousBreakpoint) {
         googletag.pubads().refresh(
