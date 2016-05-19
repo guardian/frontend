@@ -1,9 +1,8 @@
 define([
     'common/utils/detect',
     'common/utils/mediator',
-    'lodash/utilities/identity',
-    'lodash/objects/isArray'
-], function (detect, mediator, identity, isArray) {
+    'lodash/utilities/identity'
+], function (detect, mediator, identity) {
 
     var supportsPushState = detect.hasPushStateSupport(),
         model = {
@@ -51,7 +50,7 @@ define([
             constructQuery: function (query) {
                 return Object.keys(query).map(function (param) {
                         var value = query[param];
-                        return param + '=' + (isArray(value) ? value.join(',') : value);
+                        return param + '=' + (Array.isArray(value) ? value.join(',') : value);
                     }).join('&');
             },
 
