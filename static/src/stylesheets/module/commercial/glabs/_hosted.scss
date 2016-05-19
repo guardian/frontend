@@ -456,6 +456,9 @@ $hosted-stripe: 28px;
 
     .hosted__meta {
         left: $gs-gutter/2;
+        @include mq(desktop) {
+            width: 55%;
+        }
         @include mq($until: desktop) {
             bottom: 15%;
         }
