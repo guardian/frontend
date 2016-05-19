@@ -10,7 +10,7 @@ case object HostedPage extends StandalonePage {
     webTitle = "Guardian Hosted",
     section = "renault-car-of-the-future",
     contentType = GuardianContentTypes.Hosted,
-    analyticsName = "GFE:renault-car-of-the-future:hosted:design-competition",
+    analyticsName = "GFE:renault-car-of-the-future:hosted:design-competition-teaser",
     javascriptConfigOverrides = Map(
       "keywords" -> JsString("renault-car-of-the-future"),
       "tones" -> JsString("advertiser-content")
