@@ -294,6 +294,9 @@ $hosted-stripe: 28px;
 }
 
 .hosted__cta {
+    margin: 9px;
+    padding: 0;
+
     svg {
         fill: $neutral-1;
     }
@@ -319,6 +322,13 @@ $hosted-stripe: 28px;
             height: 26px;
         }
     }
+}
+
+.hosted__cta-text {
+    @include f-headlineSans;
+
+    font-size: 38px;
+    color: #ffc421;
 }
 
 .hosted__text {
