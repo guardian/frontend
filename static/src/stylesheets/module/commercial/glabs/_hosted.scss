@@ -339,6 +339,8 @@ $hosted-stripe: 28px;
 }
 
 .hosted__cta {
+    padding: 0;
+    
     &,
     &:focus,
     &:hover {
@@ -372,7 +374,6 @@ $hosted-stripe: 28px;
 
     @include mq(desktop) {
         margin: 9px;
-        padding: 0;
     }
 }
 
