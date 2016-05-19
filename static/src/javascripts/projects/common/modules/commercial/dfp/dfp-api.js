@@ -784,7 +784,6 @@ define([
             adverts = {};
             slotsToRefresh = [];
             mediator.off('window:resize', windowResize);
-            mediator.removeAllListeners('window:resize');
             hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
         }
     };
