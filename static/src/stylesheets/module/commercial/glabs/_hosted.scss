@@ -42,6 +42,16 @@ $hosted-stripe: 28px;
             display: none;
         }
     }
+    @include mq(wide) {
+        &:before,
+        &:after {
+            $size: gs-span(14) + $gs-gutter * 2;
+            width: calc((100% - #{$size}) / 2);
+        }
+        .adverts {
+            padding: 0 calc(50% - 570px);
+        }
+    }
 }
 
 .hosted__headerwrap {
@@ -54,10 +64,6 @@ $hosted-stripe: 28px;
 
     @include mq(leftCol) {
         max-width: gs-span(14) + $gs-gutter * 2;
-    }
-
-    @include mq(wide) {
-        max-width: gs-span($gs-max-columns) + $gs-gutter * 2;
     }
 }
 
@@ -173,15 +179,15 @@ $hosted-stripe: 28px;
         bottom: 0;
         background-color: unset;
         font-size: 16px;
-        height: 88px;
+        height: 48px;
     }
 
     .vjs-fullscreen-control {
-        margin-top: 30px;
+        margin-top: 14px;
     }
 
     .vjs-menu-button {
-        margin-top: 34px;
+        margin-top: 17px;
 
         .vjs-control-text {
             font-size: 14px;
@@ -189,13 +195,20 @@ $hosted-stripe: 28px;
     }
 
     .vjs-time-control {
-        padding-top: 21px;
+        padding-top: 2px;
     }
 
     &.vjs .vjs-play-control {
-        width: 48px;
-        height: 48px;
-        margin: 20px 10px 20px 20px;
+        width: 37px;
+        height: 37px;
+        margin: 6px 20px 6px $gs-gutter;
+    }
+
+
+    .vjs-time-control {
+        @include mq($until: tablet) {
+            display: none;
+        }
     }
 }
 
@@ -220,42 +233,67 @@ $hosted-stripe: 28px;
         left: calc(50% - 570px + #{$gs-gutter});
     }
 
-    @include mq(wide) {
-        left: calc(50% - 650px + #{$gs-gutter});
+    @include mq($until: tablet) {
+        margin-left: 57px;
+        bottom: 10px;
     }
+}
 
-    .vjs-playing + & {
+.vjs-playing + .hosted-fading {
+    .hosted__meta {
         @include hosted-fade-out;
     }
+    @include mq($until: tablet) {
+        .hostedbadge__logo {
+            @include hosted-fade-out;
+        }
+    }
+}
 
-    .vjs-paused + & {
+.vjs-paused + .hosted-fading {
+    .hosted__meta,
+    .hostedbadge__logo {
         @include hosted-fade-in;
     }
+}
+
+.hosted-fading .hostedbadge__logo {
+    margin-top: 27px;
+    position: relative;
 }
 
 // Headings
 .hosted__heading {
     @include f-headlineSans;
 
-    font-size: 56px;
-    line-height: 54px;
+    margin: 0;
+    font-size: 26px;
+    line-height: 26px;
 
-    @include mq($until: desktop) {
-        margin: 0;
-        font-size: 26px;
-        line-height: 26px;
+    @include mq(tablet) {
+        font-size: 46px;
+        line-height: 44px;
+    }
+
+    @include mq(desktop) {
+        font-size: 56px;
+        line-height: 54px;
     }
 }
 
 .hosted__heading--small {
     @include f-headlineSans;
 
-    font-size: 32px;
+    font-size: 18px;
+    line-height: 1;
+    margin-bottom: 0;
 
-    @include mq($until: desktop) {
-        font-size: 18px;
-        line-height: 1;
-        margin-bottom: 0;
+    @include mq(tablet) {
+        font-size: 24px;
+    }
+
+    @include mq(desktop) {
+        font-size: 32px;
     }
 }
 
@@ -401,7 +439,8 @@ $hosted-stripe: 28px;
 
 /*Hosted thrasher*/
 .creative--hosted-video {
-    .gs-container {
+    .hosted-video__body {
+        position: relative;
         height: 100%;
         padding-top: 0;
     }
