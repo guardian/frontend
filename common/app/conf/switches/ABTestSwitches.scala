@@ -104,11 +104,11 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val HideEvenComments = Switch(
+  val ABParticipationHideHalfOfComments = Switch(
     SwitchGroup.ABTests,
-    "ab-hide-even-comments",
+    "ab-participation-hide-half-of-comments",
     "We are going to hide comments on a random half of articles",
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2016, 6, 6),
     exposeClientSide = true
   )

@@ -45,13 +45,13 @@ define([
 
     return function () {
 
-            this.id = 'HideEvenComments';
+            this.id = 'ParticipationHideHalfOfComments';
             this.start = '2016-05-15';
             this.expiry = '2016-06-06';
             this.author = 'Nathaniel Bennett';
             this.description = 'Hide comments for a percentage of users to determine what effect it has on their dwell time and loyalty ';
-            this.audience = 0.1;
-            this.audienceOffset = 0.5;
+            this.audience = 0.0;
+            this.audienceOffset = 0.0;
             this.successMeasure = 'We want to guage how valuable comments actually are to us';
             this.audienceCriteria = 'All users';
             this.dataLinkNames = '';
@@ -71,7 +71,7 @@ define([
                     id: 'hide-comments',
                     test: function(){
                         var isContent = !/Network Front|Section|Tag/.test(config.page.contentType),
-                            shortUrlSlug = (config.page.shortUrl || '').replace('http://gu.com', ''),
+                            shortUrlSlug = (config.page.shortUrl || '').replace('http://gu.com/p/', ''),
                             hide = CommentBlocker.hideComments(shortUrlSlug);
 
                         if(isContent && hide) {

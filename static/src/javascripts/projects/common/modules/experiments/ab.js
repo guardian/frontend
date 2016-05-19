@@ -16,7 +16,7 @@ define([
     'common/modules/experiments/tests/participation-low-fric-fashion',
     'common/modules/experiments/tests/clever-friend-brexit',
     'common/modules/experiments/tests/welcome-header',
-    'common/modules/experiments/tests/hide-even-comments',
+    'common/modules/experiments/tests/participation-hide-half-of-comments',
     'lodash/arrays/flatten',
     'lodash/arrays/zip',
     'lodash/collections/forEach',
