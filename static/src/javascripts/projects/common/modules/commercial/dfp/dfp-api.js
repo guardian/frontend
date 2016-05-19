@@ -204,6 +204,7 @@ define([
     function loadAdvertising() {
         googletag.cmd.push(
             defineAdverts,
+            setPublisherProvidedId,
             shouldLazyLoad() ? displayLazyAds : displayAds,
             // anything we want to happen after displaying ads
             postDisplay
@@ -250,6 +251,14 @@ define([
 
         function isDisabledCommercialFeature() {
             return !commercialFeatures.topBannerAd && $adSlot.data('name') === 'top-above-nav';
+        }
+    }
+
+    function setPublisherProvidedId() {
+        var user = id.getUserFromCookie();
+        if (user) {
+            var hashedId = sha1.hash(user.id);
+            googletag.pubads().setPublisherProvidedId(hashedId);
         }
     }
 
@@ -300,18 +309,9 @@ define([
 
     function displayLazyAds() {
         googletag.pubads().collapseEmptyDivs();
-        setPublisherProvidedId();
         googletag.enableServices();
         instantLoad();
         enableLazyLoad();
-    }
-
-    function setPublisherProvidedId() {
-        var user = id.getUserFromCookie();
-        if (user) {
-            var hashedId = sha1.hash(user.id);
-            googletag.pubads().setPublisherProvidedId(hashedId);
-        }
     }
 
     function instantLoad() {
@@ -361,7 +361,6 @@ define([
     function displayAds() {
         googletag.pubads().enableSingleRequest();
         googletag.pubads().collapseEmptyDivs();
-        setPublisherProvidedId();
         googletag.enableServices();
         // as this is an single request call, only need to make a single display call (to the first ad
         // slot)
