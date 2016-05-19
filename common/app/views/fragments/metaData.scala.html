@@ -7,7 +7,7 @@
 @import play.api.Play
 @import play.api.Play.current
 @import views.support.{SeoThumbnail, StripHtmlTags}
-@import conf.switches.Switches.{AmpSwitch, UseLinkPreconnect, GoogleAnalyticsSwitch}
+@import conf.switches.Switches.{AmpSwitch, UseLinkPreconnect, GoogleAnalyticsSwitch, CommercialSwitch}
 
 @* Critical meta data that have an impact on rendering speed *@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
@@ -41,6 +41,11 @@
         @if(GoogleAnalyticsSwitch.isSwitchedOn) {
             <link rel="preconnect" crossorigin href="//www.google-analytics.com" />
         }
+
+        @if(CommercialSwitch.isSwitchedOn) {
+            <link rel="preconnect" crossorigin href="@Configuration.googletag.jsLocation" />
+        }
+
     }
 
     <link rel="apple-touch-icon" sizes="152x152" href="@Static("images/favicons/152x152.png")" />
