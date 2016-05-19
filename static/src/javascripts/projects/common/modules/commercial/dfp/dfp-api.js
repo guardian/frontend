@@ -108,12 +108,12 @@ define([
      * Private variables
      */
     var dfp;
-    var adSlotSelector       = '.js-ad-slot';
-    var displayed            = false;
-    var rendered             = false;
-    var adverts              = {};
-    var creativeIDs          = [];
-    var prebidService        = null;
+    var adSlotSelector = '.js-ad-slot';
+    var displayed = false;
+    var rendered = false;
+    var adverts = {};
+    var creativeIDs = [];
+    var prebidService = null;
     var googletag;
 
     var renderStartTime = null;
