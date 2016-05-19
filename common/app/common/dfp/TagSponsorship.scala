@@ -82,12 +82,14 @@ case class HighMerchandisingLineItem(
   customTargetSet: Seq[CustomTargetSet]
   ) {
   val customTargets = customTargetSet.map(_.targets)
-  val editions = customTargets.flatMap(sequence => sequence.filter((target) => target.name == "edition")).map(target => target.values)
+  val editions = customTargets.flatMap(sequence => sequence.filter((target) => target.name == "edition")).map(_.values)
 
 
-  def matchesAdUnitAndTag (adUnitSuffix: String, pageTags:Seq[Tag],edition:String): Boolean = {
+  def matchesAdUnitAndTagandEdition (adUnitSuffix: String, pageTags:Seq[Tag],edition:String): Boolean = {
 
-    println(edition)
+    val cleansedHighMerchEdition = editions.flatMap(_.distinct)
+
+    val cleansedPageEdition = edition.split(" ", 2)(0).toLowerCase
 
     val tagNames = pageTags map (_.name) map (_.replaceAll(" ","-").toLowerCase)
 
@@ -95,7 +97,9 @@ case class HighMerchandisingLineItem(
 
     lazy val matchesAdUnit: Boolean = adUnits.exists(_.path contains adUnitSuffix)
 
-    matchesTag && matchesAdUnit
+    lazy val matchesEdition: Boolean = cleansedHighMerchEdition.contains(cleansedPageEdition)
+
+    matchesTag && matchesAdUnit && matchesEdition
   }
 }
 
