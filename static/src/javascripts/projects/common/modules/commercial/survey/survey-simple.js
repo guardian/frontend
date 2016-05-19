@@ -1,21 +1,19 @@
 define([
-    'bean',
     'fastdom',
-    'common/utils/$',
     'common/utils/template',
     'common/modules/user-prefs',
-    'common/views/svgs',
-    'text!common/views/commercial/survey/survey-simple.html',
-    'lodash/arrays/uniq'
+    'inlineSvg!svgs/icon/arrow-white-right',
+    'inlineSvg!svgs/icon/marque-36',
+    'inlineSvg!svgs/icon/cross',
+    'text!common/views/commercial/survey/survey-simple.html'
 ], function (
-    bean,
     fastdom,
-    $,
     template,
     userPrefs,
-    svgs,
-    surveySimpleTemplate,
-    uniq
+    arrowWhiteRight,
+    marque36icon,
+    crossIcon,
+    surveySimpleTemplate
 ) {
     var surveySimple = function (config) {
         this.config = config || {};
@@ -30,28 +28,28 @@ define([
                 buttonLink: this.config.buttonLink,
                 buttonDataLink: this.config.membershipDataLink,
                 showCloseBtn: this.config.showCloseBtn,
-                arrowWhiteRight: svgs('arrowWhiteRight'),
-                marque36icon: svgs('marque36icon'),
-                crossIcon: svgs('crossIcon'),
-                surveyOverlaySimple: svgs('surveyOverlaySimple')
+                arrowWhiteRight: arrowWhiteRight,
+                marque36icon: marque36icon,
+                crossIcon: crossIcon
             });
     };
 
     surveySimple.prototype.attach = function () {
         if (!this.hasSeen()) {
             fastdom.write(function () {
-                $(document.body).append(this.bannerTmpl);
+                document.body.insertAdjacentHTML('beforeend', this.bannerTmpl);
+                this.element = document.body.lastElementChild;
 
                 if (this.config.showCloseBtn) {
-                    bean.on(document, 'click', $('.js-survey-close'), this.handleClick.bind(this));
-                    bean.on(document, 'click', $('.js-survey-link__takepart'), this.handleClick.bind(this));
+                    this.element.querySelector('.js-survey-close').addEventListener('click', this.handleClick.bind(this));
+                    this.element.querySelector('.js-survey-link__takepart').addEventListener('click', this.handleClick.bind(this));
                 }
-            }.bind(this));
+            }, this);
         }
     };
 
     surveySimple.prototype.handleClick = function () {
-        $('.js-survey-overlay').addClass('u-h');
+        this.element.setAttribute('hidden', 'hidden');
         if (this.shouldClosePermanently) {
             this.closePermanently();
         }
@@ -65,13 +63,18 @@ define([
     surveySimple.prototype.closePermanently = function () {
         var messageStates = userPrefs.get(this.prefs) || [];
         messageStates.push(this.id);
-        userPrefs.set(this.prefs, uniq(messageStates));
+        userPrefs.set(this.prefs, messageStates.reduce(function (result, input) {
+            if (result.indexOf(input) === -1) {
+                result.push(input);
+            }
+            return result;
+        }, []));
     };
 
     surveySimple.prototype.show = function () {
         fastdom.write(function () {
-            $('.js-survey-overlay').removeClass('u-h');
-        });
+            this.element.removeAttribute('hidden');
+        }, this);
     };
 
     return surveySimple;
