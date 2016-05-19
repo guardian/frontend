@@ -24,8 +24,15 @@ $hosted-stripe: 28px;
 
 .hosted__header {
     width: 100%;
-    height: 58px;
     background-color: $neutral-1;
+
+    @include mq(mobile) {
+        height: 48px;
+    }
+
+    @include mq(tablet) {
+        height: 58px;
+    }
 }
 
 .hosted__side {
@@ -62,8 +69,6 @@ $hosted-stripe: 28px;
 
     svg {
         fill: #ffffff;
-        width: 135px;
-        height: 50px;
     }
 
     .inline-logo {
@@ -71,9 +76,17 @@ $hosted-stripe: 28px;
         margin-top: -5px;
     }
 
+    @include mq(mobile) {
+        svg {
+            width: 115px;
+            height: 40px
+        }
+    }
+
     @include mq(tablet) {
         svg {
             width: 185px;
+            height: 50px;
         }
     }
 }
@@ -451,9 +464,16 @@ $hosted-stripe: 28px;
 .hosted__label {
     float: left;
     margin-left: 110px;
-    margin-top: 29px;
     color: #ffffff;
     border: 0;
+
+    @include mq(mobile) {
+        margin-top: 20px;
+    }
+
+    @include mq(tablet) {
+        margin-top: 29px;
+    }
 
     @include mq(desktop) {
         margin-left: 160px;
