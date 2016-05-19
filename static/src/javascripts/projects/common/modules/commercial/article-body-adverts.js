@@ -98,7 +98,10 @@ define([
         function insertInlineAd(paras) {
             bodyAds += 1;
             var isFabricTopReplacement = config.switches.fabricAdverts && (bodyAds === 1) && detect.isBreakpoint({max: 'phablet'});
-            var adDefinition = isFabricTopReplacement ? 'inline-fabric-top' : ('inline' + bodyAds);
+
+            // Note that the names 'inline1' to 'inline8' are used by passbacks for retargeting -
+            // check with adOps before changing these labels
+            var adDefinition = isFabricTopReplacement ? 'inline1-fabric' : ('inline' + bodyAds);
 
             insertAdAtPara(paras[0], adDefinition, 'inline');
         }

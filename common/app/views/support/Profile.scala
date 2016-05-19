@@ -120,17 +120,23 @@ object ImgSrc extends Logging with implicits.Strings {
 
   private val supportedImages = Set(".jpg", ".jpeg", ".png")
 
-  def apply(url: String, imageType: ElementProfile): String = {
+  def apply(url: String, imageType: ElementProfile, overlayTest: Boolean = false): String = {
     try {
       val uri = new URI(url.trim.encodeURI)
-
+      val imageOverlay = if (imageType == FacebookOpenGraphImage && overlayTest) {
+        "&bm=normal" +
+        "&ba=bottom%2C%20left" +
+        "&bw=350" +
+        "&bp=20" +
+        "&blend64=aHR0cDovL3MxNC5wb3N0aW1nLm9yZy80YnA4cDJ4cjUvV2hpdGVfbG9nb193aXRoX3NoYWRvdy5wbmc"
+      } else { "" }
       val isSupportedImage = supportedImages.exists(extension => uri.getPath.toLowerCase.endsWith(extension))
 
       hostPrefixMapping.get(uri.getHost)
         .filter(const(ImageServerSwitch.isSwitchedOn))
         .filter(const(isSupportedImage))
         .map { host =>
-          val signedPath = ImageUrlSigner.sign(s"${uri.getRawPath}${imageType.resizeString}", host.token)
+          val signedPath = ImageUrlSigner.sign(s"${uri.getRawPath}${imageType.resizeString}${imageOverlay}", host.token)
           s"$imageHost/img/${host.prefix}$signedPath"
         }.getOrElse(url)
     } catch {

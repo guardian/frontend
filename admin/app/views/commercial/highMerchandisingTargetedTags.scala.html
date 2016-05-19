@@ -1,4 +1,4 @@
-@(env: String, report: dfp.HighMerchandisingTargetedTagsReport)(implicit request: RequestHeader)
+@(env: String, report: common.dfp.HighMerchandisingTargetedTagsReport)(implicit request: RequestHeader)
 @import tools.DfpLink
 
 @admin_main("Commercial High Slot", env, isAuthed = true, hasCharts = false) {
@@ -13,12 +13,11 @@
         <table class="table table-striped table-bordered table-condensed">
             <thead>
                 <tr>
-                    <th>Line Item Name</th>
-                    <th>DFP link</th>
-                    <th>Keywords</th>
-                    <th>adUnits</th>
-                    <th>DFP adUnit Links</th>
-                    <th>Editions Targets</th>
+                    <th class="col-md-3">Name</th>
+                    <th class="col-md-1">DFP link</th>
+                    <th class="col-md-4">Tags</th>
+                    <th class="col-md-3">DFP adUnits</th>
+                    <th class="col-md-1">Editions</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,12 +26,13 @@
                         <td>@{lineItem.name}</td>
                         <td><a href="@DfpLink.lineItem(lineItem.id)">@{lineItem.id}</a></td>
                         <td>@{lineItem.tags.mkString(", ")}</td>
-                        <td>@{lineItem.adUnitString.mkString(", ")}</td>
-                        <td>@for(adUnitId <- lineItem.adUnitIds) {
-                            <a href="@DfpLink.adUnit(adUnitId)">@{adUnitId}</a>
+                        <td>@for(adUnit <- lineItem.adUnits) {
+                            <div>
+                                <a href="@DfpLink.adUnit(adUnit.id)">@{adUnit.fullPath}</a>
+                            </div>
                         }</td>
                         @if(lineItem.editions.isEmpty){
-                        <td>non</td>} else {
+                        <td>none</td>} else {
                         <td>@{lineItem.editions.distinct}</td>}
                     </tr>
                 }

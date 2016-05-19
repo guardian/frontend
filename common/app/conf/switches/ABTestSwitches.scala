@@ -103,4 +103,32 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 5, 19),
     exposeClientSide = true
   )
+
+  val ABFacebookShareParams = Switch(
+    SwitchGroup.ABTests,
+    "ab-facebook-share-params",
+    "Switch to add a query parameter to the url sent to Facebook when a user clicks the share button",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 30),
+    exposeClientSide = true
+  )
+
+  val ABPlayVideoOnFronts = Switch(
+    SwitchGroup.ABTests,
+    "ab-play-video-on-fronts",
+    "Don't play video on fronts, but auto play when in article",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 1),
+    exposeClientSide = true
+  )
+
+  val ABVideoControlsOnMainMedia = Switch(
+    SwitchGroup.ABTests,
+    "ab-video-controls-on-main-media",
+    "Show video controls on main media.",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 5, 26),
+    exposeClientSide = true
+  )
+
 }

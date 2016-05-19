@@ -1,0 +1,34 @@
+<div class="creative--hosted-video l-side-margins fc-container__inner"
+     style="
+        background-color: <%=data.backgroundColour%>;
+    ">
+    <div class="fc-container__header">
+        <a href="/guardian-labs" class="fc-container__header__title" data-link-name="<%=data.linkTracking%>">
+            from our advertisers
+        </a>
+    </div>
+    <div class="fc-container__body hosted-video__body" data-link-name="<%=data.sponsorName%>">
+        <div class="hosted-video--image-container"  style="
+            background-image: url(<%=data.asset%>);
+        ">
+            <a href="<%=data.clickMacro%><%=data.link%>" target="_blank" data-link-name="<%=data.linkTracking%>">
+                <div class="hosted-banner" style="
+                    border-color: <%=data.bannerColour%>;
+                    "></div>
+                <div class="hosted__meta">
+                    <p class="hosted__heading--small" style="
+                            color: <%=data.header1colour%>;
+                        "><%=data.header1%></p>
+                    <h1 class="hosted__heading" style="
+                            color: <%=data.header2colour%>;
+                        "><%=data.header2%></h1>
+                </div>
+                <div class="play-button"></div>
+            </a>
+        </div>
+        <div class="hostedbadge hosted-tone-bg--renault">
+            <p class="hostedbadge__info">Advertiser content</p>
+            <img class="hostedbadge__logo" src="<%=data.logo%>">
+        </div>
+    </div>
+</div>

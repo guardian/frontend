@@ -280,13 +280,13 @@ trait CommercialSwitches {
     "static-badges",
     "If on, all badges are served server side",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 25),
+    sellByDate = new LocalDate(2016, 6, 22),
     exposeClientSide = true
   )
 
   val highMerchandisingComponentSwitch = Switch(
     SwitchGroup.Commercial,
-    "render-commercial-high-slot-always",
+    "optimise-high-merchandising",
     "If on, server will check tags for high-merchandising target before rendering high-merch slot.",
     safeState = Off,
     sellByDate = new LocalDate(2016,6,8),

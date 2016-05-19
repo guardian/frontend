@@ -9,7 +9,7 @@ import conf.Configuration.commercial.dfpAdUnitRoot
 
 trait AdSlotAgent {
 
-  protected def isProd: Boolean
+  protected def environmentIsProd: Boolean
 
   protected def lineItemsBySlot: Map[AdSlot, Seq[GuLineItem]]
 
@@ -56,7 +56,7 @@ trait AdSlotAgent {
         targetsRelevantSizes(lineItem) &&
         targetsAdUnit(lineItem, adUnitWithoutRoot) &&
         deriveEditionFromGeotargeting(lineItem).contains(edition) &&
-        !(isProd && targetsAdTest(lineItem))
+        !(environmentIsProd && targetsAdTest(lineItem))
     }
 
     lineItems flatMap (_.creativeSizes)
@@ -82,7 +82,7 @@ trait AdSlotAgent {
         targetsTopBelowNavSlot(lineItem) &&
         targetsEdition(lineItem, edition) &&
         targetsAdUnit(lineItem, adUnitWithoutRoot) &&
-        !(isProd && targetsAdTest(lineItem))
+        !(environmentIsProd && targetsAdTest(lineItem))
     }
   }
 
