@@ -97,7 +97,7 @@ case class HighMerchandisingLineItem(
 
     lazy val matchesAdUnit: Boolean = adUnits.exists(_.path contains adUnitSuffix)
 
-    lazy val matchesEdition: Boolean = cleansedHighMerchEdition.contains(cleansedPageEdition)
+    lazy val matchesEdition: Boolean = cleansedHighMerchEdition.isEmpty || cleansedHighMerchEdition.contains(cleansedPageEdition)
 
     matchesTag && matchesAdUnit && matchesEdition
   }
