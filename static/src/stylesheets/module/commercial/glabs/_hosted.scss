@@ -156,6 +156,12 @@ $hosted-stripe: 28px;
             @include hosted-fade-out;
         }
 
+        .vjs-time-control {
+            @include mq($until: tablet) {
+                @include hosted-fade-out;
+            }
+        }
+
         .vjs-control-bar {
             background-color: unset;
             transition: background-color 1s linear;
@@ -167,6 +173,12 @@ $hosted-stripe: 28px;
         .vjs-volume-menu-button,
         .vjs-progress-control {
             @include hosted-fade-in;
+        }
+
+        @include mq($until: tablet) {
+            .vjs-time-control {
+                @include hosted-fade-in;
+            }
         }
 
         .vjs-control-bar {
@@ -204,12 +216,6 @@ $hosted-stripe: 28px;
         margin: 6px 20px 6px $gs-gutter;
     }
 
-
-    .vjs-time-control {
-        @include mq($until: tablet) {
-            display: none;
-        }
-    }
 }
 
 .hosted__meta {
@@ -225,16 +231,14 @@ $hosted-stripe: 28px;
 
     @include mq(desktop) {
         width: 35%;
-        left: calc(50% - 490px + #{$gs-gutter});
     }
 
     @include mq(leftCol) {
         bottom: 18%;
-        left: calc(50% - 570px + #{$gs-gutter});
     }
 
     @include mq($until: tablet) {
-        margin-left: 57px;
+        left: 76px;
         bottom: 10px;
     }
 }
@@ -310,7 +314,7 @@ $hosted-stripe: 28px;
     &:after {
         content: '';
         width: 100%;
-        height: 100%;    
+        height: 100%;
         position: absolute;
         left: 0;
         top: 0;
@@ -459,13 +463,15 @@ $hosted-stripe: 28px;
         @include mq(desktop) {
             font-size: 46px;
             line-height: 46px;
-            margin-top: -12px;
             margin-bottom: 10px;
         }
     }
 
     .hosted__meta {
         left: $gs-gutter/2;
+        @include mq(desktop) {
+            width: 55%;
+        }
         @include mq($until: desktop) {
             bottom: 15%;
         }
