@@ -20,7 +20,7 @@ define([
         this.expiry = '2016-06-08';
         this.author = 'Maria Livia Chiorean';
         this.description = 'Show a welcome header for first time users.';
-        this.audience = 0;
+        this.audience = 1;
         this.audienceOffset = 0;
         this.audienceCriteria = 'First time users';
         this.idealOutcome = 'People come back more after the first visit.';
