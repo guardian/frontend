@@ -1,10 +1,10 @@
 @()
 
 (function applyAdfreeRenderCondition(commercial){
-    var AD_FREE_COOKIE = 'gu_adfree_test',
-        MVT_ID_COOKIE = 'GU_mvt_id',
-        FIRST_TIME_VISIT_KEY = 'gu.firstVisitTime',
-        ALREADY_VISITED_KEY = 'gu.alreadyVisited';
+    var AD_FREE_COOKIE = 'gu_adfree_test';
+    var MVT_ID_COOKIE = 'GU_mvt_id';
+    var FIRST_TIME_VISIT_KEY = 'gu.firstVisitTime';
+    var ALREADY_VISITED_KEY = 'gu.alreadyVisited';
 
     if ((readLocalStorage(ALREADY_VISITED_KEY) || 0) == 0) {
         writeLocalStorage(FIRST_TIME_VISIT_KEY, new Date().getTime());
@@ -32,13 +32,14 @@
     }
 
     function assignUser() {
-        var mvtNumValues = 899999,
-            audience = 0.1, // keep this in sync with new-user-adverts-disabled.js
-            audienceOffset = 0, // keep this in sync with new-user-adverts-disabled.js
-            smallestTestId = mvtNumValues * audienceOffset,
-            largestTestId  = smallestTestId + mvtNumValues * audience,
-            mvtCookieId = readCookie(MVT_ID_COOKIE),
-            variants, testVariantIndex;
+        var mvtNumValues = 899999;
+        var audience = 0.1; // keep this in sync with new-user-adverts-disabled.js
+        var audienceOffset = 0; // keep this in sync with new-user-adverts-disabled.js
+        var smallestTestId = mvtNumValues * audienceOffset;
+        var largestTestId  = smallestTestId + mvtNumValues * audience;
+        var mvtCookieId = readCookie(MVT_ID_COOKIE);
+        var variants;
+        var testVariantIndex;
 
         if (mvtCookieId && mvtCookieId > smallestTestId && mvtCookieId <= largestTestId) {
             variants = [{
@@ -61,8 +62,8 @@
 
     function readLocalStorage(key) {
         if ("localStorage" in window) {
-            var data,
-                dataParsed;
+            var data;
+            var dataParsed;
             data = localStorage.getItem(key);
             if (data === null) {
                 return null;
