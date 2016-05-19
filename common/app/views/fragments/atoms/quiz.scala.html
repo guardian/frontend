@@ -6,9 +6,6 @@
 
 @(quiz: model.content.Quiz, maybeResults: Option[QuizResults], showResults: Boolean, sharelinks: Seq[model.ShareLink])(implicit request: RequestHeader)
 
-@if(showResults) {
-    <h2>@quiz.title</h2>
-}
 <form action="@postUrl(quiz)" method="POST" class="@RenderClasses(Map(
     ("atom-quiz", true),
     ("atom-quiz--personality", quiz.quizType == "personality"),

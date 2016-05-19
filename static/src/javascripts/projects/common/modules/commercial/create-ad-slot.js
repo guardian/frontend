@@ -104,10 +104,13 @@ define([
                 mobile: fabricTopSlot
             }
         },
-        'inline-fabric-top': {
+        'inline1-fabric': {
             sizeMappings: {
                 mobile: ('1,1|300,250|' + fabricTopSlot)
-            }
+            },
+            // This label is used so that passbacks can retarget the slot, and so that in-reads (which always appear in
+            // the first slot) can be limited to this ad.
+            name : 'inline1'
         }
     };
 

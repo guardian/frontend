@@ -19,6 +19,7 @@ class ContainerModelTest extends FlatSpec with Matchers with OptionValues {
     val config: CollectionConfig = CollectionConfig(
       displayName = None,
       backfill = None,
+      metadata = None,
       collectionType = "",
       href = None,
       description = None,

@@ -5,6 +5,7 @@ import com.gu.contentapi.client.model.v1.{Content => ApiContent, ItemResponse}
 import common._
 import contentapi.ContentApiClient
 import conf.switches.Switches
+import facebookimages.ArticleWithOpenGraphOverlay
 import model.Cached.WithoutRevalidationResult
 import model._
 import model.liveblog.{BodyBlock, KeyEventData}
@@ -188,6 +189,10 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
         case (article: Article, None) =>
           if(mvt.ABIntersperseMultipleStoryPackagesStories.isParticipating) {
             Left(ArticlePage(article, StoryPackages(article, response)))
+          }
+          else if(mvt.ABOpenGraphOverlay.isParticipating) {
+            val newArticle = ArticleWithOpenGraphOverlay(article)
+            Left(ArticlePage(newArticle, RelatedContent(newArticle, response)))
           }
           else {
             Left(ArticlePage(article, RelatedContent(article, response)))

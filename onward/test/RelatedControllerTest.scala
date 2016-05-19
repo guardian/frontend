@@ -8,7 +8,7 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 
   val article = "uk/2012/aug/07/woman-torture-burglary-waterboard-surrey"
   val badArticle = "i/am/not/here"
-  val articleWithoutRelated = "uk/2012/aug/29/eva-rausing-information-murder-olaf-palme"
+  val articleWithoutRelated = "childrens-books-site/2016/may/17/picasso-ed-vere"
 
   it should "serve JSON when .json format is supplied" in {
     val fakeRequest = FakeRequest(GET, s"/related/${article}.json")

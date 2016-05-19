@@ -224,4 +224,12 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
+  val UseLinkPreconnect = Switch(
+    SwitchGroup.Performance,
+    "use-link-preconnect",
+    "If this switch is on then link preconnect hints will be on the page",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 5),
+    exposeClientSide = false
+  )
 }

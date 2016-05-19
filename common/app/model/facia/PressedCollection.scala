@@ -36,11 +36,7 @@ case class PressedCollection(
   }
 
   def branding(edition: Edition): Option[Branding] = {
-
-    // TODO: replace this placeholder with value from fapi
-    val shouldBeBranded = true
-
-    if (shouldBeBranded) {
+    if (config.showBranding) {
       val brandings = curatedPlusBackfillDeduplicated flatMap (_.branding(edition))
       if (brandings.nonEmpty && brandings.forall(_ == brandings.head)) {
         brandings.headOption

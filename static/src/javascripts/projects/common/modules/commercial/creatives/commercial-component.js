@@ -35,7 +35,7 @@ define([
         soulmatesTest:  defaultUrlBuilder('soulmates-test/mixed'),
         capiSingle:     defaultUrlBuilder('capi-single'),
         capi:           defaultUrlBuilder('capi'),
-        paidforCard:    defaultUrlBuilder('paid'),
+        paidforCard:    complexUrlBuilder('paid', '', false, true),
         books:          complexUrlBuilder('books/books', 'isbns'),
         jobs:           complexUrlBuilder('jobs', 'jobIds', true),
         masterclasses:  complexUrlBuilder('masterclasses', 'ids', true),
@@ -69,12 +69,13 @@ define([
         };
     }
 
-    function complexUrlBuilder(url, withSpecificId, withKeywords) {
+    function complexUrlBuilder(url, withSpecificId, withKeywords, withSection) {
         return function (params) {
             return buildComponentUrl(url, merge(
                 params,
                 withSpecificId && params[withSpecificId] ? { t: params[withSpecificId].split(',') } : {},
-                withKeywords ? getKeywords() : {}
+                withKeywords ? getKeywords() : {},
+                withSection ? { s: config.page.section } : {}
             ));
         };
     }
@@ -147,7 +148,7 @@ define([
      *
      * @constructor
      * @extends Component
-     * @param (Object=) adSlot
+     * @param {Object=} adSlot
      * @param {Object=} params
      */
     function CommercialComponent(adSlot, params) {
