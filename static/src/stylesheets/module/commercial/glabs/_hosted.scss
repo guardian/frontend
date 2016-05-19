@@ -216,6 +216,10 @@ $hosted-stripe: 28px;
         margin: 6px 20px 6px $gs-gutter;
     }
 
+    &.vjs-using-native-controls .vjs-control-bar {
+        display: block;
+    }
+
 }
 
 .hosted__meta {
@@ -499,7 +503,7 @@ $hosted-stripe: 28px;
         right: 0;
         bottom: 0;
         position: absolute;
-        background-image: linear-gradient(to bottom, rgba(238, 238, 238, 0), rgba(0, 0, 0, .4));
+        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, .4));
         border-top: 2px solid transparent;
     }
 
