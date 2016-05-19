@@ -1,6 +1,5 @@
 package common.dfp
 
-import common.Edition
 import model.Tag
 import conf.switches.Switches._
 
