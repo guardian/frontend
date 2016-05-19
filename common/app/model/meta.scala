@@ -103,24 +103,14 @@ final case class Commercial(
   def isSponsored(maybeEdition: Option[Edition]): Boolean =
     DfpAgent.isSponsored(tags.tags, Some(metadata.section), maybeEdition)
 
-  def needsHighMerchandisingSlot: Boolean = {
-    DfpAgent.hasHighMerchAdAndTag(metadata.adUnitSuffix,tags.tags)
+  def needsHighMerchandisingSlot(edition:String): Boolean = {
+    DfpAgent.hasHighMerchAdAndTag(metadata.adUnitSuffix,tags.tags,edition)
   }
 
-  def conditionalConfig: Map[String, JsValue] = {
-    val highMerchandisingMeta = if (needsHighMerchandisingSlot) {
-      Some("hasHighMerchandisingTarget", JsBoolean(needsHighMerchandisingSlot))
-    } else None
-
-    val meta: List[Option[(String, JsValue)]] = List(
-      highMerchandisingMeta
-    )
-    meta.flatten.toMap
-  }
 
   def javascriptConfig: Map[String, JsValue] = Map(
     ("isAdvertisementFeature", JsBoolean(isAdvertisementFeature))
-  ) ++ conditionalConfig
+  )
 
 }
 /**

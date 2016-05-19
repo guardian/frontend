@@ -85,14 +85,16 @@ case class HighMerchandisingLineItem(
   val editions = customTargets.flatMap(sequence => sequence.filter((target) => target.name == "edition")).map(target => target.values)
 
 
-  def matchesAdUnitAndTag (adUnitSuffix: String, pageTags:Seq[Tag]): Boolean = {
+  def matchesAdUnitAndTag (adUnitSuffix: String, pageTags:Seq[Tag],edition:String): Boolean = {
+
+    println(edition)
 
     val tagNames = pageTags map (_.name) map (_.replaceAll(" ","-").toLowerCase)
 
     val matchesTag: Boolean = tagNames.exists(tags.contains)
 
     lazy val matchesAdUnit: Boolean = adUnits.exists(_.path contains adUnitSuffix)
-    
+
     matchesTag && matchesAdUnit
   }
 }

@@ -8,8 +8,8 @@ trait HighMerchandiseComponentAgent {
 
   protected def targetedHighMerchandisingLineItems: Seq[HighMerchandisingLineItem]
 
-  def hasHighMerchAdAndTag(adUnitSuffix:String, tags: Seq[Tag]) = {
+  def hasHighMerchAdAndTag(adUnitSuffix:String, tags: Seq[Tag],edition:String) = {
     highMerchandisingComponentSwitch.isSwitchedOff ||
-    targetedHighMerchandisingLineItems.exists(_.matchesAdUnitAndTag(adUnitSuffix, tags))
+    targetedHighMerchandisingLineItems.exists(_.matchesAdUnitAndTag(adUnitSuffix, tags,edition))
   }
 }
