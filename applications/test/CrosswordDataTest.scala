@@ -41,17 +41,7 @@ import org.scalatest.time.{Millis, Span}
     "fromCrossword should populate solutionAvailable field always and dateSolutionAvailable field if it exists" in {
 
       implicit val patienceConfig = PatienceConfig(timeout = Span(3000, Millis), interval = Span(100, Millis))
-      val futureCrossword = controllers.CrosswordPageController.getCrossword("speedy", 1040)(TestRequest("crosswords/speedy/1040"))
       val futureCrosswordWithDateSolutionAvailable = controllers.CrosswordPageController.getCrossword("prize", 26806)(TestRequest("crosswords/prize/26806"))
-
-      whenReady(futureCrossword) { result =>
-        val maybeCrossword = result.content.flatMap(_.crossword)
-        maybeCrossword shouldBe defined
-        val crossword = CrosswordData.fromCrossword(maybeCrossword.get)
-        crossword.solutionAvailable should be(true)
-        crossword.dateSolutionAvailable should be(None)
-      }
-
       whenReady(futureCrosswordWithDateSolutionAvailable) { result =>
         val maybeCrossword = result.content.flatMap(_.crossword)
         maybeCrossword shouldBe defined

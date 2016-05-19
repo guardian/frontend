@@ -238,7 +238,7 @@ final case class Content(
   )
 
   val twitterProperties = Map(
-    "twitter:app:url:googleplay" -> metadata.webUrl.replace("http", "guardian"),
+    "twitter:app:url:googleplay" -> metadata.webUrl.replaceFirst("^[a-zA-Z]*://", "guardian://"), //replace current scheme with guardian mobile app scheme
     "twitter:image" -> rawOpenGraphImage
   ) ++ contributorTwitterHandle.map(handle => "twitter:creator" -> s"@$handle").toList
 

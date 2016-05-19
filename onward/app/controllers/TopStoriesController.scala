@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.contentapi.client.GuardianContentApiThriftError
+import com.gu.contentapi.client.GuardianContentApiError
 import common._
 import contentapi.ContentApiClient
 import conf._
@@ -41,7 +41,7 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
           case Nil => None
           case picks => Some(RelatedContent(picks))
         }
-      } recover { case GuardianContentApiThriftError(404, message, _) =>
+      } recover { case GuardianContentApiError(404, message, _) =>
         log.info(s"Got a 404 while calling content api: $message")
         None
       }

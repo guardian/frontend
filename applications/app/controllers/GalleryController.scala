@@ -43,7 +43,7 @@ object GalleryController extends Controller with RendersItemResponse with Loggin
       .showFields("all")
     ).map { response =>
       val gallery = response.content.map(Content(_))
-      val model: Option[GalleryPage] = gallery collect { case g: Gallery => GalleryPage(g, RelatedContent(g, response), index, isTrail) }
+      val model: Option[GalleryPage] = gallery collect { case g: Gallery => GalleryPage(g, StoryPackages(g, response), index, isTrail) }
 
       ModelOrResult(model, response)
 
