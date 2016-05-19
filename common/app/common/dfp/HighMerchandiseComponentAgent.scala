@@ -9,6 +9,6 @@ trait HighMerchandiseComponentAgent {
 
   def hasHighMerchAdAndTagandEdition(adUnitSuffix:String, tags: Seq[Tag],edition:String) = {
     highMerchandisingComponentSwitch.isSwitchedOff ||
-    targetedHighMerchandisingLineItems.exists(_.matchesAdUnitAndTagandEdition(adUnitSuffix, tags,edition))
+    targetedHighMerchandisingLineItems.exists(_.matchesAdUnitAndTagAndEdition(adUnitSuffix, tags,edition))
   }
 }

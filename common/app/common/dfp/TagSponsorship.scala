@@ -85,7 +85,7 @@ case class HighMerchandisingLineItem(
   val editions = customTargets.flatMap(sequence => sequence.filter((target) => target.name == "edition")).map(_.values)
 
 
-  def matchesAdUnitAndTagandEdition (adUnitSuffix: String, pageTags:Seq[Tag],edition:String): Boolean = {
+  def matchesAdUnitAndTagAndEdition (adUnitSuffix: String, pageTags:Seq[Tag],edition:String): Boolean = {
 
     val cleansedHighMerchEdition = editions.flatMap(_.distinct)
 
