@@ -338,11 +338,19 @@ $hosted-stripe: 28px;
 .hosted__cta-wrapper {
     position: relative;
     z-index: 1;
-    padding-top: 270px;
     margin-left: 20px;
+
+    @include mq(mobile) {
+        padding-top: 130px;
+    }
 
     @include mq(tablet) {
         width: 40%;
+        padding-top: 160px;
+    }
+
+    @include mq(desktop) {
+        padding-top: 220px;
     }
 }
 
