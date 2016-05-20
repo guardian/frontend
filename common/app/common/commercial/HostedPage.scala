@@ -7,7 +7,7 @@ import play.api.libs.json.JsString
 case object HostedPage extends StandalonePage {
 
   override val metadata: MetaData = {
-    val title = "Designing the car of the future - video"
+    val title = "Advertiser content hosted by the Guardian: Designing the car of the future - video"
     val description =
       "Who better to dream up the transport of tomorrow than the people who'll be buying them? Follow a group of students as they work on designing the interior of self-driving cars"
     val toneId = "tone/hosted-content"
