@@ -514,20 +514,27 @@ object Video {
     val elements = content.elements
     val section = content.metadata.section
     val id = content.metadata.id
-    val source: Option[String] = elements.videos.find(_.properties.isMain).flatMap(_.videos.source)
+    val mainVideo: Option[VideoElement] = elements.videos.find(_.properties.isMain)
+    val source: Option[String] = mainVideo.flatMap(_.videos.source)
 
     val javascriptConfig: Map[String, JsValue] = Map(
       "isPodcast" -> JsBoolean(content.tags.isPodcast),
       "source" -> JsString(source.getOrElse("")),
-      "embeddable" -> JsBoolean(elements.videos.find(_.properties.isMain).map(_.videos.embeddable).getOrElse(false)),
-      "videoDuration" -> elements.videos.find(_.properties.isMain).map{ v => JsNumber(v.videos.duration)}.getOrElse(JsNull))
+      "embeddable" -> JsBoolean(mainVideo.map(_.videos.embeddable).getOrElse(false)),
+      "videoDuration" -> mainVideo.map{ v => JsNumber(v.videos.duration)}.getOrElse(JsNull))
 
-    val opengraphProperties = Map(
-      "og:type" -> "video",
-      "og:video:type" -> "text/html",
-      "og:video" -> content.metadata.webUrl,
-      "video:tag" -> content.tags.keywords.map(_.name).mkString(",")
-    )
+    val opengraphProperties = mainVideo.flatMap { _.videos.largestVideo }.map { videoAsset =>
+      val videoAssetUrl = videoAsset.url.getOrElse("")
+      val optionalOpengraphProperties = if(content.metadata.webUrl.startsWith("https://")) Map("og:video:secure_url" -> videoAssetUrl) else Nil
+      Map(
+        "og:type" -> "video",
+        "og:video" -> videoAssetUrl,
+        "og:video:type" -> videoAsset.mimeType.getOrElse(""),
+        "og:video:width" -> videoAsset.width.toString,
+        "og:video:height" -> videoAsset.height.toString,
+        "video:tag" -> content.tags.keywords.map(_.name).mkString(",")
+      ) ++ optionalOpengraphProperties
+    }.getOrElse(Map.empty)
 
     val metadata = content.metadata.copy(
       contentType = contentType,

@@ -74,7 +74,7 @@ trait PerformanceSwitches {
     "server-side-buckets",
     "When this switch expires, remove the remaining predefined server side testing buckets",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 20),
+    sellByDate = new LocalDate(2016, 6, 22),
     exposeClientSide = false
   )
 
