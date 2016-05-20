@@ -1,8 +1,8 @@
 define([
-    'qwery',
+    'common/utils/$',
     'common/utils/config'
 ], function (
-    qwery,
+    $,
     config
 ) {
     return function () {
@@ -20,7 +20,7 @@ define([
 
         this.canRun = function () {
             // Only videos that are links to video pages have data-embed-paths
-            return config.page.isFront && qwery('.fc-item--has-video-main-media').length > 0;
+            return config.page.isFront && $('.fc-item--has-video-main-media .js-video-play-button').length > 0;
         };
 
         this.variants = [
