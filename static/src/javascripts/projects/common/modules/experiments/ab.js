@@ -135,8 +135,8 @@ define([
                 && test.canRun() && !expired && isTestSwitchedOn(test));
     }
 
-    function getId(test) {
-        return test.id;
+    function getId(_) {
+        return _.id;
     }
 
     function getTest(id) {
@@ -259,9 +259,7 @@ define([
 
         if (mvtCookieId && mvtCookieId > smallestTestId && mvtCookieId <= largestTestId) {
             // This mvt test id is in the test range, so allocate it to a test variant.
-            variantIds = test.variants.map(function (variant) {
-                return variant.id;
-            });
+            variantIds = test.variants.map(getId);
             testVariantId = mvtCookieId % variantIds.length;
 
             addParticipation(test, variantIds[testVariantId]);
