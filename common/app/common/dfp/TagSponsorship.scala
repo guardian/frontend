@@ -85,10 +85,10 @@ case class HighMerchandisingLineItem(
   val customTargets = customTargetSet.map(_.targets)
   val editions = customTargets.flatMap(_.filter( _.name == "edition")).map(_.values).distinct
 
-  def matchesPageTargeting (adUnitSuffix: String, pageTags:Seq[Tag], edition:String): Boolean = {
+  def matchesPageTargeting (adUnitSuffix: String, pageTags:Seq[Tag], edition:Edition): Boolean = {
 
     // edition comes in the form "UK edition" and "US edition"
-    val cleansedPageEdition = edition.split(" ", 2).head.toLowerCase
+    val cleansedPageEdition = edition.id.toLowerCase
 
     val cleansedPageTagNames = pageTags map (_.name) map (_.replaceAll(" ","-").toLowerCase)
 

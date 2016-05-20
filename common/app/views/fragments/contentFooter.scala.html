@@ -20,7 +20,7 @@
     } {
         <div class="js-fronts-network-2" data-link-name="fronts-on-articles | network-front | block-2"></div>
     } {
-        @if(content.commercial.needsHighMerchandisingSlot(Edition(request).displayName)) {
+        @if(content.commercial.needsHighMerchandisingSlot(Edition(request))) {
             <div class="fc-container fc-container--commercial-high">@fragments.commercial.commercialComponentHigh()</div>
         }
     } {

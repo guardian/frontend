@@ -2,12 +2,13 @@ package common.dfp
 
 import model.Tag
 import conf.switches.Switches._
+import common.Edition
 
 trait HighMerchandiseComponentAgent {
 
   protected def targetedHighMerchandisingLineItems: Seq[HighMerchandisingLineItem]
 
-  def isTargetedByHighMerch(adUnitSuffix:String, tags: Seq[Tag],edition:String) = {
+  def isTargetedByHighMerch(adUnitSuffix:String, tags: Seq[Tag],edition:Edition) = {
     highMerchandisingComponentSwitch.isSwitchedOff ||
     targetedHighMerchandisingLineItems.exists(_.matchesPageTargeting(adUnitSuffix, tags, edition))
   }
