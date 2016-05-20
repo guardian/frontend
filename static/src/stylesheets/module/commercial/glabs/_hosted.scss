@@ -398,6 +398,7 @@ $hosted-stripe: 28px;
     @include f-headlineSans;
 
     font-size: 25px;
+    font-weight: bold;
     color: #ffc421;
 
     @include mq(tablet) {
