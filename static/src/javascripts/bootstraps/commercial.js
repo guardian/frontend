@@ -14,8 +14,7 @@ define([
     'common/modules/commercial/third-party-tags',
     'common/modules/commercial/paidfor-band',
     'common/modules/commercial/adverts',
-    'common/modules/commercial/commercial-audit',
-    'common/utils/user-timing'
+    'common/modules/commercial/commercial-audit'
 ], function (
     Promise,
     config,
