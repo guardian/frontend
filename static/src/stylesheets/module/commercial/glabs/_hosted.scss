@@ -318,7 +318,7 @@ $hosted-stripe: 28px;
         left: 0;
         top: 0;
         z-index: 0;
-        background: linear-gradient(transparent 200px, rgba(0, 0, 0, .7));
+        background: linear-gradient(transparent 100px, rgba(0, 0, 0, .5));
     }
 
     @include mq(mobile) {
@@ -379,12 +379,13 @@ $hosted-stripe: 28px;
     }
 
     @include mq(tablet) {
-        height: 34px;
+        height: 38px;
         margin: 13px;
+        line-height: 1;
 
         svg {
-            width: 34px;
-            height: 34px;
+            width: 37px;
+            height: 37px;
         }
     }
 
