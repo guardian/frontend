@@ -27,7 +27,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
     val result = leagueTableController.renderLeagueTableJson()(fakeRequest)
     status(result) should be(200)
-    header("Content-Type", result).get should be("application/json; charset=utf-8")
+    contentType(result) shouldBe Some("application/json")
     contentAsString(result) should startWith("{\"config\"")
   }
 
@@ -43,7 +43,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
     val result = leagueTableController.renderTeamlist()(fakeRequest)
     status(result) should be(200)
-    header("Content-Type", result).get should be("application/json; charset=utf-8")
+    contentType(result) shouldBe Some("application/json")
     contentAsString(result) should startWith("{\"config\"")
   }
 
@@ -61,7 +61,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
     val result = leagueTableController.renderCompetition(competitionId)(fakeRequest)
     status(result) should be(200)
-    header("Content-Type", result).get should be("application/json; charset=utf-8")
+    contentType(result) shouldBe Some("application/json")
     contentAsString(result) should startWith("{\"html\"")
   }
 
