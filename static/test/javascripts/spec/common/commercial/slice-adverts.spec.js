@@ -187,19 +187,22 @@ define([
             });
         });
 
-        describe('Fabric ads', function () {
+        describe('Top slot replacement', function () {
             beforeEach(function () {
                 config.switches.fabricAdverts = true;
+                // Remove the first container's candidate, so we're sure any slots are inserted by our replacement logic,
+                // not at the behest of the markup.
+                bonzo(qwery('.fc-container-first .js-fc-slice-mpu-candidate', $fixtureContainer)).remove();
             });
 
-            it('can be added on mobile', function (done) {
+            it('is added on mobile', function (done) {
                 detect.isBreakpoint = function () {
                     // expecting check for breakpoint <= phablet
                     return true;
                 };
                 sliceAdverts.init();
                 fastdom.defer(function () {
-                    expect(qwery('.fc-container-first .ad-slot--fabric', $fixtureContainer).length).toBe(1);
+                    expect(qwery('.fc-container-first .ad-slot--inline1', $fixtureContainer).length).toBe(1);
                     done();
                 });
             });
@@ -211,7 +214,7 @@ define([
                 };
                 sliceAdverts.init();
                 fastdom.defer(function () {
-                    expect(qwery('.fc-container-first .ad-slot--fabric', $fixtureContainer).length).toBe(0);
+                    expect(qwery('.fc-container-first .ad-slot--inline1', $fixtureContainer).length).toBe(0);
                     done();
                 });
             });
