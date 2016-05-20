@@ -105,18 +105,18 @@ object SystemMetrics extends implicits.Numbers {
 object RequestMetrics {
 
   val PanicRequestsSurgeMetric = CountMetric(
-    name = "requests-shed",
-    description = "Number of requests we returned 503 because the server was overloaded"
+    name = "panic-requests-surge",
+    description = "Number of requests we returned 503 because we received a sudden surge"
   )
 
   val PanicExcessiveLatencyMetric = CountMetric(
-    name = "requests-shed",
-    description = "Number of requests we returned 503 because the server was overloaded"
+    name = "panic-excessive-latency",
+    description = "Number of requests we returned 503 because latency was excessively high"
   )
 
   val PanicLatencyWarningMetric = CountMetric(
-    name = "requests-shed",
-    description = "Number of requests we returned 503 because the server was overloaded"
+    name = "panic-latency-warning",
+    description = "Number of requests we had some chance of returning 503 because the server was running slowly"
   )
 
 }
