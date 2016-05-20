@@ -19,9 +19,6 @@
     @* polyfill, feature detect etc before we try and use the stylesheets *@
     @fragments.inlineJSBlocking(simpleSurveyStaticPage)
 
-    @* try and load fonts before we use the stylesheets *@
-    @fragments.fontDefinitions()
-
     @* start trying to use the stylesheets *@
     <script>
         @InlineJs(enableStylesheets().body, "enableStylesheets.js")
