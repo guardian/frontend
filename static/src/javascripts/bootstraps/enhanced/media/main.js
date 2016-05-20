@@ -256,7 +256,7 @@ define([
                         var vol;
 
                         deferToAnalytics(function () {
-                            events.initOmnitureTracking(player);
+                            events.initOmnitureTracking(player, mediaId);
                             events.initOphanTracking(player, mediaId);
 
                             events.bindGlobalEvents(player);

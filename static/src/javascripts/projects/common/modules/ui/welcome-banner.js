@@ -1,43 +1,61 @@
 define([
+    'bean',
     'fastdom',
     'common/utils/storage',
     'common/utils/template',
-    'common/utils/load-css-promise'
+    'common/utils/load-css-promise',
+    'common/views/svgs'
 ], function (
+    bean,
     fastdom,
     storage,
     template,
-    loadCssPromise
+    loadCssPromise,
+    svgs
 ) {
     /**
      * Rules:
      * 1st visit replace nav bar with banner
      */
     var header = document.getElementById('header'),
-        message1 = '<div class="banner-message"><%=HTML%></div>',
+        message1 = '<div class="banner-message"><span class="line-1"><%=first%></span><span class="line-2"><%=second%></span></div>',
         data = {
-            message1: {
-                HTML: '<span class="pull-left">news website</span><span class="pull-right">of the year</span>'
+            'award-winning': {
+                'first': 'award-winning news,',
+                'second': 'sport and culture'
             }
         };
 
-    function showWelcomeMessage(messageNumber) {
+    function showWelcomeMessage(messageName) {
         loadCssPromise.then(function () {
-            createAndSetHeader(messageNumber);
+            createAndSetHeader(messageName);
         });
     }
 
-    function createAndSetHeader(messageNumber) {
-        var headerDiv = document.createElement('div'),
-            msg = template(message1, data[messageNumber]);
+    function createAndSetHeader(messageName) {
+        var newHeader = document.createElement('button'),
+            msg = template(message1, data[messageName]),
+            closeBtn = '<div class="banner-close-icon"><button class="js-welcome-message__item__close button button--tertiary u-faux-block-link__promote" aria-label="Dismiss" data-link-name="close button">' + svgs('closeCentralIcon') + '</button></div>';
 
-        headerDiv.setAttribute('id', 'welcome-banner');
-        headerDiv.setAttribute('style', 'height:' + header.offsetHeight + 'px;');
-        headerDiv.innerHTML = msg;
+        newHeader.id = 'welcome-banner';
+        newHeader.style.height = header.offsetHeight + 'px';
+        newHeader.innerHTML = closeBtn + msg;
+        newHeader.className += 'u-faux-block-link__promote';
+
+        newHeader.setAttribute('data-link-name', 'welcome-banner');
+
+        bean.on($(newHeader)[0], 'click', function () {
+            fastdom.write(function () {
+                newHeader.style.display = 'none';
+            });
+        });
 
         header.getElementsByClassName('l-header-main')[0].style.zIndex = 1200;
+        header.appendChild(newHeader);
 
-        header.appendChild(headerDiv);
+        setTimeout(function(){
+            newHeader.style.opacity = 1;
+        }, 0);
     }
 
     return {
