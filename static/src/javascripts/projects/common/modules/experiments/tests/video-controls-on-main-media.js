@@ -1,11 +1,11 @@
 define([
-    'qwery',
+    'common/utils/$',
     'common/utils/config'
 ], function (
-    qwery,
+    $,
     config
 ) {
-    var mainVideo = qwery('[data-component="main video"]');
+    var mainVideo = $('[data-component="main video"]');
 
     return function () {
         this.id = 'VideoControlsOnMainMedia';

@@ -1115,18 +1115,19 @@ $ima-controls-height: 70px;
 
 // For a test
 .show-media-controls {
-    .vjs-control-bar {
-        bottom: 0 !important;
-    }
-
-
-    .vjs-big-play-button .vjs-control-text {
-        &:before {
-            background-color: $media-default;
+    .vjs-paused {
+        .vjs-control-bar {
+            bottom: 0 !important;
         }
 
-        &:after {
-            border-left-color: #333333;
+        .vjs-big-play-button .vjs-control-text {
+            &:before {
+                background-color: $media-default;
+            }
+
+            &:after {
+                border-left-color: #333333;
+            }
         }
     }
 }
