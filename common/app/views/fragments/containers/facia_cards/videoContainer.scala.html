@@ -1,0 +1,72 @@
+@(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit requestHeader: RequestHeader)
+
+@import model.VideoPlayer
+@import views.support.Video700
+@import views.html.fragments.media.video
+@import views.html.fragments.nav.treats
+
+<div class="fc-container__inner">
+    <h2 class="video-title fc-container__header__title">
+        <a href="@containerDefinition.href" data-link-name="video-container-title @containerDefinition.displayName">@containerDefinition.displayName</a>
+    </h2>
+</div>
+
+<div class="video-playlist video-playlist--start js-video-playlist"
+     data-number-of-videos="@(containerDefinition.collectionEssentials.items.zipWithIndex.length - 1)"
+     data-component="video-playlist">
+    <div class="video-playlist__control video-playlist__control--prev js-video-playlist-prev" data-link-name="video-container-prev">
+        @fragments.inlineSvg("chevron-left", "icon", Seq("video-playlist__icon"))
+    </div>
+    <div class="video-playlist__control video-playlist__control--next js-video-playlist-next" data-link-name="video-container-next">
+        @fragments.inlineSvg("chevron-right", "icon", Seq("video-playlist__icon"))
+    </div>
+
+    <ul class="u-unstyled video-playlist__inner js-video-playlist-inner">
+        <li class="video-playlist__item video-title video-title--leftcol fc-container__header__title">
+            <a class="video-title__link" href="@containerDefinition.href" data-link-name="video-container-title @containerDefinition.displayName">
+                @containerDefinition.displayName match {
+                    case Some("videos") => {
+                        @fragments.inlineSvg("guardian-video-logo", "logo")
+                    }
+
+                    case _ => {
+                        @containerDefinition.displayName
+                    }
+                }
+            </a>
+            @treats(containerDefinition, frontProperties)
+        </li>
+
+        @containerDefinition.collectionEssentials.items.zipWithIndex.map { case (item, index) =>
+            @if(item.header.isVideo) {
+                <li class="video-playlist__item js-video-playlist-item-@index @if(index == 0){video-playlist__item--active video-playlist__item--first}">
+                    @item.properties.maybeContent.map { content =>
+                        @defining(VideoPlayer(
+                            content.elements.mainVideo.get,
+                            Video640,
+                            item,
+                            autoPlay = false,
+                            showControlsAtStart = false
+                        )) { player =>
+                            <div class="fc-item__media-wrapper u-faux-block-link__promote media__container--hidden js-video-player">
+                                <div class="fc-item__video-container">
+                                    @video(player, false, false, showOverlay = true, showPoster = false)
+                                </div>
+                            </div>
+                            <div class="fc-item__video-fallback media__placeholder--active js-video-placeholder gu-media__fallback">
+                                <div data-link-name="video-play-button-overlay" class="@RenderClasses("fc-item__video-play", "media__placeholder--hidden", "vjs-big-play-button", "js-video-play-button")"><span class="vjs-control-text"></span></div>
+                                <div class="fc-item__media-wrapper">
+                                    <div class="fc-item__image-container u-responsive-ratio inlined-image">
+                                    @InlineImage.fromFaciaContent(item).map { fallbackImage =>
+                                        <img src="@Video700.bestFor(fallbackImage.imageMedia)" />
+                                    }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </li>
+            }
+        }
+    </ul>
+</div>

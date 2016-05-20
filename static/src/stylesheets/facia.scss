@@ -1,33 +1,14 @@
 @charset 'UTF-8';
 
-@import 'base/_zindex';
-
 @import '_vars';
 @import '_mixins';
 @import '_extends-only';
 
-@import 'module/_popup';
-@import 'module/_search';
-@import 'module/_search-tool';
-@import 'module/_weather';
+@import '_common';
+
 @import 'module/_social';
-@import 'module/_tabs';
-@import 'module/_headline-list';
-@import 'module/_rich-links';
-@import 'components/pasteup-buttons/src/_buttons';
-@import 'module/facia/_pagination';
-@import 'module/_release-message';
-@import 'module/onward/_breaking-news';
-@import 'module/facia/_facia-show-more';
-@import 'module/_tag-list';
-@import 'module/_submeta';
-@import 'layout/_footer';
 @import 'icons/_video-icons-sprite';
 @import 'icons/_video-icons-svg';
-@import 'module/content/_media-player';
-@import 'module/commercial/_commercial';
 @import 'module/business/_stocks';
 @import 'module/live-pulse';
 @import 'module/facia/snaps/_facia';
-@import 'module/crosswords/_main';
-@import 'module/email/_main';

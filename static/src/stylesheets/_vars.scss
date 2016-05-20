@@ -23,9 +23,8 @@ $guss-rem-baseline: 16px;
 $inArticleInlineImgWidth: 114px;
 $headerHeight: 36px;
 
-@import 'components/guss-colours/_colours';
-@import 'components/pasteup-palette/src/_palette';
-@import 'components/guss-grid-system/_grid-system';
+@import 'pasteup/palette/src';
+@import 'pasteup/grid-system/src';
 
 $right-column:     gs-span(4);
 $left-column:      gs-span(2); // Grows to 3 columns on wide viewports
@@ -70,106 +69,115 @@ $guss-column-rule: none;
 $f-serif-headline: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;
 
 
-// Colours (access these through the colour($name) mixin)
+// Colours, take from pasteup/palette
 // =============================================================================
 
-$frontend-palette: (
-
-    neutral-2-contrasted:   darken(guss-colour(neutral-2, $pasteup-palette), 3%),
+$neutral-2-contrasted:   darken($neutral-2, 3%);
 
 // Tones
 // =============================================================================
 
-    news-default:           guss-colour(news-main-1, $pasteup-palette),
-    news-accent:            guss-colour(news-main-2, $pasteup-palette),
+$news-default:           $news-main-1;
+$news-accent:            $news-main-2;
 
-    feature-default:        guss-colour(features-support-1, $pasteup-palette),
-    feature-accent:         guss-colour(features-main-2, $pasteup-palette),
-    feature-mute:           guss-colour(features-support-3, $pasteup-palette),
+$feature-default:        $features-support-1;
+$feature-accent:         $features-main-2;
+$feature-mute:           $features-support-3;
 
-    analysis-default:       guss-colour(news-main-1, $pasteup-palette),
-    analysis-accent:        guss-colour(news-main-2, $pasteup-palette),
-    analysis-mute:          guss-colour(comment-support-2, $pasteup-palette),
-    analysis-background:    guss-colour(neutral-7, $pasteup-palette),
+$analysis-default:       $news-main-1;
+$analysis-accent:        $news-main-2;
+$analysis-mute:          $comment-support-2;
+$analysis-background:    $neutral-7;
 
-    comment-default:        guss-colour(comment-support-4, $pasteup-palette),
-    comment-accent:         guss-colour(comment-main-2, $pasteup-palette),
-    comment-background:     guss-colour(comment-support-2, $pasteup-palette),
+$comment-default:        $comment-support-4;
+$comment-accent:         $comment-main-2;
+$comment-background:     $comment-support-2;
 
-    live-default:           guss-colour(live-main-1, $pasteup-palette),
-    live-accent:            guss-colour(live-main-2, $pasteup-palette),
-    live-mute:              guss-colour(features-support-3, $pasteup-palette),
+$live-default:           $live-main-1;
+$live-accent:            $live-main-2;
+$live-mute:              $features-support-3;
 
-    media-default:          guss-colour(multimedia-main-2, $pasteup-palette),
-    media-background:       guss-colour(multimedia-main-1, $pasteup-palette),
-    media-mute:             guss-colour(multimedia-support-4, $pasteup-palette),
+$media-default:          $multimedia-main-2;
+$media-background:       $multimedia-support-5;
+$media-mute:             $neutral-1;
 
-    review-accent:          guss-colour(comment-support-3, $pasteup-palette),
-    review-background:      guss-colour(comment-support-1, $pasteup-palette),
+$review-accent:          $comment-support-3;
+$review-background:      $comment-support-1;
 
-    editorial-default:      guss-colour(news-main-1, $pasteup-palette),
-    editorial-accent:       guss-colour(news-support-1, $pasteup-palette),
+$editorial-default:      $news-main-1;
+$editorial-accent:       $news-support-1;
 
-    crosswordAccent1:       guss-colour(news-main-1, $pasteup-palette),
-    crosswordAccent2:       guss-colour(news-main-2, $pasteup-palette),
+$crosswordAccent1:       $news-main-1;
+$crosswordAccent2:       $news-main-2;
 
-    sudoku-mute:            lighten(guss-colour(news-main-2, $pasteup-palette), 30%),
-    sudoku-accent:          lighten(guss-colour(news-main-2, $pasteup-palette), 10%),
+$sudoku-mute:            lighten($news-main-2, 30%);
+$sudoku-accent:          lighten($news-main-2, 10%);
 
-    story-package:          guss-colour(news-support-7, $pasteup-palette),
+$story-package:          $news-support-7;
 
-    paidfor-background:     guss-colour(news-support-3, $pasteup-palette),
+$paidfor-background:     $news-support-3;
 
-    soulmates-colour:       #332e2e,
-    soulmates-accent-colour:#484848,
+$special-report-accent:  #fce800;
 
-    // Football
-    // =============================================================================
+$soulmates-colour:       #332e2e;
+$soulmates-accent-colour: #484848;
+$soulmates-border-colour: #e6e1c3;
+$soulmates-background:    #f5f3e7;
 
-    sport-bright:           #70d2e6,
-    sport-mid:              guss-colour(guardian-brand, $pasteup-palette),
-    sport-dark:             #003f64,
+// Football
+// =============================================================================
 
-    sport-home:             #70d2e6,
-    sport-away:             #003f64,
+$sport-bright:           #70d2e6;
+$sport-mid:              $guardian-brand;
+$sport-dark:             #003f64;
 
-    // Stati
-    // =============================================================================
+$sport-home:             #70d2e6;
+$sport-away:             #003f64;
 
-    status-positive:        guss-colour(success, $pasteup-palette),
-    status-neutral:         guss-colour(neutral-2, $pasteup-palette),
-    status-negative:        guss-colour(error, $pasteup-palette),
+// Stati
+// =============================================================================
 
-    // Social
-    // =============================================================================
+$status-positive:        $success;
+$status-neutral:         $neutral-2;
+$status-negative:        $error;
 
-    social-email:           #767676,
-    social-facebook:        #3067a3,
-    social-twitter:         #03b3ee,
-    social-gplus:           #e15440,
-    social-whatsapp:        #59cb3f,
-    social-linkedin:        #0071a1,
-    social-pinterest:       #b9252c,
+// Quiz colours
+// =============================================================================
 
-    // Membership
-    // =============================================================================
+$quiz-correct:           #3db540;
+$quiz-incorrect:         #c3021b;
 
-    membership-default:     #bb3a7f,
+// Social
+// =============================================================================
 
-    // Commercial content
-    // =============================================================================
+$social-email:           #767676;
+$social-facebook:        #3067a3;
+$social-twitter:         #03b3ee;
+$social-gplus:           #e15440;
+$social-whatsapp:        #59cb3f;
+$social-linkedin:        #0071a1;
+$social-pinterest:       #b9252c;
 
-    paid-article:              #d9d9d9,
-    paid-article-bg:           #d1d1d1,
-    paid-article-header:       #bfbfbf,
-    paid-article-header-bg:    #b8b8b8,
-    paid-article-subheader:    #cccccc,
-    paid-article-subheader-bg: #c4c4c4,
-    paid-article-media-bg:     #bbb7b1,
-    paid-article-brand:        #69d1ca
-);
+// Membership
+// =============================================================================
 
-$c-top-header-background: guss-colour(guardian-brand-dark, $pasteup-palette); // one-off colour for header bg
+$membership-default:     #bb3a7f;
+
+// Commercial content
+// =============================================================================
+
+$paid-article:              #d9d9d9;
+$paid-article-bg:           #d1d1d1;
+$paid-article-header:       #bfbfbf;
+$paid-article-header-bg:    #b8b8b8;
+$paid-article-subheader:    #cccccc;
+$paid-article-subheader-bg: #c4c4c4;
+$paid-article-media-bg:     #bbb7b1;
+$paid-article-icon:         #767676;
+$paid-article-brand:        #69d1ca;
+$rainbow-red:               #ed1c24; // from Guss
+
+$c-top-header-background: $guardian-brand-dark; // one-off colour for header bg
 
 // MPU
 // =============================================================================

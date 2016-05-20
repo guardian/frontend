@@ -4,14 +4,16 @@ define([
     'common/utils/$',
     'common/utils/mediator',
     'common/utils/storage',
-    'template!common/views/commercial/creatives/fluid250GoogleAndroid.html'
+    'template!common/views/commercial/creatives/fluid250GoogleAndroid.html',
+    'common/modules/commercial/creatives/add-tracking-pixel'
 ], function (
     bean,
     bonzo,
     $,
     mediator,
     storage,
-    fluid250GoogleAndroidTpl
+    fluid250GoogleAndroidTpl,
+    addTrackingPixel
 ) {
     var Fluid250GoogleAndroid = function ($adSlot, params) {
         this.$adSlot = $adSlot;
@@ -23,7 +25,7 @@ define([
         $.create(fluid250GoogleAndroidTpl(this.params)).appendTo(this.$adSlot);
 
         if (this.params.trackingPixel) {
-            this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
+            addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
         }
     };
 

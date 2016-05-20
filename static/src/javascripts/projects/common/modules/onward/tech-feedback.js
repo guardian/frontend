@@ -43,8 +43,7 @@ define([
                 var props = {
                     page: window.location,
                     width: window.innerWidth,
-                    ads: dfp.getCreativeIDs().join(' '),
-                    ophanId: config.ophan.pageViewId
+                    ads: dfp.getCreativeIDs().join(' ')
                 };
                 var body = objToHash(assign(props, storedValues));
                 link.attr('href', oldHref + '#' + body.substring(1));
@@ -60,8 +59,9 @@ define([
                     browser: window.navigator.userAgent,
                     page: window.location,
                     width: window.innerWidth,
-                    adBlock: detect.adblockInUse(),
+                    adBlock: detect.adblockInUseSync(),
                     devicePixelRatio: window.devicePixelRatio,
+                    ophanId: config.ophan.pageViewId,
                     abTests : summariseAbTests(ab.getParticipations())
                 };
                 var body = '\r\n\r\n\r\n\r\n------------------------------\r\nAdditional technical data about your request - please do not edit:\r\n\r\n'
@@ -114,7 +114,7 @@ define([
         var storedValues = getValuesFromHash(window.location.hash);
         registerHandler('.js-tech-feedback-report', addEmailValuesToHash(storedValues));
         registerHandler('.js-tech-feedback-mailto', addEmailHeaders(storedValues));
-        registerHandler('.js-userhelp-mailto', addEmailHeaders(storedValues));
+        registerHandler('[href=mailto:userhelp@theguardian.com]', addEmailHeaders(storedValues));
         registerHandler('[href=mailto:crosswords.beta@theguardian.com]', addEmailHeaders(storedValues));// FIXME should have used a .js- selector
 
         // Exposed for testing

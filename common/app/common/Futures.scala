@@ -8,7 +8,7 @@ object Futures extends ExecutionContexts {
     require(batchSize > 0, "Batch size must be greater than 0")
 
     @tailrec
-    def iter(as: Seq[Seq[A]], acc: Future[Seq[B]]): Future[Seq[B]] = as match {
+    def iter(as: Seq[Seq[A]], acc: Future[Seq[B]]): Future[Seq[B]] = as.toList match {
       case Nil => acc
 
       case batch +: remainingBatches =>

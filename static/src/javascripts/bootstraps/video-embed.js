@@ -152,7 +152,6 @@ define([
                         events.bindContentEvents(player);
                     });
 
-                    omniture.go();
                 }
             });
 

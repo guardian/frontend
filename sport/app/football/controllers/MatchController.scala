@@ -1,6 +1,7 @@
 package football.controllers
 
 import common._
+import model.Cached.WithoutRevalidationResult
 import model.TeamMap.findTeamIdByUrlName
 import model._
 import conf._
@@ -62,7 +63,7 @@ object MatchController extends Controller with Football with Requests with Loggi
 
   private def render(maybeMatch: Option[FootballMatch]) = Action.async { implicit request =>
     val response = maybeMatch map { theMatch =>
-      val lineup: Future[LineUp] = FootballClient.lineUp(theMatch.id)
+      val lineup: Future[LineUp] = FootballClient.lineUp(theMatch.id).recover(FootballClient.logErrors)
       val page: Future[MatchPage] = lineup map { MatchPage(theMatch, _) }
 
       page map { page =>
@@ -73,6 +74,6 @@ object MatchController extends Controller with Football with Requests with Loggi
     }
 
     // we do not keep historical data, so just redirect old stuff to the results page (see also MatchController)
-    response.getOrElse(Future.successful(Cached(30){Found("/football/results")}))
+    response.getOrElse(Future.successful(Cached(30)(WithoutRevalidationResult(Found("/football/results")))))
   }
 }

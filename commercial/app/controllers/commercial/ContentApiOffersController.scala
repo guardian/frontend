@@ -1,49 +1,35 @@
 package controllers.commercial
 
+import common.commercial._
 import common.{ExecutionContexts, Logging}
 import model.commercial.{CapiAgent, Lookup}
 import model.{Cached, NoCache}
-import performance.MemcachedAction
 import play.api.mvc._
 
 import scala.concurrent.Future
 import scala.util.control.NonFatal
-import conf.switches.Switches.NewCommercialContent
+
+sealed abstract class SponsorType(val className: String)
+case object PaidFor extends SponsorType("paidfor")
+case object Supported extends SponsorType("supported")
 
 object ContentApiOffersController extends Controller with ExecutionContexts with implicits.Requests with Logging {
 
-  private val sponsorTypeToClass = Map(
-    "sponsored" -> "fc-container--sponsored",
-    "advertisement-feature" -> "fc-container--advertisement-feature",
-    "foundation-supported" -> "fc-container--foundation-supported"
+  private val sponsorTypeToClassRefactor = Map(
+    "sponsored" -> Supported,
+    "advertisement-feature" -> PaidFor,
+    "foundation-supported" -> Supported
   )
 
-  private val sponsorTypeToLabel = {if (NewCommercialContent.isSwitchedOn) Map(
+  private val sponsorTypeToLabel = Map(
     "sponsored" -> "Supported by",
     "advertisement-feature" -> "Paid for by",
     "foundation-supported" -> "Supported by"
-  ) else {Map(
-    "sponsored" -> "Sponsored by",
-    "advertisement-feature" -> "Brought to you by",
-    "foundation-supported" -> "Supported by"
-  )}}
+  )
 
-  private def renderItems(format: Format, isMulti: Boolean) = MemcachedAction { implicit request =>
+  private def renderItems(format: Format, isMulti: Boolean) = Action.async { implicit request =>
 
     val optKeyword = request.getParameter("k")
-    val optLogo = request.getParameter("l")
-    val optCapiTitle = request.getParameter("ct")
-    val optCapiLink = request.getParameter("cl")
-    val optCapiAbout = request.getParameter("cal")
-    val optCapiButtonText = request.getParameter("clt")
-    val optCapiReadMoreUrl = request.getParameter("rmd")
-    val optCapiReadMoreText = request.getParameter("rmt")
-    val optCapiAdFeature = request.getParameter("af")
-    val optClickMacro = request.getParameter("clickMacro")
-    val optOmnitureId = request.getParameter("omnitureId")
-
-    val optSponsorType = optCapiAdFeature flatMap (feature => sponsorTypeToClass.get(feature))
-    val optSponsorLabel = optCapiAdFeature flatMap (feature => sponsorTypeToLabel.get(feature))
 
     val eventualLatest = optKeyword.map { keyword =>
       // getting twice as many, as we filter out content without images
@@ -67,13 +53,52 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
       (specific ++ latestByKeyword.filter(_.trail.trailPicture.nonEmpty)).distinct take 4
     }
 
-    futureContents map {
-      case Nil => NoCache(format.nilResult)
+    futureContents.map(_.toList) map {
+      case Nil => NoCache(format.nilResult.result)
       case contents => Cached(componentMaxAge) {
+
+        val optLogo = request.getParameter("l")
+        val optCapiTitle = request.getParameter("ct")
+        val optCapiLink = request.getParameter("cl")
+        val optCapiAbout = request.getParameter("cal")
+        val optCapiButtonText = request.getParameter("clt")
+        val optCapiReadMoreUrl = request.getParameter("rmd")
+        val optCapiReadMoreText = request.getParameter("rmt")
+        val optCapiAdFeature = request.getParameter("af")
+        val optClickMacro = request.getParameter("clickMacro")
+        val optOmnitureId = request.getParameter("omnitureId")
+        val omnitureId = optOmnitureId orElse optCapiTitle getOrElse ""
+        val optSponsorTypeRefactor = optCapiAdFeature flatMap (feature => sponsorTypeToClassRefactor.get(feature))
+        val optSponsorLabel = optCapiAdFeature flatMap (feature => sponsorTypeToLabel.get(feature))
+
         if (isMulti) {
-          format.result(views.html.contentapi.items(contents, optLogo, optCapiTitle, optCapiLink, optCapiAbout, optClickMacro, optOmnitureId, optCapiAdFeature, optSponsorType, optSponsorLabel))
+          format.result(views.html.contentapi.items(
+            contents map (CardContent.fromContentItem(_, optClickMacro, withDescription = false)),
+            optLogo,
+            optCapiTitle,
+            optCapiLink,
+            optCapiAbout,
+            optClickMacro,
+            omnitureId,
+            optCapiAdFeature,
+            optSponsorTypeRefactor,
+            optSponsorLabel)
+          )
         } else {
-          format.result(views.html.contentapi.item(contents.head, optLogo, optCapiTitle, optCapiLink, optCapiAbout, optCapiButtonText, optCapiReadMoreUrl, optCapiReadMoreText, optSponsorType, optSponsorLabel, optClickMacro, optOmnitureId))
+          format.result(views.html.contentapi.item(
+            CardContent.fromContentItem(contents.head, optClickMacro, withDescription = true),
+            optLogo,
+            optCapiTitle,
+            optCapiLink,
+            optCapiAbout,
+            optCapiButtonText,
+            optCapiReadMoreUrl,
+            optCapiReadMoreText,
+            optSponsorTypeRefactor,
+            optSponsorLabel,
+            optClickMacro,
+            omnitureId
+          ))
         }
       }
     }

@@ -24,11 +24,14 @@
 }
 
 .paidfor-content {
-    background: colour(paid-article-subheader);
+    background: $paid-article-subheader;
     text-align: left;
     &,
-    h2 {
+    .gu-title {
         @include f-headlineSans;
+        @include font-size(20, 24);
+        padding-bottom: 5px;
+        font-weight: normal;
     }
 
     &:before {
@@ -37,15 +40,15 @@
         top: 0;
         left: 0;
         right: 0;
-        background: guss-colour(paidfor-background, $frontend-palette);
+        background: $paidfor-background;
         height: 1px;
         z-index: 5;
     }
 
     .inline-glabs-logo-small {
         svg {
-            right: 0;
-            left: unset;
+            right: $gs-gutter / 4;
+            left: auto;
             top: 4px;
             width: 75px;
             height: 23px;
@@ -54,6 +57,11 @@
                 fill: #ffffff;
             }
         }
+    }
+
+    .gu-text {
+        @include font-size(16, 20);
+        margin-bottom: $gs-baseline;
     }
 }
 
@@ -80,7 +88,7 @@
 }
 
 .paidfor-box--logo {
-    padding-bottom: $gs-baseline;
+    padding-bottom: $gs-gutter / 4;
 }
 
 .paidfor-title {
@@ -89,10 +97,10 @@
 }
 
 .paidfor-brand {
+    @include f-textSans;
     color: #767676;
     text-align: right;
-    font-size: get-font-size(data, 3);
-    @include f-textSans;
+    font-size: get-font-size(textSans, 2);
 
     img {
         vertical-align: middle;
@@ -100,12 +108,11 @@
 }
 
 .paidfor-logo {
-    max-width: $gs-baseline * 6;
-    height: $gs-baseline * 3;
+    max-height: $gs-baseline * 5;
 }
 
 .paidfor-band {
-    background: guss-colour(paidfor-background, $frontend-palette);
+    background: $paidfor-background;
     width: 100%;
     z-index: 1200;
 
@@ -141,8 +148,8 @@
 }
 
 .paidfor-band__inner {
+    @include content-gutter();
     display: flex;
     justify-content: space-between;
     box-sizing: border-box;
-    @include content-gutter();
 }

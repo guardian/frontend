@@ -51,9 +51,7 @@ define([
             if (config.switches.audienceScienceGateway && storedSegments) {
                 segments = chain(pairs(storedSegments[section])).and(filter, function (placement) {
                         //keyword `default` written in dot notation throws an exception IE8
-                        // jscs:disable requireDotNotation
                         return placement[1]['default']; //eslint-disable-line
-                        // jscs:enable requireDotNotation
                     }).and(map, function (placement) {
                         return ['pq_' + placement[0], 'T'];
                     }).and(zipObject).valueOf();

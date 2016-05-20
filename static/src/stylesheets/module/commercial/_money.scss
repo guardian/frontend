@@ -19,9 +19,9 @@
     }
 
     .commercial__body .button--tertiary .inline-arrow-right {
-        fill: colour(neutral-2);
+        fill: $neutral-2;
     }
-    
+
     .commercial__money-buttons {
         .lineitem__cta {
             margin-top: $gs-baseline / 2;

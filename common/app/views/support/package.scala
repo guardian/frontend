@@ -1,6 +1,7 @@
 package views.support
 
 import common._
+import model.Cached.WithoutRevalidationResult
 import model._
 import model.pressed.PressedContent
 
@@ -9,6 +10,8 @@ import org.joda.time.{DateTimeZone, LocalDate, DateTime}
 import org.joda.time.format.DateTimeFormat
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import org.jsoup.nodes.Document.OutputSettings
+import org.jsoup.nodes.Entities.EscapeMode
 import org.jsoup.safety.{ Whitelist, Cleaner }
 import play.api.libs.json.Json._
 import play.api.libs.json.Writes
@@ -147,7 +150,7 @@ object cleanTrailText {
 }
 
 object StripHtmlTags {
-  def apply(html: String): String = Jsoup.clean(html, Whitelist.none())
+  def apply(html: String): String = Jsoup.clean(html, "", Whitelist.none())
 }
 
 object StripHtmlTagsAndUnescapeEntities{
@@ -179,7 +182,7 @@ object RenderOtherStatus {
   def apply(result: Result)(implicit request: RequestHeader) = result.header.status match {
     case 404 => NoCache(NotFound)
     case 410 if request.isJson => Cached(60)(JsonComponent(gonePage, "status" -> "GONE"))
-    case 410 => Cached(60)(Ok(views.html.expired(gonePage)))
+    case 410 => Cached(60)(WithoutRevalidationResult(Ok(views.html.expired(gonePage))))
     case _ => result
   }
 }

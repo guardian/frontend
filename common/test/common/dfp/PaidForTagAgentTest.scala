@@ -2,7 +2,7 @@ package common.dfp
 
 import com.gu.contentapi.client.model.v1.{Tag => ApiTag, TagType => ApiTagType}
 import com.gu.facia.api.{models => fapi}
-import com.gu.facia.client.models.CollectionConfigJson
+import com.gu.facia.client.models.{Backfill, CollectionConfigJson}
 import common.Edition.defaultEdition
 import common.editions.Us
 import model.Tag
@@ -61,7 +61,7 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
 
   private object TestPaidForTagAgent extends PaidForTagAgent {
 
-    override protected def isPreview: Boolean = false
+    override protected def environmentIsPreview: Boolean = false
 
     val sponsorships: Seq[PaidForTag] = Seq(
       paidForTag("business-essentials", Sponsored, Keyword, toLineItem(sponsor = Some("spon"))),
@@ -170,8 +170,12 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
     }
   }
 
-  private def apiQuery(apiQuery: String) = {
-    CollectionConfig.make(fapi.CollectionConfig.fromCollectionJson(CollectionConfigJson.withDefaults(apiQuery = Some(apiQuery))))
+  private def apiQuery(apiQuery: String): CollectionConfig = {
+    CollectionConfig.make(
+      fapi.CollectionConfig.fromCollectionJson(
+        CollectionConfigJson.withDefaults(backfill = Some(Backfill("capi", apiQuery)))
+      )
+    )
   }
 
   "isAdvertisementFeature" should "be true for an advertisement feature" in {

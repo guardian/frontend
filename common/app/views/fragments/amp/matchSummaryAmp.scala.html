@@ -1,0 +1,72 @@
+@(path: String)
+@import conf.Configuration
+
+@* must be served by localhost, not thegulocal *@
+<amp-list layout="fixed-height" height="132" src="@Configuration.amp.baseUrl/@path" class="score-container onward-list">
+    <template type="amp-mustache">
+        <div class="match-summary">
+
+            {{#isLiveOrIsResult}}
+                <h1 class="u-h">
+                    {{homeTeam.name}} {{homeTeam.score}} - {{awayTeam.score}} {{awayTeam.name}}
+                </h1>
+            {{/isLiveOrIsResult}}
+            {{^isLiveOrIsResult}}
+                <h1 class="u-h">
+                    {{homeTeam.name}} v {{awayTeam.name}}
+                </h1>
+            {{/isLiveOrIsResult}}
+
+            <div class="match-info">
+                <div class="match-info__competition">{{competition.fullName}}</div>
+                <div class="match-info__venue">{{venue}}</div>
+            </div>
+
+            <div class="match-summary__teams">
+                <div class="match-summary__team match-summary__team--home">
+                    <div class="team__info">
+                        <h2 class="team__heading">
+                            <span class="team__name">
+                                <span class="team__name-long">{{ homeTeam.name }} </span>
+                            </span>
+                            {{#isLiveOrIsResult}}
+                                <div class="team__score">{{ homeTeam.score }}</div>
+                            {{/isLiveOrIsResult}}
+                        </h2>
+
+                        <dl class="team__scorers u-unstyled">
+                            <dt class="u-h">Home team scorers</dt>
+                                {{#homeTeam.scorers}}
+                                    <dd>{{scorer}}</dd>
+                                {{/homeTeam.scorers}}
+                        </dl>
+                    </div>
+                </div>
+
+                <div class="match-summary__team match-summary__team--away u-cf">
+                    <div class="team__info">
+                        <h2 class="team__heading">
+                            <span class="team__name">
+                                <span class="team__name-long">{{awayTeam.name}}</span>
+                            </span>
+                            {{#isLiveOrIsResult}}
+                                <div class="team__score">{{awayTeam.score}}</div>
+                            {{/isLiveOrIsResult}}
+                        </h2>
+                        <dl class="team__scorers u-unstyled">
+                            <dt class="u-h">Away team scorers</dt>
+                            {{#awayTeam.scorers}}
+                                <dd>{{scorer}}</dd>
+                            {{/awayTeam.scorers}}
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </template>
+    <div overflow class="cta cta--medium cta--show-more cta--show-more__unindent">
+        @fragments.inlineSvg("plus", "icon")
+        See scorers
+    </div>
+</amp-list>

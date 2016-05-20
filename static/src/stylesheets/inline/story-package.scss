@@ -1,6 +1,5 @@
 @import '../_vars';
 @import '../_mixins';
-@import '../components/pasteup-buttons/src/_mixins';
 
 @mixin kicker-override($tone, $colour) {
     .tone-#{$tone}--item {
@@ -24,28 +23,28 @@
 }
 
 .fc-container--story-package {
-    background-color: colour(neutral-4);
+    background-color: $neutral-4;
     margin-bottom: $gs-baseline;
     border-top: 1px solid #ffffff;
 
     // Container Chrome
     .fc-container__header__title {
-        border-top-color: colour(story-package);
-        color: colour(news-support-2);
+        border-top-color: $story-package;
+        color: $news-support-2;
 
         & a:hover {
-            color: colour(story-package);
+            color: $story-package;
         }
     }
 
     .fc-container__header__description {
-        color: colour(story-package);
+        color: $story-package;
     }
 
     .treats__treat {
-        border-color: colour(news-support-2);
+        border-color: $news-support-2;
         background-color: transparent;
-        color: colour(story-package);
+        color: $story-package;
 
         &:hover {
             background-color: inherit;
@@ -54,24 +53,26 @@
 
     .button--primary {
         @include button-colour(
-            colour(news-support-2),
-            #ffffff,
-            mix(colour(news-support-2), colour(neutral-1), 60%)
+            $news-support-2,
+            #ffffff
+        );
+        @include button-hover-colour(
+            mix($news-support-2, $neutral-1, 60%)
         );
     }
 
     .fc-slice__item+.fc-slice__item:before {
-        border-left-color: lighten(colour(news-support-6), 30%);
+        border-left-color: lighten($news-support-6, 30%);
     }
 
     // Item Level
     .fc-item {
         // This shouldn't need to be important but too specific selectors on some tones force it to be
-        background-color: colour(story-package) !important;
+        background-color: $story-package !important;
 
         .u-faux-block-link--hover {
             color: inherit;
-            background-color: mix(colour(story-package), colour(neutral-1), 50%);
+            background-color: mix($story-package, $neutral-1, 50%);
         }
     }
 
@@ -81,17 +82,17 @@
     }
 
     .fc-sublink__title:before {
-        border-color: mix(colour(story-package), #ffffff, 80%);
+        border-color: mix($story-package, #ffffff, 80%);
     }
 
     .fc-item__standfirst {
-        color: colour(neutral-4);
+        color: $neutral-4;
     }
 
     .fc-item__kicker,
     .fc-sublink__kicker {
         &:after {
-            color: mix(colour(story-package), #ffffff, 80%);
+            color: mix($story-package, #ffffff, 80%);
         }
     }
 
@@ -99,53 +100,53 @@
     .rich-link__link,
     .fc-sublink__link {
         &:visited {
-            color: mix(#ffffff, colour(story-package), 80%);
+            color: mix(#ffffff, $story-package, 80%);
         }
     }
 
     .fc-item__title--quoted .inline-quote {
-        fill: colour(neutral-4);
+        fill: $neutral-4;
     }
 
     .fc-item__meta {
-        color: mix(#ffffff, colour(story-package), 80%);
+        color: mix(#ffffff, $story-package, 80%);
 
         .inline-icon {
-            fill: mix(#ffffff, colour(story-package), 80%);
+            fill: mix(#ffffff, $story-package, 80%);
         }
     }
 
     .fc-save-for-later {
-        border-color: mix(colour(story-package), #ffffff, 80%);
+        border-color: mix($story-package, #ffffff, 80%);
     }
 
     .live-pulse-icon:before {
-        background-color: colour(live-support-1);
+        background-color: $live-support-1;
     }
 
     .fc-item__liveblog-block__text {
-        background-color: lighten(colour(story-package), 5%);
-        border-top-color: lighten(colour(story-package), 15%);
-        border-bottom-color: lighten(colour(story-package), 5%);
+        background-color: lighten($story-package, 5%);
+        border-top-color: lighten($story-package, 15%);
+        border-bottom-color: lighten($story-package, 5%);
     }
 
     .fc-item__liveblog-block__text:after {
-        background-color: lighten(colour(story-package), 5%);
-        box-shadow: -5px 0 5px -2px lighten(colour(story-package), 5%);
+        background-color: lighten($story-package, 5%);
+        box-shadow: -5px 0 5px -2px lighten($story-package, 5%);
     }
 
     // These need to exist for all kickers because of tone on tone action
-    @include kicker-override(analysis, colour(analysis-accent));
-    @include kicker-override(comment, colour(comment-accent));
-    @include kicker-override(dead, colour(live-support-1));
-    @include kicker-override(editorial, colour(news-accent));
-    @include kicker-override(external, colour(maps-support-1));
-    @include kicker-override(feature, colour(feature-mute));
-    @include kicker-override(letters, colour(comment-accent));
-    @include kicker-override(live, colour(live-support-1));
-    @include kicker-override(media, colour(media-default));
-    @include kicker-override(news, colour(news-accent));
-    @include kicker-override(review, colour(review-accent));
+    @include kicker-override(analysis, $analysis-accent);
+    @include kicker-override(comment, $comment-accent);
+    @include kicker-override(dead, $live-support-1);
+    @include kicker-override(editorial, $news-accent);
+    @include kicker-override(external, $maps-support-1);
+    @include kicker-override(feature, $feature-mute);
+    @include kicker-override(letters, $comment-accent);
+    @include kicker-override(live, $live-support-1);
+    @include kicker-override(media, $media-default);
+    @include kicker-override(news, $news-accent);
+    @include kicker-override(review, $review-accent);
 
     // Item Level
     .fc-item--three-quarters-tall-tablet {
@@ -166,11 +167,9 @@
                 }
             }
 
-            .fc-slice__item:first-of-type {
-                [class*="fc-item--has-sublinks"] {
-                    .fc-item__standfirst {
-                        display: none;
-                    }
+            .fc-slice__item:first-of-type [class*='fc-item--has-sublinks'] {
+                .fc-item__standfirst {
+                    display: none;
                 }
             }
 
@@ -192,7 +191,7 @@
             }
 
             // Only allows one sublink on each item in the right col
-            &[class*="fc-item--has-sublinks"] {
+            &[class*='fc-item--has-sublinks'] {
                 .fc-sublink:nth-of-type(n+2) {
                     display: none;
                 }

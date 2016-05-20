@@ -1,0 +1,50 @@
+@import views.html.fragments.inlineSvg
+@import views.html.fragments.items.elements.facia_cards.image
+@import layout.{FaciaWidths, ItemClasses}
+@import cards.{CardType, Standard}
+
+@(item: common.commercial.CardContent,
+  omnitureId: String,
+  cardType: CardType = Standard,
+  optAdvertClassNames: Option[Seq[String]] = None,
+  optClassNames: Option[Seq[String]] = None,
+  optImgRatio: Option[String] = None,
+  useCardBranding: Boolean)
+
+<a href="@item.targetUrl" class="advert advert--large advert--capi advert--landscape
+    @item.icon match {
+        case Some(_) => {advert--media}
+        case None    => {advert--text}
+    }
+    @optAdvertClassNames.map { classNames => @classNames.map(c => s"advert--$c").mkString(" ")}
+    @optClassNames.map { classNames => @classNames.mkString(" ")}
+    "
+    data-link-name="@omnitureId"
+    @if(useCardBranding){
+        @for(branding <- item.branding) {
+            @for(sponsorship <- branding.sponsorshipType) {data-sponsorship="@sponsorship"}
+            @for(sponsor <- branding.sponsor)             {data-sponsor="@sponsor"}
+            @for(keywords <- branding.keywordId)          {data-keywords="@keywords"}
+            @for(series <- branding.seriesId)             {data-series="@series"}
+        }
+    }
+    >
+    <div class="advert__text">
+        <h2 class="advert__title">
+            @for(icon <- item.icon){@inlineSvg(icon, "icon")}
+            @item.headline
+        </h2>
+        @for(description <- item.description) {
+            <div class="advert__standfirst">@Html(description)</div>
+        }
+        @for(branding <- item.branding; sponsor <- branding.sponsor) {<div class="advert__badge js-badge"></div>}
+    </div>
+    <div class="advert__image-container @for(imgRatio <- optImgRatio){u-responsive-ratio u-responsive-ratio--@imgRatio}">
+        @image(
+            Seq("advert__image"),
+            FaciaWidths.mediaFromItemClasses(ItemClasses(mobile = Standard, tablet = cardType, desktop = Some(cardType))),
+            maybeImageMedia = item.image,
+            maybeSrc = item.fallbackImageUrl
+        )
+    </div>
+</a>

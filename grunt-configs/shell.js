@@ -38,9 +38,6 @@ module.exports = function () {
 
         makeDeploysRadiator: {
             command: [
-                'npm install',
-                './node_modules/.bin/jspm install',
-                './node_modules/.bin/tsd install',
                 'npm run build',
                 'mkdir -p ../../target/deploys-radiator',
                 'cp ./target/** ../../target/deploys-radiator'

@@ -1,0 +1,221 @@
+.advert {
+    box-sizing: border-box;
+    display: block;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    font-size: .75rem;
+    line-height: 1rem;
+    padding-bottom: $gs-baseline / 2;
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+
+        .advert__title {
+            text-decoration: underline;
+        }
+    }
+
+    &,
+    &:active {
+        color: inherit;
+    }
+
+    .has-no-flex &:not(.advert--small):not(.advert--landscape) {
+        padding-top: 11 * $gs-baseline;
+        position: relative;
+    }
+}
+
+.advert--landscape {
+    .has-no-flex & {
+        overflow: hidden;
+
+        > .advert__image-container {
+            float: right;
+            position: static;
+            margin: 0;
+        }
+
+        > .advert__text {
+            $line-height: 20px;
+            $image-height: $line-height * 4 + $gs-baseline;
+            $ratio: 5 / 3;
+            float: left;
+            width: calc(100% - #{$image-height * $ratio});
+        }
+    }
+}
+
+.advert--inverse {
+    .has-no-flex & {
+        > .advert__image-container {
+            float: left;
+        }
+
+        > .advert__text {
+            float: right;
+        }
+    }
+}
+
+.advert--manual {
+    .advert__image-container {
+        height: auto;
+    }
+}
+
+.advert--single {
+    .advert__standfirst {
+        margin-top: $gs-baseline / 2;
+        opacity: .7;
+    }
+
+    &:hover,
+    &:focus {
+        .button--tertiary {
+            @include button-colour(
+                transparent,
+                null,
+                darken($neutral-3, 10%)
+            );
+        }
+    }
+}
+
+.advert__title {
+    font-size: 1rem;
+    line-height: 1.25;
+
+    &.u-text-hyphenate {
+        max-width: 100%;
+    }
+
+    .advert-blended__body & {
+        font-size: 14px;
+        line-height: 18px;
+    }
+}
+
+/* [1] Prevents IE11 bug where the image container's height would go ballooney */
+.advert__image-container {
+    order: -1;
+    overflow: auto; /* [1] */
+    margin-bottom: $gs-baseline / 2;
+    width: 100%;
+
+    @include mq(tablet) {
+        height: 11 * $gs-baseline;
+    }
+
+    .has-no-flex & {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        margin: 0;
+    }
+
+    .advert-blended__body & {
+        height: auto;
+    }
+}
+
+.advert__image {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+}
+
+.advert__meta {
+    @include f-textSans;
+    color: $neutral-2;
+}
+
+.advert__more {
+    margin-top: $gs-baseline / 2;
+}
+
+.advert--small > .advert__title {
+    padding-top: $gs-baseline / 2;
+}
+
+@include mq(tablet) {
+    .advert--large {
+        flex-direction: row;
+        align-items: stretch;
+        padding-bottom: 0;
+
+        > .advert__text {
+            flex: 1;
+            padding: $gs-baseline / 2 $gs-gutter / 2 $gs-baseline / 2 0;
+        }
+
+        > .advert__image-container {
+            flex-basis: calc(50% - #{$gs-gutter / 2});
+            flex-shrink: 0;
+            height: auto;
+            order: 0;
+            margin-bottom: 0;
+            margin-left: $gs-gutter / 2;
+        }
+
+        .advert__image {
+            width: 100%;
+        }
+    }
+
+    .advert--inverse {
+        flex-direction: row-reverse;
+
+        > .advert__text {
+            padding: $gs-baseline / 2 0 $gs-baseline / 2 $gs-gutter / 2;
+        }
+
+        > .advert__image-container {
+            margin-left: 0;
+            margin-right: $gs-gutter / 2;
+        }
+    }
+
+    .advert--thumbnail {
+        .advert__image-container {
+            $line-height: 20px;
+            $image-height: $line-height * 4 + $gs-baseline;
+            $ratio: 5 / 3;
+            width: $image-height * $ratio;
+        }
+
+        .advert__text {
+            padding-left: 0;
+        }
+    }
+
+    .advert--large--1x3 > .advert__image-container {
+        flex-basis: calc(75% - #{$gs-gutter / 2});
+    }
+
+    .advert--large--1x2 > .advert__image-container {
+        flex-basis: calc(66.67% - #{$gs-gutter / 2});
+    }
+
+    .has-no-flex {
+        .advert--large--1x3 > .advert__image-container {
+            width:  calc(75% - #{$gs-gutter / 2});
+        }
+
+        .advert--large--1x2 > .advert__image-container {
+            width:  calc(66.67% - #{$gs-gutter / 2});
+        }
+
+        .advert--large--1x3 > .advert__text {
+            width:  calc(25% - #{$gs-gutter / 2});
+        }
+
+        .advert--large--1x2 > .advert__text {
+            width:  calc(33.33% - #{$gs-gutter / 2});
+        }
+    }
+}

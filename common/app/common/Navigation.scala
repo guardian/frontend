@@ -47,6 +47,7 @@ trait Navigation {
   val uk = SectionLink("uk-news", "UK", "UK News", "/uk-news")
   val us = SectionLink("us-news", "US", "US News", "/us-news")
   val usElection2016 = SectionLink("us-elections-2016", "election 2016", "Election 2016", "/us-news/us-elections-2016")
+  val auElection2016 = SectionLink("au-elections-2016", "election 2016", "Election 2016", "/australia-news/australian-election-2016")
   val politics = SectionLink("politics", "politics", "Politics", "/politics")
   val technology = SectionLink("technology", "tech", "Technology", "/technology")
   val environment = SectionLink("environment", "environment", "Environment", "/environment")
@@ -143,7 +144,7 @@ trait Navigation {
   val useconomy = SectionLink("business", "US economy", "US economy", "/business/useconomy")
   val ussustainablebusiness = SectionLink("business", "sustainable business", "Sustainable business", "/us/sustainable-business")
   val ausustainablebusiness = SectionLink("business", "sustainable business", "Sustainable business", "/au/sustainable-business")
-  val ussmallbusiness = SectionLink("business", "small business", "small business", "/business/series/the-power-of-small")
+  val ussmallbusiness = SectionLink("business", "small business", "small business", "/business/us-small-business")
   val recession = SectionLink("business", "recession", "Recession", "/business/recession")
   val investing = SectionLink("business", "investing", "Investing", "/business/investing")
   val banking = SectionLink("business", "banking", "Banking", "/business/banking")
@@ -314,7 +315,7 @@ object Navigation {
       SectionLink("careers", "newsletter", "newsletter", "https://register.theguardian.com/careers"),
       SectionLink("careers", "courses", "courses", "http://jobs.theguardian.com/courses"),
       SectionLink("careers", "jobs", "jobs", "http://jobs.theguardian.com"),
-      SectionLink("careers", "top employers UK", "top employers UK", "/careers/britains-top-employers")
+      SectionLink("careers", "top employers UK", "top employers UK", "/careers/top-employers-uk")
     ),
     "guardian-masterclasses" -> Seq(
       SectionLink("guardian-masterclasses", "guardian masterclasses", "guardian masterclasses", "/guardian-masterclasses"),

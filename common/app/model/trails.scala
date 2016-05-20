@@ -3,17 +3,47 @@ package model
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import implicits.Dates._
 import org.joda.time.DateTime
-import org.jsoup.Jsoup
 import org.scala_tools.time.Imports._
 import play.api.libs.json.{Json, JsBoolean, JsString, JsValue}
 import views.support.{Naked, ImgSrc}
-import scala.collection.JavaConversions._
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 
 /**
  * additional information needed to display something on a facia page from CAPI
  */
 object Trail {
+
+  private val trailPicMinDesiredSize = 460
+
+  // if you change these rules make sure you update IMAGES.md (in this project)
+  private def findTrailImages(elements: Elements): Option[ImageMedia] = {
+    // Try to pick a thumbnail element which contains an image with at least 460 width.
+    val trailImageMedia = elements.thumbnail.find(_.images.imageCrops.exists(_.width >= trailPicMinDesiredSize)).map(_.images)
+      .orElse(elements.mainPicture.map(_.images))
+      .orElse(elements.videos.headOption.map(_.images))
+      .orElse(elements.thumbnail.map(_.images))
+
+    // Try to take the master 5:3 image. At render-time, the image resizing service will size the image according to card width.
+    // Filtering the list images here means that facia-press does not need to slim down the Trail object.
+    trailImageMedia.flatMap { imageMedia =>
+      val filteredTrailImages = imageMedia.allImages.filter { image =>
+        IsRatio(5, 3, image.width, image.height)
+      }
+
+      val masterTrailImage = filteredTrailImages.find(_.isMaster).map { master =>
+        ImageMedia.make(List(master))
+      }
+
+      // If there isn't a 5:3 image, no ImageMedia object will be created.
+      lazy val largestTrailImage = filteredTrailImages.sortBy(-_.width).headOption.map { bestImage =>
+        ImageMedia.make(List(bestImage))
+      }
+
+      // Choose the master 5:3 image, or the largest 5:3 image.
+      masterTrailImage.orElse(largestTrailImage)
+    }
+  }
+
   def make(
     tags: Tags,
     fields: Fields,
@@ -21,6 +51,7 @@ object Trail {
     elements: Elements,
     metadata: MetaData,
     apiContent: contentapi.Content) = {
+
     Trail(
       webPublicationDate = apiContent.webPublicationDate.map(_.toJodaDateTime).getOrElse(DateTime.now),
       headline = apiContent.fields.flatMap(_.headline).getOrElse(""),
@@ -29,9 +60,7 @@ object Trail {
       isCommentable = apiContent.fields.flatMap(_.commentable).exists(b => b),
       isClosedForComments = !apiContent.fields.flatMap(_.commentCloseDate).map(_.toJodaDateTime).exists(_.isAfterNow),
       byline = apiContent.fields.flatMap(_.byline).map(stripHtml),
-      trailPicture = elements.thumbnail.find(_.images.imageCrops.exists(_.width >= elements.trailPicMinDesiredSize)).map(_.images)
-        .orElse(elements.mainPicture.map(_.images))
-        .orElse(elements.thumbnail.map(_.images)),
+      trailPicture = findTrailImages(elements),
       tags = tags,
       commercial = commercial,
       fields = fields,

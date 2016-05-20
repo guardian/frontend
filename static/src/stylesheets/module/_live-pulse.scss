@@ -14,9 +14,9 @@
 }
 
 .live-pulse-icon:before {
+    @include circular;
     display: inline-block;
     position: relative;
-    @include circular;
     $size: .75em;
     background-color: #ffffff;
     width: $size;

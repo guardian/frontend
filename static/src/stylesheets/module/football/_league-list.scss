@@ -3,8 +3,8 @@
     margin: $gs-baseline 0 $gs-baseline*2;
 
     @include mq(tablet) {
-        margin-top: ($gs-baseline/3)*2;
         @include fs-textSans(4);
+        margin-top: ($gs-baseline/3)*2;
     }
 }
 
@@ -30,10 +30,10 @@
 .football-leagues__list {}
 
 .football-leagues__item {
+    @include fs-textSans(2, true);
     box-sizing: border-box;
     display: inline-block;
     vertical-align: top;
     width: 50%;
     margin-bottom: $gs-baseline/2;
-    @include fs-textSans(2, true);
 }

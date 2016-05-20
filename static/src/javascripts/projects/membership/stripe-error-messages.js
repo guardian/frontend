@@ -1,4 +1,3 @@
-/* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
 define({
     invalid_request_error: {},
     api_error: {

@@ -1,0 +1,11 @@
+<a class="gimbap gimbap--simple gimbap--richmedia gimbap--tone-<%=componenttone%><%=gimbapEffects%>"
+   href="<%=clickMacro%><%=offerurl%>"
+   data-link-name="<%=offertitle%>">
+    <h4 class="gimbap-richmedia__title"><span class="gimbap-richmedia__highlight"><%=offerHighlight%></span> / <%=offerTitle%></h4>
+    <p class="gimbap-richmedia__headline"><%=offerHeadline%></p>
+    <% if (offerDate) { %><span class="gimbap-richmedia__meta gimbap-richmedia__meta--date"><%=iconClock%> <%=offerDate%></span><% } %>
+    <% if (offerPlace) { %><span class="gimbap-richmedia__meta gimbap-richmedia__meta--place"><%=iconLocation%> <%=offerPlace%></span><% } %>
+    <% if (offerPrice) { %><span class="gimbap-richmedia__price">&#163; <%=offerPrice%></span><% } %>
+    <% if (offerDiscount) { %><span class="gimbap-richmedia__meta gimbap-richmedia__meta--saving"><%=iconBasket%> <%=offerDiscount%></span><% } %>
+    <img class="gimbap__image gimbap-richmedia__img" src="<%=offerimage%>" />
+</a>

@@ -3,8 +3,8 @@ package controllers
 import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import common._
-import conf.LiveContentApi
-import conf.LiveContentApi.getResponse
+import contentapi.ContentApiClient
+import contentapi.ContentApiClient.getResponse
 import implicits.Requests
 import layout.{CollectionEssentials, FaciaContainer}
 import model._
@@ -38,14 +38,14 @@ object MediaInSectionController extends Controller with Logging with Paging with
     def isCurrentStory(content: ApiContent) =
       content.fields.flatMap(_.shortUrl).exists(!_.equals(currentShortUrl))
 
-    val promiseOrResponse = getResponse(LiveContentApi.search(edition)
+    val promiseOrResponse = getResponse(ContentApiClient.search(edition)
       .section(sectionId)
       .tag(tags)
       .showTags("all")
       .showFields("all")
     ).map {
       response =>
-        response.results filter { content => isCurrentStory(content) } map { result =>
+        response.results.toList filter { content => isCurrentStory(content) } map { result =>
           RelatedContentItem(result)
         } match {
           case Nil => None

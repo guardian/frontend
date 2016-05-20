@@ -1,14 +1,17 @@
 define([
     'common/utils/ajax',
     'bonzo',
-    'lodash/objects/assign'
+    'lodash/objects/merge'
 ], function (
     ajax,
     bonzo,
-    assign
+    merge
 ) {
+    function identity(x) {
+        return x;
+    }
 
-    var LazyLoad = function (options) {
+    function lazyload(options) {
 
         /*
             Accepts these options:
@@ -21,45 +24,32 @@ define([
             always            - callback function, optional
             force             - boolean, default false. Reload an already-populated container
         */
+        options = merge({
+            success: identity,
+            error:   identity,
+            always:  identity,
+            beforeInsert: identity,
+            force: false
+        }, options);
 
-        var into,
-            defaultOpts = {
-                success: function () {},
-                error:   function () {},
-                always:  function () {},
-                beforeInsert: function (html) { return html; },
-                force: false
-            },
-            opts = assign(defaultOpts, options || {});
-
-        this.load = function () {
-
-            if (opts.url && opts.container) {
-                into = bonzo(opts.container);
-                if (opts.force || !into.hasClass('lazyloaded')) {
-                    return ajax({
-                        url: opts.url,
-                        type: 'json',
-                        crossOrigin: true
-                    }).then(
-                        function (resp) {
-                            into.html(opts.beforeInsert(resp.html));
-                            into.addClass('lazyloaded');
-                            opts.success(resp);
-                        },
-                        function (req) {
-                            opts.error(req);
-                        }
-                    ).always(
-                        function (resp) {
-                            opts.always(resp);
-                        }
-                    );
-                }
+        if (options.url && options.container) {
+            var $container = bonzo(options.container);
+            if (options.force || !$container.hasClass('lazyloaded')) {
+                return ajax({
+                    url: options.url,
+                    type: 'json',
+                    crossOrigin: true
+                })
+                .then(function (resp) {
+                    $container.html(options.beforeInsert(resp.html))
+                        .addClass('lazyloaded');
+                    options.success(resp);
+                })
+                .catch(options.error)
+                .always(options.always);
             }
-        };
+        }
+    }
 
-    };
-
-    return LazyLoad;
+    return lazyload;
 });

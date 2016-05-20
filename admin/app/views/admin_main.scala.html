@@ -1,7 +1,8 @@
-@(title: String, env: String, isAuthed: Boolean = false, hasCharts: Boolean = false, autoRefresh: Boolean = false)(content: Html)
+@(title: String, env: String, isAuthed: Boolean = false, hasCharts: Boolean = false, autoRefresh: Boolean = false)(content: Html)(implicit request: RequestHeader)
 
 @import controllers.admin.routes.UncachedAssets
 @import controllers.admin.routes.UncachedWebAssets
+@import templates.inlineJS.blocking.js._
 
 <!DOCTYPE html>
 
@@ -77,20 +78,19 @@
         <link href='//fonts.googleapis.com/css?family=Open+Sans:800' rel='stylesheet' type='text/css'>
 
         <script type="text/javascript">
-            var curl = {
-                baseUrl: 'assets/javascripts',
-                apiName: 'require',
-                paths:   {
-                    text: 'text', // noop
-                    inlineSvg: 'inlineSvg', // noop
-                    template: 'template' // noop
-                }
-            };
 
-            @Html(Static.js.curl)
+            @Html(curlConfig().body)
+
+            @Html(config(model.AdminPage(title)).body)
+
+            window.curl.paths['bootstraps/admin'] = '@Static("javascripts/bootstraps/admin.js")';
+
+            @Html(Static.js.curl);
+
+            require(['bootstraps/admin']);
         </script>
         <script src="//code.jquery.com/jquery.js"></script>
         <script type="text/javascript" src="@UncachedWebAssets.at("lib/bootstrap/js/bootstrap.min.js")"></script>
-        <script type="text/javascript" src="@Static("javascripts/bootstraps/admin.js")" async></script>
+
     </body>
 </html>

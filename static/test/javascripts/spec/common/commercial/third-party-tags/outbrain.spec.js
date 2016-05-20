@@ -5,12 +5,14 @@ define([
     'fastdom',
     'helpers/injector',
     'helpers/fixtures',
-    'common/utils/$'
+    'common/utils/$',
+    'Promise'
 ], function (
     fastdom,
     Injector,
     fixtures,
-    $
+    $,
+    Promise
 ) {
     var fixturesConfig = {
             id: 'outbrain',
@@ -61,7 +63,7 @@ define([
                 identity.isUserLoggedIn = function () {
                     return false;
                 };
-                detect.adblockInUse = function () { return false; };
+                detect.adblockInUseSync = function () { return false; };
 
                 commercialFeatures.outbrain = true;
 
@@ -155,7 +157,7 @@ define([
             });
 
             it('should load instantly when ad block is in use', function (done) {
-                detect.adblockInUse = function () { return true; };
+                detect.adblockInUseSync = function () { return true; };
 
                 sut.init().then(function () {
                     expect(sut.load).toHaveBeenCalled();
@@ -336,8 +338,7 @@ define([
                 config.page.edition = 'AU';
 
                 sut.load('merchandising').then(function () {
-                    expect($('.OUTBRAIN', $fixtureContainer).first().data('widgetId')).toEqual('CR_14');
-                    expect($('.OUTBRAIN', $fixtureContainer).last().data('widgetId')).toEqual('CR_14');
+                    expect($('.OUTBRAIN', $fixtureContainer).first().data('widgetId')).toEqual('AR_28');
                     done();
                 });
             });
@@ -349,7 +350,6 @@ define([
 
                 sut.load('merchandising').then(function () {
                     expect($('.OUTBRAIN', $fixtureContainer).first().data('widgetId')).toEqual('MB_11');
-                    expect($('.OUTBRAIN', $fixtureContainer).last().data('widgetId')).toEqual('MB_11');
                     done();
                 });
             });

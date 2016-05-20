@@ -7,34 +7,38 @@
 @import views.html.fragments.items.facia_cards.meta
 @import views.html.fragments.media.video
 @import views.support.{CutOut, GetClasses, RemoveOuterParaHtml, RenderClasses, Video640}
+@import headlines.ABHeadlines
 
 @import Function.const
 
-<div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(item.hasImage && !item.hasInlineSnapHtml) {js-snappable}"
-    @if(item.discussionSettings.isCommentable) {
-        @item.discussionSettings.discussionId.map { id =>
-        data-discussion-id="@id"
+@defining(ABHeadlines.upgrade(item)) { item =>
+    <div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(item.hasImage && !item.hasInlineSnapHtml) {js-snappable}"
+        @if(item.discussionSettings.isCommentable) {
+            @item.discussionSettings.discussionId.map { id =>
+            data-discussion-id="@id"
+            }
+            data-discussion-closed="@item.discussionSettings.isClosedForComments"
+            data-discussion-url="@item.header.url.get(request)#comments"
         }
-        data-discussion-closed="@item.discussionSettings.isClosedForComments"
-        data-discussion-url="@item.header.url.get(request)#comments"
-    }
     data-link-name="@item.analyticsPrefix | card-@{ index + 1 }"
     data-item-visibility="@visibilityDataAttribute"
     data-test-id="facia-card"
-    @item.id.map { id => data-id="@id" }
-    @item.snapStuff.map(_.dataAttributes)
-    @item.shortUrl.map { shortUrl => data-loyalty-short-url="@shortUrl" }>
+        @item.id.map { id => data-id="@id" }
+        @item.snapStuff.map(_.dataAttributes)
+        @item.shortUrl.map { shortUrl => data-loyalty-short-url="@shortUrl" }>
 
-    @if(!item.hasInlineSnapHtml) {
-        @container()
-    }
-    @if(item.hasInlineSnapHtml) {
-        @item.snapStuff.map { snap => @snap.embedHtml.map(Html(_)) }
-    }
+        @if(!item.hasInlineSnapHtml) {
+            @container(item)
+        }
+        @if(item.hasInlineSnapHtml) {
+            @item.snapStuff.map { snap => @snap.embedHtml.map(Html(_)) }
+        }
 
-</div>
+    </div>
 
-@container() = {
+}
+
+@container(item: layout.ContentCard) = {
     <div class="fc-item__container">
         @if(item.snapStuff.map(_.snapType).contains(FrontendLatestSnap)) {
             @kicker(item.header, List("fc-item__kicker--dreamsnap", "fc-item__kicker--dreamsnap-list"))
@@ -50,18 +54,22 @@
                     showControlsAtStart = false,
                     endSlatePath,
                     Some(false),
-                    item.id
+                    // We only pass in the ID if this is a video or audio block, as if it's a mainMedia video, the
+                    // ID is actually pointing to the article, which is wrong. It would be nice to have the ID on the
+                    // ContentCard, but we don't for now. Annoyingly this doesn't allow us to check for if we should
+                    // play ads or if the video is expired, but as fronts change really often, this is a non-problem.
+                    if (item.isMediaLink) item.id else None
                 )) { player =>
                     <div class="fc-item__media-wrapper u-faux-block-link__promote media__container--hidden js-video-player">
                         <div class="fc-item__video-container">
-                            @video(player, false, item.cardTypes.showVideoEndSlate)
+                            @video(player, false, item.cardTypes.showVideoEndSlate, showPoster = false)
                         </div>
                     </div>
                 @fallback.map { fallbackImage =>
                     <div class="fc-item__video-fallback media__placeholder--active js-video-placeholder gu-media__fallback">
-                        <div class="@RenderClasses("fc-item__video-play", "media__placeholder--hidden", "vjs-big-play-button", "js-video-play-button")"><span class="vjs-control-text"></span></div>
+                        <div data-link-name="video-play-button-overlay" class="@RenderClasses("fc-item__video-play", "media__placeholder--hidden", "vjs-big-play-button", "js-video-play-button")"><span class="vjs-control-text"></span></div>
                         @itemImage(
-                            fallbackImage.imageContainer.images,
+                            fallbackImage.imageMedia,
                             inlineImage = containerIndex == 0 && index < 4,
                             widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
                         )
@@ -73,23 +81,23 @@
             case Some(svg@CrosswordSvg(_)) => {
                 <div class="fc-item__media-wrapper">
                     <div class="fc-item__image-container u-responsive-ratio inlined-image">
-                        <img src="@svg.imageUrl" class="responsive-img js-crossword-thumbnail" alt=""
-                        role="presentation" data-crossword-id="@svg.persistenceId" />
+                        <object type="image/svg+xml" data="@svg.imageUrl" class="responsive-img js-crossword-thumbnail" alt=""
+                        role="presentation" data-crossword-id="@svg.persistenceId" ></object>
                     </div>
                 </div>
             }
 
             case Some(InlineVideo(_, _, _, Some(fallbackImage))) => {
                 @itemImage(
-                    fallbackImage.imageContainer.images,
+                    fallbackImage.imageMedia,
                     inlineImage = containerIndex == 0 && index < 4,
                     widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
                 )
             }
 
-            case Some(InlineImage(imageContainer)) => {
+            case Some(InlineImage(images)) => {
                 @itemImage(
-                    imageContainer.images,
+                    images,
                     inlineImage = containerIndex == 0 && index < 4,
                     widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
                 )
@@ -173,3 +181,4 @@
         <a @Html(item.header.url.hrefWithRel) class="u-faux-block-link__overlay js-headline-text" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(item.header.headline)</a>
     </div>
 }
+

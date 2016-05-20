@@ -19,7 +19,7 @@ class ChaptersLinksCleanerTest extends FlatSpec with Matchers {
         | </body>""".stripMargin) { ChaptersLinksCleaner }
 
     html.body should include("<h2 id=\"st-marys\"><strong>St Mary’s</strong></h2>")
-    html.body should include("<h2 id=\"best-places-for-20\"><strong>Best places for &pound;20</strong></h2>")
+    html.body should include("<h2 id=\"best-places-for-20\"><strong>Best places for £20</strong></h2>")
   }
 
   "ChaptersLinkCleaner" should "not add h2 headings not surrounded by chapter sections" in {
@@ -35,6 +35,6 @@ class ChaptersLinksCleanerTest extends FlatSpec with Matchers {
 
     html.body should not include("<h2 id=\"st-marys\"><strong>St Mary’s</strong></h2>")
 
-    html.body should include("<h2 id=\"best-places-for-20\"><strong>Best places for &pound;20</strong></h2>")
+    html.body should include("<h2 id=\"best-places-for-20\"><strong>Best places for £20</strong></h2>")
   }
 }

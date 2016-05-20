@@ -1,12 +1,14 @@
 package model
 
-import common.{NavItem, SectionLink, Pagination}
+import common.{NavItem, Pagination, SectionLink}
+import model.content._
 import model.facia.PressedCollection
 import model.liveblog.{BlockAttributes, BodyBlock}
+import model.pressed._
 import org.joda.time.DateTime
-import play.api.libs.json._
 import play.api.libs.functional.syntax._
-import pressed._
+import play.api.libs.json._
+import quiz.{Image => _, _}
 
 object ElementsFormat {
 
@@ -55,6 +57,7 @@ object MetaDataFormat {
   implicit val paginationFormat = Json.format[Pagination]
   implicit val sectionLinkFormat = Json.format[SectionLink]
   implicit val navItemFormat = Json.format[NavItem]
+  implicit val cacheTimeFormat = Json.format[CacheTime]
 
   private case class MetaDataPart1(
     id: String,
@@ -71,9 +74,9 @@ object MetaDataFormat {
 
   private case class MetaDataPart2(
     contentType: String,
-    isImmersive: Boolean,
+    hasHeader: Boolean,
     schemaType: Option[String],
-    cacheSeconds: Int,
+    cacheTime: CacheTime,
     openGraphImages: Seq[String],
     membershipAccess: Option[String],
     isFront: Boolean,
@@ -106,9 +109,9 @@ object MetaDataFormat {
         part1.description,
         part1.rssPath,
         part2.contentType,
-        part2.isImmersive,
+        part2.hasHeader,
         part2.schemaType,
-        part2.cacheSeconds,
+        part2.cacheTime,
         part2.openGraphImages,
         part2.membershipAccess,
         part2.isFront,
@@ -144,9 +147,9 @@ object MetaDataFormat {
           meta.rssPath),
         MetaDataPart2(
           meta.contentType,
-          meta.hasHeader,
+          meta.shouldHideHeaderAndTopAds,
           meta.schemaType,
-          meta.cacheSeconds,
+          meta.cacheTime,
           meta.openGraphImages,
           meta.membershipAccess,
           meta.isFront,
@@ -176,14 +179,21 @@ object ContentTypeFormat {
   implicit val tagPropertiesFormat = Json.format[TagProperties]
   implicit val tagFormat = Json.format[Tag]
   val tagsFormat = Json.format[Tags]
+  implicit val imageMediaFormat = ElementsFormat.imageMediaFormat
+  implicit val quizImageMediaFormat = Json.format[QuizImageMedia]
+  implicit val answerFormat = Json.format[Answer]
+  implicit val questionFormat = Json.format[Question]
+  implicit val quizResultBucketFormat = Json.format[ResultBucket]
+  implicit val quizResultGroupFormat = Json.format[ResultGroup]
+  implicit val quizContentFormat = Json.format[QuizContent]
+  implicit val quizFormat = Json.format[Quiz]
+  implicit val atomsFormat = Json.format[Atoms]
   implicit val blockAttributesFormat = Json.format[BlockAttributes]
   implicit val bodyBlockFormat = Json.format[BodyBlock]
   val fieldsFormat = Json.format[Fields]
   val elementsFormat = ElementsFormat.format
   implicit val tweetFormat = Json.format[Tweet]
   implicit val cardStyleFormat = CardStyleFormat
-  implicit val imageMediaFormat = ElementsFormat.imageMediaFormat
-  private val shareLinksJsonFormat = Json.format[JsonShareLinks]
   private val commercialJsonFormat = Json.format[JsonCommercial]
   private val trailJsonFormat = Json.format[JsonTrail]
 
@@ -203,17 +213,14 @@ object ContentTypeFormat {
     witnessAssignment: Option[String],
     isbn: Option[String],
     imdb: Option[String],
+    paFootballTeams: Seq[String],
     javascriptReferences: Seq[JsObject],
     wordCount: Int,
     showByline: Boolean,
     hasStoryPackage: Boolean,
     rawOpenGraphImage: String,
-    showFooterContainers: Boolean)
-
-  private case class JsonShareLinks(
-    elementShareOrder: List[String],
-    pageShareOrder: List[String]
-  )
+    showFooterContainers: Boolean,
+    atoms: Option[Atoms])
 
   private case class JsonCommercial(
     isInappropriateForSponsorship: Boolean,
@@ -242,17 +249,17 @@ object ContentTypeFormat {
     val contentJson: Reads[JsonContent] = Json.reads[JsonContent]
 
     // Combine a Builder[Reads] with a function that can create Content to make a Reads[Content].
-    (contentJson and shareLinksJsonFormat and commercialJsonFormat and trailJsonFormat and elementsFormat and metadataFormat and fieldsFormat and tagsFormat) {
+    (contentJson and commercialJsonFormat and trailJsonFormat and elementsFormat and metadataFormat and fieldsFormat and tagsFormat) {
       (jsonContent: JsonContent,
-       jsonShareLinks: JsonShareLinks,
        jsonCommercial: JsonCommercial,
        jsonTrail: JsonTrail,
        elements: Elements,
        metadata: MetaData,
        fields: Fields,
-       tags: Tags) => {
+       tags: Tags
+       ) => {
 
-       val sharelinks = ShareLinks.apply(tags, fields, metadata, jsonShareLinks.elementShareOrder, jsonShareLinks.pageShareOrder)
+       val sharelinks = ShareLinks.apply(tags, fields, metadata)
        val commercial = Commercial.apply(tags, metadata,
         jsonCommercial.isInappropriateForSponsorship,
         jsonCommercial.sponsorshipTag,
@@ -273,6 +280,7 @@ object ContentTypeFormat {
         jsonTrail.isClosedForComments)
 
        Content.apply(trail, metadata, tags, commercial, elements, fields, sharelinks,
+        jsonContent.atoms,
         jsonContent.publication,
         jsonContent.internalPageCode,
         jsonContent.contributorBio,
@@ -287,6 +295,7 @@ object ContentTypeFormat {
         jsonContent.witnessAssignment,
         jsonContent.isbn,
         jsonContent.imdb,
+        jsonContent.paFootballTeams,
         jsonContent.javascriptReferences,
         jsonContent.wordCount,
         jsonContent.showByline,
@@ -300,7 +309,7 @@ object ContentTypeFormat {
 
   private val writesContent: Writes[Content] = {
 
-    (Json.writes[JsonContent] and Json.writes[JsonShareLinks] and Json.writes[JsonCommercial] and Json.writes[JsonTrail] and ElementsFormat.format and MetaDataFormat.writesMetadata and Json.writes[Fields] and Json.writes[Tags])((content: Content) => {
+    (Json.writes[JsonContent] and Json.writes[JsonCommercial] and Json.writes[JsonTrail] and ElementsFormat.format and MetaDataFormat.writesMetadata and Json.writes[Fields] and Json.writes[Tags])((content: Content) => {
       // Return a tuple of decomposed classes. This is a handwritten unapply method, converting
       // from the big Content class to the smaller classes.
       ( JsonContent.apply(
@@ -318,14 +327,15 @@ object ContentTypeFormat {
           content.witnessAssignment,
           content.isbn,
           content.imdb,
+          content.paFootballTeams,
           content.javascriptReferences,
           content.wordCount,
           content.showByline,
           content.hasStoryPackage,
           content.rawOpenGraphImage,
-          content.showFooterContainers
+          content.showFooterContainers,
+          content.atoms
         ),
-        JsonShareLinks.apply(content.sharelinks.elementShareOrder, content.sharelinks.pageShareOrder),
         JsonCommercial.apply(
           content.commercial.isInappropriateForSponsorship,
           content.commercial.sponsorshipTag,
@@ -559,6 +569,7 @@ object FaciaImageFormat {
   implicit val cutoutFormat = Json.format[Cutout]
   implicit val replaceFormat = Json.format[Replace]
   implicit val slideshowFormat = Json.format[ImageSlideshow]
+  implicit val imageReplaceFormat = Json.format[ImageReplace]
 
   object format extends Format[Image] {
     def reads(json: JsValue) = {
@@ -566,6 +577,7 @@ object FaciaImageFormat {
         case JsSuccess(JsString("Cutout"), _) => (json \ "item").validate[Cutout](cutoutFormat)
         case JsSuccess(JsString("Replace"), _) => (json \ "item").validate[Replace](replaceFormat)
         case JsSuccess(JsString("ImageSlideshow"), _) => (json \ "item").validate[ImageSlideshow](slideshowFormat)
+        case JsSuccess(JsString("ImageReplace"), _) => (json \ "item").validate[ImageReplace](imageReplaceFormat)
         case _ => JsError("Could not convert ItemKicker")
       }
     }
@@ -573,6 +585,7 @@ object FaciaImageFormat {
     def writes(faciaImage: Image) = faciaImage match {
       case cutout: Cutout => JsObject(Seq("type" -> JsString("Cutout"), "item" -> Json.toJson(cutout)(cutoutFormat)))
       case replace: Replace => JsObject(Seq("type" -> JsString("Replace"), "item" -> Json.toJson(replace)(replaceFormat)))
+      case image: ImageReplace => JsObject(Seq("type" -> JsString("ImageReplace"), "item" -> Json.toJson(image)(imageReplaceFormat)))
       case imageSlideshow: ImageSlideshow => JsObject(Seq("type" -> JsString("ImageSlideshow"), "item" -> Json.toJson(imageSlideshow)(slideshowFormat)))
     }
   }

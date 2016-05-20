@@ -103,7 +103,7 @@ define([
                         rules = firstCall.args[0];
 
                     expect(rules.minAbove).toEqual(300);
-                    expect(rules.selectors[' > h2'].minAbove).toEqual(20);
+                    expect(rules.selectors[' > h2'].minAbove).toEqual(100);
 
                     done();
                 });
@@ -174,25 +174,7 @@ define([
                     config.switches.viewability = true;
                 });
 
-                it('inserts up to two on mobile', function (done) {
-                    detect.getBreakpoint = function () {return 'mobile';};
-                    detect.isBreakpoint = function () {
-                        return true; // fudge breakpoint check
-                    };
-
-                    articleBodyAdverts.init().then(function () {
-                        expect(spaceFillerStub.callCount).toBe(2);
-                        done();
-                    });
-                });
-
                 describe('On mobiles and desktops', function () {
-                    beforeEach(function () {
-                        detect.getBreakpoint = function () {
-                            return 'tablet';
-                        };
-                    });
-
                     it('inserts up to ten adverts', function (done) {
                         articleBodyAdverts.init().then(function () {
                             expect(spaceFillerStub.callCount).toBe(10);
@@ -223,24 +205,9 @@ define([
                     config.switches.viewability = false;
                 });
 
-                it('tries to add two on mobiles and tablets', function (done) {
-                    detect.isBreakpoint = function () {
-                        return true; // fudge check for max:tablet
-                    };
-
+                it('tries to add two', function (done) {
                     articleBodyAdverts.init().then(function () {
                         expect(spaceFillerStub.callCount).toBe(2);
-                        done();
-                    });
-                });
-
-                it('tries to add just one on desktop', function (done) {
-                    detect.isBreakpoint = function () {
-                        return false; //fudge check for max:tablet
-                    };
-
-                    articleBodyAdverts.init().then(function () {
-                        expect(spaceFillerStub.callCount).toBe(1);
                         done();
                     });
                 });
@@ -263,7 +230,7 @@ define([
                         });
 
                         // do not appear next to non-paragraph elements
-                        expect(rules.selectors[' > *:not(p):not(h2)']).toEqual({
+                        expect(rules.selectors[' > :not(p):not(h2):not(.ad-slot)']).toEqual({
                             minAbove : 35,
                             minBelow : 400
                         });
@@ -285,7 +252,7 @@ define([
                         expect(rules.minAbove).toEqual(300);
 
                         // give headings more vertical clearance
-                        expect(rules.selectors[' > h2'].minAbove).toEqual(20);
+                        expect(rules.selectors[' > h2'].minAbove).toEqual(100);
 
                         done();
                     });

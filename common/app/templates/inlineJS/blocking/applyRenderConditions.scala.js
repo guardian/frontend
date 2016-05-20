@@ -70,7 +70,7 @@
         docClass += ' has-fixed';
     }
 
-    if (window.guardian.isModernBrowser) {
+    if (window.guardian.isEnhanced) {
         docClass = docClass.replace(/\bis-not-modern\b/g, 'is-modern');
     }
 

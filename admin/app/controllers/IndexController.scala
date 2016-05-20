@@ -28,7 +28,7 @@ object AdminIndexController extends Controller {
 
   def index() = Action { Redirect("/admin") }
 
-  def admin() = AuthActions.AuthActionTest { request =>
+  def admin() = AuthActions.AuthActionTest { implicit request =>
     NoCache(Ok(views.html.admin(Configuration.environment.stage)))
   }
 }

@@ -17,15 +17,15 @@
 }
 
 .sudoku__cell--highlighted rect {
-    fill: colour(sudoku-mute);
+    fill: $sudoku-mute;
 }
 
 .sudoku__cell--focussed rect {
-    fill: colour(sudoku-accent);
+    fill: $sudoku-accent;
 }
 
 .sudoku__cell--error .sudoku__cell-text {
-    fill: colour(error);
+    fill: $error;
 }
 
 .sudoku__cell-text {
@@ -45,10 +45,10 @@
 
 .sudoku__button-background {
     cursor: pointer;
-    fill: guss-colour(neutral-7, $pasteup-palette);
+    fill: $neutral-7;
 
     .sudoku__button:hover & {
-        fill: darken(guss-colour(neutral-7, $pasteup-palette), 10%);
+        fill: darken($neutral-7, 10%);
     }
 }
 

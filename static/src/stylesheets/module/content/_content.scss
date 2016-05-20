@@ -1,5 +1,4 @@
 .content {
-    border-top: 1px solid #ffffff;
     padding-top: 0;
     padding-bottom: $gs-baseline*3;
 
@@ -17,8 +16,10 @@
     // taking it off child elements and moving it here for DRY.
     // the intention is to move this to the global .gs-container definition
     // which requires the padding to be removed from all child elements
-    box-sizing: border-box;
+
+    // You can break out of these margins with .content__mobile-full-width
     @include content-gutter();
+    box-sizing: border-box;
 }
 
 .content__main-column {
@@ -33,13 +34,8 @@
         .content__article-body {
             padding-right: gs-span(1) + $gs-gutter;
 
-            .ad-slot {
+            .ad-slot:not(.ad-slot--im) {
                 margin-right: -1 * (gs-span(1) + $gs-gutter);
-            }
-
-            /* Inline merchandising component is on the left so negative margin-right is bad */
-            .ad-slot--im {
-                margin-right: 0;
             }
 
             .gu-media-wrapper {
@@ -92,7 +88,7 @@
 .content__hr {
     border: 0;
     margin: 0;
-    border-top: 1px dotted colour(neutral-5);
+    border-top: 1px dotted $neutral-5;
     padding-top: 5px;
 }
 
@@ -123,14 +119,14 @@
     padding-bottom: $gs-baseline/3;
 
     .content--media & a {
-        color: colour(neutral-5);
+        color: $neutral-5;
     }
 }
 
 .content__labels {
     box-sizing: border-box;
     padding: $gs-baseline/2 0;
-    border-bottom: 1px dotted colour(neutral-5);
+    border-bottom: 1px dotted $neutral-5;
     position: relative;
     z-index: 1; // bring-to-front fix to make it clickable
     overflow: hidden;
@@ -175,19 +171,20 @@
         float: none;
     }
 
-    .content__series-label__link {
-        color: colour(neutral-2);
-    }
+}
+
+.content__series-label__link {
+    color: $neutral-2;
 }
 
 @include mq(leftCol, wide) {
-    .content__section-label__link,
+    .content__section-label,
     .container__meta__title {
-        font-size: 20px !important;
-        line-height: 24px !important;
+        font-size: 20px;
+        line-height: 24px;
     }
 
-    .content__series-label__link {
+    .content__series-label {
         @include font-size(18, 22);
         display: block;
 
@@ -202,7 +199,7 @@
     @include fs-header(3);
     box-sizing: border-box;
     padding: $gs-baseline/2 0 $gs-baseline;
-    border-top: 1px dotted colour(neutral-5) !important; // Disable tone colour
+    border-top: 1px dotted $neutral-5 !important; // Disable tone colour
 }
 
 .content__headline {
@@ -224,7 +221,7 @@
         &:hover,
         &:active,
         &:focus {
-            color: colour(neutral-1);
+            color: $neutral-1;
         }
     }
 
@@ -323,7 +320,7 @@
 .content__standfirst {
     @include fs-headline(2);
     margin-bottom: $gs-baseline/2;
-    color: colour(neutral-2);
+    color: $neutral-2;
 
     @include mq(tablet) {
         @include font-size(18px, 22px);
@@ -337,11 +334,10 @@
 
         > li {
             position: relative;
-            margin-bottom: $gs-baseline/3;
         }
 
         * {
-            margin-top: .6em;
+            margin-bottom: $gs-baseline / 2;
         }
     }
 
@@ -357,12 +353,12 @@
         }
 
         > li:before {
+            @include fs-header(1, true);
             position: absolute;
             left: -16px;
             content: counter(li);
             counter-increment: li;
-            @include fs-header(1, true);
-            color: colour(neutral-3);
+            color: $neutral-3;
 
             @include mq(tablet) {
                 @include fs-header(3, true);
@@ -374,10 +370,10 @@
 }
 
 .content__dateline {
-    position: relative;
-    color: colour(neutral-2);
-    box-sizing: border-box;
     @include fs-textSans(1);
+    position: relative;
+    color: $neutral-2;
+    box-sizing: border-box;
     padding-top: $gs-baseline / 6;
     margin-bottom: $gs-baseline / 2;
 
@@ -411,12 +407,12 @@
         padding-top: $gs-baseline/6;
         padding-bottom: $gs-baseline;
         margin-bottom: 0;
-        border-top: 1px dotted colour(neutral-5);
+        border-top: 1px dotted $neutral-5;
     }
 }
 
 .content__dateline-wpd--modified {
-    color: colour(news-default);
+    color: $news-default;
     cursor: pointer;
 
     &:hover,
@@ -435,13 +431,13 @@
 }
 
 .content__meta-container .byline-img {
+    @include circular;
     position: relative;
     width: gs-span(1);
     height: 60px; //Intentionally off grid
     margin: $gs-baseline/2 0;
     overflow: hidden;
-    @include circular;
-    background-color: colour(neutral-7);
+    background-color: $neutral-7;
 
     // fixes for webkit not properly scaling/clipping the child element (still broken on some android browsers...)
     -webkit-transform: translateZ(0);
@@ -474,8 +470,8 @@
     min-height: gs-height(1);
     position: relative;
     margin-bottom: $gs-baseline;
-    border-top: 1px dotted colour(neutral-5);
-    border-bottom: 1px dotted colour(neutral-5);
+    border-top: 1px dotted $neutral-5;
+    border-bottom: 1px dotted $neutral-5;
 
     @include mq(leftCol) {
         position: absolute;
@@ -508,8 +504,11 @@
 }
 
 .content__mobile-full-width {
-    margin-left: -($gs-gutter/2);
-    margin-right: -($gs-gutter/2);
+    @include mq(mobile, tablet) {
+        width: auto;
+        margin-left: -($gs-gutter/2);
+        margin-right: -($gs-gutter/2);
+    }
 
     @include mq(mobileLandscape, tablet) {
         margin-left: -$gs-gutter;
@@ -530,11 +529,11 @@
 }
 
 .byline {
-    margin-bottom: 0;
     @include fs-bodyHeading(1);
+    margin-bottom: 0;
     padding-top: $gs-baseline/3;
     line-height: 20px;
-    color: colour(neutral-2);
+    color: $neutral-2;
 
     @include mq(tablet) {
         @include fs-bodyHeading(2, true);
@@ -544,7 +543,7 @@
     @include mq(leftCol) {
         clear: both;
         padding-top: $gs-baseline/6;
-        border-top: 1px dotted colour(neutral-5);
+        border-top: 1px dotted $neutral-5;
         box-sizing: border-box;
         padding-bottom: $gs-baseline;
         min-height: $gs-baseline*4;
@@ -579,10 +578,10 @@
 }
 
 .drop-cap {
+    @include f-headline;
     float: left;
     display: inline-block;
     text-transform: uppercase;
-    @include f-headline;
     font-weight: 200;
     box-sizing: border-box;
     height: 2*get-line-height(bodyCopy, 2);
@@ -595,9 +594,9 @@
     }
 
     .drop-cap__inner {
+        @include font-size(52px, 40px);
         display: inline-block;
         vertical-align: text-top;
-        @include font-size(52px, 40px);
 
         @include mq(tablet) {
             @include font-size(84px, 68px);
@@ -606,11 +605,10 @@
 }
 
 .commentcount {
-    display: none;
     @include fs-textSans(1);
+    display: none;
 
     i {
-        vertical-align: bottom;
         margin-right: 3px;
         vertical-align: -4px;
     }
@@ -644,7 +642,7 @@
             display: block;
             padding-top: $gs-baseline/3;
             margin-bottom: $gs-baseline;
-            border-top: 1px dotted colour(neutral-5);
+            border-top: 1px dotted $neutral-5;
         }
     }
 
@@ -653,13 +651,13 @@
 .content--advertisement-feature {
     &.content--article,
     &.content--interactive {
-        background-color: colour(neutral-8);
+        background-color: $neutral-8;
     }
     .content__standfirst,
     .content__dateline,
     .caption--main,
     .ad-slot--paid-for-badge__header {
-        color: colour(neutral-2-contrasted);
+        color: $neutral-2-contrasted;
     }
     .content__headline,
     .content__standfirst {
@@ -674,10 +672,10 @@
     &.content--article,
     &.content--interactive,
     &.tonal--tone-media {
-        background-color: colour(paid-article);
+        background-color: $paid-article;
 
         .caption {
-            color: colour(neutral-1);
+            color: $neutral-1;
         }
     }
 
@@ -690,24 +688,38 @@
     }
 
     .content__header {
-        background-color: colour(paid-article-header);
+        background-color: $paid-article-header;
     }
 
     .tonal__standfirst {
         background-color: transparent;
-        padding: $gs-baseline 0 $gs-baseline*2;
         min-height: $gs-baseline*8;
+        padding: $gs-baseline 0 $gs-baseline*2;
 
         .content__standfirst {
-            color: colour(neutral-1);
+            color: $neutral-1;
         }
+    }
+
+    .tone-news--item.rich-link {
+        background: $paid-article-subheader;
+    }
+
+    .rich-link__header,
+    .rich-link__read-more-text {
+        @include f-headlineSans;
+        font-size: get-font-size(header, 2);
+    }
+
+    .rich-link__header {
+        line-height: get-line-height(header, 1);
     }
 
     .ad-slot__label,
     .ad-slot--inline {
-        background-color: colour(paid-article-subheader);
+        background-color: $paid-article-subheader;
         border-top: 0;
-        color: colour(neutral-2-contrasted);
+        color: $neutral-2-contrasted;
     }
 
     .content__section-label {
@@ -715,13 +727,13 @@
         font-weight: 400;
 
         .content__section-label__link {
-            color: colour(neutral-1);
+            color: $neutral-1;
         }
     }
 
     .meta__social,
     .meta__numbers {
-        border-top-color: colour(paid-article-header);
+        border-top-color: $paid-article-header;
     }
 
     .ad-slot--paid-for-badge--article {
@@ -732,21 +744,22 @@
         .content__headline,
         .from-content-api,
         .tonal__main .tone-colour {
-            color: colour(neutral-1);
+            color: $neutral-1;
 
             .inline-icon {
-                fill: colour(neutral-1);
+                fill: $neutral-1;
             }
         }
 
         .most-viewed-container--media,
         .meta__number {
             .inline-icon {
-                fill: colour(neutral-1);
+                fill: $neutral-1;
             }
         }
 
-        &.content--media--audio,
+        // On video, standfirsts are injected twice - once in their usual location, another time as a replacement for the body
+        // We want to hide the first instance and style the latter
         &.content--media--video {
             .content__head .tonal__standfirst {
                 display: none;
@@ -763,18 +776,14 @@
         .content__dateline,
         .submeta__head,
         .content__series-label__link {
-            color: colour(neutral-2-contrasted);
-
-            .i {
-                @include icon(share-android);
-            }
+            color: $neutral-2-contrasted;
         }
 
         .byline {
             .tone-colour {
-                color: colour(neutral-2-contrasted);
+                color: $neutral-2-contrasted;
                 &:hover {
-                    color: colour(neutral-1);
+                    color: $neutral-1;
                 }
             }
         }
@@ -783,12 +792,12 @@
         .vjs-control-bar,
         .vjs-embed-button:hover .vjs-control-text,
         .vjs-progress-holder:before {
-            color: colour(multimedia-main-1);
-            background: colour(paid-article-media-bg);
+            color: $multimedia-main-1;
+            background: $paid-article-media-bg;
 
             .podcast-meta__item__link,
             .vjs-duration {
-                color: colour(multimedia-main-1);
+                color: $multimedia-main-1;
             }
         }
 
@@ -813,24 +822,24 @@
         }
 
         .vjs-volume-bar:before {
-            background-color: colour(neutral-1);
+            background-color: $neutral-1;
         }
 
         .end-slate-container--video {
-            background-color: colour(paid-article);
+            background-color: $paid-article;
 
             .end-slate-container__heading {
-                color: colour(news-support-7);
+                color: $news-support-7;
             }
 
             .fc-item__container {
                 &:before {
-                    background: colour(neutral-2);
+                    background: $neutral-2;
                 }
             }
 
             .fc-item__action {
-                color: colour(neutral-2-contrasted);
+                color: $neutral-2-contrasted;
             }
         }
     }
@@ -838,20 +847,20 @@
     &.tonal--tone-media,
     &.tonal--tone-news {
         .save-for-later__button {
-            color: colour(neutral-2-contrasted);
+            color: $neutral-2-contrasted;
         }
         .save-for-later__button--save,
         .save-for-later__button--saved {
             .inline-icon {
                 fill: #ffffff;
                 border-color: #ffffff;
-                background-color: colour(neutral-2-contrasted);
+                background-color: $neutral-2-contrasted;
             }
             &:hover {
                 .inline-icon {
                     background-color: #ffffff;
-                    fill: colour(neutral-2-contrasted);
-                    border-color: colour(neutral-2-contrasted);
+                    fill: $neutral-2-contrasted;
+                    border-color: $neutral-2-contrasted;
                 }
             }
         }
@@ -865,19 +874,19 @@
         .content__standfirst,
         .gallery2__caption,
         .gallery2__credit {
-            color: colour(neutral-2-contrasted);
+            color: $neutral-2-contrasted;
 
             a {
-                color: colour(guardian-brand);
+                color: $guardian-brand;
 
                 &:hover {
-                    border-bottom-color: colour(guardian-brand);
+                    border-bottom-color: $guardian-brand;
                 }
             }
         }
 
         .ad-slot--dark {
-            background-color: colour(paid-article-subheader);
+            background-color: $paid-article-subheader;
         }
     }
 
@@ -888,7 +897,7 @@
     }
 
     .fc-item__title svg {
-        fill: guss-colour(multimedia-main-2, $pasteup-palette);
+        fill: $multimedia-main-2;
     }
 }
 
@@ -903,7 +912,7 @@
     padding-top: ($gs-baseline/3);
     padding-bottom: ($gs-baseline/3)*4;
     margin-bottom: 0;
-    border-top: 1px solid colour(neutral-4);
+    border-top: 1px solid $neutral-4;
 }
 
 .meta__extras {
@@ -916,7 +925,7 @@
 }
 
 .meta__social {
-    border-top: 1px dotted colour(neutral-5);
+    border-top: 1px dotted $neutral-5;
     padding: 0;
     box-sizing: border-box;
 
@@ -977,10 +986,16 @@
 
         .tonal--tone-media & {
             border: 0;
-            background-color: colour(multimedia-support-4);
+            color: $neutral-3;
+            background-color: $media-mute;
+
+            .inline-tone-fill {
+                fill: $neutral-3;
+            }
 
             &:hover {
-                background-color: colour(neutral-2);
+                color: $neutral-3;
+                background-color: darken($media-mute, 5%);
             }
         }
 
@@ -1042,23 +1057,23 @@
 }
 
 .meta__bio {
+    @include fs-headline(1);
     margin-bottom: $gs-baseline;
     padding-top: $gs-baseline/2;
 
-    color: colour(neutral-2);
-    @include fs-headline(1);
+    color: $neutral-2;
 
     @include mq($until: leftCol) {
         display: none;
     }
 
     .tonal--tone-media & {
-        color: colour(neutral-7);
+        color: $neutral-7;
     }
 
     .meta__author--comment & {
         padding-top: $gs-baseline/6;
-        border-top: 1px dotted colour(neutral-5);
+        border-top: 1px dotted $neutral-5;
     }
 
     .content__meta-container--twitter &,
@@ -1067,7 +1082,7 @@
     }
 
     .content__meta-container--tonal-header & {
-        border-top: 1px dotted colour(neutral-5);
+        border-top: 1px dotted $neutral-5;
         padding-top: $gs-baseline/6;
     }
 }
@@ -1075,9 +1090,9 @@
 .meta__contact-header {
     @include fs-textSans(1);
     line-height: 15px;
-    color: colour(neutral-2);
+    color: $neutral-2;
     margin-bottom: 0;
-    border-top: 1px dotted colour(neutral-5);
+    border-top: 1px dotted $neutral-5;
     padding-top: $gs-baseline/6;
 
     .content__meta-container--bio & {
@@ -1105,21 +1120,33 @@
 .old-article-message {
     @include fs-textSans(1);
     display: inline-block;
-    color: colour(neutral-2);
+    color: $neutral-2;
     margin-bottom: $gs-baseline;
 
     .old-article-message--clock svg {
-        fill: colour(neutral-2);
+        fill: $neutral-2;
         margin-bottom: -1px;
     }
 }
 
 .tonal--tone-media {
     .old-article-message {
-        color: colour(neutral-3);
+        color: $neutral-3;
 
         .old-article-message--clock svg {
-            fill: colour(neutral-3);
+            fill: $neutral-3;
+        }
+    }
+}
+
+.content--interactive {
+    .tonal__main--tone-news {
+        .old-article-message {
+            @include mq(tablet) {
+                position: absolute;
+                left: 0;
+                top: 44px;
+            }
         }
     }
 }

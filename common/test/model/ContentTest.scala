@@ -53,12 +53,12 @@ class ContentTest extends FlatSpec with Matchers with OneAppPerSuite with implic
 
   "Tags" should "understand tag types" in {
 
-    val theKeywords = Seq(Tag.make(tag("/keyword1", TagType.Keyword)), Tag.make(tag("/keyword2", TagType.Keyword)))
-    val theSeries = Seq(Tag.make(tag("/series", TagType.Series)))
-    val theContributors = Seq(Tag.make(tag("/contributor", TagType.Contributor)))
-    val theTones = Seq(Tag.make(tag("/tone", TagType.Tone)))
-    val theBlogs = Seq(Tag.make(tag("/blog", TagType.Blog)))
-    val theTypes = Seq(Tag.make(tag("/type", TagType.Type)))
+    val theKeywords = List(Tag.make(tag("/keyword1", TagType.Keyword)), Tag.make(tag("/keyword2", TagType.Keyword)))
+    val theSeries = List(Tag.make(tag("/series", TagType.Series)))
+    val theContributors = List(Tag.make(tag("/contributor", TagType.Contributor)))
+    val theTones = List(Tag.make(tag("/tone", TagType.Tone)))
+    val theBlogs = List(Tag.make(tag("/blog", TagType.Blog)))
+    val theTypes = List(Tag.make(tag("/type", TagType.Type)))
 
     val tags = Tags(tags = theBlogs ++ theTones ++ theContributors ++ theSeries ++ theKeywords ++ theTypes)
 
@@ -121,25 +121,11 @@ class ContentTest extends FlatSpec with Matchers with OneAppPerSuite with implic
 
     conf.switches.Switches.MembersAreaSwitch.switchOn()
 
-    val membershipArticle = ApiContent(id = "membership/2015/jan/01/foo",
-      sectionId = None,
-      sectionName = None,
-      webPublicationDate = Some(new DateTime().toCapiDateTime),
-      webTitle = "Some article",
-      webUrl = "http://www.guardian.co.uk/membership/2015/jan/01/foo",
-      apiUrl = "http://content.guardianapis.com/membership/2015/jan/01/foo",
-      tags = List(tag("type/article")),
-      fields = Some(ContentFields(membershipAccess = Some(MembershipTier.MembersOnly))),
-      elements = None
-    )
-
-    Content(membershipArticle).metadata.requiresMembershipAccess should be(true)
-
     val noAccess = article.copy(fields = None)
     Content(noAccess).metadata.requiresMembershipAccess should be(false)
 
-    val outsideMembership = article.copy(fields = Some(ContentFields(membershipAccess = Some(MembershipTier.MembersOnly))))
-    Content(outsideMembership).metadata.requiresMembershipAccess should be(false)
+    val membershipArticle = article.copy(fields = Some(ContentFields(membershipAccess = Some(MembershipTier.MembersOnly))))
+    Content(membershipArticle).metadata.requiresMembershipAccess should be(true)
 
   }
 

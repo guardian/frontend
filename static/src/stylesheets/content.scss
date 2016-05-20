@@ -10,39 +10,30 @@
 @import 'module/_discussion-mixins';
 @import '_extends-only';
 
+@import '_common';
 
 /* ==========================================================================
    Base
    ========================================================================== */
 
 @import 'base/_tables';
-@import 'base/_zindex';
-@import 'components/pasteup-forms/src/_forms';
-@import 'components/pasteup-buttons/src/_buttons';
+@import 'pasteup/forms/styles';
 
 
 /* ==========================================================================
    Global modules
    ========================================================================== */
 
-@import 'module/_tabs';
-@import 'module/_headline-list';
 @import 'module/_cta';
-@import 'layout/_footer';
 @import 'module/content/_gallerythumbs';
 @import 'module/_dropdown';
 @import 'module/charts/_doughnuts';
 
-@import 'module/_search';
-@import 'module/_search-tool';
-
 @import 'module/content/_content.global';
-@import 'module/content/_media-player';
 @import 'module/content/_media.global';
 @import 'module/_loader';
 
 @import 'module/content/_live-blog';
-@import 'module/content/_live-filter';
 
 @import 'module/_discussion';
 @import 'module/identity/_disc';
@@ -55,16 +46,11 @@
 @import 'module/content/_block-level-sharing';
 
 @import 'module/preferences/_notifications';
-@import 'module/crosswords/_main';
-@import 'module/_weather';
 @import 'module/_sudoku';
 
 @import 'module/onward/_right-hand-most-popular';
-@import 'module/onward/_breaking-news';
 @import 'module/_clamp';
-@import 'module/_submeta';
 
-@import 'module/_rich-links';
 @import 'module/_membership-events';
 
 @import 'module/_save-for-later';
@@ -100,8 +86,6 @@
    Facia
    ========================================================================== */
 
-@import 'module/facia/_facia-show-more';
-@import 'module/facia/_pagination';
 @import 'module/facia/_tag-meta';
 @import 'module/facia/_l-list';
 @import 'module/facia/_container';
@@ -126,19 +110,10 @@
 
 @import 'icons/_global-icons-sprite';
 @import 'icons/_global-icons-svg';
-@import 'module/icons';
-
-/* ==========================================================================
-   Commercial modules
-   ========================================================================== */
-
-@import 'module/commercial/_commercial';
+@import 'module/_icons';
 
 /* ==========================================================================
    Misc
    ========================================================================== */
 
-@import 'module/_release-message';
-@import 'module/_tag-list';
 @import 'module/_childrens-books-site';
-@import 'module/email/_main';

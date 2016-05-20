@@ -1,12 +1,11 @@
 package controllers
 
 import common.ExecutionContexts
-import conf.{LiveContentApi, AllGoodHealthcheckController}
+import conf.{AllGoodCachedHealthCheck, CachedHealthCheckLifeCycle}
 import dispatch.{FunctionHandler, Http}
 import scala.concurrent.Future
-import contentapi.Response
+import contentapi.{ContentApiClient, Response}
 import conf.Configuration.contentApi.previewAuth
-import play.api.mvc.Action
 
 class TrainingHttp extends contentapi.Http with ExecutionContexts {
 
@@ -34,25 +33,20 @@ class TrainingHttp extends contentapi.Http with ExecutionContexts {
       auth =>
         req.as_!(auth.user, auth.password)
     )
-    def handler = new FunctionHandler(r => Response(r.getResponseBody("utf-8"), r.getStatusCode, r.getStatusText))
+    def handler = new FunctionHandler(r => Response(r.getResponseBodyAsBytes, r.getStatusCode, r.getStatusText))
     http(authReq.toRequest, handler)
   }
 }
 
-object TrainingHealthCheck extends AllGoodHealthcheckController(
+object HealthCheck extends AllGoodCachedHealthCheck(
  9016,
- "/world/2012/sep/11/barcelona-march-catalan-independence"
+ "/info/developer-blog/2016/apr/14/training-preview-healthcheck"
 ) {
+  init()
 
-  lazy val init = {
-    LiveContentApi._http = new TrainingHttp
-    ()=>()
-  }
+  def init(): Unit = ContentApiClient.setHttp(new TrainingHttp)
+}
 
-  override def healthcheck() = {
-    if (!isOk) {
-      init()
-    }
-    super.healthcheck()
-  }
+trait TrainingPreviewHealthCheckLifeCycle extends CachedHealthCheckLifeCycle {
+  override val healthCheckController = HealthCheck
 }

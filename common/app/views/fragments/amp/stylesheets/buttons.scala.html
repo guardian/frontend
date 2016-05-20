@@ -1,4 +1,5 @@
-.cta {
+.cta,
+.element-interactive a{
     display: inline-block;
     vertical-align: top;
     width: auto;
@@ -12,7 +13,8 @@
     line-height: 1.125rem;
 }
 
-.cta--medium {
+.cta--medium,
+.element-interactive a{
     height: 1.875rem;
     padding: 0 0.625rem;
     margin-right: 0.625rem;
@@ -30,9 +32,17 @@
     margin: 0 20px 0;
 }
 
+.cta--show-more.cta--show-more__unindent {
+    margin: 0
+}
+
 @@media (max-width: 480px) {
     .cta--show-more {
         margin: 0 10px 0;
+    }
+
+    .cta--show-more.cta--show-more__unindent {
+        margin: 0
     }
 }
 
@@ -68,4 +78,22 @@
 
 .cta--comments svg {
     margin-bottom: -7px;
+}
+
+.main-site-link {
+    margin: 0;
+    padding: 0;
+    float: right;
+}
+
+.no-comments .main-site-link {
+    float: none;
+}
+
+@@media (max-width: 350px) {
+    .main-site-link {
+        float: none;
+        display: block;
+        margin-top: 12px;
+    }
 }

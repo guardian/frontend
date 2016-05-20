@@ -1,0 +1,32 @@
+@(item: common.commercial.CardContent,
+  omnitureId: String,
+  optAdvertClassNames: Option[Seq[String]] = None,
+  optClassNames: Option[Seq[String]] = None,
+  useCardBranding: Boolean)
+
+@import views.html.fragments.inlineSvg
+
+<a href="@item.targetUrl" class="advert advert--small advert--capi
+    @item.icon match {
+        case Some(_) => {advert--media}
+        case None    => {advert--text}
+    }
+    @optAdvertClassNames.map { classNames => @classNames.map(c => s"advert--$c").mkString(" ")}
+    @optClassNames.map { classNames => @classNames.mkString(" ")}
+    "
+    data-link-name="@omnitureId"
+    @if(useCardBranding){
+        @for(branding <- item.branding) {
+            @for(sponsorship <- branding.sponsorshipType) {data-sponsorship="@sponsorship"}
+            @for(sponsor <- branding.sponsor)             {data-sponsor="@sponsor"}
+            @for(keywords <- branding.keywordId)          {data-keywords="@keywords"}
+            @for(series <- branding.seriesId)             {data-series="@series"}
+        }
+    }
+    >
+    <p class="advert__title">
+        @for(icon <- item.icon){@inlineSvg(icon, "icon")}
+        @item.headline
+    </p>
+    @for(branding <- item.branding; sponsor <- branding.sponsor) {<div class="advert__badge js-badge"></div>}
+</a>

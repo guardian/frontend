@@ -1,56 +1,107 @@
-.gu-image-container {
-    background-color: colour(neutral-8);
-}
-
 %gu-style-box {
     padding: $gs-baseline / 2;
 }
 
-.gu-box {
-    @extend %gu-style-box;
+.gu-display {
+    position: relative;
 }
 
-.gu-title {
-    @include f-headlineSans;
-    @include font-size(21, 26);
-
-    color: colour(neutral-1);
-    padding-bottom: $gs-baseline;
-    text-align: left;
+.gu-display__image-layer {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    position: static;
 }
 
-.gu-text {
-    @include f-textSans;
-    @include font-size(14, 18);
-    
-    color: colour(neutral-2);
-    text-align: left;
-    margin-bottom: $gs-row-height;
-}
-
-.gu-brand {
-    text-align: right;
-}
-
-.gu-note {
-    @include f-textSans;
-    @include font-size(13, 18);
-
-    color: colour(neutral-2);   
-}
-
-.gu-logo {
-    width: 40%;
-    vertical-align: sub;
-}
-
-.gu-image {
+.gu-display__image {
     width: 100%;
     display: block;
 }
 
+.gu-display__image-fadeout {
+    &:after {
+        content: '';
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 0;
+        background: linear-gradient(transparent 80px, rgba(0, 0, 0, .5));
+    }
+}
+
+.gu-mutable {
+    display: block;
+    position: absolute;
+    z-index: 2;
+}
+
+.gu-display__content {
+    @extend %gu-style-box;
+    bottom: 30px;
+    left: 0;
+    padding: $gs-gutter/2;
+}
+
+.gu-display__content--hosted {
+    bottom: 0;
+}
+
+.gu-display__link {
+    color: #ffffff;
+
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.content--immersive-article .from-content-api .gu-display__content-title,
+.gu-display__content-title {
+    @include f-headlineSans;
+    @include font-size(20, 20);
+
+    color: #ffffff;
+    text-align: left;
+    font-weight: normal;
+    margin-bottom: 5px;
+}
+
+.gu-display__content-title--hosted {
+    @include font-size(30, 32);
+
+    width: 80%;
+    margin: 0;
+    font-weight: bold;
+}
+
+.gu-display__content-text {
+    @include f-headlineSans;
+    @include font-size(20, 20);
+
+    color: #ffffff;
+    text-align: left;
+}
+
+.gu-display__cta {
+    left: 10px;
+    bottom: 10px;
+    line-height: 2.4;
+}
+
+.gu-display__logo-link {
+    right: 10px;
+    bottom: 10px;
+    line-height: 1;
+}
+
+.gu-display__logo {
+    width: 80px;
+    height: 30px;
+}
+
 .gu-external-icon {
-    float: right; 
+    float: right;
     svg {
         fill: #ffffff;
         margin: 0 5px;
@@ -60,76 +111,124 @@
     }
 }
 
-.gu-comcontent {
-    display: block;
-    background-color: colour(neutral-8);
-    border-top: 1px solid $gustyle-tone;
-    padding: 0;
-    overflow: hidden;
-    position: relative;
-
-    &:hover {
-        background-color: colour(neutral-6);
-        text-decoration: none;
-
-        .gu-image {
-            background-color: #000000;
-            opacity: .9;
-        }
-    }
+/* values configurable in DFP */
+.gu-display__content-color--bright {
+    color: #ffffff;
 }
 
-.gu-display {
-    min-height: 400px;
-    position: relative;
+.content--immersive-article .from-content-api .gu-display__content-color--dark,
+.gu-display__content-color--dark {
+    color: #000000;
+}
 
-    .gu-box {
-        position: absolute;
-        bottom: 0;
-        z-index: 1;
-        padding: $gs-gutter/2;
-    }
+.gu-display__content-position--bottom {
+    bottom: 30px;
+}
 
-    .gu-title {
-        padding-bottom: $gs-baseline/2;
-        
-        a {
-            color: #ffffff;
-        }
-    }
+.gu-display__content-position--top {
+    top: 30px;
+}
 
-    .button {
-        float: left;
-        color: #ffffff;
-        box-shadow: 0 0 1px 0px #ffffff inset, 0 0 1px 0px #ffffff;
-    }
+.gu-display__content-size--small {
+    font-size: .9rem;
+    line-height: .9rem;
+}
 
+.gu-display__content-size--regular {
+    font-size: 1.25rem;
+}
+
+.gu-display__content-size--big {
+    font-size: 1.35rem;
+}
+
+.gu-display__logo-pos--bottom-right {
+    right: 10px;
+    bottom: 10px;
+    left: auto;
+}
+
+.gu-display__logo-pos--top-left {
+    left: 10px;
+    top: 0;
+    right: auto;
 }
 
 $mobile-max-container-width: gs-span(8);
 @include mq-add-breakpoint(containerWidestMobile, $mobile-max-container-width + $gs-gutter * 2);
 
+.ad-slot--frame,
 .gu-style {
     width: auto;
+    border-top: #fedd79 1px solid;
     margin-left: $gs-gutter / 2;
     margin-right: $gs-gutter / 2;
 
-    @include mq(mobileLandscape) {
-        margin-left: $gs-gutter;
-        margin-right: $gs-gutter;
-    }
-
     @include mq(containerWidestMobile) {
-        margin: 0 auto;
-        width: $mobile-max-container-width;
+        margin-left: auto;
+        margin-right: auto;
+        width: 275px;
     }
 
     @include mq(tablet) {
+        width: auto;
+        margin-right: $gs-gutter / 2;
+        margin-left: $gs-gutter / 2;
+    }
+
+    @include mq(desktop) {
+        max-width: 300px;
         margin-left: $gs-gutter / 2;
         margin-right: $gs-gutter / 2;
     }
 
-    @include mq(desktop) {
-        width: 300px;
+    // Article styles: Right slot width is exactly the size of the banner so we don't want any margin
+    &.ad-slot--right {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    // Gallery & Liveblog sections styles
+    &.ad-slot--gallery-inline,
+    &.ad-slot--liveblog-inline {
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+
+.gu-style--unboxed {
+    @include mq($until: tablet) {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    @include mq(tablet) {
+        max-width: 300px;
+    }
+}
+
+// Hosted (bottom) version 2 - this is purely for testing purposes
+.gu-display--hostedbottom {
+    .gu-display__logo-pos--bottom-right {
+        top: auto;
+        bottom: 50px;
+    }
+
+    .gu-display__content {
+        width: 100%;
+        min-height: 110px;
+        padding-top: $gs-gutter / 2;
+        background-color: #fffcf4;
+    }
+
+    .gu-display__content-title--hosted {
+        @include font-size(22, 24);
+
+        width: 60%;
+        font-weight: normal;
+        color: #333333;
     }
 }

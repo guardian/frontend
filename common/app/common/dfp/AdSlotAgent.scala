@@ -9,7 +9,7 @@ import conf.Configuration.commercial.dfpAdUnitRoot
 
 trait AdSlotAgent {
 
-  protected val isProd: Boolean
+  protected def environmentIsProd: Boolean
 
   protected def lineItemsBySlot: Map[AdSlot, Seq[GuLineItem]]
 
@@ -41,8 +41,8 @@ trait AdSlotAgent {
       creativeSizes.contains(leaderboardSize) || creativeSizes.contains(responsiveSize)
     }
 
-    def deriveEditionFromGeotargeting(lineItem: GuLineItem): Option[Edition] = {
-      lineItem.targeting.geoTargetsIncluded.headOption flatMap {
+    def deriveEditionFromGeotargeting(lineItem: GuLineItem): Seq[Edition] = {
+      lineItem.targeting.geoTargetsIncluded flatMap {
         case GeoTarget(_, _, "COUNTRY", "United Kingdom") => Some(Uk)
         case GeoTarget(_, _, "COUNTRY", "United States") => Some(Us)
         case GeoTarget(_, _, "COUNTRY", "Australia") => Some(Au)
@@ -56,7 +56,7 @@ trait AdSlotAgent {
         targetsRelevantSizes(lineItem) &&
         targetsAdUnit(lineItem, adUnitWithoutRoot) &&
         deriveEditionFromGeotargeting(lineItem).contains(edition) &&
-        !(isProd && targetsAdTest(lineItem))
+        !(environmentIsProd && targetsAdTest(lineItem))
     }
 
     lineItems flatMap (_.creativeSizes)
@@ -82,7 +82,7 @@ trait AdSlotAgent {
         targetsTopBelowNavSlot(lineItem) &&
         targetsEdition(lineItem, edition) &&
         targetsAdUnit(lineItem, adUnitWithoutRoot) &&
-        !(isProd && targetsAdTest(lineItem))
+        !(environmentIsProd && targetsAdTest(lineItem))
     }
   }
 

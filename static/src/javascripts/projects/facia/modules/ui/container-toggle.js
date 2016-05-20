@@ -1,4 +1,3 @@
-/* jscs:disable disallowDanglingUnderscores */
 define([
     'bean',
     'bonzo',

@@ -5,12 +5,15 @@
 /* Root base
    ========================================================================== */
 
-@include guss-typography-defaults;
-
-body {
-    color: colour(neutral-1);
+html {
+    font-family: $f-serif-text;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
 }
-
+body {
+    line-height: 1.5;
+    color: $neutral-1;
+}
 
 /**
  * Turn on kerning and ligatures
@@ -67,7 +70,7 @@ p {
     margin-bottom: ($gs-baseline/3)*2;
 }
 h3 {
+    @include fs-bodyCopy(2);
     font-weight: normal;
     margin-bottom: 7px;
-    @include fs-bodyCopy(2);
 }

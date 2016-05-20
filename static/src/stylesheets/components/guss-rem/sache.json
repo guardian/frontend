@@ -1,5 +1,0 @@
-{
-  "name": "Guss-rem",
-  "description": "Transforms any pixel value and group of properties into their equivalent in rem units with a pixel fallback",
-  "tags": ["responsive", "rwd", "rem", "graceful degradation"]
-}

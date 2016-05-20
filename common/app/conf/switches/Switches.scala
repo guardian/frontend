@@ -13,6 +13,23 @@ sealed trait SwitchState
 case object On extends SwitchState
 case object Off extends SwitchState
 
+case class SwitchGroup(name: String, description: Option[String] = None)
+object SwitchGroup {
+  val ABTests = SwitchGroup("A/B Tests",
+                            Some("The expiry date of these switches does NOT affect the expiry of the AB tests; " +
+                                 "these switches serve only to quickly enable/disable said tests."))
+  val Commercial = SwitchGroup("Commercial")
+  val CommercialFeeds = SwitchGroup("Commercial: Feeds",
+                            Some("These switches enable the fetching and parsing of the commercial merchandising components."))
+  val Facia = SwitchGroup("Facia")
+  val Feature = SwitchGroup("Feature")
+  val Identity = SwitchGroup("Identity")
+  val Monitoring = SwitchGroup("Monitoring")
+  val Performance = SwitchGroup("Performance")
+  val ServerSideABTests = SwitchGroup("Server-side A/B Tests")
+}
+
+
 trait Initializable[T] extends ExecutionContexts with Logging {
 
   private val initialized = Promise[T]()
@@ -33,7 +50,7 @@ trait Initializable[T] extends ExecutionContexts with Logging {
 }
 
 case class Switch(
-  group: String,
+  group: SwitchGroup,
   name: String,
   description: String,
   safeState: SwitchState,
@@ -63,6 +80,14 @@ case class Switch(
     }
     initialized(this)
   }
+  def switchToSafeState(): Unit = {
+    if (safeState == On) {
+      delegate.switchOn()
+    } else {
+      delegate.switchOff()
+    }
+    initialized(this)
+  }
 
   Switch.switches.send(this :: _)
 }
@@ -70,7 +95,7 @@ case class Switch(
 object Switch {
 
   def apply(
-    group: String,
+    group: SwitchGroup,
     name: String,
     description: String,
     safeState: SwitchState,
@@ -126,9 +151,9 @@ with MonitoringSwitches {
 
   def eventuallyAll: Future[List[Switch]] = Switch.eventuallyAllSwitches
 
-  def grouped: List[(String, Seq[Switch])] = {
+  def grouped: List[(SwitchGroup, Seq[Switch])] = {
     val sortedSwitches = all.groupBy(_.group).map { case (key, value) => (key, value.sortBy(_.name)) }
-    sortedSwitches.toList.sortBy(_._1)
+    sortedSwitches.toList.sortBy(_._1.name)
   }
 
 }

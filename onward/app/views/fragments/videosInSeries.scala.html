@@ -1,0 +1,34 @@
+@import common.Pagination
+@(videos: List[model.Video], seriesTitle: Option[String], series: String, pagination: Pagination)(implicit request: RequestHeader)
+
+@import views.support.Seq2zipWithRowInfo
+
+<div class="most-viewed-container most-viewed-container--media most-viewed-container--video most-viewed-container--playlist"
+data-component="most-viewed-video">
+
+    <div class="most-viewed-container__header">
+        <h3 class="most-viewed-container__heading u-cf">
+            <div class="most-viewed__more-from">More from</div>
+               @seriesTitle.getOrElse("More in this series")
+        </h3>
+    </div>
+    <ul class="u-cf u-unstyled most-viewed--media most-viewed--video items--media items--video items--playlist" data-link-name="Most viewed video">
+    @videos.zipWithRowInfo.map{ case (video, row) =>
+        @fragments.mediaItem(video, row.rowNum)
+    }
+    </ul>
+    <div class="u-cf most-viewed-navigation" data-link-name="most-viewed-navigation">
+            <!-- TODO: reverse routing - do we support it? -->
+            <!-- TODO: Buttons here, not really links, but it's easy for styling -->
+        @pagination.previous.map { page =>
+            <button class="most-viewed-navigation__button most-viewed-navigation__button--prev" data-page="@page" data-link-name="prev">
+            @fragments.inlineSvg("arrow-left", "icon")
+            </button>
+        }
+        @pagination.next.map { page =>
+            <button class="most-viewed-navigation__button most-viewed-navigation__button--next" data-page="@page" data-link-name="next">
+            @fragments.inlineSvg("chevron-right", "icon")
+            </button>
+        }
+    </div>
+</div>

@@ -39,10 +39,6 @@ object RadiatorController extends Controller with Logging with AuthLogging with 
   }
   def renderRadiator() = AuthActions.AuthActionTest.async { implicit request =>
 
-    // Some features do not work outside our network
-    // /radiator?features=external disables these
-    val external = request.getParameter("features").contains("external")
-
     for {
       user50x <- CloudWatch.user50x
       shortLatency <- CloudWatch.shortStackLatency
@@ -53,7 +49,7 @@ object RadiatorController extends Controller with Logging with AuthLogging with 
       val graphs = Seq(user50x) ++ shortLatency ++ fastlyErrors
       NoCache(Ok(views.html.radiator(
         graphs, multiLineGraphs, cost, switchesExpiringSoon,
-        Configuration.environment.stage, external
+        Configuration.environment.stage
       )))
     }
   }

@@ -25,27 +25,47 @@ define([
             expanded = (opts.expanded === false) ? false : true, // true = open, false = closed
             cta = document.createElement('button'),
             showCount = (opts.showCount === false) ? false : true,
+            renderState = function () {
+                if (expanded) {
+                    dom.removeClass('shut');
+                } else {
+                    dom.addClass('shut');
+                }
+            },
+            getCount = function () {
+                return parseInt(dom.attr('data-count'), 10);
+            },
+            updateCallToAction = function () {
+                var text = 'Show ';
+                if (showCount) {
+                    text += getCount() + ' ';
+                }
+                text += (expanded) ? 'fewer' : 'more';
+                cta.innerHTML = text;
+                cta.setAttribute('data-link-name', 'Show ' + ((expanded) ? 'more' : 'fewer'));
+                cta.setAttribute('data-is-ajax', '1');
+            },
+            // Model
+            model = {
+
+                toggleExpanded: function () {
+                    expanded = (expanded) ? false : true;
+                    renderState();
+                    updateCallToAction();
+                },
+
+                getCount: getCount,
+
+                isOpen: function () {
+                    return (dom.hasClass('shut')) ? false : true;
+                }
+            },
             // View
             view = {
 
-                updateCallToAction: function () {
-                    var text = 'Show ';
-                    if (showCount) {
-                        text += model.getCount() + ' ';
-                    }
-                    text += (expanded) ? 'fewer' : 'more';
-                    cta.innerHTML = text;
-                    cta.setAttribute('data-link-name', 'Show ' + ((expanded) ? 'more' : 'fewer'));
-                    cta.setAttribute('data-is-ajax', '1');
-                },
+                updateCallToAction: updateCallToAction,
 
-                renderState: function () {
-                    if (expanded) {
-                        dom.removeClass('shut');
-                    } else {
-                        dom.addClass('shut');
-                    }
-                },
+                renderState: renderState,
 
                 renderCallToAction: function () {
                     bean.add(cta, 'click', function () {
@@ -67,23 +87,6 @@ define([
                             cta.scrollIntoView();
                         }, 550);
                     }
-                }
-            },
-            // Model
-            model = {
-
-                toggleExpanded: function () {
-                    expanded = (expanded) ? false : true;
-                    view.renderState();
-                    view.updateCallToAction();
-                },
-
-                getCount: function () {
-                    return parseInt(dom.attr('data-count'), 10);
-                },
-
-                isOpen: function () {
-                    return (dom.hasClass('shut')) ? false : true;
                 }
             };
 

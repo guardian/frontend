@@ -7,8 +7,7 @@
     outOfPage: Boolean = false,
     forceDisplay: Boolean = false,
     contentSponsor: Option[String] = None,
-    paidForContentType: Option[String] = None,
-    fluid: Boolean = false
+    paidForContentType: Option[String] = None
 )(placeholderContent: Html)
 @import conf.switches.Switches._
 
@@ -26,5 +25,4 @@
     @sizeMapping.map{ case(breakpoint, sizes) =>
         data-@breakpoint="@sizes.mkString("|")"
     }
-    @if(fluid && FluidAdvertsSwitch.isSwitchedOn){ data-fluid="true" }
     >@placeholderContent</div>

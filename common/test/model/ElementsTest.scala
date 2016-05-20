@@ -49,7 +49,7 @@ class ElementsTest extends FlatSpec with Matchers with OneAppPerSuite {
       FixtureTemplates.emptyApiContent.copy(
         elements = Some(List(theImage))
       )
-    ).elements.trailPicture(5, 3).map(_.images.allImages.headOption.exists( image =>
+    ).trail.trailPicture.map(_.allImages.headOption.exists( image =>
       image.width == 504 && image.height == 300
     )) shouldBe Some(true)
   }
@@ -61,7 +61,7 @@ class ElementsTest extends FlatSpec with Matchers with OneAppPerSuite {
       FixtureTemplates.emptyApiContent.copy(
         elements = Some(List(theImage))
       )
-    ).elements.trailPicture(5, 3) shouldEqual None
+    ).trail.trailPicture shouldEqual None
   }
 
   it should "not die if an image has 0 height or width" in {
@@ -73,7 +73,7 @@ class ElementsTest extends FlatSpec with Matchers with OneAppPerSuite {
           thumbnailFixture((0, 300), (500, 0), (500, 300))
         ))
       )
-    ).elements.trailPicture(5, 3) shouldBe defined
+    ).trail.trailPicture shouldBe defined
   }
 
   private def image(  id: String,

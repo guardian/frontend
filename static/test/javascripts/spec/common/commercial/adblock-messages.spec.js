@@ -22,7 +22,7 @@ define([
                 detect = arguments[2];
                 userFeatures = arguments[3];
 
-                detect.adblockInUse = function () {
+                detect.adblockInUseSync = function () {
                     return mockUserHasAdblock;
                 };
                 detect.getBreakpoint = function () {

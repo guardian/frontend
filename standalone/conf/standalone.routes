@@ -18,13 +18,13 @@ GET           /logout                                                           
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
 
 # Travel offers
-GET        /commercial/travel/offers.json                                                      controllers.commercial.TravelOffers.renderTravel
+GET        /commercial/travel/offers.json                                                      controllers.commercial.TravelOffersController.renderTravel
 
 # Jobs
-GET        /commercial/jobs.json                                                               controllers.commercial.JobAds.renderJobs
+GET        /commercial/jobs.json                                                               controllers.commercial.JobsController.renderJobs
 
 # Masterclasses
-GET        /commercial/masterclasses.json                                                      controllers.commercial.MasterClasses.renderMasterclasses
+GET        /commercial/masterclasses.json                                                      controllers.commercial.MasterclassesController.renderMasterclasses
 
 # Soulmates
 GET        /commercial/soulmates/$subgroup<\w+>.json                                           controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
@@ -61,6 +61,7 @@ GET        /tagged.json                                                         
 GET        /:mediaType/section/:sectionId/*seriesId.json                                       controllers.MediaInSectionController.renderSectionMediaWithSeries(mediaType, sectionId, seriesId)
 GET        /:mediaType/section/:sectionId.json                                                 controllers.MediaInSectionController.renderSectionMedia(mediaType, sectionId)
 GET        /video/most-viewed.json                                                             controllers.MostViewedVideoController.renderMostViewed()
+GET        /video/in-series/*series.json                                                       controllers.MostViewedVideoController.renderInSeries(series: String)
 GET        /audio/most-viewed.json                                                             controllers.MostViewedAudioController.renderMostViewed()
 GET        /embed/card/*path.json                                                              controllers.RichLinkController.render(path)
 GET        /embed/card/*path                                                                   controllers.RichLinkController.renderHtml(path)
@@ -136,6 +137,7 @@ GET        /sport/rugby/api/score/:year/:month/:day/:team1Id/:team2Id           
 # Onward journeys
 GET        /series/*path.json                                                                  controllers.SeriesController.renderSeriesStories(path)
 
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>/info.json                             controllers.MediaController.renderInfoJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                                  controllers.MediaController.renderJson(path)
 
 # Facia
@@ -156,8 +158,12 @@ GET        /theobserver                                                         
 GET        /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>           controllers.NewspaperController.newspaperForDate(path, day, month, year)
 GET        /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all       controllers.NewspaperController.allOn(path, day, month, year)
 
+# Atoms
+POST       /atom/quiz/:id/*path                                                                controllers.QuizController.submit(id, path)
+
 GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                     controllers.AllIndexController.on(path)
 GET        /$path<.+>/latest                                                                   controllers.LatestIndexController.latest(path)
+GET        /$path<.+>/latest/email                                                             controllers.LatestIndexController.latest(path)
 GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all                            controllers.AllIndexController.allOn(path, day, month, year)
 GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/altdate                        controllers.AllIndexController.altDate(path, day, month, year)
 GET        /$path<.+>/all                                                                      controllers.AllIndexController.all(path)
@@ -191,8 +197,12 @@ GET        /weatherapi/city/:id.json                                            
 GET        /weatherapi/city.json                                                               weather.controllers.LocationsController.whatIsMyCity()
 GET        /weatherapi/locations                                                               weather.controllers.LocationsController.findCity(query: String)
 
+# Breaking News
+GET        /news-alert/alerts                                                                  controllers.NewsAlertController.alerts()
+
 # Articles
 GET        /*path.json                                                                         controllers.ArticleController.renderLiveBlogJson(path, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean])
+GET        /*path/email                                                                        controllers.ArticleController.renderArticle(path)
 
 # Don't forward requests for favicon.ico to the Content API
 GET        /favicon.ico                                                                        controllers.FaviconController.favicon

@@ -13,25 +13,25 @@ object MostViewedAudioController extends Controller with Logging with ExecutionC
   def renderMostViewed() = Action { implicit request =>
     getMostViewedAudio match {
       case Nil => Cached(60) { JsonNotFound() }
-      case audio => Cached(900) { renderMostViewedAudio(audio, "audio") }
+      case audio => renderMostViewedAudio(audio, "audio")
     }
   }
 
   def renderMostViewedPodcast() = Action { implicit request =>
     getMostViewedPodcast match {
       case Nil => Cached(60) { JsonNotFound() }
-      case podcast => Cached(900) { renderMostViewedAudio(podcast, "podcast") }
+      case podcast => renderMostViewedAudio(podcast, "podcast")
     }
   }
 
-  private def getMostViewedAudio()(implicit request: RequestHeader): Seq[RelatedContentItem] = {
+  private def getMostViewedAudio()(implicit request: RequestHeader): List[RelatedContentItem] = {
     val size = request.getQueryString("size").getOrElse("4").toInt
-    MostViewedAudioAgent.mostViewedAudio().take(size)
+    MostViewedAudioAgent.mostViewedAudio().take(size).toList
   }
 
-  private def getMostViewedPodcast()(implicit request: RequestHeader): Seq[RelatedContentItem] = {
+  private def getMostViewedPodcast()(implicit request: RequestHeader): List[RelatedContentItem] = {
     val size = request.getQueryString("size").getOrElse("4").toInt
-    MostViewedAudioAgent.mostViewedPodcast().take(size)
+    MostViewedAudioAgent.mostViewedPodcast().take(size).toList
   }
 
   private def renderMostViewedAudio(audios: Seq[RelatedContentItem], mediaType: String)(implicit request: RequestHeader) = Cached(900) {

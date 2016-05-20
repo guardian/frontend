@@ -9,12 +9,34 @@ case class EmailSubscription(
   frequency: String,
   listId: String,
   popularity: Int = 0,
-  subscribedTo: Boolean = false
+  subscribedTo: Boolean = false,
+  exampleUrl: Option[String] = None
 )
+
 object EmailSubscription {
   def apply(emailSubscription: EmailSubscription) = emailSubscription
 }
 object EmailSubscriptions {
+  val theFiver = EmailSubscription(
+    "The Fiver",
+    "sport",
+    "Football",
+    "The Fiver is theguardian.com/sport's free football email. Every weekday we round up the day's news and gossip in our own belligerent, sometimes intelligent and — very occasionally — funny way. The Fiver is delivered every Monday to Friday at around 5pm — hence the name.",
+    "Weekday afternoons",
+    "218",
+    10
+  )
+
+  val guardianOpinion = EmailSubscription(
+    "The best of Guardian Opinion",
+    "news",
+    "Opinion's daily email newsletter",
+    "Guardian Opinion's daily email newsletter with the most shared opinion, analysis and editorial articles from the last 24 hours — sign up to read, share and join the debate every afternoon.",
+    "Weekday afternoons",
+    "2313",
+    10
+  )
+
   def australianEmails(subscribedListIds: Iterable[String] = None) = List(
     EmailSubscription(
       "The Guardian today - AUS",
@@ -41,7 +63,7 @@ object EmailSubscriptions {
       "news",
       "Politics",
       "All the latest news and comment on Australian politics from the Guardian, delivered to you every weekday.",
-      "Weekdays at midday",
+      "Weekdays at 10am",
       "1866",
       subscribedTo = subscribedListIds.exists{ x => x == "1866" }
     ),
@@ -56,10 +78,10 @@ object EmailSubscriptions {
       subscribedTo = subscribedListIds.exists{ x => x == "2635" }
     ),
     EmailSubscription(
-      "Best of Comment is free - Australia",
+      "Best of Guardian Opinion - Australia",
       "comment",
-      "Cartoons from Guardian Australia's resident Walkley-winning cartoonist",
-      "An evening selection of the best reads on Comment is free in Australia",
+      "An evening selection of the best reads from Guardian Opinion in Australia",
+      "An evening selection of the best reads from Guardian Opinion in Australia",
       "Daily",
       "2976",
       11,
@@ -83,8 +105,8 @@ object EmailSubscriptions {
       "Close up",
       "culture",
       "Film",
-      "Every Thursday, rely on Close up to bring you Guardian film news, reviews and much, much more.",
-      "Every Thursday",
+      "Rely on Close up to bring you Guardian film news, reviews and much, much more.",
+      "Every Friday",
       "40",
       5,
       subscribedTo = subscribedListIds.exists{ x => x == "40" }
@@ -94,7 +116,7 @@ object EmailSubscriptions {
       "culture",
       "Film",
       "Our film editors recap the top headlines each weekday and deliver them straight to your inbox in time for your evening commute.",
-      "Everyday",
+      "Every weekday",
       "1950",
       5,
       subscribedTo = subscribedListIds.exists{ x => x == "1950" }
@@ -103,8 +125,8 @@ object EmailSubscriptions {
       "Bookmarks",
       "culture",
       "Weekly email from the books team",
-      "A weekly email from the books team with our pick of the latest news, views and reviews, delivered to your inbox every Thursday.",
-      "Once a week",
+      "A weekly email from the books team with our pick of the latest news, views and reviews, delivered to your inbox.",
+      "Every Thursday",
       "3039",
       subscribedTo = subscribedListIds.exists{ x => x == "3039" }
     ),
@@ -113,8 +135,10 @@ object EmailSubscriptions {
       "culture",
       "Art and design",
       "For your art world low-down, sign up to the Guardian's Art Weekly email and get all the latest news, reviews and comment delivered straight to your inbox.",
-      "",
-      "99"
+      "Every Friday",
+      "99",
+      subscribedTo = subscribedListIds.exists{ x => x == "99" },
+      exampleUrl = Some("http://www.theguardian.com/artanddesign/series/art-weekly/latest/email")
     )
   )
 
@@ -124,8 +148,8 @@ object EmailSubscriptions {
       "Guardian Masterclasses",
       "guardian favourites",
       "Courses and training",
-      "News on the latest classes, blog content and competitions from the Guardian's learning programme. Plus inspiring tips from world-class tutors on everything from journalism and creative writing to culture and general knowledge, delivered to your inbox three times per week.",
-      "3 times per week",
+      "News on the latest classes, blog content and competitions from the Guardian's learning programme. Plus inspiring tips from world-class tutors on everything from journalism and creative writing to culture and general knowledge, delivered to your inbox.",
+      "Twice a week",
       "3561",
       subscribedTo = subscribedListIds.exists{ x => x == "3561" }
     ),
@@ -156,8 +180,8 @@ object EmailSubscriptions {
       "The Long Read",
       "news",
       "The week’s Long Reads and audio features",
-      "Bringing you the latest Long Read features and podcasts, delivered to your inbox every Saturday morning",
-      "Every week",
+      "Bringing you the latest Long Read features and podcasts, delivered to your inbox.",
+      "Every Saturday",
       "3322",
       0,
       subscribedTo = subscribedListIds.exists{ x => x == "3322" }
@@ -186,26 +210,10 @@ object EmailSubscriptions {
       11,
       subscribedTo = subscribedListIds.exists{ x => x == "1493" }
     ),
-    EmailSubscription(
-      "The best of CiF",
-      "news",
-      "The best of Comment is free",
-      "Comment is free's daily email newsletter with the most shared comment, analysis and editorial articles from the last 24 hours — sign up to read, share and join the debate on the Guardian's most popular opinion pieces every lunchtime.",
-      "Weekday lunchtime",
-      "2313",
-      10,
-      subscribedTo = subscribedListIds.exists{ x => x == "2313" }
-    ),
-    EmailSubscription(
-      "The Fiver",
-      "news",
-      "Football",
-      "The Fiver is theguardian.com/sport's free football email. Every weekday we round up the day's news and gossip in our own belligerent, sometimes intelligent and — very occasionally — funny way. The Fiver is delivered every Monday to Friday at around 5pm — hence the name.",
-      "5pm every weekday",
-      "218",
-      10,
-      subscribedTo = subscribedListIds.exists{ x => x == "218" }
-    ),
+    guardianOpinion.copy(subscribedTo = subscribedListIds.exists{ x => x == "2313" }, theme = "news"),
+    guardianOpinion.copy(subscribedTo = subscribedListIds.exists{ x => x == "2313" }, theme = "comment"),
+    theFiver.copy(subscribedTo = subscribedListIds.exists{ x => x == "218" }, theme = "news"),
+    theFiver.copy(subscribedTo = subscribedListIds.exists{ x => x == "218" }, theme = "sport"),
     EmailSubscription(
       "Media briefing",
       "news",
@@ -220,19 +228,21 @@ object EmailSubscriptions {
       "Green light",
       "news",
       "Environment",
-      "In each weekly edition our editors highlight the most important stories of the week including data, opinion pieces and background guides. We'll also flag up our best video, picture galleries, podcasts, blogs and green living guides.",
-      "",
+      "In each weekly edition our editors highlight the most important environment stories of the week including data, opinion pieces and background guides. We'll also flag up our best video, picture galleries, podcasts, blogs and green living guides.",
+      "Every Friday",
       "38",
-      subscribedTo = subscribedListIds.exists{ x => x == "38" }
+      subscribedTo = subscribedListIds.exists{ x => x == "38" },
+      exampleUrl = Some("http://www.theguardian.com/environment/series/green-light/latest/email")
     ),
     EmailSubscription(
       "Poverty matters",
       "news",
       "Global development",
       "Our editors track what's happening in development with a special focus on the millennium development goals. Sign up to get all the most important debate and discussion from around the world delivered to your inbox every fortnight.",
-      "",
+      "Every other Tuesday",
       "113",
-      subscribedTo = subscribedListIds.exists{ x => x == "113" }
+      subscribedTo = subscribedListIds.exists{ x => x == "113" },
+      exampleUrl = Some("http://www.theguardian.com/global-development/poverty-matters/latest/email")
     ),
 
     // Lifestyle
@@ -261,17 +271,18 @@ object EmailSubscriptions {
       "lifestyle",
       "Money",
       "Stay on top of the best personal finance and money news of the week, including insight and behind-the-scenes accounts from your favourite Guardian Money editors.",
-      "",
+      "Every Thursday",
       "1079",
       9,
-      subscribedTo = subscribedListIds.exists{ x => x == "1079" }
+      subscribedTo = subscribedListIds.exists{ x => x == "1079" },
+      exampleUrl = Some("http://www.theguardian.com/money/series/money-talks/latest/email")
     ),
     EmailSubscription(
       "Fashion statement",
       "lifestyle",
       "Fashion",
-      "The Guardian sorts the wheat from the chaff to deliver the latest news, views and shoes from the style frontline. Sign up to Fashion Statement, sent every Friday.",
-      "Every Friday",
+      "The Guardian sorts the wheat from the chaff to deliver the latest news, views and shoes from the style frontline.",
+      "Every Monday",
       "105",
       9,
       subscribedTo = subscribedListIds.exists{ x => x == "105" }
@@ -281,9 +292,10 @@ object EmailSubscriptions {
       "lifestyle",
       "Crosswords",
       "Register to receive our monthly crossword email by the Guardian's crossword editor with the latest issues and tips about theguardian.com/crosswords.",
-      "",
+      "Monthly",
       "101",
-      subscribedTo = subscribedListIds.exists{ x => x == "101" }
+      subscribedTo = subscribedListIds.exists{ x => x == "101" },
+      exampleUrl = Some("https://www.theguardian.com/crosswords/series/crossword-editor-update/latest/email")
     ),
     EmailSubscription(
       "The Observer Food Monthly",
@@ -303,7 +315,8 @@ object EmailSubscriptions {
       "Sign up for our rugby union email, written by our rugby correspondent Paul Rees. Every Thursday Paul will give his thoughts on the big stories, review the latest action and provide gossip from behind the scenes in his unique and indomitable style.",
       "Every Thursday",
       "219",
-      subscribedTo = subscribedListIds.exists{ x => x == "219" }
+      subscribedTo = subscribedListIds.exists{ x => x == "219" },
+      exampleUrl = Some("http://www.theguardian.com/sport/series/breakdown/latest/email")
     ),
     EmailSubscription(
       "The Spin",
@@ -312,7 +325,8 @@ object EmailSubscriptions {
       "The Spin brings you all the latest comment and news, rumour and humour from the world of cricket every Tuesday. It promises not to use tired old cricket cliches, but it might just bowl you over.",
       "Every Tuesday",
       "220",
-      subscribedTo = subscribedListIds.exists{ x => x == "220" }
+      subscribedTo = subscribedListIds.exists{ x => x == "220" },
+      exampleUrl = Some("http://www.theguardian.com/sport/series/thespin/latest/email")
     )
   ) ++ newsEmails(subscribedListIds) ++ australianEmails(subscribedListIds) ++ cultureEmails(subscribedListIds) ++ moreFromTheguardianEmails(subscribedListIds))
 }

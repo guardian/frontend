@@ -6,19 +6,31 @@ define([
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/fronts-on-articles2',
-    'common/modules/experiments/tests/related-variants',
-    'common/modules/experiments/tests/identity-register-v2',
-    'common/modules/experiments/tests/identity-sign-in-v2',
-    'common/modules/experiments/tests/liveblog-toast',
-    'common/modules/experiments/tests/userzoom-survey-message-v3',
+    'common/modules/experiments/tests/live-blog-chrome-notifications-internal',
+    'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
+    'common/modules/experiments/tests/loyal-adblocking-survey',
+    'common/modules/experiments/tests/facebook-share-params',
+    'common/modules/experiments/tests/participation-star-ratings',
+    'common/modules/experiments/tests/participation-low-fric-music',
+    'common/modules/experiments/tests/participation-low-fric-tv',
+    'common/modules/experiments/tests/participation-low-fric-recipes',
+    'common/modules/experiments/tests/participation-low-fric-fashion',
+    'common/modules/experiments/tests/clever-friend-brexit',
+    'common/modules/experiments/tests/welcome-header',
+    'common/modules/experiments/tests/play-video-on-fronts',
+    'common/modules/experiments/tests/video-controls-on-main-media',
     'lodash/arrays/flatten',
+    'lodash/arrays/zip',
     'lodash/collections/forEach',
     'lodash/objects/keys',
     'lodash/collections/some',
     'lodash/collections/filter',
     'lodash/collections/map',
+    'lodash/collections/reduce',
     'lodash/collections/find',
     'lodash/objects/pick',
+    'lodash/utilities/noop',
+    'lodash/objects/merge',
     'common/utils/chain'
 ], function (
     reportError,
@@ -28,29 +40,49 @@ define([
     store,
     mvtCookie,
     FrontsOnArticles2,
-    RelatedVariants,
-    IdentityRegisterV2,
-    IdentitySignInV2,
-    LiveblogToast,
-    UserzoomSurveyMessageV3,
+    LiveBlogChromeNotificationsInternal,
+    LiveBlogChromeNotificationsProd,
+    LoyalAdblockingSurvey,
+    FacebookShareParams,
+    ParticipationStarRatings,
+    ParticipationLowFricMusic,
+    ParticipationLowFricTv,
+    ParticipationLowFricRecipes,
+    ParticipationLowFricFashion,
+    CleverFriendBrexit,
+    WelcomeHeader,
+    PlayVideoOnFronts,
+    VideoControlsOnMainMedia,
     flatten,
+    zip,
     forEach,
     keys,
     some,
     filter,
     map,
+    reduce,
     find,
     pick,
+    noop,
+    merge,
     chain
 ) {
 
     var TESTS = flatten([
         new FrontsOnArticles2(),
-        new RelatedVariants(),
-        new IdentityRegisterV2(),
-        new IdentitySignInV2(),
-        new LiveblogToast(),
-        new UserzoomSurveyMessageV3()
+        new LiveBlogChromeNotificationsInternal(),
+        new LiveBlogChromeNotificationsProd(),
+        new LoyalAdblockingSurvey(),
+        new FacebookShareParams(),
+        new ParticipationStarRatings(),
+        new ParticipationLowFricMusic(),
+        new ParticipationLowFricTv(),
+        new ParticipationLowFricRecipes(),
+        new ParticipationLowFricFashion(),
+        new CleverFriendBrexit(),
+        new WelcomeHeader(),
+        new PlayVideoOnFronts(),
+        new VideoControlsOnMainMedia()
     ]);
 
     var participationsKey = 'gu.ab.participations';
@@ -151,6 +183,61 @@ define([
         return tag.join(',');
     }
 
+    function abData(variantName, complete) {
+        return {
+            'variantName': variantName,
+            'complete': complete
+        };
+    }
+
+    function getAbLoggableObject() {
+        try {
+            return reduce(zip(getActiveTests(), getServerSideTests()), function(log, tests) {
+                var active = tests[0];
+                var server = tests[1];
+
+                if (active && isParticipating(active) && testCanBeRun(active)) {
+                    var variant = getTestVariantId(active.id);
+
+                    if (variant && variant !== 'notintest') {
+                        log[active.id] = abData(variant, 'false');
+                    }
+                }
+
+                if (server) {
+                    log['ab' + server] = abData('inTest', 'false');
+                }
+
+                return log;
+            }, {});
+        } catch (error) {
+            // Encountering an error should invalidate the logging process.
+            reportError(error, false);
+            return {};
+        }
+    }
+
+    function trackEvent() {
+        recordOphanAbEvent(getAbLoggableObject());
+    }
+
+    function recordOphanAbEvent(data) {
+        require(['ophan/ng'], function (ophan) {
+            ophan.record({
+                abTestRegister: data
+            });
+        });
+    }
+
+    function recordTestComplete(test, variantId) {
+        var data = {};
+        data[test.id] = abData(variantId, 'true');
+
+        return function() {
+            recordOphanAbEvent(data);
+        };
+    }
+
     // Finds variant in specific tests and runs it
     function run(test) {
         if (isParticipating(test) && testCanBeRun(test)) {
@@ -159,6 +246,9 @@ define([
             var variant = getVariant(test, variantId);
             if (variant) {
                 variant.test();
+
+                var onTestComplete = variant.success || noop;
+                onTestComplete(recordTestComplete(test, variantId));
             } else if (variantId === 'notintest' && test.notInTest) {
                 test.notInTest();
             }
@@ -214,7 +304,7 @@ define([
 
     function shouldRunTest(id, variant) {
         var test = getTest(id);
-        return test && isParticipating(test) && ab.getTestVariantId(id) === variant && testCanBeRun(test);
+        return test && isParticipating(test) && getTestVariantId(id) === variant && testCanBeRun(test);
     }
 
     function getVariant(test, variantId) {
@@ -307,34 +397,12 @@ define([
                 }).valueOf();
         },
 
-        getAbLoggableObject: function () {
-            var abLogObject = {};
-
-            try {
-                forEach(getActiveTests(), function (test) {
-                    if (isParticipating(test) && testCanBeRun(test)) {
-                        var variant = getTestVariantId(test.id);
-                        if (variant && variant !== 'notintest') {
-                            abLogObject['ab' + test.id] = variant;
-                        }
-                    }
-                });
-                forEach(getServerSideTests(), function (testName) {
-                    abLogObject['ab' + testName] = 'inTest';
-                });
-            } catch (error) {
-                // Encountering an error should invalidate the logging process.
-                abLogObject = {};
-                reportError(error, false);
-            }
-
-            return abLogObject;
-        },
-
+        getAbLoggableObject: getAbLoggableObject,
         getParticipations: getParticipations,
         isParticipating: isParticipating,
         getTest: getTest,
         makeOmnitureTag: makeOmnitureTag,
+        trackEvent: trackEvent,
         getExpiredTests: getExpiredTests,
         getActiveTests: getActiveTests,
         getTestVariantId: getTestVariantId,

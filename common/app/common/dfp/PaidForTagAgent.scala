@@ -9,7 +9,7 @@ import model.pressed.CollectionConfig
 
 trait PaidForTagAgent {
 
-  protected def isPreview: Boolean
+  protected def environmentIsPreview: Boolean
 
   protected def currentPaidForTags: Seq[PaidForTag]
   protected def tagToSponsorsMap: Map[String, Set[String]]
@@ -126,9 +126,9 @@ trait PaidForTagAgent {
     def containerCapiTagIds(config: CollectionConfig): Seq[String] = {
       val stopWords = Set("newest", "order-by", "published", "search", "tag", "use-date")
 
-      config.apiQuery map { encodedQuery =>
+      config.backfill map { backfill =>
         def negativeClause(token: String): Boolean = token.startsWith("-")
-        val query = URLDecoder.decode(encodedQuery, "utf-8")
+        val query = URLDecoder.decode(backfill.query, "utf-8")
         val tokens = query.split( """\?|&|=|\(|\)|\||\,""")
         (tokens filterNot negativeClause filterNot stopWords.contains flatMap frontKeywordIds).toSeq
       } getOrElse Nil

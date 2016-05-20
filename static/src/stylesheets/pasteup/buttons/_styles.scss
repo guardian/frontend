@@ -1,0 +1,259 @@
+@import 'src';
+
+.button {
+    @include fs-textSans(2);
+    @include button-height($base-size * 5);
+    @include button-colour(
+        $news-main-2,
+        #ffffff,
+        $news-main-1
+    );
+    display: inline-block;
+    vertical-align: top;
+    width: auto;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 1000px;
+    border-width: 1px;
+    border-style: solid;
+    box-sizing: border-box;
+
+    &:hover,
+    &:focus,
+    &:active {
+        text-decoration: none;
+    }
+
+    .i-left {
+        margin-right: 0;
+        float: left;
+    }
+    .i-right {
+        margin-left: 0;
+        float: right;
+    }
+}
+
+.button--primary {
+    @include button-colour(
+        $guardian-brand,
+        #ffffff
+    );
+
+    @include button-hover-colour(
+        darken($guardian-brand, 10%)
+    );
+}
+
+.button--secondary {
+    @include button-colour(
+        $neutral-7,
+        $neutral-1
+    );
+
+    @include button-hover-colour(
+        darken($neutral-7, 10%)
+    );
+}
+
+.button--tertiary {
+    @include button-colour(
+        transparent,
+        $neutral-1,
+        $neutral-4
+    );
+
+    @include button-hover-colour(
+        transparent,
+        darken($neutral-3, 10%)
+    );
+}
+
+.button--tone-media {
+    @include button-colour(
+        $media-mute,
+        $neutral-3
+    );
+
+    @include button-hover-colour(
+        darken($media-mute, 5%)
+    );
+}
+
+.button--tone-media-variant {
+    @include button-colour(
+        $media-background,
+        $neutral-3,
+        $neutral-2
+    );
+
+    @include button-hover-colour(
+        $media-background,
+        $neutral-3
+    );
+}
+
+.button--tone-news {
+    @include button-colour(
+        $neutral-7,
+        $news-main-1
+    );
+
+    @include button-hover-colour(
+        darken($neutral-7, 10%)
+    );
+}
+
+.button--tone-news-variant {
+    @include button-colour(
+        #ffffff,
+        $news-main-1,
+        $neutral-4
+    );
+
+    @include button-hover-colour(
+        #ffffff,
+        darken($neutral-3, 10%)
+    );
+}
+
+.button--tone-feature {
+    @include button-colour(
+        $neutral-7,
+        $features-support-1
+    );
+
+    @include button-hover-colour(
+        darken($neutral-7, 10%)
+    );
+}
+
+.button--tone-feature-variant {
+    @include button-colour(
+        #ffffff,
+        $features-support-1,
+        $neutral-4
+    );
+
+    @include button-hover-colour(
+        #ffffff,
+        darken($neutral-3, 10%)
+    );
+}
+
+.button--tone-comment {
+    @include button-colour(
+        $neutral-7,
+        $comment-main-1
+    );
+
+    @include button-hover-colour(
+        darken($neutral-7, 10%)
+    );
+}
+
+.button--tone-comment-variant {
+    @include button-colour(
+        #ffffff,
+        $comment-main-1,
+        $neutral-4
+    );
+
+    @include button-hover-colour(
+        #ffffff,
+        darken($neutral-3, 10%)
+    );
+}
+
+.button--tone-live {
+    @include button-colour(
+        $neutral-6,
+        $neutral-1
+    );
+
+    @include button-hover-colour(
+        darken($neutral-6, 10%)
+    );
+}
+
+.button--tone-live-variant {
+    @include button-colour(
+        $neutral-8,
+        $neutral-1,
+        $neutral-3
+    );
+
+    @include button-hover-colour(
+        $neutral-8,
+        darken($neutral-3, 10%)
+    );
+}
+
+.button--xlarge {
+    @include button-height(44px);
+}
+
+.button--large {
+    @include button-height($base-size * 6);
+
+    @include mq($from: desktop) {
+        line-height: ($base-size * 6) + 2;
+    }
+}
+
+.button--medium {
+    @include button-height($base-size * 5);
+
+    @include mq($from: desktop) {
+        line-height: ($base-size * 5) + 2px;
+    }
+}
+
+.button--small {
+    @include button-height($base-size * 4);
+    @include fs-textSans(1);
+    line-height: $gs-baseline * 2 - 2px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.button--xsmall {
+    @include button-height($base-size * 3);
+    @include fs-textSans(1);
+    line-height: ($base-size * 3) - 2px;
+    font-weight: bold;
+}
+
+$show-more-icon-size: $base-size * 4;
+$show-more-icon-spacing: $base-size + 1;
+
+.button--show-more {
+    position: relative;
+    padding-left: $show-more-icon-size + $show-more-icon-spacing * 2;
+
+    .i, svg {
+        width: $show-more-icon-size;
+        height: $show-more-icon-size;
+        vertical-align: middle;
+        margin: auto;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: $show-more-icon-spacing;
+    }
+}
+
+.button--syndication-reprint {
+    @include button-colour(
+        transparent,
+        $news-main-2,
+        $news-main-2
+    );
+
+    @include button-hover-colour(
+        transparent,
+        darken($news-main-2, 10%)
+    );
+}

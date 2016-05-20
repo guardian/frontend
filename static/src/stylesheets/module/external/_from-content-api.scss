@@ -45,9 +45,9 @@
         counter-reset: li;
     }
     > ol > li:before {
+        @include fs-header(1, true);
         content: counter(li);
         counter-increment: li;
-        @include fs-header(1, true);
         margin-right: 4px;
 
         @include mq(tablet) {
@@ -67,13 +67,13 @@
         @include fs-header(2);
 
         @include mq(tablet) {
-            margin-bottom: 1px;
             @include fs-header(3, true);
+            margin-bottom: 1px;
         }
     }
     h3 {
-        margin: 0;
         @include fs-bodyHeading(2);
+        margin: 0;
 
         @include mq(tablet) {
             @include fs-bodyHeading(3, true);
@@ -104,12 +104,21 @@
     }
 
     &.quoted {
-        color: colour(neutral-2);
-        // Fallback
-        // TODO: Write mixin for this
+        color: $neutral-2;
         margin-left: initial;
-        margin-left: unset;
         overflow: auto;
+    }
+}
+
+.is-breuer-mode .from-content-api {
+    p {
+        margin-bottom: 0;
+    }
+
+    p + p,
+    .element--thumbnail + p,
+    .element--supporting + p {
+        text-indent: $gs-gutter * 1.5;
     }
 }
 
@@ -120,7 +129,7 @@
 .from-content-api pre {
     // Unset from `.from-content-api`
     word-wrap: normal;
-    $x: lighten(colour(guardian-brand-light), 30%);
+    $x: lighten($guardian-brand-light, 30%);
     background-color: $x;
     border: 1px solid darken($x, 10%);
     padding: $gs-baseline*.75 $gs-gutter*.75;
@@ -132,10 +141,10 @@
    ========================================================================== */
 
 .bullet {
+    @include faux-bullet-point;
     font-size: .1px; // hides bullet character. .1 more consistent than 0 cross browser
     line-height: .1px; // fix for line spacing issue (bullet was increasing spacing)
     color: transparent;
-    @include faux-bullet-point;
 }
 
 .from-content-api ul,
@@ -157,7 +166,7 @@
 
 .caption {
     @include fs-textSans(1);
-    color: colour(neutral-2);
+    color: $neutral-2;
 }
 
 .caption--img {
@@ -237,7 +246,7 @@ figure.element--thumbnail + h2 {
         @include fs-bodyCopy(1);
 
         a {
-            color: colour(neutral-2);
+            color: $neutral-2;
 
             &:hover,
             &:focus,
@@ -279,7 +288,7 @@ figure.element--thumbnail + h2 {
         font-weight: 600;
     }
     tbody tr:nth-child(odd) td {
-        background-color: darken(colour(neutral-8), 4%);
+        background-color: darken($neutral-8, 4%);
     }
 }
 
@@ -343,9 +352,9 @@ figure.element--thumbnail + h2 {
         font-style: normal;
 
         p {
-            color: colour(neutral-2);
-            margin-bottom: 0;
             @include fs-headline(4);
+            color: $neutral-2;
+            margin-bottom: 0;
             @include mq(tablet) {
                 @include fs-headline(3, true);
             }
@@ -355,17 +364,17 @@ figure.element--thumbnail + h2 {
         margin-top: 1px;
     }
     cite {
-        font-style: normal;
-        color: colour(neutral-2);
         @include fs-bodyHeading(2);
+        font-style: normal;
+        color: $neutral-2;
 
         a,
         a:visited {
-            border-bottom: 1px solid colour(neutral-4);
+            border-bottom: 1px solid $neutral-4;
 
             &:hover {
                 text-decoration: none;
-                border-bottom: 1px solid colour(neutral-2);
+                border-bottom: 1px solid $neutral-2;
             }
         }
     }

@@ -102,7 +102,7 @@
 .skip:active {
     font-size: 80%;
     display: block;
-    color: guss-colour(guardian-brand-dark, $pasteup-palette);
+    color: $guardian-brand-dark;
     text-decoration: none;
 
     position: static !important;
@@ -188,15 +188,15 @@
 .u-underline,
 %u-underline {
     text-decoration: none !important;
-    border-bottom: 1px solid colour(neutral-4);
+    border-bottom: 1px solid $neutral-4;
     transition: border-color .15s ease-out;
 
     &:hover,
     &:focus {
-        border-color: mix(colour(news-default), colour(neutral-4), 50%);
+        border-color: mix($news-default, $neutral-4, 50%);
     }
     &:active {
-        border-color: colour(news-accent);
+        border-color: $news-accent;
     }
 }
 

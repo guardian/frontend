@@ -1,83 +1,7 @@
-@(env: String, assets: Seq[tools.AssetData])
+@(env: String, metrics: Seq[tools.AssetMetric])(implicit request: RequestHeader)
 
-@chart(chart: tools.AwsDailyLineChart) = {
-    <div id="@chart.id" class="chart @chart.format.cssClass"></div>
-
-    <script type="text/javascript">
-    new google.visualization.LineChart(document.getElementById('@chart.id'))
-    .draw(google.visualization.arrayToDataTable(@Html(chart.asDataset)), {
-        curveType: 'function',
-        colors: [@Html(chart.format.colours.map(c => s"'$c'").mkString(","))],
-        chartArea: {
-            width: "98%"
-        },
-        vAxis: {
-            title: 'Kb',
-            textPosition: 'in',
-            viewWindowMode: 'pretty'
-        },
-        fontName : 'Helvetica'
-    });
-    </script>
-}
-
-@data(asset: tools.AssetData, index: Int) = {
-    <h4 id="asset-@index"><i class="glyphicon glyphicon-file"></i> @asset.name</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-8">
-            <table class="table table-bordered table--asset">
-                <thead>
-                    <tr>
-                        <th class="table__head" colspan="4">GZipped size in Kb (last 14 days)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td colspan="4">@chart(asset.zipped)</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-md-4">
-            <table class="table table-bordered table--asset">
-                <tbody>
-                    <tr>
-                        <th class="table__head" colspan="3">Size</th>
-                    </tr>
-                    <tr>
-                        <th>Current size (Raw)</th>
-                        <th>Current size (GZip)</th>
-                        <th>Week-on-week Change</th>
-                    </tr>
-                    <tr>
-                        <td>@asset.raw.latest.floor Kb</td>
-                        <td>@asset.zipped.latest.floor Kb</td>
-                        <td>@change(asset)</td>
-                    </tr>
-                    @if(asset.isCSS) {
-                        <tr>
-                            <th class="table__head" colspan="3">Metrics</th>
-                        </tr>
-                        <tr>
-                            <th>Rules</th>
-                            <th>Total Selectors</th>
-                            <th>Average Selectors</th>
-                        </tr>
-                        <tr>
-                            <td>@asset.rules.latest.toInt</td>
-                            <td>@asset.selectors.latest.toInt</td>
-                            <td>@{ "%.2f".format(asset.selectors.latest / asset.rules.latest) }</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-}
-
-@change(asset: tools.AssetData) = {
-    @defining(asset.rawChange) { change =>
+@change(metric: tools.AssetMetric) = {
+    @defining(metric.change) { change =>
         <span class="label label-@change match {
                 case c if c < 0 => {success}
                 case c if c > 0 => {danger}
@@ -91,43 +15,43 @@
                     case c if c > 0 => {arrow-up}
                     case _ => {}
                 }"></i>
-                @{"%.2f".format(asset.rawChange)} Kb
+                @{"%.2f".format(metric.change)} Kb
             }
         </span>
     }
 }
 
-@admin_main("Dashboard", env, isAuthed = true, hasCharts = true) {
+@sizeSummary(title: String, metrics: Seq[tools.AssetMetric]) = {
 
-    <h1 class="page-header">Static assets</h1>
-
-    <h3>Summary</h3>
+    <h3>@title</h3>
 
     <table class="table table-bordered table-striped table--asset">
         <thead>
             <tr>
                 <th class="table__head">Asset filename</th>
-                <th class="table__head">Current size (Raw)</th>
-                <th class="table__head">Current size (GZip)</th>
+                <th class="table__head">Current size (Gzipped)</th>
                 <th class="table__head">Week-on-week Change</th>
             </tr>
         </thead>
         <tbody>
-            @assets.filter(_.combined.hasData).zipWithIndex.map{ case (asset, index) =>
-                <tr>
-                    <td>
-                        <a href="#asset-@index">
-                            <strong>@asset.name</strong>
-                        </a>
-                    <td>@{"%.2f".format(asset.raw.latest)} Kb</td>
-                    <td>@{"%.2f".format(asset.zipped.latest)} Kb</td>
-                    <td>@change(asset)</td>
-                </tr>
-            }
+        @metrics.filter(_.chart.hasData).zipWithIndex.map{ case (metric, index) =>
+        <tr>
+            <td>
+                <strong>@metric.name</strong>
+        <td>@{"%.2f".format(metric.chart.latest)} Kb</td>
+        <td>@change(metric)</td>
+        </tr>
+        }
         </tbody>
     </table>
 
-    @assets.filter(_.combined.hasData).zipWithIndex.map{ case (asset, index) =>
-        @data(asset, index)
-    }
+}
+
+
+@admin_main("Dashboard", env, isAuthed = true, hasCharts = true) {
+
+    <h1 class="page-header">Static assets</h1>
+
+    @sizeSummary("Javascript Files", metrics.filter(_.name.endsWith(".js")))
+    @sizeSummary("CSS Files", metrics.filter(_.name.endsWith(".css")))
 }

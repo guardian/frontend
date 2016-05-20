@@ -6,7 +6,7 @@ import play.api.mvc.Controller
 import tools.CloudWatch
 
 object FastlyController extends Controller with Logging with AuthLogging with ExecutionContexts {
-  def renderFastly() = AuthActions.AuthActionTest.async { request =>
+  def renderFastly() = AuthActions.AuthActionTest.async { implicit request =>
     for {
       errors <- CloudWatch.fastlyErrors
       statistics <- CloudWatch.fastlyHitMissStatistics

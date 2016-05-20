@@ -65,29 +65,25 @@ import scala.collection.JavaConversions._
   val expiredArticle = "football/2012/sep/14/zlatan-ibrahimovic-paris-st-germain-toulouse"
 
   it should "return the latest blocks of a live blog" in {
-    val fakeRequest = FakeRequest(GET, "/environment/blog/2013/jun/26/barack-obama-climate-action-plan.json?lastUpdate=block-51cae3aee4b02dad15c7494e")
+    val lastUpdateBlock = "block-56d03169e4b074a9f6b35baa"
+    val fakeRequest = FakeRequest(GET, s"/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live.json?lastUpdate=${lastUpdateBlock}")
       .withHeaders("host" -> "localhost:9000")
 
-    val result = controllers.ArticleController.renderLiveBlogJson("environment/blog/2013/jun/26/barack-obama-climate-action-plan", Some("block-51cae3aee4b02dad15c7494e"), None, Some(true))(fakeRequest)
+    val result = controllers.ArticleController.renderLiveBlogJson("/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live", Some(lastUpdateBlock), None, Some(true))(fakeRequest)
     status(result) should be(200)
 
     val content = contentAsString(result)
 
     // newer blocks
-    content should include("block-51cb058fe4b0a53e53280c8d")
-    content should include("block-51cafaa9e4b0e2a9937599df")
+    content should include("block-56d03894e4b0bd5a0524cbab")
+    content should include("block-56d04877e4b0bd5a0524cbe2")
 
     //this block
-    content should not include "block-51cae3aee4b02dad15c7494e"
+    content should not include lastUpdateBlock
 
     //older block
-    content should not include "block-51caab7be4b08c78ea33d49d"
+    content should not include "block-56d02bd2e4b0d38537b1f5fa"
 
-  }
-
-  "The Guardian" should "remember Terry Pratchett" in {
-    val result = route(app, TestRequest("/books/2015/mar/12/terry-pratchett")).head
-    header("X-Clacks-Overhead", result).head should be ("GNU Terry Pratchett")
   }
 
   it should "know which backend served the request" in {
@@ -111,26 +107,6 @@ import scala.collection.JavaConversions._
       )
     val result = route(app, request).head
     contentAsString(result) should include ("\"edition\":\"INT\"")
-  }
-
-  they can "be in the control variant" in {
-    val request = TestRequest("/world/2014/sep/24/radical-cleric-islamic-state-release-british-hostage-alan-henning")
-      .withHeaders(
-        "X-GU-Edition" -> "intl",
-        "X-GU-International" -> "control"
-      )
-    val result = route(app, request).head
-    contentAsString(result) should include ("\"internationalEdition\":\"control\"")
-  }
-
-  they can "be in the test variant" in {
-    val request = TestRequest("/world/2014/sep/24/radical-cleric-islamic-state-release-british-hostage-alan-henning")
-      .withHeaders(
-        "X-GU-Edition" -> "intl",
-        "X-GU-International" -> "international"
-      )
-    val result = route(app, request).head
-    contentAsString(result) should include ("\"internationalEdition\":\"international\"")
   }
 
   "Interactive articles" should "provide a boot.js script element as a main embed" in goTo("/sport/2015/sep/11/how-women-in-tennis-achieved-equal-pay-us-open") { browser =>

@@ -111,9 +111,9 @@ define([
             sut.getDefaultLocation().then(function () {
                 expect(sut.fetchWeatherData).toHaveBeenCalled();
                 done();
-            });
-
-            server.restore();
+            }).then(function () {
+                server.restore();
+            }).catch(done.fail);
         });
 
         it('should remove data from localStorage and fetchWeatherData if user searches', function () {
@@ -182,9 +182,9 @@ define([
                     {weatherIcon: 3}
                 ]);
                 done();
-            });
-
-            server.restore();
+            }).then(function () {
+                server.restore();
+            }).catch(done.fail);
         });
 
         it('should call proper weather url', function () {
@@ -219,9 +219,9 @@ define([
             sut.fetchWeatherData(data).then(function () {
                 expect(sut.render).toHaveBeenCalledWith({'weatherIcon': 3}, 'London');
                 done();
-            });
-
-            server.restore();
+            }).then(function () {
+                server.restore();
+            }).catch(done.fail);
         });
 
         it('should add weather component to the DOM', function () {
@@ -299,9 +299,9 @@ define([
             sut.fetchForecastData(data).then(function () {
                 expect(sut.renderForecast).toHaveBeenCalled();
                 done();
-            });
-
-            server.restore();
+            }).then(function () {
+                server.restore();
+            }).catch(done.fail);
         });
     });
 });

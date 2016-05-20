@@ -3,7 +3,7 @@
    ========================================================================== */
 .commercial {
     .tabs__container {
-        background-color: colour(neutral-5);
+        background-color: $neutral-5;
         margin: $gs-baseline*-.5 $gs-gutter*-.5 $gs-baseline;
 
         @include mq(mobileLandscape) {
@@ -17,7 +17,7 @@
 
     .tabs__tab {
         border-bottom: 0;
-        border-color: colour(neutral-5);
+        border-color: $neutral-5;
 
         @include mq($until: tablet) {
             width: auto;
@@ -40,16 +40,16 @@
         }
 
         + .tabs__tab a {
-            border-left-color: colour(neutral-6);
+            border-left-color: $neutral-6;
         }
     }
 
     .tabs__tab--selected {
-        background-color: colour(neutral-6);
-        border-color: colour(neutral-2);
+        background-color: $neutral-6;
+        border-color: $neutral-2;
 
         a {
-            color: colour(neutral-1);
+            color: $neutral-1;
             font-weight: bold;
             background-color: transparent;
         }

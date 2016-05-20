@@ -29,7 +29,9 @@ object GetClasses {
       ("fc-item--has-metadata",
         item.timeStampDisplay.isDefined || item.discussionSettings.isCommentable || SaveForLaterSwitch.isSwitchedOn),
       ("fc-item--has-timestamp", item.timeStampDisplay.isDefined),
-      ("fc-item--is-commentable", item.discussionSettings.isCommentable)
+      ("fc-item--is-commentable", item.discussionSettings.isCommentable),
+      ("fc-item--is-media-link", item.isMediaLink),
+      ("fc-item--has-video-main-media", item.hasVideoMainMedia)
     ) ++ item.snapStuff.map(_.cssClasses.map(_ -> true).toMap).getOrElse(Map.empty)
       ++ mediaTypeClass(item).map(_ -> true)
     )
@@ -59,6 +61,7 @@ object GetClasses {
       containerDefinition.index == 0 && containerDefinition.customHeader.isEmpty,
       containerDefinition.displayName.isDefined,
       containerDefinition.displayName.contains("headlines"),
+      containerDefinition.container.toString == "Video",
       containerDefinition.commercialOptions,
       containerDefinition.hasDesktopShowMore,
       Some(containerDefinition.container),
@@ -75,6 +78,7 @@ object GetClasses {
     isFirst = true,
     hasTitle,
     isHeadlines = false,
+    isVideo = false,
     ContainerCommercialOptions.empty,
     hasDesktopShowMore = false,
     container = None,
@@ -89,6 +93,7 @@ object GetClasses {
     isFirst: Boolean,
     hasTitle: Boolean,
     isHeadlines: Boolean,
+    isVideo: Boolean,
     commercialOptions: ContainerCommercialOptions,
     hasDesktopShowMore: Boolean,
     container: Option[slices.Container] = None,
@@ -102,6 +107,7 @@ object GetClasses {
       ("fc-container--first", isFirst),
       ("fc-container--has-show-more", hasDesktopShowMore),
       ("js-container--first", isFirst),
+      ("fc-container--video", isVideo),
       ("fc-container--sponsored", commercialOptions.isSponsored),
       ("fc-container--foundation-supported", commercialOptions.isFoundationSupported),
       ("fc-container--lazy-load", lazyLoad),

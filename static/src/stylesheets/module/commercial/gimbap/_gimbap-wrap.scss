@@ -1,0 +1,284 @@
+// Gimbap-wrap variables
+$gimbap-wrap-mainlogo-top: $gs-baseline / 3 * 10;
+$gimbap-wrap-left-space-wide: 240px;
+$gimbap-wrap-left-space-leftCol: 160px;
+$gimbap-width-quarter: calc(25% - 20px);
+
+.gimbap-wrap {
+    padding: 0 $gs-gutter / 2 $gs-baseline;
+    position: relative;
+
+    @include mq(tablet) {
+        padding: 0 calc(50% - 370px) $gs-baseline;
+
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: calc(50% - 370px);
+            background: rgba(51, 51, 51, .06);
+        }
+
+        &::before { left: 0; }
+        &::after { right: 0; }
+    }
+
+    @include mq(desktop) {
+        padding: 0 calc(50% - 490px) $gs-baseline;
+
+        &::before,
+        &::after {
+            width: calc(50% - 490px);
+        }
+    }
+
+    @include mq(leftCol) {
+        padding: 0 calc(50% - 570px) $gs-baseline;
+
+        &::before,
+        &::after {
+            width: calc(50% - 570px);
+        }
+    }
+
+    @include mq(wide) {
+        padding: 0 calc(50% - 650px) $gs-baseline;
+
+        &::before,
+        &::after {
+            width: calc(50% - 650px);
+        }
+    }
+}
+
+.gimbap-wrap__box {
+    position: relative;
+    border-top: 1px solid $news-accent;
+}
+
+.gimbap-wrap__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @include mq(tablet) {
+        padding: 0 $gs-gutter;
+    }
+
+}
+
+.gimbap-wrap__mainlogo {
+    display: none;
+
+    svg {
+        width: 39px;
+        height: 39px;
+        fill: $guardian-brand;
+    }
+
+    @include mq(leftCol) {
+        display: block;
+        position: absolute;
+        left: $gs-gutter;
+        top: $gimbap-wrap-mainlogo-top;
+
+        &:first-child {
+            top: $gs-baseline / 3 * 7;
+        }
+    }
+}
+
+.gimbap-wrap__message {
+    display: none;
+
+    @include mq(leftCol) {
+        @include fs-headline(1);
+
+        display: block;
+        width: $gimbap-wrap-left-space-leftCol - 30px;
+        position: absolute;
+        left: $gs-gutter;
+        top: $gimbap-wrap-mainlogo-top * 2.3;
+        line-height: 16px;
+
+        &:first-child {
+            top: $gs-baseline / 3 * 10;
+        }
+    }
+}
+
+.gimbap-wrap__body {
+    display: block;
+    overflow: hidden;
+    padding: 0;
+
+    @include mq(tablet) {
+        padding: 0 $gs-gutter / 2;
+
+        .has-flex & {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-items: stretch;
+        }
+    }
+
+    @include mq(leftCol) {
+        margin-left: $gimbap-wrap-left-space-leftCol;
+    }
+
+    @include mq(wide) {
+        width: 960px;
+        margin-left: $gimbap-wrap-left-space-wide;
+    }
+
+    /* this is ugly but that's the price to pay when
+       decoration elements pollute the DOM */
+    .gimbap-wrap > .inline-marque-36:first-child + & {
+        padding-top: $gs-baseline;
+    }
+}
+
+.gimbap-wrap__body--simple {
+    .has-flex & {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: stretch;
+    }
+}
+
+.gimbap-wrap__body--1x1x1x1 > .gimbap {
+    @include mq(tablet) {
+        .has-flex & {
+            flex: $gimbap-width-quarter;
+        }
+    }
+}
+
+.gimbap-wrap__body--2x1x1 > .gimbap:first-child,
+.gimbap-wrap__body--1x2x1 > .gimbap:nth-child(2),
+.gimbap-wrap__body--1x1x2 > .gimbap:nth-child(3) {
+    @include mq(tablet) {
+        width: calc(66.67% - 20px);
+
+        .has-flex & {
+            flex: 2;
+        }
+    }
+    @include mq(desktop) {
+        width: calc(50% - 20px);
+    }
+}
+
+.gimbap-wrap__body--2x1x1,
+.gimbap-wrap__body--1x2x1,
+.gimbap-wrap__body--1x1x2 {
+    @include mq(tablet, desktop) {
+        > .gimbap:nth-child(n+3) {
+            display: none;
+        }
+    }
+
+    @include mq(desktop) {
+        > .gimbap:nth-child(n+4) {
+            display: none;
+        }
+    }
+}
+
+.gimbap-wrap__body--2x2 {
+    > .gimbap--simple {
+        width: calc(50% - 20px);
+    }
+
+    @include mq($until: tablet) {
+        > .gimbap:nth-child(n+2) {
+            display: none;
+        }
+    }
+}
+
+.gimbap-wrap__title {
+    font: 900 1.375rem/2.25rem 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;
+    color: $guardian-brand-dark;;
+    margin: 0;
+}
+
+.gimbap-wrap__logo {
+    vertical-align: middle;
+
+    .inline-commercial {
+        height: 30px;
+    }
+
+    svg {
+        height: 30px;
+    }
+}
+
+.gimbap-wrap__logo--masterclasses {
+    svg {
+        width: 210px;
+    }
+}
+
+.gimbap-wrap__logo--jobs {
+    svg {
+        width: 160px;
+    }
+}
+
+.gimbap-wrap__logo--soulmates {
+    svg {
+        width: 100px;
+    }
+}
+
+.gimbap-wrap__logo--members {
+    svg {
+        width: 200px;
+    }
+}
+
+.gimbap-wrap__logo--bookshop {
+    svg {
+        width: 190px;
+    }
+}
+
+// Each branded component has different styling. Let's loop through them and create unique styles.
+$gimbap-tones: ('members', 'masterclasses', 'jobs', 'soulmates', 'bookshop');
+$gimbap-colors: (
+    'members': $gimbap-members,
+    'masterclasses': $gimbap-masterclasses,
+    'jobs': $gimbap-jobs,
+    'soulmates': $gimbap-soulmates,
+    'bookshop': $gimbap-bookshop
+);
+
+@each $tone in $gimbap-tones {
+    .gimbap-wrap--tone-#{$tone} {
+        &:before,
+        &:after {
+            background-color: map-get($gimbap-colors, $tone);
+            opacity: .12;
+        }
+
+        .gimbap-wrap__box {
+            border-color: map-get($gimbap-colors, $tone);
+        }
+
+        .gimbap-wrap__message {
+            color: map-get($gimbap-colors, $tone);
+        }
+
+        .gimbap-wrap__mainlogo {
+            svg {
+                fill: map-get($gimbap-colors, $tone);
+            }
+        }
+    }
+}

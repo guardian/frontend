@@ -7,7 +7,8 @@ define([
     'common/utils/proximity-loader',
     'common/modules/onward/inject-container',
     'common/utils/config',
-    'lodash/utilities/noop'
+    'lodash/utilities/noop',
+    'common/modules/ui/full-height'
 ], function (
     fastdom,
     $,
@@ -17,12 +18,14 @@ define([
     proximityLoader,
     injectContainer,
     config,
-    noop
+    noop,
+    fullHeight
 ) {
     var ready = function () {
         articleLiveblogCommon();
         trail();
         mediator.emit('page:minuteArticle:ready');
+        fullHeight.init();
 
         if (config.page.isMinuteArticle && !config.page.showRelatedContent) {
             // Inject the us elections top stories for the US-Minute instead of

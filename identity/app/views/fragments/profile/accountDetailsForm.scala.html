@@ -3,11 +3,11 @@
 @import views.html.fragments.form.{inputField, textareaField}
 @import form.IdFormHelpers._
 @import form.Input
-@import model.Countries
+@import model.{Countries, PhoneNumbers, Titles}
 @import org.joda.time.DateTime.now
 @import helper._
-
 <form class="form js-account-details-form" novalidate action="@idUrlBuilder.buildUrl("/account/edit", idRequest)" role="main" method="post">
+    <button type="submit" class="is-hidden"></button>
     @views.html.helper.CSRF.formField
 
     @if(accountDetailsForm.globalError.isDefined) {
@@ -21,7 +21,7 @@
     <fieldset class="fieldset">
 
         <div class="fieldset__heading">
-            <h2 class="form__heading">Contact information</h2>
+            <h2 class="form__heading">Email</h2>
         </div>
 
         <div class="fieldset__fields">
@@ -44,6 +44,45 @@
                 </li>
             </ul>
         </div>
+    </fieldset>
+    <fieldset class="fieldset">
+
+        <div class="fieldset__heading">
+            <h2 class="form__heading">Phone</h2>
+        </div>
+
+                <div class="fieldset__fields">
+                    <ul class="u-unstyled">
+
+                <li class="form-field form-fields--phone">
+                    <ul class="u-unstyled">
+                        @if(accountDetailsForm("telephoneNumber").hasErrors) {
+                            <div class="form__error">@accountDetailsForm("telephoneNumber").errors.map(_.message).mkString(", ")</div>
+                        }
+                        @select(
+                            accountDetailsForm("telephoneNumber.countryCode"),
+                            PhoneNumbers.countryCodes.map { item => (item.toString, "+" + item.toString)},
+                            ('_label, "Country code"),
+                            ('_showConstraints, false),
+                            ('_default, ""),
+                            Symbol("data-test-id") -> "telephone-number-country-code",
+                            Symbol("class") -> "select--telephone-number-country-code"
+                        )
+                        @inputField(
+                            Phone(
+                                accountDetailsForm("telephoneNumber.localNumber"),
+                                ('_label, "Local number"),
+                                Symbol("data-test-id") -> "telephone-number-local-number"
+                            )
+                        )
+                    </ul>
+                </li>
+                @if(!accountDetailsForm("telephoneNumber").hasErrors && accountDetailsForm("telephoneNumber.localNumber").value.nonEmpty) {
+                    <button type="submit" class="submit-input" data-link-name="Delete Phone Number" name="deleteTelephoneNumber" value="true">
+                        Delete Phone Number</button>
+                }
+            </ul>
+        </div>
 
     </fieldset>
 
@@ -56,6 +95,12 @@
         <div class="fieldset__fields">
             <ul class="u-unstyled">
 
+                @select(
+                    accountDetailsForm("title"),
+                    Titles.titles.map { item => (item,item)},
+                    ('_label, "Title"),
+                    ('_default, "")
+                )
                 @inputField(Input(accountDetailsForm("firstName"), ('_label, "First name"), Symbol("data-test-id") -> "first-name"))
                 @inputField(Input(accountDetailsForm("secondName"), ('_label, "Last name"), Symbol("data-test-id") -> "last-name"))
                 @select(

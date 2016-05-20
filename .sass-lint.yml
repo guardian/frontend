@@ -1,0 +1,94 @@
+files:
+  include: '**/*.s+(a|c)ss'
+  ignore:
+    # Do not lint external files.
+    - 'static/src/stylesheets/components/**/*.scss'
+    # The following files are not parseable by the linter, omitting for now.
+    # A fix will soon be published in sass-lint 1.6.0.
+    - 'static/src/stylesheets/icons/**/*.scss'
+    - 'static/src/stylesheets/module/commercial/_adverts-jobs.scss'
+    - 'static/src/stylesheets/module/commercial/_adverts-soulmates.scss'
+    - 'static/src/stylesheets/module/commercial/_advert.scss'
+    - 'static/src/stylesheets/module/commercial/_adverts.scss'
+    - 'static/src/stylesheets/module/commercial/_commercial--v-high.scss'
+    - 'static/src/stylesheets/module/content/_article-minute.scss'
+    - 'static/src/stylesheets/module/email/_form.scss'
+    - 'static/src/stylesheets/module/facia/_item.scss'
+    - 'static/src/stylesheets/pasteup/fonts/_src.scss'
+options:
+  formatter: compact
+  merge-default-rules: false
+rules:
+
+  # Extends
+  extends-before-declarations: 1
+  extends-before-mixins: 1
+  placeholder-in-extend: 1
+
+  # Mixins
+  mixins-before-declarations: 1
+
+  # Line Spacing
+  single-line-per-selector: 0
+  empty-line-between-blocks:
+    - 0
+    - ignore-single-line-rulesets: true
+
+  # Disallows
+  no-color-keyword: 1
+  no-css-comments: 0
+  no-debug: 1
+  no-duplicate-properties: 1
+  no-empty-rulesets: 0
+  no-invalid-hex: 1
+  no-mergeable-selectors: 0
+  no-misspelled-properties:
+    - 1
+    - extra-properties:
+        - overflow-scrolling
+        - osx-font-smoothing
+  no-trailing-zero: 1
+  no-url-protocols: 0
+
+  # Name Formats
+  function-name-format: 0
+  mixin-name-format: 0
+  placeholder-name-format: 0
+  variable-name-format: 0
+
+  # Style Guide
+  border-zero: 1
+  final-newline:
+    - 1
+    - include: true
+  hex-length:
+    - 1
+    - style: long
+  hex-notation:
+    - 1
+    - style: lowercase
+  indentation:
+    - 1
+    - size: 4
+  leading-zero:
+    - 1
+    - include: false
+  property-sort-order:
+    - 0
+    - order: 'margin,'
+  quotes:
+    - 1
+    - style: single
+  shorthand-values: 1
+  space-after-colon: 1
+  space-after-comma: 1
+  space-before-brace: 1
+  space-before-colon: 1
+  space-between-parens:
+    - 1
+    - include: false
+  url-quotes: 0
+  zero-unit: 0
+  nesting-depth:
+    - 1
+    - max-depth: 4

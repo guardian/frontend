@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.contentapi.client.model.ItemResponse
+import com.gu.contentapi.client.model.v1.ItemResponse
 import controllers.front.FrontJsonFapi
 import play.api.mvc.{RequestHeader, Result}
 import services.ConfigAgent

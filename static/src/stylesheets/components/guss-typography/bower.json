@@ -1,9 +1,0 @@
-{
-  "name": "guss-typography",
-  "main": [
-     "_typography.config.scss",
-     "_typography.helpers.scss",
-     "_typography.mixins.scss",
-     "_typography.scss"
-  ]
-}

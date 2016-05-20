@@ -184,7 +184,8 @@ object DataMapper {
       lastModified = toJodaTime(dfpCreative.getLastModifiedDateTime),
       args = Option(dfpCreative.getCreativeTemplateVariableValues).map(_.map(arg)).map(_.toMap).getOrElse(Map.empty),
       templateId = Some(dfpCreative.getCreativeTemplateId),
-      snippet = None
+      snippet = None,
+      previewUrl = Some(dfpCreative.getPreviewUrl)
     )
   }
 }

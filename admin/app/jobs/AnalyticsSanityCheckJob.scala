@@ -1,58 +1,64 @@
 package jobs
 
+import java.util.concurrent.atomic.AtomicLong
+
+import com.amazonaws.services.cloudwatch.model.StandardUnit
 import common.{ExecutionContexts, Logging}
+import metrics.GaugeMetric
+import model.diagnostics.CloudWatch
 import org.joda.time.DateTime
-import services.{CloudWatch, OphanApi}
+import services.{CloudWatchStats, OphanApi}
 
 import scala.collection.JavaConversions._
 import scala.concurrent.Future
-import scala.concurrent.Future.sequence
 
 object AnalyticsSanityCheckJob extends ExecutionContexts with Logging {
 
+  private val rawPageViews = new AtomicLong(0L)
+  private val omniturePageViews = new AtomicLong(0L)
+  private val ophanPageViews = new AtomicLong(0L)
+
+  val omnitureConversionRate = GaugeMetric(
+    name = "omniture-percent-conversion",
+    description = "The percentage of raw page views that contain a recorded Omniture page view",
+    metricUnit = StandardUnit.Percent,
+    get = () => {
+      omniturePageViews.get.toDouble / rawPageViews.get.toDouble * 100.0d
+    }
+  )
+
+  val ophanConversionRate = GaugeMetric(
+    name = "ophan-percent-conversion",
+    description = "The percentage of raw page views that contain a recorded Ophan page view",
+    metricUnit = StandardUnit.Percent,
+    get = () => {
+      ophanPageViews.get.toDouble / rawPageViews.get.toDouble * 100.0d
+    }
+  )
+
   def run() {
 
-    val rawPageViews = CloudWatch.rawPageViews.map(
-      _.getDatapoints.headOption.map(_.getSum.doubleValue()).getOrElse(0.0)
-    )
-
-    val analyticsPageViews = CloudWatch.analyticsPageViews.map(
-      _.getDatapoints.headOption.map(_.getSum.doubleValue()).getOrElse(0.0)
-    )
-
-    def sensible(what :Double) : Double = {
-      if (what > 200) 200.0 else what
+    // Update rawPageViews.
+    CloudWatchStats.rawPageViews.foreach { stats =>
+      val views = stats.getDatapoints.headOption.map(_.getSum.longValue).getOrElse(0L)
+      rawPageViews.set(views)
     }
 
-    def pageViewComparison(eventualAnalytics: Future[Double]) = {
-      sequence(Seq(rawPageViews, eventualAnalytics)).map {
-        case (raw :: analytics :: Nil) => sensible(analytics / raw * 100)
-      }
+    // Update omniturePageViews.
+    CloudWatchStats.analyticsPageViews.foreach { stats =>
+      val views = stats.getDatapoints.headOption.map(_.getSum.longValue).getOrElse(0L)
+      omniturePageViews.set(views)
     }
 
-    val omniture = pageViewComparison(analyticsPageViews)
-
-    val ophan = pageViewComparison(ophanViews)
-
-    val eventualAdConfidence = {
-      val pageViewsHavingAnAd = CloudWatch.pageViewsHavingAnAd.map(
-        _.getDatapoints.headOption.map(_.getSum.doubleValue()).getOrElse(0.0)
-      )
-      pageViewComparison(pageViewsHavingAnAd)
+    // Update ophanPageViews.
+    ophanViews.foreach { views =>
+      ophanPageViews.set(views)
     }
 
-    sequence(Seq(omniture, ophan, eventualAdConfidence)).foreach {
-      case (omniture :: ophan :: adConfidence :: Nil) =>
-      model.diagnostics.CloudWatch.put("Analytics", Map(
-        "omniture-percent-conversion" -> omniture,
-        "ophan-percent-conversion" -> ophan,
-        "omniture-ophan-correlation" -> omniture / ophan * 100,
-        "ad-confidence" -> adConfidence
-      ))
-    }
- }
+    CloudWatch.putMetrics("Analytics", List(ophanConversionRate, omnitureConversionRate), List.empty)
+  }
 
-  private def ophanViews = {
+  private def ophanViews: Future[Long] = {
     val now = new DateTime().minusMinutes(15).getMillis
     OphanApi.getBreakdown("next-gen", hours = 1).map { json =>
       (json \\ "data").flatMap {
@@ -61,8 +67,8 @@ object AnalyticsSanityCheckJob extends ExecutionContexts with Logging {
             entry =>
               (entry \ "dateTime").as[Long] > now
           }
-          recent.map(r => (r \ "count").as[Long]).toSeq
-      }.sum.toDouble
+          recent.map(r => (r \ "count").as[Long])
+      }.sum
     }
   }
 }

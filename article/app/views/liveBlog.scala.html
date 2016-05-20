@@ -1,16 +1,15 @@
-@import _root_.liveblog.LiveBlogPageModel
-@import model.liveblog.BodyBlock
-@(model: LiveBlogPage, blocks: LiveBlogPageModel[BodyBlock])(implicit request: RequestHeader)
+
+@(model: LiveBlogPage)(implicit request: RequestHeader)
 
 @import common.LinkTo
 
 @main(model){
-    @blocks.earlier.suffix.map { suffix =>
+    @model.currentPage.pagination.flatMap(_.older).map(_.suffix).map { suffix =>
         <link rel="next" href="@LinkTo{ /@{model.article.content.metadata.id}@suffix }">
     }
-    @blocks.later.suffix.map { suffix =>
+    @model.currentPage.pagination.flatMap(_.newer).map(_.suffix).map { suffix =>
         <link rel="prev" href="@LinkTo{ /@{model.article.content.metadata.id}@suffix }">
     }
 }{
-    @views.html.liveblog.liveBlogBody(model, blocks)
+    @views.html.liveblog.liveBlogBody(model)
 }

@@ -1,4 +1,4 @@
-@(env: String)
+@(env: String)(implicit request: RequestHeader)
 @import conf.Configuration.commercial.testDomain
 
 @admin_main("Commercial Tools", env, isAuthed = true) {
@@ -16,13 +16,8 @@
                 <div class="panel-body">
                     <ul>
                         <li><a href="@controllers.admin.routes.CommercialController.renderCommercialRadiator()">Commercial Radiator</a></li>
-                        <li><a href="@controllers.admin.routes.CommercialController.renderCommercial()">Slot Load Times</a></li>
-                        <li><a href="https://dashboard.ophan.co.uk/ads">Ophan: Slot Load Times</a></li>
-                        <li><a href="http://tableau-dev.gutools.co.uk:8099/views/ViewabilityABTest/KPIAB">Viewability: A/B Tests</a></li>
-                        <li><a href="http://tableau-dev.gutools.co.uk:8099/views/ViewabilityDashSecondDraft/Health-SlotSizeBrowser">Viewability: Slot Performance</a></li>
-                        <li><a href="http://tableau-dev.gutools.co.uk:8099/views/ViewabilityDashSecondDraft/DiagnosticsSlots">Viewability: Slot Diagnostics</a></li>
-                        <li><a href="https://theguardian.moat.com/">Viewability: Moat Dashboard</a></li>
-                    </ul>
+                        <li><a href="@controllers.admin.routes.CommercialController.renderCommercialRenderTimes()">Slot Load Times</a></li>
+                     </ul>
                 </div>
             </div>
         </div>
@@ -36,6 +31,7 @@
                         <li><a href="@controllers.admin.routes.CommercialController.renderSpecialAdUnits()">Special Ad Units</a></li>
                         <li><a href="@controllers.admin.routes.CommercialController.renderPaidForTags()">Paid-For Tags</a></li>
                         <li><a href="@controllers.admin.routes.CommercialController.renderInlineMerchandisingTargetedTags()">Inline Merchandising Slot</a></li>
+                        <li><a href="@controllers.admin.routes.CommercialController.renderHighMerchandisingTargetedTags()">High Merchandising Slot</a></li>
                         <li><a href="@controllers.admin.routes.CommercialController.renderPageskins()">Pageskins</a></li>
                         <li><a href="@controllers.admin.routes.CommercialController.renderSurgingContent()">Surging Content</a></li>
                         <li><a href="@controllers.admin.routes.CommercialAdUnitController.renderToApprove()">Ad Units for approval</a></li>
@@ -73,7 +69,6 @@
                         <li><a href="@controllers.admin.routes.CommercialController.renderCreativeTemplates()">Creative templates</a></li>
                         <li><a href="@testDomain/commercial/test-page">Merchandising components</a></li>
                         <li><a href="@testDomain/commercial-containers">Commercial containers</a></li>
-                        <li><a href="@controllers.admin.routes.CommercialController.sponsoredContainers()">Sponsored containers</a></li>
                         <li><a href="@controllers.admin.routes.CommercialController.renderFluidAds()">Responsive ads</a></li>
                     </ul>
                 </div>
@@ -101,6 +96,23 @@
                 <div class="panel-body">
                     <ul>
                         <li><a href="@controllers.admin.commercial.routes.TakeoverWithEmptyMPUsController.viewList()">Takeovers with empty MPUs</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-4">
+            <h3>Resources</h3>
+            <div class="panel panel-default well--front">
+                <div class="panel-heading">Links to useful resources.</div>
+                <div class="panel-body">
+                    <ul>
+                        <li><a href="https://github.com/guardian/commercial-tools">Commercial tools repo</a></li>
+                        <li><a href="https://dfp-playground.appspot.com/59739193">DFP API playground</a></li>
                     </ul>
                 </div>
             </div>

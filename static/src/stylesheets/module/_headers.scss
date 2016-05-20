@@ -5,7 +5,7 @@
     @include fs-headline(3);
     padding: 0 0 ($gs-baseline/3)*4;
     margin: 0 $gs-gutter/2 $gs-baseline/3;
-    border-bottom: 1px dotted colour(neutral-4);
+    border-bottom: 1px dotted $neutral-4;
 
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;

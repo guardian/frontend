@@ -1,0 +1,64 @@
+@()
+
+@import views.support.EmailHelpers.Images.footerG
+
+<style>
+    .footer {
+        background: #484848 url(@footerG.path) no-repeat bottom right;
+        padding: 25px 0;
+    }
+
+    .social__links, .email__links, .disclaimer p {
+        font-family: "Helvetica", "Arial", sans-serif !important;
+        text-align: center;
+    }
+
+    .email__links {
+        color: white;
+    }
+
+    .social__links {
+        height: 50px;
+    }
+
+    .social__link, .email__links {
+        font-size: 12px;
+        font-weight: lighter;
+        line-height: 14px;
+    }
+
+    .social__link {
+        padding: 8px;
+        text-decoration: none;
+        color: white !important;
+        border: 1px solid #bdbdbd;
+        margin-right: 20px;
+        border-radius: 25px;
+    }
+
+    .social__link:last-of-type {
+        margin-right: 0 !important;
+    }
+
+    .social__link svg {
+        fill: white;
+        position: relative;
+        top: 2px;
+    }
+
+    .email__link {
+        text-decoration: none;
+        color: white !important;
+    }
+
+    .disclaimer {
+        padding-top: 25px !important;
+    }
+
+    .disclaimer p {
+        color: #dfdfdf;
+        font-size: 10px;
+        line-height: 14px;
+        margin: 0 12px 0 12px;
+    }
+</style>

@@ -1,9 +1,102 @@
-@(env: String, body: String)
+@(env: String, reports: Map[String, String])(implicit request: RequestHeader)
 
 @admin_main("Dashboard", env, isAuthed = true, hasCharts = true) {
 
     <h1 class="page-header">Quality Dashboard</h1>
-    <div style="width: 100%">
-        @Html(body)
-    </div>
+    <script src="https://code.highcharts.com/adapters/standalone-framework.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+    <p><h3>How are users accessing theguardian.com?</h3></p>
+    @for( (chartName, report) <- reports) {
+        <div id="@chartName" style="min-width:650px; max-width: 800px; height: 600px; margin: 0 auto; display: inline-block" ></div>
+
+        <script type="text/javascript">
+
+            var chart = new Highcharts.Chart('@chartName', conversion(@Html(report)));
+
+            //conversion of Omniture response into Highcharts JSON format
+            function conversion(report) {
+                var template =
+                {
+                    chart: {
+                        type: 'bar'
+                    },
+                    title: {
+                        text: ""
+                    },
+                    subtitle: {
+                        text: ""
+                    },
+                    xAxis: {
+                        type: 'category'
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: "",
+                            align: 'high'
+                        },
+                        labels: {
+                            overflow: 'justify'
+                        }
+                    },
+                    legend: {
+                        enabled:false
+                    },
+                    tooltip: {
+                        valueSuffix: ' millions'
+                    },
+                    plotOptions: {
+                        bar: {
+                            dataLabels: {
+                                enabled: true
+                            }
+                        }
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    series: [{
+                        data: [{}]
+                    }]
+                };
+
+
+                template.series[0].data = seriesDataFromOmnitureResponse(report);
+                template.title.text = titleFromOmnitureResponse(report);
+                template.yAxis.title.text = dataTypeFromOmnitureResponse(report);
+                template.subtitle.text = dateRangeFromOmnitureResponse(report);
+
+
+                function seriesDataFromOmnitureResponse (report) {
+                    var series = [];
+                    report[0].report.data.forEach(function(element){
+                        series.push({
+                            name: element.name,
+                            y: parseInt(element.counts[0])
+                        });
+                    });
+                    return series
+                }
+
+                function dataTypeFromOmnitureResponse(report) {
+                    return report[0].report.metrics[0].name + " (millions)"
+                }
+
+                function dateRangeFromOmnitureResponse(report) {
+                    return report[0].report.period
+                }
+
+                function titleFromOmnitureResponse(report) {
+                    return "Top " + report[0].report.elements[0].name + "s"
+                }
+
+                return template;
+            }
+
+        </script>
+    }
 }

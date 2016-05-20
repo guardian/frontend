@@ -1,7 +1,0 @@
-.grunt
-.DS_Store
-.sass-cache
-
-demo/*.css
-docs
-node_modules

@@ -5,7 +5,7 @@
 # For dev machines
 GET         /assets/*path                                                       dev.DevAssetsController.at(path)
 
-GET        /_healthcheck                                                        conf.HealthCheck.healthcheck()
+GET        /_healthcheck                                                        conf.HealthCheck.healthCheck()
 
 GET        /sitemaps/news.xml                                                   controllers.SiteMapController.renderNewsSiteMap()
 GET        /sitemaps/video.xml                                                  controllers.SiteMapController.renderVideoSiteMap()
@@ -22,6 +22,10 @@ GET        /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|prize|eve
 GET            /crosswords/search                                                                                                controllers.CrosswordSearchController.search()
 GET            /crosswords/lookup                                                                                                controllers.CrosswordSearchController.lookup()
 
+#Notifications Store
+POST           /notification/store                                              controllers.NotificationsController.saveSubscription()
+POST           /notification/delete                                             controllers.NotificationsController.deleteSubscription()
+
 # Email paths
 GET        /email                                                               controllers.EmailSignupController.renderPage()
 GET        /email/form/$emailType<article|footer|plain>/:listId                       controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
@@ -36,17 +40,21 @@ GET        /index/contributors/*contributor                                     
 
 GET        /embed/video/*path                                                   controllers.EmbedController.render(path)
 
+
 # Preferences
 GET        /preferences                                                         controllers.PreferencesController.indexPrefs()
 
-GET        /crosswords/optin                                                    controllers.CrosswordPreferencesController.crosswordsOptIn
-GET        /crosswords/optout                                                   controllers.CrosswordPreferencesController.crosswordsOptOut
+# opt-in/out routes: this format is deprecated in favour of /opt/<in|out>/<feature>
+# don't add any new ones!
+GET        /https/optin                                                         controllers.OptInController.handle(feature = "https", choice = "in")
+GET        /https/optout                                                        controllers.OptInController.handle(feature = "https", choice = "out")
+GET        /new-header/optin                                                    controllers.OptInController.handle(feature = "header", choice = "in")
+GET        /new-header/optout                                                   controllers.OptInController.handle(feature = "header", choice = "out")
 
-GET        /https/optin                                                         controllers.HTTPSCookieController.optIn()
-GET        /https/optout                                                        controllers.HTTPSCookieController.optOut()
+GET        /opt/$choice<in|out>/:feature                                        controllers.OptInController.handle(feature, choice)
 
 # Web App paths
-GET        /offline-page.json                                                   controllers.WebAppController.offlinePage()
+GET        /offline-crossword.json                                              controllers.WebAppController.offlineCrossword()
 GET        /service-worker.js                                                   controllers.WebAppController.serviceWorker()
 GET        /2015-06-24-manifest.json                                            controllers.WebAppController.manifest()
 
@@ -55,6 +63,9 @@ GET        /theguardian                                                         
 GET        /theobserver                                                                     controllers.NewspaperController.latestObserverNewspaper()
 GET        /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>        controllers.NewspaperController.newspaperForDate(path, day, month, year)
 GET        /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all    controllers.NewspaperController.allOn(path, day, month, year)
+
+# Atoms
+POST       /atom/quiz/:id/*path                                                 controllers.QuizController.submit(id, path)
 
 GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                      controllers.AllIndexController.on(path)
 GET        /$path<.+>/latest                                                    controllers.LatestIndexController.latest(path)
@@ -76,6 +87,7 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|picture|graphic)/.*>.json       
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|picture|graphic)/.*>            controllers.ImageContentController.render(path)
 
 # Audio and Video paths
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>/info.json              controllers.MediaController.renderInfoJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                   controllers.MediaController.renderJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>                        controllers.MediaController.render(path)
 

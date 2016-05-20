@@ -1,5 +1,6 @@
 package controllers
 
+import model.Cached.RevalidatableResult
 import model.{MetaData, SimplePage, Cached, TinyResponse}
 import play.api.data.Forms._
 import play.api.libs.ws.{WS, WSResponse}
@@ -46,10 +47,10 @@ object CommentsController extends DiscussionController with ExecutionContexts {
         Cached(60) {
           if (request.isJson)
             JsonComponent(
-              "html" -> views.html.fragments.comment(comment).toString
+              "html" -> views.html.fragments.comment(comment, comment.discussion.isClosedForRecommendation).toString
             )
           else
-            Ok(views.html.fragments.comment(comment))
+            RevalidatableResult.Ok(views.html.fragments.comment(comment, comment.discussion.isClosedForRecommendation))
         }
     }
   }
@@ -81,7 +82,7 @@ object CommentsController extends DiscussionController with ExecutionContexts {
   def reportAbuseThankYou(commentId: Int) = Action.async { implicit request =>
     discussionApi.commentFor(commentId).map { comment =>
       Cached(60) {
-        Ok(views.html.discussionComments.reportCommentThankYou(comment.webUrl, reportAbuseThankYouPage))
+        RevalidatableResult.Ok(views.html.discussionComments.reportCommentThankYou(comment.webUrl, reportAbuseThankYouPage))
       }
     }
   }
@@ -149,10 +150,14 @@ object CommentsController extends DiscussionController with ExecutionContexts {
             "commentCount" -> comments.commentCount
           )
         } else {
-          Ok(views.html.discussionComments.discussionPage(page))
+          RevalidatableResult.Ok(views.html.discussionComments.discussionPage(page))
         }
       }
     }
+      .recover {
+        case NonFatal(e) =>
+          NotFound(s"Discussion ${key} cannot be retrieved")
+      }
   }
 
   private def getTopComments(key: DiscussionKey)(implicit request: RequestHeader): Future[Result] = {
@@ -166,7 +171,7 @@ object CommentsController extends DiscussionController with ExecutionContexts {
             "html" -> views.html.discussionComments.topCommentsList(page).toString
           )
         } else {
-          Ok(views.html.discussionComments.topCommentsList(page))
+          RevalidatableResult.Ok(views.html.discussionComments.topCommentsList(page))
         }
       }
     }

@@ -1,7 +1,8 @@
 @(index: services.IndexPage)(implicit request: RequestHeader)
 @import common.{Edition, PagePaths}
-@import conf.switches.Switches
+@import conf.switches.Switches.staticBadgesSwitch
 @import model.FrontProperties.empty
+@import model.{FrontProperties, PaidContent}
 @import services.IndexPage
 @import views.html.fragments.containers.facia_cards.{container, containerScaffold}
 @import views.html.fragments.pagination
@@ -13,6 +14,80 @@
     }
 }
 
+@if(staticBadgesSwitch.isSwitchedOn) {
+
+    @index.branding(Edition(request)) match {
+
+        case Some(branding) => {
+            <div class="l-side-margins">
+                <div
+                class="@RenderClasses(Map("fc-container--advertisement-feature paid-content--advertisement-feature" -> (branding.sponsorshipType == PaidContent)), "u-cf index-page")"
+                data-link-name="Front | @request.path"
+                role="main">
+
+                    @if(branding.sponsorshipType == PaidContent) {
+                        @fragments.guBand()
+                    }
+
+                    @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
+                        @containers.map { containerDefinition =>
+                            @container(containerDefinition, frontProperties = FrontProperties.fromBranding(branding))
+                        }
+                    }
+
+                    @index.page.metadata.pagination.map { paginationInstance =>
+                        <div class="fc-container__pagination">
+                            @pagination(index.page.metadata.webTitle, paginationInstance, PagePaths.fromId(index.idWithoutEdition))
+                        </div>
+                    }
+
+                    @fragments.trendingTopics(index.faciaTrails, index.page.metadata.id, None)
+
+                    <div class="fc-container fc-container--commercial">@fragments.commercial.commercialComponent()</div>
+
+                    @defining(IndexPage.makeLinkedData(index)) { linkedData =>
+                        <script data-schema="@{linkedData.`@type`}" type="application/ld+json">
+                            @Html(model.meta.LinkedData.toJson(linkedData))
+                        </script>
+                    }
+
+                </div>
+            </div>
+        }
+
+        case None => {
+            <div class="l-side-margins">
+                <div class="u-cf index-page" data-link-name="Front | @request.path" role="main">
+
+                    @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
+                        @containers.map { containerDefinition =>
+                            @container(containerDefinition, empty)
+                        }
+                    }
+
+                    @index.page.metadata.pagination.map { paginationInstance =>
+                        <div class="fc-container__pagination">
+                            @pagination(index.page.metadata.webTitle, paginationInstance, PagePaths.fromId(index.idWithoutEdition))
+                        </div>
+                    }
+
+                    @fragments.trendingTopics(index.faciaTrails, index.page.metadata.id, None)
+
+                    <div class="fc-container fc-container--commercial">@fragments.commercial.commercialComponent()</div>
+
+                    @defining(IndexPage.makeLinkedData(index)) { linkedData =>
+                        <script data-schema="@{linkedData.`@type`}" type="application/ld+json">
+                            @Html(model.meta.LinkedData.toJson(linkedData))
+                        </script>
+                    }
+
+                </div>
+            </div>
+        }
+    }
+
+} else {
+
 <div class="l-side-margins">
     <div
         class="@RenderClasses(
@@ -22,9 +97,7 @@
                     index.commercial.isAdvertisementFeature ||
                     index.commercial.isFoundationSupported
                 ),
-                "fc-container--advertisement-feature" -> index.commercial.isAdvertisementFeature,
-                "paid-content--advertisement-feature" ->
-                    (Switches.NewCommercialContent.isSwitchedOn && index.commercial.isAdvertisementFeature)
+                "fc-container--advertisement-feature paid-content--advertisement-feature" -> index.commercial.isAdvertisementFeature
             ), "u-cf index-page"
         )"
         data-link-name="Front | @request.path"
@@ -36,7 +109,7 @@
         }
         role="main">
 
-        @if(Switches.NewCommercialContent.isSwitchedOn && index.commercial.isAdvertisementFeature) {
+        @if(index.commercial.isAdvertisementFeature) {
             @fragments.guBand()
         }
 
@@ -65,3 +138,5 @@
 
     </div>
 </div>
+
+}

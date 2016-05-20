@@ -69,3 +69,8 @@
 .id--signed-out .sign-in-required {
     display: none;
 }
+
+.is-sticky {
+    position: fixed;
+    top: 0;
+}

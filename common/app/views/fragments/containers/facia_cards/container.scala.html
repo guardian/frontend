@@ -1,10 +1,42 @@
-@(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties = model.FrontProperties.empty, isPaidContent: Boolean = false)(implicit request: RequestHeader)
+@import common.commercial.ContainerModel
 @import common.dfp.{Keyword, Series}
 @import conf.switches.Switches
 @import layout.MetaDataHeader
-@import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList}
-@import views.html.fragments.containers.facia_cards.{commercialContainer, containerMetaData, mostPopularContainer, navListContainer, navMediaListContainer, standardContainer}
-@import views.support.{GetClasses, RenderClasses}
+@import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList, SingleCampaign, Video}
+@import views.html.commercial.containers.paidContainer
+@import views.html.fragments.containers.facia_cards._
+@import views.support.Commercial.container.shouldRenderAsPaidContainer
+@import views.support.GetClasses
+
+@(containerDefinition: layout.FaciaContainer,
+  frontProperties: model.FrontProperties = model.FrontProperties.empty,
+  frontId: Option[String] = None,
+  isPaidFront: Boolean = false,
+  maybeContainerModel: Option[ContainerModel] = None)(implicit request: RequestHeader)
+
+@renderBrandingDataAttributes() = {
+    @if(Switches.cardsDecidePaidContainerBranding.isSwitchedOn) {
+        @for(container <- maybeContainerModel) {
+            @for(branding <- container.brandingAttributes) {
+                @for(sponsor <- branding.sponsor){data-sponsor="@sponsor"}
+                @for(seriesId <- branding.seriesId) { data-series="@seriesId" }
+                @for(keywordId <- branding.keywordId) { data-keywords="@keywordId" }
+                data-sponsorship="@branding.sponsorshipType"
+            }
+        }
+    } else {
+        @for(sponsor <- containerDefinition.commercialOptions.sponsor) { data-sponsor="@sponsor"}
+        @for(tag <- containerDefinition.commercialOptions.sponsorshipTag) {
+            @tag.tagType match {
+                case Series => { data-series="@{ tag.tagId}"}
+                case Keyword => { data-keywords="@{ tag.tagId}"}
+            }
+        }
+        @containerDefinition.commercialOptions.sponsorshipType.map { sponsorshipType =>
+        data-sponsorship="@sponsorshipType"
+        }
+    }
+}
 
 @defining((containerDefinition.displayName, containerDefinition.faciaComponentName)) { case (title, componentName) =>
     @containerDefinition.customHeader.map {
@@ -14,23 +46,45 @@
         case _ => {}
     }
 
-    @(containerDefinition.container, isPaidContent, Switches.NewCommercialContent.isSwitchedOn) match {
-        case (MostPopular, true, true) => {}
+    @containerDefinition.container match {
+        case _: model.MostPopular if isPaidFront => {}
+
+        case Fixed(_) if shouldRenderAsPaidContainer(isPaidFront, containerDefinition, maybeContainerModel) => {
+            @maybeContainerModel match {
+                case Some(containerModel) => {
+                    @paidContainer(frontId.getOrElse(""), containerDefinition.index, containerModel)
+                }
+                case None => {}
+            }
+        }
+
+        case slices.Commercial(SingleCampaign(_)) => {
+            @maybeContainerModel match {
+                case Some(containerModel) => {
+                    @paidContainer(
+                        frontId.getOrElse(""),
+                        containerDefinition.index,
+                        containerModel.copy(
+                            layoutName = "fixed/small/slow-IV",
+                            content = containerModel.content.copy(showMoreCards = Nil)
+                        )
+                    )
+                }
+                case None => {}
+            }
+        }
+
         case _ => {
         <section id="@componentName"
-        class="@GetClasses.forContainerDefinition(containerDefinition)"
+        class="@GetClasses.forContainerDefinition(containerDefinition)
+        @if(Switches.cardsDecidePaidContainerBranding.isSwitchedOn){
+            @for(container <- maybeContainerModel){
+                @if(container.isSingleSponsorContainer){ js-sponsored-container }
+            }
+        }"
         data-link-name="container-@{containerDefinition.index + 1} | @componentName"
         data-id="@containerDefinition.dataId"
-            @for(sponsor <- containerDefinition.commercialOptions.sponsor) { data-sponsor="@sponsor" }
-            @for(tag <- containerDefinition.commercialOptions.sponsorshipTag) {
-                @tag.tagType match {
-                    case Series => { data-series="@{tag.tagId}" }
-                    case Keyword => { data-keywords="@{tag.tagId}" }
-                }
-            }
-            @containerDefinition.commercialOptions.sponsorshipType.map { sponsorshipType =>
-            data-sponsorship="@sponsorshipType"
-            }
+        @renderBrandingDataAttributes()
         data-component="@componentName"
         aria-expanded="true">
 
@@ -46,13 +100,19 @@
 
                 case _: Dynamic | _: Fixed => {
                     <div class="fc-container__inner">
-                        @standardContainer(containerDefinition, frontProperties)
+                        @standardContainer(containerDefinition, frontProperties, maybeContainerModel)
                     </div>
                 }
 
                 case NavList => {
                     <div class="fc-container__inner">
                         @navListContainer(containerDefinition, frontProperties)
+                    </div>
+                }
+
+                case Video => {
+                    <div class="gs-container">
+                        @videoContainer(containerDefinition, frontProperties)
                     </div>
                 }
 
@@ -69,10 +129,7 @@
                 }
 
                 case slices.Commercial(container) => {
-                    <div class="@RenderClasses(
-                        Map("fc-container__inner--full-span fc-container__inner--paidfor" -> Switches.NewCommercialContent.isSwitchedOn),
-                        "fc-container__inner"
-                    )">
+                    <div class="fc-container__inner--full-span fc-container__inner--paidfor fc-container__inner">
                         @commercialContainer(container, containerDefinition, frontProperties)
                     </div>
                 }

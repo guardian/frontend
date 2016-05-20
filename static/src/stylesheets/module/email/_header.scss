@@ -1,17 +1,15 @@
 .email-sub__heading {
     @include fs-headline(3, $size-only: true);
-    padding-left: $gs-baseline / 3;
 }
 
 .email-sub__heading-emph {
-    color: guss-colour(guardian-brand, $pasteup-palette);
+    color: $guardian-brand;
 }
 
 .email-sub__description {
     border-top: 3px solid $form-secondary-colour;
     color: $form-primary-colour;
-    background-color: guss-colour(guardian-brand, $pasteup-palette);
-    padding: 0 0 0 $gs-baseline / 3;
+    background-color: $guardian-brand;
 }
 
 .email-sub__description-emph {
@@ -22,42 +20,53 @@
 // LANDING AND IN-ARTICLE (COMPOSER) PAGE MODS
 .email-sub__header--landing,
 .email-sub__header--article {
-    background-color: $form-primary-colour;
     @include fs-headline(2);
+    background-color: $form-primary-colour;
 
     .email-sub__heading {
-        margin: $gs-baseline / 2 0 $gs-baseline;
+        margin-bottom: $gs-baseline;
+    }
+
+    .email-sub__description {
+        @include fs-textSans(3);
+        color: $neutral-2;
+        margin-bottom: $gs-baseline;
     }
 }
 
 // IN-ARTICLE (COMPOSER) PAGE MODS
 .email-sub__header--article {
     .email-sub__heading {
-        color: guss-colour(guardian-brand, $pasteup-palette);
+        color: #ffffff;
+        padding-right: 40px; // Avoid close icon
     }
 
     .email-sub__description {
         background-color: transparent;
         border-top: 0 none;
-        color: guss-colour(neutral-1, $pasteup-palette);
         min-height: 20px; // Min-height required to avoid some of the layout thrashing from loading in an iframe
     }
 }
 
 // TONE SPECIFIC MODS
-@each $toneClass, $toneColour in $tones {
-    .email-sub--tone-#{$toneClass} {
-        .email-sub__heading {
-            color: $toneColour;
+
+@each $tone-class, $tone-colour-accent, $tone-colour-headline in $tones {
+    .email-sub--tone-#{$tone-class} {
+
+        @if ($tone-colour-headline) {
+            .email-sub__heading {
+                color: $tone-colour-headline;
+            }
         }
     }
 }
 
+
 // FOOTER MODS
 .email-sub__header--footer {
     .email-sub__heading {
-        color: #ffffff;
         @include fs-textSans(3);
+        color: #ffffff;
         margin-bottom: $gs-baseline;
     }
 }
@@ -65,7 +74,7 @@
 // PLAIN MODS
 .email-sub--plain {
     .email-sub__message__headline {
-        color: guss-colour(guardian-brand, $pasteup-palette);
+        color: $guardian-brand;
         line-height: 2rem;
     }
 

@@ -10,7 +10,6 @@ define([
 
         if (config.switches.remarketing) {
             return require(['js!' + remarketingUrl], function () {
-                /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
                 window.google_trackConversion({
                     google_conversion_id: 971225648,
                     google_custom_params: window.google_tag_params,

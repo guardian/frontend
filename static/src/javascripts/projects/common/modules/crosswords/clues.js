@@ -32,11 +32,9 @@ define([
                     }, this.props.humanNumber),
                     React.createElement('div', {
                         className: 'crossword__clue__text',
-                        /* jscs:disable disallowDanglingUnderscores */
                         dangerouslySetInnerHTML: {
                             __html: this.props.clue
                         }
-                        /* jscs:enable disallowDanglingUnderscores */
                     })
                 )
             );

@@ -1,6 +1,6 @@
 package controllers.front
 
-import common.{ExecutionContexts, Logging, S3Metrics}
+import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import model.PressedPage
 import play.api.libs.json._
@@ -27,10 +27,10 @@ trait FrontJsonFapi extends Logging with ExecutionContexts {
   def getRaw(path: String): Future[Option[String]] = {
     val response = SecureS3Request.urlGet(getAddressForPath(path)).get()
     response.map { r =>
+      log.info(s"S3 got ${r.header("Content-Length").getOrElse("unknown")} bytes (ungzipped to ${r.bodyAsBytes.length} bytes) for front $path")
       r.status match {
         case 200 => Some(r.body)
         case 403 =>
-          S3Metrics.S3AuthorizationError.increment()
           log.warn(s"Got 403 trying to load path: $path")
           None
         case 404 =>
@@ -55,6 +55,7 @@ trait FrontJsonFapi extends Logging with ExecutionContexts {
     val response = SecureS3Request.urlGet(getAddressForPath(path)).get()
 
     response.flatMap { r =>
+      log.info(s"S3 got ${r.header("Content-Length").getOrElse("unknown")} bytes (ungzipped to ${r.bodyAsBytes.length} bytes) json for front $path")
       r.status match {
         case 200 => Future.successful(Json.parse(r.body))
         case _   => Future.failed(new RuntimeException(s"Could not get new format for $path"))

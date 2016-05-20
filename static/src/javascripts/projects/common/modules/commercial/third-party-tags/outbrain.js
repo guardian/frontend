@@ -8,7 +8,8 @@ define([
     'common/modules/identity/api',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/third-party-tags/outbrain-codes',
-    'template!common/views/commercial/outbrain.html'
+    'template!common/views/commercial/outbrain.html',
+    'common/modules/email/run-checks'
 ], function (
     Promise,
     fastdom,
@@ -19,7 +20,8 @@ define([
     identity,
     commercialFeatures,
     getCode,
-    outbrainTpl
+    outbrainTpl,
+    emailRunChecks
 ) {
     var outbrainUrl = '//widgets.outbrain.com/outbrain.js';
 
@@ -31,8 +33,14 @@ define([
         merchandising: {
             widget: '.js-container--commercial',
             container: '.js-outbrain-container'
+        },
+        email: {
+            widget: '.js-outbrain',
+            container: '.js-outbrain-container'
         }
     };
+
+    var emailSignupPromise;
 
     function build(codes, breakpoint) {
         var html = outbrainTpl({ widgetCode: codes.code || codes.image });
@@ -41,6 +49,12 @@ define([
         }
         return html;
     }
+
+    var module = {
+        load: load,
+        tracking: tracking,
+        init: init
+    };
 
     function load(target) {
         var slot          = target in selectors ? target : 'defaults';
@@ -52,12 +66,11 @@ define([
         widgetCodes = getCode({
             slot: slot,
             section: config.page.section,
-            edition: config.page.edition,
             breakpoint: breakpoint
         });
         widgetHtml = build(widgetCodes, breakpoint);
         return fastdom.write(function () {
-            if (slot !== 'defaults') {
+            if (slot === 'merchandising') {
                 $(selectors[slot].widget).replaceWith($outbrain[0]);
             }
             $container.append(widgetHtml);
@@ -115,7 +128,34 @@ define([
      */
     function loadInstantly() {
         return !document.getElementById('dfp-ad--merchandising-high') ||
-            detect.adblockInUse();
+            detect.adblockInUseSync();
+    }
+
+    function checkEmailSignup() {
+        if (!emailSignupPromise) {
+            emailSignupPromise = new Promise(function (resolve) {
+                if (config.switches.emailInArticleOutbrain &&
+                    emailRunChecks.getEmailInserted() &&
+                    emailRunChecks.getEmailShown() === 'theGuardianToday') {
+                    // The Guardian today email is already there
+                    // so load the merchandising component
+                    resolve('email');
+                } else if (config.switches.emailInArticleOutbrain && emailRunChecks.allEmailCanRun()) {
+                    // We need to check the user's email subscriptions
+                    // so we don't insert the sign-up if they've already subscribed.
+                    // This is an async API request and returns a promise.
+                    emailRunChecks.getUserEmailSubscriptions().then(function () {
+                        // Check if the Guardian today list can run, if it can then load
+                        // the merchandising (non-compliant) version of Outbrain
+                        emailRunChecks.listCanRun({listName: 'theGuardianToday', listId: 37 }) ? resolve('email') : resolve();
+                    });
+                } else {
+                    resolve();
+                }
+            });
+        }
+
+        return emailSignupPromise;
     }
 
     function init() {
@@ -126,8 +166,10 @@ define([
         ) {
             // if there is no merch component, load the outbrain widget right away
             if (loadInstantly()) {
-                module.load();
-                return Promise.resolve(true);
+                return checkEmailSignup().then(function (widgetType) {
+                    widgetType ? module.load(widgetType) : module.load();
+                    return Promise.resolve(true);
+                });
             }
 
             return trackAd('dfp-ad--merchandising-high').then(function (isHiResLoaded) {
@@ -148,19 +190,15 @@ define([
                         module.load('merchandising');
                     }
                 } else {
-                    module.load();
+                    checkEmailSignup().then(function (widgetType) {
+                        widgetType ? module.load(widgetType) : module.load();
+                    });
                 }
             });
         }
 
         return Promise.resolve(true);
     }
-
-    var module = {
-        load: load,
-        tracking: tracking,
-        init: init
-    };
 
     return module;
 });

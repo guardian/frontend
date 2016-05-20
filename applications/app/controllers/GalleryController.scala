@@ -1,26 +1,15 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.{Content => ApiContent}
-import com.gu.contentapi.client.model.ItemResponse
+import com.gu.contentapi.client.model.v1.{Content => ApiContent, ItemResponse}
 import common._
-import conf.LiveContentApi.getResponse
-import conf._
 import conf.switches.Switches
+import contentapi.ContentApiClient
 import model._
 import play.api.mvc._
 import play.twirl.api.Html
 import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
-
-case class GalleryPage(
-  gallery: Gallery,
-  related: RelatedContent,
-  index: Int,
-  trail: Boolean) extends ContentPage {
-
-  override lazy val item = gallery
-}
 
 object GalleryController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
@@ -50,11 +39,11 @@ object GalleryController extends Controller with RendersItemResponse with Loggin
                     (implicit request: RequestHeader) = {
     val edition = Edition(request)
     log.info(s"Fetching gallery: $path for edition $edition")
-    getResponse(LiveContentApi.item(path, edition)
+    ContentApiClient.getResponse(ContentApiClient.item(path, edition)
       .showFields("all")
     ).map { response =>
       val gallery = response.content.map(Content(_))
-      val model: Option[GalleryPage] = gallery collect { case g: Gallery => GalleryPage(g, RelatedContent(g, response), index, isTrail) }
+      val model: Option[GalleryPage] = gallery collect { case g: Gallery => GalleryPage(g, StoryPackages(g, response), index, isTrail) }
 
       ModelOrResult(model, response)
 
@@ -63,9 +52,9 @@ object GalleryController extends Controller with RendersItemResponse with Loggin
 
   private def renderGallery(model: GalleryPage)(implicit request: RequestHeader) = {
     val htmlResponse: (() => Html) = () =>
-      views.html.gallery(model, model.related, model.index)
+      views.html.gallery(model)
     val jsonResponse = () =>
-      views.html.fragments.galleryBody(model.gallery, model.related, model.index)
+      views.html.fragments.galleryBody(model)
     renderFormat(htmlResponse, jsonResponse, model, Switches.all)
   }
 

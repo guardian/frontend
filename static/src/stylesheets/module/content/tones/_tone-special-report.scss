@@ -2,43 +2,41 @@
 
 @include tone-content(
     special-report, // $tone
-    colour(news-support-6), // $tonal__header-background
+    $news-support-6, // $tonal__header-background
     #ffffff, // $tonal__header-text
-    colour(news-support-1), // $tonal__header-link
+    $special-report-accent, // $tonal__header-link
     200, // $tonal__headline-weight
     #ffffff, // $tonal__headline-colour
-    colour(news-support-1), // $tonal__headline-accent
-    lighten(colour(news-support-6), 5%), // $tonal__standfirst-background
+    $special-report-accent, // $tonal__headline-accent
+    lighten($news-support-6, 5%), // $tonal__standfirst-background
     #ffffff, // $tonal__standfirst-text
     #ffffff, // $tonal__standfirst-link
     #ffffff, // $tonal__article-background
-    colour(news-support-6) // $tonal__article-link
+    $news-support-6 // $tonal__article-link
 );
 
 .tonal--tone-special-report {
     // Interactives need help because their headers are not tonal
     &.content--interactive {
-        .commentcount i {
-            @extend %i-comment--tone-neutral2;
-
-            @if $svg-support {
-                .svg & {
-                    @extend %svg-i-comment--tone-neutral2;
-                }
-            }
+        .content__headline {
+            font-weight: normal;
+            color: $neutral-1;
         }
 
-        .tone-colour,
+        .content__series-label__link {
+            color: $neutral-2;
+        }
+
         .content__section-label__link {
-            color: colour(news-support-1);
+            color: $special-report-accent;
         }
 
         .u-underline {
-            color: colour(news-support-1);
-            border-bottom-color: rgba(colour(news-support-1), .3);
+            color: $special-report-accent;
+            border-bottom-color: rgba($special-report-accent, .3);
 
             &:hover {
-                border-bottom-color: rgba(colour(news-support-1), .7);
+                border-bottom-color: rgba($special-report-accent, .7);
             }
         }
     }
@@ -47,15 +45,15 @@
         .content__main,
         .tonal__standfirst,
         .content__standfirst {
-            background-color: colour(news-support-6);
+            background-color: $news-support-6;
             color: #ffffff;
         }
 
         a.tone-colour {
-            color: colour(news-support-1);
+            color: $special-report-accent;
 
             &:hover {
-                color: mix(colour(news-support-1), #ffffff, 70%);
+                color: mix($special-report-accent, #ffffff, 70%);
             }
         }
 
@@ -67,6 +65,10 @@
             color: #ffffff;
         }
 
+        .meta__numbers .inline-share {
+            fill: #ffffff;
+        }
+
         .byline,
         .content__meta-container,
         .content__secondary-column--media,
@@ -76,12 +78,12 @@
         .meta__numbers,
         .most-viewed-container--media,
         .submeta {
-            border-color: mix(colour(news-support-6), #ffffff, 70%);
+            border-color: mix($news-support-6, #ffffff, 70%);
         }
 
         .button--tag {
-            background-color: mix(colour(news-support-6), colour(neutral-1), 70%);
-            border-color: mix(colour(news-support-6), colour(neutral-1), 70%);
+            background-color: mix($news-support-6, $neutral-1, 70%);
+            border-color: mix($news-support-6, $neutral-1, 70%);
         }
     }
 }

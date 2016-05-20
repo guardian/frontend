@@ -1,31 +1,22 @@
-/* jscs:disable disallowDanglingUnderscores */
 define([
     'common/utils/fastdom-promise',
     'qwery',
-    'bonzo',
     'bean',
     'Promise',
     'common/utils/config',
     'common/utils/mediator',
-    'lodash/collections/filter',
-    'lodash/collections/map',
-    'lodash/collections/every',
-    'lodash/objects/forOwn',
     'lodash/functions/curry'
 ], function (
     fastdom,
     qwery,
-    bonzo,
     bean,
     Promise,
     config,
     mediator,
-    filter,
-    map,
-    every,
-    forOwn,
     curry
 ) {
+    // total_hours_spent_maintaining_this = 60
+    //
     // maximum time (in ms) to wait for images to be loaded and rich links
     // to be upgraded
     var LOADING_TIMEOUT = 5000;
@@ -69,12 +60,12 @@ define([
     }
 
     function onImagesLoaded(body) {
-        var notLoaded = filter(qwery('img', body), function (img) {
+        var notLoaded = qwery('img', body).filter(function (img) {
             return !img.complete;
         });
 
         return notLoaded.length === 0 ?
-            Promise.resolve(true) :
+            true :
             new Promise(function (resolve) {
                 var loadedCount = 0;
                 bean.on(body, 'load', notLoaded, function onImgLoaded() {
@@ -90,23 +81,74 @@ define([
 
     function onRichLinksUpgraded(body) {
         return qwery('.element-rich-link--not-upgraded', body).length === 0 ?
-            Promise.resolve(true) :
+            true :
             new Promise(function (resolve) {
                 mediator.once('rich-link:loaded', resolve);
             });
     }
 
+    function onInteractivesLoaded(body) {
+        var notLoaded = qwery('.element-interactive', body).filter(function (interactive) {
+            var iframe = qwery(interactive.children).filter(isIframe);
+            return !(iframe.length && isIframeLoaded(iframe[0]));
+        });
+
+        return notLoaded.length === 0 || !('MutationObserver' in window) ?
+            true :
+            Promise.all(notLoaded.map(function (interactive) {
+                return new Promise(function (resolve) {
+                    new MutationObserver(function (records, instance) {
+                        if (!(records.length > 0 &&
+                            records[0].addedNodes.length > 0 &&
+                            isIframe(records[0].addedNodes[0]))
+                        ) {
+                            return;
+                        }
+
+                        var iframe = records[0].addedNodes[0];
+                        if (isIframeLoaded(iframe)) {
+                            resolve();
+                        } else {
+                            iframe.addEventListener('load', function () {
+                                instance.disconnect();
+                                resolve();
+                            });
+                        }
+                    }).observe(interactive, { childList: true });
+                });
+            }));
+
+        function isIframe(node) {
+            return node.nodeName === 'IFRAME';
+        }
+
+        function isIframeLoaded(iframe) {
+            return iframe.contentWindow &&
+                iframe.contentWindow.document &&
+                iframe.contentWindow.document.readyState === 'complete';
+        }
+    }
+
     // test one element vs another for the given rules
-    function _testElem(rules, elem, other) {
-        var isMinAbove = elem.top - other.bottom >= rules.minAbove;
-        var isMinBelow = other.top - elem.top >= rules.minBelow;
+    function _testCandidate(rules, challenger, opponent) {
+        var isMinAbove = challenger.top - opponent.bottom >= rules.minAbove;
+        var isMinBelow = opponent.top - challenger.top >= rules.minBelow;
 
         return isMinAbove || isMinBelow;
     }
 
     // test one element vs an array of other elements for the given rules
-    function _testElems(rules, elem, others) {
-        return every(others, curry(_testElem)(rules, elem));
+    function _testCandidates(rules, challenger, opponents) {
+        return opponents.every(curry(_testCandidate)(rules, challenger));
+    }
+
+    function _mapElementToComputedDimensions(el) {
+        var rect = el.getBoundingClientRect();
+        return {
+            top: rect.top,
+            bottom: rect.bottom,
+            element: el
+        };
     }
 
     function _mapElementToDimensions(el) {
@@ -117,95 +159,87 @@ define([
         };
     }
 
-    function _enforceRules(slots, rules, bodyTop, bodyHeight) {
-        var filtered = Promise.resolve(slots);
+    function _enforceRules(data, rules) {
+        var candidates = data.candidates;
 
         // enforce absoluteMinAbove rule
-        if (rules.absoluteMinAbove > 0) {
-            filtered = filtered.then(filter(slots, function (slot) {
-                return bodyTop + slot.top >= rules.absoluteMinAbove;
-            }));
+        if (rules.absoluteMinAbove) {
+            candidates = candidates.filter(function (candidate) {
+                return candidate.top >= rules.absoluteMinAbove;
+            });
         }
 
         // enforce minAbove and minBelow rules
-        filtered = filtered.then(function (slots) {
-            return filter(slots, function (slot) {
-                var farEnoughFromTopOfBody = slot.top >= rules.minAbove;
-                var farEnoughFromBottomOfBody = slot.top + rules.minBelow <= bodyHeight;
-                return farEnoughFromTopOfBody && farEnoughFromBottomOfBody;
-            });
+        candidates = candidates.filter(function (candidate) {
+            var farEnoughFromTopOfBody = candidate.top >= rules.minAbove;
+            var farEnoughFromBottomOfBody = candidate.top + rules.minBelow <= data.bodyHeight;
+            return farEnoughFromTopOfBody && farEnoughFromBottomOfBody;
         });
 
         // enforce content meta rule
         if (rules.clearContentMeta) {
-            filtered = filtered.then(function (slots) {
-                return [slots, qwery('.js-content-meta')[0]];
-            }).then(function (args) {
-                return fastdom.read(function () {
-                    return [args[0], _mapElementToDimensions(args[1])];
-                });
-            }).then(function (args) {
-                return filter(args[0], function (slot) {
-                    return slot.top > (args[1].bottom + rules.clearContentMeta);
-                });
+            candidates = candidates.filter(function (candidate) {
+                return candidate.top > (data.contentMeta.bottom + rules.clearContentMeta);
             });
         }
 
         // enforce selector rules
         if (rules.selectors) {
-            forOwn(rules.selectors, function (params, selector) {
-                filtered = filtered.then(function (slots) {
-                    return [slots, qwery(rules.bodySelector + selector)];
-                }).then(function (args) {
-                    return fastdom.read(function () {
-                        return [args[0], map(args[1], _mapElementToDimensions)];
-                    });
-                }).then(function (args) {
-                    return filter(args[0], function (slot) {
-                        return _testElems(params, slot, args[1]);
-                    });
+            Object.keys(rules.selectors).forEach(function (selector) {
+                candidates = candidates.filter(function (candidate) {
+                    return _testCandidates(rules.selectors[selector], candidate, data.opponents[selector]);
                 });
             });
         }
 
-        return filtered;
+        if (rules.filter) {
+            candidates = candidates.filter(rules.filter);
+        }
+
+        return candidates;
     }
 
     function getReady(body) {
         if (config.switches.viewability) {
             return Promise.race([
                 new Promise(expire),
-                Promise.all([onImagesLoaded(body), onRichLinksUpgraded(body)])
+                Promise.all([onImagesLoaded(body), onRichLinksUpgraded(body), onInteractivesLoaded(body)])
             ]);
         }
 
         return Promise.resolve(true);
     }
 
+    function SpaceError(rules) {
+        this.name = 'SpaceError';
+        this.message = 'There is no space left matching rules ' + JSON.stringify(rules);
+        this.stack = (new Error()).stack;
+    }
+
     // Rather than calling this directly, use spaceFiller to inject content into the page.
     // SpaceFiller will safely queue up all the various asynchronous DOM actions to avoid any race conditions.
     function findSpace(rules) {
-        var body;
+        var body, getDimensions;
 
-        rules = rules || defaultRules;
+        rules || (rules = defaultRules);
         body = rules.bodySelector ? document.querySelector(rules.bodySelector) : document;
+        getDimensions = rules.absoluteMinAbove ? _mapElementToComputedDimensions : _mapElementToDimensions;
 
         return getReady(body)
-        .then(getSlots)
+        .then(getCandidates)
         .then(getMeasurements)
         .then(enforceRules)
-        .then(filterSlots)
-        .then(returnSlots);
+        .then(returnCandidates);
 
-        function getSlots() {
-            var slots = qwery(rules.bodySelector + rules.slotSelector);
+        function getCandidates() {
+            var candidates = qwery(rules.bodySelector + rules.slotSelector);
             if (rules.fromBottom) {
-                slots.reverse();
+                candidates.reverse();
             }
             if (rules.startAt) {
                 var drop = true;
-                slots = filter(slots, function (slot) {
-                    if (slot === rules.startAt) {
+                candidates = candidates.filter(function (candidate) {
+                    if (candidate === rules.startAt) {
                         drop = false;
                     }
                     return !drop;
@@ -213,49 +247,70 @@ define([
             }
             if (rules.stopAt) {
                 var keep = true;
-                slots = filter(slots, function (slot) {
-                    if (slot === rules.stopAt) {
+                candidates = candidates.filter(function (candidate) {
+                    if (candidate === rules.stopAt) {
                         keep = false;
                     }
                     return keep;
                 });
             }
-            return slots;
+            return candidates;
         }
 
-        function getMeasurements(slots) {
+        function getMeasurements(candidates) {
+            var contentMeta = rules.clearContentMeta ?
+                document.querySelector('.js-content-meta') :
+                null;
+            var opponents = rules.selectors ?
+                Object.keys(rules.selectors).map(function (selector) {
+                    return [selector, qwery(rules.bodySelector + selector)];
+                }) :
+                null;
+
             return fastdom.read(function () {
-                var rect = body.getBoundingClientRect();
-                return [
-                    rect.top + window.pageYOffset,
-                    rect.height,
-                    map(slots, _mapElementToDimensions)
-                ];
+                var bodyDims = body.getBoundingClientRect();
+                var candidatesWithDims = candidates.map(getDimensions);
+                var contentMetaWithDims = rules.clearContentMeta ?
+                    getDimensions(contentMeta) :
+                    null;
+                var opponentsWithDims = opponents ?
+                    opponents.reduce(function (result, selectorAndElements) {
+                        result[selectorAndElements[0]] = selectorAndElements[1].map(getDimensions);
+                        return result;
+                    }, {}) :
+                    null;
+
+                if (rules.absoluteMinAbove) {
+                    rules.absoluteMinAbove -= bodyDims.top;
+                }
+
+                return {
+                    bodyHeight: bodyDims.height,
+                    candidates: candidatesWithDims,
+                    contentMeta: contentMetaWithDims,
+                    opponents: opponentsWithDims
+                };
             });
         }
 
         function enforceRules(data) {
-            return _enforceRules(data[2], rules, data[0], data[1]);
+            return _enforceRules(data, rules);
         }
 
-        function filterSlots(slots) {
-            return rules.filter ?
-                filter(slots, rules.filter) :
-                slots;
-        }
-
-        function returnSlots(slots) {
-            if (slots.length) {
-                return map(slots, function (slot) { return slot.element; });
+        function returnCandidates(candidates) {
+            if (candidates.length) {
+                return candidates.map(function (candidate) { return candidate.element; });
             } else {
-                throw new Error('There is no space left matching rules ' + JSON.stringify(rules));
+                throw new SpaceError(rules);
             }
         }
     }
 
     return {
         findSpace: findSpace,
-        _testElem: _testElem, // exposed for unit testing
-        _testElems: _testElems // exposed for unit testing
+        SpaceError: SpaceError,
+
+        _testCandidate: _testCandidate, // exposed for unit testing
+        _testCandidates: _testCandidates // exposed for unit testing
     };
 });

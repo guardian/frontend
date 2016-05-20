@@ -1,14 +1,14 @@
 .paidfor-meta {
-    background: guss-colour(paidfor-background, $frontend-palette);
-    font-size: get-font-size(data, 3);
     @include f-textSans;
+    background: $paidfor-background;
+    font-size: get-font-size(textSans, 2);
 }
 
 
 .paidfor-meta__label,
 .paidfor-meta__more {
     display: inline-block;
-    font-size: get-font-size(data, 3);
+    font-size: get-font-size(textSans, 2);
 }
 
 .paidfor-meta__label,
@@ -27,6 +27,7 @@
 .paidfor-label .popup__toggle {
     border-left: 1px solid rgba(0, 0, 0, .2);
     border-right: 1px solid rgba(0, 0, 0, .2);
+    display: inline-block;
 
     &:before,
     &:after {
@@ -36,7 +37,7 @@
     svg {
         width: 12px;
         height: 9px;
-        fill: colour(neutral-1);
+        fill: $neutral-1;
 
     }
 

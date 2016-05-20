@@ -10,7 +10,7 @@
     padding-top: 15px;
     font-size: 14px;
     padding-left: 28px; // aligns with top level comment's body
-    border-left: 8px solid colour(neutral-5);
+    border-left: 8px solid $neutral-5;
 
     @include mq(tablet) {
         padding-left: 44px;
@@ -24,7 +24,7 @@
 }
 
 .d2-comment-embedded a {
-    color: colour(news-default);
+    color: $news-default;
     text-decoration: none;
 }
 
@@ -61,7 +61,7 @@
 }
 
 .d2-permalink .d2-datetime {
-    color: colour(neutral-2);
+    color: $neutral-2;
     font-size: .85714285714em;
     font-family: $f-sans-serif-text; // Force font when used outside of comment context
 }
@@ -105,7 +105,6 @@
 }
 
 .d2-body {
-    clear: both;
-
     @include d-comment__body;
+    clear: both;
 }

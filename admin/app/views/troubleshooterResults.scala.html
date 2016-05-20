@@ -1,4 +1,4 @@
-@(loadbalancer: tools.LoadBalancer, results: Seq[controllers.admin.EndpointStatus])
+@(loadbalancer: tools.LoadBalancer, results: Seq[controllers.admin.EndpointStatus])(implicit request: RequestHeader)
 
 @admin_main("Troubleshooting results", "PROD", isAuthed = true) {
 

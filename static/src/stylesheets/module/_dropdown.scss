@@ -2,7 +2,7 @@
 // If you have other styles, but would like to maintain the functionality,
 // just apply .dropdown
 .dropdown-styled {
-    border-top: 1px solid colour(neutral-4);
+    border-top: 1px solid $neutral-4;
     position: relative;
 
     .dropdown__toggle,
@@ -23,21 +23,22 @@
     }
 
     .dropdown__button {
-        padding: $gs-baseline/2 0 $gs-baseline*1.5;
-        color: colour(neutral-1);
+        padding: $gs-baseline/2 0;
+        color: $neutral-1;
         text-align: left;
 
         .control {
-            border-color: colour(neutral-5);
+            border-color: $neutral-5;
             float: right;
             position: relative;
         }
 
         .inline-icon {
-            background-color: colour(neutral-2);
-            right: 0;
-            position: absolute;
-            max-height: 32px;
+            background-color: $neutral-2;
+
+            svg {
+                display: block;
+            }
         }
     }
 

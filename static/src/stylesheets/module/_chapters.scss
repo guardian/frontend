@@ -4,7 +4,7 @@
 
     @include mq($until: desktop) {
         margin-top: -($gs-baseline / 1.5);
-        border-bottom: 1px dotted colour(neutral-6);
+        border-bottom: 1px dotted $neutral-6;
     }
 
     .content__main-column & {
@@ -25,7 +25,7 @@
 
     @include mq(desktop) {
         padding-top: $gs-baseline / 4;
-        border-top: 1px solid colour(neutral-6);
+        border-top: 1px solid $neutral-6;
     }
 }
 
@@ -43,7 +43,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    fill: colour(neutral-2);
+    fill: $neutral-2;
 
     .is-expanded & {
         transform: rotate(180deg);
@@ -74,12 +74,12 @@
 
 .chapters__list-item {
     padding-top: $gs-baseline / 4;
-    border-top: 1px dotted colour(neutral-5);
+    border-top: 1px dotted $neutral-5;
 }
 
 .chapters__link {
+    @include fs-textSans(3);
     position: relative;
     display: block;
     padding-bottom: $gs-baseline;
-    @include fs-textSans(3);
 }

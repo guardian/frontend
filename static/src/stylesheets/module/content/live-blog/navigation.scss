@@ -1,0 +1,140 @@
+.liveblog-navigation {
+    // If we don't support flexbox
+    // then the children are floated
+    @include clearfix;
+    // If we do support flexbox
+    @include fs-textSans(3);
+    display: flex;
+}
+
+.liveblog-navigation__detail {
+    // If we don't support flexbox
+    text-align: center;
+    // If we do support flexbox
+    order: 1;
+    // Centre (vertically and horizontally) text
+    // If we do support flexbox
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.liveblog-navigation__newer {
+    // If we don't support flexbox
+    float: left;
+}
+
+.liveblog-navigation__older {
+    // If we don't support flexbox
+    float: right;
+    // If we do support flexbox
+    order: 2;
+}
+
+.liveblog-navigation__page-number,
+.liveblog-navigation__pages-length {
+    font-weight: bold;
+}
+
+.liveblog-navigation__link {
+    display: inline-block;
+    position: relative;
+    color: $neutral-1;
+    border: 1px solid $neutral-4;
+    height: $gs-baseline * 3;
+    line-height: 38px;
+    font-weight: bold;
+    vertical-align: middle;
+
+    &:hover {
+        border-color: $neutral-2;
+        text-decoration: none;
+    }
+
+    svg {
+        fill: $neutral-2;
+        position: absolute;
+    }
+
+    @include mq($until: mobileLandscape) {
+        font-size: 0;
+    }
+}
+
+.liveblog-navigation__link--primary {
+    width: $gs-baseline * 3;
+    border-radius: 100%;
+
+    svg {
+        top: 10px;
+        width: 16px;
+        height: 16px;
+    }
+
+    .inline-chevron-right svg {
+        right: 9px;
+    }
+
+    .inline-arrow-left svg {
+        left: 9px;
+    }
+}
+
+.liveblog-navigation__link--secondary {
+    border-radius: 21px;
+    padding: 0 $gs-gutter / 2;
+
+    svg {
+        width: 14px;
+        height: 14px;
+        top: 11px;
+    }
+}
+
+.liveblog-navigation__link--secondary--newer {
+    margin-right: $gs-gutter / 4;
+    padding-left: $gs-gutter * 1.5;
+
+    svg {
+        left: $gs-gutter / 2;
+    }
+    @include mq(mobileLandscape) {
+        margin-right: $gs-gutter / 2;
+    }
+}
+
+.liveblog-navigation__link--secondary--older {
+    margin-left: $gs-gutter / 4;
+    padding-right: $gs-gutter * 1.5;
+
+    svg {
+        right: $gs-gutter / 2;
+    }
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter / 2;
+    }
+}
+
+@include mq($until: mobileLandscape) {
+    .liveblog-navigation__link--secondary {
+        width: $gs-baseline * 3;
+        padding: 0;
+    }
+}
+
+.liveblog-navigation__link--disabled {
+    cursor: default;
+    color: $neutral-5;
+    border-color: $neutral-6;
+
+    svg {
+        fill: $neutral-5;
+    }
+
+    &:hover,
+    &:active {
+        color: $neutral-5;
+        border-color: $neutral-6;
+    }
+}

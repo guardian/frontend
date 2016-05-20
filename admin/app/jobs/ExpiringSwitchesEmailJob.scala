@@ -5,12 +5,13 @@ import conf.Configuration.frontend.webEngineersEmail
 import conf.switches.{Switch, Switches}
 import services.EmailService
 
+import scala.concurrent.Future
 import scala.util.control.NonFatal
 
 object ExpiringSwitchesEmailJob extends ExecutionContexts with Logging {
 
-  def run(): Unit = {
-    for (webEngineers <- webEngineersEmail) {
+  def run(): Future[Unit] = {
+    (for (webEngineers <- webEngineersEmail) yield {
       val expiringSwitches = Switches.all.filter(Switch.expiry(_).expiresSoon)
 
       if (expiringSwitches.nonEmpty) {
@@ -30,10 +31,15 @@ object ExpiringSwitchesEmailJob extends ExecutionContexts with Logging {
           case NonFatal(e) => log.error(s"Message failed: ${e.getMessage}")
         }
 
+        eventualResult.map(_ => ())
       } else {
         log.info("No expiring switches")
+        Future.successful(())
       }
-    }
-    if (webEngineersEmail.isEmpty) log.warn("Recipient not configured")
+    }).getOrElse(
+      Future {
+        log.warn("Recipient not configured")
+      }
+    )
   }
 }

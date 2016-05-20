@@ -1,21 +1,21 @@
 .tone-special-report--item {
     &.fc-item,
     &.rich-link {
-        background-color: colour(news-support-6);
+        background-color: $news-support-6;
     }
 
     .u-faux-block-link--hover,
     .fc-item__image-container {
-        background-color: darken(colour(news-support-6), 5%);
+        background-color: darken($news-support-6, 5%);
     }
 
     .inline-quote {
-        fill: colour(neutral-4);
+        fill: $neutral-4;
     }
 
     .rich-link__container:before,
     .fc-item__container:before {
-        background-color: colour(news-support-1);
+        background-color: $special-report-accent;
     }
 
     &,
@@ -26,56 +26,58 @@
     .fc-item__link,
     .fc-sublink__link {
         &:visited {
-            color: mix(#ffffff, colour(news-support-6), 80%);
+            color: mix(#ffffff, $news-support-6, 80%);
         }
     }
 
     .fc-item__kicker,
+    .rich-link__kicker,
     .fc-item__byline,
+    .rich-link__byline,
     .rich-link__read-more-text,
     .fc-save-for-later--is-saved {
-        color: colour(news-support-1);
+        color: $special-report-accent;
     }
 
     .fc-save-for-later {
-        border-color: mix(#000000, colour(news-support-6), 10%);
+        border-color: mix(#000000, $news-support-6, 10%);
     }
 
     .fc-item__kicker--dreamsnap {
-        background-color: mix(#000000, colour(news-support-6), 10%);
+        background-color: mix(#000000, $news-support-6, 10%);
     }
 
     .fc-item__kicker--breaking-news {
-        color: lighten(colour(live-default), 35%);
+        color: lighten($live-default, 35%);
     }
 
     .fc-item__standfirst {
-        color: mix(#ffffff, colour(news-support-6), 80%);
+        color: mix(#ffffff, $news-support-6, 80%);
     }
 
     .rich-link__arrow-icon {
-        fill: colour(news-support-1);
+        fill: $special-report-accent;
     }
 
     .fc-item__kicker:after,
     .rich-link__kicker:after,
     .fc-sublink__kicker:after {
-        color: mix(#ffffff, colour(news-support-6), 20%);
+        color: mix(#ffffff, $news-support-6, 20%);
     }
 
     .fc-sublink__title:before {
-        border-color: mix(#ffffff, colour(news-support-6), 80%);
+        border-color: mix(#ffffff, $news-support-6, 80%);
     }
 
     .fc-item__meta {
-        color: colour(neutral-4);
+        color: $neutral-4;
     }
 }
 
 .tone-news--sublink {
     .fc-sublink__kicker,
     .fc-sublink__byline {
-        color: colour(news-default);
+        color: $news-default;
     }
 
     @include sublink-style(editorial, feature, live, media) {
@@ -86,5 +88,5 @@
 }
 
 .tone-news--most-popular .fc-item__kicker {
-    color: colour(news-default);
+    color: $news-default;
 }

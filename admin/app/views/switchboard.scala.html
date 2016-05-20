@@ -1,41 +1,57 @@
 @import conf.switches.Switch
-@(env: String, lastModified: Long)(implicit flash: Flash)
-
+@(env: String, lastModified: Long)(implicit flash: Flash, request: RequestHeader)
 @import controllers.admin.routes.UncachedAssets
-
-@admin_main("Switchboard", env, isAuthed = true) {
-<link href="@UncachedAssets.at("css/switchboard.css")" rel="stylesheet">
-<link href="@UncachedAssets.at("css/radiator.css")" rel="stylesheet">
-@if(flash.get("error").isDefined) { <h1 style="color:#bd362f">@flash.get("error").get</h1> }
-<p>
-    <blockquote>
-        <em>"Death by switches."</em>
-        <footer>Nick Haley</footer>
-    </blockquote>
-</p>
-<div class="row-fluid">
-    <form id="switchboard" action="/dev/switchboard" method="POST">
-        <input type="hidden" name="lastModified" value="@lastModified" />
-        @conf.switches.Switches.grouped.map { case (group, switches) =>
-            <h4>@group</h4>
-            <div class="well">
-                @switches.map { switch =>
-                    @defining(Switch.expiry(switch)) { expiry =>
-                        <div class="checkbox">
-                            <label for="switch-@switch.name" @if(Switch.expiry(switch).expiresSoon) {
-                                class="Expiring expiry-days-@expiry.daysToExpiry"}>
-                                <input id="switch-@switch.name" name="@switch.name" type="checkbox" @if(switch.isSwitchedOn) {
-                                    checked="checked" }/>
-                                <strong>@switch.name</strong>
-                            </label>
-                            <span> - @switch.description
-                                @expiry.daysToExpiry.map{ days => <strong> @days</strong> days left}</span>
-                        </div>
-                    }
-                }
-            </div>
+@defining(conf.switches.Switches.grouped){ switchGroups =>
+    @admin_main("Switchboard", env, isAuthed = true) {
+    <link href="@UncachedAssets.at("css/switchboard.css")" rel="stylesheet">
+    <link href="@UncachedAssets.at("css/radiator.css")" rel="stylesheet">
+    @if(flash.get("error").isDefined) { <h1 style="color:#bd362f">@flash.get("error").get</h1> }
+    <p>
+        <blockquote>
+            <em>"Death by switches."</em>
+            <footer>Nick Haley</footer>
+        </blockquote>
+    </p>
+    <div>
+        <h3>Switch Groups</h3>
+        <ul class="multi-column--3">
+        @for((group, _) <- switchGroups){
+            <li><a href="#@views.support.URLEncode(group.name)">@group.name</a></li>
         }
-        <input class="btn btn-large btn-success" type="submit" value="Save">
-    </form>
-</div>
+        </ul>
+    </div>
+    <hr>
+
+    <div class="row-fluid">
+        <form id="switchboard" action="/dev/switchboard" method="POST">
+            <input type="hidden" name="lastModified" value="@lastModified" />
+            @switchGroups.map { case (group, switches) =>
+                <h4 id="@views.support.URLEncode(group.name)">@group.name</h4>
+                @for(description <- group.description){
+                    <p class="sub-heading">@description</p>
+                }
+                <div class="well">
+                    @switches.map { switch =>
+                        @defining(Switch.expiry(switch)) { expiry =>
+                            <div class="checkbox">
+                                <label for="switch-@switch.name"
+                                    @if(Switch.expiry(switch).expiresSoon) {
+                                        class="Expiring @if(expiry.hasExpired){expired} else {expiry-days-@expiry.daysToExpiry}"
+                                    }
+                                >
+                                    <input id="switch-@switch.name" name="@switch.name" type="checkbox" @if(switch.isSwitchedOn) {
+                                        checked="checked" }/>
+                                    <strong>@switch.name</strong>
+                                </label>
+                                <span> - @switch.description
+                                    @expiry.daysToExpiry.map{ days => <strong> @days</strong> days left}</span>
+                            </div>
+                        }
+                    }
+                </div>
+            }
+            <input class="btn btn-large btn-success" type="submit" value="Save">
+        </form>
+    </div>
+    }
 }

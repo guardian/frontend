@@ -3,8 +3,8 @@ package controllers
 import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import common._
-import conf.LiveContentApi
-import conf.LiveContentApi.getResponse
+import contentapi.ContentApiClient
+import contentapi.ContentApiClient.getResponse
 import implicits.Requests
 import model._
 import play.api.mvc.{Action, Controller, RequestHeader}
@@ -26,14 +26,14 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
 
     def isCurrentStory(content: ApiContent) = content.fields.flatMap(_.shortUrl).exists(_ == currentShortUrl)
 
-    val promiseOrResponse = getResponse(LiveContentApi.search(edition)
+    val promiseOrResponse = getResponse(ContentApiClient.search(edition)
       .section(sectionId)
       .tag("type/video")
       .showTags("all")
       .showFields("all")
     ).map {
         response =>
-          response.results filter { content => !isCurrentStory(content) } map { result =>
+          response.results.toList filter { content => !isCurrentStory(content) } map { result =>
             Content(result)
           } collect {
             case v: Video => v
@@ -68,12 +68,12 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
 
     def isCurrentStory(content: ApiContent) = content.fields.flatMap(_.shortUrl).exists(_ == currentShortUrl)
 
-    val promiseOrResponse = getResponse(LiveContentApi.item(seriesId, edition)
+    val promiseOrResponse = getResponse(ContentApiClient.item(seriesId, edition)
       .tag("type/video")
       .showTags("all")
       .showFields("all")
     ).map { response =>
-      response.results filter { content => !isCurrentStory(content) } map { result =>
+      response.results.getOrElse(Nil) filter { content => !isCurrentStory(content) } map { result =>
         Content(result)
       } collect {
         case v: Video => v

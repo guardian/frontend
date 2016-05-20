@@ -1,0 +1,182 @@
+.adverts--soulmates {
+    @include mq($until: tablet) {
+        // In the soulmates component, we want to show rows of 3 profiles
+        // on mobile. Except if this is a manual component.
+        &:not(.adverts--manual) .adverts__row {
+            > * {
+                flex-basis: calc(33.33% - #{$gs-gutter});
+                &:nth-child(even)::before {
+                    content: none;
+                }
+                &:nth-child(3n+2)::before,
+                &:nth-child(3n+3)::before {
+                    @include separator($neutral-4, $gs-gutter / -2);
+                }
+            }
+
+            > :nth-child(3) {
+                margin-top: 0;
+            }
+        }
+
+        > .adverts__header {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
+
+    > .adverts__header .inline-logo-soulmates > svg {
+        width: 100px;
+        height: 21px;
+
+        @include mq(mobileLandscape) {
+            width: 120px;
+            height: 28px;
+            padding: 0;
+        }
+
+        @include mq(leftCol, $until: wide) {
+            width: 100px;
+            height: 21px;
+        }
+    }
+
+    .adverts__blurb {
+        margin-bottom: $gs-baseline;
+    }
+
+    .adverts__ctas {
+        .button {
+            display: flex;
+            align-items: center;
+        }
+
+        svg {
+            display: inline-block;
+            width: initial;
+            height: initial;
+            margin-right: $gs-gutter / 2;
+            vertical-align: middle;
+        }
+    }
+
+    .search {
+        margin: 0 0 $gs-baseline / 2;
+
+        @include mq(tablet) {
+            flex-basis: gs-span(3);
+            flex-grow: 0;
+        }
+    }
+
+    .search__field {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid $soulmates-border-colour;
+        padding-bottom: $gs-baseline / 2;
+        margin-bottom: $gs-baseline / 2;
+    }
+
+    .search__label {
+        line-height: 1;
+    }
+
+    .search__submit {
+        float: right;
+    }
+}
+
+.adverts--tone-soulmates {
+    background: $soulmates-background;
+
+    > .adverts__header {
+        background: $soulmates-colour;
+    }
+
+    .adverts__blurb {
+        @include fs-headline(2);
+        font-weight: bold;
+
+        &::before {
+            content: '';
+            display: block;
+            margin: $gs-baseline * 2 0 $gs-baseline;
+            width: 20px;
+            height: 1px;
+            background: #666666;
+        }
+    }
+
+    .adverts__ctas {
+        .button {
+            background: none;
+            border: 0;
+        }
+    }
+
+    .search {
+        @include fs-textSans(2);
+    }
+}
+
+.advert-blended--soulmates {
+    background: $soulmates-background;
+    box-sizing: border-box;
+    padding: 0 $gs-gutter / 4;
+
+    .inline-logo-soulmates {
+        > svg {
+            height: 22px;
+            width: 116px;
+        }
+    }
+
+    .advert-blended__title {
+        background: $soulmates-colour;
+        margin: 0 $gs-gutter / -4 5px;
+        padding: 4px $gs-gutter / 4 0;
+    }
+
+    .advert-blended__body {
+        display: flex;
+
+        > * {
+            width: calc(50% - #{$gs-gutter / 4});
+        }
+
+        > * + * {
+            margin-left: $gs-gutter / 2;
+        }
+    }
+}
+
+.advert--soulmate {
+    &:not(.advert--manual) {
+        .advert__image-container {
+            height: 7 * $gs-baseline;
+        }
+    }
+
+    .button {
+        @include button-colour(
+            $soulmates-accent-colour,
+            null
+        );
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+        .button {
+            @include button-colour(
+                $neutral-2,
+                null
+            );
+        }
+    }
+}
+
+.logo--tone-soulmates {
+    fill: #ffffff;
+}

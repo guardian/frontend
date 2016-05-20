@@ -1,20 +1,35 @@
 define([
     'bonzo',
+    'Promise',
     'common/utils/$',
     'common/utils/config',
-    'common/utils/fastdom-idle',
-    'lodash/collections/forEach'
+    'common/utils/fastdom-promise',
+
+    'common/modules/commercial/creatives/commercial-component',
+    'common/modules/commercial/creatives/gu-style-comcontent',
+    'common/modules/commercial/creatives/frame',
+    'common/modules/commercial/creatives/facebook',
+    'common/modules/commercial/creatives/expandable',
+    'common/modules/commercial/creatives/expandable-v2',
+    'common/modules/commercial/creatives/expandable-v3',
+    'common/modules/commercial/creatives/expandable-video',
+    'common/modules/commercial/creatives/expandable-video-v2',
+    'common/modules/commercial/creatives/fabric-v1',
+    'common/modules/commercial/creatives/fabric-expanding-v1',
+    'common/modules/commercial/creatives/fabric-expandable-video-v1',
+    'common/modules/commercial/creatives/fluid250',
+    'common/modules/commercial/creatives/fluid250GoogleAndroid',
+    'common/modules/commercial/creatives/hosted-thrasher',
+    'common/modules/commercial/creatives/scrollable-mpu',
+    'common/modules/commercial/creatives/scrollable-mpu-v2',
+    'common/modules/commercial/creatives/template'
 ], function (
     bonzo,
+    Promise,
     $,
     config,
-    idleFastdom,
-    forEach
+    fastdom
 ) {
-    var breakoutClasses = [
-        'breakout__html',
-        'breakout__script'
-    ];
 
     /**
      * Allows ad content to break out of their iframes. The ad's content must have one of the above breakoutClasses.
@@ -22,64 +37,43 @@ define([
      */
     function breakoutIFrame(iFrame, $slot) {
         /*eslint-disable no-eval*/
-        var shouldRemoveIFrame = false,
-            $iFrame            = bonzo(iFrame),
-            iFrameBody         = iFrame.contentDocument.body,
-            $iFrameParent      = $iFrame.parent(),
-            type               = {};
+        var $iFrame = bonzo(iFrame);
+        var iFrameBody = iFrame.contentDocument.body;
+        var $breakoutEl;
 
-        if (iFrameBody) {
-            forEach(breakoutClasses, function (breakoutClass) {
-                $('.' + breakoutClass, iFrameBody).each(function (breakoutEl) {
-                    var creativeConfig,
-                        $breakoutEl     = bonzo(breakoutEl),
-                        breakoutContent = $breakoutEl.html();
+        $breakoutEl = $('.breakout__html, .breakout__script', iFrameBody);
 
-                    if (breakoutClass === 'breakout__script') {
-                        // new way of passing data from DFP
-                        if ($breakoutEl.attr('type') === 'application/json') {
-                            creativeConfig = JSON.parse(breakoutContent);
-                            if (config.switches.newCommercialContent && creativeConfig.name === 'gu-style-comcontent') {
-                                creativeConfig.name = 'paidfor-content';
-                            }
-                            require(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
-                                new Creative($slot, creativeConfig.params, creativeConfig.opts).create();
-                            });
-                        } else {
-                            // evil, but we own the returning js snippet
-                            eval(breakoutContent);
-                        }
-
-                        type = {
-                            type: creativeConfig.params.adType || '',
-                            variant: creativeConfig.params.adVariant || ''
-                        };
-
-                    } else {
-                        idleFastdom.write(function () {
-                            $iFrameParent.append(breakoutContent);
-                            $breakoutEl.remove();
-                        });
-
-                        $('.ad--responsive', $iFrameParent[0]).each(function (responsiveAd) {
-                            window.setTimeout(function () {
-                                idleFastdom.write(function () {
-                                    bonzo(responsiveAd).addClass('ad--responsive--open');
-                                });
-                            }, 50);
-                        });
-                    }
-                    shouldRemoveIFrame = true;
-                });
-            });
-        }
-        if (shouldRemoveIFrame) {
-            idleFastdom.write(function () {
+        if ($breakoutEl.hasClass('breakout__html')) {
+            return fastdom.write(function () {
                 $iFrame.hide();
+                $breakoutEl.detach();
+                $slot.append($breakoutEl[0].innerHTML);
+            });
+        } else if ($breakoutEl.hasClass('breakout__script')) {
+            return fastdom.write(function () {
+                $iFrame.hide();
+            }).then(function () {
+                var breakoutContent = $breakoutEl.html();
+                if ($breakoutEl.attr('type') === 'application/json') {
+                    var creativeConfig = JSON.parse(breakoutContent);
+                    if (creativeConfig.name === 'fluid250-v4' || creativeConfig.name === 'fluid250-v3') {
+                        creativeConfig.name = 'fluid250';
+                    } else if (creativeConfig.name === 'foundation-funded-logo') {
+                        creativeConfig.name = 'template';
+                        creativeConfig.params.creative = 'logo';
+                        creativeConfig.params.type = 'funded';
+                    }
+                    return new Promise(function(resolve) {
+                        require(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
+                            resolve(new Creative($slot, creativeConfig.params, creativeConfig.opts).create());
+                        });
+                    });
+                } else {
+                    // evil, but we own the returning js snippet
+                    eval(breakoutContent);
+                }
             });
         }
-
-        return type;
     }
 
     return breakoutIFrame;

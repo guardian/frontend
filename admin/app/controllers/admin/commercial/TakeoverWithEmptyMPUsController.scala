@@ -9,13 +9,13 @@ import play.api.mvc.Controller
 
 object TakeoverWithEmptyMPUsController extends Controller {
 
-  def viewList() = AuthActions.AuthActionTest {
+  def viewList() = AuthActions.AuthActionTest { implicit request =>
     Ok(views.html.commercial.takeoverWithEmptyMPUs(
       environment.stage, TakeoverWithEmptyMPUs.fetchSorted())
     )
   }
 
-  def viewForm() = AuthActions.AuthActionTest {
+  def viewForm() = AuthActions.AuthActionTest { implicit request =>
     Ok(views.html.commercial.takeoverWithEmptyMPUsCreate(
       environment.stage, TakeoverWithEmptyMPUs.form)
     )

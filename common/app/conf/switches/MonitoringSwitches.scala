@@ -6,8 +6,17 @@ import org.joda.time.LocalDate
 trait MonitoringSwitches {
   // Monitoring
 
+  val OfflinePageView = Switch(
+    SwitchGroup.Monitoring,
+    "offline-page-view",
+    "If this switch is on, views of the offline page will be beaconed to cloudwatch when you come online again",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 3),
+    exposeClientSide = true
+  )
+
   val OphanSwitch = Switch(
-    "Monitoring",
+    SwitchGroup.Monitoring,
     "ophan",
     "Enables the new Ophan tracking javascript",
     safeState = On,
@@ -15,26 +24,26 @@ trait MonitoringSwitches {
     exposeClientSide = true
   )
 
-  val DiagnosticsLogging = Switch(
-    "Monitoring",
-    "enable-diagnostics-logging",
-    "If this switch is on, then js error reports and requests sent to the Diagnostics servers will be logged.",
-    safeState = On,
+  val SentryReporting = Switch(
+    SwitchGroup.Monitoring,
+    "enable-sentry-reporting",
+    "If this switch is on, then js errors will be reported to Sentry.",
+    safeState = Off,
     never,
     exposeClientSide = true
   )
 
-  val MetricsSwitch = Switch(
-    "Monitoring",
-    "enable-metrics-non-prod",
-    "If this switch is on, then metrics will be pushed to cloudwatch on DEV and CODE",
+  val GoogleAnalyticsSwitch = Switch(
+    SwitchGroup.Monitoring,
+    "google-analytics",
+    "If this switch is on, then Google Analytics is enabled",
     safeState = Off,
-    never,
+    sellByDate = new LocalDate(2016, 8, 26),
     exposeClientSide = false
   )
 
   val ScrollDepthSwitch = Switch(
-    "Monitoring",
+    SwitchGroup.Monitoring,
     "scroll-depth",
     "Enables tracking and measurement of scroll depth",
     safeState = Off,
@@ -43,7 +52,7 @@ trait MonitoringSwitches {
   )
 
   val CssLogging = Switch(
-    "Monitoring",
+    SwitchGroup.Monitoring,
     "css-logging",
     "If this is on, then a subset of clients will post css selector information for diagnostics.",
     safeState = Off,
@@ -51,13 +60,31 @@ trait MonitoringSwitches {
     exposeClientSide = true
   )
 
+  val CspReporting = Switch(
+    SwitchGroup.Monitoring,
+    "csp-reporting",
+    "Enables logging of CSP violations",
+    safeState = Off,
+    never,
+    exposeClientSide = false
+  )
+
   val ThirdPartyEmbedTracking = Switch(
-    "Monitoring",
+    SwitchGroup.Monitoring,
     "third-party-embed-tracking",
     "Enables tracking on our off-site third party embedded content. Such as: videos on embed.theguardian.com.",
     safeState = Off,
     never,
     exposeClientSide = true
+  )
+
+  val LogstashLogging = Switch(
+    SwitchGroup.Monitoring,
+    "logstash-logging",
+    "Enables sending logs to Logstash",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
   )
 
 }

@@ -5,7 +5,7 @@ try {
     ((isVeryModern, document, window) => {
         if (isVeryModern) {
             function decodeBase64(str) {
-                return decodeURIComponent(encodeURIComponent(atob(str.replace(/-/g, '+').replace(/_/g, '/').replace(/,/g, '='))));
+                return decodeURIComponent(atob(str.replace(/-/g, '+').replace(/_/g, '/').replace(/,/g, '=')));
             }
 
             // Short version of cookie.get(), inspired by Google Analytics' code
@@ -26,16 +26,17 @@ try {
             var userData = cookieData ? JSON.parse(decodeBase64(cookieData.split('.')[0])) : null;
 
             if (userData) {
+                var displayName = decodeURIComponent(userData[2]);
                 window.guardian.config.user = {
                     id: userData[0],
-                    displayName: userData[2],
+                    displayName: displayName,
                     accountCreatedDate: userData[6],
                     emailVerified: userData[7],
                     rawResponse: cookieData
                 }
             }
         }
-    })(guardian.isModernBrowser && 'atob' in window, document, window);
+    })(guardian.isEnhanced && 'atob' in window, document, window);
 } catch (e) {
     @if(play.Play.isDev) {throw (e)}
 }

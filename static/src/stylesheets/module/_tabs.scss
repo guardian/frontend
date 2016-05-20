@@ -56,21 +56,21 @@ category: Common
     width: 50%;
     float: left;
     margin: 0;
-    border-top: 3px solid colour(neutral-6);
+    border-top: 3px solid $neutral-6;
 
     @include mq(tablet) {
         max-width: gs-span(3);
-        border-bottom: 1px solid colour(neutral-5);
+        border-bottom: 1px solid $neutral-5;
     }
 
     a,
     .tab__link {
+        @include fs-headline(2);
         display: block;
         box-sizing: border-box;
         min-height: $gs-row-height;
         padding: $gs-baseline/3 8px 0;
-        background-color: colour(neutral-6);
-        @include fs-headline(2);
+        background-color: $neutral-6;
         text-align: left;
         text-decoration: none;
 
@@ -122,7 +122,7 @@ category: Common
     z-index: 1;
 
     @include mq(tablet) {
-        border-top: 1px solid colour(neutral-5);
+        border-top: 1px solid $neutral-5;
     }
 }
 

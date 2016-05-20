@@ -28,6 +28,9 @@ define([
 
         return new Promise(function (resolve) {
 
+            var queue = items;
+            var workers = 0;
+
             function onComplete() {
                 workers--;
                 if (queue.length) {
@@ -47,9 +50,7 @@ define([
                 return;
             }
 
-            var initialItems = items.splice(0, concurrentLimit),
-                queue = items,
-                workers = 0;
+            var initialItems = items.splice(0, concurrentLimit);
 
             forEach(initialItems, start);
         });

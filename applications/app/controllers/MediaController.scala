@@ -1,12 +1,11 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.{Content => ApiContent}
-import com.gu.contentapi.client.model.ItemResponse
+import com.gu.contentapi.client.model.v1.{ContentFields, ItemResponse, Content => ApiContent}
 import common._
-import conf.LiveContentApi.getResponse
-import conf._
+import contentapi.ContentApiClient
 import conf.switches.Switches
 import model._
+import play.api.libs.json.{Format, JsObject, Json}
 import play.api.mvc._
 import views.support.RenderOtherStatus
 
@@ -21,18 +20,27 @@ object MediaController extends Controller with RendersItemResponse with Logging 
   def renderJson(path: String) = render(path)
   def render(path: String) = Action.async { implicit request => renderItem(path) }
 
+  def renderInfoJson(path: String) = Action.async { implicit request =>
+    lookup(path) map {
+      case Left(model)  => MediaInfo(expired = false, shouldHideAdverts = model.media.content.shouldHideAdverts)
+      case Right(other) => MediaInfo(expired = true, shouldHideAdverts = true)
+    } map { mediaInfo =>
+      Cached(60)(JsonComponent(Json.toJson(mediaInfo).as[JsObject]))
+    }
+  }
+
   private def lookup(path: String)(implicit request: RequestHeader) = {
     val edition = Edition(request)
 
     log.info(s"Fetching media: $path for edition $edition")
-    val response: Future[ItemResponse] = getResponse(
-      LiveContentApi.item(path, edition)
+    val response: Future[ItemResponse] = ContentApiClient.getResponse(
+      ContentApiClient.item(path, edition)
         .showFields("all")
     )
 
     val result = response map { response =>
       val mediaOption: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
-      val model = mediaOption map { media => MediaPage(media, RelatedContent(media, response)) }
+      val model = mediaOption map { media => MediaPage(media, StoryPackages(media, response)) }
 
       ModelOrResult(model, response)
     }
@@ -53,4 +61,9 @@ object MediaController extends Controller with RendersItemResponse with Logging 
 
   private def isSupported(c: ApiContent) = c.isVideo || c.isAudio
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
+}
+
+case class MediaInfo(expired: Boolean, shouldHideAdverts: Boolean)
+object MediaInfo {
+  implicit val jsonFormats: Format[MediaInfo] = Json.format[MediaInfo]
 }

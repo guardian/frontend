@@ -1,0 +1,11 @@
+@(soulmate: model.commercial.soulmates.Member,
+  clickMacro: Option[String],
+  optClassNames: Option[Seq[String]] = None)
+
+<a class="advert advert--soulmate @optClassNames.map { classNames => @classNames.mkString(" ")}" href="@clickMacro@soulmate.profileUrl" data-link-name="merchandising-soulmates-v2_2_2014-03-28-profile-@{soulmate.gender}">
+    <h2 class="advert__title u-text-hyphenate" itemprop="name">@soulmate.username</h2>
+    <div class="advert__image-container">
+        <img class="advert__image" src="@soulmate.profilePhoto">
+    </div>
+    <div class="advert__meta">@soulmate.age, @soulmate.location</div>
+</a>

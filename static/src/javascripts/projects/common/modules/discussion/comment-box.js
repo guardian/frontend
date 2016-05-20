@@ -67,19 +67,25 @@ CommentBox.prototype.classes = {};
  * @override
  */
 CommentBox.prototype.errorMessages = {
+    /* Discussion API error codes - See DAPI exceptions and associated error messages  */
     EMPTY_COMMENT_BODY: 'Please write a comment.',
     COMMENT_TOO_LONG: 'Your comment must be fewer than 5000 characters long.',
-    HTTP_420: 'You can only post one comment every minute. Please try again in a moment.',
-    HTTP_0: /*CORS blocked by HTTP/1.0 proxy*/'Could not post due to your internet settings, which might be controlled by your provider. Please contact your administrator or disable any proxy servers or VPNs and try again.',
     USER_BANNED: 'Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>).',
+    DISCUSSION_CLOSED: 'Sorry your comment can not be published as the discussion is now closed for comments.',
+    COMMENT_RATE_LIMIT_EXCEEDED: 'You can only post one comment every minute. Please try again in a moment.',
+    INVALID_PROTOCOL: 'Sorry your comment can not be published as it was not sent over a secure channel. Please report us this issue using the technical issue link in the page footer.',
+    AUTH_COOKIE_INVALID: 'Sorry, your comment was not published as you are no longer signed in. Please sign in and try again.',
+    'READ-ONLY-MODE': 'Sorry your comment can not currently be published as commenting is undergoing maintenance but will be back shortly. Please try again in a moment.',
+    /* Custom error codes */
+    API_CORS_BLOCKED: /*CORS blocked by HTTP/1.0 proxy*/'Could not post due to your internet settings, which might be controlled by your provider. Please contact your administrator or disable any proxy servers or VPNs and try again.',
     API_ERROR: 'Sorry, there was a problem posting your comment.  Please try another browser or network connection.  Reference code ',
     EMAIL_VERIFIED: '<span class="d-comment-box__error-meta">Sent. Please check your email to verify ' +
         ' your email address' + '. Once verified post your comment.</span>',
     EMAIL_VERIFIED_FAIL: 'We are having technical difficulties. Please try again later or ' +
         '<a href="/send/email" class="js-id-send-validation-email"><strong>resend the verification</strong></a>.',
-    EMAIL_NOT_VERIFIED: 'Please confirm your email address to post your first comment.<br />' +
-        'If you can\'t find the email, we can <a href="_#" class="js-id-send-validation-email"><strong>resend the verification email</strong></a><span class="d-comment-box__error-meta"> to ' +
-        ' your email address' + '.</span>'
+    EMAIL_NOT_VALIDATED: 'Please confirm your email address to comment.<br />' +
+        'If you can\'t find the email, we can <a href="_#" class="js-id-send-validation-email"><strong>resend the verification email</strong></a> to ' +
+        ' your email address' + '.'
 };
 
 /**
@@ -90,6 +96,7 @@ CommentBox.prototype.defaultOptions = {
     apiRoot: null,
     maxLength: 5000,
     premod: false,
+    newCommenter: false,
     focus: false,
     state: 'top-level',
     replyTo: null,
@@ -139,6 +146,26 @@ CommentBox.prototype.prerender = function() {
     }
 };
 
+CommentBox.prototype.showOnboarding = function(e) {
+    e.preventDefault();
+
+    // Check if new commenter as they may have already commented on this article
+    if (this.hasState('onboarding-visible') || !this.options.newCommenter) {
+        this.options.newCommenter = false;
+        this.removeState('onboarding-visible');
+        this.postComment();
+    } else {
+        this.getElem('onboarding-author').innerHTML = this.getUserData().displayName;
+        this.setState('onboarding-visible');
+        this.previewComment(this.onboardingPreviewSuccess);
+    }
+};
+
+CommentBox.prototype.hideOnboarding = function(e) {
+    e.preventDefault();
+    this.removeState('onboarding-visible');
+};
+
 /** @override */
 CommentBox.prototype.ready = function() {
     if (this.getDiscussionId() === null) {
@@ -150,12 +177,19 @@ CommentBox.prototype.ready = function() {
     this.setFormState();
 
     // TODO (jamesgorrie): Could definitely use the this.on and make the default context this
-    bean.on(document.body, 'submit', [this.elem], this.postComment.bind(this));
+
+    if (this.options.newCommenter) {
+         bean.on(document.body, 'submit', [this.elem], this.showOnboarding.bind(this));
+         bean.on(document.body, 'click', this.getClass('onboarding-cancel'), this.hideOnboarding.bind(this));
+    } else {
+        bean.on(document.body, 'submit', [this.elem], this.submitPostComment.bind(this));
+    }
+
     bean.on(document.body, 'change keyup', [commentBody], this.setFormState.bind(this));
     bean.on(commentBody, 'focus', this.setExpanded.bind(this)); // this isn't delegated as bean doesn't support it
 
     this.on('change', '.d-comment-box__body', this.resetPreviewComment);
-    this.on('click', this.getClass('preview'), this.previewComment);
+    this.on('click', this.getClass('preview'), this.previewComment.bind(this, this.previewCommentSuccess));
     this.on('click', this.getClass('hide-preview'), this.resetPreviewComment);
 
     this.on('click', this.getClass('cancel'), this.cancelComment);
@@ -189,13 +223,22 @@ CommentBox.prototype.urlify = function(str) {
 /**
  * @param {Event}
  */
-CommentBox.prototype.postComment = function(e) {
+CommentBox.prototype.submitPostComment = function(e) {
+    e.preventDefault();
+    this.postComment();
+};
+
+CommentBox.prototype.invalidEmailError = function () {
+   this.error('EMAIL_NOT_VALIDATED');
+   ValidationEmail.init();
+};
+
+CommentBox.prototype.postComment = function() {
     var self = this,
         comment = {
             body: this.elem.body.value
         };
 
-    e.preventDefault();
     self.clearErrors();
 
     var validEmailCommentSubmission = function () {
@@ -221,11 +264,6 @@ CommentBox.prototype.postComment = function(e) {
         }
     };
 
-    var invalidEmailError = function () {
-        self.error('EMAIL_NOT_VERIFIED');
-        ValidationEmail.init();
-    };
-
     if (!self.getUserData().emailVerified) {
         // Cookie could be stale so lets refresh and check from the api
         var createdDate = new Date(self.getUserData().accountCreatedDate);
@@ -234,7 +272,7 @@ CommentBox.prototype.postComment = function(e) {
                 if (response.user.statusFields.userEmailValidated === true) {
                     validEmailCommentSubmission();
                 } else {
-                    invalidEmailError();
+                    self.invalidEmailError();
                 }
             });
         } else {
@@ -252,7 +290,7 @@ CommentBox.prototype.postComment = function(e) {
  */
 CommentBox.prototype.error = function(type, message) {
 
-    if (type === 'HTTP_0') {
+    if (type === 'API_CORS_BLOCKED') {
         beacon.counts('comment-http-proxy-error', 'comment-error');
     } else {
         beacon.counts('comment-error');
@@ -298,13 +336,19 @@ CommentBox.prototype.fail = function(xhr) {
 
     this.setFormState();
 
-    if (this.errorMessages['HTTP_' + xhr.status]) {
-        this.error('HTTP_' + xhr.status);
+    if (xhr.status == 0) {
+        this.error('API_CORS_BLOCKED');
+    } else if (response.errorCode === 'EMAIL_NOT_VALIDATED') {
+        this.invalidEmailError();
     } else if (this.errorMessages[response.errorCode]) {
         this.error(response.errorCode);
     } else {
         this.error('API_ERROR', this.errorMessages.API_ERROR + xhr.status);// templating would be ideal here
     }
+};
+
+CommentBox.prototype.onboardingPreviewSuccess = function(comment, resp) {
+    this.getElem('onboarding-preview-body').innerHTML = resp.commentBody;
 };
 
 /**
@@ -373,13 +417,12 @@ CommentBox.prototype.verificationEmailFail = function() {
 /**
  * @param {Event=} e (optional)
  */
-CommentBox.prototype.previewComment = function(e) {
+CommentBox.prototype.previewComment = function(callback) {
     var self = this,
         comment = {
             body: this.getElem('body').value
         };
 
-    e.preventDefault();
     self.clearErrors();
 
     if (comment.body === '') {
@@ -395,7 +438,7 @@ CommentBox.prototype.previewComment = function(e) {
     if (self.errors.length === 0) {
         DiscussionApi
             .previewComment(comment)
-            .then(self.previewCommentSuccess.bind(self, comment), self.fail.bind(self));
+            .then(callback.bind(self, comment), self.fail.bind(self));
     }
 };
 
@@ -430,6 +473,10 @@ CommentBox.prototype.formatComment = function(formatStyle) {
     var cursorPositionStart = commentBody.selectionStart;
     var selectedText = commentBody.value.substring(commentBody.selectionStart, commentBody.selectionEnd);
 
+    var selectNewText = function(newText) {
+        commentBody.setSelectionRange(cursorPositionStart, cursorPositionStart + newText.length);
+    };
+
     var formatSelection = function(startTag, endTag) {
         var newText = startTag + selectedText + endTag;
 
@@ -454,10 +501,6 @@ CommentBox.prototype.formatComment = function(formatStyle) {
 
         commentBody.value = commentBody.value.substring(0, commentBody.selectionStart) +
             newText + commentBody.value.substring(commentBody.selectionEnd);
-    };
-
-    var selectNewText = function(newText) {
-        commentBody.setSelectionRange(cursorPositionStart, cursorPositionStart + newText.length);
     };
 
     switch(formatStyle) {

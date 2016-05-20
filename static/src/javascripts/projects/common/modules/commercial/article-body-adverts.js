@@ -37,9 +37,9 @@ define([
             minAbove: detect.isBreakpoint({ max: 'tablet' }) ? 300 : 700,
             minBelow: 300,
             selectors: {
-                ' > h2': {minAbove: detect.getBreakpoint() === 'mobile' ? 20 : 0, minBelow: 250},
-                ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
-                ' .ad-slot': {minAbove: 500, minBelow: 500}
+                ' > h2': {minAbove: detect.getBreakpoint() === 'mobile' ? 100 : 0, minBelow: 250},
+                ' .ad-slot': {minAbove: 500, minBelow: 500},
+                ' > :not(p):not(h2):not(.ad-slot)': {minAbove: 35, minBelow: 400}
             }
         };
     }
@@ -48,7 +48,8 @@ define([
         if (!inlineMerchRules) {
             inlineMerchRules = getRules();
             inlineMerchRules.minAbove = 300;
-            inlineMerchRules.selectors[' > h2'].minAbove = 20;
+            inlineMerchRules.selectors[' > h2'].minAbove = 100;
+            inlineMerchRules.selectors[' > :not(p):not(h2):not(.ad-slot)'].minAbove = 200;
         }
         return inlineMerchRules;
     }
@@ -96,7 +97,13 @@ define([
 
         function insertInlineAd(paras) {
             bodyAds += 1;
-            insertAdAtPara(paras[0], 'inline' + bodyAds, 'inline');
+            var isFabricTopReplacement = config.switches.fabricAdverts && (bodyAds === 1) && detect.isBreakpoint({max: 'phablet'});
+
+            // Note that the names 'inline1' to 'inline8' are used by passbacks for retargeting -
+            // check with adOps before changing these labels
+            var adDefinition = isFabricTopReplacement ? 'inline1-fabric' : ('inline' + bodyAds);
+
+            insertAdAtPara(paras[0], adDefinition, 'inline');
         }
     }
 
@@ -107,7 +114,7 @@ define([
 
     // If a merchandizing component has been rendered but is empty,
     // we allow a second pass for regular inline ads. This is because of
-    // the decoupling between the spacefinder algorightm and the targeting
+    // the decoupling between the spacefinder algorithm and the targeting
     // in DFP: we can only know if a slot can be removed after we have
     // received a response from DFP
     function onAdRendered(event) {
@@ -136,8 +143,8 @@ define([
             addInlineMerchAd(getInlineMerchRules());
         }
 
-        if (config.switches.viewability && detect.getBreakpoint() !== 'mobile') {
-            return addArticleAds(2, rules).then(function (countAdded) {
+        return config.switches.viewability ?
+            addArticleAds(2, rules).then(function (countAdded) {
                 if (config.page.hasInlineMerchandise && countAdded === 0) {
                     mediator.on('modules:commercial:dfp:rendered', onAdRendered);
                 }
@@ -145,16 +152,8 @@ define([
                 return countAdded === 2 ?
                     addArticleAds(8, getLongArticleRules()) :
                     countAdded;
-            });
-        } else {
-            return tryAddingAdvert(rules).then(function (trySuccessful) {
-                if (trySuccessful && detect.isBreakpoint({max: 'tablet'})) {
-                    return tryAddingAdvert(rules);
-                } else {
-                    return null;
-                }
-            });
-        }
+            }) :
+            addArticleAds(2, rules);
     }
 
     return {

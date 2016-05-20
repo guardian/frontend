@@ -1,7 +1,6 @@
 package implicits
 
-import com.gu.contentapi.client.model.ItemResponse
-
+import com.gu.contentapi.client.model.v1.ItemResponse
 
 trait ItemResponses {
   implicit class ItemResponse2isType(i: ItemResponse) {

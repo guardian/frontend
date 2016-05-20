@@ -29,7 +29,7 @@ define([
 
                 config.tests = [];
 
-                // a list of ab-tests that can be used in the spec's
+                // a list of ab-tests that can be used in the specs
                 test = {
                     one: new ABTest('DummyTest'),
                     two: new ABTest('DummyTest2')
@@ -261,6 +261,30 @@ define([
                 expect(ab.makeOmnitureTag()).toBe('AB | DummyTest | control');
             });
 
+            it('should generate the correct structure for Ophan', function() {
+                ab.addTest(test.one);
+                ab.segment();
+
+                expect(ab.getAbLoggableObject()).toEqual({
+                    'DummyTest': {
+                        variantName: 'control',
+                        complete: 'false'
+                    }
+                });
+            });
+
+            it('should fire the success function', function() {
+                var spy = sinon.spy();
+
+                ab.addTest(test.one);
+
+                test.one.variants[0].success = spy;
+
+                ab.segment();
+                ab.run();
+
+                expect(spy).toHaveBeenCalled();
+            });
         });
 
     });

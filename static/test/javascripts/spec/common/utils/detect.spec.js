@@ -7,46 +7,6 @@ define([
     $,
     detect
 ) {
-    describe('Connection speed', function () {
-
-        it('should default to \'high\' speed', function () {
-            window.performance = null;
-            expect(detect.getConnectionSpeed()).toBe('high');
-        });
-
-        it('should calculate the speed of a slow, medium & fast client request', function () {
-
-            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseEnd: 8000 } })).toBe('low');
-
-            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseEnd: 3000 } })).toBe('medium');
-
-            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseEnd: 750 } })).toBe('high');
-
-        });
-
-        it('should return low if CELL connection can be determined', function () {
-
-            expect(detect.getConnectionSpeed(null, { type: 3})).toBe('low'); // type 3 is CELL_2G
-
-            expect(detect.getConnectionSpeed(null, { type: 4})).toBe('low'); // type 4 is CELL_3G
-
-            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseEnd: 750 } }, { type: 4})).toBe('low');
-
-            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseEnd: 8000 } }, { type: 6})).toBe('low');
-
-            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseEnd: 750 } }, { type: 6})).toBe('high');
-
-        });
-
-        it('should return high or unknown if the speed can\'t be determined', function () {
-
-            expect(detect.getConnectionSpeed(null, null)).toBe('high');
-
-            expect(detect.getConnectionSpeed(null, null, true)).toBe('unknown');
-
-        });
-    });
-
     describe('Breakpoint', function () {
         beforeEach(function () {
             this.originalGetViewport = detect.getViewport;

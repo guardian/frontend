@@ -1,5 +1,5 @@
 @import common.dfp.TakeoverWithEmptyMPUs
-@(env: String, takeovers: Seq[TakeoverWithEmptyMPUs])
+@(env: String, takeovers: Seq[TakeoverWithEmptyMPUs])(implicit request: RequestHeader)
 @import TakeoverWithEmptyMPUs.timeViewFormatter
 
 @admin_main("Takeovers with Empty MPUs", env, isAuthed = true) {

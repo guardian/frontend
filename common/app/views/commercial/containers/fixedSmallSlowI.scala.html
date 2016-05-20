@@ -1,0 +1,13 @@
+@import views.support.commercial.TrackingCodeBuilder.mkInteractionTrackingCode
+@(frontId: String,
+  containerIndex: Int,
+  containerModel: common.commercial.ContainerModel)(implicit request: RequestHeader)
+
+<div class="adverts__row">
+    @containerModel.content.initialCards.take(1).map(card => views.html.commercial.cards.itemLargeCard(
+                            card,
+                            cardType = cards.FullMedia75,
+                            optAdvertClassNames = Some(Seq("large--1x3", "paidfor")),
+                            omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
+                            useCardBranding = !containerModel.isSingleSponsorContainer))
+</div>

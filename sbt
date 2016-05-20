@@ -2,8 +2,6 @@
 
 set -o errexit
 
-bundle install --system
-
 if [ -f "~/.sbtconfig" ]; then
   . ~/.sbtconfig
 fi

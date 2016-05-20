@@ -6,15 +6,22 @@
 # For dev machines
 GET        /assets/*path                                                            dev.DevAssetsController.at(path)
 
-GET        /_healthcheck                                                            conf.HealthCheck.healthcheck()
-GET        /_fronts_cdn_healthcheck                                                 conf.HealthCheck.cdnHealthcheck()
+GET        /_healthcheck                                                            conf.HealthCheck.healthCheck()
+GET        /_fronts_cdn_healthcheck                                                 conf.HealthCheck.healthCheck()
 
 GET        /_agentcontents                                                          controllers.FaciaController.renderAgentContents
 
 GET        /humans.txt                                                              controllers.Assets.at(path="/public", file="humans.txt")
 GET        /rockabox/rockabox_buster.html                                           controllers.Assets.at(path="/public", file="rockabox_buster.html")
 GET        /external/eyeblaster/addineyeV2.html                                     controllers.Assets.at(path="/public", file="addineyeV2.html")
+GET        /amp/remote.html                                                         controllers.Assets.at(path="/public", file="amp_remote.html")
+GET        /facebook-ia/remote.html                                                 controllers.Assets.at(path="/public", file="facebook_ia_remote.html")
 
+# AMP
+GET        /container/count/:count/offset/:offset/mf2.json                                      controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section = "", edition = "")
+GET        /container/count/:count/offset/:offset/section/:section/mf2.json                     controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section, edition = "")
+GET        /container/count/:count/offset/:offset/edition/:edition/mf2.json                     controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section = "", edition)
+GET        /container/count/:count/offset/:offset/section/:section/edition/:edition/mf2.json    controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section, edition)
 
 #Facia Press
 GET        /collection/*id/rss                                                      controllers.FaciaController.renderCollectionRss(id)
@@ -22,10 +29,6 @@ GET        /container/use-layout/*id.json                                       
 GET        /container/*path/some/:num/:offset/:containerNameToFilter/:edition.json  controllers.FaciaController.renderSomeFrontContainers(path, num, offset, containerNameToFilter, edition)
 GET        /container/*id.json                                                      controllers.FaciaController.renderContainerJson(id)
 GET        /most-relevant-container/*path.json                                      controllers.FaciaController.renderMostRelevantContainerJson(path)
-
-# AMP
-GET        /container-mf2/:num/:offset/:section.json                                controllers.FaciaController.frontContainersMf2EditionRedirect(num, offset, section)
-GET        /container-mf2/:num/:offset/:section/:edition.json                       controllers.FaciaController.renderSomeFrontContainersMf2(num, offset, section, edition)
 
 # Editionalised pages
 GET        /*path/show-more/*id.json                                                controllers.FaciaController.renderShowMore(path, id)

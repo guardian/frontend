@@ -25,7 +25,7 @@ $breaking-news-close-icon-width: 32px;
         border-color: #ffffff;
 
         @include mq(tablet) {
-            border-color: colour(live-mute);
+            border-color: $live-mute;
         }
 
         &:hover {
@@ -46,11 +46,11 @@ $breaking-news-close-icon-width: 32px;
 .breaking-news__item {
     display: block;
     padding: 0 0 $gs-baseline;
-    background: fade-out(colour(live-default), 1 - .95);
+    background: fade-out($live-default, 1 - .95);
     transition: background-color .25s ease;
 
     &:hover {
-        background-color: darken(colour(live-default), 2%);
+        background-color: darken($live-default, 2%);
     }
 
     & + & {
@@ -59,9 +59,9 @@ $breaking-news-close-icon-width: 32px;
 }
 
 .breaking-news__item-content {
+    @include gs-container;
     box-sizing: border-box;
     padding: ($gs-baseline * .5) 0 $gs-baseline ($gs-gutter + $breaking-news-icon-width);
-    @include gs-container;
 
     @include mq(wide) {
         .has-page-skin & {
@@ -92,7 +92,7 @@ $breaking-news-close-icon-width: 32px;
 }
 
 .breaking-news__item-kicker {
-    color: colour(live-mute);
+    color: $live-mute;
     font-style: normal;
 }
 

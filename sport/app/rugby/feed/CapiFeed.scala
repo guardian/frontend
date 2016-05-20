@@ -1,7 +1,7 @@
 package rugby.feed
 
 import common.{Edition, Logging, ExecutionContexts}
-import conf.LiveContentApi
+import contentapi.ContentApiClient
 import model.{Content, ContentType}
 import org.joda.time.DateTimeZone
 import rugby.jobs.RugbyStatsJob
@@ -35,7 +35,7 @@ object CapiFeed extends ExecutionContexts with Logging {
 
     log.info(s"Looking for ${rugbyMatch.toString}")
 
-    LiveContentApi.getResponse(LiveContentApi.search(Edition.defaultEdition)
+    ContentApiClient.getResponse(ContentApiClient.search(Edition.defaultEdition)
       .section("sport")
       .tag(searchTags)
       .fromDate(matchDate.toDateTimeAtStartOfDay)

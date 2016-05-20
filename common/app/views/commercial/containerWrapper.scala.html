@@ -1,0 +1,32 @@
+@import views.support.SponsorDataAttributes
+@(classNames: Seq[String],
+  dataLinkName: Option[String] = None,
+  rowLayout: Option[String] = None,
+  badgeInHeader: Boolean = false,
+  optKicker: Option[Html] = None,
+  optBlurb: Option[Html] = None,
+  optActions: Option[Html] = None,
+  optStamp: Option[Html] = None,
+  optBadge: Option[Html] = None
+ )(title: Html)(innards: Html)
+
+<aside class="adverts @classNames.map(c => s"adverts--$c").mkString(" ")"
+    @for(dln <- dataLinkName){data-link-name="@dln"}
+    >
+    <header class="adverts__header">
+        @for(kicker   <- optKicker)  {<div class="adverts__kicker">@kicker</div>}
+        <h1 class="adverts__title">@title</h1>
+        @if(badgeInHeader) {
+            @for(badge        <- optBadge)   {<div class="adverts__badge adverts__badge--alt js-badge">@badge</div>}
+        }
+        @for(blurb    <- optBlurb)   {<div class="adverts__blurb">@blurb</div>}
+        @for(actions  <- optActions) {<div class="adverts__ctas">@actions</div>}
+        @for(stamp    <- optStamp)   {<div class="adverts__stamp">@stamp</div>}
+    </header>
+    <div class="adverts__body">
+        @innards
+        @if(!badgeInHeader) {
+            @for(badge        <- optBadge)   {<div class="adverts__badge js-badge">@badge</div>}
+        }
+    </div>
+</aside>

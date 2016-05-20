@@ -37,7 +37,7 @@ case class InlineVideo(
 object InlineImage {
   def fromFaciaContent(faciaContent: PressedContent): Option[InlineImage] =
     if (!faciaContent.display.imageHide) {
-      faciaContent.trailPicture(5, 3) map { picture =>
+      faciaContent.trailPicture map { picture =>
         InlineImage(picture)
       }
     } else {
@@ -45,7 +45,7 @@ object InlineImage {
     }
 }
 
-case class InlineImage(imageContainer: Element) extends FaciaDisplayElement
+case class InlineImage(imageMedia: ImageMedia) extends FaciaDisplayElement
 
 case class CrosswordSvg(id: String) extends FaciaDisplayElement {
   def persistenceId = id.stripPrefix("crosswords/")

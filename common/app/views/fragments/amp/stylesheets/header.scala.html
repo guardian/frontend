@@ -6,8 +6,8 @@
 
 .main-header .logo-wrapper {
     position: absolute;
-    top: 3px;
     right: 20px;
+    padding-top: 3px;
     width: inherit;
     text-align: right;
 }
@@ -28,78 +28,74 @@
 }
 
 @* Kicker style nav *@
-.main-header.variant-kicker {
+.main-header {
     height: 68px;
 }
 
-.main-navigation.variant-kicker {
+.main-navigation {
     position: absolute;
     top: 5px;
     left: 20px;
     line-height: 1.1;
 }
 
-.main-navigation.variant-kicker .main-navigation_link {
+.main-navigation .main-navigation_link {
     display: inline;
     font-family: "Guardian Egyptian Web",Georgia,serif;
     font-size: 22px;
 }
 
-.main-navigation.variant-kicker .main-navigation_link a {
+.main-navigation .main-navigation_link a {
     font-weight: 400;
     color: #aad8f1;
     display: inline-block;
 }
 
-.main-navigation.variant-kicker .main-navigation_link:first-of-type a {
-    color: #fff;
-}
-
-.main-navigation.variant-kicker .main-navigation_link::after {
+.main-navigation .main-navigation_link::after {
     content: "/";
     color: rgba(255,255,255,0.3);
 }
 
-.main-navigation.variant-kicker .main-navigation_link:last-of-type::after {
+.main-navigation .main-navigation_link:last-of-type::after {
     content:none;
 }
 
-.main-navigation.variant-kicker .main-navigation_link:nth-child(2)::after {
+.main-navigation .main-navigation_link:nth-child(2)::after {
     content: "\A";
     white-space: pre;
 }
 
 @@media (max-width: 480px) {
-    .main-navigation.variant-kicker {
+    .main-navigation {
         left: 10px;
     }
 }
 
 @@media (max-width: 390px) {
-    .main-navigation.variant-kicker .main-navigation_link{
+    .main-navigation .main-navigation_link{
         font-size: 20px;
     }
     .main-header .logo-wrapper svg {
         width: 170px;
         height: 32px;
     }
-    .main-header.variant-kicker {
+    .main-header {
         height: 63px;
     }
 }
 
 @@media (max-width: 360px) {
-    .main-navigation.variant-kicker .main-navigation_link{
+    .main-navigation .main-navigation_link{
         font-size: 18px;
     }
     .main-header .logo-wrapper svg {
         width: 160px;
         height: 30px;
     }
-    .main-header.variant-kicker {
+    .main-header {
         height: 57px;
     }
-    .main-navigation.variant-kicker {
+    .main-navigation {
         top: 6px;
     }
 }

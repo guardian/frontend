@@ -133,6 +133,16 @@ import collection.JavaConversions._
         And("I should see the image caption")
         findFirst("[itemprop='associatedMedia image'] [itemprop=description]").getText should
           be("Our rivers and natural resources are to be valued and commodified, a move that will benefit only the rich, argues George Monbiot. Photograph: Alamy")
+
+        And("I should see the image url")
+        findFirst("[itemprop='associatedMedia image'] [itemprop=url]").getAttribute("content") should
+          endWith("/img/static/sys-images/Guardian/Pix/pictures/2012/8/6/1344274684805/Gunnerside-village-Swaled-009.jpg?w=300&q=55&auto=format&usm=12&fit=max&s=5c104f891f729f652c8f50caf5ee2dc6")
+
+        And("I should see the image width")
+        findFirst("[itemprop='associatedMedia image'] [itemprop=width]").getAttribute("content") should be("460")
+
+        And("I should see the image height")
+        findFirst("[itemprop='associatedMedia image'] [itemprop=height]").getAttribute("content") should be("276")
       }
     }
 
@@ -164,7 +174,7 @@ import collection.JavaConversions._
         Then("I should see the start and end date of coverage")
         val liveBlogPosting = findFirst("[itemtype='http://schema.org/LiveBlogPosting']").getElement
         liveBlogPosting.findElement(By.cssSelector("[itemprop='coverageStartTime']")).getAttribute("content") should be("2015-07-14T11:20:37+0100")
-        liveBlogPosting.findElement(By.cssSelector("[itemprop='coverageEndTime']")).getAttribute("content") should be("2015-07-14T11:21:27+0100")
+        liveBlogPosting.findElement(By.cssSelector("[itemprop='coverageEndTime']")).getAttribute("content") should be("2015-07-14T11:21:25+0100")
       }
     }
 
@@ -361,24 +371,22 @@ import collection.JavaConversions._
       StandardAdvertsSwitch.switchOff()
     }
 
-    scenario("Direct link to paragraph") {
-
-      Given("I have clicked a direct link to paragrah 16 on the article 'Eurozone crisis live: Fitch downgrades Greece on euro exit fears'")
-
-      goTo("/business/2012/may/17/eurozone-crisis-cameron-greece-euro-exit#block-16") { browser =>
-        import browser._
-
-        Then("I should see paragraph 16")
-        findFirst("#block-16").getText should startWith("11.31am: Vince Cable, the business secretary")
-      }
-    }
-
     scenario("Video as main element should act as main media") {
       Given("I am on an article with a main video")
       goTo("/politics/2014/may/16/nigel-farage-lbc-interview-key-moments") { browser =>
         import browser._
         Then("the main media should contain a video")
         $(".media-primary video") should have size 1
+
+        And("video meta name should be set")
+        findFirst("[itemprop='associatedMedia video'] [itemprop=name]").getAttribute("content") should be("Nigel Farage's LBC interview – the key moments")
+
+        And("video meta thumbnailUrl should be set")
+        findFirst("[itemprop='associatedMedia video'] [itemprop=thumbnailUrl]").getAttribute("content") should
+          endWith("img/static/sys-images/Guardian/Pix/audio/video/2014/5/16/1400240928538/Nigel-Farage-LBC-debate-i-014.jpg?w=640&h=360&q=55&auto=format&usm=12&fit=max&s=d113cafb7eb9b6e05e71352c83f0c4bf")
+
+        And("video meta uploadDate should be set")
+        findFirst("[itemprop='associatedMedia video'] [itemprop=uploadDate]").getAttribute("content") should be("2014-05-16T16:09:34.000+01:00")
       }
     }
 
@@ -423,7 +431,7 @@ import collection.JavaConversions._
 
     scenario("Show primary picture on composer articles") {
       Given("I am on an article created in composer tools")
-      goTo("/artanddesign/2013/apr/15/buildings-tall-architecture-guardianwitness") { browser =>
+      goTo("/music/2016/may/19/rage-against-the-machine-chuck-d-b-real-supergroup-prophets-of-rage") { browser =>
         import browser._
         Then("The main picture should be show")
         $("[itemprop='contentUrl']") should have size 1
@@ -438,7 +446,7 @@ import collection.JavaConversions._
         import browser._
 
         val mailShareUrl = "mailto:?subject=Mark%20Kermode's%20DVD%20round-up&body=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsbl"
-        val fbShareUrl = "https://www.facebook.com/dialog/share?app_id=202314643182694&href=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsfb&redirect_uri=http%3A%2F%2Fgu.com%2Fp%2F3bk2f"
+        val fbShareUrl = "https://www.facebook.com/dialog/share?app_id=202314643182694&href=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsfb&redirect_uri=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsfb"
         val twitterShareUrl = "https://twitter.com/intent/tweet?text=Mark%20Kermode's%20DVD%20round-up&url=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fstw"
         val gplusShareUrl = "https://plus.google.com/share?url=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsgp&amp;hl=en-GB&amp;wwc=1"
 
@@ -458,7 +466,7 @@ import collection.JavaConversions._
 
       SearchSwitch.switchOn()
 
-      goTo("/world/2013/jan/27/brazil-nightclub-blaze-high-death-toll") { browser =>
+      goTo("/media/2015/aug/27/sky-sports-news-presenter-kirsty-gallacher-joins-strictly-line-up") { browser =>
         import browser._
 
         Then("I should see the main ARIA roles described")
@@ -489,7 +497,7 @@ import collection.JavaConversions._
     scenario("Story package with a gallery trail") {
 
       Given("I'm on an article that has a gallery in its story package")
-      goTo("/global-development/poverty-matters/2013/jun/03/burma-rohingya-segregation") { browser =>
+      goTo("/media/2015/aug/27/sky-sports-news-presenter-kirsty-gallacher-joins-strictly-line-up") { browser =>
         import browser._
 
         Then("I should see a fancy gallery trail")
@@ -541,7 +549,7 @@ import collection.JavaConversions._
 
         // at the time of writing, Twitter does not like i.guim.co.uk
         // will see if I can get that fixed, but in the meantime this must be static.guim.co.uk
-        $("meta[name='twitter:image']").getAttributes("content").head should be("http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/9/15/1379275550234/Irans-President-Hassan-Ro-011.jpg")
+        $("meta[name='twitter:image']").getAttributes("content").head should be("https://static-secure.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/9/15/1379275549160/Irans-President-Hassan-Ro-010.jpg")
       }
     }
 

@@ -1,0 +1,322 @@
+.gimbap {
+    display: block;
+    padding: $gs-gutter / 2;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+    color: #ffffff;
+
+    .has-flex & {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &:hover {
+        text-decoration: none;
+        filter: brightness(.95);
+    }
+
+    svg {
+        fill: currentColor;
+    }
+
+    @include mq(mobile, tablet) {
+        margin-top: $gs-baseline;
+
+        &:nth-child(n+3) {
+            display: none;
+        }
+    }
+
+    @include mq(tablet) {
+        float: left;
+        width: $gimbap-width-quarter;
+        margin: 0 $gs-gutter / 2;
+
+        .has-flex & {
+            flex: 1;
+        }
+    }
+
+    @include mq(tablet, desktop) {
+        &:nth-child(n+4) {
+            display: none;
+        }
+    }
+}
+
+.gimbap--effects {
+    .gimbap__image {
+        transition: all 3.5s ease;
+    }
+
+    &:hover {
+        .gimbap__image {
+            transform: scale(1.25);
+        }
+    }
+}
+
+/* GIMBAP - STYLING */
+.gimbap--tone-members { background: lighten($gimbap-members-text, 36%); color: $gimbap-members-text; }
+.gimbap--tone-masterclasses { background: lighten($gimbap-masterclasses-reversed, 49%); color: $gimbap-masterclasses-text; }
+.gimbap--tone-soulmates { background: lighten($gimbap-soulmates-reversed, 49%); color: $gimbap-soulmates-text; }
+.gimbap--tone-jobs { background: lighten($gimbap-jobs-reversed, 42%); color: $gimbap-jobs-text; }
+.gimbap--tone-bookshop { background: lighten($gimbap-bookshop-reversed, 70%); color: $gimbap-bookshop-reversed; }
+
+.gimbap--normal {
+    .gimbap__cta {
+        filter: brightness(.5);
+    }
+}
+
+.gimbap--reversed {
+    color: #ffffff;
+
+    .gimbap__cta {
+        color: rgba(0, 0, 0, .65);
+    }
+
+    &.gimbap--tone-members { background: $gimbap-members-reversed; }
+    &.gimbap--tone-masterclasses { background: $gimbap-masterclasses-reversed; }
+    &.gimbap--tone-soulmates { background: $gimbap-soulmates-reversed; }
+    &.gimbap--tone-jobs { background: $gimbap-jobs-reversed; }
+    &.gimbap--tone-bookshop {
+        background: $gimbap-bookshop-reversed;
+
+        .gimbap__cta {
+            color: $gimbap-bookshop-text;
+        }
+
+        .gimbap__arrow {
+            background-color: $gimbap-bookshop-text;
+
+            svg {
+                fill: rgba(0, 0, 0, .65);
+            }
+        }
+    }
+}
+
+/* GIMBAP VERSIONS */
+.gimbap--simple {
+    float: left;
+    width: $gimbap-width-quarter;
+    height: 205px;
+    padding: $gs-gutter / 2;
+    background-color: #000000;
+
+    .has-flex & {
+        flex: 1;
+    }
+
+    position: relative;
+
+    @include mq($until: tablet) {
+        margin-left: $gs-gutter;
+        max-height: 100%;
+
+        &:first-child {
+            margin-left: 0;
+        }
+    }
+
+    @include mq(wide) {
+        max-height: 224px;
+    }
+}
+
+%gimbap-author-shape {
+    content: '';
+    float: right;
+    width: 40%;
+}
+
+.gimbap--has-author {
+    .gimbap__title {
+        &:before {
+            @extend %gimbap-author-shape;
+
+            shape-outside: polygon(70% 0%, 100% 150%, 0 100%);
+            min-height: 120px;
+        }
+    }
+
+    .gimbap__cta {
+        &:before {
+            @extend %gimbap-author-shape;
+
+            shape-outside: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+            min-height: 50px;
+        }
+    }
+
+    .gimbap__logo {
+        text-align: left;
+
+        .has-flex & {
+            align-self: flex-start;
+        }
+    }
+}
+
+.gimbap:only-child {
+    &.gimbap--has-author::before {
+        padding-top: 30%;
+    }
+
+    .gimbap__title {
+        @include fs-headline(4);
+
+        @include mq(desktop) {
+            font-size: 48px;
+            line-height: 50px;
+            width: 13em;
+        }
+    }
+}
+
+/* GIMBAP OBJECTS */
+.gimbap__image {
+    width: 100%;
+    display: block;
+    margin: auto;
+    opacity: .9;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 0;
+}
+
+.gimbap__author {
+    /* If only there was a 'float: bottom right' rule */
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: gs-height(4);
+    margin-right: -30px;
+}
+
+.gimbap__title {
+    @include fs-headline(5);
+
+    width: 100%;
+    font-weight: 500;
+    align-self: flex-start;
+    margin-bottom: $gs-baseline / 2;
+    word-wrap: break-word;
+}
+
+.gimbap__quote {
+    svg {
+        width: 1.2em;
+        height: .67em;
+        opacity: .8;
+
+        .gimbap:only-child > & {
+            width: .9em;
+            height: .55em;
+        }
+    }
+}
+
+.gimbap__cta {
+    @include fs-headline(2);
+
+    align-self: flex-start;
+    flex-grow: 1;
+    font-weight: 500;
+    word-wrap: break-word;
+    width: 100%;
+}
+
+.gimbap__cta--simple {
+    @include fs-headline(1);
+
+    position: absolute;
+    top: 55%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(0, 0, 0, .3);
+
+    @include mq(tablet) {
+        @include fs-headline(3);
+
+        font-weight: bold;
+    }
+
+    .gimbap--tone-jobs & {
+        color: $gimbap-jobs-light;
+    }
+
+    .gimbap--tone-soulmates & {
+        color: $gimbap-soulmates-light;
+        text-shadow: 0 0 1px rgba(0, 0, 0, .3);
+
+        svg {
+            fill: #ffffff;
+        }
+    }
+
+    .gimbap--tone-members & {
+        color: lighten($gimbap-members, 20%);
+    }
+
+    .gimbap--tone-bookshop & {
+        color: lighten($gimbap-bookshop, 40%);
+
+        svg {
+            fill: #ffffff;
+        }
+    }
+}
+
+.gimbap__arrow {
+    @include circular;
+
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: $gs-gutter / 4;
+    background-color: rgba(255, 255, 255, .4);
+
+    &,
+    svg {
+        width: $gs-baseline * 2;
+        height: $gs-baseline * 2;
+    }
+}
+
+.gimbap__arrow--styled {
+    vertical-align: bottom;
+
+    &,
+    svg {
+        width: 22px;
+        height: 22px;
+        fill: #000000;
+    }
+
+    .gimbap--tone-masterclasses & {
+        background-color: $gimbap-masterclasses;
+    }
+
+    .gimbap--tone-jobs & {
+        background-color: $gimbap-jobs;
+    }
+
+    .gimbap--tone-soulmates & {
+        background-color: $gimbap-soulmates;
+    }
+
+    .gimbap--tone-members & {
+        background-color: $gimbap-members;
+    }
+
+    .gimbap--tone-bookshop & {
+        background-color: $gimbap-bookshop;
+    }
+}

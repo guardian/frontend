@@ -1,0 +1,101 @@
+.gimbap-logo {
+    align-self: flex-end;
+    line-height: 0;
+    text-align: right;
+
+    svg {
+        fill: #ffffff;
+    }
+}
+
+.gimbap-logo {
+    .inline-commercial {
+        display: inline-block;
+        vertical-align: middle;
+    }
+}
+
+.gimbap-logo--tone-members {
+    .logo--part1 {
+        fill: $gimbap-members-text;
+    }
+
+    .logo--part2 {
+        fill: #000000;
+    }
+
+    &.gimbap-logo--reversed {
+        .logo--part1,
+        .logo--part2 {
+            fill: #ffffff;
+        }   
+    }
+}
+
+.gimbap-logo--tone-masterclasses {
+    .logo--part1 {
+        fill: #000000;
+    }
+
+    .logo--part2 {
+        fill: $gimbap-masterclasses-text;
+    }
+
+    &.gimbap-logo--reversed {
+        .logo--part1,
+        .logo--part2 {
+            fill: #ffffff;
+        }  
+    }
+}
+
+.gimbap-logo--tone-jobs {
+    .logo--part1 {
+        fill: #000000;
+    }
+
+    .logo--part2 {
+        fill: $gimbap-jobs-text;
+    }
+
+    &.gimbap-logo--reversed {
+        .logo--part1,
+        .logo--part2 {
+            fill: #ffffff;
+        }    
+    }
+}
+
+.gimbap-logo--tone-soulmates {
+    svg {
+        width: 85px; /* "Make your own magic" */
+        height: 18px;
+        fill: $gimbap-soulmates-text;
+    }
+
+    &.gimbap-logo--reversed {
+        svg {
+            fill: #ffffff;
+        } 
+    }
+}
+
+.gimbap-logo--tone-bookshop {
+    .logo--part1 {
+        fill: #6d7173;
+    }
+
+    .logo--part2 {
+        fill: $gimbap-bookshop-reversed;
+    }
+
+    &.gimbap-logo--reversed {
+        .logo--part1 {
+            fill: #bdbdbd;
+        }
+
+        .logo--part2 {
+            fill: #ffffff;
+        }
+    }
+}

@@ -16,12 +16,12 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
     * Associate child classes (keys) with those to add to the parent (values).
     */
   val ParentClasses = Map(
-    "element-video" -> "block--embed block--video",
-    "element-tweet" -> "block--embed block--tweet",
+    "element-video" -> "block--minute-article--embed block--minute-article--video",
+    "element-tweet" -> "block--minute-article--embed block--minute-article--tweet",
     "block-title" -> "has-title",
-    "quoted" -> "block--quote",
-    "element--inline" -> "background-image",
-    "element--thumbnail" -> "bottom-image"
+    "quoted" -> "block--minute-article--quote",
+    "element--inline" -> "block--minute-article--background-image block--minute-article--image",
+    "element--thumbnail" -> "block--minute-article--bottom-image block--minute-article--image"
   )
 
   /**
@@ -40,8 +40,8 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
         val allElements = block.getAllElements
 
         // Add classes
-        block.addClass("block--minute-article")
-        block.getElementsByClass("caption--img").addClass("caption--image__minute-article")
+        block.addClass("block--minute-article js-is-fixed-height")
+        block.getElementsByTag("figcaption").addClass("caption__minute-article")
 
         // Add alternative layout on alternate rows
         if (block.elementSiblingIndex() % 2 == 1) block.addClass("block--minute-article--alt-layout")
@@ -62,6 +62,17 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
         block.getElementsByClass("block-elements").headOption.map { outer =>
           block.getElementsByClass("block-title").headOption.map(t => outer.insertChildren(0, Seq(t)))
           outer.getElementsByClass("element-image").headOption.map(outer.after)
+        }
+
+        // Inline (fullscreen) image mark-up
+        // Move the picture element out of thumbnail anchor and responsive image
+        block.getElementsByClass("element--inline").headOption.map { figure =>
+          figure.getElementsByClass("u-responsive-ratio").headOption.map { outer => {
+            figure.insertChildren(0, Seq(outer))
+            outer.getElementsByClass("gu-image").headOption.map(image => image.addClass("js-is-fixed-height"))
+            outer.addClass("element--inline__image-wrapper")
+          }}
+          figure.getElementsByClass("article__img-container").headOption.map(container => container.remove())
         }
 
         // Remove Elements

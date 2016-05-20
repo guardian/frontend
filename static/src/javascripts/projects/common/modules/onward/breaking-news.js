@@ -4,6 +4,7 @@ define([
     'common/utils/$',
     'fastdom',
     'qwery',
+    'Promise',
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/storage',
@@ -11,18 +12,17 @@ define([
     'common/modules/analytics/omniture',
     'common/views/svgs',
     'template!common/views/breaking-news.html',
-    'lodash/collections/forEach',
     'lodash/objects/isArray',
-    'lodash/collections/filter',
+    'lodash/objects/has',
     'lodash/arrays/flatten',
-    'common/utils/chain',
-    'lodash/arrays/first'
+    'lodash/objects/pick'
 ], function (
     bean,
     bonzo,
     $,
     fastdom,
     qwery,
+    Promise,
     ajax,
     config,
     storage,
@@ -30,137 +30,197 @@ define([
     omniture,
     svgs,
     alertHtml,
-    forEach,
     isArray,
-    filter,
+    has,
     flatten,
-    chain,
-    first
+    pick
 ) {
-    var alertWithinSeconds = 1200, // 20 minutes
-        supportedSections = {
+    var supportedSections = {
             'sport': 'sport',
             'football': 'sport'
         },
-        breakingNewsSource = (config.switches.breakingNewsFromAdminJobs) ? '/news-alert/alerts' : '/breaking-news/lite.json',
-        storageKeyHidden = 'gu.breaking-news.hidden',
-        maxSimultaneousAlerts = 1,
-        $breakingNews,
-        $body,
-        marque36icon,
-        closeIcon;
+        breakingNewsURL = '/news-alert/alerts',
+        page = config.page,
 
-    function cleanIDs(articleIds, hiddenIds) {
-        var cleanedIDs = {};
-        forEach(articleIds, function (articleID) {
-            cleanedIDs[articleID] = hiddenIds[articleID] || false;
+        // get the users breaking news alert history
+        // {
+        //     alertID: true, <- dismissed/visited
+        //     alertID: false <- seen, but not dismissed/visited
+        // }
+        knownAlertIDsStorageKey = 'gu.breaking-news.hidden',
+        knownAlertIDs;
+
+    function storeKnownAlertIDs() {
+        storage.local.set(knownAlertIDsStorageKey, knownAlertIDs);
+    }
+
+    function markAlertAsSeen(id) {
+        updateKnownAlertID(id, false);
+    }
+
+    function markAlertAsDismissed(id) {
+        updateKnownAlertID(id, true);
+    }
+
+    function updateKnownAlertID(id, state) {
+        knownAlertIDs[id] = state;
+        storeKnownAlertIDs();
+    }
+
+    // if we can't record a dismissal, we won't show an alert
+    function userCanDismissAlerts() {
+        return storage.local.isAvailable();
+    }
+
+    function fetchBreakingNews() {
+        return ajax({
+            url: breakingNewsURL,
+            type: 'json',
+            crossOrigin: true
         });
-        return cleanedIDs;
+    }
+
+    // handle the breaking news JSON
+    function parseResponse(response) {
+        return (response.collections || [])
+            .filter(function (collection) {
+                return isArray(collection.content) && collection.content.length;
+            })
+            .map(function (collection) {
+                // collection.href is string or null
+                collection.href = (collection.href || '').toLowerCase();
+                return collection;
+            });
+    }
+
+    // pull out the alerts from the edition/section buckets that apply to us
+    // global > current edition > current section
+    function getRelevantAlerts(alerts) {
+        var edition = (page.edition || '').toLowerCase(),
+            section = supportedSections[page.section];
+
+        return flatten([
+            alerts
+                .filter(function (alert) {return alert.href === 'global';})
+                .map(function (alert) {return alert.content;}),
+            alerts
+                .filter(function (alert) {return alert.href === edition;})
+                .map(function (alert) {return alert.content;}),
+            alerts
+                .filter(function (alert) {return section && alert.href === section;})
+                .map(function (alert) {return alert.content;})
+        ]);
+    }
+
+    // keep the local alert history in sync with live alerts
+    function pruneKnownAlertIDs(alerts) {
+        // 'dismiss' this page ID, since if there's an alert for it,
+        // we don't want to show it ever
+        knownAlertIDs[page.pageId] = true;
+
+        // then remove all known alert ids that are not
+        // in the current breaking news alerts
+        knownAlertIDs = pick(knownAlertIDs, function (state, id) {
+            return alerts.some(function (alert) {return alert.id === id;});
+        });
+
+        storeKnownAlertIDs();
+        return alerts;
+    }
+
+    // don't show alerts if we've already dismissed them
+    function filterAlertsByDismissed(alerts) {
+        return alerts.filter(function (alert) {
+            return knownAlertIDs[alert.id] !== true;
+        });
+    }
+
+    // don't show alerts if they're over a certain age
+    function filterAlertsByAge(alerts) {
+        return alerts.filter(function (alert) {
+            var alertTime = alert.frontPublicationDate;
+            return alertTime && relativeDates.isWithinSeconds(new Date(alertTime), 1200); // 20 mins
+        });
+    }
+
+    // we only show one alert at a time, pick the youngest available
+    function pickNewest(alerts) {
+        return alerts.sort(function (a, b) {
+            return b.frontPublicationDate - a.frontPublicationDate;
+        })[0];
+    }
+
+    // show an alert
+    function alert(alert) {
+        if (alert) {
+            var $body = bonzo(document.body);
+            var $breakingNews = bonzo(qwery('.js-breaking-news-placeholder'));
+            var trackingMessage = 'breaking news alert shown' + (has(knownAlertIDs, alert.id) ? '' : ' 2 or more times');
+
+            // if its the first time we've seen this alert, we wait 3 secs to show it
+            // otherwise we show it immediately
+            var alertDelay = has(knownAlertIDs, alert.id) ? 0 : 3000;
+
+            // $breakingNews is hidden, so this won't trigger layout etc
+            $breakingNews.append(renderAlert(alert));
+
+            // copy of breaking news banner (with blank content) used inline at the
+            // bottom of the body, so the bottom of the body can visibly scroll
+            // past the pinned alert
+            var $spectre = renderSpectre($breakingNews);
+
+            // inject the alerts into DOM
+            setTimeout(function () {
+                fastdom.write(function () {
+                    if (alertDelay === 0) {
+                        $breakingNews.removeClass('breaking-news--fade-in');
+                    }
+                    $body.append($spectre);
+                    $breakingNews.removeClass('breaking-news--hidden');
+                    markAlertAsSeen(alert.id);
+                });
+                omniture.trackLink(this, trackingMessage);
+            }, alertDelay);
+        }
+        return alert;
+    }
+
+    function renderAlert(alert) {
+        alert.marque36icon = svgs('marque36icon');
+        alert.closeIcon = svgs('closeCentralIcon');
+
+        var $alert = bonzo.create(alertHtml(alert));
+
+        bean.on($('.js-breaking-news__item__close', $alert)[0], 'click', function () {
+            fastdom.write(function () {
+                $('[data-breaking-article-id]').hide();
+            });
+            markAlertAsDismissed(alert.id);
+        });
+
+        return $alert;
+    }
+
+    function renderSpectre($breakingNews) {
+        return bonzo(bonzo.create($breakingNews[0]))
+            .addClass('breaking-news--spectre')
+            .removeClass('breaking-news--fade-in breaking-news--hidden');
     }
 
     return function () {
-        var page = config.page,
-            hiddenIds = storage.local.get(storageKeyHidden) || {};
+        if (userCanDismissAlerts()) {
+            knownAlertIDs = storage.local.get(knownAlertIDsStorageKey) || {};
 
-        if (!page || hiddenIds[page.pageId] === true) { return; }
-
-        ajax({
-            url: breakingNewsSource,
-            type: 'json',
-            crossOrigin: true
-        }).then(
-            function (resp) {
-                var collections = (resp.collections || [])
-                    .filter(function (collection) { return isArray(collection.content) && collection.content.length; })
-                    .map(function (collection) {
-                        // collection.href is string or null
-                        collection.href = (collection.href || '').toLowerCase();
-                        return collection;
-                    }),
-                    edition = (page.edition || '').toLowerCase(),
-                    section = supportedSections[page.section],
-
-                    articles = chain([
-                        collections.filter(function (c) { return c.href === 'global'; }).map(function (c) { return c.content; }),
-                        collections.filter(function (c) { return c.href === edition;  }).map(function (c) { return c.content; }),
-                        collections.filter(function (c) { return section && c.href === section; }).map(function (c) { return c.content; })
-                    ]).and(flatten).and(filter, function (article) {
-                        var alertTime = article.frontPublicationDate;
-                        return alertTime && relativeDates.isWithinSeconds(new Date(alertTime), alertWithinSeconds);
-                    }).value(),
-
-                    articleIds = articles.map(function (article) { return article.id; }),
-                    alertDelay = 3000,
-                    alerts;
-
-                // if we're on the page that an alert is for, hide alerts for it
-                if (articleIds.indexOf(page.pageId) > -1) {
-                    hiddenIds[page.pageId] = true;
-                }
-
-                // update stored IDs with current batch, so we know we've seen these
-                storage.local.set(storageKeyHidden, cleanIDs(articleIds, hiddenIds));
-
-                alerts = chain(articles)
-                    .and(filter, function (article) { return hiddenIds[article.id] !== true; })
-                    .and(first, maxSimultaneousAlerts)
-                    .value();
-
-                if (alerts.length) {
-                    $breakingNews = $breakingNews || bonzo(qwery('.js-breaking-news-placeholder'));
-                    marque36icon = svgs('marque36icon');
-                    closeIcon = svgs('closeCentralIcon');
-
-                    forEach(alerts, function (article) {
-                        var el;
-
-                        article.marque36icon = marque36icon;
-                        article.closeIcon = closeIcon;
-                        el = bonzo.create(alertHtml(article));
-
-                        bean.on($('.js-breaking-news__item__close', el)[0], 'click', function () {
-                            fastdom.write(function () {
-                                $('[data-breaking-article-id]').hide();
-                            });
-                            hiddenIds[article.id] = true;
-                            storage.local.set(storageKeyHidden, cleanIDs(articleIds, hiddenIds));
-                        });
-
-                        fastdom.write(function () {
-                            $breakingNews.append(el);
-                        });
-
-                        if (hiddenIds[article.id] === false) {
-                            alertDelay = 0;
-                        }
-                    });
-
-                    setTimeout(function () {
-                        var message = 'breaking news alert shown' + (alertDelay ? '' : ' 2 or more times'), $breakingNewsSpectre;
-
-                        // copy of breaking news banner (with blank content) used inline in the body
-                        // to create space for a pinned alert to be scrolled into
-                        $body = $body || bonzo(document.body);
-                        $breakingNewsSpectre = bonzo(bonzo.create($breakingNews[0])).addClass('breaking-news--spectre').removeClass('breaking-news--hidden');
-                        fastdom.write(function () {
-                            $body.append($breakingNewsSpectre);
-                        });
-
-                        if (!alertDelay) {
-                            fastdom.write(function () {
-                                $breakingNews.removeClass('breaking-news--fade-in');
-                            });
-                        }
-
-                        fastdom.write(function () {
-                            $breakingNews.removeClass('breaking-news--hidden');
-                        });
-
-                        omniture.trackLink(this, message);
-                    }, alertDelay);
-                }
-            }
-        );
+            return fetchBreakingNews()
+                .then(parseResponse)
+                .then(getRelevantAlerts)
+                .then(pruneKnownAlertIDs)
+                .then(filterAlertsByDismissed)
+                .then(filterAlertsByAge)
+                .then(pickNewest)
+                .then(alert);
+        } else {
+            return Promise.reject('cannot dismiss');
+        }
     };
-
 });

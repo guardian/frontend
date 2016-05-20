@@ -1,21 +1,19 @@
 package controllers
 
-import _root_.liveblog.LiveBlogPageModel
-import com.gu.contentapi.client.model.ItemResponse
-import com.gu.contentapi.client.model.v1.{Content => ApiContent}
-import com.gu.util.liveblogs.{Block, BlockToText}
+import _root_.liveblog.LiveBlogCurrentPage
+import com.gu.contentapi.client.model.v1.{Content => ApiContent, ItemResponse}
 import common._
-import conf.LiveContentApi.getResponse
-import conf._
+import contentapi.ContentApiClient
 import conf.switches.Switches
-import conf.switches.Switches.LongCacheSwitch
+import facebookimages.ArticleWithOpenGraphOverlay
+import model.Cached.WithoutRevalidationResult
 import model._
 import model.liveblog.{BodyBlock, KeyEventData}
 import org.joda.time.DateTime
-import performance.MemcachedAction
+import org.scala_tools.time.Imports._
 import play.api.libs.functional.syntax._
-import play.api.mvc._
 import play.api.libs.json.{Json, _}
+import play.api.mvc._
 import views.support._
 
 import scala.concurrent.Future
@@ -28,14 +26,14 @@ trait PageWithStoryPackage extends ContentPage {
 }
 
 case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
-case class LiveBlogPage(article: Article, related: RelatedContent) extends PageWithStoryPackage
+case class LiveBlogPage(article: Article, currentPage: LiveBlogCurrentPage, related: RelatedContent) extends PageWithStoryPackage
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
 object ArticleController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
-  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, blocks = true)(render(path, _, None))
+  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, blocks = true)(render(path, _))
 
 
   private def renderNewerUpdates(page: PageWithStoryPackage, lastUpdateBlockId: String, isLivePage: Option[Boolean])(implicit request: RequestHeader): Result = {
@@ -52,7 +50,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   case class TextBlock(
     id: String,
     title: Option[String],
-    publishedDateTime: DateTime,
+    publishedDateTime: Option[DateTime],
     lastUpdatedDateTime: Option[DateTime],
     body: String
     )
@@ -60,18 +58,19 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   implicit val blockWrites = (
     (__ \ "id").write[String] ~
       (__ \ "title").write[Option[String]] ~
-      (__ \ "publishedDateTime").write[DateTime] ~
+      (__ \ "publishedDateTime").write[Option[DateTime]] ~
       (__ \ "lastUpdatedDateTime").write[Option[DateTime]] ~
       (__ \ "body").write[String]
     )(unlift(TextBlock.unapply))
 
   private def blockText(page: PageWithStoryPackage, number: Int)(implicit request: RequestHeader): Result = page match {
-    case LiveBlogPage(liveBlog, _) =>
+    case LiveBlogPage(liveBlog, _, _) =>
       val blocks = liveBlog.blocks.collect {
-        case Block(id, title, publishedAt, updatedAt, BlockToText(text), _) if text.trim.nonEmpty => TextBlock(id, title, publishedAt, updatedAt, text)
+        case BodyBlock(id, html, _, title, _, _, _, publishedAt, _, updatedAt, _, _) if html.trim.nonEmpty =>
+          TextBlock(id, title, publishedAt, updatedAt, html)
       }.take(number)
       Cached(page)(JsonComponent("blocks" -> Json.toJson(blocks)))
-    case _ => Cached(600)(NotFound("Can only return block text for a live blog"))
+    case _ => Cached(600)(WithoutRevalidationResult(NotFound("Can only return block text for a live blog")))
 
   }
 
@@ -80,34 +79,12 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
     else renderPage
   }
 
-  private def renderPageWithBlock(
-    maybeRequiredBlockId: Option[String],
-    blog: LiveBlogPage,
-    modelGen: (Option[(BodyBlock) => Boolean], (BodyBlock) => String) => Option[LiveBlogPageModel[BodyBlock]]
-  )(implicit request: RequestHeader) =
-    modelGen(
-      maybeRequiredBlockId.map(blockId => block => blockId == block.id),
-      _.id
-    ) map { blocks =>
-      val htmlResponse = () => views.html.liveBlog (blog, blocks)
-      val jsonResponse = () => views.html.liveblog.liveBlogBody (blog, blocks)
-      renderFormat(htmlResponse, jsonResponse, blog, Switches.all)
-    } getOrElse NotFound
-
-  private def render(path: String, page: PageWithStoryPackage, pageParam: Option[String])(implicit request: RequestHeader) = page match {
+  private def render(path: String, page: PageWithStoryPackage)(implicit request: RequestHeader) = page match {
     case blog: LiveBlogPage =>
       noAMP {
-        val pageSize = if (blog.article.content.tags.tags.map(_.id).contains("sport/sport")) 50 else 10
-        val modelGen = LiveBlogPageModel(
-          pageSize = pageSize,
-          extrasOnFirstPage = 10,
-          blog.article.content.fields.blocks
-        )_
-        pageParam.map(new PageParser().blockId) match {
-          case Some(None) => NotFound
-          case Some(Some(requiredBlockId)) => renderPageWithBlock(Some(requiredBlockId), blog, modelGen)
-          case None => renderPageWithBlock(None, blog, modelGen)
-        }
+        val htmlResponse = () => views.html.liveBlog (blog)
+        val jsonResponse = () => views.html.liveblog.liveBlogBody (blog)
+        renderFormat(htmlResponse, jsonResponse, blog, Switches.all)
       }
 
     case minute: MinutePage =>
@@ -123,10 +100,10 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
 
     case article: ArticlePage =>
       val htmlResponse = () => {
-        if (article.article.isImmersive) views.html.articleImmersive(article)
-        else if (request.isAmp)          views.html.articleAMP(article)
-        else if (request.isEmail)        views.html.articleEmail(article)
-        else                             views.html.article(article)
+        if (request.isEmail) views.html.articleEmail(article)
+        else if (article.article.isImmersive) views.html.articleImmersive(article)
+        else if (request.isAmp) views.html.articleAMP(article)
+        else views.html.article(article)
       }
 
       val jsonResponse = () => views.html.fragments.articleBody(article)
@@ -134,42 +111,42 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   }
 
   def renderLiveBlog(path: String, page: Option[String] = None) =
-    LongCacheAction { implicit request =>
-      mapModel(path, blocks = true) {// temporarily only ask for blocks too for things we know are new live blogs until until the migration is done and we can always use blocks
-        render(path, _, page)
+    Action.async { implicit request =>
+      mapModel(path, blocks = true, page) {// temporarily only ask for blocks too for things we know are new live blogs until until the migration is done and we can always use blocks
+        render(path, _)
       }
     }
 
   def renderLiveBlogJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean]) = {
-    LongCacheAction { implicit request =>
+    Action.async { implicit request =>
       mapModel(path, blocks = true) { model =>
         (lastUpdate, rendered) match {
           case (Some(lastUpdate), _) => renderNewerUpdates(model, lastUpdate, isLivePage)
           case (None, Some(false)) => blockText(model, 6)
-          case (_, _) => render(path, model, None)
+          case (_, _) => render(path, model)
         }
       }
     }
   }
 
   def renderJson(path: String) = {
-    LongCacheAction { implicit request =>
+    Action.async { implicit request =>
       mapModel(path) {
-        render(path, _, None)
+        render(path, _)
       }
     }
   }
 
   def renderArticle(path: String) = {
-    LongCacheAction { implicit request =>
-      mapModel(path) {
-        render(path, _, None)
+    Action.async { implicit request =>
+      mapModel(path, blocks = request.isEmail) {
+        render(path, _)
       }
     }
   }
 
-  def mapModel(path: String, blocks: Boolean = false)(render: PageWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
-    lookup(path, blocks) map redirect recover convertApiExceptions map {
+  def mapModel(path: String, blocks: Boolean = false, pageParam: Option[String] = None)(render: PageWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
+    lookup(path, blocks) map responseToModelOrResult(pageParam) recover convertApiExceptions map {
       case Left(model) => render(model)
       case Right(other) => RenderOtherStatus(other)
     }
@@ -179,48 +156,92 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
     val edition = Edition(request)
 
     log.info(s"Fetching article: $path for edition ${edition.id}: ${RequestLog(request)}")
-    val capiItem = LiveContentApi.item(path, edition)
+    val capiItem = ContentApiClient.item(path, edition)
       .showTags("all")
       .showFields("all")
       .showReferences("all")
+      .showAtoms("all")
+
     val capiItemWithBlocks = if (blocks) capiItem.showBlocks("body") else capiItem
-    getResponse(capiItemWithBlocks)
+    ContentApiClient.getResponse(capiItemWithBlocks)
 
   }
 
   /**
    * convert a response into something we can render, and return it
    * optionally, throw a response if we know it's not right to send the content
-   * @param response
+    *
+    * @param response
    * @return Either[PageWithStoryPackage, Result]
    */
-  def redirect(response: ItemResponse)(implicit request: RequestHeader): Either[PageWithStoryPackage, Result] = {
+  def responseToModelOrResult(pageParam: Option[String])(response: ItemResponse)(implicit request: RequestHeader): Either[PageWithStoryPackage, Result] = {
     val supportedContent = response.content.filter(isSupported).map(Content(_))
-    val content: Option[PageWithStoryPackage] = supportedContent.map {
-      case minute: Article if minute.isUSMinute => MinutePage(minute, RelatedContent(minute, response))
-      case liveBlog: Article if liveBlog.isLiveBlog => LiveBlogPage(liveBlog, RelatedContent(liveBlog, response))
-      case article: Article => ArticlePage(article, RelatedContent(article, response))
+    val page = pageParam.map(ParseBlockId.apply)
+    val supportedContentResult = ModelOrResult(supportedContent, response)
+    val content: Either[PageWithStoryPackage, Result] = supportedContentResult.left.flatMap { content =>
+      (content, page) match {
+        case (minute: Article, None) if minute.isUSMinute =>
+          Left(MinutePage(minute, StoryPackages(minute, response)))
+        case (liveBlog: Article, None/*no page param*/) if liveBlog.isLiveBlog =>
+          createLiveBlogModel(liveBlog, response, None)
+        case (liveBlog: Article, Some(Some(requiredBlockId))/*page param specified and valid format*/) if liveBlog.isLiveBlog =>
+          createLiveBlogModel(liveBlog, response, Some(requiredBlockId))
+        case (article: Article, None) =>
+          if(mvt.ABOpenGraphOverlay.isParticipating) {
+            val newArticle = ArticleWithOpenGraphOverlay(article)
+            Left(ArticlePage(newArticle, StoryPackages(newArticle, response)))
+          }
+          else {
+            Left(ArticlePage(article, StoryPackages(article, response)))
+          }
+        case _ =>
+          Right(NotFound)
+      }
     }
 
-    ModelOrResult(content, response)
+    content
+  }
+
+  def createLiveBlogModel(liveBlog: Article, response: ItemResponse, maybeRequiredBlockId: Option[String]) = {
+    import conf.switches.Switches.LongCacheSwitch
+
+    val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
+    val liveBlogPageModel = LiveBlogCurrentPage(
+      pageSize = pageSize,
+      liveBlog.content.fields.blocks,
+      maybeRequiredBlockId
+    )
+    liveBlogPageModel match {
+      case Some(pageModel) =>
+
+        val cacheTime =
+          if (!pageModel.currentPage.isArchivePage && liveBlog.fields.isLive) liveBlog.metadata.cacheTime
+          else {
+            if (LongCacheSwitch.isSwitchedOn) {
+              if (liveBlog.fields.lastModified > DateTime.now(liveBlog.fields.lastModified.getZone) - 1.hour) CacheTime.RecentlyUpdatedPurgable
+              else if (liveBlog.fields.lastModified > DateTime.now(liveBlog.fields.lastModified.getZone) - 24.hours) CacheTime.LastDayUpdatedPurgable
+              else CacheTime.NotRecentlyUpdatedPurgable
+            } else {
+              if (liveBlog.fields.lastModified > DateTime.now(liveBlog.fields.lastModified.getZone) - 1.hour) CacheTime.RecentlyUpdated
+              else if (liveBlog.fields.lastModified > DateTime.now(liveBlog.fields.lastModified.getZone) - 24.hours) CacheTime.LastDayUpdated
+              else CacheTime.NotRecentlyUpdated
+            }
+          }
+
+        val liveBlogCache = liveBlog.copy(
+          content = liveBlog.content.copy(
+            metadata = liveBlog.content.metadata.copy(
+              cacheTime = cacheTime)))
+        Left(LiveBlogPage(liveBlogCache, pageModel, StoryPackages(liveBlog, response)))
+      case None => Right(NotFound)
+    }
+
   }
 
 }
 
-object LongCacheAction {
-  def apply(block: RequestHeader => Future[Result]): Action[AnyContent] = {
-    if (LongCacheSwitch.isSwitchedOn) Action.async { implicit request =>
-      // we cannot sensibly decache memcached (does not support surogate keys)
-      // so if we are doing the 'soft purge' don't memcache
-      block(request)
-    } else MemcachedAction { implicit request =>
-      block(request)
-    }
-  }
-}
-
-class PageParser extends RegexParsers {
-  def blockId(input: String): Option[String] = {
+object ParseBlockId extends RegexParsers {
+  def apply(input: String): Option[String] = {
     def withParser: Parser[Unit] = "with:" ^^ { _ => () }
     def block: Parser[Unit] = "block-" ^^ { _ => () }
     def id: Parser[String] = "[a-zA-Z0-9]+".r

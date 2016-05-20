@@ -3,7 +3,7 @@ Multi component (AKA Frankenponent)
 ========================================================================== */
 
 .fc-container--commercial-multi {
-    background-color: colour(neutral-8);
+    background-color: $neutral-8;
     padding-bottom: 0;
 
     .fc-container__body {
@@ -11,17 +11,17 @@ Multi component (AKA Frankenponent)
     }
 
     .fc-container__inner {
-        border-top: 1px solid colour(neutral-4);
+        border-top: 1px solid $neutral-4;
     }
 
     .fc-container__header__title {
-        color: colour(neutral-1);
+        color: $neutral-1;
     }
-    
+
     .commercial__title__logo {
         top: 0;
         left: $gs-gutter/4;
-        
+
         @include mq(leftCol) {
             left: 0;
         }
@@ -35,54 +35,30 @@ Multi component (AKA Frankenponent)
         background-color: transparent;
     }
 
-    .commercial--travel,
-    .commercial--masterclasses {
+    .commercial--travel {
         .lineitem__image-right {
             width: gs-span(1) + $gs-gutter*2;
-            
+
             @include mq(mobileLandscape) {
-                width: gs-span(1) + $gs-gutter;    
+                width: gs-span(1) + $gs-gutter;
             }
         }
     }
 
-    .commercial--jobs {
-        .lineitem__image {
-            max-height: 40px;
-        }
-    }
-    
     .commercial--multi__body {
         .lineitem__title {
             font-size: 14px;
             line-height: $gs-baseline*1.5;
         }
     }
-    
+
     .commercial--books {
         .lineitem__image {
             width: auto;
         }
     }
 
-    .commercial--soulmates {
-        .commercial--multi__body {
-            background: transparent;
-        }
-
-        .lineitem__links {
-            clear: both;
-            overflow: hidden;
-        }
-
-        .lineitem__link {
-            float: left;
-            width: 45%;
-            padding-right: 5%;
-        }
-    }
-
-    @include guss-row('.lineitems');
+    @include layout-row('.lineitems');
     .lineitems {
         width: auto;
 
@@ -90,7 +66,7 @@ Multi component (AKA Frankenponent)
             margin-bottom: $gs-baseline/2;
         }
     }
-    
+
 
 }
 
@@ -101,14 +77,10 @@ Multi component (AKA Frankenponent)
         text-align: left;
         min-height: $gs-baseline * 2.5;
         margin: $gs-baseline/3 0 (-$gs-baseline/1.5);
-        
-        .commercial--soulmates & {
-            margin: 0;
-        }
 
         .commercial--tone-holidayoffers-logo {
-            color: colour(neutral-1);
-            fill: colour(neutral-1);
+            color: $neutral-1;
+            fill: $neutral-1;
         }
     }
 }
@@ -127,21 +99,21 @@ Multi component (AKA Frankenponent)
         .lineitem--multi {
             width: auto;
             float: none;
-            border-bottom: 1px solid colour(neutral-4);
-            
+            border-bottom: 1px solid $neutral-4;
+
             &:nth-child(n+3) {
                 display: none;
             }
-            
+
             @include mq(mobileLandscape) {
                 width: 50%;
                 float: left;
                 border-bottom: 0;
             }
-            
+
             @include mq(tablet) {
                 width: percentage(1/3);
-                
+
                 &:nth-child(n+3) {
                     display: block;
                 }
@@ -150,15 +122,15 @@ Multi component (AKA Frankenponent)
                     display: none;
                 }
             }
-            
+
             @include mq(desktop) {
                 width: 25%;
-                
+
                 &:nth-child(n+4) {
                     display: block;
                 }
             }
-            
+
             .lineitem__image {
                 max-height: 64px;
             }

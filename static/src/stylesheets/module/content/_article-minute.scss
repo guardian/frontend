@@ -5,19 +5,30 @@ $minute-headline-colour: #ffffff;
 
 $minute-layout-margin-nudge: gs-span(1);
 
+@mixin rule($ruleColour, $ruleHeight) {
+    background-color: $ruleColour;
+    content: '';
+    height: $ruleHeight;
+    width: gs-span(4) + $gs-gutter;
+}
+
 .content--minute-article {
     border-top: 0 none;
 }
-
 
 .content .gs-container--minute-article {
     padding: 0;
 }
 
+/* ==========================================================================
+   Header
+   ========================================================================== */
+
 .content__head--minute-article {
     .content__head--mobile,
     .content__head--desktop {
 
+        // Header background overlay
         &:before {
             content: '';
             display: block;
@@ -25,57 +36,60 @@ $minute-layout-margin-nudge: gs-span(1);
             top: 0;
             bottom: 0;
             background: rgba(0, 0, 0, .4);
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #000000 100%);
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 20%, #000000 90%);
             width: 100%;
         }
 
     }
 
-    .logo--minute--article {
+    // Logo Styles
+    .logo--us-election,
+    .logo--minute-article {
         display: block;
         float: left;
+    }
+
+    .logo--us-election {
+        height: gs-height(2);
+        position: absolute;
+        top: $gs-baseline / 2;
+        width: gs-span(1) + $gs-gutter;
+
+        @include mq(tablet) {
+            width: gs-span(1) + $gs-gutter * 2;
+        }
+
+        svg {
+            height: auto;
+            max-height: 47px;
+            width: 100%;
+        }
+    }
+
+    .logo--minute-article {
         height: gs-height(3);
         position: absolute;
         top: -#{gs-height(4) - $gs-baseline};
 
+        @include mq(desktop) {
+            height: gs-height(4);
+            top: -#{gs-height(5)};
+        }
+
         svg {
-            width: auto;
             height: 100%;
+            width: auto;
             max-width: 189px;
 
             @include mq($from: desktop) {
                 max-width: 257px;
             }
         }
-
-        @include mq(desktop) {
-            height: gs-height(4);
-            top: -#{gs-height(5)};
-        }
     }
 
     .content__wrapper {
-
         margin: 0 auto;
         width: 100%;
-    }
-
-    .content__headline,
-    .content__dateline,
-    .content__standfirst {
-        max-width: gs-span(4);
-
-        @include mq(tablet) {
-            margin-left: $gs-gutter;
-        }
-        @include mq(desktop) {
-            max-width: gs-span(6);
-            margin-left: gs-span(1) - $gs-gutter;
-        }
-        @include mq(wide) {
-            margin-left: gs-span(2) - $gs-gutter * 2;
-        }
-
     }
 
     .content__headline {
@@ -91,20 +105,17 @@ $minute-layout-margin-nudge: gs-span(1);
             font-size: 3.5rem;
         }
 
-        &:after {
-            background-color: $us-minute-highlight-colour;
-            content: '';
-            height: $gs-baseline*2;
-            position: absolute;
-            left: 0;
-            top: -$gs-baseline*2;
-            width: gs-span(4) + $gs-gutter;
-            margin-left: 0;
-            margin-right: $gs-gutter;
-
-            @include mq($from: mobileLandscape) {
+        @include mq(phablet) {
+            &:after {
+                @include rule($us-minute-highlight-colour, $gs-baseline*2);
+                position: absolute;
+                left: 0;
+                top: -$gs-baseline*2;
                 width: gs-span(4) + $gs-gutter * 2;
             }
+        }
+
+        &:after {
             @include mq(desktop) {
                 height: $gs-baseline*3;
                 top: -$gs-baseline*3;
@@ -116,22 +127,46 @@ $minute-layout-margin-nudge: gs-span(1);
         }
     }
 
-    .content__dateline {
-        @include fs-header(2);
-        border-top: 0 none;
-        color: $us-minute-highlight-colour;
-        min-height: 0;
-        padding-bottom: 0;
-        margin-bottom: 0;
-    }
-
     .content__standfirst {
         @include fs-header(2);
         color: $minute-headline-colour;
         padding-bottom: $gs-baseline;
 
     }
+
+    /* ==========================================================================
+       Header Layout
+       ========================================================================== */
+    .content__headline,
+    .content__dateline--minute-article,
+    .content__standfirst,
+    .logo--us-election {
+        max-width: gs-span(4);
+
+        @include mq(tablet) {
+            margin-left: $gs-gutter;
+        }
+        @include mq(desktop) {
+            max-width: gs-span(6);
+            margin-left: gs-span(1) - $gs-gutter;
+        }
+        @include mq(wide) {
+            margin-left: gs-span(2) - $gs-gutter * 2;
+        }
+
+    }
+
 }
+
+.content__dateline--minute-article {
+    @include fs-header(2);
+    color: $us-minute-highlight-colour;
+    margin-bottom: 0;
+}
+
+/* ==========================================================================
+   Main Column
+   ========================================================================== */
 
 .content__main-column--minute-article {
     margin: 0 auto;
@@ -162,48 +197,95 @@ $minute-layout-margin-nudge: gs-span(1);
 
 .article__container--minute-article {
     background-color: $us-minute-main-colour;
+    padding-bottom: $gs-baseline;
 }
 
 /* ==========================================================================
-   Layout
+   Blocks - Layout
    ========================================================================== */
 
 .block--minute-article {
     background-color: $us-minute-main-colour;
-    border-top: 4px solid $us-minute-highlight-colour;
     color: $us-minute-contrast-colour;
     overflow: hidden;
-    padding: $gs-baseline 0;
     position: relative;
+    width: 100%;
 
-    @include mq($from: tablet) {
-        border-top: 0 none;
-        padding-left: $gs-gutter*1.5;
+    &:before {
+        @include rule($us-minute-highlight-colour, $gs-baseline*2);
+        z-index: 2;
+        right: 0;
     }
 
     .block-elements {
-        padding: 0 $gs-gutter/2;
+        padding: $gs-baseline*3 $gs-gutter/2 0;
     }
 
+    figure.element-image {
+        margin-bottom: 0;
+        width: 100%;
+        z-index: 1;
+    }
+
+    // Mobile Layout
+    @include mq($until: mobileLandscape) {
+        // On portrait mobile we want blocks that fill up the entire screen
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        min-height: 560px;
+
+        &:before {
+            margin-top: auto;
+
+            @if ($browser-supports-flexbox == false) {
+                position: absolute;
+            }
+        }
+
+
+        &.block--minute-article--embed {
+            justify-content: center;
+
+            &:before {
+                margin-top: 0;
+            }
+        }
+    }
+
+    // Mobile Landscape
     @include mq($from: mobileLandscape) {
+        margin-top: $gs-baseline;
+
+        &:before {
+            width: gs-span(6);
+            position: absolute;
+        }
+
         .block-elements {
             padding-left: $gs-gutter;
             padding-right: $gs-gutter;
         }
+
+        figure.element-image {
+            display: block;
+            position: relative;
+        }
     }
 
+    // Tablet
     @include mq($from: tablet) {
-        margin: 0 auto;
+        border-top: 0 none;
+        margin: $gs-baseline auto;
         max-width: gs-span(8);
+        padding-left: $gs-gutter*1.5;
+        padding-top: $gs-baseline;
 
-        &:after {
-            background-color: $us-minute-highlight-colour;
-            content: '';
+        &:before {
             height: $gs-baseline*3;
-            position: absolute;
-            right: 0;
             top: 0;
             width: gs-span(7);
+            position: absolute;
         }
 
         .block-elements {
@@ -214,19 +296,20 @@ $minute-layout-margin-nudge: gs-span(1);
         }
 
         figure.element-image {
-            display: block;
             margin-top: 0;
             position: relative;
             width: gs-span(4);
         }
     }
 
+    // Desktop
     @include mq($from: desktop) {
         max-width: gs-span(11);
-        margin: $gs-baseline/2 0 0 $minute-layout-margin-nudge;
+        margin: $gs-baseline/2 0 $gs-baseline $minute-layout-margin-nudge;
+        margin-top: $gs-baseline * 2;
         padding-left: 0;
 
-        &:after {
+        &:before {
             width: gs-span(9);
         }
 
@@ -241,12 +324,9 @@ $minute-layout-margin-nudge: gs-span(1);
         }
     }
 
+    // LeftCol
     @include mq($from: leftCol) {
         max-width: gs-span(12);
-
-        &:after {
-            width: gs-span(9);
-        }
 
         .block-elements {
             width: gs-span(6);
@@ -258,6 +338,7 @@ $minute-layout-margin-nudge: gs-span(1);
         }
     }
 
+    // Wide
     @include mq($from: wide) {
         margin-left: $minute-layout-margin-nudge + gs-span(1);
 
@@ -274,15 +355,7 @@ $minute-layout-margin-nudge: gs-span(1);
 // Alternative Layout
 .block--minute-article--alt-layout {
 
-    @include mq($from: leftCol) {
-        margin-left: $minute-layout-margin-nudge + gs-span(1);
-    }
-
-    @include mq($from: wide) {
-        margin-left: $minute-layout-margin-nudge + gs-span(2);
-    }
-
-    &:after {
+    &:before {
         left: 0;
         right: auto;
     }
@@ -291,9 +364,99 @@ $minute-layout-margin-nudge: gs-span(1);
         float: left;
     }
 
-    figure.element-image {
-        float: right;
+    @include mq($from: tablet) {
+        figure.element-image {
+            float: right;
+        }
     }
+
+    @include mq($from: leftCol) {
+        margin-left: $minute-layout-margin-nudge + gs-span(1);
+    }
+
+    @include mq($from: wide) {
+        margin-left: $minute-layout-margin-nudge + gs-span(2);
+    }
+}
+
+/* ==========================================================================
+   Block Content Overrides
+   ========================================================================== */
+
+.block--minute-article {
+
+    .updated-time {
+        display: none;
+    }
+
+    // Standard elements
+
+    a,
+    .u-fauxlink {
+        color: $us-minute-contrast-colour;
+    }
+
+    a {
+        border-bottom: 1px solid rgba(255, 255, 255, .4);
+
+        &:hover {
+            border-bottom-color: $us-minute-highlight-colour;
+        }
+
+        &:active {
+            color: $us-minute-highlight-colour;
+            border-bottom-color: $us-minute-highlight-colour;
+        }
+    }
+
+
+    // Captions
+    .caption__minute-article {
+        background-color: $us-minute-highlight-colour;
+        box-sizing: border-box;
+        color: $us-minute-contrast-colour;
+        padding: $gs-baseline/2 $gs-gutter $gs-baseline $gs-gutter/2;
+        width: 100%;
+    }
+
+    .element-image .caption__minute-article {
+        @include mq($from: tablet) {
+            bottom: 0;
+            padding-left: $gs-gutter/2;
+            position: absolute;
+            background-color: rgba(12, 87, 135, .5);
+        }
+    }
+
+    .caption {
+        color: $us-minute-contrast-colour;
+    }
+
+    .svg  & .caption--img:before {
+        @extend %svg-i-camera-white-large;
+        margin-right: 5px;
+    }
+
+    figcaption.caption__minute-article {
+        max-width: none;
+    }
+
+    // Embeds
+
+    .tweet-main-image {
+        display: none;
+    }
+
+    // From content API
+
+    .from-content-api & blockquote.quoted {
+        color: $us-minute-contrast-colour;
+
+        .inline-quote {
+            fill: $us-minute-contrast-colour;
+        }
+    }
+
 }
 
 /* ==========================================================================
@@ -305,12 +468,12 @@ $minute-layout-margin-nudge: gs-span(1);
 .block--minute-article.block--quote {
 
     .quoted__contents {
-        @include fs-headline(1);
+        @include fs-headline(4);
         font-style: normal;
     }
 
     @include mq($from: tablet) {
-        &:after {
+        &:before {
             right: auto;
         }
 
@@ -340,17 +503,22 @@ $minute-layout-margin-nudge: gs-span(1);
 
 .block--minute-article--alt-layout.block--quote {
     @include mq($from: tablet) {
-        &:after {
+        &:before {
             left: 0;
         }
     }
 }
 
 // Video Layout
-.block--minute-article.block--video {
+.block--minute-article--video {
     @include mq($from: tablet) {
         .block-elements {
             width: gs-span(7);
+        }
+
+        .caption__minute-article {
+            background-color: transparent;
+            padding-left: 0;
         }
     }
 
@@ -362,7 +530,7 @@ $minute-layout-margin-nudge: gs-span(1);
 }
 
 // Tweet Layout
-.block--minute-article.block--tweet {
+.block--minute-article--tweet {
     @include mq($from: tablet) {
         .block-elements {
             width: gs-span(4);
@@ -376,62 +544,53 @@ $minute-layout-margin-nudge: gs-span(1);
     }
 }
 
-/* ==========================================================================
-   Content Overrides
-   ========================================================================== */
+// Background Image Layout
+@supports (object-fit: cover) {
+    .block--minute-article--background-image {
+        @include mq($until: mobileLandscape) {
+            .block-elements {
+                margin-bottom: $gs-baseline*4;
+                position: relative;
+                z-index: 3;
+            }
 
-.block--minute-article {
+            .element--inline {
+                bottom: 0;
+                position: absolute;
+                z-index: 1;
 
-    .updated-time {
-        display: none;
-    }
+                // Background overlay
+                &:after {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    background: rgba(0, 0, 0, .4);
+                    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 30%, #000000 100%);
+                    width: 100%;
+                }
 
-    // Standard elements
+                .element--inline__image-wrapper {
+                    height: 100vh;
+                }
 
-    a,
-    .u-fauxlink {
-        color: $us-minute-contrast-colour;
-    }
+                .gu-image {
+                    height: 100%;
+                    width: 100vw;
+                    object-fit: cover;
+                }
+            }
 
-    // Captions
-
-    .caption {
-        color: $us-minute-contrast-colour;
-    }
-
-    .svg  & .caption--img:before {
-        @extend %svg-i-camera-white-large;
-        margin-right: 5px;
-    }
-
-    .caption--image__minute-article {
-        background-color: rgba(12, 87, 135, .5);
-        box-sizing: border-box;
-        bottom: 0;
-        color: $us-minute-contrast-colour;
-        padding: $gs-baseline/2 $gs-gutter $gs-baseline $gs-gutter/2;
-        position: absolute;
-        width: 100%;
-    }
-
-    figcaption.caption--image__minute-article {
-        max-width: none;
-    }
-
-    // Embeds
-
-    .tweet-main-image {
-        display: none;
-    }
-
-    // From content API
-
-    .from-content-api & blockquote.quoted {
-        color: $us-minute-contrast-colour;
-
-        .inline-quote {
-            fill: $us-minute-contrast-colour;
+            .caption__minute-article {
+                background-color: transparent;
+                min-height: $gs-baseline*2;
+                position: relative;
+                z-index: 2;
+            }
         }
     }
-
 }
+
+
+

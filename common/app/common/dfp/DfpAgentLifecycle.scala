@@ -3,6 +3,8 @@ package common.dfp
 import common.{AkkaAsync, Jobs}
 import play.api.{Application, GlobalSettings}
 
+import scala.concurrent.Future
+
 trait DfpAgentLifecycle extends GlobalSettings {
 
   def refreshDfpAgent(): Unit = DfpAgent.refresh()
@@ -13,6 +15,7 @@ trait DfpAgentLifecycle extends GlobalSettings {
     Jobs.deschedule("DfpDataRefreshJob")
     Jobs.scheduleEveryNMinutes("DfpDataRefreshJob", 1) {
       refreshDfpAgent()
+      Future.successful(())
     }
 
     AkkaAsync {

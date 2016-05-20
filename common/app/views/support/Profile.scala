@@ -14,7 +14,9 @@ sealed trait ElementProfile {
 
   def width: Option[Int]
   def height: Option[Int]
+  def hidpi: Boolean
   def compression: Int
+  def isPng: Boolean
 
   def elementFor(image: ImageMedia): Option[ImageAsset] = {
     val sortedCrops = image.imageCrops.sortBy(-_.width)
@@ -36,13 +38,21 @@ sealed trait ElementProfile {
 
   // NOTE - if you modify this in any way there is a decent chance that you decache all our images :(
   lazy val resizeString = {
-    val qualityparam = "q=85"
+    val qualityparam = if (hidpi) {"q=20"} else {"q=55"}
     val autoParam = "auto=format"
-    val sharpParam = "sharp=10"
+    val sharpParam = "usm=12"
+    val fitParam = "fit=max"
+    val dprParam = if (hidpi) {
+      if (isPng) {
+        "dpr=1.3"
+      } else {
+        "dpr=2"
+      }
+    } else {""}
     val heightParam = height.map(pixels => s"h=$pixels").getOrElse("")
     val widthParam = width.map(pixels => s"w=$pixels").getOrElse("")
 
-    val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam).filter(_.nonEmpty).mkString("&")
+    val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam, fitParam, dprParam).filter(_.nonEmpty).mkString("&")
     s"?$params"
   }
 
@@ -52,7 +62,9 @@ sealed trait ElementProfile {
 case class Profile(
   override val width: Option[Int] = None,
   override val height: Option[Int] = None,
-  override val compression: Int = 95) extends ElementProfile
+  override val hidpi: Boolean = false,
+  override val compression: Int = 95,
+  override val isPng: Boolean = false) extends ElementProfile
 
 object VideoProfile {
   lazy val ratioHD = new Fraction(16,9)
@@ -61,7 +73,9 @@ object VideoProfile {
 case class VideoProfile(
   override val width: Some[Int],
   override val height: Some[Int],
-  override val compression: Int = 95) extends ElementProfile {
+  override val hidpi: Boolean = false,
+  override val compression: Int = 95,
+  override val isPng: Boolean = false) extends ElementProfile {
 
   lazy val isRatioHD: Boolean = Precision.compareTo(VideoProfile.ratioHD.doubleValue, aspectRatio.doubleValue, 0.1d) == 0
 
@@ -79,7 +93,9 @@ object Item620 extends Profile(width = Some(620))
 object Item640 extends Profile(width = Some(640))
 object Item700 extends Profile(width = Some(700))
 object Video640 extends VideoProfile(width = Some(640), height = Some(360)) // 16:9
+object Video700 extends VideoProfile(width = Some(700), height = Some(394)) // 16:9
 object FacebookOpenGraphImage extends Profile(width = Some(1200))
+object EmailArticleImage extends Profile(width = Some(640))
 
 // The imager/images.js base image.
 object SeoOptimisedContentImage extends Profile(width = Some(460))
@@ -87,7 +103,7 @@ object SeoOptimisedContentImage extends Profile(width = Some(460))
 // Just degrade the image quality without adjusting the width/height
 object Naked extends Profile(None, None)
 
-object ImgSrc extends Logging {
+object ImgSrc extends Logging with implicits.Strings {
 
   private lazy val imageHost = Configuration.images.path
 
@@ -96,24 +112,31 @@ object ImgSrc extends Logging {
   private lazy val hostPrefixMapping: Map[String, HostMapping] = Map(
     "static.guim.co.uk" -> HostMapping("static", Configuration.images.backends.staticToken),
     "static-secure.guim.co.uk" -> HostMapping("static", Configuration.images.backends.staticToken),
-    "media.guim.co.uk" -> HostMapping("media", Configuration.images.backends.mediaToken)
+    "media.guim.co.uk" -> HostMapping("media", Configuration.images.backends.mediaToken),
+    "uploads.guim.co.uk" -> HostMapping("uploads", Configuration.images.backends.uploadsToken)
   )
 
   def tokenFor(host:String): Option[String] = hostPrefixMapping.get(host).map(_.token)
 
   private val supportedImages = Set(".jpg", ".jpeg", ".png")
 
-  def apply(url: String, imageType: ElementProfile): String = {
+  def apply(url: String, imageType: ElementProfile, overlayTest: Boolean = false): String = {
     try {
-      val uri = new URI(url.trim)
-
+      val uri = new URI(url.trim.encodeURI)
+      val imageOverlay = if (imageType == FacebookOpenGraphImage && overlayTest) {
+        "&bm=normal" +
+        "&ba=bottom%2C%20left" +
+        "&bw=350" +
+        "&bp=20" +
+        "&blend64=aHR0cDovL3MxNC5wb3N0aW1nLm9yZy80YnA4cDJ4cjUvV2hpdGVfbG9nb193aXRoX3NoYWRvdy5wbmc"
+      } else { "" }
       val isSupportedImage = supportedImages.exists(extension => uri.getPath.toLowerCase.endsWith(extension))
 
       hostPrefixMapping.get(uri.getHost)
         .filter(const(ImageServerSwitch.isSwitchedOn))
         .filter(const(isSupportedImage))
         .map { host =>
-          val signedPath = ImageUrlSigner.sign(s"${uri.getRawPath}${imageType.resizeString}", host.token)
+          val signedPath = ImageUrlSigner.sign(s"${uri.getRawPath}${imageType.resizeString}${imageOverlay}", host.token)
           s"$imageHost/img/${host.prefix}$signedPath"
         }.getOrElse(url)
     } catch {
@@ -136,31 +159,32 @@ object ImgSrc extends Logging {
   }
 
   def srcset(imageContainer: ImageMedia, widths: WidthsByBreakpoint): String = {
-    widths.profiles.map { profile => srcsetForProfile(profile, imageContainer) } mkString ", "
+    widths.profiles.map { profile => srcsetForProfile(profile, imageContainer, hidpi = false) } mkString ", "
   }
 
-  def srcsetForBreakpoint(breakpointWidth: BreakpointWidth, breakpointWidths: Seq[BreakpointWidth], maybePath: Option[String] = None, maybeImageMedia: Option[ImageMedia] = None) = {
+  def srcsetForBreakpoint(breakpointWidth: BreakpointWidth, breakpointWidths: Seq[BreakpointWidth], maybePath: Option[String] = None, maybeImageMedia: Option[ImageMedia] = None, hidpi: Boolean = false) = {
+    val isPng = maybePath.map(path => path.toLowerCase.endsWith("png")).getOrElse(false)
     breakpointWidth.toPixels(breakpointWidths)
-      .map(browserWidth => Profile(width = Some(browserWidth)))
+      .map(browserWidth => Profile(width = Some(browserWidth), hidpi = hidpi, isPng = isPng))
       .map { profile => {
         maybePath
-          .map(url => srcsetForProfile(profile, url))
-          .orElse(maybeImageMedia.map(imageContainer => srcsetForProfile(profile, imageContainer)))
+          .map(url => srcsetForProfile(profile, url, hidpi))
+          .orElse(maybeImageMedia.map(imageContainer => srcsetForProfile(profile, imageContainer, hidpi)))
           .getOrElse("")
       } }
       .mkString(", ")
   }
 
-  def srcsetForProfile(profile: Profile, imageContainer: ImageMedia): String = {
+  def srcsetForProfile(profile: Profile, imageContainer: ImageMedia, hidpi: Boolean): String = {
     if(ImageServerSwitch.isSwitchedOn) {
-      s"${findLargestSrc(imageContainer, profile).get} ${profile.width.get}w"
+      s"${findLargestSrc(imageContainer, profile).get} ${profile.width.get * (if (hidpi) 2 else 1)}w"
     } else {
-      s"${findNearestSrc(imageContainer, profile).get} ${profile.width.get}w"
+      s"${findNearestSrc(imageContainer, profile).get} ${profile.width.get * (if (hidpi) 2 else 1)}w"
     }
   }
 
-  def srcsetForProfile(profile: Profile, path: String): String = {
-    s"${ImgSrc(path, profile)} ${profile.width.get}w"
+  def srcsetForProfile(profile: Profile, path: String, hidpi: Boolean): String = {
+    s"${ImgSrc(path, profile)} ${profile.width.get * (if (hidpi) 2 else 1)}w"
   }
 
   def getFallbackUrl(ImageElement: ImageMedia): Option[String] = {
@@ -169,6 +193,10 @@ object ImgSrc extends Logging {
     } else {
       findNearestSrc(ImageElement, Item300)
     }
+  }
+
+  def getAmpImageUrl(ImageElement: ImageMedia): Option[String] = {
+      findNearestSrc(ImageElement, Item620)
   }
 
   def getFallbackAsset(ImageElement: ImageMedia): Option[ImageAsset] = {

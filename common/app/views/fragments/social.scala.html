@@ -1,7 +1,7 @@
-@(content: model.ContentType, position: String = "bottom", iconModifier: String = "")(implicit request: RequestHeader)
+@(sharelinks: Seq[model.ShareLink], position: String = "bottom", iconModifier: String = "", isGallery: Boolean = false)
 
 <ul class="social social--@position u-unstyled u-cf" data-component="social">
-    @content.sharelinks.pageShares.map { item: model.ShareLink =>
+    @sharelinks.map { item: model.ShareLink =>
         <li class="social__item social__item--@item.css" data-link-name="@item.css">
             <a  class="social__action social-icon-wrapper"
                 data-link-name="social @position"
@@ -9,7 +9,15 @@
                 target="_blank"
                 title="@item.text">
                 <span class='@if(item.css.matches("facebook|twitter|email")) {inline-icon__fallback button share-modal__item share-modal__item--@item.css} else { u-h }'>@item.userMessage</span>
-                @fragments.inlineSvg("share-" + item.css, "icon", List("rounded-icon", "social-icon", "social-icon--" + item.css))
+                @defining(
+                    if(isGallery){
+                        List("rounded-icon", "social-icon", "social-icon--" + item.css, "social-icon--media")
+                    } else {
+                        List("rounded-icon", "social-icon", "social-icon--" + item.css)
+                    }
+                ) { classNames =>
+                    @fragments.inlineSvg("share-" + item.css, "icon", classNames)
+                }
             </a>
         </li>
     }

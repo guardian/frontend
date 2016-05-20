@@ -49,6 +49,6 @@
 }
 
 .crossword__cell-text--error {
-    fill: darken(colour(error), 20%);
+    fill: darken($error, 20%);
     opacity: 0;
 }

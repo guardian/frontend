@@ -4,22 +4,25 @@
 @import views.support.{JavaScriptPage, CamelCase}
 @import play.api.libs.json.Json
 
+var isModernBrowser =
+    "querySelector" in document
+    && "addEventListener" in window
+    && "localStorage" in window
+    && "sessionStorage" in window
+    && "bind" in Function
+    && (
+        ("XMLHttpRequest" in window && "withCredentials" in new XMLHttpRequest())
+        || "XDomainRequest" in window
+    );
+
 window.guardian = {
-    isModernBrowser: (
-        window.shouldEnhance
-            && "querySelector" in document
-            && "addEventListener" in window
-            && "localStorage" in window
-            && "sessionStorage" in window
-            && "bind" in Function
-            && (
-                ("XMLHttpRequest" in window && "withCredentials" in new XMLHttpRequest())
-                    || "XDomainRequest" in window
-            )
-    ),
+    isModernBrowser : isModernBrowser,
+    isEnhanced:
+        window.shouldEnhance && isModernBrowser,
     css: {
         loaded: false
     },
+    adBlockers: {},
     config: @JavaScript(templates.js.javaScriptConfig(page).body)
 };
 

@@ -2,7 +2,7 @@ package views.support.cleaner
 
 import java.net.URL
 
-import model.{Article, VideoAsset, VideoElement}
+import model.{Article, VideoAsset, VideoElement, ShareLinks}
 import org.jsoup.nodes.{Document, Element}
 import views.support.{HtmlCleaner, Item640}
 import scala.collection.JavaConversions._
@@ -11,14 +11,13 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 
   def addShareButtons(document: Document): Unit = {
     document.getElementsByClass("element-video").foreach(element => {
-      val shortUrl = element.attr("data-short-url")
       val webUrl = element.attr("data-canonical-url")
       val blockId = element.attr("data-media-id")
       val mediaPath = element.attr("data-video-poster")
       val mediaTitle = element.attr("data-video-name")
 
-      if (!shortUrl.isEmpty) {
-        val html = views.html.fragments.share.blockLevelSharing(blockId, article.sharelinks.elementShares(shortLinkUrl = shortUrl, webLinkUrl = webUrl, mediaPath = Some(mediaPath), title = mediaTitle), article.metadata.contentType)
+      if (!webUrl.isEmpty) {
+        val html = views.html.fragments.share.blockLevelSharing(blockId, ShareLinks.createShareLinks(ShareLinks.defaultShares, href = webUrl, title = mediaTitle, mediaPath = Some(mediaPath)), article.metadata.contentType)
         element.child(0).after(html.toString())
         element.addClass("fig--has-shares")
         element.addClass("fig--narrow-caption")
@@ -42,6 +41,8 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
         element
           .removeClass("gu-video")
           .addClass("js-gu-media--enhance gu-media gu-media--video")
+          .attr("preload", "none")
+          .attr("data-canonical-url", canonicalUrl)
           .wrap("<div class=\"gu-media-wrapper gu-media-wrapper--video u-responsive-ratio u-responsive-ratio--hd\"></div>")
 
         val flashMediaElement = conf.Static("flash/components/mediaelement/flashmediaelement.swf").path

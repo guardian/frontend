@@ -9,14 +9,14 @@
 
 @if(popular.trails.nonEmpty) {
     <div class="js-right-most-popular right-most-popular right-most-popular--image component--rhc hide-on-childrens-books-site" data-component="geo-most-popular" data-importance="-1" data-test-id="right-most-popular">
-        <h3 class="content__meta-heading">Most popular @{country.map{ name => s"in ${name}"}}</h3>
+        <h3 class="content__meta-heading">Most popular @{country.map{ name => s"in $name"}}</h3>
         <ul class="right-most-popular__items u-unstyled" data-link-name="Right hand most popular geo @countryCode">
             @popular.trails.take(5).zipWithRowInfo.map{ case(trail, row) =>
                 <li class="right-most-popular-item" data-link-name="trail | @row.rowNum">
                     <a class="right-most-popular-item__url media u-cf" href="@LinkTo{@trail.header.url}">
-                         @trail.trailPicture(5, 3).map{ image =>
+                         @trail.trailPicture.map{ imageMedia =>
                             <div class="right-most-popular-item__img media__img">
-                                <img class="responsiveimg" src="@ImgSrc.getFallbackUrl(image.images)" alt="" />
+                                <img class="responsiveimg" src="@ImgSrc.getFallbackUrl(imageMedia)" alt="" />
                             </div>
                          }
                         <div class="media__body">

@@ -2,6 +2,16 @@ html {
     overflow-y: scroll;
 }
 
+.multi-column--3 {
+    -moz-column-count: 3;
+    -moz-column-gap: 20px;
+    -webkit-column-count: 3;
+    -webkit-column-gap: 20px;
+    column-count: 3;
+    column-gap: 20px;
+    list-style-position: inside;
+}
+
 .dropdown-menu {
     position: absolute;
     display: block;
@@ -15,6 +25,10 @@ html {
 
 .row {
     margin: 20px;
+}
+
+.sub-heading {
+    font-style: italic;
 }
 
 input[type="text"] {

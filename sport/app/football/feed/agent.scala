@@ -15,6 +15,7 @@ trait Lineups extends ExecutionContexts with Logging {
     val awayTeam = m.awayTeam.copy(name = TeamName(m.awayTeam))
     LineUp(homeTeam, awayTeam, m.homeTeamPossession)
   }
+    .recover(FootballClient.logErrors)
 }
 
 trait LiveMatches extends ExecutionContexts with Logging {
@@ -31,6 +32,7 @@ trait LiveMatches extends ExecutionContexts with Logging {
     // we have checked above that the competition does exist for these matches
     matchesWithCleanedTeams.groupBy(_.competition.head.id)
   }
+    .recover(FootballClient.logErrors)
 }
 
 trait LeagueTables extends ExecutionContexts with Logging {
@@ -42,6 +44,7 @@ trait LeagueTables extends ExecutionContexts with Logging {
         t.copy(team = team)
       }
     }
+      .recover(FootballClient.logErrors)
   }
 }
 
@@ -55,6 +58,7 @@ trait Fixtures extends ExecutionContexts with Logging {
         f.copy(homeTeam = homeTeam, awayTeam = awayTeam)
       }
     }
+      .recover(FootballClient.logErrors)
   }
 }
 
@@ -70,6 +74,7 @@ trait Results extends ExecutionContexts with Logging with implicits.Collections 
         r.copy(homeTeam = homeTeam, awayTeam = awayTeam)
       }
     }
+      .recover(FootballClient.logErrors)
   }
 }
 

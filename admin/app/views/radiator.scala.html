@@ -3,8 +3,7 @@
     hitMissCharts: Seq[tools.AwsLineChart],
     cost: tools.MaximumMetric,
     switches: Seq[conf.switches.Switch],
-    env: String,
-    external: Boolean)
+    env: String)(implicit request: RequestHeader)
 
 @import org.joda.time.{DateTime, Days}
 
@@ -23,14 +22,13 @@
     </div>
 
     <div class="build-wrapper">
-        @if(!external) {
-            <h2>Teamcity builds</h2>
-            @*
-            To add another build just append another &buildTypeId=XXXXXX
-            Note, it will not show unless you enable the "External status widget" for the build in Teamcity
-            *@
-            <script type="text/javascript" src="https://teamcity.gutools.co.uk/externalStatus.html?js=1&buildTypeId=bt1304&buildTypeId=Frontend_IntegrationTests&buildTypeId=Frontend_SanityTests"></script>
-        }
+        <h2>Teamcity builds</h2>
+        @*
+        To add another build just append another &buildTypeId=XXXXXX
+        Note, it will not show unless you enable the "External status widget" for the build in Teamcity
+            for some reason the &js=1 hangs waiting for a http resp so just using the iframe version for now
+        *@
+        <iframe src="http://teamcity.gu-web.net:8111/externalStatus.html?buildTypeId=dotcom_master"></iframe>
     </div>
 
 
@@ -39,7 +37,7 @@
         <ul id="sell-by-date">
             @switches.map{ switch =>
                 @Switch.expiry(switch).daysToExpiry.map { days =>
-                    <li class="Expiring expiry-days-@days" title="@switch.name - expires in @days days">
+                    <li class="Expiring expiry-days-@days @if(Switch.expiry(switch).hasExpired){expired}">" title="@switch.name - expires in @days days">
                         @switch.name
                     </li>
                 }
@@ -53,18 +51,16 @@
     </div>
 
     <div class="monitoring-wrapper">
-        @if(!external) {
-            <div class="riffraff-wrapper">
-                <h2>CODE Deployments</h2>
-                <ul class="riffraff" id="riffraffCODE"></ul>
-                <ul class="deployers" id="deployersCODE"></ul>
-            </div>
-            <div class="riffraff-wrapper">
-                <h2>PROD Deployments</h2>
-                <ul class="riffraff" id="riffraffPROD"></ul>
-                <ul class="deployers" id="deployersPROD"></ul>
-            </div>
-        }
+        <div class="riffraff-wrapper">
+            <h2>CODE Deployments</h2>
+            <ul class="riffraff" id="riffraffCODE"></ul>
+            <ul class="deployers" id="deployersCODE"></ul>
+        </div>
+        <div class="riffraff-wrapper">
+            <h2>PROD Deployments</h2>
+            <ul class="riffraff" id="riffraffPROD"></ul>
+            <ul class="deployers" id="deployersPROD"></ul>
+        </div>
     </div>
 
     @charts.map{ chart => @fragments.lineChart(chart)  }

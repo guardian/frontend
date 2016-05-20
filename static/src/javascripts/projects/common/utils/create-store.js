@@ -1,8 +1,8 @@
 define([], function () {
     // Mini Redux
-    var createStore = function (reducer) {
+    var createStore = function (reducer, initialState) {
         // We re-assign this over time
-        var state;
+        var state = initialState;
         var subscribers = [];
 
         var notify = function () { subscribers.forEach(function (fn) { fn(); }); };
@@ -13,7 +13,6 @@ define([], function () {
         var subscribe = function (fn) { subscribers.push(fn); };
         var getState = function () { return state; };
 
-        // Set initial state
         dispatch({ type: 'INIT' });
 
         return {

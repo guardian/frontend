@@ -1,7 +1,7 @@
 @(content: model.ContentType)(implicit request: RequestHeader)
 
 
-@import model.pressed.{Comment, DefaultCardstyle, Feature, Media}
+@import model.pressed.{Comment, DefaultCardstyle, Feature, Media, SpecialReport}
 @import views.support.TrailCssClasses.toneClass
 @import views.support.{ImgSrc, RichLinkContributor, Item460, RenderClasses}
 
@@ -10,7 +10,7 @@
         <span class="rich-link__kicker">Analysis</span>
     }
     @if(content.tags.isLiveBlog && content.fields.isLive) {
-        <span class="rich-link__kicker"><span class="rich-link__live live-pulse-icon">Live</span></span>
+        <span class="rich-link__kicker"><span class="rich-link__live live-pulse-icon js-flashing-image"></span>Live</span>
     }
     @if(content.tags.isPodcast) {
         @content.content.seriesTag.map { series => <span class="rich-link__kicker">@series.metadata.webTitle</span> }
@@ -38,12 +38,17 @@
 
         <div class="rich-link__header">
             <h1 class="rich-link__title">
-                @if( toneClass(content) == "tone-comment" ) {
+                @if(content.content.cardStyle == Comment ||
+                    (content.content.cardStyle == SpecialReport && content.content.hasTonalHeaderByline)
+                ) {
                     @fragments.inlineSvg("quote", "icon")
                 }
                 <a class="rich-link__link">@Html(kicker.toString.replaceAll("^\\s+", "") + content.trail.headline)</a>
             </h1>
-            @if(!content.tags.isMedia && content.content.cardStyle == Comment) {
+            @if(!content.tags.isMedia && (
+                content.content.cardStyle == Comment ||
+                (content.content.cardStyle == SpecialReport && content.content.hasTonalHeaderByline)
+            )) {
                 <div class="rich-link__byline">@content.trail.byline.map { byline => @Html(byline) }</div>
             }
             @content.content.starRating.map { stars => @fragments.items.elements.starRating(stars) }

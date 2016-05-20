@@ -1,0 +1,376 @@
+// ********************* quiz layout *********************
+// see bottom for auto-reveal stuff
+
+.atom-quiz {
+    counter-reset: quiz-question;
+    margin: 0; // override pasteup
+}
+
+// general question block (fieldset)
+.atom-quiz__question {
+    margin-bottom: $gs-baseline * 2;
+    list-style-type: none;
+    border: 0;
+    padding: 0;
+
+    // Overrides capi styling for figure elements in _from-content-api.scss.
+    & figure.element {
+        margin: 0;
+        transition: opacity 100ms;
+    }
+}
+
+// fieldset > legend
+.atom-quiz__question-text {
+    margin-bottom: $gs-baseline;
+    display: block;
+
+    &:before {
+        counter-increment: quiz-question;
+        content: counter(quiz-question) '.';
+        padding-right: .5ch;
+    }
+}
+
+// image attached to the question, rather than an answer
+.atom-quiz__question-image {
+    margin-bottom: $gs-baseline / 2;
+}
+
+// space answers out
+.atom-quiz__answers {
+    @include clearfix;
+}
+
+.atom-quiz__answer {
+    clear: both;
+
+    & + & {
+        padding-top: $gs-baseline * .5;
+    }
+}
+
+.atom-quiz__answer--image {
+    width: 50%;
+    float: left;
+
+    &:nth-child(2) {
+        padding-top: 0;
+    }
+
+    &:nth-child(even) {
+        clear: none;
+    }
+}
+
+// [type=radio]
+// we use the radio button for a bit of state and for screen readers etc,
+// but we don't want to see it
+.atom-quiz__answer__input {
+    @include u-h;
+}
+
+// [type=radio] + label
+.atom-quiz__answer__item {
+    background-color: $neutral-8;
+    transition: background-color 100ms;
+    display: block;
+    position: relative;
+    cursor: pointer;
+
+    // make it look un-clickable
+    .atom-quiz--is-results & {
+        cursor: default;
+    }
+
+    // hightlight for when answer is selected, but in unknown state (gold)
+    // i.e. awaiting round trip
+    // [type=radio]:checked + label
+    :checked + & {
+        cursor: default; // make it look un-clickable
+        background-color: $comment-main-2;
+
+        .element-image {
+            opacity: .8;
+        }
+
+        &:before {
+            background-color: $neutral-1;
+            box-shadow: 0px 0px 0px 1px $neutral-1, inset 0px 0px 0px 3px $comment-main-2;
+        }
+    }
+
+    // highlight state (darker grey)
+    .atom-quiz--is-not-results :not(:checked) + &:hover,
+    .atom-quiz--is-not-results :not(:checked):focus + & {
+        background-color: $neutral-4;
+
+        &:before {
+            background-color: $neutral-2;
+            box-shadow: 0px 0px 0px 1px $neutral-2, inset 0px 0px 0px 3px $neutral-4;
+        }
+    }
+}
+
+@mixin atom-quiz__answer__item--selected--is-incorrect {
+    color: #ffffff;
+    background-color: $quiz-incorrect;
+
+    .element-image {
+        opacity: .8;
+    }
+
+    .atom-quiz__answer__icon {
+        display: inline-block;
+    }
+}
+
+@mixin atom-quiz__answer__item--selected--is-correct {
+    background-color: $quiz-correct;
+
+    .element-image {
+        opacity: 1;
+    }
+
+    .atom-quiz__answer__reveal-text {
+        color: #ffffff;
+        padding-left: 28px;
+        padding-top: 0;
+        min-height: auto;
+    }
+}
+
+@mixin atom-quiz__answer__item--is-correct {
+    background-color: fade-out($quiz-correct, .4);
+
+    .element-image {
+        opacity: .8;
+    }
+}
+
+// correct/incorrect highlighting
+.atom-quiz--is-results.atom-quiz--knowledge {
+
+    // default highlight for the actual correct answer (light-green)
+    .atom-quiz__answer__item--is-correct {
+        @include atom-quiz__answer__item--is-correct;
+    }
+
+    // default hightlight for the selected answer (red)
+    .atom-quiz__answer__item--selected {
+        @include atom-quiz__answer__item--selected--is-incorrect;
+    }
+
+    // overide both defaults if you selected the correct answer (bright green)
+    .atom-quiz__answer__item--is-correct.atom-quiz__answer__item--selected {
+        @include atom-quiz__answer__item--selected--is-correct;
+    }
+}
+
+.atom-quiz__answer__item--text {
+    padding: $gs-baseline $gs-gutter;
+
+    // show a fake, stylised radio button on personality quiz answers
+    .atom-quiz--personality &:before {
+        content: '';
+        height: 1em;
+        width: 1em;
+        border-radius: 1em;
+        display: inline-block;
+        position: absolute;
+        left: 1em;
+        top: 1em;
+        box-shadow: 0px 0px 0px 1px $neutral-3;
+        transition: background-color 100ms, box-shadow 50ms;
+    }
+
+    :checked + &:before {
+        background-color: $neutral-1;
+        box-shadow: 0px 0px 0px 1px $neutral-1, inset 0px 0px 0px 3px $comment-main-2;
+    }
+
+    // highlight state (darker grey)
+    .atom-quiz--is-not-results :not(:checked) + &:hover:before,
+    .atom-quiz--is-not-results :not(:checked):focus + &:before {
+        background-color: $neutral-2;
+        box-shadow: 0px 0px 0px 1px $neutral-2, inset 0px 0px 0px 3px $neutral-4;
+    }
+
+    // don't show the fake radio button on a personality quiz results page
+    .atom-quiz--is-results &:before {
+        display: none;
+    }
+
+    .atom-quiz--is-not-results.atom-quiz--personality & {
+        padding-left: 3em;
+    }
+}
+
+.atom-quiz__answer__item--image {
+    padding: $gs-gutter * .5;
+    box-sizing: border-box;
+
+    // allow IE to handle images in labels
+    &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    &:before {
+        display: none; // hide the fake radio button on personality quizzes
+    }
+
+    .atom-quiz__answer:nth-child(odd) & {
+        margin-right: $gs-baseline * .25; // keeping spacing the same around all edges
+    }
+
+    .atom-quiz__answer:nth-child(even) & {
+        margin-left: $gs-baseline * .25; // keeping spacing the same around all edges
+    }
+}
+
+.atom-quiz__answer__icon {
+    display: none;
+
+    svg {
+        height: 16px;
+        width: 16px;
+    }
+}
+
+.atom-quiz__answer__icon--text {
+    position: relative;
+    top: 2px; // magic numbers to align text with svg icon.
+    padding-right: 8px;
+    margin-left: -2px;
+}
+
+.atom-quiz__answer__icon--image {
+    padding-top: $gs-baseline;
+
+    &:after {
+        position: relative;
+        top: -2px; // magic numbers to align text with svg icon.
+        left: 8px;
+        content: 'Incorrect';
+    }
+
+    .atom-quiz__answer__item--is-correct &:after {
+        content: 'Correct';
+    }
+}
+
+.atom-quiz__answer__reveal-text {
+    @include fs-textSans(1);
+    display: none;
+    color: $neutral-1;
+
+    .atom-quiz--is-results & {
+        display: block;
+    }
+
+    .atom-quiz__answer__icon--image + & {
+        padding-top: $gs-baseline;
+        min-height: $gs-baseline * 2;
+    }
+}
+
+.atom-quiz__end-message {
+    display: none;
+    border-top: 1px solid $neutral-4;
+    background-color: $neutral-8;
+    padding: $gs-baseline / 2 $gs-gutter * 2 / 3;
+
+    .atom-quiz--is-results & {
+        display: block;
+    }
+}
+
+.atom-quiz__score-message,
+.atom-quiz__bucket-message {
+    color: $neutral-2;
+}
+
+.atom-quiz__score {
+    @include fs-headline(9);
+    font-size: 72px;
+    line-height: 78px;
+    color: $guardian-brand;
+    display: block;
+}
+
+.atom-quiz__share {
+    border-top: 1px solid $neutral-4;
+    padding-top: $gs-baseline * 2 / 3;
+    margin-top: $gs-baseline;
+}
+
+.atom-quiz__cta {
+    padding-bottom: $gs-baseline;
+}
+
+// ********************* end quiz layout ******************
+
+
+// ********************* auto-reveal *********************
+// if we can style based on form validity, we can reveal
+// the answers for knowlegde quizzes automatically
+.atom-quiz--instant-reveal:invalid,
+.atom-quiz--instant-reveal:valid {
+    // create additional counter to keep track of correct results
+    counter-reset: quiz-question quiz-score;
+
+    // hide the submit button
+    [type=submit] {
+        display: none;
+    }
+
+    // once we have a selection ([required]:valid), kill mouse input,
+    // highlight the correct answer and show the reveal text
+    // .atom-quiz__answer__input[required]:valid
+    :valid {
+        &, & + .atom-quiz__answer__item {
+            pointer-events: none;
+        }
+
+        .atom-quiz__answer__item--is-correct {
+            @include atom-quiz__answer__item--is-correct;
+        }
+
+        .atom-quiz__answer__reveal-text {
+            display: block;
+        }
+    }
+
+    // assume selected asnwer is wrong
+    :checked + .atom-quiz__answer__item {
+        @include atom-quiz__answer__item--selected--is-incorrect;
+    }
+
+    // if its correct, override style and increment correct result counter
+    :checked + .atom-quiz__answer__item--is-correct {
+        @include atom-quiz__answer__item--selected--is-correct;
+        counter-increment: quiz-score;
+    }
+
+    // update the results
+    .atom-quiz__score:after {
+        content: counter(quiz-score) '/' attr(data-question-count);
+    }
+
+    .atom-quiz__bucket-message {
+        display: none;
+    }
+}
+
+// when the whole form is valid (i.e all fields have an answer),
+// show the results
+.atom-quiz--instant-reveal:valid .atom-quiz__end-message {
+    display: block;
+}
+
+// ********************* end auto reveal ******************

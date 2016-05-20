@@ -1,6 +1,7 @@
 import com.gu.googleauth.{FilterExemption, UserIdentity}
 import commercial.CommercialLifecycle
 import common.ExecutionContexts
+import common.Logback.Logstash
 import common.dfp.FaciaDfpAgentLifecycle
 import conf._
 import controllers.AuthCookie
@@ -58,8 +59,8 @@ object PreviewAuthFilters {
   }
 }
 
-object Global extends WithFilters(
-    new PreviewAuthFilters.AuthFilterWithExemptions(
+class StandaloneGlobal extends WithFilters(
+  new PreviewAuthFilters.AuthFilterWithExemptions(
     FilterExemptions.loginExemption,
     FilterExemptions.exemptions):: NoCacheFilter :: conf.Filters.common: _*)
   with CommercialLifecycle
@@ -70,3 +71,4 @@ object Global extends WithFilters(
   with FootballLifecycle
   with CricketLifecycle
   with RugbyLifecycle
+  with Logstash

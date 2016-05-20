@@ -9,7 +9,7 @@ import play.api.Play
 
 object Redirects {
 
-  private lazy val table = if (Play.isProd) "redirects" else "redirects-DEV"
+  private lazy val table = if (Configuration.environment.isProd) "redirects" else "redirects-DEV"
 
   private lazy val client = {
     val client = new AmazonDynamoDBClient(Configuration.aws.mandatoryCredentials)

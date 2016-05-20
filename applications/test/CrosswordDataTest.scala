@@ -1,6 +1,7 @@
 package test
 
 import model.{Entry, CrosswordData}
+import org.joda.time.DateTime
 import org.scalatest._
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.time.{Millis, Span}
@@ -36,5 +37,19 @@ import org.scalatest.time.{Millis, Span}
       Entry.formatHumanNumber("10,15,20down") should be (Some("10, 15, 20 down"))
       Entry.formatHumanNumber("2,3,4,5across") should be (Some("2, 3, 4, 5 across"))
     }
+
+    "fromCrossword should populate solutionAvailable field always and dateSolutionAvailable field if it exists" in {
+
+      implicit val patienceConfig = PatienceConfig(timeout = Span(3000, Millis), interval = Span(100, Millis))
+      val futureCrosswordWithDateSolutionAvailable = controllers.CrosswordPageController.getCrossword("prize", 26806)(TestRequest("crosswords/prize/26806"))
+      whenReady(futureCrosswordWithDateSolutionAvailable) { result =>
+        val maybeCrossword = result.content.flatMap(_.crossword)
+        maybeCrossword shouldBe defined
+        val crossword = CrosswordData.fromCrossword(maybeCrossword.get)
+        crossword.solutionAvailable should be(true)
+        crossword.dateSolutionAvailable should be(Some(new DateTime(2016,2,20,0,0,0)))
+      }
+    }
+
   }
 }

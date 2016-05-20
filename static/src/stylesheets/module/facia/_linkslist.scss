@@ -7,13 +7,13 @@
     }
 
     &.tone-feature:before {
-        background: colour(feature-mute);
+        background: $feature-mute;
     }
     &.tone-comment:before {
-        background: colour(comment-accent);
+        background: $comment-accent;
     }
     &.tone-media:before {
-        background: colour(media-default);
+        background: $media-default;
     }
 
     &.show-more--hidden {

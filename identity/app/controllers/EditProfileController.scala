@@ -71,7 +71,15 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
         val user = request.user
         val forms = ProfileForms(user, activePage).bindFromRequest(request)
         val futureFormOpt = forms.activeForm.value map {
-          data: UserFormData =>
+          case data: AccountFormData if (data.deleteTelephone) => {
+            identityApiClient.deleteTelephone(user.auth) map {
+              case Left(errors) => forms.withErrors(errors)
+              case Right(_) => {
+                forms.bindForms(user.user.copy(privateFields = user.user.privateFields.copy(telephoneNumber = None)))
+              }
+            }
+          }
+          case data: UserFormData =>
             identityApiClient.saveUser(user.id, data.toUserUpdate(user), user.auth) map {
               case Left(errors) =>
                 forms.withErrors(errors)

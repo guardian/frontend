@@ -1,31 +1,33 @@
 package jobs
 
-import common.Logging
+import common.{ExecutionContexts, Logging}
 import common.dfp.{AdvertisementFeature, GuLineItem, PageSkinSponsorship}
 import conf.Configuration.commercial._
 import services.EmailService
 import tools.Store
 
-object AdsStatusEmailJob extends Logging {
+import scala.concurrent.Future
+
+object AdsStatusEmailJob extends Logging with ExecutionContexts {
 
   private val subject = "NGW Ad Targeting Status"
 
-  def run(): Unit = {
+  def run(): Future[Unit] = {
     log.info("Starting AdsStatusEmailJob")
 
-    for {
+    (for {
       adTech <- adTechTeam
       adOps <- adOpsTeam
       adOpsUs <- adOpsUsTeam
       adOpsAu <- adOpsAuTeam
-    } {
+    } yield {
       EmailService.send(
         from = adTech,
         to = Seq(adOps, adOpsUs, adOpsAu),
         cc = Seq(adTech),
         subject = subject,
         htmlBody = Some(htmlBody))
-    }
+    }).getOrElse(Future.successful(())).map(_ => ())
   }
 
   private def htmlBody: String = {

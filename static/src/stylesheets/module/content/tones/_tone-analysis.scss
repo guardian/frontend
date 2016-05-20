@@ -2,15 +2,15 @@
 
 @include tone-content(
     analysis, // $tone
-    colour(neutral-7), // $tonal__header-background
-    colour(neutral-2), // $tonal__header-text
-    colour(analysis-default), // $tonal__header-link
+    $neutral-7, // $tonal__header-background
+    $neutral-2, // $tonal__header-text
+    $analysis-default, // $tonal__header-link
     400, // $tonal__headline-weight
-    colour(analysis-default), // $tonal__headline-colour
-    colour(analysis-accent), // $tonal__headline-accent
-    colour(neutral-8), // $tonal__standfirst-background
-    colour(neutral-2), // $tonal__standfirst-text
-    colour(analysis-default), // $tonal__standfirst-link
+    $analysis-default, // $tonal__headline-colour
+    $analysis-accent, // $tonal__headline-accent
+    $neutral-8, // $tonal__standfirst-background
+    $neutral-2, // $tonal__standfirst-text
+    $analysis-default, // $tonal__standfirst-link
     #ffffff, // $tonal__article-background
-    darken(colour(analysis-accent), 15%) // $tonal__article-link
+    darken($analysis-accent, 15%) // $tonal__article-link
 );

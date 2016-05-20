@@ -14,8 +14,8 @@ h2 {
 
 .deploys {
     list-style: none;
-    display: flex;
-    align-items: flex-start;
+    /*Clearfix*/
+    overflow: hidden;
     /* Unset UAS UL */
     padding-left: 0;
     /* Unset UAS UL */
@@ -30,6 +30,7 @@ h2 {
     margin-bottom: 1em;
     box-sizing: border-box;
     padding: 1em;
+    float: left;
 }
 
 .deploy h2 {

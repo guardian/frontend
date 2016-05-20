@@ -24,7 +24,7 @@
 
     .c-football-matches {
         overflow: hidden;
-        background: colour(neutral-8);
+        background: $neutral-8;
         width: 100%;
     }
 
@@ -45,13 +45,13 @@
         .football-matches__date {
             margin: 0;
             padding: $title-padding;
-            border-top: 1px solid darken(colour(neutral-8), 4%);
+            border-top: 1px solid darken($neutral-8, 4%);
         }
     }
 
     .table__caption--bottom {
         box-sizing: border-box;
-        background: colour(neutral-8);
+        background: $neutral-8;
         border-width: 0;
         bottom: 0;
         left: 0;
@@ -69,7 +69,7 @@
         &:after {
             @include simple-gradient(transparent, #f6f6f6);
             height: $gs-baseline*1.5;
-            border-bottom: 1px solid colour(neutral-3);
+            border-bottom: 1px solid $neutral-3;
             bottom: $gs-baseline*2.75-2;
             content: ' ';
             left: 0;
@@ -98,12 +98,12 @@
     .match-summary {
         padding-left: $gs-gutter/2;
         padding-right: $gs-gutter/2;
-        background: colour(neutral-8);
+        background: $neutral-8;
         height: 100%;
         &:hover,
         &:active {
-            background: colour(neutral-6);
-            color: colour(neutral-1);
+            background: $neutral-6;
+            color: $neutral-1;
             text-decoration: none;
         }
     }
@@ -254,7 +254,7 @@ $footballBadgeSizeDesktop: 120px;
 .football-component-missing {
     @include fs-textSans(2);
 
-    background: colour(neutral-8);
+    background: $neutral-8;
     width: 100%;
     padding: $gs-baseline/1.5;
 }

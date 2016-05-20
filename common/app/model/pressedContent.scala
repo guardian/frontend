@@ -1,17 +1,19 @@
 package model.pressed
 
-import com.gu.facia.api.{utils => fapiutils}
-import com.gu.facia.api.{models => fapi}
-import com.gu.facia.client.models.CollectionConfigJson
-import fapiutils.FaciaContentUtils
-import model.{SupportedUrl, ContentType}
+import com.gu.facia.api.utils.FaciaContentUtils
+import com.gu.facia.api.{models => fapi, utils => fapiutils}
+import com.gu.facia.client.models.{Backfill, Branded, CollectionConfigJson, Metadata}
+import common.Edition
+import common.commercial.BrandHunter
+import model.{Branding, ContentType, SupportedUrl}
 import org.joda.time.DateTime
 
 object CollectionConfig {
   def make(config: fapi.CollectionConfig): CollectionConfig = {
     CollectionConfig(
       displayName = config.displayName,
-      apiQuery = config.apiQuery,
+      backfill = config.backfill,
+      metadata = config.metadata,
       collectionType = config.collectionType,
       href = config.href,
       description = config.description,
@@ -36,7 +38,8 @@ object CollectionConfig {
 }
 final case class CollectionConfig(
   displayName: Option[String],
-  apiQuery: Option[String],
+  backfill: Option[Backfill],
+  metadata: Option[Seq[Metadata]],
   collectionType: String,
   href: Option[String],
   description: Option[String],
@@ -50,7 +53,9 @@ final case class CollectionConfig(
   excludeFromRss: Boolean,
   showTimestamps: Boolean,
   hideShowMore: Boolean
-)
+) {
+  def showBranding = metadata exists (_ contains Branded)
+}
 
 object CardStyle {
   def make(cardStyle: fapiutils.CardStyle): CardStyle = cardStyle match {
@@ -158,7 +163,11 @@ final case class PressedProperties(
   maybeFrontPublicationDate: Option[Long],
   href: Option[String],
   webUrl: Option[String]
-)
+) {
+  def branding(edition: Edition): Option[Branding] = {
+    maybeContent map (BrandHunter.findContentBranding(_, edition)) getOrElse None
+  }
+}
 
 object PressedCardHeader {
   def make(content: fapi.FaciaContent): PressedCardHeader = {
@@ -277,6 +286,8 @@ sealed trait PressedContent {
   def card: PressedCard
   def discussion: PressedDiscussionSettings
   def display: PressedDisplaySettings
+
+  def branding(edition: Edition): Option[Branding] = properties.branding(edition)
 }
 sealed trait Snap extends PressedContent
 
@@ -447,6 +458,7 @@ object Image {
   def make(image: fapi.FaciaImage): Image = image match {
     case cutout: fapi.Cutout => Cutout.make(cutout)
     case replace: fapi.Replace => Replace.make(replace)
+    case imageReplace: fapi.ImageReplace => ImageReplace.make(imageReplace)
     case slideshow: fapi.ImageSlideshow => ImageSlideshow.make(slideshow)
   }
 }
@@ -465,8 +477,16 @@ object Replace {
       imageSrc = replace.imageSrc,
       imageSrcHeight = replace.imageSrcHeight,
       imageSrcWidth = replace.imageSrcWidth)
+
 }
 final case class Replace(imageSrc: String, imageSrcWidth: String, imageSrcHeight: String) extends Image
+
+object ImageReplace {
+  def make(imageReplace: fapi.ImageReplace): ImageReplace = ImageReplace(
+    src = imageReplace.src)
+
+}
+final case class ImageReplace(src: String) extends Image
 
 object ImageSlideshow {
   def make(slideshow: fapi.ImageSlideshow): ImageSlideshow = ImageSlideshow(

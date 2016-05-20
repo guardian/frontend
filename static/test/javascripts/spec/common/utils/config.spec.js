@@ -1,17 +1,21 @@
 define([
-    'common/utils/config'
+    'helpers/injector'
 ], function (
-    config
+    Injector
 ) {
     describe('Config', function () {
+        var config, injector = new Injector();
 
-        beforeEach(function () {
-            config.page = {
-                tones: 'foo',
-                series: 'bar',
-                references: [{baz: 'one'}, {baz: 'two'}],
-                webPublicationDate: '2013-03-20T17:07:00.000Z'
-            };
+        beforeAll(function (done) {
+            injector.require(['common/utils/config'], function (_config) {
+                config = _config;
+                config.page = {
+                    tones: 'foo',
+                    series: 'bar',
+                    references: [{baz: 'one'}, {baz: 'two'}],
+                    webPublicationDate: '2013-03-20T17:07:00.000Z'
+                };
+            }).then(done).catch(done.fail);
         });
 
         it('should have "hasTone" property', function () {

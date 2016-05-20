@@ -32,16 +32,6 @@ object JsonVaryHeadersFilter extends Filter with ExecutionContexts with implicit
   }
 }
 
-object GNUFilter extends Filter with ExecutionContexts {
-
-  //http://www.theguardian.com/books/shortcuts/2015/mar/17/terry-pratchetts-name-lives-on-in-the-clacks-with-hidden-web-code
-  private val GNUHeader = "X-Clacks-Overhead" -> "GNU Terry Pratchett"
-
-  override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
-    nextFilter(request).map(_.withHeaders(GNUHeader))
-  }
-}
-
 // this lets the CDN log the exact part of the backend this response came from
 object BackendHeaderFilter extends Filter with ExecutionContexts {
 
@@ -67,6 +57,20 @@ object SurrogateKeyFilter extends Filter with ExecutionContexts {
   }
 }
 
+object AmpFilter extends Filter with ExecutionContexts with implicits.Requests {
+  override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
+    if (request.isAmp) {
+      val domain = request.headers.get("Origin").getOrElse("https://" + request.domain)
+      val exposeAmpHeader = "Access-Control-Expose-Headers" -> "AMP-Access-Control-Allow-Source-Origin"
+      val ampHeader = "AMP-Access-Control-Allow-Source-Origin" -> Configuration.amp.baseUrl
+
+      nextFilter(request).map(_.withHeaders(exposeAmpHeader, ampHeader))
+    } else {
+      nextFilter(request)
+    }
+  }
+}
+
 object Filters {
   // NOTE - order is important here, Gzipper AFTER CorsVaryHeaders
   // which effectively means "JsonVaryHeaders goes around Gzipper"
@@ -75,7 +79,7 @@ object Filters {
     Gzipper,
     BackendHeaderFilter,
     RequestLoggingFilter,
-    GNUFilter,
-    SurrogateKeyFilter
+    SurrogateKeyFilter,
+    AmpFilter
   )
 }

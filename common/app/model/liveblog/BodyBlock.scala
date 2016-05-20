@@ -2,13 +2,11 @@ package model.liveblog
 
 import java.util.Locale
 
-import com.gu.contentapi.client.model.v1.{BlockAttributes => ApiBlockAttributes, Blocks}
+import com.gu.contentapi.client.model.v1.{BlockAttributes => ApiBlockAttributes, BlockElement => ApiBlockElement, VideoElementFields, Blocks, Asset}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
-import common.Edition
 import model.liveblog.BodyBlock._
 import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
 import org.joda.time.{DateTime, DateTimeZone}
-import play.api.mvc.RequestHeader
 
 object BodyBlock {
 
@@ -26,7 +24,8 @@ object BodyBlock {
             bodyBlock.firstPublishedDate.map(_.toJodaDateTime),
             bodyBlock.publishedDate.map(_.toJodaDateTime),
             bodyBlock.lastModifiedDate.map(_.toJodaDateTime),
-            bodyBlock.contributors)
+            bodyBlock.contributors,
+            bodyBlock.elements.flatMap(BlockElement.make))
         }
       }
     }
@@ -48,7 +47,8 @@ case class BodyBlock(
   firstPublishedDate: Option[DateTime],
   publishedDate: Option[DateTime],
   lastModifiedDate: Option[DateTime],
-  contributors: Seq[String]
+  contributors: Seq[String],
+  elements: Seq[BlockElement]
 ) {
   lazy val eventType: EventType =
     if (attributes.keyEvent) KeyEvent

@@ -35,7 +35,6 @@ class BreakingNewsUpdater(breakingNewsApi: BreakingNewsApi) extends Actor with L
     def save(b: BreakingNews) = Some(breakingNewsApi.putBreakingNews(Json.toJson(b)))
 
     try {
-      //Cache current BreakingNews instead of fetching it every time
       val result = for {
         currentBreakingNewsJson <- fetch
         currentBreakingNews <- parse(currentBreakingNewsJson)

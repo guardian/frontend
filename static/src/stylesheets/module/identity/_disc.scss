@@ -10,8 +10,8 @@ $disc-avatar-size: 44px;
    ========================================================================== */
 
 .disc-comment {
-    padding-bottom: $gs-baseline/2;
     @include fs-textSans(4);
+    padding-bottom: $gs-baseline/2;
 
     @include mq(activityLeftCol) {
         &:first-of-type {
@@ -20,20 +20,20 @@ $disc-avatar-size: 44px;
     }
 }
 .disc-comment__meta {
-    margin-bottom: $gs-baseline*1.5;
     @include fs-textSans(1);
-    color: colour(neutral-2-contrasted);
+    margin-bottom: $gs-baseline*1.5;
+    color: $neutral-2-contrasted;
 
     @include mq(activityLeftCol) {
         float: right;
     }
 }
 .disc-comment__date-published {
-    display: block;
     @include fs-textSans(1);
+    display: block;
 }
 .disc-comment__permalink {
-    color: colour(neutral-2);
+    color: $neutral-2;
 }
 .disc-comment__recommend {
     position: absolute;
@@ -47,27 +47,27 @@ $disc-avatar-size: 44px;
     margin-right: $gs-gutter/4;
 
     .disc-comment__recommend--active & {
-        color: colour(comment-default);
+        color: $comment-default;
     }
 }
 .disc-comment__recommend-button {
+    @include circular;
     display: inline-block;
     vertical-align: middle;
-    @include circular;
     height: 19px;
     width: 18px;
-    background-color: colour(neutral-2-contrasted);
+    background-color: $neutral-2-contrasted;
 
     .i {
         vertical-align: middle;
     }
 
     .disc-comment__recommend--open & {
-        background-color: colour(news-default);
+        background-color: $news-default;
     }
 
     .disc-comment__recommend--active & {
-        background-color: colour(comment-default);
+        background-color: $comment-default;
     }
 }
 
@@ -77,12 +77,12 @@ $disc-avatar-size: 44px;
     blockquote {
         margin: $gs-baseline $gs-gutter;
         padding-left: $gs-gutter/2;
-        border-left: 3px solid transparentize(colour(neutral-1), .75);
+        border-left: 3px solid transparentize($neutral-1, .75);
     }
 }
 .disc-comment__view-discussion {
-    display: inline-block;
     @include fs-textSans(2);
+    display: inline-block;
 }
 
 
@@ -93,9 +93,9 @@ $disc-avatar-size: 44px;
     @include fs-textSans(4);
 }
 .disc-profile__avatar {
+    @include circular;
     float: left;
     overflow: hidden;
-    @include circular;
     height: $disc-avatar-size;
     width: $disc-avatar-size;
 }
@@ -112,5 +112,5 @@ $disc-avatar-size: 44px;
 }
 .disc-profile__date {
     @include fs-textSans(1);
-    color: colour(neutral-2-contrasted);
+    color: $neutral-2-contrasted;
 }

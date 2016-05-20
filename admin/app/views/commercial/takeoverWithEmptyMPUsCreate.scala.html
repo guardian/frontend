@@ -1,5 +1,5 @@
 @import common.dfp.TakeoverWithEmptyMPUs
-@(env: String, takeoverForm: Form[TakeoverWithEmptyMPUs])(implicit messages: Messages)
+@(env: String, takeoverForm: Form[TakeoverWithEmptyMPUs])(implicit messages: Messages, request: RequestHeader)
 @import helper._
 
 @admin_main("Create takeover with Empty MPUs", env, isAuthed = true) {

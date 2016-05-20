@@ -2,7 +2,7 @@
     position: relative;
 
     &:hover {
-        background: darken(colour(neutral-8), 4%);
+        background: darken($neutral-8, 4%);
 
         @include mq(desktop) {
             .football-match__report {
@@ -10,7 +10,7 @@
 
                 a {
                     padding-left: $gs-gutter/2;
-                    background: darken(colour(neutral-8), 4%);
+                    background: darken($neutral-8, 4%);
                 }
             }
         }
@@ -21,14 +21,14 @@
     font-weight: 900;
 
     .football-match__status {
-        color: colour(news-accent);
+        color: $news-accent;
     }
 }
 
 .football-match--updated {
     .football-team__score,
     .football-teams__battleline {
-        color: colour(news-accent);
+        color: $news-accent;
     }
 }
 
@@ -37,7 +37,7 @@
 }
 
 .football-matches__date {
-    color: colour(neutral-1);
+    color: $neutral-1;
     display: block;
     margin-top: $gs-baseline/2;
 }
@@ -101,7 +101,7 @@
 }
 
 .football-team__score {
-    color: colour(neutral-2-contrasted);
+    color: $neutral-2-contrasted;
     position: absolute;
     top: 0;
 }
@@ -116,7 +116,7 @@
     left: 0;
     width: 100%;
     text-align: center;
-    color: colour(neutral-2);
+    color: $neutral-2;
 
     &:after {
         content: '\2013';
@@ -125,7 +125,7 @@
 
 .football-match__comments {
     @include fs-textSans(4, true);
-    color: colour(neutral-2-contrasted);
+    color: $neutral-2-contrasted;
     text-align: center;
 }
 

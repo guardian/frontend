@@ -73,7 +73,7 @@ Loader.prototype.initTopComments = function() {
                 this.setState('has-top-comments');
             }
         }.bind(this)
-    );
+    ).catch(this.logError.bind(this, 'Top comments'));
 };
 
 Loader.prototype.initMainComments = function() {
@@ -151,29 +151,31 @@ Loader.prototype.initMainComments = function() {
         this.loadComments({
             comment: commentId,
             shouldTruncate: shouldTruncate})
-            .catch(function(error) {
-                var reportMsg = 'Comments failed to load: ',
-                    request = error.request;
-                if (error.message === 'Request is aborted: timeout') {
-                    reportMsg += 'XHR timeout';
-                } else if (error.message) {
-                    reportMsg += error.message;
-                } else {
-                    reportMsg += 'status' in request ? request.status : '';
-                }
-                raven.captureMessage(reportMsg, {
-                    tags: {
-                        contentType: 'comments',
-                        discussionId: this.getDiscussionId(),
-                        status: 'status' in request ? request.status : '',
-                        readyState: 'readyState' in request ? request.readyState : '',
-                        response: 'response' in request ? request.response : '',
-                        statusText: 'status' in request ? request.statusText : ''
-                    }
-                });
-            }.bind(this));
+            .catch(this.logError.bind(this, 'Comments'));
     });
     this.getUser();
+};
+
+Loader.prototype.logError = function(commentType, error) {
+    var reportMsg = commentType + ' failed to load: ',
+        request = error.request || {};
+    if (error.message === 'Request is aborted: timeout') {
+        reportMsg += 'XHR timeout';
+    } else if (error.message) {
+        reportMsg += error.message;
+    } else {
+        reportMsg += 'status' in request ? request.status : '';
+    }
+    raven.captureMessage(reportMsg, {
+        tags: {
+            contentType: 'comments',
+            discussionId: this.getDiscussionId(),
+            status: 'status' in request ? request.status : '',
+            readyState: 'readyState' in request ? request.readyState : '',
+            response: 'response' in request ? request.response : '',
+            statusText: 'status' in request ? request.statusText : ''
+        }
+    });
 };
 
 Loader.prototype.initPageSizeDropdown = function(pageSize) {
@@ -218,7 +220,7 @@ Loader.prototype.initToolbar = function() {
         var updateLabelText = function (prefValue) {
             $timestampsLabel.text(prefValue ? 'Relative' : 'Absolute');
         };
-        updateLabelText(prefValue);
+        updateLabelText(undefined);
 
         var PREF_RELATIVE_TIMESTAMPS = 'discussion.enableRelativeTimestamps';
         // Default to true
@@ -345,7 +347,8 @@ Loader.prototype.commentPosted = function () {
 Loader.prototype.renderCommentBox = function(elem) {
     return new CommentBox({
         discussionId: this.getDiscussionId(),
-        premod: this.user.privateFields.isPremoderated
+        premod: this.user.privateFields.isPremoderated,
+        newCommenter: !this.user.privateFields.hasCommented
     }).render(elem).on('post:success', this.commentPosted.bind(this));
 };
 

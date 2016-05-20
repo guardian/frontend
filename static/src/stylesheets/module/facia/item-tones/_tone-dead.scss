@@ -1,49 +1,49 @@
 .tone-dead--item {
     &.fc-item,
     &.rich-link {
-        background-color: colour(neutral-7);
+        background-color: $neutral-7;
     }
 
     .u-faux-block-link--hover,
     .fc-item__image-container {
-        background-color: darken(colour(neutral-6), 2%);
+        background-color: darken($neutral-6, 2%);
     }
 
     .fc-item__container:before,
     .rich-link__container:before {
-        background-color: colour(live-default);
+        background-color: $live-default;
     }
 
     .fc-item__kicker,
     .fc-item__byline,
     .fc-save-for-later--is-saved {
-        color: colour(live-accent);
+        color: $live-accent;
     }
 
     .fc-save-for-later {
-        border-color: mix(#000000, colour(neutral-7), 10%);
+        border-color: mix(#000000, $neutral-7, 10%);
     }
 
     .fc-item__kicker--dreamsnap {
-        background-color: mix(#000000, colour(neutral-7), 10%);
+        background-color: mix(#000000, $neutral-7, 10%);
     }
 
     .rich-link__read-more-text {
-        color: colour(neutral-2);
+        color: $neutral-2;
     }
 
     .rich-link__arrow-icon {
-        fill: colour(neutral-2);
+        fill: $neutral-2;
     }
 
     .fc-save-for-later--is-saved .inline-tone-fill {
-        fill: colour(live-accent);
+        fill: $live-accent;
     }
 }
 
 .tone-dead--sublink {
     .fc-sublink__kicker {
-        color: colour(live-accent);
+        color: $live-accent;
     }
 
     @include sublink-style(editorial, feature, live, media, review) {
@@ -54,5 +54,5 @@
 }
 
 .tone-dead--most-popular .fc-item__kicker {
-    color: colour(live-accent);
+    color: $live-accent;
 }

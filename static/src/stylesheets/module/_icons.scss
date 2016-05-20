@@ -18,10 +18,10 @@ figcaption:before {
 }
 
 .caption--img:before {
+    @include icon(image);
     content: '';
     vertical-align: top;
     margin-top: 1px;
-    @include icon(image);
 }
 
 .centered-icon {
@@ -37,7 +37,7 @@ figcaption:before {
 
 // Quotes
 blockquote.quoted .inline-quote {
-    fill: colour(neutral-2);
+    fill: $neutral-2;
     position: absolute;
     svg {
         width: 27px;

@@ -2,7 +2,7 @@ package mvt
 
 import MultiVariateTesting._
 import common.InternationalEditionVariant
-import conf.switches.Switch
+import conf.switches.{SwitchGroup, Switch}
 import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
 import views.support.CamelCase
@@ -18,22 +18,74 @@ import conf.switches.Switches.ServerSideTests
 //    val tests = List(ExampleTest)
 // }
 
-object CMTopBannerPosition extends TestDefinition(
-  List(Variant1),
-  "cm-top-banner-position",
-  "Test viewability and revenue changes when top banner is moved below first container on fronts and removed from articles",
-  new LocalDate(2016, 2, 25)
-)
+object ABOpenGraphOverlay extends TestDefinition(
+  variants = Nil,
+  name = "ab-open-graph-overlay",
+  description = "Add a branded overlay to images cached by the Facebook crawler",
+  sellByDate = new LocalDate(2016, 6, 29)
+) {
+  override def isParticipating(implicit request: RequestHeader): Boolean = {
+    request.queryString.get("page").exists(_.contains("facebookOverlayVariant")) && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
+  }
+}
+
+
+object ABHeadlinesTestVariant extends TestDefinition(
+  Nil,
+  "headlines-ab-variant",
+  "To test how much of a difference changing a headline makes (variant group)",
+  new LocalDate(2016, 6, 10)
+  ) {
+  override def isParticipating(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-hlt").contains("hlt-V") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
+    }
+}
+
+object ABNewHeaderVariant extends TestDefinition(
+  variants = Nil,
+  name = "ab-new-header-variant",
+  description = "Feature switch (0% test) for the new header",
+  sellByDate = new LocalDate(2016, 6, 14)
+) {
+  override def isParticipating(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-ab-new-header").contains("variant") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
+  }
+}
+
+object ABHeadlinesTestControl extends TestDefinition(
+  Nil,
+  "headlines-ab-control",
+  "To test how much of a difference changing a headline makes (control group)",
+  new LocalDate(2016, 6, 10)
+  ) {
+  override def isParticipating(implicit request: RequestHeader): Boolean = {
+      request.headers.get("X-GU-hlt").contains("hlt-C") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
+    }
+}
 
 object ActiveTests extends Tests {
-  val tests: Seq[TestDefinition] = List(CMTopBannerPosition)
+  val tests: Seq[TestDefinition] = List(
+    ABOpenGraphOverlay,
+    ABNewHeaderVariant,
+    ABHeadlinesTestControl,
+    ABHeadlinesTestVariant
+  )
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
 
-    val configEntries = List(InternationalEditionVariant(request).map{ international => s""""internationalEditionVariant" : "$international" """}) ++
-      List(ActiveTests.getParticipatingTest(request).map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""})
+    val headlineTests = List(ABHeadlinesTestControl, ABHeadlinesTestVariant).filter(_.isParticipating)
+                          .map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""}
+    val newHeaderTests = List(ABNewHeaderVariant).filter(_.isParticipating)
+                          .map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""}
+    val internationalEditionTests = List(InternationalEditionVariant(request)
+                                      .map{ international => s""""internationalEditionVariant" : "$international" """}).flatten
 
-    configEntries.flatten.mkString(",")
+    val activeTest = List(ActiveTests.getParticipatingTest(request)
+                        .map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""}).flatten
+
+    val configEntries = activeTest ++ internationalEditionTests ++ headlineTests ++ newHeaderTests
+
+    configEntries.mkString(",")
   }
 }
 
@@ -44,7 +96,7 @@ case class TestDefinition (
   sellByDate: LocalDate
 ) {
   val switch: Switch = Switch(
-    "Server-side A/B Tests",
+    SwitchGroup.ServerSideABTests,
     name,
     description,
     conf.switches.Off,
@@ -78,20 +130,7 @@ object MultiVariateTesting {
 
   sealed case class Variant(name: String)
 
-  object Variant0 extends Variant("variant-0")
-  object Variant1 extends Variant("variant-1")
-  object Variant2 extends Variant("variant-2")
-  object Variant3 extends Variant("variant-3")
-  object Variant4 extends Variant("variant-4")
-  object Variant5 extends Variant("variant-5")
-  object Variant6 extends Variant("variant-6")
-  object Variant7 extends Variant("variant-7")
-  object Variant8 extends Variant("variant-8")
-  object Variant9 extends Variant("variant-9")
-
-  private val allVariants = List(
-    Variant0, Variant1, Variant2, Variant3, Variant4,
-    Variant5, Variant6, Variant7, Variant8, Variant9)
+  private[mvt] val allVariants = List[Variant]()
 
   def getVariant(request: RequestHeader): Option[Variant] = {
     val cdnVariant: Option[String] = request.headers.get("X-GU-mvt-variant")

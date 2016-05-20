@@ -10,6 +10,7 @@ import scala.concurrent.Future
 import scala.concurrent.duration.Duration
 import scala.util.control.NonFatal
 import scala.xml.{Elem, XML}
+import conf.switches.Switches.JobsFeedParseSwitch
 
 object JobsFeed extends ExecutionContexts with Logging {
 
@@ -20,7 +21,7 @@ object JobsFeed extends ExecutionContexts with Logging {
   } yield Job(jobXml)
 
   def parsedJobs(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[Job]] = {
-    feedMetaData.switch.isGuaranteedSwitchedOn flatMap { switchedOn =>
+    JobsFeedParseSwitch.isGuaranteedSwitchedOn flatMap { switchedOn =>
       if (switchedOn) {
         val start = currentTimeMillis
         feedContent map { body =>
@@ -30,7 +31,7 @@ object JobsFeed extends ExecutionContexts with Logging {
           Future.failed(MissingFeedException(feedMetaData.name))
         }
       } else {
-        Future.failed(SwitchOffException(feedMetaData.switch.name))
+        Future.failed(SwitchOffException(JobsFeedParseSwitch.name))
       }
     } recoverWith {
       case NonFatal(e) => Future.failed(e)

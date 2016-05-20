@@ -41,9 +41,28 @@ define([
         $twitterAction,
         $emailAction,
         twitterShortUrl = config.page.shortUrl + '/stw',
-        twitterMessageLimit = 115, // 140 - t.co length - 3 chars for quotes and url spacing
+        twitterMessageLimit = 114, // 140 - t.co length - 3 chars for quotes and url spacing
         emailShortUrl = config.page.shortUrl + '/sbl',
         validAncestors = ['js-article__body', 'content__standfirst', 'block', 'caption--main', 'content__headline'],
+
+    isValidSelection = function (range) {
+        // commonAncestorContainer is buggy, can't use it here.
+        return some(validAncestors, function (className) {
+            return $.ancestor(range.startContainer, className) && $.ancestor(range.endContainer, className);
+        });
+    },
+
+    hideSelection = function () {
+        if ($selectionSharing.hasClass('selection-sharing--active')) {
+            $selectionSharing.removeClass('selection-sharing--active');
+        }
+    },
+
+    showSelection = function () {
+        if (!$selectionSharing.hasClass('selection-sharing--active')) {
+            $selectionSharing.addClass('selection-sharing--active');
+        }
+    },
 
     updateSelection = function () {
 
@@ -72,7 +91,7 @@ define([
             }
 
             twitterHref = twitterHrefTemplate({
-                text: encodeURI(twitterMessage),
+                text: encodeURIComponent(twitterMessage),
                 url: encodeURI(twitterShortUrl)
             });
             emailHref = emailHrefTemplate({
@@ -95,18 +114,6 @@ define([
         }
     },
 
-    hideSelection = function () {
-        if ($selectionSharing.hasClass('selection-sharing--active')) {
-            $selectionSharing.removeClass('selection-sharing--active');
-        }
-    },
-
-    showSelection = function () {
-        if (!$selectionSharing.hasClass('selection-sharing--active')) {
-            $selectionSharing.addClass('selection-sharing--active');
-        }
-    },
-
     onMouseDown = function (event) {
         if (!$.ancestor(event.target, 'social__item')) {
             hideSelection();
@@ -126,13 +133,6 @@ define([
             bean.on(document.body, 'mousedown', debounce(onMouseDown, 50));
             mediator.on('window:resize', throttle(updateSelection, 50));
         }
-    },
-
-    isValidSelection = function (range) {
-        // commonAncestorContainer is buggy, can't use it here.
-        return some(validAncestors, function (className) {
-            return $.ancestor(range.startContainer, className) && $.ancestor(range.endContainer, className);
-        });
     };
 
     return {

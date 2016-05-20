@@ -31,7 +31,7 @@
 
             <div class="meta__extras meta__extras--crossword">
                 <div class="meta__social" data-component="share">
-                @fragments.social(crosswordPage.content, "top")
+                @fragments.social(crosswordPage.content.sharelinks.pageShares, "top")
                 </div>
                 @if(SaveForLaterSwitch.isSwitchedOn) {
                     <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
@@ -46,7 +46,7 @@
 
             @crosswordPage.crossword.instructions.map { instructions =>
                 <div class="crossword__instructions">
-                    <strong>Special instructions:</strong> @instructions
+                    <strong>Special instructions:</strong> @Html(instructions)
                 </div>
             }
         </div>

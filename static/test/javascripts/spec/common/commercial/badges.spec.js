@@ -18,7 +18,6 @@ define([
         var fixturesConfig = {
                 id: 'badges',
                 fixtures: [
-                    // jscs:disable disallowMultipleLineStrings
                     '<div class="facia-container">\
                         <div class="container">\
                             <div class="js-container__header"></div>\
@@ -27,22 +26,21 @@ define([
                             <div class="js-container__header"></div>\
                         </div>\
                     </div>'
-                    // jscs:enable disallowMultipleLineStrings
                 ]
             },
             preBadges = function (sponsorship, sponsor) {
                 var header;
                 switch (sponsorship) {
                     case 'sponsoredfeatures':
-                        header = 'Sponsored by:';
+                        header = 'Supported by';
                         break;
 
                     case 'advertisement-features':
-                        header = 'Brought to you by:';
+                        header = 'Paid for by';
                         break;
 
                     default:
-                        header = 'Supported by:';
+                        header = 'Supported by';
                 }
                 return template(
                     '<div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">\n' +

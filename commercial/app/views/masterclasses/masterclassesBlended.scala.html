@@ -1,0 +1,16 @@
+@(event: model.commercial.events.Masterclass, clickMacro: Option[String])
+
+@import conf.Configuration
+
+<div class="advert-blended advert-blended--masterclasses">
+    <div class="advert-blended__title">
+        <a href="@clickMacro@Configuration.commercial.masterclasses_url"
+            data-link-name="merchandising-hybrid-masterclasses-v1_0_2014-08-14-visit-site">
+            @fragments.inlineSvg("logo-masterclasses-26", "commercial", Seq("logo--tone-masterclasses"))
+            <span class="u-h">Masterclasses</span>
+        </a>
+    </div>
+    <div class="advert-blended__body">
+        @masterclassLargeCard(event, clickMacro)
+    </div>
+</div>

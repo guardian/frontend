@@ -9,8 +9,8 @@ define([
     storage,
     userFeatures
 ) {
-    function adblockInUse() {
-        return detect.adblockInUse();
+    function adblockInUseSync() {
+        return detect.adblockInUseSync();
     }
 
     function notMobile() {
@@ -32,7 +32,7 @@ define([
     }
 
     function noAdblockMsg() {
-        return adblockInUse() && notMobile() && (
+        return adblockInUseSync() && notMobile() && (
                 !visitedMoreThanOnce() ||
                 !isAdblockSwitchOn() ||
                 (isAdblockSwitchOn() && visitedMoreThanOnce() && isPayingMember()));
@@ -40,7 +40,7 @@ define([
 
     function showAdblockMsg() {
         return isAdblockSwitchOn() &&
-                adblockInUse() &&
+                adblockInUseSync() &&
                 !isPayingMember() &&
                 visitedMoreThanOnce() &&
                 notMobile();

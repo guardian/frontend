@@ -9,7 +9,7 @@
     hr {
         border: 0;
         margin: 0 0 $gs-baseline / 2;
-        border-top: 1px dotted colour(neutral-4);
+        border-top: 1px dotted $neutral-4;
     }
 
     .submeta__tone {
@@ -32,9 +32,9 @@
     .submeta__syndication {
         display: none;
         @include mq(desktop) {
+            @include fs-textSans(1);
             padding-top: $gs-baseline/2;
             display: inline-block;
-            @include fs-textSans(1);
             height: 32px;
             float: right;
             line-height: 15px;
@@ -45,7 +45,7 @@
 
 .submeta__head {
     @include fs-textSans(1);
-    color: colour(neutral-2);
+    color: $neutral-2;
     padding: $gs-baseline/3 0 $gs-baseline;
     float: left;
     margin-right: $gs-gutter / 2;

@@ -1,5 +1,6 @@
 package model
 
+import campaigns.PersonalInvestmentsCampaign
 import com.gu.facia.api.models._
 import common.Edition
 import common.dfp.DfpAgent
@@ -33,7 +34,7 @@ object PressedPage {
     val faciaPageMetaData: Map[String, JsValue] = Map(
       "keywords" -> JsString(seoData.webTitle.capitalize),
       "keywordIds" -> JsString(keywordIds.mkString(",")),
-      "contentType" -> JsString(contentType),
+      "hasSuperStickyBanner" -> JsBoolean(PersonalInvestmentsCampaign.isRunning(keywordIds)),
       "isAdvertisementFeature" -> JsBoolean(isAdvertisementFeature)
     ) ++ (if (showMpuInAllContainers) Map("showMpuInAllContainers" -> JsBoolean(true)) else Nil)
 
@@ -99,14 +100,25 @@ case class PressedPage (
       Paths.withoutEdition(id)
     ).flatten
 
-    tagAndSectionIds.find(validIds contains) map { id =>
+    tagAndSectionIds.find(validIds contains).map { id =>
       s"/${Paths.withoutEdition(id).getOrElse(id)}/all"
-    }
+    }.orElse(allPathFromTreats)
   }
+
+  private def allPathFromTreats: Option[String] = {
+    collections.flatMap(_.treats.collect {
+        case treat if SupportedUrl.fromFaciaContent(treat).endsWith("/all") => SupportedUrl.fromFaciaContent(treat)
+      }
+    ).headOption
+  }
+
   val navSection: String = metadata.section
+
   val keywordIds: Seq[String] = frontKeywordIds(id)
 
-   def sponsorshipType: Option[String] = {
+  override def branding(edition: Edition): Option[Branding] = frontProperties.branding(edition)
+
+  def sponsorshipType: Option[String] = {
     if (isSponsored(None)) {
       Option("sponsoredfeatures")
     } else if (isAdvertisementFeature) {

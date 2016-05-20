@@ -1,8 +1,16 @@
-@(content: model.ContentType)(implicit request: RequestHeader)
+@(content: model.ContentType, page: model.Page)(implicit request: RequestHeader)
 @import common.Edition
-@import conf.switches.Switches.SponsoredSwitch
-@import model.{Video, Audio, Gallery, Interactive, Article}
-@import conf.switches.Switches.NewCommercialContent
+@import conf.switches.Switches.{SponsoredSwitch, staticBadgesSwitch}
+@import model.{Article, Audio, Gallery, Interactive, Video}
+@import views.html.fragments.commercial.contentLogo
+
+@if(staticBadgesSwitch.isSwitchedOn) {
+
+    @for(branding <- page.branding(Edition(request))) {
+        @contentLogo(branding)
+    }
+
+} else {
 
 @defining(content.commercial.isSponsored(Some(Edition(request))),
     content.commercial.isAdvertisementFeature,
@@ -20,6 +28,7 @@
             },
             content match {
                 case a: Article if a.isLiveBlog => "live-blog"
+                case _: Gallery => "gallery"
                 case _: Interactive => "interactive"
                 case _ => "article"
             },
@@ -43,22 +52,18 @@
                         <h3 class="ad-slot--paid-for-badge__header">
                             @if(isSponsored) {
                                 @if(content.commercial.hasMultipleSponsors) {
-                                    This content is sponsored.
+                                    This content is supported by sponsors.
                                 } else {
-                                    Supported by:
+                                    Supported by
                                 }
                             } else {
                                 @if(isAdFeature) {
-                                    @if(NewCommercialContent.isSwitchedOn) {
-                                        Paid for by:
-                                    } else {
-                                        Brought to you by:
-                                    }
+                                    Paid for by
                                 } else {
                                     @content.commercial.sponsorshipTag.map { tag =>
-                                        @tag.name is supported by:
+                                        @tag.name is supported by
                                     }.getOrElse {
-                                        Supported by:
+                                        Supported by
                                     }
                                 }
                             }
@@ -71,4 +76,6 @@
             }
         }
     }
+}
+
 }

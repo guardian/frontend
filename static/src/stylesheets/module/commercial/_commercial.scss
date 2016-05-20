@@ -7,7 +7,6 @@
 /* Common */
 @import '_commercial--v-high';
 @import '_commercial--multi';
-@import '_facia-container';
 @import '_lineitem';
 @import '_table';
 @import '_tabs';
@@ -18,14 +17,13 @@
 /* Components */
 @import '_component';
 @import '_books';
-@import '_jobs';
-@import '_masterclasses';
 @import '_money';
-@import '_soulmates';
 @import '_travel';
 @import '_dfp';
 @import '_capi';
 @import '_paidfor';
+@import '_brandbadge';
+@import '_hostedbadge';
 
 /* Creative styles */
 @import '_creatives';
@@ -39,3 +37,23 @@
 @import 'paidfor/_paidfor-content';
 @import 'paidfor/_paidfor-meta';
 @import 'paidfor/_paidfor-popup';
+
+/* Surveys */
+@import 'surveys/_survey';
+
+/* New adverts component */
+@import '_advert';
+@import '_adverts';
+
+/* Gimbap commercial component */
+@import 'gimbap/_gimbap-branding';
+@import 'gimbap/_gimbap-logo';
+@import 'gimbap/_gimbap-wrap';
+@import 'gimbap/_gimbap-richmedia';
+@import 'gimbap/_gimbap';
+
+/* Glabs Awesome component */
+@import 'glabs/_hosted.scss';
+
+/* Guardian frame */
+@import '_frame';

@@ -11,13 +11,19 @@ import play.api.libs.ws.WS
 import weather.geo.LatitudeLongitude
 import weather.models.CityId
 import weather.models.accuweather.{ForecastResponse, LocationResponse, WeatherResponse}
-
-import scala.concurrent.Future
+import dispatch._, Defaults._
+import java.util.concurrent.{TimeoutException, TimeUnit}
+import scala.concurrent.duration.Duration
 
 object WeatherApi extends ExecutionContexts with ResourcesHelper {
   lazy val weatherApiKey: String = Configuration.weather.apiKey.getOrElse(
     throw new RuntimeException("Weather API Key not set")
   )
+
+  val requestTimeout = 300
+  val requestRetryMax = 3
+  val requestRetryDelay = Duration(100, TimeUnit.MILLISECONDS)
+  val requestRetryBackoffBase = 2
 
   private def autocompleteUrl(query: String): String =
     s"http://api.accuweather.com/locations/v1/cities/autocomplete?apikey=$weatherApiKey&q=${URLEncoder.encode(query, "utf-8")}"
@@ -36,7 +42,21 @@ object WeatherApi extends ExecutionContexts with ResourcesHelper {
     if (Play.isTest) {
       Future(Json.parse(slurpOrDie(new URI(url).getPath.stripPrefix("/"))))
     } else {
-      WS.url(url).get().filter(_.status == 200).map(_.json)
+      getJsonWithRetry(url)
+    }
+  }
+
+  private def getJsonWithRetry(url: String): Future[JsValue] = {
+    val fetchRequest = () => WS.url(url).withRequestTimeout(requestTimeout).get().filter(_.status == 200)
+      .map { response =>
+        Right(response.json)
+      }
+      .recover {
+        case t : TimeoutException => Left(t)
+      }
+    retry.Backoff(max = requestRetryMax, delay = requestRetryDelay, base = requestRetryBackoffBase)(fetchRequest).flatMap {
+      case Left(error) => Future.failed(error)
+      case Right(json) => Future.successful(json)
     }
   }
 

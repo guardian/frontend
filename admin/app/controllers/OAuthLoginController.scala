@@ -1,8 +1,8 @@
 package controllers.admin
 
-import com.gu.googleauth.{GoogleAuth, GoogleAuthConfig, UserIdentity}
+import com.gu.googleauth.{GoogleAuth, UserIdentity}
 import common.ExecutionContexts
-import conf.{Configuration, AdminConfiguration}
+import conf.Configuration
 import org.joda.time.DateTime
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
@@ -17,7 +17,7 @@ object OAuthLoginController extends Controller with ExecutionContexts {
   val forbiddenNoCredentials = Forbidden("You do not have OAuth credentials set")
 
   // this is the only place we use LoginAuthAction - to prevent authentication redirect loops
-  def login = Action { request =>
+  def login = Action { implicit request =>
     val error = request.flash.get("error")
     Ok(views.html.auth.login(error, "Test"))
   }
@@ -26,7 +26,8 @@ object OAuthLoginController extends Controller with ExecutionContexts {
   Redirect to Google with anti forgery token (that we keep in session storage - note that flashing is NOT secure)
    */
   def loginAction = Action.async { implicit request =>
-    conf.GoogleAuth.config.map { config =>
+    val host = Some(s"${if (request.secure) "https" else "http"}://${request.host}")
+    conf.GoogleAuth(host).config.map { config =>
       val antiForgeryToken = GoogleAuth.generateAntiForgeryToken()
       GoogleAuth.redirectToGoogle(config, antiForgeryToken).map {
         _.withSession {
@@ -42,7 +43,8 @@ object OAuthLoginController extends Controller with ExecutionContexts {
   will return a Future[UserIdentity] if the authentication is successful. If unsuccessful then the Future will fail.
    */
   def oauth2Callback = Action.async { implicit request =>
-    conf.GoogleAuth.config.map { config =>
+    val host = Some(s"${if (request.secure) "https" else "http"}://${request.host}")
+    conf.GoogleAuth(host).config.map { config =>
       request.session.get(ANTI_FORGERY_KEY) match {
         case None =>
           Future.successful(Redirect(routes.OAuthLoginController.login())

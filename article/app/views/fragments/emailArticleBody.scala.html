@@ -1,20 +1,118 @@
-
 @(page: PageWithStoryPackage)(implicit request: RequestHeader)
 
-@import common.LinkTo
-@import views.BodyCleaner
-@import views.support.TrailCssClasses.toneClass
-@import conf.switches.Switches._
+@import views.support.EmailArticleImage
+@import views.support.EmailHelpers._
+@import model.liveblog._
+@import model.EmailAddons.EmailContentType
 
 @defining(page.article) { article =>
-    @fragments.headTonal(article, article.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn, showMeta = false)
+    @fullRow {
+        <a href="@article.metadata.webUrl" @page.item.email.map { email => title="View @email.name online"}>
+            <img width="580" src="@article.banner" @page.item.email.map { email => alt="View @email.name online"}>
+        </a>
+    }
+
+    @article.fallbackSeriesText.map { seriesName =>
+        @paddedRow {
+            <h3 class="text--brand">@seriesName</h3>
+            <hr class="rule--compact" />
+        }
+    }
+
+    @paddedRow {
+        <h1>@article.trail.headline</h1>
+    }
+
+    @article.fields.standfirst.map { standfirst =>
+        @paddedRow(Html(standfirst))
+    }
 
     @fragments.emailMainMedia(article)
 
-    @fragments.contentMeta(article, showExtras = false)
+    @paddedRow(Seq("author")) {
+        @article.trail.byline.map { byline =>
+            <h3 class="byline">@byline</h3>
 
-    <div class="content__article-body from-content-api" itemprop="@if(article.tags.isReview){reviewBody} else {articleBody}"
-    data-test-id="article-review-body">
-        @BodyCleaner(article, article.fields.body, false)
-    </div>
+        @article.tags.contributors.headOption.map { profile =>
+            @profile.properties.twitterHandle.map { twitter =>
+                <div class="meta__twitter">
+                    <a href="http://twitter.com/@twitter" data-link-name="twitter-handle" data-component="meta-twitter-handle" class="button button--small button--secondary tone-colour">
+                        @icon("twitter-bird")
+                        <div class="contact">@@@twitter</div>
+                    </a>
+                </div>
+            }
+            @profile.properties.emailAddress.map { email =>
+                <div class="meta__email">
+                    <a href="mailto:@email" data-link-name="email-address" data-component="meta-email-address" class="button button--small button--secondary tone-colour">
+                        @icon("mail")
+                        <div class="contact">Email</div>
+                    </a>
+                </div>
+            }
+        }
+
+            <hr />
+        }
+    }
+
+    @page.article.fields.blocks.map { block =>
+        @block.title.map { title =>
+            @paddedRow {
+                <h2 class="block__title">@title</h2>
+            }
+        }
+
+        @block.elements.map { element =>
+            @element match {
+                case TextBlockElement(Some(html)) => {
+                    @paddedRow(Html(html))
+                }
+
+                case RichLinkBlockElement(Some(url), Some(text), _) => {
+                    @paddedRow(Seq("rich-link")) {
+                        <span class="rich-link__prefix">More:</span> <a href="@url">@text</a>
+                    }
+                }
+
+                case EmbedBlockElement(Some(html), _, _) => {
+                    @*fullRow(Html(html))*@
+                }
+
+                case ImageBlockElement(media, data, showCredit) => {
+                    @EmailArticleImage.bestFor(media).map { url =>
+                        @fullRow {
+                            <img width="580" class="media--main" src="@url" @data.get("alt").map { alt => alt="@alt" }>
+                        }
+
+                        @paddedRow {
+                            @data.get("caption").map { caption =>
+                                <div class="caption">
+                                    @icon("camera")
+
+                                    @Html(caption)
+
+                                    @if(showCredit) {
+                                        @data.get("credit").map(Html(_))
+                                    }
+
+                                    <hr />
+                                </div>
+                            }
+                        }
+                    }
+                }
+
+                case GuVideoBlockElement(video, media, data) => {
+                    @data.get("url").map { url =>
+                        @fullRowWithBackground(media) {
+                            <a class="play--button" href="@url"><img class="play--icon" src="@Images.play"></a>
+                        }
+                    }
+                }
+
+                case _ => {}
+            }
+        }
+    }
 }

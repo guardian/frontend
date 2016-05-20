@@ -17,14 +17,12 @@ define(['common/modules/article/spacefinder'], function (
                     {top: 100, bottom: 250, expectedResult: false} // overlapping
                 ];
 
-            // jscs:disable disallowDanglingUnderscores
             for (var i = 0; i < others.length; i++) {
-                expect(spacefinder._testElem(rules, para, others[i])).toBe(others[i].expectedResult);
+                expect(spacefinder._testCandidate(rules, para, others[i])).toBe(others[i].expectedResult);
             }
 
-            expect(spacefinder._testElems(rules, para, others)).toBe(false);
-            expect(spacefinder._testElems(rules, para, others.slice(0, 2))).toBe(true);
-            // jscs:enable disallowDanglingUnderscores
+            expect(spacefinder._testCandidates(rules, para, others)).toBe(false);
+            expect(spacefinder._testCandidates(rules, para, others.slice(0, 2))).toBe(true);
 
         });
     });

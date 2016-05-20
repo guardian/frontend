@@ -55,9 +55,18 @@ trait Strings {
           .toString()
       })
     }
+
+    def addFragment(fragment: String): String = {
+      javax.ws.rs.core.UriBuilder.fromUri(uri)
+        .fragment(fragment)
+        .build()
+        .toString()
+    }
   }
 
   implicit class string2decodings(s: String) {
     lazy val stringDecoded = URLDecoder.decode(s, "UTF-8")
   }
 }
+
+object Strings extends Strings

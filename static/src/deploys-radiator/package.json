@@ -8,7 +8,7 @@
       "hyperscript-helpers": "npm:hyperscript-helpers@^2.0.1",
       "immutable": "npm:immutable@^3.7.5",
       "monapt": "npm:monapt@^0.5.0",
-      "ts": "github:frankwallis/plugin-typescript@^2.1.2",
+      "ts": "github:frankwallis/plugin-typescript@^4.0.2",
       "virtual-dom": "npm:virtual-dom@^2.1.1"
     },
     "devDependencies": {

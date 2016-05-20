@@ -3,17 +3,30 @@
 
 @import common.LinkTo
 @import views.BodyCleaner
+@import views.support.RenderClasses
 @import views.support.TrailCssClasses.toneClass
-@import conf.switches.Switches._
+
+@* Feb 2015: Google does only support NewsArticle in their amp carousel. To remove once Google starts supporting other schemas like schema.org/Review *@
+@schemaType(page: ArticlePage) = @{
+    if (amp) "http://schema.org/NewsArticle" else page.article.metadata.schemaType
+}
+
+@bodyType(page: ArticlePage) = @{
+    if (page.article.tags.isReview && !amp) "reviewBody" else "articleBody"
+}
 
 @defining(model.article) { article =>
+
     <div class="l-side-margins">
         <article id="article" data-test-id="article-root"
-            class="content content--article tonal tonal--@toneClass(article) section-@article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")
-            @if(article.commercial.isAdvertisementFeature){content--advertisement-feature}
-            @if(article.tags.isFeature && article.elements.hasShowcaseMainElement){has-feature-showcase-element}
-            @if(article.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn){paid-content--advertisement-feature}"
-            itemscope itemtype="@article.metadata.schemaType" role="main">
+
+        class="@RenderClasses(Map(
+            "content--advertisement-feature" -> article.commercial.isAdvertisementFeature,
+            "has-feature-showcase-element" -> (article.tags.isFeature && article.elements.hasShowcaseMainElement),
+            "paid-content--advertisement-feature" -> article.commercial.isAdvertisementFeature
+        ),  "content", "content--article", "tonal", s"tonal--${toneClass(article)}", s"section-${article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")}")"
+
+        itemscope itemtype="@schemaType(model)" role="main">
             <meta itemprop="mainEntityOfPage" content="@LinkTo(article.metadata.url)">
             <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
                 <meta itemprop="name" content="The Guardian">
@@ -27,11 +40,11 @@
                 }
             </div>
 
-            @if(article.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn){
+            @if(article.commercial.isAdvertisementFeature){
                 @fragments.guBand()
             }
 
-            @fragments.headTonal(article, article.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn)
+            @fragments.headTonal(article, model, article.commercial.isAdvertisementFeature, amp = amp)
 
             @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
                 @fragments.mainMedia(article, amp)
@@ -49,7 +62,7 @@
 
                         @fragments.witnessCallToAction(article.content)
 
-                        @fragments.contentMeta(article)
+                        @fragments.contentMeta(article, model)
 
                         @fragments.chapterHeadings(article)
 
@@ -57,9 +70,20 @@
                             <hr class="content__hr hide-until-leftcol" />
                         }
 
-                        <div class="content__article-body from-content-api js-article__body" itemprop="@if(article.tags.isReview){reviewBody} else {articleBody}"
+                        <div class="content__article-body from-content-api js-article__body" itemprop="@bodyType(model)"
                             data-test-id="article-review-body">
                             @BodyCleaner(article, article.fields.body, amp = amp)
+
+                            @* A value for the image field is required for AMP article
+                            WORKAROUND: if the article doesn't contain any image we insert the metadata of the fallback logo,
+                            so the amp page passes validation but no image is visible by the user *@
+                            @if(amp && article.content.elements.images.isEmpty) {
+                                <div itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
+                                    <meta itemprop="url" content="https://assets.guim.co.uk/images/2170b16eb045a34f8c79761b203627b4/fallback-logo.png">
+                                    <meta itemprop="width" content="1200">
+                                    <meta itemprop="height" content="630">
+                                </div>
+                            }
                         </div>
 
                         @fragments.witnessCallToAction(article.content)

@@ -2,37 +2,39 @@ package controllers
 
 import com.gu.contentapi.client.model.v1.Crossword
 import common.{JsonComponent, Edition, ExecutionContexts, Logging}
-import conf.{Static, LiveContentApi}
+import contentapi.ContentApiClient
+import conf.Static
+import model.Cached.RevalidatableResult
 import model._
 import play.api.mvc.{Action, Controller, RequestHeader, Result}
 import play.api.libs.json.{JsArray, JsString, JsObject}
 
 import scala.concurrent.Future
 
-case class OfflinePage(crossword: CrosswordData) extends StandalonePage {
+case class OfflineCrossword(crossword: CrosswordData) extends StandalonePage {
 
   override val metadata = MetaData.make(
-      id = "offline-page",
+      id = "offline-crossword",
       section = "",
-      analyticsName = "offline-page",
+      analyticsName = "offline-crossword",
       webTitle = "Unable to connect to the Internet")
 }
 
 object WebAppController extends Controller with ExecutionContexts with Logging {
 
   def serviceWorker() = Action { implicit request =>
-    Cached(3600) { Ok(templates.js.serviceWorker()) }
+    Cached(60) { RevalidatableResult.Ok(templates.js.serviceWorker()) }
   }
 
-  def manifest() = Action {
-    Cached(3600) { Ok(templates.js.webAppManifest()) }
+  def manifest() = Action { implicit request =>
+    Cached(3600) { RevalidatableResult.Ok(templates.js.webAppManifest()) }
   }
 
 
   protected def withCrossword(crosswordType: String)(f: (Crossword) => Result)(implicit request: RequestHeader): Future[Result] = {
-    LiveContentApi.getResponse(LiveContentApi.item(s"crosswords/series/quick", Edition(request)).showFields("all")).map { response =>
+    ContentApiClient.getResponse(ContentApiClient.item(s"crosswords/series/quick", Edition(request)).showFields("all")).map { response =>
       val maybeCrossword = for {
-        content <- response.results.headOption
+        content <- response.results.getOrElse(Nil).headOption
         crossword <- content.crossword }
         yield f(crossword)
       maybeCrossword getOrElse InternalServerError("Crossword response from Content API invalid.")
@@ -42,9 +44,9 @@ object WebAppController extends Controller with ExecutionContexts with Logging {
     }
   }
 
-  def offlinePage() = Action.async { implicit request =>
+  def offlineCrossword() = Action.async { implicit request =>
     withCrossword("quick") { crossword =>
-      val crosswordHtml = views.html.offlinePage(OfflinePage(CrosswordData.fromCrossword(crossword)))
+      val crosswordHtml = views.html.offlineCrossword(OfflineCrossword(CrosswordData.fromCrossword(crossword)))
       Cached(60)(JsonComponent(JsObject(Map(
         "html" -> JsString(crosswordHtml.body),
         "assets" -> JsArray(Seq(
@@ -52,7 +54,6 @@ object WebAppController extends Controller with ExecutionContexts with Logging {
           Static("stylesheets/content.css"),
           Static("stylesheets/print.css"),
           Static("javascripts/app.js"),
-          Static("javascripts/enhanced-vendor.js"),
           Static("javascripts/bootstraps/enhanced/main.js"),
           Static("javascripts/bootstraps/enhanced/crosswords.js"),
           Static("javascripts/bootstraps/commercial.js"),

@@ -27,6 +27,11 @@ define([
     }
 
     function getWeb(url, callback, errback) {
+        var xhr = createXhr();
+        xhr.open('GET', url, true);
+        xhr.onreadystatechange = onReadyStateChange;
+        xhr.send(null);
+
         function onReadyStateChange() {
             var status, err;
             //Do not explicitly handle errors, those should be
@@ -45,11 +50,6 @@ define([
                 }
             }
         }
-
-        var xhr = createXhr();
-        xhr.open('GET', url, true);
-        xhr.onreadystatechange = onReadyStateChange;
-        xhr.send(null);
     }
 
     function load(name, req, onload, config) {

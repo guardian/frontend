@@ -1,4 +1,3 @@
-/* jscs:disable disallowDanglingUnderscores */
 define(['helpers/injector'], function (Injector) {
     var injector = new Injector();
 
@@ -199,5 +198,4 @@ define(['helpers/injector'], function (Injector) {
             cookies.remove(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
         }
     });
-    /* jscs:enable disallowDanglingUnderscores */
 });

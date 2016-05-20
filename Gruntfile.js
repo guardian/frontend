@@ -23,7 +23,7 @@ module.exports = function (grunt) {
         staticHashDir:   './static/hash/',
         testConfDir:     './static/test/javascripts/conf/',
         requirejsDir:    './static/requirejs',
-        webfontsDir:     './static/src/stylesheets/components/guss-webfonts/webfonts/'
+        webfontsDir:     './static/src/fonts/'
     };
 
     options.propertiesFile = options.isDev ?
@@ -36,7 +36,7 @@ module.exports = function (grunt) {
         jitGrunt: {
             staticMappings: {
                 replace: 'grunt-text-replace',
-                scsslint: 'grunt-scss-lint',
+                sasslint: 'grunt-sass-lint',
                 cssmetrics: 'grunt-css-metrics',
                 assetmonitor: 'grunt-asset-monitor',
                 /*eslint-disable camelcase*/
@@ -46,10 +46,6 @@ module.exports = function (grunt) {
             }
         }
     });
-
-    function isOnlyTask(task) {
-        return grunt.cli.tasks.length === 1 && grunt.cli.tasks[0] === task.name;
-    }
 
     if (options.isDev) {
         grunt.log.subhead('Running Grunt in DEV mode');
@@ -86,11 +82,10 @@ module.exports = function (grunt) {
     /**
      * Validate tasks
      */
-    grunt.registerTask('validate:css', ['compile:images', 'sass:compile', 'sass:compileStyleguide']);
-    grunt.registerTask('validate:sass', ['scsslint']);
+    grunt.registerTask('validate:css', ['compile:images', 'sass:compile']);
+    grunt.registerTask('validate:sass', ['sasslint']);
     grunt.registerTask('validate:js', function (app) {
         var target = (app) ? ':' + app : '';
-        grunt.task.run(['jscs' + target]);
         grunt.task.run(['eslint' + target]);
     });
     grunt.registerTask('validate', function (app) {
@@ -100,47 +95,25 @@ module.exports = function (grunt) {
     /**
      * Compile tasks
      */
-
     grunt.registerTask('sass:compile', ['concurrent:sass']);
 
     grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration']);
-    grunt.registerTask('compile:css', function (fullCompile) {
-        grunt.task.run(['clean:css', 'mkdir:css', 'compile:images', 'sass:compile', 'sass:compileStyleguide']);
+    grunt.registerTask('compile:css', function () {
+        grunt.task.run(['clean:css', 'mkdir:css', 'compile:images', 'sass:compile']);
 
-        if (options.isDev) {
-            grunt.task.run(['replace:cssSourceMaps', 'copy:css']);
-        } else {
+        if (!options.isDev) {
             grunt.task.run(['shell:updateCanIUse']);
         }
 
         grunt.task.run(['px_to_rem', 'autoprefixer']);
-
-        if (isOnlyTask(this) && !fullCompile) {
-            grunt.task.run('asset_hash');
-        }
-
     });
-    grunt.registerTask('compile:js', function (fullCompile) {
+    grunt.registerTask('compile:js', function () {
         grunt.task.run(['clean:js', 'compile:inlineSvgs']);
 
         grunt.task.run(['concurrent:requireJS', 'copy:javascript', 'concat:app', 'uglify:javascript']);
-
-        if (isOnlyTask(this) && !fullCompile) {
-            grunt.task.run('asset_hash');
-        }
-
     });
-    grunt.registerTask('develop:js', function (fullCompile) {
-        grunt.task.run([
-            'copy:inlineSVGs',
-            'clean:js',
-            'copy:javascript'
-        ]);
-
-        if (isOnlyTask(this) && !fullCompile) {
-            grunt.task.run('asset_hash');
-        }
-
+    grunt.registerTask('develop:js', function () {
+        grunt.task.run(['copy:inlineSVGs', 'clean:js', 'copy:javascript']);
     });
     grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['copy:flash']);
@@ -153,7 +126,7 @@ module.exports = function (grunt) {
         'compile:fonts',
         'compile:flash',
         !options.isDev && 'makeDeploysRadiator',
-        'asset_hash',
+        !options.isDev && 'asset_hash',
         'compile:conf'
     ].filter(identity));
 

@@ -1,0 +1,56 @@
+@import views.support.commercial.TrackingCodeBuilder.mkInteractionTrackingCode
+@(frontId: String,
+  containerIndex: Int,
+  containerModel: common.commercial.ContainerModel)(implicit request: RequestHeader)
+
+<div class="adverts__row adverts__row--3x1">
+    @containerModel.content.initialCards.take(1).map(card => views.html.commercial.cards.itemLargeCard(
+        card,
+        cardType = cards.ThreeQuarters,
+        omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
+        optAdvertClassNames = Some(Seq("paidfor", "large--1x2")),
+        useCardBranding = !containerModel.isSingleSponsorContainer
+    ))
+    @containerModel.content.initialCards.slice(1, 2).map(card => views.html.commercial.cards.itemCard(
+                            card,
+                            omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
+                            optAdvertClassNames = Some(Seq("paidfor")),
+                            useCardBranding = !containerModel.isSingleSponsorContainer))
+</div>
+<div class="adverts__row hide-until-tablet">
+    @containerModel.content.initialCards.slice(2, 6).map(card => views.html.commercial.cards.itemCard(
+                            card,
+                            omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
+                            optAdvertClassNames = Some(Seq("paidfor")),
+                            useCardBranding = !containerModel.isSingleSponsorContainer))
+</div>
+<div class="adverts__row hide-until-tablet">
+    <div class="adverts__column">
+        @containerModel.content.initialCards.slice(6, 8).map(card => views.html.commercial.cards.itemSmallCard(
+                                card,
+                                omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
+                                optAdvertClassNames = Some(Seq("paidfor")),
+                                useCardBranding = !containerModel.isSingleSponsorContainer))
+    </div>
+    <div class="adverts__column">
+        @containerModel.content.initialCards.slice(8, 10).map(card => views.html.commercial.cards.itemSmallCard(
+                                card,
+                                omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
+                                optAdvertClassNames = Some(Seq("paidfor")),
+                                useCardBranding = !containerModel.isSingleSponsorContainer))
+    </div>
+    <div class="adverts__column">
+        @containerModel.content.initialCards.slice(10, 12).map(card => views.html.commercial.cards.itemSmallCard(
+                                card,
+                                omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
+                                optAdvertClassNames = Some(Seq("paidfor")),
+                                useCardBranding = !containerModel.isSingleSponsorContainer))
+    </div>
+    <div class="adverts__column">
+        @containerModel.content.initialCards.slice(12, 14).map(card => views.html.commercial.cards.itemSmallCard(
+                                card,
+                                omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
+                                optAdvertClassNames = Some(Seq("paidfor")),
+                                useCardBranding = !containerModel.isSingleSponsorContainer))
+    </div>
+</div>

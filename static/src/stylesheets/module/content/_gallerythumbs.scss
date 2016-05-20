@@ -2,7 +2,7 @@
     margin: $gs-baseline/3 0;
     list-style: none;
     position: relative;
-    background-color: colour(neutral-2);
+    background-color: $neutral-2;
 }
 
 .gallerythumbs__item {
@@ -81,8 +81,8 @@
 .gallery-launch-cta {
     @include fs-bodyCopy(1);
     line-height: 16px;
-    background-color: colour(media-background);
-    color: colour(neutral-7) !important;
+    background-color: $media-background;
+    color: $neutral-7 !important;
     position: absolute;
     top: 0;
     left: 0;

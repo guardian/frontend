@@ -93,39 +93,4 @@ define([
         });
     });
 
-    describe('Accessibility helpers', function () {
-        beforeEach(function () {
-            window.localStorage.clear();
-            document.body.innerHTML += '<div id="ACCESSIBILITY_TEST">' +
-                '<span class="js-flashing-image"></span>' +
-                '<span class="another element"></span>' +
-                '<span class="js-flashing-image"></span>' +
-            '</div>';
-            this.DOM = document.getElementById('ACCESSIBILITY_TEST');
-        });
-        afterEach(function () {
-            this.DOM.parentNode.removeChild(this.DOM);
-            window.localStorage.clear();
-        });
-
-        it('hides flashing images when disabled', function (done) {
-            accessibility.saveState({
-                'flashing-elements': false
-            });
-            helpers.shouldHideFlashingElements(function () {
-                expect(qwery('.js-flashing-image').length).toBe(0);
-                done();
-            });
-        });
-
-        it('does nothing when enabled', function (done) {
-            accessibility.saveState({
-                'flashing-elements': true
-            });
-            helpers.shouldHideFlashingElements(function () {
-                expect(qwery('.js-flashing-image').length).toBe(2);
-                done();
-            });
-        });
-    });
 });

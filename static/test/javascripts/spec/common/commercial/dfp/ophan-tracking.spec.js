@@ -41,11 +41,9 @@ define(['common/modules/commercial/dfp/ophan-tracking'], function (dfpOphanTrack
 
         this.pubads = function () { return { addEventListener : noop }; };
 
-        /*jscs:disable disallowEmptyBlocks*/
         function noop() {
             // does nothing
         }
-        /*jscs:enable disallowEmptyBlocks*/
     }
 
     function mimicGoogletagLogCall(logger) {

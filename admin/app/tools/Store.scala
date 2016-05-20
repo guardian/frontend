@@ -30,6 +30,9 @@ trait Store extends Logging with Dates {
   def putInlineMerchandisingSponsorships(keywordsJson: String) {
     S3.putPublic(dfpInlineMerchandisingTagsDataKey, keywordsJson, defaultJsonEncoding)
   }
+  def putHighMerchandisingSponsorships(keywordsJson: String) {
+    S3.putPublic(dfpHighMerchandisingTagsDataKey, keywordsJson, defaultJsonEncoding)
+  }
   def putDfpPageSkinAdUnits(adUnitJson: String) {
     S3.putPublic(dfpPageSkinnedAdUnitsKey, adUnitJson, defaultJsonEncoding )
   }
@@ -65,6 +68,10 @@ trait Store extends Logging with Dates {
   def getDfpInlineMerchandisingTargetedTagsReport(): InlineMerchandisingTargetedTagsReport = {
     S3.get(dfpInlineMerchandisingTagsDataKey) flatMap (InlineMerchandisingTargetedTagsReportParser(_))
   } getOrElse InlineMerchandisingTargetedTagsReport(now, InlineMerchandisingTagSet())
+
+  def getDfpHighMerchandisingTargetedTagsReport(): HighMerchandisingTargetedTagsReport = {
+    S3.get(dfpHighMerchandisingTagsDataKey) flatMap (HighMerchandisingTargetedTagsReportParser(_))
+  } getOrElse HighMerchandisingTargetedTagsReport(now, HighMerchandisingLineItems(items = List.empty))
 
   def getDfpLineItemsReport(): Option[String] = S3.get(dfpLineItemsKey)
 

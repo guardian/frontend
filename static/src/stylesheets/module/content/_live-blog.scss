@@ -1,11 +1,17 @@
+@import './live-blog/navigation';
+
 $block-padding-left: gs-span(1) + $gs-gutter;
 $block-padding-right: $gs-gutter;
 
 /* Layout
    ========================================================================== */
+
+.content--liveblog .content__main {
+    background-color: $neutral-8;
+}
+
 .content__main-column--liveblog {
     @include mq(desktop) {
-        max-width: gs-span(8);
         margin-left: $right-column + $gs-gutter;
         margin-right: 0;
         max-width: none;
@@ -34,7 +40,7 @@ $block-padding-right: $gs-gutter;
 
         .meta__numbers {
             position: static;
-            border-top: 1px dotted colour(neutral-5);
+            border-top: 1px dotted $neutral-5;
             border-bottom: 0;
         }
     }
@@ -44,7 +50,7 @@ $block-padding-right: $gs-gutter;
 
         @include mq(desktop) {
             padding-top: $gs-baseline/6;
-            border-top: 1px dotted colour(neutral-5);
+            border-top: 1px dotted $neutral-5;
         }
     }
 }
@@ -76,10 +82,10 @@ $block-padding-right: $gs-gutter;
    ========================================================================== */
 .timestamp,
 .published-time {
+    @include font($f-sans-serif-text, bold, 13, 20);
     display: block;
     padding: $gs-baseline/3 0;
     margin-top: ($gs-baseline/3)*2;
-    @include font($f-sans-serif-text, bold, 13, 20);
 
     time {
         display: inline-block;
@@ -93,29 +99,29 @@ $block-padding-right: $gs-gutter;
     position: relative;
 
     &.published-time {
-        margin: 0;
         @include fs-textSans(2);
+        margin: 0;
         font-weight: bold;
     }
 
     .live-pulse-icon--red {
+        @include circular;
         $size: 12px;
         display: inline-block;
         content: '';
-        background-color: colour(live-default);
+        background-color: $live-default;
         width: $size;
         height: $size;
         margin-bottom: -1px;
         margin-right: 3px;
-        @include circular;
         animation: live-pulse 2s infinite;
     }
 
     .block-time__absolute {
+        @include fs-textSans(1);
         display: inline-block;
         margin-left: $gs-gutter/4;
-        color: colour(neutral-2);
-        @include fs-textSans(1);
+        color: $neutral-2;
         font-weight: normal;
     }
 
@@ -133,12 +139,12 @@ $block-padding-right: $gs-gutter;
 }
 
 .block-time__link {
-    color: colour(neutral-1);
+    color: $neutral-1;
 }
 
 .updated-time {
     @include fs-textSans(1);
-    color: colour(neutral-2);
+    color: $neutral-2;
     position: absolute;
     right: $gs-gutter;
     bottom: $gs-baseline / 3;
@@ -147,20 +153,28 @@ $block-padding-right: $gs-gutter;
 
 /* Blocks
    ========================================================================== */
+.blocks {
+    margin-top: $gs-baseline;
+}
+
 .block {
     @include clearfix;
+
     margin-bottom: $gs-baseline;
+    position: relative;
+}
+
+.block--content {
     padding-top: $gs-baseline/2;
     padding-bottom: $gs-baseline;
     background-color: #ffffff;
-    border-top: 1px solid colour(neutral-3);
-    border-bottom: 1px solid colour(neutral-6);
-    position: relative;
+    border-top: 1px solid $neutral-3;
+    border-bottom: 1px solid $neutral-6;
 }
 
 .block.is-key-event,
 .block.is-summary {
-    border-top: 1px solid colour(live-accent);
+    border-top: 1px solid $live-accent;
 }
 
 .truncated-block {
@@ -176,7 +190,7 @@ $block-padding-right: $gs-gutter;
 }
 
 .block--notification {
-    border-top-color: colour(live-default);
+    border-top-color: $live-default;
 }
 
 .notify {
@@ -184,10 +198,10 @@ $block-padding-right: $gs-gutter;
 }
 
 .notify__btn {
-    text-align: left;
     @include fs-textSans(3);
+    text-align: left;
     font-weight: bold;
-    color: colour(live-default);
+    color: $live-default;
 }
 
 .autoupdate--has-animation {
@@ -197,15 +211,15 @@ $block-padding-right: $gs-gutter;
 }
 
 @keyframes new-block-animation {
-    0% { opacity: 0; border-top-color: colour(live-accent); }
-    100% { opacity: 1; border-top-color: colour(neutral-3); }
+    0% { opacity: 0; border-top-color: $live-accent; }
+    100% { opacity: 1; border-top-color: $neutral-3; }
 }
 
 /* Above/Below content
    ========================================================= */
 .blog {
     .content__keywords {
-        border-top: 1px dotted colour(neutral-3);
+        border-top: 1px dotted $neutral-3;
         line-height: 20px;
     }
 }
@@ -243,7 +257,7 @@ $block-padding-right: $gs-gutter;
        ========================================================= */
     .liveblog-block-byline {
         margin-bottom: $gs-baseline * .5;
-        border-bottom: 1px dotted colour(neutral-4);
+        border-bottom: 1px dotted $neutral-4;
         padding-bottom: $gs-baseline * .5;
     }
 
@@ -258,7 +272,7 @@ $block-padding-right: $gs-gutter;
     .liveblog-block-byline__name {
         @include fs-bodyCopy(2);
         display: inline;
-        color: colour(neutral-1);
+        color: $neutral-1;
     }
 
     .block-elements {
@@ -284,7 +298,7 @@ $block-padding-right: $gs-gutter;
         }
 
         > blockquote {
-            color: colour(neutral-2);
+            color: $neutral-2;
         }
 
         /* Media
@@ -305,7 +319,7 @@ $block-padding-right: $gs-gutter;
                 background: none;
             }
             tr {
-                border-bottom: 1px solid darken(colour(neutral-8), 4%);
+                border-bottom: 1px solid darken($neutral-8, 4%);
 
                 th:first-child,
                 td:first-child {
@@ -317,7 +331,7 @@ $block-padding-right: $gs-gutter;
                 }
             }
             thead {
-                border-top: 1px solid darken(colour(neutral-8), 4%);
+                border-top: 1px solid darken($neutral-8, 4%);
             }
         }
 
@@ -351,7 +365,7 @@ $block-padding-right: $gs-gutter;
         > .element-image,
         > .element-video {
             clear: left;
-            border-bottom: 2px solid colour(neutral-8);
+            border-bottom: 2px solid $neutral-8;
             margin-bottom: $gs-baseline;
             padding-bottom: $gs-baseline/2;
 
@@ -401,7 +415,7 @@ $block-padding-right: $gs-gutter;
     max-width: 100%;
     background-position: 0 ($gs-baseline/3)*2 !important;
     background-repeat: no-repeat;
-    border-top: 1px dotted colour(neutral-3);
+    border-top: 1px dotted $neutral-3;
 
     .block-time + .block-elements .element-tweet:first-child & {
         border-top: 0;
@@ -412,6 +426,7 @@ $block-padding-right: $gs-gutter;
 }
 .tweet,
 .from-content-api blockquote.tweet {
+    @include fs-textSans(3);
     display: inline-block;
     border-left-width: 0;
     padding: $gs-baseline/2 0 0;
@@ -419,7 +434,6 @@ $block-padding-right: $gs-gutter;
     margin-left: $gs-gutter/2;
     margin-right: $gs-gutter/2;
     font-style: normal;
-    @include fs-textSans(3);
 
     &:first-child {
         margin-top: $gs-baseline/2;
@@ -463,7 +477,7 @@ $block-padding-right: $gs-gutter;
 
 .tweet-date {
     display: block;
-    color: colour(neutral-2);
+    color: $neutral-2;
     padding-left: 40px;
     margin-bottom: ($gs-baseline/3)*4;
 }
@@ -477,13 +491,13 @@ $block-padding-right: $gs-gutter;
 .dropdown--key-events,
 .dropdown--live-feed {
     border-top: 0;
+    margin-top: $gs-baseline;
+
+    $content-gutter: $gs-gutter / 2;
 
     @include mq($until: desktop) {
-        margin-right: $gs-gutter*-1;
-        margin-left: $gs-gutter*-1;
-        padding-right: $gs-gutter;
-        padding-left: $gs-gutter;
-        padding-top: $gs-baseline*4;
+        margin-right: $content-gutter * -1;
+        margin-left: $content-gutter * -1;
     }
 
     .dropdown__button {
@@ -491,10 +505,6 @@ $block-padding-right: $gs-gutter;
             background-color: #ffffff;
             padding-right: $gs-gutter;
             padding-left: $gs-gutter;
-            position: absolute;
-            top: 0;
-            right: 0;
-            left: 0;
         }
 
         @include mq(desktop) {
@@ -521,8 +531,8 @@ $block-padding-right: $gs-gutter;
         margin: 0;
 
         @include mq($until: desktop) {
-            background-color: colour(neutral-8);
-            padding: $gs-baseline 0;
+            background-color: $neutral-8;
+            padding: $gs-baseline $content-gutter;
         }
 
         @include mq(desktop) {
@@ -548,7 +558,7 @@ $timeline-width: 15px;
         }
 
         .dropdown {
-            border-top: 1px solid colour(live-main-1);
+            border-top: 1px solid $live-main-1;
             padding-top: $gs-baseline/2;
         }
     }
@@ -567,7 +577,7 @@ $timeline-width: 15px;
     }
 }
 
-.blog__timeline-container {
+.live-blog__sticky-components-container {
     @include mq(desktop) {
         transform: translateZ(0); //To force on GPU
         width: $right-column;
@@ -577,16 +587,10 @@ $timeline-width: 15px;
 }
 
 .toast__container {
-    z-index: 900;
     padding-bottom: $gs-baseline;
     text-align: center;
     transition: transform .3s ease-in-out;
-    transform: translateY((-1) * $gs-baseline * 5);
     width: 100%;
-
-    .toast__space-reserver--open & {
-        transform: translateY(0);
-    }
 
     @include mq(desktop) {
         width: gs-span(8);
@@ -609,20 +613,25 @@ $timeline-width: 15px;
     }
 }
 
+.toast__container--open {
+    z-index: $zindex-content;
+}
+
 .toast__button {
     @include fs-textSans(1);
-    background-color: colour(live-main-2);
+    background-color: $live-main-2;
     color: #ffffff;
     box-sizing: border-box;
     overflow: hidden;
     border: 0;
+    margin-right: 0;
     max-width: 300px; // somewhat arbitrary, just need a max-width to animate from
     position: relative;
 
     &:hover,
     &:focus {
         color: #ffffff;
-        background-color: colour(live-main-1);
+        background-color: $live-main-1;
     }
 
     &.toast__button--closed {
@@ -633,7 +642,6 @@ $timeline-width: 15px;
         display: inline-block;
         font-weight: 700;
         float: right;
-        margin-top: 10px;
         opacity: 1;
         padding-left: $gs-gutter * 5/4;
         transition: opacity .3s ease-in-out;
@@ -672,13 +680,9 @@ $timeline-width: 15px;
 }
 
 .toast__space-reserver {
-    padding-bottom: $gs-baseline;
     height: $gs-baseline*3; // was 0, for testing
-    display: none;
-
-    .toast-enabled & {
-        display: block;
-    }
+    margin-bottom: -$gs-baseline*3;
+    display: block;
 }
 
 .timeline {
@@ -693,7 +697,7 @@ $timeline-width: 15px;
     width: 100%;
     overflow: hidden;
     min-height: gs-height(1) + $gs-baseline/3;
-    border-bottom: 1px solid colour(neutral-4);
+    border-bottom: 1px solid $neutral-4;
 
     &:last-child {
         border-bottom: 0;
@@ -713,16 +717,17 @@ $timeline-width: 15px;
     &:hover,
     &:visited,
     &:active {
-        color: colour(neutral-1);
+        color: $neutral-1;
         text-decoration: none;
     }
 
     @include mq(desktop) {
         position: relative;
         padding: 0 $gs-gutter $gs-baseline*2;
-        border-left: 1px solid colour(neutral-5);
+        border-left: 1px solid $neutral-5;
 
         &:before {
+            @include circular;
             display: block;
             position: absolute;
             content: ' ';
@@ -730,15 +735,14 @@ $timeline-width: 15px;
             left: ($timeline-width/2)*-1;
             width: $timeline-width;
             height: $timeline-width;
-            @include circular;
-            background-color: colour(neutral-3);
+            background-color: $neutral-3;
         }
 
         &:hover:before {
-            background-color: colour(neutral-2);
+            background-color: $neutral-2;
         }
         &.live-blog__key-event--selected:before {
-            background-color: colour(neutral-1);
+            background-color: $neutral-1;
         }
 
         .timeline__item:first-child &:before,
@@ -754,9 +758,9 @@ $timeline-width: 15px;
     }
 }
 .timeline__date {
+    @include fs-textSans(2);
     display: table-cell;
     width: gs-span(1);
-    @include fs-textSans(2);
     font-weight: bold;
 
     .block-time__absolute,
@@ -772,12 +776,12 @@ $timeline-width: 15px;
     }
 }
 .timeline__title {
-    display: table-cell;
     @include fs-textSans(3);
-    border-color: colour(neutral-8);
+    display: table-cell;
+    border-color: $neutral-8;
 
     .timeline__link:hover & {
-        border-color: colour(neutral-2);
+        border-color: $neutral-2;
     }
 
     @include mq(desktop) {
@@ -797,12 +801,12 @@ $timeline-width: 15px;
 
     .tone-news--item {
         .fc-item__content {
-            background-color: darken(colour(neutral-8), 3%);
+            background-color: darken($neutral-8, 3%);
         }
 
         .u-faux-block-link--hover {
             .fc-item__content {
-                background-color: darken(colour(neutral-8), 8%);
+                background-color: darken($neutral-8, 8%);
             }
         }
     }
@@ -812,7 +816,7 @@ $timeline-width: 15px;
     @include fs-header(2);
     padding-top: $gs-baseline / 4;
     margin-bottom: ($gs-baseline/3)*4;
-    border-top: 1px solid colour(neutral-4);
+    border-top: 1px solid $neutral-4;
 }
 
 /* Football components
@@ -823,7 +827,7 @@ $timeline-width: 15px;
     }
 
     .tabs__tab--selected {
-        border-bottom-color: colour(neutral-8) !important;
+        border-bottom-color: $neutral-8 !important;
     }
 
     .match-summary {
@@ -838,7 +842,7 @@ $timeline-width: 15px;
             margin: $gs-baseline/2 $gs-gutter/2 0;
 
             @include mq(mobileLandscape) {
-                border-left: 1px solid darken(colour(neutral-8), 4%);
+                border-left: 1px solid darken($neutral-8, 4%);
                 margin-left: $gs-gutter;
                 margin-right: $gs-gutter;
                 padding-left: $gs-gutter;
@@ -846,7 +850,7 @@ $timeline-width: 15px;
         }
         .player-card__position {
             @include fs-textSans(2);
-            color: colour(neutral-1);
+            color: $neutral-1;
             font-weight: 700;
         }
     }
@@ -857,11 +861,11 @@ $timeline-width: 15px;
 
     @include mq(desktop) {
         .tabs__container--multiple {
-            background-color: colour(neutral-8);
+            background-color: $neutral-8;
         }
 
         .tabs__tab--selected .tab__link {
-            background-color: colour(neutral-8);
+            background-color: $neutral-8;
         }
 
         .match-summary {
@@ -924,35 +928,16 @@ $timeline-width: 15px;
         background-color: #ffffff;
 
         .content__labels {
-            border-bottom-color: colour(neutral-5);
+            border-bottom-color: $neutral-5;
         }
         .content__section-label__link {
-            color: colour(live-default);
+            color: $live-default;
         }
         .content__series-label__link {
-            color: colour(neutral-2);
+            color: $neutral-2;
         }
         .content__headline {
-            color: colour(neutral-1);
+            color: $neutral-1;
         }
     }
 }
-
-.liveblog__show-more {
-    background-color: colour(live-accent);
-    border: 0;
-    margin-bottom: $gs-baseline;
-    padding-left: $gs-gutter * 4 / 5;
-
-    @include mq(leftCol) {
-        margin-top: $gs-baseline;
-        margin-bottom: 0;
-    }
-
-    &:hover,
-    &:focus,
-    &:active {
-        background-color: darken(colour(live-accent), 7%);
-    }
-}
-

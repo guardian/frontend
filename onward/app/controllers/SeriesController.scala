@@ -2,20 +2,23 @@ package controllers
 
 import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
+import com.gu.facia.client.models.Backfill
 import common._
-import conf.LiveContentApi
-import conf.LiveContentApi.getResponse
+import contentapi.ContentApiClient
+import contentapi.ContentApiClient.getResponse
 import implicits.Requests
 import layout.{CollectionEssentials, DescriptionMetaHeader, FaciaContainer}
+import model.Cached.WithoutRevalidationResult
 import model._
 import model.pressed.CollectionConfig
-import play.api.libs.json.{Json, JsArray}
+import play.api.libs.json.{JsArray, Json}
 import play.api.mvc.{Action, Controller, RequestHeader}
-import services.{CollectionConfigWithId, FaciaContentConvert}
+import services.CollectionConfigWithId
 import slices.Fixed
 import views.support.FaciaToMicroFormat2Helpers._
 
 import scala.concurrent.Future
+import scala.concurrent.duration._
 
 case class Series(id: String, tag: Tag, trails: RelatedContent) {
   lazy val displayName = tag.id match {
@@ -32,8 +35,10 @@ object SeriesController extends Controller with Logging with Paging with Executi
   }
 
   def renderMf2SeriesStories(seriesId:String) = Action.async { implicit request =>
-    lookup(Edition(request), seriesId) map { series =>
-      series.map(rendermf2Series).getOrElse(NotFound)
+    lookup(Edition(request), seriesId) map {
+      _.map(series => Cached(15.minutes)(
+        rendermf2Series(series)
+      )).getOrElse(Cached(15.minutes)(WithoutRevalidationResult(NotFound)))
     }
   }
 
@@ -44,11 +49,11 @@ object SeriesController extends Controller with Logging with Paging with Executi
     def isCurrentStory(content: ApiContent) =
       content.fields.flatMap(_.shortUrl).exists(_.equals(currentShortUrl))
 
-    val seriesResponse: Future[Option[Series]] = getResponse(LiveContentApi.item(seriesId, edition)
+    val seriesResponse: Future[Option[Series]] = getResponse(ContentApiClient.item(seriesId, edition)
       .showFields("all")
     ).map { response =>
         response.tag.flatMap { tag =>
-          val trails = response.results filterNot (isCurrentStory(_)) map (RelatedContentItem(_))
+          val trails = response.results.getOrElse(Nil) filterNot (isCurrentStory(_)) map (RelatedContentItem(_))
           if (!trails.isEmpty) {
             Some(Series(seriesId, Tag.make(tag,None), RelatedContent(trails)))
           } else { None }
@@ -63,11 +68,13 @@ object SeriesController extends Controller with Logging with Paging with Executi
   private def rendermf2Series(series: Series)(implicit request: RequestHeader) = {
     val displayName = Some(series.displayName)
     val seriesStories = series.trails.items take 4
+    val description = series.tag.metadata.description.getOrElse("").replaceAll("<.*?>", "")
 
     JsonComponent(
       "items" -> JsArray(Seq(
         Json.obj(
           "displayName" -> displayName,
+          "description" -> description,
           "showContent" -> seriesStories.nonEmpty,
           "content" -> seriesStories.map( collection => isCuratedContent(collection.faciaContent))
         )
@@ -79,12 +86,14 @@ object SeriesController extends Controller with Logging with Paging with Executi
     val dataId = "series"
     val componentId = Some("series")
     val displayName = Some(series.displayName)
-    val properties = FrontProperties(series.tag.metadata.description, None, None, None, false, None)
+    val properties = FrontProperties.empty.copy(onPageDescription = series.tag.metadata.description)
     val header = series.tag.metadata.description map { description => DescriptionMetaHeader(description) }
 
 
     val config = CollectionConfig.empty.copy(
-      apiQuery = Some(series.id), displayName = displayName, href = Some(series.id)
+      backfill = Some(Backfill(`type` = "capi", query = series.id)),
+      displayName = displayName,
+      href = Some(series.id)
     )
 
     val response = () => views.html.fragments.containers.facia_cards.container(

@@ -27,7 +27,10 @@ val ABFontDelaySwitch = Switch("A/B Tests", "ab-web-fonts-delay",
     safeState = Off)
 ```
 
-The only convention is that the test id has to start with the characters _'ab-'_.
+The convention is that the test id has to start with the characters _'ab-'_.
+
+**The hyphen-separated id that follows `ab-` must correspond to the TitleCased id defined in the JS test module.
+e.g. if the switch id is `ab-geo-most-popular`, the test id must be `GeoMostPopular`**
 
 
 You will notice here that the switches we use to run our AB testing are the same switches we use to toggle features.
@@ -63,12 +66,24 @@ define(['bonzo'], function (bonzo) {
             {
                 id: 'control',
                 test: function (context, config) {
+                },
+
+                success: function(complete) {
+                    // do something that determines whether the user has completed
+                    // the test (e.g. set up an event listener) and call 'complete' afterwards
+                    complete();
                 }
             },
             {
                 id: 'hide',
                 test: function (context, config) {
                     bonzo(context.querySelector('.js-related')).hide();
+                },
+
+                success: function(complete) {
+                    // do something that determines whether the user has completed
+                    // the test (e.g. set up an event listener) and call 'complete' afterwards
+                    complete();
                 }
             }
         ];
@@ -81,12 +96,12 @@ define(['bonzo'], function (bonzo) {
 
 The AMD module must return an object with the following properties,
 
-- `id`: The unique name of the test.
+- `id`: The unique name of the test. **This must be TitleCased and correspond to the hyphen-separated portion of the switch id that follows `ab-`. e.g. if the switch id is `ab-geo-most-popular`, this id must be `GeoMostPopular`**
 - `start`: The planned start date of the test, the day when the test will be turned on.
 - `expiry`: The date on which this test is due to stop running.
 - `author`: The author of the test. They have responsibility for fixing and removing the test.
 - `description`: A plain English summary of the test.
-- `audience`: The ratio of people who you want in the test (Eg, 0.2 = 20%), who will then be split 50/50 between the control and variant.
+- `audience`: The ratio of people who you want in the test (Eg, 0.2 = 20%), who will then be split equally between the variants defined in the test.
 - `audienceOffset`: All users are given a permanent, unique hash that is a number between 0 and 1. `audienceOffset` allows you to specify the range of
   users you want to test. For example, an `audienceOffset` value of `0.5` and an `audience` of `0.1` means user with a hash between 0.5 and 0.6 will
   be opted in to the test. This helps to avoid overlapping tests.
@@ -95,7 +110,12 @@ The AMD module must return an object with the following properties,
 - `dataLinkNames`: Link names or custom link names used for test.
 - `idealOutcome`: What is the outcome that you want to see from the new variant (We want to see Y when we do X)?
 - `canRun`: A function to determine if the test is allowed to run (Eg, so you can target individual pages, segments etc.).
-- `variants`: An array of two functions - the first representing the _control_ group, the second the variant.  See "Detecting a user's bucket" below if you want to affect existing code rather than running new code.
+- `variants`: An array of objects representing the groups in your test. See "Detecting a user's bucket" below if you want to affect existing code rather than running new code.
+    - the variant objects can contain three properties:
+        - variant.id: the name of the variant
+        - variant.test: the main test function that applies the treatment for the test
+        - variant.success: a function that's called alongside test that determines if the user has finished the test. it receives a callback as a parameter that you must call when the test is completed.
+
 
 You will also need to mark the module as a dependency of the AB testing module.
 
@@ -122,8 +142,7 @@ define([
 ### Detecting a user's bucket
 You can use this code to check anywhere in your JS whether you're in a test bucket.
 ```
-if (ab.testCanBeRun('FaciaSlideshow') &&
-    ab.getTestVariantId('FaciaSlideshow') === 'slideshow') {
+if (ab.isInVariant('FaciaSlideshow', 'variant')) {
     ///...
 }
 ```

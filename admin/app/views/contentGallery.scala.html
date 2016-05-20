@@ -1,4 +1,10 @@
-@(env: String, pageViewsChart: tools.FormattedChart, lightboxLaunchesChart: tools.FormattedChart, sentryChart: tools.FormattedChart, shareChart: tools.FormattedChart, title: String, reportTimestamp: Option[String])
+@(  env: String,
+    pageViewsChart: tools.FormattedChart,
+    lightboxLaunchesChart: tools.FormattedChart,
+    sentryChart: tools.FormattedChart,
+    shareChart: tools.FormattedChart,
+    title: String,
+    reportTimestamp: Option[String])(implicit request: RequestHeader)
 
 @admin_main("Gallery Dashboard", env, isAuthed = true, hasCharts = true) {
 

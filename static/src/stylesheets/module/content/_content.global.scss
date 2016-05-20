@@ -15,31 +15,8 @@
     }
 }
 
-.sharecount__heading .i {
-    @include icon(share-android);
-}
-
-.tonal--tone-media .tonal__main--tone-media,
-.tonal--tone-special-report .content__main-column--media {
-    .sharecount__heading .i {
-        @include icon(share-android--white);
-        opacity: .6;
-    }
-}
-
-.commentcount2 {
-    display: block;
-    .i {
-        vertical-align: bottom;
-    }
-}
-
-.commentcount2__value {
-    display: block;
-}
-
 .meta__numbers {
-    border-top: 1px dotted colour(neutral-5);
+    border-top: 1px dotted $neutral-5;
     height: $gs-baseline * 3;
     padding: $gs-baseline / 2 0;
 
@@ -50,7 +27,11 @@
         border: 0;
     }
     @include mq(leftCol) {
-        border-bottom: 1px dotted colour(neutral-5);
+        border-bottom: 1px dotted $neutral-5;
+    }
+
+    .commentcount2 {
+        display: block;
     }
 
     .commentcount2__heading,
@@ -62,7 +43,7 @@
         position: relative;
         padding-left: 18px;
 
-        .i, .inline-icon {
+        .inline-icon {
             position: absolute;
             left: 0;
         }
@@ -85,7 +66,7 @@
     }
 
     .sharecount__value {
-        color: colour(neutral-1);
+        color: $neutral-1;
     }
 
     .sharecount__value--short {
@@ -101,10 +82,11 @@
     }
 
     .sharecount__heading {
-        color: colour(neutral-2);
-        .i {
-            opacity: .35;
-        }
+        color: $neutral-2;
+    }
+
+    .inline-share {
+        fill: $neutral-2;
     }
 }
 
@@ -120,7 +102,7 @@
     }
 
     .meta__extras--crossword & {
-        border-left: 1px solid colour(neutral-7);
+        border-left: 1px solid $neutral-7;
         float: right;
         padding-left: $gs-gutter / 2;
     }
@@ -136,7 +118,7 @@
     padding-top: $gs-baseline / 2;
     padding-bottom: $gs-baseline / 2;
     margin-bottom: 0;
-    border-top: 1px dotted colour(neutral-5);
+    border-top: 1px dotted $neutral-5;
     position: relative;
 
     $social-width: 39px;
@@ -173,7 +155,7 @@
             position: relative;
             left: 0;
             top: 0;
-            border-top: 1px dotted colour(neutral-5);
+            border-top: 1px dotted $neutral-5;
         }
     }
 
@@ -182,10 +164,18 @@
             float: left;
         }
     }
+
+    //Todo: Replace to content--gallery when gallery redesign goes live
+    .new-gallery & {
+        position: relative;
+        left: 0;
+        border-top: 0;
+        padding: $gs-baseline 0 0;
+    }
 }
 
 .meta__number:not(.u-h) + .meta__number {
-    border-left: 1px solid colour(neutral-7);
+    border-left: 1px solid $neutral-7;
     padding-left: $gs-gutter / 2;
     @include mq(leftCol, wide) {
         padding-left: 6px;

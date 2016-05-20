@@ -1,4 +1,86 @@
+// Contains top ad + header + main media
+.immersive-header-container {
+    @supports (object-fit: cover) and (height: 1vh) and (display: flex) {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+}
+
+.immersive-main-media {
+    // The headline wrapper is position absolute within this div
+    position: relative;
+
+    @supports (object-fit: cover) and (height: 1vh) and (display: flex) {
+        flex: 1;
+        min-height: 400px;
+    }
+}
+
+.immersive-main-media__img {
+    width: 100%;
+    // Remove inline spacing
+    display: block;
+
+    @supports (object-fit: cover) and (height: 1vh) and (display: flex) {
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        z-index: 0;
+    }
+}
+
+.immersive-main-media__headline-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, .6);
+    background: linear-gradient(rgba(0, 0, 0, .5), $multimedia-support-5);
+}
+
+.content__headline--immersive {
+    font-weight: 200;
+    padding-bottom: 1.5rem;
+}
+
 .content--immersive {
+    .content__headline--immersive {
+        @include fs-headline(9);
+        font-weight: 200;
+
+        @include mq(desktop) {
+            font-size: 4rem;
+        }
+    }
+
+    .content__series-label {
+        @include fs-header(1);
+        float: none;
+        padding-top: $gs-baseline / 2;
+        margin-bottom: 0;
+    }
+
+    .content__main {
+        padding-top: $gs-baseline / 2;
+    }
+
+    .content__standfirst {
+        a {
+            color: $neutral-6;
+            border-bottom: 1px solid rgba($neutral-6, .4);
+
+            &:hover {
+                border-bottom-color: rgba($neutral-6, 1);
+            }
+        }
+    }
+}
+
+.content--immersive-article {
     &.content {
         border-top: 0;
     }
@@ -7,11 +89,7 @@
         clear: both;
     }
 
-    .content__main {
-        padding-top: $gs-baseline / 2;
-    }
-
-/*  Header
+    /* Header
     ========================================================================== */
     .content__head {
         position: relative;
@@ -38,7 +116,6 @@
 
     .content__series-label {
         @include fs-header(1);
-        display: block;
         float: none;
         padding-top: $gs-baseline / 2;
         margin-bottom: 0;
@@ -48,20 +125,14 @@
         color: #ffffff;
     }
 
-    .content__headline {
-        @include fs-headline(9);
-        font-weight: 200;
-        line-height: 1;
-        padding-top: $gs-baseline / 2;
-        padding-bottom: 1.5rem;
-
-        @include mq(desktop) {
-            font-size: 4rem;
-        }
-    }
-
     .content__series-label + .content__headline {
         padding-top: 0;
+    }
+
+    .content__headline--immersive--with-main-media {
+        @include mq(desktop) {
+            font-size: 3.25rem;
+        }
     }
 
     .content__standfirst {
@@ -83,16 +154,6 @@
             width: gs-span(2);
             background-color: rgba(255, 255, 255, .2);
         }
-
-        a {
-            color: colour(feature-mute);
-            border-bottom: 1px solid rgba(colour(feature-mute), .4);
-
-            &:hover {
-                text-decoration: none;
-                border-bottom-color: rgba(colour(feature-mute), .8);
-            }
-        }
     }
 
     .content__loading {
@@ -101,8 +162,8 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: colour(neutral-5);
-        color: colour(neutral-1);
+        background-color: $neutral-5;
+        color: $neutral-1;
         display: none;
     }
 
@@ -134,16 +195,6 @@
     }
 
     .is-fixed-height {
-
-        .content__headline {
-            @include fs-headline(7, true);
-            line-height: 1;
-
-            @include mq(desktop) {
-                font-size: 3.25rem;
-            }
-        }
-
         .content__standfirst:before {
             @include mq($until: desktop) {
                 display: none;
@@ -156,12 +207,12 @@
         }
     }
 
-/*  Meta
+    /* Meta
     ========================================================================== */
     .content__meta-container--immersive {
         position: relative;
         width: auto;
-        border-bottom: colour(neutral-7) solid 1px;
+        border-bottom: $neutral-7 solid 1px;
         border-top: 0;
 
         @include mq(leftCol) {
@@ -170,11 +221,11 @@
         }
 
         .content__dateline {
+            @include fs-textSans(3);
             min-height: 0;
             border: 0;
             padding: 0;
             padding-right: $gs-gutter / 2 - 4px;
-            @include fs-textSans(3);
 
             @include mq(tablet, leftCol) {
                 margin-bottom: $gs-gutter;
@@ -190,7 +241,7 @@
         }
 
         .content__dateline-wpd {
-            color: colour(neutral-2);
+            color: $neutral-2;
             cursor: text;
 
             &:hover,
@@ -217,7 +268,7 @@
                 top: 2px;
                 height: 1em;
                 width: 1px;
-                background-color: colour(neutral-6);
+                background-color: $neutral-6;
             }
         }
 
@@ -230,7 +281,7 @@
 
             @include mq($until: tablet) {
                 display: block;
-                border-top: 1px dotted colour(neutral-5);
+                border-top: 1px dotted $neutral-5;
                 margin-top: $gs-baseline;
                 padding-top: $gs-baseline / 4;
                 padding-bottom: $gs-baseline;
@@ -244,14 +295,14 @@
                     top: 2px;
                     height: 1em;
                     width: 1px;
-                    background-color: colour(neutral-6);
+                    background-color: $neutral-6;
                 }
             }
         }
 
         .meta__number {
             @include fs-textSans(3);
-            color: colour(neutral-2);
+            color: $neutral-2;
             padding-left: $gs-gutter / 2;
 
             .inline-icon {
@@ -284,7 +335,7 @@
             }
 
             .inline-icon {
-                fill: colour(neutral-2);
+                fill: $neutral-2;
                 margin-top: 1px;
                 margin-right: 4px;
 
@@ -309,7 +360,7 @@
         }
     }
 
-/*  Body
+    /* Body
     ========================================================================== */
     .drop-cap {
         height: 7.25em;
@@ -328,7 +379,7 @@
         border: 0;
         margin-top: $gs-baseline * 4;
         margin-bottom: $gs-baseline / 4;
-        background-color: colour(neutral-7);
+        background-color: $neutral-7;
     }
 
     .section-image {
@@ -375,10 +426,10 @@
     }
 
     .in-body-link--immersive {
-        color: colour(feature-default);
+        color: $feature-default;
 
         &:hover {
-            border-bottom-color: rgba(colour(feature-default), .4);
+            border-bottom-color: rgba($feature-default, .4);
         }
     }
 
@@ -391,8 +442,8 @@
         width: auto;
         margin-left: 0;
         margin-bottom: $gs-baseline / 2;
-        border-top: 1px solid colour(neutral-7);
-        border-bottom: 1px solid colour(neutral-7);
+        border-top: 1px solid $neutral-7;
+        border-bottom: 1px solid $neutral-7;
         padding: 0;
         padding-top: .2em;
         padding-bottom: $gs-baseline * 3;
@@ -405,7 +456,7 @@
         }
 
         .inline-quote svg {
-            fill: colour(neutral-3);
+            fill: $neutral-3;
             width: 2.5em;
             height: 1.4em;
         }
@@ -419,11 +470,11 @@
         }
 
         .pullquote-paragraph {
-            color: colour(feature-default);
+            color: $feature-default;
         }
 
         .pullquote-cite {
-            color: colour(neutral-1) !important; // important to override super specific tonal classes
+            color: $neutral-1 !important; // important to override super specific tonal classes
         }
 
         .inline-quote.closing {
@@ -620,7 +671,7 @@
     }
 }
 
-.content__head--immersive {
+.content__head--immersive-article {
     position: relative;
 
     .content__logo-container {
@@ -628,7 +679,7 @@
         z-index: 10;
 
         @include mq($until: desktop) {
-            background-color: lighten(colour(neutral-1), 15%);
+            background-color: lighten($neutral-1, 15%);
             padding-bottom: $gs-baseline / 2;
         }
 
@@ -662,6 +713,7 @@
     &.is-fixed-height {
         &.content__head--desktop {
             height: 100vh;
+            min-height: 520px;
             max-height: 800px;
         }
 

@@ -1,4 +1,4 @@
-@(env: String, specialAdUnits: Seq[(String, String)])
+@(env: String, specialAdUnits: Seq[(String, String)])(implicit request: RequestHeader)
 @import tools.DfpLink
 
 @admin_main("Commercial", env, isAuthed = true, hasCharts = true) {

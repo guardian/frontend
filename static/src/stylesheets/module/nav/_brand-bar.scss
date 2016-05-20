@@ -1,5 +1,5 @@
 .brand-bar {
-    background-color: colour(guardian-brand);
+    background-color: $guardian-brand;
     line-height: 0;
     box-sizing: border-box;
     padding-left: $gs-gutter * .25;
@@ -18,8 +18,8 @@
 // to context matching).
 
 .brand-bar__item {
-    user-select: none;
     @include fs-bodyHeading(1);
+    user-select: none;
     float: left;
     color: $c-guardian-services-action;
     height: $headerHeight;
@@ -145,7 +145,7 @@
 }
 
 .brand-bar__item__badge {
-    background-color: rgba(colour(news-accent), .4);
+    background-color: rgba($news-accent, .4);
     color: #ffffff;
     margin-left: -4px;
     display: none;

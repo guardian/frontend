@@ -32,7 +32,7 @@
             <button class="u-button-reset popup__toggle" data-toggle="popup--comments-order"
                     aria-haspopup="true" aria-controls="comments-order-popup">Order by <span class="js-comment-order"></span></button>
 
-            <ul id="comments-order-popup" class="popup popup__group popup--comments-order is-off">
+            <ul id="comments-order-popup" class="popup popup--default popup__group popup--comments-order is-off">
                 @List("newest", "oldest", "recommendations").map { value =>
                     <li class="popup__item">
                         <button class="u-button-reset popup__action" data-order="@value" data-link-name="comments-@value">@value</button>
@@ -46,7 +46,7 @@
                 <button class="u-button-reset popup__toggle" data-toggle="popup--comments-pagesize"
                         aria-haspopup="true" aria-controls="comments-pagesize-popup">Show <span class="js-comment-pagesize">25</span></button>
 
-                <ul id="comments-pagesize-popup" class="popup popup__group popup--comments-pagesize is-off">
+                <ul id="comments-pagesize-popup" class="popup popup--default popup__group popup--comments-pagesize is-off">
                 @pagesizePopUp
                 </ul>
             </div>
@@ -57,7 +57,7 @@
             <button class="u-button-reset popup__toggle" data-toggle="popup--comments-threading"
                     aria-haspopup="true" aria-controls="comments-order-threading">Threads <span class="js-comment-threading"></span></button>
 
-            <ul id="comments-order-threading" class="popup popup__group popup--comments-threading is-off">
+            <ul id="comments-order-threading" class="popup popup--default popup__group popup--comments-threading is-off">
                 @List("collapsed", "expanded", "unthreaded").map { value =>
                     <li class="popup__item">
                         <button class="u-button-reset popup__action" data-threading="@value" data-link-name="comments-threading-@value">@value</button>
@@ -71,7 +71,7 @@
                 <button class="u-button-reset popup__toggle" data-toggle="popup--timestamp"
                         aria-haspopup="true" aria-controls="timestamp-popup">Timestamps <span class="js-timestamps"></span></button>
 
-                <ul id="timestamp-popup" class="popup popup__group popup--timestamp is-off">
+                <ul id="timestamp-popup" class="popup popup--default popup__group popup--timestamp is-off">
                     @List("relative", "absolute").map { value =>
                         <li class="popup__item">
                             <button class="u-button-reset popup__action" data-timestamp="@value" data-link-name="comments-@value">@value</button>

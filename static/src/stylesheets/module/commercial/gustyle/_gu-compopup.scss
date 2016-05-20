@@ -1,14 +1,20 @@
 .gu-compopup {
-    @include f-textSans;
     @extend %gu-style-box;
+    @include f-textSans;
 
     width: 80%;
-    top: ($gs-baseline / 2) * 3 + $gs-row-height / 2;
+    top: 44px;
     left: auto;
     right: $gs-baseline / 2;
     z-index: $zindex-modal;
     text-align: left;
+    max-width: 16em;
     background-color: $gustyle-tone;
+
+    @include mq(gs-span(5) + $gs-gutter, phablet) {
+        padding: $gs-baseline $gs-gutter / 4 * 3;
+        top: 62px;
+    }
 }
 
 .gu-compopup__title {
@@ -27,6 +33,6 @@
     @include font-size(13, 15);
 
     font-weight: bold;
-    color: colour(neutral-1);
+    color: $neutral-1;
     float: left;
 }

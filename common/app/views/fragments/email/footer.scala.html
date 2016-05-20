@@ -1,0 +1,19 @@
+@(page: model.ContentPage)(implicit request: RequestHeader)
+
+@import views.support.EmailHelpers._
+@import model.EmailAddons.EmailContentType
+@import common.{CanonicalLink, LinkTo}
+
+@fullRow(Seq("email__links")) {
+    <a class="email__link" href="https://profile.theguardian.com/email-prefs">Manage your emails</a> | <a class="email__link" href="%%unsub_center_url%%">Unsubscribe</a> | <a class="email__link" href="@LinkTo(page.metadata.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, page.metadata.webUrl)))">Trouble viewing?</a>
+}
+
+@fullRow(Seq("disclaimer")) {
+    <p>
+    @page.item.email.map { email =>
+        You are receiving this email because you are a subscriber to @{email.name}.
+    }
+
+    Guardian News & Media Limited - a member of Guardian Media Group PLC. Registered Office: @page.item.address
+    </p>
+}

@@ -3,32 +3,31 @@ package services
 import common.Edition
 import model.{RelatedContentItem, RelatedContent}
 import scala.concurrent.Future
-import conf.LiveContentApi
+import contentapi.ContentApiClient
 import feed.MostReadAgent
 import conf.switches.Switches.RelatedContentSwitch
-import LiveContentApi.getResponse
+import ContentApiClient.getResponse
 
 trait Related extends ConciergeRepository {
-  def related(edition: Edition, path: String, excludeTags: Seq[String] = Nil, relatedType: Option[String] = None): Future[RelatedContent] = {
+  def related(edition: Edition, path: String, excludeTags: Seq[String] = Nil): Future[RelatedContent] = {
 
     if (RelatedContentSwitch.isSwitchedOff) {
       Future.successful(RelatedContent(Nil))
     } else {
 
       // doesn't like "tag" being an empty string - need to explicitly pass a None
-      val tags: Option[String] = excludeTags match {
+      val tags: Option[String] = excludeTags.toList match {
         case Nil => None
         case excluding => Some(excluding.map(t => s"-$t").mkString(","))
       }
 
-      val requestBuilder = LiveContentApi.item(path, edition)
+      val response = getResponse(ContentApiClient.item(path, edition)
         .tag(tags)
         .showRelated(true)
-
-      val response = getResponse(relatedType.fold(requestBuilder) { someType => requestBuilder.stringParam("related-type", someType) })
+      )
 
       val trails = response.map { response =>
-        val relatedContentItems = response.relatedContent map { item =>
+        val relatedContentItems = response.relatedContent.getOrElse(Nil) map { item =>
           RelatedContentItem(item)
         }
         RelatedContent(relatedContentItems)
@@ -43,7 +42,7 @@ trait Related extends ConciergeRepository {
     val tags = (tag +: excludeTags.map(t => s"-$t")).mkString(",")
 
     val response = getResponse(
-      LiveContentApi.search(edition)
+      ContentApiClient.search(edition)
         .tag(tags)
         .pageSize(50)
     )

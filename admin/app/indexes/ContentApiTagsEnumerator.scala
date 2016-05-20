@@ -2,12 +2,11 @@ package indexes
 
 import common.Logging
 import common.StringEncodings.asAscii
-import conf.LiveContentApi
-import LiveContentApi.getResponse
+import contentapi.ContentApiClient
+import ContentApiClient.getResponse
 
 import scala.concurrent.Future
-import com.gu.contentapi.client.model.v1.Tag
-import com.gu.contentapi.client.model.TagsResponse
+import com.gu.contentapi.client.model.v1.{TagsResponse, Tag}
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
 import play.api.libs.iteratee.{Enumeratee, Enumerator}
@@ -30,7 +29,7 @@ object ContentApiTagsEnumerator extends Logging {
 
     Enumerator.unfoldM(Option(1)) {
       case Some(nextPage) => getPageWithRetries(nextPage) map { response =>
-        val next = if (response.isLastPage) None else Some(response.currentPage + 1)
+        val next = if (response.pages == response.currentPage) None else Some(response.currentPage + 1)
 
         Some(next, response.results)
       }
@@ -40,7 +39,7 @@ object ContentApiTagsEnumerator extends Logging {
   }
 
   def enumerateTagType(tagType: String) = enumeratePages { page =>
-    getResponse(LiveContentApi.tags.tagType(tagType).pageSize(MaxPageSize).page(page))
+    getResponse(ContentApiClient.tags.tagType(tagType).pageSize(MaxPageSize).page(page))
   }
 
   implicit class RichTag(tag: Tag) {

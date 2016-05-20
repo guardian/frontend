@@ -1,9 +1,10 @@
 package model.commercial.books
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.libs.json.Json
+import test.ConfiguredTestSuite
 
-class BookTest extends FlatSpec with Matchers {
+@DoNotDiscover class BookTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   private val json = Json.parse(
     """{"sku":"9780001712768",

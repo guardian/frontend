@@ -7,9 +7,12 @@
  */
 
 @mixin side-margins-position($container-width) {
+    // stupid fix for sasslint AST error
+    $size: $container-width + $gs-gutter * 2;
+
     &:before,
     &:after {
-        width: calc((100% - #{rem($container-width + $gs-gutter * 2)}) / 2);
+        width: calc((100% - #{$size}) / 2);
     }
 }
 
@@ -27,7 +30,7 @@
             content: '';
             position: absolute;
             z-index: 1;
-            background: rgba(colour(neutral-1), .05);
+            background: rgba($neutral-1, .05);
             top: 0;
             height: 100%;
             width: 0;
@@ -65,13 +68,13 @@
     }
 }
 .l-side-margins--media {
-    @include mq(desktop) {
+    @include mq(tablet) {
         &:after,
         &:before {
-            background: rgba(0, 0, 0, .05);
+            background: rgba(0, 0, 0, .25);
 
             .container__banding + .container__banding & {
-                background: rgba(colour(neutral-1), .15);
+                background: rgba($neutral-1, .15);
             }
         }
     }

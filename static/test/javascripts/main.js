@@ -1,5 +1,4 @@
 /*global requirejs*/
-// jscs: disable disallowDanglingUnderscores
 var tests = [];
 for (var file in window.__karma__.files) {
     if (/.*\.spec\.js$/.test(file)) {
@@ -29,6 +28,7 @@ requirejs.config({
         qwery:        'components/qwery/qwery',
         raven:        'components/raven-js/raven',
         reqwest:      'components/reqwest/reqwest',
+        analytics:    'projects/common/modules/analytics/analytics',
         // Test specific paths
         omniture:     'vendor/omniture',
         stripe:       'vendor/stripe/stripe.min',

@@ -4,9 +4,8 @@ import com.amazonaws.regions.{Region, Regions}
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
 import common._
 import conf.Configuration
-import metrics._
+import FaciaPressMetrics._
 import org.joda.time.DateTime
-import play.api.libs.json.JsNull
 import services._
 
 import scala.concurrent.Future
@@ -53,10 +52,6 @@ object ToolPressQueueWorker extends JsonQueueWorker[PressJob] with Logging {
 
     pressFutureWithConfigUpdate onComplete {
       case Success(_) =>
-        pressType match {
-          case Draft => FaciaPressMetrics.FrontPressDraftSuccess.increment()
-          case Live => FaciaPressMetrics.FrontPressLiveSuccess.increment()
-        }
 
         val millisToPress: Long = DateTime.now.getMillis - creationTime.getMillis
 
@@ -73,10 +68,6 @@ object ToolPressQueueWorker extends JsonQueueWorker[PressJob] with Logging {
         log.info(s"Successfully pressed $path on $pressType after $millisToPress ms")
 
       case Failure(error) =>
-        pressType match {
-          case Draft => FaciaPressMetrics.FrontPressDraftFailure.increment()
-          case Live => FaciaPressMetrics.FrontPressLiveFailure.increment()
-        }
         log.error(s"Failed to press $path on $pressType", error)
     }
 

@@ -26,18 +26,14 @@ object PollsHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
   }
 
   override def clean(document: Document) = {
-    if(canClean(document)){
-      pollClean(document)
-    } else {
-      document
-    }
+    universalClean(document)
+    removeScripts(document)
+    createSimplePageTracking(document)
+    removeByTagName(document, "noscript")
+    fetchAndPressPollResult(document)
   }
 
-  private def pollClean(document: Document): Document = {
-    fetchAndPressPollResult(BasicHtmlCleaner.basicClean(document))
-  }
-
-  def fetchAndPressPollResult(document: Document): Document = {
+  private def fetchAndPressPollResult(document: Document): Document = {
     val pollUrl = document.getElementById("results-container").attr("data-poll-url")
 
     fetchPoll(pollUrl).foreach { poll =>
@@ -64,9 +60,7 @@ object PollsHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
       }
     }
     document
-
   }
-
 
   import PollDeserializer._
   def fetchPoll(url: String): Option[Poll] = {

@@ -6,13 +6,14 @@ import com.google.javascript.jscomp._
 import conf.switches.Switches
 import play.api.{Application, Play}
 import play.twirl.api.Html
+import play.twirl.api.JavaScriptFormat.{Appendable => Javascript}
 
 import scala.collection.concurrent.TrieMap
 import scala.util.Try
 
 object JsMinifier {
 
-  val compilerOptions = {
+  def compilerOptions = {
     val options = new CompilerOptions()
 
     /* Checks */
@@ -52,12 +53,14 @@ object JsMinifier {
   private def compileUnsafe(codeToCompile: String, fileName: String, compilationLevel: CompilationLevel): String = {
     val compiler = new Compiler()
 
-    compilationLevel.setOptionsForCompilationLevel(compilerOptions)
+    val options = compilerOptions
+
+    compilationLevel.setOptionsForCompilationLevel(options)
 
     val extern: SourceFile = SourceFile.fromCode("extern.js", "")
     val input: SourceFile = SourceFile.fromCode(fileName, codeToCompile)
 
-    val result: Result = compiler.compile(extern, input, compilerOptions)
+    val result: Result = compiler.compile(extern, input, options)
 
     if (result.warnings.isEmpty && result.errors.isEmpty && result.success) {
       compiler.toSource
@@ -95,22 +98,24 @@ object InlineJs {
   def withFileNameHint(codeToCompile: String, fileName: String)(implicit application: Application): Html = {
     if (codeToCompile.trim.nonEmpty) {
       if (Play.isDev) {
-        Html(JsMinifier.unsafeCompileWithWhitespaceOptimisation(codeToCompile, fileName))
+        Html(optimizeJs(codeToCompile, fileName))
       } else {
         val md5 = new String(MessageDigest.getInstance("MD5").digest(codeToCompile.getBytes))
-
-        lazy val compiledCode = if (Switches.InlineJSStandardOptimisation.isSwitchedOn) {
-          JsMinifier.unsafeCompileWithStandardOptimisation(codeToCompile, fileName)
-        } else {
-          JsMinifier.unsafeCompileWithWhitespaceOptimisation(codeToCompile, fileName)
-        }
-
-        Html(memoizedMap.getOrElseUpdate(md5, compiledCode))
+        Html(memoizedMap.getOrElseUpdate(md5, optimizeJs(codeToCompile, fileName)))
       }
     } else {
       Html(codeToCompile)
     }
   }
 
+  private def optimizeJs(codeToCompile: String, fileName: String): String = {
+    if (Switches.InlineJSStandardOptimisation.isSwitchedOn) {
+      JsMinifier.unsafeCompileWithStandardOptimisation(codeToCompile, fileName)
+    } else {
+      JsMinifier.unsafeCompileWithWhitespaceOptimisation(codeToCompile, fileName)
+    }
+  }
+
   def apply(codeToCompile: String, fileName: String = "input.js")(implicit application: Application): Html = withFileNameHint(codeToCompile, fileName)
+  def apply(codeToCompile: Javascript, fileName: String)(implicit application: Application): Html = this(codeToCompile.body, fileName)
 }

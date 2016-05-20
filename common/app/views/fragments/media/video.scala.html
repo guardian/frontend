@@ -1,8 +1,10 @@
-@(player: model.VideoPlayer, enhance: Boolean, showEndSlate: Boolean = true, amp: Boolean = false)
+@(player: model.VideoPlayer, enhance: Boolean, showEndSlate: Boolean = true, amp: Boolean = false, showPoster: Boolean = true, showOverlay: Boolean = false, seriesTag: Option[model.Tag] = None)(implicit requestHeader: RequestHeader)
 
 @import conf.Static
 @import views.support.RenderClasses
 @import views.support.VideoEncodingUrlCleaner
+@import views.html.fragments.items.elements.facia_cards.title
+@import layout.FaciaCardHeader
 
 <div class="gu-media-wrapper gu-media-wrapper--video">
     @if(amp) {
@@ -38,7 +40,7 @@
             ))" data-title="@player.title"
                 data-auto-play="@player.autoPlay"
                 data-show-end-slate="@(player.showEndSlate && showEndSlate)"
-                poster="@player.poster"
+                @if(showPoster) { poster="@player.poster" }
                 data-duration="@player.video.videos.duration.toString()"
                 data-media-id="@player.video.properties.id"
                 data-end-slate="@player.endSlatePath"
@@ -55,8 +57,10 @@
                     <object type="application/x-shockwave-flash" data="@Static("flash/components/mediaelement/flashmediaelement-cdn.swf")" width="@player.width" height="@player.height">
                         <param name="allowFullScreen" value="true" />
                         <param name="movie" value="@Static("flash/components/mediaelement/flashmediaelement.swf")" />
-                        <param name="flashvars" value="controls=true&file=@encoding.url&poster=@player.poster" />
-                        <img src="@player.poster" alt="" width="@player.width" height="@player.height" />
+                        <param name="flashvars" value="controls=true&file=@encoding.url&@if(showPoster){poster=@player.poster}" />
+                        @if(showPoster) {
+                            <img src="@player.poster" alt="" width="@player.width" height="@player.height" />
+                        }
                         <div class="vjs-error-display">
                             <div>Sorry, your browser is unable to play this video.<br/>
                                 Please install <a href="http://get.adobe.com/flashplayer/">Adobe Flash</a>™ and try again.
@@ -65,6 +69,30 @@
                     </object>
                 }
             </video>
+            @if(showOverlay){
+            <div class="video-overlay">
+                @seriesTag.map { series =>
+                    <div class="video-overlay__series-label">
+                        @series.name
+                    </div>
+                }
+                <div class="video-overlay__headline">
+                    @if(player.hasFaciaHeader){
+                        @player.faciaHeaderProperties.map { properties =>
+                            @title(properties.header, 0, 0)
+                            @if(properties.showByline) {
+                                <div class="fc-item__byline">@properties.byline</div>
+                            }
+                        }
+                    } else {
+                        <h1 class="video-overlay__title">@player.title</h1>
+                    }
+                </div>
+                <span class="video-overlay__duration">
+                    @player.video.videos.formattedDuration
+                </span>
+            </div>
+            }
         </div>
     }
 </div>

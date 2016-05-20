@@ -11,46 +11,25 @@ case class PageSkinSponsorship(lineItemName: String,
                                editions: Seq[Edition],
                                countries: Seq[String],
                                isR2Only: Boolean,
-                               targetsAdTest: Boolean)
+                               targetsAdTest: Boolean,
+                               adTestValue: Option[String])
 
 object PageSkinSponsorship {
 
-  implicit val pageSkinSponsorshipWrites = new Writes[PageSkinSponsorship] {
-    def writes(sponsorship: PageSkinSponsorship): JsValue = {
-      Json.obj(
-        "lineItem" -> sponsorship.lineItemName,
-        "lineItemId" -> sponsorship.lineItemId,
-        "adUnits" -> sponsorship.adUnits,
-        "editions" -> sponsorship.editions,
-        "countries" -> sponsorship.countries,
-        "isR2Only" -> sponsorship.isR2Only,
-        "isAdTest" -> sponsorship.targetsAdTest
-      )
-    }
-  }
-
-  implicit val pageskinSponsorShipReads: Reads[PageSkinSponsorship] = (
-    (JsPath \ "lineItem").read[String] and
-      (JsPath \ "lineItemId").read[Long] and
-      (JsPath \ "adUnits").read[Seq[String]] and
-      (JsPath \ "editions").read[Seq[Edition]] and
-      (JsPath \ "countries").read[Seq[String]] and
-      (JsPath \ "isR2Only").read[Boolean] and
-      (JsPath \ "isAdTest").read[Boolean]
-    )(PageSkinSponsorship.apply _)
+  implicit val pageskinSponsorShipFormat: Format[PageSkinSponsorship] = (
+      (JsPath \ "lineItem").format[String] and
+      (JsPath \ "lineItemId").format[Long] and
+      (JsPath \ "adUnits").format[Seq[String]] and
+      (JsPath \ "editions").format[Seq[Edition]] and
+      (JsPath \ "countries").format[Seq[String]] and
+      (JsPath \ "isR2Only").format[Boolean] and
+      (JsPath \ "isAdTest").format[Boolean] and
+      (JsPath \ "adTestValue").formatNullable[String]
+    )(PageSkinSponsorship.apply, unlift(PageSkinSponsorship.unapply))
 }
-
-object PageSkin {
-  def isValidForNextGenPageSkin(adUnit: String): Boolean = adUnit.endsWith("/front") || adUnit.endsWith("/front/ng")
-}
-
 
 case class PageSkinSponsorshipReport(updatedTimeStamp: String, sponsorships: Seq[PageSkinSponsorship]) {
-
-  val (deliverableAndTestSponsorships, legacySponsorships) = sponsorships partition { sponsorship =>
-    sponsorship.adUnits.exists(PageSkin.isValidForNextGenPageSkin) && (!sponsorship.isR2Only)
-  }
-  val (testSponsorships, deliverableSponsorships) = deliverableAndTestSponsorships partition (_.targetsAdTest)
+  val (testSponsorships, deliverableSponsorships) = sponsorships partition (_.targetsAdTest)
 }
 
 object PageSkinSponsorshipReport {
@@ -66,6 +45,24 @@ object PageSkinSponsorshipReport {
 
 }
 
+object PageSkin {
+
+  def isValidAdUnit(adUnitPath: String) = getRelativePath(adUnitPath).isDefined
+
+  def getRelativePath(adUnitPath: String): Option[String] = {
+
+    def trimPath(dropFromRight: Int) = adUnitPath.split("/").drop(1).dropRight(dropFromRight).mkString("/")
+
+    if (adUnitPath endsWith "/front/ng")
+      Some(trimPath(2))
+    else if (adUnitPath endsWith "/front")
+      Some(trimPath(1))
+    else
+      None
+  }
+
+
+}
 
 object PageSkinSponsorshipReportParser extends Logging {
 

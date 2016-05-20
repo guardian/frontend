@@ -2,7 +2,6 @@
 
 @import common.{AnalyticsHost, LinkTo, CanonicalLink}
 @import conf.Configuration
-@import model.Page
 @import views.support.OmnitureAnalyticsData
 
 <!doctype html>
@@ -10,12 +9,7 @@
     <head>
         @* "utf-8" meta tag needs to be first according to AMP spec *@
         <meta charset="utf-8">
-        @if(page.metadata.id == "books/booksblog/2016/jan/20/the-best-music-to-listen-to-while-reading-or-is-it-sacrilege") {
-            <meta name="amp-3p-iframe-src" content="https://static.theguardian.com/amp/remote-3.html">
-        } else {
-            <meta name="amp-3p-iframe-src" content="https://static.theguardian.com/amp/remote.html">
-        }
-
+        <meta name="amp-3p-iframe-src" content="https://www.theguardian.com/amp/remote.html">
         @fragments.metaData(page, amp = true)
         <title>@views.support.Title(page)</title>
         @fragments.amp.stylesheets.main(page.metadata)
@@ -28,7 +22,7 @@
         @* Required for outbrain served in an amp-iframe *@
         <script custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js" async></script>
         <script custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" async></script>
-        <style>body {opacity: 0}</style><noscript><style>body {opacity: 1}</style></noscript>
+        <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
         <script src="https://cdn.ampproject.org/v0.js" async></script>
     </head>
     <body class="guardian-egyptian-loading">
@@ -46,65 +40,62 @@
 
         <div class="main-body">
 
-            @* this is for testing only *@
-            @defining("""bowie""".r) { hasHeader =>
-                <header class="main-header @if(hasHeader.findFirstIn(page.metadata.id).nonEmpty) {variant-kicker}">
-                    <a href="@LinkTo{/}" class="logo-wrapper" name="top">
-                        @fragments.inlineSvg("guardian-logo-160", "logo")
-                    </a>
-                        @if(hasHeader.findFirstIn(page.metadata.id).nonEmpty) {
-                            <div class="main-navigation variant-kicker">
-                                <div class="main-navigation_link">
-                                    <a href="http://www.theguardian.com">news</a>
-                                </div>
-                                <div class="main-navigation_link">
-                                    <a href="http://www.theguardian.com/commentisfree">opinion</a>
-                                </div>
-                                <div class="main-navigation_link">
-                                    <a href="http://www.theguardian.com/sport">sports</a>
-                                </div>
-                                <div class="main-navigation_link">
-                                    <a href="http://www.theguardian.com/culture">arts</a>
-                                </div>
-                                <div class="main-navigation_link">
-                                    <a href="http://www.theguardian.com/lifeandstyle">life</a>
-                                </div>
-                            </div>
-                        }
-                </header>
-            }
+            @fragments.amp.header()
 
             @body
 
             @if(content.trail.isCommentable) {
-                <div class="content__comments-container">
+                <div class="submeta">
                     <a href="@LinkTo(page.metadata.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, page.metadata.webUrl)))#comments" class="cta cta--medium cta--comments">
                         @fragments.inlineSvg("comment-16", "icon") View comments
                     </a>
-                </div>
+            } else {
+                <div class="submeta no-comments">
             }
+                    <a href="@LinkTo(page.metadata.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, page.metadata.webUrl)))" class="cta cta--medium main-site-link">
+                        View on theguardian.com
+                    </a>
+                </div>
 
-
-            @Page.getContentPage(page).map { content =>
-                @if(content.item.content.hasStoryPackage) {
+            @if(content.metadata.section != "childrens-books-site") {
+                @if(content.hasStoryPackage) {
                     @fragments.amp.storyPackageAmp(related)
                 }
-                @if(content.item.tags.series.nonEmpty) {
-                    @content.item.tags.series.map { tag =>
+                @if(content.tags.series.nonEmpty) {
+                    @content.tags.series.map { tag =>
                         @fragments.amp.onwardTemplateAmp("series-mf2/" + tag.id + ".json")
                     }
                 }
-                @if(!content.item.content.hasStoryPackage && content.item.tags.series.isEmpty){
+                @if(content.showInRelated
+                    && !content.hasStoryPackage
+                    && content.tags.series.isEmpty) {
                     @fragments.amp.onwardTemplateAmp("related-mf2/" + page.metadata.id + ".json")
                 }
+
+                @if(!content.shouldHideAdverts) {
+                    @fragments.amp.outbrain(page)
+                }
+
+                @* Show top container for section front only if current page belongs to one of the following sections *@
+                @* Otherwise show top container for network front *@
+                @* TODO: This list also exists in the JS for fronts on articles a/b test. Pending a decision on that, this should go in the jsconfig, or be removed*@
+
+                @defining({
+                    val whitelistedSections = List("commentisfree", "sport", "football", "fashion", "lifeandstyle",
+                                    "education", "culture", "business", "technology", "politics", "environment", "travel",
+                                    "film", "media", "money", "society", "science", "music", "books", "stage", "cities",
+                                    "tv-and-radio", "artanddesign", "global-development")
+                    whitelistedSections.contains(page.metadata.section)
+                }) { isWhitelistedSection =>
+                    @if(isWhitelistedSection) {
+                        @fragments.amp.onwardTemplateAmp(s"container/count/1/offset/0/section/${page.metadata.section}/mf2.json")
+                    } else {
+                        @fragments.amp.onwardTemplateAmp(s"container/count/1/offset/0/mf2.json")
+                    }
+                    @fragments.amp.onwardTemplateAmp("most-read-mf2.json")
+                    @fragments.amp.onwardTemplateAmp(s"container/count/3/offset/${if(isWhitelistedSection) 0 else 1}/mf2.json")
+                }
             }
-
-            @fragments.amp.outbrain(page)
-
-            @fragments.amp.onwardTemplateAmp("most-read-mf2.json")
-            @fragments.amp.onwardTemplateAmp(s"container-mf2/1/0/${page.metadata.section}.json")
-            @fragments.amp.onwardTemplateAmp(s"container-mf2/1/1/${page.metadata.section}.json")
-            @fragments.amp.onwardTemplateAmp(s"container-mf2/1/2/${page.metadata.section}.json")
 
             <amp-font
                 layout="nodisplay"
@@ -116,7 +107,7 @@
                 on-load-add-class="guardian-egyptian-loaded">
             </amp-font>
 
-            @fragments.footerAMP(page)
+            @fragments.amp.footerAMP(page)
         </div>
     </body>
 </html>

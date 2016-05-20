@@ -1,0 +1,37 @@
+<form class="search hide-until-tablet" action="@Configuration.commercial.soulmates_url/find" method="get">
+    <div class="search__field">
+        <label for="my_gender" class="search__label">I am a</label>
+        <select id="my_gender" name="my_gender" class="search__dropdown">
+            @Seq("woman", "man").map { myGender =>
+                <option value="@myGender.capitalize"@if(myGender == "man"){ selected="selected"}>@myGender</option>
+            }
+        </select>
+    </div>
+    <div class="search__field">
+        <label for="match_gender" class="search__label">Seeking</label>
+        <select id="match_gender" name="match_gender" class="search__dropdown">
+            @Map("Woman" -> "women", "Man" -> "men", "../../../public" -> "men & women").map { case (matchGenderValue, matchGenderName) =>
+                <option value="@matchGenderValue">@matchGenderName</option>
+            }
+        </select>
+    </div>
+    <div class="search__field">
+        <label for="age_min" class="search__label">Aged from</label>
+        <select id="age_min" name="age_min" class="search__dropdown">
+            @for(ageMin <- 18 to 99) {
+                <option@if(ageMin == 25){ selected="selected"}>@ageMin</option>
+            }
+        </select>
+    </div>
+    <div class="search__field">
+        <label for="age_max" class="search__label">To</label>
+        <select id="age_max" name="age_max" class="search__dropdown">
+            @for(ageMax <- 18 to 99) {
+                <option@if(ageMax == 45){ selected="selected"}>@ageMax</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="search__submit button button--tone-media button--small" data-link-name="merchandising-soulmates-v2_2_2014-03-28-find-a-soulmate">
+        Find a soulmate @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
+    </button>
+</form>

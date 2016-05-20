@@ -1,6 +1,7 @@
 package recorder
 
 import java.io._
+import java.nio.charset.StandardCharsets
 
 import common.ExecutionContexts
 import conf.Configuration
@@ -23,7 +24,7 @@ trait HttpRecorder[A] extends ExecutionContexts {
     // integration test environment
     // make sure people have checked in test files
     if (Configuration.environment.stage.equalsIgnoreCase("DEVINFRA") && !new File(baseDir, fileName).exists()) {
-      throw new IllegalStateException(s"Data file has not been checked in for: $url")
+      throw new IllegalStateException(s"Data file has not been checked in for: $url, file: $fileName, headers: ${headersFormat(headers)}")
     }
 
     get(fileName).map { f =>
@@ -61,9 +62,13 @@ trait HttpRecorder[A] extends ExecutionContexts {
 
   def fromResponse(response: A): String
 
-  private [recorder] def name(url: String, headers: Map[String, String]) = {
-    val headersString = headers.map{ case (key, value) => key + value }.mkString
-    DigestUtils.sha256Hex(url.sorted +  headersString.sorted)
+  private def headersFormat(headers: Map[String, String]): String = {
+    headers.map{ case (key, value) => key + value }.mkString
+  }
+
+  private [recorder] def name(url: String, headers: Map[String, String]): String = {
+    val headersString = headersFormat(headers)
+    DigestUtils.sha256Hex(url +  headersString)
   }
 }
 
@@ -71,15 +76,15 @@ trait ContentApiHttpRecorder extends HttpRecorder[Response] {
 
   def toResponse(str: String) = {
     if (str.startsWith("Error:")) {
-      Response("", str.replace("Error:", "").toInt, "")
+      Response(Array.empty, str.replace("Error:", "").toInt, "")
     } else {
-      Response(str, 200, "")
+      Response(str.getBytes(StandardCharsets.UTF_8), 200, "")
     }
   }
 
   def fromResponse(response: Response) = {
     if (response.status == 200) {
-      response.body
+      new String(response.body, StandardCharsets.UTF_8)
     } else {
       s"Error:${response.status}"
     }

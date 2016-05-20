@@ -1,7 +1,7 @@
 %rounded-icon,
 .rounded-icon {
+    @include circular;
     display: inline-block;
     vertical-align: middle;
     position: relative;
-    @include circular;
 }

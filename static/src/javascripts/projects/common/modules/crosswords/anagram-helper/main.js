@@ -110,11 +110,9 @@ define([
         },
 
         render: function () {
-            /* jscs:disable disallowDanglingUnderscores */
             var closeIcon = {
                 __html: svgs('closeCentralIcon')
             };
-            /* jscs:enable disallowDanglingUnderscores */
             var clue = helpers.getAnagramClueData(this.props.entries, this.props.focussedEntry);
             var cells = helpers.cellsForClue(this.props.entries, this.props.focussedEntry);
             var entries = map(cells, function (coords) {

@@ -44,6 +44,8 @@ object Job {
   )
 }
 
+case class JobSector(path: String, name: String)
+
 object Industries extends ExecutionContexts {
 
   private lazy val industryKeywordIds = AkkaAgent(Map.empty[Int, Seq[String]])

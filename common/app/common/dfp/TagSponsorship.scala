@@ -55,12 +55,59 @@ object InlineMerchandisingTargetedTagsReport {
 
 case class InlineMerchandisingTargetedTagsReport(updatedTimeStamp: String, targetedTags: InlineMerchandisingTagSet)
 
-
 object InlineMerchandisingTargetedTagsReportParser extends Logging {
   def apply(jsonString: String): Option[InlineMerchandisingTargetedTagsReport] = {
     val json = Json.parse(jsonString)
     json.validate[InlineMerchandisingTargetedTagsReport] match {
       case s: JsSuccess[InlineMerchandisingTargetedTagsReport] => Some(s.get)
+      case e: JsError => log.error("Errors: " + JsError.toJson(e).toString()); None
+    }
+  }
+}
+
+object HighMerchandisingLineItems {
+  implicit val lineItemFormat = Json.format[HighMerchandisingLineItem]
+  implicit val lineItemsFormat = Json.format[HighMerchandisingLineItems]
+}
+
+case class HighMerchandisingLineItems(items: Seq[HighMerchandisingLineItem] = Seq.empty) {
+  val sortedItems = items.sortBy(_.name)
+}
+
+case class HighMerchandisingLineItem(
+  name: String,
+  id: Long,
+  tags: Seq[String],
+  adUnits: Seq[GuAdUnit],
+  customTargetSet: Seq[CustomTargetSet]
+  ) {
+  val customTargets = customTargetSet.map(_.targets)
+  val editions = customTargets.flatMap(sequence => sequence.filter((target) => target.name == "edition")).map(target => target.values)
+
+
+  def matchesAdUnitAndTag (adUnitSuffix: String, pageTags:Seq[Tag]): Boolean = {
+
+    val tagNames = pageTags map (_.name) map (_.replaceAll(" ","-").toLowerCase)
+
+    val matchesTag: Boolean = tagNames.exists(tags.contains)
+
+    lazy val matchesAdUnit: Boolean = adUnits.exists(_.path contains adUnitSuffix)
+
+    matchesTag && matchesAdUnit
+  }
+}
+
+object HighMerchandisingTargetedTagsReport {
+  implicit val jsonFormat = Json.format[HighMerchandisingTargetedTagsReport]
+}
+
+case class HighMerchandisingTargetedTagsReport(updatedTimeStamp: String, lineItems: HighMerchandisingLineItems)
+
+object HighMerchandisingTargetedTagsReportParser extends Logging {
+  def apply(jsonString: String): Option[HighMerchandisingTargetedTagsReport] = {
+    val json = Json.parse(jsonString)
+    json.validate[HighMerchandisingTargetedTagsReport] match {
+      case s: JsSuccess[HighMerchandisingTargetedTagsReport] => Some(s.get)
       case e: JsError => log.error("Errors: " + JsError.toJson(e).toString()); None
     }
   }

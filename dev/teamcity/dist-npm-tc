@@ -4,8 +4,7 @@ set -o xtrace
 set -o nounset
 set -o errexit
 
-echo "Npm installation."
-npm prune --production
-npm install --production
+echo "Install dependencies"
+make install
 
 ./grunt-tc clean

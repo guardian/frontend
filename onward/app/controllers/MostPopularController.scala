@@ -3,12 +3,13 @@ package controllers
 import common._
 import conf._
 import feed.{MostPopularAgent, GeoMostPopularAgent, DayMostPopularAgent}
+import model.Cached.RevalidatableResult
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import views.support.FaciaToMicroFormat2Helpers._
 import scala.concurrent.Future
 import play.api.libs.json._
-import LiveContentApi.getResponse
+import contentapi.ContentApiClient
 
 object MostPopularController extends Controller with Logging with ExecutionContexts {
   val page = SimplePage(MetaData.make(
@@ -31,13 +32,13 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     val sectionPopular: Future[List[MostPopular]] = if (path.nonEmpty) lookup(edition, path).map(_.toList) else Future(Nil)
 
     sectionPopular.map { sectionPopular =>
-      lazy val sectionFirst = sectionPopular ++ globalPopular
-      lazy val globalFirst = globalPopular.toList ++ sectionPopular
-      lazy val mostPopular = if (path == "global-development") sectionFirst else globalFirst
+      val sectionFirst = sectionPopular ++ globalPopular
+      val globalFirst = globalPopular.toList ++ sectionPopular
+      val mostPopular: List[MostPopular] = if (path == "global-development") sectionFirst else globalFirst
 
       mostPopular match {
         case Nil => NotFound
-        case popular if !request.isJson => Cached(900) { Ok(views.html.mostPopular(page, popular)) }
+        case popular if !request.isJson => Cached(900) { RevalidatableResult.Ok(views.html.mostPopular(page, popular)) }
         case popular => Cached(900) {
           JsonComponent(
             "html" ->  views.html.fragments.collections.popular(popular),
@@ -101,12 +102,12 @@ object MostPopularController extends Controller with Logging with ExecutionConte
 
   private def lookup(edition: Edition, path: String)(implicit request: RequestHeader) = {
     log.info(s"Fetching most popular: $path for edition $edition")
-    getResponse(LiveContentApi.item(path, edition)
+    ContentApiClient.getResponse(ContentApiClient.item(path, edition)
       .tag(None)
       .showMostViewed(true)
     ).map{response =>
       val heading = response.section.map(s => "in " + s.webTitle.toLowerCase).getOrElse("across the guardian")
-          val popular = response.mostViewed map { RelatedContentItem(_) } take 10
+          val popular = response.mostViewed.getOrElse(Nil) map { RelatedContentItem(_) } take 10
           if (popular.isEmpty) None else Some(MostPopular(heading, path, popular.map(_.faciaContent)))
     }
   }

@@ -74,13 +74,13 @@ object CloudWatch extends Logging with ExecutionContexts {
   val loadBalancers = primaryLoadBalancers ++ secondaryLoadBalancers
 
   private val fastlyMetrics = List(
-    ("Fastly Errors (Europe) - errors per minute, average", "errors", "europe", "2eYr6Wx3ZCUoVPShlCM61l"),
-    ("Fastly Errors (USA) - errors per minute, average", "errors", "usa", "2eYr6Wx3ZCUoVPShlCM61l")
+    ("Fastly Errors (Europe) - errors per minute, average", "europe-errors"),
+    ("Fastly Errors (USA) - errors per minute, average", "usa-errors")
   )
 
   private val fastlyHitMissMetrics = List(
-    ("Fastly Hits and Misses (Europe) - per minute, average", "europe", "2eYr6Wx3ZCUoVPShlCM61l"),
-    ("Fastly Hits and Misses (USA) - per minute, average", "usa", "2eYr6Wx3ZCUoVPShlCM61l")
+    ("Fastly Hits and Misses (Europe) - per minute, average", "europe"),
+    ("Fastly Hits and Misses (USA) - per minute, average", "usa")
   )
 
   val assetsFiles = Seq(
@@ -106,13 +106,7 @@ object CloudWatch extends Logging with ExecutionContexts {
   def withErrorLogging[A](future: Future[A]): Future[A] = {
     future onFailure {
       case exception: Exception =>
-        log.info(s"CloudWatch error: ${exception.getMessage}")
-
-        // temporary till JVM bug fix comes out
-        // see https://blogs.oracle.com/joew/entry/jdk_7u45_aws_issue_123
-        if (exception.getMessage.contains("JAXP00010001")) {
-          HealthCheck.break()
-        }
+        log.error(s"CloudWatch error: ${exception.getMessage}", exception)
     }
 
     future
@@ -158,16 +152,15 @@ object CloudWatch extends Logging with ExecutionContexts {
     }
   }
 
-  def fastlyErrors = Future.traverse(fastlyMetrics) { case (graphTitle, metric, region, service) =>
+  def fastlyErrors = Future.traverse(fastlyMetrics) { case (graphTitle, metric) =>
     withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
       .withStartTime(new DateTime().minusHours(6).toDate)
       .withEndTime(new DateTime().toDate)
       .withPeriod(120)
       .withStatistics("Average")
       .withNamespace("Fastly")
-      .withMetricName(metric)
-      .withDimensions(new Dimension().withName("region").withValue(region),
-        new Dimension().withName("service").withValue(service)))) map { metricsResult =>
+      .withDimensions(new Dimension().withName("Stage").withValue("prod"))
+      .withMetricName(metric))) map { metricsResult =>
       new AwsLineChart(graphTitle, Seq("Time", metric), ChartFormat(Colour.`tone-features-2`), metricsResult)
     }
   }
@@ -181,7 +174,7 @@ object CloudWatch extends Logging with ExecutionContexts {
     .withPeriod(60 * 60 * 24)
     .withDimensions(new Dimension().withName("Currency").withValue("USD")))).map(MaximumMetric.apply)
 
-  def fastlyHitMissStatistics = Future.traverse(fastlyHitMissMetrics) { case (graphTitle, region, service) =>
+  def fastlyHitMissStatistics = Future.traverse(fastlyHitMissMetrics) { case (graphTitle, region) =>
     for {
       hits <- withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
         .withStartTime(new DateTime().minusHours(6).toDate)
@@ -189,10 +182,9 @@ object CloudWatch extends Logging with ExecutionContexts {
         .withPeriod(120)
         .withStatistics("Average")
         .withNamespace("Fastly")
-        .withMetricName("hits")
+        .withMetricName(s"$region-hits")
         .withDimensions(
-          new Dimension().withName("region").withValue(region),
-          new Dimension().withName("service").withValue(service)
+          new Dimension().withName("Stage").withValue("prod")
         ))
       )
 
@@ -202,10 +194,9 @@ object CloudWatch extends Logging with ExecutionContexts {
         .withPeriod(120)
         .withStatistics("Average")
         .withNamespace("Fastly")
-        .withMetricName("miss")
+        .withMetricName(s"$region-miss")
         .withDimensions(
-          new Dimension().withName("region").withValue(region),
-          new Dimension().withName("service").withValue(service)
+          new Dimension().withName("Stage").withValue("prod")
         )
       ))
     } yield new AwsLineChart(graphTitle, Seq("Time", "Hits", "Misses"), ChartFormat(Colour.success, Colour.error), hits, misses)
@@ -283,18 +274,6 @@ object CloudWatch extends Logging with ExecutionContexts {
       )
     )
   }
-
-
-  def ratioConfidence = for {
-    metric <- withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
-      .withStartTime(new DateTime().minusWeeks(2).toDate)
-      .withEndTime(new DateTime().toDate)
-      .withPeriod(900)
-      .withStatistics("Average")
-      .withNamespace("Analytics")
-      .withMetricName("omniture-ophan-correlation")
-      .withDimensions(stage)))
-  } yield new AwsLineChart("omniture-ophan-correlation", Seq("Time", "%"), ChartFormat.SingleLineBlue, metric)
 
   def AbMetricNames() = {
     withErrorLogging(euWestClient.listMetricsFuture(new ListMetricsRequest()

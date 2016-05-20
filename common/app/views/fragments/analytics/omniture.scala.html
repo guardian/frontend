@@ -1,0 +1,30 @@
+@(page: model.Page)( implicit request:RequestHeader)
+
+@import common.AnalyticsHost
+@import views.support.OmnitureAnalyticsData
+@import conf.Configuration
+@import conf.Static
+
+@fragments.analytics.omnitureScript(Some(page.metadata))
+
+<script id="gu-analytics">
+        // analytics code
+        @Html(Static.js.analyticsJs)
+</script>
+
+
+@defining(s"${request.host}${request.path}") { path =>
+
+    @defining(
+        s"${AnalyticsHost()}/b/ss/${Configuration.javascript.pageData("guardian.page.omnitureAccount")}/1/H.25.3/?${OmnitureAnalyticsData(page, "No Javascript", path)}"
+    ) { omnitureCall =>
+        <noscript id="omnitureNoScript">
+            <div>
+                <img id="omnitureNoScriptImage" alt=""
+                src="@Html(omnitureCall)" width="1" height="1" class="u-h" />
+                <img id="omnitureConfidenceNoScriptImage" alt=""
+                src="@{Configuration.debug.beaconUrl}/count/pva.gif" width="1" height="1" class="u-h" />
+            </div>
+        </noscript>
+    }
+}

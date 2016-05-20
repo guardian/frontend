@@ -9,4 +9,8 @@ import test.{ConfiguredTestSuite, TestRequest}
     val result = controllers.IndexController.renderCombiner("profile/grant-klopper", "tone/reviews")(TestRequest())
     status(result) should be(404)
   }
+  "Combiner" should "404 when one or both tags are missing" in {
+    val result = controllers.IndexController.renderCombiner("commentisfree/commentisfree", "world/australia")(TestRequest())
+    status(result) should be(404)
+  }
 }

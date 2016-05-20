@@ -2,17 +2,17 @@
 
 @include tone-content(
     letters, // $tone
-    colour(comment-background), // $tonal__header-background
-    colour(neutral-2), // $tonal__header-text
-    colour(comment-default), // $tonal__header-link
+    $comment-background, // $tonal__header-background
+    $neutral-2, // $tonal__header-text
+    $comment-default, // $tonal__header-link
     200, // $tonal__headline-weight
-    colour(neutral-1), // $tonal__headline-colour
-    colour(comment-default), // $tonal__headline-accent
-    colour(comment-default), // $tonal__standfirst-background
+    $neutral-1, // $tonal__headline-colour
+    $comment-default, // $tonal__headline-accent
+    $comment-default, // $tonal__standfirst-background
     #ffffff, // $tonal__standfirst-text
     #ffffff, // $tonal__standfirst-link
     #ffffff, // $tonal__article-background
-    colour(comment-default) // $tonal__article-link
+    $comment-default // $tonal__article-link
 );
 
 .tonal--tone-letters {

@@ -18,9 +18,9 @@ object BreakingNewsFormats {
 
   implicit val breakingNewsEntryReads: Reads[NewsAlertNotification] = (
     (__ \ "uid").read[UUID] and
-    (__ \ "id").read[URI] and
+      (__ \ "id").read[URI] and
+      (__ \ "title").read[String] and
       (__ \ "headline").read[String] and
-      (__ \ "message").read[String] and
       (__ \ "thumbnail").readNullable[URI] and
       (__ \ "shortUrl").read[URI] and
       Reads.pure(None) and //imageUrl
@@ -31,8 +31,8 @@ object BreakingNewsFormats {
     def writes(notification: NewsAlertNotification): JsValue = {
       Json.obj(
         "uid" -> notification.uid,
-        "headline" -> notification.title,
-        "message" -> notification.message,
+        "title" -> notification.title,
+        "headline" -> notification.message,
         "thumbnail" -> notification.thumbnailUrl,
         "shortUrl" -> notification.link,
         "id" -> notification.urlId,

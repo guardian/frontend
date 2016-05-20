@@ -34,8 +34,8 @@ define([
                 };
                                getCookieStub = sinon.stub();
                                getCookieStub.withArgs('GU_U').returns(
-                                   'WyIyMzEwOTU5IiwiamdvcnJpZUBnbWFpbC5jb20iLCJqYW1lc2dvcnJpZSIsIjUzNCIsMTM4Mjk1MzAzMT' +
-                                   'U5MSwxXQ.MC0CFBsFwIEITO91EGONK4puyO2ZgGQcAhUAqRa7PVDCoAjrbnJNYYvMFec4fAY'
+                                   'WyIyMzEwOTU5IiwiamdvcnJpZUBnbWFpbC5jb20iLCJBbSVDMyVBOWxpZSBKJUMzJUI0c2UiLCI1MzQiLDEzODI5NTMwMzE1OTEsMV0' +
+                                   '.MC0CFBsFwIEITO91EGONK4puyO2ZgGQcAhUAqRa7PVDCoAjrbnJNYYvMFec4fAY'
                                );
                                cookies.get = getCookieStub;
                                getStorageStub = sinon.stub();
@@ -51,7 +51,7 @@ define([
         });
 
         it('gets user from cookie', function () {
-            expect(Id.getUserFromCookie().displayName).toBe('jamesgorrie');
+            expect(Id.getUserFromCookie().displayName).toBe('Amélie Jôse');
         });
 
         it('decodes a base64 string', function () {
@@ -109,7 +109,7 @@ define([
             var redirectSpy = sinon.stub(Id, 'redirectTo'),
                 user        = Id.getUserOrSignIn();
 
-            expect(user.displayName).toBe('jamesgorrie');
+            expect(user.displayName).toBe('Amélie Jôse');
             expect(redirectSpy).not.toHaveBeenCalled();
             Id.redirectTo.restore();
         });

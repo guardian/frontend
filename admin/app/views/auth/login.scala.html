@@ -1,4 +1,4 @@
-@(error: Option[String] = None, env: String)
+@(error: Option[String] = None, env: String)(implicit request: RequestHeader)
 
 @admin_main("Login", env) {
         @if(error.isDefined) {

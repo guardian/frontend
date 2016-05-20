@@ -1,5 +1,5 @@
 @import common.dfp.PaidForTagsReport
-@(env: String, report: PaidForTagsReport)
+@(env: String, report: PaidForTagsReport)(implicit request: RequestHeader)
 @import _root_.dfp.printDate
 @import common.dfp.{GuLineItem, PaidForTag}
 @import tools.{DfpLink, SiteLink}

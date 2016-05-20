@@ -43,9 +43,11 @@
         .button--primary {
             @include button-colour(
                 $accentColour,
-                $accentTextColour,
+                $accentTextColour
+            );
+            @include button-hover-colour(
                 darken($accentColour, 5%)
-            )
+            );
         }
         .tabs__tab--selected {
             border-color: $accentColour;
@@ -56,101 +58,86 @@
 /* .commercial--tone-brand */
 @include tone-commercial(
     brand,
-    guss-colour(news-support-2, $pasteup-palette),
-    guss-colour(news-main-2, $pasteup-palette)
+    $news-support-2,
+    $news-main-2
 );
 
 /* .commercial--tone-subscriptions */
 @include tone-commercial(
     subscriptions,
-    guss-colour(news-support-2, $pasteup-palette),
-    guss-colour(news-main-2, $pasteup-palette),
-    $backgroundColour: lighten(guss-colour(news-support-1, $pasteup-palette), 12%)
+    $news-support-2,
+    $news-main-2,
+    $backgroundColour: lighten($news-support-1, 12%)
 );
 
 /* .commercial--tone-membership */
 @include tone-commercial(
     membership,
-    colour(membership-default),
-    colour(membership-default)
+    $membership-default,
+    $membership-default
 );
 
 /* .commercial--tone-live */
 @include tone-commercial(
     live,
-    guss-colour(live-main-1, $pasteup-palette),
-    guss-colour(live-main-1, $pasteup-palette)
-);
-
-/* .commercial--tone-jobs */
-@include tone-commercial(
-    jobs,
-    guss-colour(news-support-2, $pasteup-palette),
-    guss-colour(news-main-1, $pasteup-palette)
+    $live-main-1,
+    $live-main-1
 );
 
 /* .commercial--tone-networks */
 @include tone-commercial(
     networks,
-    guss-colour(news-support-4, $pasteup-palette),
-    guss-colour(news-main-1, $pasteup-palette)
+    $news-support-4,
+    $news-main-1
 );
 
 /* .commercial--tone-books */
 @include tone-commercial(
     books,
-    guss-colour(features-main-1, $pasteup-palette),
-    guss-colour(features-main-2, $pasteup-palette)
-);
-
-/* .commercial--tone-masterclasses */
-@include tone-commercial(
-    masterclasses,
-    guss-colour(multimedia-main-1, $pasteup-palette),
-    guss-colour(multimedia-main-2, $pasteup-palette),
-    $accentTextColour: colour(neutral-1),
-    $titleColor: guss-colour(multimedia-main-2, $pasteup-palette)
+    $features-main-1,
+    $features-main-2
 );
 
 /* .commercial--tone-travel */
 @include tone-commercial(
     travel,
-    guss-colour(maps-support-3, $pasteup-palette),
-    guss-colour(maps-support-4, $pasteup-palette)
+    $maps-support-3,
+    $maps-support-4
 );
 
 /* .commercial--tone-shop */
 @include tone-commercial(
     shop,
-    guss-colour(features-main-1, $pasteup-palette),
-    guss-colour(features-support-4, $pasteup-palette)
+    $features-main-1,
+    $features-support-4
 );
 
 /* .commercial--tone-money */
 @include tone-commercial(
     money,
-    guss-colour(news-main-2, $pasteup-palette),
-    guss-colour(news-support-2, $pasteup-palette)
+    $news-main-2,
+    $news-support-2
 );
 
 /* .commercial--tone-gardening */
 @include tone-commercial(
     gardening,
-    guss-colour(maps-main-1, $pasteup-palette),
-    guss-colour(maps-support-2, $pasteup-palette)
-);
-
-/* .commercial--tone-gardening */
-@include tone-commercial(
-    soulmates,
-    guss-colour(soulmates-colour, $frontend-palette),
-    guss-colour(soulmates-accent-colour, $frontend-palette)
+    $maps-main-1,
+    $maps-support-2
 );
 
 /* .commercial--tone-paidfor */
 @include tone-commercial(
     paidfor,
-    guss-colour(paidfor-background, $frontend-palette),
-    guss-colour(paidfor-background, $frontend-palette),
+    $paidfor-background,
+    $paidfor-background,
     $backgroundColour: #ebebeb
 );
+
+.commercial--tone-paidfor [class*='tone-'] {
+    color: inherit;
+
+    > .fc-item__container:before {
+        background-color: $paidfor-background;
+    }
+}

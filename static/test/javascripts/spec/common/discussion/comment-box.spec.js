@@ -5,6 +5,8 @@ define([
     'fixtures/discussion/discussion',
     'fixtures/discussion/comment-valid',
     'fixtures/discussion/api-post-comment-valid',
+    'fixtures/discussion/api-post-comment-error-discussion-closed',
+    'fixtures/discussion/api-post-comment-error-read-only-mode',
     'common/modules/discussion/comment-box'
 ], function (
     Id,
@@ -13,6 +15,8 @@ define([
     discussionJson,
     validCommentText,
     apiPostValidCommentResp,
+    apiPostValidCommentButDiscussionClosed,
+    apiPostValidCommentButReadOnlyMode,
     CommentBox
 ) {
     describe('Comment box', function () {
@@ -176,6 +180,24 @@ define([
                 };
 
                 bean.fire(commentBox.elem, 'submit');
+                expect(commentBox.getElem('error')).not.toBeUndefined();
+            });
+
+            it('should error on discussion closed', function () {
+                expect(commentBox.getElem('error')).toBeUndefined();
+                commentBox.getElem('body').value = validCommentText;
+                server.respondWith('POST', /.*/, [409, { 'Content-Type': 'text/html', 'Content-Length': apiPostValidCommentButDiscussionClosed.length }, apiPostValidCommentButDiscussionClosed]);
+                bean.fire(commentBox.elem, 'submit');
+                server.respond();
+                expect(commentBox.getElem('error')).not.toBeUndefined();
+            });
+
+            it('should error on read only mode', function () {
+                expect(commentBox.getElem('error')).toBeUndefined();
+                commentBox.getElem('body').value = validCommentText;
+                server.respondWith('POST', /.*/, [503, { 'Content-Type': 'text/html', 'Content-Length': apiPostValidCommentButReadOnlyMode.length }, apiPostValidCommentButReadOnlyMode]);
+                bean.fire(commentBox.elem, 'submit');
+                server.respond();
                 expect(commentBox.getElem('error')).not.toBeUndefined();
             });
 

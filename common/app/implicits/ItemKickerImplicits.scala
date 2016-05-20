@@ -39,7 +39,7 @@ object ItemKickerImplicits {
 
     def kickerHtml: String = itemKicker match {
       case BreakingNewsKicker => "Breaking news"
-      case LiveKicker => "<span class=\"live-pulse-icon js-flashing-image\"></span>Live"
+      case LiveKicker => "<span class=\"live-pulse-icon flashing-image\"></span>Live"
       case AnalysisKicker => "Analysis"
       case ReviewKicker => "Review"
       case CartoonKicker => "Cartoon"

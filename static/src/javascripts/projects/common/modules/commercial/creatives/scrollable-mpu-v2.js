@@ -4,6 +4,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'template!common/views/commercial/creatives/scrollable-mpu-v2.html',
+    'template!common/views/commercial/tracking-pixel.html',
     'lodash/functions/bindAll'
 ], function (
     fastdom,
@@ -11,6 +12,7 @@ define([
     detect,
     mediator,
     scrollableMpuTpl,
+    trackingPixelStr,
     bindAll
 ) {
 
@@ -61,8 +63,7 @@ define([
             layer1Image:      ScrollableMpu.hasScrollEnabled ? this.params.layer1Image : this.params.mobileImage,
             backgroundImage:       ScrollableMpu.hasScrollEnabled && this.params.backgroundImage ?
                 '<div class="creative--scrollable-mpu-image" style="background-image: url(' + this.params.backgroundImage + ');"></div>' : '',
-            trackingPixelImg: this.params.trackingPixel ?
-                '<img src="' + this.params.trackingPixel + '" width="1" height="1" />' : ''
+            trackingPixelImg: this.params.trackingPixel ? trackingPixelStr({ url: encodeURI(this.params.trackingPixel) }) : ''
         };
         this.$scrollableMpu = $.create(scrollableMpuTpl(templateOptions)).appendTo(this.$adSlot);
 

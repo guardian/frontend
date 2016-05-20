@@ -12,12 +12,10 @@ GET            /assets/internal/*file                                           
 GET            /assets/*path                                                                                                     dev.DevAssetsController.at(path)
 
 # Diagnostics
-GET            /ab.gif                                                                                                           controllers.DiagnosticsController.ab
-GET            /js.gif                                                                                                           controllers.DiagnosticsController.js
 GET            /count/$prefix<.+>.gif                                                                                            controllers.DiagnosticsController.analytics(prefix)
 GET            /counts.gif                                                                                                       controllers.DiagnosticsController.analyticsCounts()
 POST           /css                                                                                                              controllers.DiagnosticsController.css
-OPTIONS        /css                                                                                                              controllers.DiagnosticsController.cssOptions
+OPTIONS        /css                                                                                                              controllers.DiagnosticsController.postOptions
 POST           /accept-beacon                                                                                                    controllers.DiagnosticsController.acceptBeacon
 OPTIONS        /accept-beacon                                                                                                    controllers.DiagnosticsController.acceptBeaconOptions
 
@@ -59,17 +57,10 @@ GET            /analytics/abtests                                               
 GET            /analytics/confidence                                                                                             controllers.admin.AnalyticsConfidenceController.renderConfidence()
 GET            /analytics/content/video                                                                                          controllers.admin.ContentPerformanceController.renderVideoEncodingsDashboard()
 GET            /analytics/quality                                                                                                controllers.admin.AnalyticsController.renderQuality()
-GET            /analytics/commercial                                                                                             controllers.admin.CommercialController.renderCommercial()
-GET            /analytics/commercial/specialadunits                                                                              controllers.admin.CommercialController.renderSpecialAdUnits()
-GET            /analytics/commercial/sponsorships                                                                                controllers.admin.CommercialController.renderPaidForTags()
-GET            /analytics/commercial/pageskins                                                                                   controllers.admin.CommercialController.renderPageskins()
-GET            /analytics/commercial/surging                                                                                     controllers.admin.CommercialController.renderSurgingContent()
-GET            /analytics/commercial/im-sponsorships                                                                             controllers.admin.CommercialController.renderInlineMerchandisingTargetedTags()
-GET            /analytics/commercial/templates                                                                                   controllers.admin.CommercialController.renderCreativeTemplates()
-GET            /analytics/commercial/sponsored-containers                                                                        controllers.admin.CommercialController.sponsoredContainers()
-GET            /analytics/commercial/adtests                                                                                     controllers.admin.CommercialController.renderAdTests()
 GET            /analytics/headlines-test                                                                                         controllers.admin.MetricsController.renderHeadlinesTest()
 GET            /analytics/quality                                                                                                controllers.admin.AnalyticsController.renderQuality()
+
+# Commercial admin
 
 # Discussion
 GET            /discussion/comment-counts                                                                                        controllers.CommentCountController.commentCount(shortUrls: String)
@@ -116,6 +107,7 @@ GET            /tagged.json                                                     
 GET            /:mediaType/section/:sectionId/*seriesId.json                                                                     controllers.MediaInSectionController.renderSectionMediaWithSeries(mediaType, sectionId, seriesId)
 GET            /:mediaType/section/:sectionId.json                                                                               controllers.MediaInSectionController.renderSectionMedia(mediaType, sectionId)
 GET            /video/most-viewed.json                                                                                           controllers.MostViewedVideoController.renderMostViewed()
+GET            /video/in-series/*series.json                                                                                     controllers.MostViewedVideoController.renderInSeries(series: String)
 GET            /audio/most-viewed.json                                                                                           controllers.MostViewedAudioController.renderMostViewed()
 GET            /podcast/most-viewed.json                                                                                         controllers.MostViewedAudioController.renderMostViewedPodcast()
 GET            /gallery/most-viewed.json                                                                                         controllers.MostViewedGalleryController.renderMostViewed()
@@ -197,7 +189,6 @@ GET            /sport/rugby/api/score/:year/:month/:day/:team1Id/:team2Id.json  
 GET            /sport/rugby/api/score/:year/:month/:day/:team1Id/:team2Id                                                        rugby.controllers.MatchesController.score(year, month, day, team1Id, team2Id)
 
 # Admin
-# authentication endpoints
 GET            /login                                                                                                            controllers.admin.OAuthLoginController.login
 POST           /login                                                                                                            controllers.admin.OAuthLoginController.loginAction
 GET            /oauth2callback                                                                                                   controllers.admin.OAuthLoginController.oauth2Callback
@@ -236,6 +227,10 @@ GET            /troubleshoot/pages                                              
 GET            /troubleshoot/test                                                                                                controllers.admin.TroubleshooterController.test(id, testPath)
 GET            /redirects                                                                                                        controllers.admin.RedirectController.redirect()
 POST           /redirect-post                                                                                                    controllers.admin.RedirectController.redirectPost()
+GET            /press/r2                                                                                                         controllers.admin.R2PressController.pressForm()
+POST           /press/r2                                                                                                         controllers.admin.R2PressController.press()
+GET            /press/r2/batchupload                                                                                             controllers.admin.R2PressController.pressForm()
+POST           /press/r2/batchupload                                                                                             controllers.admin.R2PressController.batchUpload()
 
 # css reports
 GET            /css-reports                                                                                                      controllers.admin.CssReportController.entry
@@ -279,13 +274,14 @@ GET            /admin/football/api/squad/:teamId                                
 
 
 # Commercial
-GET            /commercial/travel/offers.json                                                                                    controllers.commercial.TravelOffers.renderTravel
-GET            /commercial/jobs.json                                                                                             controllers.commercial.JobAds.renderJobs
-GET            /commercial/masterclasses.json                                                                                    controllers.commercial.MasterClasses.renderMasterclasses
+GET            /commercial/travel/offers.json                                                                                    controllers.commercial.TravelOffersController.renderTravel
+GET            /commercial/jobs.json                                                                                             controllers.commercial.JobsController.renderJobs
+GET            /commercial/masterclasses.json                                                                                    controllers.commercial.MasterclassesController.renderMasterclasses
 GET            /commercial/soulmates/$subgroup<\w+>.json                                                                         controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
 GET            /commercial/soulmates-test/$subgroup<\w+>.json                                                                    controllers.commercial.SoulmatesController.renderSoulmatesTest(subgroup)
 GET            /commercial/books/book.json                                                                                       controllers.commercial.BookOffersController.renderBook
 GET            /commercial/books/books.json                                                                                      controllers.commercial.BookOffersController.renderBooks
+GET            /commercial/liveevents/event.json                                                                                 controllers.commercial.LiveEventsController.renderEvent
 GET            /commercial/money/bestbuys.json                                                                                   controllers.commercial.MoneyOffers.renderBestBuys
 GET            /commercial/money/savings/:savingsType                                                                            controllers.commercial.MoneyOffers.savings(savingsType)
 GET            /commercial/money/current-accounts/:currentAccountType                                                            controllers.commercial.MoneyOffers.currentAccounts(currentAccountType)
@@ -299,25 +295,38 @@ GET            /commercial/capi-single-merch.json                               
 GET            /commercial/capi-single-merch                                                                                     controllers.commercial.ContentApiOffersController.itemHtml
 GET            /commercial/paid.json                                                                                             controllers.commercial.PaidContentCardController.cardJson
 GET            /commercial/paid                                                                                                  controllers.commercial.PaidContentCardController.cardHtml
+GET            /commercial/multi.json                                                                                            controllers.commercial.Multi.renderMulti
+GET            /$path<commercial-containers>                                                                                     controllers.FaciaController.renderFront(path)
+
+# Static pages
+GET        /commercial/advertiser-content/renault-car-of-the-future/design-competition-teaser  controllers.commercial.StaticPageController.renderGuardianHostedPage()
 
 # Commercial Admin
-GET            /admin/commercial                                                                                                 controllers.admin.CommercialController.renderCommercialMenu()
-GET            /commercialtools/adunits/toapprove                                                                                controllers.admin.CommercialAdUnitController.renderToApprove()
-POST           /commercialtools/adunits/toapprove                                                                                controllers.admin.CommercialAdUnitController.approve()
-GET            /admin/commercial/fluid250                                                                                        controllers.admin.CommercialController.renderFluidAds()
-GET            /commercial/multi.json                                                                                            controllers.commercial.Multi.renderMulti
-GET            /admin/commercial/dfp/flush/view                                                                                  controllers.admin.commercial.DfpDataController.renderCacheFlushPage()
-GET            /admin/commercial/dfp/flush                                                                                       controllers.admin.commercial.DfpDataController.flushCache()
-GET            /admin/commercial/radiator                                                                                        controllers.admin.CommercialController.renderCommercialRadiator()
-GET            /admin/commercial/slot/:slotName                                                                                  controllers.admin.commercial.SlotController.viewSlot(slotName)
-GET            /admin/commercial/adops/takeovers-empty-mpus                                                                      controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewList()
-GET            /admin/commercial/adops/takeovers-empty-mpus/create                                                               controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewForm()
-POST           /admin/commercial/adops/takeovers-empty-mpus/create                                                               controllers.admin.commercial.TakeoverWithEmptyMPUsController.create()
-POST           /admin/commercial/adops/takeovers-empty-mpus/remove                                                               controllers.admin.commercial.TakeoverWithEmptyMPUsController.remove(url)
+GET            /commercial                                                                                                       controllers.admin.CommercialController.renderCommercialMenu()
+GET            /commercial/renderTimes                                                                                           controllers.admin.CommercialController.renderCommercialRenderTimes()
+GET            /commercial/specialadunits                                                                                        controllers.admin.CommercialController.renderSpecialAdUnits()
+GET            /commercial/sponsorships                                                                                          controllers.admin.CommercialController.renderPaidForTags()
+GET            /commercial/pageskins                                                                                             controllers.admin.CommercialController.renderPageskins()
+GET            /commercial/surging                                                                                               controllers.admin.CommercialController.renderSurgingContent()
+GET            /commercial/inline-merchandising                                                                                  controllers.admin.CommercialController.renderInlineMerchandisingTargetedTags()
+GET            /commercial/high-merchandising                                                                                    controllers.admin.CommercialController.renderHighMerchandisingTargetedTags()
+GET            /commercial/templates                                                                                             controllers.admin.CommercialController.renderCreativeTemplates()
+GET            /commercial/adunits/toapprove                                                                                     controllers.admin.CommercialAdUnitController.renderToApprove()
+POST           /commercial/adunits/toapprove                                                                                     controllers.admin.CommercialAdUnitController.approve()
+GET            /commercial/fluid250                                                                                              controllers.admin.CommercialController.renderFluidAds()
+GET            /commercial/adtests                                                                                               controllers.admin.CommercialController.renderAdTests()
+GET            /commercial/dfp/flush/view                                                                                        controllers.admin.commercial.DfpDataController.renderCacheFlushPage()
+GET            /commercial/dfp/flush                                                                                             controllers.admin.commercial.DfpDataController.flushCache()
+GET            /commercial/radiator                                                                                              controllers.admin.CommercialController.renderCommercialRadiator()
+GET            /commercial/slot/:slotName                                                                                        controllers.admin.commercial.SlotController.viewSlot(slotName)
+GET            /commercial/adops/takeovers-empty-mpus                                                                            controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewList()
+GET            /commercial/adops/takeovers-empty-mpus/create                                                                     controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewForm()
+POST           /commercial/adops/takeovers-empty-mpus/create                                                                     controllers.admin.commercial.TakeoverWithEmptyMPUsController.create()
+POST           /commercial/adops/takeovers-empty-mpus/remove                                                                     controllers.admin.commercial.TakeoverWithEmptyMPUsController.remove(takeoverStr)
 
 # Breaking News
-GET             /news-alert/alerts                                                                                               controllers.NewsAlertController.alerts()
-POST            /news-alert/alert                                                                                                controllers.NewsAlertController.create()
+GET            /news-alert/alerts                                                                                                controllers.NewsAlertController.alerts()
+POST           /news-alert/alert                                                                                                 controllers.NewsAlertController.create()
 
 # dev-build only
 GET            /commercial/magento/token                                                                                         controllers.commercial.magento.AccessTokenGenerator.generate
@@ -327,9 +336,14 @@ GET            /commercial/magento/books                                        
 # AMP
 GET            /most-read-mf2.json                                                                                               controllers.MostPopularController.renderPopularMicroformat2()
 GET            /related-mf2/*path.json                                                                                           controllers.RelatedController.renderMf2(path)
-GET            /container-mf2/:num/:offset/:section.json                                                                         controllers.FaciaController.frontContainersMf2EditionRedirect(num, offset, section)
-GET            /container-mf2/:num/:offset/:section/:edition.json                                                                controllers.FaciaController.renderSomeFrontContainersMf2(num, offset, section, edition)
 GET            /series-mf2/*path.json                                                                                            controllers.SeriesController.renderMf2SeriesStories(path)
+
+GET            /container/count/:count/offset/:offset/mf2.json                                                                   controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section = "", edition = "")
+GET            /container/count/:count/offset/:offset/section/:section/mf2.json                                                  controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section, edition = "")
+GET            /container/count/:count/offset/:offset/edition/:edition/mf2.json                                                  controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section = "", edition)
+GET            /container/count/:count/offset/:offset/section/:section/edition/:edition/mf2.json                                 controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section, edition)
+
+GET            /football-mf2/api/match-summary/:year/:month/:day/:home/:away.json                                                football.controllers.MoreOnMatchController.matchSummaryMf2(year, month, day, home, away)
 
 # Onward journeys
 GET            /series/*path.json                                                                                                controllers.SeriesController.renderSeriesStories(path)
@@ -337,8 +351,13 @@ GET            /series/*path.json                                               
 # Applications (must come before wildcard)
 GET            /sitemaps/news.xml                                                                                                controllers.SiteMapController.renderNewsSiteMap()
 GET            /sitemaps/video.xml                                                                                               controllers.SiteMapController.renderVideoSiteMap()
-GET            /offline-page.json                                                                                                controllers.WebAppController.offlinePage()
+GET            /offline-crossword.json                                                                                                controllers.WebAppController.offlineCrossword()
 GET            /service-worker.js                                                                                                controllers.WebAppController.serviceWorker()
+
+#Notifications Store
+POST           /notification/store                                                                                               controllers.NotificationsController.saveSubscription()
+POST           /notification/delete                                                                                              controllers.NotificationsController.deleteSubscription()
+
 GET            /2015-06-24-manifest.json                                                                                         controllers.WebAppController.manifest()
 GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()
 GET            /embed/video/*path                                                                                                controllers.EmbedController.render(path)
@@ -348,6 +367,7 @@ GET            /index/contributors                                              
 GET            /index/contributors/*contributor                                                                                  controllers.TagIndexController.contributor(contributor)
 GET            /$shortCode<p/[\w]+>                                                                                              controllers.ShortUrlsController.redirectShortUrl(shortCode)
 GET            /$shortCode<p/[\w]+>/:campaignCode                                                                                controllers.ShortUrlsController.fetchCampaignAndRedirectShortCode(shortCode, campaignCode)
+POST           /atom/quiz/:id/*path                                                                                              controllers.QuizController.submit(id,path)
 
 # Newspaper pages
 GET            /theguardian                                                                                                      controllers.NewspaperController.latestGuardianNewspaper()
@@ -400,6 +420,7 @@ GET            /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>                          
 GET            /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>.json                                                    controllers.ImageContentController.renderJson(path)
 GET            /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>                                                         controllers.ImageContentController.render(path)
 
+GET            /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>/info.json                                                           controllers.MediaController.renderInfoJson(path)
 GET            /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                                                                controllers.MediaController.renderJson(path)
 GET            /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>                                                                     controllers.MediaController.render(path)
 

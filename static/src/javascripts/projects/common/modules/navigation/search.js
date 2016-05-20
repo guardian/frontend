@@ -15,14 +15,14 @@ define([
     mediator,
     throttle
 ) {
+
     var Search = function () {
 
         var searchLoader,
             gcsUrl,
             resultSetSize,
             container,
-            self = this,
-            checkInterval;
+            self = this;
 
         if (config.switches.googleSearch && config.page.googleSearchUrl && config.page.googleSearchId) {
 
@@ -68,52 +68,12 @@ define([
 
         this.focusSearchField = function () {
             var $input = $('input.gsc-input');
-
             if ($input.length > 0) {
                 $input.focus();
-
-                if (config.switches.viewability && config.page.contentType !== 'Interactive') {
-                    clearInterval(checkInterval);
-                    checkInterval = setInterval(self.checkResults, 250);
-                }
-            }
-        };
-
-        // Check if google returned results as there is no callback from google API v2 for this
-        this.checkResults = function () {
-            if ($('.gsc-resultsbox-visible').length > 0) {
-                var $search = $('.js-popup--search');
-
-                // Put search box to its default state
-                fastdom.write(function () {
-                    $search.css('height', 'auto');
-                    $('.gsc-results', $search).css({
-                        height: 'auto',
-                        'overflow-y': 'visible'
-                    });
-                });
-
-                // Cut search results to window size only when in slim header mode
-                if ($('.l-header--is-slim').length > 0 || detect.getBreakpoint() === 'mobile') {
-                    fastdom.read(function () {
-                        var height = window.innerHeight - $search[0].getBoundingClientRect().top;
-
-                        fastdom.write(function () {
-                            $search.css('height', height);
-                            $('.gsc-results', $search).css({
-                                height: height - 150,
-                                'overflow-y': 'auto'
-                            });
-                        });
-                    });
-                }
-
-                clearInterval(checkInterval);
             }
         };
 
         this.load = function () {
-            /* jscs:disable disallowDanglingUnderscores */
             var s,
                 x;
 

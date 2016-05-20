@@ -8,6 +8,7 @@ import conf.switches.Switches._
 import layout.ContentWidths
 import layout.ContentWidths._
 import model._
+import model.content.{Atom, Atoms}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
@@ -96,7 +97,9 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
     for {
       figure <- body.getElementsByTag("figure")
       image <- figure.getElementsByTag("img").headOption
-      if !figure.hasClass("element-comment") && !figure.hasClass("element-witness")
+      if !(figure.hasClass("element-comment") ||
+           figure.hasClass("element-witness") ||
+           figure.hasClass("element-atom"))
       container <- findContainerFromId(figure.attr("data-media-id"), image.attr("src"))
       image <- container.images.largestImage
     }{
@@ -133,12 +136,12 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
         if !article.isLiveBlog
       } yield (index, crop)
 
-      val html = views.html.fragments.img(
+      val html = views.html.fragments.imageFigure(
         container.images,
         lightboxIndex = lightboxInfo.map(_._1),
         widthsByBreakpoint = widths,
         image_figureClasses = Some(image, figureClasses),
-        shareInfo = lightboxInfo.map{case (index, crop) => (article.sharelinks.elementShares(Some(s"img-$index"), crop.url), article.metadata.contentType) },
+        shareInfo = lightboxInfo.map{case (index, crop) => (article.sharelinks.elementShares(s"img-$index", crop.url), article.metadata.contentType) },
         amp = amp
       ).toString()
 
@@ -429,7 +432,7 @@ case class ImmersiveHeaders(isImmersive: Boolean) extends HtmlCleaner {
       document.getElementsByTag("h2").foreach{ h2 =>
         val beforeH2 = h2.previousElementSibling()
         if (beforeH2 != null) {
-          if(beforeH2.hasClass("element--immersive")) {
+          if(beforeH2.hasClass("element--immersive element-image")) {
             beforeH2.addClass("section-image")
             beforeH2.prepend("""<h2 class="section-title">""" + h2.text() + "</h2>")
             h2.remove()
@@ -526,9 +529,27 @@ object ChaptersLinksCleaner extends HtmlCleaner {
     autoaChapters.foreach { ch =>
       val h2 = ch.getElementsByTag("h2")
       h2.attr("id", slugify(h2.text()))
+    }
+    document
+  }
+}
 
-      if(Viewability.isSwitchedOn) {
-        h2.attr("class", "anchor-link-fix")
+case class AtomsCleaner(atoms: Option[Atoms])(implicit val request: RequestHeader) extends HtmlCleaner {
+  private def findAtom(id: String): Option[Atom] = {
+    atoms.flatMap(_.all.find(_.id == id))
+  }
+
+  override def clean(document: Document): Document = {
+    if (UseAtomsSwitch.isSwitchedOn) {
+      for {
+        atomContainer <- document.getElementsByClass("element-atom")
+        bodyElement <- atomContainer.getElementsByTag("gu-atom")
+        atomId <- Some(bodyElement.attr("data-atom-id"))
+        atomData <- findAtom(atomId)
+      } {
+        val html = views.html.fragments.atoms.atom(atomData).toString()
+        bodyElement.remove()
+        atomContainer.append(html)
       }
     }
     document

@@ -1,12 +1,14 @@
 define([
-    'fastdom',
+    'common/utils/fastdom-promise',
     'common/utils/$',
     'common/utils/detect',
     'common/utils/mediator',
     'common/views/svgs',
     'common/modules/commercial/gustyle/gustyle',
     'template!common/views/commercial/creatives/gu-style-comcontent.html',
-    'lodash/objects/merge'
+    'template!common/views/commercial/creatives/gu-style-hosted.html',
+    'lodash/objects/merge',
+    'common/modules/commercial/creatives/add-tracking-pixel'
 ], function (
     fastdom,
     $,
@@ -15,7 +17,9 @@ define([
     svgs,
     GuStyle,
     gustyleComcontentTpl,
-    merge
+    gustyleHostedTpl,
+    merge,
+    addTrackingPixel
 ) {
 
     var GustyleComcontent = function ($adSlot, params) {
@@ -26,22 +30,25 @@ define([
     GustyleComcontent.prototype.create = function () {
         var externalLinkIcon = svgs('externalLink', ['gu-external-icon']),
             templateOptions = {
-                clickMacro: this.params.clickMacro,
-                gustyleClass: (this.params.adVariant === 'content') ?
-                        'gu-comcontent' : 'gu-display',
-                standFirst: (this.params.adVariant === 'content') ?
-                        '<p class="gu-text">' + this.params.articleText + '</p>' : '',
-                noteOrLink: (this.params.adVariant === 'content') ?
-                        '<span class="gu-note">Brought to you by:</span>' : '<a href="' + this.params.articleUrl + '" class="button button--tertiary button--medium">' + this.params.linkLabel + ' ' + externalLinkIcon + '</a>'
+                articleContentColor: 'gu-display__content-color--' + this.params.articleContentColor,
+                articleContentPosition: 'gu-display__content-position--' + this.params.articleContentPosition,
+                articleHeaderFontSize: 'gu-display__content-size--' + this.params.articleHeaderFontSize,
+                articleTextFontSize: 'gu-display__content-size--' + this.params.articleTextFontSize,
+                brandLogoPosition: 'gu-display__logo-pos--' + this.params.brandLogoPosition,
+                externalLinkIcon: externalLinkIcon,
+                isHostedBottom: this.params.adType === 'gu-style-hosted-bottom'
             };
+        var templateToLoad = this.params.adType === 'gu-style' ? gustyleComcontentTpl : gustyleHostedTpl;
+        var markup = templateToLoad({ data: merge(this.params, templateOptions) });
+        var gustyle = new GuStyle(this.$adSlot, this.params);
 
-        $.create(gustyleComcontentTpl({ data: merge(this.params, templateOptions) })).appendTo(this.$adSlot);
-        new GuStyle(this.$adSlot, this.params).addLabel();
+        return fastdom.write(function () {
+            this.$adSlot[0].insertAdjacentHTML('beforeend', markup);
 
-        if (this.params.trackingPixel) {
-            this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
-        }
-
+            if (this.params.trackingPixel) {
+                addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
+            }
+        }, this).then(gustyle.addLabel.bind(gustyle));
     };
 
     return GustyleComcontent;

@@ -1,10 +1,11 @@
+import common.Logback.Logstash
 import common.dfp.DfpAgentLifecycle
-import common.{CloudWatchApplicationMetrics, ContentApiMetrics}
-import conf.{CorsErrorHandler, Filters, SwitchboardLifecycle}
+import common.{CloudWatchApplicationMetrics, ContentApiMetrics, EmailSubsciptionMetrics}
+import conf.{ApplicationsHealthCheckLifeCycle, CorsErrorHandler, Filters, SwitchboardLifecycle}
 import contentapi.SectionsLookUpLifecycle
 import dev.DevParametersLifecycle
 import jobs.SiteMapLifecycle
-import metrics.{FrontendMetric, EmailSubsciptionMetrics}
+import metrics.FrontendMetric
 import ophan.SurgingContentAgentLifecycle
 import play.api.mvc.WithFilters
 import services.{ConfigAgentLifecycle, IndexListingsLifecycle}
@@ -19,14 +20,14 @@ object Global extends WithFilters(Filters.common: _*)
   with SectionsLookUpLifecycle
   with SwitchboardLifecycle
   with CorsErrorHandler
-  with SiteMapLifecycle {
+  with SiteMapLifecycle
+  with Logstash
+  with ApplicationsHealthCheckLifeCycle {
   override lazy val applicationName = "frontend-applications"
 
   override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ++ List(
-    ContentApiMetrics.ElasticHttpTimeoutCountMetric,
-    ContentApiMetrics.ElasticHttpTimingMetric,
-    ContentApiMetrics.ContentApiCircuitBreakerRequestsMetric,
-    ContentApiMetrics.ContentApiCircuitBreakerOnOpen,
+    ContentApiMetrics.HttpTimeoutCountMetric,
+    ContentApiMetrics.HttpLatencyTimingMetric,
     ContentApiMetrics.ContentApiErrorMetric,
     EmailSubsciptionMetrics.EmailSubmission,
     EmailSubsciptionMetrics.EmailFormError,

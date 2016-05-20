@@ -1,5 +1,6 @@
 package controllers.admin
 
+import model.Cached.RevalidatableResult
 import play.api._
 import play.api.mvc._
 import play.api.Play.current
@@ -33,7 +34,7 @@ object PaBrowserController extends Controller with ExecutionContexts with GetPaC
   }
 
   def browse =AuthActions.AuthActionTest { implicit request =>
-    Cached(60)(Ok(views.html.football.browse()))
+    Cached(60)(RevalidatableResult.Ok(views.html.football.browse()))
   }
 
   def browser(query: String) =AuthActions.AuthActionTest.async { implicit request =>

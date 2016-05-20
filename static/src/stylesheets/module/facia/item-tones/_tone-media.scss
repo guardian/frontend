@@ -1,7 +1,6 @@
 .tone-media--item {
     $c-headline: #ffffff;
-
-    background-color: colour(media-background);
+    background-color: $media-mute;
 
     &,
     .fc-sublink__title {
@@ -10,28 +9,28 @@
 
     .u-faux-block-link--hover,
     .fc-item__image-container {
-        background-color: darken(colour(media-background), 7.5%);
+        background-color: darken($media-mute, 7.5%);
     }
 
     .fc-item__link,
     .rich-link__link,
     .fc-sublink__link {
         &:visited {
-            color: mix($c-headline, colour(media-background), 80%);
+            color: mix($c-headline, $media-mute, 80%);
         }
     }
 
     .rich-link__arrow-icon {
-        fill: colour(media-default);
+        fill: $media-default;
     }
 
     .inline-quote {
-        fill: colour(neutral-3);
+        fill: $neutral-3;
     }
 
     .fc-item__container:before,
     .rich-link__container:before {
-        background-color: colour(media-default);
+        background-color: $media-default;
     }
 
     .fc-item__kicker,
@@ -39,46 +38,46 @@
     .fc-item__byline,
     .rich-link__read-more-text,
     .fc-save-for-later--is-saved {
-        color: colour(media-default);
+        color: $media-default;
     }
 
     .fc-save-for-later {
-        border-color: mix($c-headline, colour(media-background), 20%);
+        border-color: mix($c-headline, $media-background, 20%);
     }
 
     .fc-item__kicker:after,
     .rich-link__kicker:after,
     .fc-sublink__kicker:after {
-        color: mix($c-headline, colour(media-background), 40%);
+        color: mix($c-headline, $media-background, 40%);
     }
 
     .fc-item__kicker--dreamsnap {
-        background-color: mix(#000000, colour(media-background), 10%);
+        background-color: mix(#000000, $media-background, 10%);
     }
 
     .fc-item__standfirst,
     .rich-link__standfirst,
     .fc-item__meta {
-        color: colour(neutral-3);
+        color: $neutral-3;
     }
 
     .fc-save-for-later--is-saved .inline-tone-fill {
-        fill: colour(media-default);
+        fill: $media-default;
     }
 }
 
 .tone-media--sublink {
     .fc-sublink__kicker {
-        color: colour(media-default);
+        color: $media-default;
     }
 
     @include sublink-style(analysis, comment, letters, dead, news) {
         .fc-sublink__kicker {
-            color: colour(media-background);
+            color: $media-background;
         }
     }
 }
 
 .tone-media--most-popular .fc-item__kicker {
-    color: colour(news-default);
+    color: $news-default;
 }

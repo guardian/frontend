@@ -1,8 +1,5 @@
 /* Identity and registration
    ========================================================================== */
-
-@import '../../components/pasteup-buttons/src/_mixins.scss';
-
 .l-header--identity {
     height: 45px;
 
@@ -60,7 +57,7 @@
 }
 
 .identity-section {
-    border-top: 1px solid colour(neutral-7);
+    border-top: 1px solid $neutral-7;
     box-sizing: border-box;
     margin: (($gs-baseline/3)*5) 0;
     padding-top: (($gs-baseline/3)*5) - 1;
@@ -209,13 +206,12 @@
     }
 }
 .user-profile__about {
+    @include fs-textSans(2);
     clear: both;
     margin-top: $gs-baseline;
-    @include fs-textSans(2);
 
     @include mq(tablet) {
         margin-left: $gs-gutter*3.5;
-        margin-top: $gs-baseline;
         max-width: gs-span(6);
         clear: none;
         margin-top: 0;
@@ -235,16 +231,16 @@
 }
 .user-profile__last-seen,
 .user-profile__web-page {
-    display: block;
     @include fs-textSans(1);
-    color: colour(neutral-2-contrasted);
+    display: block;
+    color: $neutral-2-contrasted;
     font-weight: normal;
 }
 .user-profile__web-page {
+    @include ellipsis();
     display: block;
     margin-bottom: $gs-baseline/3;
     max-width: 100%;
-    @include ellipsis();
     word-break: break-all;
 }
 
@@ -286,7 +282,7 @@
 
 .tabs--identity {
     .tabs__tab--selected {
-        border-top-color: colour(news-accent);
+        border-top-color: $news-accent;
     }
     .tabs__tab {
         max-width: gs-span(3);
@@ -314,7 +310,7 @@
     margin-top: $gs-baseline*2;
 }
 .email-subscription {
-    border-top: 1px solid colour(neutral-5);
+    border-top: 1px solid $neutral-5;
     margin-bottom: $gs-baseline*2;
     padding-top: $gs-baseline/3;
 }
@@ -326,8 +322,8 @@
     margin-bottom: $gs-baseline;
 
     @include mq(desktop) {
-        box-sizing: border-box;
         @include fs-headline(3, true);
+        box-sizing: border-box;
         float: left;
         padding-right: $gs-gutter;
         width: gs-span(4);
@@ -363,7 +359,7 @@
 }
 .email-subscription__button {
     @include fs-textSans(2);
-    background: colour(guardian-brand);
+    background: $guardian-brand;
     border: 0;
     color: #ffffff;
     cursor: pointer;
@@ -375,7 +371,7 @@
     }
 
     .email-subscription--subscribed & {
-        background: colour(neutral-2-contrasted);
+        background: $neutral-2-contrasted;
     }
 }
 
@@ -452,7 +448,7 @@
 .saved-content__header__description {
     @include fs-headline(1);
     padding-bottom: $gs-baseline / 2;
-    color: colour(neutral-2);
+    color: $neutral-2;
 
     @include mq(tablet) {
         padding-bottom: $gs-baseline;
@@ -504,22 +500,23 @@
 // due to *.head css appearing in the source BEFORE the global, which overides these as it loads
 .saved-content__button,
 .save-for-later__button--delete-all {
-    background-color: colour(neutral-5) !important;
-    color: colour(neutral-2) !important;
+    background-color: $neutral-5 !important;
+    color: $neutral-2 !important;
     border: 0 !important;
     cursor: pointer;
     margin-right: 0 !important;
+    padding-top: 0 !important;
 
     &:hover,
     &:active,
     &:focus {
-        background-color: colour(neutral-3) !important;
+        background-color: $neutral-3 !important;
     }
 
     .inline-icon {
         float: left;
         padding-right: .5em;
-        fill: colour(neutral-2) !important;
+        fill: $neutral-2 !important;
 
         svg {
             width: 18px;
@@ -533,9 +530,9 @@
 }
 
 .save-for-later__button--delete-all--confirm {
-    color: colour(error) !important;
+    color: $error !important;
 
     .inline-icon {
-        fill: colour(error);
+        fill: $error;
     }
 }

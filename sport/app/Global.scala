@@ -1,4 +1,5 @@
 import common.CloudWatchApplicationMetrics
+import common.Logback.Logstash
 import conf._
 import dev.DevParametersLifecycle
 import ophan.SurgingContentAgentLifecycle
@@ -13,6 +14,8 @@ object Global extends WithFilters(Filters.common: _*)
   with FootballLifecycle
   with CricketLifecycle
   with RugbyLifecycle
-  with CorsErrorHandler {
+  with CorsErrorHandler
+  with Logstash
+  with SportHealthCheckLifeCycle {
   override lazy val applicationName = "frontend-sport"
 }

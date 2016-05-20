@@ -7,12 +7,12 @@ $weather-large-size: 60px;
     right: 0;
     bottom: $gs-baseline / 2;
     height: $gs-baseline + 1px;
-    border-right: 1px dotted colour(neutral-3);
+    border-right: 1px dotted $neutral-3;
 }
 
 .weather {
     position: relative;
-    color: colour(neutral-1);
+    color: $neutral-1;
     text-align: right;
     padding-top: $gs-baseline / 6;
 
@@ -89,15 +89,15 @@ $weather-large-size: 60px;
 }
 
 .weather__desc {
+    @include fs-headline(2);
     display: inline-block;
     margin: 0;
-    @include fs-headline(2);
 }
 
 .weather__time {
-    display: none;
-    color: colour(neutral-2);
     @include fs-textSans(1);
+    display: none;
+    color: $neutral-2;
 
     @include mq(tablet) {
         display: block;
@@ -144,7 +144,7 @@ $weather-large-size: 60px;
     .weather__toggle-icon {
         display: inline-block;
         margin-bottom: $gs-baseline / 6;
-        fill: colour(neutral-1);
+        fill: $neutral-1;
 
         svg {
             width: 18px;
@@ -159,7 +159,7 @@ $weather-large-size: 60px;
 
 .weather__location {
     width: 100%;
-    border-top: 1px dotted colour(neutral-3);
+    border-top: 1px dotted $neutral-3;
 
     @include mq($until: tablet) {
         display: none;
@@ -192,10 +192,10 @@ $weather-large-size: 60px;
     }
 
     .search-tool__input {
+        @include fs-headline(2);
         width: 100%;
         display: inline-block;
         padding-right: $gs-gutter;
-        @include fs-headline(2);
         box-sizing: border-box;
     }
 
@@ -212,7 +212,7 @@ $weather-large-size: 60px;
     }
 
     &.is-editing {
-        border-bottom: 1px solid colour(neutral-3);
+        border-bottom: 1px solid $neutral-3;
     }
 }
 
@@ -234,7 +234,7 @@ $weather-large-size: 60px;
 .weather__close-icon {
     width: 16px;
     height: 16px;
-    fill: colour(neutral-2);
+    fill: $neutral-2;
 }
 
 .weather__edit-location {
@@ -280,7 +280,7 @@ $weather-large-size: 60px;
 .forecast__item {
     position: relative;
     display: table-cell;
-    border-left: 1px dotted colour(neutral-3);
+    border-left: 1px dotted $neutral-3;
     padding: 0 ($gs-gutter / 2) 0 ($gs-gutter / 4);
 
     @include mq(tablet, leftCol) {

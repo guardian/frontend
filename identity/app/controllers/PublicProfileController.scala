@@ -1,5 +1,6 @@
 package controllers
 
+import model.Cached.RevalidatableResult
 import play.api.mvc._
 import common.ExecutionContexts
 import services.{IdRequestParser, IdentityUrlBuilder}
@@ -39,7 +40,7 @@ class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
         case Right(user) =>
           user.publicFields.displayName.map { displayName =>
             val idRequest = idRequestParser(request)
-            Cached(60)(Ok(views.html.publicProfilePage(
+            Cached(60)(RevalidatableResult.Ok(views.html.publicProfilePage(
               page(url, displayName), idRequest, idUrlBuilder, user, activityType)))
           } getOrElse NotFound(views.html.errors._404())
       }

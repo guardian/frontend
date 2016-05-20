@@ -1,7 +1,7 @@
 package views.support
 
 import common.Maps.RichMap
-import common.{Edition, InternationalEdition}
+import common.Edition
 import conf.Configuration
 import conf.Configuration.environment
 import model._
@@ -20,11 +20,6 @@ object JavaScriptPage {
     val edition = Edition(request)
     val metaData = page.metadata
     val content: Option[Content] = Page.getContent(page).map(_.content)
-
-    // keeping this here for now as we use it for the "opt in" message
-    val internationalEdition = InternationalEdition(request) map { edition =>
-      ("internationalEdition", JsString(edition))
-    }
 
     val pageData = Configuration.javascript.pageData mapKeys { key =>
       CamelCase.fromHyphenated(key.split('.').lastOption.getOrElse(""))
@@ -61,14 +56,13 @@ object JavaScriptPage {
       case _ => Map()
     }
 
-    javascriptConfig ++ config ++ internationalEdition ++ commercialMetaData ++ Map(
+    javascriptConfig ++ config ++ commercialMetaData ++ Map(
       ("edition", JsString(edition.id)),
       ("ajaxUrl", JsString(Configuration.ajax.url)),
       ("isDev", JsBoolean(Play.isDev)),
       ("isProd", JsBoolean(Configuration.environment.isProd)),
       ("idUrl", JsString(Configuration.id.url)),
       ("beaconUrl", JsString(Configuration.debug.beaconUrl)),
-      ("renderTime", JsString(DateTime.now.toISODateTimeNoMillisString)),
       ("isSSL", JsBoolean(Configuration.environment.secure)),
       ("assetsPath", JsString(Configuration.assets.path)),
       ("isPreview", JsBoolean(environment.isPreview)),

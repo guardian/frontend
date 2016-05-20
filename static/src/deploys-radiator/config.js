@@ -20,7 +20,7 @@ System.config({
   packages: {
     "app": {
       "defaultExtension": "ts",
-      "modules": {
+      "meta": {
         "*.ts": {
           "loader": "ts"
         }
@@ -35,13 +35,16 @@ System.config({
     "hyperscript-helpers": "npm:hyperscript-helpers@2.0.2",
     "immutable": "npm:immutable@3.7.6",
     "monapt": "npm:monapt@0.5.0",
-    "ts": "github:frankwallis/plugin-typescript@2.4.3",
+    "ts": "github:frankwallis/plugin-typescript@4.0.2",
     "virtual-dom": "npm:virtual-dom@2.1.1",
-    "github:frankwallis/plugin-typescript@2.4.3": {
-      "typescript": "npm:typescript@1.7.5"
+    "github:frankwallis/plugin-typescript@4.0.2": {
+      "typescript": "npm:typescript@1.8.9"
     },
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
+    },
+    "github:jspm/nodelibs-os@0.1.0": {
+      "os-browserify": "npm:os-browserify@0.1.2"
     },
     "github:jspm/nodelibs-path@0.1.0": {
       "path-browserify": "npm:path-browserify@0.0.0"
@@ -82,11 +85,17 @@ System.config({
     "npm:next-tick@0.2.2": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
+    "npm:os-browserify@0.1.2": {
+      "os": "github:jspm/nodelibs-os@0.1.0"
+    },
     "npm:path-browserify@0.0.0": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:process@0.11.2": {
       "assert": "github:jspm/nodelibs-assert@0.1.0"
+    },
+    "npm:typescript@1.8.9": {
+      "os": "github:jspm/nodelibs-os@0.1.0"
     },
     "npm:util@0.10.3": {
       "inherits": "npm:inherits@2.0.1",

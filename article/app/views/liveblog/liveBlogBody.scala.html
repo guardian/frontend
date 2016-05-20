@@ -1,16 +1,14 @@
-@import _root_.liveblog.LiveBlogPageModel
-@import model.liveblog.BodyBlock
 @import model.liveblog.KeyEventData
-@(model: LiveBlogPage, blocks: LiveBlogPageModel[BodyBlock])(implicit request: RequestHeader)
+@(model: LiveBlogPage)(implicit request: RequestHeader)
 
-@import common.LinkTo
+@import common.{Edition, LinkTo}
+@import conf.switches.Switches._
 @import layout.{FaciaCardAndIndex, ItemClasses}
 @import views.html.fragments.items.facia_cards.item
 @import views.support.TrailCssClasses.toneClass
-@import common.Edition
-@import conf.switches.Switches._
 
 @defining((model.article, Edition(request).timezone)) { case (article, timezone) =>
+<div class="js-notifications-blocked"></div>
 <div class="l-side-margins">
     <article id="live-blog" data-test-id="live-blog"
         class="content content--liveblog tonal tonal--@toneClass(article) blog @if(article.fields.isLive){is-live} section-@article.trail.sectionName.toLowerCase"
@@ -19,7 +17,11 @@
         <meta itemprop="url" content="@LinkTo(article.metadata.url)">
 
         <header class="content__head tonal__head tonal__head--@toneClass(article)
-                        @if(USElectionSwitch.isSwitchedOn && article.content.tags.tags.exists(_.id == "us-news/us-elections-2016")) { content__head--us-election }">
+                      @if(ArticleBadgesSwitch.isSwitchedOn) {
+                          @if(article.content.tags.isElection) { content__head--election }
+                          @if(article.content.tags.isUSElection) { us-election }
+                          @if(article.content.tags.isAusElection) { aus-election }
+                      }">
             @* UPPER HEADER *@
             <div class="content__header tonal__header u-cf">
                 <div class="gs-container">
@@ -36,7 +38,7 @@
                         @fragments.standfirst(article)
 
                         <div class="content__updated-container content__updated-container--liveblog">
-                            @if(article.fields.isLive) {<span class="blog__live live-pulse-icon js-flashing-image">LIVE</span> }Updated <time class="js-timestamp" datetime="@article.fields.lastModified" data-relativeformat="med"></time>
+                            @if(article.fields.isLive) {<span class="blog__live live-pulse-icon flashing-image">LIVE</span> }Updated <time class="js-timestamp" datetime="@article.fields.lastModified" data-relativeformat="med"></time>
                         </div>
                     </div>
                 </div>
@@ -54,57 +56,47 @@
 
                     <div class="blog__left-col">
 
-                        @fragments.contentMeta(article)
+                        @fragments.contentMeta(article, model)
 
                         <div class="js-top-marker"></div>
-                        @if(article.hasKeyEvents) {
-                            <div class="blog__timeline blog__dropdown js-live-blog__key-events modern-visible js-updates-desktop">
-                                <div class="blog__timeline-container js-live-blog__timeline-container" data-component="timeline">
-                                    @fragments.dropdown("Key events", Some("key-events"), true) {
-                                        <ul class="timeline js-live-blog__timeline u-unstyled">
-                                            @views.html.liveblog.keyEvents("/" + article.metadata.id, KeyEventData(blocks.main, timezone))
-                                        </ul>
-                                    }
-                                </div>
+                        <div class="js-live-blog__sticky-components">
+                            <div class="js-live-blog__sticky-components-container live-blog__sticky-components-container">
+                                @if(article.hasKeyEvents) {
+                                    <div class="modern-visible js-updates-desktop">
+                                        <div data-component="timeline">
+                                            @fragments.dropdown("Key events", Some("key-events"), true) {
+                                                <ul class="timeline js-live-blog__timeline u-unstyled">
+                                                    @views.html.liveblog.keyEvents("/" + article.metadata.id, KeyEventData(article.content.fields.blocks, timezone))
+                                                </ul>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                                <div class="js-live-notifications live-notifications" data-component="notifications"></div>
                             </div>
-                        }
+                        </div>
                         <div class="js-components-container"></div>
                     </div>
 
                     @fragments.dropdown("Live feed", Some("live-feed"), true) {
                         <div class="js-article__container" data-component="body">
-                            @* Remove LiveFilter and the fragment once Toast comes out of AB test status *@
-                            @fragments.liveFilter(article.fields.isLive)
-                            <div class="js-liveblog-body u-cf from-content-api js-blog-blocks @if(article.fields.isLive) {live-blog}" data-most-recent-block="@article.mostRecentBlock" data-test-id="live-blog-blocks"
-                                itemprop="@if(article.tags.isReview) {reviewBody} else {articleBody}">
-                                <div class="toast__space-reserver">
-                                    <div id="toast__tofix" class="toast__container">
-                                        <button class="toast__button toast__button--closed button button--large">
-                                            <span class="toast__text"></span>
-                                            @fragments.inlineSvg("refresh", "icon", List(""))
-                                        </button>
-                                    </div>
+                            <div class="toast__space-reserver">
+                                <div id="toast__tofix" class="toast__container">
+                                    <button class="toast__button toast__button--closed button button--large">
+                                        <span class="toast__text"></span>
+                                        @fragments.inlineSvg("refresh", "icon", List(""))
+                                    </button>
                                 </div>
-                                @views.html.liveblog.liveBlogBlocks(blocks.blocks, article, timezone)
                             </div>
-
-                            <div class="live-navigation">
-                                @blocks.earlier.suffix.map { suffix =>
-                                    <a href="/@{article.content.metadata.id}@suffix"
-                                        class="u-button-reset button button--large button--show-more liveblog__show-more"
-                                        data-link-name="next page">
-                                        Go to older updates
-                                    </a>
-                                }
-                                @blocks.later.suffix.map { suffix =>
-                                    <a href="/@{article.content.metadata.id}@suffix"
-                                        class="u-button-reset button button--large button--show-more liveblog__show-more"
-                                        data-link-name="previous page">
-                                        Go to newer updates
-                                    </a>
-                                }
+                            @if(model.currentPage.currentPage.isArchivePage) {
+                                @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
+                            }
+                            <div class="js-liveblog-body u-cf from-content-api js-blog-blocks blocks @if(article.fields.isLive) {live-blog}" data-most-recent-block="@article.mostRecentBlock" data-test-id="live-blog-blocks"
+                                itemprop="@if(article.tags.isReview) {reviewBody} else {articleBody}">
+                                @views.html.liveblog.liveBlogBlocks(model.currentPage.currentPage.blocks, article, timezone)
                             </div>
-
+                            @* Remove LiveFilter and the fragment once Toast comes out of AB test status *@
+                            @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
                         </div>
 
                         @fragments.submeta(article)

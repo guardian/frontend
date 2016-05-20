@@ -16,7 +16,7 @@ class JsonComponentTest extends FlatSpec with Matchers with ExecutionContexts {
 
     val result = Future {
       val request = FakeRequest("GET", "http://foo.bar.com/data.json")
-      JsonComponent(Html("hello world"))(request)
+      JsonComponent(Html("hello world"))(request).result
     }
 
     contentType(result) should be(Some("application/json"))
@@ -29,7 +29,7 @@ class JsonComponentTest extends FlatSpec with Matchers with ExecutionContexts {
 
     val result = Future {
       val request = FakeRequest("GET", "http://foo.bar.com/data.json")
-      JsonComponent("text" -> Html("hello world"), "url" -> Html("http://foo.bar.com"))(request)
+      JsonComponent("text" -> Html("hello world"), "url" -> Html("http://foo.bar.com"))(request).result
     }
 
     contentType(result) should be(Some("application/json"))
@@ -42,7 +42,7 @@ class JsonComponentTest extends FlatSpec with Matchers with ExecutionContexts {
 
     val result = Future {
       val request = FakeRequest("GET", "http://foo.bar.com/data.json")
-      JsonComponent("text" -> Html("hello world"), "url" -> Html("http://foo.bar.com"), "refresh" -> false)(request)
+      JsonComponent("text" -> Html("hello world"), "url" -> Html("http://foo.bar.com"), "refresh" -> false)(request).result
     }
 
     contentType(result) should be(Some("application/json"))
@@ -55,7 +55,7 @@ class JsonComponentTest extends FlatSpec with Matchers with ExecutionContexts {
 
     val result = Future {
       val request = FakeRequest("GET", "http://foo.bar.com/data.json")
-      JsonComponent(obj("name" -> "foo"))(request)
+      JsonComponent(obj("name" -> "foo"))(request).result
     }
 
     contentType(result) should be(Some("application/json"))
@@ -68,7 +68,7 @@ class JsonComponentTest extends FlatSpec with Matchers with ExecutionContexts {
 
     val result = Future {
       val request = FakeRequest("GET", "http://foo.bar.com/data.json")
-      JsonComponent(Html("hello world"))(request)
+      JsonComponent(Html("hello world"))(request).result
     }
 
     contentAsString(result) should be("""{"html":"hello world","refreshStatus":false}""")

@@ -2,43 +2,39 @@
 
 @include tone-content(
     feature, // $tone
-    colour(feature-default), // $tonal__header-background
-    colour(neutral-6), // $tonal__header-text
-    colour(feature-mute), // $tonal__header-link
+    $feature-default, // $tonal__header-background
+    $neutral-6, // $tonal__header-text
+    $feature-mute, // $tonal__header-link
     200, // $tonal__headline-weight
     #ffffff, // $tonal__headline-colour
-    colour(feature-mute), // $tonal__headline-accent
-    colour(feature-accent), // $tonal__standfirst-background
+    $feature-mute, // $tonal__headline-accent
+    $feature-accent, // $tonal__standfirst-background
     #ffffff, // $tonal__standfirst-text
     #ffffff, // $tonal__standfirst-link
     #ffffff, // $tonal__article-background
-    colour(feature-default) // $tonal__article-link
+    $feature-default // $tonal__article-link
 );
 
 .tonal--tone-feature {
     // Interactives need help because their headers are not tonal
     &.content--interactive {
-        .commentcount i {
-            @extend %i-comment--tone-feature;
-
-            @if $svg-support {
-                .svg & {
-                    @extend %svg-i-comment--tone-feature;
-                }
-            }
+        .content__headline {
+            font-weight: normal;
+            color: $neutral-1;
         }
-
         .tone-colour,
         .content__section-label__link {
-            color: colour(feature-default);
+            color: $feature-default;
         }
-
+        .content__series-label__link {
+            color: $neutral-2;
+        }
         .u-underline {
-            color: colour(feature-default);
-            border-bottom-color: rgba(colour(feature-default), .3);
+            color: $feature-default;
+            border-bottom-color: rgba($feature-default, .3);
 
             &:hover {
-                border-bottom-color: rgba(colour(feature-default), .7);
+                border-bottom-color: rgba($feature-default, .7);
             }
         }
     }

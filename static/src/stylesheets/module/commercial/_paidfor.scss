@@ -10,21 +10,27 @@
 .commercial--paidfor {
 
     .commercial__header,
-    .commercial__title,
-    .rich-link__header {
+    .commercial__title {
         @include f-headlineSans;
     }
 
-    .rich-link__header {
+    /* Card background */
+
+    .tone-paidfor--item, .fc-item {
+        background: $paid-article-subheader;
+    }
+
+
+    /* Title text */
+
+    .fc-item__header, .rich-link__header {
+        @include f-headlineSans;
         font-size: get-font-size(header, 2);
         line-height: get-line-height(header, 1);
     }
 
     .commercial__body {
         padding-top: $gs-gutter / 2;
-        max-width: none;
-        padding-left: $gs-gutter / 2;
-        padding-right: $gs-gutter / 2;
     }
 
     .rich-link__standfirst {
@@ -64,14 +70,14 @@
     .u-faux-block-link--hover,
     .u-faux-block-link__cta {
         text-decoration: none;
-        background-color: colour(paid-article-subheader);
+        background-color: $paid-article-subheader;
     }
 
     .commercial__meta,
     .rich-link__meta {
-        color: colour(neutral-2);
-        font-size: get-font-size(data, 3);
         @include f-textSans;
+        color: $neutral-2;
+        font-size: get-font-size(textSans, 2);
         text-align: right;
     }
 
@@ -126,11 +132,11 @@
     .ad-slot--paid-for-badge--front {
         float: right;
         margin-bottom: $gs-baseline;
-        border-top-color: colour(neutral-2);
+        border-top-color: $neutral-2;
 
         .ad-slot--paid-for-badge__link {
             &:after {
-                border-bottom-color: colour(neutral-2);
+                border-bottom-color: $neutral-2;
             }
         }
     }
@@ -145,26 +151,56 @@
         margin-right: $gs-gutter;
     }
 
+    .fc-slice {
+        margin: 0 -10px;
+        width: auto;
+    }
+
     .fc-item__kicker {
         &:after {
-            color: colour(neutral-2);
+            color: $neutral-2;
         }
     }
 
     .inline-icon {
-        fill: colour(neutral-2);
+        fill: $neutral-2;
+    }
+
+    .l-row--cols-1 .lineitem {
+        flex: 0 1 50%;
+    }
+
+    .l-row--cols-1 .fc-item__media-wrapper,
+    .l-row--cols-2 .fc-item__media-wrapper {
+        @include mq(desktop) {
+            width: 50%;
+            float: left;
+            margin-right: $gs-gutter/2;
+        }
+    }
+
+    .l-row--cols-1 .fc-item__content,
+    .l-row--cols-2 .fc-item__content {
+        padding-bottom: 0;
+    }
+
+    .l-row--cols-1 .fc-item__container,
+    .l-row--cols-2 .fc-item__container {
+        display: block;
+        padding-bottom: $gs-baseline * 2;
+    }
+}
+
+.commercial__show-mores {
+    margin-top: $gs-baseline / 2;
+
+    > .fc-slice-wrapper {
+        margin: 0;
     }
 }
 
 /* Badges
    ========================================================================== */
-
-.commercial--paidfor {
-    .ad-slot--paid-for-badge {
-        padding-left: $gs-gutter / 2;
-        padding-right: $gs-gutter / 2;
-    }
-}
 
 .commercial--paidfor,
 .commercial--dfp-single {
@@ -183,13 +219,14 @@
         margin: 0;
     }
 
-    .ad-slot--paid-for-badge .ad-slot--paid-for-badge__link {
+    .ad-slot--paid-for-badge__link {
         margin: 0;
         float: none;
-    }
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 0; // remove whitespace on inline-block children
 
-    .ad-slot--paid-for-badge__link:after {
-        content: none;
+        &::after { content: none; }
     }
 
     .ad-slot.ad-slot--paid-for-badge--front {
@@ -209,26 +246,9 @@
         vertical-align: middle;
     }
 
-    .ad-slot--paid-for-badge__link {
-        display: inline-block;
-        vertical-align: middle;
-        max-width: $gs-baseline * 6;
-        height: $gs-baseline * 3;
-        font-size: 0; // remove whitespace on inline-block children
-    }
-
     .ad-slot--paid-for-badge__logo {
-        max-width: 100%;
-        max-height: 100%;
-        vertical-align: middle;
-        display: inline-block;
-    }
-
-    .ad-slot--paid-for-badge__link:before {
-        content: '';
-        height: 100%;
-        vertical-align: middle;
-        display: inline-block;
+        max-width: none;
+        max-height: $gs-baseline * 5;
     }
 }
 
@@ -240,7 +260,7 @@
         position: relative;
         // reserve space in-flow for absolutely positioned badge
         // baseline * 3 from the height of the element, plus baseline / 2 for its bottom margin
-        padding-bottom: $gs-baseline * 3.5;
+        padding-bottom: $gs-baseline * 5;
     }
 
     .ad-slot--paid-for-badge {
@@ -251,10 +271,9 @@
 }
 
 .tone-paidfor--item {
-    background: colour(paid-article-subheader);
     flex: 0 1 auto;
 
     .rich-link__container:before {
-        background: guss-colour(paidfor-background, $frontend-palette);
+        background: $paidfor-background;
     }
 }

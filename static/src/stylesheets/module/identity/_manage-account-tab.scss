@@ -75,7 +75,7 @@
 
     .manage-account-cta--disabled {
         background: none;
-        color: colour(news-default);
+        color: $news-default;
 
         &:hover,
         &:focus {
@@ -83,7 +83,7 @@
             text-decoration: underline;
         }
         &:active {
-            color: colour(news-accent);
+            color: $news-accent;
         }
     }
 
@@ -97,13 +97,13 @@
         padding: 15px 0 15px 4px;
         margin: 32px 0 15px;
         background-color: #fff8e5;
-        border-top: 1px solid colour(comment-accent);
-        border-bottom: 1px solid colour(comment-accent);
+        border-top: 1px solid $comment-accent;
+        border-bottom: 1px solid $comment-accent;
     }
 
     .subscription-changed-title {
         @include fs-header(3);
-        border-top: 1px solid colour(neutral-4);
+        border-top: 1px solid $neutral-4;
         padding: 15px 0 20px;
         margin-top: $gs-gutter*2;
     }
@@ -119,7 +119,7 @@
         }
 
         .summary {
-            background-color: colour(neutral-8);
+            background-color: $neutral-8;
         }
 
         .summary-arrow {
@@ -155,8 +155,8 @@
     }
 
     .summary-header {
-        display: block;
         @include fs-textSans(4);
+        display: block;
         color: #ffffff;
         height: 30px;
         padding: 0 0 0 $gs-baseline;
@@ -164,16 +164,16 @@
     }
 
     .summary-header--current {
-        background-color: colour(neutral-2);
+        background-color: $neutral-2;
     }
     .summary-header--target {
-        background-color: colour(news-accent);
+        background-color: $news-accent;
     }
 
     .summary-package {
         height: 57px;
-        border-top: 1px solid colour(neutral-4);
-        border-bottom: 1px solid colour(neutral-4);
+        border-top: 1px solid $neutral-4;
+        border-bottom: 1px solid $neutral-4;
 
         .summary-package__icon-container {
             display: inline-block;

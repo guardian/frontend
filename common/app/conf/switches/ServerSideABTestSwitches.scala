@@ -9,7 +9,7 @@ trait ServerSideABTestSwitches {
     val tests = mvt.ActiveTests.tests
 
     Switch(
-      "Server-side A/B Tests",
+      SwitchGroup.ServerSideABTests,
       "server-side-tests",
       "Enables the server side testing system",
       safeState = Off,

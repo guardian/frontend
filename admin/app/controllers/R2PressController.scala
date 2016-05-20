@@ -4,6 +4,7 @@ import java.io.File
 
 import common.{ExecutionContexts, Logging}
 import controllers.AuthLogging
+import model.R2PressMessage
 import play.api.mvc.{AnyContent, Controller}
 import services.{R2PressedPageTakedownNotifier, R2PagePressNotifier}
 
@@ -27,7 +28,7 @@ object R2PressController extends Controller with Logging with AuthLogging with E
     val msgs = if(uploadedFile.nonEmpty) {
       val results = uploadedFile.map(file => {
         try {
-          pressFile(file, isBatchTakedown(body))
+          pressFile(file, isBatchTakedown(body), isBatchFromPreservedSource(body))
         } catch {
           case e: Exception => List(s"Error processing ${file.getName} - ${e.getMessage}")
         }
@@ -40,7 +41,7 @@ object R2PressController extends Controller with Logging with AuthLogging with E
     Ok(views.html.pressR2(fileMsgs = msgs))
   }
 
-  private def pressFile(file: File, isTakedown: Boolean): List[String] = {
+  private def pressFile(file: File, isTakedown: Boolean, isFromPreservedSource: Boolean): List[String] = {
     val source = scala.io.Source.fromFile(file)
     try {
       source.getLines().map { line =>
@@ -49,7 +50,7 @@ object R2PressController extends Controller with Logging with AuthLogging with E
           if (isTakedown) {
             R2PressedPageTakedownNotifier.enqueue(line)
           } else {
-            R2PagePressNotifier.enqueue(line)
+            R2PagePressNotifier.enqueue(R2PressMessage(line, isFromPreservedSource))
           }
         } else {
           "* empty line *"
@@ -71,7 +72,7 @@ object R2PressController extends Controller with Logging with AuthLogging with E
             if (isTakedown(body)) {
               R2PressedPageTakedownNotifier.enqueue(url)
             } else {
-              R2PagePressNotifier.enqueue(url)
+              R2PagePressNotifier.enqueue(R2PressMessage(url, isFromPreservedSource(body)))
             }
           }
           case _ => "URL was not specified"
@@ -87,9 +88,21 @@ object R2PressController extends Controller with Logging with AuthLogging with E
     }.getOrElse(false)
   }
 
+  private def isFromPreservedSource(body: AnyContent) = {
+    body.asFormUrlEncoded.flatMap { form =>
+      Some(form.get("is-from-preserved-source").isDefined)
+    }.getOrElse(false)
+  }
+
   private def isBatchTakedown(body: AnyContent) = {
     body.asMultipartFormData.flatMap { form =>
       Some(form.asFormUrlEncoded.get("is-takedown").isDefined)
+    }.getOrElse(false)
+  }
+
+  private def isBatchFromPreservedSource(body: AnyContent) = {
+    body.asMultipartFormData.flatMap { form =>
+      Some(form.asFormUrlEncoded.get("is-from-preserved-source").isDefined)
     }.getOrElse(false)
   }
 

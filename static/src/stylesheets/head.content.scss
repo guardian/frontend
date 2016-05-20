@@ -24,7 +24,7 @@
 @import 'module/_chapters';
 @import 'module/content/_article-immersive';
 @import 'module/content/_article-minute';
-
+@import 'module/test-welcome-header';
 
 /* ==========================================================================
    External modules
@@ -35,3 +35,9 @@
 
 @import 'module/external/_from-content-api';
 @import 'module/content/_badging';
+
+/* ==========================================================================
+   Atoms
+   ========================================================================== */
+
+@import 'module/atoms/_quiz';

@@ -1,0 +1,115 @@
+
+<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex">
+    <script>
+        (function() {
+            var v = location.search.substr(1);
+            if (!(/^\d+(-canary)?$/.test(v))) return;
+            var u = 'https://3p.ampproject.net/'+encodeURIComponent(v)+'/f.js';
+            document.write('<script'+' src="'+encodeURI(u)+'"><'+'/script>');
+        })();
+    </script>
+</head>
+<body style="margin:0">
+<div id="c" style="position:absolute;top:0;left:0;bottom:0;right:0;">
+
+    <script>
+        // Duplicating the Guardian config object in the real site
+        var guardian = {} ;
+
+        function loadKrux() {
+            var krux = document.createElement('script');
+            krux.setAttribute("class", "kxct");
+            krux.setAttribute("data-id", "KS_cfybw");
+            krux.setAttribute("data-timing", "async");
+            krux.setAttribute("data-version", "1.9");
+            krux.setAttribute("type", "text/javascript");
+
+            krux.innerHTML = "window.Krux||((Krux=function(){Krux.q.push(arguments)}).q=[]); " +
+            "(function(){ " +
+            "var k=document.createElement('script');k.type='text/javascript';k.async=true; " +
+            "var m,src=(m=location.href.match(/\bkxsrc=([^&]+)/))&&decodeURIComponent(m[1]); " +
+            "k.src = /^https?:\\/\\/([a-z0-9_\\-\\.]+\\.)?krxd\\.net(:\\d{1,5})?\\//i.test(src) ? src : src === 'disable' ? '' : " +
+            "(location.protocol==='https:'?'https:':'http:')+'//cdn.krxd.net/controltag?confid=KS_cfybw' ; " +
+            "var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(k,s); }());";
+
+            document.body.appendChild(krux);
+        }
+
+        function toTitleCase(str) {
+            return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+        }
+
+        function exposeMetaDataForKrux(config) {
+            guardian = { 'config' : {
+                'page' : {
+                    'pageId' : config.targeting.url,
+                    'edition' : toTitleCase(config.targeting.edition),
+                    'seriesId' : config.targeting.se, //series isn't in the Krux output
+                    'contentType' : toTitleCase(config.targeting.ct),
+                    'keywordIds' : config.targeting.keywordIds,
+                    'keywords' : config.targeting.k.split(',').map(function (x) { return toTitleCase(x)}),
+                    'authorIds' : config.targeting.authorIds,
+                    'blogIds' : config.targeting.bl,// blogs isn't recognised by Krux scraper
+                    'referrer' : 'amp',
+                    'section' : config.targeting.section
+                }
+            }
+
+            };
+        }
+
+        function attachAdTestParam(config) {
+            var url = (window.location != window.parent.location)
+                ? document.referrer
+                : document.location;
+
+            var fragments = url.split('adtest=');
+            if (fragments.length === 2) {
+                config.targeting.at = fragments[1]
+            }
+            return config;
+        }
+
+        function attachKruxSegments(config) {
+            if (localStorage.getItem('kxsegs') !== null) {
+                var kxSegList = localStorage.getItem('kxsegs').split(',');
+
+                if (kxSegList.length > 0) {
+                    config.targeting.x = kxSegList;
+                }
+            }
+
+            return config;
+        }
+
+        function configIsValid(config) {
+            return config && config.targeting;
+        }
+
+        function isMasterIframe(config) {
+            return window.context.isMaster && config.type == 'doubleclick';
+        }
+
+        // this is the big AMP callback
+        draw3p(function (config, done) {
+
+            if (configIsValid(config) && isMasterIframe(config)) {
+                exposeMetaDataForKrux(config);
+                loadKrux();
+            }
+
+            if (configIsValid(config)) {
+                var configWithAdTestParam = attachAdTestParam(config);
+                var result = attachKruxSegments(configWithAdTestParam);
+                done(result);
+            } else {
+                done(config);
+            }
+        })</script>
+</div>
+<script>if (window.docEndCallback) window.docEndCallback()</script>
+</body>
+</html>

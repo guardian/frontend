@@ -1,10 +1,10 @@
 package controllers
 
 import com.gu.contentapi.client.GuardianContentApiError
-import com.gu.facia.api.models.FaciaContent
 import common._
-import conf.LiveContentApi.getResponse
+import contentapi.ContentApiClient
 import conf._
+import model.Cached.RevalidatableResult
 import model._
 import model.pressed.PressedContent
 import play.api.mvc.{Action, Controller, RequestHeader}
@@ -32,10 +32,10 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
 
   private def lookup(edition: Edition)(implicit request: RequestHeader): Future[Option[RelatedContent]] = {
     log.info(s"Fetching top stories for edition ${edition.id}")
-    getResponse(LiveContentApi.item("/", edition)
+    ContentApiClient.getResponse(ContentApiClient.item("/", edition)
       .showEditorsPicks(true)
     ).map { response =>
-        response.editorsPicks map { item =>
+        response.editorsPicks.getOrElse(Seq.empty).toList map { item =>
           RelatedContentItem(item)
         } match {
           case Nil => None
@@ -64,7 +64,7 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
           "html" -> jsonResponse()
         )
       else
-        Ok(htmlResponse())
+        RevalidatableResult.Ok(htmlResponse())
     }
   }
 

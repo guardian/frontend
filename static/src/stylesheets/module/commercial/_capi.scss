@@ -23,7 +23,7 @@
     // Story-package overrides
     .fc-container--story-package .fc-item__standfirst,
     .fc-container--story-package .fc-item__link:visited {
-        color: colour(neutral-2-contrasted);
+        color: $neutral-2-contrasted;
     }
 
     .tone-media--item {
@@ -58,7 +58,7 @@
 }
 
 .fc-container--advertisement-feature {
-    background-color: colour(neutral-8);
+    background-color: $neutral-8;
 
     .fc-container__inner {
 
@@ -66,13 +66,13 @@
     }
 
     .fc-container__header__title {
-        color: colour(neutral-1);
+        color: $neutral-1;
 
         .fc-container__header__link {
-            color: colour(guardian-brand);
+            color: $guardian-brand;
 
             &:hover {
-                color: colour(news-accent);
+                color: $news-accent;
             }
         }
     }
@@ -90,22 +90,26 @@
 
 
 .paid-content--advertisement-feature {
-    background-color: colour(paid-article);
+    background-color: $paid-article;
 
     .ad-slot--paid-for-badge--front {
-        border-top-color: colour(neutral-2);
+        border-top-color: $neutral-2;
 
         .ad-slot--paid-for-badge__link {
             &:after {
-                border-bottom-color: colour(neutral-2);
+                border-bottom-color: $neutral-2;
             }
         }
+    }
+
+    .fc-item--list-compact--media {
+        border-color: $paid-article-header-bg;
     }
 
     .fc-container--first .fc-container__header__title,
     .fc-container .fc-container__inner,
     .fc-container .facia-container__inner {
-        border-top-color: colour(paid-article-header-bg);
+        border-top-color: $paid-article-header-bg;
     }
 
     .fc-container__header__title {
@@ -116,66 +120,67 @@
     .tone-news--item.fc-item,
     .tone-media--item,
     .ad-slot--container-inline .ad-slot__label {
-        background-color: colour(paid-article-subheader);
+        background-color: $paid-article-subheader;
         border-top: 0;
     }
 
     .fc-container--story-package .tone-news--item.fc-item {
         // This is to override an !important background colour in story-package items
-        background-color: colour(paid-article-subheader) !important;
+        background-color: $paid-article-subheader !important;
     }
 
     .tone-media--item {
         .u-faux-block-link--hover {
-            background-color: colour(neutral-6);
+            background-color: $neutral-6;
 
             .u-faux-block-link__overlay {
-                color: colour(neutral-1);
+                color: $neutral-1;
             }
         }
 
         .fc-item__standfirst,
+        .fc-item__kicker,
         .fc-item__link:visited {
-            color: colour(neutral-1);
+            color: $neutral-1;
         }
     }
 
     // Override story-package hover colours
     .fc-container--story-package .fc-item .u-faux-block-link--hover {
-        background-color: colour(neutral-6);
+        background-color: $neutral-6;
     }
 
     .headline-list__item:before {
-        background-color: colour(neutral-1);
+        background-color: $neutral-1;
     }
 
     .headline-list__count,
     .headline-list__link:hover .headline-list__count {
-        color: colour(neutral-1);
+        color: $neutral-1;
     }
 
     .fc-item__title .inline-video-icon,
     .fc-item__title .inline-camera {
-        fill: colour(neutral-1);
+        fill: $neutral-1;
     }
 
     .fc-slice__item+.fc-slice__item:before {
-        border-left-color: colour(paid-article-subheader-bg);
+        border-left-color: $paid-article-subheader-bg;
     }
 
     .fc-item__container {
         &:before {
             display: block;
-            background: colour(paid-article-brand);
+            background: $paid-article-brand;
         }
     }
 
     .fc-item__title {
-        color: guss-colour(news-support-7, $pasteup-palette);
+        color: $news-support-7;
     }
 
     .tone-news--item .fc-item__kicker {
-        color: guss-colour(neutral-1, $pasteup-palette);
+        color: $neutral-1;
     }
 
     .fc-item__kicker:after {
@@ -183,12 +188,33 @@
     }
 
     .fc-item__meta {
-        color: colour(neutral-2);
+        color: $neutral-2;
+
+        .fc-save-for-later {
+            .inline-icon {
+                fill: $neutral-2;
+            }
+            &:hover:after {
+                color: $neutral-2;
+                text-decoration: underline;
+            }
+        }
     }
 
     &.fc-container--sponsored,
     &.fc-container--foundation-supported {
         background-color: unset;
+    }
+
+    &.tonal--tone-media .tonal__standfirst a {
+        color: $news-default;
+    }
+
+    &.tonal--tone-media .tonal__standfirst {
+        .bullet:before,
+        ul>li:before {
+            background-color: $media-mute;
+        }
     }
 
 }

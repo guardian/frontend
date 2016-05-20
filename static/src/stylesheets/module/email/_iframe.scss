@@ -32,6 +32,11 @@ body {
 */
 .email-sub__form--footer {
     padding: 0;
+
+    .email-sub__text-input {
+        margin-bottom: $gs-baseline;
+    }
+
 }
 
 .email-sub__form--article {
@@ -62,6 +67,21 @@ body {
             margin-right: 0;
             width: 38%;
         }
+
+        // Solo submit button - for logged in users where we remove the input
+        // because we know the email address already
+        .email-sub__submit-input--solo {
+            border-radius: 1000px;
+        }
+
+        .email-sub__small--mark {
+            clear: left;
+            display: inline-block;
+        }
+    }
+
+    .email-sub--article.email-sub__form--has-mark .email-sub__text-input {
+        margin-bottom: $gs-baseline;
     }
 
     .email-sub__form--footer,
@@ -92,7 +112,7 @@ body {
 
 // Above Phablet
 @include mq($from: 606px) {
-    .email-sub__form--article, {
+    .email-sub__form--article {
         .email-sub__form-wrapper {
             line-height: 3;
         }
@@ -110,7 +130,12 @@ body {
             margin-left: $gs-gutter;
             width: gs-span(3);
         }
+
+        .email-sub__small--is-hidden {
+            display: none;
+        }
     }
+
 }
 
 /**

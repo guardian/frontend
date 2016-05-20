@@ -1,16 +1,14 @@
 package common.dfp
 
-import java.net.URLEncoder
-
 import common.Edition
 import common.dfp.AdSize.{leaderboardSize, responsiveSize}
+import org.apache.commons.lang.StringUtils
 import org.joda.time.DateTime
 import org.joda.time.DateTime.now
 import org.joda.time.format.ISODateTimeFormat
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
-
-import scala.annotation.tailrec
+import scala.language.postfixOps
 
 case class CustomTarget(name: String, op: String, values: Seq[String]) {
 
@@ -29,6 +27,8 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
   val isFoundationSupportedSlot = isSlot("fobadge")
 
   val isInlineMerchandisingSlot = isSlot("im")
+
+  val isHighMerchandisingSlot = isSlot("merchandising-high")
 
   val isAdTest = isPositive("at")
 
@@ -78,6 +78,8 @@ case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
   val inlineMerchandisingTargetedKeywords = filterTags(tag => tag.isKeywordTag)(_.isInlineMerchandisingSlot)
   val inlineMerchandisingTargetedSeries = filterTags(tag => tag.isSeriesTag)(_.isInlineMerchandisingSlot)
   val inlineMerchandisingTargetedContributors = filterTags(tag => tag.isContributorTag)(_.isInlineMerchandisingSlot)
+
+  val highMerchandisingTargets = filterTags(tag => tag.isKeywordTag || tag.isSeriesTag || tag.isContributorTag)(_.isHighMerchandisingSlot)
 
   val targetsR2Only: Boolean = targets exists (_.targetsR2Only)
 }
@@ -135,7 +137,9 @@ object GeoTarget {
 }
 
 
-case class GuAdUnit(id: String, path: Seq[String])
+case class GuAdUnit(id: String, path: Seq[String]) {
+  val fullPath = path.mkString("/")
+}
 
 object GuAdUnit {
 
@@ -234,15 +238,20 @@ case class GuLineItem(id: Long,
   val paidForTags: Seq[PaidForTag] = targeting.customTargetSets.flatMap { targetSet =>
 
     def paidForTagsFromTargets(targetedNames: Seq[String], tagType: TagType, paidForType: PaidForType) = {
-      targetedNames map { targetedName =>
-        PaidForTag(
-          targetedName,
-          tagType = tagType,
-          paidForType = paidForType,
-          matchingCapiTagIds = Nil,
-          lineItems = Nil
-        )
-      }
+      targetedNames
+        .map({ dfpTargetName =>
+           // Some of the targeted names in DFP have strange unicode characters. Strip them here.
+           StringUtils.strip(dfpTargetName, "\u200B").trim
+        })
+        .map({ targetedName =>
+          PaidForTag(
+            targetedName,
+            tagType = tagType,
+            paidForType = paidForType,
+            matchingCapiTagIds = Nil,
+            lineItems = Nil
+          )
+        })
     }
 
     def seriesTags = targetSet.filterTags(_.isSeriesTag) _
@@ -265,6 +274,8 @@ case class GuLineItem(id: Long,
   val inlineMerchandisingTargetedKeywords: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedKeywords).distinct
   val inlineMerchandisingTargetedSeries: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedSeries).distinct
   val inlineMerchandisingTargetedContributors: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedContributors).distinct
+
+  val highMerchandisingTargets: Seq[String] = targeting.customTargetSets.flatMap(_.highMerchandisingTargets).distinct
 
   lazy val targetsNetworkOrSectionFrontDirectly: Boolean = {
     targeting.adUnits.exists { adUnit =>
@@ -411,7 +422,8 @@ case class GuCreative(
   lastModified: DateTime,
   args: Map[String, String],
   templateId: Option[Long],
-  snippet: Option[String]
+  snippet: Option[String],
+  previewUrl: Option[String]
 )
 
 object GuCreative {
@@ -434,7 +446,8 @@ object GuCreative {
         "lastModified" -> creative.lastModified,
         "args" -> creative.args,
         "templateId" -> creative.templateId,
-        "snippet" -> creative.snippet
+        "snippet" -> creative.snippet,
+        "previewUrl" -> creative.previewUrl
       )
     }
   }
@@ -445,7 +458,8 @@ object GuCreative {
       (JsPath \ "lastModified").read[DateTime] and
       (JsPath \ "args").read[Map[String, String]] and
       (JsPath \ "templateId").readNullable[Long] and
-      (JsPath \ "snippet").readNullable[String]
+      (JsPath \ "snippet").readNullable[String] and
+      (JsPath \ "previewUrl").readNullable[String]
     ) (GuCreative.apply _)
 }
 
@@ -456,20 +470,7 @@ case class GuCreativeTemplate(id: Long,
                               snippet: String,
                               creatives: Seq[GuCreative]) {
 
-  val example: Option[String] = creatives.headOption map { creative =>
-
-    @tailrec
-    def replaceParameters(html: String, args: Seq[(String, String)]): String = {
-      if (args.isEmpty) html
-      else {
-        val (key, value) = args.head
-        val encodedValue = URLEncoder.encode(value, "utf-8")
-        replaceParameters(html.replace(s"[%$key%]", value).replace(s"[%URI_ENCODE:$key%]", encodedValue), args.tail)
-      }
-    }
-
-    replaceParameters(snippet, creative.args.toSeq)
-  }
+  lazy val examplePreviewUrl: Option[String] = creatives flatMap {_.previewUrl} headOption
 
   lazy val isForApps: Boolean = name.startsWith("apps - ") || name.startsWith("as ") || name.startsWith("qc ")
 }

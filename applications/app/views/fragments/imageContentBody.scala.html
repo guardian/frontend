@@ -1,6 +1,5 @@
 @(page: ImageContentPage)(implicit request: RequestHeader)
 @import common.Edition
-@import conf.switches.Switches.NewCommercialContent
 @import layout.ContentWidths.ImageContentMedia
 @import views.support.RenderClasses
 
@@ -9,42 +8,42 @@
 <div class="l-side-margins l-side-margins--media">
     <article
         class="@RenderClasses(Map(
-            "content--advertisement-feature" -> image.commercial.isAdvertisementFeature,
+            "content--advertisement-feature paid-content--advertisement-feature" -> image.commercial.isAdvertisementFeature,
             "content--sponsored" -> image.commercial.isSponsored(Some(Edition(request))),
-            "content--foundation-supported" -> image.commercial.isFoundationSupported,
-            "paid-content--advertisement-feature" -> (image.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn)
+            "content--foundation-supported" -> image.commercial.isFoundationSupported
         ), "content content--media content--image tonal tonal--tone-media")"
         itemprop="mainContentOfPage"
         itemscope
         itemtype="@image.metadata.schemaType"
         role="main">
 
-        @if(image.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn) {
+        @if(image.commercial.isAdvertisementFeature) {
             @fragments.guBand()
         }
 
-        @fragments.headTonal(image, showBadge = true)
+        @fragments.headTonal(image, page, showBadge = true)
 
         <div class="content__main tonal__main tonal__main--tone-media">
             <div class="gs-container">
                 <div class="content__main-column content__main-column--image">
 
                     @image.elements.mainPicture.map { picture =>
-                        @fragments.img(
+                        @fragments.imageFigure(
                             picture.images,
                             lightboxIndex = if(image.lightBox.isMainMediaLightboxable) Some(1) else None,
                             widthsByBreakpoint = ImageContentMedia.inline
                         )
                     }
 
-                    @fragments.contentMeta(image)
+                    @fragments.contentMeta(image, page)
 
                     @fragments.submeta(image)
                 </div>
             </div>
         </div>
     </article>
-
+</div>
+<div class="l-side-margins">
     @fragments.contentFooter(image, page.related)
 </div>
 

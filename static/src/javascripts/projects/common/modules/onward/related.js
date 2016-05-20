@@ -17,7 +17,7 @@ define([
     config,
     mediator,
     register,
-    LazyLoad,
+    lazyload,
     Expandable,
     ab,
     intersection,
@@ -66,6 +66,7 @@ define([
                 showCount: false
             }).init();
         } else if (fetchRelated) {
+
             container = document.body.querySelector('.js-related');
 
             if (container) {
@@ -74,25 +75,20 @@ define([
                 register.begin(componentName);
 
                 container.setAttribute('data-component', componentName);
-                if (ab.isInVariant('RelatedVariants', 'tags-only')) {
-                    relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json?related-type=tags-only';
-                } else if (ab.isInVariant('RelatedVariants', 'tags-headline')) {
-                    relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json?related-type=tags-headline';
-                } else if (ab.isInVariant('RelatedVariants', 'in-body-links')) {
-                    relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json?related-type=in-body-links';
-                } else {
-                    relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json';
-                    if (opts.excludeTags && opts.excludeTags.length) {
-                        relatedUrl += '?' + map(opts.excludeTags, function (tag) {
-                                return 'exclude-tag=' + tag;
-                            }).join('&');
-                    }
+
+                relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json';
+
+                if (opts.excludeTags && opts.excludeTags.length) {
+                    relatedUrl += '?' + map(opts.excludeTags, function (tag) {
+                            return 'exclude-tag=' + tag;
+                        }).join('&');
                 }
 
-                new LazyLoad({
+                lazyload({
                     url: relatedUrl,
                     container: container,
                     success: function () {
+
                         var relatedContainer = container.querySelector('.related-content');
 
                         new Expandable({dom: relatedContainer, expanded: false, showCount: false}).init();
@@ -107,7 +103,7 @@ define([
                         bonzo(container).remove();
                         register.error(componentName);
                     }
-                }).load();
+                });
             }
         } else {
             $('.js-related').addClass('u-h');

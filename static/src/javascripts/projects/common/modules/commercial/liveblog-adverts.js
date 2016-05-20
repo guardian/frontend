@@ -1,121 +1,105 @@
 define([
-    'bean',
     'bonzo',
-    'common/utils/$',
+    'common/utils/fastdom-promise',
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/commercial/dfp/dfp-api',
+    'common/modules/commercial/commercial-features',
     'common/modules/commercial/create-ad-slot',
-    'lodash/collections/contains',
-    'lodash/functions/debounce',
-    'lodash/functions/once'
+    'common/modules/article/space-filler',
+    'Promise'
 ], function (
-    bean,
     bonzo,
-    $,
+    fastdom,
     config,
     mediator,
     dfp,
+    commercialFeatures,
     createAdSlot,
-    contains,
-    debounce,
-    once
+    spaceFiller,
+    Promise
 ) {
+    var INTERVAL = 5;      // number of posts between ads
+    var OFFSET = 1.5;      // ratio of the screen height from which ads are loaded
+    var MAX_ADS = 8;       // maximum number of ads to display
 
-    var postsCount,
-        timedOut,
-        adCriteria,
-        // when the the user last interact with the page
-        lastInteraction = new Date(),
-        interactionWindow = 60 * 1000,
-        adSlotNames = ['inline1', 'inline2'],
-        state = 'first',
-        adCriterias = {
-            minutebyminute: {
-                first: {
-                    timeout: 2 * 60 * 1000,
-                    posts: 2
-                },
-                further: {
-                    timeout: 5 * 60 * 1000,
-                    posts: 5
-                }
-            },
-            'default': {
-                first: {
-                    timeout: 2 * 60 * 1000,
-                    posts: 1
-                },
-                further: {
-                    timeout: 5 * 60 * 1000,
-                    posts: 5
-                }
-            },
-            test: {
-                first: {
-                    timeout: 10 * 1000,
-                    posts: 1
-                },
-                further: {
-                    timeout: 10 * 1000,
-                    posts: 1
-                }
-            }
-        },
-        reset = function () {
-            postsCount = 0;
-            timedOut = false;
-            window.setInterval(function () {
-                timedOut = true;
-            }, adCriteria[state].timeout);
-        },
-        init = function () {
-            if (!config.switches.liveblogAdverts) {
-                return false;
-            }
-            var criteriaType;
-            if (config.page.isDev) {
-                criteriaType = 'test';
-            } else if (contains(config.page.toneIds.split(','), 'tone/minutebyminute')) {
-                criteriaType = 'minutebyminute';
-            } else {
-                criteriaType = 'default';
-            }
-            adCriteria = adCriterias[criteriaType];
-            reset();
-            mediator.on('modules:autoupdate:updates', function (numberOfUpdates) {
-                postsCount += Number(numberOfUpdates);
-                if (
-                    postsCount >= adCriteria[state].posts &&
-                    timedOut &&
-                    (new Date() - lastInteraction) < interactionWindow
-                ) {
-                    var displaySlot = adSlotNames.length,
-                        // add the first ad slot we haven't already
-                        $adSlot = displaySlot ?
-                            bonzo(createAdSlot(adSlotNames.shift(), 'liveblog-inline')) :
-                            // otherwise get the ad furthest down the page
-                            $('.js-liveblog-body .ad-slot')
-                                .last()
-                                .detach();
-                    // put the ad slot after the latest post
-                    $('.js-liveblog-body .block').first().after($adSlot);
-                    if (displaySlot) {
-                        dfp.addSlot($adSlot);
-                    } else {
-                        dfp.refreshSlot($adSlot);
-                    }
-                    reset();
-                    state = 'further';
-                }
-            });
-            bean.on(document.body, 'mousemove', debounce(function () {
-                lastInteraction = new Date();
-            }, 200));
+    var slotCounter = 0, windowHeight, firstSlot;
+
+    function startListening() {
+        mediator.on('modules:autoupdate:updates', onUpdate);
+    }
+
+    function stopListening() {
+        mediator.off('modules:autoupdate:updates', onUpdate);
+    }
+
+    function getSpaceFillerRules(windowHeight, update) {
+        var prevSlot, prevIndex;
+        update = !!update;
+        return {
+            bodySelector: '.js-liveblog-body',
+            slotSelector: ' > .block',
+            fromBottom: update,
+            startAt: update ? firstSlot : null,
+            absoluteMinAbove: update ? 0 : (windowHeight * OFFSET),
+            minAbove: 0,
+            minBelow: 0,
+            filter: filterSlot
         };
 
-    return {
-        init: once(init)
-    };
+        function filterSlot(slot, index) {
+            if (index === 0) {
+                prevSlot = slot;
+                prevIndex = index;
+                return !update;
+            } else if (index - prevIndex >= INTERVAL && Math.abs(slot.top - prevSlot.top) >= windowHeight) {
+                prevSlot = slot;
+                prevIndex = index;
+                return true;
+            }
 
+            return false;
+        }
+    }
+
+    function insertAds(slots) {
+        for (var i = 0; i < slots.length && slotCounter < MAX_ADS; i++) {
+            var $adSlot = bonzo(createAdSlot('inline1' + slotCounter++, 'liveblog-inline block'));
+            $adSlot.insertAfter(slots[i]);
+            dfp.addSlot($adSlot);
+        }
+    }
+
+    function fill(rules) {
+        return spaceFiller.fillSpace(rules, insertAds)
+            .then(function (result) {
+                if (result && slotCounter < MAX_ADS) {
+                    firstSlot = document.querySelector(rules.bodySelector + ' > .ad-slot').previousSibling;
+                    startListening();
+                } else {
+                    firstSlot = null;
+                }
+            });
+    }
+
+    function onUpdate() {
+        stopListening();
+        Promise.resolve(getSpaceFillerRules(windowHeight, true)).then(fill);
+    }
+
+    function init() {
+        if (!commercialFeatures.liveblogAdverts) {
+            return null;
+        }
+
+        return fastdom.read(function () {
+            return windowHeight = document.documentElement.clientHeight;
+        })
+        .then(getSpaceFillerRules)
+        .then(fill);
+    }
+
+    return {
+        init: init
+    };
 });

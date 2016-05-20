@@ -1,9 +1,10 @@
+import common.Logback.Logstash
 import common._
 import common.dfp.FaciaDfpAgentLifecycle
-import conf.{Filters, SwitchboardLifecycle}
+import conf.{FaciaHealthCheckLifeCycle, Filters, SwitchboardLifecycle}
 import crosswords.TodaysCrosswordGridLifecycle
 import dev.DevParametersLifecycle
-import metrics.FrontendMetric
+import headlines.ABHeadlinesLifecycle
 import ophan.SurgingContentAgentLifecycle
 import play.api.mvc.WithFilters
 import services.{ConfigAgentLifecycle, IndexListingsLifecycle}
@@ -16,14 +17,10 @@ object Global extends WithFilters(Filters.common: _*)
   with SurgingContentAgentLifecycle
   with IndexListingsLifecycle
   with TodaysCrosswordGridLifecycle
-  with SwitchboardLifecycle {
+  with SwitchboardLifecycle
+  with ABHeadlinesLifecycle
+  with Logstash
+  with FaciaHealthCheckLifeCycle {
 
-override lazy val applicationName = "frontend-facia"
-
-  override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ::: List(
-    S3Metrics.S3AuthorizationError,
-    FaciaMetrics.FaciaToApplicationRedirectMetric,
-    FaciaMetrics.FaciaToRssRedirectMetric,
-    ContentApiMetrics.ContentApiCircuitBreakerRequestsMetric
-  )
+  override lazy val applicationName = "frontend-facia"
 }

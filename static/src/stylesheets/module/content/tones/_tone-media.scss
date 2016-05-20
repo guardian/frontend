@@ -2,38 +2,66 @@
 
 @include tone-content(
     media, // $tone
-    colour(media-background), // $tonal__header-background
-    colour(neutral-6), // $tonal__header-text
-    colour(media-default), // $tonal__header-link
+    $media-background, // $tonal__header-background
+    $neutral-6, // $tonal__header-text
+    $media-default, // $tonal__header-link
     400, // $tonal__headline-weight
     #ffffff, // $tonal__headline-colour
-    colour(media-default), // $tonal__headline-accent
-    colour(media-background), // $tonal__standfirst-background
-    #ffffff, // $tonal__standfirst-text
+    $media-default, // $tonal__headline-accent
+    $media-background, // $tonal__standfirst-background
+    $neutral-4, // $tonal__standfirst-text
     #ffffff, // $tonal__standfirst-link
-    colour(media-background), // $tonal__article-background
-    colour(media-default) // $tonal__article-link
+    $media-background, // $tonal__article-background
+    $media-default // $tonal__article-link
 );
 
 // Podcast and media tones share page styling
-.tonal--tone-media .tonal__main--tone-media {
-    color: colour(neutral-7);
+.tonal--tone-media {
+    color: $neutral-4;
     padding-top: 0;
 
     .byline,
+    .byline .tone-colour,
+    .byline .tone-colour:hover,
     .content__dateline,
-    .meta__numbers .sharecount__heading {
-        color: colour(neutral-3);
+    .meta__numbers .sharecount__heading,
+    .meta__numbers .commentcount2__heading {
+        color: $neutral-3;
     }
 
-    .byline a,
+    .meta__numbers .sharecount__value,
+    .meta__numbers .commentcount2__value {
+        color: $neutral-4;
+    }
+
+    .meta__numbers .inline-share,
+    .meta__numbers .inline-comment-16 {
+        fill: $neutral-3;
+    }
+
+    .commentcount2 {
+        &:hover,
+        &:focus {
+            text-decoration: none;
+
+            .commentcount2__heading {
+                color: $neutral-4;
+            }
+
+            .inline-comment-16 {
+                fill: $neutral-4;
+            }
+
+            .commentcount2__value {
+                color: $neutral-6;
+            }
+        }
+    }
+
     .caption,
-    .submeta__head,
     .ad-slot--paid-for-badge__header,
-    .ad-slot--paid-for-badge__help,
-    .from-content-api,
-    .meta__numbers .sharecount__value {
-        color: colour(neutral-7);
+    .ad-slot--paid-for-badge__help {
+        color: $neutral-6;
     }
 
     .byline,
@@ -44,8 +72,9 @@
     .commentcount,
     .meta__numbers,
     .meta__social,
+    .meta__save-for-later,
     .meta__number:not(u-h) + .meta__number {
-        border-color: colour(neutral-2);
+        border-color: $media-mute;
     }
 
     .from-content-api {
@@ -56,15 +85,15 @@
         a,
         .u-underline {
             color: inherit;
-            border-bottom-color: colour(neutral-2);
+            border-bottom-color: $neutral-2;
 
             &:hover,
             &:focus {
-                border-color: mix(colour(neutral-2), colour(neutral-4), 50%);
+                border-color: mix($neutral-2, $neutral-4, 50%);
             }
             &:active {
-                color: colour(media-default);
-                border-color: colour(media-default);
+                color: $media-default;
+                border-color: $media-default;
             }
         }
     }

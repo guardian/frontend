@@ -1,5 +1,7 @@
+@(env: String)(implicit request: RequestHeader)
+
 @import conf.switches.Switches.R2PagePressServiceSwitch
-@(env: String)
+@import conf.Configuration
 @admin_main("Frontend Admin", env, isAuthed = true) {
     <div class="row">
 
@@ -17,6 +19,7 @@
                             </ul>
                         </li>
                         <li><a href="@controllers.admin.routes.AnalyticsController.renderQuality()">Quality dashboard</a></li>
+                        <li><a href="@controllers.admin.routes.MetricsController.renderHeadlinesTest()">Headline AB Test</a></li>
                     </ul>
                 </div>
             </div>
@@ -50,6 +53,7 @@
                 <div class="panel-heading">Ops metrics (is the site healthy?).</div>
                 <div class="panel-body">
                     <ul>
+                        <li><a href="@Configuration.Kibana.url">Kibana (Server side logs)</a></li>
                         <li><a href="@controllers.admin.routes.MetricsController.renderLoadBalancers()">Load Balancers</a></li>
                         <li><a href="@controllers.admin.routes.FastlyController.renderFastly()">Fastly</a></li>
                         <li>

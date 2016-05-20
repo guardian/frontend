@@ -5,7 +5,22 @@ define([
 ) {
     // We make a new chainable with each operation to prevent mutations and
     // thus allow multiple usages of a given chainable.
-    /* jscs:disable disallowDanglingUnderscores */
+
+    var createObject = function (prototype) {
+        if (Object.create) {
+            return Object.create(prototype);
+        } else {
+            var F = function () {};
+            F.prototype = prototype;
+            return new F();
+        }
+    };
+
+    var makeChainable = function (value, object) {
+        var chainable = createObject(object);
+        chainable.setValue(value);
+        return chainable;
+    };
 
     // Chainable prototype
     var Chainable = {
@@ -16,13 +31,12 @@ define([
             // Spread
             var fn = partialRight.apply(null, arguments);
             var newValue = fn(this.value());
-            return makeChainable(newValue);
+            return makeChainable(newValue, this);
         },
         value: function () { return this.__value; },
         // Override prototype method
         valueOf: function () { return this.value(); }
     };
-    /* jscs:enable disallowDanglingUnderscores */
 
     // Add array methods to chainable
 
@@ -44,32 +58,18 @@ define([
         Chainable[methodName] = function () {
             var args = Array.prototype.slice.call(arguments);
             var newValue = Array.prototype[methodName].apply(this.value(), args);
-            return makeChainable(newValue);
+            return makeChainable(newValue, this);
         };
     });
     mutableArrayMethods.forEach(function (methodName) {
         Chainable[methodName] = function () {
             var args = Array.prototype.slice.call(arguments);
             Array.prototype[methodName].apply(this.value(), args);
-            return makeChainable(this.value());
+            return makeChainable(this.value(), this);
         };
     });
 
-    var createObject = function (prototype) {
-        if (Object.create) {
-            return Object.create(prototype);
-        } else {
-            var F = function () {};
-            F.prototype = prototype;
-            return new F();
-        }
+    return function (value) {
+        return makeChainable(value, Chainable);
     };
-
-    var makeChainable = function (value) {
-        var chainable = createObject(Chainable);
-        chainable.setValue(value);
-        return chainable;
-    };
-
-    return makeChainable;
 });

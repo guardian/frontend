@@ -8,11 +8,12 @@ define([
     'common/modules/commercial/badges',
     'common/modules/commercial/dfp/dfp-api',
     'common/modules/commercial/front-commercial-components',
-    'common/modules/commercial/top-banner-below-container',
+    'common/modules/commercial/hosted-video',
     'common/modules/commercial/slice-adverts',
     'common/modules/commercial/third-party-tags',
     'common/modules/commercial/paidfor-band',
-    'lodash/collections/forEach'
+    'common/modules/commercial/adverts',
+    'common/modules/commercial/commercial-audit'
 ], function (
     Promise,
     config,
@@ -23,46 +24,51 @@ define([
     badges,
     dfp,
     frontCommercialComponents,
-    topBannerBelowContainer,
+    hostedVideo,
     sliceAdverts,
     thirdPartyTags,
     paidforBand,
-    forEach
+    adverts,
+    commercialAudit
 ) {
     var modules = [
+        ['cm-dfp', dfp.init],
+        ['cm-thirdPartyTags', thirdPartyTags.init],
         ['cm-articleAsideAdverts', articleAsideAdverts.init],
         ['cm-articleBodyAdverts', articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
         ['cm-frontCommercialComponents', frontCommercialComponents.init],
-        ['cm-topBannerBelowContainer', topBannerBelowContainer.init],
-        ['cm-thirdPartyTags', thirdPartyTags.init],
-        ['cm-badges', badges.init]
+        ['cm-commercialAudit', commercialAudit.init],
+        ['cm-hostedVideo', hostedVideo.init]
     ];
 
-    if (config.switches.newCommercialContent) {
-        modules.push(['cm-paidforBand', paidforBand.init]);
+    if (!config.switches.staticBadges) {
+        modules.push(['cm-badges', badges.init]);
     }
 
     return {
         init: function () {
+            if (!config.switches.commercial) {
+                return;
+            }
+
             var modulePromises = [];
 
-            forEach(modules, function (pair) {
+            modules.forEach(function (pair) {
                 robust.catchErrorsAndLog(pair[0], function () {
                     modulePromises.push(pair[1]());
                 });
             });
 
             Promise.all(modulePromises).then(function () {
-                if (config.switches.commercial) {
-                    robust.catchErrorsAndLogAll([
-                        ['cm-dfp', dfp.init],
-                        // TODO does dfp return a promise?
-                        ['cm-ready', function () {
-                            mediator.emit('page:commercial:ready');
-                        }]
-                    ]);
-                }
+                robust.catchErrorsAndLogAll([
+                    ['cm-adverts', dfp.loadAds],
+                    ['cm-paidforBand', paidforBand.init],
+                    ['cm-new-adverts', adverts.init],
+                    ['cm-ready', function () {
+                        mediator.emit('page:commercial:ready');
+                    }]
+                ]);
             });
         }
     };

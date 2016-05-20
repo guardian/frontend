@@ -28,6 +28,10 @@ object IdFormHelpers {
     new Input("text", field, args:_*)
   }
 
+  def Phone(field: Field, args: (Symbol, Any)*): Input = {
+    new Input("phone", field, args:_*)
+  }
+
   def Checkbox(field: Field, args: (Symbol, Any)*): Input = {
     new Input("checkbox", field, args:_*)
   }

@@ -2,13 +2,14 @@ package model.commercial.books
 
 import org.scalatest.concurrent._
 import org.scalatest.time.{Millis, Seconds, Span}
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.libs.json.{JsNull, JsValue, Json}
+import test.ConfiguredTestSuite
 
 import scala.collection.mutable
 import scala.concurrent.Future
 
-class BookFinderTest extends FlatSpec with Matchers with ScalaFutures {
+@DoNotDiscover class BookFinderTest extends FlatSpec with Matchers with ScalaFutures with ConfiguredTestSuite {
 
   private implicit val defaultPatience =
     PatienceConfig(timeout = Span(2, Seconds), interval = Span(5, Millis))

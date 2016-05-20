@@ -25,7 +25,6 @@ object LocationsController extends Controller with ExecutionContexts with Loggin
   val CountryHeader: String = "X-GU-GeoCountry"
 
   def whatIsMyCity() = Action.async { implicit request =>
-    WeatherMetrics.whatIsMyCityRequests.increment()
 
     def cityFromRequestEdition = CityResponse.fromEdition(Edition(request))
 

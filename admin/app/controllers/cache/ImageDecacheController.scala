@@ -24,14 +24,14 @@ object ImageDecacheController extends Controller with Logging with AuthLogging w
   case object Cleared extends MessageType
   case object Error extends MessageType
 
-  private val iGuim = """i.guim.co.uk/img/(static|media)(/.*)""".r
+  private val iGuim = """i.guim.co.uk/img/(static|media|uploads)(/.*)""".r
   private val Origin = """(static|media).guim.co.uk/.*""".r
 
-  def renderImageDecacheForm() = AuthActions.AuthActionTest { request =>
+  def renderImageDecacheForm() = AuthActions.AuthActionTest { implicit request =>
     NoCache(Ok(views.html.cache.imageDecacheForm()))
   }
 
-  def decache() = AuthActions.AuthActionTest.async { request =>
+  def decache() = AuthActions.AuthActionTest.async { implicit request =>
     getSubmittedImage(request).map(new URI(_)).map{ image =>
 
       val originUrl: String = s"${image.getHost}${image.getPath}" match {
@@ -48,8 +48,8 @@ object ImageDecacheController extends Controller with Logging with AuthLogging w
       ImageServices.clearFastly(originUri)
       ImageServices.clearImgix(originUri)
 
-      val request: Future[WSResponse] = WS.url(s"$originUrl?cachebust=$cacheBust").get
-      request.map(_.status).map{
+      val decacheRequest: Future[WSResponse] = WS.url(s"$originUrl?cachebust=$cacheBust").get
+      decacheRequest.map(_.status).map{
         case NOT_FOUND => Ok(views.html.cache.imageDecacheForm(
           messageType = Cleared,
           image = image.toString,

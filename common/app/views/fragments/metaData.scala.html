@@ -7,7 +7,7 @@
 @import play.api.Play
 @import play.api.Play.current
 @import views.support.{SeoThumbnail, StripHtmlTags}
-@import conf.switches.Switches.AmpSwitch
+@import conf.switches.Switches.{AmpSwitch, UseLinkPreconnect, GoogleAnalyticsSwitch}
 
 @* Critical meta data that have an impact on rendering speed *@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
@@ -23,8 +23,25 @@
     <link rel="dns-prefetch" href="@AnalyticsHost()" />
     <link rel="dns-prefetch" href="//j.ophan.co.uk" />
     <link rel="dns-prefetch" href="//ophan.theguardian.com" />
-    <link rel="dns-prefetch" href="//oas.theguardian.com" />
     <link rel="dns-prefetch" href="@Configuration.debug.beaconUrl" />
+
+    @if(GoogleAnalyticsSwitch.isSwitchedOn) {
+        <link rel="dns-prefetch" href="//www.google-analytics.com" />
+    }
+
+    @if(UseLinkPreconnect.isSwitchedOn) {
+        <link rel="preconnect" crossorigin href="@Configuration.assets.path" />
+        <link rel="preconnect" crossorigin href="@Configuration.images.path" />
+        <link rel="preconnect" crossorigin href="@Configuration.ajax.url" />
+        <link rel="preconnect" crossorigin href="@AnalyticsHost()" />
+        <link rel="preconnect" crossorigin href="//j.ophan.co.uk" />
+        <link rel="preconnect" crossorigin href="//ophan.theguardian.com" />
+        <link rel="preconnect" crossorigin href="@Configuration.debug.beaconUrl" />
+
+        @if(GoogleAnalyticsSwitch.isSwitchedOn) {
+            <link rel="preconnect" crossorigin href="//www.google-analytics.com" />
+        }
+    }
 
     <link rel="apple-touch-icon" sizes="152x152" href="@Static("images/favicons/152x152.png")" />
     <link rel="apple-touch-icon" sizes="144x144" href="@Static("images/favicons/144x144.png")" />
@@ -36,7 +53,13 @@
     <link rel="manifest" href="/2015-06-24-manifest.json" crossorigin="use-credentials">
 
     @Page.getContentPage(page).map { page =>
-        @if(page.item.tags.isArticle && !page.item.tags.isLiveBlog && !page.item.content.isImmersive && AmpSwitch.isSwitchedOn) {
+        @if(
+            page.item.tags.isArticle &&
+            !page.item.tags.isLiveBlog &&
+            !page.item.content.isImmersive &&
+            !page.item.tags.isQuiz &&
+            AmpSwitch.isSwitchedOn
+        ) {
             <link rel="amphtml" href="@AmpLinkTo{/@page.metadata.id}">
         }
     }
@@ -70,6 +93,17 @@
 <meta name="msapplication-TileColor" content="#005689" />
 <meta name="theme-color" content="#005689">
 <meta name="msapplication-TileImage" content="@Static("images/favicons/windows_tile_144_b.png")" />
+
+@*
+ * This referrer policy preserves URLs in the Referrer header when navigating
+ * from HTTPS->HTTP.
+ *
+ * We need it for tracking to work properly while we do section-by-section
+ * rollout of HTTPS.
+ *
+ * See https://www.w3.org/TR/referrer-policy/#referrer-policy-state-unsafe-url
+*@
+<meta name="referrer" content="unsafe-url">
 
 @* https://support.google.com/plus/answer/1713826 *@
 <link rel="publisher" href="https://plus.google.com/113000071431138202574" />
