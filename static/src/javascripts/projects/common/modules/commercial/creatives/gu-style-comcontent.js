@@ -3,6 +3,7 @@ define([
     'common/utils/$',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/config',
     'common/views/svgs',
     'common/modules/commercial/gustyle/gustyle',
     'template!common/views/commercial/creatives/gu-style-comcontent.html',
@@ -14,6 +15,7 @@ define([
     $,
     detect,
     mediator,
+    config,
     svgs,
     GuStyle,
     gustyleComcontentTpl,
@@ -39,6 +41,15 @@ define([
                 isHostedBottom: this.params.adType === 'gu-style-hosted-bottom'
             };
         var templateToLoad = this.params.adType === 'gu-style' ? gustyleComcontentTpl : gustyleHostedTpl;
+
+        var title = this.params.articleHeaderText || 'unknown';
+        var sponsor = 'Renault';
+        this.params.linkTracking = 'Labs hosted native traffic card' +
+            ' | ' + config.page.edition +
+            ' | ' + config.page.section +
+            ' | ' + title +
+            ' | ' + sponsor;
+
         var markup = templateToLoad({ data: merge(this.params, templateOptions) });
         var gustyle = new GuStyle(this.$adSlot, this.params);
 

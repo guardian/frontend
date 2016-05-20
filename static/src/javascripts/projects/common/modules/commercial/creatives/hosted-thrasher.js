@@ -21,7 +21,7 @@ define([
         fastdom.write(function () {
             var title = this.params.header2 || 'unknown';
             var sponsor = 'Renault';
-            this.params.linkTracking = 'GLabs-hosted-container' +
+            this.params.linkTracking = 'Labs hosted container' +
                 ' | ' + config.page.edition +
                 ' | ' + config.page.section +
                 ' | ' + title +
