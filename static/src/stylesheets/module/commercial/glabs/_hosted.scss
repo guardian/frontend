@@ -432,6 +432,12 @@ $hosted-stripe: 28px;
 }
 
 .hosted__social {
+    @include mq($until: tablet) {
+        margin-top: $gs-gutter / 2;
+    }
+}
+
+.hosted__social-wrapper {
     border-top: 0;
     padding: $gs-gutter / 2 0 $gs-gutter / 2 $gs-gutter / 2;
 
@@ -572,7 +578,7 @@ $hosted-stripe: 28px;
 
 .hosted__label-btn--small {
     @include f-textSans;
-    
+
     font-size: 12px;
 }
 
