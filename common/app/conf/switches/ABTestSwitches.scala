@@ -122,4 +122,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABVideoControlsOnMainMedia = Switch(
+    SwitchGroup.ABTests,
+    "ab-video-controls-on-main-media",
+    "Show video controls on main media.",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 5, 26),
+    exposeClientSide = true
+  )
+
 }

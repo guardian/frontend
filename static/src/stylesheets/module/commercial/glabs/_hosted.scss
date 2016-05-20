@@ -24,8 +24,15 @@ $hosted-stripe: 28px;
 
 .hosted__header {
     width: 100%;
-    height: 58px;
     background-color: $neutral-1;
+
+    @include mq(mobile) {
+        height: 48px;
+    }
+
+    @include mq(tablet) {
+        height: 58px;
+    }
 }
 
 .hosted__side {
@@ -33,6 +40,16 @@ $hosted-stripe: 28px;
         &:before,
         &:after {
             display: none;
+        }
+    }
+    @include mq(wide) {
+        &:before,
+        &:after {
+            $size: gs-span(14) + $gs-gutter * 2;
+            width: calc((100% - #{$size}) / 2);
+        }
+        .adverts {
+            padding: 0 calc(50% - 570px);
         }
     }
 }
@@ -48,10 +65,6 @@ $hosted-stripe: 28px;
     @include mq(leftCol) {
         max-width: gs-span(14) + $gs-gutter * 2;
     }
-
-    @include mq(wide) {
-        max-width: gs-span($gs-max-columns) + $gs-gutter * 2;
-    }
 }
 
 .hosted__glogo {
@@ -62,8 +75,6 @@ $hosted-stripe: 28px;
 
     svg {
         fill: #ffffff;
-        width: 135px;
-        height: 50px;
     }
 
     .inline-logo {
@@ -71,9 +82,17 @@ $hosted-stripe: 28px;
         margin-top: -5px;
     }
 
+    @include mq(mobile) {
+        svg {
+            width: 115px;
+            height: 40px
+        }
+    }
+
     @include mq(tablet) {
         svg {
             width: 185px;
+            height: 50px;
         }
     }
 }
@@ -137,6 +156,12 @@ $hosted-stripe: 28px;
             @include hosted-fade-out;
         }
 
+        .vjs-time-control {
+            @include mq($until: tablet) {
+                @include hosted-fade-out;
+            }
+        }
+
         .vjs-control-bar {
             background-color: unset;
             transition: background-color 1s linear;
@@ -150,6 +175,12 @@ $hosted-stripe: 28px;
             @include hosted-fade-in;
         }
 
+        @include mq($until: tablet) {
+            .vjs-time-control {
+                @include hosted-fade-in;
+            }
+        }
+
         .vjs-control-bar {
             background-color: rgba(25, 25, 25, .8);
             transition: background-color 1s linear;
@@ -160,15 +191,15 @@ $hosted-stripe: 28px;
         bottom: 0;
         background-color: unset;
         font-size: 16px;
-        height: 88px;
+        height: 48px;
     }
 
     .vjs-fullscreen-control {
-        margin-top: 30px;
+        margin-top: 14px;
     }
 
     .vjs-menu-button {
-        margin-top: 34px;
+        margin-top: 17px;
 
         .vjs-control-text {
             font-size: 14px;
@@ -176,14 +207,15 @@ $hosted-stripe: 28px;
     }
 
     .vjs-time-control {
-        padding-top: 21px;
+        padding-top: 2px;
     }
 
     &.vjs .vjs-play-control {
-        width: 48px;
-        height: 48px;
-        margin: 20px 10px 20px 20px;
+        width: 37px;
+        height: 37px;
+        margin: 6px 20px 6px $gs-gutter;
     }
+
 }
 
 .hosted__meta {
@@ -199,50 +231,73 @@ $hosted-stripe: 28px;
 
     @include mq(desktop) {
         width: 35%;
-        left: calc(50% - 490px + #{$gs-gutter});
     }
 
     @include mq(leftCol) {
         bottom: 18%;
-        left: calc(50% - 570px + #{$gs-gutter});
     }
 
-    @include mq(wide) {
-        left: calc(50% - 650px + #{$gs-gutter});
+    @include mq($until: tablet) {
+        left: 76px;
+        bottom: 10px;
     }
+}
 
-    .vjs-playing + & {
+.vjs-playing + .hosted-fading {
+    .hosted__meta {
         @include hosted-fade-out;
     }
+    @include mq($until: tablet) {
+        .hostedbadge__logo {
+            @include hosted-fade-out;
+        }
+    }
+}
 
-    .vjs-paused + & {
+.vjs-paused + .hosted-fading {
+    .hosted__meta,
+    .hostedbadge__logo {
         @include hosted-fade-in;
     }
+}
+
+.hosted-fading .hostedbadge__logo {
+    margin-top: 27px;
+    position: relative;
 }
 
 // Headings
 .hosted__heading {
     @include f-headlineSans;
 
-    font-size: 56px;
-    line-height: 54px;
+    margin: 0;
+    font-size: 26px;
+    line-height: 26px;
 
-    @include mq($until: desktop) {
-        margin: 0;
-        font-size: 26px;
-        line-height: 26px;
+    @include mq(tablet) {
+        font-size: 46px;
+        line-height: 44px;
+    }
+
+    @include mq(desktop) {
+        font-size: 56px;
+        line-height: 54px;
     }
 }
 
 .hosted__heading--small {
     @include f-headlineSans;
 
-    font-size: 32px;
+    font-size: 18px;
+    line-height: 1;
+    margin-bottom: 0;
 
-    @include mq($until: desktop) {
-        font-size: 18px;
-        line-height: 1;
-        margin-bottom: 0;
+    @include mq(tablet) {
+        font-size: 24px;
+    }
+
+    @include mq(desktop) {
+        font-size: 32px;
     }
 }
 
@@ -259,7 +314,7 @@ $hosted-stripe: 28px;
     &:after {
         content: '';
         width: 100%;
-        height: 100%;    
+        height: 100%;
         position: absolute;
         left: 0;
         top: 0;
@@ -273,17 +328,18 @@ $hosted-stripe: 28px;
 }
 
 .hosted__cta-wrapper {
-    width: 40%;
     position: relative;
     z-index: 1;
-    padding-top: 200px;
+    padding-top: 270px;
     margin-left: 20px;
+
+    @include mq(tablet) {
+        width: 40%;
+    }
 }
 
 .hosted__cta {
-    svg {
-        fill: $neutral-1;
-    }
+    padding: 0;
 
     &,
     &:focus,
@@ -293,18 +349,42 @@ $hosted-stripe: 28px;
         color: $neutral-1;
     }
 
-    @include mq($until: desktop) {
-        width: 190px;
+    @include mq(mobile) {
         height: 26px;
-        margin-top: $gs-gutter / 2;
-        padding: 0 20px;
+        margin: 6px;
         font-size: 14px;
         line-height: 26px;
 
         svg {
-            width: 26px;
-            height: 26px;
+            fill: $neutral-1;
+            width: 24px;
+            height: 24px;
         }
+    }
+
+    @include mq(tablet) {
+        height: 34px;
+        margin: 13px;
+
+        svg {
+            width: 34px;
+            height: 34px;
+        }
+    }
+
+    @include mq(desktop) {
+        margin: 9px;
+    }
+}
+
+.hosted__cta-text {
+    @include f-headlineSans;
+
+    font-size: 25px;
+    color: #ffc421;
+
+    @include mq(tablet) {
+        font-size: 38px;
     }
 }
 
@@ -330,6 +410,7 @@ $hosted-stripe: 28px;
 .hosted__terms {
     @include f-textSans;
 
+    display: inline-block;
     margin-top: $gs-row-height / 2;
     font-size: 12px;
     line-height: 1.2;
@@ -375,7 +456,8 @@ $hosted-stripe: 28px;
 
 /*Hosted thrasher*/
 .creative--hosted-video {
-    .gs-container {
+    .hosted-video__body {
+        position: relative;
         height: 100%;
         padding-top: 0;
     }
@@ -394,13 +476,15 @@ $hosted-stripe: 28px;
         @include mq(desktop) {
             font-size: 46px;
             line-height: 46px;
-            margin-top: -12px;
             margin-bottom: 10px;
         }
     }
 
     .hosted__meta {
         left: $gs-gutter/2;
+        @include mq(desktop) {
+            width: 55%;
+        }
         @include mq($until: desktop) {
             bottom: 15%;
         }
@@ -451,9 +535,16 @@ $hosted-stripe: 28px;
 .hosted__label {
     float: left;
     margin-left: 110px;
-    margin-top: 29px;
     color: #ffffff;
     border: 0;
+
+    @include mq(mobile) {
+        margin-top: 20px;
+    }
+
+    @include mq(tablet) {
+        margin-top: 29px;
+    }
 
     @include mq(desktop) {
         margin-left: 160px;
@@ -471,12 +562,16 @@ $hosted-stripe: 28px;
 
     &.popup__toggle {
         border: 0;
-        padding-bottom: 0;
+        padding: 0;
 
         svg {
             fill: #ffffff;
         }
     }
+}
+
+.hosted__label-btn--small {
+    font-size: 12px;
 }
 
 .hosted__popup {
@@ -502,4 +597,8 @@ $hosted-stripe: 28px;
             left: 29%;
         }
     }
+}
+
+.hosted__popup-text {
+    font-weight: 200;
 }

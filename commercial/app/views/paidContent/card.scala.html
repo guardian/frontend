@@ -1,29 +1,39 @@
-@(articleUrl: String, articleTitle: String, articleText: Option[String], pictureUrl: Option[String], brandLogo: Option[String], brand: Option[String], linkLabel: Option[String], optClickMacro: Option[String], optOmnitureId: Option[String], trackingPixel: Option[String], cacheBuster: Option[String])(implicit request: RequestHeader)
+@(articleUrl: String,
+  articleTitle: String,
+  articleText: Option[String],
+  pictureUrl: Option[String],
+  brandLogo: Option[String],
+  brand: Option[String],
+  linkLabel: Option[String],
+  linkTracking: String,
+  optClickMacro: Option[String],
+  trackingPixel: Option[String],
+  cacheBuster: Option[String])(implicit request: RequestHeader)
 
 @import views.html.fragments
 
 @for(trackingPx <- trackingPixel){ <img src="@trackingPx@cacheBuster" class="creative__tracking-pixel" height="1px" width="1px"/> }
-<div class="paidfor-content" data-link-name="creative | gu style commercial content">
+<div class="paidfor-content">
     <div class="u-responsive-ratio inlined-image">
-        <a href="@optClickMacro@articleUrl" data-link-name="article image">
+        <a href="@optClickMacro@articleUrl" data-link-name="@linkTracking | article image">
             @pictureUrl.map{ url => <img src="@url" alt="@linkLabel" class="lineitem__image" /> }
         </a>
         <a @if(Edition(request).id == "AU") {
                 href="@LinkTo("/guardian-labs-australia")"
             } else {
                 href="@LinkTo("/guardian-labs")"
-            } class="paidfor-content__glabs-logo" title="glabs" data-link-name="glabs logo">
+            } class="paidfor-content__glabs-logo" title="glabs" data-link-name="@linkTracking | labs logo">
             @fragments.inlineSvg("glabs-logo-small", "logo")
         </a>
     </div>
     @fragments.commercial.paidForMeta()
-    <a href="@optClickMacro@articleUrl" class="paidfor-box paidfor-box--header" data-link-name="advertisers header">
+    <a href="@optClickMacro@articleUrl" class="paidfor-box paidfor-box--header" data-link-name="@linkTracking | article title">
         <h2 class="gu-title">@articleTitle</h2>
     </a>
-    <a href="@optClickMacro@articleUrl" class="paidfor-box paidfor-box--text" data-link-name="advertisers text">
+    <a href="@optClickMacro@articleUrl" class="paidfor-box paidfor-box--text" data-link-name="@linkTracking | article text">
         @for(text <- articleText){ <div class="gu-text">@Html(text)</div> }
     </a>
-    <a href="@optClickMacro@articleUrl" class="paidfor-box paidfor-box--logo" data-link-name="advertisers logo">
+    <a href="@optClickMacro@articleUrl" class="paidfor-box paidfor-box--logo" data-link-name="@linkTracking | advertiser logo">
         <div class="paidfor-brand">
             <span class="paidfor-note">Paid for by:</span>
             @for(logoUrl <- brandLogo) {<img src="@logoUrl" alt="@brand" class="paidfor-logo"/>}

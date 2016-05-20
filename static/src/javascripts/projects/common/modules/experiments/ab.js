@@ -17,6 +17,8 @@ define([
     'common/modules/experiments/tests/participation-low-fric-fashion',
     'common/modules/experiments/tests/clever-friend-brexit',
     'common/modules/experiments/tests/welcome-header',
+    'common/modules/experiments/tests/play-video-on-fronts',
+    'common/modules/experiments/tests/video-controls-on-main-media',
     'lodash/utilities/noop'
 ], function (
     reportError,
@@ -37,6 +39,8 @@ define([
     ParticipationLowFricFashion,
     CleverFriendBrexit,
     WelcomeHeader,
+    PlayVideoOnFronts,
+    VideoControlsOnMainMedia,
     noop
 ) {
 
@@ -52,7 +56,9 @@ define([
         new ParticipationLowFricRecipes(),
         new ParticipationLowFricFashion(),
         new CleverFriendBrexit(),
-        new WelcomeHeader()
+        new WelcomeHeader(),
+        new PlayVideoOnFronts(),
+        new VideoControlsOnMainMedia()
     ];
 
     var participationsKey = 'gu.ab.participations';

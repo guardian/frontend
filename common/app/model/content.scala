@@ -238,7 +238,7 @@ final case class Content(
   )
 
   val twitterProperties = Map(
-    "twitter:app:url:googleplay" -> metadata.webUrl.replace("http", "guardian"),
+    "twitter:app:url:googleplay" -> metadata.webUrl.replaceFirst("^[a-zA-Z]*://", "guardian://"), //replace current scheme with guardian mobile app scheme
     "twitter:image" -> rawOpenGraphImage
   ) ++ contributorTwitterHandle.map(handle => "twitter:creator" -> s"@$handle").toList
 
@@ -522,12 +522,13 @@ object Video {
       "embeddable" -> JsBoolean(elements.videos.find(_.properties.isMain).map(_.videos.embeddable).getOrElse(false)),
       "videoDuration" -> elements.videos.find(_.properties.isMain).map{ v => JsNumber(v.videos.duration)}.getOrElse(JsNull))
 
+    val optionalOpengraphProperties = if(content.metadata.webUrl.startsWith("https://")) Map("og:video:secure_url" -> content.metadata.webUrl) else Nil
     val opengraphProperties = Map(
       "og:type" -> "video",
       "og:video:type" -> "text/html",
       "og:video" -> content.metadata.webUrl,
       "video:tag" -> content.tags.keywords.map(_.name).mkString(",")
-    )
+    ) ++ optionalOpengraphProperties
 
     val metadata = content.metadata.copy(
       contentType = contentType,
