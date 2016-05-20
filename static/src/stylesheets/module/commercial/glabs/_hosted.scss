@@ -388,6 +388,12 @@ $hosted-stripe: 28px;
     }
 }
 
+.hosted__cta-link {
+    &:hover {
+        text-decoration: none;
+    }
+}
+
 .hosted__text {
     @include f-textSans;
 
