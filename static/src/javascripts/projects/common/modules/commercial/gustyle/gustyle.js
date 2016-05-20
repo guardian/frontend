@@ -39,12 +39,10 @@ define([
             var classList = 'gu-style' + ((this.isContentPage) ? ' gu-style--unboxed' : '');
 
             this.$slot.addClass(classList);
-            // Temporary taking this off as we need to some big updates but it needs some proper thinking time and these ads needs to run today. Haha I know what you think.
-            // But seriously we will do it. Eventually. Maybe. We will.
-            // this.$slot.prepend($.create(template(labelTpl, { data: merge(templateOptions) })));
+            this.$slot.prepend($.create(template(labelTpl, { data: merge(templateOptions) })));
 
-            // toggles = new Toggles(this.$slot[0]);
-            // toggles.init();
+            toggles = new Toggles(this.$slot[0]);
+            toggles.init();
         }, this);
     };
 
