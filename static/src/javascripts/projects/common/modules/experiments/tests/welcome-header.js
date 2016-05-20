@@ -17,7 +17,7 @@ define([
 
         this.id = 'WelcomeHeader';
         this.start = '2016-05-18';
-        this.expiry = '2016-05-23';
+        this.expiry = '2016-05-24';
         this.author = 'Maria Livia Chiorean';
         this.description = 'Show a welcome header for first time users.';
         this.audience = 1;

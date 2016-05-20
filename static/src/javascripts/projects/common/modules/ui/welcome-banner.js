@@ -35,28 +35,28 @@ define([
     }
 
     function createAndSetHeader(messageName) {
-        var headerDiv = document.createElement('button'),
+        var header = document.createElement('button'),
             msg = template(message1, data[messageName]),
             closeBtn = '<div class="banner-close-icon"><button class="js-welcome-message__item__close button button--tertiary u-faux-block-link__promote" aria-label="Dismiss" data-link-name="close button">' + svgs('closeCentralIcon') + '</button></div>';
 
-        headerDiv.id = 'welcome-banner';
-        headerDiv.style.height = header.offsetHeight + 'px';
-        headerDiv.innerHTML = closeBtn + msg;
-        headerDiv.className += 'u-faux-block-link__promote';
+        header.id = 'welcome-banner';
+        header.style.height = header.offsetHeight + 'px';
+        header.innerHTML = closeBtn + msg;
+        header.className += 'u-faux-block-link__promote';
 
-        headerDiv.setAttribute('data-link-name', 'welcome-banner');
+        header.setAttribute('data-link-name', 'welcome-banner');
 
-        bean.on($(headerDiv)[0], 'click', function () {
+        bean.on($(header)[0], 'click', function () {
             fastdom.write(function () {
-                headerDiv.style.display = 'none';
+                header.style.display = 'none';
             });
         });
 
         header.getElementsByClassName('l-header-main')[0].style.zIndex = 1200;
-        header.appendChild(headerDiv);
+        header.appendChild(header);
 
         setTimeout(function(){
-            headerDiv.style.opacity = 1;
+            header.style.opacity = 1;
         }, 0);
     }
 
