@@ -1,12 +1,10 @@
 define([
-    'bean',
     'fastdom',
     'common/utils/storage',
     'common/utils/template',
     'common/utils/load-css-promise',
     'common/views/svgs'
 ], function (
-    bean,
     fastdom,
     storage,
     template,
@@ -44,7 +42,7 @@ define([
 
         newHeader.setAttribute('data-link-name', 'welcome-banner');
 
-        bean.on($(newHeader)[0], 'click', function () {
+        newHeader.addEventListener('click', function () {
             fastdom.write(function () {
                 newHeader.style.display = 'none';
             });
