@@ -576,7 +576,7 @@ $hosted-stripe: 28px;
 
 .hosted__popup {
     top: 110%;
-    left: 264%;
+    left: 299%;
     width: 350px;
     padding: $gs-gutter / 2 $gs-gutter / 2 $gs-gutter $gs-gutter / 2;
     background: #ffffff;
@@ -596,6 +596,12 @@ $hosted-stripe: 28px;
         &:before {
             left: 29%;
         }
+    }
+}
+
+.hosted__popup--bottom {
+    @include mq($until: tablet) {
+        left: 65%;
     }
 }
 
