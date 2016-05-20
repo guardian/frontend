@@ -308,7 +308,6 @@ $hosted-stripe: 28px;
 // Main banner
 .hosted__banner {
     position: relative;
-    height: 375px;
     background-size: cover;
 
     &:after {
@@ -322,8 +321,17 @@ $hosted-stripe: 28px;
         background: linear-gradient(transparent 200px, rgba(0, 0, 0, .7));
     }
 
-    @include mq($until: desktop) {
-        background-position: center;
+    @include mq(mobile) {
+        height: 200px;
+        background-position: left;
+    }
+
+    @include mq(tablet) {
+        height: 250px;
+    }
+
+    @include mq(desktop) {
+        height: 375px;
     }
 }
 
