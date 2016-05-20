@@ -2,16 +2,15 @@ package conf
 
 import akka.agent.Agent
 import cache.SurrogateKey
-import common.{RequestMetrics, Logging, ExecutionContexts}
+import common.{ExecutionContexts, Logging, RequestMetrics}
 import conf.switches.Switches
 import filters.RequestLoggingFilter
 import implicits.Responses._
 import org.joda.time.DateTime
+import play.api.mvc.Results.ServiceUnavailable
 import play.api.mvc.{EssentialFilter, Filter, RequestHeader, Result}
 import play.filters.gzip.GzipFilter
-import play.api.mvc.Results.ServiceUnavailable
 
-import scala.collection.immutable.Queue
 import scala.concurrent.Future
 
 object Gzipper extends GzipFilter(shouldGzip = (_, resp) => !resp.isImage)
@@ -79,8 +78,8 @@ object AmpFilter extends Filter with ExecutionContexts with implicits.Requests {
 // this turns requests away with 5xx errors if we are too busy
 object PanicSheddingFilter extends Filter with Logging {
 
-  import scala.concurrent.duration._
   import scala.concurrent.ExecutionContext.Implicits.global
+  import scala.concurrent.duration._
 
   val ALL_200s_MAX_LATENCY = 1.second.toMillis
   val PANICING_MIN_LATENCY = 3.seconds.toMillis
