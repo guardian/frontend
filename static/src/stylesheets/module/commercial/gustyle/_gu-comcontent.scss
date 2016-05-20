@@ -37,6 +37,10 @@
 
 .gu-display__link {
     color: #ffffff;
+
+    &:hover {
+        text-decoration: none;
+    }
 }
 
 .content--immersive-article .from-content-api .gu-display__content-title,
