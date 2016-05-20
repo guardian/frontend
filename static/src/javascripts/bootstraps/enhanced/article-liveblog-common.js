@@ -27,7 +27,7 @@ define([
     function initOpenCta() {
         if (config.switches.openCta && config.page.commentable) {
             var openCta = new OpenCta(mediator, {
-                discussionKey: config.page.shortUrl.replace('http://gu.com/', '')
+                discussionKey: config.page.shortUrlId || ''
             });
 
             $.create('<div class="open-cta"></div>').each(function (el) {

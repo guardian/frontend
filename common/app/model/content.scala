@@ -76,9 +76,9 @@ final case class Content(
   lazy val isFromTheObserver: Boolean = publication == "The Observer"
   lazy val primaryKeyWordTag: Option[Tag] = tags.tags.find(!_.isSectionTag)
   lazy val keywordTags: Seq[Tag] = tags.keywords.filter(tag => !tag.isSectionTag)
-  lazy val shortUrlId = fields.shortUrl.replace("http://gu.com", "")
+  lazy val shortUrlId = fields.shortUrlId
   lazy val shortUrlPath = shortUrlId
-  lazy val discussionId = Some(shortUrlPath)
+  lazy val discussionId = Some(shortUrlId)
   lazy val isImmersive = fields.displayHint.contains("immersive") || metadata.contentType.toLowerCase == "gallery"
   lazy val showNewGalleryDesign = galleryRedesign.isSwitchedOn && metadata.contentType.toLowerCase == "gallery" && !trail.commercial.isAdvertisementFeature
 
