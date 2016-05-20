@@ -571,6 +571,8 @@ $hosted-stripe: 28px;
 }
 
 .hosted__label-btn--small {
+    @include f-textSans;
+    
     font-size: 12px;
 }
 
