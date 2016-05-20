@@ -5,6 +5,8 @@ define([
     qwery,
     config
 ) {
+    var mainVideo = qwery('[data-component="main video"]');
+
     return function () {
         this.id = 'VideoControlsOnMainMedia';
         this.start = '2016-05-19';
@@ -19,17 +21,19 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function () {
-            return config.page.contentType === 'Article' && qwery('[data-component="main video"]').length > 0;
+            return config.page.contentType === 'Article' && mainVideo.length > 0;
         };
 
         this.variants = [
             {
-                id: 'baseline1',
+                id: 'control',
                 test: function () {}
             },
             {
-                id: 'baseline2',
-                test: function () {}
+                id: 'variant1',
+                test: function () {
+                    mainVideo.addClass('show-media-controls');
+                }
             }
         ];
     };
