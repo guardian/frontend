@@ -216,30 +216,31 @@ $hosted-stripe: 28px;
         margin: 6px 20px 6px $gs-gutter;
     }
 
+    &.vjs-using-native-controls .vjs-control-bar {
+        display: block;
+    }
+
+    .vjs-error-display {
+        z-index: 1016;
+    }
 }
 
 .hosted__meta {
     position: absolute;
     left: $gs-gutter;
-    bottom: 15%;
+    bottom: 50px;
     width: 55%; // Magic. Do not touch.
     color: #ffffff;
-
-    @include mq(tablet) {
-        bottom: 20%;
-    }
 
     @include mq(desktop) {
         width: 35%;
     }
 
-    @include mq(leftCol) {
-        bottom: 18%;
-    }
-
     @include mq($until: tablet) {
         left: 76px;
-        bottom: 10px;
+        right: $gs-gutter;
+        bottom: 3px;
+        width: auto;
     }
 }
 
@@ -482,6 +483,7 @@ $hosted-stripe: 28px;
 
     .hosted__meta {
         left: $gs-gutter/2;
+        bottom: 60px;
         @include mq(desktop) {
             width: 55%;
         }
@@ -517,7 +519,7 @@ $hosted-stripe: 28px;
         right: 0;
         bottom: 0;
         position: absolute;
-        background-image: linear-gradient(to bottom, rgba(238, 238, 238, 0), rgba(0, 0, 0, .4));
+        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, .4));
         border-top: 2px solid transparent;
     }
 
