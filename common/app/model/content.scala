@@ -524,10 +524,13 @@ object Video {
 
     val optionalOpengraphProperties = if(content.metadata.webUrl.startsWith("https://")) Map("og:video:secure_url" -> content.metadata.webUrl) else Nil
     val opengraphProperties = Map(
-      "og:type" -> "video",
-      "og:video:type" -> "text/html",
-      "og:video" -> content.metadata.webUrl,
-      "video:tag" -> content.tags.keywords.map(_.name).mkString(",")
+      // Not using the og:video properties here because we want end-users to visit the guardian website
+      // when they click the thumbnail in the FB feed rather than playing the video "in-place"
+      "og:type" -> "article",
+      "article:published_time" -> content.trail.webPublicationDate.toString,
+      "article:modified_time" -> content.fields.lastModified.toString,
+      "article:section" -> content.trail.sectionName,
+      "article:tag" -> content.tags.keywords.map(_.name).mkString(",")
     ) ++ optionalOpengraphProperties
 
     val metadata = content.metadata.copy(
