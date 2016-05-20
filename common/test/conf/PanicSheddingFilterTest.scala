@@ -2,54 +2,79 @@ package conf
 
 import org.scalatest.{AppendedClues, FlatSpec, Matchers}
 
-import scala.collection.immutable.Queue
-
 class LatencyMonitorTest extends FlatSpec with Matchers with AppendedClues {
 
   import LatencyMonitor._
 
-  "LatencyMonitor" should "have 2 latency after a single request" in {
-    updateLatency(2)(initialLatency) should be(AverageLatency(Queue(2), 2))
+  "LatencyMonitor" should "have no latency after no request" in {
+    initialLatency should be(AverageLatency(0))
+    initialLatency.latency should be(0)
   }
 
-  "LatencyMonitor" should "have 6 latency after (2, 4) request" in {
-    updateLatency(4)(updateLatency(2)(initialLatency)) should be(AverageLatency(Queue(2, 4), 6))
+  "LatencyMonitor" should "approach the actual latency over time" in {
+    val TEST_LATENCY = 12345L
+    val result = (0 to 1000).foldLeft(initialLatency)({ (prev, _) => updateLatency(TEST_LATENCY)(prev) })
+
+    result.latency should be > (TEST_LATENCY*0.99).toLong
+    result.latency should be <= TEST_LATENCY
   }
 
-  "LatencyMonitor" should "have 10000 latency after a 1001 req" in {
-    val one = updateLatency(0)(initialLatency)
-    val result = (0 to LATENCY_MAX_SAMPLES).foldLeft(one)({ (prev, _) => updateLatency(10)(prev) })
-    result.copy(latencies = Queue()) should be(AverageLatency(Queue(), LATENCY_MAX_SAMPLES*10))
+  "LatencyMonitor" should "approach the actual latency over time even if it's been higher" in {
+    val TEST_LATENCY = 12345L
+    val TEST_LATENCY_2 = 300L
+    val intermediate = (0 to 1000).foldLeft(initialLatency)({ (prev, _) => updateLatency(TEST_LATENCY)(prev) })
+    val result = (0 to 1000).foldLeft(intermediate)({ (prev, _) => updateLatency(TEST_LATENCY_2)(prev) })
+
+    result.latency should be >= TEST_LATENCY_2
+    result.latency should be < (TEST_LATENCY_2*1.01).toLong
   }
 
 }
+
+class StartCompleteRatioMonitorTest extends FlatSpec with Matchers with AppendedClues {
+
+  import StartCompleteRatioMonitor._
+
+  "LatencyMonitor" should "have 0 ratio after no request" in {
+    initialRatio should be(StartCompleteRatio(0))
+    initialRatio.ratio should be(0)
+  }
+
+  "LatencyMonitor" should "go up within 30 requests then down when starting/stopping requests" in {
+    val result = (0 to 30).foldLeft(initialRatio)({ (prev, _) => requestStarted(prev) })
+    result.ratio should be > 25L
+    val after = (0 to 30).foldLeft(initialRatio)({ (prev, _) => requestComplete(prev) })
+    after.ratio should be < 0L
+  }
+
+  "LatencyMonitor" should "not go too high within 20 requests" in {
+    val result = (0 to 20).foldLeft(initialRatio)({ (prev, _) => requestStarted(prev) })
+    result.ratio should be < 25L
+  }
+
+}
+
 
 class InFlightLatencyMonitorTest extends FlatSpec with Matchers with AppendedClues {
 
   import InProgressRequestMonitor._
 
   "LatencyMonitor" should "have 2 latency after a single request" in {
-    val added = requestStarted(2)(initialRequestsInProgress)
-    added should be(InFlightLatency(requestStarts = 1, lastUpdateTime = 2, totalLatency = 0))
-    added.latency(2) should be(0)
-    added.latency(4) should be(2)
-    val removed = requestComplete(2)(added)
-    removed should be(InFlightLatency(requestStarts = 0, lastUpdateTime = 2, totalLatency = 0))
-    removed.latency(4) should be(0)
-    removed.latency(6) should be(0)
+    val added = requestStarted(initialRequestsInProgress)
+    added should be(1)
+    val removed = requestComplete(added)
+    removed should be(0)
   }
 
   "LatencyMonitor" should "be able to add 2 and remove 2" in {
-    val added = requestStarted(2)(initialRequestsInProgress)
-    added should be(InFlightLatency(requestStarts = 1, lastUpdateTime = 2, totalLatency = 0))
-    val addedAgain = requestStarted(4)(added)
-    addedAgain should be(InFlightLatency(requestStarts = 2, lastUpdateTime = 4, totalLatency = 2))
-    addedAgain.latency(4) should be(1)
-    addedAgain.latency(6) should be(5)
-    val removed = requestComplete(4)(addedAgain)
-    removed should be(InFlightLatency(requestStarts = 1, lastUpdateTime = 4, totalLatency = 2))
-    val removedAgain = requestComplete(2)(removed)
-    removedAgain should be(InFlightLatency(requestStarts = 0, lastUpdateTime = 4, totalLatency = 0))
+    val added = requestStarted(initialRequestsInProgress)
+    added should be(1)
+    val addedAgain = requestStarted(added)
+    addedAgain should be(2)
+    val removed = requestComplete(addedAgain)
+    removed should be(1)
+    val removedAgain = requestComplete(removed)
+    removedAgain should be(0)
   }
 
 }

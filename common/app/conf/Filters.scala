@@ -162,7 +162,6 @@ object PanicSheddingFilter extends Filter with Logging {
 
 }
 
-// TODO unit tests
 object StartCompleteRatioMonitor extends ExecutionContexts {
 
   case class StartCompleteRatio(total: Long) {
