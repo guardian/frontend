@@ -245,6 +245,7 @@ $hosted-stripe: 28px;
 }
 
 .vjs-playing + .hosted-fading {
+    .hosted__central-play-button,
     .hosted__meta {
         @include hosted-fade-out;
     }
@@ -256,6 +257,7 @@ $hosted-stripe: 28px;
 }
 
 .vjs-paused + .hosted-fading {
+    .hosted__central-play-button,
     .hosted__meta,
     .hostedbadge__logo {
         @include hosted-fade-in;
@@ -641,4 +643,31 @@ $hosted-stripe: 28px;
 
 .hosted__popup-text {
     font-weight: 200;
+}
+
+.hosted__central-play-button {
+    @include f-headlineSans;
+    position: absolute;
+    top: calc(50% - 18px);
+    left: calc(50% - 71px);
+    border: 2px solid #ffffff;
+    height: 40px;
+    width: 146px;
+    border-radius: 30px;
+    color: #ffffff;
+    line-height: 42px;
+    text-align: center;
+    font-size: 20px;
+    @include mq($until: desktop) {
+        display: none;
+    }
+
+    .hosted__central-play-button-icon {
+        @include icon(svg-i-play-icon-grey);
+        height: 16px;
+        width: 18px;
+        vertical-align: middle;
+        margin-bottom: 3px;
+        margin-right: 3px;
+    }
 }
