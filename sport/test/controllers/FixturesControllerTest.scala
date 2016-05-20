@@ -31,7 +31,7 @@ import org.scalatest._
     val result = fixturesController.allFixtures()(fakeRequest)
 
     status(result) should be(200)
-    header("Content-Type", result).get should be("application/json; charset=utf-8")
+    contentType(result) shouldBe Some("application/json")
     contentAsString(result) should startWith("""{"""")
   }
 
@@ -47,7 +47,7 @@ import org.scalatest._
     val result = fixturesController.allFixturesFor("2012", "oct", "20")(fakeRequest)
 
     status(result) should be(200)
-    header("Content-Type", result).get should be("application/json; charset=utf-8")
+    contentType(result) shouldBe Some("application/json")
     contentAsString(result) should startWith("""{"""")
   }
 
@@ -63,7 +63,7 @@ import org.scalatest._
     val result = fixturesController.tagFixtures(tag)(fakeRequest)
 
     status(result) should be(200)
-    header("Content-Type", result).get should be("application/json; charset=utf-8")
+    contentType(result) shouldBe Some("application/json")
     contentAsString(result) should startWith("""{"""")
   }
 
@@ -79,7 +79,7 @@ import org.scalatest._
     val result = fixturesController.tagFixturesFor("2012", "oct", "20", tag)(fakeRequest)
 
     status(result) should be(200)
-    header("Content-Type", result).get should be("application/json; charset=utf-8")
+    contentType(result) shouldBe Some("application/json")
     contentAsString(result) should startWith("""{"""")
   }
 }

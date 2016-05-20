@@ -69,10 +69,7 @@ import test.{ConfiguredTestSuite, WithTestEnvironment}
         val response = call(controller.alerts, getAlertsRequest)
 
         status(response) should be(OK)
-        header("Content-Type", response) match {
-          case Some(h) => h should startWith("application/json")
-          case _ => assert(false)
-        }
+        contentType(response) shouldBe Some("application/json")
         contentAsJson(response) should equal(validJson)
       }
     }
