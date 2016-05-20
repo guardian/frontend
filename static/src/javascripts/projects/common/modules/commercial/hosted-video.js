@@ -59,6 +59,13 @@ define([
                 });
                 player.guMediaType = 'video';
 
+                // unglitching the volume on first load
+                var vol = player.volume();
+                if (vol) {
+                    player.volume(0);
+                    player.volume(vol);
+                }
+
                 player.ready(function () {
                     deferToAnalytics(function () {
                         events.initOmnitureTracking(player);
