@@ -89,7 +89,7 @@ object PanicSheddingFilter extends Filter with Logging {
   val MAX_STARTS_IMBALANCE = StartCompleteRatioMonitor.RANGE / 4
 
   val averageLatency = Agent(LatencyMonitor.initialLatency)
-  val inFlightLatency = Agent(InProgressRequestMonitor.initialRequestsInProgress)
+  val requestsInProgressCounter = Agent(InProgressRequestMonitor.initialRequestsInProgress)
   val startCompleteRatio = Agent(StartCompleteRatioMonitor.initialRatio)
 
   // Busy monitoring is not perfect as it only knows when things are already slow.
@@ -98,7 +98,8 @@ object PanicSheddingFilter extends Filter with Logging {
   // also if the request rate keeps going up there would be plenty of "young" requests to skew the average down
   def available(request: RequestHeader) = {
 
-    def panic(requestsInProgress: Int) = {
+    // we are in real trouble, but still allow a trickle through
+    def serveDuringPanic(requestsInProgress: Int) = {
       if (requestsInProgress <= MIN_CONNECTIONS) {
         true
       } else {
@@ -110,18 +111,18 @@ object PanicSheddingFilter extends Filter with Logging {
     import implicits.Requests._
     // we read all the values up front, so there could be other requests ahead of us that would affect the values (race)
     val previousLatency = averageLatency.get.latency
-    val requestsInProgress = inFlightLatency.get
+    val requestsInProgress = requestsInProgressCounter.get
     val startsRatio = startCompleteRatio.get.ratio
     log.info(s"$requestsInProgress in progress: averageLatency = $previousLatency, startsRatio (-100,100) = $startsRatio")
     if (startsRatio > MAX_STARTS_IMBALANCE) {
       log.warn(s"recently started $startsRatio compared with finishes, avoiding surge")
       RequestMetrics.PanicRequestsSurgeMetric.increment()
-      panic(requestsInProgress)
+      serveDuringPanic(requestsInProgress)
     } else if (previousLatency <= ALL_200s_MAX_LATENCY) {
       true
     } else if (previousLatency > PANICING_MIN_LATENCY) {
       RequestMetrics.PanicExcessiveLatencyMetric.increment()
-      panic(requestsInProgress)
+      serveDuringPanic(requestsInProgress)
     } else if (request.isHealthcheck) {
       log.warn(s"server busy, allowing health checks through")
       true // if we're partially open serve health checks
@@ -149,10 +150,10 @@ object PanicSheddingFilter extends Filter with Logging {
   def monitor(result: => Future[Result]) = {
     val startedResult = result
     val startTime = DateTime.now.getMillis
-    inFlightLatency.send(InProgressRequestMonitor.requestStarted)
+    requestsInProgressCounter.send(InProgressRequestMonitor.requestStarted)
     startCompleteRatio.send(StartCompleteRatioMonitor.requestStarted)
     startedResult.onComplete { _ =>
-      inFlightLatency.send(InProgressRequestMonitor.requestComplete)
+      requestsInProgressCounter.send(InProgressRequestMonitor.requestComplete)
       startCompleteRatio.send(StartCompleteRatioMonitor.requestComplete)
       averageLatency.send(LatencyMonitor.updateLatency(DateTime.now.getMillis - startTime)_)
       log.info(s"request complete in: ${DateTime.now.getMillis - startTime}")
