@@ -220,6 +220,9 @@ $hosted-stripe: 28px;
         display: block;
     }
 
+    .vjs-error-display {
+        z-index: 1016;
+    }
 }
 
 .hosted__meta {
