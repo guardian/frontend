@@ -26,10 +26,10 @@ class LatencyMonitorTest extends FlatSpec with Matchers with AppendedClues {
 
 class InFlightLatencyMonitorTest extends FlatSpec with Matchers with AppendedClues {
 
-  import InFlightLatencyMonitor._
+  import InProgressRequestMonitor._
 
   "LatencyMonitor" should "have 2 latency after a single request" in {
-    val added = requestStarted(2)(initialLatency)
+    val added = requestStarted(2)(initialRequestsInProgress)
     added should be(InFlightLatency(requestStarts = 1, lastUpdateTime = 2, totalLatency = 0))
     added.latency(2) should be(0)
     added.latency(4) should be(2)
@@ -40,7 +40,7 @@ class InFlightLatencyMonitorTest extends FlatSpec with Matchers with AppendedClu
   }
 
   "LatencyMonitor" should "be able to add 2 and remove 2" in {
-    val added = requestStarted(2)(initialLatency)
+    val added = requestStarted(2)(initialRequestsInProgress)
     added should be(InFlightLatency(requestStarts = 1, lastUpdateTime = 2, totalLatency = 0))
     val addedAgain = requestStarted(4)(added)
     addedAgain should be(InFlightLatency(requestStarts = 2, lastUpdateTime = 4, totalLatency = 2))

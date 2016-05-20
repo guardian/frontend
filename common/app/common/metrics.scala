@@ -104,7 +104,17 @@ object SystemMetrics extends implicits.Numbers {
 
 object RequestMetrics {
 
-  val RequestsShedMetric = CountMetric(
+  val PanicRequestsSurgeMetric = CountMetric(
+    name = "requests-shed",
+    description = "Number of requests we returned 503 because the server was overloaded"
+  )
+
+  val PanicExcessiveLatencyMetric = CountMetric(
+    name = "requests-shed",
+    description = "Number of requests we returned 503 because the server was overloaded"
+  )
+
+  val PanicLatencyWarningMetric = CountMetric(
     name = "requests-shed",
     description = "Number of requests we returned 503 because the server was overloaded"
   )
@@ -161,7 +171,9 @@ trait CloudWatchApplicationMetrics extends GlobalSettings with Logging {
 
   def applicationName: String
   def applicationMetrics: List[FrontendMetric] = List(
-    RequestMetrics.RequestsShedMetric
+    RequestMetrics.PanicRequestsSurgeMetric,
+    RequestMetrics.PanicExcessiveLatencyMetric,
+    RequestMetrics.PanicLatencyWarningMetric
   )
 
   def systemMetrics: List[FrontendMetric] = List(

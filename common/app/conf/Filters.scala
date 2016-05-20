@@ -89,7 +89,7 @@ object PanicSheddingFilter extends Filter with Logging {
   val MAX_STARTS_IMBALANCE = StartCompleteRatioMonitor.RANGE / 4
 
   val averageLatency = Agent(LatencyMonitor.initialLatency)
-  val inFlightLatency = Agent(InFlightLatencyMonitor.initialLatency)
+  val inFlightLatency = Agent(InProgressRequestMonitor.initialRequestsInProgress)
   val startCompleteRatio = Agent(StartCompleteRatioMonitor.initialRatio)
 
   // Busy monitoring is not perfect as it only knows when things are already slow.
@@ -108,24 +108,25 @@ object PanicSheddingFilter extends Filter with Logging {
     }
 
     import implicits.Requests._
-    // assume uncompleted requests are half way through on average, although if we get a sudden flood this assumption doesn't hold
-//    val currentInflightLatency = inFlightLatency.get.latency(DateTime.now.getMillis) * 2
+    // we read all the values up front, so there could be other requests ahead of us that would affect the values (race)
     val previousLatency = averageLatency.get.latency
-    val requestsInProgress = inFlightLatency.get.requestStarts
+    val requestsInProgress = inFlightLatency.get
     val startsRatio = startCompleteRatio.get.ratio
-    log.info(s"$requestsInProgress: currentInFlightLatency = currentInflightLatency and averageLatency = $previousLatency, starts = $startsRatio%")
-//      val worstLatency = Math.max(currentInflightLatency, previousLatency)
+    log.info(s"$requestsInProgress in progress: averageLatency = $previousLatency, startsRatio (-100,100) = $startsRatio")
     if (startsRatio > MAX_STARTS_IMBALANCE) {
       log.warn(s"recently started $startsRatio compared with finishes, avoiding surge")
+      RequestMetrics.PanicRequestsSurgeMetric.increment()
       panic(requestsInProgress)
     } else if (previousLatency <= ALL_200s_MAX_LATENCY) {
       true
     } else if (previousLatency > PANICING_MIN_LATENCY) {
+      RequestMetrics.PanicExcessiveLatencyMetric.increment()
       panic(requestsInProgress)
     } else if (request.isHealthcheck) {
       log.warn(s"server busy, allowing health checks through")
       true // if we're partially open serve health checks
     } else {
+      RequestMetrics.PanicLatencyWarningMetric.increment()
       val openingRange = PANICING_MIN_LATENCY - ALL_200s_MAX_LATENCY
       val msAwayFromFullyOff = PANICING_MIN_LATENCY - previousLatency
       val percentageOfRequestsToServe = msAwayFromFullyOff * 100 / openingRange
@@ -138,11 +139,9 @@ object PanicSheddingFilter extends Filter with Logging {
     if (available(request)) {
       monitor(nextFilter(request))
     } else if (Switches.PanicSheddingSwitch.isSwitchedOn) {
-      RequestMetrics.RequestsShedMetric.increment()
       Future.successful(ServiceUnavailable)
     } else {
       log.warn("panic switch disabled - having a go at responding anyway")
-      RequestMetrics.RequestsShedMetric.increment()
       monitor(nextFilter(request))
     }
   }
@@ -150,10 +149,10 @@ object PanicSheddingFilter extends Filter with Logging {
   def monitor(result: => Future[Result]) = {
     val startedResult = result
     val startTime = DateTime.now.getMillis
-    inFlightLatency.send(InFlightLatencyMonitor.requestStarted(startTime)_)
+    inFlightLatency.send(InProgressRequestMonitor.requestStarted)
     startCompleteRatio.send(StartCompleteRatioMonitor.requestStarted)
     startedResult.onComplete { _ =>
-      inFlightLatency.send(InFlightLatencyMonitor.requestComplete(startTime)_)
+      inFlightLatency.send(InProgressRequestMonitor.requestComplete)
       startCompleteRatio.send(StartCompleteRatioMonitor.requestComplete)
       averageLatency.send(LatencyMonitor.updateLatency(DateTime.now.getMillis - startTime)_)
       log.info(s"request complete in: ${DateTime.now.getMillis - startTime}")
@@ -189,29 +188,17 @@ object StartCompleteRatioMonitor extends ExecutionContexts {
 
 }
 
-object InFlightLatencyMonitor extends ExecutionContexts {
+object InProgressRequestMonitor extends ExecutionContexts {
 
-  case class InFlightLatency(requestStarts: Int, lastUpdateTime: Long, totalLatency: Long) {
-    def latency(now: Long) =
-      if (requestStarts == 0) {
-        0L
-      } else {
-        (now - lastUpdateTime) + (totalLatency / requestStarts)
-      }
+  val initialRequestsInProgress = 0
+
+  def request(start: Boolean)(requestsInProgress: Int) = {
+    requestsInProgress + (if (start) 1 else -1)
   }
 
-  val initialLatency = InFlightLatency(requestStarts = 0, lastUpdateTime = 0, totalLatency = 0)
+  def requestStarted = request(start = true)_
 
-  def requestStarted(startTime: Long)(inFlightLatency: InFlightLatency) = {
-    val InFlightLatency(requestStarts, lastUpdateTime, total) = inFlightLatency
-    val newTotal = total + ((startTime - lastUpdateTime) * requestStarts)
-    InFlightLatency(requestStarts + 1, startTime, newTotal)
-  }
-
-  def requestComplete(startTime: Long)(inFlightLatency: InFlightLatency) = {
-    val InFlightLatency(requestStarts, lastUpdateTime, total) = inFlightLatency
-    InFlightLatency(requestStarts - 1, lastUpdateTime, total - (lastUpdateTime - startTime))
-  }
+  def requestComplete = request(start = false)_
 
 }
 
