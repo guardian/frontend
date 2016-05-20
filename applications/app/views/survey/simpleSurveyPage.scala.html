@@ -1,0 +1,98 @@
+@()(implicit request: RequestHeader)
+
+@import staticpages.StaticPages.simpleSurveyStaticPage
+@import common.InlineJs
+@import templates.inlineJS.blocking.js._
+
+<!DOCTYPE html>
+<html id="js-context" class="js-off is-not-modern id--signed-out" data-page-path="@request.path">
+
+<head>
+    <meta charset="utf-8" />
+    <title>@views.support.Title(simpleSurveyStaticPage)</title>
+
+    @fragments.metaData(simpleSurveyStaticPage)
+
+    @* get the stylesheets downloading ASAP *@
+    @fragments.stylesheets(None)
+
+    @* polyfill, feature detect etc before we try and use the stylesheets *@
+    @fragments.inlineJSBlocking(simpleSurveyStaticPage)
+
+    @* try and load fonts before we use the stylesheets *@
+    @fragments.fontDefinitions()
+
+    @* start trying to use the stylesheets *@
+    <script>
+        @InlineJs(enableStylesheets().body, "enableStylesheets.js")
+    </script>
+
+</head>
+    <body
+        id="top"
+        itemscope itemtype="http://schema.org/WebPage">
+
+        @fragments.header(simpleSurveyStaticPage)
+
+        <div class="l-side-margins">
+
+            <div class="adfreesurvey-wrapper adfreesurvey-simple-wrapper" data-link-name="adfree survey simple page">
+
+                <div class="adfreesurvey-wrapper-inner">
+
+                    @fragments.inlineSvg("survey-thumbsup", "commercial")
+
+                    <h1>Thank you so much for expressing interest in an advert free experience</h1>
+
+                    <p class="standfirst">Unfortunately this feature isn’t available at the moment on the Guardian site. This is part of a test to understand the interest of our readers in new features for the Guardian site and apps.</p>
+
+                    @fragments.inlineSvg("survey-loudspeaker", "commercial")
+
+                    <h2>Quick survey</h2>
+
+                    <p>We would like to hear your thoughts on this feature, so we’ve created a quick survey for you. The survey is hosted in UserZoom and should take no more than 5 minutes to complete.</p>
+
+                    <p><a href="https://s.userzoom.com/m/MSBDMTBTMjQy" class="button button--primary button--medium" data-link-name="take part in survey" target="_blank">Tell us your thoughts</a></p>
+
+                    @fragments.inlineSvg("thankyou-email", "commercial")
+
+                    <h2>Register interest</h2>
+
+                    <p>Let us know your email address to be contacted if this feature becomes available. Your email won't be used for other purposes.</p>
+
+                    <p><a href="https://s.userzoom.com/m/MiBDMTBTMjQz" class="button button--primary button--medium" data-link-name="register email" target="_blank">Register</a></p>
+
+                </div>
+
+                <div class="footer-area">
+
+                    <div class="adfreesurvey-wrapper-inner adfreesurvey-wrapper-inner--footer">
+
+                        <ul class="u-unstyled l-row l-row--cols-2">
+
+                            <li class="l-row__item l-row__item--span-1">
+
+                                <p>Get an advert free experience on the Guardian app today by upgrading to the premium tier for just &pound;2.49 a month.</p>
+
+                                <p><img src="@Static("images/commercial/survey-iosandroidapps.png")"></p>
+
+                                <a href="http://www.theguardian.com/guardianapp" class="button button--secondary button--small" data-link-name="read more about the guardian app">Learn more about the Guardian app @fragments.inlineSvg("arrow-right", "icon")</a>
+
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        @fragments.footer(simpleSurveyStaticPage)
+
+        @fragments.inlineJSNonBlocking()
+
+    </body>
+</html>

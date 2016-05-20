@@ -1,0 +1,130 @@
+.adfreesurvey-wrapper {
+    .adfreesurvey-wrapper-inner {
+        margin: 0 auto;
+        width: auto;
+        padding: 0 $gs-gutter $gs-gutter;
+
+        @include mq(tablet) {
+            margin: 0 auto;
+            width: $gs-column-width*6;
+            padding: $gs-gutter 0;
+        }
+    }
+
+    .inline-survey-thumbsup {
+        margin-bottom: $gs-gutter/2;
+        display: block;
+        padding-top: $gs-gutter;
+    }
+
+    .inline-survey-loudspeaker,
+    .inline-thankyou-email {
+        display: block;
+        text-align: center;
+        margin-top: $gs-gutter;
+
+        svg {
+            width: 100px;
+            height: 100px;
+        }
+    }
+
+    .inline-arrow-right {
+        float: right;
+        fill: #7d7d7d;
+
+    }
+
+    .inline-membership-logo {
+        margin: $gs-gutter 0;
+        display: block;
+        svg {
+            width: 100px;
+            height: 40px;
+
+            g {
+                fill: #bf4181;
+            }
+        }
+        @include mq(tablet) {
+            margin: $gs-gutter*2 0 30px;
+        }
+    }
+
+    h1 {
+        @include fs-headline(4);
+        color: $guardian-brand;
+        font-weight: bold;
+        margin-bottom: $gs-gutter;
+
+        @include mq(tablet) {
+            @include fs-headline(6);
+            font-weight: bold;
+        }
+    }
+
+    h2 {
+        @include fs-header(4);
+        color: $guardian-brand;
+        margin-bottom: $gs-baseline/2;
+    }
+
+    p {
+        margin-bottom: $gs-baseline;
+        @include fs-bodyCopy(1);
+    }
+
+    .standfirst {
+        @include fs-bodyCopy(2);
+    }
+
+    .button--secondary {
+        border-color: #7d7d7d;
+        background-color: transparent;
+
+        &:hover {
+            background-color: $neutral-7;
+        }
+    }
+
+    .button--medium {
+        line-height: 32px;
+    }
+
+    .footer-area {
+        background-color: $neutral-5;
+
+        .adfreesurvey-wrapper-inner {
+            width: auto;
+            padding: $gs-gutter;
+            margin: 0 auto;
+
+            @include mq(tablet) {
+                width: $gs-column-width*10;
+                padding: $gs-gutter*2 0;
+            }
+        }
+
+        img {
+            display: block;
+        }
+
+        .l-row__item:last-child {
+            margin-top: $gs-gutter;
+
+            @include mq(tablet) {
+                margin-top: 0;
+            }
+        }
+
+    }
+
+    &.adfreesurvey-simple-wrapper {
+        .adfreesurvey-wrapper-inner--footer {
+            @include mq(tablet) {
+                width: $gs-column-width*8;
+            }
+        }
+    }
+
+}
