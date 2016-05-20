@@ -5,7 +5,6 @@ define([
     'common/utils/$',
     'common/utils/mediator',
     'common/utils/storage',
-    'common/utils/template',
     'template!common/views/commercial/creatives/expandable.html',
     'lodash/functions/bindAll',
     'common/modules/commercial/creatives/add-tracking-pixel'

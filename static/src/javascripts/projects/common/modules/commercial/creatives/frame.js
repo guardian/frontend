@@ -1,19 +1,18 @@
 define([
     'common/utils/fastdom-promise',
-    'common/utils/template',
     'common/views/svgs',
     'common/modules/ui/toggles',
     'common/modules/commercial/creatives/add-tracking-pixel',
-    'text!common/views/commercial/creatives/frame.html',
-    'text!common/views/commercial/gustyle/label.html'
+    'template!common/views/commercial/creatives/frame.html',
+    'template!common/views/commercial/gustyle/label.html'
 ], function (
     fastdom,
     template,
     svgs,
     Toggles,
     addTrackingPixel,
-    frameStr,
-    labelStr
+    frameTpl,
+    labelTpl
 ) {
 
     var Frame = function ($adSlot, params) {
@@ -25,8 +24,8 @@ define([
         this.params.externalLinkIcon = svgs('externalLink', ['gu-external-icon']);
         this.params.target = this.params.newWindow === 'yes' ? '_blank' : '_self';
 
-        var frameMarkup = template(frameStr, { data: this.params });
-        var labelMarkup = template(labelStr, { data: {
+        var frameMarkup = frameTpl({ data: this.params });
+        var labelMarkup = labelTpl({ data: {
             buttonTitle: 'Ad',
             infoTitle: 'Advertising on the Guardian',
             infoText: 'is created and paid for by third parties and link to an external site.',

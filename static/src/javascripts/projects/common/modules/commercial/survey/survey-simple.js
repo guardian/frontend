@@ -2,16 +2,14 @@ define([
     'bean',
     'fastdom',
     'common/utils/$',
-    'common/utils/template',
     'common/modules/user-prefs',
     'common/views/svgs',
-    'text!common/views/commercial/survey/survey-simple.html',
+    'template!common/views/commercial/survey/survey-simple.html',
     'lodash/arrays/uniq'
 ], function (
     bean,
     fastdom,
     $,
-    template,
     userPrefs,
     svgs,
     surveySimpleTemplate,
@@ -22,7 +20,7 @@ define([
         this.id = this.config.id;
         this.prefs = 'overlay-messages';
         this.shouldClosePermanently = this.config.shouldClosePermanently || false;
-        this.bannerTmpl = template(surveySimpleTemplate,
+        this.bannerTmpl = surveySimpleTemplate(
             {
                 surveyHeader: this.config.surveyHeader,
                 surveyText: this.config.surveyText,

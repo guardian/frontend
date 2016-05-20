@@ -6,10 +6,9 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/storage',
-    'common/utils/template',
     'common/views/svgs',
-    'text!common/views/commercial/creatives/fabric-expanding-v1.html',
-    'text!common/views/commercial/creatives/fabric-expanding-video.html',
+    'template!common/views/commercial/creatives/fabric-expanding-v1.html',
+    'template!common/views/commercial/creatives/fabric-expanding-video.html',
     'lodash/functions/bindAll',
     'lodash/objects/merge',
     'common/modules/commercial/creatives/add-tracking-pixel',
@@ -22,7 +21,6 @@ define([
     detect,
     mediator,
     storage,
-    template,
     svgs,
     fabricExpandingV1Html,
     fabricExpandingVideoHtml,
@@ -157,7 +155,7 @@ define([
             inlineStyle : [leftMargin, leftPosition, rightPosition].join('; ')
         };
 
-        return template(fabricExpandingVideoHtml, viewModel);
+        return fabricExpandingVideoHtml(viewModel);
     };
 
     FabricExpandingV1.prototype.stopVideo = function (delay) {
@@ -193,7 +191,7 @@ define([
             scrollbg: this.params.backgroundImagePType !== 'none' ?
             '<div class="ad-exp--expand-scrolling-bg" style="background-image: url(' + this.params.backgroundImageP + '); background-position: ' + this.params.backgroundImagePPosition + ' ' + scrollbgDefaultY + '; background-repeat: ' + this.params.backgroundImagePRepeat + ';"></div>' : ''
         };
-        var $fabricExpandingV1 = $.create(template(fabricExpandingV1Html, { data: merge(this.params, showmoreArrow, showmorePlus, videoDesktop, videoMobile, scrollingbg) }));
+        var $fabricExpandingV1 = $.create(fabricExpandingV1Html({ data: merge(this.params, showmoreArrow, showmorePlus, videoDesktop, videoMobile, scrollingbg) }));
 
         var domPromise = new Promise(function (resolve) {
             fastdom.write(function () {

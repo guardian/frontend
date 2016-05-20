@@ -3,33 +3,27 @@ define([
     'bonzo',
     'fastdom',
     'common/utils/detect',
-    'common/utils/template',
     'common/utils/mediator',
     'common/modules/commercial/creatives/add-tracking-pixel',
-    'text!common/views/commercial/creatives/fabric-v1.html',
-    'text!common/views/commercial/creatives/iframe-video.html',
-    'text!common/views/commercial/creatives/scrollbg.html',
+    'template!common/views/commercial/creatives/fabric-v1.html',
+    'template!common/views/commercial/creatives/iframe-video.html',
+    'template!common/views/commercial/creatives/scrollbg.html',
     'lodash/objects/merge'
 ], function (
     $,
     bonzo,
     fastdom,
     detect,
-    template,
     mediator,
     addTrackingPixel,
-    fabricV1Html,
-    iframeVideoStr,
-    scrollBgStr,
+    fabricV1Tpl,
+    iframeVideoTpl,
+    scrollBgTpl,
     merge
 ) {
     var hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
     var isEnhanced = detect.isEnhanced();
     var isIE10OrLess = detect.getUserAgent.browser === 'MSIE' && (parseInt(detect.getUserAgent.version) <= 10);
-
-    var fabricV1Tpl;
-    var iframeVideoTpl;
-    var scrollBgTpl;
 
     // This is a hasty clone of fluid250.js
 
@@ -40,12 +34,6 @@ define([
 
     FabricV1.prototype.create = function () {
         this.$adSlot.addClass('ad-slot__fabric-v1 content__mobile-full-width');
-
-        if (!fabricV1Tpl) {
-            fabricV1Tpl = template(fabricV1Html);
-            iframeVideoTpl = template(iframeVideoStr);
-            scrollBgTpl = template(scrollBgStr);
-        }
 
         var videoPosition = {
             position: this.params.videoPositionH === 'left' || this.params.videoPositionH === 'right' ?

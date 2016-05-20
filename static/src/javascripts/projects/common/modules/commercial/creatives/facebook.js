@@ -2,23 +2,20 @@
 define([
     'fastdom',
     'common/utils/config',
-    'common/utils/template',
     'common/utils/load-script',
     'common/utils/report-error',
     'common/modules/commercial/creatives/add-tracking-pixel',
-    'text!common/views/commercial/creatives/facebook.html'
-], function(fastdom, config, template, loadScript, reportError, addTrackingPixel, facebookStr) {
+    'template!common/views/commercial/creatives/facebook.html'
+], function(fastdom, config, template, loadScript, reportError, addTrackingPixel, facebookTpl) {
     var scriptId = 'facebook-jssdk';
     var scriptSrc = '//connect.facebook.net/en_US/sdk/xfbml.ad.js#xfbml=1&version=v2.5';
     var adUnits = {
         mpu: { placementId: '180444840287_10154600557405288', adId: 'fb_ad_root_mpu' }
     };
-    var facebookTpl;
 
     function Facebook($adSlot, params) {
         this.$adSlot = $adSlot;
         this.params  = params;
-        facebookTpl || (facebookTpl = template(facebookStr));
     }
 
     Facebook.prototype.create = function () {

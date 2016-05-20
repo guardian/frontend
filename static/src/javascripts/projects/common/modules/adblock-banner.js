@@ -9,22 +9,22 @@ define([
     adblockStickyMessage,
     adblockStickyMessageCoin) {
 
+    var templates = {
+        'adblock-sticky-message': adblockStickyMessage,
+        'adblock-sticky-message-coin': adblockStickyMessageCoin
+    };
+
     /**
      * Message which is shown at the top of the page to the adblock users.
      * @constructor
      */
     var AdblockBanner = function (template, config) {
-        this.template = template;
+        this.template = templates[template];
         this.config = config;
-
-        this.templates = {
-            'adblock-sticky-message': adblockStickyMessage,
-            'adblock-sticky-message-coin': adblockStickyMessageCoin
-        };
     };
 
     AdblockBanner.prototype.renderTemplate = function () {
-        return this.templates[this.template](this.config);
+        return this.template(this.config);
     };
 
     AdblockBanner.prototype.show = function () {
