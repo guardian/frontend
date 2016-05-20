@@ -31,8 +31,7 @@ define([
     thirdPartyTags,
     paidforBand,
     adverts,
-    commercialAudit,
-    userTiming
+    commercialAudit
 ) {
     var modules = [
         ['cm-dfp', dfp.init],
