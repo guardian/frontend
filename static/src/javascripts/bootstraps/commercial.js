@@ -14,7 +14,8 @@ define([
     'common/modules/commercial/third-party-tags',
     'common/modules/commercial/paidfor-band',
     'common/modules/commercial/adverts',
-    'common/modules/commercial/commercial-audit'
+    'common/modules/commercial/commercial-audit',
+    'common/utils/user-timing'
 ], function (
     Promise,
     config,
@@ -31,7 +32,8 @@ define([
     thirdPartyTags,
     paidforBand,
     adverts,
-    commercialAudit
+    commercialAudit,
+    userTiming
 ) {
     var modules = [
         ['cm-dfp', dfp.init],
@@ -70,8 +72,8 @@ define([
                     ['cm-paidforBand', paidforBand.init],
                     ['cm-new-adverts', adverts.init],
                     ['cm-ready', function () {
-                        mediator.emit('page:commercial:ready');
                         userTiming.mark('commercial end');
+                        mediator.emit('page:commercial:ready');
                     }]
                 ]);
             });
