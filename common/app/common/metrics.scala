@@ -99,26 +99,6 @@ object SystemMetrics extends implicits.Numbers {
     get = () => buildNumber,
     metricUnit = StandardUnit.None
   )
-
-}
-
-object RequestMetrics {
-
-  val PanicRequestsSurgeMetric = CountMetric(
-    name = "panic-requests-surge",
-    description = "Number of requests we returned 503 because we received a sudden surge"
-  )
-
-  val PanicExcessiveLatencyMetric = CountMetric(
-    name = "panic-excessive-latency",
-    description = "Number of requests we returned 503 because latency was excessively high"
-  )
-
-  val PanicLatencyWarningMetric = CountMetric(
-    name = "panic-latency-warning",
-    description = "Number of requests we had some chance of returning 503 because the server was running slowly"
-  )
-
 }
 
 object ContentApiMetrics {
@@ -170,11 +150,7 @@ trait CloudWatchApplicationMetrics extends GlobalSettings with Logging {
   val applicationDimension = List(new Dimension().withName("ApplicationName").withValue(applicationName))
 
   def applicationName: String
-  def applicationMetrics: List[FrontendMetric] = List(
-    RequestMetrics.PanicRequestsSurgeMetric,
-    RequestMetrics.PanicExcessiveLatencyMetric,
-    RequestMetrics.PanicLatencyWarningMetric
-  )
+  def applicationMetrics: List[FrontendMetric] = Nil
 
   def systemMetrics: List[FrontendMetric] = List(
     SystemMetrics.MaxHeapMemoryMetric,
