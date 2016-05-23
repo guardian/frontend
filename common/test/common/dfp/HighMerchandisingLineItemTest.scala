@@ -58,7 +58,7 @@ class HighMerchandisingLineItemTest extends FlatSpec with Matchers {
 
       ),None,None,None
     ))
-    TestAgent.isTargetedByHighMerch("cricket",testTagsSeq,editions.Us) should be(true)
+    TestAgent.isTargetedByHighMerch("sport", testTagsSeq, editions.Us) should be(true)
   }
 
 }
