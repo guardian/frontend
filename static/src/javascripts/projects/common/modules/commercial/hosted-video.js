@@ -7,14 +7,12 @@ define([
     'common/utils/$',
     'common/utils/defer-to-analytics',
     'common/modules/video/events',
-    'common/modules/video/supportedBrowsers',
     'text!common/views/ui/loading.html'
 ], function (
     bean,
     $,
     deferToAnalytics,
     events,
-    supportedBrowsers,
     loadingTmpl
 ) {
     var player;
@@ -77,7 +75,6 @@ define([
 
                     initLoadingSpinner(player);
                     upgradeVideoPlayerAccessibility(player);
-                    supportedBrowsers(player);
                 });
             });
         });

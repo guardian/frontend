@@ -129,6 +129,15 @@ class ContentTest extends FlatSpec with Matchers with OneAppPerSuite with implic
 
   }
 
+  it should "returns the correct shortUrlId" in {
+
+    def contentWithShortUrl(shortUrl: String) = Content(article.copy(fields =  Some(ContentFields(shortUrl = Some(shortUrl)))))
+
+    contentWithShortUrl("http://gu.com/p/3r1b5").fields.shortUrlId should be("/p/3r1b5")
+    contentWithShortUrl("https://gu.com/p/4t2c6").fields.shortUrlId should be("/p/4t2c6")
+  }
+
+
   private def tag(id: String = "/id", tagType: TagType = TagType.Keyword, name: String = "", url: String = "") = {
     ApiTag(id = id, `type` = tagType, webTitle = name,
       sectionId = None, sectionName = None, webUrl = url, apiUrl = "apiurl", references = Nil)
