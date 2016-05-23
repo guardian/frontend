@@ -111,6 +111,17 @@ define([
                             description: description
                         }
                     });
+                },
+                success: function (complete) {
+                    mediator.on('modules:participation:clicked', function (){
+                        // Data lake
+                        complete();
+
+                        // Omniture
+                        getOmniture().then(function (omniture) {
+                            omniture.trackLinkImmediate('ab | ParticipationLowFricMusicV1 | variant-1 | success');
+                        });
+                    });
                 }
             }
         ];
