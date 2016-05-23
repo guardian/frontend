@@ -35,9 +35,9 @@ class PlaySavedArticlesService @Inject()(api: IdApiClient) extends SafeLogging w
 
     val sanitizedArticles = savedArticles.articles map {
       article =>
-        val id = article.id.replace("http://www.theguardian.com/","")
-        val shortUrl = article.shortUrl.replace("http://gu.com","")
-        SavedArticle(id, shortUrl, article.date, article.read, article.platform)
+        val id = article.id.replaceFirst("^[a-zA-Z]+://www.theguardian.com/","")
+        val shortUrlId = article.shortUrl.replaceFirst("^[a-zA-Z]+://gu.com","")
+        SavedArticle(id, shortUrlId, article.date, article.read, article.platform)
     }
     SavedArticles(savedArticles.version, sanitizedArticles)
   }
