@@ -2,9 +2,11 @@ package services
 
 import akka.util.Timeout
 import com.gu.facia.api.models.{CommercialPriority, EditorialPriority, FrontPriority, TrainingPriority}
+import com.gu.facia.client.ApiClient
 import com.gu.facia.client.models.{ConfigJson => Config, FrontJson => Front}
 import common._
 import conf.Configuration
+import conf.switches.Switches
 import fronts.FrontsApi
 import model.pressed.CollectionConfig
 import model.{FrontProperties, SeoDataJson}
@@ -21,8 +23,18 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
   implicit val alterTimeout: Timeout = Configuration.faciatool.configBeforePressTimeout.millis
   private lazy val configAgent = AkkaAgent[Option[Config]](None)
 
+  def getClient: ApiClient = {
+    if (Switches.FaciaPressCrossAccountStorage.isSwitchedOn) {
+      log.info("Config agent is using cross account client")
+      FrontsApi.crossAccountClient
+    } else {
+      log.info("Config agent is using same account client")
+      FrontsApi.amazonClient
+    }
+  }
+
   def refresh() = {
-    val futureConfig = FrontsApi.amazonClient.config
+    val futureConfig = getClient.config
     futureConfig.onComplete {
       case Success(config) => log.info(s"Successfully got config")
       case Failure(t) => log.error(s"Getting config failed with $t", t)
@@ -35,7 +47,7 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
   }
 
   def refreshAndReturn(): Future[Option[Config]] =
-    FrontsApi.amazonClient.config
+    getClient.config
       .flatMap(config => configAgent.alter{_ => Option(config)})
       .fallbackTo{
       log.warn("Falling back to current ConfigAgent contents on refreshAndReturn")
@@ -118,7 +130,8 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
       imageWidth = frontOption.flatMap(_.imageWidth).map(_.toString),
       imageHeight = frontOption.flatMap(_.imageHeight).map(_.toString),
       isImageDisplayed = frontOption.flatMap(_.isImageDisplayed).getOrElse(false),
-      editorialType = None // value found in Content API
+      editorialType = None, // value found in Content API
+      activeBrandings = None // value found in Content API
     )
   }
 

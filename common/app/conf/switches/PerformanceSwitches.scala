@@ -24,6 +24,15 @@ trait PerformanceSwitches {
     exposeClientSide = true
   )
 
+  val BootInteractivesFromMainSwitch = Switch(
+    SwitchGroup.Performance,
+    "boot-interactives-from-main",
+    "If this switch is on then interactive bootstraps will be booted from main.js for perf and stability reasons",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 8),
+    exposeClientSide = true
+  )
+
   val TagPageSizeSwitch = Switch(
     SwitchGroup.Performance,
     "tag-page-size",
@@ -51,21 +60,21 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
-  val CheckETagsSwitch = Switch(
-    SwitchGroup.Performance,
-    "check-etags",
-    "If this switch is on, empty 304 not modified responses will be returned for requests with the correct etag",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 20),
-    exposeClientSide = false
-  )
-
   val CircuitBreakerSwitch = Switch(
     SwitchGroup.Performance,
     "circuit-breaker",
     "If this switch is switched on then the Content API circuit breaker will be operational",
     safeState = Off,
     sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val ServerSideBucketsSwitch = Switch(
+    SwitchGroup.Performance,
+    "server-side-buckets",
+    "When this switch expires, remove the remaining predefined server side testing buckets",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 22),
     exposeClientSide = false
   )
 
@@ -206,15 +215,6 @@ trait PerformanceSwitches {
     exposeClientSide = true
   )
 
-  val IphoneConfidence = Switch(
-    SwitchGroup.Performance,
-    "iphone-confidence",
-    "If this switch is on then some beacons will be dropped to gauge iPhone confidence",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val ContentApiUseThrift = Switch(
     SwitchGroup.Performance,
     "content-api-use-thrift",
@@ -224,14 +224,12 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
-  // Owner: dotcom health (tbonnin)
-  val RetryFailedAccuWeatherApiRequests = Switch(
+  val UseLinkPreconnect = Switch(
     SwitchGroup.Performance,
-    "retry-failed-accuweather-requests",
-    "If this switch is ON then failed requests to the Accuweather would be retried 2 more times before failing",
+    "use-link-preconnect",
+    "If this switch is on then link preconnect hints will be on the page",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 4, 27), //Wednesday
+    sellByDate = new LocalDate(2016, 8, 5),
     exposeClientSide = false
   )
-
 }

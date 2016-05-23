@@ -1,14 +1,71 @@
 @(page: model.Page, projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader)
-@import common.{Edition, Navigation}
+@import common.{Edition, Navigation, commercial}
 @import conf.switches.Switches._
-@import views.support.Commercial.topBelowNavSlot
-@import views.support.{Commercial, RenderClasses}
+@import layout.ContentWidths.MainMedia
+@import model.GalleryPage
 @import model.Page.getContent
+@import views.support.Commercial.topBelowNavSlot
+@import views.support.{Commercial, ContributorLinks, RenderClasses}
+
+@headerAndTopAds(showAdverts: Boolean, edition: Edition, adBelowNav: Boolean) = {
+    @if(!(page.metadata.shouldHideHeaderAndTopAds && getContent(page).exists(_.tags.isArticle))) {
+        @if(showAdverts) {
+            @fragments.commercial.topBanner(page.metadata, edition)
+        }
+
+        @fragments.header(page)
+
+        @if(adBelowNav) {
+            @fragments.commercial.topBannerBelowNav()
+        }
+
+        @if(showAdverts) {
+            @fragments.commercial.topBannerMobile(page.metadata, edition)
+        }
+
+        <div id="maincontent" tabindex="0"></div>
+    }
+}
+
+@immersiveMainMedia(page: GalleryPage) = {
+    <div class="new-gallery content tonal--tone-media immersive-main-media">
+
+        @page.item.elements.mainPicture.map(_.images).orElse(page.item.trail.trailPicture).map { picture =>
+            @fragments.image(
+                picture = picture,
+                classes = Seq("immersive-main-media__img"),
+                widths = MainMedia.immersive,
+                imageAltText = "",
+                isImmersiveMainMedia = true
+            )
+        }
+
+        <div class="immersive-main-media__headline-container">
+            <div class="gs-container">
+
+                @fragments.meta.metaInline(page.item)
+
+                <h1 class="content__headline content__headline--immersive content__headline--immersive--with-main-media">
+                    @fragments.inlineSvg("camera", "icon", List("inline-tone-fill", "inline-icon--media")) @Html(page.item.trail.headline)
+                </h1>
+
+                @if(page.item.content.hasTonalHeaderByline) {
+                    @page.item.trail.byline.map { text =>
+                        <span class="content__headline content__headline--byline">@ContributorLinks(text, page.item.tags.contributors)</span>
+                    }
+                }
+
+            </div>
+        </div>
+    </div>
+}
+
 <!DOCTYPE html>
 <html id="js-context" class="js-off is-not-modern id--signed-out" data-page-path="@request.path">
 <head>
     @fragments.head(page, projectName, head)
 </head>
+
 @defining(Commercial.shouldShowAds(page), Edition(request)) { case (showAdverts, edition) =>
     @defining(showAdverts && topBelowNavSlot.hasAd(page.metadata, edition)) { adBelowNav =>
         @defining(Navigation.topLevelItem(edition.navigation, page)) { navigation =>
@@ -29,25 +86,17 @@
 
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
-        @if(!(page.metadata.hasHeader && getContent(page).exists(_.tags.isArticle))) {
-            @if(!mvt.CMTopBannerPosition.isParticipating) {
-                @if(showAdverts) {
-                    @fragments.commercial.topBanner(page.metadata, edition)
-                }
+        @page match {
+            case page: model.GalleryPage if page.gallery.showNewGalleryDesign => {
+                <div class="immersive-header-container">
+                    @headerAndTopAds(showAdverts, edition, adBelowNav)
 
-                @fragments.header(page)
-
-                @if(adBelowNav) {
-                    @fragments.commercial.topBannerBelowNav()
-                }
-
-                @if(showAdverts) {
-                    @fragments.commercial.topBannerMobile(page.metadata, edition)
-                }
-
-                <div id="maincontent" tabindex="0"></div>
-            } else {
-                @fragments.header(page)
+                    @immersiveMainMedia(page)
+                </div>
+            }
+            case commercial.HostedPage => {}
+            case _ => {
+                @headerAndTopAds(showAdverts, edition, adBelowNav)
             }
         }
 
@@ -82,7 +131,7 @@
 
         @fragments.analytics.base(page)
 
-        @if(requestOutOfPageSlotAlways.isSwitchedOn || page.metadata.hasPageSkinOrAdTestPageSkin(edition)) {
+        @if(page.metadata.hasPageSkinOrAdTestPageSkin(edition)) {
             @fragments.commercial.pageSkin()
         }
 

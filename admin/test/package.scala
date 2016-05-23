@@ -8,7 +8,6 @@ class AdminTestSuite extends Suites (
   new football.SiteControllerTest,
   new football.TablesControllerTest,
   new indexes.TagPagesTest,
-  new services.AdminHealthCheckTest,
   new pagepresser.HtmlCleanerTest,
   new pagepresser.InteractiveHtmlCleanerTest,
   new controllers.admin.DeploysRadiatorControllerTest,

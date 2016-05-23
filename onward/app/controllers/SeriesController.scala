@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.contentapi.client.GuardianContentApiThriftError
+import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import com.gu.facia.client.models.Backfill
 import common._
@@ -8,6 +8,7 @@ import contentapi.ContentApiClient
 import contentapi.ContentApiClient.getResponse
 import implicits.Requests
 import layout.{CollectionEssentials, DescriptionMetaHeader, FaciaContainer}
+import model.Cached.WithoutRevalidationResult
 import model._
 import model.pressed.CollectionConfig
 import play.api.libs.json.{JsArray, Json}
@@ -34,10 +35,10 @@ object SeriesController extends Controller with Logging with Paging with Executi
   }
 
   def renderMf2SeriesStories(seriesId:String) = Action.async { implicit request =>
-    lookup(Edition(request), seriesId) map { series =>
-      Cached(15.minutes)(
-        series.map(rendermf2Series).getOrElse(NotFound)
-      )
+    lookup(Edition(request), seriesId) map {
+      _.map(series => Cached(15.minutes)(
+        rendermf2Series(series)
+      )).getOrElse(Cached(15.minutes)(WithoutRevalidationResult(NotFound)))
     }
   }
 
@@ -58,7 +59,7 @@ object SeriesController extends Controller with Logging with Paging with Executi
           } else { None }
         }
       }
-      seriesResponse.recover{ case GuardianContentApiThriftError(404, message, _) =>
+      seriesResponse.recover{ case GuardianContentApiError(404, message, _) =>
         log.info(s"Got a 404 calling content api: $message" )
         None
       }
@@ -68,7 +69,7 @@ object SeriesController extends Controller with Logging with Paging with Executi
     val displayName = Some(series.displayName)
     val seriesStories = series.trails.items take 4
     val description = series.tag.metadata.description.getOrElse("").replaceAll("<.*?>", "")
-    
+
     JsonComponent(
       "items" -> JsArray(Seq(
         Json.obj(
@@ -85,7 +86,7 @@ object SeriesController extends Controller with Logging with Paging with Executi
     val dataId = "series"
     val componentId = Some("series")
     val displayName = Some(series.displayName)
-    val properties = FrontProperties(series.tag.metadata.description, None, None, None, false, None)
+    val properties = FrontProperties.empty.copy(onPageDescription = series.tag.metadata.description)
     val header = series.tag.metadata.description map { description => DescriptionMetaHeader(description) }
 
 

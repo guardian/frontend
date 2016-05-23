@@ -1,86 +1,84 @@
 package tools
 
-import CloudWatch._
-import com.amazonaws.services.cloudwatch.model.{Dimension, GetMetricStatisticsRequest}
-import org.joda.time.DateTime
 import awswrappers.cloudwatch._
-
+import com.amazonaws.services.cloudwatch.model._
+import common.{AkkaAgent, ExecutionContexts, Logging}
+import org.joda.time.DateTime
+import tools.CloudWatch._
+import scala.collection.JavaConversions._
 import scala.concurrent.Future
+import scala.math.BigDecimal
+import scala.util.control.NonFatal
 
-case class AssetData(
-  name: String,
-  raw: AwsDailyLineChart,
-  zipped: AwsDailyLineChart,
-  rules: AwsDailyLineChart,
-  selectors: AwsDailyLineChart
-) {
-  def combined: AwsDailyLineChart = new AwsDailyLineChart(name, Seq("Size", "GZip (kb)", "None (kb)"), ChartFormat.DoubleLineBlueRed, raw.charts.head, zipped.charts.head)
-  lazy val isCSS = name.endsWith(".css")
-  lazy val isJS = name.endsWith(".js")
-  lazy val rawChange = (raw.dataset.last.values.headOption.getOrElse(0.0) - raw.dataset.head.values.headOption.getOrElse(0.0)).toFloat
-  lazy val isPositiveChange = rawChange <= -0.00
+case class AssetMetric(name: String, metric: GetMetricStatisticsResult, yLabel: String) {
+  lazy val chart = new AwsLineChart(name, Seq(yLabel, name), ChartFormat.SingleLineBlack, metric)
+  lazy val change = BigDecimal(chart.dataset.last.values.headOption.getOrElse(0.0) - chart.dataset.head.values.headOption.getOrElse(0.0)).setScale(2, BigDecimal.RoundingMode.HALF_UP).toFloat
 }
 
 object AssetMetrics {
 
-  def zipped(file: String) = withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
-    .withStartTime(new DateTime().minusDays(14).toDate)
+  private val timePeriodInDays = 14 // Cloudwatch metric retention period is 14 days
+
+  private val gzipped = new Dimension().withName("Compression").withValue("GZip")
+  private val raw = new Dimension().withName("Compression").withValue("None")
+  private val rules = new Dimension().withName("Metric").withValue("Rules")
+  private val selectors = new Dimension().withName("Metric").withValue("Total Selectors")
+
+  private def fetchMetric(metric: Metric, dimension: Dimension) = withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
+    .withStartTime(new DateTime().minusDays(timePeriodInDays).toDate)
     .withEndTime(new DateTime().toDate)
     .withPeriod(86400) //One day
     .withStatistics("Average")
     .withNamespace("Assets")
-    .withMetricName(file)
-    .withDimensions(
-      new Dimension().withName("Compression").withValue("GZip")
-    )) map { metric =>
-    new AwsDailyLineChart(file, Seq("Size", "Kb"), ChartFormat.SingleLineBlack, metric)
-  })
+    .withMetricName(metric.getMetricName)
+    .withDimensions(dimension)))
 
-  def raw(file: String) = withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
-    .withStartTime(new DateTime().minusDays(14).toDate)
-    .withEndTime(new DateTime().toDate)
-    .withPeriod(86400) //One day
-    .withStatistics("Average")
-    .withNamespace("Assets")
-    .withMetricName(file)
-    .withDimensions(
-      new Dimension().withName("Compression").withValue("None")
-    )) map { metric =>
-    new AwsDailyLineChart(file, Seq("Size", "Kb"), ChartFormat.SingleLineBlack, metric)
-  })
+  private def allMetrics = withErrorLogging(euWestClient.listMetricsFuture(new ListMetricsRequest().withNamespace("Assets")))
 
-  def rules(file: String) = withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
-    .withStartTime(new DateTime().minusDays(14).toDate)
-    .withEndTime(new DateTime().toDate)
-    .withPeriod(86400) // One day
-    .withStatistics("Average")
-    .withNamespace("Assets")
-    .withMetricName(file)
-    .withDimensions(
-      new Dimension().withName("Metric").withValue("Rules")
-    )) map { metric =>
-    new AwsDailyLineChart(file, Seq("Rules", "Count"), ChartFormat.SingleLineBlack, metric)
-  })
-
-  def selectors(file: String) = withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
-    .withStartTime(new DateTime().minusDays(14).toDate)
-    .withEndTime(new DateTime().toDate)
-    .withPeriod(86400) //One day
-    .withStatistics("Average")
-    .withNamespace("Assets")
-    .withMetricName(file)
-    .withDimensions(
-      new Dimension().withName("Metric").withValue("Total Selectors")
-    )) map { metric =>
-    new AwsDailyLineChart(file, Seq("Total selectors", "Count"), ChartFormat.SingleLineBlack, metric)
-  })
-
-  def assets = Future.traverse(assetsFiles) { file =>
-    for {
-      r <- raw(file)
-      z <- zipped(file)
-      rs <- rules(file)
-      ss <- selectors(file)
-    } yield new AssetData(file, r, z, rs, ss)
+  private def metricResults(dimension: Dimension) = allMetrics.flatMap { metricsList =>
+    Future.sequence {
+      metricsList.getMetrics
+        .filter(_.getDimensions.contains(dimension))
+        .toList
+        .map { metric =>
+          fetchMetric(metric, dimension)
+        }
+    }
   }
+
+  private def metrics(dimension: Dimension, yLabel: String = "") = metricResults(dimension).map(_.map { result =>
+    new AssetMetric(result.getLabel, result, yLabel)
+  })
+
+  // Public methods
+
+  def sizeMetrics = metrics(dimension = gzipped, yLabel = "Size").map(_.sortBy(m => (-m.change, m.name)))
 }
+
+
+object AssetMetricsCache extends ExecutionContexts with Logging {
+
+  sealed trait ReportType
+  object ReportTypes {
+    case object sizeOfFiles extends ReportType
+  }
+
+  private val cache = AkkaAgent[Map[ReportType, List[AssetMetric]]](Map.empty)
+
+  private def getReport(reportType: ReportType): Option[List[AssetMetric]] = cache().get(reportType)
+
+  def run(): Future[Unit] = {
+    AssetMetrics.sizeMetrics.map { metrics =>
+      log.info("Successfully refreshed Asset Metrics data")
+      cache.send(cache.get + (ReportTypes.sizeOfFiles -> metrics))
+    }
+      .recover {
+        case NonFatal(e) =>
+          log.error("Error refreshing Asset Metrics data", e)
+      }
+  }
+
+  def sizes: List[AssetMetric] = getReport(ReportTypes.sizeOfFiles).getOrElse(List.empty[AssetMetric])
+
+}
+

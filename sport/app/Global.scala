@@ -15,6 +15,7 @@ object Global extends WithFilters(Filters.common: _*)
   with CricketLifecycle
   with RugbyLifecycle
   with CorsErrorHandler
-  with Logstash {
+  with Logstash
+  with SportHealthCheckLifeCycle {
   override lazy val applicationName = "frontend-sport"
 }

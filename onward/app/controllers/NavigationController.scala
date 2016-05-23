@@ -2,6 +2,7 @@ package controllers
 
 import common.{LinkTo, SectionLink, NavItem, Edition}
 import model.Cached
+import model.Cached.RevalidatableResult
 import play.api.libs.json.Json._
 import play.api.libs.json.Writes
 import play.api.mvc.{Action, Controller}
@@ -28,7 +29,7 @@ object NavigationController extends Controller {
         )
       }
 
-      Ok(arr(Edition.all.map { edition =>
+      RevalidatableResult.Ok(arr(Edition.all.map { edition =>
         obj(edition.id -> arr(edition.navigation.map(item => NavItemAndEdition(item, edition))))
       }))
     }

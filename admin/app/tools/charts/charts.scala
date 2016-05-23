@@ -128,11 +128,12 @@ class AwsLineChart(
       .getOrElse(throw new IllegalStateException(s"Don't know how to get a value for $dataPoint"))
 
   protected def toLabel(date: DateTime): String = date.withZone(format.timezone).toString("HH:mm")
+
+  lazy val latest = dataset.lastOption.flatMap(_.values.headOption).getOrElse(0.0)
 }
 
 class AwsDailyLineChart(name: String, labels: Seq[String], format: ChartFormat, charts: GetMetricStatisticsResult*) extends AwsLineChart(name, labels, format, charts:_*) {
   override def toLabel(date: DateTime): String = date.withZone(format.timezone).toString("dd/MM")
-  lazy val latest = dataset.lastOption.flatMap(_.values.headOption).getOrElse(0.0)
 }
 
 class ABDataChart(name: String, ablabels: Seq[String], format: ChartFormat, charts: GetMetricStatisticsResult*) extends AwsLineChart(name, ablabels, format, charts:_*) {

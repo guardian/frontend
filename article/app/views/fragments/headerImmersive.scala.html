@@ -1,12 +1,8 @@
-@(article: model.Article, showBadge: Boolean = false)(implicit request: RequestHeader)
+@(article: model.Article)(implicit request: RequestHeader)
 
 @import views.support.TrailCssClasses.toneClass
-@import views.support.ContributorLinks
-@import views.support.ImgSrc
-@import conf.switches.Switches.immersiveMainEmbedSwitch
-@import layout._
 
-<header class="content__head content__head--immersive content__head--desktop tonal__head tonal__head--@toneClass(article)
+<header class="content__head content__head--immersive-article content__head--desktop tonal__head tonal__head--@toneClass(article)
 @if(article.fields.main.nonEmpty) { is-fixed-height js-is-fixed-height }
 @if(article.isUSMinute) { content__head--minute-article}">
     <div class="content__logo-container">
@@ -16,7 +12,7 @@
                 @fragments.inlineSvg("guardian-logo-160", "logo", Seq("content__logo"))
             </a>
             @if(article.isUSMinute) {
-                <a class="logo--us-election" href="@LinkTo {/us-news/us-elections-2016}">
+                <a class="logo--us-election" href="@LinkTo{/us-news/us-elections-2016}">
                     <span class="u-h">The US Election 2016</span>
                     @fragments.inlineSvg("us-election-logo", "logo")
                 </a>
@@ -63,14 +59,14 @@
         <div class="content__head--mobile">
             <div class="content__wrapper content__wrapper--headline">
                 <div class="gs-container">
-                @if(!article.isUSMinute) {
-                    @article.content.blogOrSeriesTag.map { series =>
-                        <h3 class="content__series-label">
-                            <a class="content__series-label__link" href="@LinkTo {/@series.id}">@series.name</a>
-                        </h3>
+                    @if(!article.isUSMinute) {
+                        @article.content.blogOrSeriesTag.map { series =>
+                            <h3 class="content__series-label">
+                                <a class="content__series-label__link" href="@LinkTo{/@series.id}">@series.name</a>
+                            </h3>
+                        }
                     }
-                }
-                    <h1 class="content__headline">
+                    <h1 class="content__headline content__headline--immersive @if(article.fields.main.nonEmpty) { content__headline--immersive--with-main-media }">
                         @if(article.isUSMinute) {
                             <a href="@LinkTo{/us-news/series/the-campaign-minute-2016}" class="logo--minute-article">
                                 <span class="u-h">The Minute - </span>

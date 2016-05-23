@@ -17,14 +17,13 @@
 /* Components */
 @import '_component';
 @import '_books';
-@import '_jobs';
-@import '_masterclasses';
 @import '_money';
-@import '_soulmates';
 @import '_travel';
 @import '_dfp';
 @import '_capi';
 @import '_paidfor';
+@import '_brandbadge';
+@import '_hostedbadge';
 
 /* Creative styles */
 @import '_creatives';
@@ -52,3 +51,9 @@
 @import 'gimbap/_gimbap-wrap';
 @import 'gimbap/_gimbap-richmedia';
 @import 'gimbap/_gimbap';
+
+/* Glabs Awesome component */
+@import 'glabs/_hosted.scss';
+
+/* Guardian frame */
+@import '_frame';

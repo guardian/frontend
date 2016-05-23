@@ -6,6 +6,7 @@ import common.{Edition, ExecutionContexts, Logging}
 import contentapi.ContentApiClient
 import contentapi.ContentApiClient.getResponse
 import implicits.{Dates, ItemResponses}
+import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
 import model._
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone}
@@ -37,18 +38,18 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
   }
 
   // redirect old dated pages e.g. /sport/cycling/2011/jan/05 to new format /sport/cycling/2011/jan/05/all
-  def on(path: String) = Action {
-    Cached(300)(MovedPermanently(s"/$path/all"))
+  def on(path: String) = Action { implicit request =>
+    Cached(300)(WithoutRevalidationResult(MovedPermanently(s"/$path/all")))
   }
 
-  def all(path: String) = Action.async { request =>
+  def all(path: String) = Action.async { implicit request =>
     val edition = Edition(request)
 
     if (ConfigAgent.shouldServeFront(path) || defaultEdition.isEditionalised(path)) {
       IndexController.render(path)(request)
     } else {
       /** No front exists, so 'all' is the same as the tag page - redirect there */
-      Future.successful(Cached(300)(MovedPermanently(s"/$path")))
+      Future.successful(Cached(300)(WithoutRevalidationResult(MovedPermanently(s"/$path"))))
     }
   }
 
@@ -62,9 +63,9 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
       val olderDate = index.trails.find(!_.trail.webPublicationDate.sameDay(reqDate)).map(_.trail.webPublicationDate.toDateTime)
 
       if (index.trails.isEmpty) {
-        redirectToFirstAllPage(path)
+        Cached(300)(WithoutRevalidationResult(redirectToFirstAllPage(path)))
       } else if (contentOnRequestedDate.isEmpty) {
-        redirectToOlderAllPage(olderDate, path)
+        Cached(300)(WithoutRevalidationResult(redirectToOlderAllPage(olderDate, path)))
       } else {
         val prevPage = {
           olderDate match {
@@ -76,9 +77,9 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
         val nextPage = if (reqDate.sameDay(today)) None else Some(s"/$path/${urlFormat(reqDate.plusDays(1))}/altdate")
         val model = index.copy(contents = contentOnRequestedDate, tzOverride = Some(DateTimeZone.UTC))
 
-        Ok(views.html.all(model, PreviousAndNext(prevPage, nextPage)))
+        Cached(300)(RevalidatableResult.Ok(views.html.all(model, PreviousAndNext(prevPage, nextPage))))
       }
-    }.getOrElse(NotFound)}.map(Cached(300)(_))
+    }.getOrElse(Cached(300)(WithoutRevalidationResult(NotFound)))}
   }
 
   private def redirectToOlderAllPage(olderDate: Option[DateTime], path: String) = olderDate.map {

@@ -4,7 +4,9 @@ import conf.switches.Switches
 import conf.switches.Switches._
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
+import play.api.http.Writeable
 import play.api.mvc._
+import play.twirl.api.Html
 import scala.concurrent.Future
 import scala.concurrent.duration.Duration
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -29,41 +31,56 @@ object Cached extends implicits.Dates {
 
   private val tenDaysInSeconds = 864000
 
-  def apply(seconds: Int)(result: Result): Result = {
-    if (cacheableStatusCodes.contains(result.header.status)) cacheHeaders(seconds, result) else result
-  }
-
-  def apply(duration: Duration)(result: Result): Result = {
-    apply(duration.toSeconds.toInt)(result)
-  }
-
-  def apply(page: Page)(result: Result): Result = {
-    val cacheSeconds = page.metadata.cacheTime.cacheSeconds
-    if (cacheableStatusCodes.contains(result.header.status)) cacheHeaders(cacheSeconds, result) else result
-  }
-
   case class Hash(string: String)
-  case class RevalidatableResult(result: Result, hash: Hash)
+
+  sealed trait CacheableResult { def result: Result }
+  case class RevalidatableResult(result: Result, hash: Hash) extends CacheableResult
+  case class WithoutRevalidationResult(result: Result) extends CacheableResult
+
   object RevalidatableResult {
-    def apply(result: Result, body: String) = {
+    def apply[C](result: Result, content: C)(implicit writeable: Writeable[C]) = {
       // hashing function from Arrays.java
-      val hashLong: Long = body.getBytes("UTF-8").foldLeft(z = 1L){
+      val hashLong: Long = writeable.transform(content).foldLeft(z = 1L){
         case (accu, nextByte) => 31 * accu + nextByte
       }
       new RevalidatableResult(result, Hash(hashLong.toString))
     }
+
+    def Ok[C](content: C)(implicit writeable: Writeable[C]) = {
+      apply(Results.Ok(content), content)
+    }
   }
 
-  def withRevalidation(page: Page)(stringResult: RevalidatableResult)(implicit request: RequestHeader): Result = {
+
+  def apply(seconds: Int)(result: CacheableResult)(implicit request: RequestHeader): Result = {
+    apply(seconds, result, request.headers.get("If-None-Match"))//FIXME could be comma separated
+  }
+
+  def apply(duration: Duration)(result: CacheableResult)(implicit request: RequestHeader): Result = {
+    apply(duration.toSeconds.toInt, result, request.headers.get("If-None-Match"))
+  }
+
+  def apply(page: Page)(revalidatableResult: CacheableResult)(implicit request: RequestHeader): Result = {
     val cacheSeconds = page.metadata.cacheTime.cacheSeconds
-    if (cacheableStatusCodes.contains(stringResult.result.header.status)) cacheHeaders(cacheSeconds, stringResult.result, Some((stringResult.hash, request.headers.get("If-None-Match")))) else stringResult.result
+    apply(cacheSeconds, revalidatableResult, request.headers.get("If-None-Match"))
   }
 
   // Use this when you are sure your result needs caching headers, even though the result status isn't
   // conventionally cacheable. Typically we only cache 200 and 404 responses.
-  def explicitlyCache(seconds: Int)(result: Result): Result = cacheHeaders(seconds, result)
+  def explicitlyCache(seconds: Int)(result: Result): Result = cacheHeaders(seconds, result, None)
 
-  private def cacheHeaders(seconds: Int, result: Result, maybeHash: Option[(Hash, Option[String])] = None) = {
+  def apply(seconds: Int, cacheableResult: CacheableResult, ifNoneMatch: Option[String]) =
+    if (cacheableStatusCodes.contains(cacheableResult.result.header.status)) {
+      cacheableResult match {
+        case RevalidatableResult(result, hash) =>
+          cacheHeaders(seconds, result, Some((hash, ifNoneMatch)))
+        case WithoutRevalidationResult(result) => cacheHeaders(seconds, result, None)
+      }
+    } else {
+      cacheableResult.result
+    }
+
+  private def cacheHeaders(seconds: Int, result: Result, maybeHash: Option[(Hash, Option[String])]) = {
     val now = DateTime.now
     val expiresTime = now + seconds.seconds
     val maxAge = if (DoubleCacheTimesSwitch.isSwitchedOn) seconds * 2 else seconds
@@ -79,7 +96,7 @@ object Cached extends implicits.Dates {
 
     val (etagHeaderString, validatedResult): (String, Result) = maybeHash.map { case (hash, maybeHashToMatch) =>
       val etag = s"""W/"hash${hash.string}""""
-      if (Switches.CheckETagsSwitch.isSwitchedOn && maybeHashToMatch.contains(etag)) {
+      if (maybeHashToMatch.contains(etag)) {
         (etag, Results.NotModified)
       } else {
         (etag, result)

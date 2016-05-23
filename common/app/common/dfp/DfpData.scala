@@ -2,6 +2,7 @@ package common.dfp
 
 import common.Edition
 import common.dfp.AdSize.{leaderboardSize, responsiveSize}
+import org.apache.commons.lang.StringUtils
 import org.joda.time.DateTime
 import org.joda.time.DateTime.now
 import org.joda.time.format.ISODateTimeFormat
@@ -26,6 +27,8 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
   val isFoundationSupportedSlot = isSlot("fobadge")
 
   val isInlineMerchandisingSlot = isSlot("im")
+
+  val isHighMerchandisingSlot = isSlot("merchandising-high")
 
   val isAdTest = isPositive("at")
 
@@ -75,6 +78,8 @@ case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
   val inlineMerchandisingTargetedKeywords = filterTags(tag => tag.isKeywordTag)(_.isInlineMerchandisingSlot)
   val inlineMerchandisingTargetedSeries = filterTags(tag => tag.isSeriesTag)(_.isInlineMerchandisingSlot)
   val inlineMerchandisingTargetedContributors = filterTags(tag => tag.isContributorTag)(_.isInlineMerchandisingSlot)
+
+  val highMerchandisingTargets = filterTags(tag => tag.isKeywordTag || tag.isSeriesTag || tag.isContributorTag)(_.isHighMerchandisingSlot)
 
   val targetsR2Only: Boolean = targets exists (_.targetsR2Only)
 }
@@ -132,7 +137,9 @@ object GeoTarget {
 }
 
 
-case class GuAdUnit(id: String, path: Seq[String])
+case class GuAdUnit(id: String, path: Seq[String]) {
+  val fullPath = path.mkString("/")
+}
 
 object GuAdUnit {
 
@@ -231,15 +238,20 @@ case class GuLineItem(id: Long,
   val paidForTags: Seq[PaidForTag] = targeting.customTargetSets.flatMap { targetSet =>
 
     def paidForTagsFromTargets(targetedNames: Seq[String], tagType: TagType, paidForType: PaidForType) = {
-      targetedNames map { targetedName =>
-        PaidForTag(
-          targetedName,
-          tagType = tagType,
-          paidForType = paidForType,
-          matchingCapiTagIds = Nil,
-          lineItems = Nil
-        )
-      }
+      targetedNames
+        .map({ dfpTargetName =>
+           // Some of the targeted names in DFP have strange unicode characters. Strip them here.
+           StringUtils.strip(dfpTargetName, "\u200B").trim
+        })
+        .map({ targetedName =>
+          PaidForTag(
+            targetedName,
+            tagType = tagType,
+            paidForType = paidForType,
+            matchingCapiTagIds = Nil,
+            lineItems = Nil
+          )
+        })
     }
 
     def seriesTags = targetSet.filterTags(_.isSeriesTag) _
@@ -262,6 +274,8 @@ case class GuLineItem(id: Long,
   val inlineMerchandisingTargetedKeywords: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedKeywords).distinct
   val inlineMerchandisingTargetedSeries: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedSeries).distinct
   val inlineMerchandisingTargetedContributors: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedContributors).distinct
+
+  val highMerchandisingTargets: Seq[String] = targeting.customTargetSets.flatMap(_.highMerchandisingTargets).distinct
 
   lazy val targetsNetworkOrSectionFrontDirectly: Boolean = {
     targeting.adUnits.exists { adUnit =>

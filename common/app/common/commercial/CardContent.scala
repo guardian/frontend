@@ -2,7 +2,7 @@ package common.commercial
 
 import conf.switches.Switches
 import model.pressed.PressedContent
-import model.{ContentType, ImageOverride, ImageMedia}
+import model.{ContentType, ImageMedia, ImageOverride}
 import views.support.{CardWithSponsorDataAttributes, ImgSrc, SponsorDataAttributes}
 
 case class CardContent(
@@ -13,7 +13,6 @@ case class CardContent(
                         image: Option[ImageMedia],
                         fallbackImageUrl: Option[String],
                         targetUrl: String,
-                        group: Option[DynamicGroup],
                         branding: Option[SponsorDataAttributes]
                       )
 
@@ -32,9 +31,7 @@ object CardContent {
       videoImageMedia.orElse(imageOverride).orElse(defaultTrailPicture)
     }
 
-    var fallbackImageUrl = image flatMap {
-      ImgSrc.getFallbackUrl
-    }
+    val fallbackImageUrl = image flatMap ImgSrc.getFallbackUrl
 
     CardContent(
       icon = {
@@ -49,12 +46,6 @@ object CardContent {
       image,
       fallbackImageUrl,
       targetUrl = header.url,
-      group = content.card.group match {
-        case "3" => Some(HugeGroup)
-        case "2" => Some(VeryBigGroup)
-        case "1" => Some(BigGroup)
-        case _ => None
-      },
       branding = {
         if (Switches.cardsDecidePaidContainerBranding.isSwitchedOn) {
           CardWithSponsorDataAttributes.sponsorDataAttributes(content)
@@ -65,7 +56,7 @@ object CardContent {
     )
   }
 
-  def fromContentItem(item: ContentType, clickMacro: Option[String]): CardContent = {
+  def fromContentItem(item: ContentType, clickMacro: Option[String], withDescription: Boolean): CardContent = {
     val tags = item.tags
     CardContent(
       icon = {
@@ -76,23 +67,17 @@ object CardContent {
       },
       headline = item.trail.headline,
       kicker = None,
-      description = item.fields.trailText,
+      description = {
+        if (withDescription) item.fields.trailText
+        else None
+      },
       image = item.trail.trailPicture,
       fallbackImageUrl = item.trail.trailPicture flatMap ImgSrc.getFallbackUrl,
       targetUrl = {
-        val url = item.metadata.url
+        val url = item.metadata.webUrl
         clickMacro map { cm => s"$cm$url" } getOrElse url
       },
-      group = None,
       branding = None
     )
   }
 }
-
-sealed trait DynamicGroup
-
-case object HugeGroup extends DynamicGroup
-
-case object VeryBigGroup extends DynamicGroup
-
-case object BigGroup extends DynamicGroup

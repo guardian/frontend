@@ -15,17 +15,25 @@ case class RelatedContentItem (
   faciaContent: PressedContent
 )
 
-case class RelatedContent ( items: Seq[RelatedContentItem], storyPackagesCount: Int = 0) {
+case class RelatedContent (items: Seq[RelatedContentItem]) {
   val hasStoryPackage: Boolean = items.nonEmpty
   val faciaItems: Seq[PressedContent] = items.map(_.faciaContent)
 }
 
-object RelatedContent {
+object StoryPackages {
   def apply(parent: ContentType, response: ItemResponse): RelatedContent = {
-    // It's misleading to use storyPackage here rather than relatedContent. A tidy up should rename this object
-    val storyPackagesContent = response.packages.map { packages =>
-      packages.flatMap { p =>
-        p.articles.map(_.content)
+
+    val storyPackagesContent: Seq[ApiContent] = response.packages.map { packages =>
+      val allContentsPerPackage: Seq[Seq[ApiContent]] = packages.map(_.articles.map(_.content))
+      if(packages.size > 1) { //intermix packages only if more than one
+        allContentsPerPackage
+         .flatMap(_.zipWithIndex) // zip content with its position
+         .groupBy(_._1.id).map(_._2.head).toSeq // remove duplicates (Note: not using `distinct` here that would require
+                                                // hashing/comparing the whole ApiContent object but instead grouping based on `id`
+                                                // and then collecting the first element of each group of duplicates)
+         .sortBy(_._2).map(_._1)  // sort by position and extract content
+      } else {
+        allContentsPerPackage.flatten
       }
     }.getOrElse(List.empty)
 
@@ -34,24 +42,5 @@ object RelatedContent {
       RelatedContentItem(frontendContent, FaciaContentConvert.contentToFaciaContent(item))
     }
     RelatedContent(items.filterNot(_.content.metadata.id == parent.metadata.id))
-  }
-}
-
-object StoryPackages {
-  def apply(parent: ContentType, response: ItemResponse): RelatedContent = {
-    val storyPackagesContent = response.packages.map { packages =>
-      packages.map { p =>
-        p.articles.map(_.content)
-      }
-       .flatMap(_.zipWithIndex) // zip content with its position
-       .sortBy(_._2).map(_._1) // sort by position and extract content to intermix stories from all packages
-       .distinct // remove duplicates
-    }.getOrElse(List.empty)
-
-    val items = storyPackagesContent.map { item =>
-      val frontendContent = Content(item)
-      RelatedContentItem(frontendContent, FaciaContentConvert.contentToFaciaContent(item))
-    }
-    RelatedContent(items.filterNot(_.content.metadata.id == parent.metadata.id), response.packages.fold(0)(_.size))
   }
 }

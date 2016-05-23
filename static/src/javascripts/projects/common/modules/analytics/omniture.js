@@ -64,10 +64,6 @@ define([
         });
     };
 
-    Omniture.prototype.logView = function () {
-        this.s.tl(true, 'o', 'Omniture topup call');
-    };
-
     Omniture.prototype.logTag = function (spec) {
         var storeObj,
             delay;
@@ -131,58 +127,9 @@ define([
         });
     };
 
-    Omniture.prototype.shouldPopulateMvtPageProperties = function (mvtTag) {
-        // This checks if the user test alocation has changed once ab test framework has loaded.
-        return mvtTag !== config.abTestsParticipations;
-    };
-
-    Omniture.prototype.populatePageProperties = function () {
-        var d,
-            /* Retrieve navigation interaction data */
-            ni       = storage.session.get(NG_STORAGE_KEY),
-            mvt      = ab.makeOmnitureTag(document);
-
-        if (id.getUserFromCookie()) {
-            this.s.prop2 = 'GUID:' + id.getUserFromCookie().id;
-            this.s.eVar2 = 'GUID:' + id.getUserFromCookie().id;
-        }
-        //This is for testing moving ab testing to first omniture call.
-        var inTest = this.shouldPopulateMvtPageProperties(mvt);
-        var testCall = 'AB | firedSecondCall | ' + inTest;
-        mvt = mvt.split(',').concat(testCall).join(',');
-
-        this.s.prop31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
-        this.s.eVar31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
-        this.s.prop40    = detect.adblockInUseSync() || detect.getFirefoxAdblockPlusInstalledSync();
-        this.s.eVar51    = mvt;
-        this.s.list1     = mvt; // allows us to 'unstack' the AB test names (allows longer names)
-
-        if (ni) {
-            d = new Date().getTime();
-            if (d - ni.time < 60 * 1000) { // One minute
-                this.s.eVar24 = ni.pageName;
-                this.s.eVar37 = ni.tag;
-            }
-            storage.session.remove(R2_STORAGE_KEY);
-            storage.session.remove(NG_STORAGE_KEY);
-        }
-
-        // Sponsored content
-        this.s.prop38 = uniq($('[data-sponsorship]')).map(function (n) {
-            var sponsorshipType = n.getAttribute('data-sponsorship');
-            var maybeSponsor = n.getAttribute('data-sponsor');
-            var sponsor = maybeSponsor ? maybeSponsor : 'unknown';
-            return sponsorshipType + ':' + sponsor;
-        }).toString();
-
+    Omniture.prototype.go = function () {
         this.s.linkTrackVars = standardProps;
         this.s.linkTrackEvents = 'None';
-
-    };
-
-    Omniture.prototype.go = function () {
-        this.populatePageProperties();
-        this.logView();
         mediator.emit('analytics:ready');
     };
 

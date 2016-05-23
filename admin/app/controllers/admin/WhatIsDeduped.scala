@@ -3,6 +3,7 @@ package controllers.admin
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import layout.DedupedFrontResult
+import model.Cached.RevalidatableResult
 import model.{NoCache, Cached}
 import play.Play
 import play.api.libs.json.{JsError, JsSuccess}
@@ -16,7 +17,7 @@ object WhatIsDeduped extends Controller with Logging with ExecutionContexts {
 
    def index() = AuthActions.AuthActionTest { implicit request =>
      val paths: List[String] = ConfigAgent.getPathIds.sorted
-     Cached(60)(Ok(views.html.dedupePathsList(Configuration.environment.stage, paths)))
+     Cached(60)(RevalidatableResult.Ok(views.html.dedupePathsList(Configuration.environment.stage, paths)))
    }
 
    def dedupedFor(path: String) = AuthActions.AuthActionTest.async { implicit request =>
@@ -25,7 +26,7 @@ object WhatIsDeduped extends Controller with Logging with ExecutionContexts {
      WS.url(url).get().map { response =>
        response.json.validate[DedupedFrontResult] match {
          case JsSuccess(dedupedFrontResult, _) =>
-           Cached(60)(Ok(views.html.dedupedOnPath(Configuration.environment.stage, dedupedFrontResult)))
+           Cached(60)(RevalidatableResult.Ok(views.html.dedupedOnPath(Configuration.environment.stage, dedupedFrontResult)))
          case JsError(errors) => NoCache(NotFound(s"$path Not Found"))
        }
      }.recover {

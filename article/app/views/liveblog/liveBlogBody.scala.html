@@ -1,14 +1,14 @@
 @import model.liveblog.KeyEventData
 @(model: LiveBlogPage)(implicit request: RequestHeader)
 
-@import common.LinkTo
+@import common.{Edition, LinkTo}
+@import conf.switches.Switches._
 @import layout.{FaciaCardAndIndex, ItemClasses}
 @import views.html.fragments.items.facia_cards.item
 @import views.support.TrailCssClasses.toneClass
-@import common.Edition
-@import conf.switches.Switches._
 
 @defining((model.article, Edition(request).timezone)) { case (article, timezone) =>
+<div class="js-notifications-blocked"></div>
 <div class="l-side-margins">
     <article id="live-blog" data-test-id="live-blog"
         class="content content--liveblog tonal tonal--@toneClass(article) blog @if(article.fields.isLive){is-live} section-@article.trail.sectionName.toLowerCase"
@@ -17,7 +17,11 @@
         <meta itemprop="url" content="@LinkTo(article.metadata.url)">
 
         <header class="content__head tonal__head tonal__head--@toneClass(article)
-                        @if(USElectionSwitch.isSwitchedOn && article.content.tags.tags.exists(_.id == "us-news/us-elections-2016")) { content__head--us-election }">
+                      @if(ArticleBadgesSwitch.isSwitchedOn) {
+                          @if(article.content.tags.isElection) { content__head--election }
+                          @if(article.content.tags.isUSElection) { us-election }
+                          @if(article.content.tags.isAusElection) { aus-election }
+                      }">
             @* UPPER HEADER *@
             <div class="content__header tonal__header u-cf">
                 <div class="gs-container">
@@ -50,24 +54,27 @@
 
                     @fragments.witnessCallToAction(article.content)
 
-                    @fragments.liveNotificationsCallToActionPlaceHolder()
-
                     <div class="blog__left-col">
 
-                        @fragments.contentMeta(article)
+                        @fragments.contentMeta(article, model)
 
                         <div class="js-top-marker"></div>
-                        @if(article.hasKeyEvents) {
-                            <div class="blog__timeline blog__dropdown js-live-blog__key-events modern-visible js-updates-desktop">
-                                <div class="blog__timeline-container js-live-blog__timeline-container" data-component="timeline">
-                                    @fragments.dropdown("Key events", Some("key-events"), true) {
-                                        <ul class="timeline js-live-blog__timeline u-unstyled">
-                                            @views.html.liveblog.keyEvents("/" + article.metadata.id, KeyEventData(article.content.fields.blocks, timezone))
-                                        </ul>
-                                    }
-                                </div>
+                        <div class="js-live-blog__sticky-components">
+                            <div class="js-live-blog__sticky-components-container live-blog__sticky-components-container">
+                                @if(article.hasKeyEvents) {
+                                    <div class="modern-visible js-updates-desktop">
+                                        <div data-component="timeline">
+                                            @fragments.dropdown("Key events", Some("key-events"), true) {
+                                                <ul class="timeline js-live-blog__timeline u-unstyled">
+                                                    @views.html.liveblog.keyEvents("/" + article.metadata.id, KeyEventData(article.content.fields.blocks, timezone))
+                                                </ul>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                                <div class="js-live-notifications live-notifications" data-component="notifications"></div>
                             </div>
-                        }
+                        </div>
                         <div class="js-components-container"></div>
                     </div>
 

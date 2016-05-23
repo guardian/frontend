@@ -1,4 +1,4 @@
-@(gallery: model.Gallery, related: model.RelatedContent, index: Int)(implicit request: RequestHeader)
+@(page: model.GalleryPage)(implicit request: RequestHeader)
 @import common.{Edition, LinkTo}
 @import layout.ContentWidths.GalleryMedia
 @import views.support.TrailCssClasses.toneClass
@@ -7,40 +7,38 @@
 <div class="l-side-margins l-side-margins--media">
 
     <article id="article" class="@RenderClasses(
-            Map("content--advertisement-feature" -> gallery.commercial.isAdvertisementFeature,
-                "paid-content--advertisement-feature" -> gallery.commercial.isAdvertisementFeature
+            Map("content--advertisement-feature" -> page.gallery.commercial.isAdvertisementFeature,
+                "paid-content--advertisement-feature" -> page.gallery.commercial.isAdvertisementFeature
             ),
-            "content", "content--media", "content--gallery", "tonal", s"tonal--${toneClass(gallery)}"
+            "content", "content--media", "content--gallery", "tonal", s"tonal--${toneClass(page.gallery)}"
         )"
-        itemscope itemtype="@gallery.metadata.schemaType" role="main">
+        itemscope itemtype="@page.gallery.metadata.schemaType" role="main">
 
-        @if(gallery.commercial.isAdvertisementFeature){
+        @if(page.gallery.commercial.isAdvertisementFeature){
             @fragments.guBand()
         }
 
-        @fragments.headTonal(gallery, gallery.commercial.isSponsored(Some(Edition(request))) || gallery.commercial.isFoundationSupported || gallery.commercial.isAdvertisementFeature)
+        @fragments.headTonal(page.gallery, page, page.gallery.commercial.isSponsored(Some(Edition(request))) || page.gallery.commercial.isFoundationSupported || page.gallery.commercial.isAdvertisementFeature)
 
-        <div class="content__main tonal__main tonal__main--@toneClass(gallery)">
-            <div class="gs-container">
-                <div class="content__main-column content__main-column--gallery">
-                    @fragments.witnessCallToAction(gallery.content)
-                    @fragments.contentMeta(gallery)
-                    <ul class="gallery2">
-                    @gallery.lightbox.largestCrops.zipWithRowInfo.map { case (image, row) =>
-                        @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum, gallery.lightbox.imageContainer(row.rowNum - 1))
-                    }
-                    </ul>
-                    @fragments.witnessCallToAction(gallery.content)
-                    @fragments.submeta(gallery)
-                </div>
+        <div class="content__main tonal__main tonal__main--@toneClass(page.gallery) gs-container">
+            <div class="content__main-column content__main-column--gallery">
+                @fragments.witnessCallToAction(page.gallery.content)
+                @fragments.contentMeta(page.gallery, page)
+                <ul class="gallery2">
+                @page.gallery.lightbox.largestCrops.zipWithRowInfo.map { case (image, row) =>
+                    @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum, page.gallery.lightbox.imageContainer(row.rowNum - 1))
+                }
+                </ul>
+                @fragments.witnessCallToAction(page.gallery.content)
+                @fragments.submeta(page.gallery)
             </div>
         </div>
     </article>
 
-    @if(gallery.content.showInRelated &&
-        !gallery.commercial.isAdvertisementFeature ) {
+    @if(page.gallery.content.showInRelated &&
+        !page.gallery.commercial.isAdvertisementFeature ) {
         <div class="gallery__most-popular facia-container fc-container--media hide-on-childrens-books-site">
-            <div class="js-gallery-most-popular tonal--@toneClass(gallery)">
+            <div class="js-gallery-most-popular tonal--@toneClass(page.gallery)">
                 <div class="fc-container">
                     <div class="fc-container__inner">
                         <div class="fc-container__header">
@@ -53,7 +51,7 @@
             </div>
         </div>
     }
-    @fragments.contentFooter(gallery, related, "media")
+    @fragments.contentFooter(page.gallery, page.related, "media")
 </div>
 
 @galleryItem(adSlots: Seq[String], adInterval: Int, image: model.ImageAsset, rowNum: Int, imageElement: model.ImageElement) = {
@@ -62,7 +60,7 @@
         <figure itemscope itemtype="http://schema.org/ImageObject">
 
             <a class="gallery2__img-container js-gallerythumbs @if(image.width >= image.height) {gallery2__img-container--landscape} else {gallery2__img-container--portrait}"
-                href="@LinkTo{@gallery.metadata.url#img-@rowNum}"
+                href="@LinkTo{@page.gallery.metadata.url#img-@rowNum}"
 
                 data-link-name="Launch Gallery Lightbox" data-is-ajax>
 
@@ -86,13 +84,13 @@
                     }
                 }
 
-                @fragments.share.blockLevelSharing("img-" + rowNum.toString, gallery.sharelinks.elementShares("img-" + rowNum.toString, image.path), gallery.metadata.contentType)
+                @fragments.share.blockLevelSharing("img-" + rowNum.toString, page.gallery.sharelinks.elementShares("img-" + rowNum.toString, image.path), page.gallery.metadata.contentType)
             </div>
 
         </figure>
     </li>
 
-    @if(!gallery.content.shouldHideAdverts && rowNum % adInterval == 0) {
+    @if(!page.gallery.content.shouldHideAdverts && rowNum % adInterval == 0) {
         @adSlots.lift((rowNum / adInterval) - 1).map { adSlot =>
             <li class="gallery2__item gallery2__item--advert">
                 <div class="gallery2__img-container">

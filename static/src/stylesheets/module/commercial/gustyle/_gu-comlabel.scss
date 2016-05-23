@@ -1,4 +1,6 @@
 .gu-comlabel {
+    // Temporary hidding this. We need to update texts etc but it needs to be live today.
+    display: none;
     color: $neutral-1;
 
     .gu-comlabel__btn {
@@ -25,6 +27,16 @@
 
         &:after {
             display: none;
+        }
+
+        @include mq(gs-span(5) + $gs-gutter, phablet) {
+            top: $gs-baseline * 1.5;
+            right: $gs-gutter;
+            padding: 10px 10px 5px;
+
+            &.is-active::before {
+                top: 38px;
+            }
         }
     }
 }

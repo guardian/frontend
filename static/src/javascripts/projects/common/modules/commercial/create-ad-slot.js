@@ -13,6 +13,8 @@ define([
     isArray,
     transform
 ) {
+    var fabricTopSlot = '88,71';
+    var fabricMappingSwitch = config.switches.fabricAdverts ? ('|' + fabricTopSlot) : '';
     var adSlotDefinitions = {
         right: {
             sizeMappings: {
@@ -94,8 +96,16 @@ define([
         },
         'top-above-nav': {
             sizeMappings: {
-                desktop: '1,1|88,70|728,90|940,230|900,250|970,250'
+                desktop: '1,1|88,70|728,90|940,230|900,250|970,250' + fabricMappingSwitch
             }
+        },
+        'inline1-fabric': {
+            sizeMappings: {
+                mobile: ('1,1|300,250|' + fabricTopSlot)
+            },
+            // This label is used so that passbacks can retarget the slot, and so that in-reads (which always appear in
+            // the first slot) can be limited to this ad.
+            name : 'inline1'
         }
     };
 

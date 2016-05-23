@@ -83,9 +83,9 @@ CommentBox.prototype.errorMessages = {
         ' your email address' + '. Once verified post your comment.</span>',
     EMAIL_VERIFIED_FAIL: 'We are having technical difficulties. Please try again later or ' +
         '<a href="/send/email" class="js-id-send-validation-email"><strong>resend the verification</strong></a>.',
-    EMAIL_NOT_VERIFIED: 'Please confirm your email address to post your first comment.<br />' +
-        'If you can\'t find the email, we can <a href="_#" class="js-id-send-validation-email"><strong>resend the verification email</strong></a><span class="d-comment-box__error-meta"> to ' +
-        ' your email address' + '.</span>'
+    EMAIL_NOT_VALIDATED: 'Please confirm your email address to comment.<br />' +
+        'If you can\'t find the email, we can <a href="_#" class="js-id-send-validation-email"><strong>resend the verification email</strong></a> to ' +
+        ' your email address' + '.'
 };
 
 /**
@@ -228,6 +228,10 @@ CommentBox.prototype.submitPostComment = function(e) {
     this.postComment();
 };
 
+CommentBox.prototype.invalidEmailError = function () {
+   this.error('EMAIL_NOT_VALIDATED');
+   ValidationEmail.init();
+};
 
 CommentBox.prototype.postComment = function() {
     var self = this,
@@ -260,11 +264,6 @@ CommentBox.prototype.postComment = function() {
         }
     };
 
-    var invalidEmailError = function () {
-        self.error('EMAIL_NOT_VERIFIED');
-        ValidationEmail.init();
-    };
-
     if (!self.getUserData().emailVerified) {
         // Cookie could be stale so lets refresh and check from the api
         var createdDate = new Date(self.getUserData().accountCreatedDate);
@@ -273,7 +272,7 @@ CommentBox.prototype.postComment = function() {
                 if (response.user.statusFields.userEmailValidated === true) {
                     validEmailCommentSubmission();
                 } else {
-                    invalidEmailError();
+                    self.invalidEmailError();
                 }
             });
         } else {
@@ -339,6 +338,8 @@ CommentBox.prototype.fail = function(xhr) {
 
     if (xhr.status == 0) {
         this.error('API_CORS_BLOCKED');
+    } else if (response.errorCode === 'EMAIL_NOT_VALIDATED') {
+        this.invalidEmailError();
     } else if (this.errorMessages[response.errorCode]) {
         this.error(response.errorCode);
     } else {

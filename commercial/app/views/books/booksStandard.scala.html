@@ -1,57 +1,46 @@
-@(books: Seq[model.commercial.books.Book], omnitureId: Option[String], clickMacro: Option[String])(implicit request: RequestHeader)
+@(books: Seq[model.commercial.books.Book],
+  omnitureId: Option[String],
+  clickMacro: Option[String],
+  isProminent: Boolean = false)(implicit request: RequestHeader)
 
 @import conf.Configuration
+@import views.html.books.{bookCard, searchForm}
+@import views.html.commercial.containerWrapper
 
-@defining(("2_0", "2014-10-15")) { case (version, date) =>
-    <div class="commercial commercial--books commercial--tone-books commercial--standard" role="complementary" data-link-name="merchandising | books standard | @omnitureId">
-        <div class="commercial__inner">
-            <div class="commercial__header">
-                <h3 class="commercial__title">
-                    <a href="@{clickMacro}http://www.guardianbookshop.co.uk/" data-link-name="merchandising-bookshop-v@{version}_@{date}-medium-visit-shop">
-                        @fragments.inlineSvg("marque-54", "icon")
-                        @fragments.inlineSvg("logo-guardian", "logo")
-                        @fragments.inlineSvg("logo-bookshop", "commercial", List("inline-commercial-brand"))
-                        <span class="u-h">The Guardian</span> <span class="u-h">Bookshop</span>
-                    </a>
-                </h3>
-                @searchForm(version, date)
-                <a class="commercial__cta button button--tertiary button--large" href="@clickMacro@Configuration.commercial.books_url" data-link-name="merchandising-bookshop-v@{version}_@{date}-medium-visit-shop">
-                    @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
-                    <span class="commercial__cta__label">Visit <span class="hide-on-mobile-inline">book</span>shop</span>
-                </a>
-            </div>
-            <div class="commercial__body">
-                <h4 class="commercial--books__title hide-on-mobile">This week’s bestsellers</h4>
-                <ul class="lineitems">
-                @books.map { book =>
-                    <li class="lineitem" itemscope itemtype="http://schema.org/Book">
-                        <a class="lineitem__link" href="@clickMacro@book.buyUrl" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-medium-@{book.isbn}-@{book.author}-@{book.title}">
-                            @book.jacketUrl.map { url =>
-                            <img class="lineitem__image" itemprop="image" src="@url" alt=""/>
-                            }
-                            <h4 class="lineitem__title" itemprop="name">@book.title</h4>
-                        @if(book.author) {
-                            <p class="lineitem__meta lineitem__author" itemprop="author">By @book.author</p>
-                        }
-                            <meta itemprop="isbn" content="@{book.isbn}"/>
-                            <p class="lineitem__meta" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-                            @book.price.map { price =>
-                                RRP &pound;@("%.2f".format(price))<br/>
-                            }
-                            @book.offerPrice.map { price =>
-                                <strong class="commercial--tone__highlight">Our price: <span itemprop="price">&pound;@("%.2f".format(price))</span></strong>
-                                <meta itemprop="priceCurrency" content="GBP"/>
-                            }
-                            </p>
-                        </a>
-                        <a class="lineitem__cta button button--primary button--small" href="@clickMacro@book.buyUrl" data-link-name="merchandising-bookshop-v@{version}_@{date}-medium-@{book.isbn}-@{book.author}-@{book.title}-button">
-                            Buy now@fragments.inlineSvg("arrow-right", "icon", List("i-right"))
-                        </a>
-                    </li>
-                }
-                </ul>
-            </div>
+@containerWrapper(Seq("legacy", "books", "tone-books"),
+                  dataLinkName = omnitureId.map(id => s"merchandising | books standard | ${id}"),
+                  optActions = Some(actions)){
 
+    <a class="adverts__logo" href="@{clickMacro}http://www.guardianbookshop.co.uk/" data-link-name="merchandising-bookshop-v2_0_2014-10-15-medium-visit-shop">
+        @fragments.inlineSvg("marque-54", "icon")
+        @fragments.inlineSvg("logo-guardian", "logo")
+        @fragments.inlineSvg("logo-bookshop", "commercial", List("inline-commercial-brand"))
+        <span class="u-h">The Guardian Bookshop</span>
+    </a>
+
+}{
+
+    @if(isProminent) {
+        <div class="adverts__row adverts__row--2x1x1">
+            @books.take(1).map { book => @bookLargeCard(book, clickMacro, optAdvertClassNames = Some(Seq("inverse", "large--1x2"))) }
+            @books.slice(1, 3).map { book => @bookCard(book, clickMacro) }
         </div>
-    </div>
+    } else {
+        <div class="adverts__row">
+        @books.take(2).map { book => @bookCard(book, clickMacro) }
+        @books.slice(2, 4).map { book => @bookCard(book, clickMacro, optClassNames = Some(Seq("hide-until-tablet"))) }
+        </div>
+    }
+
+}
+
+@actions = {
+
+    @searchForm()
+
+    <a class="button button--tertiary button--large" href="@clickMacro@Configuration.commercial.books_url" data-link-name="merchandising-bookshop-v2_0_2014-10-15-medium-visit-shop">
+        @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
+        Visit <span class="hide-on-mobile-inline">book</span>shop
+    </a>
+
 }

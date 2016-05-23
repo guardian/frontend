@@ -12,4 +12,10 @@ object FrontsApi extends ExecutionContexts {
     client.setEndpoint(AwsEndpoints.s3)
     ApiClient(Configuration.aws.bucket, Configuration.facia.stage.toUpperCase, AmazonSdkS3Client(client))
   }
+
+  lazy val crossAccountClient: ApiClient = {
+    val client = new AmazonS3Client(Configuration.faciatool.crossAccountMandatoryCredentials)
+    client.setEndpoint(AwsEndpoints.s3)
+    ApiClient(Configuration.faciatool.crossAccountSourceBucket, Configuration.facia.stage.toUpperCase, AmazonSdkS3Client(client))
+  }
 }

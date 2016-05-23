@@ -84,7 +84,6 @@ object Jobs extends Logging {
       val schedule = DailyTimeIntervalScheduleBuilder.dailyTimeIntervalSchedule().withIntervalInSeconds(intervalInSeconds)
       log.info(s"Scheduling $name to run every $intervalInSeconds minutes")
       jobs.put(name, () => block)
-
       scheduler.scheduleJob(
         JobBuilder.newJob(classOf[FunctionJob]).withIdentity(name).build(),
         TriggerBuilder.newTrigger().withSchedule(schedule).build()

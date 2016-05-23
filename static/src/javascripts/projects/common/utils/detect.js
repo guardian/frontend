@@ -358,31 +358,16 @@ define([
     var adblockInUseSync = memoize(function () {
         return createSacrificialAd().css('display') === 'none';
     });
-
-    /** Includes Firefox Adblock Plus users who whitelist the Guardian domain */
-    var getFirefoxAdblockPlusInstalledSync = memoize(function () {
-        var adUnitMozBinding = createSacrificialAd().css('-moz-binding');
-        return !!adUnitMozBinding && adUnitMozBinding.match('elemhidehit') !== null;
-    });
     // end sync adblock detection
 
-    var getAdBlockers = new Promise(function (resolve) {
-        if (has(window.guardian.adBlockers, 'generic')) {
+    var adblockInUse = new Promise(function (resolve) {
+        if (has(window.guardian.adBlockers, 'active')) {
             // adblock detection has completed
-            resolve(window.guardian.adBlockers);
+            resolve(window.guardian.adBlockers.active);
         } else {
             // Push a listener for when the JS loads
             window.guardian.adBlockers.onDetect = resolve;
         }
-    });
-
-    var adblockInUse = getAdBlockers.then(function (adBlockers) {
-        return adBlockers.generic;
-    });
-
-    /** Includes Firefox Adblock Plus users who whitelist the Guardian domain */
-    var getFirefoxAdblockPlusInstalled = getAdBlockers.then(function (adBlockers) {
-        return adBlockers.ffAdblockPlus;
     });
 
     function getReferrer() {
@@ -415,9 +400,7 @@ define([
         breakpoints: breakpoints,
         isEnhanced: isEnhanced,
         adblockInUseSync: adblockInUseSync,
-        getFirefoxAdblockPlusInstalledSync: getFirefoxAdblockPlusInstalledSync,
         adblockInUse: adblockInUse,
-        getFirefoxAdblockPlusInstalled: getFirefoxAdblockPlusInstalled,
         getReferrer: getReferrer
     };
     return detect;

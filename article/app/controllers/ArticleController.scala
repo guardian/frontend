@@ -5,6 +5,8 @@ import com.gu.contentapi.client.model.v1.{Content => ApiContent, ItemResponse}
 import common._
 import contentapi.ContentApiClient
 import conf.switches.Switches
+import facebookimages.ArticleWithOpenGraphOverlay
+import model.Cached.WithoutRevalidationResult
 import model._
 import model.liveblog.{BodyBlock, KeyEventData}
 import org.joda.time.DateTime
@@ -68,7 +70,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
           TextBlock(id, title, publishedAt, updatedAt, html)
       }.take(number)
       Cached(page)(JsonComponent("blocks" -> Json.toJson(blocks)))
-    case _ => Cached(600)(NotFound("Can only return block text for a live blog"))
+    case _ => Cached(600)(WithoutRevalidationResult(NotFound("Can only return block text for a live blog")))
 
   }
 
@@ -179,17 +181,18 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
     val content: Either[PageWithStoryPackage, Result] = supportedContentResult.left.flatMap { content =>
       (content, page) match {
         case (minute: Article, None) if minute.isUSMinute =>
-          Left(MinutePage(minute, RelatedContent(minute, response)))
+          Left(MinutePage(minute, StoryPackages(minute, response)))
         case (liveBlog: Article, None/*no page param*/) if liveBlog.isLiveBlog =>
           createLiveBlogModel(liveBlog, response, None)
         case (liveBlog: Article, Some(Some(requiredBlockId))/*page param specified and valid format*/) if liveBlog.isLiveBlog =>
           createLiveBlogModel(liveBlog, response, Some(requiredBlockId))
         case (article: Article, None) =>
-          if(mvt.ABIntersperseMultipleStoryPackagesStories.isParticipating) {
-            Left(ArticlePage(article, StoryPackages(article, response)))
+          if(mvt.ABOpenGraphOverlay.isParticipating) {
+            val newArticle = ArticleWithOpenGraphOverlay(article)
+            Left(ArticlePage(newArticle, StoryPackages(newArticle, response)))
           }
           else {
-            Left(ArticlePage(article, RelatedContent(article, response)))
+            Left(ArticlePage(article, StoryPackages(article, response)))
           }
         case _ =>
           Right(NotFound)
@@ -229,7 +232,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
           content = liveBlog.content.copy(
             metadata = liveBlog.content.metadata.copy(
               cacheTime = cacheTime)))
-        Left(LiveBlogPage(liveBlogCache, pageModel, RelatedContent(liveBlog, response)))
+        Left(LiveBlogPage(liveBlogCache, pageModel, StoryPackages(liveBlog, response)))
       case None => Right(NotFound)
     }
 

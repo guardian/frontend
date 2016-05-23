@@ -1,8 +1,10 @@
 /*global FB:false*/
 /*global guardian*/
-define(function () {
-
+define([
+    'common/utils/load-script'
+], function (loadScript) {
     var scriptId = 'facebook-jssdk';
+    var scriptSrc = '//connect.facebook.net/en_US/sdk/xfbml.ad.js#xfbml=1&version=v2.5';
 
     function FacebookAuthorizer(appId) {
         this.appId = appId;
@@ -102,7 +104,7 @@ define(function () {
     FacebookAuthorizer.prototype._loadFacebookScript = function () {
         // don't tell Facebook about pages that have not launched yet
         if (!guardian.config.page.isPreview) {
-            require(['js!facebook.js'], this._handleScriptLoaded.bind(this));
+            loadScript({ id: scriptId, src: scriptSrc + '&appId=' + this.appId});
         }
     };
 

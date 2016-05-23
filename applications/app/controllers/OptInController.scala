@@ -1,6 +1,7 @@
 package controllers
 
 import model.Cached
+import model.Cached.WithoutRevalidationResult
 import play.api.mvc.{Action, Controller, Cookie, DiscardingCookie}
 
 import scala.concurrent.duration._
@@ -12,18 +13,20 @@ object OptInController extends Controller {
       case _ => optOut()
     }
 
-    def optIn() = Cached(60)(SeeOther("/").withCookies(Cookie(cookieName, "true", maxAge = Some(lifetime))))
-    def optOut() = Cached(60)(SeeOther("/").discardingCookies(DiscardingCookie(cookieName)))
+    def optIn() = SeeOther("/").withCookies(Cookie(cookieName, "true", maxAge = Some(lifetime)))
+    def optOut() = SeeOther("/").discardingCookies(DiscardingCookie(cookieName))
   }
 
   def handle(feature: String, choice: String) = Action { implicit request =>
-    feature match {
+    Cached(60)(WithoutRevalidationResult(feature match {
       case "https" => HTTPS.opt(choice)
       case "header" => Header.opt(choice)
+      case "gallery" => gallery.opt(choice)
       case _ => NotFound
-    }
+    }))
   }
 
   val HTTPS = OptInFeature("https_opt_in")
   val Header = OptInFeature("new_header_opt_in")
+  val gallery = OptInFeature("gallery_redesign_opt_in")
 }

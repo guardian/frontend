@@ -5,6 +5,7 @@ import model.commercial.Lookup
 import model.{Cached, NoCache}
 import play.api.mvc._
 import views.support.Item300
+import views.support.commercial.TrackingCodeBuilder
 
 object PaidContentCardController extends Controller with ExecutionContexts with implicits.Requests with Logging {
 
@@ -17,7 +18,8 @@ object PaidContentCardController extends Controller with ExecutionContexts with 
         val articleUrl = content.metadata.webUrl
         val articleTitle = request.getParameter("articleHeaderText") getOrElse content.metadata.webTitle
         val leaveTextEmpty = request.getParameter("leaveTextEmpty").exists(_ != "No")
-        val pictureUrl: Option[String] = request.getParameter("articleImage") orElse (content.trail.trailPicture.flatMap(Item300.bestFor))
+        val pictureUrl: Option[String] =
+          request.getParameter("articleImage") orElse content.trail.trailPicture.flatMap(Item300.bestFor)
         val brandLogo = request.getParameter("brandLogo")
         val brand = request.getParameter("brand")
         val linkLabel = request.getParameter("linkLabel")
@@ -31,10 +33,22 @@ object PaidContentCardController extends Controller with ExecutionContexts with 
         } else None
 
         Cached(componentMaxAge) {
-          format.result(views.html.paidContent.card(articleUrl, articleTitle, articleText, pictureUrl, brandLogo, brand, linkLabel, optClickMacro, optOmnitureId, trackingPixel, cacheBuster))
+          format.result(views.html.paidContent.card(
+            articleUrl,
+            articleTitle,
+            articleText,
+            pictureUrl,
+            brandLogo,
+            brand,
+            linkLabel,
+            linkTracking = optOmnitureId getOrElse TrackingCodeBuilder.paidCard(articleTitle),
+            optClickMacro,
+            trackingPixel,
+            cacheBuster
+          ))
         }
       } getOrElse {
-        NoCache(format.nilResult)
+        NoCache(format.nilResult.result)
       }
     }
   }

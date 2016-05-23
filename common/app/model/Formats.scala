@@ -147,7 +147,7 @@ object MetaDataFormat {
           meta.rssPath),
         MetaDataPart2(
           meta.contentType,
-          meta.hasHeader,
+          meta.shouldHideHeaderAndTopAds,
           meta.schemaType,
           meta.cacheTime,
           meta.openGraphImages,
@@ -176,9 +176,6 @@ object ContentTypeFormat {
   implicit val paginationFormat = MetaDataFormat.paginationFormat
   implicit val podcastFormat = Json.format[Podcast]
   implicit val referenceFormat = Json.format[Reference]
-  implicit val sponsorshipTypeFormat = SponsorshipType.format
-  implicit val sponsorshipTargetingFormat = Json.format[SponsorshipTargeting]
-  implicit val sponsorshipFormat = Json.format[Branding]
   implicit val tagPropertiesFormat = Json.format[TagProperties]
   implicit val tagFormat = Json.format[Tag]
   val tagsFormat = Json.format[Tags]

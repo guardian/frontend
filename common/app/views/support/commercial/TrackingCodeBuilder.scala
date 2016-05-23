@@ -4,19 +4,15 @@ import common.Edition
 import common.commercial.{CardContent, ContainerModel}
 import play.api.mvc.RequestHeader
 
-object TrackingCodeBuilder {
+object TrackingCodeBuilder extends implicits.Requests {
 
   def mkInteractionTrackingCode(frontId: String,
                                 containerIndex: Int,
                                 container: ContainerModel,
                                 card: CardContent)(implicit request: RequestHeader): String = {
-    val sponsor = container.branding.flatMap(_.sponsor) orElse card.branding.flatMap(_.sponsor) getOrElse ""
+    val sponsor = container.brandingAttributes.flatMap(_.sponsor) orElse card.branding.flatMap(_.sponsor) getOrElse ""
     val cardIndex =
-      (container.content.fixed.initialCards ++
-        container.content.dynamic.hugeCards ++
-        container.content.dynamic.veryBigCards ++
-        container.content.dynamic.bigCards ++
-        container.content.showMoreCards).indexWhere(_.headline == card.headline)
+      (container.content.initialCards ++ container.content.showMoreCards).indexWhere(_.headline == card.headline)
     Seq(
       "Labs front container",
       Edition(request).id,
@@ -27,5 +23,12 @@ object TrackingCodeBuilder {
       s"card-${cardIndex + 1}",
       card.headline
     ) mkString " | "
+  }
+
+  def paidCard(articleTitle: String)(implicit request: RequestHeader): String = {
+    def param(name: String) = request.getParameter(name) getOrElse "unknown"
+    val section = param("s")
+    val sponsor = param("brand")
+    s"GLabs-native-traffic-card | ${Edition(request).id} | $section | $articleTitle | $sponsor"
   }
 }

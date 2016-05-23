@@ -189,6 +189,16 @@
 
     .fc-item__meta {
         color: $neutral-2;
+
+        .fc-save-for-later {
+            .inline-icon {
+                fill: $neutral-2;
+            }
+            &:hover:after {
+                color: $neutral-2;
+                text-decoration: underline;
+            }
+        }
     }
 
     &.fc-container--sponsored,
@@ -203,7 +213,7 @@
     &.tonal--tone-media .tonal__standfirst {
         .bullet:before,
         ul>li:before {
-            background-color: $neutral-1;
+            background-color: $media-mute;
         }
     }
 

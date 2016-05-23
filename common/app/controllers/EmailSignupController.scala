@@ -2,6 +2,7 @@ package controllers
 
 import common.{LinkTo, Logging, ExecutionContexts}
 import conf.Configuration
+import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
 import model._
 import play.api.Play.current
 import play.api.data._
@@ -118,25 +119,25 @@ object EmailForm {
   /**
     * Associate lists with triggered send keys in ExactTarget. In our case these have a 1:1 relationship.
     */
-  val listIdsWithMaybeTrigger: Map[Int, Option[Int]] = Map(
+  val listIdsWithTrigger: Map[Int, Option[Int]] = Map(
     ListIds.testList -> Some(2529),
     ListIds.guardianTodayUk -> Some(2529),
     ListIds.guardianTodayUs -> Some(2564),
-    ListIds.guardianTodayAu -> Some(2563)) ++ controllers.ListIds.allWithoutTrigger.map(_ -> None).toMap
+    ListIds.guardianTodayAu -> Some(2563))
 
-  def submit(form: EmailForm): Option[Future[WSResponse]] = {
-    listIdsWithMaybeTrigger.get(form.listId).map { triggeredSendKey: Option[Int] =>
-      WS.url(Configuration.emailSignup.url).post(
-        JsObject(Json.obj(
-        "email" -> form.email,
-        "listId" -> form.listId,
-        "triggeredSendKey" -> triggeredSendKey,
-        "emailGroup" -> "email-footer-test",
-        "referrer" -> form.referrer,
-        "campaignCode" -> form.campaignCode)
-        .fields
-        .filterNot{ case (_, v) => v == JsNull}))
-    }
+  def submit(form: EmailForm): Future[WSResponse] = {
+    val maybeTriggeredSendKey: Option[Int] = listIdsWithTrigger.getOrElse(form.listId, None)
+
+    WS.url(Configuration.emailSignup.url).post(
+      JsObject(Json.obj(
+      "email" -> form.email,
+      "listId" -> form.listId,
+      "triggeredSendKey" -> maybeTriggeredSendKey,
+      "emailGroup" -> "email-footer-test",
+      "referrer" -> form.referrer,
+      "campaignCode" -> form.campaignCode)
+      .fields
+      .filterNot{ case (_, v) => v == JsNull}))
   }
 }
 
@@ -151,21 +152,20 @@ object EmailSignupController extends Controller with ExecutionContexts with Logg
   )
 
   def renderPage() = Action { implicit request =>
-    Cached(60)(Ok(views.html.emailLanding(emailLandingPage)))
+    Cached(60)(RevalidatableResult.Ok(views.html.emailLanding(emailLandingPage)))
   }
 
   def renderForm(emailType: String, listId: Int) = Action { implicit request =>
-    EmailForm.listIdsWithMaybeTrigger.lift(listId) match {
-      case Some(_) => Cached(1.day)(Ok(views.html.emailFragment(emailLandingPage, emailType, listId)))
-      case None => NotFound(s"List id $listId does not exist")}}
+      Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listId)))}
 
   def subscriptionResult(result: String) = Action { implicit request =>
     Cached(7.days)(result match {
-      case "success" => Ok(views.html.emailSubscriptionResult(emailLandingPage, Subscribed))
-      case "invalid" => Ok(views.html.emailSubscriptionResult(emailLandingPage, InvalidEmail))
-      case "error"   => Ok(views.html.emailSubscriptionResult(emailLandingPage, OtherError))
-      case _         => NotFound
+      case "success" => RevalidatableResult.Ok(views.html.emailSubscriptionResult(emailLandingPage, Subscribed))
+      case "invalid" => RevalidatableResult.Ok(views.html.emailSubscriptionResult(emailLandingPage, InvalidEmail))
+      case "error" => RevalidatableResult.Ok(views.html.emailSubscriptionResult(emailLandingPage, OtherError))
+      case _ => WithoutRevalidationResult(NotFound)
     })
+
   }
 
   def submit() = Action.async { implicit request =>
@@ -196,13 +196,12 @@ object EmailSignupController extends Controller with ExecutionContexts with Logg
         EmailFormError.increment()
         Future.successful(respond(InvalidEmail))},
 
-      form => EmailForm.submit(form) match {
-        case Some(future) => future.map(_.status match {
+      form => EmailForm.submit(form).map(_.status match {
           case 200 | 201 =>
             EmailSubmission.increment()
             respond(Subscribed)
 
-          case status    =>
+          case status =>
             log.error(s"Error posting to ExactTarget: HTTP $status")
             APIHTTPError.increment()
             respond(OtherError)
@@ -212,13 +211,7 @@ object EmailSignupController extends Controller with ExecutionContexts with Logg
             log.error(s"Error posting to ExactTarget: ${e.getMessage}")
             APINetworkError.increment()
             respond(OtherError)
-        }
-
-        case None =>
-          log.error(s"Unable to find a trigger for list ID ${form.listId}")
-          ListIDError.increment()
-          Future.successful(respond(OtherError))
-      })
+        })
   }
 
   def options() = Action { implicit request =>

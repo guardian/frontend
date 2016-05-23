@@ -3,9 +3,10 @@ package common
 import java.util.concurrent.TimeoutException
 
 import akka.pattern.CircuitBreakerOpenException
-import com.gu.contentapi.client.GuardianContentApiThriftError
+import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.model.v1.ErrorResponse
 import conf.switches.Switch
+import model.Cached.RevalidatableResult
 import model.{Cached, NoCache}
 import org.apache.commons.lang.exception.ExceptionUtils
 import play.api.Logger
@@ -29,14 +30,14 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
     case e: CircuitBreakerOpenException =>
       log.error(s"Got a circuit breaker open error while calling content api")
       NoCache(ServiceUnavailable)
-    case GuardianContentApiThriftError(404, message, _) =>
+    case GuardianContentApiError(404, message, _) =>
       log.info(s"Got a 404 while calling content api: $message")
       NoCache(NotFound)
-    case GuardianContentApiThriftError(410, message, errorResponse) =>
+    case GuardianContentApiError(410, message, errorResponse) =>
       errorResponse match {
         case Some(errorResponse) if isCommercialExpiry(errorResponse) =>
           log.info(s"Got a 410 while calling content api: $message: ${errorResponse.message}")
-          Cached(60)(Ok(views.html.commercialExpired()))
+          Cached(60)(RevalidatableResult.Ok(views.html.commercialExpired()))
         case _ =>
           log.info(s"Got a 410 while calling content api: $message")
           NoCache(Gone)
@@ -63,9 +64,9 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
       if (request.isJson)
         JsonComponent(jsonResponse())
       else if (request.isEmail)
-        Ok(InlineStyles(htmlResponse()))
+        RevalidatableResult.Ok(InlineStyles(htmlResponse()))
       else
-        Ok(htmlResponse())
+        RevalidatableResult.Ok(htmlResponse())
     }
 
   def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, page: model.Page, switches: Seq[Switch])(implicit request: RequestHeader) =
@@ -73,9 +74,9 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
       if (request.isJson)
         JsonComponent(page, jsonResponse())
       else if (request.isEmail)
-        Ok(InlineStyles(htmlResponse()))
+        RevalidatableResult.Ok(InlineStyles(htmlResponse()))
       else
-        Ok(htmlResponse())
+        RevalidatableResult.Ok(htmlResponse())
     }
 
   def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, cacheTime: Integer)(implicit request: RequestHeader) =
@@ -83,9 +84,9 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
       if (request.isJson)
         JsonComponent(jsonResponse())
       else if (request.isEmail)
-        Ok(InlineStyles(htmlResponse()))
+        RevalidatableResult.Ok(InlineStyles(htmlResponse()))
       else
-        Ok(htmlResponse())
+        RevalidatableResult.Ok(htmlResponse())
     }
 
   def renderFormat(html: () => Html, cacheTime: Integer)(implicit request: RequestHeader): Result = {

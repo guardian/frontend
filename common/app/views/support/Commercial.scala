@@ -1,7 +1,7 @@
 package views.support
 
 import common.Edition
-import common.commercial.{ContainerContent, ContainerModel}
+import common.commercial.ContainerModel
 import common.dfp.AdSize.{leaderboardSize, responsiveSize}
 import common.dfp._
 import conf.switches.Switches._
@@ -34,9 +34,10 @@ object Commercial {
     }
 
     def adSizes(metaData: MetaData, edition: Edition): Map[String, Seq[String]] = {
+      val fabricAdvertsTop = if (FabricAdverts.isSwitchedOn) Some("88,71") else None
       Map(
-        "mobile" -> Seq("1,1", "88,70", "728,90"),
-        "desktop" -> Seq("1,1", "88,70", "728,90", "940,230", "900,250", "970,250")
+        "mobile" -> (Seq("1,1", "88,70", "728,90") ++ fabricAdvertsTop),
+        "desktop" -> (Seq("1,1", "88,70", "728,90", "940,230", "900,250", "970,250") ++ fabricAdvertsTop)
       )
     }
 
@@ -49,17 +50,19 @@ object Commercial {
         "js-top-banner-above-nav")
 
       val sizeSpecificClass = {
-        if (FixedTopAboveNavAdSlotSwitch.isSwitchedOn && isBusinessFront(metaData)) {
-          if (hasAdOfSize(TopAboveNavSlot, leaderboardSize, metaData, edition, sizesOverride)) {
-            "top-banner-ad-container--small"
-          } else if (hasAdOfSize(TopAboveNavSlot, responsiveSize, metaData, edition, sizesOverride)) {
-            "top-banner-ad-container--responsive"
-          } else {
-            "top-banner-ad-container--large"
-          }
-        } else {
+        // Keeping this code for now since we'll be running another similar
+        // experiment in the near future:
+        // if (FixedTopAboveNavAdSlotSwitch.isSwitchedOn && isBusinessFront(metaData)) {
+        //   if (hasAdOfSize(TopAboveNavSlot, leaderboardSize, metaData, edition, sizesOverride)) {
+        //     "top-banner-ad-container--small"
+        //   } else if (hasAdOfSize(TopAboveNavSlot, responsiveSize, metaData, edition, sizesOverride)) {
+        //     "top-banner-ad-container--responsive"
+        //   } else {
+        //     "top-banner-ad-container--large"
+        //   }
+        // } else {
           "top-banner-ad-container--reveal"
-        }
+        // }
       }
 
       (classes :+ sizeSpecificClass) mkString " "
@@ -90,14 +93,9 @@ object Commercial {
           branding.exists(_.sponsorshipType == "advertisement-features")
 
         val content = container.content
-        val allCards = content.fixed.initialCards ++
-          content.dynamic.bigCards ++
-          content.dynamic.veryBigCards ++
-          content.dynamic.hugeCards
+        val paidCards = content.initialCards.filter(card => isPaid(card.branding))
 
-        val paidCards = allCards.filter(card => isPaid(card.branding))
-
-        isPaid(container.branding) || !paidCards.isEmpty
+        isPaid(container.brandingAttributes) || paidCards.nonEmpty
       }
 
       !isPaidFront &&

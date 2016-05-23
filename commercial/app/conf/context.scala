@@ -1,6 +1,6 @@
 package conf
 
-object HealthCheck extends AnyGoodHealthcheckController(
+object HealthCheck extends AnyGoodCachedHealthCheck(
   9005,
   "/commercial/soulmates/mixed.json",
   "/commercial/masterclasses.json",
@@ -9,3 +9,7 @@ object HealthCheck extends AnyGoodHealthcheckController(
   "/commercial/money/bestbuys.json",
   "/commercial/books/books.json"
 )
+
+trait CommercialHealthCheckLifeCycle extends CachedHealthCheckLifeCycle {
+  override val healthCheckController = HealthCheck
+}

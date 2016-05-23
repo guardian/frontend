@@ -231,4 +231,5 @@ case class IndexPage(
 
   def allPath = s"/$idWithoutEdition"
 
+  def branding(edition: Edition): Option[Branding] = page.branding(edition)
 }

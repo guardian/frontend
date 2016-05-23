@@ -34,6 +34,7 @@ trait S3 extends Logging {
 
       val request = new GetObjectRequest(bucket, key)
       val result = client.getObject(request)
+      log.info(s"S3 got ${result.getObjectMetadata.getContentLength} bytes from ${result.getKey}")
 
       // http://stackoverflow.com/questions/17782937/connectionpooltimeoutexception-when-iterating-objects-in-s3
       try {
@@ -150,24 +151,6 @@ object S3FrontsApi extends S3 {
 
   def getDraftFapiPressedKeyForPath(path: String): String =
     s"$location/pressed/draft/$path/fapi/pressed.json"
-
-  def getSchema = get(s"$location/schema.json")
-  def getMasterConfig: Option[String] = get(s"$location/config/config.json")
-  def getBlock(id: String) = get(s"$location/collection/$id/collection.json")
-
-  private def getListing(prefix: String, dropText: String): List[String] = {
-    import scala.collection.JavaConversions._
-    val summaries = client.map(_.listObjects(bucket, prefix).getObjectSummaries.toList).getOrElse(Nil)
-    summaries
-      .map(_.getKey.split(prefix))
-      .filter(_.nonEmpty)
-      .map(_.last)
-      .filterNot(_.endsWith("/"))
-      .map(_.split(dropText).head)
-  }
-
-  def getConfigIds(prefix: String): List[String] = getListing(prefix, "/config.json")
-  def getCollectionIds(prefix: String): List[String] = getListing(prefix, "/collection.json")
 
   def putLivePressedJson(path: String, json: String) =
     putPrivateGzipped(getLivePressedKeyForPath(path), json, "application/json")

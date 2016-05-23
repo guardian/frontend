@@ -22,44 +22,26 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers {
     image = None,
     fallbackImageUrl = None,
     targetUrl = "",
-    group = None,
     branding
   )
 
-  def mkContainerModel(isDynamic: Boolean = false, branding: Option[SponsorDataAttributes] = None) = {
+  def mkContainerModel(brandingAttributes: Option[SponsorDataAttributes] = None) = {
 
     def mkContainerContent() = ContainerContent(
       title = "container-title",
       description = None,
       targetUrl = None,
-      fixed = {
-        if (isDynamic) {
-          FixedContent(Nil)
-        } else {
-          FixedContent(initialCards = Seq(
-            mkCardContent(1),
-            mkCardContent(2),
-            mkCardContent(3),
-            mkCardContent(4),
-            mkCardContent(5),
-            mkCardContent(6),
-            mkCardContent(7),
-            mkCardContent(8),
-            mkCardContent(9)
-          ))
-        }
-      },
-      dynamic = {
-        if (isDynamic) {
-          DynamicContent(
-            hugeCards = Seq(mkCardContent(1), mkCardContent(2), mkCardContent(3)),
-            veryBigCards = Seq(mkCardContent(4), mkCardContent(5), mkCardContent(6)),
-            bigCards = Seq(mkCardContent(7), mkCardContent(8), mkCardContent(9))
-          )
-        } else {
-          DynamicContent(Nil, Nil, Nil)
-        }
-      },
+      initialCards = Seq(
+        mkCardContent(1),
+        mkCardContent(2),
+        mkCardContent(3),
+        mkCardContent(4),
+        mkCardContent(5),
+        mkCardContent(6),
+        mkCardContent(7),
+        mkCardContent(8),
+        mkCardContent(9)
+      ),
       showMoreCards = Seq(mkCardContent(10), mkCardContent(11))
     )
 
@@ -67,7 +49,8 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers {
       id = "",
       layoutName = "",
       mkContainerContent(),
-      branding
+      brandingAttributes,
+      branding = None
     )
   }
 
@@ -75,7 +58,7 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers {
     val code = TrackingCodeBuilder.mkInteractionTrackingCode(
       frontId = "front-id",
       containerIndex = 2,
-      container = mkContainerModel(branding = Some(mkBranding("sponsor-name"))),
+      container = mkContainerModel(brandingAttributes = Some(mkBranding("sponsor-name"))),
       card = mkCardContent(5)
     )(request = FakeRequest().withHeaders("X-Gu-Edition" -> "US"))
     code shouldBe
@@ -97,7 +80,7 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers {
     val code = TrackingCodeBuilder.mkInteractionTrackingCode(
       frontId = "front-id",
       containerIndex = 2,
-      container = mkContainerModel(branding = Some(mkBranding("sponsor-name"))),
+      container = mkContainerModel(brandingAttributes = Some(mkBranding("sponsor-name"))),
       card = mkCardContent(5)
     )(request = FakeRequest().withHeaders("X-Gu-Edition" -> "US"))
     code shouldBe

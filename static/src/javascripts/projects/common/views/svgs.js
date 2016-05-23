@@ -43,13 +43,16 @@ define([
     'inlineSvg!svgs/icon/share-gplus',
     'inlineSvg!svgs/icon/external-link',
     'inlineSvg!svgs/icon/tick',
+    'inlineSvg!svgs/icon/notification-off',
+    'inlineSvg!svgs/icon/notification-on',
     'inlineSvg!svgs/logo/glabs-logo-small',
     'inlineSvg!svgs/logo/membership-logo',
     'inlineSvg!svgs/commercial/logo-membership',
     'inlineSvg!svgs/commercial/adblock-coins',
-    'inlineSvg!svgs/notifications-explainer-mobile',
     'inlineSvg!svgs/notifications-explainer-desktop',
+    'inlineSvg!svgs/notifications-explainer-mobile',
     'inlineSvg!svgs/commercial/adblock-coins-us',
+    'inlineSvg!svgs/icon/star',
     'lodash/objects/isArray'
 ], function (
     commentCount16icon,
@@ -92,13 +95,16 @@ define([
     shareGPlus,
     externalLink,
     tick,
+    notificationsOff,
+    notificationsOn,
     glabsLogoSmall,
     membershipLogoWhite,
     membershipLogo,
     adblockCoins,
-    notificationsExplainerMobile,
     notificationsExplainerDesktop,
+    notificationsExplainerMobile,
     adblockCoinsUS,
+    star,
     isArray
 ) {
     var svgs = {
@@ -142,12 +148,15 @@ define([
         shareGPlus: shareGPlus,
         externalLink: externalLink,
         tick: tick,
+        notificationsOff: notificationsOff,
+        notificationsOn: notificationsOn,
         glabsLogoSmall: glabsLogoSmall,
         adblockCoinsUk: adblockCoins,
         adblockCoinsUs: adblockCoinsUS,
         logomembership: membershipLogo,
-        notificationsExplainerMobile: notificationsExplainerMobile,
         notificationsExplainerDesktop: notificationsExplainerDesktop,
+        notificationsExplainerMobile: notificationsExplainerMobile,
+        star: star,
         logomembershipwhite: membershipLogoWhite
     };
 

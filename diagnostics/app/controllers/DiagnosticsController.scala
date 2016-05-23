@@ -9,6 +9,8 @@ import model.diagnostics.csp.CSP
 import model.TinyResponse
 
 object DiagnosticsController extends Controller with Logging {
+  val r = scala.util.Random
+
   def acceptBeaconOptions = postOptions
 
   def acceptBeacon = Action { implicit request =>
@@ -41,7 +43,7 @@ object DiagnosticsController extends Controller with Logging {
   }
 
   def csp = Action(jsonParser) { implicit request =>
-    if (conf.switches.Switches.CspReporting.isSwitchedOn) {
+    if (conf.switches.Switches.CspReporting.isSwitchedOn && r.nextInt(100) == 1) {
       CSP.report(request.body)
     }
 

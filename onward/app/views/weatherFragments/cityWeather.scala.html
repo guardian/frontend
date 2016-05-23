@@ -1,5 +1,4 @@
 @(weatherResponse: weather.models.accuweather.WeatherResponse)(implicit request: RequestHeader)
-@import conf.switches.Switches.PurpleRainSwitch
 
 @import common.Edition
 
@@ -14,12 +13,7 @@
                 <span class="weather__temp js-weather-temp">@math.round(temp.Value)°@temp.Unit</span>
             }
         </p>
-        @if(PurpleRainSwitch.isSwitchedOn) {
-            @fragments.inlineSvg("purple-rain", "weather", Seq("weather__icon","js-weather-icon"), Some("Purple rain"))<span class="u-h">@weatherResponse.WeatherText</span>
-        } else {
-            @fragments.inlineSvg(s"weather-${weatherResponse.WeatherIcon}", "weather", Seq("weather__icon","js-weather-icon"), Some(weatherResponse.WeatherText))<span class="u-h">@weatherResponse.WeatherText</span>
-        }
-
+        @fragments.inlineSvg(s"weather-${weatherResponse.WeatherIcon}", "weather", Seq("weather__icon","js-weather-icon"), Some(weatherResponse.WeatherText))<span class="u-h">@weatherResponse.WeatherText</span>
     </div>
     <button class="weather__toggle-forecast meta-button js-toggle-forecast mobile-only" data-link-name="weather-toggle-forecast"
     href="#toggle-forecast"><span class="u-h">Toggle forecast</span>@fragments.inlineSvg("arrow", "icon", List("weather__toggle-icon"))

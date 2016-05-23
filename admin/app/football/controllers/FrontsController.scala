@@ -1,5 +1,6 @@
 package controllers.admin
 
+import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
 import play.api.mvc.{RequestHeader, Action, Controller, Result => PlayResult}
 import play.api.libs.ws.WS
 import play.twirl.api.Html
@@ -30,7 +31,7 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
       competitionTeams <- Future.traverse(competitions){comp => client.teams(comp.competitionId, comp.startDate, comp.endDate)}
       allTeams = competitionTeams.flatten.distinct
     } yield {
-      Cached(3600)(Ok(views.html.football.fronts.index(competitions, allTeams)))
+      Cached(3600)(RevalidatableResult.Ok(views.html.football.fronts.index(competitions, allTeams)))
     }
   }
 
@@ -42,7 +43,7 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
   def resultsRedirect = Action { implicit request =>
     val submission = request.body.asFormUrlEncoded.get
     val competitionId = submission.get("competition").get.head
-    Cached(60)(SeeOther(s"/admin/football/fronts/results/$competitionId"))
+    Cached(60)(WithoutRevalidationResult(SeeOther(s"/admin/football/fronts/results/$competitionId")))
   }
 
   def results(competitionId: String) = Action.async { implicit request =>
@@ -64,7 +65,7 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
   def fixturesRedirect = Action { implicit request =>
     val submission = request.body.asFormUrlEncoded.get
     val competitionId = submission.get("competition").get.head
-    Cached(60)(SeeOther(s"/admin/football/fronts/fixtures/$competitionId"))
+    Cached(60)(WithoutRevalidationResult(SeeOther(s"/admin/football/fronts/fixtures/$competitionId")))
   }
 
   def fixtures(competitionId: String) = Action.async { implicit request =>
@@ -128,7 +129,7 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
       case (None, Some(team2Id)) => s"/admin/football/fronts/matches/$competitionId/$team2Id"
       case (_, _) => s"/admin/football/fronts/matches/$competitionId"
     }
-    Cached(60)(SeeOther(url))
+    Cached(60)(WithoutRevalidationResult(SeeOther(url)))
   }
 
   def chooseMatchForComp(competitionId: String) = chooseMatch(competitionId, None, None)
@@ -137,7 +138,7 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
   private def chooseMatch(competitionId: String, team1IdOpt: Option[String], team2IdOpt: Option[String]) =AuthActions.AuthActionTest.async { implicit request =>
     for {
       (liveMatches, fixtures, results) <- getMatchesFor(competitionId, team1IdOpt, team2IdOpt)
-    } yield Cached(60)(Ok(views.html.football.fronts.matchesList(liveMatches, fixtures, results)))
+    } yield Cached(60)(RevalidatableResult.Ok(views.html.football.fronts.matchesList(liveMatches, fixtures, results)))
   }
 
   def bigMatchSpecial(matchId: String) =AuthActions.AuthActionTest.async { implicit request =>
@@ -191,13 +192,13 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
   }
   private def hasTeam(m: FootballMatch, teamId: String) = m.homeTeam.id == teamId || m.awayTeam.id == teamId
 
-  private def previewFrontsComponent(snapFields: SnapFields): Future[PlayResult] = {
+  private def previewFrontsComponent(snapFields: SnapFields)(implicit requestHeader: RequestHeader): Future[PlayResult] = {
     import play.api.Play.current
     val result = (for {
       previewResponse <- WS.url(snapFields.uri).get()
     } yield {
       val embedContent = (previewResponse.json \ "html").as[String]
-      Cached(60)(Ok(views.html.football.fronts.viewEmbed(Html(embedContent), snapFields)))
+      Cached(60)(RevalidatableResult.Ok(views.html.football.fronts.viewEmbed(Html(embedContent), snapFields)))
     }).recover { case e =>
        log.error(s"Failed to preview snap content from ${snapFields.uri}", e)
        NoCache(Ok(views.html.football.fronts.failedEmbed(Html(e.getMessage), snapFields)))

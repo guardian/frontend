@@ -6,12 +6,30 @@ import org.joda.time.LocalDate
 trait MonitoringSwitches {
   // Monitoring
 
+  val OfflinePageView = Switch(
+    SwitchGroup.Monitoring,
+    "offline-page-view",
+    "If this switch is on, views of the offline page will be beaconed to cloudwatch when you come online again",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 3),
+    exposeClientSide = true
+  )
+
   val OphanSwitch = Switch(
     SwitchGroup.Monitoring,
     "ophan",
     "Enables the new Ophan tracking javascript",
     safeState = On,
     sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val SentryReporting = Switch(
+    SwitchGroup.Monitoring,
+    "enable-sentry-reporting",
+    "If this switch is on, then js errors will be reported to Sentry.",
+    safeState = Off,
+    never,
     exposeClientSide = true
   )
 

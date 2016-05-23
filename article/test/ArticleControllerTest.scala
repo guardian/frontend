@@ -86,11 +86,6 @@ import scala.collection.JavaConversions._
 
   }
 
-  "The Guardian" should "remember Terry Pratchett" in {
-    val result = route(app, TestRequest("/books/2015/mar/12/terry-pratchett")).head
-    header("X-Clacks-Overhead", result).head should be ("GNU Terry Pratchett")
-  }
-
   it should "know which backend served the request" in {
     val result = route(app, TestRequest("/world/2014/sep/24/radical-cleric-islamic-state-release-british-hostage-alan-henning")).head
     status(result) should be (200)

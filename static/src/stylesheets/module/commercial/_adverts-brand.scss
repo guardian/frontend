@@ -4,14 +4,15 @@
     }
 }
 
-.advert--brand {
-    .button {
-        @include button-colour(
-            $news-main-2,
-            null
-        );
-    }
+.adverts--tone-brand .button--legacy-single,
+.advert--brand .button {
+    @include button-colour(
+        $news-main-2,
+        null
+    );
+}
 
+.advert--brand {
     &:hover,
     &:focus,
     &:active {
@@ -22,5 +23,15 @@
             );
         }
     }
+}
 
+.adverts--tone-brand .button--legacy-single {
+    &:hover,
+    &:focus,
+    &:active {
+        @include button-colour(
+            darken($news-main-2, 5%),
+            null
+        );
+    }
 }

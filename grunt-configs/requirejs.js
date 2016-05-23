@@ -41,56 +41,40 @@ module.exports = function (grunt, options) {
             preserveLicenseComments: false,
             fileExclusionRegExp: /^bower_components/i
         },
-        common: {
+        boot: {
             options: {
-                dir: options.requirejsDir,
-                keepBuildDir: false,
-                shim: {
-                    videojsima: {
-                        deps: ['videojsads']
-                    },
-                    videojsads: {
-                        deps: ['bootstraps/enhanced/media/videojs-global']
-                    }
-                },
-                modules: [
-                    {
-                        name: 'boot',
-                        include: 'bootstraps/standard/main',
-                        insertRequire: ['boot'],
-                        exclude: [
-                            'text',
-                            'inlineSvg'
-                        ]
-                    },
-                    {
-                        name: 'bootstraps/commercial',
-                        exclude: [
-                            'boot',
-                            'bootstraps/standard/main',
-                            'text',
-                            'inlineSvg'
-                        ]
-                    },
-                    {
-                        name: 'enhanced-vendor',
-                        exclude: [
-                            'boot',
-                            'bootstraps/standard/main',
-                            'bootstraps/commercial'
-                        ]
-                    },
-                    {
-                        name: 'bootstraps/enhanced/main',
-                        exclude: [
-                            'boot',
-                            'bootstraps/standard/main',
-                            'bootstraps/commercial',
-                            'enhanced-vendor',
-                            'text',
-                            'inlineSvg'
-                        ]
-                    }
+                name: 'boot',
+                out: options.staticTargetDir + 'javascripts/boot.js',
+                include: 'bootstraps/standard/main',
+                insertRequire: ['boot'],
+                exclude: [
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
+        commercial: {
+            options: {
+                name: 'bootstraps/commercial',
+                out: options.staticTargetDir + 'javascripts/bootstraps/commercial.js',
+                exclude: [
+                    'boot',
+                    'bootstraps/standard/main',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
+        enhanced: {
+            options: {
+                name: 'bootstraps/enhanced/main',
+                out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/main.js',
+                exclude: [
+                    'boot',
+                    'bootstraps/standard/main',
+                    'bootstraps/commercial',
+                    'text',
+                    'inlineSvg'
                 ]
             }
         },
@@ -102,7 +86,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
@@ -117,7 +100,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
@@ -132,7 +114,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
@@ -147,7 +128,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
@@ -162,7 +142,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
@@ -177,7 +156,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
@@ -192,7 +170,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
@@ -207,7 +184,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
@@ -222,7 +198,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
@@ -237,22 +212,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
-                    'bootstraps/enhanced/main',
-                    'text',
-                    'inlineSvg'
-                ]
-            }
-        },
-        minutely: {
-            options: {
-                name: 'bootstraps/enhanced/minute',
-                out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/minute.js',
-                exclude: [
-                    'boot',
-                    'bootstraps/standard/main',
-                    'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
@@ -267,7 +226,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
@@ -282,7 +240,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
@@ -297,7 +254,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'vendor/stripe/stripe.min',
                     'text',
@@ -330,13 +286,20 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
                 ],
                 generateSourceMaps: true,
-                preserveLicenseComments: false
+                preserveLicenseComments: false,
+                shim: {
+                    videojsima: {
+                        deps: ['videojsads']
+                    },
+                    videojsads: {
+                        deps: ['bootstraps/enhanced/media/videojs-global']
+                    }
+                }
             }
         },
         videoEmbed : {
@@ -359,7 +322,6 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
-                    'enhanced-vendor',
                     'bootstraps/enhanced/main',
                     'bootstraps/enhanced/facia',
                     'text',

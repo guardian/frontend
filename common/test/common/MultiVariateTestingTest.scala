@@ -1,8 +1,5 @@
-package common
+package mvt
 
-import conf.switches.{Expiry, Switches}
-import mvt.MultiVariateTesting._
-import mvt.{TestDefinition, MultiVariateTesting, Tests}
 import org.joda.time.LocalDate
 import org.scalatest.{Matchers, FlatSpec}
 import test.TestRequest
@@ -16,16 +13,11 @@ class MultiVariateTestingTest extends FlatSpec with Matchers {
     variantsInUse.size should equal (variantsInUse.distinct.size)
   }
 
-  "a request with a valid test header" should "be assigned to the appropriate test" in {
-    TestCases.test1.switch.switchOn
-    val testRequest = TestRequest("/uk")
-      .withHeaders(
-        "X-GU-mvt-variant" -> "variant-2"
-      )
-    MultiVariateTesting.getVariant(testRequest) should be (Some(Variant2))
-    TestCases.isParticipatingInATest(testRequest) should be (true)
-    TestCases.getParticipatingTest(testRequest) should be (Some(TestCases.test1))
-    TestCases.test1.switch.switchOff
+  // TODO: refactor MultiVariateTesting to remove site-wide variants
+  // This test is only here to ensure nobody adds variants by accident before this refactoring happens
+  // Talk to Thomas Bonnin if you have any question
+  "MultiVariateTesting" should "have no variant" in {
+    MultiVariateTesting.allVariants.size should equal (0)
   }
 
   "a request with an invalid test header" should "be ignored" in {
@@ -44,14 +36,14 @@ class MultiVariateTestingTest extends FlatSpec with Matchers {
 
   object TestCases extends Tests {
     object test0 extends TestDefinition(
-      List(Variant0),
+      Nil,
       "test0",
       "an experiment test",
       new LocalDate(2100, 1, 1)
 
     )
     object test1 extends TestDefinition(
-      List(Variant1, Variant2),
+      Nil,
       "test1",
       "an experiment test",
       new LocalDate(2100, 1, 1)
