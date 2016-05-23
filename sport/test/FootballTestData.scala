@@ -3,9 +3,8 @@ package test
 import org.scala_tools.time.Imports._
 import org.joda.time.DateTime
 import pa._
-import model.Competition
+import model.{Competition, Tag, TagProperties, TeamMap}
 import feed.Competitions
-
 
 trait FootballTestData {
 
@@ -71,6 +70,14 @@ trait FootballTestData {
     )
   )
 
+  val teamTags: Map[String, Tag] = Map(
+      "Liverpool" -> Tag(
+        TagProperties("football/liverpool", "/football/liverpool", "Keyword", "football", "Football", "Liverpool",
+          "https://www.theguardian.com/football/liverpool", None, None, None, None, None, None, None, Seq(), None),
+        None,
+        None,
+        None)
+    )
 
 
   private def liveMatch(homeName: String, awayName: String, homeScore: Int, awayScore: Int, date: DateTime) = matchDay.copy(
@@ -107,6 +114,9 @@ trait FootballTestData {
           agent.addMatches(comp.matches)
         }
       }
+    }
+    if (TeamMap.teamAgent.get.isEmpty) {
+      TeamMap.teamAgent.send(old => old ++ teamTags)
     }
   }
 }

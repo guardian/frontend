@@ -149,7 +149,14 @@ final case class Fields(
   sensitive: Option[Boolean],
   legallySensitive: Option[Boolean]
 ){
-  def javascriptConfig: Map[String, JsValue] = Map(("shortUrl", JsString(shortUrl)))
+  lazy val shortUrlId = shortUrl.replaceFirst("^[a-zA-Z]+://gu.com", "") //removing scheme://gu.com
+
+  def javascriptConfig: Map[String, JsValue] = {
+    Map(
+      "shortUrl" -> JsString(shortUrl),
+      "shortUrlId" -> JsString(shortUrlId)
+    )
+  }
 }
 
 object MetaData {

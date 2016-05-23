@@ -18,6 +18,19 @@
     display: block;
 }
 
+.gu-display__image-fadeout {
+    &:after {
+        content: '';
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 0;
+        background: linear-gradient(transparent 80px, rgba(0, 0, 0, .5));
+    }
+}
+
 .gu-mutable {
     display: block;
     position: absolute;
@@ -37,6 +50,10 @@
 
 .gu-display__link {
     color: #ffffff;
+
+    &:hover {
+        text-decoration: none;
+    }
 }
 
 .content--immersive-article .from-content-api .gu-display__content-title,
@@ -197,7 +214,7 @@ $mobile-max-container-width: gs-span(8);
 .gu-display--hostedbottom {
     .gu-display__logo-pos--bottom-right {
         top: auto;
-        bottom: 49px;
+        bottom: 50px;
     }
 
     .gu-display__content {

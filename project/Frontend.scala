@@ -25,7 +25,6 @@ object Frontend extends Build with Prototypes {
       awsSts,
       awsSqs,
       contentApiClient,
-      faciaScalaClient,
       filters,
       guardianConfiguration,
       jodaConvert,

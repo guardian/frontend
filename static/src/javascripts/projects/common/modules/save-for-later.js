@@ -74,7 +74,7 @@ define([
     }
 
     var bookmarkSvg = svgs('bookmark', ['rounded-icon']),
-        shortUrl = (config.page.shortUrl || '').replace('http://gu.com', ''),
+        shortUrl = config.page.shortUrlId || '',
         savedPlatformAnalytics = 'web:' + detect.getUserAgent.browser + ':' + detect.getBreakpoint();
 
     var getCustomEventProperties = function (contentId) {

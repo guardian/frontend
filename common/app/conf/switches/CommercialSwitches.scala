@@ -230,15 +230,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val FixedTopAboveNavAdSlotSwitch = Switch(
-    SwitchGroup.Commercial,
-    "fixed-top-above-nav",
-    "Fixes size of top-above-nav ad slot on fronts.",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 20),
-    exposeClientSide = false
-  )
-
   val KruxVideoTracking = Switch(
     SwitchGroup.Commercial,
     "krux-video-tracking",
@@ -280,7 +271,7 @@ trait CommercialSwitches {
     "static-badges",
     "If on, all badges are served server side",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 25),
+    sellByDate = new LocalDate(2016, 6, 22),
     exposeClientSide = true
   )
 
