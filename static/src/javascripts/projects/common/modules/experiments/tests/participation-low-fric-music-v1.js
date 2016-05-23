@@ -12,7 +12,9 @@ define([
     lowFrictionParticipation
 ) {
 
-    var omniture;
+    var omniture,
+        isAGigReview,
+        isAnAlbumReview;
 
     /**
      * The omniture module depends on common/modules/experiments/ab, so trying to
@@ -56,15 +58,17 @@ define([
         this.canRun = function () {
             function albumReviewByAuthors (authors) {
 
-                return config.page.toneIds &&
-                    !!config.page.toneIds.match('tone/albumreview') &&
+                isAnAlbumReview = config.page.toneIds && !!config.page.toneIds.match('tone/albumreview');
+
+                return isAnAlbumReview &&
                     config.page.authorIds &&
                     !!config.page.authorIds.match(new RegExp(authors.join('|')));
             }
 
             function liveReview () {
-                return config.page.toneIds &&
-                    !!config.page.toneIds.match('tone/livereview');
+                isAGigReview = config.page.toneIds && !!config.page.toneIds.match('tone/livereview');
+
+                return isAGigReview;
             }
 
             // Commentable, album reviews by Alexis or Kitty or all live reviews
@@ -94,7 +98,8 @@ define([
                 id: 'variant-1',
                 test: function () {
                     var starRatings = Object.create(lowFrictionParticipation),
-                        description = '';
+                        description = '',
+                        reviewType = (isAnAlbumReview) ? 'album' : 'gig';
 
                     if (config.page.headline && config.page.author) {
                         description = 'Is your rating the same as ' + possessive(config.page.author) + ' on "' + config.page.headline + '"?';
@@ -102,7 +107,7 @@ define([
 
                     starRatings.init({
                         templateVars: {
-                            title: 'Do you agree? Rate now!',
+                            title: 'Do you agree? Rate this ' + reviewType + '!',
                             description: description
                         }
                     });
