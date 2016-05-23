@@ -43,7 +43,7 @@ define([
 
         afterEach(function () {
             adblockBannerConfig.banners = origBanners;
-        })
+        });
 
         it('should return no banners given no locale', function () {
             expect(adblockBannerConfig.getBanners('')).toEqual([]);
