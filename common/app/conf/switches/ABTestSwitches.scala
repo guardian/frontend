@@ -109,7 +109,7 @@ trait ABTestSwitches {
     "ab-participation-hide-half-of-comments",
     "We are going to hide comments on a random half of articles",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 6),
+    sellByDate = new LocalDate(2016, 6, 21),
     exposeClientSide = true
   )
 
