@@ -9,8 +9,8 @@ define([
     var CommentBlocker = {};
 
     CommentBlocker.hideComments = function(shortUrlSlug) {
-
-        var sUrlInt = shortUrlSlug !== null ? reduce(shortUrlSlug.split(''), function(sum, ch) {
+        
+        var sUrlInt = shortUrlSlug ? reduce(shortUrlSlug.split(''), function(sum, ch) {
             return sum + ch.charCodeAt(0);
         }, 0) : 2;
 

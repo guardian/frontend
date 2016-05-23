@@ -72,12 +72,12 @@ define([
                 var format,
                     $node = bonzo(node),
                     url = $node.attr('data-discussion-url') || getContentUrl(node),
-                    shortUrl = $node.attr('data-loyalty-short-url').replace('/p/','') || '',
+                    shortUrl = $node.attr('data-loyalty-short-url') || '',
                     $container,
                     meta,
                     html;
 
-                if (shortUrl && ab.isInVariant('ParticipationHideHalfOfComments', 'hide-comments') &&  CommentBlocker.hideComments(shortUrl) ) {
+                if (shortUrl && ab.isInVariant('ParticipationHideHalfOfComments', 'hide-comments') &&  CommentBlocker.hideComments(shortUrl.replace('/p/','')) ) {
                     return;
                 }
 
