@@ -112,7 +112,9 @@ object PanicSheddingFilter extends Filter with Logging {
     val previousLatency = averageLatency.get.latency
     val requestsInProgress = requestsInProgressCounter.get
     val startsRatio = startCompleteRatio.get.ratio
-    log.info(s"$requestsInProgress in progress: averageLatency = $previousLatency, startsRatio (-100,100) = $startsRatio")
+    if (Switches.PanicLoggingSwitch.isSwitchedOn) {
+      log.info(s"$requestsInProgress in progress: averageLatency = $previousLatency, startsRatio (range is -100,100) = $startsRatio")
+    }
     if (startsRatio > MAX_STARTS_IMBALANCE) {
       log.warn(s"recently started $startsRatio compared with finishes, avoiding surge")
       RequestMetrics.PanicRequestsSurgeMetric.increment()
@@ -136,7 +138,9 @@ object PanicSheddingFilter extends Filter with Logging {
   }
 
   override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
-    if (available(request)) {
+    if (!Switches.PanicMonitoringSwitch.isSwitchedOn) {
+      nextFilter(request)
+    } else if (available(request)) {
       monitor(nextFilter(request))
     } else if (Switches.PanicSheddingSwitch.isSwitchedOn) {
       Future.successful(ServiceUnavailable)
