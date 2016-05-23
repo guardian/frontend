@@ -35,6 +35,9 @@ class HighMerchandisingLineItemTest extends FlatSpec with Matchers {
   "hadHighMerchandisingTarget" should "be true if keywords, edition and adUnit match" in {
     TestAgent.isTargetedByHighMerch("money",Seq.empty, editions.Uk)should be(true)
   }
+  "hadHighMerchandisingTarget" should "be false if edition does not match" in {
+    TestAgent.isTargetedByHighMerch("money",Seq.empty, editions.Us)should be(false)
+  }
 
   "hadHighMerchandisingTarget" should "be true if keywords and adUnit match" in {
     val testTagsSeq = Seq(new Tag(
