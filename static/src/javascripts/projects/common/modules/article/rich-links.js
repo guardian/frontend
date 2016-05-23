@@ -9,7 +9,7 @@ define([
     'common/utils/mediator',
     'common/modules/article/space-filler',
     'common/modules/ui/images',
-    'template!common/views/content/richLinkTag.html',
+    'tpl!common/views/content/richLinkTag.html',
     'lodash/collections/contains'
 ], function (
     fastdom,

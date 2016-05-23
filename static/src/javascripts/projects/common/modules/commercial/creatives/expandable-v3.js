@@ -7,7 +7,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/views/svgs',
-    'template!common/views/commercial/creatives/expandable-v3.html',
+    'tpl!common/views/commercial/creatives/expandable-v3.html',
     'lodash/functions/bindAll',
     'lodash/objects/merge',
     'common/modules/commercial/creatives/add-tracking-pixel',

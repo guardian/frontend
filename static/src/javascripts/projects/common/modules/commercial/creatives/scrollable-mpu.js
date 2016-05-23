@@ -3,8 +3,8 @@ define([
     'common/utils/$',
     'common/utils/detect',
     'common/utils/mediator',
-    'template!common/views/commercial/creatives/scrollable-mpu.html',
-    'template!common/views/commercial/tracking-pixel.html',
+    'tpl!common/views/commercial/creatives/scrollable-mpu.html',
+    'tpl!common/views/commercial/tracking-pixel.html',
     'lodash/functions/bindAll'
 ], function (
     fastdom,

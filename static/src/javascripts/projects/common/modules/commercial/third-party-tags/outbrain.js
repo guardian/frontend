@@ -8,7 +8,7 @@ define([
     'common/modules/identity/api',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/third-party-tags/outbrain-codes',
-    'template!common/views/commercial/outbrain.html',
+    'tpl!common/views/commercial/outbrain.html',
     'common/modules/email/run-checks'
 ], function (
     Promise,

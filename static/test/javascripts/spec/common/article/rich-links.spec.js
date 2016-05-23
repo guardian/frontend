@@ -5,7 +5,7 @@ define([
 
     'common/utils/$',
 
-    'template!common/views/content/richLinkTag.html'
+    'tpl!common/views/content/richLinkTag.html'
 ], function (
     Promise,
     Injector,

@@ -6,7 +6,7 @@ define([
     'common/utils/mediator',
     'common/modules/user-prefs',
     'common/views/svgs',
-    'template!facia/views/button-toggle.html'
+    'tpl!facia/views/button-toggle.html'
 ], function (
     bean,
     bonzo,

@@ -4,7 +4,7 @@ define([
     'common/utils/$',
     'common/utils/mediator',
     'common/utils/storage',
-    'template!common/views/commercial/creatives/fluid250GoogleAndroid.html',
+    'tpl!common/views/commercial/creatives/fluid250GoogleAndroid.html',
     'common/modules/commercial/creatives/add-tracking-pixel'
 ], function (
     bean,

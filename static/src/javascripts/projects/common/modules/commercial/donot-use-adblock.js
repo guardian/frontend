@@ -10,7 +10,7 @@ define([
     'common/modules/ui/message',
     'common/modules/experiments/ab',
     'common/modules/navigation/navigation',
-    'template!common/views/membership-message.html',
+    'tpl!common/views/membership-message.html',
     'common/views/svgs',
     'lodash/collections/sample'
 ], function (

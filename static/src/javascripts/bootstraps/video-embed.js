@@ -14,8 +14,8 @@ define([
     'common/modules/video/events',
     'common/modules/video/fullscreener',
     'common/views/svgs',
-    'template!common/views/ui/loading.html',
-    'template!common/views/media/titlebar.html',
+    'tpl!common/views/ui/loading.html',
+    'tpl!common/views/media/titlebar.html',
     'lodash/functions/debounce'
 ], function (
     bean,

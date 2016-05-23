@@ -7,7 +7,7 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/views/svgs',
-    'template!common/views/save-for-later/delete-all-button.html'
+    'tpl!common/views/save-for-later/delete-all-button.html'
 ], function (
     $,
     qwery,

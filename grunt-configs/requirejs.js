@@ -32,7 +32,7 @@ module.exports = function (grunt, options) {
                 // plugins
                 text:                 'components/requirejs-text/text',
                 inlineSvg:            'projects/common/utils/inlineSvg',
-                template:             'projects/common/utils/lodash-loader',
+                tpl:                  'projects/common/utils/lodash-loader',
 
                 'react':              'empty:',
                 'ophan/ng':           'empty:'
@@ -50,8 +50,7 @@ module.exports = function (grunt, options) {
                 insertRequire: ['boot'],
                 exclude: [
                     'text',
-                    'inlineSvg',
-                    'template'
+                    'inlineSvg'
                 ]
             }
         },
@@ -64,7 +63,7 @@ module.exports = function (grunt, options) {
                     'bootstraps/standard/main',
                     'text',
                     'inlineSvg',
-                    'template'
+                    'tpl'
                 ]
             }
         },
@@ -78,7 +77,7 @@ module.exports = function (grunt, options) {
                     'bootstraps/commercial',
                     'text',
                     'inlineSvg',
-                    'template'
+                    'tpl'
                 ]
             }
         },
@@ -93,7 +92,7 @@ module.exports = function (grunt, options) {
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg',
-                    'template'
+                    'tpl'
                 ]
             }
         },
@@ -108,7 +107,7 @@ module.exports = function (grunt, options) {
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg',
-                    'template'
+                    'tpl'
                 ]
             }
         },
@@ -123,7 +122,7 @@ module.exports = function (grunt, options) {
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg',
-                    'template'
+                    'tpl'
                 ]
             }
         },
@@ -138,7 +137,7 @@ module.exports = function (grunt, options) {
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg',
-                    'template'
+                    'tpl'
                 ]
             }
         },
@@ -153,7 +152,7 @@ module.exports = function (grunt, options) {
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg',
-                    'template'
+                    'tpl'
                 ]
             }
         },
@@ -168,7 +167,7 @@ module.exports = function (grunt, options) {
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg',
-                    'template'
+                    'tpl'
                 ]
             }
         },
@@ -183,7 +182,7 @@ module.exports = function (grunt, options) {
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg',
-                    'template'
+                    'tpl'
                 ]
             }
         },
@@ -198,7 +197,7 @@ module.exports = function (grunt, options) {
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg',
-                    'template'
+                    'tpl'
                 ]
             }
         },
@@ -213,7 +212,7 @@ module.exports = function (grunt, options) {
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg',
-                    'template'
+                    'tpl'
                 ]
             }
         },
@@ -228,7 +227,7 @@ module.exports = function (grunt, options) {
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg',
-                    'template'
+                    'tpl'
                 ]
             }
         },
@@ -243,7 +242,7 @@ module.exports = function (grunt, options) {
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg',
-                    'template'
+                    'tpl'
                 ]
             }
         },
@@ -258,7 +257,7 @@ module.exports = function (grunt, options) {
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg',
-                    'template'
+                    'tpl'
                 ]
             }
         },
@@ -274,7 +273,7 @@ module.exports = function (grunt, options) {
                     'vendor/stripe/stripe.min',
                     'text',
                     'inlineSvg',
-                    'template'
+                    'tpl'
                 ]
             }
         },
@@ -306,7 +305,7 @@ module.exports = function (grunt, options) {
                     'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg',
-                    'template'
+                    'tpl'
                 ],
                 generateSourceMaps: true,
                 preserveLicenseComments: false,
@@ -327,7 +326,7 @@ module.exports = function (grunt, options) {
                 exclude: [
                     'text',
                     'inlineSvg',
-                    'template'
+                    'tpl'
                 ],
                 generateSourceMaps: true,
                 preserveLicenseComments: false
@@ -345,7 +344,7 @@ module.exports = function (grunt, options) {
                     'bootstraps/enhanced/facia',
                     'text',
                     'inlineSvg',
-                    'template'
+                    'tpl'
                 ]
             }
         }

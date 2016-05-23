@@ -5,7 +5,7 @@ define([
     'common/utils/storage',
     'common/utils/load-css-promise',
     'common/views/svgs',
-    'template!common/views/ui/welcome.html'
+    'tpl!common/views/ui/welcome.html'
 ], function (
     bean,
     fastdom,

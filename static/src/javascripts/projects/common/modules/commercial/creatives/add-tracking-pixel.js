@@ -1,5 +1,5 @@
 define([
-    'template!common/views/commercial/tracking-pixel.html'
+    'tpl!common/views/commercial/tracking-pixel.html'
 ], function (
     trackingPixelTpl
 ) {

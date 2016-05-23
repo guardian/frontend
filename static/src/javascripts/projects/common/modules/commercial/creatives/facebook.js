@@ -5,7 +5,7 @@ define([
     'common/utils/load-script',
     'common/utils/report-error',
     'common/modules/commercial/creatives/add-tracking-pixel',
-    'template!common/views/commercial/creatives/facebook.html'
+    'tpl!common/views/commercial/creatives/facebook.html'
 ], function(fastdom, config, template, loadScript, reportError, addTrackingPixel, facebookTpl) {
     var scriptId = 'facebook-jssdk';
     var scriptSrc = '//connect.facebook.net/en_US/sdk/xfbml.ad.js#xfbml=1&version=v2.5';

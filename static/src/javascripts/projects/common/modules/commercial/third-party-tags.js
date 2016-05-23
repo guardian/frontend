@@ -17,7 +17,7 @@ define([
     'common/modules/identity/api',
     'common/modules/commercial/third-party-tags/outbrain',
     'common/modules/commercial/third-party-tags/plista',
-    'template!common/views/commercial/external-content.html'
+    'tpl!common/views/commercial/external-content.html'
 ], function (
     Promise,
     $,

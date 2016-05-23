@@ -4,7 +4,7 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/views/svgs',
-    'template!common/views/commercial/live-events-thrasher.html'
+    'tpl!common/views/commercial/live-events-thrasher.html'
 ], function (
     bean,
     fastdom,

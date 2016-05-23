@@ -6,8 +6,8 @@ define([
     'common/utils/config',
     'common/utils/formatters',
     'common/views/svgs',
-    'template!common/views/content/share-count.html',
-    'template!common/views/content/share-count-immersive.html'
+    'tpl!common/views/content/share-count.html',
+    'tpl!common/views/content/share-count-immersive.html'
 ], function (
     reportError,
     $,

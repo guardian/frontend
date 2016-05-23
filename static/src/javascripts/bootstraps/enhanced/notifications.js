@@ -10,9 +10,9 @@ define([
     'common/utils/robust',
     'common/views/svgs',
     'common/modules/user-prefs',
-    'template!common/views/ui/notifications-follow-link.html',
-    'template!common/views/ui/notifications-explainer.html',
-    'template!common/views/ui/notifications-permission-denied-message.html',
+    'tpl!common/views/ui/notifications-follow-link.html',
+    'tpl!common/views/ui/notifications-explainer.html',
+    'tpl!common/views/ui/notifications-permission-denied-message.html',
     'lodash/collections/some',
     'lodash/arrays/uniq',
     'lodash/arrays/without'

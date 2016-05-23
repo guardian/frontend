@@ -3,7 +3,7 @@ define([
     'common/utils/config',
     'common/modules/commercial/hosted-video',
     'common/modules/commercial/creatives/add-tracking-pixel',
-    'template!common/views/commercial/creatives/hosted-thrasher.html'
+    'tpl!common/views/commercial/creatives/hosted-thrasher.html'
 ], function (
     fastdom,
     config,

@@ -11,7 +11,7 @@ define([
     'common/modules/ui/relativedates',
     'common/modules/analytics/omniture',
     'common/views/svgs',
-    'template!common/views/breaking-news.html',
+    'tpl!common/views/breaking-news.html',
     'lodash/objects/isArray',
     'lodash/objects/has',
     'lodash/arrays/flatten',

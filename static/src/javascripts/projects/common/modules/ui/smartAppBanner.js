@@ -8,7 +8,7 @@ define([
     'common/modules/user-prefs',
     'common/modules/ui/message',
     'lodash/objects/merge',
-    'template!common/views/smart-app-banner/smart-app-message.html'
+    'tpl!common/views/smart-app-banner/smart-app-message.html'
 ], function (
     fastdom,
     $,

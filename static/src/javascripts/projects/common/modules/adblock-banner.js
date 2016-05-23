@@ -1,8 +1,8 @@
 define([
     'fastdom',
     'common/utils/$',
-    'template!common/views/commercial/adblock-sticky-message.html',
-    'template!common/views/commercial/adblock-sticky-message-coin.html'
+    'tpl!common/views/commercial/adblock-sticky-message.html',
+    'tpl!common/views/commercial/adblock-sticky-message-coin.html'
 ], function (
     fastdom,
     $,

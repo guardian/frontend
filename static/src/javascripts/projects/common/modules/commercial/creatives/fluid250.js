@@ -5,9 +5,9 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/modules/commercial/creatives/add-tracking-pixel',
-    'template!common/views/commercial/creatives/fluid250.html',
-    'template!common/views/commercial/creatives/iframe-video.html',
-    'template!common/views/commercial/creatives/scrollbg.html',
+    'tpl!common/views/commercial/creatives/fluid250.html',
+    'tpl!common/views/commercial/creatives/iframe-video.html',
+    'tpl!common/views/commercial/creatives/scrollbg.html',
     'lodash/objects/merge'
 ], function (
     $,

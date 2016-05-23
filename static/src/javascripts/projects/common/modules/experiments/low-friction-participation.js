@@ -6,9 +6,9 @@ define([
     'common/utils/$',
     'common/utils/fastdom-promise',
     'common/views/svgs',
-    'template!common/views/experiments/participation/low-friction-wrapper.html',
-    'template!common/views/experiments/participation/low-friction-contents.html',
-    'template!common/views/experiments/participation/low-friction-buttons.html',
+    'tpl!common/views/experiments/participation/low-friction-wrapper.html',
+    'tpl!common/views/experiments/participation/low-friction-contents.html',
+    'tpl!common/views/experiments/participation/low-friction-buttons.html',
     'bean',
     'common/utils/mediator'
 ], function (

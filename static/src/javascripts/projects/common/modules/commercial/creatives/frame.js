@@ -3,8 +3,8 @@ define([
     'common/views/svgs',
     'common/modules/ui/toggles',
     'common/modules/commercial/creatives/add-tracking-pixel',
-    'template!common/views/commercial/creatives/frame.html',
-    'template!common/views/commercial/gustyle/label.html'
+    'tpl!common/views/commercial/creatives/frame.html',
+    'tpl!common/views/commercial/gustyle/label.html'
 ], function (
     fastdom,
     template,
