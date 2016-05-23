@@ -277,6 +277,16 @@ case class GuLineItem(id: Long,
 
   val highMerchandisingTargets: Seq[String] = targeting.customTargetSets.flatMap(_.highMerchandisingTargets).distinct
 
+  val targetsHighMerchandising: Boolean = {
+    val targetSlotIsHighMerch = for {
+      targetSet <- targeting.customTargetSets
+      target <- targetSet.targets
+      if target.name == "slot" && target.values.contains("merchandising-high")
+    } yield target
+    targetSlotIsHighMerch.nonEmpty
+  }
+
+
   lazy val targetsNetworkOrSectionFrontDirectly: Boolean = {
     targeting.adUnits.exists { adUnit =>
       val path = adUnit.path
