@@ -17,6 +17,7 @@ define([
     'common/modules/experiments/tests/participation-low-fric-fashion',
     'common/modules/experiments/tests/clever-friend-brexit',
     'common/modules/experiments/tests/welcome-header',
+    'common/modules/experiments/tests/participation-hide-half-of-comments',
     'common/modules/experiments/tests/play-video-on-fronts',
     'common/modules/experiments/tests/video-controls-on-main-media',
     'lodash/arrays/flatten',
@@ -51,6 +52,7 @@ define([
     ParticipationLowFricFashion,
     CleverFriendBrexit,
     WelcomeHeader,
+    HideHalfOfComments,
     PlayVideoOnFronts,
     VideoControlsOnMainMedia,
     flatten,
@@ -81,6 +83,7 @@ define([
         new ParticipationLowFricFashion(),
         new CleverFriendBrexit(),
         new WelcomeHeader(),
+        new HideHalfOfComments(),
         new PlayVideoOnFronts(),
         new VideoControlsOnMainMedia()
     ]);
