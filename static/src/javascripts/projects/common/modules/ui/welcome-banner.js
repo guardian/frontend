@@ -20,7 +20,6 @@ define([
      * 1st visit replace nav bar with banner
      */
     var header = document.getElementById('header'),
-        message1 = '',
         data = {
             'award-winning': {
                 'first': 'award-winning news,',
