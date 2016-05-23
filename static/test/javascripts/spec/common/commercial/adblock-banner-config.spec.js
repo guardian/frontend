@@ -6,6 +6,7 @@ define([
 
         var testConfig = [
             {
+                template: 'template',
                 defaults: {
                     name: 'City'
                 },
@@ -29,14 +30,20 @@ define([
         ],
         ukBanners,
         usBanners,
-        intBanners;
+        intBanners,
+        origBanners;
 
         beforeEach(function () {
+            origBanners = adblockBannerConfig.banners;
             adblockBannerConfig.banners = testConfig;
             ukBanners = adblockBannerConfig.getBanners('UK');
             usBanners = adblockBannerConfig.getBanners('US');
             intBanners = adblockBannerConfig.getBanners('INT');
         });
+
+        afterEach(function () {
+            adblockBannerConfig.banners = origBanners;
+        })
 
         it('should return no banners given no locale', function () {
             expect(adblockBannerConfig.getBanners('')).toEqual([]);
