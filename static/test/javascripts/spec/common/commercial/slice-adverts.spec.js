@@ -190,9 +190,9 @@ define([
         describe('Top slot replacement', function () {
             beforeEach(function () {
                 config.switches.fabricAdverts = true;
-                // Remove the first container's candidate, so we're sure any slots are inserted by our replacement logic,
-                // not at the behest of the markup.
-                bonzo(qwery('.fc-container-first .js-fc-slice-mpu-candidate', $fixtureContainer)).remove();
+                // To be sure that any slots added are top slot replacements, we set the page to a network front,
+                // where adverts will normally never appear on the first container.
+                config.page.pageId = 'uk';
             });
 
             it('is added on mobile', function (done) {
@@ -200,9 +200,13 @@ define([
                     // expecting check for breakpoint <= phablet
                     return true;
                 };
+                detect.getBreakpoint = function () {
+                    return 'mobile';
+                };
+
                 sliceAdverts.init();
                 fastdom.defer(function () {
-                    expect(qwery('.fc-container-first .ad-slot--inline1', $fixtureContainer).length).toBe(1);
+                    expect(qwery('.fc-container-first + .ad-slot--inline1', $fixtureContainer).length).toBe(1);
                     done();
                 });
             });
@@ -211,6 +215,9 @@ define([
                 detect.isBreakpoint = function () {
                     // expecting check for breakpoint <= phablet
                     return false;
+                };
+                detect.getBreakpoint = function () {
+                    return 'desktop';
                 };
                 sliceAdverts.init();
                 fastdom.defer(function () {
