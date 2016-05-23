@@ -18,7 +18,6 @@ define([
     'common/modules/component',
     'common/modules/video/events',
     'common/modules/video/fullscreener',
-    'common/modules/video/supportedBrowsers',
     'common/modules/video/tech-order',
     'common/modules/video/video-container',
     'common/modules/video/onward-container',
@@ -47,7 +46,6 @@ define([
     Component,
     events,
     fullscreener,
-    supportedBrowsers,
     techOrder,
     videoContainer,
     onwardContainer,
@@ -268,7 +266,6 @@ define([
 
                         initLoadingSpinner(player);
                         upgradeVideoPlayerAccessibility(player);
-                        supportedBrowsers(player);
 
                         player.one('playing', function (e) {
                             if (isFlash(e)) {
@@ -315,10 +312,6 @@ define([
                             } else {
                                 resolve();
                             }
-
-
-
-
                         } else {
                             player.playlist({
                                 mediaType: 'audio',
