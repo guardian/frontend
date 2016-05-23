@@ -65,15 +65,11 @@ define([
             }
         }
 
-        function onError(error) {
-            onload.error(error);
-        }
-
         var url = req.toUrl(name);
         if (config.isBuild) {
-            getNode(url, onSuccess, onError);
+            getNode(url, onSuccess, onload.error);
         } else {
-            getWeb(url, onSuccess, onError);
+            getWeb(url, onSuccess, onload.error);
         }
     }
 
