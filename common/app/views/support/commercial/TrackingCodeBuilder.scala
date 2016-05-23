@@ -28,7 +28,7 @@ object TrackingCodeBuilder extends implicits.Requests {
   def paidCard(articleTitle: String)(implicit request: RequestHeader): String = {
     def param(name: String) = request.getParameter(name) getOrElse "unknown"
     val section = param("s")
-    val sponsor = param("sponsor")
+    val sponsor = param("brand")
     s"GLabs-native-traffic-card | ${Edition(request).id} | $section | $articleTitle | $sponsor"
   }
 }

@@ -355,6 +355,11 @@ $hosted-stripe: 28px;
     @include mq(desktop) {
         padding-top: 220px;
     }
+
+    a {
+        // hack stop the link underline
+        color: transparent;
+    }
 }
 
 .hosted__cta {
