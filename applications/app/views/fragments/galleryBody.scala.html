@@ -4,7 +4,7 @@
 @import views.support.TrailCssClasses.toneClass
 @import views.support.{ImgSrc, RenderClasses}
 
-<div class="l-side-margins l-side-margins--media">
+<div class="l-side-margins @if(!page.gallery.commercial.isAdvertisementFeature){l-side-margins--media}">
 
     <article id="article" class="@RenderClasses(
             Map("content--advertisement-feature" -> page.gallery.commercial.isAdvertisementFeature,

@@ -104,6 +104,15 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABParticipationHideHalfOfComments = Switch(
+    SwitchGroup.ABTests,
+    "ab-participation-hide-half-of-comments",
+    "We are going to hide comments on a random half of articles",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 21),
+    exposeClientSide = true
+  )
+
   val ABFacebookShareParams = Switch(
     SwitchGroup.ABTests,
     "ab-facebook-share-params",
@@ -130,5 +139,4 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 5, 26),
     exposeClientSide = true
   )
-
 }
