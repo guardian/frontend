@@ -5,6 +5,8 @@
 GET            /surveys/*file                                                                                                    dev.DevAssetsController.surveys(file)
 GET            /commercial/test-page                                                                                             controllers.commercial.CreativeTestPage.allComponents(k: List[String])
 
+GET            /survey                                                                                                           controllers.SurveyPageController.renderSimpleSurveyPage()
+
 # For dev machines
 GET            /assets/admin/lib/*file                                                                                           controllers.admin.UncachedWebAssets.at(file)
 GET            /assets/admin/*file                                                                                               controllers.admin.UncachedAssets.at(file, relativePath="lib/admin/")
