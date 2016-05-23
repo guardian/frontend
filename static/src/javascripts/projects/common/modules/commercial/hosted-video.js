@@ -7,14 +7,12 @@ define([
     'common/utils/$',
     'common/utils/defer-to-analytics',
     'common/modules/video/events',
-    'common/modules/video/supportedBrowsers',
     'text!common/views/ui/loading.html'
 ], function (
     bean,
     $,
     deferToAnalytics,
     events,
-    supportedBrowsers,
     loadingTmpl
 ) {
     var player;
@@ -57,6 +55,14 @@ define([
                     autoplay: false,
                     preload: 'metadata'
                 });
+                player.guMediaType = 'video';
+
+                // unglitching the volume on first load
+                var vol = player.volume();
+                if (vol) {
+                    player.volume(0);
+                    player.volume(vol);
+                }
 
                 player.ready(function () {
                     deferToAnalytics(function () {
@@ -69,7 +75,6 @@ define([
 
                     initLoadingSpinner(player);
                     upgradeVideoPlayerAccessibility(player);
-                    supportedBrowsers(player);
                 });
             });
         });

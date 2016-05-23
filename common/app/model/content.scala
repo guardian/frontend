@@ -76,9 +76,9 @@ final case class Content(
   lazy val isFromTheObserver: Boolean = publication == "The Observer"
   lazy val primaryKeyWordTag: Option[Tag] = tags.tags.find(!_.isSectionTag)
   lazy val keywordTags: Seq[Tag] = tags.keywords.filter(tag => !tag.isSectionTag)
-  lazy val shortUrlId = fields.shortUrl.replace("http://gu.com", "")
+  lazy val shortUrlId = fields.shortUrlId
   lazy val shortUrlPath = shortUrlId
-  lazy val discussionId = Some(shortUrlPath)
+  lazy val discussionId = Some(shortUrlId)
   lazy val isImmersive = fields.displayHint.contains("immersive") || metadata.contentType.toLowerCase == "gallery"
   lazy val showNewGalleryDesign = galleryRedesign.isSwitchedOn && metadata.contentType.toLowerCase == "gallery" && !trail.commercial.isAdvertisementFeature
 
@@ -238,7 +238,7 @@ final case class Content(
   )
 
   val twitterProperties = Map(
-    "twitter:app:url:googleplay" -> metadata.webUrl.replace("http", "guardian"),
+    "twitter:app:url:googleplay" -> metadata.webUrl.replaceFirst("^[a-zA-Z]*://", "guardian://"), //replace current scheme with guardian mobile app scheme
     "twitter:image" -> rawOpenGraphImage
   ) ++ contributorTwitterHandle.map(handle => "twitter:creator" -> s"@$handle").toList
 
@@ -291,7 +291,7 @@ object Content {
       isExpired = apiContent.isExpired.getOrElse(false),
       productionOffice = apifields.flatMap(_.productionOffice.map(_.name)),
       tweets = apiContent.elements.getOrElse(Nil).filter(_.`type`.name == "Tweet").map{ tweet =>
-        val images = tweet.assets.filter(_.`type`.name == "Image").map(_.file).flatten
+        val images = tweet.assets.filter(_.`type`.name == "Image").flatMap(asset => asset.typeData.flatMap(_.secureFile).orElse(asset.file))
         Tweet(tweet.id, images)
       },
       showInRelated = apifields.flatMap(_.showInRelatedContent).getOrElse(false),
@@ -522,12 +522,16 @@ object Video {
       "embeddable" -> JsBoolean(elements.videos.find(_.properties.isMain).map(_.videos.embeddable).getOrElse(false)),
       "videoDuration" -> elements.videos.find(_.properties.isMain).map{ v => JsNumber(v.videos.duration)}.getOrElse(JsNull))
 
+    val optionalOpengraphProperties = if(content.metadata.webUrl.startsWith("https://")) Map("og:video:secure_url" -> content.metadata.webUrl) else Nil
     val opengraphProperties = Map(
-      "og:type" -> "video",
-      "og:video:type" -> "text/html",
-      "og:video" -> content.metadata.webUrl,
-      "video:tag" -> content.tags.keywords.map(_.name).mkString(",")
-    )
+      // Not using the og:video properties here because we want end-users to visit the guardian website
+      // when they click the thumbnail in the FB feed rather than playing the video "in-place"
+      "og:type" -> "article",
+      "article:published_time" -> content.trail.webPublicationDate.toString,
+      "article:modified_time" -> content.fields.lastModified.toString,
+      "article:section" -> content.trail.sectionName,
+      "article:tag" -> content.tags.keywords.map(_.name).mkString(",")
+    ) ++ optionalOpengraphProperties
 
     val metadata = content.metadata.copy(
       contentType = contentType,

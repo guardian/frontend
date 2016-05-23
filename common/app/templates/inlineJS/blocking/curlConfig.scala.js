@@ -28,7 +28,6 @@ window.curlConfig = {
             'googletag.js':                      '@{Configuration.javascript.config("googletagJsUrl")}',
             stripe:                              '@Static("javascripts/vendor/stripe/stripe.min.js")',
             react:                               '@Static("javascripts/components/react/react.js")',
-            'facebook.js':                       '//connect.facebook.net/en_US/all.js',
             'ophan/ng':                          '@{Configuration.javascript.config("ophanJsUrl")}',
             'prebid.js':                         '@Static("javascripts/vendor/prebid/0.8.1/prebid.js")',
 
@@ -57,7 +56,6 @@ window.curlConfig = {
             qwery:                          'components/qwery/qwery',
             raven:                          'components/raven-js/raven',
             reqwest:                        'components/reqwest/reqwest',
-            'facebook.js':                  '//connect.facebook.net/en_US/all.js',
             'foresee.js':                   'vendor/foresee/20150703/foresee-trigger.js',
             'googletag.js':                 '@{Configuration.javascript.config("googletagJsUrl")}',
             'ophan/ng':                     '@{Configuration.javascript.config("ophanJsUrl")}',

@@ -103,17 +103,17 @@ final case class Commercial(
   def isSponsored(maybeEdition: Option[Edition]): Boolean =
     DfpAgent.isSponsored(tags.tags, Some(metadata.section), maybeEdition)
 
-  def hasHighMerchandisingTarget: Boolean = {
-    DfpAgent.hasHighMerchandisingTarget(tags.tags)
+  def needsHighMerchandisingSlot: Boolean = {
+    DfpAgent.hasHighMerchAdAndTag(metadata.adUnitSuffix,tags.tags)
   }
 
   def conditionalConfig: Map[String, JsValue] = {
-    val highMerchansisingMeta = if (hasHighMerchandisingTarget) {
-      Some("hasHighMerchandisingTarget", JsBoolean(hasHighMerchandisingTarget))
+    val highMerchandisingMeta = if (needsHighMerchandisingSlot) {
+      Some("hasHighMerchandisingTarget", JsBoolean(needsHighMerchandisingSlot))
     } else None
 
     val meta: List[Option[(String, JsValue)]] = List(
-      highMerchansisingMeta
+      highMerchandisingMeta
     )
     meta.flatten.toMap
   }
@@ -159,7 +159,14 @@ final case class Fields(
   sensitive: Option[Boolean],
   legallySensitive: Option[Boolean]
 ){
-  def javascriptConfig: Map[String, JsValue] = Map(("shortUrl", JsString(shortUrl)))
+  lazy val shortUrlId = shortUrl.replaceFirst("^[a-zA-Z]+://gu.com", "") //removing scheme://gu.com
+
+  def javascriptConfig: Map[String, JsValue] = {
+    Map(
+      "shortUrl" -> JsString(shortUrl),
+      "shortUrlId" -> JsString(shortUrlId)
+    )
+  }
 }
 
 object MetaData {

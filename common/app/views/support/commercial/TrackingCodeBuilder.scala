@@ -4,7 +4,7 @@ import common.Edition
 import common.commercial.{CardContent, ContainerModel}
 import play.api.mvc.RequestHeader
 
-object TrackingCodeBuilder {
+object TrackingCodeBuilder extends implicits.Requests {
 
   def mkInteractionTrackingCode(frontId: String,
                                 containerIndex: Int,
@@ -23,5 +23,12 @@ object TrackingCodeBuilder {
       s"card-${cardIndex + 1}",
       card.headline
     ) mkString " | "
+  }
+
+  def paidCard(articleTitle: String)(implicit request: RequestHeader): String = {
+    def param(name: String) = request.getParameter(name) getOrElse "unknown"
+    val section = param("s")
+    val sponsor = param("brand")
+    s"GLabs-native-traffic-card | ${Edition(request).id} | $section | $articleTitle | $sponsor"
   }
 }

@@ -160,15 +160,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val MediaPlayerSupportedBrowsers = Switch(
-    SwitchGroup.Feature,
-    "media-player-supported-browsers",
-    "If this is switched on then a message will be displayed to UAs not supported by our media player",
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val BreakingNewsSwitch = Switch(
     SwitchGroup.Feature,
     "breaking-news",

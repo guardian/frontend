@@ -18,7 +18,6 @@ define([
     'common/modules/component',
     'common/modules/video/events',
     'common/modules/video/fullscreener',
-    'common/modules/video/supportedBrowsers',
     'common/modules/video/tech-order',
     'common/modules/video/video-container',
     'common/modules/video/onward-container',
@@ -47,7 +46,6 @@ define([
     Component,
     events,
     fullscreener,
-    supportedBrowsers,
     techOrder,
     videoContainer,
     onwardContainer,
@@ -195,13 +193,21 @@ define([
 
         var videoInfo = new Promise(function(resolve) {
             // We only have the canonical URL in videos embedded in articles / main media.
+            var defaultVideoInfo = {
+                expired: false,
+                shouldHideAdverts: false
+            };
+
             if (!canonicalUrl) {
-                resolve(false);
+                resolve(defaultVideoInfo);
             } else {
                 ajax({
                     url: canonicalUrl + '/info.json'
                 }).then(function(videoInfo) {
                     resolve(videoInfo);
+                }, function() {
+                    // if this fails, don't stop, keep going.
+                    resolve(defaultVideoInfo);
                 });
             }
         });
@@ -248,7 +254,7 @@ define([
                         var vol;
 
                         deferToAnalytics(function () {
-                            events.initOmnitureTracking(player);
+                            events.initOmnitureTracking(player, mediaId);
                             events.initOphanTracking(player, mediaId);
 
                             events.bindGlobalEvents(player);
@@ -260,7 +266,6 @@ define([
 
                         initLoadingSpinner(player);
                         upgradeVideoPlayerAccessibility(player);
-                        supportedBrowsers(player);
 
                         player.one('playing', function (e) {
                             if (isFlash(e)) {
@@ -307,10 +312,6 @@ define([
                             } else {
                                 resolve();
                             }
-
-
-
-
                         } else {
                             player.playlist({
                                 mediaType: 'audio',

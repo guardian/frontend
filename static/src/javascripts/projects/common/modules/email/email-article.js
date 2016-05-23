@@ -39,9 +39,9 @@ define([
             theCampaignMinute: {
                 listId: '3599',
                 listName: 'theCampaignMinute',
-                campaignCode: 'the_minute_footer',
-                headline: 'Enjoying The Minute?',
-                description: 'Sign up and we\'ll send you the Guardian US Campaign Minute, once per day.',
+                campaignCode: config.page.isMinuteArticle ? 'the_minute_footer' : 'the_minute_election_article',
+                headline: config.page.isMinuteArticle ? 'Enjoying the minute?' : 'Want the latest election news?',
+                description: 'Sign up and we\'ll send you the campaign minute every weekday.',
                 successHeadline: 'Thank you for signing up to the Guardian US Campaign minute',
                 successDescription: 'We will send you the biggest political story lines of the day',
                 modClass: config.page.isMinuteArticle ? 'post-article' : 'end-article',
