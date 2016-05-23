@@ -52,8 +52,7 @@ define([
     'common/modules/email/email',
     'common/modules/email/email-article',
     'bootstraps/enhanced/identity-common',
-    'lodash/collections/forEach',
-    'lodash/utilities/escape' // this is needed by the lodash precompiler
+    'lodash/collections/forEach'
 ], function (
     fastdom,
     bean,
