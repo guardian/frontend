@@ -7,13 +7,13 @@ define([
     'common/utils/chain'
 ], function (qwery, config, omniture, values, chain) {
 
-    function OmnitureMedia(player) {
+    function OmnitureMedia(player, mediaId) {
 
         function getAttribute(attributeName) {
             return player.el().getAttribute(attributeName);
         }
 
-        var mediaId = getAttribute('data-embed-path') || config.page.pageId,
+        var pageId = config.page.pageId,
             // infer type (audio/video) from what element we have
             mediaType = qwery('audio', player.el()).length ? 'audio' : 'video',
             prerollPlayed = false,
@@ -38,10 +38,12 @@ define([
                 'eVar11',   // embedded or on platform
                 'prop41',   // preroll milestone
                 'prop43',   // media type
-                'prop44',   // media id
-                'eVar44',   // media id
+                'prop44',   // page id
+                'eVar44',   // page id
                 'eVar74',   // ad or content
-                'eVar61'];  // restricted
+                'eVar61',   // restricted
+                'prop39'    // media id
+            ];
 
         this.getDuration = function () {
             return parseInt(getAttribute('data-duration'), 10) || undefined;
@@ -57,7 +59,9 @@ define([
 
             // Set these each time because they are shared global variables, but OmnitureMedia is instanced.
             s.eVar43 = s.prop43 = mediaType.charAt(0).toUpperCase() + mediaType.slice(1);
-            s.eVar44 = s.prop44 = mediaId;
+            s.eVar44 = s.prop44 = pageId;
+            s.prop39 = mediaId;
+            
             if (prerollPlayed) {
                 // Any event after 'video:preroll:play' should be tagged with this value.
                 s.prop41 = 'PrerollMilestone';
@@ -85,7 +89,7 @@ define([
             s.eVar11 = isEmbed ? 'Embedded' : config.page.sectionName || '';
             s.eVar7 = s.pageName;
 
-            s.Media.open(mediaId, this.getDuration(), 'HTML5 Video');
+            s.Media.open(pageId, this.getDuration(), 'HTML5 Video');
         };
 
         this.onContentPlay = function () {

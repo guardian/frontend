@@ -16,8 +16,8 @@ define([
             cookieVal = cookies.get(COOKIE_WELCOME_BANNER);
 
         this.id = 'WelcomeHeader';
-        this.start = '2016-05-12';
-        this.expiry = '2016-05-18';
+        this.start = '2016-05-18';
+        this.expiry = '2016-05-24';
         this.author = 'Maria Livia Chiorean';
         this.description = 'Show a welcome header for first time users.';
         this.audience = 1;
@@ -34,18 +34,19 @@ define([
                     cookies.add(COOKIE_WELCOME_BANNER, 1);
                 }
             }
-            return detect.isBreakpoint({max: 'mobile'}) && firstTimeVisitor;
+            return detect.isBreakpoint({max: 'mobile'}) && !config.page.isFront && firstTimeVisitor &&
+                !detect.isIOS() && detect.getUserAgent.browser !== 'Safari' &&
+                config.page.edition === 'US';
         };
 
         this.variants = [{
-            id: 'test1',
+            id: 'control',
             test: function () {
-
             }
         }, {
-            id: 'test2',
+            id: 'award-winning',
             test: function () {
-
+                welcomeHeader.showWelcomeMessage(this.id);
             }
         }];
 

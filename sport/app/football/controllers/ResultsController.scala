@@ -37,7 +37,7 @@ object ResultsController extends MatchListController with CompetitionResultFilte
   private def page(tag: Option[String] = None): Option[FootballPage] = {
     def allPage = new FootballPage("football/results", "football", "All results", "GFE:Football:automatic:results")
     def competitionPage = (competition: Competition) => new FootballPage(s"${competition.url}/results", "football", s"${competition.fullName} results", "GFE:Football:automatic:competition results")
-    def teamPage = (team: FootballTeam) => new FootballPage(s"/football/$tag/results", "football", s"${tag} results", "GFE:Football:automatic:team results")
+    def teamPage = (team: FootballTeam) => new FootballPage(s"/football/${tag.getOrElse("")}/results", "football", s"${team.name} results", "GFE:Football:automatic:team results")
     byType[FootballPage](allPage)(competitionPage)(teamPage)(tag)
   }
 
