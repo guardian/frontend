@@ -1,7 +1,8 @@
+@import cards.{CardType, Standard}
+@import layout.{FaciaWidths, ItemClasses}
 @import views.html.fragments.inlineSvg
 @import views.html.fragments.items.elements.facia_cards.image
-@import layout.{FaciaWidths, ItemClasses}
-@import cards.{CardType, Standard}
+@import views.support.commercial.CssClassBuilder
 
 @(item: common.commercial.CardContent,
   omnitureId: String,
@@ -12,15 +13,7 @@
   useCardBranding: Boolean)
 
 
-<a href="@item.targetUrl" class="advert advert--capi
-    @item.icon match {
-        case Some(_) => {advert--media}
-        case None    => {advert--text}
-    }
-    @optAdvertClassNames.map { classNames => @classNames.map(c => s"advert--$c").mkString(" ")}
-    @optClassNames.map { classNames => @classNames.mkString(" ")}
-    @if(useCardBranding) {js-sponsored-card}
-    "
+<a href="@item.targetUrl" class="@CssClassBuilder.cardLink(item, optAdvertClassNames, optClassNames, useCardBranding)"
     @if(useCardBranding){
         @for(branding <- item.branding) {
             data-sponsorship="@branding.sponsorshipType"
