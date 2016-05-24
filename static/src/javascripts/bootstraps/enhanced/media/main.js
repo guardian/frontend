@@ -180,7 +180,7 @@ define([
 
     function initVideoTeaser() {
         fastdom.read(function () {
-            $('.js-video-player', document.body).each(function (el) {
+            $('.js-video-player:not(.video-playlist__item__player)', document.body).each(function (el) {
                 var $el = bonzo(el);
                 var clone = el.cloneNode(true);
                 var $clone = bonzo(clone);
