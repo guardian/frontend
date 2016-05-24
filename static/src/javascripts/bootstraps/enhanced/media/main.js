@@ -68,7 +68,7 @@ define([
             unviewed_position_start: 1
         };
 
-        return 'http://' + config.page.dfpHost + '/gampad/ads?' + urlUtils.constructQuery(queryParams);
+        return 'https://' + config.page.dfpHost + '/gampad/ads?' + urlUtils.constructQuery(queryParams);
     }
 
     function initLoadingSpinner(player) {
