@@ -19,6 +19,7 @@ module.exports = function (grunt) {
         isDev: (grunt.option('dev') !== undefined) ? Boolean(grunt.option('dev')) : process.env.GRUNT_ISDEV === '1',
         singleRun:       grunt.option('single-run') !== false,
         staticTargetDir: './static/target/',
+        staticPublicDir: './static/public/',
         staticSrcDir:    './static/src/',
         staticHashDir:   './static/hash/',
         testConfDir:     './static/test/javascripts/conf/',
@@ -110,7 +111,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:js', function () {
         grunt.task.run(['clean:js', 'compile:inlineSvgs']);
 
-        grunt.task.run(['concurrent:requireJS', 'copy:javascript', 'concat:app', 'uglify:javascript']);
+        grunt.task.run(['concurrent:requireJS', 'copy:javascript', 'concat:app', 'uglify:javascript', 'concat:ie8']);
     });
     grunt.registerTask('develop:js', function () {
         grunt.task.run(['copy:inlineSVGs', 'clean:js', 'copy:javascript']);
