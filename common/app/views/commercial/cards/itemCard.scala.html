@@ -1,5 +1,6 @@
 @import cards.{CardType, Standard}
 @import layout.{FaciaWidths, ItemClasses}
+@import views.html.fragments.commercial.contentLogo
 @import views.html.fragments.inlineSvg
 @import views.html.fragments.items.elements.facia_cards.image
 @import views.support.commercial.CssClassBuilder
@@ -12,17 +13,9 @@
   optImgRatio: Option[String] = None,
   useCardBranding: Boolean)
 
-
-<a href="@item.targetUrl" class="@CssClassBuilder.cardLink(item, optAdvertClassNames, optClassNames, useCardBranding)"
-    @if(useCardBranding){
-        @for(branding <- item.brandingAttributes) {
-            data-sponsorship="@branding.sponsorshipType"
-            @for(sponsor <- branding.sponsor)             {data-sponsor="@sponsor"}
-            @for(keywords <- branding.keywordId)          {data-keywords="@keywords"}
-            @for(series <- branding.seriesId)             {data-series="@series"}
-        }
-    }
-    data-link-name="@omnitureId"
+<a href="@item.targetUrl"
+   class="@CssClassBuilder.linkFromStandardCard(item, optAdvertClassNames, optClassNames, useCardBranding)"
+   data-link-name="@omnitureId"
     >
     <h2 class="advert__title">
         @for(icon <- item.icon){@inlineSvg(icon, "icon")}
@@ -39,10 +32,9 @@
     @for(description <- item.description) {
         <div class="advert__standfirst">@Html(description)</div>
     }
-
     @if(useCardBranding) {
-        @for(branding <- item.brandingAttributes; sponsor <- branding.sponsor) {
-            <div class="advert__badge js-badge-placeholder"></div>
+        @for(branding <- item.branding) {
+            @contentLogo(branding)
         }
     }
 </a>

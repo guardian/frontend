@@ -99,9 +99,7 @@ object Commercial {
 
         def isPaid(card: CardContent): Boolean = if (staticBadgesSwitch.isSwitchedOn) {
           isPaidBranding(card.branding)
-        } else {
-          isPaidBrandingAttributes(card.brandingAttributes)
-        }
+        } else false
 
         val isPaidContainer = if (staticBadgesSwitch.isSwitchedOn) {
           isPaidBranding(containerModel.branding)

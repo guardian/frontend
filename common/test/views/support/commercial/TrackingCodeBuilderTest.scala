@@ -22,7 +22,6 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers {
     image = None,
     fallbackImageUrl = None,
     targetUrl = "",
-    brandingAttributes,
     branding = None
   )
 

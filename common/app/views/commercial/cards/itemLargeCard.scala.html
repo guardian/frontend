@@ -1,7 +1,9 @@
 @import cards.{CardType, Standard}
 @import layout.{FaciaWidths, ItemClasses}
+@import views.html.fragments.commercial.contentLogo
 @import views.html.fragments.inlineSvg
 @import views.html.fragments.items.elements.facia_cards.image
+@import views.support.commercial.CssClassBuilder
 
 @(item: common.commercial.CardContent,
   omnitureId: String,
@@ -11,23 +13,9 @@
   optImgRatio: Option[String] = None,
   useCardBranding: Boolean)
 
-<a href="@item.targetUrl" class="advert advert--large advert--capi advert--landscape
-    @item.icon match {
-        case Some(_) => {advert--media}
-        case None    => {advert--text}
-    }
-    @optAdvertClassNames.map { classNames => @classNames.map(c => s"advert--$c").mkString(" ")}
-    @optClassNames.map { classNames => @classNames.mkString(" ")}
-    "
-    data-link-name="@omnitureId"
-    @if(useCardBranding){
-        @for(branding <- item.brandingAttributes) {
-            @for(sponsorship <- branding.sponsorshipType) {data-sponsorship="@sponsorship"}
-            @for(sponsor <- branding.sponsor)             {data-sponsor="@sponsor"}
-            @for(keywords <- branding.keywordId)          {data-keywords="@keywords"}
-            @for(series <- branding.seriesId)             {data-series="@series"}
-        }
-    }
+<a href="@item.targetUrl"
+   class="@CssClassBuilder.linkFromLargeCard(item, optAdvertClassNames, optClassNames, useCardBranding)"
+   data-link-name="@omnitureId"
     >
     <div class="advert__text">
         <h2 class="advert__title">
@@ -37,7 +25,11 @@
         @for(description <- item.description) {
             <div class="advert__standfirst">@Html(description)</div>
         }
-        @for(branding <- item.brandingAttributes; sponsor <- branding.sponsor) {<div class="advert__badge js-badge"></div>}
+        @if(useCardBranding) {
+            @for(branding <- item.branding) {
+                @contentLogo(branding)
+            }
+        }
     </div>
     <div class="advert__image-container @for(imgRatio <- optImgRatio){u-responsive-ratio u-responsive-ratio--@imgRatio}">
         @image(
