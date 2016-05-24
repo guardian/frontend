@@ -24,8 +24,8 @@ module.exports = function (grunt, options) {
                     dest: options.staticTargetDir + 'javascripts'
                 },
                 {
-                    src: options.staticPublicDir + 'javascripts/ie8polyfills.js',
-                    dest: options.staticPublicDir + 'javascripts/ie8polyfills.js'
+                    src: options.staticPublicDir + 'javascripts/es5-json-html5-shims.js',
+                    dest: options.staticPublicDir + 'javascripts/es5-json-html5-shims.js'
                 }
             ]
         },

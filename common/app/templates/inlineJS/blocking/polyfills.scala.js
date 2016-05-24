@@ -2,16 +2,6 @@
 @import conf.Static
 @import conf.Configuration
 
-// JSON support needed for raven
-if (typeof JSON !== 'object') {
-    (function (document) {
-        var s = document.createElement('script'),
-        sc = document.getElementsByTagName('script')[0];
-        s.src = '@Static("javascripts/components/JSON-js/json2.js")';
-        sc.parentNode.insertBefore(s, sc);
-    })(document);
-}
-
 @* It's faster to pass arguments in setTimeout than to use an anon function, but IE <10 can't do that. *@
 // Polyfill setTimeout args: https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers.setTimeout.
 /*@@cc_on

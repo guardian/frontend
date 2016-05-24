@@ -4,12 +4,13 @@
 @import templates.inlineJS.blocking.js._
 
 <!--[if lt IE 9]>
-    <script src="@Static("javascripts/ie8polyfills.js")"></script>
-    <script>@Html(polyfills().body)</script>
+    <script src="@Static("javascripts/es5-json-html5-shims.js")"></script>
 <![endif]-->
 
 @* NOTE the order of these includes is important  *@
 <script id="gu">
+    @Html(polyfills().body)
+
     @Html(curlConfig().body)
 
     // render-critical blocking JS
