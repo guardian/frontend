@@ -23,7 +23,7 @@ define([
     scrollBgStr,
     merge
 ) {
-    var hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
+    var hasScrollEnabled = !detect.isAndroid();
     var isEnhanced = detect.isEnhanced();
     var isIE10OrLess = detect.getUserAgent.browser === 'MSIE' && (parseInt(detect.getUserAgent.version) <= 10);
 
