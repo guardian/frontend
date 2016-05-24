@@ -216,30 +216,31 @@ $hosted-stripe: 28px;
         margin: 6px 20px 6px $gs-gutter;
     }
 
+    &.vjs-using-native-controls .vjs-control-bar {
+        display: block;
+    }
+
+    .vjs-error-display {
+        z-index: 1016;
+    }
 }
 
 .hosted__meta {
     position: absolute;
     left: $gs-gutter;
-    bottom: 15%;
+    bottom: 50px;
     width: 55%; // Magic. Do not touch.
     color: #ffffff;
-
-    @include mq(tablet) {
-        bottom: 20%;
-    }
 
     @include mq(desktop) {
         width: 35%;
     }
 
-    @include mq(leftCol) {
-        bottom: 18%;
-    }
-
     @include mq($until: tablet) {
         left: 76px;
-        bottom: 10px;
+        right: $gs-gutter;
+        bottom: 3px;
+        width: auto;
     }
 }
 
@@ -308,7 +309,6 @@ $hosted-stripe: 28px;
 // Main banner
 .hosted__banner {
     position: relative;
-    height: 375px;
     background-size: cover;
 
     &:after {
@@ -319,22 +319,44 @@ $hosted-stripe: 28px;
         left: 0;
         top: 0;
         z-index: 0;
-        background: linear-gradient(transparent 200px, rgba(0, 0, 0, .7));
+        background: linear-gradient(transparent 100px, rgba(0, 0, 0, .5));
     }
 
-    @include mq($until: desktop) {
-        background-position: center;
+    @include mq(mobile) {
+        height: 200px;
+        background-position: left;
+    }
+
+    @include mq(tablet) {
+        height: 250px;
+    }
+
+    @include mq(desktop) {
+        height: 375px;
     }
 }
 
 .hosted__cta-wrapper {
     position: relative;
     z-index: 1;
-    padding-top: 270px;
     margin-left: 20px;
+
+    @include mq(mobile) {
+        padding-top: 130px;
+    }
 
     @include mq(tablet) {
         width: 40%;
+        padding-top: 160px;
+    }
+
+    @include mq(desktop) {
+        padding-top: 220px;
+    }
+
+    a {
+        // hack stop the link underline
+        color: transparent;
     }
 }
 
@@ -363,12 +385,13 @@ $hosted-stripe: 28px;
     }
 
     @include mq(tablet) {
-        height: 34px;
+        height: 38px;
         margin: 13px;
+        line-height: 1;
 
         svg {
-            width: 34px;
-            height: 34px;
+            width: 37px;
+            height: 37px;
         }
     }
 
@@ -381,10 +404,17 @@ $hosted-stripe: 28px;
     @include f-headlineSans;
 
     font-size: 25px;
+    font-weight: bold;
     color: #ffc421;
 
     @include mq(tablet) {
         font-size: 38px;
+    }
+}
+
+.hosted__cta-link {
+    &:hover {
+        text-decoration: none;
     }
 }
 
@@ -432,6 +462,12 @@ $hosted-stripe: 28px;
 }
 
 .hosted__social {
+    @include mq($until: tablet) {
+        margin-top: $gs-gutter / 2;
+    }
+}
+
+.hosted__social-wrapper {
     border-top: 0;
     padding: $gs-gutter / 2 0 $gs-gutter / 2 $gs-gutter / 2;
 
@@ -482,6 +518,7 @@ $hosted-stripe: 28px;
 
     .hosted__meta {
         left: $gs-gutter/2;
+        bottom: 60px;
         @include mq(desktop) {
             width: 55%;
         }
@@ -517,8 +554,8 @@ $hosted-stripe: 28px;
         right: 0;
         bottom: 0;
         position: absolute;
-        background-image: linear-gradient(to bottom, rgba(238, 238, 238, 0), rgba(0, 0, 0, .4));
-        border-top: 2px solid transparent;
+        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, .4));
+        border-top: 1px solid transparent;
     }
 
     .play-button {
@@ -571,12 +608,14 @@ $hosted-stripe: 28px;
 }
 
 .hosted__label-btn--small {
+    @include f-textSans;
+
     font-size: 12px;
 }
 
 .hosted__popup {
     top: 110%;
-    left: 264%;
+    left: 299%;
     width: 350px;
     padding: $gs-gutter / 2 $gs-gutter / 2 $gs-gutter $gs-gutter / 2;
     background: #ffffff;
@@ -596,6 +635,12 @@ $hosted-stripe: 28px;
         &:before {
             left: 29%;
         }
+    }
+}
+
+.hosted__popup--bottom {
+    @include mq($until: tablet) {
+        left: 65%;
     }
 }
 

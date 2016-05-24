@@ -18,7 +18,6 @@ define([
     'common/modules/component',
     'common/modules/video/events',
     'common/modules/video/fullscreener',
-    'common/modules/video/supportedBrowsers',
     'common/modules/video/tech-order',
     'common/modules/video/video-container',
     'common/modules/video/onward-container',
@@ -47,7 +46,6 @@ define([
     Component,
     events,
     fullscreener,
-    supportedBrowsers,
     techOrder,
     videoContainer,
     onwardContainer,
@@ -146,7 +144,9 @@ define([
                         placeholder.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
                         player.removeClass('media__container--hidden').addClass('media__container--active');
                         $el.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
-                        enhanceVideo($('video', player).get(0), true);
+                        var enhancedPlayer = enhanceVideo($('video', player).get(0), true);
+
+                        mediator.emit('ab:PlayVideoOnFronts:front-player-created', enhancedPlayer);
                     });
                 });
                 fastdom.write(function () {
@@ -166,7 +166,8 @@ define([
 
         fastdom.read(function () {
             $('.js-gu-media--enhance').each(function (el) {
-                enhanceVideo(el, false, withPreroll);
+                var enhancedPlayer = enhanceVideo(el, false, withPreroll);
+                mediator.emit('ab:PlayVideoOnFronts:in-article-video-created', enhancedPlayer);
             });
         });
 
@@ -256,7 +257,7 @@ define([
                         var vol;
 
                         deferToAnalytics(function () {
-                            events.initOmnitureTracking(player);
+                            events.initOmnitureTracking(player, mediaId);
                             events.initOphanTracking(player, mediaId);
 
                             events.bindGlobalEvents(player);
@@ -268,7 +269,6 @@ define([
 
                         initLoadingSpinner(player);
                         upgradeVideoPlayerAccessibility(player);
-                        supportedBrowsers(player);
 
                         player.one('playing', function (e) {
                             if (isFlash(e)) {
@@ -315,10 +315,6 @@ define([
                             } else {
                                 resolve();
                             }
-
-
-
-
                         } else {
                             player.playlist({
                                 mediaType: 'audio',
@@ -351,6 +347,8 @@ define([
                 });
             }
         });
+
+        return player;
     }
 
     function initEndSlate(player, endSlatePath) {

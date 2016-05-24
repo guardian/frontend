@@ -74,7 +74,7 @@ trait PerformanceSwitches {
     "server-side-buckets",
     "When this switch expires, remove the remaining predefined server side testing buckets",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 20),
+    sellByDate = new LocalDate(2016, 6, 22),
     exposeClientSide = false
   )
 
@@ -103,6 +103,33 @@ trait PerformanceSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
+  )
+
+  val PanicMonitoringSwitch = Switch(
+    SwitchGroup.Performance,
+    "panic-monitoring",
+    "If this switch is on, we monitor latency and requests to see if servers are overloaded",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 8),
+    exposeClientSide = false
+  )
+
+  val PanicLoggingSwitch = Switch(
+    SwitchGroup.Performance,
+    "panic-logging",
+    "If this switch is on, we log latency when we are monitoring it with panic-monitoring",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 8),
+    exposeClientSide = false
+  )
+
+  val PanicSheddingSwitch = Switch(
+    SwitchGroup.Performance,
+    "panic-shedding",
+    "If this switch is on, we try to keep response times below 1s by returning Service Unavailable errors if we're busy",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 8),
+    exposeClientSide = false
   )
 
   val RichLinkSwitch = Switch(

@@ -76,9 +76,9 @@ final case class Content(
   lazy val isFromTheObserver: Boolean = publication == "The Observer"
   lazy val primaryKeyWordTag: Option[Tag] = tags.tags.find(!_.isSectionTag)
   lazy val keywordTags: Seq[Tag] = tags.keywords.filter(tag => !tag.isSectionTag)
-  lazy val shortUrlId = fields.shortUrl.replace("http://gu.com", "")
+  lazy val shortUrlId = fields.shortUrlId
   lazy val shortUrlPath = shortUrlId
-  lazy val discussionId = Some(shortUrlPath)
+  lazy val discussionId = Some(shortUrlId)
   lazy val isImmersive = fields.displayHint.contains("immersive") || metadata.contentType.toLowerCase == "gallery"
   lazy val showNewGalleryDesign = galleryRedesign.isSwitchedOn && metadata.contentType.toLowerCase == "gallery" && !trail.commercial.isAdvertisementFeature
 
@@ -524,10 +524,13 @@ object Video {
 
     val optionalOpengraphProperties = if(content.metadata.webUrl.startsWith("https://")) Map("og:video:secure_url" -> content.metadata.webUrl) else Nil
     val opengraphProperties = Map(
-      "og:type" -> "video",
-      "og:video:type" -> "text/html",
-      "og:video" -> content.metadata.webUrl,
-      "video:tag" -> content.tags.keywords.map(_.name).mkString(",")
+      // Not using the og:video properties here because we want end-users to visit the guardian website
+      // when they click the thumbnail in the FB feed rather than playing the video "in-place"
+      "og:type" -> "article",
+      "article:published_time" -> content.trail.webPublicationDate.toString,
+      "article:modified_time" -> content.fields.lastModified.toString,
+      "article:section" -> content.trail.sectionName,
+      "article:tag" -> content.tags.keywords.map(_.name).mkString(",")
     ) ++ optionalOpengraphProperties
 
     val metadata = content.metadata.copy(
