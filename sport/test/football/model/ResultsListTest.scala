@@ -145,7 +145,7 @@ import test.ConfiguredTestSuite
       matchDates should equal(matchDates.sortWith((match1Date, match2Date) => match1Date.isAfter(match2Date)))
     }
 
-    "should only show fixtures" in {
+    "should only show results" in {
       results.relevantMatches.foreach(checkIsResult)
     }
 

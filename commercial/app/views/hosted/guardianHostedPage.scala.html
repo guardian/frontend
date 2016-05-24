@@ -1,0 +1,118 @@
+@import common.commercial.HostedPage
+@(page: HostedPage, videoBlock: Html)(implicit request: RequestHeader)
+@import conf.Static
+
+@main(page) { } {
+    <div class="hosted__header">
+        <div class="hosted__headerwrap">
+            <div class="paidfor-label paidfor-meta__more hosted__label has-popup">
+                <button class="u-button-reset paidfor-label__btn popup__toggle hosted__label-btn" data-toggle="js-hosted-popup" data-link-name="about-adertiser-content">About @fragments.inlineSvg("arrow-down", "icon")</button>
+                <div class="popup popup--paidfor hosted__popup is-off js-hosted-popup">
+                    <p class="hosted__popup-text">Advertiser content is used to describe advertisement features that are paid for, produced and controlled by the advertiser rather than the publisher​.</p>
+                    <p class="hosted__popup-text">They​ are subject to regulation by the Advertising Standards Authority in the UK, the Federal Trade Commission in the US and the Advertising Standards Bureau in Australia.</p>
+                    <p class="hosted__popup-text">This content is produced by the advertiser and does not involve GNM staff.</p>
+                </div>
+            </div>
+            <a href="http://www.theguardian.com" data-link-name="guardian-logo-top-right" class="hosted__glogo">
+                <p class="hosted__glogotext">Hosted by</p>
+                @fragments.inlineSvg("logo-guardian", "logo")
+            </a>
+        </div>
+    </div>
+    <div class="l-side-margins hosted__side">
+        <section class="hosted-tone--dark">
+            <div class="adverts hosted__container--full">
+                <div class="hostedbadge hostedbadge--shouldscale hosted-tone-bg--renault">
+                    <p class="hostedbadge__info">Advertiser content</p>
+                </div>
+                <div class="u-responsive-ratio u-responsive-ratio--hd">
+                    @videoBlock
+                    <div class="hosted-fading">
+                        <div class="hosted__meta">
+                            <h1 class="hosted__heading hosted-tone--renault">Designing the car of the future</h1>
+                        </div>
+                        <div class="hostedbadge hostedbadge--shouldscale">
+                            <img class="hostedbadge__logo" src="@Static("images/commercial/logo_renault.jpg")">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="adverts adverts--legacy hosted__container hosted__container--content">
+            <header class="adverts__header hosted__social">
+                <div class="meta__social hosted__social-wrapper" data-component="share">
+                    <ul class="social social--top u-unstyled u-cf" data-component="social">
+                        <li class="social__item social__item--facebook" data-link-name="facebook">
+                            <a  class="social__action social-icon-wrapper"
+                            data-link-name="facebook-social-share-1"
+                            href="https://www.facebook.com/dialog/share?app_id=180444840287&href=http://theguardian.com/commercial/advertiser-content/renault-car-of-the-future/design-competition-teaser&redirect_uri=http://theguardian.com/commercial/advertiser-content/renault-car-of-the-future/design-competition-teaser"
+                            target="_blank"
+                            title="facebook">
+                                <span class='inline-icon__fallback button share-modal__item share-modal__item--facebook'>Share on Facebook</span>
+                                @fragments.inlineSvg("share-facebook", "icon", List("rounded-icon social-icon social-icon--facebook"))
+                            </a>
+                        </li>
+                        <li class="social__item social__item--twitter" data-link-name="twitter">
+                            <a  class="social__action social-icon-wrapper"
+                            data-link-name="twitter-social-share-1"
+                            href="https://twitter.com/intent/tweet?text=Advertiser content from Renault hosted by the Guardian: Designing the car of the future - video&url=http://theguardian.com/commercial/advertiser-content/renault-car-of-the-future/design-competition-teaser"
+                            target="_blank"
+                            title="twitter">
+                                <span class='inline-icon__fallback button share-modal__item share-modal__item--twitter'>Share on Twitter</span>
+                                @fragments.inlineSvg("share-twitter", "icon", List("rounded-icon social-icon social-icon--twitter"))
+                            </a>
+                        </li>
+                        <li class="social__item social__item--email" data-link-name="email">
+                            <a  class="social__action social-icon-wrapper"
+                            data-link-name="email-social-share-1"
+                            href="mailto:?subject=Designing the car of the future - video&body=http://theguardian.com/commercial/advertiser-content/renault-car-of-the-future/design-competition-teaser"
+                            target="_blank"
+                            title="email">
+                                <span class='inline-icon__fallback button share-modal__item share-modal__item--email'>Share via email</span>
+                                @fragments.inlineSvg("share-email", "icon", List("rounded-icon social-icon social-icon--email"))
+                            </a>
+                        </li>
+                        <li class="social__item social__item--pinterest" data-link-name="pinterest">
+                            <a  class="social__action social-icon-wrapper"
+                            data-link-name="Pinterest-social-share-1"
+                            href="http://www.pinterest.com/pin/find/?url=http://theguardian.com/commercial/advertiser-content/renault-car-of-the-future/design-competition-teaser"
+                            target="_blank"
+                            title="pinterest">
+                                <span class='inline-icon__fallback button share-modal__item share-modal__item--pinterest'>Share on Pinterest</span>
+                                @fragments.inlineSvg("share-pinterest", "icon", List("rounded-icon social-icon social-icon--pinterest"))
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </header>
+            <div class="adverts__body">
+                <div class="hosted__standfirst">
+                    <p class="hosted__text">Who better to dream up the cars of tomorrow than the people who'll be buying them? Students at Central St Martins are working with Renault to design the interior for cars that will drive themselves. Watch this short video to find out more about the project, and visit this page again soon to catch up on the students' progress.</p>
+                    <div class="hosted__terms">​This content was paid for and produced by Renault. For more information click
+                        <div class="paidfor-label paidfor-meta__more has-popup hosted__link">
+                            <button class="u-button-reset paidfor-label__btn hosted__label-btn--small popup__toggle hosted__label-btn" data-toggle="js-hosted-popup-bottom" data-link-name="terms-and-conditions-text-link">here @fragments.inlineSvg("arrow-down", "icon")</button>
+                            <div class="popup popup--paidfor hosted__popup hosted__popup--bottom is-off js-hosted-popup-bottom">
+                                <p class="hosted__popup-text">Advertiser content is used to describe advertisement features that are paid for, produced and controlled by the advertiser rather than the publisher​.</p>
+                                <p class="hosted__popup-text">They​ are subject to regulation by the Advertising Standards Authority in the UK, the Federal Trade Commission in the US and the Advertising Standards Bureau in Australia.</p>
+                                <p class="hosted__popup-text">This content is produced by the advertiser and does not involve GNM staff.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="adverts hosted__container--full">
+            <div class="hosted__banner" style="background-image: url(@Static("images/commercial/ren_commercial_banner.jpg"));">
+                <div class="hostedbadge hostedbadge--shouldscale hostedbadge--pushdown hosted-tone-bg--renault">
+                    <img class="hostedbadge__logo" src="@Static("images/commercial/logo_renault.jpg")">
+                </div>
+                <div class="hosted__cta-wrapper">
+                    <a href="https://www.renault.co.uk/vehicles/new-vehicles/zoe.html" rel="nofollow" class="hosted__cta-link" data-link-name="explore-renault-zoe-button" target="_blank">
+                        <span class="hosted__cta-text">Discover Zoe</span>
+                        @fragments.inlineSvg("arrow-right", "icon", List("i-right","advert__more","button","button--large","button--primary","hosted__cta"))
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+}

@@ -99,11 +99,6 @@ define([
                 desktop: '1,1|88,70|728,90|940,230|900,250|970,250' + fabricMappingSwitch
             }
         },
-        'fabric': {
-            sizeMappings: {
-                mobile: fabricTopSlot
-            }
-        },
         'inline1-fabric': {
             sizeMappings: {
                 mobile: ('1,1|300,250|' + fabricTopSlot)
