@@ -28,6 +28,12 @@
     right: 0;
 }
 
+.frame__logo,
+.frame__content,
+.frame__cta {
+    z-index: 1;
+}
+
 .frame__logo--top {
     margin-bottom: $gs-baseline;
 }
