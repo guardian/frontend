@@ -143,6 +143,10 @@
         svg {
             height: 24px;
             width: 75px;
+
+            path {
+                fill: $neutral-1;
+            }
         }
     }
 }

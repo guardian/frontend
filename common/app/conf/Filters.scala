@@ -3,10 +3,10 @@ package conf
 import cache.SurrogateKey
 import common.ExecutionContexts
 import filters.RequestLoggingFilter
-import org.apache.commons.codec.digest.DigestUtils
-import play.api.mvc.{EssentialFilter, Result, RequestHeader, Filter}
-import play.filters.gzip.GzipFilter
 import implicits.Responses._
+import play.api.mvc.{EssentialFilter, Filter, RequestHeader, Result}
+import play.filters.gzip.GzipFilter
+
 import scala.concurrent.Future
 
 object Gzipper extends GzipFilter(shouldGzip = (_, resp) => !resp.isImage)
@@ -75,6 +75,7 @@ object Filters {
   // NOTE - order is important here, Gzipper AFTER CorsVaryHeaders
   // which effectively means "JsonVaryHeaders goes around Gzipper"
   lazy val common: List[EssentialFilter] = List(
+    PanicSheddingFilter,
     JsonVaryHeadersFilter,
     Gzipper,
     BackendHeaderFilter,
