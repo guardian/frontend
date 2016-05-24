@@ -1,8 +1,9 @@
 package common.commercial
 
+import common.Edition
 import conf.switches.Switches
 import model.pressed.PressedContent
-import model.{ContentType, ImageMedia, ImageOverride}
+import model.{Branding, ContentType, ImageMedia, ImageOverride}
 import views.support.{CardWithSponsorDataAttributes, ImgSrc, SponsorDataAttributes}
 
 case class CardContent(
@@ -13,12 +14,13 @@ case class CardContent(
                         image: Option[ImageMedia],
                         fallbackImageUrl: Option[String],
                         targetUrl: String,
-                        brandingAttributes: Option[SponsorDataAttributes]
+                        brandingAttributes: Option[SponsorDataAttributes],
+                        branding: Option[Branding]
                       )
 
 object CardContent {
 
-  def fromPressedContent(content: PressedContent): CardContent = {
+  def fromPressedContent(edition: Edition)(content: PressedContent): CardContent = {
 
     val header = content.header
 
@@ -52,7 +54,8 @@ object CardContent {
         } else {
           None
         }
-      }
+      },
+      branding = content.branding(edition)
     )
   }
 
@@ -77,7 +80,8 @@ object CardContent {
         val url = item.metadata.webUrl
         clickMacro map { cm => s"$cm$url" } getOrElse url
       },
-      brandingAttributes = None
+      brandingAttributes = None,
+      branding = None
     )
   }
 }

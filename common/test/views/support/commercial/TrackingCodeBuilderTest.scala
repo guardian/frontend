@@ -14,7 +14,7 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers {
     keywordId = None
   )
 
-  def mkCardContent(index: Int, branding: Option[SponsorDataAttributes] = None) = CardContent(
+  def mkCardContent(index: Int, brandingAttributes: Option[SponsorDataAttributes] = None) = CardContent(
     icon = None,
     headline = s"headline-$index",
     kicker = None,
@@ -22,7 +22,8 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers {
     image = None,
     fallbackImageUrl = None,
     targetUrl = "",
-    branding
+    brandingAttributes,
+    branding = None
   )
 
   def mkContainerModel(brandingAttributes: Option[SponsorDataAttributes] = None) = {
@@ -70,7 +71,7 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers {
       frontId = "front-id",
       containerIndex = 5,
       container = mkContainerModel(),
-      card = mkCardContent(3, branding = Some(mkBranding("card-sponsor")))
+      card = mkCardContent(3, brandingAttributes = Some(mkBranding("card-sponsor")))
     )(request = FakeRequest().withHeaders("X-Gu-Edition" -> "US"))
     code shouldBe
       "Labs front container | US | front-id | container-6 | container-title | card-sponsor | card-3 | headline-3"
