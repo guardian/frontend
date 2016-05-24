@@ -14,7 +14,6 @@ module.exports = function (grunt, options) {
         ie8: {
             src: [
                 options.staticPublicDir + 'javascripts/components/es5-shim/es5-shim.js',
-                options.staticPublicDir + 'javascripts/components/JSON-js/json2.js',
                 options.staticPublicDir + 'javascripts/components/html5shiv/html5shiv.js'
             ],
             dest: options.staticPublicDir + 'javascripts/es5-json-html5-shims.js'

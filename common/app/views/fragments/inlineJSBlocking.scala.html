@@ -3,6 +3,9 @@
 @import common.InlineJs
 @import templates.inlineJS.blocking.js._
 
+<!--[if lt IE 8]>
+    <script src="@Static("javascripts/components/JSON-js/json2.js")"></script>
+<![endif]-->
 <!--[if lt IE 9]>
     <script src="@Static("javascripts/es5-json-html5-shims.js")"></script>
 <![endif]-->
