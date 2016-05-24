@@ -17,15 +17,16 @@ object PanicSheddingFilter extends Filter with Logging {
   import scala.concurrent.ExecutionContext.Implicits.global
   import scala.concurrent.duration._
 
-  val ALL_200s_MAX_LATENCY = 1.second.toMillis
-  val PANICING_MIN_LATENCY = 3.seconds.toMillis
+  val NORMAL_LATENCY_LIMIT = 1.second.toMillis
+  val CRITICAL_LATENCY_LIMIT = 3.seconds.toMillis
   // always allow a few concurrent connections even in slow times
-  val MIN_CONNECTIONS = 4
-  val MAX_STARTS_IMBALANCE = StartCompleteRatioMonitor.RANGE / 4
+  val TRICKLE_RECOVERY_CONCURRENT_CONNECTIONS = 4
+  val WORST_ALLOWABLE_SURGE = SurgeFactorMonitor.RANGE / 4
+  val RANGE = SurgeFactorMonitor.RANGE
 
-  val averageLatency = Agent(LatencyMonitor.initialLatency)
-  val requestsInProgressCounter = Agent(InProgressRequestMonitor.initialRequestsInProgress)
-  val startCompleteRatio = Agent(StartCompleteRatioMonitor.initialRatio)
+  val latencyCounter = Agent(LatencyMonitor.initialLatency)
+  val requestsInProgressCounter = Agent(RequestsInProgressMonitor.initialRequestsInProgress)
+  val surgeFactorCounter = Agent(SurgeFactorMonitor.initialRatio)
 
   // Busy monitoring is not perfect as it only knows when things are already slow.
   // if we get loads of requests at the same moment, it would take up to 1 second to realise
@@ -35,37 +36,42 @@ object PanicSheddingFilter extends Filter with Logging {
 
     import implicits.Requests._
     // we read all the values up front, so there could be other requests ahead of us that would affect the values (race)
-    val previousLatency = averageLatency.get.latency
+    val latency = latencyCounter.get.latency
     val requestsInProgress = requestsInProgressCounter.get
-    val startsRatio = startCompleteRatio.get.ratio
+    val surgeFactor = surgeFactorCounter.get.ratio
     lazy val loadAverage = ManagementFactory.getOperatingSystemMXBean.getSystemLoadAverage
+
     if (Switches.PanicLoggingSwitch.isSwitchedOn) {
-      log.info(s"$requestsInProgress in progress: averageLatency = $previousLatency, startsRatio (range is -100,100) = $startsRatio, loadAverage = $loadAverage")
+      log.info(s"$requestsInProgress requests in progress, averageLatency = ${latency}ms, surgeFactor (range is -$RANGE,$RANGE) = $surgeFactor, loadAverage = $loadAverage")
     }
-    if (startsRatio > MAX_STARTS_IMBALANCE) {
-      log.warn(s"Request spike detected, won't serve this request - $startsRatio (range is -100 to 100, over 25 is a spike), loadAverage = $loadAverage")
+
+    if (surgeFactor > WORST_ALLOWABLE_SURGE) {
+      log.warn(s"Request spike detected, won't serve this request.  surgeFactor = $surgeFactor (range is -$RANGE,$RANGE, over $WORST_ALLOWABLE_SURGE is a spike), loadAverage = $loadAverage")
       RequestMetrics.PanicRequestsSurgeMetric.increment()
       false
-    } else if (previousLatency <= ALL_200s_MAX_LATENCY) {
+    } else if (latency <= NORMAL_LATENCY_LIMIT) {
       true
-    } else if (previousLatency > PANICING_MIN_LATENCY) {
+    } else if (latency > CRITICAL_LATENCY_LIMIT) {
       RequestMetrics.PanicExcessiveLatencyMetric.increment()
-      if (requestsInProgress <= MIN_CONNECTIONS) {
-        log.warn(s"Excessive previous latency detected, serving anyway as $requestsInProgress/$MIN_CONNECTIONS requests in progress - ${previousLatency}ms, loadAverage = $loadAverage")
+      if (requestsInProgress <= TRICKLE_RECOVERY_CONCURRENT_CONNECTIONS) {
+        log.warn(
+          s"""Excessive latency detected, serving anyway as in progress requests ($requestsInProgress)
+             | is less than the minimum ($TRICKLE_RECOVERY_CONCURRENT_CONNECTIONS).
+             | latency = ${latency}ms, loadAverage = $loadAverage""".stripMargin)
         true
       } else {
-        log.warn(s"Excessive previous latency detected, won't serve this request - ${previousLatency}ms, loadAverage = $loadAverage")
+        log.warn(s"Excessive previous latency detected, won't serve this request. latency = ${latency}ms, loadAverage = $loadAverage")
         false // even health checks fail
       }
     } else if (request.isHealthcheck) {
-      log.warn(s"Moderately high latency, allowing health checks through - ${previousLatency}ms, loadAverage = $loadAverage")
+      log.warn(s"Moderately high latency, allowing health checks through. latency = ${latency}ms, loadAverage = $loadAverage")
       true
     } else {
       RequestMetrics.PanicLatencyWarningMetric.increment()
-      val openingRange = PANICING_MIN_LATENCY - ALL_200s_MAX_LATENCY
-      val msAwayFromFullyOff = PANICING_MIN_LATENCY - previousLatency
+      val openingRange = CRITICAL_LATENCY_LIMIT - NORMAL_LATENCY_LIMIT
+      val msAwayFromFullyOff = CRITICAL_LATENCY_LIMIT - latency
       val percentageOfRequestsToServe = msAwayFromFullyOff * 100 / openingRange
-      log.warn(s"Moderately high latency, only serving $percentageOfRequestsToServe% of requests - ${previousLatency}ms, loadAverage = $loadAverage")
+      log.warn(s"Moderately high latency, only serving $percentageOfRequestsToServe% of requests.  latency = ${latency}ms, loadAverage = $loadAverage")
       scala.util.Random.nextInt(100) < percentageOfRequestsToServe
     }
   }
@@ -86,19 +92,19 @@ object PanicSheddingFilter extends Filter with Logging {
   def monitor(result: => Future[Result]) = {
     val startedResult = result
     val startTime = DateTime.now.getMillis
-    requestsInProgressCounter.send(InProgressRequestMonitor.requestStarted)
-    startCompleteRatio.send(StartCompleteRatioMonitor.requestStarted)
+    requestsInProgressCounter.send(RequestsInProgressMonitor.requestStarted)
+    surgeFactorCounter.send(SurgeFactorMonitor.requestStarted)
     startedResult.onComplete { _ =>
-      requestsInProgressCounter.send(InProgressRequestMonitor.requestComplete)
-      startCompleteRatio.send(StartCompleteRatioMonitor.requestComplete)
-      averageLatency.send(LatencyMonitor.updateLatency(DateTime.now.getMillis - startTime)_)
+      requestsInProgressCounter.send(RequestsInProgressMonitor.requestComplete)
+      surgeFactorCounter.send(SurgeFactorMonitor.requestComplete)
+      latencyCounter.send(LatencyMonitor.updateLatency(DateTime.now.getMillis - startTime)_)
     }
     startedResult
   }
 
 }
 
-object StartCompleteRatioMonitor extends ExecutionContexts {
+object SurgeFactorMonitor extends ExecutionContexts {
 
   case class StartCompleteRatio(total: Long) {
     def ratio = total / LIMIT_SUM_DECAY
@@ -123,7 +129,7 @@ object StartCompleteRatioMonitor extends ExecutionContexts {
 
 }
 
-object InProgressRequestMonitor extends ExecutionContexts {
+object RequestsInProgressMonitor extends ExecutionContexts {
 
   val initialRequestsInProgress = 0
 
