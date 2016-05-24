@@ -16,6 +16,7 @@ define([
     'common/modules/commercial/build-page-targeting',
     'common/modules/commercial/commercial-features',
     'common/modules/component',
+    'common/modules/experiments/ab',
     'common/modules/video/events',
     'common/modules/video/fullscreener',
     'common/modules/video/tech-order',
@@ -45,6 +46,7 @@ define([
     buildPageTargeting,
     commercialFeatures,
     Component,
+    ab,
     events,
     fullscreener,
     techOrder,
@@ -170,7 +172,9 @@ define([
             });
         });
 
-        initVideoTeaser();
+        if(ab.isInVariant('VideoTeaser', 'variant')) {
+            initVideoTeaser();
+        }
 
         initPlayButtons(document.body);
 
