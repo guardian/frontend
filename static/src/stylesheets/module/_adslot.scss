@@ -649,3 +649,10 @@
         }
     }
 }
+
+/**
+ * Fluid ad slots don't have widths
+ */
+.ad-slot--fluid {
+    width: auto;
+}
