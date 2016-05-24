@@ -1,20 +1,35 @@
 package views.support.commercial
 
 import common.commercial._
-import org.scalatest.{FlatSpec, Matchers}
+import conf.switches.Switches.staticBadgesSwitch
+import model.{Branding, Sponsored}
+import org.scalatest.{BeforeAndAfterEach, FlatSpec, Matchers}
 import play.api.test.FakeRequest
 import views.support.SponsorDataAttributes
 
-class TrackingCodeBuilderTest extends FlatSpec with Matchers {
+class TrackingCodeBuilderTest extends FlatSpec with Matchers with BeforeAndAfterEach {
 
-  def mkBranding(sponsor: String) = SponsorDataAttributes(
-    sponsor = Some(sponsor),
+  override protected def beforeEach(): Unit = {
+    staticBadgesSwitch.switchOff()
+  }
+
+  private def mkBrandingAttributes(sponsorName: String) = SponsorDataAttributes(
+    sponsor = Some(sponsorName),
     sponsorshipType = "",
     seriesId = None,
     keywordId = None
   )
 
-  def mkCardContent(index: Int, brandingAttributes: Option[SponsorDataAttributes] = None) = CardContent(
+  private def mkBranding(sponsorName: String) = Branding(
+    sponsorshipType = Sponsored,
+    sponsorName,
+    sponsorLogo = "",
+    sponsorLink = "",
+    aboutThisLink = "",
+    targeting = None
+  )
+
+  private def mkCardContent(index: Int, branding: Option[Branding] = None) = CardContent(
     icon = None,
     headline = s"headline-$index",
     kicker = None,
@@ -22,10 +37,10 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers {
     image = None,
     fallbackImageUrl = None,
     targetUrl = "",
-    branding = None
+    branding
   )
 
-  def mkContainerModel(brandingAttributes: Option[SponsorDataAttributes] = None) = {
+  private def mkContainerModel(brandingAttributes: Option[SponsorDataAttributes] = None) = {
 
     def mkContainerContent() = ContainerContent(
       title = "container-title",
@@ -58,7 +73,7 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers {
     val code = TrackingCodeBuilder.mkInteractionTrackingCode(
       frontId = "front-id",
       containerIndex = 2,
-      container = mkContainerModel(brandingAttributes = Some(mkBranding("sponsor-name"))),
+      container = mkContainerModel(brandingAttributes = Some(mkBrandingAttributes("sponsor-name"))),
       card = mkCardContent(5)
     )(request = FakeRequest().withHeaders("X-Gu-Edition" -> "US"))
     code shouldBe
@@ -66,11 +81,12 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers {
   }
 
   it should "populate tracking code when card has individual branding" in {
+    staticBadgesSwitch.switchOn()
     val code = TrackingCodeBuilder.mkInteractionTrackingCode(
       frontId = "front-id",
       containerIndex = 5,
       container = mkContainerModel(),
-      card = mkCardContent(3, brandingAttributes = Some(mkBranding("card-sponsor")))
+      card = mkCardContent(3, branding = Some(mkBranding("card-sponsor")))
     )(request = FakeRequest().withHeaders("X-Gu-Edition" -> "US"))
     code shouldBe
       "Labs front container | US | front-id | container-6 | container-title | card-sponsor | card-3 | headline-3"
@@ -80,7 +96,7 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers {
     val code = TrackingCodeBuilder.mkInteractionTrackingCode(
       frontId = "front-id",
       containerIndex = 2,
-      container = mkContainerModel(brandingAttributes = Some(mkBranding("sponsor-name"))),
+      container = mkContainerModel(brandingAttributes = Some(mkBrandingAttributes("sponsor-name"))),
       card = mkCardContent(5)
     )(request = FakeRequest().withHeaders("X-Gu-Edition" -> "US"))
     code shouldBe
