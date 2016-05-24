@@ -202,39 +202,28 @@ define([
                 config.page.pageId = 'uk';
             });
 
-            it('is added on mobile', function () {
-                detect.isBreakpoint = function () {
-                    // expecting check for breakpoint <= phablet
-                    return true;
-                };
-                detect.getBreakpoint = function () {
-                    return 'mobile';
-                };
-
+            it('is added on mobile', function (done) {
+                detect.isBreakpoint = mockIsBreakpoint('mobile');
                 sliceAdverts.init();
 
-                expect(getCreatedSlotTypes()[0]).toBe('inline1-fabric');
-            });
-
-            it('is not added on desktop', function () {
-                detect.isBreakpoint = function () {
-                    // expecting check for breakpoint <= phablet
-                    return false;
-                };
-                detect.getBreakpoint = function () {
-                    return 'desktop';
-                };
-
-                sliceAdverts.init();
-
-                expect(getCreatedSlotTypes().indexOf('inline1-fabric')).toBe(-1);
-            });
-
-            function getCreatedSlotTypes() {
-                return createSlotSpy.calls.allArgs().map(function (args) {
-                    return args[0];
+                fastdom.defer(function () {
+                    expect(qwery('.fc-container-first .ad-slot', $fixtureContainer).length).toBe(1);
+                    done();
                 });
-            }
+            });
+
+            it('is not added on desktop', function (done) {
+                detect.isBreakpoint = mockIsBreakpoint('desktop');
+
+                sliceAdverts.init();
+
+                fastdom.defer(function () {
+                    expect(qwery('.fc-container-first .ad-slot', $fixtureContainer).length).toBe(0);
+                    done();
+                });
+            });
+
+
         });
 
         //TODO: get data if we need to reintroduce this again
@@ -249,5 +238,30 @@ define([
                 done();
             });
         });
+
+        function mockIsBreakpoint(current) {
+
+            return function (query) {
+                var maxBreakpoint = getBreakpoint(query.max);
+                var maxSize = maxBreakpoint ? maxBreakpoint.width : Infinity;
+
+                var minBreakpoint = getBreakpoint(query.min);
+                var minSize = minBreakpoint ? minBreakpoint.width : 0;
+
+                var mockSize = getBreakpoint(current).width;
+                return minSize <= mockSize && mockSize <= maxSize;
+            };
+
+            function getBreakpoint(name) {
+                var breakpoints = detect.breakpoints;
+                for (var i = 0; i < breakpoints.length; i++) {
+                    if (breakpoints[i].name === name) {
+                        return breakpoints[i];
+                    }
+                }
+                return undefined;
+            }
+        }
     });
+
 });
