@@ -126,7 +126,7 @@ object ImgSrc extends Logging with implicits.Strings {
       val imageOverlay = if (imageType == FacebookOpenGraphImage && overlayTest) {
         "&bm=normal" +
         "&ba=bottom%2C%20left" +
-        "&blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNS8yMy9vdmVybGF5LWxvZ28tMTIwMC05MC5wbmc" +
+        "&blend64=aHR0cHM6Ly9hc3NldHMuZ3VpbS5jby51ay9pbWFnZXMvc29jaWFsLzMwNWEzNGRmZTM1YWI3MjUxYjJkOTVkYmEwOTU5ODczL292ZXJsYXktbG9nby0xMjAwLTkwLnBuZw" +
         "&fit=crop"
       } else { "" }
       val isSupportedImage = supportedImages.exists(extension => uri.getPath.toLowerCase.endsWith(extension))
