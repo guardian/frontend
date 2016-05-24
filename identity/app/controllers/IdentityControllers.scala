@@ -6,10 +6,13 @@ import form.FormComponents
 import formstack.FormStackComponents
 import idapiclient.IdApiComponents
 import play.api.libs.ws.WSClient
+import play.filters.csrf.CSRFCheck
 import services.IdentityServices
 
 trait IdentityControllers extends IdApiComponents with IdentityServices with FormStackComponents with FormComponents {
   def wsClient: WSClient
+
+  def csrfCheck: CSRFCheck
 
   lazy val authenticatedActions = wire[AuthenticatedActions]
   lazy val changePasswordController = wire[ChangePasswordController]

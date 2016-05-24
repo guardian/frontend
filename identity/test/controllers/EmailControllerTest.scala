@@ -25,6 +25,8 @@ import actions.AuthenticatedActions
 
 @DoNotDiscover class EmailControllerTest extends WordSpec with ShouldMatchers with MockitoSugar with ConfiguredTestSuite {
 
+  val csrfAddToken = app.injector.instanceOf[play.filters.csrf.CSRFAddToken]
+
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val conf = mock[IdentityConfiguration]
   val api = mock[IdApiClient]
@@ -81,7 +83,7 @@ import actions.AuthenticatedActions
   "The save preferences method" when {
     "the form submission is valid" when {
       val emailFormat = "Text"
-      def fakeRequest = FakeCSRFRequest(POST, "/email-prefs")
+      def fakeRequest = FakeCSRFRequest(csrfAddToken,POST, "/email-prefs")
         .withFormUrlEncodedBody("htmlPreference" -> emailFormat, "csrfToken" -> "abc")
       def authRequest = new AuthRequest(authenticatedUser, fakeRequest)
 
