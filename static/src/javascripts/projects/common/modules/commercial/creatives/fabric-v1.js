@@ -80,7 +80,7 @@ define([
                 bonzo(this.layer2).css('background-position', '');
             }
 
-            if (this.scrollType === 'fixed') {
+            if (this.scrollType === 'fixed' && hasBackgroundFixedSupport) {
                 bonzo(this.scrollingBg).css('background-attachment', 'fixed');
             }
 
