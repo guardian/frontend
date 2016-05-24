@@ -159,7 +159,6 @@ object PanicSheddingFilter extends Filter with Logging {
       requestsInProgressCounter.send(InProgressRequestMonitor.requestComplete)
       startCompleteRatio.send(StartCompleteRatioMonitor.requestComplete)
       averageLatency.send(LatencyMonitor.updateLatency(DateTime.now.getMillis - startTime)_)
-      log.info(s"request complete in: ${DateTime.now.getMillis - startTime}")
     }
     startedResult
   }
