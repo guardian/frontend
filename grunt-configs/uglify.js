@@ -22,6 +22,10 @@ module.exports = function (grunt, options) {
                         '!vendor/stripe/*.js'
                     ],
                     dest: options.staticTargetDir + 'javascripts'
+                },
+                {
+                    src: options.staticPublicDir + 'javascripts/ie8polyfills.js',
+                    dest: options.staticPublicDir + 'javascripts/ie8polyfills.js'
                 }
             ]
         },

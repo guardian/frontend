@@ -111,7 +111,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:js', function () {
         grunt.task.run(['clean:js', 'compile:inlineSvgs']);
 
-        grunt.task.run(['concurrent:requireJS', 'copy:javascript', 'concat:app', 'uglify:javascript', 'concat:ie8']);
+        grunt.task.run(['concurrent:requireJS', 'copy:javascript', 'concat:app', 'concat:ie8', 'uglify:javascript']);
     });
     grunt.registerTask('develop:js', function () {
         grunt.task.run(['copy:inlineSVGs', 'clean:js', 'copy:javascript']);
