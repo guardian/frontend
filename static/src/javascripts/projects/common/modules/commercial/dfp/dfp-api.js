@@ -488,8 +488,8 @@ define([
             });
         },
         '88,70': isFluid250('ad-slot--top-banner-ad'),
-        '88,71': isFluid250('ad-slot--top-banner-ad')
-        '88,88': isFluid250('ad-slot--commercial-component'),
+        '88,71': isFluid('ad-slot--container-inline'),
+        '88,88': isFluid250('ad-slot--commercial-component')
     };
 
     function isFluid250(className) {
@@ -497,6 +497,16 @@ define([
             if ($adSlot.hasClass(className)) {
                 fastdom.write(function () {
                     $adSlot.addClass('ad-slot__fluid250');
+                });
+            }
+        }
+    }
+
+    function isFluid(className) {
+        return function (_, $adSlot) {
+            if ($adSlot.hasClass(className)) {
+                fastdom.write(function () {
+                    $adSlot.addClass('ad-slot--fluid');
                 });
             }
         }
