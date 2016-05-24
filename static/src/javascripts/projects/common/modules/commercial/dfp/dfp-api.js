@@ -486,8 +486,31 @@ define([
                     bonzo(geoMostPopular.elem).remove();
                 });
             });
-        }
+        },
+        '88,70': isFluid250('ad-slot--top-banner-ad'),
+        '88,71': isFluid('ad-slot--mobile'),
+        '88,88': isFluid250('ad-slot--commercial-component')
     };
+
+    function isFluid250(className) {
+        return function (_, $adSlot) {
+            if ($adSlot.hasClass(className)) {
+                fastdom.write(function () {
+                    $adSlot.addClass('ad-slot__fluid250');
+                });
+            }
+        };
+    }
+
+    function isFluid(className) {
+        return function (_, $adSlot) {
+            if ($adSlot.hasClass(className)) {
+                fastdom.write(function () {
+                    $adSlot.addClass('ad-slot--fluid');
+                });
+            }
+        };
+    }
 
     function parseAd(event) {
         var size;
@@ -540,13 +563,6 @@ define([
                 if ($adSlot.hasClass('ad-slot--container-inline') && $adSlot.hasClass('ad-slot--not-mobile')) {
                     fastdom.write(function () {
                         $adSlot.parent().css('display', 'flex');
-                    });
-                }
-
-                if (($adSlot.hasClass('ad-slot--top-banner-ad') && size === '88,70')
-                    || ($adSlot.hasClass('ad-slot--commercial-component') && size === '88,88')) {
-                    fastdom.write(function () {
-                        $adSlot.addClass('ad-slot__fluid250');
                     });
                 }
             }).catch(raven.captureException);

@@ -35,7 +35,7 @@ define([
         var prefs               = userPrefs.get('container-states') || {};
         var isMobile            = detect.getBreakpoint() === 'mobile';
         var isNetworkFront      = ['uk', 'us', 'au'].indexOf(config.page.pageId) !== -1;
-        // Mobile doesn't have a top slot, so we substitute a slot that accepts both ordinary MPUs and the 'fabric' ads
+        // Mobile doesn't have a top slot, so we substitute a slot that accepts both ordinary MPUs and the 'fabric' ads (88x71s)
         // that take the top slot in responsive takeovers.
         var replaceTopSlot      = (config.page.isFront && config.switches.fabricAdverts && detect.isBreakpoint({max : 'phablet'}));
         // We must keep a small bit of state in the filtering logic
@@ -79,9 +79,7 @@ define([
             // create ad slots for the selected slices
             .map(function (item, index) {
                 var adName = 'inline' + (index + 1);
-                var adSlot = replaceTopSlot && index === 0 ?
-                    createAdSlot('inline1-fabric', 'container-inline') :
-                    createAdSlot(adName, 'container-inline');
+                var adSlot = createAdSlot(adName, 'container-inline');
 
                 adSlot.className += ' ' + (isMobile ? 'ad-slot--mobile' : 'container-inline');
 
