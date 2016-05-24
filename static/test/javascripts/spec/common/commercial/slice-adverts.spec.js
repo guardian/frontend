@@ -3,6 +3,7 @@ define([
     'fastdom',
     'qwery',
     'common/utils/$',
+    'common/modules/commercial/create-ad-slot',
     'common/modules/user-prefs',
     'helpers/fixtures',
     'helpers/injector',
@@ -12,6 +13,7 @@ define([
     fastdom,
     qwery,
     $,
+    createAdSlot,
     userPrefs,
     fixtures,
     Injector,
@@ -27,7 +29,12 @@ define([
             injector = new Injector(),
             sliceAdverts, config, detect, commercialFeatures;
 
+        var createSlotSpy = jasmine.createSpy('create-ad-slot').and.callFake(createAdSlot);
+
         beforeEach(function (done) {
+            createSlotSpy.calls.reset();
+            injector.mock('common/modules/commercial/create-ad-slot', createSlotSpy);
+
             injector.require([
                 'common/modules/commercial/slice-adverts',
                 'common/modules/commercial/commercial-features',
@@ -187,34 +194,47 @@ define([
             });
         });
 
-        describe('Fabric ads', function () {
+        describe('Top slot replacement', function () {
             beforeEach(function () {
                 config.switches.fabricAdverts = true;
+                // To be sure that any slots added are top slot replacements, we set the page to a network front,
+                // where adverts will normally never appear on the first container.
+                config.page.pageId = 'uk';
             });
 
-            it('can be added on mobile', function (done) {
+            it('is added on mobile', function () {
                 detect.isBreakpoint = function () {
                     // expecting check for breakpoint <= phablet
                     return true;
                 };
+                detect.getBreakpoint = function () {
+                    return 'mobile';
+                };
+
                 sliceAdverts.init();
-                fastdom.defer(function () {
-                    expect(qwery('.fc-container-first .ad-slot--fabric', $fixtureContainer).length).toBe(1);
-                    done();
-                });
+
+                expect(getCreatedSlotTypes()[0]).toBe('inline1-fabric');
             });
 
-            it('is not added on desktop', function (done) {
+            it('is not added on desktop', function () {
                 detect.isBreakpoint = function () {
                     // expecting check for breakpoint <= phablet
                     return false;
                 };
+                detect.getBreakpoint = function () {
+                    return 'desktop';
+                };
+
                 sliceAdverts.init();
-                fastdom.defer(function () {
-                    expect(qwery('.fc-container-first .ad-slot--fabric', $fixtureContainer).length).toBe(0);
-                    done();
-                });
+
+                expect(getCreatedSlotTypes().indexOf('inline1-fabric')).toBe(-1);
             });
+
+            function getCreatedSlotTypes() {
+                return createSlotSpy.calls.allArgs().map(function (args) {
+                    return args[0];
+                });
+            }
         });
 
         //TODO: get data if we need to reintroduce this again
