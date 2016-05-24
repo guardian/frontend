@@ -5,6 +5,7 @@
 
 <!--[if lt IE 9]>
     <script src="@Static("javascripts/ie8polyfills.js")"></script>
+    <script>@Html(polyfills().body)</script>
 <![endif]-->
 
 @* NOTE the order of these includes is important  *@
@@ -26,9 +27,6 @@
     }
 
     // render-critical blocking JS
-
-    // polyfills
-    @Html(polyfills().body)
 
     // determine whether to run enhanced JS
     @InlineJs(shouldEnhance(page.metadata).body, "shouldEnhance.js")
