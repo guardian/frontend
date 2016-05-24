@@ -289,7 +289,7 @@ trait CommercialSwitches {
     "commercial-audit",
     "Audit Ads",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 23),
+    sellByDate = new LocalDate(2016, 5, 24),
     exposeClientSide = true
   )
 
