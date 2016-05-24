@@ -7,6 +7,14 @@
 
     <h1>High Merchandising Line Items</h1>
 
+    <p>Article page will render a high-merchandising slot in the contentFooter when following conditions are met :</p>
+    <ol>
+        <li>There is an available Line item that is targeting the <em>merchandising-high</em> slot <b>AND</b> has:</li>
+        <li>A tag that matches a page keyword tag (or no targeted tags)</li>
+        <li>An edition target that matches the page Edition (or no edition target)</li>
+        <li>An adUnit target that matches the page adUnit</li>
+    </ol>
+
     <em style="float: right">Last updated: @report.updatedTimeStamp</em>
 
     @if(report.lineItems.items.isEmpty) {<p>None</p>} else {

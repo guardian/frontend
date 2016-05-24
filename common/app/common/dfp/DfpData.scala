@@ -286,7 +286,6 @@ case class GuLineItem(id: Long,
     targetSlotIsHighMerch.nonEmpty
   }
 
-
   lazy val targetsNetworkOrSectionFrontDirectly: Boolean = {
     targeting.adUnits.exists { adUnit =>
       val path = adUnit.path

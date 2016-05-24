@@ -19,7 +19,7 @@ class HighMerchandisingLineItemTest extends FlatSpec with Matchers {
         HighMerchandisingLineItem(
           name = "test2",
           id = 77943847,
-          tags = Seq("cricket"),
+          tags = Seq("cricket","England","test"),
           adUnits = Seq(GuAdUnit("59359047", Seq("theguardian.com","sport"))),
           customTargetSet = Seq(CustomTargetSet("AND",Seq(CustomTarget("slot","IS",Seq("merchandising-high")))))
         )
