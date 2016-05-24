@@ -14,12 +14,12 @@ define([
 
     return function () {
         this.id = 'PlayVideoOnFronts';
-        this.start = '2016-05-18';
-        this.expiry = '2016-05-25';
+        this.start = '2016-05-24';
+        this.expiry = '2016-05-31';
         this.author = 'James Gorrie';
         this.description = 'Test if autoplaying on fronts is bad.';
-        this.audience = 1;
-        this.audienceOffset = 0;
+        this.audience = 0.5;
+        this.audienceOffset = 0.39;
         this.successMeasure = '';
         this.audienceCriteria = 'Fronts that have cards with articles that have video as their main media';
         this.dataLinkNames = '';
