@@ -499,7 +499,7 @@ define([
                     $adSlot.addClass('ad-slot__fluid250');
                 });
             }
-        }
+        };
     }
 
     function isFluid(className) {
@@ -509,7 +509,7 @@ define([
                     $adSlot.addClass('ad-slot--fluid');
                 });
             }
-        }
+        };
     }
 
     function parseAd(event) {
