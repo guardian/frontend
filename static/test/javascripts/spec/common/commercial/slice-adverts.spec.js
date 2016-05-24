@@ -19,7 +19,7 @@ define([
     Injector,
     sliceAdvertsHtml
 ) {
-    fdescribe('Slice Adverts', function () {
+    describe('Slice Adverts', function () {
 
         var fixturesConfig = {
                 id: 'slice-adverts',
