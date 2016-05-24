@@ -142,9 +142,9 @@ $hosted-video-height: 540px;
 .hosted__video {
     vertical-align: top;
 
-    .vjs-big-play-button .vjs-control-text {
-        display: none;
-    }
+    //.vjs-big-play-button .vjs-control-text {
+
+    //}
 
     //those control buttons will fade in on video play
     .vjs-fullscreen-control,
@@ -233,12 +233,8 @@ $hosted-video-height: 540px;
     position: absolute;
     left: $gs-gutter;
     bottom: 50px;
-    width: 55%; // Magic. Do not touch.
+    width: 100%;
     color: #ffffff;
-
-    @include mq(desktop) {
-        width: 35%;
-    }
 
     @include mq($until: tablet) {
         left: 76px;
@@ -285,8 +281,8 @@ $hosted-video-height: 540px;
     }
 
     @include mq(desktop) {
-        font-size: 56px;
-        line-height: 54px;
+        font-size: 36px;
+        line-height: 34px;
     }
 }
 
@@ -523,9 +519,6 @@ $hosted-video-height: 540px;
     .hosted__meta {
         left: $gs-gutter/2;
         bottom: 60px;
-        @include mq(desktop) {
-            width: 55%;
-        }
         @include mq($until: desktop) {
             bottom: 15%;
         }
