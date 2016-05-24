@@ -127,7 +127,7 @@ trait ABTestSwitches {
     "ab-play-video-on-fronts",
     "Don't play video on fronts, but auto play when in article",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 1),
+    sellByDate = new LocalDate(2016, 5, 31),
     exposeClientSide = true
   )
 
@@ -136,7 +136,7 @@ trait ABTestSwitches {
     "ab-video-controls-on-main-media",
     "Show video controls on main media.",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 26),
+    sellByDate = new LocalDate(2016, 5, 27),
     exposeClientSide = true
   )
 }
