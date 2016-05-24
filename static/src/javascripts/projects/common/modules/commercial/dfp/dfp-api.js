@@ -488,7 +488,7 @@ define([
             });
         },
         '88,70': isFluid250('ad-slot--top-banner-ad'),
-        '88,71': isFluid('ad-slot--container-inline'),
+        '88,71': isFluid('ad-slot--mobile'),
         '88,88': isFluid250('ad-slot--commercial-component')
     };
 
