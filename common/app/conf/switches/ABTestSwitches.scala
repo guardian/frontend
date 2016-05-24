@@ -136,7 +136,7 @@ trait ABTestSwitches {
     "ab-video-controls-on-main-media",
     "Show video controls on main media.",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 26),
+    sellByDate = new LocalDate(2016, 5, 27),
     exposeClientSide = true
   )
 }
