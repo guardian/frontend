@@ -13,14 +13,14 @@ object ArticleWithOpenGraphOverlay {
         Seq("og:url" -> s"$url?page=facebookOverlayVariant")
       }.getOrElse(Nil).toMap
     }
-    
+
     article.copy(
       content = article.content.copy(
         metadata = article.content.metadata.copy(
           opengraphPropertiesOverrides = {
             openGraphProps ++
-            ogUrl ++
-            Map("og:image" -> ImgSrc(article.content.rawOpenGraphImage, FacebookOpenGraphImage, true))
+            ogUrl +
+            ("og:image" -> ImgSrc(article.content.rawOpenGraphImage, FacebookOpenGraphImage, true))
           }
         )
       )
