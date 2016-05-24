@@ -301,7 +301,6 @@ GET            /$path<commercial-containers>                                    
 
 # Commercial Admin
 GET            /commercial                                                                                                       controllers.admin.CommercialController.renderCommercialMenu()
-GET            /commercial/renderTimes                                                                                           controllers.admin.CommercialController.renderCommercialRenderTimes()
 GET            /commercial/specialadunits                                                                                        controllers.admin.CommercialController.renderSpecialAdUnits()
 GET            /commercial/sponsorships                                                                                          controllers.admin.CommercialController.renderPaidForTags()
 GET            /commercial/pageskins                                                                                             controllers.admin.CommercialController.renderPageskins()
