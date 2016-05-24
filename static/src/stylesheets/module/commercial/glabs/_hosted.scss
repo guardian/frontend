@@ -1,13 +1,17 @@
 $hosted-stripe: 28px;
+$hosted-video-width: 960px;
+$hosted-video-height: 540px;
 
 @mixin hosted-fade-in {
+    visibility: visible;
     opacity: 1;
-    transition: opacity 1s linear;
+    transition: opacity 1s linear, visibility 0s;
 }
 
 @mixin hosted-fade-out {
+    visibility: hidden;
     opacity: 0;
-    transition: opacity 1s linear;
+    transition: opacity 1s linear, visibility 1s;
 }
 
 .hosted-tone--renault {
@@ -19,7 +23,7 @@ $hosted-stripe: 28px;
 }
 
 .hosted-tone--dark {
-    background-color: $paid-article;
+    background-color: #3E3E3E;
 }
 
 .hosted__header {
@@ -40,16 +44,6 @@ $hosted-stripe: 28px;
         &:before,
         &:after {
             display: none;
-        }
-    }
-    @include mq(wide) {
-        &:before,
-        &:after {
-            $size: gs-span(14) + $gs-gutter * 2;
-            width: calc((100% - #{$size}) / 2);
-        }
-        .adverts {
-            padding: 0 calc(50% - 570px);
         }
     }
 }
@@ -132,6 +126,16 @@ $hosted-stripe: 28px;
 .hosted__container--full {
     @include mq($until: desktop) {
         padding: 0;
+    }
+
+    .u-responsive-ratio {
+        overflow: visible;
+
+        @include mq($from: desktop) {
+            width: $hosted-video-width;
+            padding-bottom: $hosted-video-height;
+            margin: 0 auto;
+        }
     }
 }
 
@@ -584,7 +588,15 @@ $hosted-stripe: 28px;
     }
 
     @include mq(desktop) {
-        margin-left: 160px;
+        margin-left: 170px;
+    }
+
+    @include mq(leftCol) {
+        margin-left: 250px;
+    }
+
+    @include mq(wide) {
+        margin-left: 100px;
     }
 }
 
