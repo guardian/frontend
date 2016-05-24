@@ -13,7 +13,7 @@ case class CardContent(
                         image: Option[ImageMedia],
                         fallbackImageUrl: Option[String],
                         targetUrl: String,
-                        branding: Option[SponsorDataAttributes]
+                        brandingAttributes: Option[SponsorDataAttributes]
                       )
 
 object CardContent {
@@ -46,7 +46,7 @@ object CardContent {
       image,
       fallbackImageUrl,
       targetUrl = header.url,
-      branding = {
+      brandingAttributes = {
         if (Switches.cardsDecidePaidContainerBranding.isSwitchedOn) {
           CardWithSponsorDataAttributes.sponsorDataAttributes(content)
         } else {
@@ -77,7 +77,7 @@ object CardContent {
         val url = item.metadata.webUrl
         clickMacro map { cm => s"$cm$url" } getOrElse url
       },
-      branding = None
+      brandingAttributes = None
     )
   }
 }

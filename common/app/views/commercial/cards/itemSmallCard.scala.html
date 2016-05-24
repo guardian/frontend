@@ -16,7 +16,7 @@
     "
     data-link-name="@omnitureId"
     @if(useCardBranding){
-        @for(branding <- item.branding) {
+        @for(branding <- item.brandingAttributes) {
             @for(sponsorship <- branding.sponsorshipType) {data-sponsorship="@sponsorship"}
             @for(sponsor <- branding.sponsor)             {data-sponsor="@sponsor"}
             @for(keywords <- branding.keywordId)          {data-keywords="@keywords"}
@@ -28,5 +28,5 @@
         @for(icon <- item.icon){@inlineSvg(icon, "icon")}
         @item.headline
     </p>
-    @for(branding <- item.branding; sponsor <- branding.sponsor) {<div class="advert__badge js-badge"></div>}
+    @for(branding <- item.brandingAttributes; sponsor <- branding.sponsor) {<div class="advert__badge js-badge"></div>}
 </a>

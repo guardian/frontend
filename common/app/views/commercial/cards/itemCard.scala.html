@@ -15,7 +15,7 @@
 
 <a href="@item.targetUrl" class="@CssClassBuilder.cardLink(item, optAdvertClassNames, optClassNames, useCardBranding)"
     @if(useCardBranding){
-        @for(branding <- item.branding) {
+        @for(branding <- item.brandingAttributes) {
             data-sponsorship="@branding.sponsorshipType"
             @for(sponsor <- branding.sponsor)             {data-sponsor="@sponsor"}
             @for(keywords <- branding.keywordId)          {data-keywords="@keywords"}
@@ -41,7 +41,7 @@
     }
 
     @if(useCardBranding) {
-        @for(branding <- item.branding; sponsor <- branding.sponsor) {
+        @for(branding <- item.brandingAttributes; sponsor <- branding.sponsor) {
             <div class="advert__badge js-badge-placeholder"></div>
         }
     }

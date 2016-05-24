@@ -2,7 +2,7 @@ package views.support
 
 import common.Edition
 import common.commercial.ContainerModel
-import common.dfp.AdSize.{leaderboardSize, responsiveSize}
+import common.dfp.AdSize.responsiveSize
 import common.dfp._
 import conf.switches.Switches._
 import layout.{ColumnAndCards, ContentCard, FaciaContainer}
@@ -93,7 +93,7 @@ object Commercial {
           branding.exists(_.sponsorshipType == "advertisement-features")
 
         val content = container.content
-        val paidCards = content.initialCards.filter(card => isPaid(card.branding))
+        val paidCards = content.initialCards.filter(card => isPaid(card.brandingAttributes))
 
         isPaid(container.brandingAttributes) || paidCards.nonEmpty
       }

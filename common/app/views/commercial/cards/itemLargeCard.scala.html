@@ -1,7 +1,7 @@
+@import cards.{CardType, Standard}
+@import layout.{FaciaWidths, ItemClasses}
 @import views.html.fragments.inlineSvg
 @import views.html.fragments.items.elements.facia_cards.image
-@import layout.{FaciaWidths, ItemClasses}
-@import cards.{CardType, Standard}
 
 @(item: common.commercial.CardContent,
   omnitureId: String,
@@ -21,7 +21,7 @@
     "
     data-link-name="@omnitureId"
     @if(useCardBranding){
-        @for(branding <- item.branding) {
+        @for(branding <- item.brandingAttributes) {
             @for(sponsorship <- branding.sponsorshipType) {data-sponsorship="@sponsorship"}
             @for(sponsor <- branding.sponsor)             {data-sponsor="@sponsor"}
             @for(keywords <- branding.keywordId)          {data-keywords="@keywords"}
@@ -37,7 +37,7 @@
         @for(description <- item.description) {
             <div class="advert__standfirst">@Html(description)</div>
         }
-        @for(branding <- item.branding; sponsor <- branding.sponsor) {<div class="advert__badge js-badge"></div>}
+        @for(branding <- item.brandingAttributes; sponsor <- branding.sponsor) {<div class="advert__badge js-badge"></div>}
     </div>
     <div class="advert__image-container @for(imgRatio <- optImgRatio){u-responsive-ratio u-responsive-ratio--@imgRatio}">
         @image(
