@@ -192,7 +192,7 @@ define([
                     offerImage:          tpl.params['offer' + index + 'image'],
                     offerTitle:          tpl.params['offer' + index + 'title'],
                     offerText:           tpl.params['offer' + index + 'meta'],
-                    cta:                 tpl.params['offer' + index + 'linktext'] || tpl.params.offerLinkText ? manualCardCtaTpl({
+                    cta:                 tpl.params.showCtaLink !== 'hide-cta-link' && (tpl.params['offer' + index + 'linktext'] || tpl.params.offerLinkText) ? manualCardCtaTpl({
                         offerLinkText:       tpl.params['offer' + index + 'linktext'] || tpl.params.offerLinkText,
                         arrowRight:          tpl.params.arrowRight,
                         classNames:          ''
@@ -207,7 +207,7 @@ define([
                 offerImage:          tpl.params.offerImage,
                 offerTitle:          tpl.params.offerTitle,
                 offerText:           tpl.params.offerText,
-                cta:                 tpl.params.viewAllText ? manualCardCtaTpl({
+                cta:                 tpl.params.showCtaLink !== 'hide-cta-link' && tpl.params.viewAllText ? manualCardCtaTpl({
                     offerLinkText:       tpl.params.viewAllText,
                     arrowRight:          tpl.params.arrowRight,
                     classNames:          'button--tertiary'
