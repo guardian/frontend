@@ -16,16 +16,13 @@ module.exports = function (grunt, options) {
                     expand: true,
                     cwd: options.staticTargetDir + 'javascripts',
                     src: [
+                        'es5-html5.js',
                         '{components,vendor}/**/*.js',
                         '!components/curl/**/*.js',
                         '!components/zxcvbn/**/*.js',
                         '!vendor/stripe/*.js'
                     ],
                     dest: options.staticTargetDir + 'javascripts'
-                },
-                {
-                    src: options.staticPublicDir + 'javascripts/es5-json-html5-shims.js',
-                    dest: options.staticPublicDir + 'javascripts/es5-json-html5-shims.js'
                 }
             ]
         },
