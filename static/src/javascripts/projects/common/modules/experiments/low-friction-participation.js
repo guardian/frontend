@@ -45,7 +45,7 @@ define([
             title: 'Do you agree? Rate this film now',
             description: 'Let us know what you think!',
             itemClassSuffix: 'star',
-            confirmButton: 'Confirm',
+            confirmButton: 'Rate it!',
             testMessage: 'This is a test. We\'re currently evaluating this as a potential new feature on theguardian.com'
         }
     };
