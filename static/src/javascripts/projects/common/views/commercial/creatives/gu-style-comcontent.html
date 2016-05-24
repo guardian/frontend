@@ -1,7 +1,7 @@
 <div class="gu-display">
-    <div class="gu-display__image-layer inlined-image">
+    <a class="gu-display__image-layer inlined-image" href="<%=data.clickMacro%><%=data.articleUrl%>" data-link-name="<%=data.linkTracking%>" target="_blank">
         <img class="gu-display__image" src="<%=data.articleImage%>">
-    </div>
+    </a>
     <div class="gu-mutable gu-display__content <%=data.articleContentPosition%>">
         <a href="<%=data.clickMacro%><%=data.articleUrl%>" class="gu-display__link <%=data.articleContentColor%>" data-link-name="<%=data.linkTracking%>" target="_blank">
             <h2 class="gu-display__content-title <%=data.articleContentColor%> <%=data.articleHeaderFontSize%>"><%=data.articleHeaderText%></h2>
