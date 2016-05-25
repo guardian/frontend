@@ -22,7 +22,11 @@ define([
         'lifeandstyle/series/how-to-eat',
         'commentisfree/series/you-tell-us',
         'football/series/footballweekly',
-        'australia-news/series/politics-live-with-katharine-murphy'
+        'australia-news/series/politics-live-with-katharine-murphy',
+        'crosswords/series/quick',
+        'crosswords/series/quiptic',
+        'crosswords/series/cryptic,',
+        'crosswords/series/speedy'
     ];
 
     var blogIds = [
