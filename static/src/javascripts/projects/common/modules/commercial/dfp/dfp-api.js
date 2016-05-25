@@ -697,8 +697,8 @@ define([
      * Multiple sizes - `data-mobile="300,50|320,50"`
      */
     function createSizeMapping(attr) {
-        return map(attr.split('|'), function (size) {
-            return map(size.split(','), Number);
+        return attr.split('|').map(function (size) {
+            return size === 'fluid' ? 'fluid' : size.split(',').map(Number);
         });
     }
 
