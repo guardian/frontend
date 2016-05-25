@@ -56,6 +56,15 @@ sealed trait ElementProfile {
     s"?$params"
   }
 
+  lazy val overlayString = {
+    val height = "h=632"
+    val blendMode = "bm=normal"
+    val blendOffset = "ba=bottom%2Cleft"
+    val blendImage = "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNS8yNS9vdmVybGF5LWxvZ28tMTIwMC05MF9vcHQucG5n"
+    val fit = "fit=crop"
+    Seq(height, blendMode, blendOffset, blendImage, fit).mkString("&")
+  }
+
   private def toResizeString(i: Option[Int]) = i.map(_.toString).getOrElse("-")
 }
 
@@ -123,20 +132,19 @@ object ImgSrc extends Logging with implicits.Strings {
   def apply(url: String, imageType: ElementProfile, overlayTest: Boolean = false): String = {
     try {
       val uri = new URI(url.trim.encodeURI)
-      val imageOverlay = if (imageType == FacebookOpenGraphImage && overlayTest) {
-        "&bm=normal" +
-        "&ba=bottom%2C%20left" +
-        "&blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNS8yMy9vdmVybGF5LWxvZ28tMTIwMC05MC5wbmc" +
-        "&fit=crop"
+      val inOverlayTest = imageType == FacebookOpenGraphImage && overlayTest
 
-      } else { "" }
+      val resizeString = if (inOverlayTest) {
+          imageType.resizeString.replace("&fit=max", "") + "&" + imageType.overlayString }
+        else { imageType.resizeString }
+
       val isSupportedImage = supportedImages.exists(extension => uri.getPath.toLowerCase.endsWith(extension))
 
       hostPrefixMapping.get(uri.getHost)
         .filter(const(ImageServerSwitch.isSwitchedOn))
         .filter(const(isSupportedImage))
         .map { host =>
-          val signedPath = ImageUrlSigner.sign(s"${uri.getRawPath}${imageType.resizeString}${imageOverlay}", host.token)
+          val signedPath = ImageUrlSigner.sign(s"${uri.getRawPath}$resizeString", host.token)
           s"$imageHost/img/${host.prefix}$signedPath"
         }.getOrElse(url)
     } catch {
@@ -196,7 +204,7 @@ object ImgSrc extends Logging with implicits.Strings {
   }
 
   def getAmpImageUrl(ImageElement: ImageMedia): Option[String] = {
-      findNearestSrc(ImageElement, Item620)
+    findNearestSrc(ImageElement, Item620)
   }
 
   def getFallbackAsset(ImageElement: ImageMedia): Option[ImageAsset] = {
