@@ -28,6 +28,7 @@ object MainCleaner {
       withJsoup(BulletCleaner(html))(
         if (amp) AmpEmbedCleaner(article) else VideoEmbedCleaner(article),
         PictureCleaner(article, amp),
+        ImmersiveMainEmbed(article.isImmersive, article.isSixtyDaysModified),
         MainFigCaptionCleaner
       )
   }
