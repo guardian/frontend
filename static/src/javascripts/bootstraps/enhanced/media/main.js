@@ -22,6 +22,7 @@ define([
     'common/modules/video/video-container',
     'common/modules/video/onward-container',
     'common/modules/video/more-in-series-container',
+    'common/modules/video/videojs-options',
     // This must be the full path because we use curl config to change it based
     // on env
     'bootstraps/enhanced/media/video-player',
@@ -50,6 +51,7 @@ define([
     videoContainer,
     onwardContainer,
     moreInSeriesContainer,
+    videojsOptions,
     videojs,
     loadingTmpl
 ) {
@@ -215,34 +217,15 @@ define([
             }
         });
 
-        player = createVideoPlayer(el, {
+        player = createVideoPlayer(el, videojsOptions({
             techOrder: techPriority,
-            controls: true,
-            textTrackDisplay: false,
-            textTrackSettings: false,
-            controlBar: {
-                children: [
-                    'playToggle',
-                    'currentTimeDisplay',
-                    'timeDivider',
-                    'durationDisplay',
-                    'progressControl',
-                    'fullscreenToggle',
-                    'volumeMenuButton'
-                ]
-            },
-            // `autoplay` is always set to false.
-            // If you are going to set autoplay to any other value, note it breaks
-            // `preload="auto"` on < Chrome 35 and `preload="metadata"` on old Safari
-            autoplay: false,
-            preload: 'metadata',
             plugins: {
                 embed: {
                     embeddable: !config.page.isFront && config.switches.externalVideoEmbeds && (config.page.contentType === 'Video' || $el.attr('data-embeddable') === 'true'),
                     location: config.page.externalEmbedHost + '/embed/video/' + (embedPath ? embedPath : config.page.pageId)
                 }
             }
-        });
+        }));
 
         videoInfo.then(function(videoInfo) {
             if (videoInfo.expired) {
