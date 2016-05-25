@@ -48,10 +48,8 @@ define([
     'inlineSvg!svgs/logo/glabs-logo-small',
     'inlineSvg!svgs/logo/membership-logo',
     'inlineSvg!svgs/commercial/logo-membership',
-    'inlineSvg!svgs/commercial/adblock-coins',
     'inlineSvg!svgs/notifications-explainer-desktop',
     'inlineSvg!svgs/notifications-explainer-mobile',
-    'inlineSvg!svgs/commercial/adblock-coins-us',
     'inlineSvg!svgs/icon/star',
     'lodash/objects/isArray'
 ], function (
@@ -100,10 +98,8 @@ define([
     glabsLogoSmall,
     membershipLogoWhite,
     membershipLogo,
-    adblockCoins,
     notificationsExplainerDesktop,
     notificationsExplainerMobile,
-    adblockCoinsUS,
     star,
     isArray
 ) {
@@ -151,8 +147,6 @@ define([
         notificationsOff: notificationsOff,
         notificationsOn: notificationsOn,
         glabsLogoSmall: glabsLogoSmall,
-        adblockCoinsUk: adblockCoins,
-        adblockCoinsUs: adblockCoinsUS,
         logomembership: membershipLogo,
         notificationsExplainerDesktop: notificationsExplainerDesktop,
         notificationsExplainerMobile: notificationsExplainerMobile,

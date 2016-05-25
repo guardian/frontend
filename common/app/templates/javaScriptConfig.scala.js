@@ -26,7 +26,8 @@
             }
         },
         "commercial": {
-            "showingAdfree" : null
+            "showingAdfree" : null,
+            "membershipAssets": "@Static("images/commercial/membership/")"
         }
     }
 }

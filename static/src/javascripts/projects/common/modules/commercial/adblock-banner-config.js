@@ -62,32 +62,22 @@ define([
             }
         },
         {
-            template: 'adblock-sticky-message-coin',
+            template: 'adblock-influence-banner',
 
             defaults: {
-                cursor: cursor,
-                customCssClass: '',
-                rectangleLogo: svgs('logomembership'),
-                marque36icon: svgs('marque36icon')
+                customCssClass: 'adblock-banner__wrap'
             },
 
             variants: [
                 {
-                    quoteText: 'Quality journalism',
-                    supporterLink: 'https://membership.theguardian.com/supporter?INTCMP=ADBLOCK_BANNER_COIN'
+                    supporterLink: 'https://membership.theguardian.com/supporter?INTCMP=ADBLOCK_BANNER_INFLUENCE'
                 }
             ],
 
             editions: {
                 UK: {
-                    monthlyCost: '£5',
-                    dailyCost: '16p',
-                    adblockCoins: svgs('adblockCoinsUk')
                 },
-                INT: {
-                    monthlyCost: '$4.99',
-                    dailyCost: '16¢',
-                    adblockCoins: svgs('adblockCoinsUs')
+                US: {
                 }
             }
         }
