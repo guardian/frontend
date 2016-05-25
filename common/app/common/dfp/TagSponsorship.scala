@@ -84,8 +84,9 @@ case class HighMerchandisingLineItem(
 
   val customTargets = customTargetSet.map(_.targets)
   val editions = customTargets.flatMap(_.filter( _.name == "edition")).map(_.values).distinct
+  val urls = customTargets.flatMap(_.filter( _.name == "url")).map(_.values).distinct
 
-  def matchesPageTargeting (adUnitSuffix: String, pageTags:Seq[Tag], edition:Edition): Boolean = {
+  def matchesPageTargeting (adUnitSuffix: String, pageTags:Seq[Tag], edition:Edition,url:String): Boolean = {
 
     val cleansedPageEdition = edition.id.toLowerCase
 
@@ -97,11 +98,9 @@ case class HighMerchandisingLineItem(
 
     lazy val matchesEdition: Boolean = editions.isEmpty || editions.exists(_.contains(cleansedPageEdition))
 
-    if(matchesTag && matchesAdUnit && matchesEdition){
-      println(name)
-    }
+    lazy val matchesUrl: Boolean = urls.isEmpty || urls.exists(_.contains(url))
 
-    matchesTag && matchesAdUnit && matchesEdition
+    matchesTag && matchesAdUnit && matchesEdition && matchesUrl
   }
 }
 

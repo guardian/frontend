@@ -104,7 +104,7 @@ final case class Commercial(
     DfpAgent.isSponsored(tags.tags, Some(metadata.section), maybeEdition)
 
   def needsHighMerchandisingSlot(edition:Edition): Boolean = {
-    DfpAgent.isTargetedByHighMerch(metadata.adUnitSuffix,tags.tags,edition)
+    DfpAgent.isTargetedByHighMerch(metadata.adUnitSuffix,tags.tags,edition,metadata.url)
   }
 
 
