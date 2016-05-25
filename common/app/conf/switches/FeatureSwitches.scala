@@ -368,7 +368,7 @@ trait FeatureSwitches {
     SwitchGroup.Feature,
     "1x1px-slot",
     "When ON, we will force the creation of the 1x1px adSlot for surveys and pageskins globally",
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2016, 8, 25),
     exposeClientSide = true
   )
