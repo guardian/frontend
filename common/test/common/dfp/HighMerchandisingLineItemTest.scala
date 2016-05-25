@@ -22,20 +22,31 @@ class HighMerchandisingLineItemTest extends FlatSpec with Matchers {
           tags = Seq("cricket","England","test"),
           adUnits = Seq(GuAdUnit("59359047", Seq("theguardian.com","sport"))),
           customTargetSet = Seq(CustomTargetSet("AND",Seq(CustomTarget("slot","IS",Seq("merchandising-high")))))
+        ),
+        HighMerchandisingLineItem(
+          name = "test3",
+          id = 77943847,
+          tags = Seq.empty,
+          adUnits = Seq.empty,
+          customTargetSet = Seq(CustomTargetSet("AND",Seq(CustomTarget("slot","IS",Seq("merchandising-high")),CustomTarget("url","IS",Seq("/commentisfree/2015/jul/21/it-hurts-but-im-going-to-defend-ashley-madison-and-37-million-cheaters")))))
         )
       )
    }
 
-    override def isTargetedByHighMerch(adUnitSuffix:String, tags: Seq[Tag],edition:Edition) = {
-        targetedHighMerchandisingLineItems.exists(_.matchesPageTargeting(adUnitSuffix, tags, edition))
+    override def isTargetedByHighMerch(adUnitSuffix:String, tags: Seq[Tag],edition:Edition,url:String) = {
+        targetedHighMerchandisingLineItems.exists(_.matchesPageTargeting(adUnitSuffix, tags, edition, url))
     }
   }
 
   "hadHighMerchandisingTarget" should "be true if keywords, edition and adUnit match" in {
-    TestAgent.isTargetedByHighMerch("money",Seq.empty, editions.Uk)should be(true)
+    TestAgent.isTargetedByHighMerch("money",Seq.empty, editions.Uk,"/commentisfree/2016/may/25/greek-bailout-eu-on-best-behaviour-until-referendum-over-brexit")should be(true)
   }
   "hadHighMerchandisingTarget" should "be false if edition does not match" in {
-    TestAgent.isTargetedByHighMerch("money",Seq.empty, editions.Us)should be(false)
+    TestAgent.isTargetedByHighMerch("money",Seq.empty, editions.Us,"/commentisfree/2016/may/25/greek-bailout-eu-on-best-behaviour-until-referendum-over-brexit")should be(false)
+  }
+
+  "hadHighMerchandisingTarget" should "be true if url matches" in {
+    TestAgent.isTargetedByHighMerch("technology",Seq.empty, editions.Uk,"/commentisfree/2015/jul/21/it-hurts-but-im-going-to-defend-ashley-madison-and-37-million-cheaters")should be(true)
   }
 
   "hadHighMerchandisingTarget" should "be true if keywords and adUnit match" in {
@@ -60,7 +71,7 @@ class HighMerchandisingLineItemTest extends FlatSpec with Matchers {
 
       ),None,None,None
     ))
-    TestAgent.isTargetedByHighMerch("sport", testTagsSeq, editions.Us) should be(true)
+    TestAgent.isTargetedByHighMerch("sport", testTagsSeq, editions.Us,"/commentisfree/2016/may/25/greek-bailout-eu-on-best-behaviour-until-referendum-over-brexit") should be(true)
   }
 
 }
