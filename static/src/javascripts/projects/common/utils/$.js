@@ -1,11 +1,9 @@
 define([
     'bonzo',
-    'qwery',
-    'lodash/collections/forEach'
+    'qwery'
 ], function (
     bonzo,
-    qwery,
-    forEach
+    qwery
 ) {
 
     // Warning: side effect. This patches the bonzo module for use everywhere
@@ -36,7 +34,7 @@ define([
 
     $.forEachElement = function (selector, fn) {
         var els = qwery(selector);
-        forEach(els, fn);
+        els.forEach(fn);
         return els;
     };
 

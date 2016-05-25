@@ -54,23 +54,17 @@ define([
     }
 
     function updatePref(containerId, state) {
-        var prefs = userPrefs.get(PREF_NAME, {
-            type: 'session'
-        }) || {};
+        var prefs = userPrefs.get(PREF_NAME, 'session') || {};
         if (state !== STATE_DISPLAYED) {
             delete prefs[containerId];
         } else {
             prefs[containerId] = 'more';
         }
-        userPrefs.set(PREF_NAME, prefs, {
-            type: 'session'
-        });
+        userPrefs.set(PREF_NAME, prefs, 'session');
     }
 
     function readPrefs(containerId) {
-        var prefs = userPrefs.get(PREF_NAME, {
-            type: 'session'
-        });
+        var prefs = userPrefs.get(PREF_NAME, 'session');
         return (prefs && prefs[containerId]) ? STATE_DISPLAYED : STATE_HIDDEN;
     }
 

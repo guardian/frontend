@@ -5,13 +5,8 @@
  */
 define([
     'common/utils/pad',
-    'common/utils/url',
-    'lodash/objects/assign',
-    'lodash/collections/contains',
-    'lodash/collections/map',
-    'lodash/collections/filter',
-    'common/utils/chain'
-], function (pad, urlUtils, assign, contains, map, filter, chain) {
+    'common/utils/url'
+], function (pad, urlUtils) {
     var config         = guardian.config,
         adUnitOverride = urlUtils.getUrlVars()['ad-unit'];
 
@@ -26,6 +21,17 @@ define([
         return Math.floor(Math.random() * 36).toString(36);
     })};
 
+    function assign(dest, source) {
+        if ('assign' in Object) {
+            return Object.assign(dest, source);
+        } else {
+            Object.keys(source).forEach(function (param) {
+                dest[param] = source[param];
+            });
+            return dest;
+        }
+    }
+
     return assign({
         hasTone: function (name) {
             return (this.page.tones || '').indexOf(name) > -1;
@@ -34,11 +40,11 @@ define([
             return (this.page.series || '').indexOf(name) > -1;
         },
         referencesOfType: function (name) {
-            return chain(this.page.references || []).and(filter, function (reference) {
+            return (this.page.references || []).filter(function (reference) {
                     return typeof reference[name] !== 'undefined';
-                }).and(map, function (reference) {
+                }).map(function (reference) {
                     return reference[name];
-                }).valueOf();
+                });
         },
         referenceOfType: function (name) {
             return this.referencesOfType(name)[0];
@@ -61,7 +67,7 @@ define([
             return s ? s[0] : null;
         },
 
-        isMedia: contains(['Video', 'Audio'], config.page.contentType)
+        isMedia: ['Video', 'Audio'].indexOf(config.page.contentType) > -1
 
     }, config);
 });

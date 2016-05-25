@@ -7,37 +7,13 @@
 
 define([
     'common/utils/mediator',
-    'common/utils/$',
-    'common/modules/user-prefs',
-    'lodash/arrays/last',
-    'lodash/arrays/findIndex',
-    'lodash/objects/defaults',
-    'lodash/objects/has',
-    'lodash/arrays/first',
-    'lodash/collections/findLast',
-    'common/utils/chain',
-    'lodash/collections/contains',
-    'lodash/collections/pluck',
-    'lodash/arrays/initial',
-    'lodash/arrays/rest',
     'lodash/functions/memoize',
+    'lodash/functions/compose',
     'Promise'
 ], function (
     mediator,
-    $,
-    userPrefs,
-    last,
-    findIndex,
-    defaults,
-    has,
-    first,
-    findLast,
-    chain,
-    contains,
-    pluck,
-    initial,
-    rest,
     memoize,
+    compose,
     Promise
 ) {
 
@@ -238,56 +214,73 @@ define([
         };
     }
 
-    /** TEMPORARY: I'm going to update lodash in a separate pull request. */
-    function takeWhile(xs, f) {
-        var acc = [],
-            i,
-            size = xs.length;
+    function takeWhile(f, arr) {
+        var i = 0,
+            size = arr.length,
+            taking = i < size && f(arr[i], i, arr);
 
-        for (i = 0; i < size; i++) {
-            if (f(xs[i])) {
-                acc.push(xs[i]);
-            } else {
-                break;
-            }
+        while (taking) {
+            i += 1;
+            taking = i < size && f(arr[i], i, arr);
         }
 
-        return acc;
+        return arr.slice(0, i);
+    }
+
+    function dropWhile(f, arr) {
+        var i = 0,
+            size = arr.length,
+            dropping = i < size && f(arr[i], i, arr);
+
+        while (dropping) {
+            i += 1;
+            dropping = i < size && f(arr[i], i, arr);
+        }
+
+        return arr.slice(i);
+    }
+
+    function getBreakpointName(breakpoint) {
+        return breakpoint.name;
+    }
+
+    function reverseArray(arr) {
+        return arr.reverse();
     }
 
     function getBreakpoint(includeTweakpoint) {
-        var viewportWidth = detect.getViewport().width,
-            index,
-            breakpoint = last(takeWhile(breakpoints, function (bp) {
-                return bp.width <= viewportWidth;
-            })).name;
-        if (!includeTweakpoint) {
-            index = findIndex(breakpoints, function (b) {
-                return b.name === breakpoint;
-            });
-            breakpoint = chain(breakpoints).and(first, index + 1).and(findLast, function (b) {
-                    return !b.isTweakpoint;
-                }).valueOf()
-                .name;
+        var viewportWidth = detect.getViewport().width;
+        var breakpoint;
+        if (includeTweakpoint) {
+            breakpoint = takeWhile(getMatchingBreakpoint, breakpoints).slice(-1)[0].name;
+        } else {
+            var algo = compose(
+                dropWhile.bind(undefined, function (_) { return _.isTweakpoint; }),
+                reverseArray,
+                takeWhile.bind(undefined, getMatchingBreakpoint)
+            );
+            breakpoint = algo(breakpoints)[0].name;
         }
 
         return breakpoint;
+
+        function getMatchingBreakpoint(bp) {
+            return bp.width <= viewportWidth;
+        }
     }
 
     function isBreakpoint(criteria) {
-        var c = defaults(
-                criteria,
-                {
-                    min: first(breakpoints).name,
-                    max: last(breakpoints).name
-                }
-            ),
-            currentBreakpoint = getBreakpoint(true);
-        return chain(breakpoints).and(rest, function (breakpoint) {
-                return breakpoint.name !== c.min;
-            }).and(initial, function (breakpoint) {
-                return breakpoint.name !== c.max;
-            }).and(pluck, 'name').and(contains, currentBreakpoint).value();
+        criteria.min = criteria.min || breakpoints[0].name;
+        criteria.max = criteria.max || breakpoints[breakpoints.length - 1].name;
+
+        var currentBreakpoint = getBreakpoint(true);
+        var algo = compose(
+            dropWhile.bind(undefined, function (_) { return _ !== criteria.max; }),
+            reverseArray,
+            dropWhile.bind(undefined, function (_) { return _ !== criteria.min; })
+        );
+
+        return algo(breakpoints.map(getBreakpointName)).indexOf(currentBreakpoint) !== -1;
     }
 
     // Page Visibility
@@ -346,9 +339,9 @@ define([
     }
 
     var createSacrificialAd = memoize(function () {
-        var sacrificialAd = $.create('<div class="ad_unit" style="position: absolute; height: 10px; top: 0; left: 0; z-index: -1;">&nbsp;</div>');
-        sacrificialAd.appendTo(document.body);
-        return sacrificialAd;
+        var sacrificialAd = '<div class="ad_unit" style="position: absolute; height: 10px; top: 0; left: 0; z-index: -1;">&nbsp;</div>';
+        document.body.insertAdjacentHTML('beforeend', sacrificialAd);
+        return document.body.lastChild;
     });
     // sync adblock detection is deprecated.
     // it will be removed once sticky nav and omniture top up call are both removed
@@ -356,12 +349,12 @@ define([
     //
     // ** don't forget to remove them from the return object too **
     var adblockInUseSync = memoize(function () {
-        return createSacrificialAd().css('display') === 'none';
+        return window.getComputedStyle(createSacrificialAd()).display === 'none';
     });
     // end sync adblock detection
 
     var adblockInUse = new Promise(function (resolve) {
-        if (has(window.guardian.adBlockers, 'active')) {
+        if (window.guardian.adBlockers.hasOwnProperty('active')) {
             // adblock detection has completed
             resolve(window.guardian.adBlockers.active);
         } else {
