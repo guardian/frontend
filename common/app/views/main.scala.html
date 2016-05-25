@@ -94,7 +94,7 @@
                     @immersiveMainMedia(page)
                 </div>
             }
-            case commercial.HostedPage => {}
+            case commercial.HostedPage(_, _, _, _, _) => {}
             case _ => {
                 @headerAndTopAds(showAdverts, edition, adBelowNav)
             }

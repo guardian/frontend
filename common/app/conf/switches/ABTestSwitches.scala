@@ -50,12 +50,12 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABParticipationLowFricMusic = Switch(
+  val ABParticipationLowFricMusicV1 = Switch(
     SwitchGroup.ABTests,
-    "ab-participation-low-fric-music",
+    "ab-participation-low-fric-music-v1",
     "AB test switch to insert low friction participation into music",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 15),
+    sellByDate = new LocalDate(2016, 6, 7),
     exposeClientSide = true
   )
 
@@ -100,7 +100,16 @@ trait ABTestSwitches {
     "ab-welcome-header",
     "Welcome header for first time users test",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 19),
+    sellByDate = new LocalDate(2016, 6, 30),
+    exposeClientSide = true
+  )
+
+  val ABParticipationHideHalfOfComments = Switch(
+    SwitchGroup.ABTests,
+    "ab-participation-hide-half-of-comments",
+    "We are going to hide comments on a random half of articles",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 21),
     exposeClientSide = true
   )
 
@@ -118,7 +127,7 @@ trait ABTestSwitches {
     "ab-play-video-on-fronts",
     "Don't play video on fronts, but auto play when in article",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 1),
+    sellByDate = new LocalDate(2016, 5, 31),
     exposeClientSide = true
   )
 
@@ -127,7 +136,7 @@ trait ABTestSwitches {
     "ab-video-controls-on-main-media",
     "Show video controls on main media.",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 26),
+    sellByDate = new LocalDate(2016, 5, 27),
     exposeClientSide = true
   )
 

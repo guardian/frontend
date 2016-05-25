@@ -29,7 +29,7 @@ define([
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
         isEmbed = !!guardian.isEmbed,
         QUARTILES = [25, 50, 75],
-    // Advert and content events used by analytics. The expected order of bean events is:
+        // Advert and content events used by analytics. The expected order of bean events is:
         EVENTS = [
             'preroll:request',
             'preroll:ready',
@@ -76,8 +76,8 @@ define([
         });
     }
 
-    function initOmnitureTracking(player) {
-        new OmnitureMedia(player).init();
+    function initOmnitureTracking(player, mediaId) {
+        new OmnitureMedia(player, mediaId).init();
     }
 
     function bindPrerollEvents(player) {

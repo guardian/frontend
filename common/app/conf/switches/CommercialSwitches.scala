@@ -230,15 +230,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val FixedTopAboveNavAdSlotSwitch = Switch(
-    SwitchGroup.Commercial,
-    "fixed-top-above-nav",
-    "Fixes size of top-above-nav ad slot on fronts.",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 20),
-    exposeClientSide = false
-  )
-
   val KruxVideoTracking = Switch(
     SwitchGroup.Commercial,
     "krux-video-tracking",
@@ -266,21 +257,12 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val cardsDecidePaidContainerBranding = Switch(
-    SwitchGroup.Commercial,
-    "cards-decide-paid-container-branding",
-    "DON'T TURN THIS ON! If on, the cards will decide the branding of their container",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 1),
-    exposeClientSide = false
-  )
-
   val staticBadgesSwitch = Switch(
     SwitchGroup.Commercial,
     "static-badges",
     "If on, all badges are served server side",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 25),
+    sellByDate = new LocalDate(2016, 6, 22),
     exposeClientSide = true
   )
 
@@ -293,21 +275,12 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val CommercialAuditSwitch = Switch(
+  val hostedEpisode1Content = Switch(
     SwitchGroup.Commercial,
-    "commercial-audit",
-    "Audit Ads",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 23),
-    exposeClientSide = true
-  )
-
-  val HostedContent = Switch(
-    SwitchGroup.Commercial,
-    "hosted-content",
-    "If on, you can access hosted content",
+    "hosted-episode1-content",
+    "If on, another hardcoded page of hosted content is available",
     safeState = Off,
     sellByDate = new LocalDate(2016, 7, 12),
-    exposeClientSide =  false
+    exposeClientSide = false
   )
 }

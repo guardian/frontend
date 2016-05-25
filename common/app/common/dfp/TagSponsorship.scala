@@ -1,6 +1,6 @@
 package common.dfp
 
-import common.Logging
+import common.{Edition, Logging}
 import model.Tag
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
@@ -81,19 +81,26 @@ case class HighMerchandisingLineItem(
   adUnits: Seq[GuAdUnit],
   customTargetSet: Seq[CustomTargetSet]
   ) {
+
   val customTargets = customTargetSet.map(_.targets)
-  val editions = customTargets.flatMap(sequence => sequence.filter((target) => target.name == "edition")).map(target => target.values)
+  val editions = customTargets.flatMap(_.filter( _.name == "edition")).map(_.values).distinct
+  val urls = customTargets.flatMap(_.filter( _.name == "url")).map(_.values).distinct
 
+  def matchesPageTargeting (adUnitSuffix: String, pageTags:Seq[Tag], edition:Edition, pagePath:String): Boolean = {
 
-  def matchesAdUnitAndTag (adUnitSuffix: String, pageTags:Seq[Tag]): Boolean = {
+    val cleansedPageEdition = edition.id.toLowerCase
 
-    val tagNames = pageTags map (_.name) map (_.replaceAll(" ","-").toLowerCase)
+    val cleansedPageTagNames = pageTags map (_.name.replaceAll(" ","-").toLowerCase)
 
-    val matchesTag: Boolean = tagNames.exists(tags.contains)
+    val matchesTag: Boolean = tags.isEmpty || cleansedPageTagNames.exists(tags.contains)
 
-    lazy val matchesAdUnit: Boolean = adUnits.exists(_.path contains adUnitSuffix)
+    lazy val matchesAdUnit: Boolean = adUnits.isEmpty || adUnits.exists(_.path contains adUnitSuffix)
 
-    matchesTag && matchesAdUnit
+    lazy val matchesEdition: Boolean = editions.isEmpty || editions.exists(_.contains(cleansedPageEdition))
+
+    lazy val matchesUrl: Boolean = urls.isEmpty || urls.exists(_.contains(pagePath))
+
+    matchesTag && matchesAdUnit && matchesEdition && matchesUrl
   }
 }
 

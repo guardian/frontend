@@ -13,34 +13,19 @@ define([
     identity,
     noop
 ) {
-    var userFeatures, PERSISTENCE_KEYS;
-
-    userFeatures = {
-        refresh : refresh,
-        isAdfree : isAdfree,
-        isPayingMember : isPayingMember,
-
-        /* Test methods */
-        _requestNewData : requestNewData,
-        _deleteOldData : deleteOldData,
-        _persistResponse : persistResponse
-    };
-
-    PERSISTENCE_KEYS = {
+    var PERSISTENCE_KEYS = {
         USER_FEATURES_EXPIRY_COOKIE : 'gu_user_features_expiry',
         PAYING_MEMBER_COOKIE : 'gu_paying_member'
     };
 
-    function refresh() {
-        if (identity.isUserLoggedIn() && needNewFeatureData()) {
-            userFeatures._requestNewData();
-        }
-        if (haveDataAfterSignout()) {
-            userFeatures._deleteOldData();
-        }
+    function UserFeatures() {
+        // Exposed for testing
+        this._requestNewData = requestNewData;
+        this._deleteOldData = deleteOldData;
+        this._persistResponse = persistResponse;
     }
 
-    function isAdfree() {
+    UserFeatures.prototype.isAdfree = function() {
         // Defer to the value set by the preflight scripts
         // They need to determine how the page will appear before it starts rendering
 
@@ -52,41 +37,41 @@ define([
         }
     }
 
-    function isPayingMember() {
-        // Does NOT check if data has expired
-        // If the user is logged in, but has no cookie yet, play it safe and assume they're a paying user
-        return identity.isUserLoggedIn() && cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE) !== 'false';
-    }
+    /**
+     * Updates the user's data in a lazy fashion
+     */
+    UserFeatures.prototype.refresh = function () {
+        if (identity.isUserLoggedIn() && userNeedsNewFeatureData()) {
+            this._requestNewData();
+        } else if (userHasDataAfterSignout()) {
+            this._deleteOldData();
+        }
 
-    function needNewFeatureData() {
-        return !hasAllFeaturesData() || featuresDataIsOld();
-    }
+        function userNeedsNewFeatureData() {
+            return featuresDataIsMissing() || featuresDataIsOld();
 
-    function haveDataAfterSignout() {
-        return (!identity.isUserLoggedIn() && hasAnyFeaturesData());
-    }
+            function featuresDataIsMissing() {
+                return !cookies.get(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE)
+                    || !cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
+            }
 
-    function hasAllFeaturesData() {
-        return cookies.get(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE) &&
-            cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
-    }
+            function featuresDataIsOld() {
+                var featuresExpiryCookie = cookies.get(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
+                var featuresExpiryTime = parseInt(featuresExpiryCookie, 10);
+                var timeNow = new Date().getTime();
+                return timeNow >= featuresExpiryTime;
+            }
+        }
 
-    function hasAnyFeaturesData() {
-        return cookies.get(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE) ||
-            cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
-    }
+        function userHasDataAfterSignout() {
+            return !identity.isUserLoggedIn() && userHasData();
 
-    function featuresDataIsOld() {
-        var featuresExpiryCookie = cookies.get(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE),
-            featuresExpiryTime = parseInt(featuresExpiryCookie, 10),
-            timeNow = new Date().getTime();
-        return timeNow >= featuresExpiryTime;
-    }
-
-    function deleteOldData() {
-        cookies.remove(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
-        cookies.remove(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
-    }
+            function userHasData() {
+                return cookies.get(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE)
+                    || cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
+            }
+        }
+    };
 
     function requestNewData() {
         ajaxPromise({
@@ -104,5 +89,22 @@ define([
         cookies.add(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, !JsonResponse.adblockMessage);
     }
 
-    return userFeatures;
+    function deleteOldData() {
+        // We expect adfree cookies to be cleaned up by the logout process, but what if the user's login simply times out?
+        cookies.remove(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
+        cookies.remove(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
+    }
+
+    /**
+     * Does our _existing_ data say the user is a paying member?
+     * This data may be stale; we do not wait for userFeatures.refresh()
+     * @returns {boolean}
+     */
+    UserFeatures.prototype.isPayingMember = function () {
+        // If the user is logged in, but has no cookie yet, play it safe and assume they're a paying user
+        return identity.isUserLoggedIn()
+            && (cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE) !== 'false');
+    };
+
+    return new UserFeatures();
 });

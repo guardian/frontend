@@ -156,6 +156,12 @@ $hosted-stripe: 28px;
             @include hosted-fade-out;
         }
 
+        .vjs-time-control {
+            @include mq($until: tablet) {
+                @include hosted-fade-out;
+            }
+        }
+
         .vjs-control-bar {
             background-color: unset;
             transition: background-color 1s linear;
@@ -167,6 +173,12 @@ $hosted-stripe: 28px;
         .vjs-volume-menu-button,
         .vjs-progress-control {
             @include hosted-fade-in;
+        }
+
+        @include mq($until: tablet) {
+            .vjs-time-control {
+                @include hosted-fade-in;
+            }
         }
 
         .vjs-control-bar {
@@ -204,38 +216,31 @@ $hosted-stripe: 28px;
         margin: 6px 20px 6px $gs-gutter;
     }
 
+    &.vjs-using-native-controls .vjs-control-bar {
+        display: block;
+    }
 
-    .vjs-time-control {
-        @include mq($until: tablet) {
-            display: none;
-        }
+    .vjs-error-display {
+        z-index: 1016;
     }
 }
 
 .hosted__meta {
     position: absolute;
     left: $gs-gutter;
-    bottom: 15%;
+    bottom: 50px;
     width: 55%; // Magic. Do not touch.
     color: #ffffff;
 
-    @include mq(tablet) {
-        bottom: 20%;
-    }
-
     @include mq(desktop) {
         width: 35%;
-        left: calc(50% - 490px + #{$gs-gutter});
-    }
-
-    @include mq(leftCol) {
-        bottom: 18%;
-        left: calc(50% - 570px + #{$gs-gutter});
     }
 
     @include mq($until: tablet) {
-        margin-left: 57px;
-        bottom: 10px;
+        left: 76px;
+        right: $gs-gutter;
+        bottom: 3px;
+        width: auto;
     }
 }
 
@@ -304,37 +309,59 @@ $hosted-stripe: 28px;
 // Main banner
 .hosted__banner {
     position: relative;
-    height: 375px;
     background-size: cover;
 
     &:after {
         content: '';
         width: 100%;
-        height: 100%;    
+        height: 100%;
         position: absolute;
         left: 0;
         top: 0;
         z-index: 0;
-        background: linear-gradient(transparent 200px, rgba(0, 0, 0, .7));
+        background: linear-gradient(transparent 100px, rgba(0, 0, 0, .5));
     }
 
-    @include mq($until: desktop) {
-        background-position: center;
+    @include mq(mobile) {
+        height: 200px;
+        background-position: left;
+    }
+
+    @include mq(tablet) {
+        height: 250px;
+    }
+
+    @include mq(desktop) {
+        height: 375px;
     }
 }
 
 .hosted__cta-wrapper {
-    width: 40%;
     position: relative;
     z-index: 1;
-    padding-top: 200px;
     margin-left: 20px;
+
+    @include mq(mobile) {
+        padding-top: 130px;
+    }
+
+    @include mq(tablet) {
+        width: 40%;
+        padding-top: 160px;
+    }
+
+    @include mq(desktop) {
+        padding-top: 220px;
+    }
+
+    a {
+        // hack stop the link underline
+        color: transparent;
+    }
 }
 
 .hosted__cta {
-    svg {
-        fill: $neutral-1;
-    }
+    padding: 0;
 
     &,
     &:focus,
@@ -344,18 +371,50 @@ $hosted-stripe: 28px;
         color: $neutral-1;
     }
 
-    @include mq($until: desktop) {
-        width: 190px;
+    @include mq(mobile) {
         height: 26px;
-        margin-top: $gs-gutter / 2;
-        padding: 0 20px;
+        margin: 6px;
         font-size: 14px;
         line-height: 26px;
 
         svg {
-            width: 26px;
-            height: 26px;
+            fill: $neutral-1;
+            width: 24px;
+            height: 24px;
         }
+    }
+
+    @include mq(tablet) {
+        height: 38px;
+        margin: 13px;
+        line-height: 1;
+
+        svg {
+            width: 37px;
+            height: 37px;
+        }
+    }
+
+    @include mq(desktop) {
+        margin: 9px;
+    }
+}
+
+.hosted__cta-text {
+    @include f-headlineSans;
+
+    font-size: 25px;
+    font-weight: bold;
+    color: #ffc421;
+
+    @include mq(tablet) {
+        font-size: 38px;
+    }
+}
+
+.hosted__cta-link {
+    &:hover {
+        text-decoration: none;
     }
 }
 
@@ -381,6 +440,7 @@ $hosted-stripe: 28px;
 .hosted__terms {
     @include f-textSans;
 
+    display: inline-block;
     margin-top: $gs-row-height / 2;
     font-size: 12px;
     line-height: 1.2;
@@ -402,6 +462,12 @@ $hosted-stripe: 28px;
 }
 
 .hosted__social {
+    @include mq($until: tablet) {
+        margin-top: $gs-gutter / 2;
+    }
+}
+
+.hosted__social-wrapper {
     border-top: 0;
     padding: $gs-gutter / 2 0 $gs-gutter / 2 $gs-gutter / 2;
 
@@ -446,13 +512,16 @@ $hosted-stripe: 28px;
         @include mq(desktop) {
             font-size: 46px;
             line-height: 46px;
-            margin-top: -12px;
             margin-bottom: 10px;
         }
     }
 
     .hosted__meta {
         left: $gs-gutter/2;
+        bottom: 60px;
+        @include mq(desktop) {
+            width: 55%;
+        }
         @include mq($until: desktop) {
             bottom: 15%;
         }
@@ -485,8 +554,8 @@ $hosted-stripe: 28px;
         right: 0;
         bottom: 0;
         position: absolute;
-        background-image: linear-gradient(to bottom, rgba(238, 238, 238, 0), rgba(0, 0, 0, .4));
-        border-top: 2px solid transparent;
+        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, .4));
+        border-top: 1px solid transparent;
     }
 
     .play-button {
@@ -530,7 +599,7 @@ $hosted-stripe: 28px;
 
     &.popup__toggle {
         border: 0;
-        padding-bottom: 0;
+        padding: 0;
 
         svg {
             fill: #ffffff;
@@ -538,9 +607,15 @@ $hosted-stripe: 28px;
     }
 }
 
+.hosted__label-btn--small {
+    @include f-textSans;
+
+    font-size: 12px;
+}
+
 .hosted__popup {
     top: 110%;
-    left: 264%;
+    left: 299%;
     width: 350px;
     padding: $gs-gutter / 2 $gs-gutter / 2 $gs-gutter $gs-gutter / 2;
     background: #ffffff;
@@ -561,4 +636,14 @@ $hosted-stripe: 28px;
             left: 29%;
         }
     }
+}
+
+.hosted__popup--bottom {
+    @include mq($until: tablet) {
+        left: 65%;
+    }
+}
+
+.hosted__popup-text {
+    font-weight: 200;
 }

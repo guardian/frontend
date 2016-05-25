@@ -1,9 +1,9 @@
 package common.commercial
 
-import conf.switches.Switches
+import common.Edition
 import model.pressed.PressedContent
-import model.{ContentType, ImageMedia, ImageOverride}
-import views.support.{CardWithSponsorDataAttributes, ImgSrc, SponsorDataAttributes}
+import model.{Branding, ContentType, ImageMedia, ImageOverride}
+import views.support.ImgSrc
 
 case class CardContent(
                         icon: Option[String],
@@ -13,12 +13,12 @@ case class CardContent(
                         image: Option[ImageMedia],
                         fallbackImageUrl: Option[String],
                         targetUrl: String,
-                        branding: Option[SponsorDataAttributes]
+                        branding: Option[Branding]
                       )
 
 object CardContent {
 
-  def fromPressedContent(content: PressedContent): CardContent = {
+  def fromPressedContent(edition: Edition)(content: PressedContent): CardContent = {
 
     val header = content.header
 
@@ -46,13 +46,7 @@ object CardContent {
       image,
       fallbackImageUrl,
       targetUrl = header.url,
-      branding = {
-        if (Switches.cardsDecidePaidContainerBranding.isSwitchedOn) {
-          CardWithSponsorDataAttributes.sponsorDataAttributes(content)
-        } else {
-          None
-        }
-      }
+      branding = content.branding(edition)
     )
   }
 
