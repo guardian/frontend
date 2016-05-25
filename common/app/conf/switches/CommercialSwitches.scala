@@ -275,6 +275,15 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
+  val reportEmptyDfpResponsesSwitch = Switch(
+    SwitchGroup.Commercial,
+    "report-empty-dfp-responses",
+    "If on, the client will report empty dfp ad responses.",
+    safeState = Off,
+    sellByDate = new LocalDate(2016,6,8),
+    exposeClientSide = true
+  )
+
   val hostedEpisode1Content = Switch(
     SwitchGroup.Commercial,
     "hosted-episode1-content",
