@@ -1,6 +1,4 @@
 .gu-comlabel {
-    // Temporary hidding this. We need to update texts etc but it needs to be live today.
-    display: none;
     color: $neutral-1;
 
     .gu-comlabel__btn {
@@ -10,8 +8,8 @@
         position: absolute;
         top: $gs-baseline / 2;
         right: $gs-baseline / 2;
-        width: auto;
-        padding: 8px 5px 1px;
+        width: 32px;
+        padding: 8px 7px 1px;
         border-radius: 100%;
         z-index: $zindex-modal;
         background-color: $gustyle-tone;
@@ -33,6 +31,7 @@
             top: $gs-baseline * 1.5;
             right: $gs-gutter;
             padding: 10px 10px 5px;
+            width: 38px;
 
             &.is-active::before {
                 top: 38px;

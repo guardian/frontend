@@ -9,6 +9,14 @@ module.exports = function (grunt, options) {
                 options.staticTargetDir + 'javascripts/boot.js'
             ],
             dest: options.staticTargetDir + 'javascripts/app.js'
+        },
+
+        shivsAndShims: {
+            src: [
+                options.staticPublicDir + 'javascripts/components/es5-shim/es5-shim.js',
+                options.staticPublicDir + 'javascripts/components/html5shiv/html5shiv.js'
+            ],
+            dest: options.staticTargetDir + 'javascripts/es5-html5.js'
         }
     };
 };

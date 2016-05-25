@@ -3,6 +3,7 @@ define([
     'fastdom',
     'qwery',
     'common/utils/$',
+    'common/modules/commercial/create-ad-slot',
     'common/modules/user-prefs',
     'helpers/fixtures',
     'helpers/injector',
@@ -12,6 +13,7 @@ define([
     fastdom,
     qwery,
     $,
+    createAdSlot,
     userPrefs,
     fixtures,
     Injector,
@@ -27,7 +29,12 @@ define([
             injector = new Injector(),
             sliceAdverts, config, detect, commercialFeatures;
 
+        var createSlotSpy = jasmine.createSpy('create-ad-slot').and.callFake(createAdSlot);
+
         beforeEach(function (done) {
+            createSlotSpy.calls.reset();
+            injector.mock('common/modules/commercial/create-ad-slot', createSlotSpy);
+
             injector.require([
                 'common/modules/commercial/slice-adverts',
                 'common/modules/commercial/commercial-features',
@@ -187,34 +194,36 @@ define([
             });
         });
 
-        describe('Fabric ads', function () {
+        describe('Top slot replacement', function () {
             beforeEach(function () {
                 config.switches.fabricAdverts = true;
+                // To be sure that any slots added are top slot replacements, we set the page to a network front,
+                // where adverts will normally never appear on the first container.
+                config.page.pageId = 'uk';
             });
 
-            it('can be added on mobile', function (done) {
-                detect.isBreakpoint = function () {
-                    // expecting check for breakpoint <= phablet
-                    return true;
-                };
+            it('is added on mobile', function (done) {
+                detect.isBreakpoint = mockIsBreakpoint('mobile');
                 sliceAdverts.init();
+
                 fastdom.defer(function () {
-                    expect(qwery('.fc-container-first .ad-slot--fabric', $fixtureContainer).length).toBe(1);
+                    expect(qwery('.fc-container-first .ad-slot', $fixtureContainer).length).toBe(1);
                     done();
                 });
             });
 
             it('is not added on desktop', function (done) {
-                detect.isBreakpoint = function () {
-                    // expecting check for breakpoint <= phablet
-                    return false;
-                };
+                detect.isBreakpoint = mockIsBreakpoint('desktop');
+
                 sliceAdverts.init();
+
                 fastdom.defer(function () {
-                    expect(qwery('.fc-container-first .ad-slot--fabric', $fixtureContainer).length).toBe(0);
+                    expect(qwery('.fc-container-first .ad-slot', $fixtureContainer).length).toBe(0);
                     done();
                 });
             });
+
+
         });
 
         //TODO: get data if we need to reintroduce this again
@@ -229,5 +238,30 @@ define([
                 done();
             });
         });
+
+        function mockIsBreakpoint(current) {
+
+            return function (query) {
+                var maxBreakpoint = getBreakpoint(query.max);
+                var maxSize = maxBreakpoint ? maxBreakpoint.width : Infinity;
+
+                var minBreakpoint = getBreakpoint(query.min);
+                var minSize = minBreakpoint ? minBreakpoint.width : 0;
+
+                var mockSize = getBreakpoint(current).width;
+                return minSize <= mockSize && mockSize <= maxSize;
+            };
+
+            function getBreakpoint(name) {
+                var breakpoints = detect.breakpoints;
+                for (var i = 0; i < breakpoints.length; i++) {
+                    if (breakpoints[i].name === name) {
+                        return breakpoints[i];
+                    }
+                }
+                return undefined;
+            }
+        }
     });
+
 });

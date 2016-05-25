@@ -12,8 +12,7 @@ define([
     'common/modules/commercial/slice-adverts',
     'common/modules/commercial/third-party-tags',
     'common/modules/commercial/paidfor-band',
-    'common/modules/commercial/adverts',
-    'common/modules/commercial/commercial-audit'
+    'common/modules/commercial/adverts'
 ], function (
     Promise,
     config,
@@ -28,8 +27,7 @@ define([
     sliceAdverts,
     thirdPartyTags,
     paidforBand,
-    adverts,
-    commercialAudit
+    adverts
 ) {
     var modules = [
         ['cm-dfp', dfp.init],
@@ -38,7 +36,6 @@ define([
         ['cm-articleBodyAdverts', articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
         ['cm-frontCommercialComponents', frontCommercialComponents.init],
-        ['cm-commercialAudit', commercialAudit.init],
         ['cm-hostedVideo', hostedVideo.init]
     ];
 

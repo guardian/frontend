@@ -4,7 +4,7 @@ import model.GuardianContentTypes.Hosted
 import model.{MetaData, StandalonePage}
 import play.api.libs.json.JsString
 
-case object HostedPage extends StandalonePage {
+case class HostedPage(pageName: String) extends StandalonePage {
 
   override val metadata: MetaData = {
     val title = "Advertiser content hosted by the Guardian: Designing the car of the future - video"
@@ -15,13 +15,12 @@ case object HostedPage extends StandalonePage {
     val sectionId = "renault-car-of-the-future"
     val keywordId = s"$sectionId/$sectionId"
     val keywordName = sectionId
-    val urlSuffix = "design-competition-teaser"
     MetaData.make(
-      id = s"commercial/advertiser-content/$sectionId/$urlSuffix",
+      id = s"commercial/advertiser-content/$sectionId/$pageName",
       webTitle = title,
       section = sectionId,
       contentType = Hosted,
-      analyticsName = s"GFE:$sectionId:$Hosted:$urlSuffix",
+      analyticsName = s"GFE:$sectionId:$Hosted:$pageName",
       description = Some(description),
       javascriptConfigOverrides = Map(
         "keywordIds" -> JsString(keywordId),

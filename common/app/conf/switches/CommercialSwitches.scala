@@ -284,21 +284,12 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val CommercialAuditSwitch = Switch(
+  val hostedEpisode1Content = Switch(
     SwitchGroup.Commercial,
-    "commercial-audit",
-    "Audit Ads",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 23),
-    exposeClientSide = true
-  )
-
-  val HostedContent = Switch(
-    SwitchGroup.Commercial,
-    "hosted-content",
-    "If on, you can access hosted content",
+    "hosted-episode1-content",
+    "If on, another hardcoded page of hosted content is available",
     safeState = Off,
     sellByDate = new LocalDate(2016, 7, 12),
-    exposeClientSide =  false
+    exposeClientSide = false
   )
 }

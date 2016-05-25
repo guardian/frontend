@@ -42,8 +42,8 @@ define([
         },
         inline1: {
             sizeMappings: {
-                mobile:             '1,1|300,250',
-                'mobile-landscape': '1,1|300,250',
+                mobile:             '1,1|300,250' + fabricMappingSwitch,
+                'mobile-landscape': '1,1|300,250' + fabricMappingSwitch,
                 tablet:             '1,1|300,250'
             }
         },
@@ -98,19 +98,6 @@ define([
             sizeMappings: {
                 desktop: '1,1|88,70|728,90|940,230|900,250|970,250' + fabricMappingSwitch
             }
-        },
-        'fabric': {
-            sizeMappings: {
-                mobile: fabricTopSlot
-            }
-        },
-        'inline1-fabric': {
-            sizeMappings: {
-                mobile: ('1,1|300,250|' + fabricTopSlot)
-            },
-            // This label is used so that passbacks can retarget the slot, and so that in-reads (which always appear in
-            // the first slot) can be limited to this ad.
-            name : 'inline1'
         }
     };
 

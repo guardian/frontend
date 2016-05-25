@@ -1112,3 +1112,22 @@ $ima-controls-height: 70px;
 .vjs-modal-dialog-description {
     display: none;
 }
+
+// For a test
+.show-media-controls {
+    .vjs-paused {
+        .vjs-control-bar {
+            bottom: 0 !important;
+        }
+
+        .vjs-big-play-button .vjs-control-text {
+            &:before {
+                background-color: $media-default;
+            }
+
+            &:after {
+                border-left-color: #333333;
+            }
+        }
+    }
+}

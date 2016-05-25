@@ -28,7 +28,7 @@ define([
         var labelMarkup = labelTpl({ data: {
             buttonTitle: 'Ad',
             infoTitle: 'Advertising on the Guardian',
-            infoText: 'is created and paid for by third parties and link to an external site.',
+            infoText: 'is created and paid for by third parties.',
             infoLinkText: 'Learn more about how advertising supports the Guardian.',
             infoLinkUrl: 'https://www.theguardian.com/advertising-on-the-guardian',
             icon: svgs('arrowicon', ['gu-comlabel__icon']),

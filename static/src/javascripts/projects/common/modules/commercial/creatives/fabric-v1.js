@@ -21,7 +21,7 @@ define([
     scrollBgTpl,
     merge
 ) {
-    var hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
+    var hasBackgroundFixedSupport = !detect.isAndroid();
     var isEnhanced = detect.isEnhanced();
     var isIE10OrLess = detect.getUserAgent.browser === 'MSIE' && (parseInt(detect.getUserAgent.version) <= 10);
 
@@ -68,13 +68,13 @@ define([
                 bonzo(this.layer2).css('background-position', '');
             }
 
-            if (this.scrollType === 'fixed' && hasScrollEnabled) {
+            if (this.scrollType === 'fixed' && hasBackgroundFixedSupport) {
                 bonzo(this.scrollingBg).css('background-attachment', 'fixed');
             }
 
         }, this);
 
-        if (templateOptions.scrollbg && hasScrollEnabled) {
+        if (templateOptions.scrollbg) {
             // update bg position
             fastdom.read(this.updateBgPosition, this);
             mediator.on('window:throttledScroll', this.updateBgPosition.bind(this));
@@ -94,6 +94,12 @@ define([
                 bonzo(this.scrollingBg)
                     .addClass('ad-scrolling-bg-parallax')
                     .css('background-position', '50% ' + scrollAmount + '%');
+            }, this);
+        } else if (this.scrollType === 'fixed' && !hasBackgroundFixedSupport) {
+            var adRect = this.$adSlot[0].getBoundingClientRect();
+            var vPos = (window.innerHeight - adRect.bottom + adRect.height / 2) / window.innerHeight * 100;
+            fastdom.write(function () {
+                bonzo(this.scrollingBg).css('background-position', '50% ' + vPos + '%');
             }, this);
         }
         this.layer2Animation();

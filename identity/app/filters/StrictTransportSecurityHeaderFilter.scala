@@ -5,7 +5,7 @@ import play.api.mvc.{Filter, RequestHeader, Result}
 
 import scala.concurrent.Future
 
-object StrictTransportSecurityHeaderFilter extends Filter with ExecutionContexts {
+class StrictTransportSecurityHeaderFilter extends Filter with ExecutionContexts {
 
   private val OneYearInSeconds = 31536000
   private val Header = "Strict-Transport-Security" -> s"max-age=$OneYearInSeconds; preload"
