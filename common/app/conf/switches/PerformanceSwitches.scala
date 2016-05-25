@@ -51,15 +51,6 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
-  val CheckETagsSwitch = Switch(
-    SwitchGroup.Performance,
-    "check-etags",
-    "If this switch is on, empty 304 not modified responses will be returned for requests with the correct etag",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 20),
-    exposeClientSide = false
-  )
-
   val CircuitBreakerSwitch = Switch(
     SwitchGroup.Performance,
     "circuit-breaker",
@@ -74,7 +65,7 @@ trait PerformanceSwitches {
     "server-side-buckets",
     "When this switch expires, remove the remaining predefined server side testing buckets",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 20),
+    sellByDate = new LocalDate(2016, 6, 22),
     exposeClientSide = false
   )
 
@@ -103,6 +94,33 @@ trait PerformanceSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
+  )
+
+  val PanicMonitoringSwitch = Switch(
+    SwitchGroup.Performance,
+    "panic-monitoring",
+    "If this switch is on, we monitor latency and requests to see if servers are overloaded",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 8),
+    exposeClientSide = false
+  )
+
+  val PanicLoggingSwitch = Switch(
+    SwitchGroup.Performance,
+    "panic-logging",
+    "If this switch is on, we log latency when we are monitoring it with panic-monitoring",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 8),
+    exposeClientSide = false
+  )
+
+  val PanicSheddingSwitch = Switch(
+    SwitchGroup.Performance,
+    "panic-shedding",
+    "If this switch is on, we try to keep response times below 1s by returning Service Unavailable errors if we're busy",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 8),
+    exposeClientSide = false
   )
 
   val RichLinkSwitch = Switch(
@@ -224,4 +242,22 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
+  val UseLinkPreconnect = Switch(
+    SwitchGroup.Performance,
+    "use-link-preconnect",
+    "If this switch is on then link preconnect hints will be on the page",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 5),
+    exposeClientSide = false
+  )
+
+  // Owner: tbonnin
+  val LogAllDiscussionIncomingRequests = Switch(
+    SwitchGroup.Performance,
+    "log-all-discussion-incoming-requests",
+    "If this switch is on then log all incoming discussion requests",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 2),
+    exposeClientSide = false
+  )
 }

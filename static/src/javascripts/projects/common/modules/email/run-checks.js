@@ -11,6 +11,7 @@ define([
     'lodash/collections/contains',
     'common/modules/user-prefs',
     'common/modules/identity/api',
+    'common/modules/experiments/ab',
     'Promise'
 ], function (
     $,
@@ -25,18 +26,30 @@ define([
     contains,
     userPrefs,
     Id,
+    ab,
     Promise
 ) {
-    var emailInserted = false,
-        emailShown,
-        userListSubsChecked = false,
-        userListSubs = [];
+    var emailInserted = false;
+    var emailShown;
+    var userListSubsChecked = false;
+    var userListSubs = [];
 
     function pageHasBlanketBlacklist() {
         // Prevent the blanket emails from ever showing on certain keywords or sections
         return page.keywordExists(['US elections 2016', 'Football']) ||
             config.page.section === 'film' ||
             config.page.seriesId === 'world/series/guardian-morning-briefing';
+    }
+
+    function userIsInAClashingAbTest() {
+        var clashingTests = [
+            ['ParticipationStarRatings','star-rating'],
+            ['ParticipationLowFricMusicV1', 'variant-1']
+        ];
+
+        return some(clashingTests, function(test) {
+            return ab.isInVariant(test[0], test[1]);
+        });
     }
 
     function userHasRemoved(id, formType) {
@@ -88,7 +101,8 @@ define([
 
     var canRunList = {
         theCampaignMinute: function () {
-            return config.page.isMinuteArticle && page.keywordExists(['US elections 2016']);
+            return (page.keywordExists(['US elections 2016']) || config.page.isMinuteArticle)
+                && config.page.series != 'Guardian US briefing';
         },
         theFilmToday: function () {
             return config.page.section === 'film';
@@ -97,7 +111,8 @@ define([
             return page.keywordExists(['Football']) && allowedArticleStructure();
         },
         usBriefing: function () {
-            return config.page.section === 'us-news' && allowedArticleStructure();
+            return (config.page.section === 'us-news' && allowedArticleStructure()) ||
+                config.page.series === 'Guardian US briefing';
         },
         ausCampaignCatchup: function () {
             return page.keywordExists([
@@ -143,6 +158,7 @@ define([
             !emailInserted &&
             !config.page.isFront &&
             config.switches.emailInArticle &&
+            !userIsInAClashingAbTest() &&
             storage.session.isAvailable() &&
             !userHasSeenThisSession() &&
             !(browser === 'MSIE' && contains(['7','8','9'], version + ''));

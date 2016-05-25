@@ -15,16 +15,20 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
     }
   }
 
-  val highMerchandisingTargetedTags: HighMerchandisingLineItems = {
-
-    lineItems.foldLeft(HighMerchandisingLineItems(items = List.empty)) { (soFar, lineItem) =>
-      if (lineItem.highMerchandisingTargets.isEmpty) {
-        soFar
-      } else {
-        soFar.copy(items = soFar.items :+ HighMerchandisingLineItem(
-          lineItem.name, lineItem.id, lineItem.highMerchandisingTargets))
+  val targetedHighMerchandisingLineItems: HighMerchandisingLineItems = {
+    val highMerchLineItems = lineItems
+      .filter(_.highMerchandisingTargets.nonEmpty)
+      .foldLeft(Seq.empty[HighMerchandisingLineItem]) { (soFar, lineItem) =>
+        soFar :+ HighMerchandisingLineItem(
+          name = lineItem.name,
+          id = lineItem.id,
+          tags = lineItem.highMerchandisingTargets,
+          adUnits = lineItem.targeting.adUnits,
+          customTargetSet = lineItem.targeting.customTargetSets
+        )
       }
-    }
+
+    HighMerchandisingLineItems(items = highMerchLineItems)
   }
 
   val pageSkinSponsorships: Seq[PageSkinSponsorship] = {

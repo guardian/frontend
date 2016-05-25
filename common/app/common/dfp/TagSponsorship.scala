@@ -65,36 +65,36 @@ object InlineMerchandisingTargetedTagsReportParser extends Logging {
   }
 }
 
-object HighMerchandisingTargetedTagSet {
-  implicit val jsonReads = Json.reads[HighMerchandisingTargetedTagSet]
-
-  implicit val highMerchandisingTargetedTagSetWrites = new Writes[HighMerchandisingTargetedTagSet] {
-    def writes(tagSet: HighMerchandisingTargetedTagSet): JsValue = {
-      Json.obj(
-        "items" -> tagSet.items
-      )
-    }
-  }
-}
-
-case class HighMerchandisingTargetedTagSet(items: Set[String] = Set.empty){
-
-  def hasTag (tag: Tag): Boolean = items.exists(item => tag.id.endsWith(item))
-
-
-  def nonEmpty = items.nonEmpty
-
-}
-
 object HighMerchandisingLineItems {
   implicit val lineItemFormat = Json.format[HighMerchandisingLineItem]
   implicit val lineItemsFormat = Json.format[HighMerchandisingLineItems]
 }
 
-case class HighMerchandisingLineItem(name: String, id: Long, tags: Seq[String])
-
-case class HighMerchandisingLineItems(items: Seq[HighMerchandisingLineItem]) {
+case class HighMerchandisingLineItems(items: Seq[HighMerchandisingLineItem] = Seq.empty) {
   val sortedItems = items.sortBy(_.name)
+}
+
+case class HighMerchandisingLineItem(
+  name: String,
+  id: Long,
+  tags: Seq[String],
+  adUnits: Seq[GuAdUnit],
+  customTargetSet: Seq[CustomTargetSet]
+  ) {
+  val customTargets = customTargetSet.map(_.targets)
+  val editions = customTargets.flatMap(sequence => sequence.filter((target) => target.name == "edition")).map(target => target.values)
+
+
+  def matchesAdUnitAndTag (adUnitSuffix: String, pageTags:Seq[Tag]): Boolean = {
+
+    val tagNames = pageTags map (_.name) map (_.replaceAll(" ","-").toLowerCase)
+
+    val matchesTag: Boolean = tagNames.exists(tags.contains)
+
+    lazy val matchesAdUnit: Boolean = adUnits.exists(_.path contains adUnitSuffix)
+
+    matchesTag && matchesAdUnit
+  }
 }
 
 object HighMerchandisingTargetedTagsReport {

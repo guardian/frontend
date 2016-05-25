@@ -7,6 +7,7 @@ import common.commercial.BrandHunter
 import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
+import conf.switches.Switches.galleryRedesign
 import cricketPa.CricketTeams
 import model.liveblog.BodyBlock
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
@@ -15,7 +16,6 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 import play.api.mvc.RequestHeader
-import conf.switches.Switches.galleryRedesign
 
 object Commercial {
 
@@ -103,17 +103,17 @@ final case class Commercial(
   def isSponsored(maybeEdition: Option[Edition]): Boolean =
     DfpAgent.isSponsored(tags.tags, Some(metadata.section), maybeEdition)
 
-  def hasHighMerchandisingTarget: Boolean = {
-    DfpAgent.hasHighMerchandisingTarget(tags.tags)
+  def needsHighMerchandisingSlot: Boolean = {
+    DfpAgent.hasHighMerchAdAndTag(metadata.adUnitSuffix,tags.tags)
   }
 
   def conditionalConfig: Map[String, JsValue] = {
-    val highMerchansisingMeta = if (hasHighMerchandisingTarget) {
-      Some("hasHighMerchandisingTarget", JsBoolean(hasHighMerchandisingTarget))
+    val highMerchandisingMeta = if (needsHighMerchandisingSlot) {
+      Some("hasHighMerchandisingTarget", JsBoolean(needsHighMerchandisingSlot))
     } else None
 
     val meta: List[Option[(String, JsValue)]] = List(
-      highMerchansisingMeta
+      highMerchandisingMeta
     )
     meta.flatten.toMap
   }
@@ -159,7 +159,14 @@ final case class Fields(
   sensitive: Option[Boolean],
   legallySensitive: Option[Boolean]
 ){
-  def javascriptConfig: Map[String, JsValue] = Map(("shortUrl", JsString(shortUrl)))
+  lazy val shortUrlId = shortUrl.replaceFirst("^[a-zA-Z]+://gu.com", "") //removing scheme://gu.com
+
+  def javascriptConfig: Map[String, JsValue] = {
+    Map(
+      "shortUrl" -> JsString(shortUrl),
+      "shortUrlId" -> JsString(shortUrlId)
+    )
+  }
 }
 
 object MetaData {
@@ -284,7 +291,7 @@ final case class MetaData (
   val isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(id)
 
   val requiresMembershipAccess: Boolean = {
-    conf.switches.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty && url.contains("/membership/")
+    conf.switches.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty
   }
 
   val hasSlimHeader: Boolean = contentType == "Interactive" || section == "identity" || (galleryRedesign.isSwitchedOn && contentType.toLowerCase == "gallery")
@@ -308,7 +315,8 @@ final case class MetaData (
     ("analyticsName", JsString(analyticsName)),
     ("isFront", JsBoolean(isFront)),
     ("isSurging", JsString(isSurging.mkString(","))),
-    ("videoJsFlashSwf", JsString(conf.Static("flash/components/video-js-swf/video-js.swf").path))
+    ("videoJsFlashSwf", JsString(conf.Static("flash/components/video-js-swf/video-js.swf").path)),
+    ("contentType", JsString(contentType))
   )
 
   def opengraphProperties: Map[String, String] = {
@@ -420,8 +428,6 @@ trait StandalonePage extends Page {
 }
 
 case class SimplePage(override val metadata: MetaData) extends StandalonePage
-
-case class HostedPage(override val metadata: MetaData) extends StandalonePage
 
 case class CommercialExpiryPage(
   id: String,
@@ -622,6 +628,10 @@ final case class Tags(
 
   lazy val isClimateChangeSeries = tags.exists(t => t.id =="environment/series/keep-it-in-the-ground")
   lazy val isUSMinuteSeries = tags.exists(t => t.id == "us-news/series/the-campaign-minute-2016")
+
+  lazy val isUSElection = tags.exists(t => t.id == "us-news/us-elections-2016")
+  lazy val isAusElection = tags.exists(t => t.id == "australia-news/australian-election-2016")
+  lazy val isElection = isUSElection || isAusElection
 
   lazy val keywordIds = keywords.map { _.id }
 

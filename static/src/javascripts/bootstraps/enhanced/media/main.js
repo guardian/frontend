@@ -18,10 +18,10 @@ define([
     'common/modules/component',
     'common/modules/video/events',
     'common/modules/video/fullscreener',
-    'common/modules/video/supportedBrowsers',
     'common/modules/video/tech-order',
     'common/modules/video/video-container',
     'common/modules/video/onward-container',
+    'common/modules/video/more-in-series-container',
     // This must be the full path because we use curl config to change it based
     // on env
     'bootstraps/enhanced/media/video-player',
@@ -46,10 +46,10 @@ define([
     Component,
     events,
     fullscreener,
-    supportedBrowsers,
     techOrder,
     videoContainer,
     onwardContainer,
+    moreInSeriesContainer,
     videojs,
     loadingTmpl
 ) {
@@ -144,7 +144,9 @@ define([
                         placeholder.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
                         player.removeClass('media__container--hidden').addClass('media__container--active');
                         $el.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
-                        enhanceVideo($('video', player).get(0), true);
+                        var enhancedPlayer = enhanceVideo($('video', player).get(0), true);
+
+                        mediator.emit('ab:PlayVideoOnFronts:front-player-created', enhancedPlayer);
                     });
                 });
                 fastdom.write(function () {
@@ -164,7 +166,8 @@ define([
 
         fastdom.read(function () {
             $('.js-gu-media--enhance').each(function (el) {
-                enhanceVideo(el, false, withPreroll);
+                var enhancedPlayer = enhanceVideo(el, false, withPreroll);
+                mediator.emit('ab:PlayVideoOnFronts:in-article-video-created', enhancedPlayer);
             });
         });
 
@@ -193,13 +196,21 @@ define([
 
         var videoInfo = new Promise(function(resolve) {
             // We only have the canonical URL in videos embedded in articles / main media.
+            var defaultVideoInfo = {
+                expired: false,
+                shouldHideAdverts: false
+            };
+
             if (!canonicalUrl) {
-                resolve(false);
+                resolve(defaultVideoInfo);
             } else {
                 ajax({
                     url: canonicalUrl + '/info.json'
                 }).then(function(videoInfo) {
                     resolve(videoInfo);
+                }, function() {
+                    // if this fails, don't stop, keep going.
+                    resolve(defaultVideoInfo);
                 });
             }
         });
@@ -246,7 +257,7 @@ define([
                         var vol;
 
                         deferToAnalytics(function () {
-                            events.initOmnitureTracking(player);
+                            events.initOmnitureTracking(player, mediaId);
                             events.initOphanTracking(player, mediaId);
 
                             events.bindGlobalEvents(player);
@@ -258,7 +269,6 @@ define([
 
                         initLoadingSpinner(player);
                         upgradeVideoPlayerAccessibility(player);
-                        supportedBrowsers(player);
 
                         player.one('playing', function (e) {
                             if (isFlash(e)) {
@@ -293,14 +303,8 @@ define([
                                         player.ima({
                                             id: mediaId,
                                             adTagUrl: getAdUrl(),
-                                            prerollTimeout: 1000,
-                                            contribAdsSettings: {
-                                                // This is higher than the `prerollTimeout` to so as not to
-                                                // trigger the `adtimeout` before the `prerollTimeout`.
-                                                timeout: 2000
-                                            }
+                                            prerollTimeout: 1000
                                         });
-
                                         player.ima.requestAds();
 
                                         // Video analytics event.
@@ -343,6 +347,8 @@ define([
                 });
             }
         });
+
+        return player;
     }
 
     function initEndSlate(player, endSlatePath) {
@@ -362,33 +368,22 @@ define([
         });
     }
 
+    function getMediaType() {
+        return config.page.contentType.toLowerCase();
+    }
+
     function initMoreInSection() {
         if (!config.isMedia || !config.page.showRelatedContent) {
             return;
         }
 
-        var mediaType = config.page.contentType.toLowerCase(),
-            section   = new Component(),
-            attachTo  = $('.js-onward')[0],
-            endpoint  = '/' + mediaType + '/section/' + config.page.section;
-
-        if ('seriesId' in config.page) {
-            endpoint += '/' + config.page.seriesId;
-        }
-
-        endpoint += '.json?shortUrl=' + config.page.shortUrl;
-
-        // exclude professional network content from video pages
-        if (mediaType === 'video') {
-            endpoint += '&exclude-tag=guardian-professional/guardian-professional';
-        }
-
-        section.endpoint = endpoint;
-
-        section.fetch(attachTo).then(function () {
-            mediator.emit('page:media:moreinloaded', attachTo);
-            mediator.emit('page:new-content', attachTo);
-        });
+        var el  = $('.js-more-in-section')[0];
+        moreInSeriesContainer.init(
+            el, getMediaType(),
+            config.page.section,
+            config.page.shortUrl,
+            config.page.seriesId
+        );
     }
 
     function initOnwardContainer() {
@@ -396,9 +391,8 @@ define([
             return;
         }
 
-        var mediaType = config.page.contentType.toLowerCase();
+        var mediaType = getMediaType();
         var el = $(mediaType === 'video' ? '.js-video-components-container' : '.js-media-popular')[0];
-
         onwardContainer.init(el, mediaType);
     }
 

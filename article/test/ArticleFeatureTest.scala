@@ -431,7 +431,7 @@ import collection.JavaConversions._
 
     scenario("Show primary picture on composer articles") {
       Given("I am on an article created in composer tools")
-      goTo("/artanddesign/2013/apr/15/buildings-tall-architecture-guardianwitness") { browser =>
+      goTo("/music/2016/may/19/rage-against-the-machine-chuck-d-b-real-supergroup-prophets-of-rage") { browser =>
         import browser._
         Then("The main picture should be show")
         $("[itemprop='contentUrl']") should have size 1

@@ -61,8 +61,6 @@ trait Prototypes {
       "Spy" at "https://files.couchbase.com/maven2/"
     ),
 
-    updateOptions := updateOptions.value.withCachedResolution(true),
-
     evictionWarningOptions in update := EvictionWarningOptions.default
       .withWarnTransitiveEvictions(false)
       .withWarnDirectEvictions(false)

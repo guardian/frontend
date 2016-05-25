@@ -96,7 +96,7 @@ object Cached extends implicits.Dates {
 
     val (etagHeaderString, validatedResult): (String, Result) = maybeHash.map { case (hash, maybeHashToMatch) =>
       val etag = s"""W/"hash${hash.string}""""
-      if (Switches.CheckETagsSwitch.isSwitchedOn && maybeHashToMatch.contains(etag)) {
+      if (maybeHashToMatch.contains(etag)) {
         (etag, Results.NotModified)
       } else {
         (etag, result)

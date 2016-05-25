@@ -115,12 +115,14 @@
         z-index: $zindex-popover;
     }
 }
-.top-banner-ad-container--small {
-    min-height: ($gs-row-height * 3) + 18;
-}
-.top-banner-ad-container--responsive {
-    min-height: ($gs-row-height * 7) + 16;
-}
+// Keeping this code for now since we'll be running another similar
+// experiment in the near future:
+// .top-banner-ad-container--small {
+//     min-height: ($gs-row-height * 3) + 18;
+// }
+// .top-banner-ad-container--responsive {
+//     min-height: ($gs-row-height * 7) + 16;
+// }
 .top-banner-ad-container--above-nav {
     @include mq(tablet) {
         .js-on & {
@@ -180,9 +182,9 @@
             text-align: left;
         }
     }
-    .top-banner-ad-container--large & {
-        min-height: 250px;
-    }
+    // .top-banner-ad-container--large & {
+    //     min-height: 250px;
+    // }
     .has-page-skin & {
         @include mq(wide) {
             width: auto !important;
@@ -454,35 +456,38 @@
         }
     }
 }
-.ad-slot--paid-for-badge--gallery {
-    border-top: 1px dotted $media-mute;
-    border-bottom: 0;
-    padding-top: $gs-baseline / 3;
 
-    @include mq(desktop) {
-        width: gs-span(3);
-        position: absolute;
-    }
+.content--media:not(.paid-content--advertisement-feature) {
+    .ad-slot--paid-for-badge--gallery {
+        border-top: 1px dotted $media-mute;
+        border-bottom: 0;
+        padding-top: $gs-baseline / 3;
 
-    .content__main-column > & {
         @include mq(desktop) {
-            top: 100%;
+            width: gs-span(3);
+            position: absolute;
         }
 
-        @include mq(leftCol) {
-            left: -160px;
+        .content__main-column > & {
+            @include mq(desktop) {
+                top: 100%;
+            }
+
+            @include mq(leftCol) {
+                left: -160px;
+            }
+
+            @include mq(wide) {
+                left: -240px;
+            }
         }
 
-        @include mq(wide) {
-            left: -240px;
+        .ad-slot--paid-for-badge__header {
+            font-weight: normal;
         }
-    }
-
-
-    .ad-slot--paid-for-badge__header {
-        font-weight: normal;
     }
 }
+
 .ad-slot--paid-for-badge--interactive {
     width: 140px;
     min-height: 135px;
@@ -643,4 +648,11 @@
             }
         }
     }
+}
+
+/**
+ * Fluid ad slots don't have widths
+ */
+.ad-slot--fluid {
+    width: auto;
 }

@@ -296,7 +296,7 @@ GET            /commercial/capi-single-merch                                    
 GET            /commercial/paid.json                                                                                             controllers.commercial.PaidContentCardController.cardJson
 GET            /commercial/paid                                                                                                  controllers.commercial.PaidContentCardController.cardHtml
 GET            /commercial/multi.json                                                                                            controllers.commercial.Multi.renderMulti
-GET            /commercial/guardian-hosted                                                                                       controllers.commercial.StaticPageController.renderGuardianHostedPage()
+GET            /commercial/advertiser-content/renault-car-of-the-future/:pageName                                                controllers.commercial.HostedContentController.renderHostedPage(pageName)
 GET            /$path<commercial-containers>                                                                                     controllers.FaciaController.renderFront(path)
 
 # Commercial Admin
@@ -309,7 +309,6 @@ GET            /commercial/surging                                              
 GET            /commercial/inline-merchandising                                                                                  controllers.admin.CommercialController.renderInlineMerchandisingTargetedTags()
 GET            /commercial/high-merchandising                                                                                    controllers.admin.CommercialController.renderHighMerchandisingTargetedTags()
 GET            /commercial/templates                                                                                             controllers.admin.CommercialController.renderCreativeTemplates()
-GET            /commercial/sponsored-containers                                                                                  controllers.admin.CommercialController.sponsoredContainers()
 GET            /commercial/adunits/toapprove                                                                                     controllers.admin.CommercialAdUnitController.renderToApprove()
 POST           /commercial/adunits/toapprove                                                                                     controllers.admin.CommercialAdUnitController.approve()
 GET            /commercial/fluid250                                                                                              controllers.admin.CommercialController.renderFluidAds()

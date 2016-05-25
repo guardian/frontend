@@ -50,17 +50,19 @@ object Commercial {
         "js-top-banner-above-nav")
 
       val sizeSpecificClass = {
-        if (FixedTopAboveNavAdSlotSwitch.isSwitchedOn && isBusinessFront(metaData)) {
-          if (hasAdOfSize(TopAboveNavSlot, leaderboardSize, metaData, edition, sizesOverride)) {
-            "top-banner-ad-container--small"
-          } else if (hasAdOfSize(TopAboveNavSlot, responsiveSize, metaData, edition, sizesOverride)) {
-            "top-banner-ad-container--responsive"
-          } else {
-            "top-banner-ad-container--large"
-          }
-        } else {
+        // Keeping this code for now since we'll be running another similar
+        // experiment in the near future:
+        // if (FixedTopAboveNavAdSlotSwitch.isSwitchedOn && isBusinessFront(metaData)) {
+        //   if (hasAdOfSize(TopAboveNavSlot, leaderboardSize, metaData, edition, sizesOverride)) {
+        //     "top-banner-ad-container--small"
+        //   } else if (hasAdOfSize(TopAboveNavSlot, responsiveSize, metaData, edition, sizesOverride)) {
+        //     "top-banner-ad-container--responsive"
+        //   } else {
+        //     "top-banner-ad-container--large"
+        //   }
+        // } else {
           "top-banner-ad-container--reveal"
-        }
+        // }
       }
 
       (classes :+ sizeSpecificClass) mkString " "

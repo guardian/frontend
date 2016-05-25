@@ -20,6 +20,20 @@
     align-items: flex-start;
 }
 
+.frame__link-background {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.frame__logo,
+.frame__content,
+.frame__cta {
+    z-index: 1;
+}
+
 .frame__logo--top {
     margin-bottom: $gs-baseline;
 }
