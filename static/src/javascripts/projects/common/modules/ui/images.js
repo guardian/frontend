@@ -1,22 +1,18 @@
 define([
-    'bonzo',
-    'picturefill',
-    'common/utils/$',
-    'common/utils/$css',
+    'qwery',
+    'picturefill'
     'common/utils/mediator'
 ],
 function (
-    bonzo,
+    qwery,
     picturefill,
-    $,
-    $css,
     mediator
 ) {
 
     var images = {
 
         upgradePictures: function (context) {
-            var images = [].slice.call($('img[srcset], picture img', context || document.body));
+            var images = qwery('img[srcset], picture img', context || document);
             picturefill({ elements: images });
         },
 
