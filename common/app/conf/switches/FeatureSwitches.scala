@@ -363,4 +363,14 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  //Owner: Dotcom Commercial
+  val forceOneByOnePxSlotSwitch = Switch(
+    SwitchGroup.Feature,
+    "1x1px-slot",
+    "When ON, we will force the creation of the 1x1px adSlot for pageskins",
+    safeState = On,
+    sellByDate = new LocalDate(2016, 8, 25),
+    exposeClientSide = true
+  )
+
 }
