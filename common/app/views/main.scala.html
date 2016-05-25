@@ -131,7 +131,7 @@
 
         @fragments.analytics.base(page)
 
-        @if(page.metadata.hasPageSkinOrAdTestPageSkin(edition)) {
+        @if(ForceOneByOnePxSlotSwitch.isSwitchedOn || page.metadata.hasPageSkinOrAdTestPageSkin(edition)) {
             @fragments.commercial.pageSkin()
         }
 
