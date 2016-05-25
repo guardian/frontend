@@ -7,7 +7,6 @@ import dfp.DfpDataCacheLifecycle
 import model.AdminLifecycle
 import ophan.SurgingContentAgentLifecycle
 import play.api.mvc.{RequestHeader, Results, WithFilters}
-import purge.SoftPurge
 import services.ConfigAgentLifecycle
 
 import scala.concurrent.Future
@@ -21,7 +20,6 @@ object Global extends WithFilters(Gzipper)
   with SurgingContentAgentLifecycle
   with DfpAgentLifecycle
   with DfpDataCacheLifecycle
-  with SoftPurge
   with Logstash
   with AdminHealthCheckLifeCycle {
 
