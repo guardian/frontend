@@ -35,7 +35,7 @@ define([
         } else {
             return config.commercial.showingAdfree;
         }
-    }
+    };
 
     /**
      * Updates the user's data in a lazy fashion
