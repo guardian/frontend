@@ -1,0 +1,49 @@
+@()(implicit request: RequestHeader)
+
+@import staticpages.StaticPages.simpleSurveyStaticPage
+@import common.InlineJs
+@import templates.inlineJS.blocking.js._
+
+<!DOCTYPE html>
+<html id="js-context" class="js-off is-not-modern id--signed-out" data-page-path="@request.path">
+
+    <head>
+        <meta charset="utf-8" />
+        <title>@views.support.Title(simpleSurveyStaticPage)</title>
+
+        @fragments.metaData(simpleSurveyStaticPage)
+
+        @* get the stylesheets downloading ASAP *@
+        @fragments.stylesheets(None)
+
+        @* polyfill, feature detect etc before we try and use the stylesheets *@
+        @fragments.inlineJSBlocking(simpleSurveyStaticPage)
+
+        @* start trying to use the stylesheets *@
+        <script>
+            @InlineJs(enableStylesheets().body, "enableStylesheets.js")
+        </script>
+
+    </head>
+    <body
+    id="top"
+    itemscope itemtype="http://schema.org/WebPage">
+
+        @fragments.header(simpleSurveyStaticPage)
+
+        <div class="l-side-margins">
+
+            <div class="formstack-survey-wrapper" data-link-name="formstack survey">
+
+                <script type="text/javascript" src="https://guardiannewsampampmedia.formstack.com/forms/js.php/testform?no_style=1"></script><noscript><a href="https://guardiannewsampampmedia.formstack.com/forms/testform" title="Online Form">Online Form - TestForm</a></noscript>
+
+            </div>
+
+        </div>
+
+        @fragments.footer(simpleSurveyStaticPage)
+
+        @fragments.inlineJSNonBlocking()
+
+    </body>
+</html>
