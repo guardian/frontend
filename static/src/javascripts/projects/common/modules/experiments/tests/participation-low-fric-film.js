@@ -24,7 +24,7 @@ define([
         this.expiry = '2016-06-08';
         this.author = 'Gareth Trufitt - Participation';
         this.description = 'Participation - Low friction test for star ratings on Film';
-        this.audience = 0.45;
+        this.audience = 0.25;
         this.audienceOffset = 0.2;
         this.successMeasure = 'Control - User comments, Variant - User rates';
         this.audienceCriteria = 'Film reviews that have comments turned on (45% for 7 days)';
