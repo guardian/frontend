@@ -60,22 +60,22 @@ sealed trait ElementProfile {
 }
 
 case class Profile(
-  override val width: Option[Int] = None,
-  override val height: Option[Int] = None,
-  override val hidpi: Boolean = false,
-  override val compression: Int = 95,
-  override val isPng: Boolean = false) extends ElementProfile
+                    override val width: Option[Int] = None,
+                    override val height: Option[Int] = None,
+                    override val hidpi: Boolean = false,
+                    override val compression: Int = 95,
+                    override val isPng: Boolean = false) extends ElementProfile
 
 object VideoProfile {
   lazy val ratioHD = new Fraction(16,9)
 }
 
 case class VideoProfile(
-  override val width: Some[Int],
-  override val height: Some[Int],
-  override val hidpi: Boolean = false,
-  override val compression: Int = 95,
-  override val isPng: Boolean = false) extends ElementProfile {
+                         override val width: Some[Int],
+                         override val height: Some[Int],
+                         override val hidpi: Boolean = false,
+                         override val compression: Int = 95,
+                         override val isPng: Boolean = false) extends ElementProfile {
 
   lazy val isRatioHD: Boolean = Precision.compareTo(VideoProfile.ratioHD.doubleValue, aspectRatio.doubleValue, 0.1d) == 0
 
@@ -123,20 +123,25 @@ object ImgSrc extends Logging with implicits.Strings {
   def apply(url: String, imageType: ElementProfile, overlayTest: Boolean = false): String = {
     try {
       val uri = new URI(url.trim.encodeURI)
-      val imageOverlay = if (imageType == FacebookOpenGraphImage && overlayTest) {
-        "&bm=normal" +
-        "&ba=bottom%2C%20left" +
-        "&blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNS8yMy9vdmVybGF5LWxvZ28tMTIwMC05MC5wbmc" +
-        "&fit=crop"
+      val inOverlayTest = imageType == FacebookOpenGraphImage && overlayTest
 
-      } else { "" }
+      val (imageOverlay, resizeString) = if (inOverlayTest) {
+        (
+          "&h=632" +
+            "&bm=normal" +
+            "&ba=bottom%2Cleft" +
+            "&blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNS8yNS9vdmVybGF5LWxvZ28tMTIwMC05MF9vcHQucG5n" +
+            "&fit=crop", imageType.resizeString.replace("&fit=max", ""))
+
+      } else { ("",imageType.resizeString) }
+
       val isSupportedImage = supportedImages.exists(extension => uri.getPath.toLowerCase.endsWith(extension))
 
       hostPrefixMapping.get(uri.getHost)
         .filter(const(ImageServerSwitch.isSwitchedOn))
         .filter(const(isSupportedImage))
         .map { host =>
-          val signedPath = ImageUrlSigner.sign(s"${uri.getRawPath}${imageType.resizeString}${imageOverlay}", host.token)
+          val signedPath = ImageUrlSigner.sign(s"${uri.getRawPath}${resizeString}${imageOverlay}", host.token)
           s"$imageHost/img/${host.prefix}$signedPath"
         }.getOrElse(url)
     } catch {
@@ -196,7 +201,7 @@ object ImgSrc extends Logging with implicits.Strings {
   }
 
   def getAmpImageUrl(ImageElement: ImageMedia): Option[String] = {
-      findNearestSrc(ImageElement, Item620)
+    findNearestSrc(ImageElement, Item620)
   }
 
   def getFallbackAsset(ImageElement: ImageMedia): Option[ImageAsset] = {
