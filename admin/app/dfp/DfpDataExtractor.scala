@@ -17,7 +17,7 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
 
   val targetedHighMerchandisingLineItems: HighMerchandisingLineItems = {
     val highMerchLineItems = lineItems
-      .filter(_.highMerchandisingTargets.nonEmpty)
+      .filter(_.targetsHighMerchandising)
       .foldLeft(Seq.empty[HighMerchandisingLineItem]) { (soFar, lineItem) =>
         soFar :+ HighMerchandisingLineItem(
           name = lineItem.name,
