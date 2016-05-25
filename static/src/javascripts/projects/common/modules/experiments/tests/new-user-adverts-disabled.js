@@ -30,14 +30,14 @@ define([
         };
 
         this.variants = [{
-            id: 'variant',
+            id: 'sampletest-variant',
             test: function () {
-                cookies.add('gu_adfree_test', 'variant');
+                cookies.add('gu_adfree_test', 'sampletest-variant');
             }
         }, {
-            id: 'control',
+            id: 'sample-testcontrol',
             test: function () {
-                cookies.add('gu_adfree_test', 'control');
+                cookies.add('gu_adfree_test', 'sample-testcontrol');
             }
         }];
 

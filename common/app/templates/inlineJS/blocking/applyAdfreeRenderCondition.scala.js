@@ -49,21 +49,21 @@
         var variants;
         var testVariantIndex;
 
-        var alreadyVisited = storage.local.get('gu.alreadyVisited') || 0;
+        var alreadyVisited = readLocalStorage('gu.alreadyVisited') || 0;
         if (alreadyVisited == 0
             && mvtCookieId
             && mvtCookieId > smallestTestId
             && mvtCookieId <= largestTestId
             && !isIOS() && !isSafari()) {
             variants = [{
-                id: 'variant',
+                id: 'sampletest-variant',
                 test: function () {
-                    writeCookie(AD_FREE_COOKIE, 'variant');
+                    writeCookie(AD_FREE_COOKIE, 'sampletest-variant');
                 }
             }, {
-                id: 'control',
+                id: 'sampletest-control',
                 test: function () {
-                    writeCookie(AD_FREE_COOKIE, 'control');
+                    writeCookie(AD_FREE_COOKIE, 'sampletest-control');
                 }
             }];
             testVariantIndex = mvtCookieId % variants.length;
