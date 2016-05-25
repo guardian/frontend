@@ -343,6 +343,15 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
+  val EuReferendumBadgeSwitch = Switch(
+    SwitchGroup.Feature,
+    "eu-referendum-badge",
+    "When ON, a badge will be applied to all EU Referendum articles",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 1),
+    exposeClientSide = false
+  )
+
   // Owner: Dotcom loyalty
   val EmailInArticleGtodaySwitch = Switch(
     SwitchGroup.Feature,
