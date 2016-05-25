@@ -238,17 +238,6 @@ $ima-controls-height: 70px;
     }
 }
 
-.vjs-custom-control-spacer,
-.vjs-live-control,
-.vjs-remaining-time,
-.vjs-playback-rate,
-.vjs-subtitles-button,
-.vjs-captions-button,
-.vjs-chapters-button,
-.vjs-caption-settings {
-    display: none;
-}
-
 .vjs-control-text {
     overflow: hidden !important; // some control texts have pseudo elements for icons, so they cannot use u-h.
     display: inline-block;

@@ -94,7 +94,7 @@
                     @immersiveMainMedia(page)
                 </div>
             }
-            case commercial.HostedPage(_) => {}
+            case commercial.HostedPage(_, _, _, _, _) => {}
             case _ => {
                 @headerAndTopAds(showAdverts, edition, adBelowNav)
             }
@@ -131,7 +131,7 @@
 
         @fragments.analytics.base(page)
 
-        @if(page.metadata.hasPageSkinOrAdTestPageSkin(edition)) {
+        @if(ForceOneByOnePxSlotSwitch.isSwitchedOn || page.metadata.hasPageSkinOrAdTestPageSkin(edition)) {
             @fragments.commercial.pageSkin()
         }
 

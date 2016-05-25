@@ -179,10 +179,10 @@ define([
         // set local storage: gu.alreadyVisited
         //
 
-        var alreadyVisted;
+        var alreadyVisited;
         if (guardian.isEnhanced) {
-            alreadyVisted = storage.local.get('gu.alreadyVisited') || 0;
-            storage.local.set('gu.alreadyVisited', alreadyVisted + 1);
+            alreadyVisited = storage.local.get('gu.alreadyVisited') || 0;
+            storage.local.set('gu.alreadyVisited', alreadyVisited + 1);
         }
 
         // Adds a global window:throttledScroll event to mediator, which throttles
