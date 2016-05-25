@@ -5,8 +5,7 @@ import utils.SafeLogging
 import common.ExecutionContexts
 import scala.concurrent.Future
 
-
-object HeaderLoggingFilter extends Filter with SafeLogging with ExecutionContexts {
+class HeaderLoggingFilter extends Filter with SafeLogging with ExecutionContexts {
   def logHeaders(rh: RequestHeader) {
     val keys: Set[String] = rh.headers.keys filterNot { name =>
       "Cookie" == name || "User-Agent" == name || "Authorization" == name

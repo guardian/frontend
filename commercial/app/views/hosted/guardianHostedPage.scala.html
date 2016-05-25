@@ -29,7 +29,7 @@
                     @videoBlock
                     <div class="hosted-fading">
                         <div class="hosted__meta">
-                            <h1 class="hosted__heading hosted-tone--renault">Designing the car of the future</h1>
+                            <h1 class="hosted__heading hosted-tone--renault">@page.videoTitle</h1>
                         </div>
                         <div class="hostedbadge hostedbadge--shouldscale">
                             <img class="hostedbadge__logo" src="@Static("images/commercial/logo_renault.jpg")">
@@ -43,9 +43,9 @@
                 <div class="meta__social hosted__social-wrapper" data-component="share">
                     <ul class="social social--top u-unstyled u-cf" data-component="social">
                         <li class="social__item social__item--facebook" data-link-name="facebook">
-                            <a  class="social__action social-icon-wrapper"
+                            <a class="social__action social-icon-wrapper"
                             data-link-name="facebook-social-share-1"
-                            href="https://www.facebook.com/dialog/share?app_id=180444840287&href=http://theguardian.com/commercial/advertiser-content/renault-car-of-the-future/design-competition-teaser&redirect_uri=http://theguardian.com/commercial/advertiser-content/renault-car-of-the-future/design-competition-teaser"
+                            href="https://www.facebook.com/dialog/share?app_id=180444840287&href=@{controllers.commercial.routes.HostedContentController.renderHostedPage(page.pageName)}&redirect_uri=@{controllers.commercial.routes.HostedContentController.renderHostedPage(page.pageName)}"
                             target="_blank"
                             title="facebook">
                                 <span class='inline-icon__fallback button share-modal__item share-modal__item--facebook'>Share on Facebook</span>
@@ -53,9 +53,9 @@
                             </a>
                         </li>
                         <li class="social__item social__item--twitter" data-link-name="twitter">
-                            <a  class="social__action social-icon-wrapper"
+                            <a class="social__action social-icon-wrapper"
                             data-link-name="twitter-social-share-1"
-                            href="https://twitter.com/intent/tweet?text=Advertiser content from Renault hosted by the Guardian: Designing the car of the future - video&url=http://theguardian.com/commercial/advertiser-content/renault-car-of-the-future/design-competition-teaser"
+                            href="https://twitter.com/intent/tweet?text=@{page.pageTitle}&url=@{controllers.commercial.routes.HostedContentController.renderHostedPage(page.pageName)}"
                             target="_blank"
                             title="twitter">
                                 <span class='inline-icon__fallback button share-modal__item share-modal__item--twitter'>Share on Twitter</span>
@@ -63,9 +63,9 @@
                             </a>
                         </li>
                         <li class="social__item social__item--email" data-link-name="email">
-                            <a  class="social__action social-icon-wrapper"
+                            <a class="social__action social-icon-wrapper"
                             data-link-name="email-social-share-1"
-                            href="mailto:?subject=Designing the car of the future - video&body=http://theguardian.com/commercial/advertiser-content/renault-car-of-the-future/design-competition-teaser"
+                            href="mailto:?subject=@{page.pageTitle}&body=@{controllers.commercial.routes.HostedContentController.renderHostedPage(page.pageName)}"
                             target="_blank"
                             title="email">
                                 <span class='inline-icon__fallback button share-modal__item share-modal__item--email'>Share via email</span>
@@ -75,7 +75,7 @@
                         <li class="social__item social__item--pinterest" data-link-name="pinterest">
                             <a  class="social__action social-icon-wrapper"
                             data-link-name="Pinterest-social-share-1"
-                            href="http://www.pinterest.com/pin/find/?url=http://theguardian.com/commercial/advertiser-content/renault-car-of-the-future/design-competition-teaser"
+                            href="http://www.pinterest.com/pin/find/?url=@{controllers.commercial.routes.HostedContentController.renderHostedPage(page.pageName)}"
                             target="_blank"
                             title="pinterest">
                                 <span class='inline-icon__fallback button share-modal__item share-modal__item--pinterest'>Share on Pinterest</span>
@@ -87,7 +87,7 @@
             </header>
             <div class="adverts__body">
                 <div class="hosted__standfirst">
-                    <p class="hosted__text">Who better to dream up the cars of tomorrow than the people who'll be buying them? Students at Central St Martins are working with Renault to design the interior for cars that will drive themselves. Watch this short video to find out more about the project, and visit this page again soon to catch up on the students' progress.</p>
+                    <p class="hosted__text">@page.standfirst</p>
                     <div class="hosted__terms">​This content was paid for and produced by Renault. For more information click
                         <div class="paidfor-label paidfor-meta__more has-popup hosted__link">
                             <button class="u-button-reset paidfor-label__btn hosted__label-btn--small popup__toggle hosted__label-btn" data-toggle="js-hosted-popup-bottom" data-link-name="terms-and-conditions-text-link">here @fragments.inlineSvg("arrow-down", "icon")</button>

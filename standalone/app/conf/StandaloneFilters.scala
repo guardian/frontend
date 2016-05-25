@@ -1,22 +1,20 @@
-import com.gu.googleauth.{FilterExemption, UserIdentity}
-import commercial.CommercialLifecycle
+package conf
+
+import javax.inject.Inject
+
+import com.gu.googleauth.{UserIdentity, FilterExemption}
 import common.ExecutionContexts
-import common.Logback.Logstash
-import common.dfp.FaciaDfpAgentLifecycle
-import conf._
 import controllers.AuthCookie
-import feed.OnwardJourneyLifecycle
-import play.Play
+import play.api.{Mode, Environment}
+import play.api.http.HttpFilters
 import play.api.mvc.Results._
-import play.api.mvc._
-import rugby.conf.RugbyLifecycle
-import services.ConfigAgentLifecycle
+import play.api.mvc.{Result, RequestHeader, Filter}
 
 import scala.concurrent.Future
 
 // OBVIOUSLY this is only for the preview server
 // NOT to be used elsewhere...
-object NoCacheFilter extends Filter with ExecutionContexts {
+class NoCacheFilter extends Filter with ExecutionContexts {
   override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] =
     nextFilter(request).map(_.withHeaders("Cache-Control" -> "no-cache"))
 }
@@ -38,9 +36,9 @@ object FilterExemptions {
 object PreviewAuthFilters {
   val LOGIN_ORIGIN_KEY = "loginOriginUrl"
   class AuthFilterWithExemptions( loginUrl: FilterExemption,
-                                  exemptions: Seq[FilterExemption]) extends Filter {
+    exemptions: Seq[FilterExemption])(implicit environment: Environment) extends Filter {
 
-    private def doNotAuthenticate(request: RequestHeader) = Play.isTest ||
+    private def doNotAuthenticate(request: RequestHeader) = environment.mode == Mode.Test ||
       request.path.startsWith(loginUrl.path) ||
       exemptions.exists(exemption => request.path.startsWith(exemption.path))
 
@@ -59,16 +57,11 @@ object PreviewAuthFilters {
   }
 }
 
-class StandaloneGlobal extends WithFilters(
-  new PreviewAuthFilters.AuthFilterWithExemptions(
+class StandaloneFilters @Inject() (
+    implicit environment: Environment
+) extends HttpFilters {
+
+  val filters = new PreviewAuthFilters.AuthFilterWithExemptions(
     FilterExemptions.loginExemption,
-    FilterExemptions.exemptions):: NoCacheFilter :: conf.Filters.common: _*)
-  with CommercialLifecycle
-  with OnwardJourneyLifecycle
-  with ConfigAgentLifecycle
-  with FaciaDfpAgentLifecycle
-  with SwitchboardLifecycle
-  with FootballLifecycle
-  with CricketLifecycle
-  with RugbyLifecycle
-  with Logstash
+    FilterExemptions.exemptions) :: new NoCacheFilter() ::Filters.common
+}

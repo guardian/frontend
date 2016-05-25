@@ -1,19 +1,15 @@
-import com.google.inject.Guice
 import common.CloudWatchApplicationMetrics
 import common.Logback.Logstash
 import conf._
-import filters.{StrictTransportSecurityHeaderFilter, HeaderLoggingFilter}
 import play.api.Play.current
 import play.api._
 import play.api.mvc._
 import play.api.mvc.Results._
-import play.api.inject._
 import play.api.inject.guice._
 import scala.concurrent.Future
 import utils.SafeLogging
 
-object Global extends WithFilters(HeaderLoggingFilter :: StrictTransportSecurityHeaderFilter :: conf.Filters.common: _*)
-  with SafeLogging
+object Global extends SafeLogging
   with CloudWatchApplicationMetrics
   with IdentityLifecycle
   with SwitchboardLifecycle

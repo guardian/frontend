@@ -1,18 +1,16 @@
 import commercial.CommercialLifecycle
 import common.Logback.Logstash
 import common._
-import conf.{CommercialHealthCheckLifeCycle, CorsErrorHandler, Filters, SwitchboardLifecycle}
+import conf.{CommercialHealthCheckLifeCycle, CorsErrorHandler, SwitchboardLifecycle}
 import dev.DevParametersLifecycle
 import metrics.MetricUploader
-import play.api.mvc.WithFilters
 
 package object CommercialMetrics {
 
   val metrics = MetricUploader("Commercial")
 }
 
-object Global extends WithFilters(Filters.common: _*)
-  with CommercialLifecycle
+object Global extends CommercialLifecycle
   with DevParametersLifecycle
   with SwitchboardLifecycle
   with CloudWatchApplicationMetrics

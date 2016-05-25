@@ -3,11 +3,9 @@ import common.Logback.Logstash
 import conf._
 import dev.DevParametersLifecycle
 import ophan.SurgingContentAgentLifecycle
-import play.api.mvc.WithFilters
 import rugby.conf.RugbyLifecycle
 
-object Global extends WithFilters(Filters.common: _*)
-  with DevParametersLifecycle
+object Global extends DevParametersLifecycle
   with CloudWatchApplicationMetrics
   with SurgingContentAgentLifecycle
   with SwitchboardLifecycle

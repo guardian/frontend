@@ -1,6 +1,5 @@
 @import common.commercial.ContainerModel
 @import common.dfp.{Keyword, Series}
-@import conf.switches.Switches
 @import layout.MetaDataHeader
 @import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList, SingleCampaign, Video}
 @import views.html.commercial.containers.paidContainer
@@ -15,26 +14,15 @@
   maybeContainerModel: Option[ContainerModel] = None)(implicit request: RequestHeader)
 
 @renderBrandingDataAttributes() = {
-    @if(Switches.cardsDecidePaidContainerBranding.isSwitchedOn) {
-        @for(container <- maybeContainerModel) {
-            @for(branding <- container.brandingAttributes) {
-                @for(sponsor <- branding.sponsor){data-sponsor="@sponsor"}
-                @for(seriesId <- branding.seriesId) { data-series="@seriesId" }
-                @for(keywordId <- branding.keywordId) { data-keywords="@keywordId" }
-                data-sponsorship="@branding.sponsorshipType"
-            }
+    @for(sponsor <- containerDefinition.commercialOptions.sponsor) { data-sponsor="@sponsor"}
+    @for(tag <- containerDefinition.commercialOptions.sponsorshipTag) {
+        @tag.tagType match {
+            case Series => { data-series="@{ tag.tagId}"}
+            case Keyword => { data-keywords="@{ tag.tagId}"}
         }
-    } else {
-        @for(sponsor <- containerDefinition.commercialOptions.sponsor) { data-sponsor="@sponsor"}
-        @for(tag <- containerDefinition.commercialOptions.sponsorshipTag) {
-            @tag.tagType match {
-                case Series => { data-series="@{ tag.tagId}"}
-                case Keyword => { data-keywords="@{ tag.tagId}"}
-            }
-        }
-        @containerDefinition.commercialOptions.sponsorshipType.map { sponsorshipType =>
-        data-sponsorship="@sponsorshipType"
-        }
+    }
+    @containerDefinition.commercialOptions.sponsorshipType.map { sponsorshipType =>
+    data-sponsorship="@sponsorshipType"
     }
 }
 
@@ -76,17 +64,12 @@
 
         case _ => {
         <section id="@componentName"
-        class="@GetClasses.forContainerDefinition(containerDefinition)
-        @if(Switches.cardsDecidePaidContainerBranding.isSwitchedOn){
-            @for(container <- maybeContainerModel){
-                @if(container.isSingleSponsorContainer){ js-sponsored-container }
-            }
-        }"
-        data-link-name="container-@{containerDefinition.index + 1} | @componentName"
-        data-id="@containerDefinition.dataId"
-        @renderBrandingDataAttributes()
-        data-component="@componentName"
-        aria-expanded="true">
+                 class="@GetClasses.forContainerDefinition(containerDefinition)"
+                 data-link-name="container-@{containerDefinition.index + 1} | @componentName"
+                 data-id="@containerDefinition.dataId"
+                 @renderBrandingDataAttributes()
+                 data-component="@componentName"
+                 aria-expanded="true">
 
             @if(containerDefinition.isStoryPackage){
                 @conf.Static.css.inline("story-package").map { css =>

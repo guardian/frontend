@@ -1,6 +1,7 @@
 package common.Logback
 
 import com.amazonaws.auth.AWSCredentialsProvider
+import com.amazonaws.util.EC2MetadataUtils
 import common.ManifestData
 import conf.switches.Switches
 import conf.Configuration
@@ -29,7 +30,8 @@ object Logstash {
     "app" -> Configuration.environment.projectName,
     "stage" -> Configuration.environment.stage.toUpperCase,
     "build" -> ManifestData.build,
-    "revision" -> ManifestData.revision
+    "revision" -> ManifestData.revision,
+    "ec2_instance" -> Option(EC2MetadataUtils.getInstanceId).getOrElse("Not running on ec2")
   )
 
   val config = for {

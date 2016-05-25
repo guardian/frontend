@@ -1,5 +1,5 @@
 @(item: model.ContentType, page: model.Page, showBadge: Boolean = true, showExtras: Boolean = true)(implicit request: RequestHeader)
-@import conf.switches.Switches.{SaveForLaterSwitch, galleryRedesign}
+@import conf.switches.Switches.{SaveForLaterSwitch, staticBadgesSwitch}
 @import model._
 @import views.support.ContentOldAgeDescriber
 
@@ -64,7 +64,10 @@
     @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty)) { content__meta-container--email}">
 
 
-    @if(showBadge && (item.tags.isVideo || item.tags.isAudio || (item.tags.isArticle && !item.commercial.isAdvertisementFeature))) {
+    @if(
+        (showBadge && (item.tags.isVideo || item.tags.isAudio || (item.tags.isArticle && !item.commercial.isAdvertisementFeature))) ||
+            (staticBadgesSwitch.isSwitchedOn && (item.tags.isVideo || item.tags.isAudio))
+    ) {
         @fragments.commercial.badge(item, page)
     }
 

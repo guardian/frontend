@@ -1,13 +1,13 @@
 package views.support
 
 import common.Edition
-import common.commercial.ContainerModel
-import common.dfp.AdSize.{leaderboardSize, responsiveSize}
+import common.commercial.{CardContent, ContainerModel}
+import common.dfp.AdSize.responsiveSize
 import common.dfp._
 import conf.switches.Switches._
 import layout.{ColumnAndCards, ContentCard, FaciaContainer}
 import model.pressed.{CollectionConfig, PressedContent}
-import model.{ContentType, MetaData, Page, Tag}
+import model.{Branding, ContentType, MetaData, Page, PaidContent, Tag}
 
 object Commercial {
 
@@ -85,21 +85,39 @@ object Commercial {
 
   object container {
 
-    def shouldRenderAsPaidContainer(isPaidFront: Boolean, container: FaciaContainer, containerModel: Option[ContainerModel]): Boolean = {
+    def shouldRenderAsPaidContainer(isPaidFront: Boolean,
+                                    container: FaciaContainer,
+                                    optContainerModel: Option[ContainerModel]): Boolean = {
 
-      def containerHasPaidContent(container: ContainerModel): Boolean = {
+      def isPaid(containerModel: ContainerModel): Boolean = {
 
-        def isPaid(branding: Option[SponsorDataAttributes]): Boolean =
-          branding.exists(_.sponsorshipType == "advertisement-features")
+        def isPaidBrandingAttributes(brandingAttributes: Option[SponsorDataAttributes]): Boolean =
+          brandingAttributes.exists(_.sponsorshipType == "advertisement-features")
 
-        val content = container.content
-        val paidCards = content.initialCards.filter(card => isPaid(card.branding))
+        def isPaidBranding(branding: Option[Branding]): Boolean =
+          branding.exists(_.sponsorshipType == PaidContent)
 
-        isPaid(container.brandingAttributes) || paidCards.nonEmpty
+        def isPaid(card: CardContent): Boolean = if (staticBadgesSwitch.isSwitchedOn) {
+          isPaidBranding(card.branding)
+        } else false
+
+        val isPaidContainer = if (staticBadgesSwitch.isSwitchedOn) {
+          isPaidBranding(containerModel.branding)
+        } else {
+          isPaidBrandingAttributes(containerModel.brandingAttributes)
+        }
+
+        val isAllPaidContent = {
+          val content = containerModel.content
+          val cards = content.initialCards ++ content.showMoreCards
+          cards.nonEmpty && cards.forall(isPaid)
+        }
+
+        isPaidContainer || isAllPaidContent
       }
 
       !isPaidFront &&
-        ( container.commercialOptions.isPaidContainer || containerModel.exists(containerHasPaidContent) )
+        (container.commercialOptions.isPaidContainer || optContainerModel.exists(isPaid))
     }
 
     def mkSponsorDataAttributes(config: CollectionConfig): Option[SponsorDataAttributes] = {

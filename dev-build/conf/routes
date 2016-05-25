@@ -301,7 +301,6 @@ GET            /$path<commercial-containers>                                    
 
 # Commercial Admin
 GET            /commercial                                                                                                       controllers.admin.CommercialController.renderCommercialMenu()
-GET            /commercial/renderTimes                                                                                           controllers.admin.CommercialController.renderCommercialRenderTimes()
 GET            /commercial/specialadunits                                                                                        controllers.admin.CommercialController.renderSpecialAdUnits()
 GET            /commercial/sponsorships                                                                                          controllers.admin.CommercialController.renderPaidForTags()
 GET            /commercial/pageskins                                                                                             controllers.admin.CommercialController.renderPageskins()
@@ -309,8 +308,6 @@ GET            /commercial/surging                                              
 GET            /commercial/inline-merchandising                                                                                  controllers.admin.CommercialController.renderInlineMerchandisingTargetedTags()
 GET            /commercial/high-merchandising                                                                                    controllers.admin.CommercialController.renderHighMerchandisingTargetedTags()
 GET            /commercial/templates                                                                                             controllers.admin.CommercialController.renderCreativeTemplates()
-GET            /commercial/adunits/toapprove                                                                                     controllers.admin.CommercialAdUnitController.renderToApprove()
-POST           /commercial/adunits/toapprove                                                                                     controllers.admin.CommercialAdUnitController.approve()
 GET            /commercial/fluid250                                                                                              controllers.admin.CommercialController.renderFluidAds()
 GET            /commercial/adtests                                                                                               controllers.admin.CommercialController.renderAdTests()
 GET            /commercial/dfp/flush/view                                                                                        controllers.admin.commercial.DfpDataController.renderCacheFlushPage()
