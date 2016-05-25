@@ -31,6 +31,14 @@
         return readCookie(AD_FREE_COOKIE) == "variant";
     }
 
+    function isIOS() {
+        return /(iPad|iPhone|iPod touch)/i.test(navigator.userAgent);
+    }
+
+    function isSafari() {
+        return /(safari)/i.test(navigator.userAgent);
+    }
+
     function assignUser() {
         var mvtNumValues = 899999;
         var audience = 0.1; // keep this in sync with new-user-adverts-disabled.js
@@ -41,7 +49,12 @@
         var variants;
         var testVariantIndex;
 
-        if (mvtCookieId && mvtCookieId > smallestTestId && mvtCookieId <= largestTestId) {
+        var alreadyVisited = storage.local.get('gu.alreadyVisited') || 0;
+        if (alreadyVisited == 0
+            && mvtCookieId
+            && mvtCookieId > smallestTestId
+            && mvtCookieId <= largestTestId
+            && !isIOS() && !isSafari()) {
             variants = [{
                 id: 'variant',
                 test: function () {

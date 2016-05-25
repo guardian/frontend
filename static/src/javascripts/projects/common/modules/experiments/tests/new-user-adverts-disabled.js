@@ -1,11 +1,13 @@
 define([
     'common/utils/config',
     'common/utils/cookies',
-    'common/utils/storage'
+    'common/utils/storage',
+    'common/utils/detect'
 ], function (
     config,
     cookies,
-    storage
+    storage,
+    detect
 ) {
     return function () {
         this.id = 'NewUserAdvertsDisabled';
@@ -19,7 +21,7 @@ define([
         this.idealOutcome = 'People come back more after the first visit.';
 
         this.canRun = function () {
-            if (storage.local.isStorageAvailable()) {
+            if (storage.local.isStorageAvailable() && !detect.isIOS() && detect.getUserAgent.browser !== 'Safari') {
                 var alreadyVisited = storage.local.get('gu.alreadyVisited') || 0;
                 return alreadyVisited == 0;
             } else {
