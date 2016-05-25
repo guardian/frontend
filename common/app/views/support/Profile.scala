@@ -56,6 +56,15 @@ sealed trait ElementProfile {
     s"?$params"
   }
 
+  lazy val overlayString = {
+    val height = "h=632"
+    val blendMode = "bm=normal"
+    val blendOffset = "ba=bottom%2Cleft"
+    val blendImage = "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNS8yNS9vdmVybGF5LWxvZ28tMTIwMC05MF9vcHQucG5n"
+    val fit = "fit=crop"
+    Seq(height, blendMode, blendOffset, blendImage, fit).mkString("&")
+  }
+
   private def toResizeString(i: Option[Int]) = i.map(_.toString).getOrElse("-")
 }
 
@@ -125,15 +134,9 @@ object ImgSrc extends Logging with implicits.Strings {
       val uri = new URI(url.trim.encodeURI)
       val inOverlayTest = imageType == FacebookOpenGraphImage && overlayTest
 
-      val (imageOverlay, resizeString) = if (inOverlayTest) {
-        (
-          "&h=632" +
-          "&bm=normal" +
-          "&ba=bottom%2Cleft" +
-          "&blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNS8yNS9vdmVybGF5LWxvZ28tMTIwMC05MF9vcHQucG5n" +
-          "&fit=crop", imageType.resizeString.replace("&fit=max", ""))
-
-      } else { ("",imageType.resizeString) }
+      val resizeString = if (inOverlayTest) {
+          imageType.resizeString.replace("&fit=max", "") + "&" + imageType.overlayString }
+        else { imageType.resizeString }
 
       val isSupportedImage = supportedImages.exists(extension => uri.getPath.toLowerCase.endsWith(extension))
 
@@ -141,7 +144,7 @@ object ImgSrc extends Logging with implicits.Strings {
         .filter(const(ImageServerSwitch.isSwitchedOn))
         .filter(const(isSupportedImage))
         .map { host =>
-          val signedPath = ImageUrlSigner.sign(s"${uri.getRawPath}${resizeString}${imageOverlay}", host.token)
+          val signedPath = ImageUrlSigner.sign(s"${uri.getRawPath}$resizeString", host.token)
           s"$imageHost/img/${host.prefix}$signedPath"
         }.getOrElse(url)
     } catch {
