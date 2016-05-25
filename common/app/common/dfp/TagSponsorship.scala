@@ -100,10 +100,6 @@ case class HighMerchandisingLineItem(
 
     lazy val matchesUrl: Boolean = urls.isEmpty || urls.exists(_.contains(url))
 
-    if(matchesTag && matchesAdUnit && matchesEdition && matchesUrl){
-      println(url)
-    }
-
     matchesTag && matchesAdUnit && matchesEdition && matchesUrl
   }
 }
