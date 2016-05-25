@@ -257,6 +257,15 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val FluidAdverts = Switch(
+    SwitchGroup.Commercial,
+    "fluid-adverts",
+    "Request fluid adverts from DFP",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 30),
+    exposeClientSide = false
+  )
+
   val staticBadgesSwitch = Switch(
     SwitchGroup.Commercial,
     "static-badges",
