@@ -128,10 +128,10 @@ object ImgSrc extends Logging with implicits.Strings {
       val (imageOverlay, resizeString) = if (inOverlayTest) {
         (
           "&h=632" +
-            "&bm=normal" +
-            "&ba=bottom%2Cleft" +
-            "&blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNS8yNS9vdmVybGF5LWxvZ28tMTIwMC05MF9vcHQucG5n" +
-            "&fit=crop", imageType.resizeString.replace("&fit=max", ""))
+          "&bm=normal" +
+          "&ba=bottom%2Cleft" +
+          "&blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNS8yNS9vdmVybGF5LWxvZ28tMTIwMC05MF9vcHQucG5n" +
+          "&fit=crop", imageType.resizeString.replace("&fit=max", ""))
 
       } else { ("",imageType.resizeString) }
 
