@@ -27,6 +27,10 @@
 @import 'module/test-welcome-header';
 @import 'module/commercial/_hostedbadge';
 
+// Needed for more seamless loading of Hosted By page (Renault release)
+@import 'module/commercial/glabs/_hosted';
+
+
 /* ==========================================================================
    External modules
    ========================================================================== */
@@ -37,8 +41,6 @@
 @import 'module/external/_from-content-api';
 @import 'module/content/_badging';
 
-// Needed for more seamless loading of Hosted By page (Renault release)
-@import 'module/commercial/glabs/_hosted';
 
 /* ==========================================================================
    Atoms
