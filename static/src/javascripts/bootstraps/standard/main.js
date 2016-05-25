@@ -83,7 +83,7 @@ define([
                     }
 
                     return config.switches.enableSentryReporting &&
-                        Math.random() < 0.2 &&
+                        Math.random() < 0.1 &&
                         !isDev; // don't actually notify sentry in dev mode
                 }
             }

@@ -524,17 +524,20 @@ define([
 
             // This empty slot could be caused by a targeting problem,
             // let's report these and diagnose the problem in sentry.
-            var adUnitPath = event.slot.getAdUnitPath();
-            var adTargetingMap = event.slot.getTargetingMap();
-            var adTargetingKValues = adTargetingMap ? adTargetingMap['k'] : [];
-            var adKeywords = adTargetingKValues ? adTargetingKValues.join(', ') : '';
+            // Keep the sample rate low, otherwise we'll get rate-limited (report-error will also sample down)
+            if (config.switches.reportEmptyDfpResponses && Math.random() < 0.001) {
+                var adUnitPath = event.slot.getAdUnitPath();
+                var adTargetingMap = event.slot.getTargetingMap();
+                var adTargetingKValues = adTargetingMap ? adTargetingMap['k'] : [];
+                var adKeywords = adTargetingKValues ? adTargetingKValues.join(', ') : '';
 
-            reportError(new Error('dfp returned an empty ad response'), {
-                feature: 'commercial',
-                adUnit: adUnitPath,
-                adSlot: adSlotId,
-                adKeywords: adKeywords
-            }, false);
+                reportError(new Error('dfp returned an empty ad response'), {
+                    feature: 'commercial',
+                    adUnit: adUnitPath,
+                    adSlot: adSlotId,
+                    adKeywords: adKeywords
+                }, false);
+            }
         } else {
             $adSlot = $('#' + adSlotId);
 
