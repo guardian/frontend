@@ -35,9 +35,9 @@ define([
                 cookies.add('gu_adfree_test', 'sampletest-variant');
             }
         }, {
-            id: 'sample-testcontrol',
+            id: 'sampletest-control',
             test: function () {
-                cookies.add('gu_adfree_test', 'sample-testcontrol');
+                cookies.add('gu_adfree_test', 'sampletest-control');
             }
         }];
 
