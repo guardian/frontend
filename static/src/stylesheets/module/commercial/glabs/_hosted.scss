@@ -23,7 +23,7 @@ $hosted-video-height: 540px;
 }
 
 .hosted-tone--dark {
-    background-color: #3E3E3E;
+    background-color: #3e3e3e;
 }
 
 .hosted__header {
@@ -223,7 +223,7 @@ $hosted-video-height: 540px;
     &.vjs .vjs-play-control {
         width: 37px;
         height: 37px;
-        margin: 6px 20px 6px 20px;
+        margin: 6px 20px;
 
         @include mq(desktop) {
             margin-left: $gs-column-width * 1.5;
