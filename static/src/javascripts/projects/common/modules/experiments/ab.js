@@ -20,6 +20,7 @@ define([
     'common/modules/experiments/tests/participation-hide-half-of-comments',
     'common/modules/experiments/tests/play-video-on-fronts',
     'common/modules/experiments/tests/video-controls-on-main-media',
+    'common/modules/experiments/tests/new-user-adverts-disabled',
     'lodash/arrays/flatten',
     'lodash/arrays/zip',
     'lodash/collections/forEach',
@@ -55,6 +56,7 @@ define([
     HideHalfOfComments,
     PlayVideoOnFronts,
     VideoControlsOnMainMedia,
+    NewUserAdvertsDisabled,
     flatten,
     zip,
     forEach,
@@ -85,7 +87,8 @@ define([
         new WelcomeHeader(),
         new HideHalfOfComments(),
         new PlayVideoOnFronts(),
-        new VideoControlsOnMainMedia()
+        new VideoControlsOnMainMedia(),
+        new NewUserAdvertsDisabled()
     ]);
 
     var participationsKey = 'gu.ab.participations';
