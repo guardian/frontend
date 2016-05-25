@@ -142,9 +142,9 @@ $hosted-video-height: 540px;
 .hosted__video {
     vertical-align: top;
 
-    //.vjs-big-play-button .vjs-control-text {
-
-    //}
+    .vjs-big-play-button .vjs-control-text {
+        display: none;
+    }
 
     //those control buttons will fade in on video play
     .vjs-fullscreen-control,
@@ -202,6 +202,12 @@ $hosted-video-height: 540px;
         margin-top: 14px;
     }
 
+    .vjs-volume-menu-button {
+        @include mq(desktop) {
+            margin-right: $gs-column-width * 1.5;
+        }
+    }
+
     .vjs-menu-button {
         margin-top: 17px;
 
@@ -217,7 +223,11 @@ $hosted-video-height: 540px;
     &.vjs .vjs-play-control {
         width: 37px;
         height: 37px;
-        margin: 6px 20px 6px $gs-gutter;
+        margin: 6px 20px 6px 20px;
+
+        @include mq(desktop) {
+            margin-left: $gs-column-width * 1.5;
+        }
     }
 
     &.vjs-using-native-controls .vjs-control-bar {
@@ -231,16 +241,18 @@ $hosted-video-height: 540px;
 
 .hosted__meta {
     position: absolute;
-    left: $gs-gutter;
-    bottom: 50px;
+    left: 20px;
+    bottom: 60px;
     width: 100%;
     color: #ffffff;
 
     @include mq($until: tablet) {
-        left: 76px;
         right: $gs-gutter;
-        bottom: 3px;
         width: auto;
+    }
+
+    @include mq(desktop) {
+        left: $gs-column-width * 1.5;
     }
 }
 
@@ -274,11 +286,6 @@ $hosted-video-height: 540px;
     margin: 0;
     font-size: 26px;
     line-height: 26px;
-
-    @include mq(tablet) {
-        font-size: 46px;
-        line-height: 44px;
-    }
 
     @include mq(desktop) {
         font-size: 36px;
