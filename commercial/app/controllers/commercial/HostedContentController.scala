@@ -10,7 +10,7 @@ import views.html.hosted.{episode1Video, guardianHostedPage, teaserVideo}
 object HostedContentController extends Controller {
 
   def renderHostedPage(pageName: String) = Action { implicit request =>
-    val pageUrl = controllers.commercial.routes.HostedContentController.renderHostedPage(pageName).absoluteURL
+    lazy val pageUrl = routes.HostedContentController.renderHostedPage(pageName).absoluteURL
     pageName match {
 
       case "design-competition-teaser" =>
