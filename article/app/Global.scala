@@ -1,16 +1,14 @@
 import common.Logback.Logstash
 import common.dfp.DfpAgentLifecycle
 import common.{CloudWatchApplicationMetrics, ContentApiMetrics}
-import conf.{ArticleHealthCheckLifeCycle, CorsErrorHandler, Filters, SwitchboardLifecycle}
+import conf.{ArticleHealthCheckLifeCycle, CorsErrorHandler, SwitchboardLifecycle}
 import dev.DevParametersLifecycle
 import metrics.FrontendMetric
 import ophan.SurgingContentAgentLifecycle
-import play.api.mvc.WithFilters
 import services.NewspaperBooksAndSectionsAutoRefresh
 
 object Global
-  extends WithFilters(Filters.common: _*)
-  with NewspaperBooksAndSectionsAutoRefresh
+  extends NewspaperBooksAndSectionsAutoRefresh
   with DevParametersLifecycle
   with DfpAgentLifecycle
   with CloudWatchApplicationMetrics

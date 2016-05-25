@@ -8,7 +8,7 @@
         position: absolute;
         top: $gs-baseline / 2;
         right: $gs-baseline / 2;
-        width: auto;
+        width: 32px;
         padding: 8px 7px 1px;
         border-radius: 100%;
         z-index: $zindex-modal;
@@ -31,6 +31,7 @@
             top: $gs-baseline * 1.5;
             right: $gs-gutter;
             padding: 10px 10px 5px;
+            width: 38px;
 
             &.is-active::before {
                 top: 38px;
