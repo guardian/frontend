@@ -1,6 +1,6 @@
 define([
     'qwery',
-    'picturefill'
+    'picturefill',
     'common/utils/mediator'
 ],
 function (
