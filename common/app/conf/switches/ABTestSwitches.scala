@@ -41,12 +41,12 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABParticipationStarRatings = Switch(
+  val ABParticipationLowFricFilm = Switch(
     SwitchGroup.ABTests,
-    "ab-participation-star-ratings",
+    "ab-participation-low-fric-film",
     "AB test switch to insert star ratings into film articles",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 13),
+    sellByDate = new LocalDate(2016, 6, 8),
     exposeClientSide = true
   )
 
