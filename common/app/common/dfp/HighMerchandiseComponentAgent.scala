@@ -8,8 +8,8 @@ trait HighMerchandiseComponentAgent {
 
   protected def targetedHighMerchandisingLineItems: Seq[HighMerchandisingLineItem]
 
-  def isTargetedByHighMerch(adUnitSuffix:String, tags: Seq[Tag],edition:Edition, url:String) = {
+  def isTargetedByHighMerch(adUnitSuffix:String, tags: Seq[Tag],edition:Edition, pagePath:String) = {
     highMerchandisingComponentSwitch.isSwitchedOff ||
-    targetedHighMerchandisingLineItems.exists(_.matchesPageTargeting(adUnitSuffix, tags, edition,url))
+    targetedHighMerchandisingLineItems.exists(_.matchesPageTargeting(adUnitSuffix, tags, edition,pagePath))
   }
 }
