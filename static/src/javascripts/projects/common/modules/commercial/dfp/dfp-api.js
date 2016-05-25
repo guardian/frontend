@@ -458,6 +458,7 @@ define([
      */
 
     var callbacks = {
+        '0,0': isFluid250('ad-slot--top-banner-ad'),
         '300,251': function (event, $adSlot) {
             stickyMpu($adSlot);
         },
