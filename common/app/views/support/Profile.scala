@@ -60,22 +60,22 @@ sealed trait ElementProfile {
 }
 
 case class Profile(
-                    override val width: Option[Int] = None,
-                    override val height: Option[Int] = None,
-                    override val hidpi: Boolean = false,
-                    override val compression: Int = 95,
-                    override val isPng: Boolean = false) extends ElementProfile
+  override val width: Option[Int] = None,
+  override val height: Option[Int] = None,
+  override val hidpi: Boolean = false,
+  override val compression: Int = 95,
+  override val isPng: Boolean = false) extends ElementProfile
 
 object VideoProfile {
   lazy val ratioHD = new Fraction(16,9)
 }
 
 case class VideoProfile(
-                         override val width: Some[Int],
-                         override val height: Some[Int],
-                         override val hidpi: Boolean = false,
-                         override val compression: Int = 95,
-                         override val isPng: Boolean = false) extends ElementProfile {
+  override val width: Some[Int],
+  override val height: Some[Int],
+  override val hidpi: Boolean = false,
+  override val compression: Int = 95,
+  override val isPng: Boolean = false) extends ElementProfile {
 
   lazy val isRatioHD: Boolean = Precision.compareTo(VideoProfile.ratioHD.doubleValue, aspectRatio.doubleValue, 0.1d) == 0
 
