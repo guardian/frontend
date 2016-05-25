@@ -77,13 +77,13 @@ object Multi
           MasterclassAgent.specificMasterclasses(Seq(eventBriteId)).filterNot(_.mainPicture.isEmpty).headOption orElse {
             MasterclassAgent.masterclassesTargetedAt(segment).filterNot(_.mainPicture.isEmpty).headOption
           } map {
-            views.html.masterClasses.masterclassesBlended(_, clickMacro)
+            views.html.masterclasses.masterclassesBlended(_, clickMacro)
           }
         }
       case ("masterclasses", _) =>
         Future.successful {
           MasterclassAgent.masterclassesTargetedAt(segment).filterNot(_.mainPicture.isEmpty).headOption map {
-            views.html.masterClasses.masterclassesBlended(_, clickMacro)
+            views.html.masterclasses.masterclassesBlended(_, clickMacro)
           }
         }
       case ("soulmates", _) =>
