@@ -161,6 +161,13 @@
         padding-bottom: $gs-row-height / 2;
         padding-top: $gs-row-height / 2;
 
+        /* Oh horrible code, I'm looking at you. One day, you'll disappear.
+           One day, I'll fucking rip you apart.
+         */
+        &.ad-slot--h250 {
+            height: 250px;
+        }
+
         .ad-slot__label {
             margin-top: (-1) * $gs-row-height / 2;
         }
