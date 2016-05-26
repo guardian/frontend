@@ -273,13 +273,22 @@ define([
                 });
             });
 
-            it('should fire the success function', function() {
+            it('should fire the success function when canRun is true', function() {
                 var spy = sinon.spy();
 
                 ab.addTest(test.one);
-
                 test.one.variants[0].success = spy;
+                ab.registerCompleteEvents();
 
+                expect(spy).toHaveBeenCalled();
+            });
+
+            it('should fire the success function when canRun is false', function() {
+                var spy = sinon.spy();
+
+                test.one.canRun = function() { return false; };
+                ab.addTest(test.one);
+                test.one.variants[0].success = spy;
                 ab.registerCompleteEvents();
 
                 expect(spy).toHaveBeenCalled();
