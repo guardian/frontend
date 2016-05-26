@@ -30,6 +30,7 @@ define([
     'lodash/collections/map',
     'lodash/collections/reduce',
     'lodash/collections/find',
+    'lodash/functions/memoize',
     'lodash/objects/pick',
     'lodash/utilities/noop',
     'lodash/objects/merge',
@@ -66,6 +67,7 @@ define([
     map,
     reduce,
     find,
+    memoize,
     pick,
     noop,
     merge,
@@ -252,43 +254,59 @@ define([
             var variant = getVariant(test, variantId);
             if (variant) {
                 variant.test();
-
-                var onTestComplete = variant.success || noop;
-                onTestComplete(recordTestComplete(test, variantId));
             } else if (variantId === 'notintest' && test.notInTest) {
                 test.notInTest();
             }
         }
     }
 
-    function allocateUserToTest(test) {
-
-        // Skip allocation if the user is already participating, or the test is invalid.
-        if (!testCanBeRun(test) || isParticipating(test)) {
-            return;
-        }
-
-        // Determine whether the user is in the test or not. The test population is just a subset of mvt ids.
-        // A test population must begin from a specific value. Overlapping test ranges are permitted.
-        var variantIds, testVariantId,
-            smallestTestId = mvtCookie.getMvtNumValues() * test.audienceOffset,
-            largestTestId  = smallestTestId + mvtCookie.getMvtNumValues() * test.audience,
-        // Get this browser's mvt test id.
-            mvtCookieId = mvtCookie.getMvtValue();
+    /**
+     * Determine whether the user is in the test or not and return the associated
+     * variant ID.
+     *
+     * The test population is just a subset of mvt ids. A test population must
+     * begin from a specific value. Overlapping test ranges are permitted.
+     *
+     * @return {String} variant ID
+     */
+    var variantIdFor = memoize(function(test) {
+        var smallestTestId = mvtCookie.getMvtNumValues() * test.audienceOffset;
+        var largestTestId = smallestTestId + mvtCookie.getMvtNumValues() * test.audience;
+        var mvtCookieId = mvtCookie.getMvtValue();
 
         if (mvtCookieId && mvtCookieId > smallestTestId && mvtCookieId <= largestTestId) {
             // This mvt test id is in the test range, so allocate it to a test variant.
-            variantIds = map(test.variants, function (variant) {
+            var variantIds = map(test.variants, function (variant) {
                 return variant.id;
             });
-            testVariantId = mvtCookieId % variantIds.length;
 
-            addParticipation(test, variantIds[testVariantId]);
-
+            return variantIds[mvtCookieId % variantIds.length];
         } else {
-            addParticipation(test, 'notintest');
+            return 'notintest';
+        }
+    }, function(test) { return test.id; }); // use test ids as memo cache keys
+
+    function allocateUserToTest(test) {
+        // Only allocate the user if the test is valid and they're not already participating.
+        if (testCanBeRun(test) && !isParticipating(test)) {
+             addParticipation(test, variantIdFor(test));
         }
     }
+
+    /**
+     * Set up the completion listener for a test
+     */
+    function registerCompleteEvent(test) {
+        var variantId = variantIdFor(test);
+
+        if (variantId !== 'notintest') {
+            var variant = getVariant(test, variantId);
+            var onTestComplete = variant.success || noop;
+
+            onTestComplete(recordTestComplete(test, variantId));
+        }
+    }
+
 
     function isTestSwitchedOn(test) {
         return config.switches['ab' + test.id];
@@ -371,9 +389,11 @@ define([
         },
 
         run: function () {
-            forEach(getActiveTests(), function (test) {
-                run(test);
-            });
+            forEach(getActiveTests(), run);
+        },
+
+        registerCompleteEvents: function() {
+            forEach(getActiveTests(), registerCompleteEvent);
         },
 
         isEventApplicableToAnActiveTest: function (event) {
@@ -449,6 +469,7 @@ define([
         // testing
         reset: function () {
             TESTS = [];
+            variantIdFor.cache = {};
         }
     };
 
