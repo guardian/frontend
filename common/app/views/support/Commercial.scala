@@ -48,25 +48,11 @@ object Commercial {
         "top-banner-ad-container",
         "top-banner-ad-container--desktop",
         "top-banner-ad-container--above-nav",
-        "js-top-banner-above-nav")
+        "js-top-banner-above-nav",
+        "top-banner-ad-container--reveal"
+      )
 
-      val sizeSpecificClass = {
-        // Keeping this code for now since we'll be running another similar
-        // experiment in the near future:
-        // if (FixedTopAboveNavAdSlotSwitch.isSwitchedOn && isBusinessFront(metaData)) {
-        //   if (hasAdOfSize(TopAboveNavSlot, leaderboardSize, metaData, edition, sizesOverride)) {
-        //     "top-banner-ad-container--small"
-        //   } else if (hasAdOfSize(TopAboveNavSlot, responsiveSize, metaData, edition, sizesOverride)) {
-        //     "top-banner-ad-container--responsive"
-        //   } else {
-        //     "top-banner-ad-container--large"
-        //   }
-        // } else {
-          "top-banner-ad-container--reveal"
-        // }
-      }
-
-      (classes :+ sizeSpecificClass) mkString " "
+      classes mkString " "
     }
 
     def slotCssClasses(metaData: MetaData): Seq[String] = {

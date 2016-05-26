@@ -115,14 +115,7 @@
         z-index: $zindex-popover;
     }
 }
-// Keeping this code for now since we'll be running another similar
-// experiment in the near future:
-// .top-banner-ad-container--small {
-//     min-height: ($gs-row-height * 3) + 18;
-// }
-// .top-banner-ad-container--responsive {
-//     min-height: ($gs-row-height * 7) + 16;
-// }
+
 .top-banner-ad-container--above-nav {
     @include mq(tablet) {
         .js-on:not(.is-adfree) & {
@@ -189,9 +182,7 @@
             text-align: left;
         }
     }
-    // .top-banner-ad-container--large & {
-    //     min-height: 250px;
-    // }
+
     .has-page-skin & {
         @include mq(wide) {
             width: auto !important;
