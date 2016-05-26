@@ -1,6 +1,7 @@
 import common.Logback.Logstash
 import common.{CloudWatchApplicationMetrics, DiagnosticsLifecycle}
-import conf.{DiagnosticsHealthCheckLifeCycle, SwitchboardLifecycle}
+import conf.DiagnosticsHealthCheckLifeCycle
+import conf.switches.SwitchboardLifecycle
 
 object Global
   extends DiagnosticsLifecycle

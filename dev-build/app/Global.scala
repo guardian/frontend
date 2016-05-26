@@ -2,8 +2,8 @@ import commercial.CommercialLifecycle
 import common.dfp.FaciaDfpAgentLifecycle
 import common.{CanonicalLink, DiagnosticsLifecycle, ExecutionContexts}
 import conf._
+import conf.switches.SwitchboardLifecycle
 import contentapi.SectionsLookUpLifecycle
-import dev.DevParametersLifecycle
 import dfp.DfpDataCacheLifecycle
 import feed.{MostPopularFacebookAutoRefreshLifecycle, MostReadLifecycle, OnwardJourneyLifecycle}
 import implicits.Requests
@@ -58,7 +58,6 @@ object DevJsonExtensionFilter extends EssentialFilter with ExecutionContexts wit
 
 
 object Global extends WithFilters(DevJsonExtensionFilter :: DevCacheWarningFilter :: Filters.common: _*)
-  with DevParametersLifecycle
   with AdminLifecycle
   with DiagnosticsLifecycle
   with OnwardJourneyLifecycle
@@ -74,7 +73,6 @@ object Global extends WithFilters(DevJsonExtensionFilter :: DevCacheWarningFilte
   with FootballLifecycle
   with CricketLifecycle
   with RugbyLifecycle
-  with CorsErrorHandler
   with ABHeadlinesLifecycle {
   override val allowedParams: Seq[String] =
     CanonicalLink.significantParams ++ commercialParams ++ insignificantParams ++ Seq("query")

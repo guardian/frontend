@@ -1,12 +1,12 @@
 import common.CloudWatchApplicationMetrics
 import common.Logback.Logstash
 import conf._
+import conf.switches.SwitchboardLifecycle
 import filters.DiscussionRequestLoggingFilter
 import play.api.http.HttpFilters
 import play.api.mvc.EssentialFilter
 
 object Global extends CloudWatchApplicationMetrics
-  with CorsErrorHandler
   with SwitchboardLifecycle
   with Logstash
   with DiscussionHealthCheckLifeCycle {
