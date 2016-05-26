@@ -242,13 +242,17 @@ $hosted-video-height: 540px;
 .hosted__meta {
     position: absolute;
     left: 20px;
-    bottom: 60px;
     width: 100%;
     color: #ffffff;
 
     @include mq($until: tablet) {
         right: $gs-gutter;
         width: auto;
+        bottom: 48px;
+    }
+
+    @include mq(tablet) {
+        bottom: 60px;
     }
 
     @include mq(desktop) {
