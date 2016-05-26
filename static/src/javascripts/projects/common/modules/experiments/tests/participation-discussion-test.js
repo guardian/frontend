@@ -2,11 +2,13 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/modules/experiments/tests/utils/comment-blocker',
+    'common/modules/identity/api',
     'lodash/collections/some'
     ], function (
     $,
     config,
     CommentBlocker,
+    identity,
     some
 ) {
     var seriesIds = [
@@ -49,9 +51,9 @@ define([
 
     return function () {
 
-            this.id = 'ParticipationHideHalfOfComments';
-            this.start = '2016-05-23';
-            this.expiry = '2016-06-21';
+            this.id = 'ParticipationDiscussionTest';
+            this.start = '2016-05-26';
+            this.expiry = '2016-06-24';
             this.author = 'Nathaniel Bennett';
             this.description = 'Hide comments for a percentage of users to determine what effect it has on their dwell time and loyalty ';
             this.audience = 0.1;
@@ -65,12 +67,12 @@ define([
                 var testAuthor = config.page.author || '';
                 var canRunOnBlog = doesNotContain(blogIds, config.page.blogIds || '');
                 var canRunOnSeries = doesNotContain(seriesIds, config.page.seriesId || '');
-                return testAuthor !== dontRunOnAuthor && canRunOnBlog && canRunOnSeries;
+                return testAuthor !== dontRunOnAuthor && canRunOnBlog && canRunOnSeries !identity.isUserLoggedIn();
             };
 
             this.variants = [
                 {
-                    id: 'hide-comments',
+                    id: 'variant-1',
                     test: function(){
                         var shortUrlSlug = (config.page.shortUrl || '').replace('http://gu.com/p/', ''),
                             hide = CommentBlocker.hideComments(shortUrlSlug);
