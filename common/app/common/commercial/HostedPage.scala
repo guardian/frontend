@@ -5,11 +5,13 @@ import model.{MetaData, StandalonePage}
 import play.api.libs.json.JsString
 
 case class HostedPage(
-                     pageUrl:String,
+                       pageUrl: String,
                        pageName: String,
                        pageTitle: String,
-                       videoTitle: String,
-                       standfirst: String
+                       standfirst: String,
+                       logoUrl: String,
+                       bannerUrl: String,
+                       video: HostedVideo
                      ) extends StandalonePage {
 
   override val metadata: MetaData = {
@@ -36,10 +38,17 @@ case class HostedPage(
         "og:title" -> pageTitle,
         "og:description" ->
           s"ADVERTISER CONTENT FROM RENAULT HOSTED BY THE GUARDIAN | $standfirst",
-        "og:image" ->
-          "https://aws-frontend-static.s3.amazonaws.com/PROD/frontend-static/images/commercial/038c373fd249e5a2f4b6ae02e7cf3a93/renault-video-poster.jpg",
+        "og:image" -> video.posterUrl,
         "fb:app_id" -> "180444840287"
       )
     )
   }
 }
+
+case class HostedVideo(
+                        mediaId: String,
+                        title: String,
+                        duration: Int,
+                        posterUrl: String,
+                        srcUrl: String
+                      )
