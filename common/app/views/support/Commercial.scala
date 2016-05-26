@@ -29,8 +29,8 @@ object Commercial {
 
   object topAboveNavSlot {
 
-    private def isBusinessFront(metaData: MetaData) = {
-      metaData.id == "uk/business" || metaData.id == "us/business" || metaData.id == "au/business"
+    private def isUKTechFront(metaData: MetaData) = {
+      metaData.id == "uk/technology"
     }
 
     def adSizes(metaData: MetaData, edition: Edition): Map[String, Seq[String]] = {
@@ -69,15 +69,9 @@ object Commercial {
       (classes :+ sizeSpecificClass) mkString " "
     }
 
-    def slotCssClasses(metaData: MetaData, edition: Edition): Seq[String] = {
+    def slotCssClasses(metaData: MetaData): Seq[String] = {
         val classes = Seq("top-banner-ad")
-        val fixedTechSlotClass = if(
-            FixedTechTopSlot.isSwitchedOn &&
-            metaData.section == "technology" &&
-            metaData.isFront &&
-            edition.id == "UK"
-        ) Some("h250") else None
-
+        val fixedTechSlotClass = if(FixedTechTopSlot.isSwitchedOn && isUKTechFront(metaData)) Some("h250") else None
         classes ++ fixedTechSlotClass
     }
   }
