@@ -92,19 +92,16 @@ case class HighMerchandisingLineItem(
   def matchesPageTargeting (adUnitSuffix: String, pageTags:Seq[Tag], edition:Edition, pagePath:String): Boolean = {
 
     val cleansedPageEdition = edition.id.toLowerCase
-
     val cleansedPageTagNames = pageTags map (_.name.replaceAll(" ","-").toLowerCase)
 
-    val matchesTag: Boolean = cleansedPageTagNames.exists(tags.contains)
+    val matchesAdUnit = adUnits.isEmpty || adUnits.exists(_.path contains adUnitSuffix)
+    val matchesTag = cleansedPageTagNames.isEmpty || cleansedPageTagNames.exists(tags.contains)
+    val matchesEdition = editions.isEmpty || editions.contains(cleansedPageEdition)
+    val matchesUrl = urls.isEmpty || urls.contains(pagePath)
 
-    // This does not accept run of network. High merch line items must be explicitly targeted.
-    val matchesAdUnit: Boolean = adUnits.exists(_.path contains adUnitSuffix)
-
-    val matchesEdition: Boolean = editions.contains(cleansedPageEdition)
-
-    val matchesUrl: Boolean = urls.contains(pagePath)
-
-    matchesTag || matchesAdUnit || matchesEdition || matchesUrl
+    // High-merch line items must be explicitly targeted to something, so if there is no kind of targeting,
+    // then the match fails.
+    matchesAdUnit && matchesTag && matchesEdition && matchesUrl && !hasUnknownTarget
   }
 }
 
