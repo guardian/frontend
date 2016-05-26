@@ -108,6 +108,7 @@ module.exports = function (grunt) {
 
         grunt.task.run(['px_to_rem', 'autoprefixer']);
     });
+    grunt.registerTask('compile:atomicCss', ['shell:atomicCss']);
     grunt.registerTask('compile:js', function () {
         grunt.task.run(['clean:js', 'compile:inlineSvgs']);
 
@@ -123,6 +124,7 @@ module.exports = function (grunt) {
     var identity = function (x) { return x; };
     grunt.registerTask('compile-assets', [
         'compile:css',
+        'compile:atomicCss',
         (options.isDev ? 'develop:js' : 'compile:js'),
         'compile:fonts',
         'compile:flash',
