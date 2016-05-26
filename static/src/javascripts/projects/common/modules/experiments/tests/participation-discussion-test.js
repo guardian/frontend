@@ -67,7 +67,8 @@ define([
                 var testAuthor = config.page.author || '';
                 var canRunOnBlog = doesNotContain(blogIds, config.page.blogIds || '');
                 var canRunOnSeries = doesNotContain(seriesIds, config.page.seriesId || '');
-                return testAuthor !== dontRunOnAuthor && canRunOnBlog && canRunOnSeries !identity.isUserLoggedIn();
+                var notLoggedIn = !identity.isUserLoggedIn();
+                return testAuthor !== dontRunOnAuthor && canRunOnBlog && canRunOnSeries && notLoggedIn;
             };
 
             this.variants = [
