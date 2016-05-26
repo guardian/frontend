@@ -33,7 +33,7 @@ object HostedContentController extends Controller {
             pageTitle = "Renault shortlists 'car of the future' designs - video",
             videoTitle = "Renault shortlists 'car of the future' designs",
             standfirst = "Renault challenged Central St Martins students to dream up the car of the future. The winning design will be announced at Clerkenwell Design Week (and on this site). Watch this short video to find out who made the shortlist.",
-            posterImage = Static("images/commercial/renault-video-poster-ep1.png").path
+            posterImage = Static("images/commercial/renault-video-poster-ep1.jpg").path
           )
           Cached(60)(RevalidatableResult.Ok(guardianHostedPage(page, episode1Video())))
         } else {
