@@ -6,6 +6,7 @@ GET            /surveys/*file                                                   
 GET            /commercial/test-page                                                                                             controllers.commercial.CreativeTestPage.allComponents(k: List[String])
 
 GET            /survey                                                                                                           controllers.SurveyPageController.renderSimpleSurveyPage()
+GET            /formstacksurvey                                                                                                  controllers.SurveyPageController.renderFormStackSurvey()
 
 # For dev machines
 GET            /assets/admin/lib/*file                                                                                           controllers.admin.UncachedWebAssets.at(file)
