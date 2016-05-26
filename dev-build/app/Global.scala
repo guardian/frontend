@@ -74,6 +74,4 @@ object Global extends WithFilters(DevJsonExtensionFilter :: DevCacheWarningFilte
   with CricketLifecycle
   with RugbyLifecycle
   with ABHeadlinesLifecycle {
-  override val allowedParams: Seq[String] =
-    CanonicalLink.significantParams ++ commercialParams ++ insignificantParams ++ Seq("query")
 }
