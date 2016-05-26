@@ -571,14 +571,32 @@ $hosted-video-height: 540px;
         border-top: 1px solid transparent;
     }
 
+    .hosted__faux-controls {
+        @include f-headlineSans;
+        position: absolute;
+        bottom: 0;
+        font-size: 16px;
+        font-weight: bold;
+
+        .hosted__video-timer {
+            color: #ffffff;
+            @include mq(desktop) {
+                margin-bottom: 10px;
+            }
+        }
+    }
+
     .play-button {
         @include icon(play-32--tone-media);
         @include mq(desktop) {
             padding: 9px;
         }
-        position: absolute;
-        margin: $gs-gutter/2;
-        bottom: 0;
+        margin: 10px;
+    }
+
+    .play-button, .hosted__video-timer {
+        display: inline-block;
+        vertical-align: bottom;
     }
 }
 
