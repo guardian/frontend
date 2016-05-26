@@ -5,6 +5,8 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
+    'lodash/utilities/noop',
+
     'common/modules/experiments/tests/fronts-on-articles2',
     'common/modules/experiments/tests/live-blog-chrome-notifications-internal',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
@@ -20,20 +22,7 @@ define([
     'common/modules/experiments/tests/participation-hide-half-of-comments',
     'common/modules/experiments/tests/play-video-on-fronts',
     'common/modules/experiments/tests/video-controls-on-main-media',
-    'common/modules/experiments/tests/new-user-adverts-disabled',
-    'lodash/arrays/flatten',
-    'lodash/arrays/zip',
-    'lodash/collections/forEach',
-    'lodash/objects/keys',
-    'lodash/collections/some',
-    'lodash/collections/filter',
-    'lodash/collections/map',
-    'lodash/collections/reduce',
-    'lodash/collections/find',
-    'lodash/objects/pick',
-    'lodash/utilities/noop',
-    'lodash/objects/merge',
-    'common/utils/chain'
+    'common/modules/experiments/tests/new-user-adverts-disabled'
 ], function (
     reportError,
     config,
@@ -41,6 +30,8 @@ define([
     mediator,
     store,
     mvtCookie,
+    noop,
+
     FrontsOnArticles2,
     LiveBlogChromeNotificationsInternal,
     LiveBlogChromeNotificationsProd,
@@ -56,23 +47,10 @@ define([
     HideHalfOfComments,
     PlayVideoOnFronts,
     VideoControlsOnMainMedia,
-    NewUserAdvertsDisabled,
-    flatten,
-    zip,
-    forEach,
-    keys,
-    some,
-    filter,
-    map,
-    reduce,
-    find,
-    pick,
-    noop,
-    merge,
-    chain
+    NewUserAdvertsDisabled
 ) {
 
-    var TESTS = flatten([
+    var TESTS = [
         new FrontsOnArticles2(),
         new LiveBlogChromeNotificationsInternal(),
         new LiveBlogChromeNotificationsProd(),
@@ -89,7 +67,7 @@ define([
         new PlayVideoOnFronts(),
         new VideoControlsOnMainMedia(),
         new NewUserAdvertsDisabled()
-    ]);
+    ];
 
     var participationsKey = 'gu.ab.participations';
 
@@ -112,19 +90,23 @@ define([
 
     function removeParticipation(test) {
         var participations = getParticipations();
-        delete participations[test.id];
-        store.local.set(participationsKey, participations);
+        var filteredParticipations = Object.keys(participations)
+            .filter(function (participation) { return participation !== test.id })
+            .reduce(function (result, input) {
+                result[input] = participations[input];
+                return result;
+            }, {});
+        store.local.set(participationsKey, filteredParticipations);
     }
 
     function cleanParticipations() {
         // Removes any tests from localstorage that have been
         // renamed/deleted from the backend
-        var participations = getParticipations();
-        forEach(keys(participations), function (k) {
-            if (typeof (config.switches['ab' + k]) === 'undefined') {
+        Object.keys(getParticipations()).forEach(function (k) {
+            if (typeof config.switches['ab' + k] === 'undefined') {
                 removeParticipation({ id: k });
             } else {
-                var testExists = some(TESTS, function (element) {
+                var testExists = TESTS.some(function (element) {
                     return element.id === k;
                 });
 
@@ -136,8 +118,9 @@ define([
     }
 
     function getActiveTests() {
-        return filter(TESTS, function (test) {
-            var expired = (new Date() - new Date(test.expiry)) > 0;
+        var now = new Date();
+        return TESTS.filter(function (test) {
+            var expired = (now - new Date(test.expiry)) > 0;
             if (expired) {
                 removeParticipation(test);
                 return false;
@@ -147,8 +130,9 @@ define([
     }
 
     function getExpiredTests() {
-        return filter(TESTS, function (test) {
-            return (new Date() - new Date(test.expiry)) > 0;
+        var now = new Date();
+        return TESTS.filter(function (test) {
+            return (now - new Date(test.expiry)) > 0;
         });
     }
 
@@ -159,30 +143,35 @@ define([
                 && test.canRun() && !expired && isTestSwitchedOn(test));
     }
 
+    function getId(test) {
+        return test.id;
+    }
+
     function getTest(id) {
-        var test = filter(TESTS, function (test) {
-            return (test.id === id);
-        });
-        return (test) ? test[0] : '';
+        var testIndex = TESTS.map(getId).indexOf(id);
+        return testIndex !== -1 ? TESTS[testIndex] : '';
     }
 
     function makeOmnitureTag() {
         var participations = getParticipations(),
             tag = [];
 
-        forEach(keys(participations), function (k) {
-            if (testCanBeRun(getTest(k))) {
-                tag.push(['AB', k, participations[k].variant].join(' | '));
-            }
-        });
+        Object.keys(participations)
+            .map(getTest)
+            .filter(testCanBeRun)
+            .forEach(function (test) {
+                tag.push('AB | ' + test.id + ' | ' + participations[test.id].variant);
+            });
 
-        forEach(keys(config.tests), function (k) {
-            if (k.toLowerCase().match(/^cm/)) {
-                tag.push(['AB', k, 'variant'].join(' | '));
-            }
-        });
+        Object.keys(config.tests)
+            .filter(function (k) {
+                return k.toLowerCase().indexOf('cm') === 0;
+            })
+            .forEach(function (k) {
+                tag.push('AB | ' + k + ' | variant');
+            });
 
-        forEach(getServerSideTests(), function (testName) {
+        getServerSideTests().forEach(function (testName) {
             tag.push('AB | ' + testName + ' | inTest');
         });
 
@@ -198,24 +187,24 @@ define([
 
     function getAbLoggableObject() {
         try {
-            return reduce(zip(getActiveTests(), getServerSideTests()), function(log, tests) {
-                var active = tests[0];
-                var server = tests[1];
+            var log = {};
 
-                if (active && isParticipating(active) && testCanBeRun(active)) {
-                    var variant = getTestVariantId(active.id);
+            getActiveTests()
+                .filter(isParticipating)
+                .filter(testCanBeRun)
+                .forEach(function (test) {
+                    var variant = getTestVariantId(test.id);
 
                     if (variant && variant !== 'notintest') {
-                        log[active.id] = abData(variant, 'false');
+                        log[test.id] = abData(variant, 'false');
                     }
-                }
+                });
 
-                if (server) {
-                    log['ab' + server] = abData('inTest', 'false');
-                }
+            getServerSideTests().forEach(function (test) {
+                log['ab' + server] = abData('inTest', 'false');
+            });
 
-                return log;
-            }, {});
+            return log;
         } catch (error) {
             // Encountering an error should invalidate the logging process.
             reportError(error, false);
@@ -278,7 +267,7 @@ define([
 
         if (mvtCookieId && mvtCookieId > smallestTestId && mvtCookieId <= largestTestId) {
             // This mvt test id is in the test range, so allocate it to a test variant.
-            variantIds = map(test.variants, function (variant) {
+            variantIds = test.variants.map(function (variant) {
                 return variant.id;
             });
             testVariantId = mvtCookieId % variantIds.length;
@@ -314,17 +303,13 @@ define([
     }
 
     function getVariant(test, variantId) {
-        return find(test.variants, function (variant) {
-            return variant.id === variantId;
-        });
+        var index = test.variants.map(getId).indexOf(variantId);
+        return index === -1 ? null : test.variants[index];
     }
 
     // These kinds of tests are both server and client side.
     function getServerSideTests() {
-        return chain(config.tests)
-            .and(pick, function (participating) { return !!participating; })
-            .and(keys)
-            .value();
+        return Object.keys(config.tests).filter(function (test) { return !!config.tests[test]; });
     }
 
     var ab = {
@@ -338,17 +323,17 @@ define([
         },
 
         segment: function () {
-            forEach(getActiveTests(), function (test) {
+            getActiveTests().forEach(function (test) {
                 allocateUserToTest(test);
             });
         },
 
         forceSegment: function (testId, variant) {
-            chain(getActiveTests()).and(filter, function (test) {
-                    return (test.id === testId);
-                }).and(forEach, function (test) {
-                    addParticipation(test, variant);
-                }).valueOf();
+            getActiveTests().filter(function (test) {
+                return test.id === testId;
+            }).forEach(function (test) {
+                addParticipation(test, variant);
+            });
         },
 
         segmentUser: function () {
@@ -356,7 +341,7 @@ define([
                 forceUserIntoTest = /^#ab/.test(window.location.hash);
             if (forceUserIntoTest) {
                 tokens = window.location.hash.replace('#ab-', '').split(',');
-                forEach(tokens, function (token) {
+                tokens.forEach(function (token) {
                     var abParam, test, variant;
                     abParam = token.split('=');
                     test = abParam[0];
@@ -371,36 +356,26 @@ define([
         },
 
         run: function () {
-            forEach(getActiveTests(), function (test) {
-                run(test);
-            });
+            getActiveTests().forEach(run);
         },
 
         isEventApplicableToAnActiveTest: function (event) {
-            var participations = keys(getParticipations());
-            return some(participations, function (id) {
+            return Object.keys(getParticipations()).some(function (id) {
                 var listOfEventStrings = getTest(id).events;
-                return some(listOfEventStrings, function (ev) {
+                return listOfEventStrings.some(function (ev) {
                     return event.indexOf(ev) === 0;
                 });
             });
         },
 
         getActiveTestsEventIsApplicableTo: function (event) {
-
-            function startsWith(string, prefix) {
-                return string.indexOf(prefix) === 0;
-            }
-
             var eventTag = event.tag;
-            return eventTag && chain(getActiveTests()).and(filter, function (test) {
+            return eventTag && getActiveTests().filter(function (test) {
                     var testEvents = test.events;
-                    return testEvents && some(testEvents, function (testEvent) {
-                        return startsWith(eventTag, testEvent);
+                    return testEvents && testEvents.some(function (testEvent) {
+                        return eventTag.indexOf(testEvent) === 0;
                     });
-                }).and(map, function (test) {
-                    return test.id;
-                }).valueOf();
+                }).map(getId);
         },
 
         getAbLoggableObject: getAbLoggableObject,
@@ -423,9 +398,8 @@ define([
          */
         testCanBeRun: function (test) {
             if (typeof test === 'string') {
-                return testCanBeRun(find(TESTS, function (t) {
-                    return t.id === test;
-                }));
+                var testIndex = TESTS.map(getId).indexOf(test);
+                return testIndex !== -1 && testCanBeRun(TESTS[testIndex]);
             }
 
             return test.id && test.expiry && testCanBeRun(test);
