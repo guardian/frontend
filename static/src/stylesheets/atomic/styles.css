@@ -1,0 +1,16 @@
+.a { color: #000; }
+.b { color: #ff0; }
+.c { color: orange; }
+.d { font: italic small-caps normal .8125rem/150% Arial, Helvetica, sans-serif; }
+.e { font-family: Helvetica Neue, Arial, sans-serif; }
+.f { font-weight: 400; }
+.g { height: 1rem; }
+.h { height: 2rem; }
+.i { margin-bottom: .625rem; }
+.j { margin-left: 1.25rem; }
+.k { margin-right: 1.25rem; }
+.l { margin-top: 1rem; }
+.m { margin-top: .625rem; }
+.n { padding: 2rem; }
+.o { -webkit-transition: all; transition: all; }
+.p { width: 100%; }
