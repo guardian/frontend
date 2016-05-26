@@ -82,25 +82,29 @@ case class HighMerchandisingLineItem(
   customTargetSet: Seq[CustomTargetSet]
   ) {
 
-  val customTargets = customTargetSet.map(_.targets)
-  val editions = customTargets.flatMap(_.filter( _.name == "edition")).map(_.values).distinct
-  val urls = customTargets.flatMap(_.filter( _.name == "url")).map(_.values).distinct
+  val customTargets = customTargetSet.flatMap(_.targets)
+  val editions = customTargets.filter( _.name == "edition").flatMap(_.values).distinct
+  val urls = customTargets.filter( _.name == "url").flatMap(_.values).distinct
+  val isRunOfNetwork = adUnits.isEmpty
+  val hasUnknownTarget = isRunOfNetwork && editions.isEmpty && urls.isEmpty && tags.isEmpty
 
+  // Returns true if the metadata parameters explicitly match the lineItem.
   def matchesPageTargeting (adUnitSuffix: String, pageTags:Seq[Tag], edition:Edition, pagePath:String): Boolean = {
 
     val cleansedPageEdition = edition.id.toLowerCase
 
     val cleansedPageTagNames = pageTags map (_.name.replaceAll(" ","-").toLowerCase)
 
-    val matchesTag: Boolean = tags.isEmpty || cleansedPageTagNames.exists(tags.contains)
+    val matchesTag: Boolean = cleansedPageTagNames.exists(tags.contains)
 
-    lazy val matchesAdUnit: Boolean = adUnits.isEmpty || adUnits.exists(_.path contains adUnitSuffix)
+    // This does not accept run of network. High merch line items must be explicitly targeted.
+    val matchesAdUnit: Boolean = adUnits.exists(_.path contains adUnitSuffix)
 
-    lazy val matchesEdition: Boolean = editions.isEmpty || editions.exists(_.contains(cleansedPageEdition))
+    val matchesEdition: Boolean = editions.contains(cleansedPageEdition)
 
-    lazy val matchesUrl: Boolean = urls.isEmpty || urls.exists(_.contains(pagePath))
+    val matchesUrl: Boolean = urls.contains(pagePath)
 
-    matchesTag && matchesAdUnit && matchesEdition && matchesUrl
+    matchesTag || matchesAdUnit || matchesEdition || matchesUrl
   }
 }
 
