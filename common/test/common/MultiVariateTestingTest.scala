@@ -41,14 +41,16 @@ class MultiVariateTestingTest extends FlatSpec with Matchers {
       "test0",
       "an experiment test",
       new LocalDate(2100, 1, 1)
-    )
+    ) {
+      def canRun(implicit request: RequestHeader): Boolean = true
+    }
     object test1 extends TestDefinition(
       "test1",
       "another experiment test",
       new LocalDate(2100, 1, 1)
     ) {
-      override def isParticipating(implicit request: RequestHeader): Boolean = {
-        request.headers.get("X-GU-Test1").contains("test1variant") && super.isParticipating(request)
+      def canRun(implicit request: RequestHeader): Boolean = {
+        request.headers.get("X-GU-Test1").contains("test1variant")
       }
     }
     object test2 extends TestDefinition(
@@ -56,8 +58,8 @@ class MultiVariateTestingTest extends FlatSpec with Matchers {
       "still another experiment test",
       new LocalDate(2100, 1, 1)
     ) {
-      override def isParticipating(implicit request: RequestHeader): Boolean = {
-        request.headers.get("X-GU-Test2").contains("test2variant") && super.isParticipating(request)
+      def canRun(implicit request: RequestHeader): Boolean = {
+        request.headers.get("X-GU-Test2").contains("test2variant")
       }
     }
 

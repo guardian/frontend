@@ -21,8 +21,8 @@ object ABOpenGraphOverlay extends TestDefinition(
   description = "Add a branded overlay to images cached by the Facebook crawler",
   sellByDate = new LocalDate(2016, 6, 29)
 ) {
-  override def isParticipating(implicit request: RequestHeader): Boolean = {
-    request.queryString.get("page").exists(_.contains("facebookOverlayVariant")) && super.isParticipating(request)
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.queryString.get("page").exists(_.contains("facebookOverlayVariant"))
   }
 }
 
@@ -32,8 +32,8 @@ object ABHeadlinesTestVariant extends TestDefinition(
   "To test how much of a difference changing a headline makes (variant group)",
   new LocalDate(2016, 6, 10)
   ) {
-  override def isParticipating(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-hlt").contains("hlt-V") && super.isParticipating(request)
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-hlt").contains("hlt-V")
   }
 }
 
@@ -42,8 +42,8 @@ object ABNewHeaderVariant extends TestDefinition(
   description = "Feature switch (0% test) for the new header",
   sellByDate = new LocalDate(2016, 6, 14)
 ) {
-  override def isParticipating(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-new-header").contains("variant") && super.isParticipating(request)
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-ab-new-header").contains("variant")
   }
 }
 
@@ -52,8 +52,8 @@ object ABHeadlinesTestControl extends TestDefinition(
   "To test how much of a difference changing a headline makes (control group)",
   new LocalDate(2016, 6, 10)
   ) {
-  override def isParticipating(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-hlt").contains("hlt-C") && super.isParticipating(request)
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-hlt").contains("hlt-C")
   }
 }
 
@@ -77,7 +77,7 @@ object ActiveTests extends ServerSideABTests {
   )
 }
 
-case class TestDefinition (
+abstract case class TestDefinition (
   name: String,
   description: String,
   sellByDate: LocalDate
@@ -90,5 +90,10 @@ case class TestDefinition (
     sellByDate,
     exposeClientSide = true
   )
-  def isParticipating(implicit request: RequestHeader): Boolean = switch.isSwitchedOn && ServerSideTests.isSwitchedOn
+
+  private def isSwitchedOn: Boolean = switch.isSwitchedOn && ServerSideTests.isSwitchedOn
+
+  def canRun(implicit request: RequestHeader): Boolean
+  def isParticipating(implicit request: RequestHeader): Boolean = isSwitchedOn && canRun(request)
+
 }
