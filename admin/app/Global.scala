@@ -6,8 +6,7 @@ import controllers.AdminHealthCheckLifeCycle
 import dfp.DfpDataCacheLifecycle
 import model.AdminLifecycle
 import ophan.SurgingContentAgentLifecycle
-import play.api.mvc._
-import purge.SoftPurge
+import play.api.mvc.{RequestHeader, Results}
 import services.ConfigAgentLifecycle
 
 import scala.concurrent.Future
@@ -20,7 +19,6 @@ object Global extends AdminLifecycle
   with SurgingContentAgentLifecycle
   with DfpAgentLifecycle
   with DfpDataCacheLifecycle
-  with SoftPurge
   with Logstash
   with AdminHealthCheckLifeCycle {
 

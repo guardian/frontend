@@ -42,19 +42,10 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
-  val SoftPurgeSwitch = Switch(
-    SwitchGroup.Performance,
-    "soft-purge-switch",
-    "If this switch is on then articles will be automatically soft purged them from the CDN",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val LongCacheSwitch = Switch(
     SwitchGroup.Performance,
     "long-cache-switch",
-    "If this switch is on then articles will get a longer cache time",
+    "If this switch is on then content will get a longer cache time",
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
