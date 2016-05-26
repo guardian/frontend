@@ -43,7 +43,7 @@ export const getDifference = (base: string, head: string): Promise<List<GitHubCo
                         {
                             url: gitHubCommitJson.html_url,
                             authorName: gitHubCommitJson.commit.author.name,
-                            authorLogin: gitHubCommitJson.author.login,
+                            authorLogin: (gitHubCommitJson.author) ? gitHubCommitJson.author.login : 'Unknown',
                             message: gitHubCommitJson.commit.message
                         }
                     ))));
@@ -51,7 +51,7 @@ export const getDifference = (base: string, head: string): Promise<List<GitHubCo
                 return response.clone().json<GitHubErrorJson>()
                     // We need to re-assert the type for rejected promises
                     // https://github.com/Microsoft/TypeScript/issues/7588
-                    .then(json => Promise.reject<List<GitHubCommit>>(new Error('foo')));
+                    .then(json => Promise.reject<List<GitHubCommit>>(new Error(json.message)));
             }
         })
 );
