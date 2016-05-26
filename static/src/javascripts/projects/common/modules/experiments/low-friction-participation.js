@@ -38,6 +38,7 @@ define([
     var settings = {
         prevItemsHighlight: true, // Add the highlight class the items before the selected one
         itemCount: 5, // Amount of items
+        itemIconUnicode: [], // Add a list of unicode icons
         itemIconId: 'star', // SVG icon ID
         inactiveIconClass: 'star__item--grey', // The inactive class added to the icon
         buttonTextArray: [], // An array of strings to use as the button text, if array is empty will use current iteration value+1
@@ -71,12 +72,13 @@ define([
 
         // Build our participation buttons
         for (var i = 0; i < settings.itemCount; i++) {
+            var thisUniIcon = settings.itemIconUnicode[i] || settings.itemIconUnicode[0]; // Use icon at current iteration or default to first
             var templateVars = {
                 buttonText: 'Choose' +  (settings.buttonTextArray.length > 0 && settings.buttonTextArray[i]) || i + 1,
                 shouldBeActive: !state.confirming && !state.complete,
                 shouldBeHighlighted: (state.confirming || state.complete) &&
                     ((settings.prevItemsHighlight && state.selectedItem >= i) || state.selectedItem === i),
-                itemIcon: svgs(settings.itemIconId, [settings.inactiveIconClass]),
+                itemIcon: thisUniIcon || svgs(settings.itemIconId, [settings.inactiveIconClass]),
                 itemId: i,
                 state: state
             };

@@ -46,3 +46,17 @@
     fill: $comment-support-3;
     opacity: 1;
 }
+
+/* Football */
+
+.participation-low-fric--button__football {
+    font-size: 35px;
+    opacity: .5;
+
+    &.participation-low-fric--button__is-active:hover,
+    &.participation-low-fric--button__is-active:focus,
+    &.participation-low-fric--button__is-active:active,
+    &.participation-low-fric--button__is-highlighted {
+        opacity: 1;
+    }
+}
