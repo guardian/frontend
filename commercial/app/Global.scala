@@ -1,8 +1,8 @@
 import commercial.CommercialLifecycle
 import common.Logback.Logstash
 import common._
-import conf.{CommercialHealthCheckLifeCycle, CorsErrorHandler, SwitchboardLifecycle}
-import dev.DevParametersLifecycle
+import conf.switches.SwitchboardLifecycle
+import conf.CommercialHealthCheckLifeCycle
 import metrics.MetricUploader
 
 package object CommercialMetrics {
@@ -11,10 +11,8 @@ package object CommercialMetrics {
 }
 
 object Global extends CommercialLifecycle
-  with DevParametersLifecycle
   with SwitchboardLifecycle
   with CloudWatchApplicationMetrics
-  with CorsErrorHandler
   with Logstash
   with CommercialHealthCheckLifeCycle {
   override lazy val applicationName = "frontend-commercial"

@@ -1,15 +1,13 @@
 import common.CloudWatchApplicationMetrics
 import common.Logback.Logstash
 import common.dfp.DfpAgentLifecycle
-import conf.SwitchboardLifecycle
+import conf.switches.SwitchboardLifecycle
 import controllers.AdminHealthCheckLifeCycle
 import dfp.DfpDataCacheLifecycle
 import model.AdminLifecycle
 import ophan.SurgingContentAgentLifecycle
 import play.api.mvc.{RequestHeader, Results}
 import services.ConfigAgentLifecycle
-
-import scala.concurrent.Future
 
 object Global extends AdminLifecycle
   with ConfigAgentLifecycle
@@ -23,8 +21,4 @@ object Global extends AdminLifecycle
   with AdminHealthCheckLifeCycle {
 
   override lazy val applicationName = "frontend-admin"
-
-  override def onError(request: RequestHeader, ex: Throwable) = Future.successful(InternalServerError(
-    views.html.errorPage(ex)
-  ))
 }

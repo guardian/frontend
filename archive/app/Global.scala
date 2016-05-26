@@ -1,13 +1,11 @@
 import common.CloudWatchApplicationMetrics
 import common.Logback.Logstash
-import conf.{ArchiveHealthCheckLifeCycle, CorsErrorHandler, SwitchboardLifecycle}
-import dev.DevParametersLifecycle
+import conf.switches.SwitchboardLifecycle
+import conf.ArchiveHealthCheckLifeCycle
 import services.ArchiveMetrics
 
-object Global extends DevParametersLifecycle
-  with CloudWatchApplicationMetrics
+object Global extends CloudWatchApplicationMetrics
   with ArchiveMetrics
-  with CorsErrorHandler
   with SwitchboardLifecycle
   with Logstash
   with ArchiveHealthCheckLifeCycle {

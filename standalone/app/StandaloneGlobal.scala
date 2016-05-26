@@ -4,6 +4,7 @@ import common.ExecutionContexts
 import common.Logback.Logstash
 import common.dfp.FaciaDfpAgentLifecycle
 import conf._
+import conf.switches.SwitchboardLifecycle
 import controllers.AuthCookie
 import feed.OnwardJourneyLifecycle
 import play.Play
