@@ -1,22 +1,17 @@
-import common.Logback.Logstash
+import common.Logback.LogstashLifecycle
 import common._
 import conf.switches.SwitchboardLifecycle
 import lifecycle.FaciaPressLifecycle
-import play.api.GlobalSettings
+import model.ApplicationIdentity
 import play.api.inject.ApplicationLifecycle
+import play.api.GlobalSettings
 import services.ConfigAgentLifecycle
 
 import scala.concurrent.ExecutionContext
 
-object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents
-  with ConfigAgentLifecycle
-  with SwitchboardLifecycle
-  with CloudWatchApplicationMetrics
-  with Logstash {
+object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents {
 
-  override def applicationName = "frontend-facia-press"
-
-  override def applicationMetrics = List(
+  val applicationMetrics = ApplicationMetrics(
     FaciaPressMetrics.FrontPressCronSuccess,
     ContentApiMetrics.HttpLatencyTimingMetric,
     ContentApiMetrics.HttpTimeoutCountMetric,
@@ -28,7 +23,12 @@ object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents
     FaciaPressMetrics.AllFrontsPressLatencyMetric
   )
 
+
   override def lifecycleComponents(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext): List[LifecycleComponent] = List(
+    new ConfigAgentLifecycle(appLifecycle),
+    new SwitchboardLifecycle(appLifecycle),
+    new CloudWatchMetricsLifecycle(appLifecycle, ApplicationIdentity("frontend-facia-press"), applicationMetrics),
+    LogstashLifecycle,
     new FaciaPressLifecycle(appLifecycle)
   )
 }
