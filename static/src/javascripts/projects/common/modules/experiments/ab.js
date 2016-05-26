@@ -418,8 +418,8 @@ define([
          */
         testCanBeRun: function (test) {
             if (typeof test === 'string') {
-                var testIndex = TESTS.map(getId).indexOf(test);
-                return testIndex !== -1 && testCanBeRun(TESTS[testIndex]);
+                test = getTest(test);
+                return test && testCanBeRun(test);
             }
 
             return test.id && test.expiry && testCanBeRun(test);
