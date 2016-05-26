@@ -18,18 +18,6 @@ import conf.switches.Switches.ServerSideTests
 //    val tests = List(ExampleTest)
 // }
 
-object ABOpenGraphOverlay extends TestDefinition(
-  variants = Nil,
-  name = "ab-open-graph-overlay",
-  description = "Add a branded overlay to images cached by the Facebook crawler",
-  sellByDate = new LocalDate(2016, 6, 29)
-) {
-  override def isParticipating(implicit request: RequestHeader): Boolean = {
-    request.queryString.get("page").exists(_.contains("facebookOverlayVariant")) && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
-  }
-}
-
-
 object ABHeadlinesTestVariant extends TestDefinition(
   Nil,
   "headlines-ab-variant",
@@ -65,7 +53,6 @@ object ABHeadlinesTestControl extends TestDefinition(
 
 object ActiveTests extends Tests {
   val tests: Seq[TestDefinition] = List(
-    ABOpenGraphOverlay,
     ABNewHeaderVariant,
     ABHeadlinesTestControl,
     ABHeadlinesTestVariant
