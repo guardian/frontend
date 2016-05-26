@@ -301,4 +301,13 @@ trait CommercialSwitches {
     sellByDate = new LocalDate(2016, 7, 12),
     exposeClientSide = false
   )
+
+  val hostedPageLinksBetweenContent = Switch(
+    SwitchGroup.Commercial,
+    "hosted-link-pages",
+    "If on, the hosted pages link to each other",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 12),
+    exposeClientSide = false
+  )
 }

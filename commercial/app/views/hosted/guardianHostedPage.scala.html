@@ -1,6 +1,7 @@
 @import common.commercial.HostedPage
 @(page: HostedPage, videoBlock: Html)(implicit request: RequestHeader)
 @import conf.Static
+@import conf.switches.Switches.hostedPageLinksBetweenContent
 
 @main(page) { } {
     <div class="hosted__header">
@@ -99,6 +100,18 @@
                         </div>
                     </div>
                 </div>
+                @if(hostedPageLinksBetweenContent.isSwitchedOn) {
+                <div class="hosted__next-video">
+                    <div class="hosted__next-video--header">
+                        <h2 class="hosted__text hosted__next-video--up-next">@page.nextVideoHeader</h2>
+                        <h2 class="hosted__next-video--client-name hosted-tone--renault">Renault</h2>
+                    </div>
+                    <a href="@page.nextVideoLink" class="hosted__next-video--tile">
+                        <img class="hosted__next-video-thumb" src="@page.nextVideoImage">
+                        <p class="hosted__next-video-title">@page.nextVideoTitle</p>
+                    </a>
+                </div>
+                }
             </div>
         </section>
         <section class="adverts hosted__container--full">

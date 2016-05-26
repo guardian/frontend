@@ -9,6 +9,10 @@ case class HostedPage(
                        pageName: String,
                        pageTitle: String,
                        videoTitle: String,
+                       nextVideoHeader: String,
+                       nextVideoTitle: String,
+                       nextVideoLink: String,
+                       nextVideoImage: String,
                        standfirst: String,
                        posterImage: String
                      ) extends StandalonePage {
