@@ -469,6 +469,7 @@ define([
         // testing
         reset: function () {
             TESTS = [];
+            variantIdFor.cache = {};
         }
     };
 
