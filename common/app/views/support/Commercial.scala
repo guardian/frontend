@@ -68,6 +68,18 @@ object Commercial {
 
       (classes :+ sizeSpecificClass) mkString " "
     }
+
+    def slotCssClasses(metaData: MetaData, edition: Edition): Seq[String] = {
+        val classes = Seq("top-banner-ad")
+        val fixedTechSlotClass = if(
+            FixedTechTopSlot.isSwitchedOn &&
+            metaData.section == "technology" &&
+            metaData.isFront &&
+            edition.id == "UK"
+        ) Some("h250") else None
+
+        classes ++ fixedTechSlotClass
+    }
   }
 
   object topBelowNavSlot {
