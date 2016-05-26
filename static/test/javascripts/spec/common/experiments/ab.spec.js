@@ -280,8 +280,7 @@ define([
 
                 test.one.variants[0].success = spy;
 
-                ab.segment();
-                ab.run();
+                ab.registerCompleteEvents();
 
                 expect(spy).toHaveBeenCalled();
             });
