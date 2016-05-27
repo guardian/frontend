@@ -4,7 +4,7 @@ import common._
 import conf.Configuration
 import play.api.{Application, GlobalSettings}
 
-trait SwitchboardLifecycle extends GlobalSettings with ExecutionContexts with Logging {
+trait SwitchboardLifecycle extends GlobalSettings with Logging {
 
   override def onStart(app: Application) {
     super.onStart(app)
