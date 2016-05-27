@@ -1,6 +1,5 @@
 @import common.commercial.HostedPage
-@(page: HostedPage, videoBlock: Html)(implicit request: RequestHeader)
-@import conf.Static
+@(page: HostedPage)(implicit request: RequestHeader)
 @import conf.switches.Switches.hostedPageLinksBetweenContent
 
 @main(page) { } {
@@ -27,13 +26,26 @@
                     <p class="hostedbadge__info">Advertiser content</p>
                 </div>
                 <div class="u-responsive-ratio u-responsive-ratio--hd">
-                    @videoBlock
+                    <video
+                      data-duration="@page.video.duration"
+                      data-media-id="@page.video.mediaId"
+                      controls="controls"
+                      preload="auto"
+                      style="width: 100%;"
+                      data-block-video-ads="true"
+                      poster="@page.video.posterUrl"
+                      class="vjs-hosted__video hosted__video gu-media--show-controls-at-start gu-media--video vjs vjs-tech-html5 vjs-paused vjs-controls-enabled vjs_video_1-dimensions vjs-user-active">
+                        <source type="video/mp4" src="@page.video.srcUrl">
+                        <source type="video/webm" src="@page.video.srcUrl">
+                        <source type="video/ogg" src="@page.video.srcUrl">
+                        <source type="video/m3u8" src="@page.video.srcUrl">
+                    </video>
                     <div class="hosted-fading">
                         <div class="hosted__meta">
-                            <h1 class="hosted__heading hosted-tone--renault">@page.videoTitle</h1>
+                            <h1 class="hosted__heading hosted-tone--renault">@page.video.title</h1>
                         </div>
                         <div class="hostedbadge hostedbadge--shouldscale">
-                            <img class="hostedbadge__logo" src="@Static("images/commercial/logo_renault.jpg")">
+                            <img class="hostedbadge__logo" src="@page.logoUrl">
                         </div>
                     </div>
                 </div>
@@ -103,21 +115,21 @@
                 @if(hostedPageLinksBetweenContent.isSwitchedOn) {
                 <div class="hosted__next-video">
                     <div class="hosted__next-video--header">
-                        <h2 class="hosted__text hosted__next-video--up-next">@page.nextVideoHeader</h2>
+                        <h2 class="hosted__text hosted__next-video--up-next">@page.nextVideo.header</h2>
                         <h2 class="hosted__next-video--client-name hosted-tone--renault">Renault</h2>
                     </div>
-                    <a href="@page.nextVideoLink" class="hosted__next-video--tile">
-                        <img class="hosted__next-video-thumb" src="@page.nextVideoImage">
-                        <p class="hosted__next-video-title">@page.nextVideoTitle</p>
+                    <a href="@page.nextVideo.link" class="hosted__next-video--tile">
+                        <img class="hosted__next-video-thumb" src="@page.nextVideo.imageUrl">
+                        <p class="hosted__next-video-title">@page.nextVideo.title</p>
                     </a>
                 </div>
                 }
             </div>
         </section>
         <section class="adverts hosted__container--full">
-            <div class="hosted__banner" style="background-image: url(@Static("images/commercial/ren_commercial_banner.jpg"));">
+            <div class="hosted__banner" style="background-image: url(@page.bannerUrl);">
                 <div class="hostedbadge hostedbadge--shouldscale hostedbadge--pushdown hosted-tone-bg--renault">
-                    <img class="hostedbadge__logo" src="@Static("images/commercial/logo_renault.jpg")">
+                    <img class="hostedbadge__logo" src="@page.logoUrl">
                 </div>
                 <div class="hosted__cta-wrapper">
                     <a href="https://www.renault.co.uk/vehicles/new-vehicles/zoe.html" rel="nofollow" class="hosted__cta-link" data-link-name="explore-renault-zoe-button" target="_blank">

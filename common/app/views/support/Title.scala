@@ -23,8 +23,8 @@ object Title {
         s"${Localisation(t.metadata.webTitle)}${pagination(page)}${getSectionConsideringWebtitle(t.metadata.webTitle, Option(t.properties.sectionName))}"
       case s: Section =>
         s"${Localisation(s.metadata.webTitle)}${pagination(page)}"
-      case HostedPage(_, _, pageTitle, _, _, _, _, _, _, _) =>
-        s"${Localisation(pageTitle)}"
+      case hostedPage: HostedPage =>
+        s"${Localisation(hostedPage.pageTitle)}"
       case _          =>
         page.metadata.title.filter(_.nonEmpty).map(Localisation(_)).getOrElse(
           s"${Localisation(page.metadata.webTitle)}${pagination(page)}${getSectionConsideringWebtitle(page.metadata.webTitle, Option(page.metadata.section))}"

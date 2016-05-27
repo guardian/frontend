@@ -266,6 +266,15 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
+  val FixedTechTopSlot = Switch(
+    SwitchGroup.Commercial,
+    "fixed-tech-top-slot",
+    "Height of the top banner is fixed at 250px in the Tech section",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 30),
+    exposeClientSide = false
+  )
+
   val staticBadgesSwitch = Switch(
     SwitchGroup.Commercial,
     "static-badges",

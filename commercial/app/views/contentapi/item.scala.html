@@ -5,7 +5,9 @@
 @import views.html.commercial.cards.itemLargeCard
 @import views.html.commercial.containerWrapper
 @import views.html.fragments.inlineSvg
+@import views.support.commercial.TrackingCodeBuilder.mkCapiCardTrackingCode
 @(card: CardContent,
+  optSection: Option[String],
   optLogo: Option[String],
   optCapiTitle: Option[String],
   optCapiLink: Option[String],
@@ -19,7 +21,6 @@
   omnitureId: String)(implicit request: RequestHeader)
 
 @containerWrapper(Seq("legacy", "legacy-single", "capi", optSponsorType.map(t => t.className).getOrElse(""), optSponsorType.map(t => s"tone-${t.className}").getOrElse("")),
-                  Some(s"merchandising | capi | single $omnitureId"),
                   badgeInHeader =  optSponsorType match {
                       case Some(Supported) => true
                       case _               => false
@@ -45,7 +46,7 @@
     <div class="adverts__row adverts__row--single">
         @itemLargeCard(
             card,
-            omnitureId,
+            omnitureId = mkCapiCardTrackingCode("single", optSection, optCapiTitle, omnitureId, card),
             optAdvertClassNames = Some(Seq("inverse", optSponsorType.map(t => t.className).getOrElse(""))),
             useCardBranding = false)
 
