@@ -1,31 +1,34 @@
 <% if (data.isHostedBottom) { %>
     <div class="gu-display gu-display--hostedbottom">
-        <a href="<%=data.clickMacro%><%=data.articleUrl%>" class="gu-display__image-layer inlined-image" data-link-name="<%=data.linkTracking%>">
-            <img class="gu-display__image" src="<%=data.articleImage%>">
-        </a>
-        <div class="gu-display__content gu-display__content--hosted">
-            <a href="<%=data.clickMacro%><%=data.articleUrl%>" class="gu-display__link" data-link-name="<%=data.linkTracking%>">
+        <a href="<%=data.clickMacro%><%=data.articleUrl%>" class="gu-display__link" data-link-name="<%=data.linkTracking%>">
+            <div class="gu-display__image-layer inlined-image">
+                <img class="gu-display__image" src="<%=data.articleImage%>">
+            </div>
+            <div class="gu-display__content gu-display__content--hosted">
                 <h2 class="gu-display__content-title gu-display__content-title--hosted"><%=data.articleHeaderText%></h2>
-            </a>
+                <div class="gu-mutable <%=data.brandLogoPosition%> hostedbadge" style="background-color: <%=data.brandColor%>">
+                    <p class="hostedbadge__info">Advertiser content</p>
+                    <img class="hostedbadge__logo" src="<%=data.brandLogo%>">
+                </div>
+            </div>
+        </a>
+    </div>
+<% } else { %>
+    <!-- this version is unfinished -->
+    <div class="gu-display">
+        <a href="<%=data.clickMacro%><%=data.articleUrl%>" class="gu-display__link" data-link-name="<%=data.linkTracking%>">
+            <div class="gu-display__image-layer inlined-image gu-display__image-fadeout">
+                <img class="gu-display__image" src="<%=data.articleImage%>">
+            </div>
+            <div class="gu-mutable gu-display__content gu-display__content--hosted">
+                <div style="color: <%=data.brandColor%>" class="gu-display__link">
+                    <h2 class="gu-display__content-title gu-display__content-title--hosted" style="color: <%=data.brandColor%>"><%=data.articleHeaderText%></h2>
+                </div>
+            </div>
             <div class="gu-mutable <%=data.brandLogoPosition%> hostedbadge" style="background-color: <%=data.brandColor%>">
                 <p class="hostedbadge__info">Advertiser content</p>
                 <img class="hostedbadge__logo" src="<%=data.brandLogo%>">
             </div>
-        </div>
-    </div>
-<% } else { %>
-    <div class="gu-display" data-link-name="<%=data.linkTracking%>">
-        <a href="<%=data.clickMacro%><%=data.articleUrl%>" class="gu-display__image-layer inlined-image gu-display__image-fadeout" data-link-name="<%=data.linkTracking%>">
-            <img class="gu-display__image" src="<%=data.articleImage%>">
         </a>
-        <div class="gu-mutable gu-display__content gu-display__content--hosted">
-            <a href="<%=data.clickMacro%><%=data.articleUrl%>" style="color: <%=data.brandColor%>" class="gu-display__link" data-link-name="<%=data.linkTracking%>">
-                <h2 class="gu-display__content-title gu-display__content-title--hosted" style="color: <%=data.brandColor%>"><%=data.articleHeaderText%></h2>
-            </a>
-        </div>
-        <div class="gu-mutable <%=data.brandLogoPosition%> hostedbadge" style="background-color: <%=data.brandColor%>">
-            <p class="hostedbadge__info">Advertiser content</p>
-            <img class="hostedbadge__logo" src="<%=data.brandLogo%>">
-        </div>
     </div>
 <% } %>

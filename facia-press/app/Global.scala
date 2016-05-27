@@ -1,6 +1,7 @@
 import common.Logback.Logstash
 import common._
-import conf.{Configuration => GuardianConfiguration, SwitchboardLifecycle}
+import conf.switches.SwitchboardLifecycle
+import conf.{Configuration => GuardianConfiguration}
 import frontpress.{FrontPressCron, ToolPressQueueWorker}
 import play.api.GlobalSettings
 import services.ConfigAgentLifecycle

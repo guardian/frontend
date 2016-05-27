@@ -9,10 +9,10 @@
 
     <p>Article page will render a high-merchandising slot in the contentFooter when following conditions are met :</p>
     <ol>
-        <li>There is an available Line item that is targeting the <em>merchandising-high</em> slot <b>AND</b> has:</li>
-        <li>A keyword target that matches one of the page keyword tags (or no targeted tags)</li>
-        <li>An edition target that matches the page Edition (or no edition target)</li>
-        <li>A url target that matches the page url (or no url target)</li>
+        <li>There is an available Line item that is targeting the <em>merchandising-high</em> slot <b>AND</b> at least one of:</li>
+        <li>A tag target that matches one of the page tags</li>
+        <li>An edition target that matches the page Edition</li>
+        <li>A url target that matches the page url</li>
         <li>An adUnit target that matches the page adUnit</li>
     </ol>
 
@@ -24,25 +24,34 @@
                 <tr>
                     <th class="col-md-3">Name</th>
                     <th class="col-md-1">DFP link</th>
-                    <th class="col-md-4">Tags</th>
-                    <th class="col-md-3">DFP adUnits</th>
+                    <th class="col-md-2">Tags</th>
+                    <th class="col-md-3">AdUnits</th>
                     <th class="col-md-1">Editions</th>
+                    <th class="col-md-2">Urls</th>
                 </tr>
             </thead>
             <tbody>
                 @for(lineItem <- report.lineItems.sortedItems) {
                     <tr>
-                        <td>@{lineItem.name}</td>
+                        <td>@{lineItem.name}
+                            @if(lineItem.hasUnknownTarget){
+                                <span class="label label-danger">no targeting</span>
+                            }
+                        </td>
                         <td><a href="@DfpLink.lineItem(lineItem.id)">@{lineItem.id}</a></td>
                         <td>@{lineItem.tags.mkString(", ")}</td>
-                        <td>@for(adUnit <- lineItem.adUnits) {
-                            <div>
-                                <a href="@DfpLink.adUnit(adUnit.id)">@{adUnit.fullPath}</a>
-                            </div>
-                        }</td>
-                        @if(lineItem.editions.isEmpty){
-                        <td>none</td>} else {
-                        <td>@{lineItem.editions}</td>}
+                        <td>
+                            @for(adUnit <- lineItem.adUnits) {
+                                <div>
+                                    <a href="@DfpLink.adUnit(adUnit.id)">@{adUnit.fullPath}</a>
+                                </div>
+                            }
+                            @if(lineItem.isRunOfNetwork) {
+                                <div class="alert alert-warning">Run of network</div>
+                            }
+                        </td>
+                        <td>@{lineItem.editions.mkString(", ")}</td>
+                        <td>@{lineItem.urls.mkString(", ")}</td>
                     </tr>
                 }
             </tbody>

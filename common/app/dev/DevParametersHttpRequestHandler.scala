@@ -1,11 +1,19 @@
 package dev
 
-import play.api.{Play, GlobalSettings}
+import com.google.inject.Inject
+import play.api.http.{HttpFilters, HttpConfiguration, HttpErrorHandler, DefaultHttpRequestHandler}
+import play.api.routing.Router
+import play.api.Play
 import play.api.mvc.RequestHeader
 import Play.isProd
 import common.CanonicalLink
 
-trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
+class DevParametersHttpRequestHandler @Inject() (
+    router: Router,
+    errorHandler: HttpErrorHandler,
+    configuration: HttpConfiguration,
+    filters: HttpFilters
+  ) extends DefaultHttpRequestHandler(router, errorHandler, configuration, filters) with implicits.Requests {
 
 
 
@@ -50,7 +58,7 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
 
   val allowedParams = CanonicalLink.significantParams ++ commercialParams ++ insignificantParams
 
-  override def onRouteRequest(request: RequestHeader) = {
+  override def routeRequest(request: RequestHeader) = {
 
     Play.maybeApplication.foreach{ implicit application =>
       // json requests have no SEO implication but will affect caching
@@ -73,7 +81,7 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
       }
     }
 
-    super.onRouteRequest(request)
+    super.routeRequest(request)
   }
 
 }

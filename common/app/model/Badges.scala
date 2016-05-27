@@ -17,6 +17,9 @@ object Badges {
     else Seq()
   }
 
-  def badgeFor(c: ContentType) = allBadges.find(badge => c.tags.tags.exists(tag => tag.id == badge.seriesTag))
+  def badgeFor(c: ContentType) = c.tags.tags.map(_.id).foldLeft(None: Option[Badge]) { (maybeBadge, tag) =>
+      maybeBadge orElse allBadges.find(b => b.seriesTag == tag)
+  }
+
   def badgeFor(fc: FaciaContainer) = fc.href.flatMap(href => allBadges.find(badge => href == badge.seriesTag))
 }

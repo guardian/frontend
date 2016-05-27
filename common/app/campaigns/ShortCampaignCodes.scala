@@ -18,7 +18,8 @@ object ShortCampaignCodes {
     "swa" -> "share_btn_wa",
     "em"  -> "email",
     "sgp" -> "share_btn_gp",
-    "sbl" -> "share_btn_link"
+    "sbl" -> "share_btn_link",
+    "sme" -> "share_btn_me"
   )
 
   // Resolves "stw" to query param: CMP->share_btn_tw
