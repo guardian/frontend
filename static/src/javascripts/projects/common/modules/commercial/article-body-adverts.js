@@ -5,7 +5,7 @@ define([
     'common/utils/detect',
     'common/modules/article/space-filler',
     'common/modules/commercial/dfp/dfp-api',
-    'common/modules/commercial/track-ad',
+    'common/modules/commercial/dfp/track-ad-load',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features',
     'lodash/functions/memoize'

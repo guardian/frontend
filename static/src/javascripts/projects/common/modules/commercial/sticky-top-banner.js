@@ -1,7 +1,7 @@
 define([
     'common/utils/fastdom-promise',
     'Promise',
-    'common/modules/commercial/track-ad',
+    'common/modules/commercial/dfp/track-ad-load',
     'common/utils/$',
     'common/utils/create-store',
     'common/utils/mediator',

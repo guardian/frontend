@@ -6,7 +6,7 @@ define([
     'common/utils/detect',
     'common/utils/template',
     'common/modules/identity/api',
-    'common/modules/commercial/track-ad',
+    'common/modules/commercial/dfp/track-ad-load',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/third-party-tags/outbrain-codes',
     'text!common/views/commercial/outbrain.html',

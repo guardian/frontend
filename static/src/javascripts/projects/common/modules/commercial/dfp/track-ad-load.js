@@ -1,10 +1,13 @@
 define([
     'Promise',
-    'common/utils/mediator'
-], function(Promise, mediator) {
-    return trackAd;
+    'common/utils/mediator',
+    'lodash/functions/memoize'
+], function(Promise, mediator, memoize) {
 
-    function trackAd(id) {
+    // Despite its misleading name, the dfp:rendered event is triggered when
+    // and ad is loaded into the DOM. As we have our breakout algorithm taking
+    // over, it does not necessarily correlate with the creative being rendered
+    var trackAdLoad = memoize(function trackAd(id) {
         return new Promise(function (resolve, reject) {
             var onAdLoaded = function (event) {
                 if (event.slot.getSlotElementId() === id) {
@@ -26,5 +29,7 @@ define([
             mediator.on('modules:commercial:dfp:rendered', onAdLoaded);
             mediator.on('modules:commercial:dfp:alladsrendered', onAllAdsLoaded);
         });
-    }
+    });
+
+    return trackAdLoad;
 });
