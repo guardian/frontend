@@ -10,13 +10,13 @@ import scala.collection.concurrent.{Map => ConcurrentMap, TrieMap}
 import scala.util.{Failure, Success, Try}
 
 // turns an unhashed name into a name that's hashed if it needs to be
-class Assets(base: String, mapResource: String) extends Logging {
+class Assets(base: String, mapResource: String, useHashedBundles: Boolean = Configuration.assets.useHashedBundles) extends Logging {
 
   lazy val lookup = Get(assetMap(mapResource))
 
   def apply(path: String): String = {
     val target =
-      if (Configuration.assets.useHashedBundles) {
+      if (useHashedBundles) {
         lookup.getOrElse(path, throw new AssetNotFoundException(path))
       } else {
         path
@@ -132,10 +132,4 @@ object LoadFromClasspath {
   }
 }
 
-case class AssetNotFoundException(assetPath: String) extends Exception {
-  override val getMessage: String = if (Configuration.assets.useHashedBundles) {
-    s"Cannot find asset $assetPath. You should run `make compile`."
-  } else {
-    s"Cannot find asset $assetPath. You should run `make compile-dev`."
-  }
-}
+case class AssetNotFoundException(assetPath: String) extends Exception(s"Cannot find asset $assetPath. You should run `make compile`.")
