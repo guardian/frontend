@@ -11,11 +11,16 @@ object DfpApi extends Logging {
 
   private def readLineItems(stmtBuilder: StatementBuilder): Seq[GuLineItem] = {
 
-    withDfpSession { session =>
-      session.lineItems(stmtBuilder) map { lineItem =>
-        toGuLineItem(session)(lineItem)
-      }
-    }
+    withDfpSession( session => {
+      session.lineItems(stmtBuilder)
+        .map( dfpLineItem => {
+          toGuLineItem(session)(dfpLineItem) -> dfpLineItem
+        })
+        .filter(Function.tupled(DataValidation.isGuLineItemValid))
+        .map({
+          case (guLineItem, _) => guLineItem
+        })
+    })
   }
 
   def readCurrentLineItems(): Seq[GuLineItem] = {
