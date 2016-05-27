@@ -5,12 +5,12 @@ import conf.Static
 import conf.switches.Switches
 import model.Cached.RevalidatableResult
 import model.{Cached, NoCache}
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.{Action, AnyContent, Controller, Request}
 import views.html.hosted.guardianHostedPage
 
 object HostedContentController extends Controller {
 
-  def renderHostedPage(pageName: String) = Action { implicit request =>
+  def renderHostedPage(pageName: String) = Action { implicit request: Request[AnyContent] =>
     lazy val pageUrl = routes.HostedContentController.renderHostedPage(pageName).absoluteURL
     pageName match {
 
@@ -45,7 +45,7 @@ object HostedContentController extends Controller {
               mediaId = "renault-car-of-the-future",
               title = "Renault shortlists 'car of the future' designs",
               duration = 160,
-              posterUrl = Static("images/commercial/renault-video-poster-ep1.png").path,
+              posterUrl = Static("images/commercial/renault-video-poster-ep1.jpg").path,
               srcUrl = "https://multimedia.guardianapis.com/interactivevideos/video.php?file=160523GlabsRenaultTestHD&format=video/webm&maxbitrate=2048"
             )
           )

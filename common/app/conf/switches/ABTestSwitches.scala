@@ -104,9 +104,9 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABParticipationHideHalfOfComments = Switch(
+  val ABParticipationDiscussionTest = Switch(
     SwitchGroup.ABTests,
-    "ab-participation-hide-half-of-comments",
+    "ab-participation-discussion-test",
     "We are going to hide comments on a random half of articles",
     safeState = Off,
     sellByDate = new LocalDate(2016, 6, 21),
@@ -146,6 +146,15 @@ trait ABTestSwitches {
     "Enable adfree experience for 3 days for new users",
     safeState = Off,
     sellByDate = new LocalDate(2016, 7, 1),
+    exposeClientSide = true
+  )
+
+  val ABParticipationLowFricSport = Switch(
+    SwitchGroup.ABTests,
+    "ab-participation-low-fric-sport",
+    "AB test switch to insert low friction participation into sport",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 15),
     exposeClientSide = true
   )
 

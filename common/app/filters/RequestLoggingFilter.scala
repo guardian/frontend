@@ -23,7 +23,7 @@ class RequestLoggingFilter extends Filter with Logging with ExecutionContexts {
         "req.method" -> rh.method,
         "req.url" -> rh.uri,
         "req.id" -> pseudoId.toString,
-        "req.latency_ms" -> stopWatch.elapsed.toString
+        "req.latency_millis" -> stopWatch.elapsed
       )
       //TODO: add all/some request headers fields
       appendEntries(fields.asJava)

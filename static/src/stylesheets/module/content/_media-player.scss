@@ -68,6 +68,10 @@ $ima-controls-height: 70px;
     &.gu-media--video { // aspect ratio fix (this element gets given a fixed height by video.js)
         height: auto !important;
         cursor: pointer;
+        
+        &.vjs-user-inactive {
+            cursor: none;
+        }
     }
     &.gu-media--audio {
         position: relative;

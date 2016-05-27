@@ -77,7 +77,7 @@ define([
                     meta,
                     html;
 
-                if (shortUrl && ab.isInVariant('ParticipationHideHalfOfComments', 'hide-comments') &&  CommentBlocker.hideComments(shortUrl.replace('/p/','')) ) {
+                if (shortUrl && ab.isInVariant('ParticipationDiscussionTest', 'variant-1') &&  CommentBlocker.hideComments(shortUrl.replace('/p/','')) ) {
                     return;
                 }
 
