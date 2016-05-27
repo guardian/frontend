@@ -157,40 +157,8 @@ object DfpApi extends Logging {
     } sortBy (_._2)
   }
 
-  def readAdUnitsForApproval(rootName: String): Seq[GuAdUnit] = {
-    withDfpSession { session =>
-      val suggestedAdUnits = session.suggestedAdUnits.get(new StatementBuilder())
-      val allUnits = suggestedAdUnits map toGuAdUnit
-      allUnits.filter { adUnit =>
-        (adUnit.path.last == "ng" || adUnit.path.last == "r2") && adUnit.path.size == 4
-      }.sortBy(_.id).distinct
-    }
-  }
-
-  def approveTheseAdUnits(adUnits: Iterable[String]): Try[String] = {
-    try {
-      val maybeResult = for (session <- SessionWrapper()) yield {
-        val adUnitsList = adUnits.mkString(",")
-        val numChanges = session.suggestedAdUnits.approve(
-          new StatementBuilder().where(s"id in ($adUnitsList)").toStatement
-        )
-        if (numChanges > 0) {
-          Success("Ad units approved")
-        } else {
-          Failure(new DfpApprovalException("Apparently, nothing changed"))
-        }
-      }
-      maybeResult getOrElse Failure(new DfpSessionException())
-    } catch {
-      case NonFatal(e) => Failure(new DfpApprovalException(e.getMessage))
-    }
-  }
-
   private def withDfpSession[T](block: SessionWrapper => Seq[T]): Seq[T] = {
     val results = for (session <- SessionWrapper()) yield block(session)
     results getOrElse Nil
   }
 }
-
-class DfpApprovalException(message: String) extends RuntimeException
-class DfpSessionException extends RuntimeException
