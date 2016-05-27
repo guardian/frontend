@@ -1,5 +1,5 @@
 define([
-    'fastdom',
+    'common/utils/fastdom-promise',
     'common/utils/$',
     'common/utils/config',
     'common/utils/template',
@@ -28,14 +28,14 @@ define([
             templateOptions = {
                 buttonTitle: 'Ad',
                 infoTitle: 'Advertising on the Guardian',
-                infoText: 'is created and paid for by third parties and link to an external site.',
+                infoText: 'is created and paid for by third parties.',
                 infoLinkText: 'Learn more about how advertising supports the Guardian.',
                 infoLinkUrl: 'https://www.theguardian.com/advertising-on-the-guardian',
                 icon: svgs('arrowicon', ['gu-comlabel__icon']),
                 dataAttr: this.$slot.attr('id')
             };
 
-        fastdom.write(function () {
+        return fastdom.write(function () {
             var classList = 'gu-style' + ((this.isContentPage) ? ' gu-style--unboxed' : '');
 
             this.$slot.addClass(classList);
@@ -43,7 +43,7 @@ define([
 
             toggles = new Toggles(this.$slot[0]);
             toggles.init();
-        }.bind(this));
+        }, this);
     };
 
     return Gustyle;

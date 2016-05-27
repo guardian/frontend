@@ -6,9 +6,6 @@
 
 @(quiz: model.content.Quiz, maybeResults: Option[QuizResults], showResults: Boolean, sharelinks: Seq[model.ShareLink])(implicit request: RequestHeader)
 
-@if(showResults) {
-    <h2>@quiz.title</h2>
-}
 <form action="@postUrl(quiz)" method="POST" class="@RenderClasses(Map(
     ("atom-quiz", true),
     ("atom-quiz--personality", quiz.quizType == "personality"),
@@ -36,7 +33,7 @@
 
         @question.imageMedia.map { image =>
             <div class="atom-quiz__question-image">
-                @fragments.img(image.imageMedia, widthsByBreakpoint = BodyMedia.inline, image_figureClasses = image.imageClasses)
+                @fragments.imageFigure(image.imageMedia, widthsByBreakpoint = BodyMedia.inline, image_figureClasses = image.imageClasses)
             </div>
         }
 
@@ -77,7 +74,7 @@
         ))">
             @if(hasImage) {
                 @answer.imageMedia.map { image =>
-                    @fragments.img(image.imageMedia, widthsByBreakpoint = BodyMedia.inline, image_figureClasses = image.imageClasses)
+                    @fragments.imageFigure(image.imageMedia, widthsByBreakpoint = BodyMedia.inline, image_figureClasses = image.imageClasses)
                 }
                 @renderIcon(question, answer, maybeUserAnswer, "atom-quiz__answer__icon--image")
             } else {

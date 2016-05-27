@@ -27,8 +27,6 @@
         &:last-child {
             border-bottom: 1px dotted $media-mute;
         }
-        .gallery2__item--advert + & {
-        }
     }
     @include mq(desktop) {
         padding-right: gs-span(3) + $gs-gutter;
@@ -44,6 +42,7 @@
         }
     }
 }
+
 .gallery2__item--advert {
     min-height: 0;
     padding-top: 0;
@@ -80,7 +79,7 @@
         width: gs-span(3);
         right: 0;
         top: 0;
-        border-top: 1px dotted $neutral-2;
+        border-top: 1px dotted $media-mute;
     }
 }
 
@@ -189,19 +188,82 @@
     padding-bottom: $gs-baseline*2;
 }
 
-.content--gallery {
-    .content__meta-container {
-        min-height: gs-height(1) + $gs-baseline*2;
+// New gallery stuff
 
-        @include mq(tablet) {
-            border-bottom: 0;
+// The main image needs to take up 100vh and the slim header needs to sit just on top of it.
+.l-header--new-gallery {
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    left: 0;
+}
+
+.content__labels--gallery {
+    border: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    width: auto;
+    float: none;
+
+    .content__section-label {
+        margin-right: $gs-gutter / 4;
+    }
+
+    .content__series-label {
+        font-weight: normal;
+    }
+
+    .content__series-label,
+    .content__section-label {
+        @include fs-header(1, $size-only: true);
+        float: left;
+    }
+}
+
+.new-gallery__meta-container {
+    &:before {
+        content: '';
+        border-top: 1px solid $media-mute;
+        padding-top: $gs-baseline / 4;
+        display: block;
+        width: gs-span(1);
+    }
+}
+
+.new-gallery__divider {
+    border-top: 1px solid $media-mute;
+    margin-top: $gs-baseline;
+
+    @include mq(desktop) {
+        padding-top: $gs-baseline / 2;
+    }
+}
+
+// TODO: When the time comes, remove `.new-gallery` class completely and remove old gallery styling
+.new-gallery {
+    .content__main-column--gallery {
+        max-width: none;
+        margin-right: auto;
+        padding-bottom: $gs-baseline*2;
+
+        @include mq(desktop) {
+            margin-left: gs-span(3) + $gs-gutter;
+            margin-right: -$gs-gutter;
         }
+    }
 
-        @include mq(tablet, leftCol) {
-            .byline,
-            .content__dateline {
-                padding-right: gs-span(3) + $gs-gutter;
-            }
+    .content__meta-container {
+        border: 0;
+        position: relative;
+        width: auto;
+        min-height: auto;
+        margin-bottom: $gs-baseline;
+
+        .byline,
+        .content__dateline {
+            border: 0;
+            min-height: 0;
+            padding: 0;
         }
 
         .meta__comment-count--top {
@@ -226,216 +288,74 @@
     .witness-cta {
         border: 0;
     }
-}
 
-//disable hover state for lightbox and related content as they're on dark backgrounds
-.gallery__most-popular,
-.gallery-lightbox--endslate {
-    .tone-media--item {
-        .u-faux-block-link--hover {
-            background-color: $media-background !important;
-
-            .responsive-img {
-                opacity: 1 !important;
-            }
-
-            .fc-item__link {
-                text-decoration: underline !important;
-            }
-        }
-    }
-}
-
-// New gallery stuff
-
-// The main image needs to take up 100vh and the slim header needs to sit just on top of it.
-.l-header--new-gallery {
-    position: absolute;
-    z-index: 1;
-    right: 0;
-    left: 0;
-}
-
-.content__labels--gallery {
-    border: 0;
-    margin-bottom: 0;
-    width: auto;
-    float: none;
-}
-
-// TODO: When the time comes, remove `.new-gallery` class completely and remove old gallery styling
-.new-gallery {
-    .ad-slot--dark {
-        background-color: $multimedia-support-5;
-    }
-
-    .content__main-column {
-        max-width: none;
-
-        @include mq(tablet) {
-            margin-left: gs-span(3);
-        }
-    }
-
-    @include mq(tablet) {
-        .content__dateline,
-        .content__labels--gallery,
-        .byline,
-        .content__meta-container,
-        .meta__break,
-        .meta__save-for-later,
-        .content__headline,
-        .content__standfirst {
-            margin-left: gs-span(3);
-            margin-right: gs-span(1);
-            max-width: gs-span(8);
-        }
-
-        .byline, .content__dateline {
-            border: 0;
-        }
-
-        .content__standfirst {
-            padding-bottom: 0;
-            padding-top: 0;
-
-            &:before {
-                content: none;
-            }
-        }
-    }
-
-    // overriding defaults
-    .meta__save-for-later {
-        position: relative;
-        left: 0;
-    }
-
-    // TODO: Replace all media tones instead of overwriting the defaults
-    &.tonal--tone-media {
-
-        // Overwriting media tone header so that you can see the image instead
-        .tonal__header {
-            background-color: $multimedia-support-5
-        }
-
-        .meta__numbers {
-            color: $neutral-3;
-        }
-
-        .content__dateline,
-        .sharecount__heading {
-            color: $neutral-2;
-        }
-
-        .byline a,
-        .sharecount__value {
-            color: $neutral-3;
-        }
-
-        .save-for-later__button--save .inline-icon {
-            background-color: $multimedia-support-5;
-        }
-    }
-
-    .content__wrapper--headline {
-        background-color: rgba(0, 0, 0, .6);
-        background: linear-gradient(rgba(0, 0, 0, .5), $multimedia-support-5);
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-    }
-
-    .content__headline {
-        &:before {
-            content: none;
-        }
-    }
-
-    .inline-camera svg {
-        width: 32px;
-        height: auto;
-    }
-
-    .content__standfirst {
-        color: $neutral-5;
-    }
-
-    .content__meta-container {
-        border: 0;
-        position: relative;
-        width: auto;
-        margin-bottom: 0;
+    .meta__extras {
+        border-top: 1px dotted $media-mute;
+        border-bottom: 1px dotted $media-mute;
+        display: flex;
+        justify-content: space-between;
     }
 
     .meta__social {
-        border-top: 1px dotted $neutral-2;
-        border-bottom: 1px dotted $neutral-2;
-    }
+        border: 0;
 
-    .meta__break {
-        border-top: 1px dotted $neutral-2;
-        display: block;
-        width: 10%;
+        .social--top {
+            padding: 8px 0 0;
+
+            .social__item {
+                padding-right: $gs-gutter/4;
+                min-width: auto;
+            }
+        }
     }
 
     .meta__numbers {
         border: 0;
-        position: absolute;
-        right: 0;
-        top: 0;
+        flex-shrink: 0;
+        position: static;
+        min-width: gs-span(1);
+    }
 
-        .sharecount__heading {
-            padding-left: 0;
+    @include mq(desktop) {
+        .content__labels,
+        .content__meta-container,
+        .content__headline,
+        .content__standfirst {
+            margin-left: gs-span(3) + $gs-gutter;
+            max-width: gs-span(8);
         }
     }
 
-    .content__series-label {
-        padding-top: 0;
-        margin-left: 1rem;
-    }
-
-    .content__series-label,
-    .content__section-label {
-        display: inline-block;
-    }
-
-    .block-share--gallery {
-        position: relative;
-
-        .block-share__item--facebook,
-        .block-share__item--twitter,
-        .block-share__item--pinterest {
-            background-color: $multimedia-support-5;
-            border: 1px solid $neutral-2;
-
-            &:hover {
-                background-color: $multimedia-support-5;
-            }
-
-            &.inline-icon, .inline-icon {
-                fill: $neutral-3;
-            }
-        }
-    }
-
-    .social-icon, .block-share__item {
-        background-color: $multimedia-support-5;
-        border: 1px solid $neutral-2;
-
-        &:hover {
-            background-color: $multimedia-support-5;
+    // TODO: Replace all media tones instead of overwriting the defaults
+    &.tonal--tone-media {
+        .meta__twitter,
+        .meta__email {
+            margin-top: $gs-baseline/4;
+            margin-bottom: $gs-baseline;
         }
 
-        &.inline-icon, .inline-icon {
-            fill: $neutral-3
+        // Overwriting media tone header so that you can see the image instead
+        .content__headline {
+            font-weight: 200;
+            padding-top: 0;
         }
     }
 
     .gallery {
         list-style: none;
         margin: 0;
+        position: relative;
+
+        @include mq(desktop) {
+            &:before {
+                content: '';
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: -$gs-gutter/2;
+                border-left: 1px solid $media-mute;
+            }
+        }
     }
 
     .gallery__item {
@@ -444,10 +364,16 @@
             flex-direction: column-reverse;
         }
 
-        // On mobile the images should be 100% of the width of the screen
-        @include mq($until: phablet) {
+        // On mobile/tablet the images should be 100% of the width of the screen
+        @include mq($until: desktop) {
             margin-left: -$gs-gutter;
             margin-right: -$gs-gutter;
+            padding-top: $gs-baseline / 2;
+            border-top: 1px solid $media-mute;
+
+            &:first-of-type {
+                border-top: 0;
+            }
         }
 
         @include mq($until: mobileLandscape) {
@@ -455,7 +381,7 @@
             margin-right: -$gs-gutter / 2;
         }
 
-        @include mq(tablet) {
+        @include mq(desktop) {
             position: relative;
             border-top: 0;
             padding: 0;
@@ -466,9 +392,16 @@
         }
     }
 
+    .gallery__item--advert {
+        @include mq($until: desktop) {
+            border-top: 0;
+            margin-left: 0;
+            margin-right: 0;
+        }
+    }
+
     .gallery__figcaption {
         @include fs-textSans(1);
-        padding-top: $gs-baseline / 4;
         overflow: visible;
         max-height: 100%;
         position: relative;
@@ -477,37 +410,37 @@
 
         @include mq($until: desktop) {
             margin-bottom: $gs-baseline * 2;
-        }
-
-        @include mq($until: phablet) {
-            padding: $gs-gutter;
+            padding-top: $gs-baseline / 2;
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
         }
 
         @include mq($until: mobileLandscape) {
-            padding: $gs-gutter / 2;
+            padding-left: $gs-gutter / 2;
+            padding-right: $gs-gutter / 2;
         }
 
-        @include mq(tablet) {
+        @include mq(desktop) {
             @include fs-textSans(2, true);
             position: absolute;
             width: gs-span(3);
             top: 0;
             right: auto;
-            margin-left: 0 - gs-span(3);
+            margin-left: -(gs-span(3) + $gs-gutter);
         }
     }
 
     .gallery__caption {
         color: $neutral-4;
-        margin-bottom: 0;
 
-        @include mq(tablet) {
+        @include mq(desktop) {
             padding-right: $gs-gutter / 2;
         }
 
         a {
             color: $neutral-4;
             border-bottom: 1px solid $neutral-2;
+            transition: border-color .15s ease-out;
 
             &:hover {
                 border-bottom: 1px solid $neutral-7;
@@ -531,20 +464,24 @@
     }
 
     .gallery__credit {
-        color: $neutral-2;
+        color: $neutral-3;
 
-        @include mq(tablet) {
+        @include mq(desktop) {
             padding-right: $gs-gutter / 2;
         }
     }
 
     .gallery__img-container {
-        background-color: $multimedia-support-5;
-
-        @include mq(tablet) {
-            border-left: 1px dotted $multimedia-support-4;
-            padding-left: $gs-gutter / 2;
+        @include mq(desktop) {
             padding-bottom: 2.5rem;
+        }
+
+        @include mq($until: desktop) {
+            text-align: center;
+
+            img {
+                display: inline-block;
+            }
         }
     }
 
@@ -553,17 +490,4 @@
     .gallery__img {
         width: 100%;
     }
-
-    .content__header__background-image {
-        height: 100vh;
-        // The headline wrapper is position absolute within this div
-        position: relative;
-        background-position: center center;
-        background-size: cover;
-    }
-}
-
-// Make related content the right colour.
-.l-side-margins--new-gallery .tonal--tone-media {
-    background-color: $multimedia-support-5;
 }

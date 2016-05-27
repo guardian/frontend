@@ -125,7 +125,10 @@ define([
     }
 
     function augmentInteractive() {
-        if (/Article|Interactive|LiveBlog/.test(config.page.contentType)) {
+        if (
+            !config.switches.bootInteractivesFromMain &&
+            /Article|Interactive|LiveBlog/.test(config.page.contentType)
+        ) {
             $('figure.interactive').each(function (el) {
                 fastdom.defer(function () {
                     enhancer.render(el, document, config, mediator);

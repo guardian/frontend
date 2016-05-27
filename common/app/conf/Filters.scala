@@ -3,15 +3,16 @@ package conf
 import cache.SurrogateKey
 import common.ExecutionContexts
 import filters.RequestLoggingFilter
-import org.apache.commons.codec.digest.DigestUtils
-import play.api.mvc.{EssentialFilter, Result, RequestHeader, Filter}
-import play.filters.gzip.GzipFilter
+import play.api.http.HttpFilters
 import implicits.Responses._
+import play.api.mvc.{EssentialFilter, Filter, RequestHeader, Result}
+import play.filters.gzip.GzipFilter
+
 import scala.concurrent.Future
 
-object Gzipper extends GzipFilter(shouldGzip = (_, resp) => !resp.isImage)
+class Gzipper extends GzipFilter(shouldGzip = (_, result) => !result.isImage)
 
-object JsonVaryHeadersFilter extends Filter with ExecutionContexts with implicits.Requests {
+class JsonVaryHeadersFilter extends Filter with ExecutionContexts with implicits.Requests {
 
   private val varyFields = List("Origin", "Accept")
   private val defaultVaryFields = varyFields.mkString(",")
@@ -33,7 +34,7 @@ object JsonVaryHeadersFilter extends Filter with ExecutionContexts with implicit
 }
 
 // this lets the CDN log the exact part of the backend this response came from
-object BackendHeaderFilter extends Filter with ExecutionContexts {
+class BackendHeaderFilter extends Filter with ExecutionContexts {
 
   private lazy val backendHeader = "X-Gu-Backend-App" -> conf.Configuration.environment.projectName
 
@@ -43,7 +44,7 @@ object BackendHeaderFilter extends Filter with ExecutionContexts {
 }
 
 // See https://www.fastly.com/blog/surrogate-keys-part-1/
-object SurrogateKeyFilter extends Filter with ExecutionContexts {
+class SurrogateKeyFilter extends Filter with ExecutionContexts {
 
   private val SurrogateKeyHeader = "Surrogate-Key"
 
@@ -57,7 +58,7 @@ object SurrogateKeyFilter extends Filter with ExecutionContexts {
   }
 }
 
-object AmpFilter extends Filter with ExecutionContexts with implicits.Requests {
+class AmpFilter extends Filter with ExecutionContexts with implicits.Requests {
   override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
     if (request.isAmp) {
       val domain = request.headers.get("Origin").getOrElse("https://" + request.domain)
@@ -74,12 +75,21 @@ object AmpFilter extends Filter with ExecutionContexts with implicits.Requests {
 object Filters {
   // NOTE - order is important here, Gzipper AFTER CorsVaryHeaders
   // which effectively means "JsonVaryHeaders goes around Gzipper"
-  lazy val common: List[EssentialFilter] = List(
-    JsonVaryHeadersFilter,
-    Gzipper,
-    BackendHeaderFilter,
-    RequestLoggingFilter,
-    SurrogateKeyFilter,
-    AmpFilter
+  def common: List[EssentialFilter] = List(
+    new PanicSheddingFilter,
+    new JsonVaryHeadersFilter,
+    new Gzipper,
+    new BackendHeaderFilter,
+    new RequestLoggingFilter,
+    new SurrogateKeyFilter,
+    new AmpFilter
   )
+}
+
+class CommonFilters extends HttpFilters {
+  val filters = Filters.common
+}
+
+class CommonGzipFilter extends HttpFilters {
+  val filters = Seq(new Gzipper)
 }

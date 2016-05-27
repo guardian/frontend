@@ -1,21 +1,56 @@
-.content--immersive {
-    .is-fixed-height {
-        .content__headline {
-            @include fs-headline(7, true);
-            line-height: 1;
-
-            @include mq(desktop) {
-                font-size: 3.25rem;
-            }
-        }
+// Contains top ad + header + main media
+.immersive-header-container {
+    @supports (object-fit: cover) and (height: 1vh) and (display: flex) {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
     }
 
-    .content__headline {
+}
+
+.immersive-main-media {
+    // The headline wrapper is position absolute within this div
+    position: relative;
+
+    @supports (object-fit: cover) and (height: 1vh) and (display: flex) {
+        flex: 1;
+        min-height: 400px;
+    }
+}
+
+.immersive-main-media__img {
+    width: 100%;
+    // Remove inline spacing
+    display: block;
+
+    @supports (object-fit: cover) and (height: 1vh) and (display: flex) {
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        z-index: 0;
+    }
+}
+
+.immersive-main-media__headline-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, .6);
+    background: linear-gradient(rgba(0, 0, 0, .5), $multimedia-support-5);
+}
+
+.content__headline--immersive {
+    font-weight: 200;
+    padding-bottom: 1.5rem;
+}
+
+.content--immersive {
+    .content__headline--immersive {
         @include fs-headline(9);
         font-weight: 200;
-        line-height: 1;
-        padding-top: $gs-baseline / 2;
-        padding-bottom: 1.5rem;
 
         @include mq(desktop) {
             font-size: 4rem;
@@ -79,12 +114,25 @@
         }
     }
 
+    .content__series-label {
+        @include fs-header(1);
+        float: none;
+        padding-top: $gs-baseline / 2;
+        margin-bottom: 0;
+    }
+
     .content__series-label__link {
         color: #ffffff;
     }
 
     .content__series-label + .content__headline {
         padding-top: 0;
+    }
+
+    .content__headline--immersive--with-main-media {
+        @include mq(desktop) {
+            font-size: 3.25rem;
+        }
     }
 
     .content__standfirst {
@@ -108,6 +156,34 @@
         }
     }
 
+    .content__main-embed {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+
+    .is-fixed-height {
+        .content__headline {
+            @include fs-headline(7, true);
+            line-height: 1;
+
+            @include mq(desktop) {
+                font-size: 3.25rem;
+            }
+        }
+
+        .content__standfirst:before {
+            @include mq($until: desktop) {
+                display: none;
+            }
+        }
+    }
+
+    /* Old Iframed Main Embed (Remove this section if immersiveMainEmbedSwitch is made permanent)
+    ========================================================================== */
     .content__loading {
         position: absolute;
         top: 0;
@@ -146,17 +222,8 @@
         }
     }
 
-    .is-fixed-height {
-        .content__standfirst:before {
-            @include mq($until: desktop) {
-                display: none;
-            }
-        }
-
-        // Should be removed when capi returns a no-id element for code embeds in main media
-        .content__loading {
-            display: block;
-        }
+    .is-fixed-height .content__loading {
+        display: block;
     }
 
     /* Meta
@@ -674,6 +741,7 @@
             bottom: 0;
             left: 0;
             right: 0;
+            z-index: 2;
         }
 
         @include mq($until: desktop) {

@@ -18,10 +18,11 @@ define([
     'common/modules/component',
     'common/modules/video/events',
     'common/modules/video/fullscreener',
-    'common/modules/video/supportedBrowsers',
     'common/modules/video/tech-order',
     'common/modules/video/video-container',
-    'common/modules/experiments/ab',
+    'common/modules/video/onward-container',
+    'common/modules/video/more-in-series-container',
+    'common/modules/video/videojs-options',
     // This must be the full path because we use curl config to change it based
     // on env
     'bootstraps/enhanced/media/video-player',
@@ -46,10 +47,11 @@ define([
     Component,
     events,
     fullscreener,
-    supportedBrowsers,
     techOrder,
     videoContainer,
-    ab,
+    onwardContainer,
+    moreInSeriesContainer,
+    videojsOptions,
     videojs,
     loadingTmpl
 ) {
@@ -68,7 +70,7 @@ define([
             unviewed_position_start: 1
         };
 
-        return 'http://' + config.page.dfpHost + '/gampad/ads?' + urlUtils.constructQuery(queryParams);
+        return 'https://' + config.page.dfpHost + '/gampad/ads?' + urlUtils.constructQuery(queryParams);
     }
 
     function initLoadingSpinner(player) {
@@ -144,7 +146,9 @@ define([
                         placeholder.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
                         player.removeClass('media__container--hidden').addClass('media__container--active');
                         $el.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
-                        enhanceVideo($('video', player).get(0), true);
+                        var enhancedPlayer = enhanceVideo($('video', player).get(0), true);
+
+                        mediator.emit('ab:PlayVideoOnFronts:front-player-created', enhancedPlayer);
                     });
                 });
                 fastdom.write(function () {
@@ -164,7 +168,8 @@ define([
 
         fastdom.read(function () {
             $('.js-gu-media--enhance').each(function (el) {
-                enhanceVideo(el, false, withPreroll);
+                var enhancedPlayer = enhanceVideo(el, false, withPreroll);
+                mediator.emit('ab:PlayVideoOnFronts:in-article-video-created', enhancedPlayer);
             });
         });
 
@@ -179,50 +184,51 @@ define([
         var mediaType = el.tagName.toLowerCase(),
             $el = bonzo(el).addClass('vjs vjs-tech-' + videojs.options.techOrder[0]),
             mediaId = $el.attr('data-media-id'),
-            blockVideoAds = $el.attr('data-block-video-ads') === 'true',
             showEndSlate = $el.attr('data-show-end-slate') === 'true',
             endSlateUri = $el.attr('data-end-slate'),
             embedPath = $el.attr('data-embed-path'),
             // we need to look up the embedPath for main media videos
             canonicalUrl = $el.attr('data-canonical-url') || (embedPath ? '/' + embedPath : null),
             techPriority = techOrder(el),
-            withPreroll = shouldPreroll && !blockVideoAds,
             player,
             mouseMoveIdle,
             playerSetupComplete,
-            isPlayerExpired;
+            withPreroll,
+            blockVideoAds;
 
-        isPlayerExpired = new Promise(function(resolve) {
+        var videoInfo = new Promise(function(resolve) {
             // We only have the canonical URL in videos embedded in articles / main media.
+            var defaultVideoInfo = {
+                expired: false,
+                shouldHideAdverts: false
+            };
+
             if (!canonicalUrl) {
-                resolve(false);
+                resolve(defaultVideoInfo);
             } else {
                 ajax({
                     url: canonicalUrl + '/info.json'
                 }).then(function(videoInfo) {
-                    resolve(videoInfo.expired);
+                    resolve(videoInfo);
+                }, function() {
+                    // if this fails, don't stop, keep going.
+                    resolve(defaultVideoInfo);
                 });
             }
         });
 
-        player = createVideoPlayer(el, {
+        player = createVideoPlayer(el, videojsOptions({
             techOrder: techPriority,
-            controls: true,
-            // `autoplay` is always set to false.
-            // If you are going to set autoplay to any other value, note it breaks
-            // `preload="auto"` on < Chrome 35 and `preload="metadata"` on old Safari
-            autoplay: false,
-            preload: 'metadata',
             plugins: {
                 embed: {
                     embeddable: !config.page.isFront && config.switches.externalVideoEmbeds && (config.page.contentType === 'Video' || $el.attr('data-embeddable') === 'true'),
                     location: config.page.externalEmbedHost + '/embed/video/' + (embedPath ? embedPath : config.page.pageId)
                 }
             }
-        });
+        }));
 
-        isPlayerExpired.then(function(expired) {
-            if (expired) {
+        videoInfo.then(function(videoInfo) {
+            if (videoInfo.expired) {
                 player.ready(function() {
                     player.error({
                         code: 0,
@@ -234,6 +240,9 @@ define([
                     player.errorDisplay.open();
                 });
             } else {
+                blockVideoAds = videoInfo.shouldHideAdverts;
+                withPreroll = shouldPreroll && !blockVideoAds;
+
                 // Location of this is important.
                 events.bindErrorHandler(player);
                 player.guMediaType = mediaType;
@@ -243,7 +252,7 @@ define([
                         var vol;
 
                         deferToAnalytics(function () {
-                            events.initOmnitureTracking(player);
+                            events.initOmnitureTracking(player, mediaId);
                             events.initOphanTracking(player, mediaId);
 
                             events.bindGlobalEvents(player);
@@ -255,7 +264,6 @@ define([
 
                         initLoadingSpinner(player);
                         upgradeVideoPlayerAccessibility(player);
-                        supportedBrowsers(player);
 
                         player.one('playing', function (e) {
                             if (isFlash(e)) {
@@ -302,10 +310,6 @@ define([
                             } else {
                                 resolve();
                             }
-
-
-
-
                         } else {
                             player.playlist({
                                 mediaType: 'audio',
@@ -338,6 +342,8 @@ define([
                 });
             }
         });
+
+        return player;
     }
 
     function initEndSlate(player, endSlatePath) {
@@ -357,69 +363,32 @@ define([
         });
     }
 
+    function getMediaType() {
+        return config.page.contentType.toLowerCase();
+    }
+
     function initMoreInSection() {
         if (!config.isMedia || !config.page.showRelatedContent) {
             return;
         }
 
-        var mediaType = config.page.contentType.toLowerCase(),
-            section   = new Component(),
-            attachTo  = $('.js-onward')[0],
-            endpoint  = '/' + mediaType + '/section/' + config.page.section;
-
-        if ('seriesId' in config.page) {
-            endpoint += '/' + config.page.seriesId;
-        }
-
-        endpoint += '.json?shortUrl=' + config.page.shortUrl;
-
-        // exclude professional network content from video pages
-        if (mediaType === 'video') {
-            endpoint += '&exclude-tag=guardian-professional/guardian-professional';
-        }
-
-        section.endpoint = endpoint;
-
-        section.fetch(attachTo).then(function () {
-            mediator.emit('page:media:moreinloaded', attachTo);
-            mediator.emit('page:new-content', attachTo);
-        });
+        var el  = $('.js-more-in-section')[0];
+        moreInSeriesContainer.init(
+            el, getMediaType(),
+            config.page.section,
+            config.page.shortUrl,
+            config.page.seriesId
+        );
     }
 
-    function initMostViewedMedia() {
+    function initOnwardContainer() {
         if (!config.isMedia) {
             return;
         }
 
-        var mediaType  = config.page.contentType.toLowerCase(),
-            mostViewed = new Component(),
-            isInSeriesTest = ab.isInVariant('VideoSeriesPage', 'variant'),
-            attachTo   = $(mediaType === 'video' ? '.js-video-components-container' : '.js-media-popular')[0],
-            endpoint   = isInSeriesTest ? '/video/in-series/' + config.page.seriesId + '.json' :
-                         '/' + (config.page.isPodcast ? 'podcast' : mediaType) + '/most-viewed.json';
-
-        mostViewed.manipulationType = mediaType === 'video' ? 'append' : 'html';
-        mostViewed.endpoint = endpoint;
-
-        mostViewed.fetch(attachTo, 'html').then(function () {
-            mediator.emit('page:new-content');
-
-            if (isInSeriesTest) {
-                // TODO: This is only for the test - please don't get this close to prod
-                bean.on(attachTo, 'click', '.most-viewed-navigation__link', function(ev) {
-                    var page = ev.currentTarget.getAttribute('data-page');
-                    var endpoint = mostViewed.endpoint.replace(/\?page=\d/, '') + '?page=' + page;
-
-                    mostViewed = new Component();
-                    mostViewed.manipulationType = mediaType === 'video' ? 'append' : 'html';
-                    mostViewed.endpoint = endpoint;
-                    attachTo.innerHTML = '';
-                    mostViewed.fetch(attachTo, 'html');
-                    ev.preventDefault();
-                    return false;
-                });
-            }
-        });
+        var mediaType = getMediaType();
+        var el = $(mediaType === 'video' ? '.js-video-components-container' : '.js-media-popular')[0];
+        onwardContainer.init(el, mediaType);
     }
 
     function initWithRaven(withPreroll) {
@@ -439,7 +408,8 @@ define([
         // The `hasMultipleVideosInPage` flag is temporary until the # will be fixed
         var shouldPreroll = commercialFeatures.videoPreRolls &&
             !config.page.hasMultipleVideosInPage &&
-            !config.page.isAdvertisementFeature;
+            !config.page.isAdvertisementFeature &&
+            !config.page.sponsorshipType;
 
         if (config.switches.enhancedMediaPlayer) {
             if (shouldPreroll) {
@@ -455,7 +425,7 @@ define([
         }
         initFacia();
         initMoreInSection();
-        initMostViewedMedia();
+        initOnwardContainer();
     }
 
     return {

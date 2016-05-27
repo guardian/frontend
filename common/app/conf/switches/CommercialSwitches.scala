@@ -230,15 +230,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val FixedTopAboveNavAdSlotSwitch = Switch(
-    SwitchGroup.Commercial,
-    "fixed-top-above-nav",
-    "Fixes size of top-above-nav ad slot on fronts.",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 6),
-    exposeClientSide = false
-  )
-
   val KruxVideoTracking = Switch(
     SwitchGroup.Commercial,
     "krux-video-tracking",
@@ -266,93 +257,21 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val v2MasterclassesTemplate = Switch(
-    SwitchGroup.CommercialRefactoring,
-    "v2-masterclasses-template",
-    "Masterclasses component using template v2",
+  val FluidAdverts = Switch(
+    SwitchGroup.Commercial,
+    "fluid-adverts",
+    "Request fluid adverts from DFP",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
+    sellByDate = new LocalDate(2016, 6, 30),
     exposeClientSide = false
   )
 
-  val v2BooksTemplate = Switch(
-    SwitchGroup.CommercialRefactoring,
-    "v2-books-template",
-    "Books component using template v2",
+  val FixedTechTopSlot = Switch(
+    SwitchGroup.Commercial,
+    "fixed-tech-top-slot",
+    "Height of the top banner is fixed at 250px in the Tech section",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = false
-  )
-
-  val v2SoulmatesTemplate = Switch(
-    SwitchGroup.CommercialRefactoring,
-    "v2-soulmates-template",
-    "Soulmates component using template v2",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = false
-  )
-
-  val v2BlendedTemplate = Switch(
-    SwitchGroup.CommercialRefactoring,
-    "v2-blended-template",
-    "Blended component using template v2",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = false
-  )
-
-  val v2ManualSingleTemplate = Switch(
-    SwitchGroup.CommercialRefactoring,
-    "v2-manual-single-template",
-    "Manual single component using template v2",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = true
-  )
-
-  val v2ManualMultipleTemplate = Switch(
-    SwitchGroup.CommercialRefactoring,
-    "v2-manual-multiple-template",
-    "Manual multiple component using template v2",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = true
-  )
-
-  val v2CapiSingleTemplate = Switch(
-    SwitchGroup.CommercialRefactoring,
-    "v2-capi-single-template",
-    "Capi single component using template v2",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = false
-  )
-
-  val v2CapiMultipleTemplate = Switch(
-    SwitchGroup.CommercialRefactoring,
-    "v2-capi-multiple-template",
-    "Capi multiple component using template v2",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = false
-  )
-
-  val v2FixedContainerTemplate = Switch(
-    SwitchGroup.CommercialRefactoring,
-    "v2-fixed-container-template",
-    "Fixed paid containers using template v2",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 4),
-    exposeClientSide = false
-  )
-
-  val cardsDecidePaidContainerBranding = Switch(
-    SwitchGroup.CommercialRefactoring,
-    "cards-decide-paid-container-branding",
-    "If on, the cards will decide the branding of their container",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 1),
+    sellByDate = new LocalDate(2016, 6, 30),
     exposeClientSide = false
   )
 
@@ -361,16 +280,34 @@ trait CommercialSwitches {
     "static-badges",
     "If on, all badges are served server side",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 25),
+    sellByDate = new LocalDate(2016, 6, 22),
     exposeClientSide = true
   )
 
-  val requestOutOfPageSlotAlways = Switch(
+  val highMerchandisingComponentSwitch = Switch(
     SwitchGroup.Commercial,
-    "request-out-of-page-slot-always",
-    "If on, the out of page slot (1x1) will be added to each page, regardless of pageskins, surveys or other dependent features",
+    "optimise-high-merchandising",
+    "If on, server will check tags for high-merchandising target before rendering high-merch slot.",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 3),
-    exposeClientSide =  false
+    sellByDate = new LocalDate(2016,6,8),
+    exposeClientSide = false
+  )
+
+  val reportEmptyDfpResponsesSwitch = Switch(
+    SwitchGroup.Commercial,
+    "report-empty-dfp-responses",
+    "If on, the client will report empty dfp ad responses.",
+    safeState = Off,
+    sellByDate = new LocalDate(2016,6,8),
+    exposeClientSide = true
+  )
+
+  val hostedEpisode1Content = Switch(
+    SwitchGroup.Commercial,
+    "hosted-episode1-content",
+    "If on, another hardcoded page of hosted content is available",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 12),
+    exposeClientSide = false
   )
 }

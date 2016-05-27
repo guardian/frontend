@@ -1,7 +1,7 @@
 package dfp
 
 import common.Edition
-import common.dfp.{GeoTarget, GuLineItem, InlineMerchandisingTagSet, PageSkinSponsorship}
+import common.dfp._
 
 case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
 
@@ -15,6 +15,22 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
     }
   }
 
+  val targetedHighMerchandisingLineItems: HighMerchandisingLineItems = {
+    val highMerchLineItems = lineItems
+      .filter(_.targetsHighMerchandising)
+      .foldLeft(Seq.empty[HighMerchandisingLineItem]) { (soFar, lineItem) =>
+        soFar :+ HighMerchandisingLineItem(
+          name = lineItem.name,
+          id = lineItem.id,
+          tags = lineItem.highMerchandisingTargets,
+          adUnits = lineItem.targeting.adUnits,
+          customTargetSet = lineItem.targeting.customTargetSets
+        )
+      }
+
+    HighMerchandisingLineItems(items = highMerchLineItems)
+  }
+
   val pageSkinSponsorships: Seq[PageSkinSponsorship] = {
     lineItems withFilter { lineItem =>
       lineItem.isPageSkin && lineItem.isCurrent
@@ -26,7 +42,8 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
         editions = editionsTargeted(lineItem),
         countries = countriesTargeted(lineItem),
         isR2Only = lineItem.targeting.targetsR2Only,
-        targetsAdTest = lineItem.targeting.hasAdTestTargetting
+        targetsAdTest = lineItem.targeting.hasAdTestTargetting,
+        adTestValue = lineItem.targeting.adTestValue
       )
     }
   }

@@ -3,7 +3,7 @@
 # ~~~~
 
 
-GET         /_healthcheck                                                                           controllers.HealthCheck.healthcheck()
+GET         /_healthcheck                                                                           controllers.HealthCheck.healthCheck()
 
 # authentication endpoints
 GET         /login                                                                                  controllers.admin.OAuthLoginController.login
@@ -20,18 +20,18 @@ GET         /assets/*path                                                       
 #all endpoints below this line should be authenticated#
 #######################################################
 
-#Index page
+# Index page
 GET         /                                                                                       controllers.admin.AdminIndexController.index()
 GET         /admin                                                                                  controllers.admin.AdminIndexController.admin()
 
-#Facia Press
+# Facia Press
 GET         /press                                                                                  controllers.FrontPressController.press()
 POST        /press/all                                                                              controllers.FrontPressController.queueAllFrontsForPress()
 POST        /press/high                                                                             controllers.FrontPressController.queueHighFrequencyFrontsForPress()
 POST        /press/standard                                                                         controllers.FrontPressController.queueStandardFrequencyFrontsForPress()
 POST        /press/low                                                                              controllers.FrontPressController.queueLowFrequencyFrontsForPress()
 
-#R2 Press
+# R2 Press
 GET         /press/r2                                                                               controllers.admin.R2PressController.pressForm()
 POST        /press/r2                                                                               controllers.admin.R2PressController.press()
 GET         /press/r2/batchupload                                                                   controllers.admin.R2PressController.pressForm()
@@ -54,7 +54,7 @@ GET         /ophan/pageviews/*path                                              
 GET         /ophan/pageviews                                                                        controllers.admin.OphanApiController.platformPageViews()
 GET         /ophan/ads/render-time                                                                  controllers.admin.OphanApiController.adsRenderTime()
 
-#Development endpoints
+# Development endpoints
 GET         /dev/switchboard                                                                        controllers.admin.SwitchboardController.renderSwitchboard()
 GET         /dev/switchboard-plista                                                                 controllers.admin.SwitchboardPlistaController.renderSwitchboard()
 
@@ -69,33 +69,29 @@ GET         /analytics/quality                                                  
 
 GET         /analytics/headlines-test                                                               controllers.admin.MetricsController.renderHeadlinesTest()
 
-#Facia
+# Facia
 GET         /deduped                                                                                controllers.admin.WhatIsDeduped.index()
 GET         /deduped/*path                                                                          controllers.admin.WhatIsDeduped.dedupedFor(path)
 
 # Commercial
-GET         /admin/commercial                                                                       controllers.admin.CommercialController.renderCommercialMenu()
-GET         /analytics/commercial                                                                   controllers.admin.CommercialController.renderCommercial()
-GET         /analytics/commercial/specialadunits                                                    controllers.admin.CommercialController.renderSpecialAdUnits()
-GET         /analytics/commercial/sponsorships                                                      controllers.admin.CommercialController.renderPaidForTags()
-GET         /analytics/commercial/pageskins                                                         controllers.admin.CommercialController.renderPageskins()
-GET         /analytics/commercial/surging                                                           controllers.admin.CommercialController.renderSurgingContent()
-GET         /analytics/commercial/im-sponsorships                                                   controllers.admin.CommercialController.renderInlineMerchandisingTargetedTags()
-GET         /analytics/commercial/templates                                                         controllers.admin.CommercialController.renderCreativeTemplates()
-GET         /analytics/commercial/sponsored-containers                                              controllers.admin.CommercialController.sponsoredContainers()
-GET         /commercialtools/adunits/toapprove                                                      controllers.admin.CommercialAdUnitController.renderToApprove()
-POST        /commercialtools/adunits/toapprove                                                      controllers.admin.CommercialAdUnitController.approve()
-GET         /admin/commercial/fluid250                                                              controllers.admin.CommercialController.renderFluidAds()
-GET         /analytics/commercial/adtests                                                           controllers.admin.CommercialController.renderAdTests()
-GET         /admin/commercial/dfp/flush/view                                                        controllers.admin.commercial.DfpDataController.renderCacheFlushPage()
-GET         /admin/commercial/dfp/flush                                                             controllers.admin.commercial.DfpDataController.flushCache()
-GET         /admin/commercial/radiator                                                              controllers.admin.CommercialController.renderCommercialRadiator()
-GET         /admin/commercial/slot/:slotName                                                        controllers.admin.commercial.SlotController.viewSlot(slotName)
-GET         /admin/commercial/adops/takeovers-empty-mpus                                            controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewList()
-GET         /admin/commercial/adops/takeovers-empty-mpus/create                                     controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewForm()
-POST        /admin/commercial/adops/takeovers-empty-mpus/create                                     controllers.admin.commercial.TakeoverWithEmptyMPUsController.create()
-POST        /admin/commercial/adops/takeovers-empty-mpus/remove                                     controllers.admin.commercial.TakeoverWithEmptyMPUsController.remove(takeoverStr)
-
+GET         /commercial                                                                             controllers.admin.CommercialController.renderCommercialMenu()
+GET         /commercial/specialadunits                                                              controllers.admin.CommercialController.renderSpecialAdUnits()
+GET         /commercial/sponsorships                                                                controllers.admin.CommercialController.renderPaidForTags()
+GET         /commercial/pageskins                                                                   controllers.admin.CommercialController.renderPageskins()
+GET         /commercial/surging                                                                     controllers.admin.CommercialController.renderSurgingContent()
+GET         /commercial/inline-merchandising                                                        controllers.admin.CommercialController.renderInlineMerchandisingTargetedTags()
+GET         /commercial/high-merchandising                                                          controllers.admin.CommercialController.renderHighMerchandisingTargetedTags()
+GET         /commercial/templates                                                                   controllers.admin.CommercialController.renderCreativeTemplates()
+GET         /commercial/fluid250                                                                    controllers.admin.CommercialController.renderFluidAds()
+GET         /commercial/adtests                                                                     controllers.admin.CommercialController.renderAdTests()
+GET         /commercial/dfp/flush/view                                                              controllers.admin.commercial.DfpDataController.renderCacheFlushPage()
+GET         /commercial/dfp/flush                                                                   controllers.admin.commercial.DfpDataController.flushCache()
+GET         /commercial/radiator                                                                    controllers.admin.CommercialController.renderCommercialRadiator()
+GET         /commercial/slot/:slotName                                                              controllers.admin.commercial.SlotController.viewSlot(slotName)
+GET         /commercial/adops/takeovers-empty-mpus                                                  controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewList()
+GET         /commercial/adops/takeovers-empty-mpus/create                                           controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewForm()
+POST        /commercial/adops/takeovers-empty-mpus/create                                           controllers.admin.commercial.TakeoverWithEmptyMPUsController.create()
+POST        /commercial/adops/takeovers-empty-mpus/remove                                           controllers.admin.commercial.TakeoverWithEmptyMPUsController.remove(takeoverStr)
 
 # Metrics
 GET         /metrics/loadbalancers                                                                  controllers.admin.MetricsController.renderLoadBalancers()

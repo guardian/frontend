@@ -11,13 +11,11 @@
             <table class="table table-bordered ">
                 <thead>
                     <th colspan="4">Name</th>
-                    <th colspan="3">Allocated variants</th>
                 </thead>
                 <tbody>
                     @tests.map { test =>
                         <tr>
                             <td colspan="4">@test.name @status(test)</td>
-                            <td colspan="3">@{test.variants.map(_.name).sorted.mkString(", ")}</td>
                         </tr>
                     }
                     @if(tests.isEmpty) {

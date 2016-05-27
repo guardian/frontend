@@ -1,7 +1,6 @@
-@import common.commercial.ContainerModel
 @import common.Edition
+@import common.commercial.ContainerModel
 @import views.support.RenderClasses
-@import conf.switches.Switches
 @(faciaPage: model.PressedPage)(implicit request: RequestHeader)
 
 @defining((faciaPage.isSponsored(Some(Edition(request))),
@@ -35,11 +34,11 @@
                             faciaPage.frontProperties,
                             Some(faciaPage.id),
                             faciaPage.isAdvertisementFeature,
-                            if (Switches.v2FixedContainerTemplate.isSwitchedOn)
-                                faciaPage.collections
-                                    .find(_.id == containerDefinition.dataId)
-                                    .map(ContainerModel.fromPressedCollection)
-                            else None
+                            faciaPage.collections.find {
+                                _.id == containerDefinition.dataId
+                            }.map {
+                                ContainerModel.fromPressedCollection(Edition(request))
+                            }
                         )
                     }
 

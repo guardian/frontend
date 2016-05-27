@@ -1,4 +1,5 @@
-@(item: model.ContentType, showBadge: Boolean = false)(implicit request: RequestHeader)
+@(item: model.ContentType, page: model.Page, showBadge: Boolean = false)(implicit request: RequestHeader)
+@import conf.switches.Switches.staticBadgesSwitch
 
 <header class="content__head u-cf">
     <div class="gs-container">
@@ -12,8 +13,8 @@
                 @fragments.standfirst(item)
             }
 
-            @if(showBadge) {
-                @fragments.commercial.badge(item)
+            @if(showBadge || staticBadgesSwitch.isSwitchedOn) {
+                @fragments.commercial.badge(item, page)
             }
 
             @if(item.tags.isInteractive && !item.trail.shouldHidePublicationDate) {

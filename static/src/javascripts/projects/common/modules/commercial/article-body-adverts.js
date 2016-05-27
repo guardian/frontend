@@ -99,7 +99,9 @@ define([
 
         function insertInlineAd(paras) {
             bodyAds += 1;
-            insertAdAtPara(paras[0], 'inline' + bodyAds, 'inline');
+            var adDefinition = 'inline' + bodyAds;
+
+            insertAdAtPara(paras[0], adDefinition, 'inline');
         }
     }
 

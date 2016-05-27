@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.{Content => ApiContent, ItemResponse}
+import com.gu.contentapi.client.model.v1.{ContentFields, ItemResponse, Content => ApiContent}
 import common._
 import contentapi.ContentApiClient
 import conf.switches.Switches
@@ -22,8 +22,8 @@ object MediaController extends Controller with RendersItemResponse with Logging 
 
   def renderInfoJson(path: String) = Action.async { implicit request =>
     lookup(path) map {
-      case Left(model)  => MediaInfo(expired = false)
-      case Right(other) => MediaInfo(expired = true)
+      case Left(model)  => MediaInfo(expired = false, shouldHideAdverts = model.media.content.shouldHideAdverts)
+      case Right(other) => MediaInfo(expired = true, shouldHideAdverts = true)
     } map { mediaInfo =>
       Cached(60)(JsonComponent(Json.toJson(mediaInfo).as[JsObject]))
     }
@@ -40,7 +40,7 @@ object MediaController extends Controller with RendersItemResponse with Logging 
 
     val result = response map { response =>
       val mediaOption: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
-      val model = mediaOption map { media => MediaPage(media, RelatedContent(media, response)) }
+      val model = mediaOption map { media => MediaPage(media, StoryPackages(media, response)) }
 
       ModelOrResult(model, response)
     }
@@ -63,7 +63,7 @@ object MediaController extends Controller with RendersItemResponse with Logging 
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
 }
 
-case class MediaInfo(expired: Boolean)
+case class MediaInfo(expired: Boolean, shouldHideAdverts: Boolean)
 object MediaInfo {
   implicit val jsonFormats: Format[MediaInfo] = Json.format[MediaInfo]
 }

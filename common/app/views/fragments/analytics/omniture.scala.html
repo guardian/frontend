@@ -2,14 +2,14 @@
 
 @import common.AnalyticsHost
 @import views.support.OmnitureAnalyticsData
-@import common.InlineJs
 @import conf.Configuration
+@import conf.Static
 
 @fragments.analytics.omnitureScript(Some(page.metadata))
 
-<script>
+<script id="gu-analytics">
         // analytics code
-    @InlineJs(templates.inlineJS.nonBlocking.js.analytics(), "analytics.js")
+        @Html(Static.js.analyticsJs)
 </script>
 
 

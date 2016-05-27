@@ -1,20 +1,21 @@
 package model
 
+import campaigns.PersonalInvestmentsCampaign
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
+import common.commercial.BrandHunter
 import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
-import conf.switches.Switches._
+import conf.switches.Switches.galleryRedesign
 import cricketPa.CricketTeams
-import model.CacheTime._
 import model.liveblog.BodyBlock
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
-import campaigns.PersonalInvestmentsCampaign
+import play.api.mvc.RequestHeader
 
 object Commercial {
 
@@ -102,9 +103,15 @@ final case class Commercial(
   def isSponsored(maybeEdition: Option[Edition]): Boolean =
     DfpAgent.isSponsored(tags.tags, Some(metadata.section), maybeEdition)
 
+  def needsHighMerchandisingSlot(edition:Edition): Boolean = {
+    DfpAgent.isTargetedByHighMerch(metadata.adUnitSuffix,tags.tags,edition,metadata.url)
+  }
+
+
   def javascriptConfig: Map[String, JsValue] = Map(
     ("isAdvertisementFeature", JsBoolean(isAdvertisementFeature))
   )
+
 }
 /**
  * MetaData represents a page on the site, whether facia or content
@@ -121,7 +128,9 @@ object Fields {
       blocks = BodyBlock.make(apiContent.blocks),
       lastModified = apiContent.fields.flatMap(_.lastModified).map(_.toJodaDateTime).getOrElse(DateTime.now),
       displayHint = apiContent.fields.flatMap(_.displayHint).getOrElse(""),
-      isLive = apiContent.fields.flatMap(_.liveBloggingNow).getOrElse(false)
+      isLive = apiContent.fields.flatMap(_.liveBloggingNow).getOrElse(false),
+      sensitive = apiContent.fields.flatMap(_.sensitive),
+      legallySensitive = apiContent.fields.flatMap(_.legallySensitive)
     )
   }
 }
@@ -136,9 +145,18 @@ final case class Fields(
   blocks: Seq[BodyBlock],
   lastModified: DateTime,
   displayHint: String,
-  isLive: Boolean
+  isLive: Boolean,
+  sensitive: Option[Boolean],
+  legallySensitive: Option[Boolean]
 ){
-  def javascriptConfig: Map[String, JsValue] = Map(("shortUrl", JsString(shortUrl)))
+  lazy val shortUrlId = shortUrl.replaceFirst("^[a-zA-Z]+://gu.com", "") //removing scheme://gu.com
+
+  def javascriptConfig: Map[String, JsValue] = {
+    Map(
+      "shortUrl" -> JsString(shortUrl),
+      "shortUrlId" -> JsString(shortUrlId)
+    )
+  }
 }
 
 object MetaData {
@@ -227,7 +245,7 @@ final case class MetaData (
   description: Option[String] = None,
   rssPath: Option[String] = None,
   contentType: String = "",
-  hasHeader: Boolean = true,
+  shouldHideHeaderAndTopAds: Boolean = false,
   schemaType: Option[String] = None, // Must be one of... http://schema.org/docs/schemas.html
   cacheTime: CacheTime = CacheTime.Default,
   openGraphImages: Seq[String] = Seq(),
@@ -263,10 +281,10 @@ final case class MetaData (
   val isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(id)
 
   val requiresMembershipAccess: Boolean = {
-    conf.switches.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty && url.contains("/membership/")
+    conf.switches.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty
   }
 
-  val hasSlimHeader: Boolean = contentType == "Interactive" || section == "identity"
+  val hasSlimHeader: Boolean = contentType == "Interactive" || section == "identity" || (galleryRedesign.isSwitchedOn && contentType.toLowerCase == "gallery")
 
   // Special means "Next Gen platform only".
   private val special = id.contains("-sp-")
@@ -287,7 +305,8 @@ final case class MetaData (
     ("analyticsName", JsString(analyticsName)),
     ("isFront", JsBoolean(isFront)),
     ("isSurging", JsString(isSurging.mkString(","))),
-    ("videoJsFlashSwf", JsString(conf.Static("flash/components/video-js-swf/video-js.swf").path))
+    ("videoJsFlashSwf", JsString(conf.Static("flash/components/video-js-swf/video-js.swf").path)),
+    ("contentType", JsString(contentType))
   )
 
   def opengraphProperties: Map[String, String] = {
@@ -345,7 +364,8 @@ object Page {
 
 // A Page is something that has metadata, and anything with Metadata can be rendered.
 trait Page {
- def metadata: MetaData
+  def metadata: MetaData
+  def branding(edition: Edition): Option[Branding] = None
 }
 
 // ContentPage objects use data from a ContentApi item to populate metadata.
@@ -373,6 +393,8 @@ trait ContentPage extends Page {
     metadata.twitterProperties ++
     item.content.twitterProperties ++
     metadata.twitterPropertiesOverrides
+
+  override def branding(edition: Edition): Option[Branding] = BrandHunter.findContentBranding(item, edition)
 }
 case class SimpleContentPage(content: ContentType) extends ContentPage {
   override lazy val item: ContentType = content
@@ -404,6 +426,15 @@ case class CommercialExpiryPage(
   analyticsName: String = "GFE:Gone") extends StandalonePage {
 
   override val metadata: MetaData = MetaData.make(id, section, webTitle, analyticsName, shouldGoogleIndex = false)
+}
+
+case class GalleryPage(
+  gallery: Gallery,
+  related: RelatedContent,
+  index: Int,
+  trail: Boolean)(implicit request: RequestHeader) extends ContentPage {
+  override lazy val item = gallery
+  val showBadge = item.commercial.isSponsored(Some(Edition(request))) || item.commercial.isFoundationSupported || item.commercial.isAdvertisementFeature
 }
 
 case class TagCombiner(
@@ -587,6 +618,10 @@ final case class Tags(
 
   lazy val isClimateChangeSeries = tags.exists(t => t.id =="environment/series/keep-it-in-the-ground")
   lazy val isUSMinuteSeries = tags.exists(t => t.id == "us-news/series/the-campaign-minute-2016")
+
+  lazy val isUSElection = tags.exists(t => t.id == "us-news/us-elections-2016")
+  lazy val isAusElection = tags.exists(t => t.id == "australia-news/australian-election-2016")
+  lazy val isElection = isUSElection || isAusElection
 
   lazy val keywordIds = keywords.map { _.id }
 

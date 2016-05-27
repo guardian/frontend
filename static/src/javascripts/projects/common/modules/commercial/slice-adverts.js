@@ -32,12 +32,14 @@ define([
         }
 
         var adSlots;
-        var prefs          = userPrefs.get('container-states') || {};
-        var isMobile       = detect.getBreakpoint() === 'mobile';
-        var isNetworkFront = ['uk', 'us', 'au'].indexOf(config.page.pageId) !== -1;
-        var hasFabricAd    = (config.page.isFront && config.switches.fabricAdverts && detect.isBreakpoint({max : 'phablet'}));
+        var prefs               = userPrefs.get('container-states') || {};
+        var isMobile            = detect.getBreakpoint() === 'mobile';
+        var isNetworkFront      = ['uk', 'us', 'au'].indexOf(config.page.pageId) !== -1;
+        // Mobile doesn't have a top slot, so we substitute a slot that accepts both ordinary MPUs and the 'fabric' ads (88x71s)
+        // that take the top slot in responsive takeovers.
+        var replaceTopSlot      = (config.page.isFront && config.switches.fabricAdverts && detect.isBreakpoint({max : 'phablet'}));
         // We must keep a small bit of state in the filtering logic
-        var lastIndex      = -1;
+        var lastIndex           = -1;
 
         adSlots = qwery(containerSelector)
             // get all ad slices
@@ -51,6 +53,12 @@ define([
             // keeping containers only if they are $containerGap nodes apart
             .filter(function (item, index) {
                 if (config.page.showMpuInAllContainers) {
+                    return true;
+                }
+
+                if (replaceTopSlot && index === 0) {
+                    // it's mobile, so we needn't check for an adSlice
+                    lastIndex = index;
                     return true;
                 }
 
@@ -71,9 +79,7 @@ define([
             // create ad slots for the selected slices
             .map(function (item, index) {
                 var adName = 'inline' + (index + 1);
-                var adSlot = hasFabricAd && index === 0 ?
-                    createAdSlot('fabric', 'container-inline') :
-                    createAdSlot(adName, 'container-inline');
+                var adSlot = createAdSlot(adName, 'container-inline');
 
                 adSlot.className += ' ' + (isMobile ? 'ad-slot--mobile' : 'container-inline');
 

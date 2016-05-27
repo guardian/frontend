@@ -12,7 +12,8 @@
 </div>
 
 <div class="video-playlist video-playlist--start js-video-playlist"
-     data-number-of-videos="@(containerDefinition.collectionEssentials.items.zipWithIndex.length - 1)">
+     data-number-of-videos="@(containerDefinition.collectionEssentials.items.zipWithIndex.length - 1)"
+     data-component="video-playlist">
     <div class="video-playlist__control video-playlist__control--prev js-video-playlist-prev" data-link-name="video-container-prev">
         @fragments.inlineSvg("chevron-left", "icon", Seq("video-playlist__icon"))
     </div>
@@ -24,7 +25,7 @@
         <li class="video-playlist__item video-title video-title--leftcol fc-container__header__title">
             <a class="video-title__link" href="@containerDefinition.href" data-link-name="video-container-title @containerDefinition.displayName">
                 @containerDefinition.displayName match {
-                    case Some("videos") => {
+                    case Some("video") | Some("videos") => {
                         @fragments.inlineSvg("guardian-video-logo", "logo")
                     }
 
@@ -49,11 +50,11 @@
                         )) { player =>
                             <div class="fc-item__media-wrapper u-faux-block-link__promote media__container--hidden js-video-player">
                                 <div class="fc-item__video-container">
-                                    @video(player, false, false, showOverlay = true)
+                                    @video(player, false, false, showOverlay = true, showPoster = false)
                                 </div>
                             </div>
                             <div class="fc-item__video-fallback media__placeholder--active js-video-placeholder gu-media__fallback">
-                                <div class="@RenderClasses("fc-item__video-play", "media__placeholder--hidden", "vjs-big-play-button", "js-video-play-button")"><span class="vjs-control-text"></span></div>
+                                <div data-link-name="video-play-button-overlay" class="@RenderClasses("fc-item__video-play", "media__placeholder--hidden", "vjs-big-play-button", "js-video-play-button")"><span class="vjs-control-text"></span></div>
                                 <div class="fc-item__media-wrapper">
                                     <div class="fc-item__image-container u-responsive-ratio inlined-image">
                                     @InlineImage.fromFaciaContent(item).map { fallbackImage =>

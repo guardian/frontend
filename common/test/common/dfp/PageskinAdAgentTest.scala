@@ -14,37 +14,41 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
       Seq(Uk),
       Seq("United Kingdom"),
       isR2Only = false,
-      targetsAdTest = false),
+      targetsAdTest = false,
+      None),
     PageSkinSponsorship("lineItemName2",
       12345L,
       Seq(s"$dfpAdUnitRoot/music/front"),
       Nil,
       Nil,
       isR2Only = false,
-      targetsAdTest = false),
+      targetsAdTest = false,
+      None),
     PageSkinSponsorship("lineItemName3",
       123456L,
       Seq(s"$dfpAdUnitRoot/sport"),
       Nil,
       Nil,
       isR2Only = false,
-      targetsAdTest = false),
+      targetsAdTest = false,
+      None),
     PageSkinSponsorship("lineItemName4",
       1234567L,
       Seq(s"$dfpAdUnitRoot/testSport/front"),
       Seq(Uk),
       Seq("United Kingdom"),
       isR2Only = false,
-      targetsAdTest = true)
+      targetsAdTest = true,
+      Some("6"))
   )
 
   private object TestPageskinAdAgent extends PageskinAdAgent {
-    override protected val isProd: Boolean = true
+    override protected val environmentIsProd: Boolean = true
     override protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = examplePageSponsorships
   }
 
   private object NotProductionTestPageskinAdAgent extends PageskinAdAgent {
-    override protected val isProd: Boolean = false
+    override protected val environmentIsProd: Boolean = false
     override protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = examplePageSponsorships
   }
 

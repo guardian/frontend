@@ -14,11 +14,12 @@ object DfpAgent
   extends PaidForTagAgent
   with PageskinAdAgent
   with InlineMerchandiseComponentAgent
+  with HighMerchandiseComponentAgent
   with AdSlotAgent
   with ExecutionContexts {
 
-  override protected val isProd: Boolean = environment.isProd
-  override protected val isPreview: Boolean = {
+  override protected val environmentIsProd: Boolean = environment.isProd
+  override protected val environmentIsPreview: Boolean = {
     if (Play.maybeApplication.isDefined) environment.isPreview
     else false
   }
@@ -27,6 +28,7 @@ object DfpAgent
   private lazy val tagToSponsorsMapAgent = AkkaAgent[Map[String, Set[String]]](Map[String, Set[String]]())
   private lazy val tagToAdvertisementFeatureSponsorsMapAgent = AkkaAgent[Map[String, Set[String]]](Map[String, Set[String]]())
   private lazy val inlineMerchandisingTagsAgent = AkkaAgent[InlineMerchandisingTagSet](InlineMerchandisingTagSet())
+  private lazy val targetedHighMerchandisingLineItemsAgent = AkkaAgent[Seq[HighMerchandisingLineItem]](Seq.empty)
   private lazy val pageskinnedAdUnitAgent = AkkaAgent[Seq[PageSkinSponsorship]](Nil)
   private lazy val lineItemAgent = AkkaAgent[Map[AdSlot, Seq[GuLineItem]]](Map.empty)
   private lazy val takeoverWithEmptyMPUsAgent = AkkaAgent[Seq[TakeoverWithEmptyMPUs]](Nil)
@@ -35,6 +37,7 @@ object DfpAgent
   protected def tagToSponsorsMap = tagToSponsorsMapAgent get()
   protected def tagToAdvertisementFeatureSponsorsMap = tagToAdvertisementFeatureSponsorsMapAgent get()
   protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = inlineMerchandisingTagsAgent get()
+  protected def targetedHighMerchandisingLineItems: Seq[HighMerchandisingLineItem] = targetedHighMerchandisingLineItemsAgent get()
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent get()
   protected def lineItemsBySlot: Map[AdSlot, Seq[GuLineItem]] = lineItemAgent get()
   protected def takeoversWithEmptyMPUs: Seq[TakeoverWithEmptyMPUs] =
@@ -67,7 +70,6 @@ object DfpAgent
         jsonString <- stringFromS3(key)
         report <- Json.parse(jsonString).asOpt[PaidForTagsReport]
       } yield report
-
       reportOption.fold(Seq[PaidForTag]())(_.paidForTags)
     }
 
@@ -88,6 +90,14 @@ object DfpAgent
       maybeTagSet getOrElse InlineMerchandisingTagSet()
     }
 
+    def grabTargetedHighMerchandisingLineItemFromStore(): Seq[HighMerchandisingLineItem] ={
+      for {
+        jsonString <- stringFromS3(dfpHighMerchandisingTagsDataKey).toSeq
+        report <- HighMerchandisingTargetedTagsReportParser(jsonString).toSeq
+        lineItems <- report.lineItems.items
+      } yield lineItems
+    }
+
     def updateMap(agent: Agent[Map[String, Set[String]]])(freshData: => Map[String, Set[String]]) {
       if (freshData.nonEmpty) {
         agent send freshData
@@ -97,6 +107,12 @@ object DfpAgent
     def updateInlineMerchandisingTargetedTags(freshData: InlineMerchandisingTagSet) {
       inlineMerchandisingTagsAgent sendOff { oldData =>
         if (freshData.nonEmpty) freshData else oldData
+      }
+    }
+
+    def updateTargetedHighMerchandisingLineItems(freshData: Seq[HighMerchandisingLineItem]): Unit ={
+      targetedHighMerchandisingLineItemsAgent sendOff { oldData =>
+        if(freshData.nonEmpty) freshData else oldData
       }
     }
 
@@ -113,7 +129,11 @@ object DfpAgent
 
     update(pageskinnedAdUnitAgent)(grabPageSkinSponsorshipsFromStore(dfpPageSkinnedAdUnitsKey))
 
+
     updateInlineMerchandisingTargetedTags(grabInlineMerchandisingTargetedTagsFromStore())
+
+    updateTargetedHighMerchandisingLineItems(grabTargetedHighMerchandisingLineItemFromStore())
+
   }
 
   def refreshFaciaSpecificData(): Unit = {

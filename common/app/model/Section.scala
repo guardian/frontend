@@ -1,9 +1,10 @@
 package model
 
-import com.gu.contentapi.client.model.v1.{Section => ApiSection}
-import common.Pagination
-import play.api.libs.json.{JsBoolean, JsString, JsValue}
 import campaigns.PersonalInvestmentsCampaign
+import com.gu.contentapi.client.model.v1.{Section => ApiSection}
+import common.commercial.BrandHunter
+import common.{Edition, Pagination}
+import play.api.libs.json.{JsBoolean, JsString, JsValue}
 
 object Section {
   def make(section: ApiSection, pagination: Option[Pagination] = None): Section = {
@@ -20,7 +21,6 @@ object Section {
         "keywords" -> JsString(webTitle),
         "keywordIds" -> JsString(keywordIds.mkString(",")),
         "hasSuperStickyBanner" -> JsBoolean(PersonalInvestmentsCampaign.isRunning(keywordIds)),
-        "contentType" -> JsString("Section"),
         "isAdvertisementFeature" -> JsBoolean(keywordSponsorship.isAdvertisementFeature)
       )
 
@@ -33,6 +33,7 @@ object Section {
       webTitle = webTitle,
       analyticsName = s"GFE:$sectionName",
       adUnitSuffix = adUnitSuffix,
+      contentType = "Section",
       isFront = true,
       rssPath = Some(s"/$id/rss"),
       iosType = sectionName match {
@@ -45,12 +46,20 @@ object Section {
     Section(
       metadata,
       keywordSponsorship,
-      isEditionalised = section.editions.length > 1)
+      isEditionalised = section.editions.length > 1,
+      activeBrandings = section.activeSponsorships map (_ map Branding.make)
+    )
   }
 }
 
 case class Section private (
   override val metadata: MetaData,
   keywordSponsorship: KeywordSponsorshipHandling,
-  isEditionalised: Boolean
-  ) extends StandalonePage
+  isEditionalised: Boolean,
+  activeBrandings: Option[Seq[Branding]]
+  ) extends StandalonePage {
+
+  override def branding(edition: Edition): Option[Branding] = {
+    BrandHunter.findSectionBranding(this, publicationDate = None, edition)
+  }
+}
