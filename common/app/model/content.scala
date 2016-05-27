@@ -350,6 +350,10 @@ object Article {
     val fields = content.fields
     val bookReviewIsbn = content.isbn.map { i: String => Map("isbn" -> JsString(i)) }.getOrElse(Map())
 
+    // we don't serve pre-roll if there are multiple videos in an article
+    // `headOption` as the video could be main media or a regular embed, so just get the first video
+    val videoDuration = content.elements.videos.headOption.map { v => JsNumber(v.videos.duration) }.getOrElse(JsNull)
+
     val javascriptConfig: Map[String, JsValue] = Map(
       ("isLiveBlog", JsBoolean(content.tags.isLiveBlog)),
       ("inBodyInternalLinkCount", JsNumber(content.linkCounts.internal)),
@@ -359,7 +363,8 @@ object Article {
       ("lightboxImages", lightbox.javascriptConfig),
       ("hasMultipleVideosInPage", JsBoolean(content.hasMultipleVideosInPage)),
       ("isImmersive", JsBoolean(content.isImmersive)),
-      ("isSensitive", JsBoolean(fields.sensitive.getOrElse(false)))
+      ("isSensitive", JsBoolean(fields.sensitive.getOrElse(false))),
+      ("videoDuration" -> videoDuration)
     ) ++ bookReviewIsbn
 
     val opengraphProperties: Map[String, String] = Map(
