@@ -49,9 +49,23 @@
 
 /* Football */
 
+$buttonSize: 32px;
+
 .participation-low-fric--button__football {
-    font-size: 35px;
+    display: inline-block;
+    font-size: $buttonSize/2;
+    margin-left: $buttonSize/8;
+    margin-bottom: $buttonSize/4;
     opacity: .5;
+    height: $buttonSize;
+    width: $buttonSize;
+
+    .participation-low-fric--inner-icon {
+        display: inline-block;
+        // iOS 7 doesn't let us have icons bigger than 16px so we'll
+        // scale them instead and adjust the position
+        transform: scale(2) translateX($buttonSize/8) translateY($buttonSize/8)
+    }
 
     &.participation-low-fric--button__is-active:hover,
     &.participation-low-fric--button__is-active:focus,

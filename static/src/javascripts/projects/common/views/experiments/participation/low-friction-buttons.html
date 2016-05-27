@@ -5,6 +5,6 @@
     <%if (shouldBeActive) {%>participation-low-fric--button__is-active<% } %>
     <%if (shouldBeHighlighted) {%>participation-low-fric--button__is-highlighted<% } %>"
     data-item-id="<%=itemId%>">
-    <%=itemIcon%>
+    <span class="participation-low-fric--inner-icon"><%=itemIcon%></span>
     <% if (!state.complete) {%><span class="u-h"><%=buttonText%></span><% } %>
 <%if (state.complete) { %></span><% } else { %></button><% } %>
