@@ -120,6 +120,7 @@ trait Competitions extends LiveMatches with Logging with implicits.Collections w
     Competition("121", "/football/scottish-championship", "Scottish Championship", "Scottish Championship", "Scottish", showInTeamsList = true, tableDividers = List(1, 8, 9)),
     Competition("122", "/football/scottish-league-one", "Scottish League One", "Scottish League One", "Scottish", showInTeamsList = true, tableDividers = List(1, 4, 8, 9)),
     Competition("123", "/football/scottish-league-two", "Scottish League Two", "Scottish League Two", "Scottish", showInTeamsList = true, tableDividers = List(1, 4)),
+    Competition("750", "/football/euro-2016", "Euro 2016", "Euro", "Internationals"),
     Competition("751", "/football/euro-2016-qualifiers", "Euro 2016 qualifying", "Euro 2016 qual.", "Internationals"),
     Competition("501", "/football/champions-league-qualifying", "Champions League qualifying", "Champions League qual.", "European"),
     Competition("510", "/football/uefa-europa-league", "Europa League", "Europa League", "European", tableDividers = List(2)),
@@ -128,7 +129,6 @@ trait Competitions extends LiveMatches with Logging with implicits.Collections w
     Competition("320", "/football/scottishcup", "Scottish Cup", "Scottish Cup", "Scottish"),
     Competition("321", "/football/cis-insurance-cup", "Scottish League Cup", "Scottish League Cup", "Scottish"),
     Competition("721", "/football/friendlies", "International friendlies", "Friendlies", "Internationals"),
-    Competition("750", "/football/euro-2016", "Euro 2016", "Euro", "Internationals"),
     Competition("870", "/football/women-s-world-cup-2015", "Women's World Cup 2015", "Women's World Cup", "Internationals", showInTeamsList = true, tableDividers = List(2))
 
   )
