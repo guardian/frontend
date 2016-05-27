@@ -142,82 +142,79 @@
 }
 
 
-@include mq(desktop) {
+.formstack-survey-wrapper {
+    width: $gs-column-width*20;
+    margin: 0 auto;
+    padding-top: 1em;
 
-    .formstack-survey-wrapper {
-        width: $gs-column-width*20;
-        margin: 0 auto;
-        padding-top: 1em;
-
-        .fsSection {
-            margin: $gs-gutter*2 0;
-        }
-
-        .fsSection:first-child {
-            margin-top: 0;
-        }
-
-        .fsBody .fsRowBody {
-            padding: 0;
-        }
-
-        .fsPage .fsForm {
-            border: 0;
-            box-shadow: 0;
-        }
-
-        .fsBody .fsForm {
-            margin: 0;
-        }
-
-        .fsRow {
-            margin: 0 $gs-gutter;
-            padding-top: 1em;
-        }
-
-        .fsSectionHeading {
-            color: $guardian-brand;
-            margin: 0;
-        }
-
-        .fsMatrixFieldset {
-            border: none;
-        }
-
-        .fsMatrixCol1 .fsField, .fsMatrixCol2 .fsField {
-            margin: 0;
-        }
-
-        .fsLabel.fsLabelVertical, label.fsLabel {
-            color: $guardian-brand;
-        }
-
-        .fsSubmitButton {
-            color: white;
-            border: 0;
-            padding: $gs-gutter*0.25 $gs-gutter*0.5;
-            background-color: $guardian-brand;
-        }
-
-        .fsSubmitButton:hover {
-            background-color: $guardian-brand-dark;
-        }
-
-        input[type=radio]:not(old) {
-            background-color: red;
-        }
-
-        .fs-clear {
-            clear: both;
-        }
-
-        fieldset {
-            border: none;
-        }
-
-        .fieldset-content .horizontal {
-            display: inline-block;
-        }
-
+    .fsSection {
+        margin: $gs-gutter*2 0;
     }
+
+    .fsSection:first-child {
+        margin-top: 0;
+    }
+
+    .fsBody .fsRowBody {
+        padding: 0;
+    }
+
+    .fsPage .fsForm {
+        border: 0;
+        box-shadow: 0;
+    }
+
+    .fsBody .fsForm {
+        margin: 0;
+    }
+
+    .fsRow {
+        margin: 0 $gs-gutter;
+        padding-top: 1em;
+    }
+
+    .fsSectionHeading {
+        color: $guardian-brand;
+        margin: 0;
+    }
+
+    .fsMatrixFieldset {
+        border: none;
+    }
+
+    .fsMatrixCol1 .fsField, .fsMatrixCol2 .fsField {
+        margin: 0;
+    }
+
+    .fsLabel.fsLabelVertical, label.fsLabel {
+        color: $guardian-brand;
+    }
+
+    .fsSubmitButton {
+        color: white;
+        border: 0;
+        padding: $gs-gutter*0.25 $gs-gutter*0.5;
+        background-color: $guardian-brand;
+    }
+
+    .fsSubmitButton:hover {
+        background-color: $guardian-brand-dark;
+    }
+
+    input[type=radio]:not(old) {
+        background-color: red;
+    }
+
+    .fs-clear {
+        clear: both;
+    }
+
+    fieldset {
+        border: none;
+    }
+
+    .fieldset-content .horizontal {
+        display: inline-block;
+    }
+
 }
