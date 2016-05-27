@@ -7,6 +7,7 @@ import java.io.{File, InputStream}
 import java.nio.ByteBuffer
 import java.net.URI
 import java.util
+import football.controllers.HealthCheck
 import org.scalatest.Suites
 import play.api.libs.ws.ning.NingWSResponse
 import recorder.HttpRecorder
@@ -39,7 +40,7 @@ class SportTestSuite extends Suites (
   new rugby.model.MatchParserTest
 ) with SingleServerSuite with FootballTestData {
 
-  override lazy val port: Int = conf.HealthCheck.testPort
+  override lazy val port: Int = HealthCheck.testPort
 
   // Inject stub api.
   FootballClient.http = TestHttp

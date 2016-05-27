@@ -1,5 +1,6 @@
 package test
 
+import controllers.HealthCheck
 import org.scalatest.Suites
 
 class OnwardTestSuite extends Suites (
@@ -15,5 +16,5 @@ class OnwardTestSuite extends Suites (
   new VideoInSectionTest,
   new RichLinkControllerTest ) with SingleServerSuite {
 
-  override lazy val port: Int = conf.HealthCheck.testPort
+  override lazy val port: Int = HealthCheck.testPort
 }
