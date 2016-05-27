@@ -13,11 +13,6 @@ object DataMapper {
     GuAdUnit(dfpAdUnit.getId, ancestorNames :+ dfpAdUnit.getName)
   }
 
-  def toGuAdUnit(suggested: SuggestedAdUnit): GuAdUnit = {
-    val ancestorNames = toSeq(suggested.getParentPath).map(_.getName) ++ suggested.getPath.toList
-    GuAdUnit(suggested.getId, ancestorNames.tail)
-  }
-
   def toGuTargeting(
     dfpTargeting: Targeting,
     placementAdUnitIds: Long => Seq[String],
