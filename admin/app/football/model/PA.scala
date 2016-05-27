@@ -36,8 +36,8 @@ object PA extends Collections {
   val approvedCompetitions = List(
     "100", "500", "510", "300", "301", "101", "102",
     "103", "400", "120", "121", "122", "123", "320",
-    "321", "700", "721", "650", "620", "625", "635",
-    "870"
+    "321", "700", "721", "750", "650", "620", "625",
+    "635", "870"
   )
 
   def filterCompetitions(competitions: List[Season]): List[Season] = {
