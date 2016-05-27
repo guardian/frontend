@@ -13,6 +13,8 @@ define([
 ) {
 
     return function () {
+        var module = this;
+        
         this.id = 'ParticipationLowFricSport';
         this.start = '2016-05-25';
         this.expiry = '2016-06-08';
@@ -38,7 +40,9 @@ define([
                 id: 'control',
                 test: function () {},
                 success: function (complete) {
-                    mediator.on('discussion:commentbox:post:success',  complete);
+                    if (module.canRun()) {
+                        mediator.on('discussion:commentbox:post:success',  complete);   
+                    }
                 }
             },
             {
@@ -55,7 +59,9 @@ define([
                     });
                 },
                 success: function (complete) {
-                    mediator.on('modules:participation:clicked', complete);
+                    if (module.canRun()) {
+                        mediator.on('modules:participation:clicked', complete);
+                    }
                 }
             }
         ];
