@@ -11,7 +11,8 @@ case class HostedPage(
                        standfirst: String,
                        logoUrl: String,
                        bannerUrl: String,
-                       video: HostedVideo
+                       video: HostedVideo,
+                       nextVideo: HostedNextVideo
                      ) extends StandalonePage {
 
   override val metadata: MetaData = {
@@ -51,4 +52,12 @@ case class HostedVideo(
                         duration: Int,
                         posterUrl: String,
                         srcUrl: String
+                      )
+
+
+case class HostedNextVideo(
+                        header: String,
+                        title: String,
+                        imageUrl: String,
+                        link: String
                       )
