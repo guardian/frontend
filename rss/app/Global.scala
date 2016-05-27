@@ -1,14 +1,13 @@
 import common.Logback.Logstash
 import common.{CloudWatchApplicationMetrics, ContentApiMetrics}
 import conf._
+import conf.switches.SwitchboardLifecycle
 import contentapi.SectionsLookUpLifecycle
-import dev.DevParametersLifecycle
 import metrics.FrontendMetric
 import ophan.SurgingContentAgentLifecycle
 import services.ConfigAgentLifecycle
 
 object Global extends ConfigAgentLifecycle
-  with DevParametersLifecycle
   with CloudWatchApplicationMetrics
   with SurgingContentAgentLifecycle
   with SectionsLookUpLifecycle

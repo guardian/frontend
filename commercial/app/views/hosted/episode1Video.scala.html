@@ -1,5 +1,4 @@
-@()
-@import conf.Static
+@(poster: String)
 
 <video
   data-duration="160"
@@ -8,7 +7,7 @@
   preload="auto"
   style="width: 100%;"
   data-block-video-ads="true"
-  poster="@Static("images/commercial/renault-video-poster.jpg")"
+  poster="@poster"
   class="vjs-hosted__video hosted__video gu-media--show-controls-at-start gu-media--video vjs vjs-tech-html5 vjs-paused vjs-controls-enabled vjs_video_1-dimensions vjs-user-active">
     <source type="video/mp4" src="https://multimedia.guardianapis.com/interactivevideos/video.php?file=160523GlabsRenaultTestHD&format=video/webm&maxbitrate=2048">
     <source type="video/webm" src="https://multimedia.guardianapis.com/interactivevideos/video.php?file=160523GlabsRenaultTestHD&format=video/webm&maxbitrate=2048">

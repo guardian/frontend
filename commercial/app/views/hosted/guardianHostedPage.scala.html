@@ -45,7 +45,7 @@
                         <li class="social__item social__item--facebook" data-link-name="facebook">
                             <a class="social__action social-icon-wrapper"
                             data-link-name="facebook-social-share-1"
-                            href="https://www.facebook.com/dialog/share?app_id=180444840287&href=@{controllers.commercial.routes.HostedContentController.renderHostedPage(page.pageName)}&redirect_uri=@{controllers.commercial.routes.HostedContentController.renderHostedPage(page.pageName)}"
+                            href="https://www.facebook.com/dialog/share?app_id=180444840287&href=@{page.pageUrl}&redirect_uri=@{page.pageUrl}"
                             target="_blank"
                             title="facebook">
                                 <span class='inline-icon__fallback button share-modal__item share-modal__item--facebook'>Share on Facebook</span>
@@ -55,7 +55,7 @@
                         <li class="social__item social__item--twitter" data-link-name="twitter">
                             <a class="social__action social-icon-wrapper"
                             data-link-name="twitter-social-share-1"
-                            href="https://twitter.com/intent/tweet?text=@{page.pageTitle}&url=@{controllers.commercial.routes.HostedContentController.renderHostedPage(page.pageName)}"
+                            href="https://twitter.com/intent/tweet?text=@{page.pageTitle}&url=@{page.pageUrl}"
                             target="_blank"
                             title="twitter">
                                 <span class='inline-icon__fallback button share-modal__item share-modal__item--twitter'>Share on Twitter</span>
@@ -65,7 +65,7 @@
                         <li class="social__item social__item--email" data-link-name="email">
                             <a class="social__action social-icon-wrapper"
                             data-link-name="email-social-share-1"
-                            href="mailto:?subject=@{page.pageTitle}&body=@{controllers.commercial.routes.HostedContentController.renderHostedPage(page.pageName)}"
+                            href="mailto:?subject=@{page.pageTitle}&body=@{page.pageUrl}"
                             target="_blank"
                             title="email">
                                 <span class='inline-icon__fallback button share-modal__item share-modal__item--email'>Share via email</span>
@@ -75,7 +75,7 @@
                         <li class="social__item social__item--pinterest" data-link-name="pinterest">
                             <a  class="social__action social-icon-wrapper"
                             data-link-name="Pinterest-social-share-1"
-                            href="http://www.pinterest.com/pin/find/?url=@{controllers.commercial.routes.HostedContentController.renderHostedPage(page.pageName)}"
+                            href="http://www.pinterest.com/pin/find/?url=@{page.pageUrl}"
                             target="_blank"
                             title="pinterest">
                                 <span class='inline-icon__fallback button share-modal__item share-modal__item--pinterest'>Share on Pinterest</span>
