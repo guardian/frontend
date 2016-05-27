@@ -6,6 +6,7 @@
 @import views.html.commercial.containerWrapper
 @import views.html.fragments.inlineSvg
 @import views.support.commercial.TrackingCodeBuilder.mkCapiCardTrackingCode
+@import cards.{Half, Third, Standard}
 @(cards: Seq[CardContent],
   optSection: Option[String],
   optLogo: Option[String],
@@ -18,45 +19,52 @@
   optSponsorType: Option[SponsorType],
   optSponsorLabel: Option[String])(implicit request: RequestHeader)
 
-@containerWrapper(Seq("legacy", "capi", optSponsorType.map(t => t.className).getOrElse(""), optSponsorType.map(t => s"tone-${t.className}").getOrElse("")),
-                  badgeInHeader =  optSponsorType match {
-                      case Some(Supported) => true
-                      case _               => false
-                  },
-                  optBadge = Some(badge),
-                  optKicker = optSponsorType match {
-                      case Some(PaidFor) => Some(paidForMeta())
-                      case _             => None
-                  },
-                  optStamp = optSponsorType match {
-                      case Some(PaidFor) => Some(stamp)
-                      case _             => None
-                  }){
+@defining(Math.min(cards.size, 4) match {
+    case 3 => Third
+    case 2 => Half
+    case _ => Standard
+}) { cardType =>
+    @containerWrapper(Seq("legacy", "capi", optSponsorType.map(t => t.className).getOrElse(""), optSponsorType.map(t => s"tone-${t.className}").getOrElse("")),
+                      badgeInHeader =  optSponsorType match {
+                          case Some(Supported) => true
+                          case _               => false
+                      },
+                      optBadge = Some(badge),
+                      optKicker = optSponsorType match {
+                          case Some(PaidFor) => Some(paidForMeta())
+                          case _             => None
+                      },
+                      optStamp = optSponsorType match {
+                          case Some(PaidFor) => Some(stamp)
+                          case _             => None
+                      }){
 
-    @optCapiLink.map { linkUrl =>
-        <a href="@clickMacro@linkUrl" class="adverts__logo u-text-hyphenate" data-link-name="header link">@optCapiTitle</a>
-    }.getOrElse {
-        <span class="u-text-hyphenate">@optCapiTitle</span>
+        @optCapiLink.map { linkUrl =>
+            <a href="@clickMacro@linkUrl" class="adverts__logo u-text-hyphenate" data-link-name="header link">@optCapiTitle</a>
+        }.getOrElse {
+            <span class="u-text-hyphenate">@optCapiTitle</span>
+        }
+
+    }{
+
+        <div class="adverts__row">
+            @cards.take(2).map { card => @itemCard(
+                card,
+                omnitureId = mkCapiCardTrackingCode("multiple", optSection, optCapiTitle, omnitureId, card),
+                optAdvertClassNames = optSponsorType.map(t => Seq(t.className)),
+                useCardBranding = false)
+            }
+            @cards.slice(2, 4).map { card => @itemCard(
+                card,
+                omnitureId = mkCapiCardTrackingCode("multiple", optSection, optCapiTitle, omnitureId, card),
+                cardType = cardType,
+                optAdvertClassNames = optSponsorType.map(t => Seq(t.className)),
+                optClassNames = Some(Seq("hide-until-mobile-landscape")),
+                useCardBranding = false)
+            }
+        </div>
+
     }
-
-}{
-
-    <div class="adverts__row">
-        @cards.take(2).map { card => @itemCard(
-            card,
-            omnitureId = mkCapiCardTrackingCode("multiple", optSection, optCapiTitle, omnitureId, card),
-            optAdvertClassNames = optSponsorType.map(t => Seq(t.className)),
-            useCardBranding = false)
-        }
-        @cards.slice(2, 4).map { card => @itemCard(
-            card,
-            omnitureId = mkCapiCardTrackingCode("multiple", optSection, optCapiTitle, omnitureId, card),
-            optAdvertClassNames = optSponsorType.map(t => Seq(t.className)),
-            optClassNames = Some(Seq("hide-until-mobile-landscape")),
-            useCardBranding = false)
-        }
-    </div>
-
 }
 
 @stamp = {
