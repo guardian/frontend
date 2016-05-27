@@ -185,9 +185,41 @@ define([
         mediator.emit('modules:participation:clicked');
     }
 
+    function itemHovered (e) {
+        var itemLength;
+        var $lowFricButtons;
+
+        fastdomPromise.read(function() {
+            itemLength = e.currentTarget.getAttribute('data-item-id');
+            $lowFricButtons = $('.js-participation-low-fric--button');
+        });
+
+        fastdomPromise.write(function() {
+            $lowFricButtons.removeClass('participation-low-fric--button__is-highlighted');
+
+            if (itemLength > -1) {
+                for(var i = itemLength; i >= 0; i--) {
+
+                    $($lowFricButtons[i]).addClass('participation-low-fric--button__is-highlighted');
+                }
+            }
+        });
+    }
+
+    function blockUnHovered (e) {
+        var hoveringContainer = e.toElement && e.toElement.classList.contains('js-participation-low-friction__contents');
+        if (!hoveringContainer && !currentState.confirming && !currentState.complete) {
+            fastdomPromise.write(function() {
+                $('.js-participation-low-fric--button').removeClass('participation-low-fric--button__is-highlighted');
+            });
+        }
+    }
+
     function bindEvents () {
         bean.on(document, 'click.particpation-low-fric', '.js-participation-low-fric--button', itemClicked);
         bean.on(document, 'click.particpation-low-fric', '.js-participation-low-fric__confirm', confirmClicked);
+        bean.on(document, 'mouseover.particpation-low-fric', '.js-participation-low-fric--button', itemHovered);
+        bean.on(document, 'mouseout.particpation-low-fric', '.js-participation-low-friction__contents', blockUnHovered);
     }
 
     // Initalise it.
