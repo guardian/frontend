@@ -1,7 +1,7 @@
 # For dev machines
 GET         /assets/*path                          dev.DevAssetsController.at(path)
 
-GET         /_healthcheck                          conf.HealthCheck.healthCheck()
+GET         /_healthcheck                           controllers.HealthCheck.healthCheck()
 
 GET         /google1ec7a89a27d60d47.html            controllers.Assets.at(path = "/public", file = "google1ec7a89a27d60d47.html")
 
