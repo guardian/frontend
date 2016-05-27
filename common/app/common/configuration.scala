@@ -78,6 +78,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val urls = properties map { property =>
       configuration.getStringProperty(property).get
     }
+    lazy val updateIntervalInSecs: Int = configuration.getIntegerProperty("healthcheck.updateIntervalInSecs").getOrElse(5)
   }
 
   object debug {

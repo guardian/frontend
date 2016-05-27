@@ -1,6 +1,6 @@
 package controllers.commercial
 
-import common.commercial.{HostedPage, HostedVideo}
+import common.commercial.{HostedPage, HostedVideo, HostedNextVideo}
 import conf.Static
 import conf.switches.Switches
 import model.Cached.RevalidatableResult
@@ -12,6 +12,9 @@ object HostedContentController extends Controller {
 
   def renderHostedPage(pageName: String) = Action { implicit request: Request[AnyContent] =>
     lazy val pageUrl = routes.HostedContentController.renderHostedPage(pageName).absoluteURL
+    val teaserPosterUrl: String = Static("images/commercial/renault-video-poster.jpg")
+    val episode1PosterUrl: String = Static("images/commercial/renault-video-poster-ep1.jpg")
+
     pageName match {
 
       case "design-competition-teaser" =>
@@ -26,8 +29,14 @@ object HostedContentController extends Controller {
             mediaId = "renault-car-of-the-future",
             title = "Designing the car of the future",
             duration = 86,
-            posterUrl = Static("images/commercial/renault-video-poster.jpg"),
+            posterUrl = teaserPosterUrl,
             srcUrl = "http://multimedia.guardianapis.com/interactivevideos/video.php?file=160516GlabsTestSD&format=video/mp4&maxbitrate=2048"
+          ),
+          nextVideo = HostedNextVideo(
+            header = "Up next from",
+            title = "Renault shortlists 'car of the future' designs",
+            link = "/commercial/advertiser-content/renault-car-of-the-future/design-competition-episode1",
+            imageUrl = episode1PosterUrl
           )
         )
         Cached(60)(RevalidatableResult.Ok(guardianHostedPage(page)))
@@ -45,8 +54,14 @@ object HostedContentController extends Controller {
               mediaId = "renault-car-of-the-future",
               title = "Renault shortlists 'car of the future' designs",
               duration = 160,
-              posterUrl = Static("images/commercial/renault-video-poster-ep1.jpg"),
+              posterUrl = episode1PosterUrl,
               srcUrl = "https://multimedia.guardianapis.com/interactivevideos/video.php?file=160523GlabsRenaultTestHD&format=video/webm&maxbitrate=2048"
+            ),
+            nextVideo = HostedNextVideo(
+              header = "Also from",
+              title = "Designing the car of the future",
+              link = "/commercial/advertiser-content/renault-car-of-the-future/design-competition-teaser",
+              imageUrl = teaserPosterUrl
             )
           )
           Cached(60)(RevalidatableResult.Ok(guardianHostedPage(page)))

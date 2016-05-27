@@ -29,6 +29,7 @@
 
 .participation-low-fric__confirm {
     @include button-colour($neutral-1, #ffffff, $neutral-1);
+    margin-left: 10px;
     margin-top: 10px;
 }
 

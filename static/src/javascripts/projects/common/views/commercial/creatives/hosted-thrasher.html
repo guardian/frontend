@@ -24,7 +24,16 @@
                             color: <%=data.header2colour%>;
                         "><%=data.header2%></h1>
                 </div>
-                <div class="play-button"></div>
+                <div class="hosted__faux-controls">
+                    <div class="play-button"></div>
+                    <% if(data.timeString) { %>
+                    <div class="hosted__video-timer">
+                        <span class="vjs-current-time vjs-time-control">0:00</span>
+                        <span class="vjs-time-control vjs-time-divider"> / </span>
+                        <span class="vjs-duration vjs-time-control vjs-control"><%=data.timeString%></span>
+                    </div>
+                    <% } %>
+                </div>
             </a>
         </div>
         <div class="hostedbadge hosted-tone-bg--renault">
