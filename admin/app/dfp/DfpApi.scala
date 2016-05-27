@@ -7,58 +7,13 @@ import common.dfp.{GuAdUnit, GuCreative, GuCreativeTemplate, GuLineItem}
 import dfp.DataMapper.{toGuAdUnit, toGuCreativeTemplate, toGuLineItem, toGuTemplateCreative}
 import org.joda.time.DateTime
 
-import scala.util.control.NonFatal
-import scala.util.{Failure, Success, Try}
-
 object DfpApi extends Logging {
 
   private def readLineItems(stmtBuilder: StatementBuilder): Seq[GuLineItem] = {
 
-    def sponsor(lineItem: LineItem) = for {
-      sponsorFieldId <- CustomFieldAgent.get.data.get("Sponsor")
-      customFieldValues <- Option(lineItem.getCustomFieldValues)
-      sponsor <- customFieldValues.collect {
-        case fieldValue: CustomFieldValue if fieldValue.getCustomFieldId == sponsorFieldId =>
-          fieldValue.getValue.asInstanceOf[TextValue].getValue
-      }.headOption
-    } yield sponsor
-
-    def placementAdUnitIds(session: SessionWrapper, placementId: Long): Seq[String] = {
-      lazy val fallback = {
-        val stmtBuilder = new StatementBuilder().where("id = :id").withBindVariableValue("id", placementId)
-        session.placements(stmtBuilder) flatMap (_.getTargetedAdUnitIds.toSeq)
-      }
-      PlacementAgent.get.data getOrElse(placementId, fallback)
-    }
-
-    def adUnit(adUnitId: String): Option[GuAdUnit] = AdUnitAgent.get.data.get(adUnitId)
-
-    def targetingKey(session: SessionWrapper, keyId: Long): String = {
-      lazy val fallback = {
-        val stmtBuilder = new StatementBuilder().where("id = :id").withBindVariableValue("id", keyId)
-        session.customTargetingKeys(stmtBuilder).head.getName
-      }
-      CustomTargetingKeyAgent.get.data getOrElse(keyId, fallback)
-    }
-
-    def targetingValue(session: SessionWrapper, valueId: Long): String = {
-      lazy val fallback = {
-        val stmtBuilder = new StatementBuilder().where("id = :id").withBindVariableValue("id", valueId)
-        session.customTargetingValues(stmtBuilder).head.getName
-      }
-      CustomTargetingValueAgent.get.data getOrElse(valueId, fallback)
-    }
-
     withDfpSession { session =>
       session.lineItems(stmtBuilder) map { lineItem =>
-        toGuLineItem(
-          lineItem,
-          sponsor(lineItem),
-          placementAdUnitIds(session, _),
-          adUnit,
-          targetingKey(session, _),
-          targetingValue(session, _)
-        )
+        toGuLineItem(session)(lineItem)
       }
     }
   }

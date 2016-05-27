@@ -14,3 +14,15 @@ object CustomTargetingValueAgent extends DataAgent[Long, String] {
     maybeData getOrElse Map.empty
   }
 }
+
+object CustomTargetingValueService {
+
+  def targetingValue(session: SessionWrapper)(valueId: Long): String = {
+    lazy val fallback = {
+      val stmtBuilder = new StatementBuilder().where("id = :id").withBindVariableValue("id", valueId)
+      session.customTargetingValues(stmtBuilder).head.getName
+    }
+    CustomTargetingValueAgent.get.data getOrElse(valueId, fallback)
+  }
+
+}

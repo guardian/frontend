@@ -1,5 +1,6 @@
 package dfp
 
+import com.google.api.ads.dfp.axis.utils.v201508.StatementBuilder
 import com.google.api.ads.dfp.axis.v201508._
 import common.dfp._
 import dfp.ApiHelper.{isPageSkin, optJavaInt, toJodaTime, toSeq}
@@ -13,22 +14,16 @@ object DataMapper {
     GuAdUnit(dfpAdUnit.getId, ancestorNames :+ dfpAdUnit.getName)
   }
 
-  def toGuTargeting(
-    dfpTargeting: Targeting,
-    placementAdUnitIds: Long => Seq[String],
-    adUnit: String => Option[GuAdUnit],
-    targetingKey: Long => String,
-    targetingValue: Long => String
-  ): GuTargeting = {
+  private def toGuTargeting(session: SessionWrapper)(dfpTargeting: Targeting): GuTargeting = {
 
     def toGuAdUnits(inventoryTargeting: InventoryTargeting): Seq[GuAdUnit] = {
 
       //noinspection MapFlatten
-      val directAdUnits = toSeq(inventoryTargeting.getTargetedAdUnits).map(_.getAdUnitId).map(adUnit).flatten
+      val directAdUnits = toSeq(inventoryTargeting.getTargetedAdUnits).map(_.getAdUnitId).map(AdUnitService.adUnit).flatten
 
       //noinspection MapFlatten
       val adUnitsDerivedFromPlacements = {
-        toSeq(inventoryTargeting.getTargetedPlacementIds).flatMap(placementAdUnitIds).map(adUnit).flatten
+        toSeq(inventoryTargeting.getTargetedPlacementIds).map(PlacementService.placementAdUnitIds(session)).flatten
       }
 
       (directAdUnits ++ adUnitsDerivedFromPlacements).sortBy(_.path.mkString).distinct
@@ -39,9 +34,9 @@ object DataMapper {
       def toCustomTargetSet(criteria: CustomCriteriaSet): CustomTargetSet = {
 
         def toCustomTarget(criterion: CustomCriteria) = CustomTarget(
-          targetingKey(criterion.getKeyId),
+          CustomTargetingKeyService.targetingKey(session)(criterion.getKeyId),
           criterion.getOperator.getValue,
-          criterion.getValueIds map targetingValue
+          criterion.getValueIds map CustomTargetingValueService.targetingValue(session)
         )
 
         val targets = criteria.getChildren collect {
@@ -79,17 +74,11 @@ object DataMapper {
     )
   }
 
-  def toGuCreativePlaceholders(
-    dfpLineItem: LineItem,
-    placementAdUnitIds: Long => Seq[String],
-    adUnit: String => Option[GuAdUnit],
-    targetingKey: Long => String,
-    targetingValue: Long => String
-  ): Seq[GuCreativePlaceholder] = {
+  private def toGuCreativePlaceholders(session: SessionWrapper)(dfpLineItem: LineItem): Seq[GuCreativePlaceholder] = {
 
     def creativeTargeting(name: String): Option[GuTargeting] = {
       for (targeting <- toSeq(dfpLineItem.getCreativeTargetings) find (_.getName == name)) yield {
-        toGuTargeting(targeting.getTargeting, placementAdUnitIds, adUnit, targetingKey, targetingValue)
+        toGuTargeting(session)(targeting.getTargeting)
       }
     }
 
@@ -105,14 +94,7 @@ object DataMapper {
     }
   }
 
-  def toGuLineItem(
-    dfpLineItem: LineItem,
-    sponsor: Option[String],
-    placementAdUnitIds: Long => Seq[String],
-    adUnit: String => Option[GuAdUnit],
-    targetingKey: Long => String,
-    targetingValue: Long => String
-  ) = GuLineItem(
+  def toGuLineItem(session: SessionWrapper)(dfpLineItem: LineItem) = GuLineItem(
     id = dfpLineItem.getId,
     name = dfpLineItem.getName,
     startTime = toJodaTime(dfpLineItem.getStartDateTime),
@@ -121,15 +103,11 @@ object DataMapper {
       else Some(toJodaTime(dfpLineItem.getEndDateTime))
     },
     isPageSkin = isPageSkin(dfpLineItem),
-    sponsor,
-    creativePlaceholders = toGuCreativePlaceholders(
-      dfpLineItem,
-      placementAdUnitIds,
-      adUnit,
-      targetingKey,
-      targetingValue
+    sponsor = CustomFieldService.sponsor(dfpLineItem),
+    creativePlaceholders = toGuCreativePlaceholders(session)(
+      dfpLineItem
     ),
-    targeting = toGuTargeting(dfpLineItem.getTargeting, placementAdUnitIds, adUnit, targetingKey, targetingValue),
+    targeting = toGuTargeting(session)(dfpLineItem.getTargeting),
     status = dfpLineItem.getStatus.toString,
     costType = dfpLineItem.getCostType.toString,
     lastModified = toJodaTime(dfpLineItem.getLastModifiedDateTime)
