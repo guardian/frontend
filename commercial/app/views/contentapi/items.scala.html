@@ -5,7 +5,9 @@
 @import views.html.commercial.cards.itemCard
 @import views.html.commercial.containerWrapper
 @import views.html.fragments.inlineSvg
+@import views.support.commercial.TrackingCodeBuilder.mkCapiCardTrackingCode
 @(cards: Seq[CardContent],
+  optSection: Option[String],
   optLogo: Option[String],
   optCapiTitle: Option[String],
   optCapiLink: Option[String],
@@ -17,7 +19,6 @@
   optSponsorLabel: Option[String])(implicit request: RequestHeader)
 
 @containerWrapper(Seq("legacy", "capi", optSponsorType.map(t => t.className).getOrElse(""), optSponsorType.map(t => s"tone-${t.className}").getOrElse("")),
-                  Some(s"merchandising | capi | multiple $omnitureId"),
                   badgeInHeader =  optSponsorType match {
                       case Some(Supported) => true
                       case _               => false
@@ -43,13 +44,13 @@
     <div class="adverts__row">
         @cards.take(2).map { card => @itemCard(
             card,
-            omnitureId,
+            omnitureId = mkCapiCardTrackingCode("multiple", optSection, optCapiTitle, omnitureId, card),
             optAdvertClassNames = optSponsorType.map(t => Seq(t.className)),
             useCardBranding = false)
         }
         @cards.slice(2, 4).map { card => @itemCard(
             card,
-            omnitureId,
+            omnitureId = mkCapiCardTrackingCode("multiple", optSection, optCapiTitle, omnitureId, card),
             optAdvertClassNames = optSponsorType.map(t => Seq(t.className)),
             optClassNames = Some(Seq("hide-until-mobile-landscape")),
             useCardBranding = false)
