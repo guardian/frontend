@@ -1,12 +1,12 @@
 package controllers.commercial
 
-import common.commercial.HostedPage
+import common.commercial.{HostedPage, HostedVideo}
 import conf.Static
 import conf.switches.Switches
 import model.Cached.RevalidatableResult
 import model.{Cached, NoCache}
 import play.api.mvc.{Action, AnyContent, Controller, Request}
-import views.html.hosted.{episode1Video, guardianHostedPage, teaserVideo}
+import views.html.hosted.guardianHostedPage
 
 object HostedContentController extends Controller {
 
@@ -15,29 +15,41 @@ object HostedContentController extends Controller {
     pageName match {
 
       case "design-competition-teaser" =>
-        val poster: String = Static("images/commercial/renault-video-poster.jpg").path
         val page = HostedPage(
           pageUrl,
           pageName,
           pageTitle = "Advertiser content hosted by the Guardian: Designing the car of the future - video",
-          videoTitle = "Designing the car of the future",
           standfirst = "Who better to dream up the cars of tomorrow than the people who'll be buying them? Students at Central St Martins are working with Renault to design the interior for cars that will drive themselves. Watch this short video to find out more about the project, and visit this page again soon to catch up on the students' progress.",
-          posterImage = poster
+          logoUrl = Static("images/commercial/logo_renault.jpg").path,
+          bannerUrl = Static("images/commercial/ren_commercial_banner.jpg").path,
+          video = HostedVideo(
+            mediaId = "renault-car-of-the-future",
+            title = "Designing the car of the future",
+            duration = 86,
+            posterUrl = Static("images/commercial/renault-video-poster.jpg").path,
+            srcUrl = "http://multimedia.guardianapis.com/interactivevideos/video.php?file=160516GlabsTestSD&format=video/mp4&maxbitrate=2048"
+          )
         )
-        Cached(60)(RevalidatableResult.Ok(guardianHostedPage(page, teaserVideo(poster))))
+        Cached(60)(RevalidatableResult.Ok(guardianHostedPage(page)))
 
       case "design-competition-episode1" =>
         if (Switches.hostedEpisode1Content.isSwitchedOn) {
-          val poster: String = Static("images/commercial/renault-video-poster-ep1.jpg").path
           val page = HostedPage(
             pageUrl,
             pageName,
             pageTitle = "Renault shortlists 'car of the future' designs - video",
-            videoTitle = "Renault shortlists 'car of the future' designs",
             standfirst = "Renault challenged Central St Martins students to dream up the car of the future. The winning design will be announced at Clerkenwell Design Week (and on this site). Watch this short video to find out who made the shortlist.",
-            posterImage = poster
+            logoUrl = Static("images/commercial/logo_renault.jpg").path,
+            bannerUrl = Static("images/commercial/ren_commercial_banner.jpg").path,
+            video = HostedVideo(
+              mediaId = "renault-car-of-the-future",
+              title = "Renault shortlists 'car of the future' designs",
+              duration = 160,
+              posterUrl = Static("images/commercial/renault-video-poster-ep1.jpg").path,
+              srcUrl = "https://multimedia.guardianapis.com/interactivevideos/video.php?file=160523GlabsRenaultTestHD&format=video/webm&maxbitrate=2048"
+            )
           )
-          Cached(60)(RevalidatableResult.Ok(guardianHostedPage(page, episode1Video(poster))))
+          Cached(60)(RevalidatableResult.Ok(guardianHostedPage(page)))
         } else {
           NoCache(NotFound)
         }
