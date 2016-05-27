@@ -50,7 +50,10 @@ object CardContent {
     )
   }
 
-  def fromContentItem(item: ContentType, clickMacro: Option[String], withDescription: Boolean): CardContent = {
+  def fromContentItem(item: ContentType,
+                      edition: Edition,
+                      clickMacro: Option[String],
+                      withDescription: Boolean): CardContent = {
     val tags = item.tags
     CardContent(
       icon = {
@@ -71,7 +74,7 @@ object CardContent {
         val url = item.metadata.webUrl
         clickMacro map { cm => s"$cm$url" } getOrElse url
       },
-      branding = None
+      branding = BrandHunter.findContentBranding(item, edition)
     )
   }
 }
