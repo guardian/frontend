@@ -20,13 +20,13 @@ object HostedContentController extends Controller {
           pageName,
           pageTitle = "Advertiser content hosted by the Guardian: Designing the car of the future - video",
           standfirst = "Who better to dream up the cars of tomorrow than the people who'll be buying them? Students at Central St Martins are working with Renault to design the interior for cars that will drive themselves. Watch this short video to find out more about the project, and visit this page again soon to catch up on the students' progress.",
-          logoUrl = Static("images/commercial/logo_renault.jpg").path,
-          bannerUrl = Static("images/commercial/ren_commercial_banner.jpg").path,
+          logoUrl = Static("images/commercial/logo_renault.jpg"),
+          bannerUrl = Static("images/commercial/ren_commercial_banner.jpg"),
           video = HostedVideo(
             mediaId = "renault-car-of-the-future",
             title = "Designing the car of the future",
             duration = 86,
-            posterUrl = Static("images/commercial/renault-video-poster.jpg").path,
+            posterUrl = Static("images/commercial/renault-video-poster.jpg"),
             srcUrl = "http://multimedia.guardianapis.com/interactivevideos/video.php?file=160516GlabsTestSD&format=video/mp4&maxbitrate=2048"
           )
         )
@@ -39,13 +39,13 @@ object HostedContentController extends Controller {
             pageName,
             pageTitle = "Renault shortlists 'car of the future' designs - video",
             standfirst = "Renault challenged Central St Martins students to dream up the car of the future. The winning design will be announced at Clerkenwell Design Week (and on this site). Watch this short video to find out who made the shortlist.",
-            logoUrl = Static("images/commercial/logo_renault.jpg").path,
-            bannerUrl = Static("images/commercial/ren_commercial_banner.jpg").path,
+            logoUrl = Static("images/commercial/logo_renault.jpg"),
+            bannerUrl = Static("images/commercial/ren_commercial_banner.jpg"),
             video = HostedVideo(
               mediaId = "renault-car-of-the-future",
               title = "Renault shortlists 'car of the future' designs",
               duration = 160,
-              posterUrl = Static("images/commercial/renault-video-poster-ep1.jpg").path,
+              posterUrl = Static("images/commercial/renault-video-poster-ep1.jpg"),
               srcUrl = "https://multimedia.guardianapis.com/interactivevideos/video.php?file=160523GlabsRenaultTestHD&format=video/webm&maxbitrate=2048"
             )
           )

@@ -99,7 +99,7 @@ object EmailAddons {
 
     lazy val banner = {
       val banner = email map (_.banner) getOrElse defaultBanner
-      Static(s"images/email/banners/$banner").path
+      Static(s"images/email/banners/$banner")
     }
 
     lazy val address = email flatMap (_.address) getOrElse defaultAddress

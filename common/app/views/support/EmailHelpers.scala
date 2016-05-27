@@ -1,7 +1,7 @@
 package views.support
 
 import conf.Static
-import model.{ImageMedia, ImageAsset}
+import model.ImageMedia
 import play.twirl.api.Html
 
 object EmailHelpers {

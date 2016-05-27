@@ -214,7 +214,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object images {
     lazy val path = configuration.getMandatoryStringProperty("images.path")
-    val fallbackLogo = Static("images/fallback-logo.png").path
+    val fallbackLogo = Static("images/fallback-logo.png")
     object backends {
       lazy val mediaToken: String = configuration.getMandatoryStringProperty("images.media.token")
       lazy val staticToken: String = configuration.getMandatoryStringProperty("images.static.token")
