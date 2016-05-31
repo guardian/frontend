@@ -21,7 +21,7 @@ class ArchiveMetrics(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionC
     CloudWatch.putMetrics("ArchiveMetrics", List(GoogleBotMetric.Googlebot404Count), List.empty)
   }
 
-  override def start():Unit = {
+  override def start(): Unit = {
     Jobs.deschedule("ArchiveSystemMetricsJob")
 
     Jobs.schedule("ArchiveSystemMetricsJob", "0 * * * * ?"){
