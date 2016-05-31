@@ -5,7 +5,7 @@ import org.joda.time.DateTime
 import play.api.libs.functional.syntax._
 import play.api.libs.json.{JsPath, Reads}
 
-case class LiveEventImage(id: String, mainImageUrl: String)
+case class LiveEventImage(eventId: String, mainImageUrl: String)
 object LiveEventImage{
 
   implicit val liveEventImageReads: Reads[LiveEventImage] = (
