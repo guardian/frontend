@@ -1,6 +1,8 @@
 package conf
 
-object HealthCheck extends AllGoodHealthcheckController(
-  9014,
-  "/books/harrypotter/rss"
-)
+import controllers.HealthCheck
+
+
+trait RssHealthCheckLifeCycle extends CachedHealthCheckLifeCycle {
+  override val healthCheckController = HealthCheck
+}

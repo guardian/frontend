@@ -136,7 +136,7 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
         if !article.isLiveBlog
       } yield (index, crop)
 
-      val html = views.html.fragments.img(
+      val html = views.html.fragments.imageFigure(
         container.images,
         lightboxIndex = lightboxInfo.map(_._1),
         widthsByBreakpoint = widths,
@@ -426,13 +426,25 @@ case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
   }
 }
 
+case class ImmersiveMainEmbed(isImmersive: Boolean, isSixtyDaysModified: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+      if(immersiveMainEmbedSwitch.isSwitchedOn && isSixtyDaysModified && isImmersive) {
+        val srcdoc = document.getElementsByTag("iframe").attr("srcdoc")
+        if(srcdoc != null) {
+            document.getElementsByTag("body").html(srcdoc)
+        }
+      }
+      document
+  }
+}
+
 case class ImmersiveHeaders(isImmersive: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     if(isImmersive) {
       document.getElementsByTag("h2").foreach{ h2 =>
         val beforeH2 = h2.previousElementSibling()
         if (beforeH2 != null) {
-          if(beforeH2.hasClass("element--immersive element-image")) {
+          if(beforeH2.hasClass("element--immersive") && beforeH2.hasClass("element-image")) {
             beforeH2.addClass("section-image")
             beforeH2.prepend("""<h2 class="section-title">""" + h2.text() + "</h2>")
             h2.remove()

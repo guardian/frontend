@@ -4,6 +4,18 @@
     }
 }
 
+.adverts--paidfor {
+    @include mq(mobileLandscape, desktop) {
+        > .adverts__header {
+            flex-wrap: wrap;
+        }
+
+        .adverts__kicker {
+            flex-basis: 100%;
+        }
+    }
+}
+
 .adverts--tone-paidfor {
     background-color: $neutral-6;
 
@@ -105,11 +117,6 @@
         color: $guardian-brand-dark;
     }
 
-    // Supported by containers don't feature separators between items
-    .adverts__row > * + *::before {
-        content: none;
-    }
-
     .adverts__badge__help {
         color: $neutral-2-contrasted;
     }
@@ -117,6 +124,14 @@
 
 .advert--capi {
     border-top: 1px solid;
+    transition: background .1s;
+
+    &:hover,
+    &:focus {
+        .advert__title {
+            text-decoration: none;
+        }
+    }
 
     .advert__title,
     .advert__meta,
@@ -146,8 +161,11 @@
         }
 
         .advert__image {
-            min-height: $gs-baseline * 11;
             width: 100%;
+
+            @include mq(desktop) {
+                min-height: $gs-baseline * 11;
+            }
         }
 
         .advert__standfirst {
@@ -172,6 +190,11 @@
     @include f-textSans;
     background: $paid-article-subheader;
     border-top-color: $paid-article-brand;
+
+    &:hover,
+    &:focus {
+        background: darken($paid-article-subheader, 7%);
+    }
 
     .advert__title {
         @include f-headlineSans;
@@ -200,12 +223,23 @@
 .advert--supported {
     &.advert--text {
         border-top-color: $news-main-2;
+        background: $neutral-8;
+
+        &:hover,
+        &:focus {
+            background: $neutral-6;
+        }
     }
 
     &.advert--media {
         border-top-color: $multimedia-main-2;
         background: $multimedia-main-1;
         color: #ffffff;
+
+        &:hover,
+        &:focus {
+            background: darken($media-background, 7.5%);
+        }
 
         .advert__title {
             > .inline-icon svg {
@@ -215,7 +249,9 @@
     }
 
     > .advert__title {
-        @include font-size(get-font-size(headline, 3), get-line-height(headline, 3));
+        @include mq(desktop) {
+            @include font-size(get-font-size(headline, 3), get-line-height(headline, 3));
+        }
     }
 
     > .advert__standfirst {

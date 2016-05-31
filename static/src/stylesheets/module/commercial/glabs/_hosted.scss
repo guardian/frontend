@@ -1,0 +1,751 @@
+$hosted-stripe: 28px;
+$hosted-video-width: 960px;
+$hosted-video-height: 540px;
+$renaultColor: #ffc421;
+$renaultLight: #fff9e9;
+
+@mixin hosted-fade-in {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 1s linear, visibility 0s;
+}
+
+@mixin hosted-fade-out {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 1s linear, visibility 1s;
+}
+
+.hosted-tone--renault {
+    color: $renaultColor;
+}
+
+.hosted-tone-bg--renault {
+    background-color: $renaultColor;
+}
+
+.hosted-tone--dark {
+    background-color: #3e3e3e;
+}
+
+.hosted__header {
+    width: 100%;
+    background-color: $neutral-1;
+
+    @include mq(mobile) {
+        height: 48px;
+    }
+
+    @include mq(tablet) {
+        height: 58px;
+    }
+}
+
+.hosted__side {
+    @include mq($until: desktop) {
+        &:before,
+        &:after {
+            display: none;
+        }
+    }
+}
+
+.hosted__headerwrap {
+    margin: 0 auto;
+    text-align: right;
+
+    @include mq(desktop) {
+        max-width: gs-span(12) + $gs-gutter * 2;
+    }
+
+    @include mq(leftCol) {
+        max-width: gs-span(14) + $gs-gutter * 2;
+    }
+
+    @include mq(wide) {
+        max-width: gs-span($gs-max-columns) + $gs-gutter * 2;
+    }
+}
+
+.hosted__glogo {
+    display: inline-block;
+    padding: 4px $gs-gutter / 2;
+    background-color: $guardian-brand;
+    text-align: right;
+
+    svg {
+        fill: #ffffff;
+    }
+
+    .inline-logo {
+        display: inline-block;
+        margin-top: -5px;
+    }
+
+    @include mq(mobile) {
+        svg {
+            width: 115px;
+            height: 40px
+        }
+    }
+
+    @include mq(tablet) {
+        svg {
+            width: 185px;
+            height: 50px;
+        }
+    }
+}
+
+.hosted__glogotext {
+    @include f-headlineSans;
+    @include font-size(14);
+
+    margin: 0;
+    text-align: left;
+    color: rgba(255, 255, 255, .5);
+}
+
+.hosted__container {
+    position: relative;
+    background: transparent;
+    color: #ffffff;
+
+    @include mq($until: desktop) {
+        padding: 0;
+    }
+}
+
+.hosted__container--content {
+    @include mq($until: leftCol) {
+        display: flex;
+        flex-direction: column-reverse;
+
+        .adverts__header {
+            padding-top: 0;
+            padding-bottom: 0;
+            border-top: 1px solid rgba(0, 0, 0, .2);
+        }
+    }
+}
+
+.hosted__container--full {
+    @include mq($until: desktop) {
+        padding: 0;
+    }
+
+    .u-responsive-ratio {
+        overflow: visible;
+
+        @include mq($from: desktop) {
+            width: $hosted-video-width;
+            padding-bottom: $hosted-video-height;
+            margin: 0 auto;
+        }
+    }
+}
+
+.hosted__video {
+    vertical-align: top;
+
+    .vjs-big-play-button .vjs-control-text {
+        display: none;
+    }
+
+    //those control buttons will fade in on video play
+    .vjs-fullscreen-control,
+    .vjs-volume-menu-button,
+    .vjs-progress-control {
+        opacity: 0;
+    }
+
+    &.vjs-paused {
+        .vjs-fullscreen-control,
+        .vjs-volume-menu-button,
+        .vjs-progress-control {
+            @include hosted-fade-out;
+        }
+
+        .vjs-time-control {
+            @include mq($until: tablet) {
+                @include hosted-fade-out;
+            }
+        }
+
+        .vjs-control-bar {
+            background-color: unset;
+            transition: background-color 1s linear;
+        }
+    }
+
+    &.vjs-playing {
+        .vjs-fullscreen-control,
+        .vjs-volume-menu-button,
+        .vjs-progress-control {
+            @include hosted-fade-in;
+        }
+
+        @include mq($until: tablet) {
+            .vjs-time-control {
+                @include hosted-fade-in;
+            }
+        }
+
+        .vjs-control-bar {
+            background-color: rgba(25, 25, 25, .8);
+            transition: background-color 1s linear;
+        }
+    }
+
+    .vjs-control-bar {
+        bottom: 0;
+        background-color: unset;
+        font-size: 16px;
+        height: 48px;
+    }
+
+    .vjs-fullscreen-control {
+        margin-top: 14px;
+    }
+
+    .vjs-volume-menu-button {
+        @include mq(desktop) {
+            margin-right: $gs-column-width * 1.5;
+        }
+    }
+
+    .vjs-menu-button {
+        margin-top: 17px;
+
+        .vjs-control-text {
+            font-size: 14px;
+        }
+    }
+
+    .vjs-time-control {
+        padding-top: 2px;
+    }
+
+    &.vjs .vjs-play-control {
+        width: 37px;
+        height: 37px;
+        margin: 6px 20px;
+
+        @include mq(desktop) {
+            margin-left: $gs-column-width * 1.5;
+        }
+    }
+
+    &.vjs-using-native-controls .vjs-control-bar {
+        display: block;
+    }
+
+    .vjs-error-display {
+        z-index: 1016;
+    }
+}
+
+.hosted__meta {
+    position: absolute;
+    left: 20px;
+    width: 100%;
+    color: #ffffff;
+
+    @include mq($until: tablet) {
+        right: $gs-gutter;
+        width: auto;
+        bottom: 48px;
+    }
+
+    @include mq(tablet) {
+        bottom: 60px;
+    }
+
+    @include mq(desktop) {
+        left: $gs-column-width * 1.5;
+    }
+}
+
+.vjs-playing + .hosted-fading {
+    .hosted__meta {
+        @include hosted-fade-out;
+    }
+    @include mq($until: tablet) {
+        .hostedbadge__logo {
+            @include hosted-fade-out;
+        }
+    }
+}
+
+.vjs-paused + .hosted-fading {
+    .hosted__meta,
+    .hostedbadge__logo {
+        @include hosted-fade-in;
+    }
+}
+
+.hosted-fading .hostedbadge__logo {
+    margin-top: 27px;
+    position: relative;
+}
+
+// Headings
+.hosted__heading {
+    @include f-headlineSans;
+
+    margin: 0;
+    font-size: 22px;
+    line-height: 24px;
+
+    @include mq(tablet) {
+        font-size: 26px;
+        line-height: 26px;
+    }
+
+    @include mq(desktop) {
+        font-size: 36px;
+        line-height: 34px;
+    }
+}
+
+.hosted__heading--small {
+    @include f-headlineSans;
+
+    font-size: 18px;
+    line-height: 1;
+    margin-bottom: 0;
+
+    @include mq(tablet) {
+        font-size: 24px;
+    }
+
+    @include mq(desktop) {
+        font-size: 32px;
+    }
+}
+
+.hosted__subheading {
+    padding-bottom: 0;
+}
+
+// Main banner
+.hosted__banner {
+    position: relative;
+    background-size: cover;
+
+    &:after {
+        content: '';
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 0;
+        background: linear-gradient(transparent 100px, rgba(0, 0, 0, .5));
+    }
+
+    @include mq(mobile) {
+        height: 200px;
+        background-position: left;
+    }
+
+    @include mq(tablet) {
+        height: 250px;
+    }
+
+    @include mq(desktop) {
+        height: 375px;
+    }
+}
+
+.hosted__cta-wrapper {
+    position: relative;
+    z-index: 1;
+    margin-left: 20px;
+
+    @include mq(mobile) {
+        padding-top: 130px;
+    }
+
+    @include mq(tablet) {
+        width: 40%;
+        padding-top: 160px;
+    }
+
+    @include mq(desktop) {
+        padding-top: 220px;
+    }
+
+    a {
+        // hack stop the link underline
+        color: transparent;
+    }
+}
+
+.hosted__cta {
+    padding: 0;
+
+    &,
+    &:focus,
+    &:hover {
+        background-color: $renaultColor;
+        border-color: $renaultColor;
+        color: $neutral-1;
+    }
+
+    @include mq(mobile) {
+        height: 26px;
+        margin: 6px;
+        font-size: 14px;
+        line-height: 26px;
+
+        svg {
+            fill: $neutral-1;
+            width: 24px;
+            height: 24px;
+        }
+    }
+
+    @include mq(tablet) {
+        height: 38px;
+        margin: 13px;
+        line-height: 1;
+
+        svg {
+            width: 37px;
+            height: 37px;
+        }
+    }
+
+    @include mq(desktop) {
+        margin: 9px;
+    }
+}
+
+.hosted__cta-text {
+    @include f-headlineSans;
+
+    font-size: 25px;
+    font-weight: bold;
+    color: $renaultColor;
+
+    @include mq(tablet) {
+        font-size: 38px;
+    }
+}
+
+.hosted__cta-link,
+.hosted__next-video--tile {
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.hosted__text {
+    @include f-textSans;
+
+    line-height: 1.2;
+    color: #767676;
+
+    @include mq($until: tablet) {
+        font-size: 14px;
+    }
+
+    @include mq(tablet) {
+        font-size: 18px;
+    }
+
+    @include mq(leftCol) {
+        font-size: 16px;
+    }
+}
+
+.hosted__terms {
+    @include f-textSans;
+
+    display: inline-block;
+    margin-top: $gs-row-height / 2;
+    font-size: 12px;
+    line-height: 1.2;
+    color: #767676;
+}
+
+.hosted__link {
+    color: $renaultColor;
+}
+
+.hosted__standfirst {
+    flex: 3;
+    width: auto;
+    padding: $gs-baseline $gs-gutter 0;
+
+    @include mq(desktop) {
+        width: 60%;
+        max-width: 60%;
+        margin-bottom: $gs-gutter * 1.5;
+    }
+}
+
+.hosted__social {
+    @include mq($until: tablet) {
+        margin-top: $gs-gutter / 2;
+    }
+}
+
+.hosted__social-wrapper {
+    border-top: 0;
+    padding: $gs-gutter / 2 0 $gs-gutter / 2 $gs-gutter / 2;
+
+    @include mq(mobileLandscape) {
+        padding: $gs-gutter / 2 0;
+    }
+
+    @include mq(leftCol) {
+        padding-top: 0;
+        padding-left: $gs-gutter / 2;
+
+        .social__item {
+            min-width: 30px;
+        }
+
+        .social-icon {
+            min-width: 30px;
+            height: 30px;
+        }
+    }
+}
+
+/*Hosted thrasher*/
+.creative--hosted-video {
+    .hosted-video__body {
+        position: relative;
+        height: 100%;
+        padding-top: 0;
+    }
+
+    .hosted-video_layer {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        background-repeat: no-repeat;
+    }
+
+    .hosted__heading {
+        @include mq(desktop) {
+            font-size: 32px;
+            line-height: 34px;
+            margin-bottom: 10px;
+        }
+    }
+
+    .hosted__meta {
+        left: $gs-gutter/2;
+        bottom: 60px;
+        @include mq($until: desktop) {
+            bottom: 15%;
+        }
+    }
+
+    .hosted-video--image-container {
+        height: 339px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+    }
+
+    .hostedbadge {
+        top: 0;
+        left: $gs-gutter/2;
+        @include mq(leftCol) {
+            top: 210px;
+            left: - $left-column - $gs-gutter;
+            width: 112px;
+        }
+        @include mq(wide) {
+            left: - $left-column-wide - $gs-gutter;
+        }
+    }
+
+    .hosted-banner {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        position: absolute;
+        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, .4));
+        border-top: 1px solid transparent;
+    }
+
+    .hosted__faux-controls {
+        @include f-headlineSans;
+        position: absolute;
+        bottom: 0;
+        font-size: 16px;
+        font-weight: bold;
+
+        .hosted__video-timer {
+            color: #ffffff;
+            @include mq(desktop) {
+                margin-bottom: 10px;
+            }
+        }
+    }
+
+    .play-button {
+        @include icon(play-32--tone-media);
+        @include mq(desktop) {
+            padding: 9px;
+        }
+        margin: 10px;
+    }
+
+    .play-button, .hosted__video-timer {
+        display: inline-block;
+        vertical-align: bottom;
+    }
+}
+
+.hosted__label {
+    float: left;
+    margin-left: 110px;
+    color: #ffffff;
+    border: 0;
+
+    @include mq(mobile) {
+        margin-top: 20px;
+    }
+
+    @include mq(tablet) {
+        margin-top: 29px;
+    }
+
+    @include mq(desktop) {
+        margin-left: 170px;
+    }
+
+    @include mq(leftCol) {
+        margin-left: 250px;
+    }
+
+    @include mq(wide) {
+        margin-left: 180px;
+    }
+}
+
+.hosted__label-btn {
+    @include f-headlineSans;
+
+    font-size: 16px;
+
+    .inline-icon {
+        padding-left: 2px;
+    }
+
+    &.popup__toggle {
+        border: 0;
+        padding: 0;
+
+        svg {
+            fill: #ffffff;
+        }
+    }
+}
+
+.hosted__label-btn--small {
+    @include f-textSans;
+
+    font-size: 12px;
+}
+
+.hosted__popup {
+    top: 110%;
+    left: 299%;
+    width: 350px;
+    padding: $gs-gutter / 2 $gs-gutter / 2 $gs-gutter $gs-gutter / 2;
+    background: #ffffff;
+    color: $neutral-1;
+    text-align: left;
+    border-radius: 0;
+
+    &:before {
+        left: 8%;
+        border-bottom-color: #ffffff;
+    }
+
+    @include mq($until: tablet) {
+        width: 250px;
+        left: 125%;
+
+        &:before {
+            left: 29%;
+        }
+    }
+}
+
+.hosted__popup--bottom {
+    @include mq($until: tablet) {
+        left: 65%;
+    }
+}
+
+.hosted__popup-text {
+    font-weight: 200;
+}
+
+.hosted__next-video--header {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #eeeeee;
+}
+
+.hosted__container .adverts__body {
+    @include mq(desktop) {
+        display: flex;
+        max-width: none;
+    }
+}
+
+.hosted__next-video {
+    @include f-headlineSans;
+
+    flex: 2;
+    padding: $gs-baseline $gs-gutter 0;
+}
+
+.hosted__next-video--up-next {
+    font-weight: bolder;
+}
+
+.hosted__next-video--client-name {
+    font-size: 20px;
+    line-height: 20px;
+}
+
+.hosted__next-video--tile {
+    display: flex;
+    background: $renaultLight;
+    color: #333333;
+    border-top: 2px solid $renaultColor;
+    text-decoration: none;
+
+    &:active {
+        color: #333333;
+    }
+}
+
+.hosted__next-video-thumb {
+    height: 96px;
+    width: 160px;
+    align-self: center;
+}
+
+.hosted__next-video-title {
+    font-size: 20px;
+    line-height: 23px;
+    padding: 10px;
+    margin: 0;
+}

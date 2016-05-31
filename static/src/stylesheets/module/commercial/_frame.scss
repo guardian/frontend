@@ -1,0 +1,158 @@
+.frame {
+    position: relative;
+}
+
+.frame__background-image {
+    display: block;
+    width: 100%;
+}
+
+.frame__foreground {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: $gs-baseline / 2 $gs-gutter / 2;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.frame__link-background {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.frame__logo,
+.frame__content,
+.frame__cta {
+    z-index: 1;
+}
+
+.frame__logo--top {
+    margin-bottom: $gs-baseline;
+}
+
+.frame__logo--bottom {
+    position: absolute;
+    bottom: $gs-baseline / 2;
+    right: $gs-gutter / 2;
+}
+
+.frame__logo-image {
+    display: block;
+}
+
+.frame__content {
+    @include f-headlineSans;
+}
+
+@include mq(gs-span(5) + $gs-gutter, phablet) {
+    .frame__foreground {
+        padding: $gs-baseline * 1.5 $gs-gutter;
+    }
+
+    .frame__content {
+        max-width: 18em;
+    }
+
+    .frame__logo--bottom {
+        bottom: $gs-baseline * 1.5;
+        right: $gs-gutter;
+    }
+}
+
+.frame__content--left   {
+    align-self: flex-start;
+    text-align: left;
+}
+.frame__content--center {
+    align-self: center;
+    text-align: center;
+}
+.frame__content--right  {
+    align-self: flex-end;
+    text-align: right;
+}
+
+.frame__content--top    {
+    margin-bottom: auto;
+}
+.frame__content--middle {
+    margin-bottom: auto;
+    margin-top: auto;
+}
+.frame__content--bottom {
+    margin-top: auto;
+}
+
+.frame__content-title {
+    font-weight: normal;
+    line-height: 1.2;
+}
+
+.frame__link {
+    color: inherit;
+}
+
+.frame__cta {
+    color: #ffffff;
+}
+
+.has-no-flex {
+    .frame__logo,
+    .frame__content,
+    .frame__cta {
+        position: absolute;
+    }
+
+    .frame__logo--top {
+        top: $gs-baseline / 2;
+        left: $gs-gutter / 2;
+    }
+
+    .frame__logo--bottom {
+        bottom: $gs-baseline / 2;
+        right: $gs-gutter / 2;
+    }
+
+    .frame__cta {
+        bottom: $gs-baseline / 2;
+        left: $gs-gutter / 2;
+    }
+
+    .frame__content--top {
+        top: $gs-baseline * 5;
+    }
+
+    .frame__content--bottom {
+        bottom: $gs-baseline * 5;
+    }
+
+    .frame__content--middle {
+        top: 50%;
+        transform: translate(0, -50%);
+    }
+
+    .frame__content--left {
+        left: $gs-gutter / 2;
+    }
+
+    .frame__content--right {
+        right: $gs-gutter / 2;
+    }
+
+    .frame__content--center {
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+
+    .frame__content--middle.frame__content--center {
+        transform: translate(-50%, -50%);
+    }
+}

@@ -1,6 +1,7 @@
 package test
 
 import java.util.{ List => JList }
+import controllers.HealthCheck
 import org.scalatest.Suites
 import collection.JavaConversions._
 
@@ -14,5 +15,5 @@ object `package` {
 class ArchiveTestSuite extends Suites (
   new ArchiveControllerTest ) with SingleServerSuite {
 
-  override lazy val port: Int = conf.HealthCheck.testPort
+  override lazy val port: Int = HealthCheck.testPort
 }

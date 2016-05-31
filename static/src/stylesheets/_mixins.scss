@@ -232,9 +232,11 @@
 }
 
 @mixin content-gutter {
-    padding: 0 $gs-gutter/2;
+    padding-left: $gs-gutter/2;
+    padding-right: $gs-gutter/2;
 
     @include mq(mobileLandscape) {
-        padding: 0 $gs-gutter;
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
     }
 }

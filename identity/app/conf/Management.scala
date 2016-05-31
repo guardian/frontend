@@ -1,3 +1,8 @@
 package conf
 
-object HealthCheck extends AllGoodHealthcheckController(9010, "/signin")
+import controllers.HealthCheck
+
+
+trait IdentityHealthCheckLifeCycle extends CachedHealthCheckLifeCycle {
+  override val healthCheckController = HealthCheck
+}

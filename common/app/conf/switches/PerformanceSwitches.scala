@@ -24,6 +24,15 @@ trait PerformanceSwitches {
     exposeClientSide = true
   )
 
+  val BootInteractivesFromMainSwitch = Switch(
+    SwitchGroup.Performance,
+    "boot-interactives-from-main",
+    "If this switch is on then interactive bootstraps will be booted from main.js for perf and stability reasons",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 8),
+    exposeClientSide = true
+  )
+
   val TagPageSizeSwitch = Switch(
     SwitchGroup.Performance,
     "tag-page-size",
@@ -33,30 +42,12 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
-  val SoftPurgeSwitch = Switch(
-    SwitchGroup.Performance,
-    "soft-purge-switch",
-    "If this switch is on then articles will be automatically soft purged them from the CDN",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val LongCacheSwitch = Switch(
     SwitchGroup.Performance,
     "long-cache-switch",
-    "If this switch is on then articles will get a longer cache time",
+    "If this switch is on then content will get a longer cache time",
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val CheckETagsSwitch = Switch(
-    SwitchGroup.Performance,
-    "check-etags",
-    "If this switch is on, empty 304 not modified responses will be returned for requests with the correct etag",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 20),
     exposeClientSide = false
   )
 
@@ -72,9 +63,9 @@ trait PerformanceSwitches {
   val ServerSideBucketsSwitch = Switch(
     SwitchGroup.Performance,
     "server-side-buckets",
-    "When this switch expires, we should have decided whether permanently running server side ab testing affects caching/costs too much",
+    "When this switch expires, remove the remaining predefined server side testing buckets",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 10),
+    sellByDate = new LocalDate(2016, 6, 22),
     exposeClientSide = false
   )
 
@@ -103,6 +94,33 @@ trait PerformanceSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
+  )
+
+  val PanicMonitoringSwitch = Switch(
+    SwitchGroup.Performance,
+    "panic-monitoring",
+    "If this switch is on, we monitor latency and requests to see if servers are overloaded",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 8),
+    exposeClientSide = false
+  )
+
+  val PanicLoggingSwitch = Switch(
+    SwitchGroup.Performance,
+    "panic-logging",
+    "If this switch is on, we log latency when we are monitoring it with panic-monitoring",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 8),
+    exposeClientSide = false
+  )
+
+  val PanicSheddingSwitch = Switch(
+    SwitchGroup.Performance,
+    "panic-shedding",
+    "If this switch is on, we try to keep response times below 1s by returning Service Unavailable errors if we're busy",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 8),
+    exposeClientSide = false
   )
 
   val RichLinkSwitch = Switch(
@@ -206,15 +224,6 @@ trait PerformanceSwitches {
     exposeClientSide = true
   )
 
-  val IphoneConfidence = Switch(
-    SwitchGroup.Performance,
-    "iphone-confidence",
-    "If this switch is on then some beacons will be dropped to gauge iPhone confidence",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val ContentApiUseThrift = Switch(
     SwitchGroup.Performance,
     "content-api-use-thrift",
@@ -224,4 +233,12 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
+  val UseLinkPreconnect = Switch(
+    SwitchGroup.Performance,
+    "use-link-preconnect",
+    "If this switch is on then link preconnect hints will be on the page",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 5),
+    exposeClientSide = false
+  )
 }

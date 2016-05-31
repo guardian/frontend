@@ -30,7 +30,8 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
                     isSSL : false,
                     section : 'politics',
                     shouldHideAdverts : false,
-                    isFront : false
+                    isFront : false,
+                    showRelatedContent: true
                 };
 
                 config.switches = {
@@ -263,6 +264,12 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
 
             it('Is disabled in sensitive content', function () {
                 config.page.shouldHideAdverts = true;
+                features = new CommercialFeatures;
+                expect(features.outbrain).toBe(false);
+            });
+
+            it('Is disabled when related content is hidden', function () {
+                config.page.showRelatedContent = false;
                 features = new CommercialFeatures;
                 expect(features.outbrain).toBe(false);
             });

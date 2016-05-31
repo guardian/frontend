@@ -19,6 +19,7 @@ module.exports = function (grunt) {
         isDev: (grunt.option('dev') !== undefined) ? Boolean(grunt.option('dev')) : process.env.GRUNT_ISDEV === '1',
         singleRun:       grunt.option('single-run') !== false,
         staticTargetDir: './static/target/',
+        staticPublicDir: './static/public/',
         staticSrcDir:    './static/src/',
         staticHashDir:   './static/hash/',
         testConfDir:     './static/test/javascripts/conf/',
@@ -46,10 +47,6 @@ module.exports = function (grunt) {
             }
         }
     });
-
-    function isOnlyTask(task) {
-        return grunt.cli.tasks.length === 1 && grunt.cli.tasks[0] === task.name;
-    }
 
     if (options.isDev) {
         grunt.log.subhead('Running Grunt in DEV mode');
@@ -99,47 +96,25 @@ module.exports = function (grunt) {
     /**
      * Compile tasks
      */
-
     grunt.registerTask('sass:compile', ['concurrent:sass']);
 
     grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration']);
-    grunt.registerTask('compile:css', function (fullCompile) {
+    grunt.registerTask('compile:css', function () {
         grunt.task.run(['clean:css', 'mkdir:css', 'compile:images', 'sass:compile']);
 
-        if (options.isDev) {
-            grunt.task.run(['replace:cssSourceMaps', 'copy:css']);
-        } else {
+        if (!options.isDev) {
             grunt.task.run(['shell:updateCanIUse']);
         }
 
         grunt.task.run(['px_to_rem', 'autoprefixer']);
-
-        if (isOnlyTask(this) && !fullCompile) {
-            grunt.task.run('asset_hash');
-        }
-
     });
-    grunt.registerTask('compile:js', function (fullCompile) {
+    grunt.registerTask('compile:js', function () {
         grunt.task.run(['clean:js', 'compile:inlineSvgs']);
 
-        grunt.task.run(['concurrent:requireJS', 'copy:javascript', 'concat:app', 'uglify:javascript']);
-
-        if (isOnlyTask(this) && !fullCompile) {
-            grunt.task.run('asset_hash');
-        }
-
+        grunt.task.run(['concurrent:requireJS', 'copy:javascript', 'concat:app', 'concat:shivsAndShims', 'uglify:javascript']);
     });
-    grunt.registerTask('develop:js', function (fullCompile) {
-        grunt.task.run([
-            'copy:inlineSVGs',
-            'clean:js',
-            'copy:javascript'
-        ]);
-
-        if (isOnlyTask(this) && !fullCompile) {
-            grunt.task.run('asset_hash');
-        }
-
+    grunt.registerTask('develop:js', function () {
+        grunt.task.run(['copy:inlineSVGs', 'clean:js', 'copy:javascript']);
     });
     grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['copy:flash']);
@@ -152,7 +127,7 @@ module.exports = function (grunt) {
         'compile:fonts',
         'compile:flash',
         !options.isDev && 'makeDeploysRadiator',
-        'asset_hash',
+        !options.isDev && 'asset_hash',
         'compile:conf'
     ].filter(identity));
 

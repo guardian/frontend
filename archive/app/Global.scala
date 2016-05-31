@@ -1,16 +1,23 @@
-import common.CloudWatchApplicationMetrics
 import common.Logback.Logstash
-import conf.{SwitchboardLifecycle, CorsErrorHandler, Filters}
-import dev.DevParametersLifecycle
-import play.api.mvc.WithFilters
+import common.{CloudWatchApplicationMetrics, LifecycleComponent, BackwardCompatibleLifecycleComponents}
+import conf.switches.SwitchboardLifecycle
+import conf.InjectedCachedHealthCheckLifeCycle
+import controllers.HealthCheck
+import play.api.inject.ApplicationLifecycle
+import play.api.GlobalSettings
 import services.ArchiveMetrics
 
-object Global extends WithFilters(Filters.common: _*)
-  with DevParametersLifecycle
+import scala.concurrent.ExecutionContext
+
+object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents
   with CloudWatchApplicationMetrics
-  with ArchiveMetrics
-  with CorsErrorHandler
   with SwitchboardLifecycle
   with Logstash {
+
   override lazy val applicationName = "frontend-archive"
+
+  override def lifecycleComponents(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext): List[LifecycleComponent] = List(
+    new ArchiveMetrics(appLifecycle),
+    new InjectedCachedHealthCheckLifeCycle(HealthCheck)
+  )
 }

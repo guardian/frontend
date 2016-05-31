@@ -2,14 +2,12 @@ package controllers
 
 import com.gu.contentapi.client.model.v1.{Content => ApiContent, ItemResponse}
 import common._
-import contentapi.ContentApiClient
-import conf._
 import conf.switches.Switches
+import contentapi.ContentApiClient
 import model._
 import play.api.mvc._
 import play.twirl.api.Html
 import views.support.RenderOtherStatus
-import model.GalleryPage
 
 import scala.concurrent.Future
 
@@ -45,7 +43,7 @@ object GalleryController extends Controller with RendersItemResponse with Loggin
       .showFields("all")
     ).map { response =>
       val gallery = response.content.map(Content(_))
-      val model: Option[GalleryPage] = gallery collect { case g: Gallery => GalleryPage(g, RelatedContent(g, response), index, isTrail) }
+      val model: Option[GalleryPage] = gallery collect { case g: Gallery => GalleryPage(g, StoryPackages(g, response), index, isTrail) }
 
       ModelOrResult(model, response)
 
@@ -54,9 +52,9 @@ object GalleryController extends Controller with RendersItemResponse with Loggin
 
   private def renderGallery(model: GalleryPage)(implicit request: RequestHeader) = {
     val htmlResponse: (() => Html) = () =>
-      views.html.gallery(model, model.related, model.index)
+      views.html.gallery(model)
     val jsonResponse = () =>
-      views.html.fragments.galleryBody(model.gallery, model.related, model.index)
+      views.html.fragments.galleryBody(model)
     renderFormat(htmlResponse, jsonResponse, model, Switches.all)
   }
 

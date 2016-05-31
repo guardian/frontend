@@ -1,7 +1,7 @@
 package conf
 
-object HealthCheck extends AllGoodHealthcheckController(
-  9011,
-  "/top-stories.json",
-  "/most-read/society.json"
-)
+import controllers.HealthCheck
+
+trait OnwardHealthCheckLifeCycle extends CachedHealthCheckLifeCycle {
+  override val healthCheckController = HealthCheck
+}

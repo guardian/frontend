@@ -1,45 +1,45 @@
-@(gallery: model.GalleryPage, related: model.RelatedContent, index: Int)(implicit request: RequestHeader)
+@(page: model.GalleryPage)(implicit request: RequestHeader)
 
-@import common.{Edition, LinkTo}
+@import common.LinkTo
 @import layout.ContentWidths.GalleryMedia
 @import views.support.TrailCssClasses.toneClass
-@import views.support.{ImgSrc, RenderClasses}
+@import views.support.RenderClasses
 
 <div class="l-side-margins l-side-margins--media l-side-margins--new-gallery">
 
     <article id="article" class="@RenderClasses(
-            Map("content--advertisement-feature" -> gallery.item.commercial.isAdvertisementFeature,
-                "paid-content--advertisement-feature" -> gallery.item.commercial.isAdvertisementFeature
+            Map("content--advertisement-feature" -> page.item.commercial.isAdvertisementFeature,
+                "paid-content--advertisement-feature" -> page.item.commercial.isAdvertisementFeature
             ),
-            "content", "content--media", "content--gallery", "tonal", "new-gallery", "content--immersive", s"tonal--${toneClass(gallery.item)}"
+            "content", "content--media", "content--gallery", "tonal", "new-gallery", "content--immersive", s"tonal--${toneClass(page.item)}"
         )"
-        itemscope itemtype="@gallery.item.metadata.schemaType" role="main">
+        itemscope itemtype="@page.item.metadata.schemaType" role="main">
 
-        @if(gallery.item.commercial.isAdvertisementFeature){
+        @if(page.item.commercial.isAdvertisementFeature){
             @fragments.guBand()
         }
 
-        @fragments.galleryHeader(gallery)
+        @fragments.galleryHeader(page)
 
-        <div class="content__main tonal__main tonal__main--@toneClass(gallery.item)">
-            <div class="gs-container">
+        <div class="content__main tonal__main tonal__main--@toneClass(page.item)">
+            <div class="gs-container new-gallery__divider">
                 <div class="content__main-column content__main-column--gallery">
-                    @fragments.witnessCallToAction(gallery.item.content)
+                    @fragments.witnessCallToAction(page.item.content)
                     <ul class="gallery">
-                        @gallery.item.lightbox.largestCrops.zipWithRowInfo.map { case (image, row) =>
-                            @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum, gallery.item.lightbox.imageContainer(row.rowNum - 1))
+                        @page.item.lightbox.largestCrops.zipWithRowInfo.map { case (image, row) =>
+                            @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum, page.item.lightbox.imageContainer(row.rowNum - 1))
                         }
                     </ul>
-                    @fragments.witnessCallToAction(gallery.item.content)
-                    @fragments.submeta(gallery.item)
+                    @fragments.witnessCallToAction(page.item.content)
+                    @fragments.submeta(page.item)
                 </div>
             </div>
         </div>
     </article>
 
-    @if(gallery.item.content.showInRelated &&
-        !gallery.item.commercial.isAdvertisementFeature ) {
-        <div class="gallery__most-popular facia-container fc-container fc-container--media hide-on-childrens-books-site js-gallery-most-popular tonal--@toneClass(gallery.item)">
+    @if(page.item.content.showInRelated &&
+        !page.item.commercial.isAdvertisementFeature ) {
+        <div class="gallery__most-popular facia-container fc-container fc-container--media hide-on-childrens-books-site js-gallery-most-popular tonal--@toneClass(page.item)">
             <div class="fc-container__inner">
                 <div class="fc-container__header">
                     <h2 class="fc-container__header__title">
@@ -49,7 +49,9 @@
             </div>
         </div>
     }
-    @fragments.contentFooter(gallery.item, related, "media")
+</div>
+<div class="l-side-margins">
+    @fragments.contentFooter(page.item, page.related, "media")
 </div>
 
 @galleryItem(adSlots: Seq[String], adInterval: Int, image: model.ImageAsset, rowNum: Int, imageElement: model.ImageElement) = {
@@ -67,42 +69,31 @@
                     }
                 }
 
-                @fragments.share.blockLevelSharing("img-" + rowNum.toString, gallery.item.sharelinks.elementShares("img-" + rowNum.toString, image.path), gallery.item.metadata.contentType, isNewGallery = true)
+                @fragments.share.blockLevelSharing("img-" + rowNum.toString, page.item.sharelinks.elementShares("img-" + rowNum.toString, image.path), page.item.metadata.contentType, isNewGallery = true)
             </div>
 
-            <a class="gallery__img-container gallery__img-container@if(image.width >= image.height) {--landscape} else {--portrait} js-gallerythumbs"
-                href="@LinkTo{@gallery.item.metadata.url#img-@rowNum}"
-                data-link-name="Launch Gallery Lightbox" data-is-ajax>
-
-                <picture>
-                    @* IE 9 needs this workaround as per https://scottjehl.github.io/picturefill/ *@
-                        <!--[if IE 9]><video style="display: none;"><![endif]-->
-                    @defining({
-                        GalleryMedia.inline
-                    }) { widths =>
-                        @widths.breakpoints.map { breakpointWidth =>
-                            <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (min-resolution: 120dpi)"
-                            sizes="@breakpointWidth.width"
-                            srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(imageElement.images), hidpi = true)" />
-                            <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px)"
-                            sizes="@breakpointWidth.width"
-                            srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(imageElement.images))" />
-                        }
-                    }
-
-                    <!--[if IE 9]></video><![endif]-->
-
-                    <img class="gallery__img gallery__img@if(image.width >= image.height) {--landscape} else {--portrait}"
-                    itemprop="contentUrl"
-                        style="max-width: calc(@{image.width.toFloat/image.height} * 96vh)"
-                    alt="@image.altText.getOrElse("")"
-                    src="@ImgSrc.getFallbackUrl(imageElement.images)" />
-                </picture>
-            </a>
+            @defining(
+                if(image.width >= image.height) {"--landscape"} else {"--portrait"}
+            ) { orientation =>
+                <a class="gallery__img-container gallery__img-container@orientation js-gallerythumbs"
+                    @*
+                     * This ensures that the image height never goes above 96vh
+                     *@
+                    style="max-width: calc(@image.ratioDouble * 96vh)"
+                    href="@LinkTo{@page.item.metadata.url#img-@rowNum}"
+                    data-link-name="Launch Gallery Lightbox" data-is-ajax>
+                    @fragments.image(
+                        imageElement.images,
+                        Seq("gallery__img", s"gallery__img$orientation"),
+                        GalleryMedia.inline,
+                        image.altText.getOrElse("")
+                    )
+                </a>
+            }
         </figure>
     </li>
 
-    @if(!gallery.item.content.shouldHideAdverts && rowNum % adInterval == 0) {
+    @if(!page.item.content.shouldHideAdverts && rowNum % adInterval == 0) {
         @adSlots.lift((rowNum / adInterval) - 1).map { adSlot =>
             <li class="gallery__item gallery__item--advert">
                 <div class="gallery__img-container">

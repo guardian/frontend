@@ -1,3 +1,5 @@
 package conf
 
-object HealthCheck extends AllGoodHealthcheckController(9006, "/robots.txt")
+trait DiagnosticsHealthCheckLifeCycle extends CachedHealthCheckLifeCycle {
+  override val healthCheckController = controllers.HealthCheck
+}

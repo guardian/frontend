@@ -5,7 +5,7 @@
 # For dev machines
 GET        /assets/*path                                                                       dev.DevAssetsController.at(path)
 
-GET        /_healthcheck                                                                       conf.HealthCheck.healthcheck()
+GET        /_healthcheck                                                                       football.controllers.HealthCheck.healthCheck()
 
 GET        /sport/cricket/match/:matchDate/:teamId.json                                        controllers.CricketMatchController.renderMatchIdJson(matchDate, teamId)
 GET        /sport/cricket/match/:matchDate/:teamId                                             controllers.CricketMatchController.renderMatchId(matchDate, teamId)
@@ -29,6 +29,8 @@ GET        /football/results                                                    
 GET        /football/results.json                                                              football.controllers.ResultsController.allResultsJson()
 GET        /football/:tag/results/:year/:month/:day.json                                       football.controllers.ResultsController.tagResultsForJson(year, month, day, tag)
 GET        /football/:tag/results/:year/:month/:day                                            football.controllers.ResultsController.tagResultsFor(year, month, day, tag)
+GET        /football/:tag/results/more/:year/:month/:day.json                                  football.controllers.ResultsController.moreTagResultsForJson(year, month, day, tag)
+GET        /football/:tag/results/more/:year/:month/:day                                       football.controllers.ResultsController.moreTagResultsFor(year, month, day, tag)
 GET        /football/:tag/results                                                              football.controllers.ResultsController.tagResults(tag)
 GET        /football/:tag/results.json                                                         football.controllers.ResultsController.tagResultsJson(tag)
 

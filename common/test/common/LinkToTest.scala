@@ -2,7 +2,7 @@ package common
 
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.Play
-import common.editions.{International, Uk}
+import common.editions.{Au, Us, International, Uk}
 import play.api.mvc.RequestHeader
 import test._
 import play.api.test.FakeRequest
@@ -12,6 +12,7 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
   Play.unsafeApplication
 
   implicit val edition = Uk
+  implicit val editions = Seq(Uk,Us,Au)
   implicit val request = FakeRequest("GET", "/")
 
   object TestLinkTo extends LinkTo {
@@ -65,10 +66,37 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
     TestLinkTo("/football/rss", edition) should be ("http://www.foo.com/football/rss")
   }
 
-  it should "be https on https enabled sections" in {
-    TheGuardianLinkTo("/info/hello", edition) should be ("https://www.theguardian.com/info/hello")
-    TheGuardianLinkTo("http://www.theguardian.com/info", edition) should be ("https://www.theguardian.com/info")
-    TheGuardianLinkTo("/info/foo", edition) should be ("https://www.theguardian.com/info/foo")
+  it should "be https on https-enabled sections whether editionalised or not" in {
+    for (ed <- editions) {
+      TheGuardianLinkTo("/info/hello", ed) should be ("https://www.theguardian.com/info/hello")
+      TheGuardianLinkTo("http://www.theguardian.com/info", ed) should be ("https://www.theguardian.com/info")
+      TheGuardianLinkTo("/info/foo", ed) should be ("https://www.theguardian.com/info/foo")
+      TheGuardianLinkTo("http://www.theguardian.com/technology", ed) should be (s"https://www.theguardian.com/${ed.id.toLowerCase}/technology")
+      TheGuardianLinkTo("/technology", ed) should be (s"https://www.theguardian.com/${ed.id.toLowerCase}/technology")
+      TheGuardianLinkTo("/technology/hello", ed) should be (s"https://www.theguardian.com/technology/hello")
+      TheGuardianLinkTo("/business", ed) should be (s"https://www.theguardian.com/${ed.id.toLowerCase}/business")
+      TheGuardianLinkTo("/business/hello", ed) should be (s"https://www.theguardian.com/business/hello")
+      TheGuardianLinkTo("/sport", ed) should be (s"https://www.theguardian.com/${ed.id.toLowerCase}/sport")
+      TheGuardianLinkTo("/sport/hello", ed) should be (s"https://www.theguardian.com/sport/hello")
+      TheGuardianLinkTo("/football", ed) should be (s"https://www.theguardian.com/football")
+      TheGuardianLinkTo("/football/hello", ed) should be (s"https://www.theguardian.com/football/hello")
+      TheGuardianLinkTo("/culture", ed) should be (s"https://www.theguardian.com/${ed.id.toLowerCase}/culture")
+      TheGuardianLinkTo("/culture/hello", ed) should be (s"https://www.theguardian.com/culture/hello")
+      TheGuardianLinkTo("/film", ed) should be (s"https://www.theguardian.com/${ed.id.toLowerCase}/film")
+      TheGuardianLinkTo("/film/hello", ed) should be (s"https://www.theguardian.com/film/hello")
+      TheGuardianLinkTo("/tv-and-radio", ed) should be (s"https://www.theguardian.com/tv-and-radio")
+      TheGuardianLinkTo("/tv-and-radio/hello", ed) should be (s"https://www.theguardian.com/tv-and-radio/hello")
+      TheGuardianLinkTo("/music", ed) should be (s"https://www.theguardian.com/music")
+      TheGuardianLinkTo("/music/hello", ed) should be (s"https://www.theguardian.com/music/hello")
+      TheGuardianLinkTo("/books", ed) should be (s"https://www.theguardian.com/books")
+      TheGuardianLinkTo("/books/hello", ed) should be (s"https://www.theguardian.com/books/hello")
+      TheGuardianLinkTo("/artanddesign", ed) should be (s"https://www.theguardian.com/artanddesign")
+      TheGuardianLinkTo("/artanddesign/hello", ed) should be (s"https://www.theguardian.com/artanddesign/hello")
+      TheGuardianLinkTo("/stage", ed) should be (s"https://www.theguardian.com/stage")
+      TheGuardianLinkTo("/stage/hello", ed) should be (s"https://www.theguardian.com/stage/hello")
+      TheGuardianLinkTo("/membership", ed) should be (s"https://www.theguardian.com/membership")
+      TheGuardianLinkTo("/membership/hello", ed) should be (s"https://www.theguardian.com/membership/hello")
+    }
   }
 
   it should "be https to amp" in {

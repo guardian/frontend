@@ -3,8 +3,8 @@
 
 @import common.LinkTo
 @import views.BodyCleaner
-@import views.support.TrailCssClasses.toneClass
 @import views.support.RenderClasses
+@import views.support.TrailCssClasses.toneClass
 
 @* Feb 2015: Google does only support NewsArticle in their amp carousel. To remove once Google starts supporting other schemas like schema.org/Review *@
 @schemaType(page: ArticlePage) = @{
@@ -44,7 +44,7 @@
                 @fragments.guBand()
             }
 
-            @fragments.headTonal(article, article.commercial.isAdvertisementFeature, amp = amp)
+            @fragments.headTonal(article, model, article.commercial.isAdvertisementFeature, amp = amp)
 
             @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
                 @fragments.mainMedia(article, amp)
@@ -62,7 +62,7 @@
 
                         @fragments.witnessCallToAction(article.content)
 
-                        @fragments.contentMeta(article)
+                        @fragments.contentMeta(article, model)
 
                         @fragments.chapterHeadings(article)
 

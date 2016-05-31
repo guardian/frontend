@@ -1,4 +1,3 @@
-
 @(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader)
 
 @import common.LinkTo
@@ -34,6 +33,11 @@
 
                         <div class="content__article-body from-content-api js-article__body" itemprop="@if(article.tags.isReview){reviewBody} else {articleBody}"
                             data-test-id="article-review-body">
+
+                            @if(article.commercial.isAdvertisementFeature || article.commercial.isSponsored(None) || article.commercial.isFoundationSupported) {
+                                @fragments.commercial.badge(article, model)
+                            }
+
                             @BodyCleaner(article, article.fields.body, amp = amp)
                         </div>
 

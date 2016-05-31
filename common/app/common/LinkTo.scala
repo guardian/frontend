@@ -27,7 +27,10 @@ trait LinkTo extends Logging {
   /**
     * email is here to allow secure POSTs from the footer signup form
     */
-  val httpsEnabledSections: Seq[String] = Seq("info", "email", "science", "crosswords")
+  val httpsEnabledSections: Seq[String] =
+    Seq("info", "email", "science", "crosswords", "technology", "business", "sport", "football",
+      "culture", "film", "tv-and-radio", "music", "books", "artanddesign", "stage",
+      "membership")
 
   def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request))
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request))
@@ -60,13 +63,19 @@ trait LinkTo extends Logging {
 
     val url = s"$host/$editionalisedPath"
     url match {
-      case ProdURL() if (isHttpsEnabled(editionalisedPath) || secure) =>  url.replace("http://", "https://")
+      case ProdURL() if (isHttpsEnabled(editionalisedPath, edition) || secure) =>  url.replace("http://", "https://")
       case _ => url
     }
   }
 
-  private def isHttpsEnabled(editionalisedPath: String) =
-    httpsEnabledSections.exists(editionalisedPath.startsWith)
+  private def isHttpsEnabled(editionalisedPath: String, edition: Edition) = {
+    val noEdPath = if(editionalisedPath.startsWith(edition.id.toLowerCase + "/")) {
+      editionalisedPath.split(s"${edition.id.toLowerCase}/")(1)
+    } else {
+      editionalisedPath
+    }
+    httpsEnabledSections.exists(noEdPath.startsWith)
+  }
 
   private def clean(path: String) = path match {
     case TagPattern(left, right) if left == right => left //clean section tags e.g. /books/books

@@ -149,7 +149,8 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     word-wrap: break-word;
     width: 100%;
     bottom: 0;
-    background-color: rgba(51, 51, 51, .9);
+    border-top: 1px solid $media-mute;
+    background-color: $media-background;
     padding: $gs-gutter/2;
     padding-bottom: $gs-gutter;
     display: none;
@@ -171,7 +172,6 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
         padding-right: $gs-gutter*2;
         padding-left: $gs-gutter;
         transition: right .1s ease-in, opacity .1s ease-in;
-        background-color: $media-background;
         right: (-1 * $gallery-lightbox-info-width-desktop) + $gallery-lightbox-sidebar-width;
         width: $gallery-lightbox-info-width-desktop;
     }
@@ -291,14 +291,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     }
 
     .gallery-lightbox__btn--info-button .gallery-lightbox__btn-body {
-        background: $neutral-7;
-        i {
-            @include icon(info-black);
-        }
-    }
-
-    &.gallery-lightbox--hover .gallery-lightbox__btn--info-button:hover .gallery-lightbox__btn-body {
-        background: $neutral-8;
+        background-color: $c-gallery-lightbox-btn--active;
     }
 }
 
@@ -310,11 +303,6 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
         right: 0;
         z-index: 7; // above img/sidebar
         padding: $gs-baseline/2 $gs-gutter/2 $gs-gutter*4 $gs-gutter;
-
-        .gallery-lightbox__btn-body {
-            background-color: rgba(51, 51, 51, .6);
-            border: 1px solid $neutral-4;
-        }
     }
     .gallery-lightbox__btn--close-hitbox:hover & {
         transition: none;
@@ -403,4 +391,3 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
         color: #ffffff;
     }
 }
-

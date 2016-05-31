@@ -1,27 +1,34 @@
-@(item: model.ContentType, showBadge: Boolean = false, showMeta: Boolean = true, amp: Boolean = false)(implicit request: RequestHeader)
+@(item: model.ContentType, page: model.Page, showBadge: Boolean = false, showMeta: Boolean = true, amp: Boolean = false)(implicit request: RequestHeader)
 
-@import views.support.TrailCssClasses.toneClass
+@import conf.switches.Switches.staticBadgesSwitch
 @import views.support.ContributorLinks
+@import views.support.TrailCssClasses.toneClass
 
 <header class="content__head tonal__head tonal__head--@toneClass(item)
     @if(item.content.hasTonalHeaderByline && item.tags.hasLargeContributorImage) { content__head--byline-pic}">
 
-    <div class="content__header tonal__header u-cf">
+    <div class="content__header tonal__header">
         <div class="gs-container">
-            <div class="content__main-column">
+            <div class="content__main-column u-cf">
 
                 @if(showMeta) {
                     @fragments.meta.metaInline(item, amp)
                 }
 
                 <h1 class="content__headline js-score" itemprop="headline">
-                    @item match {
-                        case v: model.Video => {
-                            @fragments.inlineSvg("video-icon", "icon")
-                            @Html(item.trail.headline)
+                    @if(item.tags.isMedia) {
+                        @defining(
+                            item match {
+                                case video: model.Video => "video-icon"
+                                case audio: model.Audio => "volume-high"
+                                // The only other 2 media types: gallery and picture both use camera icon
+                                case _ => "camera"
+                            }
+                        ) { mediaIcon =>
+                            @fragments.inlineSvg(mediaIcon, "icon", List("inline-tone-fill", "inline-icon--media"))
                         }
-                        case _ => { @Html(item.trail.headline) }
                     }
+                    @Html(item.trail.headline)
                 </h1>
 
                 @if(amp && item.tags.isMatchReport && item.metadata.section == "football") {
@@ -78,8 +85,11 @@
                     </div>
                 }
 
-                @if(showBadge && !item.commercial.isAdvertisementFeature) {
-                    @fragments.commercial.badge(item)
+                @if(
+                    (showBadge && !item.commercial.isAdvertisementFeature) ||
+                        (staticBadgesSwitch.isSwitchedOn && !item.tags.isVideo && !item.tags.isAudio)
+                ) {
+                    @fragments.commercial.badge(item, page)
                 }
 
             </div>
@@ -92,7 +102,7 @@
                 <div class="content__main-column">
                     @if(showBadge && item.commercial.isAdvertisementFeature) {
                         <div class="content__meta-container js-content-meta js-football-meta u-cf">
-                            @fragments.commercial.badge(item)
+                            @fragments.commercial.badge(item, page)
                         </div>
                     }
                     @if(!item.tags.isVideo) {

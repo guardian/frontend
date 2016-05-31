@@ -11,12 +11,12 @@ import play.api.libs.json.{JsArray, JsString, JsObject}
 
 import scala.concurrent.Future
 
-case class OfflinePage(crossword: CrosswordData) extends StandalonePage {
+case class OfflineCrossword(crossword: CrosswordData) extends StandalonePage {
 
   override val metadata = MetaData.make(
-      id = "offline-page",
+      id = "offline-crossword",
       section = "",
-      analyticsName = "offline-page",
+      analyticsName = "offline-crossword",
       webTitle = "Unable to connect to the Internet")
 }
 
@@ -44,9 +44,9 @@ object WebAppController extends Controller with ExecutionContexts with Logging {
     }
   }
 
-  def offlinePage() = Action.async { implicit request =>
+  def offlineCrossword() = Action.async { implicit request =>
     withCrossword("quick") { crossword =>
-      val crosswordHtml = views.html.offlinePage(OfflinePage(CrosswordData.fromCrossword(crossword)))
+      val crosswordHtml = views.html.offlineCrossword(OfflineCrossword(CrosswordData.fromCrossword(crossword)))
       Cached(60)(JsonComponent(JsObject(Map(
         "html" -> JsString(crosswordHtml.body),
         "assets" -> JsArray(Seq(
@@ -54,7 +54,6 @@ object WebAppController extends Controller with ExecutionContexts with Logging {
           Static("stylesheets/content.css"),
           Static("stylesheets/print.css"),
           Static("javascripts/app.js"),
-          Static("javascripts/enhanced-vendor.js"),
           Static("javascripts/bootstraps/enhanced/main.js"),
           Static("javascripts/bootstraps/enhanced/crosswords.js"),
           Static("javascripts/bootstraps/commercial.js"),

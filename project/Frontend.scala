@@ -22,14 +22,11 @@ object Frontend extends Build with Prototypes {
       awsDynamodb,
       awsS3,
       awsSns,
+      awsSts,
       awsSqs,
       contentApiClient,
-      faciaScalaClient,
       filters,
-      googleSheetsApi,
       guardianConfiguration,
-      jacksonCore,
-      jacksonMapper,
       jodaConvert,
       jodaTime,
       jSoup,
@@ -41,7 +38,6 @@ object Frontend extends Build with Prototypes {
       scalaCheck,
       scalajTime,
       scalaz,
-      snappyJava,
       ws,
       faciaFapiScalaClient,
       dispatchTest,
@@ -101,8 +97,7 @@ object Frontend extends Build with Prototypes {
 
   val diagnostics = application("diagnostics").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
-      uaDetectorResources,
-      openCsv
+      uaDetectorResources
     )
   )
 
@@ -110,7 +105,6 @@ object Frontend extends Build with Prototypes {
     libraryDependencies ++= Seq(
       paClient,
       dfpAxis,
-      anormModule,
       bootstrap,
       jquery,
       jqueryui,
@@ -189,11 +183,11 @@ object Frontend extends Build with Prototypes {
     adminJobs
   )
 
-  val preview = application("preview").dependsOn(withTests(common), standalone).settings(
+  val preview = application("preview").dependsOn(commonWithTests, standalone).settings(
     RoutesKeys.routesImport += "scala.language.reflectiveCalls"
   )
 
-  val trainingPreview = application("training-preview").dependsOn(withTests(common), standalone).settings(
+  val trainingPreview = application("training-preview").dependsOn(commonWithTests, standalone).settings(
     RoutesKeys.routesImport += "scala.language.reflectiveCalls"
   )
 

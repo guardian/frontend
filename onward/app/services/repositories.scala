@@ -1,11 +1,7 @@
 package services
 
-import com.gu.contentapi.client.model.v1.Content
-import com.gu.contentapi.client.parser.JsonParser
 import common.Edition
 import model.{RelatedContentItem, RelatedContent}
-import org.json4s.native.JsonMethods
-import play.api.libs.ws.WS
 import scala.concurrent.Future
 import contentapi.ContentApiClient
 import feed.MostReadAgent

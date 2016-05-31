@@ -2,6 +2,7 @@ package conf
 
 import common._
 import feed.Competitions
+import football.controllers.HealthCheck
 import model.{TeamMap, LiveBlogAgent}
 import pa.{PaClientErrorsException, Http, PaClient}
 import play.api.GlobalSettings
@@ -108,8 +109,8 @@ object FootballClient extends PaClient with Http with Logging with ExecutionCont
 
 }
 
-object HealthCheck extends AllGoodHealthcheckController(
-  9013,
-  "/football/live",
-  "/football/premierleague/results"
-)
+
+
+trait SportHealthCheckLifeCycle extends CachedHealthCheckLifeCycle {
+  override val healthCheckController = HealthCheck
+}

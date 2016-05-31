@@ -5,12 +5,11 @@
 # For dev machines
 GET         /assets/*path                                                       dev.DevAssetsController.at(path)
 
-GET        /_healthcheck                                                        conf.HealthCheck.healthcheck()
+GET        /_healthcheck                                                        controllers.HealthCheck.healthCheck()
 
 GET        /sitemaps/news.xml                                                   controllers.SiteMapController.renderNewsSiteMap()
 GET        /sitemaps/video.xml                                                  controllers.SiteMapController.renderVideoSiteMap()
 
-GET        /surveys/404-test/next-in-series/$seriesName<experience|alanis|oliver-burkeman> controllers.SurveysController.render404TestNextInSeries(seriesName: String)
 GET        /surveys/*file                                                       controllers.Assets.at(path="/public/surveys", file)
 
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
@@ -55,7 +54,7 @@ GET        /new-header/optout                                                   
 GET        /opt/$choice<in|out>/:feature                                        controllers.OptInController.handle(feature, choice)
 
 # Web App paths
-GET        /offline-page.json                                                   controllers.WebAppController.offlinePage()
+GET        /offline-crossword.json                                              controllers.WebAppController.offlineCrossword()
 GET        /service-worker.js                                                   controllers.WebAppController.serviceWorker()
 GET        /2015-06-24-manifest.json                                            controllers.WebAppController.manifest()
 

@@ -43,27 +43,20 @@
 }
 
 .content__headline--immersive {
-    @include fs-headline(9);
     font-weight: 200;
-    line-height: 1;
-    padding-top: $gs-baseline / 2;
     padding-bottom: 1.5rem;
-
-    @include mq(desktop) {
-        font-size: 4rem;
-    }
-}
-
-.content__headline--immersive--with-main-media {
-    @include fs-headline(7, true);
-    line-height: 1;
-
-    @include mq(desktop) {
-        font-size: 3.25rem;
-    }
 }
 
 .content--immersive {
+    .content__headline--immersive {
+        @include fs-headline(9);
+        font-weight: 200;
+
+        @include mq(desktop) {
+            font-size: 4rem;
+        }
+    }
+
     .content__series-label {
         @include fs-header(1);
         float: none;
@@ -121,12 +114,25 @@
         }
     }
 
+    .content__series-label {
+        @include fs-header(1);
+        float: none;
+        padding-top: $gs-baseline / 2;
+        margin-bottom: 0;
+    }
+
     .content__series-label__link {
         color: #ffffff;
     }
 
     .content__series-label + .content__headline {
         padding-top: 0;
+    }
+
+    .content__headline--immersive--with-main-media {
+        @include mq(desktop) {
+            font-size: 3.25rem;
+        }
     }
 
     .content__standfirst {
@@ -150,6 +156,34 @@
         }
     }
 
+    .content__main-embed {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+
+    .is-fixed-height {
+        .content__headline {
+            @include fs-headline(7, true);
+            line-height: 1;
+
+            @include mq(desktop) {
+                font-size: 3.25rem;
+            }
+        }
+
+        .content__standfirst:before {
+            @include mq($until: desktop) {
+                display: none;
+            }
+        }
+    }
+
+    /* Old Iframed Main Embed (Remove this section if immersiveMainEmbedSwitch is made permanent)
+    ========================================================================== */
     .content__loading {
         position: absolute;
         top: 0;
@@ -188,17 +222,8 @@
         }
     }
 
-    .is-fixed-height {
-        .content__standfirst:before {
-            @include mq($until: desktop) {
-                display: none;
-            }
-        }
-
-        // Should be removed when capi returns a no-id element for code embeds in main media
-        .content__loading {
-            display: block;
-        }
+    .is-fixed-height .content__loading {
+        display: block;
     }
 
     /* Meta
@@ -716,6 +741,7 @@
             bottom: 0;
             left: 0;
             right: 0;
+            z-index: 2;
         }
 
         @include mq($until: desktop) {

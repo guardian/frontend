@@ -60,6 +60,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val secure = Play.application.configuration.getBoolean("guardian.secure").getOrElse(false)
 
     lazy val isProd = stage.equalsIgnoreCase("prod")
+    lazy val isCode = stage.equalsIgnoreCase("code")
     lazy val isNonProd = List("dev", "code", "gudev").contains(stage.toLowerCase)
 
     lazy val isPreview = projectName == "preview"
@@ -77,6 +78,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val urls = properties map { property =>
       configuration.getStringProperty(property).get
     }
+    lazy val updateIntervalInSecs: Int = configuration.getIntegerProperty("healthcheck.updateIntervalInSecs").getOrElse(5)
   }
 
   object debug {
@@ -213,7 +215,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object images {
     lazy val path = configuration.getMandatoryStringProperty("images.path")
-    val fallbackLogo = Static("images/fallback-logo.png").path
+    val fallbackLogo = Static("images/fallback-logo.png")
     object backends {
       lazy val mediaToken: String = configuration.getMandatoryStringProperty("images.media.token")
       lazy val staticToken: String = configuration.getMandatoryStringProperty("images.static.token")
@@ -227,6 +229,13 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object assets {
     lazy val path = configuration.getMandatoryStringProperty("assets.path")
+
+    // This configuration value determines if this server will load and resolve assets using the asset map.
+    // Set this to true if you want to run the Play server in dev, and emulate prod mode asset-loading.
+    // If true in dev, assets are locally loaded from the `hash` build output, otherwise assets come from 'target' for css, and 'src' for js.
+    lazy val useHashedBundles =  configuration.getStringProperty("assets.useHashedBundles")
+      .map(_.toBoolean)
+      .getOrElse(environment.isProd || environment.isCode)
   }
 
   object staticSport {
@@ -290,6 +299,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     private lazy val dfpRoot = s"$commercialRoot/dfp"
     lazy val dfpPaidForTagsDataKey = s"$dfpRoot/paid-for-tags-v4.json"
     lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"
+    lazy val dfpHighMerchandisingTagsDataKey = s"$dfpRoot/high-merchandising-tags.json"
     lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v6.json"
     lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v4.json"
     lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"
@@ -377,6 +387,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object faciatool {
+    lazy val crossAccountSourceBucket = configuration.getMandatoryStringProperty("aws.cmsFronts.frontCollections.bucket")
+    lazy val sameAccountSourceBucket = configuration.getMandatoryStringProperty("aws.bucket")
+    lazy val outputBucket = configuration.getMandatoryStringProperty("aws.bucket")
+
     lazy val frontPressCronQueue = configuration.getStringProperty("frontpress.sqs.cron_queue_url")
     lazy val frontPressToolQueue = configuration.getStringProperty("frontpress.sqs.tool_queue_url")
     lazy val frontPressStatusNotificationStream = configuration.getStringProperty("frontpress.kinesis.status_notification_stream")
@@ -398,6 +412,32 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       Try(configuration.getStringProperty("admin.pressjob.low.push.rate.inminutes").get.toInt)
         .getOrElse(60)
 
+    lazy val stsRoleToAssume = configuration.getStringProperty("aws.cmsFronts.account.role")
+
+    def crossAccountMandatoryCredentials: AWSCredentialsProvider =
+      crossAccountCredentials.getOrElse(throw new BadConfigurationException("AWS credentials for cross account are not configured"))
+
+    lazy val crossAccountCredentials: Option[AWSCredentialsProvider] = faciatool.stsRoleToAssume.flatMap { role =>
+      val provider = new AWSCredentialsProviderChain(
+        new ProfileCredentialsProvider("cmsFronts"),
+        new STSAssumeRoleSessionCredentialsProvider(role, "frontend")
+      )
+
+      // this is a bit of a convoluted way to check whether we actually have credentials.
+      // I guess in an ideal world there would be some sort of isConfigued() method...
+      try {
+        val creds = provider.getCredentials
+        Some(provider)
+      } catch {
+        case ex: AmazonClientException =>
+          log.error("amazon client cross account exception", ex)
+
+          // We really, really want to ensure that PROD is configured before saying a box is OK
+          if (Play.isProd) throw ex
+          // this means that on dev machines you only need to configure keys if you are actually going to use them
+          None
+      }
+    }
   }
 
   object r2Press {

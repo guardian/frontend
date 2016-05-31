@@ -7,7 +7,7 @@ import layout.FaciaCardHeader
 case class VideoFaciaProperties(
   header: layout.FaciaCardHeader,
   showByline: Boolean,
-  byline: String
+  byline: Option[String]
 )
 
 case class VideoPlayer(
@@ -22,7 +22,7 @@ case class VideoPlayer(
   hasFaciaHeader: Boolean = false,
   faciaHeaderProperties: Option[VideoFaciaProperties] = None
 ) {
-  def poster = profile.bestFor(video.images).getOrElse(Static("images/media-holding.jpg").path)
+  def poster = profile.bestFor(video.images).getOrElse(Static("images/media-holding.jpg"))
 
   /** Width and height are always defined for video profile, so this is OK. */
   def width = profile.width.get
@@ -35,7 +35,7 @@ case class VideoPlayer(
   def blockVideoAds = video.videos.blockVideoAds
 }
 
-object VideoPlayer{
+object VideoPlayer {
   def apply(
     video: VideoElement,
     profile: VideoProfile,
@@ -53,7 +53,7 @@ object VideoPlayer{
     faciaHeaderProperties = Some(VideoFaciaProperties(
       header = FaciaCardHeader.fromTrail(content, None),
       showByline = content.properties.showByline,
-      byline = content.properties.byline.get
+      byline = content.properties.byline
     ))
   )}
 }

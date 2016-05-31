@@ -1,13 +1,13 @@
-
 import common.Logback.Logstash
 import common.{CloudWatchApplicationMetrics, DiagnosticsLifecycle}
-import conf.{SwitchboardLifecycle, Gzipper}
-import play.api.mvc.WithFilters
+import conf.DiagnosticsHealthCheckLifeCycle
+import conf.switches.SwitchboardLifecycle
 
-object Global extends WithFilters(Gzipper)
-  with DiagnosticsLifecycle
+object Global
+  extends DiagnosticsLifecycle
   with SwitchboardLifecycle
   with CloudWatchApplicationMetrics
-  with Logstash {
+  with Logstash
+  with DiagnosticsHealthCheckLifeCycle {
   override lazy val applicationName = "frontend-diagnostics"
 }

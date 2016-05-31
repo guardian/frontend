@@ -25,6 +25,8 @@
                 }
             }
         },
-        "commercial": {}
+        "commercial": {
+            "showingAdfree" : null
+        }
     }
 }

@@ -143,12 +143,12 @@
                     var $palette    = $('#dfp-palette'),
                         toneClasses = ['brand', 'subscriptions', 'membership', 'live', 'jobs', 'networks', 'books', 'masterclasses', 'travel', 'shop', 'money', 'gardening', 'soulmates']
                             .map(function (tone) {
-                                return 'commercial--tone-' + tone;
+                                return 'adverts--tone-' + tone;
                             });
                     bean.on($palette[0], 'change', function () {
-                        $('#multiple1, .commercial--dfp-single, .commercial--v-high')
+                        $('#multiple1 > .adverts, #manual1 > .adverts, .commercial--v-high')
                             .removeClass(toneClasses.join(' '))
-                            .addClass('commercial--tone-' + $palette.val());
+                            .addClass('adverts--tone-' + $palette.val());
                     });
 
                     var blendedStyle = document.getElementById('blended-style'),
@@ -668,6 +668,7 @@
                 ("offerUrl", "http://www.theguardian.com/technology/2014/nov/20/apple-beats-music-iphone-ipad-spotify"),
                 ("seeMoreUrl", "http://www.theguardian.com/technology/2014/nov/20/apple-beats-music-iphone-ipad-spotify"),
                 ("showCtaLink", "show-cta-link"),
+                ("offerLinkText", "See more"),
                 ("clickMacro", "%%CLICK_URL_ESC%%")
             ))
         ),

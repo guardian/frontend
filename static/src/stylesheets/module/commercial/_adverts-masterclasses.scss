@@ -54,13 +54,25 @@
     }
 }
 
-.advert-blended--masterclasses .advert-blended__title {
-    padding-top: 5px;
-    padding-bottom: 9px;
+.advert-blended--masterclasses {
+    .advert-blended__title {
+        padding-top: 5px;
+        padding-bottom: 9px;
 
-    > svg {
-        height: 22px;
-        width: 144px;
+        > svg {
+            height: 22px;
+            width: 144px;
+        }
+    }
+
+    .advert {
+        display: block;
+    }
+
+    .advert__image-container {
+        float: right;
+        margin: 0 0 0 $gs-gutter / 2;
+        width: 50%;
     }
 }
 

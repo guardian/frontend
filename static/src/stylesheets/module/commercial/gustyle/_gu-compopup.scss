@@ -8,15 +8,21 @@
     right: $gs-baseline / 2;
     z-index: $zindex-modal;
     text-align: left;
+    max-width: 16em;
     background-color: $gustyle-tone;
-}
 
-.gu-compopup__title {
-    @include font-size(13, 18);
+    @include mq(gs-span(5) + $gs-gutter, phablet) {
+        padding: $gs-baseline $gs-gutter / 4 * 3;
+        top: 62px;
+    }
 
-    margin: 0;
-    font-family: inherit;
-    font-weight: bold;
+    .gu-compopup__title {
+        @include font-size(13, 18);
+
+        margin: 0;
+        font-family: inherit;
+        font-weight: bold;
+    }
 }
 
 .gu-compopup__text {

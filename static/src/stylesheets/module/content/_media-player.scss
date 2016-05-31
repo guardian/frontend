@@ -2,7 +2,7 @@
 @import '../../icons/video-icons-svg';
 
 // parameterising these as they're used in a few places
-$vjs-control-colour: rgba(25, 25, 25, .8);
+$vjs-control-colour: $media-mute;
 $vjs-control-height: $gs-baseline*4;
 $vjs-progress-hitbox-height: $gs-baseline;
 $vjs-progress-visual-height-resting: $gs-baseline/2;
@@ -22,6 +22,10 @@ $ima-controls-height: 70px;
 .gu-media-wrapper--audio {
     background-color: $vjs-control-colour;
     padding-top: $vjs-progress-visual-height-resting;
+
+    .vjs-control-bar {
+        background: transparent;
+    }
 
     // naughty videojs removes classes, so have to select by element
     audio {
@@ -64,6 +68,10 @@ $ima-controls-height: 70px;
     &.gu-media--video { // aspect ratio fix (this element gets given a fixed height by video.js)
         height: auto !important;
         cursor: pointer;
+
+        &.vjs-user-inactive {
+            cursor: none;
+        }
     }
     &.gu-media--audio {
         position: relative;
@@ -111,7 +119,7 @@ $ima-controls-height: 70px;
             @include mq(mobileLandscape) {
                 @include video-play-button-size($vjs-large-button-size);
             }
-            background-color: rgba(51, 51, 51, .6);
+            background-color: rgba($media-mute, .6);
             .gu-media-wrapper:hover &,
             .gu-media__fallback:hover & {
                 background-color: $media-default;
@@ -194,7 +202,7 @@ $ima-controls-height: 70px;
     width: 100%;
     z-index: 4;
     left: 0;
-    background-color: $vjs-control-colour;
+    background-color: rgba($media-background, .8);
     color: #ffffff;
     font-weight: bold;
     height: $vjs-control-height;
@@ -232,17 +240,6 @@ $ima-controls-height: 70px;
     * {
         outline: none; // hide focus outlines on controls
     }
-}
-
-.vjs-custom-control-spacer,
-.vjs-live-control,
-.vjs-remaining-time,
-.vjs-playback-rate,
-.vjs-subtitles-button,
-.vjs-captions-button,
-.vjs-chapters-button,
-.vjs-caption-settings {
-    display: none;
 }
 
 .vjs-control-text {
@@ -950,7 +947,7 @@ $ima-controls-height: 70px;
 
 .podcast-meta {
     text-align: left;
-    border-top: 1px solid lighten($neutral-1, 16%);
+    border-top: 1px solid $media-background;
     margin-top: $gs-baseline/2;
     padding: $gs-baseline/2 $gs-gutter/2;
 }
@@ -1060,7 +1057,7 @@ $ima-controls-height: 70px;
             left: 0;
             width: 1px;
             height: 100%;
-            border-left: 1px solid $neutral-2;
+            border-left: 1px solid $vjs-control-colour;
         }
     }
 

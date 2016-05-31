@@ -2,8 +2,10 @@ package model.pressed
 
 import com.gu.facia.api.utils.FaciaContentUtils
 import com.gu.facia.api.{models => fapi, utils => fapiutils}
-import com.gu.facia.client.models.{Backfill, CollectionConfigJson}
-import model.{ContentType, SupportedUrl}
+import com.gu.facia.client.models.{Backfill, Branded, CollectionConfigJson, Metadata}
+import common.Edition
+import common.commercial.BrandHunter
+import model.{Branding, ContentType, SupportedUrl}
 import org.joda.time.DateTime
 
 object CollectionConfig {
@@ -11,6 +13,7 @@ object CollectionConfig {
     CollectionConfig(
       displayName = config.displayName,
       backfill = config.backfill,
+      metadata = config.metadata,
       collectionType = config.collectionType,
       href = config.href,
       description = config.description,
@@ -36,6 +39,7 @@ object CollectionConfig {
 final case class CollectionConfig(
   displayName: Option[String],
   backfill: Option[Backfill],
+  metadata: Option[Seq[Metadata]],
   collectionType: String,
   href: Option[String],
   description: Option[String],
@@ -49,7 +53,9 @@ final case class CollectionConfig(
   excludeFromRss: Boolean,
   showTimestamps: Boolean,
   hideShowMore: Boolean
-)
+) {
+  def showBranding = metadata exists (_ contains Branded)
+}
 
 object CardStyle {
   def make(cardStyle: fapiutils.CardStyle): CardStyle = cardStyle match {
@@ -157,7 +163,11 @@ final case class PressedProperties(
   maybeFrontPublicationDate: Option[Long],
   href: Option[String],
   webUrl: Option[String]
-)
+) {
+  def branding(edition: Edition): Option[Branding] = {
+    maybeContent map (BrandHunter.findContentBranding(_, edition)) getOrElse None
+  }
+}
 
 object PressedCardHeader {
   def make(content: fapi.FaciaContent): PressedCardHeader = {
@@ -276,6 +286,8 @@ sealed trait PressedContent {
   def card: PressedCard
   def discussion: PressedDiscussionSettings
   def display: PressedDisplaySettings
+
+  def branding(edition: Edition): Option[Branding] = properties.branding(edition)
 }
 sealed trait Snap extends PressedContent
 

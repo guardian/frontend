@@ -133,13 +133,14 @@ define([
 
             initialiseStickyAdBanner: function () {
                 if (!(config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile')
-                    && config.page.pageId !== 'offline-page'
+                    && config.page.pageId !== 'offline-crossword'
                     && !config.page.shouldHideAdverts
                     && config.page.section !== 'childrens-books-site'
                     && !config.tests.abNewHeaderVariant
                     && (config.page.hasSuperStickyBanner
                         || config.page.contentType !== 'Interactive'
                         && config.page.contentType !== 'Crossword'
+                        && config.page.contentType !== 'Hosted'
                         && !config.page.isImmersive
                         && !config.page.isUsMinute
                         && !config.page.isAdvertisementFeature
@@ -183,10 +184,8 @@ define([
 
             loadAnalytics: function () {
                 omniture.go();
-
                 if (config.switches.ophan) {
                     require(['ophan/ng'], function (ophan) {
-
                         if (config.switches.scrollDepth) {
                             mediator.on('scrolldepth:data', ophan.record);
 
@@ -199,7 +198,7 @@ define([
             },
 
             cleanupCookies: function () {
-                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at', 'gu_adfree_user']);
+                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at']);
             },
 
             cleanupLocalStorage : function () {

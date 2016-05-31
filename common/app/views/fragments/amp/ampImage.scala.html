@@ -1,0 +1,13 @@
+@(picture: model.ImageMedia, imageAltText: String)
+
+@import views.support.ImgSrc
+
+@picture.largestImage.map { largestImage =>
+    <amp-img src="@ImgSrc.getAmpImageUrl(picture)"
+    layout="responsive"
+    width="@largestImage.width"
+    height="@largestImage.height"
+    class="maxed responsive-img"
+    itemprop="contentUrl"
+    alt="@imageAltText"></amp-img>
+}
