@@ -1,15 +1,11 @@
 define([
-    'common/utils/$',
     'common/utils/config',
     'common/modules/experiments/tests/utils/comment-blocker',
-    'common/modules/identity/api',
-    'lodash/collections/some'
-    ], function (
-    $,
+    'common/modules/identity/api'
+], function (
     config,
     CommentBlocker,
-    identity,
-    some
+    identity
 ) {
     var seriesIds = [
         'fashion/series/sali-hughes-beauty',
@@ -43,7 +39,7 @@ define([
     var dontRunOnAuthor = 'First Dog on the Moon';
 
     function doesNotContain(values, toTest) {
-        var contains = some(values, function(value){
+        var contains = values.some(function (value) {
             return value === toTest;
         });
         return !contains;
@@ -79,8 +75,13 @@ define([
                             hide = CommentBlocker.hideComments(shortUrlSlug);
 
                         if(config.page.isContent && hide) {
-                            $('.js-comments').addClass('discussion--hidden');
-                            $('.js-commentcount').addClass('commentcount2--hidden');
+                            var forEach = seriesIds.forEach;
+                            forEach.call(document.querySelectorAll('.js-comments'), function(c) {
+                                c.classList.add('discussion--hidden');
+                            });
+                            forEach.call(document.querySelectorAll('.js-commentcount'), function(c) {
+                                c.classList.add('commentcount2--hidden');
+                            });
                         }
                     }
                 },
@@ -92,4 +93,3 @@ define([
         };
     }
 );
-
