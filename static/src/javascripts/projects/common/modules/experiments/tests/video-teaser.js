@@ -1,8 +1,6 @@
 define([
-    'common/utils/$',
     'common/utils/config'
 ], function (
-    $,
     config
 ) {
     return function () {
@@ -21,7 +19,7 @@ define([
 
         this.canRun = function () {
             return config.page.isFront
-                && $('.gu-media-wrapper--video').length > 0
+                && document.querySelector('.gu-media-wrapper--video')
                 && config.page.pageId !== 'video';
         };
 
