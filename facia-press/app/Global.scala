@@ -25,17 +25,4 @@ object Global extends GlobalSettings
     FaciaPressMetrics.AuPressLatencyMetric,
     FaciaPressMetrics.AllFrontsPressLatencyMetric
   )
-
-  override def onStart(app: play.api.Application) {
-    super.onStart(app)
-    ToolPressQueueWorker.start()
-    if (GuardianConfiguration.faciatool.frontPressCronQueue.isDefined) {
-      FrontPressCron.start()
-    }
-  }
-
-  override def onStop(app: play.api.Application) {
-    ToolPressQueueWorker.stop()
-    super.onStop(app)
-  }
 }

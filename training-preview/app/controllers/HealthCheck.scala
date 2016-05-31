@@ -46,7 +46,3 @@ object HealthCheck extends AllGoodCachedHealthCheck(
 
   def init(): Unit = ContentApiClient.setHttp(new TrainingHttp)
 }
-
-trait TrainingPreviewHealthCheckLifeCycle extends CachedHealthCheckLifeCycle {
-  override val healthCheckController = HealthCheck
-}
