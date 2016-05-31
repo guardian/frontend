@@ -20,7 +20,7 @@
     }
     ],
     "theme_color": "#005689",
-    "background_color": "#ffffff"
+    "background_color": "#ffffff",
     "start_url": "/uk?INTCMP=webapp",
     "display": "browser",
     "orientation": "portrait",
