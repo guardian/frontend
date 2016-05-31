@@ -9,14 +9,21 @@ import scala.io.Source
 object InteractiveHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
 
   override def canClean(document: Document): Boolean = {
-    document.getElementById("interactive-content") != null
+    document.getElementById("interactive-content") != null &&
+      !document.getElementsByAttributeValue("rel","canonical").attr("href").toLowerCase.contains("/ng-interactive/")
   }
 
   override def clean(document: Document) = {
     universalClean(document)
-    removeScripts(document)
+    //removeScripts(document)
     createSimplePageTracking(document)
     removeByTagName(document, "noscript")
+
+    // prep. for HTTPS
+//    val tmpDoc = Jsoup.parse(secureSource(document.html()))
+//    document.head().replaceWith(tmpDoc.head())
+//    document.body().replaceWith(tmpDoc.body())
+//    document
   }
 
   override def extractOmnitureParams(document: Document) = {
@@ -113,6 +120,10 @@ object InteractiveHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
       document.head().append(html)
     }
     document
+  }
+
+  private def secureSource(src: String): String = {
+    src.replaceAllLiterally(""""//""", """"https://""").replaceAllLiterally("'//", "'https://").replaceAllLiterally("http://", "https://")
   }
 
 }
