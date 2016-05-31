@@ -1,6 +1,7 @@
 package conf
 
-object HealthCheck extends AllGoodCachedHealthCheck(9008, "/uk/business")
+import controllers.HealthCheck
+
 
 trait FaciaHealthCheckLifeCycle extends CachedHealthCheckLifeCycle {
   override val healthCheckController = HealthCheck

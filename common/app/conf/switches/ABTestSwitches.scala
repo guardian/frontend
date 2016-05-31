@@ -131,15 +131,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABVideoControlsOnMainMedia = Switch(
-    SwitchGroup.ABTests,
-    "ab-video-controls-on-main-media",
-    "Show video controls on main media.",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 27),
-    exposeClientSide = true
-  )
-
   val ABNewUserAdvertsDisabled = Switch(
     SwitchGroup.ABTests,
     "ab-new-user-adverts-disabled",
@@ -158,4 +149,12 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABVideoTeaser = Switch(
+    SwitchGroup.ABTests,
+    "ab-video-teaser",
+    "Show video teaser",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 1),
+    exposeClientSide = true
+  )
 }

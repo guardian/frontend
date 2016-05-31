@@ -17,7 +17,6 @@ class PublicationController @Inject() (bookAgent: NewspaperBookTagAgent = Newspa
                               extends Controller
                               with ExecutionContexts
                               with ItemResponses
-                              with NewspaperBooksAndSectionsAutoRefresh
                               with Dates
                               with Logging {
 

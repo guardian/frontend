@@ -52,17 +52,23 @@
 
 $buttonSize: 32px;
 
+// TODO: When moving out of this test, using emoticons is more of a pain that it's worth
+// We need icons here, even if they're duplicates of emojis or something
 .participation-low-fric--button__football {
     display: inline-block;
     font-size: $buttonSize/2;
     margin-left: $buttonSize/8;
     margin-bottom: $buttonSize/4;
     opacity: .5;
+    position: relative;
     height: $buttonSize;
     width: $buttonSize;
 
     .participation-low-fric--inner-icon {
         display: inline-block;
+        position: absolute;
+        top: 0;
+        left: 0;
         // iOS 7 doesn't let us have icons bigger than 16px so we'll
         // scale them instead and adjust the position
         transform: scale(2) translateX($buttonSize/8) translateY($buttonSize/8)

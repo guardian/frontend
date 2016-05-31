@@ -17,6 +17,8 @@ import org.scalatest.concurrent.{Futures, ScalaFutures}
     whenReady(response) { item: ItemResponse =>
 
       item.content.map { apiContent =>
+
+        implicit val request = TestRequest()
         val pageShares = model.Content(apiContent).sharelinks.pageShares
 
         pageShares.map(_.text) should be (List("Facebook", "Twitter", "Email", "Pinterest", "LinkedIn", "Google plus", "WhatsApp", "Messenger"))
