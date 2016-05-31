@@ -12,10 +12,7 @@ object Badges {
   val euElection = Badge("politics/eu-referendum", Static("images/EU_Ref_Logo.svg"))
   val euRealityCheck = Badge("politics/series/eu-referendum-reality-check", Static("images/EU_Ref_Logo.svg"))
 
-  val allBadges = Seq(usElection, ausElection, euRealityCheck) ++ {
-    if (Switches.EuReferendumBadgeSwitch.isSwitchedOn) Seq(euElection)
-    else Seq()
-  }
+  val allBadges = Seq(usElection, ausElection, euRealityCheck, euElection)
 
   def badgeFor(c: ContentType) = c.tags.tags.map(_.id).foldLeft(None: Option[Badge]) { (maybeBadge, tag) =>
       maybeBadge orElse allBadges.find(b => b.seriesTag == tag)
