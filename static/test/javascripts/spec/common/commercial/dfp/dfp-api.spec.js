@@ -215,7 +215,7 @@ define([
             config.page.hasPageSkin = true;
             detect.getBreakpoint = function () {
                 return 'wide';
-            }
+            };
             dfp.init().then(dfp.loadAds).then(function () {
                 window.googletag.cmd.forEach(function (func) { func(); });
                 expect(window.googletag.pubads().enableSingleRequest).toHaveBeenCalled();
