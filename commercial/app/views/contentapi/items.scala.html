@@ -51,6 +51,7 @@
             @cards.take(2).map { card => @itemCard(
                 card,
                 omnitureId = mkCapiCardTrackingCode("multiple", optSection, optCapiTitle, omnitureId, card),
+                cardType = cardType,
                 optAdvertClassNames = optSponsorType.map(t => Seq(t.className)),
                 useCardBranding = false)
             }
