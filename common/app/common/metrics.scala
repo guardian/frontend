@@ -167,8 +167,7 @@ trait CloudWatchApplicationMetrics extends GlobalSettings with Logging {
   def applicationName: String
   def applicationMetrics: List[FrontendMetric] = List(
     RequestMetrics.PanicRequestsSurgeMetric,
-    RequestMetrics.PanicExcessiveLatencyMetric,
-    RequestMetrics.PanicLatencyWarningMetric
+    RequestMetrics.HighLatencyMetric
   )
 
   def systemMetrics: List[FrontendMetric] = List(
