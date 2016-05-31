@@ -5,24 +5,17 @@
 @import views.support.TrailCssClasses.toneClass
 @import views.support.RenderClasses
 
-<div class="l-side-margins l-side-margins--media l-side-margins--new-gallery">
+<div class="l-side-margins l-side-margins--media l-side-margins--gallery">
 
     <article id="article" class="@RenderClasses(
-            Map("content--advertisement-feature" -> page.item.commercial.isAdvertisementFeature,
-                "paid-content--advertisement-feature" -> page.item.commercial.isAdvertisementFeature
-            ),
-            "content", "content--media", "content--gallery", "tonal", "new-gallery", "content--immersive", s"tonal--${toneClass(page.item)}"
+            "content", "content--media", "content--gallery", "tonal", "content--immersive", s"tonal--${toneClass(page.item)}"
         )"
         itemscope itemtype="@page.item.metadata.schemaType" role="main">
-
-        @if(page.item.commercial.isAdvertisementFeature){
-            @fragments.guBand()
-        }
 
         @fragments.galleryHeader(page)
 
         <div class="content__main tonal__main tonal__main--@toneClass(page.item)">
-            <div class="gs-container new-gallery__divider">
+            <div class="gs-container gallery__divider">
                 <div class="content__main-column content__main-column--gallery">
                     @fragments.witnessCallToAction(page.item.content)
                     <ul class="gallery">

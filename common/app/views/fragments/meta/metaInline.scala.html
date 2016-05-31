@@ -7,7 +7,7 @@
 
 <div class="content__labels @if(item.content.tags.isUSElection) {content__labels--us-election}
     @if(item.content.tags.isAusElection) {content__labels--aus-election}
-    @if(item.content.isImmersive && item.metadata.contentType.toLowerCase == "gallery") {content__labels--gallery}">
+    @if(item.content.isImmersiveGallery) {content__labels--gallery}">
     @if(ArticleBadgesSwitch.isSwitchedOn) {
 
         @badgeFor(item).map { badge =>
