@@ -312,17 +312,6 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  // Owner: First impressions
-  val galleryRedesign = Switch(
-    SwitchGroup.Feature,
-    "gallery-redesign-switch",
-    "If this switch is on, the new gallery redesign displays",
-    safeState = On,
-    // Tuesday
-    sellByDate = new LocalDate(2016, 5, 31),
-    exposeClientSide = false
-  )
-
   val R2PagePressServiceSwitch = Switch(
     SwitchGroup.Feature,
     "r2-page-press-service",

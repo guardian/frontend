@@ -87,7 +87,7 @@
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
         @page match {
-            case page: model.GalleryPage if page.gallery.showNewGalleryDesign => {
+            case page: model.GalleryPage if page.gallery.content.isImmersive => {
                 <div class="immersive-header-container">
                     @headerAndTopAds(showAdverts, edition, adBelowNav)
 
