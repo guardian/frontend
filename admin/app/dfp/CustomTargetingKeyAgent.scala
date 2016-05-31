@@ -20,7 +20,7 @@ object CustomTargetingKeyService {
   def targetingKey(session: SessionWrapper)(keyId: Long): String = {
     lazy val fallback = {
       val stmtBuilder = new StatementBuilder().where("id = :id").withBindVariableValue("id", keyId)
-      session.customTargetingKeys(stmtBuilder).head.getName
+      session.customTargetingKeys(stmtBuilder).headOption.map(_.getName).getOrElse("unknown")
     }
     CustomTargetingKeyAgent.get.data getOrElse(keyId, fallback)
   }

@@ -20,7 +20,7 @@ object CustomTargetingValueService {
   def targetingValue(session: SessionWrapper)(valueId: Long): String = {
     lazy val fallback = {
       val stmtBuilder = new StatementBuilder().where("id = :id").withBindVariableValue("id", valueId)
-      session.customTargetingValues(stmtBuilder).head.getName
+      session.customTargetingValues(stmtBuilder).headOption.map(_.getName).getOrElse("unknown")
     }
     CustomTargetingValueAgent.get.data getOrElse(valueId, fallback)
   }
