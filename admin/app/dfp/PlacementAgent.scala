@@ -1,6 +1,7 @@
 package dfp
 
 import com.google.api.ads.dfp.axis.utils.v201508.StatementBuilder
+import common.dfp.GuAdUnit
 
 import scala.util.Try
 
@@ -15,4 +16,17 @@ object PlacementAgent extends DataAgent[Long, Seq[String]] {
     }
     maybeData getOrElse Map.empty
   }
+}
+
+object PlacementService {
+
+  def placementAdUnitIds(session: SessionWrapper)(placementId: Long): Seq[GuAdUnit] = {
+    lazy val fallback = {
+      val stmtBuilder = new StatementBuilder().where("id = :id").withBindVariableValue("id", placementId)
+      session.placements(stmtBuilder) flatMap (_.getTargetedAdUnitIds.toSeq)
+    }
+    val adUnitIds = PlacementAgent.get.data getOrElse(placementId, fallback)
+    adUnitIds.flatMap(AdUnitService.adUnit)
+  }
+
 }

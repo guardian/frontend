@@ -61,29 +61,6 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) {
     }
   }
 
-  object suggestedAdUnits {
-
-    private val suggestedAdUnitService = services.suggestedAdUnitService
-    private val typeName = "suggested ad units"
-
-    def get(stmtBuilder: StatementBuilder): Seq[SuggestedAdUnit] = {
-      logAroundRead(typeName, stmtBuilder) {
-        read(stmtBuilder) { statement =>
-          val page = suggestedAdUnitService.getSuggestedAdUnitsByStatement(statement)
-          (page.getResults, page.getTotalResultSetSize)
-        }
-      }
-    }
-
-    def approve(filterStatement: Statement): Int = {
-      logAroundPerform(typeName, "approving", filterStatement) {
-        val action = new ApproveSuggestedAdUnit()
-        val result = suggestedAdUnitService.performSuggestedAdUnitAction(action, filterStatement)
-        result.getNumChanges
-      }
-    }
-  }
-
   def placements(stmtBuilder: StatementBuilder): Seq[Placement] = {
     logAroundRead("placements", stmtBuilder) {
       read(stmtBuilder) { statement =>

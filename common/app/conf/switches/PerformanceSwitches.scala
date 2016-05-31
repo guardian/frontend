@@ -206,15 +206,6 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
-  val Viewability = Switch(
-    SwitchGroup.Performance,
-    "viewability",
-    "Viewability - Includes whole viewability package: ads lazy loading, sticky ad banner, sticky MPU, spacefinder 2.0, dynamic ads, ad next to comments",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val DisableStickyAdBannerOnMobileSwitch = Switch(
     SwitchGroup.Performance,
     "disable-sticky-ad-banner-on-mobile",
@@ -248,16 +239,6 @@ trait PerformanceSwitches {
     "If this switch is on then link preconnect hints will be on the page",
     safeState = Off,
     sellByDate = new LocalDate(2016, 8, 5),
-    exposeClientSide = false
-  )
-
-  // Owner: tbonnin
-  val LogAllDiscussionIncomingRequests = Switch(
-    SwitchGroup.Performance,
-    "log-all-discussion-incoming-requests",
-    "If this switch is on then log all incoming discussion requests",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 2),
     exposeClientSide = false
   )
 }
