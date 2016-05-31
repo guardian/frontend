@@ -1,11 +1,9 @@
 define([
-    'bean',
-    'common/utils/$',
+    'qwery',
     'common/utils/config',
     'common/utils/mediator'
 ], function (
-    bean,
-    $,
+    qwery,
     config,
     mediator
 ) {
@@ -28,7 +26,7 @@ define([
         this.canRun = function () {
             // Only videos that are links to video pages have data-embed-paths
             // Or article pages that have been linked to from test-enhanced cards
-            return (config.page.isFront && $('.fc-item--has-video-main-media .js-video-play-button').length > 0) ||
+            return (config.page.isFront && document.querySelector('.fc-item--has-video-main-media .js-video-play-button')) ||
                 (config.page.contentType === 'Article' && hasAutoplayHash);
         };
 
@@ -51,11 +49,11 @@ define([
                     // On article page
                     if (hasAutoplayHash) {
                         var first = true;
-                        mediator.on('ab:PlayVideoOnFronts:in-article-video-created', function(player) {
+                        mediator.on('ab:PlayVideoOnFronts:in-article-video-created', function (player) {
                             if (first) {
                                 first = false;
                                 player.play();
-                                player.on('video:content:25', function() {
+                                player.on('video:content:25', function () {
                                     complete();
                                 });
                             }
@@ -63,17 +61,16 @@ define([
                     }
 
                     // This is for the front page
-                    $('.fc-item--has-video-main-media').each(function(el) {
-                        var link = $('.u-faux-block-link__overlay', el);
-                        var playButton = $('.js-video-play-button', el);
+                    qwery('.fc-item--has-video-main-media').forEach(function (el) {
+                        var link = el.querySelector('.u-faux-block-link__overlay');
+                        var playButton = el.querySelector('.js-video-play-button');
 
-                        if (playButton.length > 0) {
-                            link.attr('href', link.attr('href') + autoplayHash);
-
-                            bean.on(playButton[0], 'click', function(ev) {
+                        if (playButton) {
+                            link.href = link.href + autoplayHash;
+                            playButton.addEventListener('click', function (ev) {
                                 ev.preventDefault();
                                 ev.stopPropagation();
-                                link[0].click();
+                                link.click();
                                 return false;
                             });
                         }
