@@ -117,7 +117,6 @@ define([
             this.dfpAdvertising &&
             switches.standardAdverts &&
             !isMinuteArticle &&
-            config.switches.viewability &&
             config.switches.discussion &&
             config.page.commentable &&
             identityApi.isUserLoggedIn() &&
@@ -146,4 +145,3 @@ define([
     }
 
 });
-

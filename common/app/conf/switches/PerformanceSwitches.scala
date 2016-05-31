@@ -206,15 +206,6 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
-  val Viewability = Switch(
-    SwitchGroup.Performance,
-    "viewability",
-    "Viewability - Includes whole viewability package: ads lazy loading, sticky ad banner, sticky MPU, spacefinder 2.0, dynamic ads, ad next to comments",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val DisableStickyAdBannerOnMobileSwitch = Switch(
     SwitchGroup.Performance,
     "disable-sticky-ad-banner-on-mobile",
