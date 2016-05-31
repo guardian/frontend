@@ -15,16 +15,9 @@ object NextGenInteractiveHtmlCleaner extends HtmlCleaner with implicits.WSReques
     //removeScripts(document)
     createSimplePageTracking(document)
     removeByTagName(document, "noscript")
-    val tmpDoc = Jsoup.parse(secureSource(document.html()))
-    document.head().replaceWith(tmpDoc.head())
-    document.body().replaceWith(tmpDoc.body())
-    document
+    secureDocument(document)
   }
 
   override def extractOmnitureParams(document: Document) = InteractiveHtmlCleaner.extractOmnitureParams(document)
-
-  private def secureSource(src: String): String = {
-    src.replaceAllLiterally(""""//""", """"https://""").replaceAllLiterally("'//", "'https://").replaceAllLiterally("http://", "https://")
-  }
 
 }

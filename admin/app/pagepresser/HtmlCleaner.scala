@@ -2,6 +2,7 @@ package pagepresser
 
 import com.netaporter.uri.Uri.parse
 import common.{ExecutionContexts, Logging}
+import org.jsoup.Jsoup
 import org.jsoup.nodes.{Element, Document}
 import conf.Configuration
 
@@ -234,4 +235,16 @@ abstract class HtmlCleaner extends Logging with ExecutionContexts {
     }
     document
   }
+
+  def secureDocument(document: Document): Document = {
+    val tmpDoc = Jsoup.parse(secureSource(document.html()))
+    document.head().replaceWith(tmpDoc.head())
+    document.body().replaceWith(tmpDoc.body())
+    document
+  }
+
+  private def secureSource(src: String): String = {
+    src.replaceAllLiterally(""""//""", """"https://""").replaceAllLiterally("'//", "'https://").replaceAllLiterally("http://", "https://")
+  }
+
 }
