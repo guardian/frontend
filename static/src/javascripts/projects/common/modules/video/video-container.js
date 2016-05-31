@@ -4,10 +4,12 @@
 
 define([
     'bean',
+    'fastdom',
     'common/utils/$',
     'bootstraps/enhanced/media/video-player'
 ], function (
     bean,
+    fastdom,
     $,
     videojs
 ) {
@@ -16,7 +18,8 @@ define([
         videoWidth = 700,
         translateWidth = 0,
         $videoPlaylist = $('.js-video-playlist'),
-        numberOfVideos = $videoPlaylist.attr('data-number-of-videos');
+        numberOfVideos = $videoPlaylist.attr('data-number-of-videos'),
+        preloadImageCount = 2;
 
     function init() {
         bindEvents();
@@ -36,6 +39,7 @@ define([
         $('.video-playlist__item--active').removeClass('video-playlist__item--active');
 
         if (direction === 'next') {
+            fetchImage(containerPos + preloadImageCount);
             containerPos++;
         } else {
             containerPos--;
@@ -64,6 +68,20 @@ define([
     function resetPlayers() {
         $('.js-video-playlist .vjs').each(function() {
             videojs($(this)[0]).pause();
+        });
+    }
+
+    function fetchImage(i) {
+        $('.js-video-playlist-image--' + i).map(function(el) {
+            fastdom.read(function () {
+                var dataSrc = el.getAttribute('data-src');
+                var src = el.getAttribute('src');
+                if (dataSrc && !src) {
+                    fastdom.write(function() {
+                        el.setAttribute('src', dataSrc);
+                    });
+                }
+            });
         });
     }
 
