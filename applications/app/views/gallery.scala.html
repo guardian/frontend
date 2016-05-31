@@ -1,9 +1,19 @@
 @(page: model.GalleryPage)(implicit request: RequestHeader)
 
+@*
+    * TODO:
+    * What can be deleted css for paid advertisements
+        * html
+        * css
+    * What can be deleted for old galleries
+        * html
+        * css
+*@
+
 @main(page){ }{
     @if(page.gallery.content.isImmersiveGallery) {
-        @fragments.newGalleryBody(page)
-    } else {
         @fragments.galleryBody(page)
+    } else {
+        @fragments.paidAdvertisementGalleryBody(page)
     }
 }
