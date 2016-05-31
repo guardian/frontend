@@ -19,7 +19,7 @@ define([
     videojsOptions,
     loadingTmpl
 ) {
-    var player, mouseMoveIdle;
+    var player;
 
     function initLoadingSpinner(player) {
         player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
