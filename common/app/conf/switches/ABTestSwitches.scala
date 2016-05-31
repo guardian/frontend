@@ -149,4 +149,12 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABVideoTeaser = Switch(
+    SwitchGroup.ABTests,
+    "ab-video-teaser",
+    "Show video teaser",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 1),
+    exposeClientSide = true
+  )
 }
