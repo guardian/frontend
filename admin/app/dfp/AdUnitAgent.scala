@@ -36,4 +36,13 @@ object AdUnitAgent extends DataAgent[String, GuAdUnit] {
 
     maybeData getOrElse Map.empty
   }
+
+}
+
+object AdUnitService {
+
+  def adUnit(adUnitId: String): Option[GuAdUnit] = {
+    AdUnitAgent.get.data.get(adUnitId)
+  }
+
 }

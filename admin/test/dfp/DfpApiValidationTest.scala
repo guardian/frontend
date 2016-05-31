@@ -1,0 +1,65 @@
+package dfp
+
+import common.dfp.{GuAdUnit, GuLineItem, GuTargeting}
+import com.google.api.ads.dfp.axis.v201508._
+import org.joda.time.DateTime
+import org.scalatest._
+
+class DfpApiValidationTest extends FlatSpec with Matchers {
+
+  private def lineItem(adUnitIds: Seq[String]): GuLineItem = {
+    val adUnits = adUnitIds.map( adUnitId => {
+      GuAdUnit(
+        id = adUnitId,
+        path = Nil)
+    })
+
+    GuLineItem(
+      id = 0L,
+      name = "test line item",
+      startTime = DateTime.now.withTimeAtStartOfDay,
+      endTime = None,
+      isPageSkin = false,
+      sponsor = None,
+      status = "COMPLETED",
+      costType = "CPM",
+      creativePlaceholders = Nil,
+      targeting = GuTargeting(
+        adUnits = adUnits,
+        geoTargetsIncluded = Nil,
+        geoTargetsExcluded = Nil,
+        customTargetSets = Nil),
+      lastModified = DateTime.now.withTimeAtStartOfDay)
+  }
+
+  private def makeDfpLineItem(adUnitIds: Seq[String]): LineItem = {
+    val dfpLineItem = new LineItem()
+    val targeting = new Targeting()
+    val inventoryTargeting = new InventoryTargeting()
+
+    val adUnitTargeting = adUnitIds.map( adUnit => {
+      val adUnitTarget = new AdUnitTargeting()
+      adUnitTarget.setAdUnitId(adUnit)
+      adUnitTarget
+    })
+
+    inventoryTargeting.setTargetedAdUnits(adUnitTargeting.toArray)
+    targeting.setInventoryTargeting(inventoryTargeting)
+    dfpLineItem.setTargeting(targeting)
+    dfpLineItem
+  }
+
+  "isGuLineItemValid" should "return false when the adunit targeting does not match the dfp line item" in {
+    val guLineItem = lineItem(List("1", "2", "3"))
+    val dfpLineItem = makeDfpLineItem(List("1", "2", "3", "4"))
+
+    DataValidation.isGuLineItemValid(guLineItem, dfpLineItem) shouldBe (false)
+  }
+
+  "isGuLineItemValid" should "return true when the adunit targeting does match the dfp line item" in {
+    val guLineItem = lineItem(List("1", "2", "3"))
+    val dfpLineItem = makeDfpLineItem(List("1", "2", "3"))
+
+    DataValidation.isGuLineItemValid(guLineItem, dfpLineItem) shouldBe (true)
+  }
+}
