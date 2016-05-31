@@ -3,7 +3,6 @@
  */
 
 define([
-    'fastdom',
     'bean',
     'common/utils/$',
     'common/utils/defer-to-analytics',
@@ -11,7 +10,6 @@ define([
     'common/modules/video/videojs-options',
     'text!common/views/ui/loading.html'
 ], function (
-    fastdom,
     bean,
     $,
     deferToAnalytics,
