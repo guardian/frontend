@@ -109,14 +109,9 @@ object RequestMetrics {
     description = "Number of requests we returned 503 because we received a sudden surge"
   )
 
-  val PanicExcessiveLatencyMetric = CountMetric(
-    name = "panic-excessive-latency",
-    description = "Number of requests we returned 503 because latency was excessively high"
-  )
-
-  val PanicLatencyWarningMetric = CountMetric(
-    name = "panic-latency-warning",
-    description = "Number of requests we had some chance of returning 503 because the server was running slowly"
+  val HighLatencyMetric = CountMetric(
+    name = "high-latency",
+    description = "Number of requests made when the recent latency was too high"
   )
 
 }
