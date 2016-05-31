@@ -23,7 +23,7 @@ object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents
 
   override lazy val applicationName = "frontend-admin"
 
-  def lifecycleComponents(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext): List[LifecycleComponent] = List(
+  override def lifecycleComponents(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext): List[LifecycleComponent] = List(
     new AdminLifecycle(appLifecycle),
     new DfpDataCacheLifecycle(appLifecycle),
     new InjectedCachedHealthCheckLifeCycle(HealthCheck)
