@@ -32,6 +32,7 @@ module.exports = function (grunt, options) {
                 // plugins
                 text:                 'components/requirejs-text/text',
                 inlineSvg:            'projects/common/utils/inlineSvg',
+                tpl:                  'projects/common/utils/lodash-loader',
 
                 'react':              'empty:',
                 'ophan/ng':           'empty:'
@@ -61,7 +62,8 @@ module.exports = function (grunt, options) {
                     'boot',
                     'bootstraps/standard/main',
                     'text',
-                    'inlineSvg'
+                    'inlineSvg',
+                    'tpl'
                 ]
             }
         },
@@ -74,7 +76,8 @@ module.exports = function (grunt, options) {
                     'bootstraps/standard/main',
                     'bootstraps/commercial',
                     'text',
-                    'inlineSvg'
+                    'inlineSvg',
+                    'tpl'
                 ]
             }
         },
@@ -88,7 +91,8 @@ module.exports = function (grunt, options) {
                     'bootstraps/commercial',
                     'bootstraps/enhanced/main',
                     'text',
-                    'inlineSvg'
+                    'inlineSvg',
+                    'tpl'
                 ]
             }
         },
@@ -102,7 +106,8 @@ module.exports = function (grunt, options) {
                     'bootstraps/commercial',
                     'bootstraps/enhanced/main',
                     'text',
-                    'inlineSvg'
+                    'inlineSvg',
+                    'tpl'
                 ]
             }
         },
@@ -116,7 +121,8 @@ module.exports = function (grunt, options) {
                     'bootstraps/commercial',
                     'bootstraps/enhanced/main',
                     'text',
-                    'inlineSvg'
+                    'inlineSvg',
+                    'tpl'
                 ]
             }
         },
@@ -130,7 +136,8 @@ module.exports = function (grunt, options) {
                     'bootstraps/commercial',
                     'bootstraps/enhanced/main',
                     'text',
-                    'inlineSvg'
+                    'inlineSvg',
+                    'tpl'
                 ]
             }
         },
@@ -144,7 +151,8 @@ module.exports = function (grunt, options) {
                     'bootstraps/commercial',
                     'bootstraps/enhanced/main',
                     'text',
-                    'inlineSvg'
+                    'inlineSvg',
+                    'tpl'
                 ]
             }
         },
@@ -158,7 +166,8 @@ module.exports = function (grunt, options) {
                     'bootstraps/commercial',
                     'bootstraps/enhanced/main',
                     'text',
-                    'inlineSvg'
+                    'inlineSvg',
+                    'tpl'
                 ]
             }
         },
@@ -172,7 +181,8 @@ module.exports = function (grunt, options) {
                     'bootstraps/commercial',
                     'bootstraps/enhanced/main',
                     'text',
-                    'inlineSvg'
+                    'inlineSvg',
+                    'tpl'
                 ]
             }
         },
@@ -186,7 +196,8 @@ module.exports = function (grunt, options) {
                     'bootstraps/commercial',
                     'bootstraps/enhanced/main',
                     'text',
-                    'inlineSvg'
+                    'inlineSvg',
+                    'tpl'
                 ]
             }
         },
@@ -200,7 +211,8 @@ module.exports = function (grunt, options) {
                     'bootstraps/commercial',
                     'bootstraps/enhanced/main',
                     'text',
-                    'inlineSvg'
+                    'inlineSvg',
+                    'tpl'
                 ]
             }
         },
@@ -214,7 +226,8 @@ module.exports = function (grunt, options) {
                     'bootstraps/commercial',
                     'bootstraps/enhanced/main',
                     'text',
-                    'inlineSvg'
+                    'inlineSvg',
+                    'tpl'
                 ]
             }
         },
@@ -228,7 +241,8 @@ module.exports = function (grunt, options) {
                     'bootstraps/commercial',
                     'bootstraps/enhanced/main',
                     'text',
-                    'inlineSvg'
+                    'inlineSvg',
+                    'tpl'
                 ]
             }
         },
@@ -242,7 +256,8 @@ module.exports = function (grunt, options) {
                     'bootstraps/commercial',
                     'bootstraps/enhanced/main',
                     'text',
-                    'inlineSvg'
+                    'inlineSvg',
+                    'tpl'
                 ]
             }
         },
@@ -257,7 +272,8 @@ module.exports = function (grunt, options) {
                     'bootstraps/enhanced/main',
                     'vendor/stripe/stripe.min',
                     'text',
-                    'inlineSvg'
+                    'inlineSvg',
+                    'tpl'
                 ]
             }
         },
@@ -288,7 +304,8 @@ module.exports = function (grunt, options) {
                     'bootstraps/commercial',
                     'bootstraps/enhanced/main',
                     'text',
-                    'inlineSvg'
+                    'inlineSvg',
+                    'tpl'
                 ],
                 generateSourceMaps: true,
                 preserveLicenseComments: false,
@@ -308,7 +325,8 @@ module.exports = function (grunt, options) {
                 out: options.staticTargetDir + 'javascripts/bootstraps/video-embed.js',
                 exclude: [
                     'text',
-                    'inlineSvg'
+                    'inlineSvg',
+                    'tpl'
                 ],
                 generateSourceMaps: true,
                 preserveLicenseComments: false
@@ -325,7 +343,8 @@ module.exports = function (grunt, options) {
                     'bootstraps/enhanced/main',
                     'bootstraps/enhanced/facia',
                     'text',
-                    'inlineSvg'
+                    'inlineSvg',
+                    'tpl'
                 ]
             }
         }

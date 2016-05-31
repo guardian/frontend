@@ -4,11 +4,10 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/config',
-    'common/utils/template',
     'common/views/svgs',
     'common/modules/commercial/gustyle/gustyle',
-    'text!common/views/commercial/creatives/gu-style-comcontent.html',
-    'text!common/views/commercial/creatives/gu-style-hosted.html',
+    'tpl!common/views/commercial/creatives/gu-style-comcontent.html',
+    'tpl!common/views/commercial/creatives/gu-style-hosted.html',
     'lodash/objects/merge',
     'common/modules/commercial/creatives/add-tracking-pixel'
 ], function (
@@ -17,7 +16,6 @@ define([
     detect,
     mediator,
     config,
-    template,
     svgs,
     GuStyle,
     gustyleComcontentTpl,
@@ -52,7 +50,7 @@ define([
             ' | ' + title +
             ' | ' + sponsor;
 
-        var markup = template(templateToLoad, { data: merge(this.params, templateOptions) });
+        var markup = templateToLoad({ data: merge(this.params, templateOptions) });
         var gustyle = new GuStyle(this.$adSlot, this.params);
 
         return fastdom.write(function () {

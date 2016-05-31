@@ -6,9 +6,8 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/storage',
-    'common/utils/template',
     'common/views/svgs',
-    'text!common/views/commercial/creatives/fabric-expandable-video-v1.html',
+    'tpl!common/views/commercial/creatives/fabric-expandable-video-v1.html',
     'lodash/objects/merge',
     'common/modules/commercial/creatives/add-tracking-pixel',
     'Promise'
@@ -20,7 +19,6 @@ define([
     detect,
     mediator,
     storage,
-    template,
     svgs,
     fabricExpandableVideoHtml,
     merge,
@@ -54,7 +52,7 @@ define([
                 '<iframe id="YTPlayer" width="100%" height="' + videoHeight + '" src="' + this.params.YoutubeVideoURL + '?showinfo=0&amp;rel=0&amp;controls=0&amp;fs=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="expandable-video"></iframe>'
                 : ''
         };
-        var $fabricExpandableVideo = $.create(template(fabricExpandableVideoHtml, { data: merge(this.params, showmoreArrow, showmorePlus, videoSource) }));
+        var $fabricExpandableVideo = $.create(fabricExpandableVideoHtml({ data: merge(this.params, showmoreArrow, showmorePlus, videoSource) }));
         var $ad = $('.ad-exp--expand', $fabricExpandableVideo);
 
         var domPromise = new Promise(function (resolve) {

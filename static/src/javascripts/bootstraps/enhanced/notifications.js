@@ -7,13 +7,12 @@ define([
     'common/utils/config',
     'common/utils/storage',
     'common/utils/ajax',
-    'common/utils/template',
     'common/utils/robust',
     'common/views/svgs',
     'common/modules/user-prefs',
-    'text!common/views/ui/notifications-follow-link.html',
-    'text!common/views/ui/notifications-explainer.html',
-    'text!common/views/ui/notifications-permission-denied-message.html',
+    'tpl!common/views/ui/notifications-follow-link.html',
+    'tpl!common/views/ui/notifications-explainer.html',
+    'tpl!common/views/ui/notifications-permission-denied-message.html',
     'lodash/collections/some',
     'lodash/arrays/uniq',
     'lodash/arrays/without'
@@ -26,7 +25,6 @@ define([
     config,
     storage,
     ajax,
-    template,
     robust,
     svgs,
     userPrefs,
@@ -59,7 +57,7 @@ define([
             var $follow = bonzo($('.js-live-notifications')),
                 isSsubscribed = modules.checkSubscriptions(),
                 handler = isSsubscribed ? modules.unSubscribeHandler : modules.subscribeHandler,
-                src = template(followLink, {
+                src = followLink({
                     isSubscribed: isSsubscribed,
                     icon: svgs(isSsubscribed ? 'notificationsOff' : 'notificationsOn')
                 });
@@ -71,7 +69,7 @@ define([
         },
 
         showExplainer: function() {
-            var src = template(explainer,{
+            var src = explainer({
                 closeIcon : svgs('closeCentralIcon'),
                 imgMobile: svgs('notificationsExplainerMobile', ['mobile-only', 'live-notifications-explainer-svg']),
                 imgDesktop: svgs('notificationsExplainerDesktop', ['hide-on-mobile', 'live-notifications-explainer-svg'])
@@ -96,7 +94,7 @@ define([
         },
 
         notificationsDeniedMessage: function() {
-            var src = template(permissionsTemplate,{closeIcon : svgs('closeCentralIcon')});
+            var src = permissionsTemplate({closeIcon : svgs('closeCentralIcon')});
             fastdom.write(function () {
                 var blocked = $('.js-notifications-blocked');
                 blocked.prepend(src);

@@ -5,9 +5,8 @@ define([
     'common/utils/$',
     'common/utils/mediator',
     'common/modules/user-prefs',
-    'common/utils/template',
     'common/views/svgs',
-    'text!facia/views/button-toggle.html'
+    'tpl!facia/views/button-toggle.html'
 ], function (
     bean,
     bonzo,
@@ -15,14 +14,13 @@ define([
     $,
     mediator,
     userPrefs,
-    template,
     svgs,
     btnTmpl
 ) {
     return function (container) {
         var _$container = bonzo(container),
             _$button = bonzo(bonzo.create(
-                template(btnTmpl, {
+                btnTmpl({
                     text: 'Hide',
                     dataLink: 'Show',
                     icon: svgs('arrowicon')

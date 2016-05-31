@@ -1,19 +1,16 @@
 define([
     'common/utils/fastdom-promise',
     'common/utils/config',
-    'common/utils/template',
     'common/modules/commercial/hosted-video',
     'common/modules/commercial/creatives/add-tracking-pixel',
-    'text!common/views/commercial/creatives/hosted-thrasher.html'
+    'tpl!common/views/commercial/creatives/hosted-thrasher.html'
 ], function (
     fastdom,
     config,
-    template,
     hostedVideo,
     addTrackingPixel,
-    hostedThrasherStr
+    hostedThrasherTemplate
 ) {
-    var hostedThrasherTemplate;
 
     var HostedThrasher = function ($adSlot, params) {
         this.$adSlot = $adSlot;
@@ -21,8 +18,6 @@ define([
     };
 
     HostedThrasher.prototype.create = function () {
-        hostedThrasherTemplate = hostedThrasherTemplate || template(hostedThrasherStr);
-
         fastdom.write(function () {
             var title = this.params.header2 || 'unknown';
             var sponsor = 'Renault';

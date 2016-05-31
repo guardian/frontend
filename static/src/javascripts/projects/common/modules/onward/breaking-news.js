@@ -8,11 +8,10 @@ define([
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/storage',
-    'common/utils/template',
     'common/modules/ui/relativedates',
     'common/modules/analytics/omniture',
     'common/views/svgs',
-    'text!common/views/breaking-news.html',
+    'tpl!common/views/breaking-news.html',
     'lodash/objects/isArray',
     'lodash/objects/has',
     'lodash/arrays/flatten',
@@ -27,7 +26,6 @@ define([
     ajax,
     config,
     storage,
-    template,
     relativeDates,
     omniture,
     svgs,
@@ -191,7 +189,7 @@ define([
         alert.marque36icon = svgs('marque36icon');
         alert.closeIcon = svgs('closeCentralIcon');
 
-        var $alert = bonzo.create(template(alertHtml, alert));
+        var $alert = bonzo.create(alertHtml(alert));
 
         bean.on($('.js-breaking-news__item__close', $alert)[0], 'click', function () {
             fastdom.write(function () {

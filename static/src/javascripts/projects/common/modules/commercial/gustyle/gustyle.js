@@ -2,16 +2,14 @@ define([
     'common/utils/fastdom-promise',
     'common/utils/$',
     'common/utils/config',
-    'common/utils/template',
     'common/modules/ui/toggles',
     'common/views/svgs',
-    'text!common/views/commercial/gustyle/label.html',
+    'tpl!common/views/commercial/gustyle/label.html',
     'lodash/objects/merge'
 ], function (
     fastdom,
     $,
     config,
-    template,
     Toggles,
     svgs,
     labelTpl,
@@ -39,7 +37,7 @@ define([
             var classList = 'gu-style' + ((this.isContentPage) ? ' gu-style--unboxed' : '');
 
             this.$slot.addClass(classList);
-            this.$slot.prepend($.create(template(labelTpl, { data: merge(templateOptions) })));
+            this.$slot.prepend($.create(labelTpl({ data: merge(templateOptions) })));
 
             toggles = new Toggles(this.$slot[0]);
             toggles.init();

@@ -33,7 +33,8 @@ window.curlConfig = {
 
             // plugins
             text:                                'text', // noop
-            inlineSvg:                           'inlineSvg' // noop
+            inlineSvg:                           'inlineSvg',// noop
+            tpl:                                 'tpl' // noop
         } else {
             admin:                          'projects/admin',
             common:                         'projects/common',
@@ -78,7 +79,8 @@ window.curlConfig = {
 
             // plugins
             text:         'components/requirejs-text/text',
-            inlineSvg:    'projects/common/utils/inlineSvg'
+            inlineSvg:    'projects/common/utils/inlineSvg',
+            tpl:          'projects/common/utils/lodash-loader'
         }
     }
 };

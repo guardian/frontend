@@ -11,10 +11,9 @@ define([
     'common/utils/mediator',
     'lodash/functions/debounce',
     'lodash/collections/contains',
-    'common/utils/template',
     'common/views/svgs',
-    'text!common/views/email/submissionResponse.html',
-    'text!common/views/ui/close-button.html',
+    'tpl!common/views/email/submissionResponse.html',
+    'tpl!common/views/ui/close-button.html',
     'common/utils/robust',
     'common/utils/detect',
     'common/modules/identity/api',
@@ -33,7 +32,6 @@ define([
     mediator,
     debounce,
     contains,
-    template,
     svgs,
     successHtml,
     closeHtml,
@@ -83,7 +81,7 @@ define([
                     submissionMessage: (isSuccess) ? formData.customSuccessDesc || messages.defaultSuccessDesc : 'Please try again.',
                     submissionIcon: (isSuccess) ? svgs('tick') : svgs('crossIcon')
                 },
-                submissionHtml = template(successHtml, submissionMessage);
+                submissionHtml = successHtml(submissionMessage);
 
             fastdom.write(function () {
                 $form.addClass('email-sub__form--is-hidden');
@@ -119,7 +117,6 @@ define([
             getOmniture().then(function (omniture) {
                 omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | ' + analytics.signedIn + ' | form hidden');
             });
-
         },
         ui = {
             updateForm: function (thisRootEl, el, analytics, opts) {
@@ -158,7 +155,7 @@ define([
                         var closeButtonTemplate = {
                             closeIcon: svgs('closeCentralIcon')
                         },
-                        closeButtonHtml = template(closeHtml, closeButtonTemplate);
+                        closeButtonHtml = closeHtml(closeButtonTemplate);
 
                         el.append(closeButtonHtml);
 

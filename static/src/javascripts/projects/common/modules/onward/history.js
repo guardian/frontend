@@ -6,12 +6,11 @@ define([
     'fastdom',
     'common/utils/$',
     'common/utils/config',
-    'common/utils/template',
     'common/utils/storage',
     'common/utils/url',
     'common/modules/experiments/ab',
-    'text!common/views/history/tag.html',
-    'text!common/views/history/mega-nav.html',
+    'tpl!common/views/history/tag.html',
+    'tpl!common/views/history/mega-nav.html',
     'lodash/objects/isObject',
     'lodash/objects/isNumber',
     'lodash/collections/find',
@@ -35,7 +34,6 @@ define([
     fastdom,
     $,
     config,
-    template,
     storage,
     url,
     ab,
@@ -387,7 +385,7 @@ define([
         tags = getPopularFiltered();
 
         if (tags.length) {
-            tagsHTML = template(viewMegaNav, {tags: tags.map(tagHtml).join('')});
+            tagsHTML = viewMegaNav({tags: tags.map(tagHtml).join('')});
             fastdom.write(function () {
                 getMegaNav().prepend(tagsHTML);
             });
@@ -423,7 +421,7 @@ define([
     }
 
     function tagHtml(tag, index) {
-        return template(viewTag, {id: tag[0], name: tag[1], index: index + 1});
+        return viewTag({id: tag[0], name: tag[1], index: index + 1});
     }
 
     return {

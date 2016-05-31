@@ -5,8 +5,7 @@ define([
     'fastdom',
     'common/modules/email/email',
     'common/utils/config',
-    'text!common/views/email/iframe.html',
-    'common/utils/template',
+    'tpl!common/views/email/iframe.html',
     'common/modules/article/space-filler',
     'common/modules/analytics/omniture',
     'common/utils/robust',
@@ -22,7 +21,6 @@ define([
     email,
     config,
     iframeTemplate,
-    template,
     spaceFiller,
     omniture,
     robust,
@@ -135,7 +133,7 @@ define([
         },
         addListToPage = function (listConfig) {
             if (listConfig) {
-                var iframe = bonzo.create(template(iframeTemplate, listConfig))[0],
+                var iframe = bonzo.create(iframeTemplate(listConfig))[0],
                     $iframeEl = $(iframe);
 
                 bean.on(iframe, 'load', function () {

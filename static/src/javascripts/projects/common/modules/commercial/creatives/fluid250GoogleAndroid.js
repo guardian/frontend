@@ -4,8 +4,7 @@ define([
     'common/utils/$',
     'common/utils/mediator',
     'common/utils/storage',
-    'common/utils/template',
-    'text!common/views/commercial/creatives/fluid250GoogleAndroid.html',
+    'tpl!common/views/commercial/creatives/fluid250GoogleAndroid.html',
     'common/modules/commercial/creatives/add-tracking-pixel'
 ], function (
     bean,
@@ -13,7 +12,6 @@ define([
     $,
     mediator,
     storage,
-    template,
     fluid250GoogleAndroidTpl,
     addTrackingPixel
 ) {
@@ -24,7 +22,7 @@ define([
 
     Fluid250GoogleAndroid.prototype.create = function () {
 
-        $.create(template(fluid250GoogleAndroidTpl, this.params)).appendTo(this.$adSlot);
+        $.create(fluid250GoogleAndroidTpl(this.params)).appendTo(this.$adSlot);
 
         if (this.params.trackingPixel) {
             addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);

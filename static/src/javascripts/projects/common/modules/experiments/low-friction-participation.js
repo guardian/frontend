@@ -6,10 +6,9 @@ define([
     'common/utils/$',
     'common/utils/fastdom-promise',
     'common/views/svgs',
-    'text!common/views/experiments/participation/low-friction-wrapper.html',
-    'text!common/views/experiments/participation/low-friction-contents.html',
-    'text!common/views/experiments/participation/low-friction-buttons.html',
-    'common/utils/template',
+    'tpl!common/views/experiments/participation/low-friction-wrapper.html',
+    'tpl!common/views/experiments/participation/low-friction-contents.html',
+    'tpl!common/views/experiments/participation/low-friction-buttons.html',
     'bean',
     'common/utils/mediator'
 ], function (
@@ -23,7 +22,6 @@ define([
     lowFrictionWrapper,
     lowFrictionContents,
     lowFrictionButtons,
-    template,
     bean,
     mediator
 ) {
@@ -83,7 +81,7 @@ define([
                 state: state
             };
 
-            buttonString += template(lowFrictionButtons, merge(settings.templateVars, templateVars));
+            buttonString += lowFrictionButtons(merge(settings.templateVars, templateVars));
         }
 
         return buttonString;
@@ -93,7 +91,7 @@ define([
 
     function render (state) {
 
-        var view = template(lowFrictionContents, merge(settings.templateVars, {
+        var view = lowFrictionContents(merge(settings.templateVars, {
                 buttons: createButtons(state),
                 confirming: state.confirming,
                 complete: state.complete
@@ -104,7 +102,7 @@ define([
         }
 
         if (state.initialRender) {
-            var fullView = template(lowFrictionWrapper, merge(settings.templateVars, {
+            var fullView = lowFrictionWrapper(merge(settings.templateVars, {
                 contents: view
             }));
 

@@ -8,7 +8,6 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/fastdom-promise',
-    'common/utils/template',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/third-party-tags/audience-science-gateway',
     'common/modules/commercial/third-party-tags/audience-science-pql',
@@ -18,7 +17,7 @@ define([
     'common/modules/identity/api',
     'common/modules/commercial/third-party-tags/outbrain',
     'common/modules/commercial/third-party-tags/plista',
-    'text!common/views/commercial/external-content.html'
+    'tpl!common/views/commercial/external-content.html'
 ], function (
     Promise,
     $,
@@ -26,7 +25,6 @@ define([
     detect,
     mediator,
     fastdom,
-    template,
     commercialFeatures,
     audienceScienceGateway,
     audienceSciencePql,
@@ -36,12 +34,11 @@ define([
     identity,
     outbrain,
     plista,
-    externalContentContainerStr
+    externalTpl
     ) {
 
     function loadExternalContentWidget() {
 
-        var externalTpl = template(externalContentContainerStr);
         var documentAnchorClass = '.js-external-content-widget-anchor';
 
         function renderWidgetContainer(widgetType) {

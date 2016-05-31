@@ -8,18 +8,17 @@ define([
     'common/utils/detect',
     'common/utils/fsm',
     'common/utils/mediator',
-    'common/utils/template',
     'common/utils/url',
     'common/modules/component',
     'common/modules/ui/blockSharing',
     'common/modules/ui/images',
     'common/views/svgs',
-    'text!common/views/content/block-sharing.html',
-    'text!common/views/content/button.html',
-    'text!common/views/content/endslate.html',
-    'text!common/views/content/loader.html',
-    'text!common/views/content/share-button.html',
-    'text!common/views/content/share-button-mobile.html',
+    'tpl!common/views/content/block-sharing.html',
+    'tpl!common/views/content/button.html',
+    'tpl!common/views/content/endslate.html',
+    'tpl!common/views/content/loader.html',
+    'tpl!common/views/content/share-button.html',
+    'tpl!common/views/content/share-button-mobile.html',
     'lodash/collections/map',
     'lodash/functions/throttle',
     'lodash/collections/forEach',
@@ -35,7 +34,6 @@ define([
     detect,
     FiniteStateMachine,
     mediator,
-    template,
     url,
     Component,
     blockSharing,
@@ -63,8 +61,7 @@ define([
 
         // TEMPLATE
         function generateButtonHTML(label) {
-            var tmpl = buttonTpl;
-            return template(tmpl, {label: label});
+            return buttonTpl({label: label});
         }
 
         this.galleryLightboxHtml =
@@ -157,15 +154,15 @@ define([
                 'url': encodeURI('http://www.pinterest.com/pin/create/button/?description=' + config.page.webTitle + '&url=' + blockShortUrl + '&media=' + urlPrefix + img.src)
             }];
 
-        return template(blockSharingTpl.replace(/^\s+|\s+$/gm, ''), {
+        return blockSharingTpl({
             articleType: 'gallery',
             count: this.images.length,
             index: i,
             caption: img.caption,
             credit: img.displayCredit ? img.credit : '',
             blockShortUrl: blockShortUrl,
-            shareButtons: map(shareItems, template.bind(null, shareButtonTpl)).join(''),
-            shareButtonsMobile: map(shareItems, template.bind(null, shareButtonMobileTpl)).join('')
+            shareButtons: map(shareItems, shareButtonTpl).join(''),
+            shareButtonsMobile: map(shareItems, shareButtonMobileTpl).join('')
         });
     };
 

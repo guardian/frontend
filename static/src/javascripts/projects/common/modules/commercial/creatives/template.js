@@ -1,20 +1,18 @@
 define([
     'Promise',
-    'common/utils/template',
     'common/utils/fastdom-promise',
     'common/views/svgs',
     'common/modules/commercial/creatives/template-preprocessor',
 
     // require templates, so they're bundled up as part of the build
-    'text!common/views/commercial/creatives/logo.html',
-    'text!common/views/commercial/creatives/manual-inline.html',
-    'text!common/views/commercial/creatives/gimbap.html',
-    'text!common/views/commercial/creatives/gimbap-simple.html',
-    'text!common/views/commercial/creatives/gimbap-richmedia.html',
-    'text!common/views/commercial/creatives/manual-container.html'
+    'tpl!common/views/commercial/creatives/logo.html',
+    'tpl!common/views/commercial/creatives/manual-inline.html',
+    'tpl!common/views/commercial/creatives/gimbap.html',
+    'tpl!common/views/commercial/creatives/gimbap-simple.html',
+    'tpl!common/views/commercial/creatives/gimbap-richmedia.html',
+    'tpl!common/views/commercial/creatives/manual-container.html'
 ], function (
     Promise,
-    template,
     fastdom,
     svgs,
     templatePreprocessor
@@ -77,12 +75,12 @@ define([
                 this.params.type = 'sponsored';
             }
 
-            require(['text!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
+            require(['tpl!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
                 if (templatePreprocessor[this.params.creative]) {
                     templatePreprocessor[this.params.creative](this);
                 }
 
-                var creativeHtml = template(creativeTpl, this.params);
+                var creativeHtml = creativeTpl(this.params);
 
                 fastdom.write(function () {
                     this.adSlot.insertAdjacentHTML('beforeend', creativeHtml);

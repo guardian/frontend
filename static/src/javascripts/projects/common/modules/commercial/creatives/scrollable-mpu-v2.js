@@ -3,16 +3,14 @@ define([
     'common/utils/$',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/utils/template',
-    'text!common/views/commercial/creatives/scrollable-mpu-v2.html',
-    'text!common/views/commercial/tracking-pixel.html',
+    'tpl!common/views/commercial/creatives/scrollable-mpu-v2.html',
+    'tpl!common/views/commercial/tracking-pixel.html',
     'lodash/functions/bindAll'
 ], function (
     fastdom,
     $,
     detect,
     mediator,
-    template,
     scrollableMpuTpl,
     trackingPixelStr,
     bindAll
@@ -65,9 +63,9 @@ define([
             layer1Image:      ScrollableMpu.hasScrollEnabled ? this.params.layer1Image : this.params.mobileImage,
             backgroundImage:       ScrollableMpu.hasScrollEnabled && this.params.backgroundImage ?
                 '<div class="creative--scrollable-mpu-image" style="background-image: url(' + this.params.backgroundImage + ');"></div>' : '',
-            trackingPixelImg: this.params.trackingPixel ? template(trackingPixelStr, { url: encodeURI(this.params.trackingPixel) }) : ''
+            trackingPixelImg: this.params.trackingPixel ? trackingPixelStr({ url: encodeURI(this.params.trackingPixel) }) : ''
         };
-        this.$scrollableMpu = $.create(template(scrollableMpuTpl, templateOptions)).appendTo(this.$adSlot);
+        this.$scrollableMpu = $.create(scrollableMpuTpl(templateOptions)).appendTo(this.$adSlot);
 
         if (ScrollableMpu.hasScrollEnabled) {
             // update bg position

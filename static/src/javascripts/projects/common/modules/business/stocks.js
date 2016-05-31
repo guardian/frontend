@@ -2,17 +2,15 @@ define([
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
-    'common/utils/template',
     'common/views/svgs',
-    'text!common/views/business/stock-value.html',
-    'text!common/views/business/stocks.html',
+    'tpl!common/views/business/stock-value.html',
+    'tpl!common/views/business/stocks.html',
     'lodash/collections/contains',
     'lodash/collections/map'
 ], function (
     $,
     ajax,
     config,
-    template,
     svgs,
     stockValueTemplate,
     stocksTemplate,
@@ -36,7 +34,7 @@ define([
 
     function renderData(data) {
         var stockValues = map(data.stocks, function (stockValue) {
-            return template(stockValueTemplate, {
+            return stockValueTemplate({
                 name: stockValue.name,
                 deltaClass: 'stocks__stock-value--' + stockValue.trend,
                 price: stockValue.price,
@@ -49,7 +47,7 @@ define([
             });
         }).join('');
 
-        return template(stocksTemplate, {
+        return stocksTemplate({
             stocks: stockValues
         });
     }

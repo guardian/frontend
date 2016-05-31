@@ -5,8 +5,7 @@ define([
     'common/utils/$',
     'common/utils/mediator',
     'common/utils/storage',
-    'common/utils/template',
-    'text!common/views/commercial/creatives/expandable.html',
+    'tpl!common/views/commercial/creatives/expandable.html',
     'lodash/functions/bindAll',
     'common/modules/commercial/creatives/add-tracking-pixel'
 ], function (
@@ -16,7 +15,6 @@ define([
     $,
     mediator,
     storage,
-    template,
     expandableTpl,
     bindAll,
     addTrackingPixel
@@ -55,7 +53,7 @@ define([
     };
 
     Expandable.prototype.create = function () {
-        var $expandable = $.create(template(expandableTpl, { data: this.params }));
+        var $expandable = $.create(expandableTpl({ data: this.params }));
 
         this.$ad     = $('.ad-exp--expand', $expandable);
         this.$button = $('.ad-exp__close-button', $expandable);

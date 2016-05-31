@@ -4,23 +4,20 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/utils/template',
     'common/modules/identity/api',
     'common/modules/commercial/commercial-features',
-    'text!common/views/commercial/plista.html'
+    'tpl!common/views/commercial/plista.html'
 ], function (
     fastdom,
     $,
     config,
     detect,
     mediator,
-    template,
     identity,
     commercialFeatures,
-    plistaStr
+    plistaTpl
 ) {
 
-    var plistaTpl = template(plistaStr);
     var selectors = {
         container: '.js-plista-container'
     };

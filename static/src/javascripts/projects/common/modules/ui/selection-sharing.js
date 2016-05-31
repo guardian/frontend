@@ -6,8 +6,9 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/utils/template',
-    'text!common/views/ui/selection-sharing.html',
+    'tpl!common/views/ui/selection-sharing.html',
+    'tpl!common/views/ui/twitter-sharing-url.html',
+    'tpl!common/views/ui/email-sharing-url.html',
     'common/views/svgs',
     'lodash/functions/debounce',
     'lodash/functions/throttle',
@@ -20,8 +21,9 @@ define([
     config,
     detect,
     mediator,
-    template,
     sharingTemplate,
+    twitterHrefTemplate,
+    emailHrefTemplate,
     svgs,
     debounce,
     throttle,
@@ -31,7 +33,7 @@ define([
     var $body = bonzo(document.body),
         twitterIcon = svgs('shareTwitter', ['icon']),
         emailIcon = svgs('shareEmail', ['icon']),
-        selectionSharing = template(sharingTemplate, {
+        selectionSharing = sharingTemplate({
             twitterIcon: twitterIcon,
             emailIcon: emailIcon
         }),
@@ -39,10 +41,8 @@ define([
         $twitterAction,
         $emailAction,
         twitterShortUrl = config.page.shortUrl + '/stw',
-        twitterHrefTemplate = 'https://twitter.com/intent/tweet?text=%E2%80%9C<%=text%>%E2%80%9D&url=<%=url%>',
         twitterMessageLimit = 114, // 140 - t.co length - 3 chars for quotes and url spacing
         emailShortUrl = config.page.shortUrl + '/sbl',
-        emailHrefTemplate = 'mailto:?subject=<%=subject%>&body=%E2%80%9C<%=selection%>%E2%80%9D <%=url%>',
         validAncestors = ['js-article__body', 'content__standfirst', 'block', 'caption--main', 'content__headline'],
 
     isValidSelection = function (range) {
@@ -90,11 +90,11 @@ define([
                 twitterMessage = twitterMessage.slice(0, twitterMessageLimit - 1) + '…';
             }
 
-            twitterHref = template(twitterHrefTemplate, {
+            twitterHref = twitterHrefTemplate({
                 text: encodeURIComponent(twitterMessage),
                 url: encodeURI(twitterShortUrl)
             });
-            emailHref = template(emailHrefTemplate, {
+            emailHref = emailHrefTemplate({
                 subject: encodeURI(config.page.webTitle),
                 selection: encodeURI(range.toString()),
                 url: encodeURI(emailShortUrl)

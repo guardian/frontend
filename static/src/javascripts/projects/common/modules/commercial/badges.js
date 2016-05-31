@@ -4,12 +4,11 @@ define([
     'Promise',
     'common/utils/$',
     'common/utils/config',
-    'common/utils/template',
     'common/utils/fastdom-idle',
     'common/modules/commercial/dfp/dfp-api',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features',
-    'text!common/views/commercial/badge.html',
+    'tpl!common/views/commercial/badge.html',
     'lodash/collections/map'
 ], function (
     bonzo,
@@ -17,7 +16,6 @@ define([
     Promise,
     $,
     config,
-    template,
     idleFastdom,
     dfp,
     createAdSlot,
@@ -44,8 +42,7 @@ define([
         },
         addPreBadge  = function ($adSlot, header, sponsor) {
             if (sponsor) {
-                $adSlot.append(template(
-                    badgeTpl,
+                $adSlot.append(badgeTpl(
                     {
                         header:  header,
                         sponsor: sponsor

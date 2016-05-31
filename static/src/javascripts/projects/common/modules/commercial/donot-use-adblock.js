@@ -3,7 +3,6 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/storage',
-    'common/utils/template',
     'common/modules/commercial/adblock-messages',
     'common/modules/commercial/adblock-banner-config',
     'common/modules/adblock-banner',
@@ -11,7 +10,7 @@ define([
     'common/modules/ui/message',
     'common/modules/experiments/ab',
     'common/modules/navigation/navigation',
-    'text!common/views/membership-message.html',
+    'tpl!common/views/membership-message.html',
     'common/views/svgs',
     'lodash/collections/sample'
 ], function (
@@ -19,7 +18,6 @@ define([
     config,
     detect,
     storage,
-    template,
     adblockMsg,
     adblockConfig,
     AdblockBanner,
@@ -66,7 +64,7 @@ define([
                 pinOnHide: false,
                 siteMessageLinkName: 'adblock',
                 siteMessageCloseBtn: 'hide'
-            }).show(template(messageTemplate, {
+            }).show(messageTemplate({
                 linkHref: adblockLink + '?INTCMP=' + message.campaign,
                 messageText: message.messageText,
                 linkText: message.linkText,
@@ -102,4 +100,3 @@ define([
         init: init
     };
 });
-
