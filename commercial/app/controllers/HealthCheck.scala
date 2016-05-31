@@ -1,4 +1,6 @@
-package conf
+package controllers
+
+import conf.AnyGoodCachedHealthCheck
 
 object HealthCheck extends AnyGoodCachedHealthCheck(
   9005,
@@ -9,7 +11,3 @@ object HealthCheck extends AnyGoodCachedHealthCheck(
   "/commercial/money/bestbuys.json",
   "/commercial/books/books.json"
 )
-
-trait CommercialHealthCheckLifeCycle extends CachedHealthCheckLifeCycle {
-  override val healthCheckController = HealthCheck
-}

@@ -1,7 +1,9 @@
-package conf
+package controllers
 
+import conf.AllGoodCachedHealthCheck
 import contentapi.SectionsLookUp
-import play.api.mvc.{AnyContent, Action}
+import play.api.mvc.{Action, AnyContent}
+
 import scala.concurrent.Future
 
 object HealthCheck extends AllGoodCachedHealthCheck(
@@ -19,8 +21,4 @@ object HealthCheck extends AllGoodCachedHealthCheck(
       super.healthCheck()(request)
     }
   }
-}
-
-trait ApplicationsHealthCheckLifeCycle extends CachedHealthCheckLifeCycle {
-  override val healthCheckController = HealthCheck
 }
