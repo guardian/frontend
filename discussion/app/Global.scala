@@ -2,7 +2,7 @@ import common.CloudWatchApplicationMetrics
 import common.Logback.Logstash
 import conf._
 import conf.switches.SwitchboardLifecycle
-import filters.DiscussionRequestLoggingFilter
+import filters.RequestLoggingFilter
 import play.api.http.HttpFilters
 import play.api.mvc.EssentialFilter
 
@@ -21,7 +21,7 @@ class DiscussionFilters extends HttpFilters {
     new JsonVaryHeadersFilter,
     new Gzipper,
     new BackendHeaderFilter,
-    new DiscussionRequestLoggingFilter,
+    new RequestLoggingFilter,
     new SurrogateKeyFilter,
     new AmpFilter
   )

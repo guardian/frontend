@@ -250,14 +250,4 @@ trait PerformanceSwitches {
     sellByDate = new LocalDate(2016, 8, 5),
     exposeClientSide = false
   )
-
-  // Owner: tbonnin
-  val LogAllDiscussionIncomingRequests = Switch(
-    SwitchGroup.Performance,
-    "log-all-discussion-incoming-requests",
-    "If this switch is on then log all incoming discussion requests",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 2),
-    exposeClientSide = false
-  )
 }
