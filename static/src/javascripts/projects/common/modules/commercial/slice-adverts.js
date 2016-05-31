@@ -37,7 +37,7 @@ define([
         var isNetworkFront      = ['uk', 'us', 'au'].indexOf(config.page.pageId) !== -1;
         // Mobile doesn't have a top slot, so we substitute a slot that accepts both ordinary MPUs and the 'fabric' ads (88x71s)
         // that take the top slot in responsive takeovers.
-        var replaceTopSlot      = (config.page.isFront && config.switches.fabricAdverts && detect.isBreakpoint({max : 'phablet'}));
+        var replaceTopSlot      = (config.page.isFront && detect.isBreakpoint({max : 'phablet'}));
         // We must keep a small bit of state in the filtering logic
         var lastIndex           = -1;
 
