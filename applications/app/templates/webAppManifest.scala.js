@@ -5,6 +5,11 @@
     "icons":[
     {
         "type": "image/png",
+        "sizes": "192x192",
+        "src": "@{JavaScript(Static("images/favicons/roundel-192x192.png"))}"
+    },
+    {
+        "type": "image/png",
         "sizes": "152x152",
         "src": "@{JavaScript(Static("images/favicons/roundel-152x152.png"))}"
     },
@@ -14,6 +19,8 @@
         "src": "@{JavaScript(Static("images/favicons/roundel-114x114.png"))}"
     }
     ],
+    "theme_color": "#005689",
+    "background_color": "#ffffff"
     "start_url": "/uk?INTCMP=webapp",
     "display": "browser",
     "orientation": "portrait",
