@@ -4,21 +4,17 @@
 @import views.support.TrailCssClasses.toneClass
 @import views.support.{ImgSrc, RenderClasses}
 
-<div class="l-side-margins @if(!page.gallery.commercial.isAdvertisementFeature){l-side-margins--media}">
+<div class="l-side-margins l-side-margins--media">
 
     <article id="article" class="@RenderClasses(
-            Map("content--advertisement-feature" -> page.gallery.commercial.isAdvertisementFeature,
-                "paid-content--advertisement-feature" -> page.gallery.commercial.isAdvertisementFeature
-            ),
+            "content--advertisement-feature", "paid-content--advertisement-feature",
             "content", "content--media", "content--gallery", "tonal", s"tonal--${toneClass(page.gallery)}"
         )"
         itemscope itemtype="@page.gallery.metadata.schemaType" role="main">
 
-        @if(page.gallery.commercial.isAdvertisementFeature){
-            @fragments.guBand()
-        }
+        @fragments.guBand()
 
-        @fragments.headTonal(page.gallery, page, page.gallery.commercial.isSponsored(Some(Edition(request))) || page.gallery.commercial.isFoundationSupported || page.gallery.commercial.isAdvertisementFeature)
+        @fragments.headTonal(page.gallery, page, showBadge = true)
 
         <div class="content__main tonal__main tonal__main--@toneClass(page.gallery) gs-container">
             <div class="content__main-column content__main-column--gallery">
@@ -35,22 +31,6 @@
         </div>
     </article>
 
-    @if(page.gallery.content.showInRelated &&
-        !page.gallery.commercial.isAdvertisementFeature ) {
-        <div class="gallery__most-popular facia-container fc-container--media hide-on-childrens-books-site">
-            <div class="js-gallery-most-popular tonal--@toneClass(page.gallery)">
-                <div class="fc-container">
-                    <div class="fc-container__inner">
-                        <div class="fc-container__header">
-                            <h2 class="fc-container__header__title">
-                                <a class="most-viewed-no-js tone-colour" href="@LinkTo{/gallery/most-viewed}" data-link-name="Most viewed galleries">More galleries</a>
-                            </h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
     @fragments.contentFooter(page.gallery, page.related, "media")
 </div>
 
