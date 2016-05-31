@@ -12,7 +12,7 @@ import scala.util.{Failure, Success, Try}
 // turns an unhashed name into a name that's hashed if it needs to be
 class Assets(base: String, mapResource: String, useHashedBundles: Boolean = Configuration.assets.useHashedBundles) extends Logging {
 
-  lazy val lookup = Get(assetMap(mapResource))
+  lazy val lookup: Map[String, String] = Get(assetMap(mapResource))
 
   def apply(path: String): String = {
     val target =
