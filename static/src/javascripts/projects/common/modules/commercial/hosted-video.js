@@ -74,6 +74,7 @@ define([
                     initLoadingSpinner(player);
                     upgradeVideoPlayerAccessibility(player);
                 });
+
             });
         });
     }
