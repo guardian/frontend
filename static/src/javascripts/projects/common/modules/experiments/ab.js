@@ -23,7 +23,6 @@ define([
     'common/modules/experiments/tests/welcome-header',
     'common/modules/experiments/tests/participation-discussion-test',
     'common/modules/experiments/tests/play-video-on-fronts',
-    'common/modules/experiments/tests/video-controls-on-main-media',
     'common/modules/experiments/tests/new-user-adverts-disabled'
 ], function (
     reportError,
@@ -50,7 +49,6 @@ define([
     WelcomeHeader,
     ParticipationDiscussionTest,
     PlayVideoOnFronts,
-    VideoControlsOnMainMedia,
     NewUserAdvertsDisabled
 ) {
 
@@ -70,7 +68,6 @@ define([
         new WelcomeHeader(),
         new ParticipationDiscussionTest(),
         new PlayVideoOnFronts(),
-        new VideoControlsOnMainMedia(),
         new NewUserAdvertsDisabled()
     ];
 
