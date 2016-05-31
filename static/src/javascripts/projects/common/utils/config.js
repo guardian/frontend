@@ -6,7 +6,7 @@
 define([
     'common/utils/pad',
     'common/utils/url',
-    'lodash/objects/assign'
+    'common/utils/assign'
 ], function (pad, urlUtils, assign) {
     var config         = guardian.config,
         adUnitOverride = urlUtils.getUrlVars()['ad-unit'];
