@@ -1,13 +1,14 @@
 package test
 
 import com.gargoylesoftware.htmlunit.BrowserVersion
+import controllers.HealthCheck
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import play.api.test.{TestServer, TestBrowser, FakeApplication}
 import play.api.test.Helpers._
 
 object `package` {
 
-  object HtmlUnit extends EditionalisedHtmlUnit(conf.HealthCheck.testPort.toString)
+  object HtmlUnit extends EditionalisedHtmlUnit(HealthCheck.testPort.toString)
 }
 
 class EditionalisedHtmlUnit(val port: String) extends TestSettings {

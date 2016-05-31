@@ -1,16 +1,20 @@
 package controllers.commercial
 
-import common.commercial.HostedPage
+import common.commercial.{HostedPage, HostedVideo, HostedNextVideo}
+import conf.Static
 import conf.switches.Switches
 import model.Cached.RevalidatableResult
 import model.{Cached, NoCache}
-import play.api.mvc.{Action, Controller}
-import views.html.hosted.{episode1Video, guardianHostedPage, teaserVideo}
+import play.api.mvc.{Action, AnyContent, Controller, Request}
+import views.html.hosted.guardianHostedPage
 
 object HostedContentController extends Controller {
 
-  def renderHostedPage(pageName: String) = Action { implicit request =>
-    val pageUrl = controllers.commercial.routes.HostedContentController.renderHostedPage(pageName).absoluteURL
+  def renderHostedPage(pageName: String) = Action { implicit request: Request[AnyContent] =>
+    lazy val pageUrl = routes.HostedContentController.renderHostedPage(pageName).absoluteURL
+    val teaserPosterUrl: String = Static("images/commercial/renault-video-poster.jpg")
+    val episode1PosterUrl: String = Static("images/commercial/renault-video-poster-ep1.jpg")
+
     pageName match {
 
       case "design-competition-teaser" =>
@@ -18,10 +22,24 @@ object HostedContentController extends Controller {
           pageUrl,
           pageName,
           pageTitle = "Advertiser content hosted by the Guardian: Designing the car of the future - video",
-          videoTitle = "Designing the car of the future",
-          standfirst = "Who better to dream up the cars of tomorrow than the people who'll be buying them? Students at Central St Martins are working with Renault to design the interior for cars that will drive themselves. Watch this short video to find out more about the project, and visit this page again soon to catch up on the students' progress."
+          standfirst = "Who better to dream up the cars of tomorrow than the people who'll be buying them? Students at Central St Martins are working with Renault to design the interior for cars that will drive themselves. Watch this short video to find out more about the project, and visit this page again soon to catch up on the students' progress.",
+          logoUrl = Static("images/commercial/logo_renault.jpg"),
+          bannerUrl = Static("images/commercial/ren_commercial_banner.jpg"),
+          video = HostedVideo(
+            mediaId = "renault-car-of-the-future",
+            title = "Designing the car of the future",
+            duration = 86,
+            posterUrl = teaserPosterUrl,
+            srcUrl = "http://multimedia.guardianapis.com/interactivevideos/video.php?file=160516GlabsTestSD&format=video/mp4&maxbitrate=2048"
+          ),
+          nextVideo = HostedNextVideo(
+            header = "Up next from",
+            title = "Renault shortlists 'car of the future' designs",
+            link = "/commercial/advertiser-content/renault-car-of-the-future/design-competition-episode1",
+            imageUrl = episode1PosterUrl
+          )
         )
-        Cached(60)(RevalidatableResult.Ok(guardianHostedPage(page, teaserVideo())))
+        Cached(60)(RevalidatableResult.Ok(guardianHostedPage(page)))
 
       case "design-competition-episode1" =>
         if (Switches.hostedEpisode1Content.isSwitchedOn) {
@@ -29,10 +47,24 @@ object HostedContentController extends Controller {
             pageUrl,
             pageName,
             pageTitle = "Renault shortlists 'car of the future' designs - video",
-            videoTitle = "Renault shortlists 'car of the future' designs",
-            standfirst = "Renault challenged Central St Martins students to dream up the car of the future. The winning design will be announced at Clerkenwell Design Week (and on this site). Watch this short video to find out who made the shortlist."
+            standfirst = "Renault challenged Central St Martins students to dream up the car of the future. The winning design will be announced at Clerkenwell Design Week (and on this site). Watch this short video to find out who made the shortlist.",
+            logoUrl = Static("images/commercial/logo_renault.jpg"),
+            bannerUrl = Static("images/commercial/ren_commercial_banner.jpg"),
+            video = HostedVideo(
+              mediaId = "renault-car-of-the-future",
+              title = "Renault shortlists 'car of the future' designs",
+              duration = 160,
+              posterUrl = episode1PosterUrl,
+              srcUrl = "https://multimedia.guardianapis.com/interactivevideos/video.php?file=160523GlabsRenaultTestHD&format=video/webm&maxbitrate=2048"
+            ),
+            nextVideo = HostedNextVideo(
+              header = "Also from",
+              title = "Designing the car of the future",
+              link = "/commercial/advertiser-content/renault-car-of-the-future/design-competition-teaser",
+              imageUrl = teaserPosterUrl
+            )
           )
-          Cached(60)(RevalidatableResult.Ok(guardianHostedPage(page, episode1Video())))
+          Cached(60)(RevalidatableResult.Ok(guardianHostedPage(page)))
         } else {
           NoCache(NotFound)
         }

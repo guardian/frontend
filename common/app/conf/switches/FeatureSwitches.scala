@@ -4,6 +4,14 @@ import conf.switches.Expiry.never
 import org.joda.time.LocalDate
 
 trait FeatureSwitches {
+  val immersiveMainEmbedSwitch = Switch(
+    SwitchGroup.Feature,
+    "immersive-main-media",
+    "If this switch is on, main media embeds won't be iframed",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 22),
+    exposeClientSide = false
+  )
 
   val FixturesAndResultsContainerSwitch = Switch(
     SwitchGroup.Feature,
@@ -349,15 +357,6 @@ trait FeatureSwitches {
     "When ON, articles specified in the badges file will have visual elements added",
     safeState = On,
     sellByDate = new LocalDate(2017, 2, 28),
-    exposeClientSide = false
-  )
-
-  val EuReferendumBadgeSwitch = Switch(
-    SwitchGroup.Feature,
-    "eu-referendum-badge",
-    "When ON, a badge will be applied to all EU Referendum articles",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 1),
     exposeClientSide = false
   )
 

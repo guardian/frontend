@@ -72,11 +72,9 @@
                  aria-expanded="true">
 
             @if(containerDefinition.isStoryPackage){
-                @conf.Static.css.inline("story-package").map { css =>
-                    <style>
-                        @Html(css)
-                    </style>
-                }
+                <style>
+                @Html(common.Assets.css.inlineStoryPackage)
+                </style>
             }
 
             @containerDefinition.container match {

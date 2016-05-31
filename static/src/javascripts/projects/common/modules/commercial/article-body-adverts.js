@@ -139,17 +139,15 @@ define([
             addInlineMerchAd(getInlineMerchRules());
         }
 
-        return config.switches.viewability ?
-            addArticleAds(2, rules).then(function (countAdded) {
-                if (config.page.hasInlineMerchandise && countAdded === 0) {
-                    mediator.on('modules:commercial:dfp:rendered', onAdRendered);
-                }
+        return addArticleAds(2, rules).then(function (countAdded) {
+            if (config.page.hasInlineMerchandise && countAdded === 0) {
+                mediator.on('modules:commercial:dfp:rendered', onAdRendered);
+            }
 
-                return countAdded === 2 ?
-                    addArticleAds(8, getLongArticleRules()) :
-                    countAdded;
-            }) :
-            addArticleAds(2, rules);
+            return countAdded === 2 ?
+                addArticleAds(8, getLongArticleRules()) :
+                countAdded;
+        });
     }
 
     return {

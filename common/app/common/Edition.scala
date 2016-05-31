@@ -165,9 +165,3 @@ object InternationalEdition {
     }
   }
 }
-
-object InternationalEditionVariant {
-
-  def apply(request: RequestHeader): Option[String] = request.headers.get("X-GU-International")
-
-}

@@ -20,7 +20,7 @@ object LinkedData {
 case class Guardian(
   name: String = "The Guardian",
   url: String = "http://www.theguardian.com/",
-  logo: String = Static("images/favicons/152x152.png").path,
+  logo: String = Static("images/favicons/152x152.png"),
   sameAs: List[String] = List(
     "https://www.facebook.com/theguardian",
     "https://twitter.com/guardian",

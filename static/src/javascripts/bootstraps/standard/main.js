@@ -142,9 +142,10 @@ define([
         robust.catchErrorsAndLog('ab-tests', function () {
             if (guardian.isEnhanced) {
                 ab.segmentUser();
-                robust.catchErrorsAndLog('ab-tests-run', function () {
-                    ab.run();
-                });
+
+                robust.catchErrorsAndLog('ab-tests-run', ab.run);
+                robust.catchErrorsAndLog('ab-tests-registerCompleteEvents', ab.registerCompleteEvents);
+
                 ab.trackEvent();
             }
         });

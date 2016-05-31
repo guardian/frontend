@@ -1,6 +1,8 @@
 $hosted-stripe: 28px;
 $hosted-video-width: 960px;
 $hosted-video-height: 540px;
+$renaultColor: #ffc421;
+$renaultLight: #fff9e9;
 
 @mixin hosted-fade-in {
     visibility: visible;
@@ -15,11 +17,11 @@ $hosted-video-height: 540px;
 }
 
 .hosted-tone--renault {
-    color: #ffc421;
+    color: $renaultColor;
 }
 
 .hosted-tone-bg--renault {
-    background-color: #ffc421;
+    background-color: $renaultColor;
 }
 
 .hosted-tone--dark {
@@ -58,6 +60,10 @@ $hosted-video-height: 540px;
 
     @include mq(leftCol) {
         max-width: gs-span(14) + $gs-gutter * 2;
+    }
+
+    @include mq(wide) {
+        max-width: gs-span($gs-max-columns) + $gs-gutter * 2;
     }
 }
 
@@ -242,13 +248,17 @@ $hosted-video-height: 540px;
 .hosted__meta {
     position: absolute;
     left: 20px;
-    bottom: 60px;
     width: 100%;
     color: #ffffff;
 
     @include mq($until: tablet) {
         right: $gs-gutter;
         width: auto;
+        bottom: 48px;
+    }
+
+    @include mq(tablet) {
+        bottom: 60px;
     }
 
     @include mq(desktop) {
@@ -284,8 +294,13 @@ $hosted-video-height: 540px;
     @include f-headlineSans;
 
     margin: 0;
-    font-size: 26px;
-    line-height: 26px;
+    font-size: 22px;
+    line-height: 24px;
+
+    @include mq(tablet) {
+        font-size: 26px;
+        line-height: 26px;
+    }
 
     @include mq(desktop) {
         font-size: 36px;
@@ -373,8 +388,8 @@ $hosted-video-height: 540px;
     &,
     &:focus,
     &:hover {
-        background-color: #ffc421;
-        border-color: #ffc421;
+        background-color: $renaultColor;
+        border-color: $renaultColor;
         color: $neutral-1;
     }
 
@@ -412,14 +427,15 @@ $hosted-video-height: 540px;
 
     font-size: 25px;
     font-weight: bold;
-    color: #ffc421;
+    color: $renaultColor;
 
     @include mq(tablet) {
         font-size: 38px;
     }
 }
 
-.hosted__cta-link {
+.hosted__cta-link,
+.hosted__next-video--tile {
     &:hover {
         text-decoration: none;
     }
@@ -455,15 +471,17 @@ $hosted-video-height: 540px;
 }
 
 .hosted__link {
-    color: #ffc421;
+    color: $renaultColor;
 }
 
 .hosted__standfirst {
+    flex: 3;
     width: auto;
     padding: $gs-baseline $gs-gutter 0;
 
     @include mq(desktop) {
         width: 60%;
+        max-width: 60%;
         margin-bottom: $gs-gutter * 1.5;
     }
 }
@@ -562,14 +580,32 @@ $hosted-video-height: 540px;
         border-top: 1px solid transparent;
     }
 
+    .hosted__faux-controls {
+        @include f-headlineSans;
+        position: absolute;
+        bottom: 0;
+        font-size: 16px;
+        font-weight: bold;
+
+        .hosted__video-timer {
+            color: #ffffff;
+            @include mq(desktop) {
+                margin-bottom: 10px;
+            }
+        }
+    }
+
     .play-button {
         @include icon(play-32--tone-media);
         @include mq(desktop) {
             padding: 9px;
         }
-        position: absolute;
-        margin: $gs-gutter/2;
-        bottom: 0;
+        margin: 10px;
+    }
+
+    .play-button, .hosted__video-timer {
+        display: inline-block;
+        vertical-align: bottom;
     }
 }
 
@@ -596,7 +632,7 @@ $hosted-video-height: 540px;
     }
 
     @include mq(wide) {
-        margin-left: 100px;
+        margin-left: 180px;
     }
 }
 
@@ -658,4 +694,58 @@ $hosted-video-height: 540px;
 
 .hosted__popup-text {
     font-weight: 200;
+}
+
+.hosted__next-video--header {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #eeeeee;
+}
+
+.hosted__container .adverts__body {
+    @include mq(desktop) {
+        display: flex;
+        max-width: none;
+    }
+}
+
+.hosted__next-video {
+    @include f-headlineSans;
+
+    flex: 2;
+    padding: $gs-baseline $gs-gutter 0;
+}
+
+.hosted__next-video--up-next {
+    font-weight: bolder;
+}
+
+.hosted__next-video--client-name {
+    font-size: 20px;
+    line-height: 20px;
+}
+
+.hosted__next-video--tile {
+    display: flex;
+    background: $renaultLight;
+    color: #333333;
+    border-top: 2px solid $renaultColor;
+    text-decoration: none;
+
+    &:active {
+        color: #333333;
+    }
+}
+
+.hosted__next-video-thumb {
+    height: 96px;
+    width: 160px;
+    align-self: center;
+}
+
+.hosted__next-video-title {
+    font-size: 20px;
+    line-height: 23px;
+    padding: 10px;
+    margin: 0;
 }

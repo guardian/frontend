@@ -19,11 +19,9 @@ Only if we detect we should run enhance.
 
 define([
     'Promise',
-    'lodash/collections/forEach',
     'domReady'
 ], function (
     Promise,
-    forEach,
     domReady
 ) {
     // curl’s promise API is broken, so we must cast it to a real Promise
