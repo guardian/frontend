@@ -150,8 +150,3 @@ class CachedHealthCheckLifeCycle(healthCheckController: CachedHealthCheck) exten
     }
   }
 }
-
-// this is temporary and allows me to split a big PR
-class InjectedCachedHealthCheckLifeCycle(val healthCheckController: CachedHealthCheck) extends CachedHealthCheckLifeCycle with LifecycleComponent {
-  override def start(): Unit = super.onStart(Play.current)
-}
