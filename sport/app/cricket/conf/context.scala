@@ -1,10 +1,16 @@
-package conf
+package cricket.conf
 
-import common.{AkkaAsync, Jobs, ExecutionContexts}
+import common.{LifecycleComponent, AkkaAsync, Jobs}
 import jobs.CricketStatsJob
-import play.api.GlobalSettings
+import play.api.inject.ApplicationLifecycle
 
-trait CricketLifecycle extends GlobalSettings with ExecutionContexts {
+import scala.concurrent.{Future, ExecutionContext}
+
+class CricketLifecycle(appLifeCycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent {
+
+  appLifeCycle.addStopHook { () => Future {
+    descheduleJobs()
+  }}
 
   private def scheduleJobs() {
     Jobs.schedule("CricketAgentRefreshJob", "0 * * * * ?") {
@@ -16,8 +22,7 @@ trait CricketLifecycle extends GlobalSettings with ExecutionContexts {
     Jobs.deschedule("CricketAgentRefreshJob")
   }
 
-  override def onStart(app: play.api.Application) {
-    super.onStart(app)
+  override def start() {
     descheduleJobs()
     scheduleJobs()
 
@@ -25,10 +30,4 @@ trait CricketLifecycle extends GlobalSettings with ExecutionContexts {
       CricketStatsJob.run()
     }
   }
-
-  override def onStop(app: play.api.Application) {
-    descheduleJobs()
-    super.onStop(app)
-  }
-
 }
