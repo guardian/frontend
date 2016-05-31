@@ -81,6 +81,7 @@ final case class Content(
   lazy val discussionId = Some(shortUrlId)
   lazy val isImmersive = fields.displayHint.contains("immersive") || metadata.contentType.toLowerCase == "gallery"
   lazy val showNewGalleryDesign = galleryRedesign.isSwitchedOn && metadata.contentType.toLowerCase == "gallery" && !trail.commercial.isAdvertisementFeature
+  lazy val isFoodAndDrink: Boolean = tags.isFoodAndDrink
 
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {
@@ -105,7 +106,7 @@ final case class Content(
 
   // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
   lazy val openGraphImage: String = {
-    ImgSrc(rawOpenGraphImage, FacebookOpenGraphImage)
+    ImgSrc(rawOpenGraphImage, FacebookOpenGraphImage, isFoodAndDrink)
   }
 
   lazy val syndicationType = {
@@ -438,7 +439,6 @@ final case class Article (
   val isLiveBlog: Boolean = content.tags.isLiveBlog && content.fields.blocks.nonEmpty
   val isUSMinute: Boolean = content.tags.isUSMinuteSeries
   val isImmersive: Boolean = content.isImmersive
-
   lazy val hasVideoAtTop: Boolean = soupedBody.body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
