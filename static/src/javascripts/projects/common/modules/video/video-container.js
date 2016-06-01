@@ -24,33 +24,10 @@ define([
         preloadImageCount = 2;
 
     function init() {
-        bindEvents();
-        initLazyLoadImages();
-    }
-
-    function initLazyLoadImages() {
-        $('.js-video-playlist-image').each(function(el) {
-            // We wrap this in a read as ElementInview reads the DOM.
-            fastdom.read(function() {
-                var elementInview = ElementInview(el , $('.js-video-playlist-inner').get(0), {
-                    // This loads 1 image in the future
-                    left: 410
-                });
-
-                elementInview.on('firstview', function(el) {
-                    fastdom.write(function() {
-                        var dataSrc = el.getAttribute('data-src');
-                        var src = el.getAttribute('src');
-
-                        if (dataSrc && !src) {
-                            fastdom.write(function() {
-                                el.setAttribute('src', dataSrc);
-                            });
-                        }
-                    });
-                });
-            });
-        });
+        if ($videoPlaylist.length > 0) {
+            bindEvents();
+            initLazyLoadImages();
+        }
     }
 
     function bindEvents() {
@@ -99,20 +76,45 @@ define([
         });
     }
 
+    // iniLazyLoadImages is used for when a user scrolls i.e. thin viewport
+    // and fetchImage is used for when the carousel controls are used i.e. fat viewport
+    function initLazyLoadImages() {
+        $('.js-video-playlist-image').each(function(el) {
+            // We wrap this in a read as ElementInview reads the DOM.
+            fastdom.read(function() {
+                var elementInview = ElementInview(el , $('.js-video-playlist-inner').get(0), {
+                    // This loads 1 image in the future
+                    left: 410
+                });
+
+                elementInview.on('firstview', function(el) {
+                    fastdom.write(function() {
+                        var dataSrc = el.getAttribute('data-src');
+                        var src = el.getAttribute('src');
+
+                        if (dataSrc && !src) {
+                            fastdom.write(function() {
+                                el.setAttribute('src', dataSrc);
+                            });
+                        }
+                    });
+                });
+            });
+        });
+    }
+
     function fetchImage(i) {
-
-
-        // $('.js-video-playlist-image--' + i).map(function(el) {
-        //     fastdom.read(function () {
-        //         var dataSrc = el.getAttribute('data-src');
-        //         var src = el.getAttribute('src');
-        //         if (dataSrc && !src) {
-        //             fastdom.write(function() {
-        //                 el.setAttribute('src', dataSrc);
-        //             });
-        //         }
-        //     });
-        // });
+        $('.js-video-playlist-image--' + i).map(function(el) {
+            fastdom.read(function () {
+                var dataSrc = el.getAttribute('data-src');
+                var src = el.getAttribute('src');
+                if (dataSrc && !src) {
+                    fastdom.write(function() {
+                        el.setAttribute('src', dataSrc);
+                    });
+                }
+            });
+        });
     }
 
     return function () {
