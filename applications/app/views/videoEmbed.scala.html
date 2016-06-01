@@ -90,7 +90,7 @@
         }
 
         document.documentElement.className = docClass;
-        @Html(Static.js.omnitureJs)
+        @Html(common.Assets.js.omnitureJs)
         </script>
 
         <script>
@@ -105,7 +105,7 @@
                 }
             };
 
-            @Html(Static.js.curl)
+            @Html(common.Assets.js.curl)
 
             require(['bootstraps/video-embed'], function(bootstrap) {
                 bootstrap.init();

@@ -7,60 +7,20 @@ import common.dfp.{GuAdUnit, GuCreative, GuCreativeTemplate, GuLineItem}
 import dfp.DataMapper.{toGuAdUnit, toGuCreativeTemplate, toGuLineItem, toGuTemplateCreative}
 import org.joda.time.DateTime
 
-import scala.util.control.NonFatal
-import scala.util.{Failure, Success, Try}
-
 object DfpApi extends Logging {
 
   private def readLineItems(stmtBuilder: StatementBuilder): Seq[GuLineItem] = {
 
-    def sponsor(lineItem: LineItem) = for {
-      sponsorFieldId <- CustomFieldAgent.get.data.get("Sponsor")
-      customFieldValues <- Option(lineItem.getCustomFieldValues)
-      sponsor <- customFieldValues.collect {
-        case fieldValue: CustomFieldValue if fieldValue.getCustomFieldId == sponsorFieldId =>
-          fieldValue.getValue.asInstanceOf[TextValue].getValue
-      }.headOption
-    } yield sponsor
-
-    def placementAdUnitIds(session: SessionWrapper, placementId: Long): Seq[String] = {
-      lazy val fallback = {
-        val stmtBuilder = new StatementBuilder().where("id = :id").withBindVariableValue("id", placementId)
-        session.placements(stmtBuilder) flatMap (_.getTargetedAdUnitIds.toSeq)
-      }
-      PlacementAgent.get.data getOrElse(placementId, fallback)
-    }
-
-    def adUnit(adUnitId: String): Option[GuAdUnit] = AdUnitAgent.get.data.get(adUnitId)
-
-    def targetingKey(session: SessionWrapper, keyId: Long): String = {
-      lazy val fallback = {
-        val stmtBuilder = new StatementBuilder().where("id = :id").withBindVariableValue("id", keyId)
-        session.customTargetingKeys(stmtBuilder).head.getName
-      }
-      CustomTargetingKeyAgent.get.data getOrElse(keyId, fallback)
-    }
-
-    def targetingValue(session: SessionWrapper, valueId: Long): String = {
-      lazy val fallback = {
-        val stmtBuilder = new StatementBuilder().where("id = :id").withBindVariableValue("id", valueId)
-        session.customTargetingValues(stmtBuilder).head.getName
-      }
-      CustomTargetingValueAgent.get.data getOrElse(valueId, fallback)
-    }
-
-    withDfpSession { session =>
-      session.lineItems(stmtBuilder) map { lineItem =>
-        toGuLineItem(
-          lineItem,
-          sponsor(lineItem),
-          placementAdUnitIds(session, _),
-          adUnit,
-          targetingKey(session, _),
-          targetingValue(session, _)
-        )
-      }
-    }
+    withDfpSession( session => {
+      session.lineItems(stmtBuilder)
+        .map( dfpLineItem => {
+          toGuLineItem(session)(dfpLineItem) -> dfpLineItem
+        })
+        .filter(Function.tupled(DataValidation.isGuLineItemValid))
+        .map({
+          case (guLineItem, _) => guLineItem
+        })
+    })
   }
 
   def readCurrentLineItems(): Seq[GuLineItem] = {
@@ -157,40 +117,8 @@ object DfpApi extends Logging {
     } sortBy (_._2)
   }
 
-  def readAdUnitsForApproval(rootName: String): Seq[GuAdUnit] = {
-    withDfpSession { session =>
-      val suggestedAdUnits = session.suggestedAdUnits.get(new StatementBuilder())
-      val allUnits = suggestedAdUnits map toGuAdUnit
-      allUnits.filter { adUnit =>
-        (adUnit.path.last == "ng" || adUnit.path.last == "r2") && adUnit.path.size == 4
-      }.sortBy(_.id).distinct
-    }
-  }
-
-  def approveTheseAdUnits(adUnits: Iterable[String]): Try[String] = {
-    try {
-      val maybeResult = for (session <- SessionWrapper()) yield {
-        val adUnitsList = adUnits.mkString(",")
-        val numChanges = session.suggestedAdUnits.approve(
-          new StatementBuilder().where(s"id in ($adUnitsList)").toStatement
-        )
-        if (numChanges > 0) {
-          Success("Ad units approved")
-        } else {
-          Failure(new DfpApprovalException("Apparently, nothing changed"))
-        }
-      }
-      maybeResult getOrElse Failure(new DfpSessionException())
-    } catch {
-      case NonFatal(e) => Failure(new DfpApprovalException(e.getMessage))
-    }
-  }
-
   private def withDfpSession[T](block: SessionWrapper => Seq[T]): Seq[T] = {
     val results = for (session <- SessionWrapper()) yield block(session)
     results getOrElse Nil
   }
 }
-
-class DfpApprovalException(message: String) extends RuntimeException
-class DfpSessionException extends RuntimeException

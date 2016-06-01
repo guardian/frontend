@@ -2,19 +2,25 @@ package model
 
 import java.util.TimeZone
 
-import common.{AkkaAsync, Jobs, Logging}
+import common.{LifecycleComponent, AkkaAsync, Jobs, Logging}
 import conf.Configuration
 import conf.Configuration.environment
 import conf.switches.Switches._
 import football.feed.MatchDayRecorder
 import jobs._
-import play.api.GlobalSettings
+import play.api.inject.ApplicationLifecycle
 import services.EmailService
 import tools.{AssetMetricsCache, CloudWatch, LoadBalancer}
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
-trait AdminLifecycle extends GlobalSettings with Logging {
+class AdminLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+
+  appLifecycle.addStopHook { () => Future {
+    descheduleJobs()
+    CloudWatch.shutdown()
+    EmailService.shutdown()
+  }}
 
   lazy val adminPressJobStandardPushRateInMinutes: Int = Configuration.faciatool.adminPressJobStandardPushRateInMinutes
   lazy val adminPressJobHighPushRateInMinutes: Int = Configuration.faciatool.adminPressJobHighPushRateInMinutes
@@ -119,8 +125,7 @@ trait AdminLifecycle extends GlobalSettings with Logging {
     Jobs.deschedule("AssetMetricsCache")
   }
 
-  override def onStart(app: play.api.Application): Unit = {
-    super.onStart(app)
+  override def start(): Unit = {
     descheduleJobs()
     scheduleJobs()
 
@@ -129,12 +134,5 @@ trait AdminLifecycle extends GlobalSettings with Logging {
       VideoEncodingsJob.run()
       AssetMetricsCache.run()
     }
-  }
-
-  override def onStop(app: play.api.Application): Unit = {
-    descheduleJobs()
-    CloudWatch.shutdown()
-    EmailService.shutdown()
-    super.onStop(app)
   }
 }

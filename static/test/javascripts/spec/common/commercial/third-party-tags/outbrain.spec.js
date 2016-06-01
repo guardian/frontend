@@ -22,9 +22,12 @@ define([
                 '<div class="js-outbrain"><div class="js-outbrain-container"></div></div>'
             ]
         },
+        ads = {
+           'dfp-ad--merchandising-high': true,
+           'dfp-ad--merchandising': false
+        },
         $fixtureContainer,
         config,
-        mediator,
         identity,
         detect,
         sut, // System under test
@@ -34,27 +37,34 @@ define([
 
     describe('Outbrain', function () {
         beforeEach(function (done) {
-            // injector.mock('ophan/ng', { record: function () {} });
+            injector.mock('common/modules/commercial/dfp/track-ad-load', function(id) {
+                return Promise.resolve(ads[id]);
+            });
+            injector.mock('common/modules/email/run-checks', function() {
+                return Promise.resolve(false);
+            });
             injector.require([
+                'common/modules/commercial/dfp/track-ad-load',
+                'common/modules/email/run-checks',
                 'common/modules/commercial/third-party-tags/outbrain',
                 'common/modules/commercial/third-party-tags/outbrain-sections',
-                'common/utils/mediator',
                 'common/utils/config',
                 'common/modules/identity/api',
                 'common/utils/detect',
                 'common/modules/commercial/commercial-features'
             ], function () {
-                sut      = arguments[0];
-                getSection = arguments[1];
-                mediator = arguments[2];
-                config   = arguments[3];
-                identity = arguments[4];
-                detect   = arguments[5];
-                commercialFeatures = arguments[6];
+                sut      = arguments[2];
+                getSection = arguments[3];
+                config   = arguments[4];
+                identity = arguments[5];
+                detect   = arguments[6];
+                commercialFeatures = arguments[7];
 
                 config.switches.outbrain = true;
+                config.switches.emailInArticleOutbrain = false;
                 config.page = {
                     section: 'uk-news',
+                    isFront: false,
                     isPreview: false,
                     commentable: true,
                     edition: 'UK'
@@ -81,26 +91,7 @@ define([
         });
 
         describe('Init', function () {
-            var eventStub, eventStubLo;
-
             beforeEach(function () {
-                eventStub = {
-                    slot: {
-                        getSlotElementId: function () {
-                            return 'dfp-ad--merchandising-high';
-                        }
-                    },
-                    isEmpty: true
-                };
-                eventStubLo = {
-                    slot: {
-                        getSlotElementId: function () {
-                            return 'dfp-ad--merchandising';
-                        }
-                    },
-                    isEmpty: true
-                };
-
                 spyOn(sut, 'load');
             });
 
@@ -109,8 +100,6 @@ define([
                     expect(sut.load).toHaveBeenCalled();
                     done();
                 });
-                mediator.emit('modules:commercial:dfp:rendered', eventStub);
-                mediator.emit('modules:commercial:dfp:rendered', eventStubLo);
             });
 
             it('should not load when sensitive content', function (done) {
@@ -152,8 +141,6 @@ define([
                     expect(sut.load).toHaveBeenCalled();
                     done();
                 });
-                mediator.emit('modules:commercial:dfp:rendered', eventStub);
-                mediator.emit('modules:commercial:dfp:rendered', eventStubLo);
             });
 
             it('should load instantly when ad block is in use', function (done) {
@@ -166,49 +153,23 @@ define([
             });
 
             it('should load in the low-priority merch component', function (done) {
-                eventStub.isEmpty = false;
-                eventStubLo.isEmpty = true;
-
-                var oldEmit = mediator.emit;
-                mediator.emit = function (eventName, data) {
-                    return new Promise(function (resolve) {
-                        oldEmit.call(mediator, eventName, data);
-                        resolve();
-                    });
-                };
+                ads['dfp-ad--merchandising-high'] = true;
+                ads['dfp-ad--merchandising'] = false;
 
                 sut.init().then(function () {
                     expect(sut.load).toHaveBeenCalledWith('merchandising');
                     done();
                 });
-                mediator.emit('modules:commercial:dfp:rendered', eventStub).then(function () {
-                    mediator.emit('modules:commercial:dfp:rendered', eventStubLo);
-                });
-
-                mediator.emit = oldEmit;
             });
 
             it('should not load if both merch components are loaded', function (done) {
-                eventStub.isEmpty = false;
-                eventStubLo.isEmpty = false;
-
-                var oldEmit = mediator.emit;
-                mediator.emit = function (eventName, data) {
-                    return new Promise(function (resolve) {
-                        oldEmit.call(mediator, eventName, data);
-                        resolve();
-                    });
-                };
+                ads['dfp-ad--merchandising-high'] = true;
+                ads['dfp-ad--merchandising'] = true;
 
                 sut.init().then(function () {
                     expect(sut.load).not.toHaveBeenCalledWith('merchandising');
                     done();
                 });
-                mediator.emit('modules:commercial:dfp:rendered', eventStub).then(function () {
-                    mediator.emit('modules:commercial:dfp:rendered', eventStubLo);
-                });
-
-                mediator.emit = oldEmit;
             });
         });
 

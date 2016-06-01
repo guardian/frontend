@@ -26,7 +26,7 @@ class DfpDataCacheJobTest extends FlatSpec with Matchers {
   private val cachedLineItems = Seq(lineItem(1, "a"), lineItem(2, "b"), lineItem(3, "c"))
   private val allReadyOrDeliveringLineItems = Nil
 
-  "loadLineItems" should "dedup line items that have changed in an unknown way" in {
+  "loadLineItems" should "dedupe line items that have changed in an unknown way" in {
     def lineItemsModifiedSince(threshold: DateTime) = Seq(
       lineItem(1, "a"),
       lineItem(2, "b"),
@@ -47,7 +47,7 @@ class DfpDataCacheJobTest extends FlatSpec with Matchers {
     lineItems.current shouldBe Seq(lineItem(1, "a"), lineItem(2, "b"), lineItem(3, "c"))
   }
 
-  it should "dedup line items that have changed in a known way" in {
+  it should "dedupe line items that have changed in a known way" in {
     def lineItemsModifiedSince(threshold: DateTime) = Seq(
       lineItem(1, "d"),
       lineItem(2, "e"),
