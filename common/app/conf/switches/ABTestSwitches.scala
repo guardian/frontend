@@ -19,7 +19,7 @@ trait ABTestSwitches {
     "ab-live-blog-chrome-notifications-internal",
     "Live blog chrome notifications - Internal",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 1),
+    sellByDate = new LocalDate(2016, 7, 4),
     exposeClientSide = true
   )
 
@@ -28,7 +28,7 @@ trait ABTestSwitches {
     "ab-live-blog-chrome-notifications-prod",
     "Live blog chrome notifications - prod",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 1),
+    sellByDate = new LocalDate(2016, 7, 4),
     exposeClientSide = true
   )
 
