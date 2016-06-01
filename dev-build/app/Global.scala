@@ -1,11 +1,10 @@
 import commercial.CommercialLifecycle
-import dfp.DfpDataCacheLifecycle
 import common.dfp.FaciaDfpAgentLifecycle
 import common._
 import conf._
 import conf.switches.SwitchboardLifecycle
 import contentapi.SectionsLookUpLifecycle
-import cricket.conf.CricketLifecycle
+import _root_.dfp.DfpDataCacheLifecycle
 import feed.{MostPopularFacebookAutoRefreshLifecycle, MostReadLifecycle, OnwardJourneyLifecycle}
 import model.AdminLifecycle
 import ophan.SurgingContentAgentLifecycle
@@ -18,23 +17,23 @@ import headlines.ABHeadlinesLifecycle
 import scala.concurrent.ExecutionContext
 
 object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents
+  with DiagnosticsLifecycle
+  with OnwardJourneyLifecycle
+  with MostReadLifecycle
   with FaciaDfpAgentLifecycle
   with ConfigAgentLifecycle
   with SurgingContentAgentLifecycle
   with SectionsLookUpLifecycle
+  with MostPopularFacebookAutoRefreshLifecycle
   with SwitchboardLifecycle
+  with FootballLifecycle
+  with CricketLifecycle
+  with RugbyLifecycle
   with ABHeadlinesLifecycle {
 
   override def lifecycleComponents(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext): List[LifecycleComponent] = List(
-    new AdminLifecycle(appLifecycle),
-    new DiagnosticsLifecycle(appLifecycle),
-    new OnwardJourneyLifecycle(appLifecycle),
-    new CommercialLifecycle(appLifecycle),
-    new MostReadLifecycle(appLifecycle),
-    new DfpDataCacheLifecycle(appLifecycle),
-    new MostPopularFacebookAutoRefreshLifecycle(appLifecycle),
-    new FootballLifecycle(appLifecycle),
-    new CricketLifecycle(appLifecycle),
-    new RugbyLifecycle(appLifecycle)
+    new AdminLifecycle(appLifecycle)(ec),
+    new CommercialLifecycle(appLifecycle)(ec),
+    new DfpDataCacheLifecycle(appLifecycle)(ec)
   )
 }
