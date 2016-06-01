@@ -2,6 +2,7 @@ import common.{LifecycleComponent, BackwardCompatibleLifecycleComponents, CloudW
 import common.Logback.Logstash
 import conf._
 import conf.switches.SwitchboardLifecycle
+import controllers.HealthCheck
 import filters.RequestLoggingFilter
 import play.api.GlobalSettings
 import play.api.http.HttpFilters
@@ -16,7 +17,9 @@ object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents
   with Logstash {
   override lazy val applicationName = "frontend-discussion"
 
-  override def lifecycleComponents(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext): List[LifecycleComponent] = Nil
+  override def lifecycleComponents(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext): List[LifecycleComponent] = List(
+    new InjectedCachedHealthCheckLifeCycle(HealthCheck)
+  )
 }
 
 class DiscussionFilters extends HttpFilters {

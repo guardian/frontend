@@ -2,6 +2,7 @@ import common.{LifecycleComponent, BackwardCompatibleLifecycleComponents, CloudW
 import common.Logback.Logstash
 import conf._
 import conf.switches.SwitchboardLifecycle
+import controllers.HealthCheck
 import play.api._
 import play.api.inject.ApplicationLifecycle
 import play.api.inject.guice._
@@ -18,6 +19,7 @@ object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents
   override lazy val applicationName = "frontend-identity"
 
   override def lifecycleComponents(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext): List[LifecycleComponent] = List(
+    new InjectedCachedHealthCheckLifeCycle(HealthCheck),
     new IdentityLifecycle(appLifecycle)
   )
 }
