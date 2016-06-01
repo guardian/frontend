@@ -28,11 +28,11 @@ define([
      *
      * @returns {Promise} - when insertion attempt completed, resolves 'true' if inserted, or 'false' if no space found
      */
-    SpaceFiller.prototype.fillSpace = function (rules, writer) {
+    SpaceFiller.prototype.fillSpace = function (rules, writer, options) {
         return queue.add(insertNextContent);
 
         function insertNextContent() {
-            return spacefinder.findSpace(rules).then(onSpacesFound, onNoSpacesFound);
+            return spacefinder.findSpace(rules, options).then(onSpacesFound, onNoSpacesFound);
         }
 
         function onSpacesFound(paragraphs) {
