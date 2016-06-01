@@ -37,7 +37,7 @@ trait ABTestSwitches {
     "ab-loyal-adblocking-survey",
     "An adblock ongoing survey for all loyal users",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 31),
+    sellByDate = new LocalDate(2016, 6, 2),
     exposeClientSide = true
   )
 

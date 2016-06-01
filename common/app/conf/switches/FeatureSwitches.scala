@@ -319,7 +319,7 @@ trait FeatureSwitches {
     "If this switch is on, the new gallery redesign displays",
     safeState = On,
     // Tuesday
-    sellByDate = new LocalDate(2016, 5, 31),
+    sellByDate = new LocalDate(2016, 6, 2),
     exposeClientSide = false
   )
 
