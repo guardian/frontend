@@ -28,12 +28,12 @@
 }
 
 @immersiveMainMedia(page: GalleryPage) = {
-    <div class="new-gallery content tonal--tone-media immersive-main-media">
+    <div class="new-gallery content tonal--tone-media immersive-main-media js-background-image">
 
         @page.item.elements.mainPicture.map(_.images).orElse(page.item.trail.trailPicture).map { picture =>
             @fragments.image(
                 picture = picture,
-                classes = Seq("immersive-main-media__img"),
+                classes = Seq("immersive-main-media__img", "js-immersive-main-media__img"),
                 widths = MainMedia.immersive,
                 imageAltText = "",
                 isImmersiveMainMedia = true

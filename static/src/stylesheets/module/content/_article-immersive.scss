@@ -22,14 +22,29 @@
     width: 100%;
     // Remove inline spacing
     display: block;
+    // This is for the fallback;
+    min-height: 400px;
 
     @supports (object-fit: cover) and (height: 1vh) and (display: flex) {
         object-fit: cover;
         position: absolute;
         top: 0;
+        // overriding the fallback default
+        min-height: none;
         height: 100%;
         width: 100%;
         z-index: 0;
+    }
+}
+
+.immersive-main-media--fallback {
+    background-size: cover;
+    background-position: center center;
+    min-height: 400px;
+
+    // hide image if object fit is not supported
+    .immersive-main-media__img {
+        opacity: 0;
     }
 }
 
