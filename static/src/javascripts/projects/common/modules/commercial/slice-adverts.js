@@ -56,7 +56,8 @@ define([
                     return true;
                 }
 
-                if (replaceTopSlot && index === 0) {
+                var isThrasher = bonzo(item.container).hasClass('fc-container--thrasher');
+                if (replaceTopSlot && index === 0 && !isThrasher) {
                     // it's mobile, so we needn't check for an adSlice
                     lastIndex = index;
                     return true;

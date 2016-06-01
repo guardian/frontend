@@ -183,7 +183,6 @@ object MetaData {
     ): MetaData = {
 
     val resolvedUrl = url.getOrElse(s"/$id")
-
     MetaData(
       id = id,
       url = resolvedUrl,
@@ -605,6 +604,7 @@ final case class Tags(
   lazy val isPoll: Boolean = tags.exists { _.id == Tags.Poll }
   lazy val isImageContent: Boolean = tags.exists { tag => List("type/cartoon", "type/picture", "type/graphic").contains(tag.id) }
   lazy val isInteractive: Boolean = tags.exists { _.id == Tags.Interactive }
+  lazy val isFoodAndDrink: Boolean = tags.exists {_.id == "lifeandstyle/food-and-drink"}
 
   lazy val hasLargeContributorImage: Boolean = tagsOfType("Contributor").filter(_.properties.contributorLargeImagePath.nonEmpty).nonEmpty
 

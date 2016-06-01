@@ -30,7 +30,7 @@ define([
             if(videoLength){
                 var seconds = videoLength % 60;
                 var minutes = (videoLength - seconds) / 60;
-                this.params.timeString = minutes + ':' + (seconds < 10 ? '0' + seconds : seconds);
+                this.params.timeString = minutes + (seconds < 10 ? ':0' : ':') + seconds;
             }
 
             this.params.linkTracking = 'Labs hosted container' +

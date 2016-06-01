@@ -31,6 +31,15 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
+  val FacebookShareImageLogoOverlay = Switch(
+    SwitchGroup.Feature,
+    "facebook-share-image-logo-overlay",
+    "If this switch is turned on, we will overlay the guardian logo along the bottom of images shared on facebook",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 11, 7),
+    exposeClientSide = false
+  )
+
   val OutbrainSwitch = Switch(
     SwitchGroup.Feature,
     "outbrain",

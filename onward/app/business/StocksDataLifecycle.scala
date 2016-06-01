@@ -1,15 +1,17 @@
 package business
 
-import play.api.{GlobalSettings, Application}
+import common.LifecycleComponent
+import play.api.inject.ApplicationLifecycle
 
-trait StocksDataLifecycle extends GlobalSettings {
-  override def onStart(app: Application): Unit = {
-    super.onStart(app)
-    StocksData.start()
-  }
+import scala.concurrent.{Future, ExecutionContext}
 
-  override def onStop(app: Application): Unit = {
+class StocksDataLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent {
+
+  appLifecycle.addStopHook { () => Future {
     StocksData.stop()
-    super.onStop(app)
+  }}
+
+  def start(): Unit = {
+    StocksData.start()
   }
 }

@@ -1,12 +1,17 @@
 package feed
 
-import common.{AkkaAsync, Jobs}
-import play.api.{ Application => PlayApp, GlobalSettings }
+import common.{LifecycleComponent, AkkaAsync, Jobs}
+import play.api.inject.ApplicationLifecycle
 
-trait MostReadLifecycle extends GlobalSettings {
-  override def onStart(app: PlayApp) {
-    super.onStart(app)
+import scala.concurrent.{Future, ExecutionContext}
 
+class MostReadLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent {
+
+  appLifecycle.addStopHook { () => Future {
+    Jobs.deschedule("MostReadAgentRefreshJob")
+  }}
+
+  override def start(): Unit = {
     Jobs.deschedule("MostReadAgentRefreshJob")
 
     // update every 30 min
@@ -17,10 +22,5 @@ trait MostReadLifecycle extends GlobalSettings {
     AkkaAsync {
       MostReadAgent.update()
     }
-  }
-
-  override def onStop(app: PlayApp) {
-    Jobs.deschedule("MostReadAgentRefreshJob")
-    super.onStop(app)
   }
 }

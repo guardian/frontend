@@ -17,11 +17,11 @@ define([
 
         this.id = 'WelcomeHeader';
         this.start = '2016-05-18';
-        this.expiry = '2016-05-24';
+        this.expiry = '2016-06-10';
         this.author = 'Maria Livia Chiorean';
         this.description = 'Show a welcome header for first time users.';
-        this.audience = 1;
-        this.audienceOffset = 0;
+        this.audience = 0.4;
+        this.audienceOffset = 0.6;
         this.audienceCriteria = 'First time users';
         this.idealOutcome = 'People come back more after the first visit.';
 

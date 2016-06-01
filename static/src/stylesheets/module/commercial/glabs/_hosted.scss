@@ -119,7 +119,7 @@ $renaultLight: #fff9e9;
 .hosted__container--content {
     @include mq($until: leftCol) {
         display: flex;
-        flex-direction: column-reverse;
+        flex-direction: column;
 
         .adverts__header {
             padding-top: 0;
@@ -475,18 +475,18 @@ $renaultLight: #fff9e9;
 }
 
 .hosted__standfirst {
-    flex: 3;
     width: auto;
     padding: $gs-baseline $gs-gutter 0;
 
     @include mq(desktop) {
-        width: 60%;
-        max-width: 60%;
         margin-bottom: $gs-gutter * 1.5;
     }
 }
 
 .hosted__social {
+    @include mq($until: leftCol) {
+        order: 2;
+    }
     @include mq($until: tablet) {
         margin-top: $gs-gutter / 2;
     }
@@ -698,22 +698,25 @@ $renaultLight: #fff9e9;
 
 .hosted__next-video--header {
     padding-bottom: 10px;
-    margin-bottom: 10px;
+    margin: $gs-baseline $gs-gutter 10px;
     border-bottom: 2px solid #eeeeee;
 }
 
 .hosted__container .adverts__body {
+    @include mq($until: leftCol) {
+        order: 1;
+    }
     @include mq(desktop) {
-        display: flex;
-        max-width: none;
+        margin-right: 80px;
     }
 }
 
 .hosted__next-video {
     @include f-headlineSans;
-
-    flex: 2;
-    padding: $gs-baseline $gs-gutter 0;
+    @include mq(leftCol) {
+        width: calc(300px + 2 * #{$gs-gutter});
+    }
+    order: 3;
 }
 
 .hosted__next-video--up-next {
@@ -725,11 +728,12 @@ $renaultLight: #fff9e9;
     line-height: 20px;
 }
 
-.hosted__next-video--tile {
+.hosted__next-video .hosted__next-video--tile {
     display: flex;
     background: $renaultLight;
     color: #333333;
     border-top: 2px solid $renaultColor;
+    margin: 0 $gs-gutter $gs-gutter;
     text-decoration: none;
 
     &:active {
@@ -738,9 +742,14 @@ $renaultLight: #fff9e9;
 }
 
 .hosted__next-video-thumb {
-    height: 96px;
-    width: 160px;
+    height: 72px;
+    width: 120px;
     align-self: center;
+
+    @include mq($until: phablet) {
+        height: 54px;
+        width: 90px;
+    }
 }
 
 .hosted__next-video-title {
@@ -748,4 +757,9 @@ $renaultLight: #fff9e9;
     line-height: 23px;
     padding: 10px;
     margin: 0;
+
+    @include mq($until: phablet) {
+        font-size: 18px;
+        line-height: 20px;
+    }
 }
