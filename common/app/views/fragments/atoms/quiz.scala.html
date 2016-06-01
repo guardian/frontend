@@ -15,11 +15,13 @@
     ("atom-quiz--instant-reveal", !quiz.revealAtEnd && quiz.quizType == "knowledge"),
     ("js-atom-quiz--instant-reveal", !quiz.revealAtEnd && quiz.quizType == "knowledge")
 ))">
-    @quiz.content.questions.zipWithIndex.map { case (question, index) =>
-        @renderQuestion(question,
-            playForm(s"answers[$index]"),
-            maybeResults.flatMap(_.getAnswerFor(question))
-        )
+    @if(maybeResults.isEmpty) {
+        @quiz.content.questions.zipWithIndex.map { case (question, index) =>
+            @renderQuestion(question,
+                playForm(s"answers[$index]"),
+                maybeResults.flatMap(_.getAnswerFor(question))
+            )
+        }
     }
     @renderFooter(maybeResults)
     @if(maybeResults.isEmpty) {
