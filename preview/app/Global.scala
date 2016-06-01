@@ -1,12 +1,3 @@
-import common.LifecycleComponent
-import conf.InjectedCachedHealthCheckLifeCycle
-import controllers.HealthCheck
-import play.api.inject.ApplicationLifecycle
+import controllers.PreviewHealthCheckLifeCycle
 
-import scala.concurrent.ExecutionContext
-
-object Global extends StandaloneGlobal {
-  override def lifecycleComponents(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext): List[LifecycleComponent] = {
-    super.lifecycleComponents(appLifecycle) :+ new InjectedCachedHealthCheckLifeCycle(HealthCheck)
-  }
-}
+object Global extends StandaloneGlobal with PreviewHealthCheckLifeCycle

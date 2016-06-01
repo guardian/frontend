@@ -1,13 +1,12 @@
 import common.Logback.Logstash
 import common._
 import conf.switches.SwitchboardLifecycle
+import conf.{Configuration => GuardianConfiguration}
+import frontpress.{FrontPressCron, ToolPressQueueWorker}
 import play.api.GlobalSettings
-import play.api.inject.ApplicationLifecycle
 import services.ConfigAgentLifecycle
 
-import scala.concurrent.ExecutionContext
-
-object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents
+object Global extends GlobalSettings
   with ConfigAgentLifecycle
   with SwitchboardLifecycle
   with CloudWatchApplicationMetrics
@@ -27,5 +26,16 @@ object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents
     FaciaPressMetrics.AllFrontsPressLatencyMetric
   )
 
-  override def lifecycleComponents(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext): List[LifecycleComponent] = Nil
+  override def onStart(app: play.api.Application) {
+    super.onStart(app)
+    ToolPressQueueWorker.start()
+    if (GuardianConfiguration.faciatool.frontPressCronQueue.isDefined) {
+      FrontPressCron.start()
+    }
+  }
+
+  override def onStop(app: play.api.Application) {
+    ToolPressQueueWorker.stop()
+    super.onStop(app)
+  }
 }

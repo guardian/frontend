@@ -1,27 +1,19 @@
-import common.{LifecycleComponent, BackwardCompatibleLifecycleComponents, CloudWatchApplicationMetrics}
+import common.CloudWatchApplicationMetrics
 import common.Logback.Logstash
 import conf._
 import conf.switches.SwitchboardLifecycle
-import controllers.HealthCheck
 import play.api._
-import play.api.inject.ApplicationLifecycle
 import play.api.inject.guice._
 import utils.SafeLogging
 
-import scala.concurrent.ExecutionContext
-
-object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents
-  with SafeLogging
+object Global extends SafeLogging
   with CloudWatchApplicationMetrics
+  with IdentityLifecycle
   with SwitchboardLifecycle
-  with Logstash {
+  with Logstash
+  with IdentityHealthCheckLifeCycle {
 
   override lazy val applicationName = "frontend-identity"
-
-  override def lifecycleComponents(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext): List[LifecycleComponent] = List(
-    new InjectedCachedHealthCheckLifeCycle(HealthCheck),
-    new IdentityLifecycle(appLifecycle)
-  )
 }
 
 class IdentityApplicationLoader extends GuiceApplicationLoader() {

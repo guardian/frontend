@@ -1,14 +1,8 @@
 package common
 
-import play.api.inject.ApplicationLifecycle
+import play.api.GlobalSettings
 
-import scala.concurrent.{ExecutionContext, Future}
-
-class DiagnosticsLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
-
-  appLifecycle.addStopHook { () => Future {
-    descheduleJobs()
-  }}
+trait DiagnosticsLifecycle extends GlobalSettings with Logging {
 
   private def scheduleJobs() {
     Jobs.schedule("DiagnosticsLoadJob", "0 * * * * ?") {
@@ -20,8 +14,14 @@ class DiagnosticsLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: Exec
     Jobs.deschedule("DiagnosticsLoadJob")
   }
 
-  override def start(): Unit = {
+  override def onStart(app: play.api.Application) {
+    super.onStart(app)
     descheduleJobs()
     scheduleJobs()
+  }
+
+  override def onStop(app: play.api.Application) {
+    descheduleJobs()
+    super.onStop(app)
   }
 }
