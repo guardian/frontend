@@ -22,13 +22,13 @@
             <tbody>
                 @for(targetingKey <- keyValues) {
                     <tr>
-                        <td>@{targetingKey.name}</td>
+                        <td><a href="@controllers.admin.routes.CommercialController.renderKeyValuesCsv(targetingKey.name)">@{targetingKey.name}</a></td>
                         <td>@{targetingKey.displayName}</td>
                         <td>@{targetingKey.id}</td>
                         <td>
-                            @for(targetingValue <- targetingKey.values) {
+                            @for(targetingValue <- targetingKey.readableValues) {
                                 <div>
-                                    @{targetingValue.name} <em>(@{targetingValue.id})</em>
+                                    @{targetingValue.name} @{targetingValue.displayName} <em>(@{targetingValue.id})</em>
                                 </div>
                             }
                         </td>

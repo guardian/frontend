@@ -107,4 +107,15 @@ object CommercialController extends Controller with Logging with AuthLogging wit
   def renderKeyValues() = AuthActions.AuthActionTest { implicit request =>
     Ok(views.html.commercial.customTargetingKeyValues("PROD", Store.getDfpCustomTargetingKeyValues))
   }
+
+  def renderKeyValuesCsv(key: String) = AuthActions.AuthActionTest { implicit request =>
+    val csv: Option[String] = Store.getDfpCustomTargetingKeyValues.find(_.name == key).map { selectedKey =>
+
+      selectedKey.values.map( targetValue => {
+        s"${targetValue.id}, ${targetValue.name}, ${targetValue.displayName}"
+      }).mkString("\n")
+    }
+
+    Ok(csv.getOrElse(s"No targeting found for key: $key"))
+  }
 }

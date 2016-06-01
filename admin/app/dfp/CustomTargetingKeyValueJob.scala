@@ -12,7 +12,9 @@ case class GuCustomTargetingKey(
   name: String,
   displayName: String,
   values: Seq[GuCustomTargetingValue]
-)
+) {
+  val readableValues: Seq[GuCustomTargetingValue] = values.filter( _.displayName.nonEmpty)
+}
 
 case class GuCustomTargetingValue(
   id: Long,
