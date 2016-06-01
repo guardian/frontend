@@ -7,11 +7,15 @@
 
 define([
     'common/utils/mediator',
+    'common/utils/take-while',
+    'common/utils/drop-while',
     'lodash/functions/memoize',
     'lodash/functions/compose',
     'Promise'
 ], function (
     mediator,
+    takeWhile,
+    dropWhile,
     memoize,
     compose,
     Promise
@@ -212,32 +216,6 @@ define([
             width:  w.innerWidth  || e.clientWidth  || g.clientWidth,
             height: w.innerHeight || e.clientHeight || g.clientHeight
         };
-    }
-
-    function takeWhile(f, arr) {
-        var i = 0,
-            size = arr.length,
-            taking = i < size && f(arr[i], i, arr);
-
-        while (taking) {
-            i += 1;
-            taking = i < size && f(arr[i], i, arr);
-        }
-
-        return arr.slice(0, i);
-    }
-
-    function dropWhile(f, arr) {
-        var i = 0,
-            size = arr.length,
-            dropping = i < size && f(arr[i], i, arr);
-
-        while (dropping) {
-            i += 1;
-            dropping = i < size && f(arr[i], i, arr);
-        }
-
-        return arr.slice(i);
     }
 
     function getBreakpointName(breakpoint) {
