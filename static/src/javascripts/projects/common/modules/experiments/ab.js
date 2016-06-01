@@ -22,7 +22,6 @@ define([
     'common/modules/experiments/tests/clever-friend-brexit',
     'common/modules/experiments/tests/welcome-header',
     'common/modules/experiments/tests/participation-discussion-test',
-    'common/modules/experiments/tests/play-video-on-fronts',
     'common/modules/experiments/tests/new-user-adverts-disabled',
     'common/modules/experiments/tests/video-teaser'
 ], function (
@@ -34,7 +33,6 @@ define([
     mvtCookie,
     memoize,
     noop,
-
     FrontsOnArticles2,
     LiveBlogChromeNotificationsInternal,
     LiveBlogChromeNotificationsProd,
@@ -49,7 +47,6 @@ define([
     CleverFriendBrexit,
     WelcomeHeader,
     ParticipationDiscussionTest,
-    PlayVideoOnFronts,
     NewUserAdvertsDisabled,
     VideoTeaser
 ) {
@@ -69,7 +66,6 @@ define([
         new CleverFriendBrexit(),
         new WelcomeHeader(),
         new ParticipationDiscussionTest(),
-        new PlayVideoOnFronts(),
         new NewUserAdvertsDisabled(),
         new VideoTeaser()
     ];

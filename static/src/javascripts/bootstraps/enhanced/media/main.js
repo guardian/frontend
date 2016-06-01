@@ -146,9 +146,7 @@ define([
                         placeholder.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
                         player.removeClass('media__container--hidden').addClass('media__container--active');
                         $el.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
-                        var enhancedPlayer = enhanceVideo($('video', player).get(0), true);
-
-                        mediator.emit('ab:PlayVideoOnFronts:front-player-created', enhancedPlayer);
+                        enhanceVideo($('video', player).get(0), true);
                     });
                 });
                 fastdom.write(function () {
@@ -168,8 +166,7 @@ define([
 
         fastdom.read(function () {
             $('.js-gu-media--enhance').each(function (el) {
-                var enhancedPlayer = enhanceVideo(el, false, withPreroll);
-                mediator.emit('ab:PlayVideoOnFronts:in-article-video-created', enhancedPlayer);
+                enhanceVideo(el, false, withPreroll);
             });
         });
 
