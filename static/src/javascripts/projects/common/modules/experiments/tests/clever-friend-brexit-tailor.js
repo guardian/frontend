@@ -8,7 +8,7 @@ define([
     }
 
     return function () {
-        this.id = 'CleverFriendBrexit';
+        this.id = 'CleverFriendBrexitTailor';
         this.start = '2016-06-01';
         this.expiry = '2016-07-31';
         this.author = 'Roberto Tyley';
