@@ -159,7 +159,7 @@ object Eventbrite extends ExecutionContexts with Logging {
         val start = currentTimeMillis
         feedContent map { body =>
           val responses = Json.parse(body).as[Seq[EBResponse]]
-          val events = responses flatMap {_.events} filter {_.startDate.isAfter(now.plusWeeks(2))}
+          val events = responses flatMap {_.events}
 
           Future(ParsedFeed(
             events,

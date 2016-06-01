@@ -30,7 +30,7 @@ object HostedContentController extends Controller {
             title = "Designing the car of the future",
             duration = 86,
             posterUrl = teaserPosterUrl,
-            srcUrl = "http://multimedia.guardianapis.com/interactivevideos/video.php?file=160516GlabsTestSD&format=video/mp4&maxbitrate=2048"
+            srcUrl = "https://multimedia.guardianapis.com/interactivevideos/video.php?file=160516GlabsTestSD&format=video/mp4&maxbitrate=2048"
           ),
           nextVideo = HostedNextVideo(
             header = "Up next from",

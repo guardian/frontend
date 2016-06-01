@@ -132,10 +132,10 @@ final case class ShareLinks(
   metadata: MetaData
 ) {
 
-  private val pageShareOrder: List[SharePlatform] = if (tags.isGallery) {
+  private val pageShareOrder: List[SharePlatform] = if (tags.isGallery || tags.isImageContent) {
     List(Facebook, Twitter, Email, PinterestPage, GooglePlus, WhatsApp, Messenger)
   } else {
-    List(Facebook, Twitter, Email, PinterestPage, LinkedIn, GooglePlus, WhatsApp, Messenger)
+    List(Facebook, Twitter, Email, LinkedIn, GooglePlus, WhatsApp, Messenger)
   }
 
   private val elementShareOrder: List[SharePlatform] = if (tags.isLiveBlog) {
@@ -167,14 +167,23 @@ final case class ShareLinks(
     ShareLinks.create(sharePlatform, href = href, title = metadata.webTitle, mediaPath = mediaPath)
   })
 
-  val pageShares: Seq[ShareLink] = pageShareOrder.map( sharePlatform => {
-    val contentTitle = sharePlatform match {
-      case Twitter if tags.isClimateChangeSeries => s"${metadata.webTitle} #keepitintheground"
-      case _ => metadata.webTitle
-    }
+  import play.api.mvc.RequestHeader
 
-    val href = createShortUrlWithCampaign(sharePlatform)
+  def pageShares(implicit request: RequestHeader): Seq[ShareLink] = {
+    
+    /* AMP does not support yet fb-messenger protocol */
+    val platforms = if (request.isAmp) pageShareOrder.filter(p => p != Messenger) else pageShareOrder
 
-    ShareLinks.create(sharePlatform, href = href, title = contentTitle, mediaPath = None)
-  })
+    platforms.map( sharePlatform => {
+      val contentTitle = sharePlatform match {
+        case Twitter if tags.isClimateChangeSeries => s"${metadata.webTitle} #keepitintheground"
+        case _ => metadata.webTitle
+      }
+
+      val href = createShortUrlWithCampaign(sharePlatform)
+
+      ShareLinks.create(sharePlatform, href = href, title = contentTitle, mediaPath = None)
+    })
+
+  }
 }
