@@ -219,13 +219,6 @@ define([
         return candidates;
     }
 
-    function getReady(body) {
-        return Promise.race([
-            new Promise(expire),
-            Promise.all([onImagesLoaded(body), onRichLinksUpgraded(body), onInteractivesLoaded(body)])
-        ]);
-    }
-
     function SpaceError(rules) {
         this.name = 'SpaceError';
         this.message = 'There is no space left matching rules ' + JSON.stringify(rules);
@@ -234,18 +227,31 @@ define([
 
     // Rather than calling this directly, use spaceFiller to inject content into the page.
     // SpaceFiller will safely queue up all the various asynchronous DOM actions to avoid any race conditions.
-    function findSpace(rules) {
-        var body, getDimensions;
+    function findSpace(rules, options) {
+        var getDimensions;
 
         rules || (rules = defaultRules);
-        body = rules.bodySelector ? document.querySelector(rules.bodySelector) : document;
+        options || (options = defaultOptions);
+        rules.body = rules.bodySelector ? document.querySelector(rules.bodySelector) : document;
         getDimensions = rules.absoluteMinAbove ? _mapElementToComputedDimensions : _mapElementToDimensions;
 
-        return getReady(body)
+        return getReady()
         .then(getCandidates)
         .then(getMeasurements)
         .then(enforceRules)
         .then(returnCandidates);
+
+        function getReady() {
+            return Promise.race([
+                new Promise(expire),
+                Promise.all([
+                    options.waitForImages ? onImagesLoaded(rules) : true,
+                    options.waitForLinks ? onRichLinksUpgraded(rules) : true,
+                    options.waitForInteractives ? onInteractivesLoaded(rules) : true,
+                    options.waitForAds ? onAdsLoaded(rules) : true
+                ])
+            ]);
+        }
 
         function getCandidates() {
             var candidates = qwery(rules.bodySelector + rules.slotSelector);
@@ -284,7 +290,7 @@ define([
                 null;
 
             return fastdom.read(function () {
-                var bodyDims = body.getBoundingClientRect();
+                var bodyDims = rules.body.getBoundingClientRect();
                 var candidatesWithDims = candidates.map(getDimensions);
                 var contentMetaWithDims = rules.clearContentMeta ?
                     getDimensions(contentMeta) :
