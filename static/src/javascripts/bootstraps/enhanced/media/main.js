@@ -209,7 +209,9 @@ define([
                 var ajaxInfoUrl = config.page.ajaxUrl + urlUtils.getPath(canonicalUrl);
 
                 ajax({
-                    url: ajaxInfoUrl + '/info.json'
+                    url: ajaxInfoUrl + '/info.json',
+                    type: 'json',
+                    crossOrigin: true
                 }).then(function(videoInfo) {
                     resolve(videoInfo);
                 }, function() {
