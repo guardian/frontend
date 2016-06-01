@@ -24,15 +24,6 @@ trait PerformanceSwitches {
     exposeClientSide = true
   )
 
-  val BootInteractivesFromMainSwitch = Switch(
-    SwitchGroup.Performance,
-    "boot-interactives-from-main",
-    "If this switch is on then interactive bootstraps will be booted from main.js for perf and stability reasons",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 8),
-    exposeClientSide = true
-  )
-
   val TagPageSizeSwitch = Switch(
     SwitchGroup.Performance,
     "tag-page-size",
@@ -204,15 +195,6 @@ trait PerformanceSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false
-  )
-
-  val Viewability = Switch(
-    SwitchGroup.Performance,
-    "viewability",
-    "Viewability - Includes whole viewability package: ads lazy loading, sticky ad banner, sticky MPU, spacefinder 2.0, dynamic ads, ad next to comments",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
   )
 
   val DisableStickyAdBannerOnMobileSwitch = Switch(

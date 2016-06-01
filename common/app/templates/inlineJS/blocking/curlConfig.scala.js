@@ -45,7 +45,6 @@ window.curlConfig = {
             react:                          'components/react/react',
             classnames:                     'components/classnames/index',
             domReady:                       'components/domready/ready',
-            enhancer:                       'components/enhancer/enhancer',
             EventEmitter:                   'components/eventEmitter/EventEmitter',
             fastclick:                      'components/fastclick/fastclick',
             fastdom:                        'components/fastdom/index',

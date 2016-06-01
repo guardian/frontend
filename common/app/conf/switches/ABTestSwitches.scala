@@ -19,7 +19,7 @@ trait ABTestSwitches {
     "ab-live-blog-chrome-notifications-internal",
     "Live blog chrome notifications - Internal",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 1),
+    sellByDate = new LocalDate(2016, 7, 4),
     exposeClientSide = true
   )
 
@@ -28,16 +28,7 @@ trait ABTestSwitches {
     "ab-live-blog-chrome-notifications-prod",
     "Live blog chrome notifications - prod",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 1),
-    exposeClientSide = true
-  )
-
-  val ABLoyalAdblockingSurvey = Switch(
-    SwitchGroup.ABTests,
-    "ab-loyal-adblocking-survey",
-    "An adblock ongoing survey for all loyal users",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 31),
+    sellByDate = new LocalDate(2016, 7, 4),
     exposeClientSide = true
   )
 
@@ -119,15 +110,6 @@ trait ABTestSwitches {
     "Switch to add a query parameter to the url sent to Facebook when a user clicks the share button",
     safeState = Off,
     sellByDate = new LocalDate(2016, 6, 30),
-    exposeClientSide = true
-  )
-
-  val ABPlayVideoOnFronts = Switch(
-    SwitchGroup.ABTests,
-    "ab-play-video-on-fronts",
-    "Don't play video on fronts, but auto play when in article",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 31),
     exposeClientSide = true
   )
 

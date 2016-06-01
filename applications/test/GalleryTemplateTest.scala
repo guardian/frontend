@@ -12,7 +12,7 @@ import scala.collection.JavaConversions._
 
   it should "render captions" in goTo("/news/gallery/2012/may/02/picture-desk-live-kabul-burma") { browser =>
     import browser._
-    $("p.gallery__caption").getTexts.firstNonEmpty.get should include("A TV grab from state-owned French television station France 2 showing the debate between Francois Hollande and Nicolas Sarkozy for the 2012 French presidential election campaign")
+    $("div.gallery__caption").getTexts.firstNonEmpty.get should include("A TV grab from state-owned French television station France 2 showing the debate between Francois Hollande and Nicolas Sarkozy for the 2012 French presidential election campaign")
   }
 
   it should "render all images in the gallery" in goTo("/news/gallery/2012/may/02/picture-desk-live-kabul-burma") { browser =>

@@ -10,7 +10,6 @@ module.exports = function (grunt, options) {
                 bean:                 'components/bean/bean',
                 bonzo:                'components/bonzo/bonzo',
                 domReady:             'components/domready/ready',
-                enhancer:             'components/enhancer/enhancer',
                 EventEmitter:         'components/eventEmitter/EventEmitter',
                 fastdom:              'components/fastdom/index',
                 fence:                'components/fence/fence',
