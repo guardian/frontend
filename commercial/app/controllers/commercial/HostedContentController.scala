@@ -33,7 +33,6 @@ object HostedContentController extends Controller {
             srcUrl = "https://multimedia.guardianapis.com/interactivevideos/video.php?file=160516GlabsTestSD&format=video/mp4&maxbitrate=2048"
           ),
           nextVideo = HostedNextVideo(
-            header = "Up next from",
             title = "Renault shortlists 'car of the future' designs",
             link = "/commercial/advertiser-content/renault-car-of-the-future/design-competition-episode1",
             imageUrl = episode1PosterUrl
@@ -58,7 +57,6 @@ object HostedContentController extends Controller {
               srcUrl = "https://multimedia.guardianapis.com/interactivevideos/video.php?file=160523GlabsRenaultTestHD&format=video/webm&maxbitrate=2048"
             ),
             nextVideo = HostedNextVideo(
-              header = "Also from",
               title = "Designing the car of the future",
               link = "/commercial/advertiser-content/renault-car-of-the-future/design-competition-teaser",
               imageUrl = teaserPosterUrl

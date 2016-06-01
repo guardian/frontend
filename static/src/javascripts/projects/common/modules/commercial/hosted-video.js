@@ -49,7 +49,6 @@ define([
 
         require(['bootstraps/enhanced/media/main'], function () {
             require(['bootstraps/enhanced/media/video-player'], function(videojs){
-
                 var mediaId = $videoEl.attr('data-media-id');
 
                 player = videojs($videoEl.get(0), videojsOptions());

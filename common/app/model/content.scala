@@ -8,7 +8,7 @@ import com.gu.facia.client.models.TrailMetaData
 import common._
 import common.dfp.DfpAgent
 import conf.Configuration
-import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch, galleryRedesign}
+import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch}
 import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
 import model.content.{Atoms, Quiz}
@@ -79,8 +79,9 @@ final case class Content(
   lazy val shortUrlId = fields.shortUrlId
   lazy val shortUrlPath = shortUrlId
   lazy val discussionId = Some(shortUrlId)
-  lazy val isImmersive = fields.displayHint.contains("immersive") || metadata.contentType.toLowerCase == "gallery"
-  lazy val showNewGalleryDesign = galleryRedesign.isSwitchedOn && metadata.contentType.toLowerCase == "gallery" && !trail.commercial.isAdvertisementFeature
+  lazy val isImmersiveGallery = metadata.contentType.toLowerCase == "gallery" && !trail.commercial.isAdvertisementFeature
+  lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery
+  lazy val isFoodAndDrink: Boolean = tags.isFoodAndDrink
 
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {
@@ -105,7 +106,7 @@ final case class Content(
 
   // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
   lazy val openGraphImage: String = {
-    ImgSrc(rawOpenGraphImage, FacebookOpenGraphImage)
+    ImgSrc(rawOpenGraphImage, FacebookOpenGraphImage, isFoodAndDrink)
   }
 
   lazy val syndicationType = {
@@ -444,7 +445,6 @@ final case class Article (
   val isUSMinute: Boolean = content.tags.isUSMinuteSeries
   val isImmersive: Boolean = content.isImmersive
   val isSixtyDaysModified: Boolean = fields.lastModified.isAfter(DateTime.now().minusDays(60))
-
   lazy val hasVideoAtTop: Boolean = soupedBody.body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
@@ -657,7 +657,7 @@ final case class Gallery(
   lightboxProperties: GalleryLightboxProperties) extends ContentType {
 
   val lightbox = GalleryLightbox(content.elements, content.tags, lightboxProperties)
-  val showNewGalleryDesign: Boolean = content.showNewGalleryDesign
+
   def apply(index: Int): ImageAsset = lightbox.galleryImages(index).images.largestImage.get
 }
 

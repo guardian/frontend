@@ -5,7 +5,6 @@ import com.gu.contentapi.client.model.v1.{Content => ApiContent, ItemResponse}
 import common._
 import contentapi.ContentApiClient
 import conf.switches.Switches
-import facebookimages.ArticleWithOpenGraphOverlay
 import model.Cached.WithoutRevalidationResult
 import model._
 import model.liveblog.{BodyBlock, KeyEventData}
@@ -186,14 +185,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
           createLiveBlogModel(liveBlog, response, None)
         case (liveBlog: Article, Some(Some(requiredBlockId))/*page param specified and valid format*/) if liveBlog.isLiveBlog =>
           createLiveBlogModel(liveBlog, response, Some(requiredBlockId))
-        case (article: Article, None) =>
-          if(mvt.ABOpenGraphOverlay.isParticipating) {
-            val newArticle = ArticleWithOpenGraphOverlay(article)
-            Left(ArticlePage(newArticle, StoryPackages(newArticle, response)))
-          }
-          else {
-            Left(ArticlePage(article, StoryPackages(article, response)))
-          }
+        case (article: Article, None) => Left(ArticlePage(article, StoryPackages(article, response)))
         case _ =>
           Right(NotFound)
       }
