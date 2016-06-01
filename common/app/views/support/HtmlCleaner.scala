@@ -489,6 +489,29 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleane
   }
 }
 
+// Gallery Caption's don't come back as structured data
+// This is a hack to serve the correct html
+object GalleryCaptionCleaner {
+  def apply(caption: String) = {
+    val galleryCaption = Jsoup.parse(caption)
+    val firstStrong = Option(galleryCaption.getElementsByTag("strong").first())
+    val captionTitle = galleryCaption.createElement("h2")
+    val captionTitleText = firstStrong.map(_.text()).getOrElse("")
+
+    // <strong> is removed in place of having a <h2> element
+    firstStrong.foreach(_.remove())
+
+    captionTitle.addClass("gallery__caption__title")
+    captionTitle.text(captionTitleText)
+
+    // There should be one br after the title
+    galleryCaption.prependElement("br")
+    galleryCaption.prependChild(captionTitle)
+
+    galleryCaption.toString
+  }
+}
+
 object FigCaptionCleaner extends HtmlCleaner {
   override def clean(document: Document): Document = {
     document.getElementsByTag("figcaption").foreach{ _.addClass("caption caption--img")}
