@@ -10,12 +10,13 @@ object NextGenInteractiveHtmlCleaner extends HtmlCleaner with implicits.WSReques
       document.getElementsByAttributeValue("rel","canonical").attr("href").toLowerCase.contains("/ng-interactive/")
   }
 
-  override def clean(document: Document) = {
+  override def clean(document: Document, convertToHttps: Boolean) = {
     universalClean(document)
     //removeScripts(document)
     createSimplePageTracking(document)
     removeByTagName(document, "noscript")
-    secureDocument(document)
+    if (convertToHttps) secureDocument(document)
+    document
   }
 
   override def extractOmnitureParams(document: Document) = InteractiveHtmlCleaner.extractOmnitureParams(document)

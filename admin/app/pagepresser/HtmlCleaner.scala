@@ -14,7 +14,7 @@ abstract class HtmlCleaner extends Logging with ExecutionContexts {
   lazy val nonDigitRegEx = """\D+""".r
 
   def canClean(document: Document): Boolean
-  def clean(document: Document): Document
+  def clean(document: Document, convertToHttps: Boolean): Document
 
   protected def universalClean(document: Document): Document = {
     removeAds(document)
@@ -244,7 +244,7 @@ abstract class HtmlCleaner extends Logging with ExecutionContexts {
   }
 
   private def secureSource(src: String): String = {
-    src.replaceAllLiterally(""""//""", """"https://""").replaceAllLiterally("'//", "'https://").replaceAllLiterally("http://", "https://")
+    src.replaceAllLiterally("http://", "//")
   }
 
 }
