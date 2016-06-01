@@ -56,14 +56,14 @@
             && mvtCookieId <= largestTestId
             && !isIOS() && !isSafari()) {
             variants = [{
-                id: 'sampletest-variant',
+                id: 'variant',
                 test: function () {
-                    writeCookie(AD_FREE_COOKIE, 'sampletest-variant');
+                    writeCookie(AD_FREE_COOKIE, 'variant');
                 }
             }, {
-                id: 'sampletest-control',
+                id: 'control',
                 test: function () {
-                    writeCookie(AD_FREE_COOKIE, 'sampletest-control');
+                    writeCookie(AD_FREE_COOKIE, 'control');
                 }
             }];
             testVariantIndex = mvtCookieId % variants.length;
