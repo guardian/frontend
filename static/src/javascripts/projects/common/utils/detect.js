@@ -230,20 +230,29 @@ define([
         var viewportWidth = detect.getViewport().width;
         var breakpoint;
         if (includeTweakpoint) {
-            breakpoint = takeWhile(getMatchingBreakpoint, breakpoints).slice(-1)[0].name;
+            breakpoint = takeWhile(isMatchingBreakpoint, breakpoints).slice(-1)[0].name;
         } else {
+            // Remember: (f ∘ g ∘ h)(x) = f(g(h(x)))
+            // If, 1. we take all breakpoints matching the viewport width, in increasing order
+            //     2. we reverse the array, effectively putting any tweakpoints first
+            //     3. we drop all tweakpoints from the beginning of the array
+            // Then, the first item is the largest breakpoint that is not a tweakpoint
             var algo = compose(
-                dropWhile.bind(undefined, function (_) { return _.isTweakpoint; }),
+                dropWhile.bind(undefined, isTweakpoint),
                 reverseArray,
-                takeWhile.bind(undefined, getMatchingBreakpoint)
+                takeWhile.bind(undefined, isMatchingBreakpoint)
             );
             breakpoint = algo(breakpoints)[0].name;
         }
 
         return breakpoint;
 
-        function getMatchingBreakpoint(bp) {
-            return bp.width <= viewportWidth;
+        function isMatchingBreakpoint(_) {
+            return _.width <= viewportWidth;
+        }
+
+        function isTweakpoint(_) {
+            return _.isTweakpoint;
         }
     }
 
@@ -252,6 +261,11 @@ define([
         criteria.max = criteria.max || breakpoints[breakpoints.length - 1].name;
 
         var currentBreakpoint = getBreakpoint(true);
+        // If, 1. we drop all breakpoints smaller than the breakpoint range (min)
+        //     2. we reverse the array, and...
+        //     3. we drop all breakpoints larger than the breakpoint range (max)
+        // Then, we get the range of matching breakpoints (in reverse order but
+        // it doesn't matter)
         var algo = compose(
             dropWhile.bind(undefined, function (_) { return _ !== criteria.max; }),
             reverseArray,
