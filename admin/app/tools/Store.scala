@@ -54,6 +54,9 @@ trait Store extends Logging with Dates {
   def putDfpTemplateCreatives(creatives: String) {
     S3.putPublic(dfpTemplateCreativesKey, creatives, defaultJsonEncoding)
   }
+  def putDfpCustomTargetingKeyValues(keyValues: String): Unit ={
+    S3.putPublic(dfpCustomTargetingKeys, keyValues, defaultJsonEncoding )
+  }
 
   val now: String = DateTime.now().toHttpDateTimeString
 
@@ -88,6 +91,7 @@ trait Store extends Logging with Dates {
     }
     creatives getOrElse Nil
   }
+
 
   object commercial {
 
