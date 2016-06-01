@@ -68,6 +68,10 @@ define([
     function addInlineMerchAd(rules) {
         spaceFiller.fillSpace(rules, function (paras) {
             insertAdAtPara(paras[0], 'im', 'im');
+        }, {
+            waitForImages: true,
+            waitForLinks: true,
+            waitForInteractives: true
         });
     }
 
@@ -95,7 +99,11 @@ define([
     }
 
     function tryAddingAdvert(rules) {
-        return spaceFiller.fillSpace(rules, insertInlineAd);
+        return spaceFiller.fillSpace(rules, insertInlineAd, {
+            waitForImages: true,
+            waitForLinks: true,
+            waitForInteractives: true
+        });
 
         function insertInlineAd(paras) {
             bodyAds += 1;
