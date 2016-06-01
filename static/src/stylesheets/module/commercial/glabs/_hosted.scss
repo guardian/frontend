@@ -795,7 +795,7 @@ $renaultLight: #fff9e9;
 .hosted__next-video-thumb {
     height: 72px;
     width: 120px;
-    align-self: center;
+    align-self: flex-start;
 
     @include mq($until: phablet) {
         height: 54px;
