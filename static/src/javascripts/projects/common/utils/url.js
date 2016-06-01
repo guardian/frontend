@@ -1,7 +1,6 @@
 define([
-    'common/utils/detect',
-    'common/utils/mediator'
-], function (detect, mediator) {
+    'common/utils/detect'
+], function (detect) {
 
     var supportsPushState = detect.hasPushStateSupport(),
         model = {
@@ -72,9 +71,6 @@ define([
             }
         };
 
-    // pubsub
-    mediator.on('modules:url:pushquerystring', model.pushQueryString);
-
     // not exposing all the methods here
     return {
         getUrlVars: model.getUrlVars,
@@ -82,7 +78,8 @@ define([
         pushUrl: model.pushUrl,
         constructQuery: model.constructQuery,
         back: model.back,
-        hasHistorySupport: supportsPushState
+        hasHistorySupport: supportsPushState,
+        pushQueryString: model.pushQueryString
     };
 
 });
