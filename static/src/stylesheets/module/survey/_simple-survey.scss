@@ -70,8 +70,8 @@
     }
 
     p {
-        margin-bottom: $gs-baseline;
         @include fs-bodyCopy(1);
+        margin-bottom: $gs-baseline;
     }
 
     .standfirst {
@@ -179,7 +179,7 @@
     }
 
     .fsMatrixFieldset {
-        border: none;
+        border: 0;
     }
 
     .fsMatrixCol1 .fsField, .fsMatrixCol2 .fsField {
@@ -191,7 +191,7 @@
     }
 
     .fsSubmitButton {
-        color: white;
+        color: #ffffff;
         border: 0;
         padding: $gs-gutter*0.25 $gs-gutter*0.5;
         background-color: $guardian-brand;
@@ -202,7 +202,7 @@
     }
 
     input[type=radio]:not(old) {
-        background-color: red;
+        background-color: #ff0000;
     }
 
     .fs-clear {
@@ -210,7 +210,7 @@
     }
 
     fieldset {
-        border: none;
+        border: 0;
     }
 
     .fieldset-content .horizontal {
