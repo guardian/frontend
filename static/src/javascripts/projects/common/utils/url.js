@@ -1,8 +1,7 @@
 define([
     'common/utils/detect',
-    'common/utils/mediator',
-    'lodash/utilities/identity'
-], function (detect, mediator, identity) {
+    'common/utils/mediator'
+], function (detect, mediator) {
 
     var supportsPushState = detect.hasPushStateSupport(),
         model = {
@@ -12,7 +11,7 @@ define([
             getUrlVars: function (options) {
                 var opts = options || {};
                 return (opts.query || model.getCurrentQueryString()).split('&')
-                    .filter(identity)
+                    .filter(Boolean)
                     .map(function (query) {
                         return query.indexOf('=') > -1 ? query.split('=') : [query, true];
                     })
