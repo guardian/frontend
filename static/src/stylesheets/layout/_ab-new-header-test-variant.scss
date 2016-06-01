@@ -41,9 +41,19 @@
         // Removes extra spacing
         display: block;
 
+        // Aspect ratio: 16:3
+        @include mq($until: phablet) {
+            width: 46vw;
+            // height: auto doesn't work in Safari
+            height: calc(3/16 * 46vw);
+            min-width: 147px;
+            min-height: 28px;
+        }
+
         @include mq(tablet) {
             width: 200px;
-            height: auto;
+            // height: auto doesn't work in Safari
+            height: calc(3/16 * 200px);
         }
     }
 }
@@ -62,12 +72,32 @@
     // Override button from user agent stylesheet
     padding: ($gs-gutter / 2);
 
+    @include mq($from: mobile, $until: phablet) {
+        font-size: 3.8vw;
+    }
+
     svg {
         fill: currentColor;
-        margin-right: 4px;
+        // Spacing also due to inline elements
+        margin-right: 1px;
         vertical-align: middle;
-        // Align with cap height instead of x height
-        margin-top: -3px;
+
+        @include mq($until: mobile) {
+            // Align with cap height instead of x height
+            margin-top: -2px;
+        }
+
+        @include mq($from: mobile, $until: phablet) {
+            // Align with cap height instead of x height
+            margin-top: -.7vw;
+        }
+
+        @include mq($until: phablet) {
+            min-width: 14px;
+            min-height: 14px;
+            width: 4vw;
+            height: 4vw;
+        }
     }
 }
 
@@ -75,6 +105,11 @@
     @include fs-textSans(5);
     display: flex;
     align-items: center;
+    line-height: 1.3;
+
+    @include mq($from: mobile, $until: phablet) {
+        font-size: 5vw;
+    }
 
     @include mq($until: phablet) {
         padding-left: ($gs-gutter / 2);
@@ -115,21 +150,49 @@
     border-radius: 100%;
     z-index: $zindex-modal;
 
-    @include mq($until: phablet) {
+    @include mq($until: mobile) {
+        padding: 12px;
+        margin-right: 15px;
+        // Overlap
+        margin-top: -6px;
+        margin-bottom: -6px;
+        width: 38px;
+        height: 38px;
+    }
+
+    @include mq($from: mobile, $until: phablet) {
+        padding: 4vw;
+        // Overlap
+        margin-top: -2vw;
+        margin-bottom: -2vw;
+        width: 12vw;
+        height: 12vw;
+    }
+
+    @include mq($from: phablet, $until: tablet) {
+        padding: $gs-gutter * .7;
         // Overlap
         margin-top: -5px;
         margin-bottom: -5px;
+        width: 45px;
+        height: 45px;
     }
 
-    @include mq(phablet) {
-        margin-left: 6px;
+    @include mq(tablet) {
+        padding: $gs-gutter * .9;
+        // Overlap
+        margin-top: -5px;
+        margin-bottom: -5px;
+        width: 60px;
+        height: 60px;
     }
 
     svg {
-        height: 18px;
         // Removes extra spacing
         display: block;
         fill: #ffffff;
+        width: 100%;
+        height: 100%;
     }
 }
 
