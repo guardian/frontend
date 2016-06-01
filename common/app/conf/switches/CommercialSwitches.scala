@@ -248,21 +248,21 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val FabricAdverts = Switch(
+  val FluidAdverts = Switch(
     SwitchGroup.Commercial,
-    "fabric-adverts",
-    "Request 'fabric' format adverts (88x71s) from DFP",
+    "fluid-adverts",
+    "Request fluid adverts from DFP",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 31),
-    exposeClientSide = true
+    sellByDate = new LocalDate(2016, 6, 30),
+    exposeClientSide = false
   )
 
-  val cardsDecidePaidContainerBranding = Switch(
+  val FixedTechTopSlot = Switch(
     SwitchGroup.Commercial,
-    "cards-decide-paid-container-branding",
-    "DON'T TURN THIS ON! If on, the cards will decide the branding of their container",
+    "fixed-tech-top-slot",
+    "Height of the top banner is fixed at 250px in the Tech section",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 1),
+    sellByDate = new LocalDate(2016, 6, 30),
     exposeClientSide = false
   )
 
@@ -284,10 +284,28 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
+  val reportEmptyDfpResponsesSwitch = Switch(
+    SwitchGroup.Commercial,
+    "report-empty-dfp-responses",
+    "If on, the client will report empty dfp ad responses.",
+    safeState = Off,
+    sellByDate = new LocalDate(2016,6,8),
+    exposeClientSide = true
+  )
+
   val hostedEpisode1Content = Switch(
     SwitchGroup.Commercial,
     "hosted-episode1-content",
     "If on, another hardcoded page of hosted content is available",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 12),
+    exposeClientSide = false
+  )
+
+  val hostedPageLinksBetweenContent = Switch(
+    SwitchGroup.Commercial,
+    "hosted-link-pages",
+    "If on, the hosted pages link to each other",
     safeState = Off,
     sellByDate = new LocalDate(2016, 7, 12),
     exposeClientSide = false

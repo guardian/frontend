@@ -1,28 +1,28 @@
 import common.CloudWatchApplicationMetrics
 import common.Logback.Logstash
 import conf._
-import filters.{DiscussionRequestLoggingFilter, RequestLoggingFilter}
-import play.api.mvc.{EssentialFilter, WithFilters}
+import conf.switches.SwitchboardLifecycle
+import filters.RequestLoggingFilter
+import play.api.http.HttpFilters
+import play.api.mvc.EssentialFilter
 
-object Global extends WithFilters(DiscussionFilters.allFilters : _*)
-  with CloudWatchApplicationMetrics
-  with CorsErrorHandler
+object Global extends CloudWatchApplicationMetrics
   with SwitchboardLifecycle
   with Logstash
   with DiscussionHealthCheckLifeCycle {
   override lazy val applicationName = "frontend-discussion"
 }
 
-object DiscussionFilters {
+class DiscussionFilters extends HttpFilters {
   // NOTE - order is important here, Gzipper AFTER CorsVaryHeaders
   // which effectively means "JsonVaryHeaders goes around Gzipper"
-  lazy val allFilters: List[EssentialFilter] = List(
-    JsonVaryHeadersFilter,
-    Gzipper,
-    BackendHeaderFilter,
-    DiscussionRequestLoggingFilter,
-    SurrogateKeyFilter,
-    AmpFilter,
-    PanicSheddingFilter
+  lazy val filters: List[EssentialFilter] = List(
+    new PanicSheddingFilter,
+    new JsonVaryHeadersFilter,
+    new Gzipper,
+    new BackendHeaderFilter,
+    new RequestLoggingFilter,
+    new SurrogateKeyFilter,
+    new AmpFilter
   )
 }

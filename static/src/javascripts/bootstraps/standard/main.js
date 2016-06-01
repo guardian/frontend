@@ -83,7 +83,7 @@ define([
                     }
 
                     return config.switches.enableSentryReporting &&
-                        Math.random() < 0.2 &&
+                        Math.random() < 0.1 &&
                         !isDev; // don't actually notify sentry in dev mode
                 }
             }
@@ -120,10 +120,7 @@ define([
          *  Interactives are content, we want them booting as soon (and as stable) as possible.
          */
 
-        if (
-            config.switches.bootInteractivesFromMain &&
-            /Article|Interactive|LiveBlog/.test(config.page.contentType)
-        ) {
+        if (/Article|Interactive|LiveBlog/.test(config.page.contentType)) {
             $('figure.interactive').each(function (el) {
                 require($(el).attr('data-interactive'), function (interactive) {
                     fastdom.defer(function () {
@@ -142,9 +139,10 @@ define([
         robust.catchErrorsAndLog('ab-tests', function () {
             if (guardian.isEnhanced) {
                 ab.segmentUser();
-                robust.catchErrorsAndLog('ab-tests-run', function () {
-                    ab.run();
-                });
+
+                robust.catchErrorsAndLog('ab-tests-run', ab.run);
+                robust.catchErrorsAndLog('ab-tests-registerCompleteEvents', ab.registerCompleteEvents);
+
                 ab.trackEvent();
             }
         });
@@ -179,10 +177,10 @@ define([
         // set local storage: gu.alreadyVisited
         //
 
-        var alreadyVisted;
+        var alreadyVisited;
         if (guardian.isEnhanced) {
-            alreadyVisted = storage.local.get('gu.alreadyVisited') || 0;
-            storage.local.set('gu.alreadyVisited', alreadyVisted + 1);
+            alreadyVisited = storage.local.get('gu.alreadyVisited') || 0;
+            storage.local.set('gu.alreadyVisited', alreadyVisited + 1);
         }
 
         // Adds a global window:throttledScroll event to mediator, which throttles

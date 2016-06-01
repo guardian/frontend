@@ -161,8 +161,11 @@
         }
 
         .advert__image {
-            min-height: $gs-baseline * 11;
             width: 100%;
+
+            @include mq(desktop) {
+                min-height: $gs-baseline * 11;
+            }
         }
 
         .advert__standfirst {
@@ -246,7 +249,9 @@
     }
 
     > .advert__title {
-        @include font-size(get-font-size(headline, 3), get-line-height(headline, 3));
+        @include mq(desktop) {
+            @include font-size(get-font-size(headline, 3), get-line-height(headline, 3));
+        }
     }
 
     > .advert__standfirst {

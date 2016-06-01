@@ -1,18 +1,16 @@
 package commercial
 
 import commercial.feeds._
-import common.{AkkaAsync, ExecutionContexts, Jobs, Logging}
+import common._
 import model.commercial.jobs.Industries
 import model.commercial.events.MasterclassTagsAgent
 import model.commercial.money.BestBuysAgent
 import model.commercial.travel.Countries
-import play.api.{Application => PlayApp, GlobalSettings}
+import play.api.inject.ApplicationLifecycle
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Random
 import scala.util.control.NonFatal
-
-import common.AkkaAgent
 
 private [commercial] object CommercialLifecycleMetrics {
 
@@ -24,7 +22,11 @@ private [commercial] object CommercialLifecycleMetrics {
   )
 }
 
-trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionContexts {
+class CommercialLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+
+  appLifecycle.addStopHook { () => Future {
+    stop()
+  }}
 
   private val refreshJobs: List[RefreshJob] = List(
     MasterClassTagsRefresh,
@@ -52,7 +54,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     }
   }
 
-  override def onStart(application: PlayApp): Unit = {
+  override def start(): Unit = {
 
     def randomStartSchedule(minsLater: Int = 0) = s"0 ${Random.nextInt(15) + minsLater}/15 * * * ?"
 
@@ -100,9 +102,6 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       }
       parsedFeed.map(_ => ())
     }
-
-
-    super.onStart(application)
 
     def mkJobName(feedName: String, task: String): String = s"${feedName.replaceAll("/", "-")}-$task-job"
 
@@ -167,7 +166,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     }
   }
 
-  override def onStop(app: PlayApp): Unit = {
+  def stop(): Unit = {
     refreshJobs foreach (_.stop())
 
     for (fetcher <- FeedFetcher.all) {
@@ -179,7 +178,5 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     }
 
     Jobs.deschedule("cloudwatchUpload")
-
-    super.onStop(app)
   }
 }

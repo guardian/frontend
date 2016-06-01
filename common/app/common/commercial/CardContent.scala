@@ -1,9 +1,9 @@
 package common.commercial
 
-import conf.switches.Switches
+import common.Edition
 import model.pressed.PressedContent
-import model.{ContentType, ImageMedia, ImageOverride}
-import views.support.{CardWithSponsorDataAttributes, ImgSrc, SponsorDataAttributes}
+import model.{Branding, ContentType, ImageMedia, ImageOverride}
+import views.support.ImgSrc
 
 case class CardContent(
                         icon: Option[String],
@@ -13,12 +13,12 @@ case class CardContent(
                         image: Option[ImageMedia],
                         fallbackImageUrl: Option[String],
                         targetUrl: String,
-                        branding: Option[SponsorDataAttributes]
+                        branding: Option[Branding]
                       )
 
 object CardContent {
 
-  def fromPressedContent(content: PressedContent): CardContent = {
+  def fromPressedContent(edition: Edition)(content: PressedContent): CardContent = {
 
     val header = content.header
 
@@ -46,17 +46,14 @@ object CardContent {
       image,
       fallbackImageUrl,
       targetUrl = header.url,
-      branding = {
-        if (Switches.cardsDecidePaidContainerBranding.isSwitchedOn) {
-          CardWithSponsorDataAttributes.sponsorDataAttributes(content)
-        } else {
-          None
-        }
-      }
+      branding = content.branding(edition)
     )
   }
 
-  def fromContentItem(item: ContentType, clickMacro: Option[String], withDescription: Boolean): CardContent = {
+  def fromContentItem(item: ContentType,
+                      edition: Edition,
+                      clickMacro: Option[String],
+                      withDescription: Boolean): CardContent = {
     val tags = item.tags
     CardContent(
       icon = {
@@ -77,7 +74,7 @@ object CardContent {
         val url = item.metadata.webUrl
         clickMacro map { cm => s"$cm$url" } getOrElse url
       },
-      branding = None
+      branding = BrandHunter.findContentBranding(item, edition)
     )
   }
 }

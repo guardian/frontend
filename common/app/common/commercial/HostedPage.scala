@@ -4,12 +4,18 @@ import model.GuardianContentTypes.Hosted
 import model.{MetaData, StandalonePage}
 import play.api.libs.json.JsString
 
-case class HostedPage(pageName: String) extends StandalonePage {
+case class HostedPage(
+                       pageUrl: String,
+                       pageName: String,
+                       pageTitle: String,
+                       standfirst: String,
+                       logoUrl: String,
+                       bannerUrl: String,
+                       video: HostedVideo,
+                       nextVideo: HostedNextVideo
+                     ) extends StandalonePage {
 
   override val metadata: MetaData = {
-    val title = "Advertiser content hosted by the Guardian: Designing the car of the future - video"
-    val description =
-      "Who better to dream up the transport of tomorrow than the people who'll be buying them? Follow a group of students as they work on designing the interior of self-driving cars"
     val toneId = "tone/hosted-content"
     val toneName = "Hosted content"
     val sectionId = "renault-car-of-the-future"
@@ -17,11 +23,11 @@ case class HostedPage(pageName: String) extends StandalonePage {
     val keywordName = sectionId
     MetaData.make(
       id = s"commercial/advertiser-content/$sectionId/$pageName",
-      webTitle = title,
+      webTitle = pageTitle,
       section = sectionId,
       contentType = Hosted,
       analyticsName = s"GFE:$sectionId:$Hosted:$pageName",
-      description = Some(description),
+      description = Some(standfirst),
       javascriptConfigOverrides = Map(
         "keywordIds" -> JsString(keywordId),
         "keywords" -> JsString(keywordName),
@@ -29,15 +35,29 @@ case class HostedPage(pageName: String) extends StandalonePage {
         "tones" -> JsString(toneName)
       ),
       opengraphPropertiesOverrides = Map(
-        "og:url" ->
-          "http://theguardian.com/commercial/advertiser-content/renault-car-of-the-future/design-competition-teaser",
-        "og:title" -> "Designing the car of the future - video",
+        "og:url" -> pageUrl,
+        "og:title" -> pageTitle,
         "og:description" ->
-          "ADVERTISER CONTENT FROM RENAULT HOSTED BY THE GUARDIAN | Who better to dream up the transport of tomorrow than the people who'll be buying them? Follow a group of students as they work on designing the interior of self-driving cars",
-        "og:image" ->
-          "https://aws-frontend-static.s3.amazonaws.com/PROD/frontend-static/images/commercial/038c373fd249e5a2f4b6ae02e7cf3a93/renault-video-poster.jpg",
+          s"ADVERTISER CONTENT FROM RENAULT HOSTED BY THE GUARDIAN | $standfirst",
+        "og:image" -> video.posterUrl,
         "fb:app_id" -> "180444840287"
       )
     )
   }
 }
+
+case class HostedVideo(
+                        mediaId: String,
+                        title: String,
+                        duration: Int,
+                        posterUrl: String,
+                        srcUrl: String
+                      )
+
+
+case class HostedNextVideo(
+                        header: String,
+                        title: String,
+                        imageUrl: String,
+                        link: String
+                      )

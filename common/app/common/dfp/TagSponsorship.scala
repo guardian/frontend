@@ -1,6 +1,6 @@
 package common.dfp
 
-import common.Logging
+import common.{Edition, Logging}
 import model.Tag
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
@@ -81,19 +81,27 @@ case class HighMerchandisingLineItem(
   adUnits: Seq[GuAdUnit],
   customTargetSet: Seq[CustomTargetSet]
   ) {
-  val customTargets = customTargetSet.map(_.targets)
-  val editions = customTargets.flatMap(sequence => sequence.filter((target) => target.name == "edition")).map(target => target.values)
 
+  val customTargets = customTargetSet.flatMap(_.targets)
+  val editions = customTargets.filter( _.name == "edition").flatMap(_.values).distinct
+  val urls = customTargets.filter( _.name == "url").flatMap(_.values).distinct
+  val isRunOfNetwork = adUnits.isEmpty
+  val hasUnknownTarget = isRunOfNetwork && editions.isEmpty && urls.isEmpty && tags.isEmpty
 
-  def matchesAdUnitAndTag (adUnitSuffix: String, pageTags:Seq[Tag]): Boolean = {
+  // Returns true if the metadata parameters explicitly match the lineItem.
+  def matchesPageTargeting (adUnitSuffix: String, pageTags:Seq[Tag], edition:Edition, pagePath:String): Boolean = {
 
-    val tagNames = pageTags map (_.name) map (_.replaceAll(" ","-").toLowerCase)
+    val cleansedPageEdition = edition.id.toLowerCase
+    val cleansedPageTagNames = pageTags map (_.name.replaceAll(" ","-").toLowerCase)
 
-    val matchesTag: Boolean = tagNames.exists(tags.contains)
+    val matchesAdUnit = adUnits.isEmpty || adUnits.exists(_.path contains adUnitSuffix)
+    val matchesTag = cleansedPageTagNames.isEmpty || cleansedPageTagNames.exists(tags.contains)
+    val matchesEdition = editions.isEmpty || editions.contains(cleansedPageEdition)
+    val matchesUrl = urls.isEmpty || urls.contains(pagePath)
 
-    lazy val matchesAdUnit: Boolean = adUnits.exists(_.path contains adUnitSuffix)
-
-    matchesTag && matchesAdUnit
+    // High-merch line items must be explicitly targeted to something, so if there is no kind of targeting,
+    // then the match fails.
+    matchesAdUnit && matchesTag && matchesEdition && matchesUrl && !hasUnknownTarget
   }
 }
 

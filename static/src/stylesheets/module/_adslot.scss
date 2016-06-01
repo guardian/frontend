@@ -115,24 +115,17 @@
         z-index: $zindex-popover;
     }
 }
-// Keeping this code for now since we'll be running another similar
-// experiment in the near future:
-// .top-banner-ad-container--small {
-//     min-height: ($gs-row-height * 3) + 18;
-// }
-// .top-banner-ad-container--responsive {
-//     min-height: ($gs-row-height * 7) + 16;
-// }
+
 .top-banner-ad-container--above-nav {
     @include mq(tablet) {
-        .js-on & {
+        .js-on:not(.is-adfree) & {
             display: block;
         }
     }
 }
 .top-banner-ad-container--below-nav {
     @include mq(desktop) {
-        .js-on & {
+        .js-on:not(.is-adfree) & {
             display: block;
         }
     }
@@ -161,6 +154,13 @@
         padding-bottom: $gs-row-height / 2;
         padding-top: $gs-row-height / 2;
 
+        /* Oh horrible code, I'm looking at you. One day, you'll disappear.
+           One day, I'll fucking rip you apart.
+         */
+        &.ad-slot--h250 {
+            height: 250px;
+        }
+
         .ad-slot__label {
             margin-top: (-1) * $gs-row-height / 2;
         }
@@ -182,9 +182,7 @@
             text-align: left;
         }
     }
-    // .top-banner-ad-container--large & {
-    //     min-height: 250px;
-    // }
+
     .has-page-skin & {
         @include mq(wide) {
             width: auto !important;

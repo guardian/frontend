@@ -7,7 +7,6 @@ import common.commercial.BrandHunter
 import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
-import conf.switches.Switches.galleryRedesign
 import cricketPa.CricketTeams
 import model.liveblog.BodyBlock
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
@@ -103,24 +102,14 @@ final case class Commercial(
   def isSponsored(maybeEdition: Option[Edition]): Boolean =
     DfpAgent.isSponsored(tags.tags, Some(metadata.section), maybeEdition)
 
-  def needsHighMerchandisingSlot: Boolean = {
-    DfpAgent.hasHighMerchAdAndTag(metadata.adUnitSuffix,tags.tags)
+  def needsHighMerchandisingSlot(edition:Edition): Boolean = {
+    DfpAgent.isTargetedByHighMerch(metadata.adUnitSuffix,tags.tags,edition,metadata.url)
   }
 
-  def conditionalConfig: Map[String, JsValue] = {
-    val highMerchandisingMeta = if (needsHighMerchandisingSlot) {
-      Some("hasHighMerchandisingTarget", JsBoolean(needsHighMerchandisingSlot))
-    } else None
-
-    val meta: List[Option[(String, JsValue)]] = List(
-      highMerchandisingMeta
-    )
-    meta.flatten.toMap
-  }
 
   def javascriptConfig: Map[String, JsValue] = Map(
     ("isAdvertisementFeature", JsBoolean(isAdvertisementFeature))
-  ) ++ conditionalConfig
+  )
 
 }
 /**
@@ -194,7 +183,6 @@ object MetaData {
     ): MetaData = {
 
     val resolvedUrl = url.getOrElse(s"/$id")
-
     MetaData(
       id = id,
       url = resolvedUrl,
@@ -294,7 +282,7 @@ final case class MetaData (
     conf.switches.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty
   }
 
-  val hasSlimHeader: Boolean = contentType == "Interactive" || section == "identity" || (galleryRedesign.isSwitchedOn && contentType.toLowerCase == "gallery")
+  val hasSlimHeader: Boolean = contentType == "Interactive" || section == "identity" || contentType.toLowerCase == "gallery"
 
   // Special means "Next Gen platform only".
   private val special = id.contains("-sp-")
@@ -315,7 +303,7 @@ final case class MetaData (
     ("analyticsName", JsString(analyticsName)),
     ("isFront", JsBoolean(isFront)),
     ("isSurging", JsString(isSurging.mkString(","))),
-    ("videoJsFlashSwf", JsString(conf.Static("flash/components/video-js-swf/video-js.swf").path)),
+    ("videoJsFlashSwf", JsString(conf.Static("flash/components/video-js-swf/video-js.swf"))),
     ("contentType", JsString(contentType))
   )
 
@@ -616,6 +604,7 @@ final case class Tags(
   lazy val isPoll: Boolean = tags.exists { _.id == Tags.Poll }
   lazy val isImageContent: Boolean = tags.exists { tag => List("type/cartoon", "type/picture", "type/graphic").contains(tag.id) }
   lazy val isInteractive: Boolean = tags.exists { _.id == Tags.Interactive }
+  lazy val isFoodAndDrink: Boolean = tags.exists {_.id == "lifeandstyle/food-and-drink"}
 
   lazy val hasLargeContributorImage: Boolean = tagsOfType("Contributor").filter(_.properties.contributorLargeImagePath.nonEmpty).nonEmpty
 

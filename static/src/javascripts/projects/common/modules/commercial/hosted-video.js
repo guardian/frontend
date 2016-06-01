@@ -7,12 +7,14 @@ define([
     'common/utils/$',
     'common/utils/defer-to-analytics',
     'common/modules/video/events',
+    'common/modules/video/videojs-options',
     'text!common/views/ui/loading.html'
 ], function (
     bean,
     $,
     deferToAnalytics,
     events,
+    videojsOptions,
     loadingTmpl
 ) {
     var player;
@@ -47,14 +49,9 @@ define([
 
         require(['bootstraps/enhanced/media/main'], function () {
             require(['bootstraps/enhanced/media/video-player'], function(videojs){
-
                 var mediaId = $videoEl.attr('data-media-id');
 
-                player = videojs($videoEl.get(0), {
-                    controls: true,
-                    autoplay: false,
-                    preload: 'metadata'
-                });
+                player = videojs($videoEl.get(0), videojsOptions());
                 player.guMediaType = 'video';
 
                 // unglitching the volume on first load

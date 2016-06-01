@@ -22,6 +22,7 @@ define([
     'common/modules/video/video-container',
     'common/modules/video/onward-container',
     'common/modules/video/more-in-series-container',
+    'common/modules/video/videojs-options',
     // This must be the full path because we use curl config to change it based
     // on env
     'bootstraps/enhanced/media/video-player',
@@ -50,6 +51,7 @@ define([
     videoContainer,
     onwardContainer,
     moreInSeriesContainer,
+    videojsOptions,
     videojs,
     loadingTmpl
 ) {
@@ -68,7 +70,7 @@ define([
             unviewed_position_start: 1
         };
 
-        return 'http://' + config.page.dfpHost + '/gampad/ads?' + urlUtils.constructQuery(queryParams);
+        return 'https://' + config.page.dfpHost + '/gampad/ads?' + urlUtils.constructQuery(queryParams);
     }
 
     function initLoadingSpinner(player) {
@@ -144,9 +146,7 @@ define([
                         placeholder.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
                         player.removeClass('media__container--hidden').addClass('media__container--active');
                         $el.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
-                        var enhancedPlayer = enhanceVideo($('video', player).get(0), true);
-
-                        mediator.emit('ab:PlayVideoOnFronts:front-player-created', enhancedPlayer);
+                        enhanceVideo($('video', player).get(0), true);
                     });
                 });
                 fastdom.write(function () {
@@ -166,8 +166,7 @@ define([
 
         fastdom.read(function () {
             $('.js-gu-media--enhance').each(function (el) {
-                var enhancedPlayer = enhanceVideo(el, false, withPreroll);
-                mediator.emit('ab:PlayVideoOnFronts:in-article-video-created', enhancedPlayer);
+                enhanceVideo(el, false, withPreroll);
             });
         });
 
@@ -178,7 +177,6 @@ define([
     }
 
     function enhanceVideo(el, autoplay, shouldPreroll) {
-
         var mediaType = el.tagName.toLowerCase(),
             $el = bonzo(el).addClass('vjs vjs-tech-' + videojs.options.techOrder[0]),
             mediaId = $el.attr('data-media-id'),
@@ -196,16 +194,21 @@ define([
 
         var videoInfo = new Promise(function(resolve) {
             // We only have the canonical URL in videos embedded in articles / main media.
+            // These are set to the safest defaults that will always play video.
             var defaultVideoInfo = {
                 expired: false,
-                shouldHideAdverts: false
+                shouldHideAdverts: true
             };
 
             if (!canonicalUrl) {
                 resolve(defaultVideoInfo);
             } else {
+                var ajaxInfoUrl = config.page.ajaxUrl + urlUtils.getPath(canonicalUrl);
+
                 ajax({
-                    url: canonicalUrl + '/info.json'
+                    url: ajaxInfoUrl + '/info.json',
+                    type: 'json',
+                    crossOrigin: true
                 }).then(function(videoInfo) {
                     resolve(videoInfo);
                 }, function() {
@@ -215,22 +218,15 @@ define([
             }
         });
 
-
-        player = createVideoPlayer(el, {
+        player = createVideoPlayer(el, videojsOptions({
             techOrder: techPriority,
-            controls: true,
-            // `autoplay` is always set to false.
-            // If you are going to set autoplay to any other value, note it breaks
-            // `preload="auto"` on < Chrome 35 and `preload="metadata"` on old Safari
-            autoplay: false,
-            preload: 'metadata',
             plugins: {
                 embed: {
                     embeddable: !config.page.isFront && config.switches.externalVideoEmbeds && (config.page.contentType === 'Video' || $el.attr('data-embeddable') === 'true'),
                     location: config.page.externalEmbedHost + '/embed/video/' + (embedPath ? embedPath : config.page.pageId)
                 }
             }
-        });
+        }));
 
         videoInfo.then(function(videoInfo) {
             if (videoInfo.expired) {
@@ -329,7 +325,6 @@ define([
                             fastdom.write(function () {
                                 player.addClass('vjs-mousemoved');
                             });
-
 
                             mouseMoveIdle = setTimeout(function () {
                                 fastdom.write(function () {

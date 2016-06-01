@@ -51,10 +51,6 @@ define([
                     isFront: true
                 };
 
-                config.switches = {
-                    fabricAdverts : false
-                };
-
                 detect.getBreakpoint = function () {
                     return 'desktop';
                 };
@@ -134,8 +130,8 @@ define([
                 $('.ad-slot--inline1', $fixtureContainer).each(function (adSlot) {
                     var $adSlot = bonzo(adSlot);
 
-                    expect($adSlot.data('mobile')).toEqual('1,1|300,250');
-                    expect($adSlot.data('mobile-landscape')).toEqual('1,1|300,250');
+                    expect($adSlot.data('mobile')).toEqual('1,1|300,250|88,71');
+                    expect($adSlot.data('mobile-landscape')).toEqual('1,1|300,250|88,71');
                     expect($adSlot.data('tablet')).toEqual('1,1|300,250');
                 });
                 $('.ad-slot--inline2', $fixtureContainer).each(function (adSlot) {
@@ -169,12 +165,17 @@ define([
 
         it('should not add ad to first container if network front', function (done) {
             config.page.pageId = 'uk';
+            var oldis = detect.isBreakpoint;
+            detect.isBreakpoint = function () {
+                return false;
+            };
             sliceAdverts.init();
 
             fastdom.defer(function () {
                 expect(qwery('.fc-container-first .ad-slot', $fixtureContainer).length).toBe(0);
                 expect(qwery('.fc-container-third .ad-slot', $fixtureContainer).length).toBe(1);
                 expect(qwery('.fc-container-fifth .ad-slot', $fixtureContainer).length).toBe(1);
+                detect.isBreakpoint = oldis;
                 done();
             });
         });
@@ -196,7 +197,6 @@ define([
 
         describe('Top slot replacement', function () {
             beforeEach(function () {
-                config.switches.fabricAdverts = true;
                 // To be sure that any slots added are top slot replacements, we set the page to a network front,
                 // where adverts will normally never appear on the first container.
                 config.page.pageId = 'uk';

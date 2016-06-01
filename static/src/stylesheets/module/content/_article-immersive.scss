@@ -156,6 +156,34 @@
         }
     }
 
+    .content__main-embed {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+
+    .is-fixed-height {
+        .content__headline {
+            @include fs-headline(7, true);
+            line-height: 1;
+
+            @include mq(desktop) {
+                font-size: 3.25rem;
+            }
+        }
+
+        .content__standfirst:before {
+            @include mq($until: desktop) {
+                display: none;
+            }
+        }
+    }
+
+    /* Old Iframed Main Embed (Remove this section if immersiveMainEmbedSwitch is made permanent)
+    ========================================================================== */
     .content__loading {
         position: absolute;
         top: 0;
@@ -194,17 +222,8 @@
         }
     }
 
-    .is-fixed-height {
-        .content__standfirst:before {
-            @include mq($until: desktop) {
-                display: none;
-            }
-        }
-
-        // Should be removed when capi returns a no-id element for code embeds in main media
-        .content__loading {
-            display: block;
-        }
+    .is-fixed-height .content__loading {
+        display: block;
     }
 
     /* Meta
@@ -722,6 +741,7 @@
             bottom: 0;
             left: 0;
             right: 0;
+            z-index: 2;
         }
 
         @include mq($until: desktop) {

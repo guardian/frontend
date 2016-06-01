@@ -43,8 +43,9 @@ define([
 
     function userIsInAClashingAbTest() {
         var clashingTests = [
-            ['ParticipationStarRatings','star-rating'],
-            ['ParticipationLowFricMusicV1', 'variant-1']
+            ['ParticipationLowFricFilm','variant-1'],
+            ['ParticipationLowFricMusicV1', 'variant-1'],
+            ['ParticipationLowFricSport', 'variant-1']
         ];
 
         return some(clashingTests, function(test) {

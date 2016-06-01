@@ -2,7 +2,7 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-GET        /_healthcheck                    conf.HealthCheck.healthCheck()
+GET        /_healthcheck                    controllers.HealthCheck.healthCheck()
 
 GET        /count/$path<.+>.gif             controllers.DiagnosticsController.analytics(path)
 

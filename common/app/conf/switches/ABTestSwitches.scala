@@ -19,7 +19,7 @@ trait ABTestSwitches {
     "ab-live-blog-chrome-notifications-internal",
     "Live blog chrome notifications - Internal",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 1),
+    sellByDate = new LocalDate(2016, 7, 4),
     exposeClientSide = true
   )
 
@@ -28,7 +28,7 @@ trait ABTestSwitches {
     "ab-live-blog-chrome-notifications-prod",
     "Live blog chrome notifications - prod",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 1),
+    sellByDate = new LocalDate(2016, 7, 4),
     exposeClientSide = true
   )
 
@@ -37,16 +37,16 @@ trait ABTestSwitches {
     "ab-loyal-adblocking-survey",
     "An adblock ongoing survey for all loyal users",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 31),
+    sellByDate = new LocalDate(2016, 6, 2),
     exposeClientSide = true
   )
 
-  val ABParticipationStarRatings = Switch(
+  val ABParticipationLowFricFilm = Switch(
     SwitchGroup.ABTests,
-    "ab-participation-star-ratings",
+    "ab-participation-low-fric-film",
     "AB test switch to insert star ratings into film articles",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 13),
+    sellByDate = new LocalDate(2016, 6, 8),
     exposeClientSide = true
   )
 
@@ -104,9 +104,9 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABParticipationHideHalfOfComments = Switch(
+  val ABParticipationDiscussionTest = Switch(
     SwitchGroup.ABTests,
-    "ab-participation-hide-half-of-comments",
+    "ab-participation-discussion-test",
     "We are going to hide comments on a random half of articles",
     safeState = Off,
     sellByDate = new LocalDate(2016, 6, 21),
@@ -122,21 +122,30 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABPlayVideoOnFronts = Switch(
+  val ABNewUserAdvertsDisabled = Switch(
     SwitchGroup.ABTests,
-    "ab-play-video-on-fronts",
-    "Don't play video on fronts, but auto play when in article",
+    "ab-new-user-adverts-disabled",
+    "Enable adfree experience for 3 days for new users",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 31),
+    sellByDate = new LocalDate(2016, 7, 1),
     exposeClientSide = true
   )
 
-  val ABVideoControlsOnMainMedia = Switch(
+  val ABParticipationLowFricSport = Switch(
     SwitchGroup.ABTests,
-    "ab-video-controls-on-main-media",
-    "Show video controls on main media.",
+    "ab-participation-low-fric-sport",
+    "AB test switch to insert low friction participation into sport",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 27),
+    sellByDate = new LocalDate(2016, 6, 15),
+    exposeClientSide = true
+  )
+
+  val ABVideoTeaser = Switch(
+    SwitchGroup.ABTests,
+    "ab-video-teaser",
+    "Show video teaser",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 1),
     exposeClientSide = true
   )
 }

@@ -1,9 +1,9 @@
 @(page: model.GalleryPage)(implicit request: RequestHeader)
 
 @main(page){ }{
-    @if(page.gallery.showNewGalleryDesign) {
-        @fragments.newGalleryBody(page)
-    } else {
+    @if(page.gallery.content.isImmersiveGallery) {
         @fragments.galleryBody(page)
+    } else {
+        @fragments.paidAdvertisementGalleryBody(page)
     }
 }

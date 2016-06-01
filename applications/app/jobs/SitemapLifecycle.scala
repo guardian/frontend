@@ -1,14 +1,13 @@
 package jobs
 
 import common._
-import play.api.GlobalSettings
 import services.{VideoSiteMap, NewsSiteMap}
 
-trait SiteMapLifecycle extends GlobalSettings with ExecutionContexts {
+import scala.concurrent.ExecutionContext
 
-  override def onStart(app: play.api.Application) {
-    super.onStart(app)
+class SiteMapLifecycle(implicit ec: ExecutionContext) extends LifecycleComponent {
 
+  override def start(): Unit = {
     Jobs.deschedule("SiteMap")
     Jobs.schedule("SiteMap", "0 0/2 * * * ?") {
       SiteMapJob.update()

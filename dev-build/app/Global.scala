@@ -1,70 +1,25 @@
 import commercial.CommercialLifecycle
 import common.dfp.FaciaDfpAgentLifecycle
-import common.{CanonicalLink, DiagnosticsLifecycle, ExecutionContexts}
+import common._
 import conf._
+import conf.switches.SwitchboardLifecycle
 import contentapi.SectionsLookUpLifecycle
-import dev.DevParametersLifecycle
-import dfp.DfpDataCacheLifecycle
+import _root_.dfp.DfpDataCacheLifecycle
 import feed.{MostPopularFacebookAutoRefreshLifecycle, MostReadLifecycle, OnwardJourneyLifecycle}
-import implicits.Requests
 import model.AdminLifecycle
 import ophan.SurgingContentAgentLifecycle
-import play.api.mvc.{EssentialAction, EssentialFilter, RequestHeader, WithFilters}
+import play.api.GlobalSettings
+import play.api.inject.ApplicationLifecycle
 import rugby.conf.RugbyLifecycle
 import services.ConfigAgentLifecycle
 import headlines.ABHeadlinesLifecycle
 
-// obviously this is only for devbuild and should never end up in one of our
-// prod projects
-object DevCacheWarningFilter extends EssentialFilter with ExecutionContexts {
-  def apply(next: EssentialAction) = new EssentialAction {
-    def apply(rh: RequestHeader) = {
-      next(rh).map{ result =>
-        val header = result.header
-        val path = rh.path
-        if (
-          header.status == 200 &&
-            !header.headers.keySet.contains("Cache-Control") &&
-            path != "/favicon.ico" &&
-            !path.startsWith("/assets/") // these are only used on DEV machines
-        ) {
-          // nice big warning to devs if they are working on something uncached
-          println("\n\n\n---------------------------- WARNING ------------------------------------")
-          println(s"URL $path has NO CACHE-CONTROL header")
-          println("-------------------------------------------------------------------------------\n\n\n")
-        }
-        result
-      }
-    }
-  }
-}
+import scala.concurrent.ExecutionContext
 
-// obviously this is only for devbuild and should never end up in one of our
-// prod projects
-object DevJsonExtensionFilter extends EssentialFilter with ExecutionContexts with Requests {
-  def apply(next: EssentialAction) = new EssentialAction {
-    def apply(rh: RequestHeader) = {
-      if (rh.isJson && !rh.path.endsWith(".json") && !rh.path.endsWith(".js")) {
-        // makes it easy for devs to see what has happened
-        println("\n\n\n---------------------------- WARNING ------------------------------------")
-        println(s"URL ${rh.path} does not have a .json extension")
-        println("-------------------------------------------------------------------------------\n\n\n")
-        throw new IllegalArgumentException("JSON endpoints must end with '.json'")
-      }
-      next(rh)
-    }
-  }
-}
-
-
-object Global extends WithFilters(DevJsonExtensionFilter :: DevCacheWarningFilter :: Filters.common: _*)
-  with DevParametersLifecycle
-  with AdminLifecycle
+object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents
   with DiagnosticsLifecycle
   with OnwardJourneyLifecycle
-  with CommercialLifecycle
   with MostReadLifecycle
-  with DfpDataCacheLifecycle
   with FaciaDfpAgentLifecycle
   with ConfigAgentLifecycle
   with SurgingContentAgentLifecycle
@@ -74,8 +29,11 @@ object Global extends WithFilters(DevJsonExtensionFilter :: DevCacheWarningFilte
   with FootballLifecycle
   with CricketLifecycle
   with RugbyLifecycle
-  with CorsErrorHandler
   with ABHeadlinesLifecycle {
-  override val allowedParams: Seq[String] =
-    CanonicalLink.significantParams ++ commercialParams ++ insignificantParams ++ Seq("query")
+
+  override def lifecycleComponents(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext): List[LifecycleComponent] = List(
+    new AdminLifecycle(appLifecycle)(ec),
+    new CommercialLifecycle(appLifecycle)(ec),
+    new DfpDataCacheLifecycle(appLifecycle)(ec)
+  )
 }

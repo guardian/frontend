@@ -212,6 +212,10 @@ define([
         });
 
         it('should display ads', function (done) {
+            config.page.hasPageSkin = true;
+            detect.getBreakpoint = function () {
+                return 'wide';
+            };
             dfp.init().then(dfp.loadAds).then(function () {
                 window.googletag.cmd.forEach(function (func) { func(); });
                 expect(window.googletag.pubads().enableSingleRequest).toHaveBeenCalled();
@@ -260,7 +264,6 @@ define([
                 detect.getBreakpoint = function () {
                     return 'wide';
                 };
-                config.switches.viewability = true;
                 config.page.hasPageSkin = false;
                 expect(dfp.shouldLazyLoad()).toBe(true);
             });
@@ -269,7 +272,6 @@ define([
                 detect.getBreakpoint = function () {
                     return 'desktop';
                 };
-                config.switches.viewability = true;
                 config.page.hasPageSkin = true;
                 expect(dfp.shouldLazyLoad()).toBe(true);
             });
@@ -278,7 +280,6 @@ define([
                 detect.getBreakpoint = function () {
                     return 'wide';
                 };
-                config.switches.viewability = true;
                 config.page.hasPageSkin = true;
                 expect(dfp.shouldLazyLoad()).toBe(false);
             });

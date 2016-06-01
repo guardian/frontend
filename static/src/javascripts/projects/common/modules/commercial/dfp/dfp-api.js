@@ -24,6 +24,7 @@ define([
     'common/modules/commercial/dfp/ophan-tracking',
     'common/modules/commercial/dfp/breakout-iframe',
     'common/modules/commercial/dfp/PrebidService',
+    'common/modules/commercial/dfp/track-ad-load',
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
     'common/modules/analytics/beacon',
@@ -66,6 +67,7 @@ define([
     ophanTracking,
     breakoutIFrame,
     PrebidService,
+    trackAdLoad,
     geoMostPopular,
     ab,
     beacon,
@@ -254,7 +256,7 @@ define([
 
     function shouldLazyLoad() {
         // We do not want lazy loading on pageskins because it messes up the roadblock
-        return config.switches.viewability && !(config.page.hasPageSkin && detect.getBreakpoint() === 'wide');
+        return !(config.page.hasPageSkin && detect.getBreakpoint() === 'wide');
     }
 
     function showSponsorshipPlaceholder() {
@@ -458,11 +460,12 @@ define([
      */
 
     var callbacks = {
+        '0,0': isFluid250('ad-slot--top-banner-ad'),
         '300,251': function (event, $adSlot) {
             stickyMpu($adSlot);
         },
         '300,250': function (event, $adSlot) {
-            if (config.switches.viewability && $adSlot.hasClass('ad-slot--right')) {
+            if ($adSlot.hasClass('ad-slot--right')) {
                 var mobileAdSizes = $adSlot.attr('data-mobile');
                 if (mobileAdSizes && mobileAdSizes.indexOf('300,251') > -1) {
                     stickyMpu($adSlot);
@@ -524,17 +527,20 @@ define([
 
             // This empty slot could be caused by a targeting problem,
             // let's report these and diagnose the problem in sentry.
-            var adUnitPath = event.slot.getAdUnitPath();
-            var adTargetingMap = event.slot.getTargetingMap();
-            var adTargetingKValues = adTargetingMap ? adTargetingMap['k'] : [];
-            var adKeywords = adTargetingKValues ? adTargetingKValues.join(', ') : '';
+            // Keep the sample rate low, otherwise we'll get rate-limited (report-error will also sample down)
+            if (config.switches.reportEmptyDfpResponses && Math.random() < 0.001) {
+                var adUnitPath = event.slot.getAdUnitPath();
+                var adTargetingMap = event.slot.getTargetingMap();
+                var adTargetingKValues = adTargetingMap ? adTargetingMap['k'] : [];
+                var adKeywords = adTargetingKValues ? adTargetingKValues.join(', ') : '';
 
-            reportError(new Error('dfp returned an empty ad response'), {
-                feature: 'commercial',
-                adUnit: adUnitPath,
-                adSlot: adSlotId,
-                adKeywords: adKeywords
-            }, false);
+                reportError(new Error('dfp returned an empty ad response'), {
+                    feature: 'commercial',
+                    adUnit: adUnitPath,
+                    adSlot: adSlotId,
+                    adKeywords: adKeywords
+                }, false);
+            }
         } else {
             $adSlot = $('#' + adSlotId);
 
@@ -697,8 +703,8 @@ define([
      * Multiple sizes - `data-mobile="300,50|320,50"`
      */
     function createSizeMapping(attr) {
-        return map(attr.split('|'), function (size) {
-            return map(size.split(','), Number);
+        return attr.split('|').map(function (size) {
+            return size === 'fluid' ? 'fluid' : size.split(',').map(Number);
         });
     }
 
@@ -787,6 +793,7 @@ define([
         loadAds:        load,
         addSlot:        addSlot,
         getCreativeIDs: getCreativeIDs,
+        trackAdLoad:    trackAdLoad,
 
         // Used privately but exposed only for unit testing
         getAdverts:     getAdverts,

@@ -18,8 +18,8 @@
         width: 132px;
     }
 
-    @include mq(leftCol) {
-        left: calc(50% - 570px + #{$gs-gutter});
+    @include mq(wide) {
+        left: calc(50% - 630px);
     }
 }
 

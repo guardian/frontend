@@ -210,21 +210,26 @@ $mobile-max-container-width: gs-span(8);
     }
 }
 
-// Hosted (bottom) version 2 - this is purely for testing purposes
 .gu-display--hostedbottom {
+    .gu-display__link {
+        text-decoration: none;
+    }
+
     .gu-display__logo-pos--bottom-right {
-        top: auto;
-        bottom: 50px;
+        top: -27px;
+        height: 27px;
     }
 
     .gu-display__content {
-        width: 100%;
+        position: relative;
+        width: auto;
         min-height: 110px;
         padding-top: $gs-gutter / 2;
         background-color: #fffcf4;
     }
 
     .gu-display__content-title--hosted {
+        @include f-headlineSans;
         @include font-size(22, 24);
 
         width: 60%;

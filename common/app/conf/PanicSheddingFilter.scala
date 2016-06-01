@@ -12,7 +12,7 @@ import play.api.mvc.{Result, RequestHeader, Filter}
 import scala.concurrent.Future
 
 // this turns requests away with 5xx errors if we are too busy
-object PanicSheddingFilter extends Filter with Logging {
+class PanicSheddingFilter extends Filter with Logging {
 
   import scala.concurrent.ExecutionContext.Implicits.global
   import scala.concurrent.duration._
