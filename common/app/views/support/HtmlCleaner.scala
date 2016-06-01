@@ -494,12 +494,12 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleane
 object GalleryCaptionCleaner {
   def apply(caption: String) = {
     val galleryCaption = Jsoup.parse(caption)
-    val firstStrong = galleryCaption.getElementsByTag("strong").first()
+    val firstStrong = Option(galleryCaption.getElementsByTag("strong").first())
     val captionTitle = galleryCaption.createElement("h2")
-    val captionTitleText = firstStrong.text()
+    val captionTitleText = firstStrong.map(_.text()).getOrElse("")
 
     // <strong> is removed in place of having a <h2> element
-    firstStrong.remove()
+    firstStrong.foreach(_.remove())
 
     captionTitle.addClass("gallery__caption__title")
     captionTitle.text(captionTitleText)
