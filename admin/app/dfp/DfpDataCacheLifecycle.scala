@@ -48,7 +48,7 @@ class DfpDataCacheLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: Exe
 
     new Job[Unit] {
       val name: String = "DFP-CustomTargeting-Store"
-      val interval: Int = 2
+      val interval: Int = 15
       def run() = CustomTargetingKeyValueJob.run()
     },
 

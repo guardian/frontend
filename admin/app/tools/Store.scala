@@ -4,9 +4,10 @@ import common.Logging
 import common.dfp._
 import conf.Configuration.commercial._
 import conf.{AdminConfiguration, Configuration}
+import dfp.GuCustomTargetingKey
 import implicits.Dates
 import org.joda.time.DateTime
-import play.api.libs.json.Json
+import play.api.libs.json.{JsError, JsSuccess, Json}
 import play.api.libs.json.Json.toJson
 import services.S3
 
@@ -55,7 +56,7 @@ trait Store extends Logging with Dates {
     S3.putPublic(dfpTemplateCreativesKey, creatives, defaultJsonEncoding)
   }
   def putDfpCustomTargetingKeyValues(keyValues: String): Unit ={
-    S3.putPublic(dfpCustomTargetingKeys, keyValues, defaultJsonEncoding )
+    S3.putPublic(dfpCustomTargetingKey, keyValues, defaultJsonEncoding )
   }
 
   val now: String = DateTime.now().toHttpDateTimeString
@@ -92,6 +93,16 @@ trait Store extends Logging with Dates {
     creatives getOrElse Nil
   }
 
+  def getDfpCustomTargetingKeyValues: Seq[GuCustomTargetingKey] = {
+    val targeting = for (doc <- S3.get(dfpCustomTargetingKey)) yield {
+      val json = Json.parse(doc)
+      json.validate[Seq[GuCustomTargetingKey]] match {
+        case s: JsSuccess[Seq[GuCustomTargetingKey]] => s.get.sortBy(_.name)
+        case e: JsError => log.error("Errors: " + JsError.toJson(e).toString()); Nil
+      }
+    }
+    targeting getOrElse Nil
+  }
 
   object commercial {
 

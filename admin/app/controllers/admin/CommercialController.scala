@@ -103,4 +103,8 @@ object CommercialController extends Controller with Logging with AuthLogging wit
       Ok(views.html.commercial.commercialRadiator("PROD", adResponseConfidenceGraph))
     }
   }
+
+  def renderKeyValues() = AuthActions.AuthActionTest { implicit request =>
+    Ok(views.html.commercial.customTargetingKeyValues("PROD", Store.getDfpCustomTargetingKeyValues))
+  }
 }
