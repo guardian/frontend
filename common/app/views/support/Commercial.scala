@@ -34,7 +34,7 @@ object Commercial {
     }
 
     def adSizes(metaData: MetaData, edition: Edition): Map[String, Seq[String]] = {
-      val fabricAdvertsTop = if (FabricAdverts.isSwitchedOn) Some("88,71") else None
+      val fabricAdvertsTop = Seq("88,71")
       val fluidAdvertsTop = if (FluidAdverts.isSwitchedOn) Some("fluid") else None
       val leaderboardAdvertsTop = if (FixedTechTopSlot.isSwitchedOn && isUKTechFront(metaData)) None else Some("728,90")
       Map(

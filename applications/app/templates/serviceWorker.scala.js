@@ -208,7 +208,7 @@ self.addEventListener('push', function (event) {
                         };
                         return self.registration.showNotification(message.title, {
                             body: message.body,
-                            icon: '@{JavaScript(Static("images/favicons/114x114.png").path)}',
+                            icon: '@{JavaScript(Static("images/favicons/114x114.png"))}',
                             tag: message.title,
                             data: data
                         });

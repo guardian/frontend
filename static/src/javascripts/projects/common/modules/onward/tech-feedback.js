@@ -9,7 +9,8 @@ define([
     'lodash/collections/map',
     'lodash/collections/reduce',
     'lodash/objects/assign',
-    'lodash/objects/keys'
+    'lodash/objects/keys',
+    'common/utils/cookies'
 ], function (
     bean,
     fastdom,
@@ -21,7 +22,8 @@ define([
     map,
     reduce,
     assign,
-    keys
+    keys,
+    cookies
 ) {
 
     function objToString(obj) {
@@ -62,6 +64,7 @@ define([
                     adBlock: detect.adblockInUseSync(),
                     devicePixelRatio: window.devicePixelRatio,
                     ophanId: config.ophan.pageViewId,
+                    gu_u: cookies.get('GU_U'),
                     abTests : summariseAbTests(ab.getParticipations())
                 };
                 var body = '\r\n\r\n\r\n\r\n------------------------------\r\nAdditional technical data about your request - please do not edit:\r\n\r\n'

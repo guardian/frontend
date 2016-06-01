@@ -200,14 +200,10 @@ define([
     }
 
     function getReady(body) {
-        if (config.switches.viewability) {
-            return Promise.race([
-                new Promise(expire),
-                Promise.all([onImagesLoaded(body), onRichLinksUpgraded(body), onInteractivesLoaded(body)])
-            ]);
-        }
-
-        return Promise.resolve(true);
+        return Promise.race([
+            new Promise(expire),
+            Promise.all([onImagesLoaded(body), onRichLinksUpgraded(body), onInteractivesLoaded(body)])
+        ]);
     }
 
     function SpaceError(rules) {

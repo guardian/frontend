@@ -180,7 +180,6 @@ define([
     }
 
     function enhanceVideo(el, autoplay, shouldPreroll) {
-
         var mediaType = el.tagName.toLowerCase(),
             $el = bonzo(el).addClass('vjs vjs-tech-' + videojs.options.techOrder[0]),
             mediaId = $el.attr('data-media-id'),
@@ -324,7 +323,6 @@ define([
                             fastdom.write(function () {
                                 player.addClass('vjs-mousemoved');
                             });
-
 
                             mouseMoveIdle = setTimeout(function () {
                                 fastdom.write(function () {

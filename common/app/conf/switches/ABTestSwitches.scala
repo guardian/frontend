@@ -19,7 +19,7 @@ trait ABTestSwitches {
     "ab-live-blog-chrome-notifications-internal",
     "Live blog chrome notifications - Internal",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 1),
+    sellByDate = new LocalDate(2016, 7, 4),
     exposeClientSide = true
   )
 
@@ -28,7 +28,7 @@ trait ABTestSwitches {
     "ab-live-blog-chrome-notifications-prod",
     "Live blog chrome notifications - prod",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 1),
+    sellByDate = new LocalDate(2016, 7, 4),
     exposeClientSide = true
   )
 
@@ -37,7 +37,7 @@ trait ABTestSwitches {
     "ab-loyal-adblocking-survey",
     "An adblock ongoing survey for all loyal users",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 31),
+    sellByDate = new LocalDate(2016, 6, 2),
     exposeClientSide = true
   )
 
@@ -127,7 +127,7 @@ trait ABTestSwitches {
     "ab-play-video-on-fronts",
     "Don't play video on fronts, but auto play when in article",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 31),
+    sellByDate = new LocalDate(2016, 6, 2),
     exposeClientSide = true
   )
 
@@ -149,4 +149,12 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABVideoTeaser = Switch(
+    SwitchGroup.ABTests,
+    "ab-video-teaser",
+    "Show video teaser",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 1),
+    exposeClientSide = true
+  )
 }
