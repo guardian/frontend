@@ -24,6 +24,7 @@ define([
     'common/modules/commercial/dfp/ophan-tracking',
     'common/modules/commercial/dfp/breakout-iframe',
     'common/modules/commercial/dfp/PrebidService',
+    'common/modules/commercial/dfp/track-ad-load',
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
     'common/modules/analytics/beacon',
@@ -66,6 +67,7 @@ define([
     ophanTracking,
     breakoutIFrame,
     PrebidService,
+    trackAdLoad,
     geoMostPopular,
     ab,
     beacon,
@@ -791,6 +793,7 @@ define([
         loadAds:        load,
         addSlot:        addSlot,
         getCreativeIDs: getCreativeIDs,
+        trackAdLoad:    trackAdLoad,
 
         // Used privately but exposed only for unit testing
         getAdverts:     getAdverts,
