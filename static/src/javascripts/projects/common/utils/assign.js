@@ -1,4 +1,9 @@
 define(function () {
+    /**
+     * Assigns own enumerable properties of source object(s) to the destination
+     * object. Subsequent sources will overwrite property assignments of previous
+     * sources.
+     */
     var assign = 'assign' in Object ? assignNative : assignPolyfill;
     return assign;
 
