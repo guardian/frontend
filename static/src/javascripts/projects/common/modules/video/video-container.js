@@ -6,11 +6,13 @@ define([
     'bean',
     'fastdom',
     'common/utils/$',
+    'common/utils/element-inview',
     'bootstraps/enhanced/media/video-player'
 ], function (
     bean,
     fastdom,
     $,
+    ElementInview,
     videojs
 ) {
 
@@ -23,6 +25,32 @@ define([
 
     function init() {
         bindEvents();
+        initLazyLoadImages();
+    }
+
+    function initLazyLoadImages() {
+        $('.js-video-playlist-image').each(function(el) {
+            // We wrap this in a read as ElementInview reads the DOM.
+            fastdom.read(function() {
+                var elementInview = ElementInview(el , $('.js-video-playlist-inner').get(0), {
+                    // This loads 1 image in the future
+                    left: 410
+                });
+
+                elementInview.on('firstview', function(el) {
+                    fastdom.write(function() {
+                        var dataSrc = el.getAttribute('data-src');
+                        var src = el.getAttribute('src');
+
+                        if (dataSrc && !src) {
+                            fastdom.write(function() {
+                                el.setAttribute('src', dataSrc);
+                            });
+                        }
+                    });
+                });
+            });
+        });
     }
 
     function bindEvents() {
@@ -72,17 +100,19 @@ define([
     }
 
     function fetchImage(i) {
-        $('.js-video-playlist-image--' + i).map(function(el) {
-            fastdom.read(function () {
-                var dataSrc = el.getAttribute('data-src');
-                var src = el.getAttribute('src');
-                if (dataSrc && !src) {
-                    fastdom.write(function() {
-                        el.setAttribute('src', dataSrc);
-                    });
-                }
-            });
-        });
+
+
+        // $('.js-video-playlist-image--' + i).map(function(el) {
+        //     fastdom.read(function () {
+        //         var dataSrc = el.getAttribute('data-src');
+        //         var src = el.getAttribute('src');
+        //         if (dataSrc && !src) {
+        //             fastdom.write(function() {
+        //                 el.setAttribute('src', dataSrc);
+        //             });
+        //         }
+        //     });
+        // });
     }
 
     return function () {
