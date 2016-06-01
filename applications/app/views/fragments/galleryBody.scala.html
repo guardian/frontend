@@ -3,7 +3,7 @@
 @import common.LinkTo
 @import layout.ContentWidths.GalleryMedia
 @import views.support.TrailCssClasses.toneClass
-@import views.support.RenderClasses
+@import views.support.{RenderClasses, GalleryCaptionCleaner}
 
 <div class="l-side-margins l-side-margins--media l-side-margins--gallery">
 
@@ -53,7 +53,7 @@
 
             <div class="gallery__figcaption">
                 @image.caption.map { caption =>
-                    <p class="gallery__caption" itemprop="caption">@Html(caption)</p>
+                    <div class="gallery__caption" itemprop="caption">@Html(GalleryCaptionCleaner(caption))</div>
                 }
                 @if(image.displayCredit) {
                     @image.credit.map { credit =>

@@ -157,6 +157,7 @@
 
 .gallery__caption {
     color: $neutral-4;
+    margin-bottom: 0.5rem;
 
     @include mq(desktop) {
         padding-right: $gs-gutter / 2;
@@ -172,20 +173,13 @@
             text-decoration: none;
         }
     }
+}
 
-    // This is the gallery caption title
-    > strong:first-child {
-        @include fs-headline(2);
-        color: $neutral-5;
-        display: block;
-        margin-bottom: $gs-baseline/2;
-
-        // The first br is display none after the title because the
-        // title already has the correct margins provided in "fs-headline(2)"
-        & + br {
-            display: none;
-        }
-    }
+.gallery__caption__title {
+    @include fs-headline(2);
+    color: $neutral-5;
+    display: block;
+    margin-bottom: $gs-baseline/2;
 }
 
 .gallery__credit {
