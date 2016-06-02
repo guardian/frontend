@@ -5,15 +5,18 @@ import feed.Competitions
 import football.controllers.HealthCheck
 import model.{TeamMap, LiveBlogAgent}
 import pa.{PaClientErrorsException, Http, PaClient}
-import play.api.GlobalSettings
+import play.api.inject.ApplicationLifecycle
 import play.api.libs.ws.WS
-import scala.concurrent.Future
-import scala.concurrent.duration._
+import scala.concurrent.{ExecutionContext, Future}
 
-trait FootballLifecycle extends GlobalSettings with ExecutionContexts {
+class FootballLifecycle(appLifeCycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent {
+
+  appLifeCycle.addStopHook { () => Future {
+    descheduleJobs()
+  }}
 
   private def scheduleJobs() {
-    Competitions.competitionIds.zipWithIndex map { case (id, index) =>
+    Competitions.competitionIds.zipWithIndex foreach { case (id, index) =>
       //stagger fixtures and results refreshes to avoid timeouts
       val seconds = index * 5 % 60
       val minutes = index * 5 / 60 % 5
@@ -51,8 +54,7 @@ trait FootballLifecycle extends GlobalSettings with ExecutionContexts {
     Jobs.deschedule("TeamMapRefreshJob")
   }
 
-  override def onStart(app: play.api.Application) {
-    super.onStart(app)
+  override def start(): Unit = {
     descheduleJobs()
     scheduleJobs()
 
@@ -64,12 +66,6 @@ trait FootballLifecycle extends GlobalSettings with ExecutionContexts {
       TeamMap.refresh()
     }
   }
-
-  override def onStop(app: play.api.Application) {
-    descheduleJobs()
-    super.onStop(app)
-  }
-
 }
 
 object FootballClient extends PaClient with Http with Logging with ExecutionContexts {
@@ -111,6 +107,3 @@ object FootballClient extends PaClient with Http with Logging with ExecutionCont
 
 
 
-trait SportHealthCheckLifeCycle extends CachedHealthCheckLifeCycle {
-  override val healthCheckController = HealthCheck
-}

@@ -32,15 +32,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABLoyalAdblockingSurvey = Switch(
-    SwitchGroup.ABTests,
-    "ab-loyal-adblocking-survey",
-    "An adblock ongoing survey for all loyal users",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 2),
-    exposeClientSide = true
-  )
-
   val ABParticipationLowFricFilm = Switch(
     SwitchGroup.ABTests,
     "ab-participation-low-fric-film",
@@ -145,7 +136,7 @@ trait ABTestSwitches {
     "ab-video-teaser",
     "Show video teaser",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 1),
+    sellByDate = new LocalDate(2016, 6, 3),
     exposeClientSide = true
   )
 }
