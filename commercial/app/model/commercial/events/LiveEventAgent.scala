@@ -61,14 +61,12 @@ object LiveEventAgent extends ExecutionContexts with Logging {
     }
 
     val start = currentTimeMillis()
-    val eventDateFilter = now plusWeeks 2
 
     val liveEvents =
       for{
         eventImages <- fetchAndParseLiveEventImages
         ParsedFeed(events, _) <- Eventbrite.parsePagesOfEvents(feedMetaData, feedContent)
       } yield events
-            .filter (_.startDate isAfter eventDateFilter)
             .map ( event => LiveEvent(event, eventImages find (_.eventId == event.id)) )
 
     liveEvents map updateAvailableMerchandise
