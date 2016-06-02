@@ -18,7 +18,7 @@ object DataMapper {
     def toGuAdUnits(inventoryTargeting: InventoryTargeting): Seq[GuAdUnit] = {
 
       //noinspection MapFlatten
-      val directAdUnits = toSeq(inventoryTargeting.getTargetedAdUnits).map(_.getAdUnitId).map(AdUnitService.adUnit).flatten
+      val directAdUnits = toSeq(inventoryTargeting.getTargetedAdUnits).map(_.getAdUnitId).map(AdUnitService.activeAdUnit).flatten
 
       //noinspection MapFlatten
       val adUnitsDerivedFromPlacements = {

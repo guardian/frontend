@@ -39,7 +39,7 @@ object AdUnitAgent extends DataAgent[String, GuAdUnit] {
 object AdUnitService {
 
   // Retrieves the ad unit object if the id matches and the ad unit is active.
-  def adUnit(adUnitId: String): Option[GuAdUnit] = {
+  def activeAdUnit(adUnitId: String): Option[GuAdUnit] = {
     AdUnitAgent.get.data.get(adUnitId).collect {
       case adUnit if adUnit.isActive => adUnit
     }
