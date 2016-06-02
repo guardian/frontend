@@ -214,27 +214,30 @@ define([
      * attributes on the element.
      */
     function defineAdverts() {
-        var $adSlots = qwery(adSlotSelector).map(bonzo);
-
-        var activeSlots = $adSlots.filter(function ($adSlot) {
-            // filter out (and remove) hidden ads
-            if (shouldFilterAdSlot($adSlot)) {
-                fastdom.write(function () {
-                    $adSlot.remove();
-                });
-                return false;
-            } else {
-                return true;
-            }
-        });
-
-        var advertArray = activeSlots.map(function ($adSlot) {
-            return new Advert($adSlot);
-        });
-
-        advertArray.forEach(function (advert) {
-            adverts[advert.adSlotId] = advert;
-        });
+        // Get all ad slots
+        qwery(adSlotSelector)
+            // convert them to bonzo objects
+            .map(bonzo)
+            // remove the ones which should not be there
+            .filter(function ($adSlot) {
+                // filter out (and remove) hidden ads
+                if (shouldFilterAdSlot($adSlot)) {
+                    fastdom.write(function () {
+                        $adSlot.remove();
+                    });
+                    return false;
+                } else {
+                    return true;
+                }
+            })
+            // convert to Advert ADT
+            .map(function ($adSlot) {
+                return new Advert($adSlot);
+            })
+            // fill in the adverts map
+            .forEach(function (advert) {
+                adverts[advert.adSlotId] = advert;
+            });
     }
 
     function shouldFilterAdSlot($adSlot) {
