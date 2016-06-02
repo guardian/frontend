@@ -173,8 +173,10 @@ define([
         googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
             rendered = true;
             recordFirstAdRendered();
-            mediator.emit('modules:commercial:dfp:rendered', event);
-            parseAd(event);
+            parseAd(event).then(function (adSlotId) {
+                mediator.emit('modules:commercial:dfp:rendered', event);
+                allAdsRendered(adSlotId);
+            });
         }));
     }
 
@@ -542,6 +544,8 @@ define([
                     adKeywords: adKeywords
                 }, false);
             }
+
+            return Promise.resolve(adSlotId);
         } else {
             $adSlot = $('#' + adSlotId);
 
@@ -558,7 +562,7 @@ define([
 
             // Check if creative is a new gu style creative and place labels accordingly.
             // Use public method so that tests can stub it out.
-            dfp.checkForBreakout($adSlot).then(function () {
+            return dfp.checkForBreakout($adSlot).then(function () {
                 addLabel($adSlot);
 
                 size = event.size.join(',');
@@ -572,10 +576,10 @@ define([
                         $adSlot.parent().css('display', 'flex');
                     });
                 }
+
+                return adSlotId;
             }).catch(raven.captureException);
         }
-
-        allAdsRendered(adSlotId);
     }
 
     function removeSlot(adSlotId) {
