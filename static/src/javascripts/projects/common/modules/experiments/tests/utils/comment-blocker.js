@@ -1,16 +1,14 @@
 define([
-    'common/utils/config',
-    'lodash/collections/reduce'
+    'common/utils/config'
 ], function(
-    config,
-    reduce
+    config
 ) {
 
     var CommentBlocker = {};
 
     CommentBlocker.hideComments = function(shortUrlSlug) {
-        
-        var sUrlInt = shortUrlSlug ? reduce(shortUrlSlug.split(''), function(sum, ch) {
+
+        var sUrlInt = shortUrlSlug ? shortUrlSlug.split('').reduce(function(sum, ch) {
             return sum + ch.charCodeAt(0);
         }, 0) : 2;
 
