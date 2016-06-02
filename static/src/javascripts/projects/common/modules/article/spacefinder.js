@@ -17,7 +17,7 @@ define([
     trackAdLoaded,
     memoize
 ) {
-    // total_hours_spent_maintaining_this = 60
+    // total_hours_spent_maintaining_this = 64
     //
     // maximum time (in ms) to wait for images to be loaded and rich links
     // to be upgraded
