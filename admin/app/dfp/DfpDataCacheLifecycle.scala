@@ -1,12 +1,18 @@
 package dfp
 
 import common.dfp.{GuAdUnit, GuCreativeTemplate}
-import common.{AkkaAsync, ExecutionContexts, Jobs}
-import play.api.{Application, GlobalSettings}
+import common.{LifecycleComponent, AkkaAsync, ExecutionContexts, Jobs}
+import play.api.inject.ApplicationLifecycle
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
-trait DfpDataCacheLifecycle extends GlobalSettings with ExecutionContexts {
+class DfpDataCacheLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent with ExecutionContexts {
+
+  appLifecycle.addStopHook { () => Future {
+    jobs foreach { job =>
+      Jobs.deschedule(job.name)
+    }
+  }}
 
   trait Job[T] {
     val name: String
@@ -38,6 +44,12 @@ trait DfpDataCacheLifecycle extends GlobalSettings with ExecutionContexts {
       val name = "DFP-TargetingValues-Update"
       val interval = 30
       def run() = CustomTargetingValueAgent.refresh()
+    },
+
+    new Job[Unit] {
+      val name: String = "DFP-CustomTargeting-Store"
+      val interval: Int = 15
+      def run() = CustomTargetingKeyValueJob.run()
     },
 
     new Job[DataCache[Long, Seq[String]]] {
@@ -84,9 +96,7 @@ trait DfpDataCacheLifecycle extends GlobalSettings with ExecutionContexts {
 
   )
 
-  override def onStart(app: Application) {
-    super.onStart(app)
-
+  override def start() = {
     jobs foreach { job =>
       Jobs.deschedule(job.name)
       Jobs.scheduleEveryNMinutes(job.name, job.interval) {
@@ -98,13 +108,7 @@ trait DfpDataCacheLifecycle extends GlobalSettings with ExecutionContexts {
       DfpDataCacheJob.refreshAllDfpData()
       CreativeTemplateAgent.refresh()
       DfpTemplateCreativeCacheJob.run()
+      CustomTargetingKeyValueJob.run()
     }
-  }
-
-  override def onStop(app: Application) {
-    jobs foreach { job =>
-      Jobs.deschedule(job.name)
-    }
-    super.onStop(app)
   }
 }

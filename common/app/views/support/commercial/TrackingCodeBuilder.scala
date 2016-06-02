@@ -32,6 +32,23 @@ object TrackingCodeBuilder extends implicits.Requests {
     ) mkString " | "
   }
 
+  def mkCapiCardTrackingCode(multiplicity: String,
+                             optSection: Option[String],
+                             optContainerTitle: Option[String],
+                             omnitureId: String,
+                             card: CardContent)(implicit request:RequestHeader): String = {
+      Seq(
+          "merchandising",
+          "capi",
+          multiplicity,
+          optSection.getOrElse(""),
+          optContainerTitle.getOrElse(""),
+          omnitureId,
+          card.branding.map(_.sponsorName).getOrElse(""),
+          card.headline
+      ) mkString " | "
+  }
+
   def paidCard(articleTitle: String)(implicit request: RequestHeader): String = {
     def param(name: String) = request.getParameter(name) getOrElse "unknown"
     val section = param("s")

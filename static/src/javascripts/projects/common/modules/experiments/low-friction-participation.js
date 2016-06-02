@@ -38,6 +38,7 @@ define([
     var settings = {
         prevItemsHighlight: true, // Add the highlight class the items before the selected one
         itemCount: 5, // Amount of items
+        itemIconUnicode: [], // Add a list of unicode icons
         itemIconId: 'star', // SVG icon ID
         inactiveIconClass: 'star__item--grey', // The inactive class added to the icon
         buttonTextArray: [], // An array of strings to use as the button text, if array is empty will use current iteration value+1
@@ -71,12 +72,13 @@ define([
 
         // Build our participation buttons
         for (var i = 0; i < settings.itemCount; i++) {
+            var thisUniIcon = settings.itemIconUnicode[i] || settings.itemIconUnicode[0]; // Use icon at current iteration or default to first
             var templateVars = {
                 buttonText: 'Choose' +  (settings.buttonTextArray.length > 0 && settings.buttonTextArray[i]) || i + 1,
                 shouldBeActive: !state.confirming && !state.complete,
                 shouldBeHighlighted: (state.confirming || state.complete) &&
                     ((settings.prevItemsHighlight && state.selectedItem >= i) || state.selectedItem === i),
-                itemIcon: svgs(settings.itemIconId, [settings.inactiveIconClass]),
+                itemIcon: thisUniIcon || svgs(settings.itemIconId, [settings.inactiveIconClass]),
                 itemId: i,
                 state: state
             };
@@ -183,9 +185,42 @@ define([
         mediator.emit('modules:participation:clicked');
     }
 
+    function itemHovered (e) {
+        var itemLength;
+        var $lowFricButtons;
+
+        fastdomPromise.read(function() {
+            itemLength = e.currentTarget.getAttribute('data-item-id');
+            $lowFricButtons = $('.js-participation-low-fric--button');
+        }).then(updateIcons);
+
+        function updateIcons () {
+            fastdomPromise.write(function() {
+                $lowFricButtons.removeClass('participation-low-fric--button__is-highlighted');
+
+                if (itemLength > -1) {
+                    for(var i = itemLength; i >= 0; i--) {
+
+                        $($lowFricButtons[i]).addClass('participation-low-fric--button__is-highlighted');
+                    }
+                }
+            });
+        }
+    }
+
+    function blockUnHovered () {
+        if (!currentState.confirming && !currentState.complete) {
+            fastdomPromise.write(function() {
+                $('.js-participation-low-fric--button').removeClass('participation-low-fric--button__is-highlighted');
+            });
+        }
+    }
+
     function bindEvents () {
         bean.on(document, 'click.particpation-low-fric', '.js-participation-low-fric--button', itemClicked);
         bean.on(document, 'click.particpation-low-fric', '.js-participation-low-fric__confirm', confirmClicked);
+        bean.on(document, 'mouseover.particpation-low-fric', '.js-participation-low-fric--button', itemHovered);
+        bean.on(document, 'mouseleave.particpation-low-fric', '.js-participation-low-friction__contents', blockUnHovered);
     }
 
     // Initalise it.

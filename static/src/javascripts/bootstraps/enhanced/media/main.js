@@ -70,7 +70,7 @@ define([
             unviewed_position_start: 1
         };
 
-        return 'http://' + config.page.dfpHost + '/gampad/ads?' + urlUtils.constructQuery(queryParams);
+        return 'https://' + config.page.dfpHost + '/gampad/ads?' + urlUtils.constructQuery(queryParams);
     }
 
     function initLoadingSpinner(player) {
@@ -146,9 +146,7 @@ define([
                         placeholder.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
                         player.removeClass('media__container--hidden').addClass('media__container--active');
                         $el.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
-                        var enhancedPlayer = enhanceVideo($('video', player).get(0), true);
-
-                        mediator.emit('ab:PlayVideoOnFronts:front-player-created', enhancedPlayer);
+                        enhanceVideo($('video', player).get(0), true);
                     });
                 });
                 fastdom.write(function () {
@@ -168,8 +166,7 @@ define([
 
         fastdom.read(function () {
             $('.js-gu-media--enhance').each(function (el) {
-                var enhancedPlayer = enhanceVideo(el, false, withPreroll);
-                mediator.emit('ab:PlayVideoOnFronts:in-article-video-created', enhancedPlayer);
+                enhanceVideo(el, false, withPreroll);
             });
         });
 
@@ -180,7 +177,6 @@ define([
     }
 
     function enhanceVideo(el, autoplay, shouldPreroll) {
-
         var mediaType = el.tagName.toLowerCase(),
             $el = bonzo(el).addClass('vjs vjs-tech-' + videojs.options.techOrder[0]),
             mediaId = $el.attr('data-media-id'),
@@ -198,16 +194,21 @@ define([
 
         var videoInfo = new Promise(function(resolve) {
             // We only have the canonical URL in videos embedded in articles / main media.
+            // These are set to the safest defaults that will always play video.
             var defaultVideoInfo = {
                 expired: false,
-                shouldHideAdverts: false
+                shouldHideAdverts: true
             };
 
             if (!canonicalUrl) {
                 resolve(defaultVideoInfo);
             } else {
+                var ajaxInfoUrl = config.page.ajaxUrl + urlUtils.getPath(canonicalUrl);
+
                 ajax({
-                    url: canonicalUrl + '/info.json'
+                    url: ajaxInfoUrl + '/info.json',
+                    type: 'json',
+                    crossOrigin: true
                 }).then(function(videoInfo) {
                     resolve(videoInfo);
                 }, function() {
@@ -324,7 +325,6 @@ define([
                             fastdom.write(function () {
                                 player.addClass('vjs-mousemoved');
                             });
-
 
                             mouseMoveIdle = setTimeout(function () {
                                 fastdom.write(function () {

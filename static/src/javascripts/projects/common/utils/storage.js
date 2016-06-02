@@ -3,11 +3,7 @@
  Module: storage.js
  Description: Wrapper around localStorage functionality
  */
-define([
-    'lodash/objects/isUndefined'
-], function (
-    isUndefined
-) {
+define(function () {
 
     var w = window,
         Storage = function (type) {
@@ -20,7 +16,7 @@ define([
     };
 
     Storage.prototype.isStorageAvailable = function (refresh) {
-        if (isUndefined(isAvailable) || refresh) {
+        if (isAvailable === undefined || refresh) {
             isAvailable = this.isAvailable();
         }
         return isAvailable;

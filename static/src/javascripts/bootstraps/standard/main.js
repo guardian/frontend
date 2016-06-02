@@ -120,10 +120,7 @@ define([
          *  Interactives are content, we want them booting as soon (and as stable) as possible.
          */
 
-        if (
-            config.switches.bootInteractivesFromMain &&
-            /Article|Interactive|LiveBlog/.test(config.page.contentType)
-        ) {
+        if (/Article|Interactive|LiveBlog/.test(config.page.contentType)) {
             $('figure.interactive').each(function (el) {
                 require($(el).attr('data-interactive'), function (interactive) {
                     fastdom.defer(function () {
@@ -142,9 +139,10 @@ define([
         robust.catchErrorsAndLog('ab-tests', function () {
             if (guardian.isEnhanced) {
                 ab.segmentUser();
-                robust.catchErrorsAndLog('ab-tests-run', function () {
-                    ab.run();
-                });
+
+                robust.catchErrorsAndLog('ab-tests-run', ab.run);
+                robust.catchErrorsAndLog('ab-tests-registerCompleteEvents', ab.registerCompleteEvents);
+
                 ab.trackEvent();
             }
         });

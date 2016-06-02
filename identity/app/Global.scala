@@ -1,49 +1,27 @@
-import common.CloudWatchApplicationMetrics
+import common.{LifecycleComponent, BackwardCompatibleLifecycleComponents, CloudWatchApplicationMetrics}
 import common.Logback.Logstash
 import conf._
-import play.api.Play.current
+import conf.switches.SwitchboardLifecycle
+import controllers.HealthCheck
 import play.api._
-import play.api.mvc._
-import play.api.mvc.Results._
+import play.api.inject.ApplicationLifecycle
 import play.api.inject.guice._
-import scala.concurrent.Future
 import utils.SafeLogging
 
-object Global extends SafeLogging
+import scala.concurrent.ExecutionContext
+
+object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents
+  with SafeLogging
   with CloudWatchApplicationMetrics
-  with IdentityLifecycle
   with SwitchboardLifecycle
-  with Logstash
-  with IdentityHealthCheckLifeCycle {
+  with Logstash {
 
   override lazy val applicationName = "frontend-identity"
 
-  override def onError(request: RequestHeader, ex: Throwable) = {
-    logger.error("Serving error page", ex)
-    if (Play.mode == Mode.Prod) {
-      Future.successful(InternalServerError(views.html.errors._50x()))
-    } else {
-      super.onError(request, ex)
-    }
-  }
-
-  override def onHandlerNotFound(request: RequestHeader) = {
-    logger.info(s"Serving 404, no handler found for ${request.path}")
-    if (Play.mode == Mode.Prod) {
-      Future.successful(NotFound(views.html.errors._404()))
-    } else {
-      super.onHandlerNotFound(request)
-    }
-  }
-
-  override def onBadRequest(request: RequestHeader, error: String) = {
-    logger.info(s"Serving 400, could not bind request to handler for ${request.uri}")
-    if (Play.mode == Mode.Prod) {
-      Future.successful(BadRequest("Bad Request: " + error))
-    } else {
-      super.onBadRequest(request, error)
-    }
-  }
+  override def lifecycleComponents(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext): List[LifecycleComponent] = List(
+    new InjectedCachedHealthCheckLifeCycle(HealthCheck),
+    new IdentityLifecycle(appLifecycle)
+  )
 }
 
 class IdentityApplicationLoader extends GuiceApplicationLoader() {

@@ -4,6 +4,14 @@ import conf.switches.Expiry.never
 import org.joda.time.LocalDate
 
 trait FeatureSwitches {
+  val immersiveMainEmbedSwitch = Switch(
+    SwitchGroup.Feature,
+    "immersive-main-media",
+    "If this switch is on, main media embeds won't be iframed",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 22),
+    exposeClientSide = false
+  )
 
   val FixturesAndResultsContainerSwitch = Switch(
     SwitchGroup.Feature,
@@ -18,6 +26,15 @@ trait FeatureSwitches {
     SwitchGroup.Feature,
     "chapter-headings",
     "If this switch is turned on, we will add a block of chapter headings to the top of article pages",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 11, 7),
+    exposeClientSide = false
+  )
+
+  val FacebookShareImageLogoOverlay = Switch(
+    SwitchGroup.Feature,
+    "facebook-share-image-logo-overlay",
+    "If this switch is turned on, we will overlay the guardian logo along the bottom of images shared on facebook",
     safeState = Off,
     sellByDate = new LocalDate(2016, 11, 7),
     exposeClientSide = false
@@ -304,17 +321,6 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  // Owner: First impressions
-  val galleryRedesign = Switch(
-    SwitchGroup.Feature,
-    "gallery-redesign-switch",
-    "If this switch is on, the new gallery redesign displays",
-    safeState = On,
-    // Tuesday
-    sellByDate = new LocalDate(2016, 5, 31),
-    exposeClientSide = false
-  )
-
   val R2PagePressServiceSwitch = Switch(
     SwitchGroup.Feature,
     "r2-page-press-service",
@@ -340,15 +346,6 @@ trait FeatureSwitches {
     "When ON, articles specified in the badges file will have visual elements added",
     safeState = On,
     sellByDate = new LocalDate(2017, 2, 28),
-    exposeClientSide = false
-  )
-
-  val EuReferendumBadgeSwitch = Switch(
-    SwitchGroup.Feature,
-    "eu-referendum-badge",
-    "When ON, a badge will be applied to all EU Referendum articles",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 1),
     exposeClientSide = false
   )
 

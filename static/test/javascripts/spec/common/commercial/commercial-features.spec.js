@@ -40,7 +40,6 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
                     sponsored : true,
                     standardAdverts : true,
                     videoAdverts : true,
-                    viewability : true,
                     discussion : true
                 };
 

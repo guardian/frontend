@@ -43,6 +43,8 @@ define([
     }
 
     return function () {
+        var module = this;
+        
         this.id = 'ParticipationLowFricMusicV1';
         this.start = '2016-05-23';
         this.expiry = '2016-06-07';
@@ -83,15 +85,17 @@ define([
                 id: 'control',
                 test: function () {},
                 success: function (complete) {
-                    mediator.on('discussion:commentbox:post:success', function (){
-                        // Data lake
-                        complete();
+                    if (module.canRun()) {
+                        mediator.on('discussion:commentbox:post:success', function () {
+                            // Data lake
+                            complete();
 
-                        // Omniture
-                        getOmniture().then(function (omniture) {
-                            omniture.trackLinkImmediate('ab | ParticipationLowFricMusic | control | complete');
+                            // Omniture
+                            getOmniture().then(function (omniture) {
+                                omniture.trackLinkImmediate('ab | ParticipationLowFricMusic | control | complete');
+                            });
                         });
-                    });
+                    }
                 }
             },
             {
@@ -113,15 +117,17 @@ define([
                     });
                 },
                 success: function (complete) {
-                    mediator.on('modules:participation:clicked', function (){
-                        // Data lake
-                        complete();
+                    if (module.canRun()) {
+                        mediator.on('modules:participation:clicked', function () {
+                            // Data lake
+                            complete();
 
-                        // Omniture
-                        getOmniture().then(function (omniture) {
-                            omniture.trackLinkImmediate('ab | ParticipationLowFricMusicV1 | variant-1 | success');
+                            // Omniture
+                            getOmniture().then(function (omniture) {
+                                omniture.trackLinkImmediate('ab | ParticipationLowFricMusicV1 | variant-1 | success');
+                            });
                         });
-                    });
+                    }
                 }
             }
         ];

@@ -3,11 +3,12 @@ package model.commercial.events
 import java.lang.System._
 
 import commercial.feeds._
-import conf.Configuration
 import common.{AkkaAgent, ExecutionContexts, Logging}
+import conf.Configuration
+import org.joda.time.DateTime.now
 import play.api.Play.current
 import play.api.libs.json.Json
-import play.api.libs.ws.WS
+import play.api.libs.ws.{WS, WSResponse}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -15,10 +16,13 @@ import scala.util.control.NonFatal
 
 object LiveEventAgent extends ExecutionContexts with Logging {
 
-
-  private lazy val liveEventAgent = AkkaAgent[Seq[LiveEvent]](Nil)
+  private lazy val liveEventAgent = AkkaAgent[Seq[LiveEvent]](Seq.empty)
 
   def availableLiveEvents: Seq[LiveEvent] = liveEventAgent.get
+
+  def specificLiveEvents(eventIds: Seq[String]): Seq[LiveEvent] = availableLiveEvents filter (eventIds contains _.eventId)
+
+  def specificLiveEvent(eventBriteId: String): Option[LiveEvent] = availableLiveEvents.find(_.eventId == eventBriteId)
 
   def updateAvailableMerchandise(freshMerchandise: Seq[LiveEvent]): Future[Seq[LiveEvent]] = {
     liveEventAgent.alter { oldMerchandise =>
@@ -31,33 +35,21 @@ object LiveEventAgent extends ExecutionContexts with Logging {
     }
   }
 
-  def specificLiveEvents(eventBriteIds: Seq[String]): Seq[LiveEvent] = {
-    for {
-      liveEvent <- availableLiveEvents
-      eventId <- eventBriteIds
-      if liveEvent.eventId == eventId
-    } yield liveEvent
-  }
-
-  def specificLiveEvent(eventBriteId: String): Option[LiveEvent] = {
-    availableLiveEvents.find(_.eventId == eventBriteId)
-  }
-
   def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[LiveEvent]] = {
 
-    def fetchAndParseLiveEventImages = {
+    def fetchAndParseLiveEventImages: Future[Seq[LiveEventImage]] = {
+
+      def requestEventImages: Future[WSResponse] =
+        WS.url(Configuration.commercial.liveEventsImagesUrl)
+          .withRequestTimeout(feedMetaData.timeout.toMillis.toInt)
+          .get()
 
       def parseEventImages(feed: String): Seq[LiveEventImage] = {
         val json = Json.parse(feed)
-        val eventImages = (json \ "events").as[Seq[LiveEventImage]]
-        eventImages
+        (json \ "events").as[Seq[LiveEventImage]]
       }
 
-      val futureResponse = WS.url(Configuration.commercial.liveEventsImagesUrl)
-        .withRequestTimeout(feedMetaData.timeout.toMillis.toInt)
-        .get()
-
-      futureResponse map { response =>
+      requestEventImages map { response =>
         if (response.status == 200) {
           parseEventImages(response.body)
         } else {
@@ -67,19 +59,19 @@ object LiveEventAgent extends ExecutionContexts with Logging {
         case NonFatal(e) => Future.failed(e)
       }
     }
+
     val start = currentTimeMillis()
-    val futureEventImages = fetchAndParseLiveEventImages
-    val futureParsedFeed = Eventbrite.parsePagesOfEvents(feedMetaData, feedContent)
+    val eventDateFilter = now plusWeeks 2
 
-    val futureLiveEvents =
+    val liveEvents =
       for{
-        ParsedFeed(events, _) <- futureParsedFeed
-        eventImages <- futureEventImages
-      } yield events map { event => LiveEvent(event, eventImages.find(_.id == event.id)) }
+        eventImages <- fetchAndParseLiveEventImages
+        ParsedFeed(events, _) <- Eventbrite.parsePagesOfEvents(feedMetaData, feedContent)
+      } yield events
+            .filter (_.startDate isAfter eventDateFilter)
+            .map ( event => LiveEvent(event, eventImages find (_.eventId == event.id)) )
 
-    futureLiveEvents map { liveEvents =>
-      updateAvailableMerchandise(liveEvents)
-      ParsedFeed(liveEvents, Duration(currentTimeMillis- start, MILLISECONDS))
-    }
+    liveEvents map updateAvailableMerchandise
+    liveEvents map { ParsedFeed(_, Duration(currentTimeMillis- start, MILLISECONDS)) }
   }
 }

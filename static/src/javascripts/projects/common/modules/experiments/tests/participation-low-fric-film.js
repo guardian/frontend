@@ -19,6 +19,8 @@ define([
     }
 
     return function () {
+        var module = this;
+        
         this.id = 'ParticipationLowFricFilm';
         this.start = '2016-05-24';
         this.expiry = '2016-06-08';
@@ -44,7 +46,9 @@ define([
                 id: 'control',
                 test: function () {},
                 success: function (complete) {
-                    mediator.on('discussion:commentbox:post:success',  complete);
+                    if (module.canRun()) {
+                        mediator.on('discussion:commentbox:post:success', complete);
+                    }
                 }
             },
             {
@@ -64,7 +68,10 @@ define([
                     });
                 },
                 success: function (complete) {
-                    mediator.on('modules:participation:clicked', complete);
+                    // We have to duplicate canRun here atm
+                    if (module.canRun()) {
+                        mediator.on('modules:participation:clicked', complete);
+                    }
                 }
             }
         ];

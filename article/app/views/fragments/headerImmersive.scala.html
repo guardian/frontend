@@ -1,6 +1,7 @@
 @(article: model.Article)(implicit request: RequestHeader)
 
 @import views.support.TrailCssClasses.toneClass
+@import conf.switches.Switches.immersiveMainEmbedSwitch
 
 <header class="content__head content__head--immersive-article content__head--desktop tonal__head tonal__head--@toneClass(article)
 @if(article.fields.main.nonEmpty) { is-fixed-height js-is-fixed-height }
@@ -21,11 +22,17 @@
     </div>
 
     @if(article.elements.hasMainEmbed || article.elements.elements("main").isEmpty) {
-        <div class="content__loading">
-            <span class="content__loading-animation is-updating"></span>
-            <span class="u-h">Loading header</span>
-        </div>
-        @MainCleaner(article, article.fields.main, false)
+        @if(immersiveMainEmbedSwitch.isSwitchedOn && article.isSixtyDaysModified) {
+            <div class="content__main-embed">
+                @MainCleaner(article, article.fields.main, false)
+            </div>
+        } else {
+            <div class="content__loading">
+                <span class="content__loading-animation is-updating"></span>
+                <span class="u-h">Loading header</span>
+            </div>
+            @MainCleaner(article, article.fields.main, false)
+        }
     } else {
         <style>
             @article.elements.mainPicture.map { picture =>

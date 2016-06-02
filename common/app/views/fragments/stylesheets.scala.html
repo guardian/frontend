@@ -49,7 +49,7 @@
   - Exclude IE Mobile [&(!IEMobile)]
 *@
 <!--[if (lt IE 9)&(!IEMobile)]>
-    @fragments.stylesheetLink(Static.css.headOldIE(projectName), isCrossword)
+    @fragments.stylesheetLink(common.Assets.css.headOldIE(projectName), isCrossword)
     @fragments.stylesheetLink("stylesheets/old-ie.content.css", isCrossword)
 <![endif]-->
 
@@ -58,7 +58,7 @@
   - Exclude IE Mobile [&(!IEMobile)]
 *@
 <!--[if (IE 9)&(!IEMobile)]>
-    @fragments.stylesheetLink(Static.css.headIE9(projectName), isCrossword)
+    @fragments.stylesheetLink(common.Assets.css.headIE9(projectName), isCrossword)
     @fragments.stylesheetLink("stylesheets/ie9.content.css", isCrossword)
 <![endif]-->
 
@@ -72,10 +72,10 @@
     <link rel="stylesheet" id="head-css" data-reload="head@projectName.map("." + _).getOrElse(".content")" type="text/css" href="@Static("stylesheets/head" + projectName.map("." + _).getOrElse(".content") + ".css")" />
 } else {
     <style class="js-loggable">
-        @Html(Static.css.head(projectName))
+        @Html(common.Assets.css.head(projectName))
     </style>
 }
-@fragments.stylesheetLink(Static.css.projectCss(projectName), isCrossword)
+@fragments.stylesheetLink(common.Assets.css.projectCss(projectName), isCrossword)
 <!--<![endif]-->
 
 <link rel="stylesheet" media="print" type="text/css" href="@Static("stylesheets/print.css")" />

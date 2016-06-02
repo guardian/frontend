@@ -248,13 +248,22 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val FabricAdverts = Switch(
+  val FluidAdverts = Switch(
     SwitchGroup.Commercial,
-    "fabric-adverts",
-    "Request 'fabric' format adverts (88x71s) from DFP",
+    "fluid-adverts",
+    "Request fluid adverts from DFP",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 5, 31),
-    exposeClientSide = true
+    sellByDate = new LocalDate(2016, 6, 30),
+    exposeClientSide = false
+  )
+
+  val FixedTechTopSlot = Switch(
+    SwitchGroup.Commercial,
+    "fixed-tech-top-slot",
+    "Height of the top banner is fixed at 250px in the Tech section",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 30),
+    exposeClientSide = false
   )
 
   val staticBadgesSwitch = Switch(
@@ -288,6 +297,15 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "hosted-episode1-content",
     "If on, another hardcoded page of hosted content is available",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 12),
+    exposeClientSide = false
+  )
+
+  val hostedPageLinksBetweenContent = Switch(
+    SwitchGroup.Commercial,
+    "hosted-link-pages",
+    "If on, the hosted pages link to each other",
     safeState = Off,
     sellByDate = new LocalDate(2016, 7, 12),
     exposeClientSide = false
