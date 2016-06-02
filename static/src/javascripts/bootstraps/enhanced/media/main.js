@@ -302,13 +302,13 @@ define([
                                             adTagUrl: getAdUrl(),
                                             prerollTimeout: 1000
                                         });
-                                        player.ima.requestAds();
                                         player.on('adstart', function() {
                                             var adDuration = player.ima.getAdsManager().getCurrentAd().getDuration();
                                             if (adDuration > skipAdTime) {
                                                 player.adSkipCountdown(skipAdTime);
                                             }
                                         });
+                                        player.ima.requestAds();
 
                                         // Video analytics event.
                                         player.trigger(events.constructEventName('preroll:request', player));
