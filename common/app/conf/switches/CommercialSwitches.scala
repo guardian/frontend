@@ -249,7 +249,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "adblock",
     "Switch for the Adblock Message.",
-    owners = Seq(Owner.withGithub("johnduffell")),
+    owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
@@ -259,7 +259,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "krux-video-tracking",
     "If this switch is ON, there will be a Krux pixel fired to track particular videos",
-    owners = Seq(Owner.withGithub("johnduffell")),
+    owners = Seq(Owner.withGithub("commercial team")),
     safeState = On,
     sellByDate = never,
     exposeClientSide = true

@@ -30,7 +30,7 @@ trait MonitoringSwitches {
     SwitchGroup.Monitoring,
     "google-analytics",
     "If this switch is on, then Google Analytics is enabled",
-    owners = Seq(Owner.withGithub("Grant Klopper")),
+    owners = Seq(Owner.withGithub("gklopper")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 8, 26),
     exposeClientSide = false
