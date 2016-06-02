@@ -196,38 +196,53 @@ $renaultLight: #fff9e9;
         opacity: 0;
     }
 
-    &.vjs-paused {
-        .vjs-fullscreen-control,
-        .vjs-volume-menu-button,
-        .vjs-progress-control {
-            @include hosted-fade-out;
-        }
-
-        .vjs-big-play-button {
-            @include hosted-fade-in;
-        }
-
-        .vjs-control-bar {
-            background-color: unset;
-            transition: background-color 1s linear;
-        }
+    &.vjs-playing .vjs-time-control,
+    .vjs-fullscreen-control,
+    .vjs-volume-menu-button,
+    .vjs-progress-control {
+        @include hosted-fade-out;
+        transition-delay: 1500ms;
     }
 
-    &.vjs-playing {
+    .vjs-big-play-button {
+        @include hosted-fade-in;
+    }
+
+    .vjs-control-bar {
+        background-color: unset;
+        transition: background-color 1s linear;
+        transition-delay: 1500ms;
+    }
+
+    &.vjs-playing:hover {
+        .vjs-time-control,
         .vjs-fullscreen-control,
         .vjs-volume-menu-button,
         .vjs-progress-control {
             @include hosted-fade-in;
+            transition-delay: 0s;
         }
 
         .vjs-big-play-button {
             @include hosted-fade-out;
             display: block !important; //I know this is ugly but I need to overwrite display:none to show the animation
+            transition-delay: 0s;
         }
 
         .vjs-control-bar {
             background-color: rgba(25, 25, 25, .8);
-            transition: background-color 1s linear;
+            transition-delay: 0s;
+        }
+    }
+
+    &.vjs-paused,
+    &.vjs-paused:hover {
+        .vjs-time-control,
+        .vjs-fullscreen-control,
+        .vjs-volume-menu-button,
+        .vjs-progress-control,
+        .vjs-control-bar {
+            transition-delay: 0s;
         }
     }
 
