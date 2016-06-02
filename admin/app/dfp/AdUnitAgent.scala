@@ -1,7 +1,6 @@
 package dfp
 
 import com.google.api.ads.dfp.axis.utils.v201508.StatementBuilder
-import com.google.api.ads.dfp.axis.v201508.InventoryStatus
 import common.dfp.GuAdUnit
 import conf.Configuration
 
@@ -13,8 +12,6 @@ object AdUnitAgent extends DataAgent[String, GuAdUnit] {
     val maybeData = for (session <- SessionWrapper()) yield {
 
       val statementBuilder = new StatementBuilder()
-                             .where("status = :status")
-                             .withBindVariableValue("status", InventoryStatus._ACTIVE)
 
       val dfpAdUnits = session.adUnits(statementBuilder)
 
@@ -30,7 +27,7 @@ object AdUnitAgent extends DataAgent[String, GuAdUnit] {
       rootAndDescendantAdUnits.map { adUnit =>
         val id = adUnit.getId
         val path = adUnit.getParentPath.tail.map(_.getName).toSeq :+ adUnit.getName
-        id -> GuAdUnit(id, path)
+        id -> GuAdUnit(id, path, adUnit.getStatus.getValue)
       }.toMap
     }
 
@@ -41,8 +38,27 @@ object AdUnitAgent extends DataAgent[String, GuAdUnit] {
 
 object AdUnitService {
 
+  // Retrieves the ad unit object if the id matches and the ad unit is active.
   def adUnit(adUnitId: String): Option[GuAdUnit] = {
-    AdUnitAgent.get.data.get(adUnitId)
+    AdUnitAgent.get.data.get(adUnitId).collect {
+      case adUnit if adUnit.isActive => adUnit
+    }
   }
+
+  def archivedAdUnit(adUnitId: String): Option[GuAdUnit] = {
+    AdUnitAgent.get.data.get(adUnitId).collect {
+      case adUnit if adUnit.isArchived => adUnit
+    }
+  }
+
+  def isArchivedAdUnit(adUnitId: String) = archivedAdUnit(adUnitId).isDefined
+
+  def inactiveAdUnit(adUnitId: String): Option[GuAdUnit] = {
+    AdUnitAgent.get.data.get(adUnitId).collect {
+      case adUnit if adUnit.isInactive => adUnit
+    }
+  }
+
+  def isInactiveAdUnit(adUnitId: String) = inactiveAdUnit(adUnitId).isDefined
 
 }
