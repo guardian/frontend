@@ -62,7 +62,7 @@ define([
         waitForLinks: true,
         waitForInteractives: false,
         waitForAds: false
-    }
+    };
 
     function expire(resolve) {
         window.setTimeout(resolve, LOADING_TIMEOUT);
@@ -144,7 +144,7 @@ define([
 
     var onAdsLoaded = memoize(function (rules) {
         return Promise.all(qwery('.js-ad-slot', rules.body)
-            .map(function (ad) { return ad.id })
+            .map(function (ad) { return ad.id; })
             .map(trackAdLoaded)
         );
     }, getFuncId);

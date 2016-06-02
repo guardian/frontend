@@ -22,10 +22,8 @@ define([
             spaceFiller,
             spaceFillerStub,
             commercialFeatures,
-            mediator,
             config,
-            detect,
-            dfp;
+            detect;
 
         beforeEach(function (done) {
             injector.mock('common/modules/commercial/dfp/track-ad-load', function(id) {
@@ -45,7 +43,7 @@ define([
                 'common/modules/commercial/commercial-features',
                 'common/modules/article/space-filler',
                 'common/utils/config',
-                'common/utils/detect',
+                'common/utils/detect'
             ], function () {
                 articleBodyAdverts = arguments[2];
 

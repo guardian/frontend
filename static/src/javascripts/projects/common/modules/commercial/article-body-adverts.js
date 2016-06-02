@@ -44,7 +44,7 @@ define([
                 ' .ad-slot': {minAbove: 500, minBelow: 500},
                 ' > :not(p):not(h2):not(.ad-slot)': {minAbove: 35, minBelow: 400}
             },
-            filter: function(slot, index) {
+            filter: function(slot) {
                 if (!prevSlot || Math.abs(slot.top - prevSlot.top) >= this.selectors[' .ad-slot'].minBelow) {
                     prevSlot = slot;
                     return true;
