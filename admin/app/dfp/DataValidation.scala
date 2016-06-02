@@ -17,11 +17,11 @@ object DataValidation {
       )).getOrElse(Nil)
 
     // The validation should not account for inactive or archived ad units.
-    val activeDfpAdUnits = dfpAdUnitIds.filterNot { adUnit =>
-      AdUnitService.isArchivedAdUnit(adUnit) || AdUnitService.isInactiveAdUnit(adUnit)
+    val activeDfpAdUnitIds = dfpAdUnitIds.filterNot { adUnitId =>
+      AdUnitService.isArchivedAdUnit(adUnitId) || AdUnitService.isInactiveAdUnit(adUnitId)
     }
 
-    activeDfpAdUnits.forall( adUnitId => {
+    activeDfpAdUnitIds.forall( adUnitId => {
       guAdUnits.exists(_.id == adUnitId)
     })
   }
