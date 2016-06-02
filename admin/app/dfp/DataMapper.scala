@@ -1,6 +1,5 @@
 package dfp
 
-import com.google.api.ads.dfp.axis.utils.v201508.StatementBuilder
 import com.google.api.ads.dfp.axis.v201508._
 import common.dfp._
 import dfp.ApiHelper.{isPageSkin, optJavaInt, toJodaTime, toSeq}
@@ -11,7 +10,7 @@ object DataMapper {
   def toGuAdUnit(dfpAdUnit: AdUnit): GuAdUnit = {
     val ancestors = toSeq(dfpAdUnit.getParentPath)
     val ancestorNames = if (ancestors.isEmpty) Nil else ancestors.map(_.getName).tail
-    GuAdUnit(dfpAdUnit.getId, ancestorNames :+ dfpAdUnit.getName)
+    GuAdUnit(dfpAdUnit.getId, ancestorNames :+ dfpAdUnit.getName, dfpAdUnit.getStatus.getValue)
   }
 
   private def toGuTargeting(session: SessionWrapper)(dfpTargeting: Targeting): GuTargeting = {

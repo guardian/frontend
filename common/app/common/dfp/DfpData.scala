@@ -136,29 +136,17 @@ object GeoTarget {
 
 }
 
-
-case class GuAdUnit(id: String, path: Seq[String]) {
+case class GuAdUnit(id: String, path: Seq[String], status: String) {
   val fullPath = path.mkString("/")
+
+  val isActive = status == "ACTIVE"
+  val isInactive = status == "INACTIVE"
+  val isArchived = status == "ARCHIVED"
 }
 
 object GuAdUnit {
-
-  implicit val adUnitWrites = new Writes[GuAdUnit] {
-    def writes(adUnit: GuAdUnit): JsValue = {
-      Json.obj(
-        "id" -> adUnit.id,
-        "path" -> adUnit.path
-      )
-    }
-  }
-
-  implicit val adUnitReads: Reads[GuAdUnit] = (
-    (JsPath \ "id").read[String] and
-      (JsPath \ "path").read[Seq[String]]
-    )(GuAdUnit.apply _)
-
+  implicit val adUnitFormat = Json.format[GuAdUnit]
 }
-
 
 case class GuTargeting(adUnits: Seq[GuAdUnit],
                        geoTargetsIncluded: Seq[GeoTarget],
