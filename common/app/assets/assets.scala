@@ -84,6 +84,7 @@ object css {
       case "index" => "head.index"
       case "rich-links" => "head.rich-links"
       case "email" => "head.email"
+      case "commercial" => "head.commercial"
       case _ => "head.content"
     }
 

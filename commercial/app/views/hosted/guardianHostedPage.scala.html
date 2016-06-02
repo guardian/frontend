@@ -2,7 +2,7 @@
 @(page: HostedPage)(implicit request: RequestHeader)
 @import conf.switches.Switches.hostedPageLinksBetweenContent
 
-@main(page) { } {
+@main(page, Some("commercial")) { } {
     <div class="hosted__header">
         <div class="hosted__headerwrap">
             <div class="paidfor-label paidfor-meta__more hosted__label has-popup">

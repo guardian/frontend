@@ -1,0 +1,23 @@
+@charset 'UTF-8';
+
+@import '_head.common';
+
+/* ==========================================================================
+   Icons
+   ========================================================================== */
+@import 'icons/_global-icons-sprite';
+@import 'icons/_global-icons-svg';
+@import 'icons/video-icons-sprite';
+@import 'icons/video-icons-svg';
+
+/* ==========================================================================
+   Global modules
+   ========================================================================== */
+@import 'module/_social';
+
+/* ==========================================================================
+   Hosted By modules
+   ========================================================================== */
+@import 'module/commercial/_hostedbadge';
+@import 'module/commercial/glabs/_hosted';
+
