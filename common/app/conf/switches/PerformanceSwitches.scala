@@ -56,16 +56,6 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
-  val ServerSideBucketsSwitch = Switch(
-    SwitchGroup.Performance,
-    "server-side-buckets",
-    "When this switch expires, remove the remaining predefined server side testing buckets",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 22),
-    exposeClientSide = false
-  )
-
   val AutoRefreshSwitch = Switch(
     SwitchGroup.Performance,
     "auto-refresh",
