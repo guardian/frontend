@@ -1,15 +1,13 @@
 .survey-close {
     position: absolute;
     cursor: pointer;
-    width: 32px;
-    height: 32px;
-    top: 20px;
-    right: 20px;
+    top: 4px;
+    right: 4px;
 
     svg {
         margin-top: 5px;
-        width: 14px;
-        height: 14px;
+        width: 20px;
+        height: 20px;
     }
 }
 
@@ -24,22 +22,28 @@
 
 
     .site-message__close-btn {
+        border-color: #333333;
+        width: 42px;
+        height: 42px;
+
         @include mq($until: tablet) {
             position: static;
         }
 
+        .inline-icon {
+            fill: #333333;
+        }
     }
 
     .survey-container {
+        @include f-textSans;
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
         left: 7.5%;
         right: 7.5%;
         max-height: 90%;
-        padding: $gs-row-height $gs-column-width*.5;
-        background-color: #01558b;
-        color: #ffffff;
+        background-color: #ffffff;
         box-sizing: border-box;
 
         @include mq(tablet) {
@@ -48,8 +52,8 @@
             width: $gs-column-width * 10;
             height: auto;
             margin-left: -$gs-column-width * 5;
+            margin-top: 40px;
         }
-
     }
 
     .survey-logo {
@@ -58,62 +62,38 @@
         right: 20px;
 
         svg {
-            fill: #ffffff;
+            fill: #333333;
             width: 26px;
         }
     }
 
     .survey-icon {
         text-align: center;
-        margin-bottom: $gs-baseline;
+        padding-top: 40px;
+        background-color: #e3e3e3;
+        line-height: 0px;
 
         svg {
-            width: 100px;
-            height: 100px;
-            margin-top: -20px;
-
             @include mq(mobileLandscape) {
                 display: none;
             }
 
             @include mq(tablet) {
                 display: inline;
-                width: 150px;
-                height: 150px;
+                width: 350px;
+                height: 228px;
             }
-
         }
     }
 
     .survey-text__header {
-        @include fs-headline(4);
-        color: #ffffff;
+        @include fs-textSans(4);
+        font-size: 24px;
         font-weight: bold;
-        margin-bottom: $gs-column-width/2;
-
-        @include mq(mobile) {
-            margin-bottom: $gs-column-width/4;
-        }
-
-        @include mq(mobileLandscape) {
-            @include fs-headline(5);
-            font-weight: bold;
-            margin: -27px 50px $gs-column-width/2 0;
-        }
-
-        @include mq(tablet) {
-            margin: 0 0 $gs-column-width/2;
-        }
-    }
-
-    .survey-content {
-        padding-right: 30px;
-
-        @include mq(tablet) {
-            position: static;
-            bottom: 35px;
-            padding: 0;
-        }
+        margin-bottom: 0;
+        padding: 6px 0 0 6px;
+        background-color: #f8b600;
+        height: 44px;
     }
 
     .survey-text__info {
@@ -129,34 +109,6 @@
                 text-decoration: none;
             }
         }
-    }
-
-    .survey-links {
-        overflow: hidden;
-        margin: $gs-column-width/2 0 $gs-column-width/4;
-    }
-
-    .survey-link {
-        @include clearfix;
-        @include circular;
-
-        padding-left: 10px;
-        margin-right: $gs-gutter / 2;
-        border: 1px solid rgba(#ffffff, .3);
-        float: left;
-
-        @include mq($until: mobile) {
-            margin-bottom: $gs-row-height / 4;
-        }
-    }
-
-    .survey-link__takepart {
-        @include fs-textSans(2);
-        color: #ffffff;
-        display: block;
-        float: left;
-        padding: 0 8px;
-        line-height: $gs-column-width/2;
     }
 
     .inline-arrow-white-right {
