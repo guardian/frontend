@@ -104,8 +104,14 @@ define([
     }
 
     function insertAdAtPara(para, name, type) {
-        var $ad = $.create(createAdSlot(name, type));
-        $ad.insertBefore(para);
+        var ad = createAdSlot(name, type);
+        para.parentNode.insertBefore(ad, para);
+    }
+
+    function addSlots(countAdded) {
+        if (countAdded > 0) {
+            $('.ad-slot--inline').each(dfp.addSlot);
+        }
     }
 
     // If a merchandizing component has been rendered but is empty,
@@ -113,19 +119,15 @@ define([
     // the decoupling between the spacefinder algorithm and the targeting
     // in DFP: we can only know if a slot can be removed after we have
     // received a response from DFP
-    var waitForMerch = memoize(function waitForMerch() {
+    function waitForMerch() {
         return trackAd('dfp-ad--im').then(function (isLoaded) {
             return isLoaded ? 0 : addArticleAds(2, getRules());
         }).then(function (countAdded) {
             return countAdded === 2 ?
                 addArticleAds(8, getLongArticleRules()) :
                 countAdded;
-        }).then(function (countAdded) {
-            if (countAdded > 0) {
-                $('.ad-slot--inline').each(dfp.addSlot);
-            }
         });
-    });
+    }
 
     function init() {
         if (!commercialFeatures.articleBodyAdverts) {
@@ -142,12 +144,10 @@ define([
 
         return addArticleAds(2, rules).then(function (countAdded) {
             if (config.page.hasInlineMerchandise && countAdded === 0) {
-                waitForMerch();
+                waitForMerch().then(addSlots);
+            } else if (countAdded === 2) {
+                addArticleAds(8, getLongArticleRules()).then(addSlots);
             }
-
-            return countAdded === 2 ?
-                addArticleAds(8, getLongArticleRules()) :
-                countAdded;
         });
     }
 
