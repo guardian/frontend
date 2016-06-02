@@ -25,7 +25,6 @@
 @import 'module/content/_article-immersive';
 @import 'module/content/_article-minute';
 @import 'module/test-welcome-header';
-@import 'module/commercial/_hostedbadge';
 
 /* ==========================================================================
    External modules
@@ -36,9 +35,6 @@
 
 @import 'module/external/_from-content-api';
 @import 'module/content/_badging';
-
-// Needed for more seamless loading of Hosted By page (Renault release)
-@import 'module/commercial/glabs/_hosted';
 
 /* ==========================================================================
    Atoms

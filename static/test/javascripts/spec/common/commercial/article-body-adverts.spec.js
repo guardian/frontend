@@ -131,16 +131,6 @@ define([
                 spaceFillerStub.onCall(1).returns(Promise.resolve(false));
                 spaceFillerStub.returns(Promise.resolve(true));
 
-                var oldOn = mediator.on;
-                var fn;
-                mediator.on = function (eventName, fn2) {
-                    fn = fn2;
-                };
-                var oldEmit = mediator.emit;
-                mediator.emit = function (eventName, arg) {
-                    return fn(arg);
-                };
-
                 detect.getBreakpoint = function () {return 'tablet';};
 
                 articleBodyAdverts.init().then(function () {
@@ -153,13 +143,11 @@ define([
                         isEmpty: true
                     };
 
-                    mediator.emit('modules:commercial:dfp:rendered', fakeEvent).then(function () {
-                        mediator.on = oldOn;
-                        mediator.emit = oldEmit;
-                        expect(spaceFillerStub.callCount).toBe(12);
-                        done();
-                    });
-                });
+                    mediator.emit('modules:commercial:dfp:rendered', fakeEvent);
+                }).then(articleBodyAdverts['@@tests'].waitForMerch)
+                .then(function () {
+                    expect(spaceFillerStub.callCount).toBe(12);
+                }).then(done);
             });
         });
 

@@ -24,15 +24,6 @@ trait PerformanceSwitches {
     exposeClientSide = true
   )
 
-  val BootInteractivesFromMainSwitch = Switch(
-    SwitchGroup.Performance,
-    "boot-interactives-from-main",
-    "If this switch is on then interactive bootstraps will be booted from main.js for perf and stability reasons",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 8),
-    exposeClientSide = true
-  )
-
   val TagPageSizeSwitch = Switch(
     SwitchGroup.Performance,
     "tag-page-size",

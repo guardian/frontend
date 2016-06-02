@@ -3,8 +3,6 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'videojs',
-    'videojsembed',
     'common/utils/$',
     'common/utils/config',
     'common/utils/defer-to-analytics',
@@ -17,13 +15,13 @@ define([
     'common/views/svgs',
     'text!common/views/ui/loading.html',
     'text!common/views/media/titlebar.html',
-    'lodash/functions/debounce'
+    'lodash/functions/debounce',
+    'common/modules/video/videojs-options',
+    'bootstraps/enhanced/media/video-player'
 ], function (
     bean,
     bonzo,
     qwery,
-    videojs,
-    videojsembed,
     $,
     config,
     deferToAnalytics,
@@ -36,7 +34,9 @@ define([
     svgs,
     loadingTmpl,
     titlebarTmpl,
-    debounce
+    debounce,
+    videojsOptions,
+    videojs
 ) {
 
     function initLoadingSpinner(player) {
@@ -114,7 +114,7 @@ define([
 
             bonzo(el).addClass('vjs');
 
-            player = createVideoPlayer(el, {
+            player = createVideoPlayer(el, videojsOptions({
                 controls: true,
                 autoplay: !!window.location.hash && window.location.hash === '#autoplay',
                 preload: 'metadata', // preload='none' & autoplay breaks ad loading on chrome35
@@ -124,7 +124,7 @@ define([
                         location: 'https://embed.theguardian.com/embed/video/' + guardian.config.page.pageId
                     }
                 }
-            });
+            }));
 
             //Location of this is important
             events.handleInitialMediaError(player);

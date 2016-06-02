@@ -25,7 +25,8 @@ abstract class Edition(
       "media",
       "environment",
       "film",
-      "lifeandstyle"
+      "lifeandstyle",
+      "travel"
     )
 
   ) extends Navigation {

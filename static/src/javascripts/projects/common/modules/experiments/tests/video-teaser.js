@@ -5,8 +5,8 @@ define([
 ) {
     return function () {
         this.id = 'VideoTeaser';
-        this.start = '2016-05-23';
-        this.expiry = '2016-06-01';
+        this.start = '2016-06-02';
+        this.expiry = '2016-06-03';
         this.author = 'Akash Askoolum';
         this.description = 'Test if video teasing leads to more plays';
         this.showForSensitive = true;
@@ -19,7 +19,7 @@ define([
 
         this.canRun = function () {
             return config.page.isFront
-                && document.querySelector('.gu-media-wrapper--video')
+                && document.getElementsByClassName('gu-media-wrapper--video').length > 0
                 && config.page.pageId !== 'video';
         };
 

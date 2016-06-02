@@ -1,9 +1,10 @@
 package feed
 
-import common.AutoRefresh
+import common.{LifecycleComponent, AutoRefresh}
+import play.api.inject.ApplicationLifecycle
 import play.api.{Application, GlobalSettings}
 import services.{MostReadItem, OphanApi}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -20,14 +21,13 @@ object MostPopularSocialAutoRefresh extends AutoRefresh[MostReadSocial](0.second
   }
 }
 
-trait MostPopularFacebookAutoRefreshLifecycle extends GlobalSettings {
-  override def onStart(app: Application): Unit = {
-    super.onStart(app)
-    MostPopularSocialAutoRefresh.start()
-  }
+class MostPopularFacebookAutoRefreshLifecycle(appLifeCycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent {
 
-  override def onStop(app: Application): Unit = {
+  appLifeCycle.addStopHook { () => Future {
     MostPopularSocialAutoRefresh.stop()
-    super.onStop(app)
+  }}
+
+  override def start(): Unit = {
+    MostPopularSocialAutoRefresh.start()
   }
 }
