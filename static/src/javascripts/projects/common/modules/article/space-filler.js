@@ -37,8 +37,7 @@ define([
 
         function onSpacesFound(paragraphs) {
             return fastdom.write(function () {
-                writer(paragraphs);
-                return true;
+                return writer(paragraphs);
             });
         }
 
