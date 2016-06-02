@@ -16,7 +16,12 @@ object DataValidation {
         toSeq(inventoryTargeting.getTargetedAdUnits).map(_.getAdUnitId()
       )).getOrElse(Nil)
 
-    dfpAdUnitIds.forall( adUnitId => {
+    // The validation should not account for inactive or archived ad units.
+    val activeDfpAdUnits = dfpAdUnitIds.filterNot { adUnit =>
+      AdUnitService.isArchivedAdUnit(adUnit) || AdUnitService.isInactiveAdUnit(adUnit)
+    }
+
+    activeDfpAdUnits.forall( adUnitId => {
       guAdUnits.exists(_.id == adUnitId)
     })
   }
