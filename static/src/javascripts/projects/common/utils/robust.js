@@ -27,8 +27,8 @@ define([
         reporter(error, { module: name }, false);
     };
 
-    var catchErrorsAndLog = function (name, fn, reporter) {
-        var error = catchErrors(fn);
+    var catchErrorsAndLog = function (name, fn, reporter, binding) {
+        var error = catchErrors(fn.bind(binding || window));
         if (error) {
             log(name, error, reporter);
         }
@@ -44,7 +44,7 @@ define([
 
     function makeBlocks(codeBlocks) {
         return codeBlocks.map(function (record) {
-            return catchErrorsAndLog.bind(this, record[0], record[1]);
+            return catchErrorsAndLog.bind(this, record[0], record[1], record[2]);
         });
     }
 
