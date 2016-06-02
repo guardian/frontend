@@ -22,9 +22,8 @@
             <tbody>
                 @for(targetingKey <- keyValues) {
                     <tr>
-                        @{val csvLink = controllers.admin.routes.CommercialController.renderKeyValuesCsv(targetingKey.name)}
-                        <td><a href="@csvLink">@{targetingKey.name}</a></td>
-                        <td><a href="@csvLink">@{targetingKey.displayName}</a></td>
+                        <td><a href="@controllers.admin.routes.CommercialController.renderKeyValuesCsv(targetingKey.name)">@{targetingKey.name}</a></td>
+                        <td><a href="@controllers.admin.routes.CommercialController.renderKeyValuesCsv(targetingKey.name)">@{targetingKey.displayName}</a></td>
                         <td>@{targetingKey.id}</td>
                         <td>
                             @for(targetingValue <- targetingKey.readableValues) {
