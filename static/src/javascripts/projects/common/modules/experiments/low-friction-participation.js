@@ -1,6 +1,6 @@
 define([
-    'lodash/objects/merge',
     'lodash/functions/memoize',
+    'common/utils/assign',
     'common/utils/storage',
     'common/utils/config',
     'common/utils/$',
@@ -13,8 +13,8 @@ define([
     'bean',
     'common/utils/mediator'
 ], function (
-    merge,
     memoize,
+    assign,
     storage,
     config,
     $,
@@ -83,7 +83,7 @@ define([
                 state: state
             };
 
-            buttonString += template(lowFrictionButtons, merge(settings.templateVars, templateVars));
+            buttonString += template(lowFrictionButtons, assign({}, settings.templateVars, templateVars));
         }
 
         return buttonString;
@@ -93,7 +93,7 @@ define([
 
     function render (state) {
 
-        var view = template(lowFrictionContents, merge(settings.templateVars, {
+        var view = template(lowFrictionContents, assign({}, settings.templateVars, {
                 buttons: createButtons(state),
                 confirming: state.confirming,
                 complete: state.complete
@@ -104,7 +104,7 @@ define([
         }
 
         if (state.initialRender) {
-            var fullView = template(lowFrictionWrapper, merge(settings.templateVars, {
+            var fullView = template(lowFrictionWrapper, assign({}, settings.templateVars, {
                 contents: view
             }));
 
@@ -130,7 +130,7 @@ define([
 
     function updateState (state) {
         // Render with merged state
-        render(merge(currentState, state));
+        render(assign({}, currentState, state));
     }
 
     // Getters
@@ -234,7 +234,7 @@ define([
         }
 
         // Create instance options
-        settings = merge(settings, options);
+        assign(settings, options);
 
         els.$lowFricContainer = $('.js-participation-low-fric');
 
