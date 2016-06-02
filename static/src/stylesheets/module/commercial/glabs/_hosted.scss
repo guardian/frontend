@@ -136,7 +136,7 @@ section.hosted__container {
     }
 }
 
-.hosted__container--full {
+.hosted__container--full.adverts {
     @include mq($until: desktop) {
         padding: 0;
     }
