@@ -1,6 +1,6 @@
 define([
     'Promise',
-    'common/utils/$',
+    'qwery',
     'common/utils/config',
     'common/utils/detect',
     'common/modules/article/space-filler',
@@ -11,7 +11,7 @@ define([
     'lodash/functions/memoize'
 ], function (
     Promise,
-    $,
+    qwery,
     config,
     detect,
     spaceFiller,
@@ -111,7 +111,7 @@ define([
 
     function addSlots(countAdded) {
         if (countAdded > 0) {
-            $('.ad-slot--inline').each(dfp.addSlot);
+            qwery('.ad-slot--inline').forEach(dfp.addSlot);
         }
     }
 
