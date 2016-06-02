@@ -120,7 +120,7 @@ define([
     // the decoupling between the spacefinder algorithm and the targeting
     // in DFP: we can only know if a slot can be removed after we have
     // received a response from DFP
-    function waitForMerch() {
+    var waitForMerch = memoize(function () {
         return trackAd('dfp-ad--im').then(function (isLoaded) {
             return isLoaded ? 0 : addArticleAds(2, getRules());
         }).then(function (countAdded) {
@@ -128,7 +128,13 @@ define([
                 addArticleAds(8, getLongArticleRules()) :
                 countAdded;
         });
-    }
+    });
+
+    var insertLongAds = memoize(function () {
+        return addArticleAds(8, getLongArticleRules()).then(function (countAdded) {
+            return 2 + countAdded;
+        });
+    });
 
     function init() {
         if (!commercialFeatures.articleBodyAdverts) {
@@ -147,7 +153,7 @@ define([
             if (config.page.hasInlineMerchandise && countAdded === 0) {
                 waitForMerch().then(addSlots);
             } else if (countAdded === 2) {
-                addArticleAds(8, getLongArticleRules()).then(addSlots);
+                insertLongAds().then(addSlots);
             }
         });
     }
@@ -156,7 +162,8 @@ define([
         init: init,
 
         '@@tests': {
-            waitForMerch: waitForMerch
+            waitForMerch: waitForMerch,
+            insertLongAds: insertLongAds
         }
     };
 });
