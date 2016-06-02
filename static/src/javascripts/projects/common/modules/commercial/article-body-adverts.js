@@ -33,6 +33,7 @@ define([
     }
 
     function getRules() {
+        var prevSlot;
         return {
             bodySelector: '.js-article__body',
             slotSelector: ' > p',
@@ -42,6 +43,13 @@ define([
                 ' > h2': {minAbove: detect.getBreakpoint() === 'mobile' ? 100 : 0, minBelow: 250},
                 ' .ad-slot': {minAbove: 500, minBelow: 500},
                 ' > :not(p):not(h2):not(.ad-slot)': {minAbove: 35, minBelow: 400}
+            },
+            filter: function(slot, index) {
+                if (!prevSlot || Math.abs(slot.top - prevSlot.top) >= this.selectors[' .ad-slot'].minBelow) {
+                    prevSlot = slot;
+                    return true;
+                }
+                return false;
             }
         };
     }
@@ -77,39 +85,21 @@ define([
 
     // Add new ads while there is still space
     function addArticleAds(count, rules) {
-        return addArticleAdsRec(count, 0);
-
-        /*
-         * count:Integer is the number of adverts that should optimally inserted
-         * countAdded:Integer is the number of adverts effectively added. It is
-         * an accumulator (although no JS engine optimizes tail calls so far).
-         */
-        function addArticleAdsRec(count, countAdded) {
-            return count === 0 ?
-                Promise.resolve(countAdded) :
-                tryAddingAdvert(rules).then(onArticleAdAdded);
-
-            function onArticleAdAdded(trySuccessful) {
-                // If last attempt worked, recurse another
-                return trySuccessful ?
-                    addArticleAdsRec(count - 1, countAdded + 1) :
-                    countAdded;
-            }
-        }
-    }
-
-    function tryAddingAdvert(rules) {
-        return spaceFiller.fillSpace(rules, insertInlineAd, {
+        return spaceFiller.fillSpace(rules, insertInlineAds, {
             waitForImages: true,
             waitForLinks: true,
             waitForInteractives: true
         });
 
-        function insertInlineAd(paras) {
-            bodyAds += 1;
-            var adDefinition = 'inline' + bodyAds;
-
-            insertAdAtPara(paras[0], adDefinition, 'inline');
+        function insertInlineAds(paras) {
+            var countAdded = 0;
+            while(countAdded < count && paras.length) {
+                bodyAds += 1;
+                var para = paras.shift();
+                var adDefinition = 'inline' + bodyAds;
+                insertAdAtPara(para, adDefinition, 'inline');
+            }
+            return countAdded;
         }
     }
 
