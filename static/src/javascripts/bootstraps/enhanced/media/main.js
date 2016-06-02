@@ -185,6 +185,7 @@ define([
             embedPath = $el.attr('data-embed-path'),
             // we need to look up the embedPath for main media videos
             canonicalUrl = $el.attr('data-canonical-url') || (embedPath ? '/' + embedPath : null),
+            shouldHideAdverts = $el.attr('data-block-video-ads') === 'false' ? false : true,
             techPriority = techOrder(el),
             player,
             mouseMoveIdle,
@@ -197,7 +198,7 @@ define([
             // These are set to the safest defaults that will always play video.
             var defaultVideoInfo = {
                 expired: false,
-                shouldHideAdverts: true
+                shouldHideAdverts: shouldHideAdverts
             };
 
             if (!canonicalUrl) {
@@ -295,13 +296,19 @@ define([
                                 raven.wrap(
                                     { tags: { feature: 'media' } },
                                     function () {
-                                        player.adSkipCountdown(15);
+                                        var skipAdTime = 15;
                                         player.ima({
                                             id: mediaId,
                                             adTagUrl: getAdUrl(),
                                             prerollTimeout: 1000
                                         });
                                         player.ima.requestAds();
+                                        player.on('adstart', function() {
+                                            var adDuration = player.ima.getAdsManager().getCurrentAd().getDuration();
+                                            if (adDuration > skipAdTime) {
+                                                player.adSkipCountdown(skipAdTime);
+                                            }
+                                        });
 
                                         // Video analytics event.
                                         player.trigger(events.constructEventName('preroll:request', player));
