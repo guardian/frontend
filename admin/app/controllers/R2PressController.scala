@@ -28,7 +28,7 @@ object R2PressController extends Controller with Logging with AuthLogging with E
     val msgs = if(uploadedFile.nonEmpty) {
       val results = uploadedFile.map(file => {
         try {
-          pressFile(file, isBatchTakedown(body), isBatchFromPreservedSource(body))
+          pressFile(file, isBatchTakedown(body), isBatchFromPreservedSource(body), isBatchConvertToHttps(body))
         } catch {
           case e: Exception => List(s"Error processing ${file.getName} - ${e.getMessage}")
         }
@@ -41,7 +41,7 @@ object R2PressController extends Controller with Logging with AuthLogging with E
     Ok(views.html.pressR2(fileMsgs = msgs))
   }
 
-  private def pressFile(file: File, isTakedown: Boolean, isFromPreservedSource: Boolean): List[String] = {
+  private def pressFile(file: File, isTakedown: Boolean, isFromPreservedSource: Boolean, isConvertToHttps: Boolean): List[String] = {
     val source = scala.io.Source.fromFile(file)
     try {
       source.getLines().map { line =>
@@ -50,7 +50,7 @@ object R2PressController extends Controller with Logging with AuthLogging with E
           if (isTakedown) {
             R2PressedPageTakedownNotifier.enqueue(line)
           } else {
-            R2PagePressNotifier.enqueue(R2PressMessage(line, isFromPreservedSource))
+            R2PagePressNotifier.enqueue(R2PressMessage(line, isFromPreservedSource, isConvertToHttps))
           }
         } else {
           "* empty line *"
@@ -72,7 +72,7 @@ object R2PressController extends Controller with Logging with AuthLogging with E
             if (isTakedown(body)) {
               R2PressedPageTakedownNotifier.enqueue(url)
             } else {
-              R2PagePressNotifier.enqueue(R2PressMessage(url, isFromPreservedSource(body)))
+              R2PagePressNotifier.enqueue(R2PressMessage(url, isFromPreservedSource(body), isConvertToHttps(body)))
             }
           }
           case _ => "URL was not specified"
@@ -94,6 +94,12 @@ object R2PressController extends Controller with Logging with AuthLogging with E
     }.getOrElse(false)
   }
 
+  private def isConvertToHttps(body: AnyContent) = {
+    body.asFormUrlEncoded.flatMap { form =>
+      Some(form.get("is-convert-to-https").isDefined)
+    }.getOrElse(false)
+  }
+
   private def isBatchTakedown(body: AnyContent) = {
     body.asMultipartFormData.flatMap { form =>
       Some(form.asFormUrlEncoded.get("is-takedown").isDefined)
@@ -103,6 +109,12 @@ object R2PressController extends Controller with Logging with AuthLogging with E
   private def isBatchFromPreservedSource(body: AnyContent) = {
     body.asMultipartFormData.flatMap { form =>
       Some(form.asFormUrlEncoded.get("is-from-preserved-source").isDefined)
+    }.getOrElse(false)
+  }
+
+  private def isBatchConvertToHttps(body: AnyContent) = {
+    body.asMultipartFormData.flatMap { form =>
+      Some(form.asFormUrlEncoded.get("is-convert-to-https").isDefined)
     }.getOrElse(false)
   }
 

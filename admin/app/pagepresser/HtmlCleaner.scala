@@ -2,7 +2,8 @@ package pagepresser
 
 import com.netaporter.uri.Uri.parse
 import common.{ExecutionContexts, Logging}
-import org.jsoup.nodes.Document
+import org.jsoup.Jsoup
+import org.jsoup.nodes.{Element, Document}
 import conf.Configuration
 
 import scala.collection.JavaConversions._
@@ -13,7 +14,7 @@ abstract class HtmlCleaner extends Logging with ExecutionContexts {
   lazy val nonDigitRegEx = """\D+""".r
 
   def canClean(document: Document): Boolean
-  def clean(document: Document): Document
+  def clean(document: Document, convertToHttps: Boolean): Document
 
   protected def universalClean(document: Document): Document = {
     removeAds(document)
@@ -188,14 +189,28 @@ abstract class HtmlCleaner extends Logging with ExecutionContexts {
     document
   }
 
+  private def elementContainsCombo(el: Element): Boolean = {
+    val comboHost = "combo.guim.co.uk"
+    val attr = if (el.hasAttr("href")) {
+      el.attr("href")
+    } else if (el.hasAttr("src")) {
+      el.attr("src")
+    } else {
+      ""
+    }
+    attr.contains(comboHost)
+  }
+
   def deComboLinks(document: Document): Document = {
-    document.getAllElements.filter { el =>
-      el.hasAttr("href") && el.attr("href").contains("combo.guim.co.uk")
-    }.foreach { el =>
+    document.getAllElements.filter( elementContainsCombo ) .foreach { el =>
 
       val combinerRegex = """//combo.guim.co.uk/(\w+)/(.+)(\.\w+)$""".r("cacheBustId", "paths", "extension")
       val microAppRegex = """^m-(\d+)~(.+)""".r
-      val href = el.attr("href")
+      val href = if (el.hasAttr("href")) {
+        el.attr("href")
+      } else {
+        el.attr("src")
+      }
       val combiner = combinerRegex.findFirstMatchIn(href)
 
       combiner.foreach { combiner =>
@@ -208,7 +223,11 @@ abstract class HtmlCleaner extends Logging with ExecutionContexts {
           } else {
             s"//static.guim.co.uk/static/$cacheBustId/$path$extension"
           }
-          val newEl = el.clone.attr("href", newPath)
+          val newEl = if (el.hasAttr("href")) {
+            el.clone.attr("href", newPath)
+          } else {
+            el.clone.attr("src", newPath)
+          }
           el.after(newEl)
         }
         el.remove()
@@ -216,4 +235,16 @@ abstract class HtmlCleaner extends Logging with ExecutionContexts {
     }
     document
   }
+
+  def secureDocument(document: Document): Document = {
+    val tmpDoc = Jsoup.parse(secureSource(document.html()))
+    document.head().replaceWith(tmpDoc.head())
+    document.body().replaceWith(tmpDoc.body())
+    document
+  }
+
+  private def secureSource(src: String): String = {
+    src.replaceAllLiterally("http://", "//")
+  }
+
 }

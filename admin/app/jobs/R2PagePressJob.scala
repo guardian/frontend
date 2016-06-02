@@ -7,7 +7,7 @@ import common._
 import conf.Configuration
 import conf.switches.Switches.R2PagePressServiceSwitch
 import org.jsoup.Jsoup
-import pagepresser.{SimpleHtmlCleaner, InteractiveHtmlCleaner, PollsHtmlCleaner}
+import pagepresser.{NextGenInteractiveHtmlCleaner, SimpleHtmlCleaner, InteractiveHtmlCleaner, PollsHtmlCleaner}
 import play.api.libs.json._
 import play.api.libs.ws.WS
 import services.{S3Archive, S3ArchiveOriginals, PagePresses}
@@ -81,11 +81,11 @@ object R2PagePressJob extends ExecutionContexts with Logging {
 
   private def pressAsUrl(urlIn: String): String = urlIn.replace("https://", "").replace("http://","")
 
-  private def parseAndClean(originalDocSource: String): Future[String] = {
-    val cleaners = Seq(PollsHtmlCleaner, InteractiveHtmlCleaner, SimpleHtmlCleaner)
+  private def parseAndClean(originalDocSource: String, convertToHttps: Boolean): Future[String] = {
+    val cleaners = Seq(PollsHtmlCleaner, InteractiveHtmlCleaner, NextGenInteractiveHtmlCleaner, SimpleHtmlCleaner)
     val archiveDocument = Jsoup.parse(originalDocSource)
     val doc: Document = cleaners.filter(_.canClean(archiveDocument))
-      .map(_.clean(archiveDocument))
+      .map(_.clean(archiveDocument, convertToHttps))
       .headOption
       .getOrElse(archiveDocument)
     Future.successful(doc.toString)
@@ -111,7 +111,7 @@ object R2PagePressJob extends ExecutionContexts with Logging {
     S3ArchiveOriginals.get(pressUrl).map { originalSource =>
       log.info(s"Re-pressing $urlIn")
 
-      val cleanedHtmlString = parseAndClean(originalSource)
+      val cleanedHtmlString = parseAndClean(originalSource, message.convertToHttps)
 
       cleanedHtmlString.map { cleanedHtmlString =>
         S3ArchivePutAndCheck(pressUrl, cleanedHtmlString) match {
@@ -151,7 +151,7 @@ object R2PagePressJob extends ExecutionContexts with Logging {
                 log.info(s"Original page source saved for $urlIn")
               }
 
-              val cleanedHtmlString = parseAndClean(originalSource)
+              val cleanedHtmlString = parseAndClean(originalSource, message.convertToHttps)
 
               cleanedHtmlString.map { cleanedHtmlString =>
                 S3ArchivePutAndCheck(pressUrl, cleanedHtmlString) match {
