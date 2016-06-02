@@ -11,7 +11,6 @@ define([
     'common/modules/experiments/tests/fronts-on-articles2',
     'common/modules/experiments/tests/live-blog-chrome-notifications-internal',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
-    'common/modules/experiments/tests/loyal-adblocking-survey',
     'common/modules/experiments/tests/facebook-share-params',
     'common/modules/experiments/tests/participation-low-fric-film',
     'common/modules/experiments/tests/participation-low-fric-music-v1',
@@ -22,7 +21,6 @@ define([
     'common/modules/experiments/tests/clever-friend-brexit',
     'common/modules/experiments/tests/welcome-header',
     'common/modules/experiments/tests/participation-discussion-test',
-    'common/modules/experiments/tests/play-video-on-fronts',
     'common/modules/experiments/tests/new-user-adverts-disabled',
     'common/modules/experiments/tests/video-teaser'
 ], function (
@@ -34,11 +32,9 @@ define([
     mvtCookie,
     memoize,
     noop,
-
     FrontsOnArticles2,
     LiveBlogChromeNotificationsInternal,
     LiveBlogChromeNotificationsProd,
-    LoyalAdblockingSurvey,
     FacebookShareParams,
     ParticipationLowFricFilm,
     ParticipationLowFricMusicV1,
@@ -49,7 +45,6 @@ define([
     CleverFriendBrexit,
     WelcomeHeader,
     ParticipationDiscussionTest,
-    PlayVideoOnFronts,
     NewUserAdvertsDisabled,
     VideoTeaser
 ) {
@@ -58,7 +53,6 @@ define([
         new FrontsOnArticles2(),
         new LiveBlogChromeNotificationsInternal(),
         new LiveBlogChromeNotificationsProd(),
-        new LoyalAdblockingSurvey(),
         new FacebookShareParams(),
         new ParticipationLowFricFilm(),
         new ParticipationLowFricMusicV1(),
@@ -69,7 +63,6 @@ define([
         new CleverFriendBrexit(),
         new WelcomeHeader(),
         new ParticipationDiscussionTest(),
-        new PlayVideoOnFronts(),
         new NewUserAdvertsDisabled(),
         new VideoTeaser()
     ];

@@ -106,7 +106,7 @@ $renaultLight: #fff9e9;
     color: rgba(255, 255, 255, .5);
 }
 
-.hosted__container {
+.hosted__container.adverts {
     position: relative;
     background: transparent;
     color: #ffffff;
@@ -124,12 +124,19 @@ $renaultLight: #fff9e9;
         .adverts__header {
             padding-top: 0;
             padding-bottom: 0;
-            border-top: 1px solid rgba(0, 0, 0, .2);
+            &:before {
+                content: '';
+                height: 1px;
+                left: $gs-gutter;
+                right: $gs-gutter;
+                position: absolute;
+                background-color: #eeeeee;
+            }
         }
     }
 }
 
-.hosted__container--full {
+.hosted__container--full.adverts {
     @include mq($until: desktop) {
         padding: 0;
     }
@@ -145,11 +152,46 @@ $renaultLight: #fff9e9;
     }
 }
 
-.hosted__video {
+.hosted__video.gu-media--video {
     vertical-align: top;
 
     .vjs-big-play-button .vjs-control-text {
-        display: none;
+        margin-left: -40px;
+        margin-top: -68px;
+        width: 136px;
+        height: 48px;
+        text-indent: -999px;
+
+        @include mq($until: desktop) {
+            display: none; //Temporary disable on mobile and tablet, it will be removed when the tap events on video element will be fixed
+        }
+
+        @include mq(tablet) {
+            margin-left: -70px;
+            margin-top: -25px;
+        }
+
+        &:before {
+            content: 'Watch now';
+            background-color: transparent;
+            text-indent: 0; //I want to show 'Watch now' text instead of the hardcoded "Play Video"
+            position: absolute;
+            top: 14px;
+            left: 34px;
+            font-size: 16px;
+            width: 92px;
+        }
+
+        &:after {
+            top: 16px;
+            left: 16px;
+            border-width: 8px 8px 8px 18px;
+        }
+
+        @include fs-textSans(4);
+        color: #ffffff;
+        border: 2px solid #ffffff;
+        border-radius: 30px;
     }
 
     //those control buttons will fade in on video play
@@ -166,10 +208,8 @@ $renaultLight: #fff9e9;
             @include hosted-fade-out;
         }
 
-        .vjs-time-control {
-            @include mq($until: tablet) {
-                @include hosted-fade-out;
-            }
+        .vjs-big-play-button {
+            @include hosted-fade-in;
         }
 
         .vjs-control-bar {
@@ -185,10 +225,9 @@ $renaultLight: #fff9e9;
             @include hosted-fade-in;
         }
 
-        @include mq($until: tablet) {
-            .vjs-time-control {
-                @include hosted-fade-in;
-            }
+        .vjs-big-play-button {
+            @include hosted-fade-out;
+            display: block !important; //I know this is ugly but I need to overwrite display:none to show the animation
         }
 
         .vjs-control-bar {
@@ -201,11 +240,11 @@ $renaultLight: #fff9e9;
         bottom: 0;
         background-color: unset;
         font-size: 16px;
-        height: 48px;
+        height: 50px;
     }
 
     .vjs-fullscreen-control {
-        margin-top: 14px;
+        margin-top: 10px;
     }
 
     .vjs-volume-menu-button {
@@ -215,24 +254,32 @@ $renaultLight: #fff9e9;
     }
 
     .vjs-menu-button {
-        margin-top: 17px;
+        margin-top: 14px;
 
         .vjs-control-text {
             font-size: 14px;
         }
     }
 
-    .vjs-time-control {
-        padding-top: 2px;
-    }
+    &.vjs {
+        .vjs-play-control {
+            width: 37px;
+            height: 37px;
+            margin: 6px 0 6px 20px;
+            display: block;
 
-    &.vjs .vjs-play-control {
-        width: 37px;
-        height: 37px;
-        margin: 6px 20px;
+            @include mq(desktop) {
+                display: none; //We have a 'watch now' in the middle so don't need this one
+                margin-left: $gs-column-width * 1.5;
+            }
+        }
 
-        @include mq(desktop) {
-            margin-left: $gs-column-width * 1.5;
+        .vjs-current-time {
+            margin-left: 20px;
+
+            @include mq(desktop) {
+                margin-left: $gs-column-width * 1.5;
+            }
         }
     }
 
@@ -267,7 +314,8 @@ $renaultLight: #fff9e9;
 }
 
 .vjs-playing + .hosted-fading {
-    .hosted__meta {
+    .hosted__meta,
+    .hosted__video-overlay {
         @include hosted-fade-out;
     }
     @include mq($until: tablet) {
@@ -279,14 +327,24 @@ $renaultLight: #fff9e9;
 
 .vjs-paused + .hosted-fading {
     .hosted__meta,
-    .hostedbadge__logo {
+    .hostedbadge__logo,
+    .hosted__video-overlay {
         @include hosted-fade-in;
     }
 }
 
-.hosted-fading .hostedbadge__logo {
-    margin-top: 27px;
-    position: relative;
+.hosted-fading {
+    .hosted__video-overlay {
+        @include simple-gradient(transparent, #383838);
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    .hostedbadge__logo {
+        margin-top: 27px;
+        position: relative;
+    }
 }
 
 // Headings
@@ -362,19 +420,10 @@ $renaultLight: #fff9e9;
     position: relative;
     z-index: 1;
     margin-left: 20px;
-
-    @include mq(mobile) {
-        padding-top: 130px;
-    }
-
-    @include mq(tablet) {
-        width: 40%;
-        padding-top: 160px;
-    }
-
-    @include mq(desktop) {
-        padding-top: 220px;
-    }
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
 
     a {
         // hack stop the link underline
@@ -382,7 +431,7 @@ $renaultLight: #fff9e9;
     }
 }
 
-.hosted__cta {
+.hosted__cta.button {
     padding: 0;
 
     &,
@@ -408,7 +457,7 @@ $renaultLight: #fff9e9;
 
     @include mq(tablet) {
         height: 38px;
-        margin: 13px;
+        margin: 8px;
         line-height: 1;
 
         svg {
@@ -432,6 +481,10 @@ $renaultLight: #fff9e9;
     @include mq(tablet) {
         font-size: 38px;
     }
+}
+
+.hosted__cta-link {
+    padding-bottom: 5%;
 }
 
 .hosted__cta-link,
@@ -515,7 +568,7 @@ $renaultLight: #fff9e9;
     }
 }
 
-/*Hosted thrasher*/
+//Hosted thrasher
 .creative--hosted-video {
     .hosted-video__body {
         position: relative;
@@ -609,7 +662,7 @@ $renaultLight: #fff9e9;
     }
 }
 
-.hosted__label {
+.hosted__label.paidfor-label {
     float: left;
     margin-left: 110px;
     color: #ffffff;
@@ -636,7 +689,7 @@ $renaultLight: #fff9e9;
     }
 }
 
-.hosted__label-btn {
+.hosted__label-btn.paidfor-label__btn {
     @include f-headlineSans;
 
     font-size: 16px;
@@ -655,13 +708,13 @@ $renaultLight: #fff9e9;
     }
 }
 
-.hosted__label-btn--small {
+.hosted__label-btn.hosted__label-btn--small {
     @include f-textSans;
 
     font-size: 12px;
 }
 
-.hosted__popup {
+.hosted__popup.popup {
     top: 110%;
     left: 299%;
     width: 350px;
@@ -699,7 +752,7 @@ $renaultLight: #fff9e9;
 .hosted__next-video--header {
     padding-bottom: 10px;
     margin: $gs-baseline $gs-gutter 10px;
-    border-bottom: 2px solid #eeeeee;
+    border-bottom: 1px solid #eeeeee;
 }
 
 .hosted__container .adverts__body {
@@ -744,7 +797,7 @@ $renaultLight: #fff9e9;
 .hosted__next-video-thumb {
     height: 72px;
     width: 120px;
-    align-self: center;
+    align-self: flex-start;
 
     @include mq($until: phablet) {
         height: 54px;

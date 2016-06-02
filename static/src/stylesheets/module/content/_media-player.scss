@@ -1105,3 +1105,22 @@ $ima-controls-height: 70px;
 .vjs-modal-dialog-description {
     display: none;
 }
+
+// We have to use vjs classes here, and not BEM modifiers as videojs
+// changes the classes names via JS, and last time we messed with that,
+// we had major refactoring issues.
+.gu-media--show-controls-at-start.vjs-paused {
+    .vjs-control-bar {
+        bottom: 0;
+    }
+
+    .vjs-big-play-button .vjs-control-text {
+        &:before {
+            background-color: $media-default;
+        }
+
+        &:after {
+            border-left-color: #333333;
+        }
+    }
+}

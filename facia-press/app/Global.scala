@@ -1,6 +1,7 @@
 import common.Logback.Logstash
 import common._
 import conf.switches.SwitchboardLifecycle
+import lifecycle.FaciaPressLifecycle
 import play.api.GlobalSettings
 import play.api.inject.ApplicationLifecycle
 import services.ConfigAgentLifecycle
@@ -27,5 +28,7 @@ object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents
     FaciaPressMetrics.AllFrontsPressLatencyMetric
   )
 
-  override def lifecycleComponents(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext): List[LifecycleComponent] = Nil
+  override def lifecycleComponents(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext): List[LifecycleComponent] = List(
+    new FaciaPressLifecycle(appLifecycle)
+  )
 }

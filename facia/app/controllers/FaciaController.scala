@@ -214,8 +214,8 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
           if (request.isJson)
             Cached(60) {JsonCollection(html)}
           else
-            Cached(60)(WithoutRevalidationResult(NotFound))
-      }.getOrElse(ServiceUnavailable)
+            Cached(60)(WithoutRevalidationResult(NotFound("containers are only available as json")))
+      }.getOrElse(Cached(60)(WithoutRevalidationResult(NotFound(s"collection id $collectionId does not exist"))))
     }
   }
 
