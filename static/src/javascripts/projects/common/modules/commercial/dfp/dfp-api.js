@@ -156,9 +156,10 @@ define([
                     renderStartTime = new Date().getTime();
                 },
                 setListeners,
-                setPageTargeting,
-                resolve
+                setPageTargeting
             );
+
+            resolve();
         });
     }
 
