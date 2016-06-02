@@ -213,7 +213,7 @@ define([
         }
 
         if (rules.filter) {
-            candidates = candidates.filter(rules.filter);
+            candidates = candidates.filter(rules.filter, rules);
         }
 
         return candidates;
