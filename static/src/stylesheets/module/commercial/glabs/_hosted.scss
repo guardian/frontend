@@ -106,7 +106,7 @@ $renaultLight: #fff9e9;
     color: rgba(255, 255, 255, .5);
 }
 
-.hosted__container {
+.hosted__container.adverts {
     position: relative;
     background: transparent;
     color: #ffffff;
@@ -124,12 +124,19 @@ $renaultLight: #fff9e9;
         .adverts__header {
             padding-top: 0;
             padding-bottom: 0;
-            border-top: 1px solid rgba(0, 0, 0, .2);
+            &:before {
+                content: '';
+                height: 1px;
+                left: $gs-gutter;
+                right: $gs-gutter;
+                position: absolute;
+                background-color: #eeeeee;
+            }
         }
     }
 }
 
-.hosted__container--full {
+.hosted__container--full.adverts {
     @include mq($until: desktop) {
         padding: 0;
     }
@@ -145,7 +152,7 @@ $renaultLight: #fff9e9;
     }
 }
 
-.hosted__video {
+.hosted__video.gu-media--video {
     vertical-align: top;
 
     .vjs-big-play-button .vjs-control-text {
@@ -413,19 +420,10 @@ $renaultLight: #fff9e9;
     position: relative;
     z-index: 1;
     margin-left: 20px;
-
-    @include mq(mobile) {
-        padding-top: 130px;
-    }
-
-    @include mq(tablet) {
-        width: 40%;
-        padding-top: 160px;
-    }
-
-    @include mq(desktop) {
-        padding-top: 220px;
-    }
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
 
     a {
         // hack stop the link underline
@@ -433,7 +431,7 @@ $renaultLight: #fff9e9;
     }
 }
 
-.hosted__cta {
+.hosted__cta.button {
     padding: 0;
 
     &,
@@ -459,7 +457,7 @@ $renaultLight: #fff9e9;
 
     @include mq(tablet) {
         height: 38px;
-        margin: 13px;
+        margin: 8px;
         line-height: 1;
 
         svg {
@@ -483,6 +481,10 @@ $renaultLight: #fff9e9;
     @include mq(tablet) {
         font-size: 38px;
     }
+}
+
+.hosted__cta-link {
+    padding-bottom: 5%;
 }
 
 .hosted__cta-link,
@@ -660,7 +662,7 @@ $renaultLight: #fff9e9;
     }
 }
 
-.hosted__label {
+.hosted__label.paidfor-label {
     float: left;
     margin-left: 110px;
     color: #ffffff;
@@ -687,7 +689,7 @@ $renaultLight: #fff9e9;
     }
 }
 
-.hosted__label-btn {
+.hosted__label-btn.paidfor-label__btn {
     @include f-headlineSans;
 
     font-size: 16px;
@@ -706,13 +708,13 @@ $renaultLight: #fff9e9;
     }
 }
 
-.hosted__label-btn--small {
+.hosted__label-btn.hosted__label-btn--small {
     @include f-textSans;
 
     font-size: 12px;
 }
 
-.hosted__popup {
+.hosted__popup.popup {
     top: 110%;
     left: 299%;
     width: 350px;
@@ -750,7 +752,7 @@ $renaultLight: #fff9e9;
 .hosted__next-video--header {
     padding-bottom: 10px;
     margin: $gs-baseline $gs-gutter 10px;
-    border-bottom: 2px solid #eeeeee;
+    border-bottom: 1px solid #eeeeee;
 }
 
 .hosted__container .adverts__body {
