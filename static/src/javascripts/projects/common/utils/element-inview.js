@@ -1,13 +1,9 @@
 define([
     'bean',
-    'common/utils/$',
-    'common/utils/mediator',
     'lodash/functions/debounce',
     'lodash/objects/assign'
 ], function(
     bean,
-    $,
-    mediator,
     debounce,
     assign
 ) {
