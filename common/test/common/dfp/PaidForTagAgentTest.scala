@@ -33,7 +33,7 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
                          sponsor: Option[String] = None,
                          expiryDate: Option[DateTime] = None,
                          adUnitPaths: Seq[String] = Nil) = {
-    val adUnits = adUnitPaths.map(path => GuAdUnit("0", path.split("/")))
+    val adUnits = adUnitPaths.map(path => GuAdUnit("0", path.split("/"), GuAdUnit.ACTIVE))
     val customTargetSets = editionId map { edition =>
       Seq(CustomTargetSet("AND", Seq(CustomTarget("edition", "IS", Seq(edition)))))
     } getOrElse Nil
