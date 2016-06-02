@@ -146,6 +146,10 @@ case class GuAdUnit(id: String, path: Seq[String], status: String) {
 
 object GuAdUnit {
   implicit val adUnitFormat = Json.format[GuAdUnit]
+
+  val ACTIVE = "ACTIVE"
+  val INACTIVE = "INACTIVE"
+  val ARCHIVED = "ARCHIVED"
 }
 
 case class GuTargeting(adUnits: Seq[GuAdUnit],
