@@ -125,7 +125,9 @@ define([
             return isLoaded ? 0 : addArticleAds(2, getRules());
         }).then(function (countAdded) {
             return countAdded === 2 ?
-                addArticleAds(8, getLongArticleRules()) :
+                addArticleAds(8, getLongArticleRules()).then(function (countAdded) {
+                    return 2 + countAdded;
+                }) :
                 countAdded;
         });
     });
