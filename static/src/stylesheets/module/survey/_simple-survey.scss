@@ -130,7 +130,7 @@
 }
 
 .formstack-survey-wrapper {
-    width: $gs-column-width*20;
+    @include gs-container;
     margin: 0 auto;
     padding-top: 1em;
 }
