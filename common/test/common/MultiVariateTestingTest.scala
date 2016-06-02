@@ -1,5 +1,6 @@
 package mvt
 
+import conf.switches.Owner
 import org.joda.time.LocalDate
 import org.scalatest.{FlatSpec, Matchers}
 import play.api.mvc.RequestHeader
@@ -40,6 +41,7 @@ class MultiVariateTestingTest extends FlatSpec with Matchers {
     object test0 extends TestDefinition(
       "test0",
       "an experiment test",
+      Seq(Owner.withName("Fake owner")),
       new LocalDate(2100, 1, 1)
     ) {
       def canRun(implicit request: RequestHeader): Boolean = true
@@ -47,6 +49,7 @@ class MultiVariateTestingTest extends FlatSpec with Matchers {
     object test1 extends TestDefinition(
       "test1",
       "another experiment test",
+      Seq(Owner.withName("Fake owner")),
       new LocalDate(2100, 1, 1)
     ) {
       def canRun(implicit request: RequestHeader): Boolean = {
@@ -56,6 +59,7 @@ class MultiVariateTestingTest extends FlatSpec with Matchers {
     object test2 extends TestDefinition(
       "test2",
       "still another experiment test",
+      Seq(Owner.withName("Fake owner")),
       new LocalDate(2100, 1, 1)
     ) {
       def canRun(implicit request: RequestHeader): Boolean = {

@@ -1,25 +1,54 @@
-@(expiringImminently: Seq[conf.switches.Switch], expiringSoon: Seq[conf.switches.Switch])
+@import conf.switches.Switch
+@import _root_.jobs.ExpiringSwitches
 
-@showSwitch(switch: conf.switches.Switch) = {
-    <li>
-        <div>@{switch.name}</div>
-        <div>expires @{switch.sellByDate.get.toString("E dd MMM")} 23:59 UTC</div>
+@(switches: Seq[Switch])
+
+@showSwitch(switch: conf.switches.Switch, showExpirationDate: Boolean) = {
+    <li style="padding-bottom: 6px">
+        <div>
+            <strong>@{switch.name}</strong>
+            - @showOwners(switch.owners)
+            @if(showExpirationDate) { - <span style="color:grey;font-style: italic;">expires @{switch.sellByDate.get.toString("E dd MMM")} at 23:59 (London time)</span>}
+        </div>
         <div>@{switch.description}</div>
     </li>
 }
 
-@if(expiringImminently.nonEmpty) {
-    <div>
-        <p style="color:red">These switches are going to expire imminently!</p>
-        <ul>@for(switch <- expiringImminently) {@showSwitch(switch)}</ul>
-    </div>
+@emergencyColor(index: Int) = @{
+    index match {
+        case 0 => "red"
+        case 1 => "orangeRed"
+        case 2 => "orange"
+        case _ => "black"
+    }
 }
 
-@if(expiringSoon.nonEmpty) {
-    <div>
-        <p style="color:orange">These switches are going to expire soon:</p>
-        <ul>@for(switch <- expiringSoon) {@showSwitch(switch)}</ul>
-    </div>
+@showOwners(owners: Seq[conf.switches.Owner]) = {
+    Owners: @for(owner <- owners) { @showOwner(owner) }
+}
+@showOwner(owner: conf.switches.Owner) = {
+    @if(owner.github.isEmpty) {
+       @owner.name
+    } else {
+        <a href="https://github.com/@{owner.github.get}">@{owner.name.getOrElse(owner.github)}</a>
+    }
+
 }
 
-<p>See https://frontend.gutools.co.uk/dev/switchboard</p>
+<html>
+    <head></head>
+    <body>
+        @defining(ExpiringSwitches(switches).groupByPriority) { allGroups =>
+            @for(group <- allGroups) {
+                @if(group.switches.nonEmpty) {
+                    <div>
+                        <h1 style="font-size:1.3em;color:@emergencyColor(allGroups.indexOf(group))">@group.description.capitalize</h1>
+                        <ul>@for(switch <- group.switches) {@showSwitch(switch, (allGroups.last == group))}</ul>
+                    </div>
+                }
+            }
+        }
+
+    <p>See https://frontend.gutools.co.uk/dev/switchboard</p>
+    </body>
+</html>

@@ -9,24 +9,27 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "dfp-caching",
     "Have Admin will poll DFP to precache adserving data.",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = On,
     sellByDate = never,
     exposeClientSide = false
   )
 
   val HeaderBiddingUS = Switch(
-     SwitchGroup.Commercial,
-     "header-bidding-us",
-     "Auction adverts on the client before calling DFP (US edition only)",
-     safeState = Off,
-     sellByDate = never,
-     exposeClientSide = true
+    SwitchGroup.Commercial,
+    "header-bidding-us",
+    "Auction adverts on the client before calling DFP (US edition only)",
+    owners = Seq(Owner.withGithub("regiskuckaertz ")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
   )
 
   val CommercialSwitch = Switch(
     SwitchGroup.Commercial,
     "commercial",
     "If this switch is OFF, no calls will be made to the ad server. BEWARE!",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
@@ -36,6 +39,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "standard-adverts",
     "Display 'standard' adverts, e.g. top banner ads, inline ads, MPUs, etc.",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
@@ -45,6 +49,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "commercial-components",
     "Display commercial components, e.g. jobs, soulmates.",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
@@ -54,6 +59,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "video-adverts",
     "Show adverts on videos.",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
@@ -63,6 +69,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "sponsored",
     "Show sponsored badges, logos, etc.",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
@@ -72,6 +79,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "liveblog-adverts",
     "Show inline adverts on liveblogs",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
@@ -81,6 +89,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "audience-science",
     "If this switch is on, Audience Science segments will be used to target ads.",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
@@ -90,6 +99,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "audience-science-gateway",
     "If this switch is on, Audience Science Gateway segments will be used to target ads.",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
@@ -99,6 +109,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "imr-worldwide",
     "Enable the IMR Worldwide audience segment tracking.",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
@@ -108,6 +119,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "krux",
     "Enable Krux Control Tag",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
@@ -117,6 +129,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "remarketing",
     "Enable Remarketing tracking",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
@@ -126,6 +139,7 @@ trait CommercialSwitches {
     SwitchGroup.CommercialFeeds,
     "gu-travel-feed-fetch",
     "If this switch is on, cached travel offers feed will be updated from external source.",
+    owners = Seq(Owner.withGithub("kelvin-chappell")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -135,6 +149,7 @@ trait CommercialSwitches {
     SwitchGroup.CommercialFeeds,
     "gu-travel-feed-parse",
     "If this switch is on, commercial components will be fed by travel offers feed.",
+    owners = Seq(Owner.withGithub("kelvin-chappell")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -144,6 +159,7 @@ trait CommercialSwitches {
     SwitchGroup.CommercialFeeds,
     "gu-jobs-feed-fetch",
     "If this switch is on, jobs feed will be periodically updated from external source.",
+    owners = Seq(Owner.withGithub("rich-nguyen")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -153,6 +169,7 @@ trait CommercialSwitches {
     SwitchGroup.CommercialFeeds,
     "gu-jobs-feed-parse",
     "If this switch is on, commercial components will be fed by jobs feed.",
+    owners = Seq(Owner.withGithub("rich-nguyen")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -162,6 +179,7 @@ trait CommercialSwitches {
     SwitchGroup.CommercialFeeds,
     "gu-events",
     "If this switch is on, commercial components will be fed by masterclass and live-events feeds.",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -171,6 +189,7 @@ trait CommercialSwitches {
     SwitchGroup.CommercialFeeds,
     "gu-soulmates",
     "If this switch is on, commercial components will be fed by soulmates feed.",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -180,6 +199,7 @@ trait CommercialSwitches {
     SwitchGroup.CommercialFeeds,
     "moneysupermarket",
     "If this switch is on, commercial components will be fed by Moneysupermarket feeds.",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -189,6 +209,7 @@ trait CommercialSwitches {
     SwitchGroup.CommercialFeeds,
     "gu-bookshop",
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -198,6 +219,7 @@ trait CommercialSwitches {
     SwitchGroup.CommercialFeeds,
     "book-lookup",
     "If this switch is on, book data will be looked up using a third-party service.",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -207,6 +229,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "gu-members-area",
     "If this switch is on, content flagged with membershipAccess will be protected",
+    owners = Seq(Owner.withGithub("JonNorman")),
     safeState = On,
     sellByDate = never,
     exposeClientSide = false
@@ -216,6 +239,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "lc-mortgages",
     "If this switch is on, commercial components will be fed by London & Country mortgage feed.",
+    owners = Seq(Owner.withGithub("JonNorman")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -225,6 +249,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "adblock",
     "Switch for the Adblock Message.",
+    owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
@@ -234,6 +259,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "krux-video-tracking",
     "If this switch is ON, there will be a Krux pixel fired to track particular videos",
+    owners = Seq(Owner.withGithub("johnduffell")),
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
@@ -243,6 +269,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "british-council-beacon",
     "British Council's beacon",
+    owners = Seq(Owner.withGithub("kenlim")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 8, 1),
     exposeClientSide = false
@@ -252,6 +279,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "fluid-adverts",
     "Request fluid adverts from DFP",
+    owners = Seq(Owner.withGithub("regiskuckaertz")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 6, 30),
     exposeClientSide = true
@@ -261,6 +289,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "fixed-tech-top-slot",
     "Height of the top banner is fixed at 250px in the Tech section",
+    owners = Seq(Owner.withGithub("regiskuckaertz")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 6, 30),
     exposeClientSide = false
@@ -270,6 +299,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "static-badges",
     "If on, all badges are served server side",
+    owners = Seq(Owner.withGithub("kelvin-chappell")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 7, 13),
     exposeClientSide = true
@@ -288,6 +318,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "optimise-high-merchandising",
     "If on, server will check tags for high-merchandising target before rendering high-merch slot.",
+    owners = Seq(Owner.withGithub("Calum Campbell")),
     safeState = Off,
     sellByDate = new LocalDate(2016,7,8),
     exposeClientSide = false
@@ -297,6 +328,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "report-empty-dfp-responses",
     "If on, the client will report empty dfp ad responses.",
+    owners = Seq(Owner.withGithub("rich-nguyen")),
     safeState = Off,
     sellByDate = new LocalDate(2016,7,8),
     exposeClientSide = true
@@ -306,6 +338,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "hosted-episode2-content",
     "If on, third page of hosted content is available",
+    owners = Seq(Owner.withGithub("lps88")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 7, 12),
     exposeClientSide = false

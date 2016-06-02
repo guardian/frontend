@@ -10,6 +10,7 @@ trait MonitoringSwitches {
     SwitchGroup.Monitoring,
     "ophan",
     "Enables the new Ophan tracking javascript",
+    owners = Seq(Owner.withGithub("johnduffell")),
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
@@ -19,6 +20,7 @@ trait MonitoringSwitches {
     SwitchGroup.Monitoring,
     "enable-sentry-reporting",
     "If this switch is on, then js errors will be reported to Sentry.",
+    owners = Seq(Owner.withGithub("rich-nguyen")),
     safeState = Off,
     never,
     exposeClientSide = true
@@ -28,6 +30,7 @@ trait MonitoringSwitches {
     SwitchGroup.Monitoring,
     "google-analytics",
     "If this switch is on, then Google Analytics is enabled",
+    owners = Seq(Owner.withGithub("Grant Klopper")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 8, 26),
     exposeClientSide = false
@@ -37,6 +40,7 @@ trait MonitoringSwitches {
     SwitchGroup.Monitoring,
     "scroll-depth",
     "Enables tracking and measurement of scroll depth",
+    owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     never,
     exposeClientSide = true
@@ -46,6 +50,7 @@ trait MonitoringSwitches {
     SwitchGroup.Monitoring,
     "css-logging",
     "If this is on, then a subset of clients will post css selector information for diagnostics.",
+    owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     never,
     exposeClientSide = true
@@ -55,6 +60,7 @@ trait MonitoringSwitches {
     SwitchGroup.Monitoring,
     "csp-reporting",
     "Enables logging of CSP violations",
+    owners = Seq(Owner.withGithub("desbo")),
     safeState = Off,
     never,
     exposeClientSide = false
@@ -64,6 +70,7 @@ trait MonitoringSwitches {
     SwitchGroup.Monitoring,
     "third-party-embed-tracking",
     "Enables tracking on our off-site third party embedded content. Such as: videos on embed.theguardian.com.",
+    owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     never,
     exposeClientSide = true
@@ -73,6 +80,7 @@ trait MonitoringSwitches {
     SwitchGroup.Monitoring,
     "logstash-logging",
     "Enables sending logs to Logstash",
+    owners = Seq(Owner.withGithub("tbonnin")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
