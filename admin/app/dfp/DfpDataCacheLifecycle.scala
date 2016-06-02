@@ -46,6 +46,12 @@ class DfpDataCacheLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: Exe
       def run() = CustomTargetingValueAgent.refresh()
     },
 
+    new Job[Unit] {
+      val name: String = "DFP-CustomTargeting-Store"
+      val interval: Int = 15
+      def run() = CustomTargetingKeyValueJob.run()
+    },
+
     new Job[DataCache[Long, Seq[String]]] {
       val name = "DFP-Placements-Update"
       val interval = 30
@@ -102,6 +108,7 @@ class DfpDataCacheLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: Exe
       DfpDataCacheJob.refreshAllDfpData()
       CreativeTemplateAgent.refresh()
       DfpTemplateCreativeCacheJob.run()
+      CustomTargetingKeyValueJob.run()
     }
   }
 }

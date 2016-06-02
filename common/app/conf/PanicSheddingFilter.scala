@@ -45,6 +45,11 @@ class PanicSheddingFilter extends Filter with Logging {
       log.info(s"$requestsInProgress requests in progress, averageLatency = ${latency}ms, surgeFactor (range is -$RANGE,$RANGE) = $surgeFactor, loadAverage = $loadAverage")
     }
 
+    if (latency > NORMAL_LATENCY_LIMIT) {
+      // need to let AWS know the problem so it can scale up
+      RequestMetrics.HighLatencyMetric.increment()
+    }
+
     if (surgeFactor > WORST_ALLOWABLE_SURGE) {
       log.warn(s"Request spike detected, won't serve this request.  surgeFactor = $surgeFactor (range is -$RANGE,$RANGE, over $WORST_ALLOWABLE_SURGE is a spike), loadAverage = $loadAverage")
       RequestMetrics.PanicRequestsSurgeMetric.increment()
@@ -52,7 +57,6 @@ class PanicSheddingFilter extends Filter with Logging {
     } else if (latency <= NORMAL_LATENCY_LIMIT) {
       true
     } else if (latency > CRITICAL_LATENCY_LIMIT) {
-      RequestMetrics.PanicExcessiveLatencyMetric.increment()
       if (requestsInProgress <= TRICKLE_RECOVERY_CONCURRENT_CONNECTIONS) {
         log.warn(
           s"""Excessive latency detected, serving anyway as in progress requests ($requestsInProgress)
@@ -67,7 +71,6 @@ class PanicSheddingFilter extends Filter with Logging {
       log.warn(s"Moderately high latency, allowing health checks through. latency = ${latency}ms, loadAverage = $loadAverage")
       true
     } else {
-      RequestMetrics.PanicLatencyWarningMetric.increment()
       val openingRange = CRITICAL_LATENCY_LIMIT - NORMAL_LATENCY_LIMIT
       val msAwayFromFullyOff = CRITICAL_LATENCY_LIMIT - latency
       val percentageOfRequestsToServe = msAwayFromFullyOff * 100 / openingRange

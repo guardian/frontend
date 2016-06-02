@@ -1,0 +1,92 @@
+@(page: model.GalleryPage)(implicit request: RequestHeader)
+@import common.{Edition, LinkTo}
+@import layout.ContentWidths.GalleryMedia
+@import views.support.TrailCssClasses.toneClass
+@import views.support.{ImgSrc, RenderClasses}
+
+<div class="l-side-margins l-side-margins--media">
+
+    <article id="article" class="@RenderClasses(
+            "content--advertisement-feature", "paid-content--advertisement-feature",
+            "content", "content--media", "content--gallery", "tonal", s"tonal--${toneClass(page.gallery)}"
+        )"
+        itemscope itemtype="@page.gallery.metadata.schemaType" role="main">
+
+        @fragments.guBand()
+
+        @fragments.headTonal(page.gallery, page, showBadge = true)
+
+        <div class="content__main tonal__main tonal__main--@toneClass(page.gallery) gs-container">
+            <div class="content__main-column content__main-column--gallery-advertisement">
+                @fragments.witnessCallToAction(page.gallery.content)
+                @fragments.contentMeta(page.gallery, page)
+                <ul class="gallery2">
+                @page.gallery.lightbox.largestCrops.zipWithRowInfo.map { case (image, row) =>
+                    @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum, page.gallery.lightbox.imageContainer(row.rowNum - 1))
+                }
+                </ul>
+                @fragments.witnessCallToAction(page.gallery.content)
+                @fragments.submeta(page.gallery)
+            </div>
+        </div>
+    </article>
+
+    @fragments.contentFooter(page.gallery, page.related, "media")
+</div>
+
+@galleryItem(adSlots: Seq[String], adInterval: Int, image: model.ImageAsset, rowNum: Int, imageElement: model.ImageElement) = {
+
+    <li id="img-@rowNum" class="gallery2__item js-gallery-item" data-link-name="Gallery item | @rowNum">
+        <figure itemscope itemtype="http://schema.org/ImageObject">
+
+            <a class="gallery2__img-container js-gallerythumbs @if(image.width >= image.height) {gallery2__img-container--landscape} else {gallery2__img-container--portrait}"
+                href="@LinkTo{@page.gallery.metadata.url#img-@rowNum}"
+
+                data-link-name="Launch Gallery Lightbox" data-is-ajax>
+
+                <img class="gallery2__img js-gallery-img @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
+                srcset="@ImgSrc.srcset(imageElement.images, GalleryMedia.inline)"
+                sizes="@GalleryMedia.inline.sizes"
+                src="@ImgSrc.getFallbackUrl(imageElement.images)"
+                alt="@image.altText.getOrElse("")"
+                itemprop="contentUrl" />
+
+                @fragments.inlineSvg("expand-image", "icon", List("centered-icon rounded-icon gallery2__fullscreen modern-visible"))
+            </a>
+
+            <div class="gallery2__figcaption">
+                @image.caption.map { caption =>
+                    <p class="gallery2__caption" itemprop="caption">@Html(caption)</p>
+                }
+                @if(image.displayCredit) {
+                    @image.credit.map { credit =>
+                        <p class="gallery2__credit" itemprop="author">@credit</p>
+                    }
+                }
+
+                @fragments.share.blockLevelSharing("img-" + rowNum.toString, page.gallery.sharelinks.elementShares("img-" + rowNum.toString, image.path), page.gallery.metadata.contentType)
+            </div>
+
+        </figure>
+    </li>
+
+    @if(!page.gallery.content.shouldHideAdverts && rowNum % adInterval == 0) {
+        @adSlots.lift((rowNum / adInterval) - 1).map { adSlot =>
+            <li class="gallery2__item gallery2__item--advert">
+                <div class="gallery2__img-container">
+                    @defining(if(adSlot == "inline1") Option("300,250") else None) { mpuSlotSize =>
+                        @fragments.commercial.standardAd(
+                            adSlot,
+                            Seq("gallery-inline", "dark"),
+                            Map(
+                                "mobile" -> (Seq("1,1", "300,50") ++ mpuSlotSize),
+                                "mobile-landscape" -> (Seq("1,1", "300,50", "320,50") ++ mpuSlotSize),
+                                "tablet" -> Seq("1,1", "300,250")
+                            )
+                        )
+                    }
+                </div>
+            </li>
+        }
+    }
+}

@@ -1,11 +1,295 @@
 @charset 'UTF-8';
 
-@include mq($until: mobileLandscape) {
-    .content--gallery .content__section {
-        display: none;
+// The main image needs to take up 100vh and the slim header needs to sit just on top of it.
+.l-header--new-gallery {
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    left: 0;
+}
+
+// Overriding the default for media tones
+.tonal--tone-media .content__headline--gallery {
+    font-weight: 200;
+    padding-top: 0;
+}
+
+.content__labels--gallery {
+    border: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    width: auto;
+    float: none;
+
+    .content__section-label {
+        margin-right: $gs-gutter / 4;
+    }
+
+    .content__series-label {
+        font-weight: normal;
+    }
+
+    .content__series-label,
+    .content__section-label {
+        @include fs-header(1, $size-only: true);
+        float: left;
     }
 }
 
+.gallery__meta-container {
+    &:before {
+        content: '';
+        border-top: 1px solid $media-mute;
+        padding-top: $gs-baseline / 4;
+        display: block;
+        width: gs-span(1);
+    }
+}
+
+.gallery__divider {
+    border-top: 1px solid $media-mute;
+    margin-top: $gs-baseline;
+
+    @include mq(desktop) {
+        padding-top: $gs-baseline / 2;
+    }
+}
+
+.content__main-column--gallery {
+    max-width: none;
+    margin-right: auto;
+    padding-bottom: $gs-baseline*2;
+
+    @include mq(desktop) {
+        margin-left: gs-span(3) + $gs-gutter;
+        margin-right: -$gs-gutter;
+    }
+}
+
+.gallery {
+    list-style: none;
+    margin: 0;
+    position: relative;
+
+    @include mq(desktop) {
+        &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: -$gs-gutter/2;
+            border-left: 1px solid $media-mute;
+        }
+    }
+}
+
+.gallery__item {
+    figure {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    // On mobile/tablet the images should be 100% of the width of the screen
+    @include mq($until: desktop) {
+        margin-left: -$gs-gutter;
+        margin-right: -$gs-gutter;
+        padding-top: $gs-baseline / 2;
+        border-top: 1px solid $media-mute;
+
+        &:first-of-type {
+            border-top: 0;
+        }
+    }
+
+    @include mq($until: mobileLandscape) {
+        margin-left: -$gs-gutter / 2;
+        margin-right: -$gs-gutter / 2;
+    }
+
+    @include mq(desktop) {
+        position: relative;
+        border-top: 0;
+        padding: 0;
+
+        figure {
+            flex-direction: row;
+        }
+    }
+}
+
+.gallery__item--advert {
+    @include mq($until: desktop) {
+        border-top: 0;
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+.gallery__figcaption {
+    @include fs-textSans(1);
+    overflow: visible;
+    max-height: 100%;
+    position: relative;
+    border: 0;
+    width: inherit;
+
+    @include mq($until: desktop) {
+        margin-bottom: $gs-baseline * 2;
+        padding-top: $gs-baseline / 2;
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
+
+    @include mq($until: mobileLandscape) {
+        padding-left: $gs-gutter / 2;
+        padding-right: $gs-gutter / 2;
+    }
+
+    @include mq(desktop) {
+        @include fs-textSans(2, true);
+        position: absolute;
+        width: gs-span(3);
+        top: 0;
+        right: auto;
+        margin-left: -(gs-span(3) + $gs-gutter);
+    }
+}
+
+.gallery__caption {
+    color: $neutral-4;
+    margin-bottom: .5rem;
+
+    @include mq(desktop) {
+        padding-right: $gs-gutter / 2;
+    }
+
+    a {
+        color: $neutral-4;
+        border-bottom: 1px solid $neutral-2;
+        transition: border-color .15s ease-out;
+
+        &:hover {
+            border-bottom: 1px solid $neutral-7;
+            text-decoration: none;
+        }
+    }
+}
+
+.gallery__caption__title {
+    @include fs-headline(2);
+    color: $neutral-5;
+    display: block;
+    margin-bottom: $gs-baseline/2;
+}
+
+.gallery__credit {
+    color: $neutral-3;
+
+    @include mq(desktop) {
+        padding-right: $gs-gutter / 2;
+    }
+}
+
+.gallery__img-container {
+    @include mq(desktop) {
+        padding-bottom: 2.5rem;
+    }
+
+    @include mq($until: desktop) {
+        text-align: center;
+
+        img {
+            display: inline-block;
+        }
+    }
+}
+
+// All images should fit within the viewport height
+.gallery__img-container,
+.gallery__img {
+    width: 100%;
+}
+
+.content__labels--gallery,
+.l-side-margins--gallery .content__meta-container,
+.content__headline--gallery,
+.content__standfirst--gallery {
+    @include mq(desktop) {
+        margin-left: gs-span(3) + $gs-gutter;
+        max-width: gs-span(8);
+    }
+}
+
+.gallery__meta-container {
+    .byline,
+    .content__dateline {
+        border: 0;
+        min-height: 0;
+        padding: 0;
+    }
+}
+
+.l-side-margins--gallery {
+    .content__meta-container {
+        border: 0;
+        position: relative;
+        width: auto;
+        min-height: auto;
+        margin-bottom: $gs-baseline;
+    }
+
+    .meta__comment-count--top {
+        display: none;
+    }
+
+    .meta__comment-count--bottom {
+        display: block;
+        float: none;
+        padding-top: $gs-baseline/2;
+
+        .commentcount {
+            position: static;
+        }
+
+        .commentcount__label {
+            display: inline;
+        }
+    }
+
+    .witness-cta {
+        border: 0;
+    }
+
+    .meta__extras {
+        border-top: 1px dotted $media-mute;
+        border-bottom: 1px dotted $media-mute;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .meta__social {
+        border: 0;
+
+        .social--top {
+            padding: 8px 0 0;
+
+            .social__item {
+                padding-right: $gs-gutter/4;
+                min-width: auto;
+            }
+        }
+    }
+
+    .meta__numbers {
+        border: 0;
+        flex-shrink: 0;
+        position: static;
+        min-width: gs-span(1);
+    }
+}
+
+// TODO:
+// When paid advertisement features are redesigned, delete below styling
 .gallery2 {
     list-style: none;
     margin: 0;
@@ -141,6 +425,12 @@
     right: 0;
 }
 
+.content__main-column--gallery-advertisement {
+    max-width: none;
+    margin-right: auto;
+    padding-bottom: $gs-baseline*2;
+}
+
 .gallery2__fullscreen,
 .article__fullscreen {
     top: 0;
@@ -180,314 +470,5 @@
 
     @if $old-ie {
         display: none;
-    }
-}
-
-.content__main-column--gallery {
-    margin-right: auto;
-    padding-bottom: $gs-baseline*2;
-}
-
-// New gallery stuff
-
-// The main image needs to take up 100vh and the slim header needs to sit just on top of it.
-.l-header--new-gallery {
-    position: absolute;
-    z-index: 1;
-    right: 0;
-    left: 0;
-}
-
-.content__labels--gallery {
-    border: 0;
-    margin-bottom: 0;
-    padding-bottom: 0;
-    width: auto;
-    float: none;
-
-    .content__section-label {
-        margin-right: $gs-gutter / 4;
-    }
-
-    .content__series-label {
-        font-weight: normal;
-    }
-
-    .content__series-label,
-    .content__section-label {
-        @include fs-header(1, $size-only: true);
-        float: left;
-    }
-}
-
-.new-gallery__meta-container {
-    &:before {
-        content: '';
-        border-top: 1px solid $media-mute;
-        padding-top: $gs-baseline / 4;
-        display: block;
-        width: gs-span(1);
-    }
-}
-
-.new-gallery__divider {
-    border-top: 1px solid $media-mute;
-    margin-top: $gs-baseline;
-
-    @include mq(desktop) {
-        padding-top: $gs-baseline / 2;
-    }
-}
-
-// TODO: When the time comes, remove `.new-gallery` class completely and remove old gallery styling
-.new-gallery {
-    .content__main-column--gallery {
-        max-width: none;
-        margin-right: auto;
-        padding-bottom: $gs-baseline*2;
-
-        @include mq(desktop) {
-            margin-left: gs-span(3) + $gs-gutter;
-            margin-right: -$gs-gutter;
-        }
-    }
-
-    .content__meta-container {
-        border: 0;
-        position: relative;
-        width: auto;
-        min-height: auto;
-        margin-bottom: $gs-baseline;
-
-        .byline,
-        .content__dateline {
-            border: 0;
-            min-height: 0;
-            padding: 0;
-        }
-
-        .meta__comment-count--top {
-            display: none;
-        }
-
-        .meta__comment-count--bottom {
-            display: block;
-            float: none;
-            padding-top: $gs-baseline/2;
-
-            .commentcount {
-                position: static;
-            }
-
-            .commentcount__label {
-                display: inline;
-            }
-        }
-    }
-
-    .witness-cta {
-        border: 0;
-    }
-
-    .meta__extras {
-        border-top: 1px dotted $media-mute;
-        border-bottom: 1px dotted $media-mute;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .meta__social {
-        border: 0;
-
-        .social--top {
-            padding: 8px 0 0;
-
-            .social__item {
-                padding-right: $gs-gutter/4;
-                min-width: auto;
-            }
-        }
-    }
-
-    .meta__numbers {
-        border: 0;
-        flex-shrink: 0;
-        position: static;
-        min-width: gs-span(1);
-    }
-
-    @include mq(desktop) {
-        .content__labels,
-        .content__meta-container,
-        .content__headline,
-        .content__standfirst {
-            margin-left: gs-span(3) + $gs-gutter;
-            max-width: gs-span(8);
-        }
-    }
-
-    // TODO: Replace all media tones instead of overwriting the defaults
-    &.tonal--tone-media {
-        .meta__twitter,
-        .meta__email {
-            margin-top: $gs-baseline/4;
-            margin-bottom: $gs-baseline;
-        }
-
-        // Overwriting media tone header so that you can see the image instead
-        .content__headline {
-            font-weight: 200;
-            padding-top: 0;
-        }
-    }
-
-    .gallery {
-        list-style: none;
-        margin: 0;
-        position: relative;
-
-        @include mq(desktop) {
-            &:before {
-                content: '';
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                left: -$gs-gutter/2;
-                border-left: 1px solid $media-mute;
-            }
-        }
-    }
-
-    .gallery__item {
-        figure {
-            display: flex;
-            flex-direction: column-reverse;
-        }
-
-        // On mobile/tablet the images should be 100% of the width of the screen
-        @include mq($until: desktop) {
-            margin-left: -$gs-gutter;
-            margin-right: -$gs-gutter;
-            padding-top: $gs-baseline / 2;
-            border-top: 1px solid $media-mute;
-
-            &:first-of-type {
-                border-top: 0;
-            }
-        }
-
-        @include mq($until: mobileLandscape) {
-            margin-left: -$gs-gutter / 2;
-            margin-right: -$gs-gutter / 2;
-        }
-
-        @include mq(desktop) {
-            position: relative;
-            border-top: 0;
-            padding: 0;
-
-            figure {
-                flex-direction: row;
-            }
-        }
-    }
-
-    .gallery__item--advert {
-        @include mq($until: desktop) {
-            border-top: 0;
-            margin-left: 0;
-            margin-right: 0;
-        }
-    }
-
-    .gallery__figcaption {
-        @include fs-textSans(1);
-        overflow: visible;
-        max-height: 100%;
-        position: relative;
-        border: 0;
-        width: inherit;
-
-        @include mq($until: desktop) {
-            margin-bottom: $gs-baseline * 2;
-            padding-top: $gs-baseline / 2;
-            padding-left: $gs-gutter;
-            padding-right: $gs-gutter;
-        }
-
-        @include mq($until: mobileLandscape) {
-            padding-left: $gs-gutter / 2;
-            padding-right: $gs-gutter / 2;
-        }
-
-        @include mq(desktop) {
-            @include fs-textSans(2, true);
-            position: absolute;
-            width: gs-span(3);
-            top: 0;
-            right: auto;
-            margin-left: -(gs-span(3) + $gs-gutter);
-        }
-    }
-
-    .gallery__caption {
-        color: $neutral-4;
-
-        @include mq(desktop) {
-            padding-right: $gs-gutter / 2;
-        }
-
-        a {
-            color: $neutral-4;
-            border-bottom: 1px solid $neutral-2;
-            transition: border-color .15s ease-out;
-
-            &:hover {
-                border-bottom: 1px solid $neutral-7;
-                text-decoration: none;
-            }
-        }
-
-        // This is the gallery caption title
-        > strong:first-child {
-            @include fs-headline(2);
-            color: $neutral-5;
-            display: block;
-            margin-bottom: $gs-baseline/2;
-
-            // The first br is display none after the title because the
-            // title already has the correct margins provided in "fs-headline(2)"
-            & + br {
-                display: none;
-            }
-        }
-    }
-
-    .gallery__credit {
-        color: $neutral-3;
-
-        @include mq(desktop) {
-            padding-right: $gs-gutter / 2;
-        }
-    }
-
-    .gallery__img-container {
-        @include mq(desktop) {
-            padding-bottom: 2.5rem;
-        }
-
-        @include mq($until: desktop) {
-            text-align: center;
-
-            img {
-                display: inline-block;
-            }
-        }
-    }
-
-    // All images should fit within the viewport height
-    .gallery__img-container,
-    .gallery__img {
-        width: 100%;
     }
 }

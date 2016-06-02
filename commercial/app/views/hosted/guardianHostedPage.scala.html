@@ -2,7 +2,7 @@
 @(page: HostedPage)(implicit request: RequestHeader)
 @import conf.switches.Switches.hostedPageLinksBetweenContent
 
-@main(page) { } {
+@main(page, Some("commercial")) { } {
     <div class="hosted__header">
         <div class="hosted__headerwrap">
             <div class="paidfor-label paidfor-meta__more hosted__label has-popup">
@@ -41,6 +41,7 @@
                         <source type="video/m3u8" src="@page.video.srcUrl">
                     </video>
                     <div class="hosted-fading">
+                        <div class="hosted__video-overlay"></div>
                         <div class="hosted__meta">
                             <h1 class="hosted__heading hosted-tone--renault">@page.video.title</h1>
                         </div>
@@ -116,10 +117,10 @@
             <div class="hosted__next-video">
                 @if(hostedPageLinksBetweenContent.isSwitchedOn) {
                 <div class="hosted__next-video--header">
-                    <h2 class="hosted__text hosted__next-video--up-next">@page.nextVideo.header</h2>
+                    <h2 class="hosted__text hosted__next-video--up-next">More from</h2>
                     <h2 class="hosted__next-video--client-name hosted-tone--renault">Renault</h2>
                 </div>
-                <a href="@page.nextVideo.link" class="hosted__next-video--tile" data-link-name="next-hosted-video">
+                <a href="@page.nextVideo.link" class="hosted__next-video--tile" data-link-name="Next Hosted Video: @page.nextVideo.title">
                     <img class="hosted__next-video-thumb" src="@page.nextVideo.imageUrl">
                     <p class="hosted__next-video-title">@page.nextVideo.title</p>
                 </a>

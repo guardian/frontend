@@ -56,14 +56,14 @@
             && mvtCookieId <= largestTestId
             && !isIOS() && !isSafari()) {
             variants = [{
-                id: 'sampletest-variant',
+                id: 'variant',
                 test: function () {
-                    writeCookie(AD_FREE_COOKIE, 'sampletest-variant');
+                    writeCookie(AD_FREE_COOKIE, 'variant');
                 }
             }, {
-                id: 'sampletest-control',
+                id: 'control',
                 test: function () {
-                    writeCookie(AD_FREE_COOKIE, 'sampletest-control');
+                    writeCookie(AD_FREE_COOKIE, 'control');
                 }
             }];
             testVariantIndex = mvtCookieId % variants.length;
@@ -76,29 +76,30 @@
     function readLocalStorage(key) {
         if ("localStorage" in window) {
             var data;
-            var dataParsed;
-            data = localStorage.getItem(key);
-            if (data === null) {
-                return null;
-            }
 
             try {
-                dataParsed = JSON.parse(data);
+                data = localStorage.getItem(key);
+                if (data === null) {
+                    return null;
+                } else {
+                    return JSON.parse(data).value;
+                }
             } catch (e) {
-                this.remove(key);
                 return null;
             }
-
-            return dataParsed.value;
         }
     }
 
     function writeLocalStorage(key, data) {
         if ("localStorage" in window) {
-            var value = JSON.stringify({
-                value: data
-            });
-            return localStorage.setItem(key, value);
+            try {
+                var value = JSON.stringify({
+                    value: data
+                });
+                return localStorage.setItem(key, value);
+            } catch (e) {
+                return null;
+            }
         }
     }
 

@@ -56,7 +56,6 @@ case class HostedVideo(
 
 
 case class HostedNextVideo(
-                        header: String,
                         title: String,
                         imageUrl: String,
                         link: String
