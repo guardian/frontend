@@ -95,6 +95,7 @@ define([
             var countAdded = 0;
             while(countAdded < count && paras.length) {
                 bodyAds += 1;
+                countAdded += 1;
                 var para = paras.shift();
                 var adDefinition = 'inline' + bodyAds;
                 insertAdAtPara(para, adDefinition, 'inline');
