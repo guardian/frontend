@@ -1,28 +1,30 @@
 package model
 
-import conf.switches.Switches
 import conf.switches.Switches._
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.http.Writeable
 import play.api.mvc._
-import play.twirl.api.Html
+import scala.math.{min, max}
+
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration.Duration
-import scala.concurrent.ExecutionContext.Implicits.global
 
 case class CacheTime(cacheSeconds: Int)
 object CacheTime {
 
-  object LiveBlogActive extends CacheTime(5)
-  object RecentlyUpdated extends CacheTime(10)
-  object LastDayUpdated extends CacheTime(30)
-  object NotRecentlyUpdated extends CacheTime(300)
-  object Default extends CacheTime(60)
-  object RecentlyUpdatedPurgable extends CacheTime(300)
-  object LastDayUpdatedPurgable extends CacheTime(1200)
-  object NotRecentlyUpdatedPurgable extends CacheTime(1800)
+  // 3800 seems slightly arbitrary, but our CDN caches to disk if above 3700
+  // https://community.fastly.com/t/why-isnt-serve-stale-working-as-expected/369
+  private def extended(cacheTime: Int) = if (LongCacheSwitch.isSwitchedOn) 3800 else cacheTime
 
+  object Default extends CacheTime(60)
+  object LiveBlogActive extends CacheTime(5)
+  object RecentlyUpdated extends CacheTime(60)
+
+  def LastDayUpdated = CacheTime(extended(60))
+  def NotRecentlyUpdated = CacheTime(extended(300))
+  def NotRecentlyUpdatedPurgable = CacheTime(extended(1800))
 }
 
 object Cached extends implicits.Dates {
@@ -80,19 +82,32 @@ object Cached extends implicits.Dates {
       cacheableResult.result
     }
 
-  private def cacheHeaders(seconds: Int, result: Result, maybeHash: Option[(Hash, Option[String])]) = {
+  /*
+    NOTE, if you change these headers make sure they are compatible with our Edge Cache
+
+    see
+    http://tools.ietf.org/html/rfc5861
+    http://www.fastly.com/blog/stale-while-revalidate
+    http://docs.fastly.com/guides/22966608/40347813
+
+    This explains Surrogate-Control vs Cache-Control
+    TLDR Surrogate-Control is used by the CDN, Cache-Control by the browser - do *not* add `private` to Cache-Control
+    https://docs.fastly.com/guides/tutorials/cache-control-tutorial
+  */
+  private def cacheHeaders(maxAge: Int, result: Result, maybeHash: Option[(Hash, Option[String])]) = {
     val now = DateTime.now
-    val expiresTime = now + seconds.seconds
-    val maxAge = if (DoubleCacheTimesSwitch.isSwitchedOn) seconds * 2 else seconds
+    val expiresTime = if (LongCacheSwitch.isSwitchedOn) now + min(maxAge, 60).seconds else now + maxAge.seconds
 
-    // NOTE, if you change these headers make sure they are compatible with our Edge Cache
+    val staleWhileRevalidateSeconds = max(maxAge / 10, 1)
+    val surrogateCacheControl = s"max-age=$maxAge, stale-while-revalidate=$staleWhileRevalidateSeconds, stale-if-error=$tenDaysInSeconds"
 
-    // see
-    // http://tools.ietf.org/html/rfc5861
-    // http://www.fastly.com/blog/stale-while-revalidate
-    // http://docs.fastly.com/guides/22966608/40347813
-    val staleWhileRevalidateSeconds = math.max(maxAge / 10, 1)
-    val cacheControl = s"max-age=$maxAge, stale-while-revalidate=$staleWhileRevalidateSeconds, stale-if-error=$tenDaysInSeconds"
+    val cacheControl = if (LongCacheSwitch.isSwitchedOn) {
+      val browserMaxAge = min(maxAge, 60)
+      val browserStaleWhileRevalidateSeconds = max(browserMaxAge / 10, 1)
+      s"max-age=$browserMaxAge, stale-while-revalidate=$browserStaleWhileRevalidateSeconds, stale-if-error=$tenDaysInSeconds"
+    } else {
+      surrogateCacheControl
+    }
 
     val (etagHeaderString, validatedResult): (String, Result) = maybeHash.map { case (hash, maybeHashToMatch) =>
       val etag = s"""W/"hash${hash.string}""""
@@ -106,13 +121,15 @@ object Cached extends implicits.Dates {
     )
 
     validatedResult.withHeaders(
-      "Surrogate-Control" -> cacheControl,
+
+      // the cache headers used by the CDN
+      "Surrogate-Control" -> surrogateCacheControl,
+      // the cache headers that make their way through to the browser
       "Cache-Control" -> cacheControl,
+
       "Expires" -> expiresTime.toHttpDateTimeString,
       "Date" -> now.toHttpDateTimeString,
       "ETag" -> etagHeaderString)
-
-
   }
 }
 
