@@ -11,7 +11,8 @@ class DfpApiValidationTest extends FlatSpec with Matchers {
     val adUnits = adUnitIds.map( adUnitId => {
       GuAdUnit(
         id = adUnitId,
-        path = Nil)
+        path = Nil,
+        status = GuAdUnit.ACTIVE)
     })
 
     GuLineItem(
