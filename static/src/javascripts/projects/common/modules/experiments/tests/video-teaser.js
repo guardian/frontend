@@ -5,8 +5,8 @@ define([
 ) {
     return function () {
         this.id = 'VideoTeaser';
-        this.start = '2016-06-02';
-        this.expiry = '2016-06-03';
+        this.start = '2016-06-03';
+        this.expiry = '2016-06-08';
         this.author = 'Akash Askoolum';
         this.description = 'Test if video teasing leads to more plays';
         this.showForSensitive = true;
