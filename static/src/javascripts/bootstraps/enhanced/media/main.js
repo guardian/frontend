@@ -185,6 +185,7 @@ define([
             embedPath = $el.attr('data-embed-path'),
             // we need to look up the embedPath for main media videos
             canonicalUrl = $el.attr('data-canonical-url') || (embedPath ? '/' + embedPath : null),
+            shouldHideAdverts = $el.attr('data-block-video-ads') === 'false' ? false : true,
             techPriority = techOrder(el),
             player,
             mouseMoveIdle,
@@ -197,7 +198,7 @@ define([
             // These are set to the safest defaults that will always play video.
             var defaultVideoInfo = {
                 expired: false,
-                shouldHideAdverts: true
+                shouldHideAdverts: shouldHideAdverts
             };
 
             if (!canonicalUrl) {
@@ -295,11 +296,13 @@ define([
                                 raven.wrap(
                                     { tags: { feature: 'media' } },
                                     function () {
-                                        player.adSkipCountdown(15);
                                         player.ima({
                                             id: mediaId,
                                             adTagUrl: getAdUrl(),
                                             prerollTimeout: 1000
+                                        });
+                                        player.on('adstart', function() {
+                                            player.adSkipCountdown(15);
                                         });
                                         player.ima.requestAds();
 
