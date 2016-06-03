@@ -1,30 +1,30 @@
 define([
     'qwery',
-    'lodash/functions/memoize',
+    'bean',
     'common/utils/assign',
     'common/utils/storage',
     'common/utils/config',
     'common/utils/fastdom-promise',
-    'common/views/svgs',
+    'common/views/svg',
+    'inlineSvg!svgs/icon/star',
     'text!common/views/experiments/participation/low-friction-wrapper.html',
     'text!common/views/experiments/participation/low-friction-contents.html',
     'text!common/views/experiments/participation/low-friction-buttons.html',
     'common/utils/template',
-    'bean',
     'common/utils/mediator'
 ], function (
     qwery,
-    memoize,
+    bean,
     assign,
     storage,
     config,
     fastdomPromise,
-    svgs,
+    svg,
+    starIcon,
     lowFrictionWrapper,
     lowFrictionContents,
     lowFrictionButtons,
     template,
-    bean,
     mediator
 ) {
 
@@ -39,7 +39,7 @@ define([
         prevItemsHighlight: true, // Add the highlight class the items before the selected one
         itemCount: 5, // Amount of items
         itemIconUnicode: [], // Add a list of unicode icons
-        itemIconId: 'star', // SVG icon ID
+        itemIcon: starIcon, // SVG icon
         inactiveIconClass: 'star__item--grey', // The inactive class added to the icon
         buttonTextArray: [], // An array of strings to use as the button text, if array is empty will use current iteration value+1
         templateVars: { // Variables that will be passed through to all views
@@ -78,7 +78,7 @@ define([
                 shouldBeActive: !state.confirming && !state.complete,
                 shouldBeHighlighted: (state.confirming || state.complete) &&
                     ((settings.prevItemsHighlight && state.selectedItem >= i) || state.selectedItem === i),
-                itemIcon: thisUniIcon || svgs(settings.itemIconId, [settings.inactiveIconClass]),
+                itemIcon: thisUniIcon || svg(settings.itemIcon, [settings.inactiveIconClass]),
                 itemId: i,
                 state: state
             };
