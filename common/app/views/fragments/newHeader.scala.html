@@ -1,6 +1,10 @@
+@()(implicit request: RequestHeader)
+
+@import common.LinkTo
+
 <header class="new-header" role="banner" data-link-name="global navigation: new header">
     <div class="new-header__inner gs-container">
-        <a href="#" class="new-header__logo" tabindex="0">
+        <a href="@LinkTo{/}" class="new-header__logo" tabindex="0">
             <h1 class="u-h">The Guardian</h1>
             @fragments.inlineSvg("guardian-logo-160", "logo")
         </a>
