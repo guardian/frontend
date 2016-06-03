@@ -1,4 +1,4 @@
-@()(implicit request: RequestHeader)
+@(formName: String)(implicit request: RequestHeader)
 
 @import staticpages.StaticPages.simpleSurveyStaticPage
 @import common.InlineJs
@@ -35,7 +35,7 @@
 
             <div class="formstack-survey-wrapper" data-link-name="formstack survey">
 
-                <script type="text/javascript" src="https://guardiannewsampampmedia.formstack.com/forms/js.php/testform"></script><noscript><a href="https://guardiannewsampampmedia.formstack.com/forms/testform" title="Online Form">Online Form - TestForm</a></noscript>
+                <script type="text/javascript" src="https://guardiannewsampampmedia.formstack.com/forms/js.php/@formName"></script><noscript><a href="https://guardiannewsampampmedia.formstack.com/forms/@formName" title="Online Form">Online Form - @formName</a></noscript>
 
             </div>
 
