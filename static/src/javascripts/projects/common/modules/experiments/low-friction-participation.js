@@ -1,9 +1,9 @@
 define([
+    'qwery',
     'lodash/functions/memoize',
     'common/utils/assign',
     'common/utils/storage',
     'common/utils/config',
-    'common/utils/$',
     'common/utils/fastdom-promise',
     'common/views/svgs',
     'text!common/views/experiments/participation/low-friction-wrapper.html',
@@ -13,11 +13,11 @@ define([
     'bean',
     'common/utils/mediator'
 ], function (
+    qwery,
     memoize,
     assign,
     storage,
     config,
-    $,
     fastdomPromise,
     svgs,
     lowFrictionWrapper,
@@ -52,9 +52,9 @@ define([
     };
 
     var els = {
-        $articleBody: $('.js-article__body'),
-        $lowFricContainer: null,
-        $lowFricContents: null
+        articleBody: document.querySelector('.js-article__body'),
+        lowFricContainer: null,
+        lowFricContents: null
     };
 
     var prefs = 'gu.lowFricParticipation';
@@ -109,17 +109,17 @@ define([
             }));
 
             fastdomPromise.write(function() {
-                els.$articleBody.append(fullView);
-                els.$lowFricContents = $('.js-participation-low-friction__contents');
+                els.articleBody.insertAdjacentHTML('beforeend', fullView);
+                els.lowFricContents = document.querySelector('.js-participation-low-friction__contents');
             });
 
         } else {
             fastdomPromise.write(function() {
-                els.$lowFricContents.html(view);
+                els.lowFricContents.innerHTML = view;
 
                 if (state.confirming) {
                     // Move focus to the confirm button
-                    $('.js-participation-low-fric__confirm').focus();
+                    document.querySelector('.js-participation-low-fric__confirm').focus();
                 }
             });
         }
@@ -169,7 +169,7 @@ define([
     function itemClicked (event) {
         updateState({
             confirming: true,
-            selectedItem: $(event.currentTarget).data().itemId,
+            selectedItem: event.currentTarget.getAttribute('data-item-id'),
             initialRender: false
         });
     }
@@ -187,21 +187,22 @@ define([
 
     function itemHovered (e) {
         var itemLength;
-        var $lowFricButtons;
+        var lowFricButtons;
 
         fastdomPromise.read(function() {
             itemLength = e.currentTarget.getAttribute('data-item-id');
-            $lowFricButtons = $('.js-participation-low-fric--button');
+            lowFricButtons = qwery('.js-participation-low-fric--button');
         }).then(updateIcons);
 
         function updateIcons () {
             fastdomPromise.write(function() {
-                $lowFricButtons.removeClass('participation-low-fric--button__is-highlighted');
+                lowFricButtons.forEach(function (btn) {
+                    btn.classList.remove('participation-low-fric--button__is-highlighted');
+                });
 
                 if (itemLength > -1) {
                     for(var i = itemLength; i >= 0; i--) {
-
-                        $($lowFricButtons[i]).addClass('participation-low-fric--button__is-highlighted');
+                        lowFricButtons[i].classList.add('participation-low-fric--button__is-highlighted');
                     }
                 }
             });
@@ -211,7 +212,9 @@ define([
     function blockUnHovered () {
         if (!currentState.confirming && !currentState.complete) {
             fastdomPromise.write(function() {
-                $('.js-participation-low-fric--button').removeClass('participation-low-fric--button__is-highlighted');
+                qwery('.js-participation-low-fric--button').forEach(function (btn) {
+                    btn.classList.remove('participation-low-fric--button__is-highlighted');
+                });
             });
         }
     }
@@ -236,7 +239,7 @@ define([
         // Create instance options
         assign(settings, options);
 
-        els.$lowFricContainer = $('.js-participation-low-fric');
+        els.lowFricContainer = document.querySelector('.js-participation-low-fric');
 
         if (userVote) {
             // Render with selected item
