@@ -11,8 +11,7 @@ define([
     robust,
     Id
 ) {
-    function setCssClass(config) {
-        Id.init(config);
+    function setCssClass() {
         // Used to show elements that need signin. Use .sign-in-required
         if (Id.isUserLoggedIn()) {
             document.documentElement.className = document.documentElement.className
