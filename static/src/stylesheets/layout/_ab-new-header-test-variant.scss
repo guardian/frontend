@@ -43,7 +43,7 @@
 
         // Aspect ratio: 16:3
         @include mq($until: phablet) {
-            width: 46vw;
+            width: 50vw;
             // height: auto doesn't work in Safari
             height: calc(3/16 * 46vw);
             min-width: 147px;
