@@ -19,7 +19,8 @@ class GuLineItemTest extends FlatSpec with Matchers {
 
   private def targeting(adUnits: Seq[GuAdUnit]): GuTargeting = {
     GuTargeting(
-      adUnits,
+      adUnitsIncluded = adUnits,
+      adUnitsExcluded = Nil,
       geoTargetsIncluded = Seq(GeoTarget(1, None, "COUNTRY", "Australia")),
       geoTargetsExcluded = Nil,
       customTargetSets = Nil
