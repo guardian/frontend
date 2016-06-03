@@ -296,17 +296,13 @@ define([
                                 raven.wrap(
                                     { tags: { feature: 'media' } },
                                     function () {
-                                        var skipAdTime = 15;
                                         player.ima({
                                             id: mediaId,
                                             adTagUrl: getAdUrl(),
                                             prerollTimeout: 1000
                                         });
                                         player.on('adstart', function() {
-                                            var adDuration = player.ima.getAdsManager().getCurrentAd().getDuration();
-                                            if (adDuration > skipAdTime) {
-                                                player.adSkipCountdown(skipAdTime);
-                                            }
+                                            player.adSkipCountdown(15);
                                         });
                                         player.ima.requestAds();
 
