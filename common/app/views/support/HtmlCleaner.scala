@@ -185,18 +185,19 @@ object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
 }
 
-object VideoEncodingUrlCleaner {
-  def apply(url: String): String = url.filter(_ != '\n')
+trait HttpsUrl {
+  def ensureHttps(url: String): String = url.replace("http:", "https:")
 }
 
-object AmpSrcCleaner {
+object VideoEncodingUrlCleaner extends HttpsUrl {
+  def apply(url: String): String = ensureHttps(url.filter(_ != '\n'))
+}
+
+object AmpSrcCleaner extends HttpsUrl {
   def apply(videoSrc: String) = {
     // All media sources need to start with https for AMP.
-    // Temperary code until all media urls returned from CAPI are https
-    if (videoSrc.startsWith("http:")) {
-      val (first, last) = videoSrc.splitAt(4);
-      first + "s" + last
-    }
+    // Temporary code until all media urls returned from CAPI are https
+    ensureHttps(videoSrc)
   }
 }
 

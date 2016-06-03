@@ -133,15 +133,11 @@ case class AllGoodCachedHealthCheck(testPort: Int, paths: String*)
 case class AnyGoodCachedHealthCheck(testPort: Int, paths: String*)
   extends CachedHealthCheck(HealthCheckPolicy.Any, testPort, paths:_*)
 
-trait CachedHealthCheckLifeCycle extends GlobalSettings {
+class CachedHealthCheckLifeCycle(healthCheckController: CachedHealthCheck) extends LifecycleComponent {
 
   private val healthCheckRequestFrequencyInSec = Configuration.healthcheck.updateIntervalInSecs
 
-  val healthCheckController: CachedHealthCheck
-
-  override def onStart(app: PlayApp) = {
-    super.onStart(app)
-
+  override def start() = {
     Jobs.deschedule("HealthCheckFetch")
     if (healthCheckRequestFrequencyInSec > 0) {
       Jobs.scheduleEveryNSeconds("HealthCheckFetch", healthCheckRequestFrequencyInSec) {
@@ -153,9 +149,4 @@ trait CachedHealthCheckLifeCycle extends GlobalSettings {
       healthCheckController.runChecks
     }
   }
-}
-
-// this is temporary and allows me to split a big PR
-class InjectedCachedHealthCheckLifeCycle(val healthCheckController: CachedHealthCheck) extends CachedHealthCheckLifeCycle with LifecycleComponent {
-  override def start(): Unit = super.onStart(Play.current)
 }

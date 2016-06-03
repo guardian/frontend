@@ -124,14 +124,6 @@ $renaultLight: #fff9e9;
         .adverts__header {
             padding-top: 0;
             padding-bottom: 0;
-            &:before {
-                content: '';
-                height: 1px;
-                left: $gs-gutter;
-                right: $gs-gutter;
-                position: absolute;
-                background-color: #eeeeee;
-            }
         }
     }
 }
@@ -157,18 +149,13 @@ $renaultLight: #fff9e9;
 
     .vjs-big-play-button .vjs-control-text {
         margin-left: -40px;
-        margin-top: -68px;
+        margin-top: -40px;
         width: 136px;
         height: 48px;
         text-indent: -999px;
 
-        @include mq($until: desktop) {
-            display: none; //Temporary disable on mobile and tablet, it will be removed when the tap events on video element will be fixed
-        }
-
-        @include mq(tablet) {
+        @include mq(mobileLandscape) {
             margin-left: -70px;
-            margin-top: -25px;
         }
 
         &:before {
@@ -194,45 +181,52 @@ $renaultLight: #fff9e9;
         border-radius: 30px;
     }
 
-    //those control buttons will fade in on video play
+    &.vjs-playing .vjs-time-control,
     .vjs-fullscreen-control,
     .vjs-volume-menu-button,
     .vjs-progress-control {
-        opacity: 0;
+        @include hosted-fade-out;
+        transition-delay: 1500ms;
     }
 
-    &.vjs-paused {
-        .vjs-fullscreen-control,
-        .vjs-volume-menu-button,
-        .vjs-progress-control {
-            @include hosted-fade-out;
-        }
-
-        .vjs-big-play-button {
-            @include hosted-fade-in;
-        }
-
-        .vjs-control-bar {
-            background-color: unset;
-            transition: background-color 1s linear;
-        }
+    .vjs-big-play-button {
+        @include hosted-fade-in;
     }
 
-    &.vjs-playing {
+    .vjs-control-bar {
+        background-color: unset;
+        transition: background-color 1s linear 1500ms;
+    }
+
+    &.vjs-playing:hover {
+        .vjs-time-control,
         .vjs-fullscreen-control,
         .vjs-volume-menu-button,
         .vjs-progress-control {
             @include hosted-fade-in;
+            transition-delay: 0s;
         }
 
         .vjs-big-play-button {
             @include hosted-fade-out;
             display: block !important; //I know this is ugly but I need to overwrite display:none to show the animation
+            transition-delay: 0s;
         }
 
         .vjs-control-bar {
             background-color: rgba(25, 25, 25, .8);
-            transition: background-color 1s linear;
+            transition-delay: 0s;
+        }
+    }
+
+    &.vjs-paused,
+    &.vjs-paused:hover {
+        .vjs-time-control,
+        .vjs-fullscreen-control,
+        .vjs-volume-menu-button,
+        .vjs-progress-control,
+        .vjs-control-bar {
+            transition-delay: 0s;
         }
     }
 
@@ -240,17 +234,19 @@ $renaultLight: #fff9e9;
         bottom: 0;
         background-color: unset;
         font-size: 16px;
-        height: 50px;
+        padding-top: 2px;
+        height: 48px;
     }
 
     .vjs-fullscreen-control {
-        margin-top: 10px;
+        margin-top: 12px;
     }
 
     .vjs-volume-menu-button {
         @include mq(desktop) {
             margin-right: $gs-column-width * 1.5;
         }
+        height: auto;
     }
 
     .vjs-menu-button {
@@ -263,15 +259,7 @@ $renaultLight: #fff9e9;
 
     &.vjs {
         .vjs-play-control {
-            width: 37px;
-            height: 37px;
-            margin: 6px 0 6px 20px;
-            display: block;
-
-            @include mq(desktop) {
-                display: none; //We have a 'watch now' in the middle so don't need this one
-                margin-left: $gs-column-width * 1.5;
-            }
+            display: none; //We have a 'watch now' in the middle so don't need this one
         }
 
         .vjs-current-time {
@@ -296,20 +284,34 @@ $renaultLight: #fff9e9;
     position: absolute;
     left: 20px;
     width: 100%;
+    bottom: 44px;
     color: #ffffff;
 
     @include mq($until: tablet) {
-        right: $gs-gutter;
-        width: auto;
-        bottom: 48px;
-    }
-
-    @include mq(tablet) {
-        bottom: 60px;
+        display: none;
     }
 
     @include mq(desktop) {
         left: $gs-column-width * 1.5;
+    }
+}
+
+.adverts__body .hosted__meta {
+    display: none;
+    position: relative;
+    width: auto;
+    padding: $gs-baseline $gs-gutter 0;
+    bottom: auto;
+    left: auto;
+    right: auto;
+
+    @include mq($until: tablet) {
+        display: block;
+    }
+
+    .hosted__heading {
+        font-size: 24px;
+        line-height: 22px;
     }
 }
 
@@ -331,6 +333,10 @@ $renaultLight: #fff9e9;
     .hosted__video-overlay {
         @include hosted-fade-in;
     }
+}
+
+.hosted__video .vjs-fullscreen-clickbox {
+    display: block;
 }
 
 .hosted-fading {
@@ -536,8 +542,9 @@ $renaultLight: #fff9e9;
     }
 }
 
-.hosted__social {
+.hosted__social.adverts__header {
     @include mq($until: leftCol) {
+        padding: $gs-baseline $gs-gutter 0;
         order: 2;
     }
     @include mq($until: tablet) {
@@ -546,12 +553,11 @@ $renaultLight: #fff9e9;
 }
 
 .hosted__social-wrapper {
-    border-top: 0;
-    padding: $gs-gutter / 2 0 $gs-gutter / 2 $gs-gutter / 2;
-
-    @include mq(mobileLandscape) {
-        padding: $gs-gutter / 2 0;
+    @include mq($until: leftCol) {
+        border-top: 1px solid #eeeeee;
+        width: 100%;
     }
+    padding: $gs-gutter / 2 0;
 
     @include mq(leftCol) {
         padding-top: 0;
