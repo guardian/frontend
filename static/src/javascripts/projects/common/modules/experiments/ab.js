@@ -23,7 +23,7 @@ define([
     'common/modules/experiments/tests/participation-discussion-test',
     'common/modules/experiments/tests/new-user-adverts-disabled',
     'common/modules/experiments/tests/video-teaser',
-    'common/modules/experiments/tests/video-nav',
+    'common/modules/experiments/tests/video-nav'
 ], function (
     reportError,
     config,
