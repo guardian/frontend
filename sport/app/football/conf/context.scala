@@ -2,7 +2,6 @@ package conf
 
 import common._
 import feed.Competitions
-import football.controllers.HealthCheck
 import model.{TeamMap, LiveBlogAgent}
 import pa.{PaClientErrorsException, Http, PaClient}
 import play.api.inject.ApplicationLifecycle

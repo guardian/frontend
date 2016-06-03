@@ -13,14 +13,14 @@ class HighMerchandisingLineItemTest extends FlatSpec with Matchers {
         name = "test",
         id = 77942847,
         tags = Seq.empty,
-        adUnits = Seq(GuAdUnit("59359047", Seq("theguardian.com","money"))),
+        adUnits = Seq(GuAdUnit("59359047", Seq("theguardian.com","money"), GuAdUnit.ACTIVE)),
         customTargetSet = Seq(CustomTargetSet("AND",Seq(CustomTarget("slot","IS",Seq("merchandising-high")),CustomTarget("edition","IS",Seq("uk")))))
       ),
         HighMerchandisingLineItem(
           name = "test2",
           id = 77943847,
           tags = Seq("cricket","England","test"),
-          adUnits = Seq(GuAdUnit("59359047", Seq("theguardian.com","sport"))),
+          adUnits = Seq(GuAdUnit("59359047", Seq("theguardian.com","sport"), GuAdUnit.ACTIVE)),
           customTargetSet = Seq(CustomTargetSet("AND",Seq(CustomTarget("slot","IS",Seq("merchandising-high")))))
         ),
         HighMerchandisingLineItem(
