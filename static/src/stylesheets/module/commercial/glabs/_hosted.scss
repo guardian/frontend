@@ -124,14 +124,6 @@ $renaultLight: #fff9e9;
         .adverts__header {
             padding-top: 0;
             padding-bottom: 0;
-            &:before {
-                content: '';
-                height: 1px;
-                left: $gs-gutter;
-                right: $gs-gutter;
-                position: absolute;
-                background-color: #eeeeee;
-            }
         }
     }
 }
@@ -550,8 +542,9 @@ $renaultLight: #fff9e9;
     }
 }
 
-.hosted__social {
+.hosted__social.adverts__header {
     @include mq($until: leftCol) {
+        padding: $gs-baseline $gs-gutter 0;
         order: 2;
     }
     @include mq($until: tablet) {
@@ -560,12 +553,11 @@ $renaultLight: #fff9e9;
 }
 
 .hosted__social-wrapper {
-    border-top: 0;
-    padding: $gs-gutter / 2 0 $gs-gutter / 2 $gs-gutter / 2;
-
-    @include mq(mobileLandscape) {
-        padding: $gs-gutter / 2 0;
+    @include mq($until: leftCol) {
+        border-top: 1px solid #eeeeee;
+        width: 100%;
     }
+    padding: $gs-gutter / 2 0;
 
     @include mq(leftCol) {
         padding-top: 0;
