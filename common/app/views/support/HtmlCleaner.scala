@@ -500,6 +500,9 @@ object GalleryCaptionCleaner {
 
     // <strong> is removed in place of having a <h2> element
     firstStrong.foreach(_.remove())
+    // There is an inconsistent number of <br> tags in gallery captions.
+    // To create some consistency, re will remove them all.
+    galleryCaption.getElementsByTag("br").remove()
 
     captionTitle.addClass("gallery__caption__title")
     captionTitle.text(captionTitleText)

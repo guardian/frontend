@@ -26,7 +26,7 @@ object PlacementService {
       session.placements(stmtBuilder) flatMap (_.getTargetedAdUnitIds.toSeq)
     }
     val adUnitIds = PlacementAgent.get.data getOrElse(placementId, fallback)
-    adUnitIds.flatMap(AdUnitService.adUnit)
+    adUnitIds.flatMap(AdUnitService.activeAdUnit)
   }
 
 }

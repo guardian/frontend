@@ -254,7 +254,7 @@ trait CommercialSwitches {
     "Request fluid adverts from DFP",
     safeState = Off,
     sellByDate = new LocalDate(2016, 6, 30),
-    exposeClientSide = false
+    exposeClientSide = true
   )
 
   val FixedTechTopSlot = Switch(

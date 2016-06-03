@@ -14,6 +14,7 @@ define([
     transform
 ) {
     var fabricTopSlot = '88,71';
+    var fluidSlot = config.switches.fluidAdverts ? '|fluid' : '';
     var adSlotDefinitions = {
         right: {
             sizeMappings: {
@@ -41,9 +42,9 @@ define([
         },
         inline1: {
             sizeMappings: {
-                mobile:             '1,1|300,250|' + fabricTopSlot,
-                'mobile-landscape': '1,1|300,250|' + fabricTopSlot,
-                tablet:             '1,1|300,250'
+                mobile:             '1,1|300,250|' + fabricTopSlot + fluidSlot,
+                'mobile-landscape': '1,1|300,250|' + fabricTopSlot + fluidSlot,
+                tablet:             '1,1|300,250' + fluidSlot
             }
         },
         inline: {

@@ -69,15 +69,6 @@ trait PerformanceSwitches {
     exposeClientSide = true
   )
 
-  val DoubleCacheTimesSwitch = Switch(
-    SwitchGroup.Performance,
-    "double-cache-times",
-    "Doubles the cache time of every endpoint. Turn on to help handle exceptional load.",
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val RelatedContentSwitch = Switch(
     SwitchGroup.Performance,
     "related-content",
