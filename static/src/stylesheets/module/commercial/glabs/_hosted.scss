@@ -182,6 +182,8 @@ $renaultLight: #fff9e9;
     }
 
     &.vjs-playing .vjs-time-control,
+    .vjs-control-bar:before,
+    .vjs-play-control,
     .vjs-fullscreen-control,
     .vjs-volume-menu-button,
     .vjs-progress-control {
@@ -193,12 +195,9 @@ $renaultLight: #fff9e9;
         @include hosted-fade-in;
     }
 
-    .vjs-control-bar {
-        background-color: unset;
-        transition: background-color 1s linear 1500ms;
-    }
-
     &.vjs-playing:hover {
+        .vjs-control-bar:before,
+        .vjs-play-control,
         .vjs-time-control,
         .vjs-fullscreen-control,
         .vjs-volume-menu-button,
@@ -212,20 +211,16 @@ $renaultLight: #fff9e9;
             display: block !important; //I know this is ugly but I need to overwrite display:none to show the animation
             transition-delay: 0s;
         }
-
-        .vjs-control-bar {
-            background-color: rgba(25, 25, 25, .8);
-            transition-delay: 0s;
-        }
     }
 
     &.vjs-paused,
     &.vjs-paused:hover {
         .vjs-time-control,
+        .vjs-play-control,
         .vjs-fullscreen-control,
         .vjs-volume-menu-button,
         .vjs-progress-control,
-        .vjs-control-bar {
+        .vjs-control-bar:before {
             transition-delay: 0s;
         }
     }
@@ -235,11 +230,27 @@ $renaultLight: #fff9e9;
         background-color: unset;
         font-size: 16px;
         padding-top: 2px;
-        height: 48px;
+        height: auto;
+        display: flex;
+        align-items: center;
+        &:before {
+            content: '';
+            position: absolute;
+            background-image: -webkit-linear-gradient(top, rgba(56, 56, 56, 0), #383838);
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+        }
     }
-
     .vjs-fullscreen-control {
         margin-top: 12px;
+    }
+
+    .vjs-time-control {
+        line-height: 40px;
+        align-self: flex-end;
     }
 
     .vjs-volume-menu-button {
@@ -247,6 +258,7 @@ $renaultLight: #fff9e9;
             margin-right: $gs-column-width * 1.5;
         }
         height: auto;
+        margin-top: 16px;
     }
 
     .vjs-menu-button {
@@ -257,18 +269,24 @@ $renaultLight: #fff9e9;
         }
     }
 
-    &.vjs {
-        .vjs-play-control {
-            display: none; //We have a 'watch now' in the middle so don't need this one
-        }
+    .vjs-volume-menu-button {
+        margin-top: 0;
+        margin-right: 20px;
+        order: 1;
+    }
 
-        .vjs-current-time {
-            margin-left: 20px;
+    .vjs-play-control {
+        width: 50px;
+        height: 50px;
+        margin: 12px 16px;
+    }
 
-            @include mq(desktop) {
-                margin-left: $gs-column-width * 1.5;
-            }
-        }
+    .vjs-current-time {
+        margin-left: 12px;
+    }
+
+    .vjs-duration {
+        flex: 1;
     }
 
     &.vjs-using-native-controls .vjs-control-bar {
@@ -277,6 +295,20 @@ $renaultLight: #fff9e9;
 
     .vjs-error-display {
         z-index: 1016;
+    }
+
+    .vjs-progress-control {
+        left: 92px;
+        right: 210px;
+        top: auto;
+        width: auto;
+        bottom: 35px;
+    }
+
+    .vjs-progress-holder:before,
+    .vjs-load-progress,
+    .vjs-play-progress {
+        height: 3px;
     }
 }
 
