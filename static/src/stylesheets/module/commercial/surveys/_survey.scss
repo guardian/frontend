@@ -72,7 +72,7 @@
         text-align: center;
         padding-top: 40px;
         background-color: #e3e3e3;
-        line-height: 0px;
+        line-height: 10px;
 
         @include mq(tablet) {
             display: block;
@@ -80,7 +80,7 @@
 
         svg {
             width: 350px;
-            height: 228px;
+            height: 226px;
         }
     }
 
