@@ -256,7 +256,7 @@ define([
 
     function shouldLazyLoad() {
         // We do not want lazy loading on pageskins because it messes up the roadblock
-        return config.switches.viewability && !(config.page.hasPageSkin);
+        return !(config.page.hasPageSkin);
     }
 
     function showSponsorshipPlaceholder() {
