@@ -1,6 +1,5 @@
 @import common.commercial.HostedPage
 @(page: HostedPage)(implicit request: RequestHeader)
-@import conf.switches.Switches.hostedPageLinksBetweenContent
 
 @main(page, Some("commercial")) { } {
     <div class="hosted__header">
@@ -118,7 +117,6 @@
                 </div>
             </div>
             <div class="hosted__next-video">
-                @if(hostedPageLinksBetweenContent.isSwitchedOn) {
                 <div class="hosted__next-video--header">
                     <h2 class="hosted__text hosted__next-video--up-next">More from</h2>
                     <h2 class="hosted__next-video--client-name hosted-tone--renault">Renault</h2>
@@ -127,7 +125,6 @@
                     <img class="hosted__next-video-thumb" src="@page.nextVideo.imageUrl">
                     <p class="hosted__next-video-title">@page.nextVideo.title</p>
                 </a>
-                }
             </div>
         </section>
         <section class="adverts hosted__container--full">

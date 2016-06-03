@@ -57,16 +57,6 @@ define([
             spaceFiller.fillSpace(rules, done);
         });
 
-        it('If it finds a space, it resolves the promise with `true`', function (done) {
-            spacefinderResult = Promise.resolve(document.createElement('p'));
-            var insertion = spaceFiller.fillSpace(rules, function writer() {});
-
-            insertion.then(function onFulfilled(result) {
-                expect(result).toBe(true);
-                done();
-            });
-        });
-
         it('If there are no spaces, it rejects the promise and does not call the writer', function (done) {
             spacefinderResult = Promise.reject(new spaceFinder.SpaceError({}));
 

@@ -6,9 +6,10 @@ import common._
 import layout.{EditionalisedLink, ContentCard}
 import mvt.{ABHeadlinesTestControl, ABHeadlinesTestVariant}
 import play.api.GlobalSettings
+import play.api.inject.ApplicationLifecycle
 import play.api.mvc.RequestHeader
 import scala.collection.JavaConversions._
-import scala.concurrent.{Future, blocking}
+import scala.concurrent.{ExecutionContext, Future, blocking}
 import conf.Configuration
 import Function.const
 
@@ -83,12 +84,15 @@ object ABHeadlines extends ExecutionContexts with Logging {
   private def isUsFront(req: RequestHeader) = req.path == "/us"
 }
 
-trait ABHeadlinesLifecycle extends GlobalSettings {
+class ABHeadlinesLifecycle(appLifeCycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent {
 
   private val ABHeadlinesJob = "ABHeadlinesJob"
 
-  override def onStart(app: play.api.Application) {
-    super.onStart(app)
+  appLifeCycle.addStopHook { () => Future {
+    Jobs.deschedule(ABHeadlinesJob)
+  }}
+
+  override def start(): Unit = {
     //runs once a minute
     Jobs.schedule(ABHeadlinesJob, "0 * * * * ?") {
       ABHeadlines.refresh()
@@ -96,12 +100,6 @@ trait ABHeadlinesLifecycle extends GlobalSettings {
     AkkaAsync{
       ABHeadlines.refresh()
     }
-  }
-
-  override def onStop(app: play.api.Application) {
-    Jobs.deschedule(ABHeadlinesJob)
-    super.onStop(app)
-
   }
 }
 

@@ -1,12 +1,12 @@
-import common.Logback.Logstash
+import common.Logback.LogstashLifecycle
 import common.dfp.DfpAgentLifecycle
 import common._
-import conf.InjectedCachedHealthCheckLifeCycle
 import conf.switches.SwitchboardLifecycle
+import conf.CachedHealthCheckLifeCycle
 import contentapi.SectionsLookUpLifecycle
 import controllers.HealthCheck
 import jobs.SiteMapLifecycle
-import metrics.FrontendMetric
+import model.ApplicationIdentity
 import ophan.SurgingContentAgentLifecycle
 import play.api.inject.ApplicationLifecycle
 import play.api.GlobalSettings
@@ -14,18 +14,9 @@ import services.{ConfigAgentLifecycle, IndexListingsLifecycle}
 
 import scala.concurrent.ExecutionContext
 
-object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents
-  with ConfigAgentLifecycle
-  with CloudWatchApplicationMetrics
-  with DfpAgentLifecycle
-  with SurgingContentAgentLifecycle
-  with IndexListingsLifecycle
-  with SectionsLookUpLifecycle
-  with SwitchboardLifecycle
-  with Logstash {
-  override lazy val applicationName = "frontend-applications"
+object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents {
 
-  override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ++ List(
+  val applicationMetrics = ApplicationMetrics(
     ContentApiMetrics.HttpTimeoutCountMetric,
     ContentApiMetrics.HttpLatencyTimingMetric,
     ContentApiMetrics.ContentApiErrorMetric,
@@ -39,7 +30,15 @@ object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents
   )
 
   override def lifecycleComponents(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext): List[LifecycleComponent] = List(
+    new ConfigAgentLifecycle(appLifecycle),
+    new CloudWatchMetricsLifecycle(appLifecycle, ApplicationIdentity("frontend-applications"), applicationMetrics),
+    new DfpAgentLifecycle(appLifecycle),
+    new SurgingContentAgentLifecycle(appLifecycle),
+    IndexListingsLifecycle,
+    new SectionsLookUpLifecycle(appLifecycle),
+    new SwitchboardLifecycle(appLifecycle),
     new SiteMapLifecycle(),
-    new InjectedCachedHealthCheckLifeCycle(HealthCheck)
+    LogstashLifecycle,
+    new CachedHealthCheckLifeCycle(HealthCheck)
   )
 }

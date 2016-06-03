@@ -41,9 +41,14 @@
                         <td><a href="@DfpLink.lineItem(lineItem.id)">@{lineItem.id}</a></td>
                         <td>@{lineItem.tags.mkString(", ")}</td>
                         <td>
-                            @for(adUnit <- lineItem.adUnits) {
+                            @for(adUnit <- lineItem.adUnitsIncluded) {
                                 <div>
-                                    <a href="@DfpLink.adUnit(adUnit.id)">@{adUnit.fullPath}</a>
+                                    <a href="@DfpLink.adUnit(adUnit.id)">+ @{adUnit.fullPath}</a>
+                                </div>
+                            }
+                            @for(adUnit <- lineItem.adUnitsExcluded) {
+                                <div>
+                                    <a href="@DfpLink.adUnit(adUnit.id)">- @{adUnit.fullPath}</a>
                                 </div>
                             }
                             @if(lineItem.isRunOfNetwork) {

@@ -277,7 +277,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       if (environment.isProd) "http://m.code.dev-theguardian.com"
       else configuration.getStringProperty("guardian.page.host") getOrElse ""
 
-    lazy val dfpAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfpAdUnitRoot")
+    lazy val dfpAdUnitGuRoot = configuration.getMandatoryStringProperty("guardian.page.dfpAdUnitRoot")
     lazy val dfpFacebookIaAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfp.facebookIaAdUnitRoot")
     lazy val dfpMobileAppsAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfp.mobileAppsAdUnitRoot")
     lazy val dfpAccountId = configuration.getMandatoryStringProperty("guardian.page.dfpAccountId")

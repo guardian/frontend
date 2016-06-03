@@ -23,7 +23,8 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
           name = lineItem.name,
           id = lineItem.id,
           tags = lineItem.highMerchandisingTargets,
-          adUnits = lineItem.targeting.adUnits,
+          adUnitsIncluded = lineItem.targeting.adUnitsIncluded,
+          adUnitsExcluded = lineItem.targeting.adUnitsExcluded,
           customTargetSet = lineItem.targeting.customTargetSets
         )
       }
@@ -38,7 +39,7 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
       PageSkinSponsorship(
         lineItemName = lineItem.name,
         lineItemId = lineItem.id,
-        adUnits = lineItem.targeting.adUnits map (_.path mkString "/"),
+        adUnits = lineItem.targeting.adUnitsIncluded map (_.path mkString "/"),
         editions = editionsTargeted(lineItem),
         countries = countriesTargeted(lineItem),
         isR2Only = lineItem.targeting.targetsR2Only,
