@@ -4,7 +4,7 @@ define([
     'common/utils/detect',
     'common/utils/template',
     'common/modules/ui/message',
-    '!text!common/views/mobile-labs/presidential-primary-alerts.html',
+    'text!common/views/mobile-labs/presidential-primary-alerts.html',
     'lodash/collections/some'
 ],function(
     svgs,

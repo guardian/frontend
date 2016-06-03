@@ -28,12 +28,10 @@
         top: $gs-baseline * 8;
     }
 
-    .site-message__header-item-message {
-        @include fs-textSans(2);
-    }
+    @include fs-textSans(2);
 
     .site-message__header-item-headline {
-        @include fs-header(2);
+        font-weight: bold;
     }
 }
 

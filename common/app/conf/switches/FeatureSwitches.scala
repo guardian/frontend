@@ -385,7 +385,7 @@ trait FeatureSwitches {
     "mobile-lab-presidential-primaries",
     "When ON, we present a promo banner to android, US edition users inviting them to subscribe to experimental primaries alerts",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 7),
+    sellByDate = new LocalDate(2016, 6, 8),
     exposeClientSide = true
   )
 }
