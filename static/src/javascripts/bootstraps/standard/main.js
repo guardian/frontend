@@ -236,15 +236,8 @@ define([
                     // Check the users access matches the content
                     var canViewContent = (requiresPaidTier) ? !!resp.tier && resp.isPaidTier : !!resp.tier;
                     if (canViewContent) {
-                        fastdom.read(function () {
-                            var cn = document.body.className;
-                            var accessCn = 'has-membership-access-requirement';
-
-                            if (cn.indexOf(accessCn) !== -1) {
-                                fastdom.write(function () {
-                                    document.body.className = cn.replace(accessCn, '');
-                                });
-                            }
+                        fastdom.write(function () {
+                            document.body.classList.remove('has-membership-access-requirement');
                         });
                     } else {
                         redirect();
