@@ -9,7 +9,7 @@ object DataValidation {
   def isGuLineItemValid(guLineItem: GuLineItem, dfpLineItem: LineItem): Boolean = {
 
     // Check that all the direct dfp ad units have been accounted for in the targeting.
-    val guAdUnits = guLineItem.targeting.adUnits
+    val guAdUnits = guLineItem.targeting.adUnitsIncluded
 
     val dfpAdUnitIds = Option(dfpLineItem.getTargeting.getInventoryTargeting)
       .map( inventoryTargeting =>
