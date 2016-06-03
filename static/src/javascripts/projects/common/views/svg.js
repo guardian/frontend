@@ -5,7 +5,7 @@ define(function () {
         // Only mess with classes if we actually need to.
         if (classes) {
             if (Array.isArray(classes)) {
-                svgElement = svg.replace(/class="/, '$&' + classes.join(' ') + ' ');
+                svgElement = svgElement.replace(/class="/, '$&' + classes.join(' ') + ' ');
             } else {
                 // Some environments don't support or don't always expose the console object
                 if (window.console && window.console.error) {
