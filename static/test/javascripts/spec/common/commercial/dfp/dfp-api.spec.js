@@ -212,6 +212,10 @@ define([
         });
 
         it('should display ads', function (done) {
+            config.page.hasPageSkin = true;
+            detect.getBreakpoint = function () {
+                return 'wide';
+            };
             dfp.init().then(dfp.loadAds).then(function () {
                 window.googletag.cmd.forEach(function (func) { func(); });
                 expect(window.googletag.pubads().enableSingleRequest).toHaveBeenCalled();
@@ -257,28 +261,11 @@ define([
         describe('pageskin loading', function () {
 
             it('should lazy load ads when there is no pageskin', function () {
-                detect.getBreakpoint = function () {
-                    return 'wide';
-                };
-                config.switches.viewability = true;
                 config.page.hasPageSkin = false;
                 expect(dfp.shouldLazyLoad()).toBe(true);
             });
 
-            it('should lazy load ads when there is a pageskin and breakpoint is lower than wide', function () {
-                detect.getBreakpoint = function () {
-                    return 'desktop';
-                };
-                config.switches.viewability = true;
-                config.page.hasPageSkin = true;
-                expect(dfp.shouldLazyLoad()).toBe(true);
-            });
-
-            it('should not lazy load ads when there is a pageskin and breakpoint is wide', function () {
-                detect.getBreakpoint = function () {
-                    return 'wide';
-                };
-                config.switches.viewability = true;
+            it('should not lazy load ads when there is a pageskin', function () {
                 config.page.hasPageSkin = true;
                 expect(dfp.shouldLazyLoad()).toBe(false);
             });
