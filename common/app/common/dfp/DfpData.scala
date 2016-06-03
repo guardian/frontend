@@ -142,6 +142,8 @@ case class GuAdUnit(id: String, path: Seq[String], status: String) {
   val isActive = status == "ACTIVE"
   val isInactive = status == "INACTIVE"
   val isArchived = status == "ARCHIVED"
+
+  val isRunOfNetwork = path.isEmpty
 }
 
 object GuAdUnit {
