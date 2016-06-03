@@ -161,7 +161,8 @@
     }
 
     @include mq($from: mobile, $until: phablet) {
-        padding: 4vw;
+        padding: 3vw;
+        margin-right: 4.7vw;
         // Overlap
         margin-top: -2vw;
         margin-bottom: -2vw;
@@ -193,40 +194,6 @@
         fill: #ffffff;
         width: 100%;
         height: 100%;
-    }
-}
-
-.new-header__nav__profile-button {
-    // Unset button from user agent stylesheet
-    border: 0;
-    // Unset button from user agent stylesheet
-    padding: 0;
-    // Override button from user agent stylesheet
-    background-color: $guardian-brand-dark;
-    border-radius: 100%;
-    // Mask contents to keep them in the circle
-    overflow: hidden;
-
-    @include mq($until: phablet) {
-        margin-left: 3px;
-    }
-
-    @include mq(phablet) {
-        order: -1;
-    }
-
-    svg {
-        // Removes extra spacing
-        display: block;
-        box-sizing: border-box;
-        // Spacing above icon
-        padding-top: 3px;
-        width: 20px;
-        height: 20px;
-
-        path {
-            fill: $news-support-1;
-        }
     }
 }
 
