@@ -6,6 +6,7 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/component',
+    'common/modules/ui/objectfit-polyfill',
     'bootstraps/enhanced/trail',
     'lodash/functions/debounce'
 ], function (
@@ -16,6 +17,7 @@ define([
     config,
     mediator,
     Component,
+    objectFitPolyfill,
     trail,
     debounce
 ) {
@@ -41,29 +43,7 @@ define([
                 'ui:images:vh': setHeight
             });
         },
-        getStyle = function (el) {
-            var style = getComputedStyle(el);
-            return style['object-fit'];
-        },
-        objectFitFallback = function () {
-            var picture = document.getElementsByClassName('js-immersive-main-media__img')[0];
-            var style = getStyle(picture);
 
-            // if image doesn't use object-fit or has the default behavior (fill)
-            if (!style || !style === 'fill') {
-                $('.js-background-image').each(function () {
-                    var $container = $(this);
-                    var imgSrc = picture.src;
-
-                    if (imgSrc) {
-                         $container
-                             .css('backgroundImage', 'url(' + imgSrc + ')')
-                             .addClass('immersive-main-media--fallback');
-
-                    }
-                });
-            }
-        },
         transcludeMostPopular = function () {
             var mostViewed = new Component(),
                 container = qwery('.js-gallery-most-popular')[0];
@@ -78,7 +58,7 @@ define([
         ready = function () {
             trail();
             verticallyResponsiveImages();
-            objectFitFallback();
+            objectFitPolyfill();
 
             mediator.emit('ui:images:upgradePictures');
 
