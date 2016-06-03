@@ -2,7 +2,7 @@
     position: absolute;
     cursor: pointer;
     top: 4px;
-    right: 4px;
+    right: 8px;
 
     svg {
         margin-top: 5px;
@@ -68,21 +68,19 @@
     }
 
     .survey-icon {
+        display: none;
         text-align: center;
         padding-top: 40px;
         background-color: #e3e3e3;
         line-height: 0px;
 
-        svg {
-            @include mq(mobileLandscape) {
-                display: none;
-            }
+        @include mq(tablet) {
+            display: block;
+        }
 
-            @include mq(tablet) {
-                display: inline;
-                width: 350px;
-                height: 228px;
-            }
+        svg {
+            width: 350px;
+            height: 228px;
         }
     }
 
@@ -91,29 +89,12 @@
         font-size: 24px;
         font-weight: bold;
         margin-bottom: 0;
-        padding: 6px 0 0 6px;
+        padding: 6px 0 0 10px;
         background-color: #f8b600;
         height: 44px;
     }
 
-    .survey-text__info {
-        @include fs-bodyCopy(1);
-        font-size: 14px;
-        line-height: 120%;
-        margin: 0 $gs-gutter $gs-column-width/4 0;
-
-        .text-link {
-            color: #ffffff;
-            text-decoration: underline;
-            &:hover {
-                text-decoration: none;
-            }
-        }
-    }
-
-    .inline-arrow-white-right {
-        display: block;
-        float: right;
-        height: $gs-column-width/2;
+    .survey-text {
+        padding: 4px 10px 0 10px;
     }
 }
