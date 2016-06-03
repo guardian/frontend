@@ -5,7 +5,7 @@ import java.net.URI
 import common.Edition
 import common.dfp.AdSize.{leaderboardSize, responsiveSize}
 import common.editions.{Au, Uk, Us}
-import conf.Configuration.commercial.dfpAdUnitRoot
+import conf.Configuration.commercial.dfpAdUnitGuRoot
 
 trait AdSlotAgent {
 
@@ -15,7 +15,7 @@ trait AdSlotAgent {
 
   protected def takeoversWithEmptyMPUs: Seq[TakeoverWithEmptyMPUs]
 
-  private def fullAdUnit(adUnitWithoutRoot: String) = s"$dfpAdUnitRoot/$adUnitWithoutRoot"
+  private def fullAdUnit(adUnitWithoutRoot: String) = s"$dfpAdUnitGuRoot/$adUnitWithoutRoot"
 
   private def isCurrent(lineItem: GuLineItem) = {
     lineItem.startTime.isBeforeNow && (

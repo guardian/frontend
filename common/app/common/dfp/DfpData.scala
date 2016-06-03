@@ -60,7 +60,6 @@ object CustomTarget {
 
 }
 
-
 case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
 
   def filterTags(tagCriteria: CustomTarget => Boolean)(bySlotType: CustomTarget => Boolean) = {
