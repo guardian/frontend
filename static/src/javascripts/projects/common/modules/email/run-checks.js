@@ -169,7 +169,6 @@ define([
         if (userListSubsChecked) {
             return Promise.resolve(userListSubs);
         } else {
-            Id.init();
             return Id.getUserEmailSignUps()
                 .then(buildUserSubscriptions)
                 .catch(function (error) {

@@ -249,6 +249,11 @@ define([
             }
         }
 
+        /**
+         * Initialise Identity module
+         */
+        identity.init();
+
         // show hiring message if we're in a very modern browser
         try { // this should never interfere with anything, so `try` it
             if ('repeat' in String.prototype && !config.page.isDev) {
