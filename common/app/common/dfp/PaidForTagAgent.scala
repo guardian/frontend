@@ -26,11 +26,11 @@ trait PaidForTagAgent {
 
     def sectionMatches(maybeSectionId: Option[String], dfpTag: PaidForTag): Boolean = {
       maybeSectionId.isEmpty || maybeSectionId.exists { sectionId =>
-        val tagAdUnitPaths = dfpTag.lineItems flatMap { lineItem =>
+        val tagAdUnitPaths: Seq[Seq[String]] = dfpTag.lineItems flatMap { lineItem =>
           lineItem.targeting.adUnitsIncluded map (_.path)
         }
         tagAdUnitPaths.isEmpty || tagAdUnitPaths.exists { path =>
-          path.tail.isEmpty || sectionId.startsWith(path.tail.head)
+          path.isEmpty || path.tail.isEmpty || sectionId.startsWith(path.tail.head)
         }
       }
     }
