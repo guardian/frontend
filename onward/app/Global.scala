@@ -1,32 +1,31 @@
 import business.StocksDataLifecycle
-import common.Logback.Logstash
-import common.{LifecycleComponent, BackwardCompatibleLifecycleComponents, CloudWatchApplicationMetrics, ContentApiMetrics}
+import common.Logback.LogstashLifecycle
+import common._
 import conf.switches.SwitchboardLifecycle
-import conf.InjectedCachedHealthCheckLifeCycle
+import conf.CachedHealthCheckLifeCycle
 import controllers.HealthCheck
 import feed.{MostPopularFacebookAutoRefreshLifecycle, MostReadLifecycle, OnwardJourneyLifecycle}
-import metrics.FrontendMetric
-import play.api.GlobalSettings
+import model.ApplicationIdentity
 import play.api.inject.ApplicationLifecycle
+import play.api.GlobalSettings
 
 import scala.concurrent.ExecutionContext
 
-object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents
-  with CloudWatchApplicationMetrics
-  with SwitchboardLifecycle
-  with Logstash {
-  override lazy val applicationName = "frontend-onward"
+object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents {
 
-  override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ++ Seq(
+  val applicationMetrics = ApplicationMetrics(
     ContentApiMetrics.HttpTimeoutCountMetric,
     ContentApiMetrics.ContentApiErrorMetric
   )
 
   override def lifecycleComponents(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext): List[LifecycleComponent] = List(
-    new InjectedCachedHealthCheckLifeCycle(HealthCheck),
     new OnwardJourneyLifecycle(appLifecycle),
+    new CloudWatchMetricsLifecycle(appLifecycle, ApplicationIdentity("frontend-onward"), applicationMetrics),
     new MostReadLifecycle(appLifecycle),
     new StocksDataLifecycle(appLifecycle),
-    new MostPopularFacebookAutoRefreshLifecycle(appLifecycle)
+    new MostPopularFacebookAutoRefreshLifecycle(appLifecycle),
+    new SwitchboardLifecycle(appLifecycle),
+    LogstashLifecycle,
+    new CachedHealthCheckLifeCycle(HealthCheck)
   )
 }

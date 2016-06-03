@@ -1,10 +1,11 @@
 import commercial.CommercialLifecycle
-import common.Logback.Logstash
+import common.Logback.LogstashLifecycle
 import common._
 import conf.switches.SwitchboardLifecycle
-import conf.InjectedCachedHealthCheckLifeCycle
+import conf.CachedHealthCheckLifeCycle
 import controllers.HealthCheck
 import metrics.MetricUploader
+import model.ApplicationIdentity
 import play.api.GlobalSettings
 import play.api.inject.ApplicationLifecycle
 
@@ -14,14 +15,13 @@ package object CommercialMetrics {
   val metrics = MetricUploader("Commercial")
 }
 
-object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents
-  with SwitchboardLifecycle
-  with CloudWatchApplicationMetrics
-  with Logstash {
-  override lazy val applicationName = "frontend-commercial"
+object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents {
 
   override def lifecycleComponents(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext): List[LifecycleComponent] = List(
     new CommercialLifecycle(appLifecycle),
-    new InjectedCachedHealthCheckLifeCycle(HealthCheck)
+    new SwitchboardLifecycle(appLifecycle),
+    new CloudWatchMetricsLifecycle(appLifecycle, ApplicationIdentity("frontend-commercial")),
+    LogstashLifecycle,
+    new CachedHealthCheckLifeCycle(HealthCheck)
   )
 }

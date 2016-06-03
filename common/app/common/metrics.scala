@@ -7,11 +7,12 @@ import java.util.concurrent.atomic.AtomicLong
 import com.amazonaws.services.cloudwatch.model.{Dimension, StandardUnit}
 import conf.Configuration
 import metrics._
+import model.ApplicationIdentity
 import model.diagnostics.CloudWatch
-import play.api.{Application => PlayApp, GlobalSettings}
+import play.api.inject.ApplicationLifecycle
 
 import scala.collection.JavaConversions._
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 object SystemMetrics extends implicits.Numbers {
 
@@ -160,15 +161,31 @@ object EmailSubsciptionMetrics {
   val ListIDError = CountMetric("email-list-id-error", "Invalid list ID in email subscription")
 }
 
-trait CloudWatchApplicationMetrics extends GlobalSettings with Logging {
-  val applicationMetricsNamespace: String = "Application"
-  val applicationDimension = List(new Dimension().withName("ApplicationName").withValue(applicationName))
+case class ApplicationMetrics(metrics: List[FrontendMetric])
 
-  def applicationName: String
+object ApplicationMetrics {
+  def apply(metrics: FrontendMetric*): ApplicationMetrics = ApplicationMetrics(metrics.toList)
+}
+
+class CloudWatchMetricsLifecycle(
+  appLifecycle: ApplicationLifecycle,
+  appIdentity: ApplicationIdentity,
+  appMetrics: ApplicationMetrics = ApplicationMetrics(Nil))
+  (implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+  val applicationMetricsNamespace: String = "Application"
+  val applicationDimension = List(new Dimension().withName("ApplicationName").withValue(appIdentity.name))
+
+  appLifecycle.addStopHook { () => Future {
+    Jobs.deschedule("ApplicationSystemMetricsJob")
+    if (Configuration.environment.isProd) {
+      Jobs.deschedule("LogMetricsJob")
+    }
+  }}
+
   def applicationMetrics: List[FrontendMetric] = List(
     RequestMetrics.PanicRequestsSurgeMetric,
     RequestMetrics.HighLatencyMetric
-  )
+  ) ++ appMetrics.metrics
 
   def systemMetrics: List[FrontendMetric] = List(
     SystemMetrics.MaxHeapMemoryMetric,
@@ -195,11 +212,10 @@ trait CloudWatchApplicationMetrics extends GlobalSettings with Logging {
     CloudWatch.putMetrics(applicationMetricsNamespace, allMetrics, applicationDimension)
   }
 
-  override def onStart(app: PlayApp) {
+  override def start() = {
     Jobs.deschedule("ApplicationSystemMetricsJob")
-    super.onStart(app)
     //run every minute, 36 seconds after the minute
-    Jobs.schedule("ApplicationSystemMetricsJob", "36 * * * * ?"){
+    Jobs.schedule("ApplicationSystemMetricsJob", "36 * * * * ?") {
       report()
     }
 
@@ -215,15 +231,6 @@ trait CloudWatchApplicationMetrics extends GlobalSettings with Logging {
     // Log the build number and revision number on startup.
     log.info(s"Build number: ${ManifestData.build}, vcs revision: ${ManifestData.revision}")
   }
-
-  override def onStop(app: PlayApp) {
-    Jobs.deschedule("ApplicationSystemMetricsJob")
-    if (Configuration.environment.isProd) {
-      Jobs.deschedule("LogMetricsJob")
-    }
-    super.onStop(app)
-  }
-
 }
 
 object bytesAsMb {
