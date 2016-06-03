@@ -1,7 +1,8 @@
 import common.Logback.LogstashLifecycle
 import common._
-import conf.{HealthCheck, CachedHealthCheckLifeCycle}
+import conf.CachedHealthCheckLifeCycle
 import conf.switches.SwitchboardLifecycle
+import controllers.HealthCheck
 import model.ApplicationIdentity
 import play.api.inject.ApplicationLifecycle
 import play.api.GlobalSettings
