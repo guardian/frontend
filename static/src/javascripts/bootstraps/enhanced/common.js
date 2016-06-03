@@ -371,8 +371,6 @@ define([
             mobileLabsAlertBanner: function () {
                 mobileLabAlerts();
             }
-
-
         };
 
     return {
