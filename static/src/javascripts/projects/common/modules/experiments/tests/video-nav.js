@@ -1,5 +1,5 @@
 define([], function () {
-    function setVideoDropdown(text, complete) {
+    function setVideoOnNav(text, complete) {
         var videoIcon = document.querySelector('.inline-video-icon').cloneNode(true);
 
         var topNavigation = document.querySelector('.top-navigation');
@@ -14,17 +14,16 @@ define([], function () {
         navItemLink.innerHTML = text;
         navItemLink.appendChild(videoIcon);
         topNavigation.insertBefore(navItem, secondNavItem);
-        navItemLink.addEventListener('click', complete);
     }
 
 
     return function () {
         this.id = 'VideoNav';
-        this.start = '2016-06-02';
-        this.expiry = '2016-06-30';
+        this.start = '2016-06-06';
+        this.expiry = '2016-06-13';
         this.author = 'James Gorrie';
         this.description = 'Use video carousel as video nav';
-        this.audience = 1;
+        this.audience = .2;
         this.audienceOffset = 0;
         this.audienceCriteria = 'On a front with the carousel';
         this.idealOutcome = 'People love it.';
@@ -34,13 +33,12 @@ define([], function () {
         };
 
         this.variants = [{
-            id: 'baseline1',
+            id: 'standard-nav',
             test: function () {}
         }, {
-            id: 'baseline2',
-            test: function () {},
-            success: function(complete) {
-                setVideoDropdown('watch', complete);
+            id: 'video-nav',
+            test: function () {
+                setVideoOnNav('watch');
             }
         }];
 
