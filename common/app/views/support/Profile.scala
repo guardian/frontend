@@ -110,7 +110,7 @@ object FacebookOpenGraphImage extends Profile(width = Some(1200)) {
       val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam, fitParam, dprParam, blendModeParam, blendOffsetParam, blendImageParam).filter(_.nonEmpty).mkString("&")
       s"?$params"
     } else {
-      super.resizeString(false)
+      super.resizeString
     }
   }
 }
