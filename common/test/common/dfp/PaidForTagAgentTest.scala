@@ -47,7 +47,7 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
       state,
       "CPM",
       Nil,
-      GuTargeting(adUnits, Nil, Nil, customTargetSets),
+      GuTargeting(adUnits, Nil, Nil, Nil, customTargetSets),
       DateTime.now()
     )
   }

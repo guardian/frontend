@@ -26,7 +26,8 @@ class DfpApiValidationTest extends FlatSpec with Matchers {
       costType = "CPM",
       creativePlaceholders = Nil,
       targeting = GuTargeting(
-        adUnits = adUnits,
+        adUnitsIncluded = adUnits,
+        adUnitsExcluded = Nil,
         geoTargetsIncluded = Nil,
         geoTargetsExcluded = Nil,
         customTargetSets = Nil),

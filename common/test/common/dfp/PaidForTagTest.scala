@@ -37,7 +37,7 @@ class PaidForTagTest extends FlatSpec with Matchers with OptionValues {
       |            }
       |          ],
       |          "targeting": {
-      |            "adUnits": [
+      |            "adUnitsIncluded": [
       |              {
       |                "id": "59351727",
       |                "path": [
@@ -46,6 +46,9 @@ class PaidForTagTest extends FlatSpec with Matchers with OptionValues {
       |                ],
       |                "status": "ACTIVE"
       |              }
+      |            ],
+      |            "adUnitsExcluded": [
+      |
       |            ],
       |            "geoTargetsIncluded": [
       |              {
@@ -111,7 +114,10 @@ class PaidForTagTest extends FlatSpec with Matchers with OptionValues {
       |            }
       |          ],
       |          "targeting": {
-      |            "adUnits": [
+      |            "adUnitsIncluded": [
+      |
+      |            ],
+      |            "adUnitsExcluded": [
       |
       |            ],
       |            "geoTargetsIncluded": [
@@ -173,7 +179,7 @@ class PaidForTagTest extends FlatSpec with Matchers with OptionValues {
       |            }
       |          ],
       |          "targeting": {
-      |            "adUnits": [
+      |            "adUnitsIncluded": [
       |              {
       |                "id": "59342247",
       |                "path": [
@@ -181,6 +187,9 @@ class PaidForTagTest extends FlatSpec with Matchers with OptionValues {
       |                ],
       |                "status": "ACTIVE"
       |              }
+      |            ],
+      |            "adUnitsExcluded": [
+      |
       |            ],
       |            "geoTargetsIncluded": [
       |
@@ -241,7 +250,7 @@ class PaidForTagTest extends FlatSpec with Matchers with OptionValues {
       |            }
       |          ],
       |          "targeting": {
-      |            "adUnits": [
+      |            "adUnitsIncluded": [
       |              {
       |                "id": "59350887",
       |                "path": [
@@ -250,6 +259,9 @@ class PaidForTagTest extends FlatSpec with Matchers with OptionValues {
       |                ],
       |                "status": "ACTIVE"
       |              }
+      |            ],
+      |            "adUnitsExcluded": [
+      |
       |            ],
       |            "geoTargetsIncluded": [
       |
@@ -310,7 +322,10 @@ class PaidForTagTest extends FlatSpec with Matchers with OptionValues {
       |            }
       |          ],
       |          "targeting": {
-      |            "adUnits": [
+      |            "adUnitsIncluded": [
+      |
+      |            ],
+      |            "adUnitsExcluded": [
       |
       |            ],
       |            "geoTargetsIncluded": [
@@ -372,7 +387,7 @@ class PaidForTagTest extends FlatSpec with Matchers with OptionValues {
       |            }
       |          ],
       |          "targeting": {
-      |            "adUnits": [
+      |            "adUnitsIncluded": [
       |              {
       |                "id": "59342247",
       |                "path": [
@@ -380,6 +395,9 @@ class PaidForTagTest extends FlatSpec with Matchers with OptionValues {
       |                ],
       |                "status": "ACTIVE"
       |              }
+      |            ],
+      |            "adUnitsExcluded": [
+      |
       |            ],
       |            "geoTargetsIncluded": [
       |
