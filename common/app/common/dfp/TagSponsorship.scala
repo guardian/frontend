@@ -78,14 +78,15 @@ case class HighMerchandisingLineItem(
   name: String,
   id: Long,
   tags: Seq[String],
-  adUnits: Seq[GuAdUnit],
+  adUnitsIncluded: Seq[GuAdUnit],
+  adUnitsExcluded: Seq[GuAdUnit],
   customTargetSet: Seq[CustomTargetSet]
   ) {
 
   val customTargets = customTargetSet.flatMap(_.targets)
   val editions = customTargets.filter( _.name == "edition").flatMap(_.values).distinct
   val urls = customTargets.filter( _.name == "url").flatMap(_.values).distinct
-  val isRunOfNetwork = adUnits.isEmpty
+  val isRunOfNetwork = adUnitsIncluded.isEmpty || (adUnitsIncluded.exists(_.isRunOfNetwork) && adUnitsIncluded.size == 1)
   val hasUnknownTarget = isRunOfNetwork && editions.isEmpty && urls.isEmpty && tags.isEmpty
 
   // Returns true if the metadata parameters explicitly match the lineItem.
@@ -94,7 +95,7 @@ case class HighMerchandisingLineItem(
     val cleansedPageEdition = edition.id.toLowerCase
     val cleansedPageTagNames = pageTags map (_.name.replaceAll(" ","-").toLowerCase)
 
-    val matchesAdUnit = adUnits.isEmpty || adUnits.exists(_.path contains adUnitSuffix)
+    val matchesAdUnit = adUnitsIncluded.isEmpty || adUnitsIncluded.exists(_.path contains adUnitSuffix)
     val matchesTag = cleansedPageTagNames.isEmpty || cleansedPageTagNames.exists(tags.contains)
     val matchesEdition = editions.isEmpty || editions.contains(cleansedPageEdition)
     val matchesUrl = urls.isEmpty || urls.contains(pagePath)

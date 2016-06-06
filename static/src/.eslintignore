@@ -6,6 +6,7 @@
 **/javascripts/bower_components
 **/javascripts/components
 **/javascripts/vendor
+**/javascripts/polyfills
 **/javascripts/projects/common/utils/atob.js
 **/javascripts/projects/common/utils/picturefill.js
 

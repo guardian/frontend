@@ -21,7 +21,7 @@ class DfpAdUnitCacher(val rootAdUnit: Any, val filename: String) extends Executi
   }
 }
 
-object DfpAdUnitCacheJob extends DfpAdUnitCacher(Configuration.commercial.dfpAdUnitRoot, Configuration.commercial.dfpActiveAdUnitListKey)
+object DfpAdUnitCacheJob extends DfpAdUnitCacher(Configuration.commercial.dfpAdUnitGuRoot, Configuration.commercial.dfpActiveAdUnitListKey)
 
 object DfpFacebookIaAdUnitCacheJob extends DfpAdUnitCacher(Configuration.commercial.dfpFacebookIaAdUnitRoot, Configuration.commercial.dfpFacebookIaAdUnitListKey)
 
