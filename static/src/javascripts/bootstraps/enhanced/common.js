@@ -53,6 +53,7 @@ define([
     'common/modules/commercial/membership-messages',
     'common/modules/email/email',
     'common/modules/email/email-article',
+    'common/modules/onward/mobile-labs-alerts',
     'bootstraps/enhanced/identity-common',
     'lodash/collections/forEach'
 ], function (
@@ -108,6 +109,7 @@ define([
     membershipMessages,
     email,
     emailArticle,
+    mobileLabAlerts,
     identity,
     forEach
 ) {
@@ -369,6 +371,10 @@ define([
                 HeadlinesTestAnalytics.init();
             },
 
+            mobileLabsAlertBanner: function () {
+                mobileLabAlerts();
+            },
+
             initHostedAboutLightbox: function () {
                 if (config.page.contentType === 'Hosted') {
                     hostedAbout.init();
@@ -423,6 +429,7 @@ define([
                 ['c-email', modules.initEmail],
                 ['c-user-features', userFeatures.refresh],
                 ['c-headlines-test-analytics', modules.headlinesTestAnalytics],
+                ['c-mobile-labs-banner', modules.mobileLabsAlertBanner()],
                 ['c-hosted-about-lightbox', modules.initHostedAboutLightbox]
             ]), function (fn) {
                 fn();

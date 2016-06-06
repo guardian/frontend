@@ -20,6 +20,12 @@ module.exports = function (grunt, options) {
                 },
                 {
                     expand: true,
+                    cwd: 'static/src/javascripts/polyfills',
+                    src: ['**/*.js'],
+                    dest: options.staticTargetDir + 'javascripts/polyfills'
+                },
+                {
+                    expand: true,
                     cwd: 'static/src/javascripts/vendor',
                     src: [
                         'foresee/**/*'

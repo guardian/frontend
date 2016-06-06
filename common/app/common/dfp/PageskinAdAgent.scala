@@ -12,7 +12,7 @@ trait PageskinAdAgent {
   private def findSponsorships(adUnitWithoutRoot: String, edition: Edition): Seq[PageSkinSponsorship] = {
 
     if (PageSkin.isValidAdUnit(adUnitWithoutRoot)) {
-      val adUnitWithRoot = s"$dfpAdUnitRoot/$adUnitWithoutRoot"
+      val adUnitWithRoot = s"$dfpAdUnitGuRoot/$adUnitWithoutRoot"
 
       def targetsAdUnitAndMatchesTheEdition(sponsorship: PageSkinSponsorship) = {
         val adUnits = sponsorship.adUnits map (_.stripSuffix("/ng"))

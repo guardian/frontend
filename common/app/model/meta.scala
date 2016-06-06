@@ -297,7 +297,7 @@ final case class MetaData (
     ("pageId", JsString(id)),
     ("section", JsString(section)),
     ("webTitle", JsString(webTitle)),
-    ("adUnit", JsString(s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitRoot}/$adUnitSuffix/ng")),
+    ("adUnit", JsString(s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitGuRoot}/$adUnitSuffix/ng")),
     ("buildNumber", JsString(buildNumber)),
     ("revisionNumber", JsString(revision)),
     ("analyticsName", JsString(analyticsName)),
