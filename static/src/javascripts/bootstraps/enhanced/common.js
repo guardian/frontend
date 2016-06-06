@@ -137,7 +137,6 @@ define([
 
             initialiseStickyAdBanner: function () {
                 if (!(config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile')
-                    && config.page.pageId !== 'offline-crossword'
                     && !config.page.shouldHideAdverts
                     && config.page.section !== 'childrens-books-site'
                     && !config.tests.abNewHeaderVariant
