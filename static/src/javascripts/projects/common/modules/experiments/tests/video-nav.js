@@ -1,5 +1,5 @@
 define([], function () {
-    function setVideoOnNav(text, complete) {
+    function setVideoOnNav(text) {
         var videoIcon = document.querySelector('.inline-video-icon').cloneNode(true);
 
         var topNavigation = document.querySelector('.top-navigation');
