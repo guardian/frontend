@@ -1,6 +1,6 @@
 package controllers.commercial
 
-import model.{MetaData, SimplePage, Page}
+import model.{MetaData, Page, SectionSummary, SimplePage}
 
 trait MoneyPage{
   def parentId: String
@@ -10,7 +10,7 @@ trait MoneyPage{
   def description: String
   def meta: Page = SimplePage(MetaData.make(
     id = s"commercial/money/$parentId/$id",
-    section = "money",
+    sectionSummary = Some(SectionSummary.fromId("money")),
     webTitle = s"$webTitle | $parentWebTitle",
     analyticsName = s"GFE:money:moneysupermarket:$parentId:$id"))
 }

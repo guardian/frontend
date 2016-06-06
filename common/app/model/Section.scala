@@ -9,10 +9,8 @@ import play.api.libs.json.{JsBoolean, JsString, JsValue}
 object Section {
   def make(section: ApiSection, pagination: Option[Pagination] = None): Section = {
     val id: String = section.id
-    val sectionName = section.id
-    val webUrl: String = section.webUrl
     val webTitle: String = section.webTitle
-    val adUnitSuffix = AdSuffixHandlingForFronts.extractAdUnitSuffixFrom(id, sectionName)
+    val adUnitSuffix = AdSuffixHandlingForFronts.extractAdUnitSuffixFrom(id, id)
 
     val keywordIds: Seq[String] = frontKeywordIds(id)
     val keywordSponsorship = KeywordSponsorshipHandling(id, adUnitSuffix, keywordIds)
@@ -25,18 +23,18 @@ object Section {
       )
 
     val metadata = MetaData (
-      id = id,
+      id,
       webUrl = section.webUrl,
       url = SupportedUrl(section),
-      section = sectionName,
+      sectionSummary = Some(SectionSummary.fromCapiSection(section)),
       pagination = pagination,
       webTitle = webTitle,
-      analyticsName = s"GFE:$sectionName",
+      analyticsName = s"GFE:$id",
       adUnitSuffix = adUnitSuffix,
       contentType = "Section",
       isFront = true,
       rssPath = Some(s"/$id/rss"),
-      iosType = sectionName match {
+      iosType = id match {
         case "crosswords" => None
         case _ => Some("front")
       },
@@ -62,4 +60,21 @@ case class Section private (
   override def branding(edition: Edition): Option[Branding] = {
     BrandHunter.findSectionBranding(this, publicationDate = None, edition)
   }
+}
+
+case class SectionSummary(
+  id: String,
+  activeBrandings: Option[Seq[Branding]]
+)
+
+object SectionSummary {
+
+  def fromCapiSection(section: ApiSection): SectionSummary = {
+    SectionSummary(
+      id = section.id,
+      activeBrandings = section.activeSponsorships map (_ map Branding.make)
+    )
+  }
+
+  def fromId(sectionId: String): SectionSummary = SectionSummary(id = sectionId, activeBrandings = None)
 }

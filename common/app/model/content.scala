@@ -8,7 +8,7 @@ import com.gu.facia.client.models.TrailMetaData
 import common._
 import common.dfp.DfpAgent
 import conf.Configuration
-import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch}
+import conf.switches.Switches.FacebookShareUseTrailPicFirstSwitch
 import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
 import model.content.{Atoms, Quiz}
@@ -842,7 +842,7 @@ object CrosswordContent {
 
     val metadata = content.metadata.copy(
       id = crossword.id,
-      section = "crosswords",
+      sectionSummary = Some(SectionSummary.fromId("crosswords")),
       analyticsName = crossword.id,
       webTitle = crossword.name,
       contentType = contentType,

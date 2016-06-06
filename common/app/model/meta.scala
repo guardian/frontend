@@ -162,7 +162,7 @@ object MetaData {
 
   def make(
     id: String,
-    section: String,
+    sectionSummary: Option[SectionSummary],
     webTitle: String,
     analyticsName: String,
     url: Option[String] = None,
@@ -188,9 +188,9 @@ object MetaData {
       url = resolvedUrl,
       webUrl = s"${Configuration.site.host}$resolvedUrl",
       webTitle = webTitle,
-      section = section,
+      sectionSummary = sectionSummary,
       analyticsName = analyticsName,
-      adUnitSuffix = adUnitSuffix getOrElse section,
+      adUnitSuffix = adUnitSuffix getOrElse sectionSummary.map(_.id).getOrElse(""),
       canonicalUrl = canonicalUrl,
       shouldGoogleIndex = shouldGoogleIndex,
       pagination = pagination,
@@ -208,17 +208,18 @@ object MetaData {
   def make(fields: Fields, apiContent: contentapi.Content) = {
     val id = apiContent.id
     val url = s"/$id"
-    val section = apiContent.sectionId.getOrElse("")
+    val sectionSummary: Option[SectionSummary] = apiContent.section map SectionSummary.fromCapiSection
+    val sectionId = sectionSummary map (_.id) getOrElse ""
 
     MetaData(
       id = id,
       url = url,
       webUrl = apiContent.webUrl,
-      section = section,
+      sectionSummary,
       webTitle = apiContent.webTitle,
       membershipAccess = apiContent.fields.flatMap(_.membershipAccess.map(_.name)),
-      analyticsName = s"GFE:$section:${id.substring(id.lastIndexOf("/") + 1)}",
-      adUnitSuffix = section,
+      analyticsName = s"GFE:$sectionId:${id.substring(id.lastIndexOf("/") + 1)}",
+      adUnitSuffix = sectionId,
       description = apiContent.fields.flatMap(_.trailText),
       cacheTime = {
         if (fields.isLive) CacheTime.LiveBlogActive
@@ -234,7 +235,7 @@ final case class MetaData (
   id: String,
   url: String,
   webUrl: String,
-  section: String,
+  sectionSummary: Option[SectionSummary],
   webTitle: String,
   analyticsName: String,
   adUnitSuffix: String,
@@ -259,6 +260,8 @@ final case class MetaData (
   opengraphPropertiesOverrides: Map[String, String] = Map(),
   twitterPropertiesOverrides: Map[String, String] = Map()
 ){
+  // todo rename sectionId
+  val section = sectionSummary map (_.id) getOrElse ""
 
   def hasPageSkin(edition: Edition) = if (isPressedPage){
     DfpAgent.hasPageSkin(adUnitSuffix, edition)
@@ -417,13 +420,14 @@ trait StandalonePage extends Page {
 
 case class SimplePage(override val metadata: MetaData) extends StandalonePage
 
-case class CommercialExpiryPage(
-  id: String,
-  section: String = "global",
-  webTitle: String = "This page has been removed",
-  analyticsName: String = "GFE:Gone") extends StandalonePage {
-
-  override val metadata: MetaData = MetaData.make(id, section, webTitle, analyticsName, shouldGoogleIndex = false)
+case class CommercialExpiryPage(id: String) extends StandalonePage {
+  override val metadata: MetaData = MetaData.make(
+    id,
+    sectionSummary = Some(SectionSummary.fromId("global")),
+    webTitle = "This page has been removed",
+    analyticsName = "GFE:Gone",
+    shouldGoogleIndex = false
+  )
 }
 
 case class GalleryPage(
@@ -444,7 +448,7 @@ case class TagCombiner(
 
   override val metadata: MetaData = MetaData.make(
     id,
-    leftTag.metadata.section,
+    leftTag.metadata.sectionSummary,
     s"${leftTag.name} + ${rightTag.name}",
     s"GFE:${leftTag.metadata.section}:${leftTag.name} + ${rightTag.name}",
     pagination = pagination,

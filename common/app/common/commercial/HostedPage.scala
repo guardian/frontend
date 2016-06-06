@@ -1,7 +1,7 @@
 package common.commercial
 
 import model.GuardianContentTypes.Hosted
-import model.{MetaData, StandalonePage}
+import model.{MetaData, SectionSummary, StandalonePage}
 import play.api.libs.json.JsString
 
 case class HostedPage(
@@ -24,7 +24,7 @@ case class HostedPage(
     MetaData.make(
       id = s"commercial/advertiser-content/$sectionId/$pageName",
       webTitle = pageTitle,
-      section = sectionId,
+      sectionSummary = Some(SectionSummary.fromId(sectionId)),
       contentType = Hosted,
       analyticsName = s"GFE:$sectionId:$Hosted:$pageName",
       description = Some(standfirst),

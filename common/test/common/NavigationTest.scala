@@ -1,14 +1,14 @@
 package common
 
 import common.editions._
-import model.{SimplePage, MetaData}
-import org.scalatest.{OptionValues, Matchers, FlatSpec}
+import model.{MetaData, SectionSummary, SimplePage}
+import org.scalatest.{FlatSpec, Matchers, OptionValues}
 
 class NavigationTest extends FlatSpec with Matchers with OptionValues {
   "topLevelItem" should "return culture for games" in {
     Navigation.topLevelItem(Uk.briefNav, SimplePage(MetaData.make(
       id = "technology/games",
-      section = "technology",
+      sectionSummary = Some(SectionSummary.fromId("technology")),
       analyticsName = "",
       webTitle= "")
     )).value.name.title shouldEqual "culture"

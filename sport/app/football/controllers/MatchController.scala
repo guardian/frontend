@@ -1,16 +1,17 @@
 package football.controllers
 
 import common._
+import conf._
+import feed._
+import implicits.{Football, Requests}
 import model.Cached.WithoutRevalidationResult
 import model.TeamMap.findTeamIdByUrlName
 import model._
-import conf._
-import play.api.libs.json._
-import play.api.mvc.{ Controller, Action }
-import pa.{LineUpTeam, FootballMatch, LineUp}
 import org.joda.time.format.DateTimeFormat
-import feed._
-import implicits.{ Requests, Football }
+import pa.{FootballMatch, LineUp, LineUpTeam}
+import play.api.libs.json._
+import play.api.mvc.{Action, Controller}
+
 import scala.concurrent.Future
 
 case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends StandalonePage with Football with ExecutionContexts {
@@ -38,7 +39,7 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends Standalone
   )
   override val metadata = MetaData.make(
     id = id,
-    section = "football",
+    sectionSummary = Some(SectionSummary.fromId("football")),
     webTitle = s"${theMatch.homeTeam.name} ${theMatch.homeTeam.score.getOrElse("")} - ${theMatch.awayTeam.score.getOrElse("")} ${theMatch.awayTeam.name}",
     analyticsName = s"GFE:Football:automatic:match:${theMatch.date.toString("dd MMM YYYY")}:${theMatch.homeTeam.name} v ${theMatch.awayTeam.name}",
     javascriptConfigOverrides = javascriptConfig

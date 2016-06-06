@@ -1,13 +1,13 @@
 package controllers
 
 import com.gu.contentapi.client.model.v1.Crossword
-import common.{JsonComponent, Edition, ExecutionContexts, Logging}
-import contentapi.ContentApiClient
+import common.{Edition, ExecutionContexts, JsonComponent, Logging}
 import conf.Static
+import contentapi.ContentApiClient
 import model.Cached.RevalidatableResult
 import model._
+import play.api.libs.json.{JsArray, JsObject, JsString}
 import play.api.mvc.{Action, Controller, RequestHeader, Result}
-import play.api.libs.json.{JsArray, JsString, JsObject}
 
 import scala.concurrent.Future
 
@@ -15,7 +15,7 @@ case class OfflineCrossword(crossword: CrosswordData) extends StandalonePage {
 
   override val metadata = MetaData.make(
       id = "offline-crossword",
-      section = "",
+      sectionSummary = None,
       analyticsName = "offline-crossword",
       webTitle = "Unable to connect to the Internet")
 }

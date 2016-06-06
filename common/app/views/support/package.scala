@@ -1,25 +1,23 @@
 package views.support
 
+import java.text.DecimalFormat
+
 import common._
 import model.Cached.WithoutRevalidationResult
 import model._
 import model.pressed.PressedContent
-
 import org.apache.commons.lang.StringEscapeUtils
-import org.joda.time.{DateTimeZone, LocalDate, DateTime}
 import org.joda.time.format.DateTimeFormat
+import org.joda.time.{DateTime, DateTimeZone, LocalDate}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import org.jsoup.nodes.Document.OutputSettings
-import org.jsoup.nodes.Entities.EscapeMode
-import org.jsoup.safety.{ Whitelist, Cleaner }
+import org.jsoup.safety.{Cleaner, Whitelist}
 import play.api.libs.json.Json._
 import play.api.libs.json.Writes
-import play.api.mvc.RequestHeader
-import play.api.mvc.Result
+import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
+
 import scala.collection.JavaConversions._
-import java.text.DecimalFormat
 
 /**
  * Encapsulates previous and next urls
@@ -176,7 +174,13 @@ object TableEmbedComplimentaryToP extends HtmlCleaner {
 object RenderOtherStatus {
   def gonePage(implicit request: RequestHeader) = {
     val canonicalUrl: Option[String] = Some(s"/${request.path.drop(1).split("/").head}")
-    SimplePage(MetaData.make(request.path, "news", "This page has been removed", "GFE:Gone", canonicalUrl = canonicalUrl))
+    SimplePage(MetaData.make(
+      id = request.path,
+      sectionSummary = Some(SectionSummary.fromId("news")),
+      webTitle = "This page has been removed",
+      analyticsName = "GFE:Gone",
+      canonicalUrl
+    ))
   }
 
   def apply(result: Result)(implicit request: RequestHeader) = result.header.status match {

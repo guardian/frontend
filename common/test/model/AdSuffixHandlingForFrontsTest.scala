@@ -1,24 +1,24 @@
 package model
 
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.{FlatSpec, Matchers}
 
 class AdSuffixHandlingForFrontsTest extends FlatSpec with Matchers  {
   val NetworkFronts = MetaData.make(
     id = "",
-    section = "",
+    sectionSummary = None,
     analyticsName = "",
     webTitle = "")
 
 
   val SectionFront = MetaData.make(
     id = "",
-    section = "business",
+    sectionSummary = Some(SectionSummary.fromId("business")),
     analyticsName = "",
     webTitle= "")
 
   val TagFront = MetaData.make(
     id = "",
-    section = "education",
+    sectionSummary = Some(SectionSummary.fromId("education")),
     analyticsName = "",
     webTitle = "")
 

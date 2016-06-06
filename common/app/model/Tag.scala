@@ -37,7 +37,7 @@ object Tag {
       webUrl = tag.webUrl,
       webTitle = tag.webTitle,
       url = tag.url,
-      section = tag.sectionId,
+      sectionSummary = Some(SectionSummary.fromId(tag.sectionId)),
       analyticsName = s"GFE:${tag.sectionId}:${tag.webTitle}",
       adUnitSuffix = AdSuffixHandlingForFronts.extractAdUnitSuffixFrom(tag.id, tag.sectionId),
       description = tag.description,
