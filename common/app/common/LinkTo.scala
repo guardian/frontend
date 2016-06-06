@@ -74,11 +74,11 @@ trait LinkTo extends Logging {
     // check if the url has _any_ edition prefix (/au/, /us/ ... )
     // as users can have au edition cookie but be on a us edition url
 
-    def hasEditionPrefix = Edition.all.exists{ edition =>
+    val hasEditionPrefix = Edition.all.exists{ edition =>
       path.startsWith(edition.id.toLowerCase + "/")
     }
 
-    val sectionPath = path.replaceFirst(s"^(${editionRegex})/", "")
+    def sectionPath = path.replaceFirst(s"^(${editionRegex})/", "")
 
     val pathWithoutEdition = if (hasEditionPrefix) sectionPath else path
 
