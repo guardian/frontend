@@ -10,7 +10,7 @@ trait MoneyPage{
   def description: String
   def meta: Page = SimplePage(MetaData.make(
     id = s"commercial/money/$parentId/$id",
-    sectionSummary = Some(SectionSummary.fromId("money")),
+    section = Some(SectionSummary.fromId("money")),
     webTitle = s"$webTitle | $parentWebTitle",
     analyticsName = s"GFE:money:moneysupermarket:$parentId:$id"))
 }

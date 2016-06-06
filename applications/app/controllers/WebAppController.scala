@@ -15,7 +15,7 @@ case class OfflineCrossword(crossword: CrosswordData) extends StandalonePage {
 
   override val metadata = MetaData.make(
       id = "offline-crossword",
-      sectionSummary = None,
+      section = None,
       analyticsName = "offline-crossword",
       webTitle = "Unable to connect to the Internet")
 }

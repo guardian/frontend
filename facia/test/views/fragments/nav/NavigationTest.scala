@@ -15,7 +15,7 @@ import scala.collection.JavaConversions._
     val page = SimplePage(MetaData.make(
       id = "bla-bla",
       webTitle = "bla-bla",
-      sectionSummary = Some(SectionSummary.fromId("football")),
+      section = Some(SectionSummary.fromId("football")),
       analyticsName = "bla-bla"
     ))
 
@@ -35,7 +35,7 @@ import scala.collection.JavaConversions._
     val page = SimplePage(MetaData.make(
       id = "bla-bla",
       webTitle = "bla-bla",
-      sectionSummary = Some(SectionSummary.fromId("football")),
+      section = Some(SectionSummary.fromId("football")),
       analyticsName = "bla-bla"
     ))
 

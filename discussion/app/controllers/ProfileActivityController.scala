@@ -9,7 +9,7 @@ object ProfileActivityController extends DiscussionController {
   def profilePage(profile: Profile, pageType: String) = SimplePage(
     metadata = MetaData.make(
       id = s"discussion/profile/${profile.userId}/$pageType",
-      sectionSummary = Some(SectionSummary.fromId("Discussion")),
+      section = Some(SectionSummary.fromId("Discussion")),
       webTitle = s"${profile.displayName}'s activity",
       analyticsName = s"GFE:Article:Profile activity page"
     )

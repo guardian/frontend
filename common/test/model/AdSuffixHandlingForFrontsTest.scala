@@ -5,20 +5,20 @@ import org.scalatest.{FlatSpec, Matchers}
 class AdSuffixHandlingForFrontsTest extends FlatSpec with Matchers  {
   val NetworkFronts = MetaData.make(
     id = "",
-    sectionSummary = None,
+    section = None,
     analyticsName = "",
     webTitle = "")
 
 
   val SectionFront = MetaData.make(
     id = "",
-    sectionSummary = Some(SectionSummary.fromId("business")),
+    section = Some(SectionSummary.fromId("business")),
     analyticsName = "",
     webTitle= "")
 
   val TagFront = MetaData.make(
     id = "",
-    sectionSummary = Some(SectionSummary.fromId("education")),
+    section = Some(SectionSummary.fromId("education")),
     analyticsName = "",
     webTitle = "")
 

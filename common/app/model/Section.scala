@@ -26,7 +26,7 @@ object Section {
       id,
       webUrl = section.webUrl,
       url = SupportedUrl(section),
-      sectionSummary = Some(SectionSummary.fromCapiSection(section)),
+      section = Some(SectionSummary.fromCapiSection(section)),
       pagination = pagination,
       webTitle = webTitle,
       analyticsName = s"GFE:$id",

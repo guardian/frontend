@@ -59,7 +59,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
 
     val page = SimplePage(MetaData.make(
       id = "",
-      sectionSummary = None,
+      section = None,
       webTitle = "",
       analyticsName = ""))
 

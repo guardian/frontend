@@ -21,7 +21,7 @@ object emailLandingPage extends StandalonePage {
   private val id = "email-landing-page"
   override val metadata = MetaData.make(
     id = id,
-    sectionSummary = None,
+    section = None,
     analyticsName = id,
     webTitle = "Email Landing Page")
 }

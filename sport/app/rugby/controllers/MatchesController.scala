@@ -12,7 +12,7 @@ import rugby.model.Match
 case class MatchPage(liveScore: Match) extends StandalonePage {
   override val metadata = MetaData.make(
     id = s"/sport/rugby/api/score/${liveScore.date.toString("yyyy/MMM/dd")}/${liveScore.homeTeam.id}/${liveScore.awayTeam.id}",
-    sectionSummary = Some(SectionSummary.fromId("rugby")),
+    section = Some(SectionSummary.fromId("rugby")),
     webTitle = s"${liveScore.homeTeam.name} v ${liveScore.awayTeam.name} ",
     analyticsName = s"GFE:Rugby:automatic:match:${liveScore.date.toString("dd MMM YYYY")}:${liveScore.homeTeam.name} v ${liveScore.awayTeam.name}")
 }

@@ -842,7 +842,7 @@ object CrosswordContent {
 
     val metadata = content.metadata.copy(
       id = crossword.id,
-      sectionSummary = Some(SectionSummary.fromId("crosswords")),
+      section = Some(SectionSummary.fromId("crosswords")),
       analyticsName = crossword.id,
       webTitle = crossword.name,
       contentType = contentType,

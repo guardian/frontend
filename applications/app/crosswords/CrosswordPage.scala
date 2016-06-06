@@ -27,7 +27,7 @@ object CrosswordSearchPage {
 
     val metadata = MetaData.make (
       id = "crosswords/search",
-      sectionSummary = Some(SectionSummary.fromId("crosswords")),
+      section = Some(SectionSummary.fromId("crosswords")),
       webTitle = "Crosswords search",
       analyticsName = "Crosswords search"
     )

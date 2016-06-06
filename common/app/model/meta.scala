@@ -162,7 +162,7 @@ object MetaData {
 
   def make(
     id: String,
-    sectionSummary: Option[SectionSummary],
+    section: Option[SectionSummary],
     webTitle: String,
     analyticsName: String,
     url: Option[String] = None,
@@ -188,9 +188,9 @@ object MetaData {
       url = resolvedUrl,
       webUrl = s"${Configuration.site.host}$resolvedUrl",
       webTitle = webTitle,
-      sectionSummary = sectionSummary,
+      section = section,
       analyticsName = analyticsName,
-      adUnitSuffix = adUnitSuffix getOrElse sectionSummary.map(_.id).getOrElse(""),
+      adUnitSuffix = adUnitSuffix getOrElse section.map(_.id).getOrElse(""),
       canonicalUrl = canonicalUrl,
       shouldGoogleIndex = shouldGoogleIndex,
       pagination = pagination,
@@ -235,7 +235,7 @@ final case class MetaData (
   id: String,
   url: String,
   webUrl: String,
-  sectionSummary: Option[SectionSummary],
+  section: Option[SectionSummary],
   webTitle: String,
   analyticsName: String,
   adUnitSuffix: String,
@@ -260,7 +260,7 @@ final case class MetaData (
   opengraphPropertiesOverrides: Map[String, String] = Map(),
   twitterPropertiesOverrides: Map[String, String] = Map()
 ){
-  val sectionId = sectionSummary map (_.id) getOrElse ""
+  val sectionId = section map (_.id) getOrElse ""
 
   def hasPageSkin(edition: Edition) = if (isPressedPage){
     DfpAgent.hasPageSkin(adUnitSuffix, edition)
@@ -422,7 +422,7 @@ case class SimplePage(override val metadata: MetaData) extends StandalonePage
 case class CommercialExpiryPage(id: String) extends StandalonePage {
   override val metadata: MetaData = MetaData.make(
     id,
-    sectionSummary = Some(SectionSummary.fromId("global")),
+    section = Some(SectionSummary.fromId("global")),
     webTitle = "This page has been removed",
     analyticsName = "GFE:Gone",
     shouldGoogleIndex = false
@@ -447,7 +447,7 @@ case class TagCombiner(
 
   override val metadata: MetaData = MetaData.make(
     id,
-    leftTag.metadata.sectionSummary,
+    leftTag.metadata.section,
     s"${leftTag.name} + ${rightTag.name}",
     s"GFE:${leftTag.metadata.sectionId}:${leftTag.name} + ${rightTag.name}",
     pagination = pagination,

@@ -9,7 +9,7 @@ class CommercialTest extends FlatSpec with Matchers with OptionValues with Befor
 
   private def metaDataFromId(pageId: String): MetaData = MetaData.make(
     id = pageId,
-    sectionSummary = Some(SectionSummary.fromId("section")),
+    section = Some(SectionSummary.fromId("section")),
     analyticsName = "analyticsName",
     webTitle = "webTitle")
 

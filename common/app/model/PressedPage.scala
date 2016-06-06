@@ -47,7 +47,7 @@ object PressedPage {
 
     MetaData.make(
       id = id,
-      sectionSummary = Some(SectionSummary.fromId(seoData.navSection)),
+      section = Some(SectionSummary.fromId(seoData.navSection)),
       webTitle = seoData.webTitle,
       //For network fronts we want the string "Network Front"
       //This allows us to change webTitle in tool easily on fronts

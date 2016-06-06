@@ -21,7 +21,7 @@ class TitleTest extends FlatSpec with Matchers with OneAppPerSuite {
     val withPagination = SimplePage(MetaData.make(
       analyticsName = "",
       webTitle = "The title",
-      sectionSummary = None,
+      section = None,
       id = "",
       pagination = Some(Pagination(7, 50, 300))
     ))
@@ -64,7 +64,7 @@ class TitleTest extends FlatSpec with Matchers with OneAppPerSuite {
     val page = SimplePage(MetaData.make(
       id = "id",
       webTitle = "The Title",
-      sectionSummary = Some(SectionSummary.fromId("The title")),
+      section = Some(SectionSummary.fromId("The title")),
       analyticsName = ""
     ))
 
@@ -75,7 +75,7 @@ class TitleTest extends FlatSpec with Matchers with OneAppPerSuite {
     val page = SimplePage(MetaData.make(
       id = "id",
       webTitle = "The Title",
-      sectionSummary = Some(SectionSummary.fromId("The title thing")),
+      section = Some(SectionSummary.fromId("The title thing")),
       analyticsName = ""
     ))
 
@@ -86,7 +86,7 @@ class TitleTest extends FlatSpec with Matchers with OneAppPerSuite {
     val page = SimplePage(MetaData.make(
       id = "id",
       webTitle = "the title",
-      sectionSummary = Some(SectionSummary.fromId("the title thing")),
+      section = Some(SectionSummary.fromId("the title thing")),
       analyticsName = ""
     ))
 

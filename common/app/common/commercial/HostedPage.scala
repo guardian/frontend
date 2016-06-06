@@ -24,7 +24,7 @@ case class HostedPage(
     MetaData.make(
       id = s"commercial/advertiser-content/$sectionId/$pageName",
       webTitle = pageTitle,
-      sectionSummary = Some(SectionSummary.fromId(sectionId)),
+      section = Some(SectionSummary.fromId(sectionId)),
       contentType = Hosted,
       analyticsName = s"GFE:$sectionId:$Hosted:$pageName",
       description = Some(standfirst),

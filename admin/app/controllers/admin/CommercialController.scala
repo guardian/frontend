@@ -15,7 +15,7 @@ import tools._
 case class CommercialPage() extends StandalonePage {
   override val metadata = MetaData.make(
     id = "commercial-templates",
-    sectionSummary = Some(SectionSummary.fromId("admin")),
+    section = Some(SectionSummary.fromId("admin")),
     webTitle = "Commercial Templates",
     analyticsName = "Commercial Templates",
     javascriptConfigOverrides = Map(

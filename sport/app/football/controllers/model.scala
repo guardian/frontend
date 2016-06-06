@@ -33,7 +33,7 @@ class FootballPage(
 
   override val metadata = MetaData.make(
     id = id,
-    sectionSummary = Some(SectionSummary.fromId(section)),
+    section = Some(SectionSummary.fromId(section)),
     webTitle = webTitle,
     analyticsName = analyticsName,
     pagination = pagination,
