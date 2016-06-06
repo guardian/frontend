@@ -31,7 +31,7 @@ object HostedContentController extends Controller {
             title = "Designing the car of the future",
             duration = 86,
             posterUrl = teaserPosterUrl,
-            srcUrl = "https://multimedia.guardianapis.com/interactivevideos/video.php?file=160516GlabsTestSD&format=video/mp4&maxbitrate=2048"
+            srcUrl = "https://multimedia.guardianapis.com/interactivevideos/video.php?file=160516GlabsTestSD"
           ),
           nextVideo = HostedNextVideo(
             title = "Renault shortlists 'car of the future' designs",
@@ -54,7 +54,7 @@ object HostedContentController extends Controller {
             title = "Renault shortlists 'car of the future' designs",
             duration = 160,
             posterUrl = episode1PosterUrl,
-            srcUrl = "https://multimedia.guardianapis.com/interactivevideos/video.php?file=160523GlabsRenaultTestHD&format=video/webm&maxbitrate=2048"
+            srcUrl = "https://multimedia.guardianapis.com/interactivevideos/video.php?file=160523GlabsRenaultTestHD"
           ),
           nextVideo = if(Switches.hostedEpisode2Content.isSwitchedOn) HostedNextVideo(
             title = "Is this the car of the future?",
@@ -83,7 +83,7 @@ object HostedContentController extends Controller {
               title = "Is this the car of the future?",
               duration = 160,
               posterUrl = episode2PosterUrl,
-              srcUrl = "http://multimedia.guardianapis.com/interactivevideos/video.php?file=160603GlabsRenaultTest3&format=video/webm&maxbitrate=2048"
+              srcUrl = "http://multimedia.guardianapis.com/interactivevideos/video.php?file=160603GlabsRenaultTest3"
             ),
             nextVideo = HostedNextVideo(
               title = "Renault shortlists 'car of the future' designs",
