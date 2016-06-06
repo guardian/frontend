@@ -388,4 +388,14 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2016, 6, 8),
     exposeClientSide = true
   )
+
+  // Owner: Dotcom habitual / Gareth
+  val EmailSignupLabNotes = Switch(
+    SwitchGroup.Feature,
+    "email-signup-lab-notes",
+    "When ON, insert the lab-notes email sign-up into Science section articles",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
 }
