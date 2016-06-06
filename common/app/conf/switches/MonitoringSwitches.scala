@@ -11,7 +11,7 @@ trait MonitoringSwitches {
     "offline-page-view",
     "If this switch is on, views of the offline page will be beaconed to cloudwatch when you come online again",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 3),
+    sellByDate = new LocalDate(2016, 6, 4),
     exposeClientSide = true
   )
 
