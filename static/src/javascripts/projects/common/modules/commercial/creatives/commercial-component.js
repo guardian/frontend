@@ -108,7 +108,8 @@ define([
 
     function setFluid(el) {
         if (el.classList.contains('ad-slot--container-inline')) {
-            el.classList.add('ad-slot--fluid');
+            el.classList.add('ad-slot__fluid250');
+            // console.log("hello");
         }
     }
 
