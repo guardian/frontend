@@ -51,7 +51,7 @@ sealed trait ElementProfile {
   val heightParam = height.map(pixels => s"h=$pixels").getOrElse("")
   val widthParam = width.map(pixels => s"w=$pixels").getOrElse("")
 
-  def resizeString(overlay: Boolean = false) = {
+  def resizeString = {
     val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam, fitParam, dprParam).filter(_.nonEmpty).mkString("&")
     s"?$params"
   }
@@ -105,8 +105,8 @@ object FacebookOpenGraphImage extends Profile(width = Some(1200)) {
   override val fitParam = "fit=crop"
 
 
-  override def resizeString(overlay: Boolean) = {
-    if(FacebookShareImageLogoOverlay.isSwitchedOn && overlay) {
+  override def resizeString = {
+    if(FacebookShareImageLogoOverlay.isSwitchedOn) {
       val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam, fitParam, dprParam, blendModeParam, blendOffsetParam, blendImageParam).filter(_.nonEmpty).mkString("&")
       s"?$params"
     } else {
@@ -139,7 +139,7 @@ object ImgSrc extends Logging with implicits.Strings {
 
   private val supportedImages = Set(".jpg", ".jpeg", ".png")
 
-  def apply(url: String, imageType: ElementProfile, facebookOverlay: Boolean = false): String = {
+  def apply(url: String, imageType: ElementProfile): String = {
     try {
       val uri = new URI(url.trim.encodeURI)
       val isSupportedImage = supportedImages.exists(extension => uri.getPath.toLowerCase.endsWith(extension))
@@ -148,7 +148,7 @@ object ImgSrc extends Logging with implicits.Strings {
         .filter(const(ImageServerSwitch.isSwitchedOn))
         .filter(const(isSupportedImage))
         .map { host =>
-          val signedPath = ImageUrlSigner.sign(s"${uri.getRawPath}${imageType.resizeString(facebookOverlay)}", host.token)
+          val signedPath = ImageUrlSigner.sign(s"${uri.getRawPath}${imageType.resizeString}", host.token)
           s"$imageHost/img/${host.prefix}$signedPath"
         }.getOrElse(url)
     } catch {
