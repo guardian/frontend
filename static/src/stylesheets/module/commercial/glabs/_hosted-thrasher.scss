@@ -3,6 +3,59 @@
         position: relative;
         height: 100%;
         padding-top: 0;
+        display: block;
+
+        @include mq(tablet) {
+            padding: 0 $gs-gutter / 2;
+
+            .has-flex & {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                align-items: stretch;
+            }
+        }
+
+        &.hosted-thrasher__body--1-elems > .hosted-thrasher--element {
+            &:nth-child(n+1),
+            &:nth-child(n+2),
+            &:nth-child(n+3) {
+                display: none;
+            }
+            @include mq(tablet) {
+                .has-flex & {
+                    flex: calc(100% - 20px);
+                }
+            }
+        }
+        &.hosted-thrasher__body--2-elems > .hosted-thrasher--element {
+            &:nth-child(n+2),
+            &:nth-child(n+3) {
+                display: none;
+            }
+            @include mq(tablet) {
+                .has-flex & {
+                    flex: calc(50% - 20px);
+                }
+            }
+        }
+        &.hosted-thrasher__body--3-elems > .hosted-thrasher--element {
+            &:nth-child(n+3) {
+                display: none;
+            }
+            @include mq(tablet) {
+                .has-flex & {
+                    flex: calc(33% - 20px);
+                }
+            }
+        }
+        &.hosted-thrasher__body--4-elems > .hosted-thrasher--element {
+            @include mq(tablet) {
+                .has-flex & {
+                    flex: calc(25% - 20px);
+                }
+            }
+        }
     }
 
     .hosted__heading {
