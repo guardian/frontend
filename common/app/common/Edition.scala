@@ -56,6 +56,7 @@ object Edition {
   lazy val editionFronts = Edition.all.map {e => "/" + e.id.toLowerCase}
 
   def isEditionFront(implicit request: RequestHeader): Boolean = editionFronts.contains(request.path)
+
   private def editionCookieValue(request: RequestHeader): String = {
     // override for Ajax calls
     val editionFromParameter = request.getQueryString("_edition")
