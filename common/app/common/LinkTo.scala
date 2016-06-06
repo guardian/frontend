@@ -17,11 +17,6 @@ import scala.collection.JavaConversions._
  * Builds absolute links to the core site (www.theguardian.com)
  */
 
-case class GuardianUrl(edition: Option[Edition], path: String)
-object GuardianUrl {
-
-}
-
 trait LinkTo extends Logging {
 
   lazy val host = Configuration.site.host
