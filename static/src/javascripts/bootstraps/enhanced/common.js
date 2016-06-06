@@ -420,7 +420,7 @@ define([
                 ['c-email', modules.initEmail],
                 ['c-user-features', userFeatures.refresh],
                 ['c-headlines-test-analytics', modules.headlinesTestAnalytics],
-                ['c-mobile-labs-banner', modules.mobileLabsAlertBanner()]
+                ['c-mobile-labs-banner', modules.mobileLabsAlertBanner]
             ]), function (fn) {
                 fn();
             });
