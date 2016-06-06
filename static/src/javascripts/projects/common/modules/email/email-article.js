@@ -75,6 +75,17 @@ define([
                 modClass: 'end-article',
                 insertMethod: insertBottomOfArticle
             },
+            labNotes: {
+                listId: '3701',
+                listName: 'labNotes',
+                campaignCode: 'lab_notes_article_signup',
+                headline: 'Sign up to Lab notes',
+                description: 'Get a weekly round-up of the biggest stories in science, insider knowledge from our network of bloggers, and a healthy dose of fun.',
+                successHeadline: 'Thank you for signing up for Lab notes',
+                successDescription: 'You\'ll receive an email every week.',
+                modClass: 'end-article',
+                insertMethod: insertBottomOfArticle
+            },
             ausCampaignCatchup: {
                 listId: '3689',
                 listName: 'ausCampaignCatchup',
