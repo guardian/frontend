@@ -281,7 +281,7 @@ case class Tag (
   val name: String = metadata.webTitle
   val isSeries: Boolean = properties.tagType == "Series"
   val isBlog: Boolean = properties.tagType == "Blog"
-  val isSectionTag: Boolean = SectionTagLookUp.sectionId(metadata.id).contains(metadata.section)
+  val isSectionTag: Boolean = SectionTagLookUp.sectionId(metadata.id).contains(metadata.sectionId)
   val showSeriesInMeta = metadata.id != "childrens-books-site/childrens-books-site"
   val isKeyword = properties.tagType == "Keyword"
   val isFootballTeam = properties.references.exists(_.`type` == "pa-football-team")

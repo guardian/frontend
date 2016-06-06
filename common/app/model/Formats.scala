@@ -137,7 +137,7 @@ object MetaDataFormat {
           meta.id,
           meta.url,
           meta.webUrl,
-          meta.section,
+          meta.sectionId,
           meta.webTitle,
           meta.analyticsName,
           meta.adUnitSuffix,

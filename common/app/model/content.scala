@@ -130,8 +130,8 @@ final case class Content(
   lazy val showSectionNotTag: Boolean = tags.tags.exists{ tag => tag.id == "childrens-books-site/childrens-books-site" && tag.properties.tagType == "Blog" }
 
   lazy val sectionLabelLink : String = {
-    if (showSectionNotTag || DfpAgent.isAdvertisementFeature(tags.tags, Some(metadata.section))) {
-      metadata.section
+    if (showSectionNotTag || DfpAgent.isAdvertisementFeature(tags.tags, Some(metadata.sectionId))) {
+      metadata.sectionId
     } else tags.tags.find(_.isKeyword) match {
       case Some(tag) => tag.id
       case _ => ""
@@ -346,7 +346,7 @@ object Article {
   private def copyMetaData(content: Content, commercial: Commercial, lightbox: GenericLightbox, trail: Trail, tags: Tags) = {
 
     val contentType = if (content.tags.isLiveBlog) GuardianContentTypes.LiveBlog else GuardianContentTypes.Article
-    val section = content.metadata.section
+    val section = content.metadata.sectionId
     val id = content.metadata.id
     val fields = content.fields
     val bookReviewIsbn = content.isbn.map { i: String => Map("isbn" -> JsString(i)) }.getOrElse(Map())
@@ -475,7 +475,7 @@ object Audio {
     val contentType = GuardianContentTypes.Audio
     val fields = content.fields
     val id = content.metadata.id
-    val section = content.metadata.section
+    val section = content.metadata.sectionId
     val javascriptConfig: Map[String, JsValue] = Map(
       "isPodcast" -> JsBoolean(content.tags.isPodcast))
 
@@ -511,7 +511,7 @@ object Video {
     val contentType = GuardianContentTypes.Video
     val fields = content.fields
     val elements = content.elements
-    val section = content.metadata.section
+    val section = content.metadata.sectionId
     val id = content.metadata.id
     val source: Option[String] = elements.videos.find(_.properties.isMain).flatMap(_.videos.source)
 
@@ -579,7 +579,7 @@ object Gallery {
     val fields = content.fields
     val elements = content.elements
     val tags = content.tags
-    val section = content.metadata.section
+    val section = content.metadata.sectionId
     val id = content.metadata.id
     val lightboxProperties = GalleryLightboxProperties(
       id = id,
@@ -774,7 +774,7 @@ object Interactive {
     val fields = content.fields
     val elements = content.elements
     val tags = content.tags
-    val section = content.metadata.section
+    val section = content.metadata.sectionId
     val id = content.metadata.id
     val twitterProperties: Map[String, String] = Map(
       "twitter:title" -> fields.linkText,
@@ -799,7 +799,7 @@ object ImageContent {
   def make(content: Content): ImageContent = {
     val contentType = GuardianContentTypes.ImageContent
     val fields = content.fields
-    val section = content.metadata.section
+    val section = content.metadata.sectionId
     val id = content.metadata.id
     val lightboxProperties = GenericLightboxProperties(
       lightboxableCutoffWidth = 940,

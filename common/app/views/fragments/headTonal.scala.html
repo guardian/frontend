@@ -31,7 +31,7 @@
                     @Html(item.trail.headline)
                 </h1>
 
-                @if(amp && item.tags.isMatchReport && item.metadata.section == "football") {
+                @if(amp && item.tags.isMatchReport && item.metadata.sectionId == "football") {
                     @defining({
                         val date = item.trail.webPublicationDate.minusDays(1).toLocalDate.toString("yyyy/MM/dd")
                         val teams = item.content.paFootballTeams.mkString("/")

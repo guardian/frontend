@@ -20,7 +20,7 @@ object Commercial {
 
   private def make(metadata: MetaData, tags: Tags, maybeApiContent: Option[contentapi.Content]): model.Commercial = {
 
-    val section = Some(metadata.section)
+    val section = Some(metadata.sectionId)
 
     val isInappropriateForSponsorship =
       maybeApiContent exists (_.fields.flatMap(_.isInappropriateForSponsorship).getOrElse(false))
@@ -100,7 +100,7 @@ final case class Commercial(
   }
 
   def isSponsored(maybeEdition: Option[Edition]): Boolean =
-    DfpAgent.isSponsored(tags.tags, Some(metadata.section), maybeEdition)
+    DfpAgent.isSponsored(tags.tags, Some(metadata.sectionId), maybeEdition)
 
   def needsHighMerchandisingSlot(edition:Edition): Boolean = {
     DfpAgent.isTargetedByHighMerch(metadata.adUnitSuffix,tags.tags,edition,metadata.url)
@@ -260,8 +260,7 @@ final case class MetaData (
   opengraphPropertiesOverrides: Map[String, String] = Map(),
   twitterPropertiesOverrides: Map[String, String] = Map()
 ){
-  // todo rename sectionId
-  val section = sectionSummary map (_.id) getOrElse ""
+  val sectionId = sectionSummary map (_.id) getOrElse ""
 
   def hasPageSkin(edition: Edition) = if (isPressedPage){
     DfpAgent.hasPageSkin(adUnitSuffix, edition)
@@ -285,7 +284,7 @@ final case class MetaData (
     conf.switches.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty
   }
 
-  val hasSlimHeader: Boolean = contentType == "Interactive" || section == "identity" || contentType.toLowerCase == "gallery"
+  val hasSlimHeader: Boolean = contentType == "Interactive" || sectionId == "identity" || contentType.toLowerCase == "gallery"
 
   // Special means "Next Gen platform only".
   private val special = id.contains("-sp-")
@@ -298,7 +297,7 @@ final case class MetaData (
 
   def javascriptConfig: Map[String, JsValue] = Map(
     ("pageId", JsString(id)),
-    ("section", JsString(section)),
+    ("section", JsString(sectionId)),
     ("webTitle", JsString(webTitle)),
     ("adUnit", JsString(s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitGuRoot}/$adUnitSuffix/ng")),
     ("buildNumber", JsString(buildNumber)),
@@ -450,7 +449,7 @@ case class TagCombiner(
     id,
     leftTag.metadata.sectionSummary,
     s"${leftTag.name} + ${rightTag.name}",
-    s"GFE:${leftTag.metadata.section}:${leftTag.name} + ${rightTag.name}",
+    s"GFE:${leftTag.metadata.sectionId}:${leftTag.name} + ${rightTag.name}",
     pagination = pagination,
     description = Some(GuardianContentTypes.TagIndex)
   )

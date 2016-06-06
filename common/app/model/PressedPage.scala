@@ -112,7 +112,7 @@ case class PressedPage (
     ).headOption
   }
 
-  val navSection: String = metadata.section
+  val navSection: String = metadata.sectionId
 
   val keywordIds: Seq[String] = frontKeywordIds(id)
 
@@ -131,13 +131,13 @@ case class PressedPage (
   }
 
   def isSponsored(maybeEdition: Option[Edition] = None): Boolean =
-    keywordIds exists (DfpAgent.isSponsored(_, Some(metadata.section), maybeEdition))
+    keywordIds exists (DfpAgent.isSponsored(_, Some(metadata.sectionId), maybeEdition))
   def hasMultipleSponsors = false // Todo: need to think about this
   lazy val isAdvertisementFeature = keywordIds exists (DfpAgent.isAdvertisementFeature(_,
-      Some(metadata.section)))
+      Some(metadata.sectionId)))
   def hasMultipleFeatureAdvertisers = false // Todo: need to think about this
   lazy val isFoundationSupported = keywordIds exists (DfpAgent.isFoundationSupported(_,
-      Some(metadata.section)))
+      Some(metadata.sectionId)))
   lazy val sponsor = keywordIds.flatMap(DfpAgent.getSponsor(_)).headOption
 
   def allItems = collections.flatMap(_.curatedPlusBackfillDeduplicated).distinct
