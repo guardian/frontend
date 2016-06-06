@@ -261,25 +261,11 @@ define([
         describe('pageskin loading', function () {
 
             it('should lazy load ads when there is no pageskin', function () {
-                detect.getBreakpoint = function () {
-                    return 'wide';
-                };
                 config.page.hasPageSkin = false;
                 expect(dfp.shouldLazyLoad()).toBe(true);
             });
 
-            it('should lazy load ads when there is a pageskin and breakpoint is lower than wide', function () {
-                detect.getBreakpoint = function () {
-                    return 'desktop';
-                };
-                config.page.hasPageSkin = true;
-                expect(dfp.shouldLazyLoad()).toBe(true);
-            });
-
-            it('should not lazy load ads when there is a pageskin and breakpoint is wide', function () {
-                detect.getBreakpoint = function () {
-                    return 'wide';
-                };
+            it('should not lazy load ads when there is a pageskin', function () {
                 config.page.hasPageSkin = true;
                 expect(dfp.shouldLazyLoad()).toBe(false);
             });

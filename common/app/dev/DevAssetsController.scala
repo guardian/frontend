@@ -3,9 +3,13 @@ package dev
 import common.Assets.AssetNotFoundException
 import common.ExecutionContexts
 import java.io.File
+import model.{NoCache, Cached}
+import model.Cached.WithoutRevalidationResult
+import play.api.Play
 import play.api.libs.MimeTypes
 import play.api.mvc._
 import play.api.libs.iteratee.Enumerator
+import play.api.Play.current
 
 object DevAssetsController extends Controller with ExecutionContexts {
 
@@ -42,10 +46,18 @@ object DevAssetsController extends Controller with ExecutionContexts {
       if (MimeTypes.isText(mime)) s"$mime; charset=utf-8" else mime
     } getOrElse BINARY
 
-    Result(
-      ResponseHeader(OK, Map(CONTENT_TYPE -> contentType)),
-      Enumerator.fromStream(resolved.openStream())
-    )
+      val result = Result(
+        ResponseHeader(OK, Map(CONTENT_TYPE -> contentType)),
+        Enumerator.fromStream(resolved.openStream())
+      )
+
+      // WebDriver caches during tests. Caching CSS during tests might speed some things up.
+      if (Play.isTest) {
+        Cached(84000)(WithoutRevalidationResult(result))
+      } else {
+        // but we don't want caching during development...
+        NoCache(result)
+    }
   }
 
   def surveys(file: String): Action[AnyContent] =

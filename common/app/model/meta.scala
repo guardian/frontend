@@ -7,7 +7,6 @@ import common.commercial.BrandHunter
 import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
-import conf.switches.Switches.galleryRedesign
 import cricketPa.CricketTeams
 import model.liveblog.BodyBlock
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
@@ -283,7 +282,7 @@ final case class MetaData (
     conf.switches.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty
   }
 
-  val hasSlimHeader: Boolean = contentType == "Interactive" || section == "identity" || (galleryRedesign.isSwitchedOn && contentType.toLowerCase == "gallery")
+  val hasSlimHeader: Boolean = contentType == "Interactive" || section == "identity" || contentType.toLowerCase == "gallery"
 
   // Special means "Next Gen platform only".
   private val special = id.contains("-sp-")
@@ -298,7 +297,7 @@ final case class MetaData (
     ("pageId", JsString(id)),
     ("section", JsString(section)),
     ("webTitle", JsString(webTitle)),
-    ("adUnit", JsString(s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitRoot}/$adUnitSuffix/ng")),
+    ("adUnit", JsString(s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitGuRoot}/$adUnitSuffix/ng")),
     ("buildNumber", JsString(buildNumber)),
     ("revisionNumber", JsString(revision)),
     ("analyticsName", JsString(analyticsName)),

@@ -1,16 +1,24 @@
-import common.CloudWatchApplicationMetrics
-import common.Logback.Logstash
+import common.{CloudWatchMetricsLifecycle, LifecycleComponent, BackwardCompatibleLifecycleComponents}
+import common.Logback.LogstashLifecycle
 import conf._
 import conf.switches.SwitchboardLifecycle
+import controllers.HealthCheck
 import filters.RequestLoggingFilter
+import model.ApplicationIdentity
+import play.api.inject.ApplicationLifecycle
+import play.api.GlobalSettings
 import play.api.http.HttpFilters
 import play.api.mvc.EssentialFilter
 
-object Global extends CloudWatchApplicationMetrics
-  with SwitchboardLifecycle
-  with Logstash
-  with DiscussionHealthCheckLifeCycle {
-  override lazy val applicationName = "frontend-discussion"
+import scala.concurrent.ExecutionContext
+
+object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents {
+  override def lifecycleComponents(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext): List[LifecycleComponent] = List(
+    new CloudWatchMetricsLifecycle(appLifecycle, ApplicationIdentity("frontend-discussion")),
+    new SwitchboardLifecycle(appLifecycle),
+    LogstashLifecycle,
+    new CachedHealthCheckLifeCycle(HealthCheck)
+  )
 }
 
 class DiscussionFilters extends HttpFilters {

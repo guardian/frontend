@@ -233,10 +233,15 @@ define([
                     this.ima.getAdsManager().stop();
                 },
                 init: function () {
-                    var skipButton = template(adsSkipOverlayTmpl, { skipTimeout: skipTimeout });
+                    var adDuration = this.ima.getAdsManager().getCurrentAd().getDuration();
+
+                    var skipButton = template(adsSkipOverlayTmpl, {
+                        adDuration: adDuration,
+                        skipTimeout: skipTimeout
+                    });
 
                     $(this.el()).append(skipButton);
-                    intervalId = setInterval(events.update.bind(this), 250);
+                    intervalId = setInterval(events.update.bind(this), 500);
 
                 },
                 end: function () {

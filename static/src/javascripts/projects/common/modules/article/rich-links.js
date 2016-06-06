@@ -88,7 +88,7 @@ define([
                 $insertedEl = $.create(template(richLinkTagTmpl, {href: config.page.richLink}));
                 $insertedEl.insertBefore(paras[0]);
                 return $insertedEl[0];
-            }).then(function (didInsert) {
+            }, { waitForAds: true }).then(function (didInsert) {
                 if (didInsert) {
                     return Promise.resolve(upgradeRichLink($insertedEl[0]));
                 } else {

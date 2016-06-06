@@ -37,14 +37,18 @@ class PaidForTagTest extends FlatSpec with Matchers with OptionValues {
       |            }
       |          ],
       |          "targeting": {
-      |            "adUnits": [
+      |            "adUnitsIncluded": [
       |              {
       |                "id": "59351727",
       |                "path": [
       |                  "theguardian.com",
       |                  "small-business-network"
-      |                ]
+      |                ],
+      |                "status": "ACTIVE"
       |              }
+      |            ],
+      |            "adUnitsExcluded": [
+      |
       |            ],
       |            "geoTargetsIncluded": [
       |              {
@@ -110,7 +114,10 @@ class PaidForTagTest extends FlatSpec with Matchers with OptionValues {
       |            }
       |          ],
       |          "targeting": {
-      |            "adUnits": [
+      |            "adUnitsIncluded": [
+      |
+      |            ],
+      |            "adUnitsExcluded": [
       |
       |            ],
       |            "geoTargetsIncluded": [
@@ -172,13 +179,17 @@ class PaidForTagTest extends FlatSpec with Matchers with OptionValues {
       |            }
       |          ],
       |          "targeting": {
-      |            "adUnits": [
+      |            "adUnitsIncluded": [
       |              {
       |                "id": "59342247",
       |                "path": [
       |                  "theguardian.com"
-      |                ]
+      |                ],
+      |                "status": "ACTIVE"
       |              }
+      |            ],
+      |            "adUnitsExcluded": [
+      |
       |            ],
       |            "geoTargetsIncluded": [
       |
@@ -239,14 +250,18 @@ class PaidForTagTest extends FlatSpec with Matchers with OptionValues {
       |            }
       |          ],
       |          "targeting": {
-      |            "adUnits": [
+      |            "adUnitsIncluded": [
       |              {
       |                "id": "59350887",
       |                "path": [
       |                  "theguardian.com",
       |                  "sustainable-business"
-      |                ]
+      |                ],
+      |                "status": "ACTIVE"
       |              }
+      |            ],
+      |            "adUnitsExcluded": [
+      |
       |            ],
       |            "geoTargetsIncluded": [
       |
@@ -307,7 +322,10 @@ class PaidForTagTest extends FlatSpec with Matchers with OptionValues {
       |            }
       |          ],
       |          "targeting": {
-      |            "adUnits": [
+      |            "adUnitsIncluded": [
+      |
+      |            ],
+      |            "adUnitsExcluded": [
       |
       |            ],
       |            "geoTargetsIncluded": [
@@ -369,13 +387,17 @@ class PaidForTagTest extends FlatSpec with Matchers with OptionValues {
       |            }
       |          ],
       |          "targeting": {
-      |            "adUnits": [
+      |            "adUnitsIncluded": [
       |              {
       |                "id": "59342247",
       |                "path": [
       |                  "theguardian.com"
-      |                ]
+      |                ],
+      |                "status": "ACTIVE"
       |              }
+      |            ],
+      |            "adUnitsExcluded": [
+      |
       |            ],
       |            "geoTargetsIncluded": [
       |

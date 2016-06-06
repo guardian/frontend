@@ -1,18 +1,15 @@
 package services
 
-import common.AutoRefresh
+import common.{LifecycleComponent, AutoRefresh}
 import model.TagIndexListings
-import play.api.{Application, GlobalSettings}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 import scala.concurrent.{Future, blocking}
 import scala.language.postfixOps
 
-trait IndexListingsLifecycle extends GlobalSettings {
-  override def onStart(app: Application): Unit = {
-    super.onStart(app)
-
+object IndexListingsLifecycle extends LifecycleComponent {
+  override def start(): Unit = {
     KeywordSectionIndexAutoRefresh.start()
     KeywordAlphaIndexAutoRefresh.start()
     ContributorAlphaIndexAutoRefresh.start()
