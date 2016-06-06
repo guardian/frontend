@@ -3,6 +3,7 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/utils/robust',
+    'common/utils/user-timing',
     'common/modules/commercial/article-aside-adverts',
     'common/modules/commercial/article-body-adverts',
     'common/modules/commercial/badges',
@@ -18,6 +19,7 @@ define([
     config,
     mediator,
     robust,
+    userTiming,
     articleAsideAdverts,
     articleBodyAdverts,
     badges,
@@ -31,12 +33,10 @@ define([
 ) {
     var modules = [
         ['cm-dfp', dfp.init],
-        ['cm-thirdPartyTags', thirdPartyTags.init],
         ['cm-articleAsideAdverts', articleAsideAdverts.init],
         ['cm-articleBodyAdverts', articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
-        ['cm-frontCommercialComponents', frontCommercialComponents.init],
-        ['cm-hostedVideo', hostedVideo.init]
+        ['cm-frontCommercialComponents', frontCommercialComponents.init]
     ];
 
     if (!config.switches.staticBadges) {
@@ -49,6 +49,8 @@ define([
                 return;
             }
 
+            userTiming.mark('commercial start');
+
             var modulePromises = [];
 
             modules.forEach(function (pair) {
@@ -60,10 +62,13 @@ define([
             Promise.all(modulePromises).then(function () {
                 robust.catchErrorsAndLogAll([
                     ['cm-adverts', dfp.loadAds],
+                    ['cm-thirdPartyTags', thirdPartyTags.init],
+                    ['cm-hostedVideo', hostedVideo.init],
                     ['cm-paidforBand', paidforBand.init],
                     ['cm-new-adverts', adverts.init],
                     ['cm-ready', function () {
                         mediator.emit('page:commercial:ready');
+                        userTiming.mark('commercial end');
                     }]
                 ]);
             });

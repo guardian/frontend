@@ -25,7 +25,7 @@
         <li class="video-playlist__item video-title video-title--leftcol fc-container__header__title">
             <a class="video-title__link" href="@containerDefinition.href" data-link-name="video-container-title @containerDefinition.displayName">
                 @containerDefinition.displayName match {
-                    case Some("videos") => {
+                    case Some("video") | Some("videos") => {
                         @fragments.inlineSvg("guardian-video-logo", "logo")
                     }
 
@@ -58,7 +58,8 @@
                                 <div class="fc-item__media-wrapper">
                                     <div class="fc-item__image-container u-responsive-ratio inlined-image">
                                     @InlineImage.fromFaciaContent(item).map { fallbackImage =>
-                                        <img src="@Video700.bestFor(fallbackImage.imageMedia)" />
+                                        <img
+                                            @if(index > 1){data-}src="@Video700.bestFor(fallbackImage.imageMedia)" class="js-video-playlist-image js-video-playlist-image--@{index}" />
                                     }
                                     </div>
                                 </div>

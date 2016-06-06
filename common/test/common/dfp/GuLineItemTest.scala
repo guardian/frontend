@@ -12,14 +12,15 @@ class GuLineItemTest extends FlatSpec with Matchers {
 
   private val defaultTargeting = targeting(
     Seq(
-      GuAdUnit("id", Seq("theguardian.com")),
-      GuAdUnit("id", Seq("theguardian.com", "business", "front"))
+      GuAdUnit("id", Seq("theguardian.com"), GuAdUnit.ACTIVE),
+      GuAdUnit("id", Seq("theguardian.com", "business", "front"), GuAdUnit.ACTIVE)
     )
   )
 
   private def targeting(adUnits: Seq[GuAdUnit]): GuTargeting = {
     GuTargeting(
-      adUnits,
+      adUnitsIncluded = adUnits,
+      adUnitsExcluded = Nil,
       geoTargetsIncluded = Seq(GeoTarget(1, None, "COUNTRY", "Australia")),
       geoTargetsExcluded = Nil,
       customTargetSets = Nil
@@ -60,17 +61,17 @@ class GuLineItemTest extends FlatSpec with Matchers {
   }
 
   it should "be false for a section front targeted indirectly" in {
-    val target = targeting(Seq(GuAdUnit("id", Seq("theguardian.com"))))
+    val target = targeting(Seq(GuAdUnit("id", Seq("theguardian.com"), GuAdUnit.ACTIVE)))
     lineItem(targeting = target) should not be 'suitableForTopAboveNavSlot
   }
 
   it should "be false for an untargeted section front" in {
-    val target = targeting(Seq(GuAdUnit("id", Seq("theguardian.com", "politics"))))
+    val target = targeting(Seq(GuAdUnit("id", Seq("theguardian.com", "politics"), GuAdUnit.ACTIVE)))
     lineItem(targeting = target) should not be 'suitableForTopAboveNavSlot
   }
 
   it should "be false for a front whose section is targeted but front not targeted directly" in {
-    val target = targeting(Seq(GuAdUnit("id", Seq("theguardian.com", "business"))))
+    val target = targeting(Seq(GuAdUnit("id", Seq("theguardian.com", "business"), GuAdUnit.ACTIVE)))
     lineItem(targeting = target) should not be 'suitableForTopAboveNavSlot
   }
 

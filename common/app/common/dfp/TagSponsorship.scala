@@ -78,29 +78,31 @@ case class HighMerchandisingLineItem(
   name: String,
   id: Long,
   tags: Seq[String],
-  adUnits: Seq[GuAdUnit],
+  adUnitsIncluded: Seq[GuAdUnit],
+  adUnitsExcluded: Seq[GuAdUnit],
   customTargetSet: Seq[CustomTargetSet]
   ) {
 
-  val customTargets = customTargetSet.map(_.targets)
-  val editions = customTargets.flatMap(_.filter( _.name == "edition")).map(_.values).distinct
-  val urls = customTargets.flatMap(_.filter( _.name == "url")).map(_.values).distinct
+  val customTargets = customTargetSet.flatMap(_.targets)
+  val editions = customTargets.filter( _.name == "edition").flatMap(_.values).distinct
+  val urls = customTargets.filter( _.name == "url").flatMap(_.values).distinct
+  val isRunOfNetwork = adUnitsIncluded.isEmpty || (adUnitsIncluded.exists(_.isRunOfNetwork) && adUnitsIncluded.size == 1)
+  val hasUnknownTarget = isRunOfNetwork && editions.isEmpty && urls.isEmpty && tags.isEmpty
 
+  // Returns true if the metadata parameters explicitly match the lineItem.
   def matchesPageTargeting (adUnitSuffix: String, pageTags:Seq[Tag], edition:Edition, pagePath:String): Boolean = {
 
     val cleansedPageEdition = edition.id.toLowerCase
-
     val cleansedPageTagNames = pageTags map (_.name.replaceAll(" ","-").toLowerCase)
 
-    val matchesTag: Boolean = tags.isEmpty || cleansedPageTagNames.exists(tags.contains)
+    val matchesAdUnit = adUnitsIncluded.isEmpty || adUnitsIncluded.exists(_.path contains adUnitSuffix)
+    val matchesTag = cleansedPageTagNames.isEmpty || cleansedPageTagNames.exists(tags.contains)
+    val matchesEdition = editions.isEmpty || editions.contains(cleansedPageEdition)
+    val matchesUrl = urls.isEmpty || urls.contains(pagePath)
 
-    lazy val matchesAdUnit: Boolean = adUnits.isEmpty || adUnits.exists(_.path contains adUnitSuffix)
-
-    lazy val matchesEdition: Boolean = editions.isEmpty || editions.exists(_.contains(cleansedPageEdition))
-
-    lazy val matchesUrl: Boolean = urls.isEmpty || urls.exists(_.contains(pagePath))
-
-    matchesTag && matchesAdUnit && matchesEdition && matchesUrl
+    // High-merch line items must be explicitly targeted to something, so if there is no kind of targeting,
+    // then the match fails.
+    matchesAdUnit && matchesTag && matchesEdition && matchesUrl && !hasUnknownTarget
   }
 }
 

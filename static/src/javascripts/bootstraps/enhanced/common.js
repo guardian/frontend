@@ -52,6 +52,7 @@ define([
     'common/modules/commercial/membership-messages',
     'common/modules/email/email',
     'common/modules/email/email-article',
+    'common/modules/onward/mobile-labs-alerts',
     'bootstraps/enhanced/identity-common',
     'lodash/collections/forEach'
 ], function (
@@ -106,6 +107,7 @@ define([
     membershipMessages,
     email,
     emailArticle,
+    mobileLabAlerts,
     identity,
     forEach
 ) {
@@ -132,8 +134,7 @@ define([
             },
 
             initialiseStickyAdBanner: function () {
-                if (config.switches.viewability
-                    && !(config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile')
+                if (!(config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile')
                     && config.page.pageId !== 'offline-crossword'
                     && !config.page.shouldHideAdverts
                     && config.page.section !== 'childrens-books-site'
@@ -365,6 +366,10 @@ define([
             },
             headlinesTestAnalytics: function () {
                 HeadlinesTestAnalytics.init();
+            },
+
+            mobileLabsAlertBanner: function () {
+                mobileLabAlerts();
             }
         };
 
@@ -414,7 +419,8 @@ define([
                 ['c-show-membership-messages', modules.showMembershipMessages],
                 ['c-email', modules.initEmail],
                 ['c-user-features', userFeatures.refresh],
-                ['c-headlines-test-analytics', modules.headlinesTestAnalytics]
+                ['c-headlines-test-analytics', modules.headlinesTestAnalytics],
+                ['c-mobile-labs-banner', modules.mobileLabsAlertBanner]
             ]), function (fn) {
                 fn();
             });

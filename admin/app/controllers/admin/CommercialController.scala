@@ -36,7 +36,7 @@ object CommercialController extends Controller with Logging with AuthLogging wit
   }
 
   def renderSpecialAdUnits = AuthActions.AuthActionTest { implicit request =>
-    val specialAdUnits = DfpApi.readSpecialAdUnits(Configuration.commercial.dfpAdUnitRoot)
+    val specialAdUnits = DfpApi.readSpecialAdUnits(Configuration.commercial.dfpAdUnitGuRoot)
     Ok(views.html.commercial.specialAdUnits(environment.stage, specialAdUnits))
   }
 
@@ -102,5 +102,20 @@ object CommercialController extends Controller with Logging with AuthLogging wit
     for (adResponseConfidenceGraph <- CloudWatch.eventualAdResponseConfidenceGraph) yield {
       Ok(views.html.commercial.commercialRadiator("PROD", adResponseConfidenceGraph))
     }
+  }
+
+  def renderKeyValues() = AuthActions.AuthActionTest { implicit request =>
+    Ok(views.html.commercial.customTargetingKeyValues("PROD", Store.getDfpCustomTargetingKeyValues))
+  }
+
+  def renderKeyValuesCsv(key: String) = AuthActions.AuthActionTest { implicit request =>
+    val csv: Option[String] = Store.getDfpCustomTargetingKeyValues.find(_.name == key).map { selectedKey =>
+
+      selectedKey.values.map( targetValue => {
+        s"${targetValue.id}, ${targetValue.name}, ${targetValue.displayName}"
+      }).mkString("\n")
+    }
+
+    Ok(csv.getOrElse(s"No targeting found for key: $key"))
   }
 }

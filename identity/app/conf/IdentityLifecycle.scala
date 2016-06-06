@@ -1,11 +1,17 @@
 package conf
 
-import common.{AkkaAsync, Jobs, ExecutionContexts}
+import common.{LifecycleComponent, AkkaAsync, Jobs}
 import jobs.{TorExitNodeList, BlockedEmailDomainList}
 import model.PhoneNumbers
-import play.api.GlobalSettings
+import play.api.inject.ApplicationLifecycle
 
-trait IdentityLifecycle extends GlobalSettings with ExecutionContexts {
+import scala.concurrent.{Future, ExecutionContext}
+
+class IdentityLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent {
+
+  appLifecycle.addStopHook { () => Future {
+    descheduleJobs()
+  }}
 
   private def scheduleJobs() {
       Jobs.schedule("BlockedEmailsRefreshJobs", "0 0/30 * * * ?") {
@@ -22,8 +28,7 @@ trait IdentityLifecycle extends GlobalSettings with ExecutionContexts {
     Jobs.deschedule("TorExitNodeRefeshJob")
   }
 
-  override def onStart(app: play.api.Application) {
-    super.onStart(app)
+  override def start(): Unit = {
     descheduleJobs()
     scheduleJobs()
 
@@ -33,10 +38,4 @@ trait IdentityLifecycle extends GlobalSettings with ExecutionContexts {
       PhoneNumbers
     }
   }
-
-  override def onStop(app: play.api.Application) {
-    descheduleJobs()
-    super.onStop(app)
-  }
-
 }

@@ -25,7 +25,7 @@ object HealthCheckResultTypes {
 private[conf] case class HealthCheckResult(url: String,
                                            result: HealthCheckInternalRequestResult,
                                            date: DateTime = DateTime.now,
-                                           expiration: Duration = 10.seconds) {
+                                           expiration: Duration = (Configuration.healthcheck.updateIntervalInSecs * 2).seconds) {
   private val expirationDate = date.plus(expiration.toMillis)
   private def expired: Boolean = DateTime.now.getMillis > expirationDate.getMillis
   def recentlySucceed: Boolean = result match {
@@ -133,17 +133,16 @@ case class AllGoodCachedHealthCheck(testPort: Int, paths: String*)
 case class AnyGoodCachedHealthCheck(testPort: Int, paths: String*)
   extends CachedHealthCheck(HealthCheckPolicy.Any, testPort, paths:_*)
 
-trait CachedHealthCheckLifeCycle extends GlobalSettings {
+class CachedHealthCheckLifeCycle(healthCheckController: CachedHealthCheck) extends LifecycleComponent {
 
-  private val healthCheckRequestFrequencyInSec = 5
+  private val healthCheckRequestFrequencyInSec = Configuration.healthcheck.updateIntervalInSecs
 
-  val healthCheckController: CachedHealthCheck
-
-  override def onStart(app: PlayApp) = {
-    super.onStart(app)
+  override def start() = {
     Jobs.deschedule("HealthCheckFetch")
-    Jobs.scheduleEveryNSeconds("HealthCheckFetch", healthCheckRequestFrequencyInSec) {
-      healthCheckController.runChecks
+    if (healthCheckRequestFrequencyInSec > 0) {
+      Jobs.scheduleEveryNSeconds("HealthCheckFetch", healthCheckRequestFrequencyInSec) {
+        healthCheckController.runChecks
+      }
     }
 
     AkkaAsync {
@@ -151,4 +150,3 @@ trait CachedHealthCheckLifeCycle extends GlobalSettings {
     }
   }
 }
-

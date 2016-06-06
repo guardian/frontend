@@ -5,7 +5,7 @@
 # For dev machines
 GET        /assets/*path                              dev.DevAssetsController.at(path)
 
-GET        /_healthcheck                              conf.HealthCheck.healthCheck()
+GET        /_healthcheck                              controllers.HealthCheck.healthCheck()
 
 GET        /nav.json                                  controllers.NavigationController.nav()
 

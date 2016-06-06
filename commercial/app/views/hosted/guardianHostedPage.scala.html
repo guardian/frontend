@@ -1,8 +1,7 @@
 @import common.commercial.HostedPage
-@(page: HostedPage, videoBlock: Html)(implicit request: RequestHeader)
-@import conf.Static
+@(page: HostedPage)(implicit request: RequestHeader)
 
-@main(page) { } {
+@main(page, Some("commercial")) { } {
     <div class="hosted__header">
         <div class="hosted__headerwrap">
             <div class="paidfor-label paidfor-meta__more hosted__label has-popup">
@@ -26,13 +25,27 @@
                     <p class="hostedbadge__info">Advertiser content</p>
                 </div>
                 <div class="u-responsive-ratio u-responsive-ratio--hd">
-                    @videoBlock
+                    <video
+                      data-duration="@page.video.duration"
+                      data-media-id="@page.video.mediaId"
+                      controls="controls"
+                      preload="auto"
+                      style="width: 100%;"
+                      data-block-video-ads="true"
+                      poster="@page.video.posterUrl"
+                      class="vjs-hosted__video hosted__video gu-media--video vjs vjs-tech-html5 vjs-paused vjs-controls-enabled vjs_video_1-dimensions vjs-user-active">
+                        <source type="video/mp4" src="@page.video.srcUrl">
+                        <source type="video/webm" src="@page.video.srcUrl">
+                        <source type="video/ogg" src="@page.video.srcUrl">
+                        <source type="video/m3u8" src="@page.video.srcUrl">
+                    </video>
                     <div class="hosted-fading">
+                        <div class="hosted__video-overlay"></div>
                         <div class="hosted__meta">
-                            <h1 class="hosted__heading hosted-tone--renault">@page.videoTitle</h1>
+                            <h1 class="hosted__heading hosted-tone--renault">@page.video.title</h1>
                         </div>
                         <div class="hostedbadge hostedbadge--shouldscale">
-                            <img class="hostedbadge__logo" src="@Static("images/commercial/logo_renault.jpg")">
+                            <img class="hostedbadge__logo" src="@page.logoUrl">
                         </div>
                     </div>
                 </div>
@@ -86,6 +99,9 @@
                 </div>
             </header>
             <div class="adverts__body">
+                <div class="hosted__meta">
+                    <h1 class="hosted__heading hosted-tone--renault">@page.video.title</h1>
+                </div>
                 <div class="hosted__standfirst">
                     <p class="hosted__text">@page.standfirst</p>
                     <div class="hosted__terms">​This content was paid for and produced by Renault. For more information click
@@ -100,11 +116,21 @@
                     </div>
                 </div>
             </div>
+            <div class="hosted__next-video">
+                <div class="hosted__next-video--header">
+                    <h2 class="hosted__text hosted__next-video--up-next">More from</h2>
+                    <h2 class="hosted__next-video--client-name hosted-tone--renault">Renault</h2>
+                </div>
+                <a href="@page.nextVideo.link" class="hosted__next-video--tile" data-link-name="Next Hosted Video: @page.nextVideo.title">
+                    <img class="hosted__next-video-thumb" src="@page.nextVideo.imageUrl">
+                    <p class="hosted__next-video-title">@page.nextVideo.title</p>
+                </a>
+            </div>
         </section>
         <section class="adverts hosted__container--full">
-            <div class="hosted__banner" style="background-image: url(@Static("images/commercial/ren_commercial_banner.jpg"));">
+            <div class="hosted__banner" style="background-image: url(@page.bannerUrl);">
                 <div class="hostedbadge hostedbadge--shouldscale hostedbadge--pushdown hosted-tone-bg--renault">
-                    <img class="hostedbadge__logo" src="@Static("images/commercial/logo_renault.jpg")">
+                    <img class="hostedbadge__logo" src="@page.logoUrl">
                 </div>
                 <div class="hosted__cta-wrapper">
                     <a href="https://www.renault.co.uk/vehicles/new-vehicles/zoe.html" rel="nofollow" class="hosted__cta-link" data-link-name="explore-renault-zoe-button" target="_blank">

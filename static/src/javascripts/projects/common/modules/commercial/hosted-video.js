@@ -8,6 +8,7 @@ define([
     'common/utils/defer-to-analytics',
     'common/modules/video/events',
     'common/modules/video/videojs-options',
+    'common/modules/video/fullscreener',
     'text!common/views/ui/loading.html'
 ], function (
     bean,
@@ -15,6 +16,7 @@ define([
     deferToAnalytics,
     events,
     videojsOptions,
+    fullscreener,
     loadingTmpl
 ) {
     var player;
@@ -49,11 +51,11 @@ define([
 
         require(['bootstraps/enhanced/media/main'], function () {
             require(['bootstraps/enhanced/media/video-player'], function(videojs){
-
                 var mediaId = $videoEl.attr('data-media-id');
 
                 player = videojs($videoEl.get(0), videojsOptions());
                 player.guMediaType = 'video';
+                videojs.plugin('fullscreener', fullscreener);
 
                 // unglitching the volume on first load
                 var vol = player.volume();
@@ -63,6 +65,8 @@ define([
                 }
 
                 player.ready(function () {
+                    player.fullscreener();
+
                     deferToAnalytics(function () {
                         events.initOmnitureTracking(player);
                         events.initOphanTracking(player, mediaId);

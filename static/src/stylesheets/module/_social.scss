@@ -58,6 +58,12 @@ category: Common
     }
 }
 
+.social__item--messenger {
+    @include mq(tablet) {
+        display: none;
+    }
+}
+
 .social__action {
     display: inline-block;
 }
@@ -156,6 +162,13 @@ category: Common
     background-color: $social-whatsapp;
     &:hover {
         background-color: darken($social-whatsapp, 10%);
+    }
+}
+
+.social-icon--messenger {
+    background-color: $social-messenger;
+    &:hover {
+        background-color: darken($social-messenger, 10%);
     }
 }
 

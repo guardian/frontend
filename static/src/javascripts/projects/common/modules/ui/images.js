@@ -12,8 +12,7 @@ function (
     var images = {
 
         upgradePictures: function (context) {
-            var images = qwery('img[srcset], picture img', context || document);
-            picturefill({ elements: images });
+            picturefill({ elements: qwery('img[srcset], picture img', context || document) });
         },
 
         listen: function () {

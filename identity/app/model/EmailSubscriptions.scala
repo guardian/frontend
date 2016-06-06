@@ -24,7 +24,8 @@ object EmailSubscriptions {
     "The Fiver is theguardian.com/sport's free football email. Every weekday we round up the day's news and gossip in our own belligerent, sometimes intelligent and — very occasionally — funny way. The Fiver is delivered every Monday to Friday at around 5pm — hence the name.",
     "Weekday afternoons",
     "218",
-    10
+    10,
+    exampleUrl = Some("https://www.theguardian.com/football/series/thefiver/latest/email")
   )
 
   val guardianOpinion = EmailSubscription(
@@ -242,7 +243,7 @@ object EmailSubscriptions {
       "Every other Tuesday",
       "113",
       subscribedTo = subscribedListIds.exists{ x => x == "113" },
-      exampleUrl = Some("http://www.theguardian.com/global-development/poverty-matters/latest/email")
+      exampleUrl = Some("http://www.theguardian.com/global-development/series/poverty-matters/latest/email")
     ),
 
     // Lifestyle

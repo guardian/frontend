@@ -26,6 +26,13 @@ define([
         fastdom.write(function () {
             var title = this.params.header2 || 'unknown';
             var sponsor = 'Renault';
+            var videoLength = this.params.videoLength;
+            if(videoLength){
+                var seconds = videoLength % 60;
+                var minutes = (videoLength - seconds) / 60;
+                this.params.timeString = minutes + (seconds < 10 ? ':0' : ':') + seconds;
+            }
+
             this.params.linkTracking = 'Labs hosted container' +
                 ' | ' + config.page.edition +
                 ' | ' + config.page.section +

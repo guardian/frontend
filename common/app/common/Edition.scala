@@ -25,7 +25,8 @@ abstract class Edition(
       "media",
       "environment",
       "film",
-      "lifeandstyle"
+      "lifeandstyle",
+      "travel"
     )
 
   ) extends Navigation {
@@ -164,10 +165,4 @@ object InternationalEdition {
         .filter(variants.contains(_) && editionIsIntl)
     }
   }
-}
-
-object InternationalEditionVariant {
-
-  def apply(request: RequestHeader): Option[String] = request.headers.get("X-GU-International")
-
 }

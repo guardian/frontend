@@ -1,17 +1,19 @@
 package common.dfp
 
-import common.{AkkaAsync, Jobs}
-import play.api.{Application, GlobalSettings}
+import common.{LifecycleComponent, AkkaAsync, Jobs}
+import play.api.inject.ApplicationLifecycle
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
-trait DfpAgentLifecycle extends GlobalSettings {
+class DfpAgentLifecycle(appLifeCycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent {
+
+  appLifeCycle.addStopHook { () => Future {
+    Jobs.deschedule("DfpDataRefreshJob")
+  }}
 
   def refreshDfpAgent(): Unit = DfpAgent.refresh()
 
-  override def onStart(app: Application) {
-    super.onStart(app)
-
+  override def start() = {
     Jobs.deschedule("DfpDataRefreshJob")
     Jobs.scheduleEveryNMinutes("DfpDataRefreshJob", 1) {
       refreshDfpAgent()
@@ -22,14 +24,9 @@ trait DfpAgentLifecycle extends GlobalSettings {
       refreshDfpAgent()
     }
   }
-
-  override def onStop(app: Application) {
-    Jobs.deschedule("DfpDataRefreshJob")
-    super.onStop(app)
-  }
 }
 
-trait FaciaDfpAgentLifecycle extends DfpAgentLifecycle {
+class FaciaDfpAgentLifecycle(appLifeCycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends DfpAgentLifecycle(appLifeCycle) {
 
   override def refreshDfpAgent(): Unit = {
     DfpAgent.refresh()
