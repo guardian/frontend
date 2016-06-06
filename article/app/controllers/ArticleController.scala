@@ -195,7 +195,6 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   }
 
   def createLiveBlogModel(liveBlog: Article, response: ItemResponse, maybeRequiredBlockId: Option[String]) = {
-    import conf.switches.Switches.LongCacheSwitch
 
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
     val liveBlogPageModel = LiveBlogCurrentPage(
@@ -207,18 +206,14 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       case Some(pageModel) =>
 
         val cacheTime =
-          if (!pageModel.currentPage.isArchivePage && liveBlog.fields.isLive) liveBlog.metadata.cacheTime
-          else {
-            if (LongCacheSwitch.isSwitchedOn) {
-              if (liveBlog.fields.lastModified > DateTime.now(liveBlog.fields.lastModified.getZone) - 1.hour) CacheTime.RecentlyUpdatedPurgable
-              else if (liveBlog.fields.lastModified > DateTime.now(liveBlog.fields.lastModified.getZone) - 24.hours) CacheTime.LastDayUpdatedPurgable
-              else CacheTime.NotRecentlyUpdatedPurgable
-            } else {
-              if (liveBlog.fields.lastModified > DateTime.now(liveBlog.fields.lastModified.getZone) - 1.hour) CacheTime.RecentlyUpdated
-              else if (liveBlog.fields.lastModified > DateTime.now(liveBlog.fields.lastModified.getZone) - 24.hours) CacheTime.LastDayUpdated
-              else CacheTime.NotRecentlyUpdated
-            }
-          }
+          if (!pageModel.currentPage.isArchivePage && liveBlog.fields.isLive)
+            liveBlog.metadata.cacheTime
+          else if (liveBlog.fields.lastModified > DateTime.now(liveBlog.fields.lastModified.getZone) - 1.hour)
+            CacheTime.RecentlyUpdated
+          else if (liveBlog.fields.lastModified > DateTime.now(liveBlog.fields.lastModified.getZone) - 24.hours)
+            CacheTime.LastDayUpdated
+          else
+            CacheTime.NotRecentlyUpdated
 
         val liveBlogCache = liveBlog.copy(
           content = liveBlog.content.copy(

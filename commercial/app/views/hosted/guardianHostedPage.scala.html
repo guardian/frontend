@@ -1,17 +1,11 @@
 @import common.commercial.HostedPage
 @(page: HostedPage)(implicit request: RequestHeader)
-@import conf.switches.Switches.hostedPageLinksBetweenContent
 
-@main(page) { } {
+@main(page, Some("commercial")) { } {
     <div class="hosted__header">
         <div class="hosted__headerwrap">
             <div class="paidfor-label paidfor-meta__more hosted__label has-popup">
-                <button class="u-button-reset paidfor-label__btn popup__toggle hosted__label-btn" data-toggle="js-hosted-popup" data-link-name="about-adertiser-content">About @fragments.inlineSvg("arrow-down", "icon")</button>
-                <div class="popup popup--paidfor hosted__popup is-off js-hosted-popup">
-                    <p class="hosted__popup-text">Advertiser content is used to describe advertisement features that are paid for, produced and controlled by the advertiser rather than the publisher​.</p>
-                    <p class="hosted__popup-text">They​ are subject to regulation by the Advertising Standards Authority in the UK, the Federal Trade Commission in the US and the Advertising Standards Bureau in Australia.</p>
-                    <p class="hosted__popup-text">This content is produced by the advertiser and does not involve GNM staff.</p>
-                </div>
+                <button class="u-button-reset paidfor-label__btn popup__toggle hosted__label-btn js-hosted-about" data-link-name="about-advertiser-content">About @fragments.inlineSvg("arrow-down", "icon")</button>
             </div>
             <a href="http://www.theguardian.com" data-link-name="guardian-logo-top-right" class="hosted__glogo">
                 <p class="hosted__glogotext">Hosted by</p>
@@ -34,7 +28,7 @@
                       style="width: 100%;"
                       data-block-video-ads="true"
                       poster="@page.video.posterUrl"
-                      class="vjs-hosted__video hosted__video gu-media--show-controls-at-start gu-media--video vjs vjs-tech-html5 vjs-paused vjs-controls-enabled vjs_video_1-dimensions vjs-user-active">
+                      class="vjs-hosted__video hosted__video gu-media--video vjs vjs-tech-html5 vjs-paused vjs-controls-enabled vjs_video_1-dimensions vjs-user-active">
                         <source type="video/mp4" src="@page.video.srcUrl">
                         <source type="video/webm" src="@page.video.srcUrl">
                         <source type="video/ogg" src="@page.video.srcUrl">
@@ -100,22 +94,19 @@
                 </div>
             </header>
             <div class="adverts__body">
+                <div class="hosted__meta">
+                    <h1 class="hosted__heading hosted-tone--renault">@page.video.title</h1>
+                </div>
                 <div class="hosted__standfirst">
                     <p class="hosted__text">@page.standfirst</p>
                     <div class="hosted__terms">​This content was paid for and produced by Renault. For more information click
                         <div class="paidfor-label paidfor-meta__more has-popup hosted__link">
-                            <button class="u-button-reset paidfor-label__btn hosted__label-btn--small popup__toggle hosted__label-btn" data-toggle="js-hosted-popup-bottom" data-link-name="terms-and-conditions-text-link">here @fragments.inlineSvg("arrow-down", "icon")</button>
-                            <div class="popup popup--paidfor hosted__popup hosted__popup--bottom is-off js-hosted-popup-bottom">
-                                <p class="hosted__popup-text">Advertiser content is used to describe advertisement features that are paid for, produced and controlled by the advertiser rather than the publisher​.</p>
-                                <p class="hosted__popup-text">They​ are subject to regulation by the Advertising Standards Authority in the UK, the Federal Trade Commission in the US and the Advertising Standards Bureau in Australia.</p>
-                                <p class="hosted__popup-text">This content is produced by the advertiser and does not involve GNM staff.</p>
-                            </div>
+                            <button class="u-button-reset paidfor-label__btn hosted__label-btn--small popup__toggle hosted__label-btn js-hosted-about" data-link-name="terms-and-conditions-text-link">here @fragments.inlineSvg("arrow-down", "icon")</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="hosted__next-video">
-                @if(hostedPageLinksBetweenContent.isSwitchedOn) {
                 <div class="hosted__next-video--header">
                     <h2 class="hosted__text hosted__next-video--up-next">More from</h2>
                     <h2 class="hosted__next-video--client-name hosted-tone--renault">Renault</h2>
@@ -124,7 +115,6 @@
                     <img class="hosted__next-video-thumb" src="@page.nextVideo.imageUrl">
                     <p class="hosted__next-video-title">@page.nextVideo.title</p>
                 </a>
-                }
             </div>
         </section>
         <section class="adverts hosted__container--full">

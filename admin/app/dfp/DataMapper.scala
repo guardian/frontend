@@ -1,6 +1,5 @@
 package dfp
 
-import com.google.api.ads.dfp.axis.utils.v201508.StatementBuilder
 import com.google.api.ads.dfp.axis.v201508._
 import common.dfp._
 import dfp.ApiHelper.{isPageSkin, optJavaInt, toJodaTime, toSeq}
@@ -11,15 +10,17 @@ object DataMapper {
   def toGuAdUnit(dfpAdUnit: AdUnit): GuAdUnit = {
     val ancestors = toSeq(dfpAdUnit.getParentPath)
     val ancestorNames = if (ancestors.isEmpty) Nil else ancestors.map(_.getName).tail
-    GuAdUnit(dfpAdUnit.getId, ancestorNames :+ dfpAdUnit.getName)
+    GuAdUnit(dfpAdUnit.getId, ancestorNames :+ dfpAdUnit.getName, dfpAdUnit.getStatus.getValue)
   }
 
   private def toGuTargeting(session: SessionWrapper)(dfpTargeting: Targeting): GuTargeting = {
 
-    def toGuAdUnits(inventoryTargeting: InventoryTargeting): Seq[GuAdUnit] = {
+    def toIncludedGuAdUnits(inventoryTargeting: InventoryTargeting): Seq[GuAdUnit] = {
 
       //noinspection MapFlatten
-      val directAdUnits = toSeq(inventoryTargeting.getTargetedAdUnits).map(_.getAdUnitId).map(AdUnitService.adUnit).flatten
+      val directAdUnits = toSeq(inventoryTargeting.getTargetedAdUnits).map(_.getAdUnitId).map(AdUnitService.activeAdUnit).flatten
+
+
 
       //noinspection MapFlatten
       val adUnitsDerivedFromPlacements = {
@@ -27,6 +28,10 @@ object DataMapper {
       }
 
       (directAdUnits ++ adUnitsDerivedFromPlacements).sortBy(_.path.mkString).distinct
+    }
+
+    def toExcludedGuAdUnits(inventoryTargeting: InventoryTargeting): Seq[GuAdUnit] = {
+      toSeq(inventoryTargeting.getExcludedAdUnits).map(_.getAdUnitId).flatMap(AdUnitService.activeAdUnit)
     }
 
     def toCustomTargetSets(criteriaSets: CustomCriteriaSet): Seq[CustomTargetSet] = {
@@ -67,7 +72,8 @@ object DataMapper {
     val geoTargetsExcluded = geoTargets(_.getExcludedLocations)
 
     GuTargeting(
-      adUnits = Option(dfpTargeting.getInventoryTargeting) map toGuAdUnits getOrElse Nil,
+      adUnitsIncluded = Option(dfpTargeting.getInventoryTargeting) map toIncludedGuAdUnits getOrElse Nil,
+      adUnitsExcluded = Option(dfpTargeting.getInventoryTargeting) map toExcludedGuAdUnits getOrElse Nil,
       geoTargetsIncluded,
       geoTargetsExcluded,
       customTargetSets = Option(dfpTargeting.getCustomTargeting) map toCustomTargetSets getOrElse Nil

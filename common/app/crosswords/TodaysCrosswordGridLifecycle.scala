@@ -1,17 +1,20 @@
 package crosswords
 
-import play.api.{Application, GlobalSettings, Play, Mode}
+import common.LifecycleComponent
+import play.api.inject.ApplicationLifecycle
+import play.api.{Play, Mode}
 
-trait TodaysCrosswordGridLifecycle extends GlobalSettings {
-  override def onStart(app: Application): Unit = {
-    super.onStart(app)
+import scala.concurrent.{Future, ExecutionContext}
+
+class TodaysCrosswordGridLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent {
+
+  appLifecycle.addStopHook { () => Future {
+    TodaysCrosswordGrid.stop()
+  }}
+
+  override def start(): Unit = {
     if(Play.current.mode != Mode.Test) {
       TodaysCrosswordGrid.start()
     }
-  }
-
-  override def onStop(app: Application): Unit = {
-    super.onStop(app)
-    TodaysCrosswordGrid.stop()
   }
 }
