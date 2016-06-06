@@ -7,11 +7,6 @@ define([
 ) {
     // Polyfill for Object-fit: https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit
 
-    function getStyle (el) {
-        var style = getComputedStyle(el);
-        return style['object-fit'];
-    }
-
     function setBackgroundImage(src) {
         return fastdomPromise.write(function () {
             $('.js-background-image').each(function () {
@@ -28,13 +23,13 @@ define([
 
     function init() {
         return fastdomPromise.read(function () {
-            return document.getElementsByClassName('js-immersive-main-media__img')[0];
+            return $('.js-immersive-main-media__img').get(0);
         }).then(function(picture) {
             if (picture) {
-                var style = getStyle(picture);
-                // if image doesn't use object-fit or has the default behavior (fill)
-                if (!style || style === 'fill') {
-                    setBackgroundImage(picture.src);
+                // If CSS.supports isn't supported, or if object fit isn't supported
+                if (typeof CSS === 'undefined' || !CSS.supports('object-fit', 'cover')) {
+                    var src = picture.currentSrc ? picture.currentSrc : picture.src;
+                    setBackgroundImage(src);
                 }
             }
         });
