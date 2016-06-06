@@ -133,4 +133,13 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 6, 21),
     exposeClientSide = true
   )
+
+  val ABVideoYellowButton = Switch(
+    SwitchGroup.ABTests,
+    "ab-video-yellow-button",
+    "Make big play button yellow",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 14),
+    exposeClientSide = true
+  )
 }

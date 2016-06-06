@@ -24,11 +24,11 @@ define([
 
         this.variants = [
             {
-                id: 'baseline1',
+                id: 'control',
                 test: function () {}
             },
             {
-                id: 'baseline2',
+                id: 'variant',
                 test: function () {}
             }
         ];
