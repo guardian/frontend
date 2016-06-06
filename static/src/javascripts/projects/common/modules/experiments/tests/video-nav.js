@@ -1,7 +1,5 @@
 define([], function () {
     function setVideoDropdown(text, complete) {
-        var videoContainer = document.querySelector('.fc-container--video');
-        var mainContainer = document.querySelector('[role="main"]');
         var videoIcon = document.querySelector('.inline-video-icon').cloneNode(true);
 
         var topNavigation = document.querySelector('.top-navigation');
@@ -16,29 +14,7 @@ define([], function () {
         navItemLink.innerHTML = text;
         navItemLink.appendChild(videoIcon);
         topNavigation.insertBefore(navItem, secondNavItem);
-
-        if (videoContainer) {
-            // we use this so as not to screw with space-finder
-            var inserted = false;
-            videoContainer.style.display = 'none';
-            navItemLink.addEventListener('click', function (ev) {
-                if (!inserted) {
-                    mainContainer.insertBefore(videoContainer, mainContainer.firstChild);
-                    inserted = true;
-                }
-
-                ev.preventDefault();
-                if (videoContainer.style.display === 'none') {
-                    videoContainer.style.display = 'block';
-                } else {
-                    videoContainer.style.display = 'none';
-                }
-                complete();
-                return false;
-            });
-        } else {
-            navItemLink.addEventListener('click', complete);
-        }
+        navItemLink.addEventListener('click', complete);
     }
 
 
