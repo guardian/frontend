@@ -106,6 +106,12 @@ define([
         }
     }
 
+    function setFluid(el) {
+        if (el.classList.contains('ad-slot--container-inline')) {
+            el.classList.add('ad-slot--fluid');
+        }
+    }
+
     function constructQuery(params) {
         return reduce(params, function (result, value, key) {
             var buildParam = function (value) {
@@ -196,6 +202,7 @@ define([
         capi: createToggle,
         capiSingle: createToggle,
         paidforCard: function (el) {
+            setFluid(el);
             adjustMostPopHeight(el);
             createToggle(el);
         }
