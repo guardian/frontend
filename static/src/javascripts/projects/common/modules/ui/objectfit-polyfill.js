@@ -9,7 +9,7 @@ define([
 
     function setBackgroundImage(src) {
         return fastdomPromise.write(function () {
-            $('.js-background-image').each(function () {
+            $('.js-object-fit-polyfill').each(function () {
                 var $container = $(this);
 
                 if (src) {

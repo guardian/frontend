@@ -28,7 +28,7 @@
 }
 
 @immersiveMainMedia(page: GalleryPage) = {
-    <div class="new-gallery content tonal--tone-media immersive-main-media js-background-image">
+    <div class="new-gallery content tonal--tone-media immersive-main-media js-object-fit-polyfill">
 
         @page.item.elements.mainPicture.map(_.images).orElse(page.item.trail.trailPicture).map { picture =>
             @fragments.image(
