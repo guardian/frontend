@@ -24,11 +24,11 @@
     } else {
         <div>Sponsor: <strong>@{lineItem.sponsor}</strong></div>
     }
-    @if(lineItem.targeting.adUnits.nonEmpty) {
-        @if(lineItem.targeting.adUnits.size == 1) {
-            <div>Ad Unit: @{lineItem.targeting.adUnits.map(_.path.mkString("/"))}</div>
+    @if(lineItem.targeting.adUnitsIncluded.nonEmpty) {
+        @if(lineItem.targeting.adUnitsIncluded.size == 1) {
+            <div>Ad Unit: @{lineItem.targeting.adUnitsIncluded.map(_.path.mkString("/"))}</div>
         } else {
-            <div>Ad Units: @{lineItem.targeting.adUnits.map(_.path.mkString("/")).mkString(", ")}</div>
+            <div>Ad Units: @{lineItem.targeting.adUnitsIncluded.map(_.path.mkString("/")).mkString(", ")}</div>
         }
     }
     @if(lineItem.targeting.editions.nonEmpty) {

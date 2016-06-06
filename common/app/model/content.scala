@@ -389,13 +389,6 @@ object Article {
       analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
       schemaType = Some(ArticleSchemas(content.tags)),
-      cacheTime = if (!fields.isLive && LongCacheSwitch.isSwitchedOn) {
-          if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 1.hour) CacheTime.RecentlyUpdatedPurgable
-          else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 24.hours) CacheTime.LastDayUpdatedPurgable
-          else CacheTime.NotRecentlyUpdatedPurgable
-        } else {
-          content.metadata.cacheTime
-        },
       iosType = Some("Article"),
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,

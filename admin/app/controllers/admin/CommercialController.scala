@@ -36,7 +36,7 @@ object CommercialController extends Controller with Logging with AuthLogging wit
   }
 
   def renderSpecialAdUnits = AuthActions.AuthActionTest { implicit request =>
-    val specialAdUnits = DfpApi.readSpecialAdUnits(Configuration.commercial.dfpAdUnitRoot)
+    val specialAdUnits = DfpApi.readSpecialAdUnits(Configuration.commercial.dfpAdUnitGuRoot)
     Ok(views.html.commercial.specialAdUnits(environment.stage, specialAdUnits))
   }
 

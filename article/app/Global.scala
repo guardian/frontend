@@ -1,10 +1,10 @@
-import common.Logback.Logstash
+import common.Logback.LogstashLifecycle
 import common.dfp.DfpAgentLifecycle
-import common.{LifecycleComponent, BackwardCompatibleLifecycleComponents, CloudWatchApplicationMetrics, ContentApiMetrics}
+import common._
 import conf.switches.SwitchboardLifecycle
-import conf.InjectedCachedHealthCheckLifeCycle
+import conf.CachedHealthCheckLifeCycle
 import controllers.HealthCheck
-import metrics.FrontendMetric
+import model.ApplicationIdentity
 import ophan.SurgingContentAgentLifecycle
 import play.api.inject.ApplicationLifecycle
 import play.api.GlobalSettings
@@ -12,16 +12,9 @@ import services.NewspaperBooksAndSectionsAutoRefresh
 
 import scala.concurrent.ExecutionContext
 
-object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents
-  with DfpAgentLifecycle
-  with CloudWatchApplicationMetrics
-  with SurgingContentAgentLifecycle
-  with SwitchboardLifecycle
-  with Logstash {
+object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents {
 
-  override lazy val applicationName = "frontend-article"
-
-  override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ::: List(
+  val applicationMetrics = ApplicationMetrics(
     ContentApiMetrics.HttpLatencyTimingMetric,
     ContentApiMetrics.HttpTimeoutCountMetric,
     ContentApiMetrics.ContentApiErrorMetric
@@ -29,6 +22,11 @@ object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents
 
   override def lifecycleComponents(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext): List[LifecycleComponent] = List(
     NewspaperBooksAndSectionsAutoRefresh,
-    new InjectedCachedHealthCheckLifeCycle(HealthCheck)
+    new DfpAgentLifecycle(appLifecycle),
+    new CloudWatchMetricsLifecycle(appLifecycle, ApplicationIdentity("frontend-article"), applicationMetrics),
+    new SurgingContentAgentLifecycle(appLifecycle),
+    new SwitchboardLifecycle(appLifecycle),
+    LogstashLifecycle,
+    new CachedHealthCheckLifeCycle(HealthCheck)
   )
 }

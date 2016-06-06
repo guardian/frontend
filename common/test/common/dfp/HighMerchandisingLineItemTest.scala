@@ -13,21 +13,24 @@ class HighMerchandisingLineItemTest extends FlatSpec with Matchers {
         name = "test",
         id = 77942847,
         tags = Seq.empty,
-        adUnits = Seq(GuAdUnit("59359047", Seq("theguardian.com","money"))),
+        adUnitsIncluded = Seq(GuAdUnit("59359047", Seq("theguardian.com","money"), GuAdUnit.ACTIVE)),
+        adUnitsExcluded = Seq.empty,
         customTargetSet = Seq(CustomTargetSet("AND",Seq(CustomTarget("slot","IS",Seq("merchandising-high")),CustomTarget("edition","IS",Seq("uk")))))
       ),
         HighMerchandisingLineItem(
           name = "test2",
           id = 77943847,
           tags = Seq("cricket","England","test"),
-          adUnits = Seq(GuAdUnit("59359047", Seq("theguardian.com","sport"))),
+          adUnitsIncluded = Seq(GuAdUnit("59359047", Seq("theguardian.com","sport"), GuAdUnit.ACTIVE)),
+          adUnitsExcluded = Seq.empty,
           customTargetSet = Seq(CustomTargetSet("AND",Seq(CustomTarget("slot","IS",Seq("merchandising-high")))))
         ),
         HighMerchandisingLineItem(
           name = "test3",
           id = 77943847,
           tags = Seq.empty,
-          adUnits = Seq.empty,
+          adUnitsIncluded = Seq.empty,
+          adUnitsExcluded = Seq.empty,
           customTargetSet = Seq(CustomTargetSet("AND",Seq(CustomTarget("slot","IS",Seq("merchandising-high")),CustomTarget("url","IS",Seq("/commentisfree/2015/jul/21/it-hurts-but-im-going-to-defend-ashley-madison-and-37-million-cheaters")))))
         )
       )
