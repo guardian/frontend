@@ -421,12 +421,12 @@ define([
     }
 
     function initYellowPlayButton() {
-        $('.fc-item__video-fallback', document.body).each(function (el) {
-            bonzo(el).addClass('vjs-big-play-button--yellow');
-        });
-
         var selector = '.fc-item__video';
         var hoverStateClassName = 'u-faux-block-link--hover';
+
+        $(selector).each(function (el) {
+            bonzo(el).parent().addClass('vjs-big-play-button--yellow');
+        });
 
         var showIntentToPlay = function (e) {
             fastdom.write(function () {
