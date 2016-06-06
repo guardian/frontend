@@ -109,6 +109,9 @@ define([
         theFiver: function () {
             return page.keywordExists(['Football']) && allowedArticleStructure();
         },
+        labNotes: function () {
+            return config.page.section === 'science' && config.switches.emailSignupLabNotes;
+        },
         usBriefing: function () {
             return (config.page.section === 'us-news' && allowedArticleStructure()) ||
                 config.page.series === 'Guardian US briefing';
