@@ -53,7 +53,7 @@ module.exports = function () {
             command: [
                 'cp static/src/stylesheets/atomic/styles.css common/conf/assets/inline-stylesheets/atomic.css',
                 'cp static/src/stylesheets/atomic/class-map.json common/conf/assets/atomic-class-map.json'
-            ]
+            ].join(' && ')
         }
     };
 };
