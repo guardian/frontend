@@ -30,10 +30,12 @@ define([
         return fastdomPromise.read(function () {
             return document.getElementsByClassName('js-immersive-main-media__img')[0];
         }).then(function(picture) {
-            var style = getStyle(picture);
-            // if image doesn't use object-fit or has the default behavior (fill)
-            if (!style || style === 'fill') {
-                setBackgroundImage(picture.src);
+            if (picture) {
+                var style = getStyle(picture);
+                // if image doesn't use object-fit or has the default behavior (fill)
+                if (!style || style === 'fill') {
+                    setBackgroundImage(picture.src);
+                }
             }
         });
     }
