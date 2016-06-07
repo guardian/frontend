@@ -1,7 +1,3 @@
-/**
-    Video Container
- */
-
 define([
     'bean',
     'common/utils/fastdom-promise',
