@@ -28,10 +28,16 @@
         }
         &.hosted-thrasher__body--2-elems > .hosted-thrasher--element {
             &:nth-child(1) {
-                margin-right: 10px;
+                @include mq(tablet) {
+                    margin-right: 10px;
+                }
             }
             &:nth-child(n+2) {
-                margin-left: 10px;
+                margin-top: 10px;
+                @include mq(tablet) {
+                    margin-top: 0;
+                    margin-left: 10px;
+                }
             }
             &:nth-child(n+3),
             &:nth-child(n+4) {
@@ -64,7 +70,6 @@
 
     .hosted-thrasher__heading {
         @include f-headlineSans;
-
         margin: 0;
         font-size: 22px;
         line-height: 24px;
@@ -100,25 +105,9 @@
     .hosted-thrasher__meta {
         position: absolute;
         left: $gs-gutter/2;
-        bottom: 60px;
+        bottom: 18%;
         width: 100%;
         color: #ffffff;
-
-        @include mq($until: desktop) {
-            bottom: 15%;
-        }
-    }
-
-    .hosted-thrasher__body--2-elems {
-        .hosted-thrasher__meta {
-            width: $gs-column-width * 4;
-        }
-        .hosted-thrasher__heading--small {
-            font-size: 24px;
-        }
-        .hosted-thrasher__heading {
-            font-size: 28px;
-        }
     }
 
     .hosted-thrasher--image-container {
@@ -127,6 +116,35 @@
         background-repeat: no-repeat;
         background-size: cover;
         position: relative;
+    }
+
+    .hosted-thrasher__body--2-elems {
+        .hosted-thrasher__meta {
+            width: $gs-column-width * 4;
+            @include mq(tablet) {
+                bottom: 15%;
+                font-size: 24px;
+            }
+        }
+        .hosted-thrasher__heading--small {
+            font-size: 22px;
+            @include mq(tablet) {
+                font-size: 24px;
+            }
+        }
+        .hosted-thrasher__heading {
+            font-size: 22px;
+            line-height: 22px;
+            @include mq(tablet) {
+                font-size: 28px;
+                line-height: 30px;
+            }
+        }
+        .hosted-thrasher--image-container {
+            @include mq($until: tablet) {
+                height: 230px;
+            }
+        }
     }
 
     .hostedbadge {
