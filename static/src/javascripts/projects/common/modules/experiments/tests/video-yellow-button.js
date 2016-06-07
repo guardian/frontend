@@ -4,7 +4,7 @@ define([
     config
 ) {
     return function () {
-        this.id = 'VideoYellowPlayButton';
+        this.id = 'VideoYellowButton';
         this.start = '2016-06-07';
         this.expiry = '2016-06-14';
         this.author = 'Akash Askoolum';
