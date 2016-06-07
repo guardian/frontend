@@ -1,13 +1,13 @@
 package views.support
 
 import common.Edition
-import common.commercial.{CardContent, ContainerModel}
+import common.commercial.{Branding, CardContent, ContainerModel, PaidContent}
 import common.dfp.AdSize.responsiveSize
 import common.dfp._
 import conf.switches.Switches._
 import layout.{ColumnAndCards, ContentCard, FaciaContainer}
 import model.pressed.{CollectionConfig, PressedContent}
-import model.{Branding, ContentType, MetaData, Page, PaidContent, Tag}
+import model.{ContentType, MetaData, Page, Tag}
 
 object Commercial {
 

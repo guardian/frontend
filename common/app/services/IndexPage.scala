@@ -1,6 +1,7 @@
 package services
 
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
+import common.commercial.Branding
 import common.{Edition, LinkTo}
 import conf.switches.Switches
 import contentapi.Paths

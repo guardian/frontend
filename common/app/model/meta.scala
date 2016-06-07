@@ -3,7 +3,7 @@ package model
 import campaigns.PersonalInvestmentsCampaign
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
-import common.commercial.BrandHunter
+import common.commercial.{BrandHunter, Branding}
 import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration

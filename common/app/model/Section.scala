@@ -2,7 +2,7 @@ package model
 
 import campaigns.PersonalInvestmentsCampaign
 import com.gu.contentapi.client.model.v1.{Section => ApiSection}
-import common.commercial.BrandHunter
+import common.commercial.{BrandHunter, Branding}
 import common.{Edition, Pagination}
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 
@@ -45,7 +45,7 @@ object Section {
       metadata,
       keywordSponsorship,
       isEditionalised = section.editions.length > 1,
-      activeBrandings = section.activeSponsorships map (_ map Branding.make)
+      activeBrandings = section.activeSponsorships map (_ map Branding.make(section.webTitle))
     )
   }
 }
@@ -72,7 +72,7 @@ object SectionSummary {
   def fromCapiSection(section: ApiSection): SectionSummary = {
     SectionSummary(
       id = section.id,
-      activeBrandings = section.activeSponsorships map (_ map Branding.make)
+      activeBrandings = section.activeSponsorships map (_ map Branding.make(section.webTitle))
     )
   }
 

@@ -1,7 +1,7 @@
 package common.commercial
 
 import common.Edition
-import model._
+import model.ContentType
 import org.joda.time.DateTime
 
 object BrandHunter {

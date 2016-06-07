@@ -1,6 +1,6 @@
 package model
 
-import common.commercial.BrandHunter
+import common.commercial.{BrandHunter, Branding}
 import common.{Edition, ExecutionContexts, Logging}
 import play.api.libs.json.Json
 
