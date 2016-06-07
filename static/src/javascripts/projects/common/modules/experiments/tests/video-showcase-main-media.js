@@ -1,35 +1,36 @@
 define([
+    'qwery',
     'common/utils/config'
 ], function (
+    qwery,
     config
 ) {
     return function () {
-        this.id = 'VideoTeaser';
+        this.id = 'VideoMainMediaAlwaysShowcase';
         this.start = '2016-06-07';
-        this.expiry = '2016-06-17';
+        this.expiry = '2016-06-14';
         this.author = 'Akash Askoolum';
-        this.description = 'Test if video teasing leads to more plays';
+        this.description = 'Test if a big main media video leads to more plays';
         this.showForSensitive = true;
-        this.audience = 0.18;
-        this.audienceOffset = 0.12;
+        this.audience = 1;
+        this.audienceOffset = 0;
         this.successMeasure = '';
-        this.audienceCriteria = 'Videos not in a carousel';
+        this.audienceCriteria = '';
         this.dataLinkNames = '';
         this.idealOutcome = '';
 
         this.canRun = function () {
-            return config.page.isFront
-                && document.getElementsByClassName('gu-media-wrapper--video').length > 0
-                && config.page.pageId !== 'video';
+            return config.page.contentType === 'Article'
+                && qwery('[data-component="main video"]').length > 0;
         };
 
         this.variants = [
             {
-                id: 'control',
+                id: 'baseline1',
                 test: function () {}
             },
             {
-                id: 'variant',
+                id: 'baseline2',
                 test: function () {}
             }
         ];

@@ -24,16 +24,15 @@ define([
         this.shouldClosePermanently = this.config.shouldClosePermanently || false;
         this.bannerTmpl = template(surveySimpleTemplate,
             {
-                surveyHeader: this.config.surveyHeader,
-                surveyText: this.config.surveyText,
-                buttonText: this.config.buttonText,
-                buttonLink: this.config.buttonLink,
-                buttonDataLink: this.config.membershipDataLink,
+                header: this.config.header,
+                paragraph1: this.config.paragraph1,
+                paragraph2: this.config.paragraph2,
+                paragraph3: this.config.paragraph3,
                 showCloseBtn: this.config.showCloseBtn,
                 arrowWhiteRight: svgs('arrowWhiteRight'),
                 marque36icon: svgs('marque36icon'),
                 crossIcon: svgs('crossIcon'),
-                surveyOverlaySimple: svgs('surveyOverlaySimple')
+                paidContent: svgs('paidContent')
             });
     };
 
@@ -44,7 +43,6 @@ define([
 
                 if (this.config.showCloseBtn) {
                     bean.on(document, 'click', $('.js-survey-close'), this.handleClick.bind(this));
-                    bean.on(document, 'click', $('.js-survey-link__takepart'), this.handleClick.bind(this));
                 }
             }.bind(this));
         }

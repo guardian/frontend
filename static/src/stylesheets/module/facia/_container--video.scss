@@ -95,6 +95,10 @@ $video-width-desktop: 700px;
     }
 }
 
+.fc-container--video-no-fill-sides {
+    background-color: transparent;
+}
+
 .video-title {
     color: $media-default;
     display: block;

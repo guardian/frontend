@@ -24,7 +24,7 @@ trait AdSlotAgent {
   }
 
   private def targetsAdUnit(lineItem: GuLineItem, adUnitWithoutRoot: String) = {
-    val adUnits = for (adUnit <- lineItem.targeting.adUnits) yield {
+    val adUnits = for (adUnit <- lineItem.targeting.adUnitsIncluded) yield {
       adUnit.path.mkString("/").stripSuffix("/ng")
     }
     adUnits.contains(fullAdUnit(adUnitWithoutRoot))

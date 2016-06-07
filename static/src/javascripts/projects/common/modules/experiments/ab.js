@@ -7,14 +7,10 @@ define([
     'common/modules/analytics/mvt-cookie',
     'lodash/functions/memoize',
     'lodash/utilities/noop',
-
     'common/modules/experiments/tests/fronts-on-articles2',
     'common/modules/experiments/tests/live-blog-chrome-notifications-internal',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/facebook-share-params',
-    'common/modules/experiments/tests/participation-low-fric-film',
-    'common/modules/experiments/tests/participation-low-fric-music-v1',
-    'common/modules/experiments/tests/participation-low-fric-tv',
     'common/modules/experiments/tests/participation-low-fric-recipes',
     'common/modules/experiments/tests/participation-low-fric-fashion',
     'common/modules/experiments/tests/participation-low-fric-sport',
@@ -22,7 +18,8 @@ define([
     'common/modules/experiments/tests/welcome-header',
     'common/modules/experiments/tests/participation-discussion-test',
     'common/modules/experiments/tests/new-user-adverts-disabled',
-    'common/modules/experiments/tests/video-teaser'
+    'common/modules/experiments/tests/video-teaser',
+    'common/modules/experiments/tests/video-showcase-main-media'
 ], function (
     reportError,
     config,
@@ -36,9 +33,6 @@ define([
     LiveBlogChromeNotificationsInternal,
     LiveBlogChromeNotificationsProd,
     FacebookShareParams,
-    ParticipationLowFricFilm,
-    ParticipationLowFricMusicV1,
-    ParticipationLowFricTv,
     ParticipationLowFricRecipes,
     ParticipationLowFricFashion,
     ParticipationLowFricSport,
@@ -46,7 +40,8 @@ define([
     WelcomeHeader,
     ParticipationDiscussionTest,
     NewUserAdvertsDisabled,
-    VideoTeaser
+    VideoTeaser,
+    VideoShowcaseMainMedia
 ) {
 
     var TESTS = [
@@ -54,9 +49,6 @@ define([
         new LiveBlogChromeNotificationsInternal(),
         new LiveBlogChromeNotificationsProd(),
         new FacebookShareParams(),
-        new ParticipationLowFricFilm(),
-        new ParticipationLowFricMusicV1(),
-        new ParticipationLowFricTv(),
         new ParticipationLowFricRecipes(),
         new ParticipationLowFricFashion(),
         new ParticipationLowFricSport(),
@@ -64,7 +56,8 @@ define([
         new WelcomeHeader(),
         new ParticipationDiscussionTest(),
         new NewUserAdvertsDisabled(),
-        new VideoTeaser()
+        new VideoTeaser(),
+        new VideoShowcaseMainMedia()
     ];
 
     var participationsKey = 'gu.ab.participations';
