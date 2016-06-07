@@ -92,7 +92,7 @@ define([
 
         if ($articleBody.length) {
             var allArticleEls = $('> *', $articleBody);
-            return every([].slice.call(allArticleEls, allArticleEls.length - 3), isParagraph);
+            return every([].slice.call(allArticleEls, allArticleEls.length - 2), isParagraph);
         } else {
             return false;
         }
@@ -111,6 +111,11 @@ define([
         },
         labNotes: function () {
             return config.page.section === 'science' && config.switches.emailSignupLabNotes;
+        },
+        euRef: function () {
+            return config.switches.emailSignupEuRef &&
+                    page.keywordExists(['EU referendum']) &&
+                    allowedArticleStructure();
         },
         usBriefing: function () {
             return (config.page.section === 'us-news' && allowedArticleStructure()) ||
