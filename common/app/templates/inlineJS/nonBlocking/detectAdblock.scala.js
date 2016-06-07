@@ -20,9 +20,25 @@ try {
                 var adStyles = window.getComputedStyle(ad);
 
                 adBlockers.active = adStyles.getPropertyValue('display') === 'none';
-                try {
-                    adBlockers.onDetect(adBlockers.active);
-                } catch(e) {}
+
+                // Run each listener
+                runEachListener(adBlockers.onDetect);
+
+                // Run subsequent listeners immediately
+                adBlockers.onDetect = {
+                    push : function () {
+                        var toRun = Array.prototype.slice.call(arguments, 0);
+                        runEachListener(toRun);
+                    }
+                };
+
+                function runEachListener(listeners) {
+                    for (var i = 0; i < listeners.length; i++) {
+                        try {
+                            listeners[i](adBlockers.active);
+                        } catch (e) {}
+                    }
+                }
             });
         });
     })(document, window);
