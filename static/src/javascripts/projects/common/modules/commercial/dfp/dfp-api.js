@@ -197,7 +197,9 @@ define([
     var lazyLoadEnabled = false;
 
     function load() {
-        return commercialFeatures.dfpAdvertising ? loadAdvertising() : Promise.resolve();
+        if (commercialFeatures.dfpAdvertising) {
+            loadAdvertising();
+        }
     }
 
     function loadAdvertising() {
