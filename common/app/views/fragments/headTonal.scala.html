@@ -1,6 +1,5 @@
 @(item: model.ContentType, page: model.Page, showBadge: Boolean = false, showMeta: Boolean = true, amp: Boolean = false)(implicit request: RequestHeader)
 
-@import conf.switches.Switches.staticBadgesSwitch
 @import views.support.ContributorLinks
 @import views.support.TrailCssClasses.toneClass
 
@@ -85,10 +84,7 @@
                     </div>
                 }
 
-                @if(
-                    (showBadge && !item.commercial.isAdvertisementFeature) ||
-                        (staticBadgesSwitch.isSwitchedOn && !item.tags.isVideo && !item.tags.isAudio)
-                ) {
+                @if(showBadge && !item.commercial.isAdvertisementFeature) {
                     @fragments.commercial.badge(item, page)
                 }
 
