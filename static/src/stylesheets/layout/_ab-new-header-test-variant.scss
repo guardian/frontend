@@ -114,6 +114,8 @@
     padding: $gs-gutter * .6;
     border-radius: 100%;
     z-index: $zindex-modal;
+    height: 42px;
+    width: 42px;
 
     @include mq($until: phablet) {
         // Overlap
@@ -124,12 +126,36 @@
     @include mq(phablet) {
         margin-left: 6px;
     }
+}
 
-    svg {
-        height: 18px;
-        // Removes extra spacing
+%new-header__burger-icon__line {
+    width: 100%;
+    height: 2px;
+    background-color: #ffffff;
+}
+
+.new-header__nav__menu-button__burger-icon {
+    @extend %new-header__burger-icon__line;
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 2px;
+    position: relative;
+
+    &:before,
+    &:after {
+        content: '';
+        position: absolute;
         display: block;
-        fill: #ffffff;
+    }
+
+    &:before {
+        @extend %new-header__burger-icon__line;
+        top: 5px;
+    }
+
+    &:after {
+        @extend %new-header__burger-icon__line;
+        top: 10px;
     }
 }
 

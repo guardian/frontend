@@ -20,7 +20,8 @@ define([
     'common/modules/experiments/tests/new-user-adverts-disabled',
     'common/modules/experiments/tests/video-teaser',
     'common/modules/experiments/tests/video-showcase-main-media',
-    'common/modules/experiments/tests/video-football-thrasher'
+    'common/modules/experiments/tests/video-football-thrasher',
+    'common/modules/experiments/tests/video-nav'
 ], function (
     reportError,
     config,
@@ -43,7 +44,8 @@ define([
     NewUserAdvertsDisabled,
     VideoTeaser,
     VideoShowcaseMainMedia,
-    VideoFootballThrasher
+    VideoFootballThrasher,
+    VideoNav
 ) {
 
     var TESTS = [
@@ -60,7 +62,8 @@ define([
         new NewUserAdvertsDisabled(),
         new VideoTeaser(),
         new VideoShowcaseMainMedia(),
-        new VideoFootballThrasher()
+        new VideoFootballThrasher(),
+        new VideoNav()
     ];
 
     var participationsKey = 'gu.ab.participations';
