@@ -109,7 +109,7 @@ trait ABTestSwitches {
     "ab-video-teaser",
     "Show video teaser",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 8),
+    sellByDate = new LocalDate(2016, 6, 17),
     exposeClientSide = true
   )
 }
