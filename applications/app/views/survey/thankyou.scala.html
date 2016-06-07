@@ -1,0 +1,55 @@
+@()(implicit request: RequestHeader)
+
+@import staticpages.StaticPages.simpleSurveyStaticPage
+@import common.InlineJs
+@import templates.inlineJS.blocking.js._
+
+<!DOCTYPE html>
+<html id="js-context" class="js-off is-not-modern id--signed-out" data-page-path="@request.path">
+
+    <head>
+        <meta charset="utf-8" />
+        <title>@views.support.Title(simpleSurveyStaticPage)</title>
+
+        @fragments.metaData(simpleSurveyStaticPage)
+
+        @* get the stylesheets downloading ASAP *@
+        @fragments.stylesheets(None)
+
+        @* polyfill, feature detect etc before we try and use the stylesheets *@
+        @fragments.inlineJSBlocking(simpleSurveyStaticPage)
+
+        @* start trying to use the stylesheets *@
+        <script>
+            @InlineJs(enableStylesheets().body, "enableStylesheets.js")
+        </script>
+
+    </head>
+    <body
+    id="survey-laboratory"
+    itemscope itemtype="http://schema.org/WebPage">
+
+        @fragments.header(simpleSurveyStaticPage)
+
+        <div class="content">
+
+            <div class="formstack-survey-wrapper">
+
+                <div class="wrapper-inner">
+
+                    <h1>Thank you</h1>
+
+                    <p class="standfirst">The form was submitted successfully.</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        @fragments.footer(simpleSurveyStaticPage)
+
+        @fragments.inlineJSNonBlocking()
+
+    </body>
+</html>
