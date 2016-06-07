@@ -1,7 +1,7 @@
 define([
     'bean',
     'bonzo',
-    'fastdom',
+    'common/utils/fastdom-promise',
     'common/utils/$',
     'common/utils/detect',
     'common/utils/mediator',
@@ -57,18 +57,6 @@ define([
         var $fabricExpandableVideo = $.create(template(fabricExpandableVideoHtml, { data: merge(this.params, showmoreArrow, showmorePlus, videoSource) }));
         var $ad = $('.ad-exp--expand', $fabricExpandableVideo);
 
-        var domPromise = new Promise(function (resolve) {
-            fastdom.write(function () {
-                $ad.css('height', this.closedHeight);
-                $('.ad-exp-collapse__slide', $fabricExpandableVideo).css('height', this.closedHeight);
-                if (this.params.trackingPixel) {
-                    addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
-                }
-                $fabricExpandableVideo.appendTo(this.$adSlot);
-                resolve();
-            }.bind(this));
-        }.bind(this));
-
         bean.on(this.$adSlot[0], 'click', '.ad-exp__open', function () {
             fastdom.write(function () {
                 var videoSrc = $('#YTPlayer').attr('src');
@@ -102,7 +90,15 @@ define([
             }.bind(this));
         }.bind(this));
 
-        return domPromise;
+        return fastdom.write(function () {
+            $ad.css('height', this.closedHeight);
+            $('.ad-exp-collapse__slide', $fabricExpandableVideo).css('height', this.closedHeight);
+            if (this.params.trackingPixel) {
+                addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
+            }
+            $fabricExpandableVideo.appendTo(this.$adSlot);
+            return true;
+        }, this);
     };
 
     return FabricExpandableVideoV1;

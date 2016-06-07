@@ -4,6 +4,7 @@
  */
 define([
     'fastdom',
+    'Promise',
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
@@ -17,6 +18,7 @@ define([
     'lodash/collections/reduce'
 ], function (
     fastdom,
+    Promise,
     $,
     config,
     mediator,
@@ -161,32 +163,32 @@ define([
     }
 
     CommercialComponent.prototype.create = function () {
-        if (this.url) {
-            lazyload({
-                url: this.url,
-                container: this.adSlot,
-                success: onSuccess.bind(this),
-                error: onError.bind(this)
-            });
-        } else {
-            this.adSlot.style.display = 'none';
-        }
-
-        return this;
-
-        function onSuccess() {
-            if (this.postLoadEvents[this.type]) {
-                this.postLoadEvents[this.type](this.adSlot);
+        return new Promise(function (resolve) {
+            if (this.url) {
+                lazyload({
+                    url: this.url,
+                    container: this.adSlot,
+                    success: onSuccess.bind(this),
+                    error: onError.bind(this)
+                });
+            } else {
+                resolve(false);
             }
 
-            mediator.emit('modules:commercial:creatives:commercial-component:loaded');
-        }
+            return this;
 
-        function onError() {
-            fastdom.write(function () {
-                this.adSlot.style.display = 'none';
-            }, this);
-        }
+            function onSuccess() {
+                if (this.postLoadEvents[this.type]) {
+                    this.postLoadEvents[this.type](this.adSlot);
+                }
+
+                resolve(true);
+            }
+
+            function onError() {
+                resolve(false);
+            }
+        });
     };
 
     CommercialComponent.prototype.postLoadEvents = {
