@@ -58,7 +58,7 @@ case class Section private (
   ) extends StandalonePage {
 
   override def branding(edition: Edition): Option[Branding] = {
-    BrandHunter.findSectionBranding(this, publicationDate = None, edition)
+    BrandHunter.findBranding(metadata.section.flatMap(_.activeBrandings), edition, publicationDate = None)
   }
 }
 

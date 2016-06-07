@@ -57,7 +57,8 @@ case class FrontProperties(
   editorialType: Option[String],
   activeBrandings: Option[Seq[Branding]]
 ) {
-  def branding(edition: Edition): Option[Branding] = BrandHunter.findFrontBranding(this, edition)
+  def branding(edition: Edition): Option[Branding] =
+    BrandHunter.findBranding(activeBrandings, edition, publicationDate = None)
 }
 
 object FrontProperties {

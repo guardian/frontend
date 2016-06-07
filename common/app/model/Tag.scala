@@ -289,6 +289,6 @@ case class Tag (
   val contributorImagePath = properties.bylineImageUrl.map(ImgSrc(_, Contributor))
 
   override def branding(edition: Edition): Option[Branding] = {
-    BrandHunter.findTagBranding(this, publicationDate = None, edition)
+    BrandHunter.findBranding(properties.activeBrandings, edition, publicationDate = None)
   }
 }
