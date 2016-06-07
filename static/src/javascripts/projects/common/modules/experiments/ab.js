@@ -19,6 +19,7 @@ define([
     'common/modules/experiments/tests/participation-discussion-test',
     'common/modules/experiments/tests/new-user-adverts-disabled',
     'common/modules/experiments/tests/video-teaser',
+    'common/modules/experiments/tests/video-nav',
     'common/modules/experiments/tests/video-showcase-main-media'
 ], function (
     reportError,
@@ -41,6 +42,7 @@ define([
     ParticipationDiscussionTest,
     NewUserAdvertsDisabled,
     VideoTeaser,
+    VideoNav,
     VideoShowcaseMainMedia
 ) {
 
@@ -57,6 +59,7 @@ define([
         new ParticipationDiscussionTest(),
         new NewUserAdvertsDisabled(),
         new VideoTeaser(),
+        new VideoNav(),
         new VideoShowcaseMainMedia()
     ];
 
