@@ -19,7 +19,7 @@ import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
 import play.api.libs.json._
-import views.support.{ChaptersLinksCleaner, FacebookOpenGraphImage, ImgSrc, Item700, StripHtmlTagsAndUnescapeEntities}
+import views.support._
 
 import scala.collection.JavaConversions._
 import scala.language.postfixOps
@@ -239,7 +239,7 @@ final case class Content(
 
   val twitterProperties = Map(
     "twitter:app:url:googleplay" -> metadata.webUrl.replaceFirst("^[a-zA-Z]*://", "guardian://"), //replace current scheme with guardian mobile app scheme
-    "twitter:image" -> rawOpenGraphImage
+    "twitter:image" -> ImgSrc(rawOpenGraphImage, TwitterImage)
   ) ++ contributorTwitterHandle.map(handle => "twitter:creator" -> s"@$handle").toList
 
   val quizzes: Seq[Quiz] = atoms.map(_.quizzes).getOrElse(Nil)
