@@ -403,7 +403,9 @@ define([
 
     function initFacia() {
         if (config.page.isFront) {
-            videoContainer();
+            $('.js-video-playlist').each(function(el) {
+                videoContainer.init(el);
+            });
         }
     }
 
