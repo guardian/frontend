@@ -76,6 +76,9 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
       TheGuardianLinkTo("/technology/hello", ed) should be (s"https://www.theguardian.com/technology/hello")
       TheGuardianLinkTo("/business", ed) should be (s"https://www.theguardian.com/${ed.id.toLowerCase}/business")
       TheGuardianLinkTo("/business/hello", ed) should be (s"https://www.theguardian.com/business/hello")
+      TheGuardianLinkTo("https://www.theguardian.com/us/sport", ed) should be (s"https://www.theguardian.com/us/sport")
+      TheGuardianLinkTo("http://www.theguardian.com/us/sport", ed) should be (s"https://www.theguardian.com/us/sport")
+      TheGuardianLinkTo("/us/sport", ed) should be (s"https://www.theguardian.com/us/sport")
       TheGuardianLinkTo("/sport", ed) should be (s"https://www.theguardian.com/${ed.id.toLowerCase}/sport")
       TheGuardianLinkTo("/sport/hello", ed) should be (s"https://www.theguardian.com/sport/hello")
       TheGuardianLinkTo("/football", ed) should be (s"https://www.theguardian.com/football")
@@ -109,8 +112,8 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
 
   it should "correctly link editionalised sections to the UK version for the International edition" in {
     // Only the front page is different in the international edition, the others go to UK...
-    TheGuardianLinkTo("/culture", International) should be ("http://www.theguardian.com/uk/culture")
-    TheGuardianLinkTo("/sport", International) should be ("http://www.theguardian.com/uk/sport")
+    TheGuardianLinkTo("/culture", International) should be ("https://www.theguardian.com/uk/culture")
+    TheGuardianLinkTo("/sport", International) should be ("https://www.theguardian.com/uk/sport")
   }
 
 
@@ -163,6 +166,12 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
   it should "link to http explicitly for amp articles" in {
     val result = TestCanonicalLink(TestRequest("/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen/amp").withHost("www.theguardian.com"), "http://www.theguardian.com/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen")
     result should be("http://www.theguardian.com/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen")
+  }
+
+
+  it should "link to https for all paths and editions" in {
+    val result = TestCanonicalLink(TestRequest("/uk/technology").withHost("http://www.theguardian.com").withHeaders("X-Gu-Edition" -> Us.id), "https://www.theguardian.com/uk/technology")
+    result should be("https://www.theguardian.com/uk/technology")
   }
 
 }
