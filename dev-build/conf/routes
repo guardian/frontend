@@ -349,7 +349,6 @@ GET            /series/*path.json                                               
 # Applications (must come before wildcard)
 GET            /sitemaps/news.xml                                                                                                controllers.SiteMapController.renderNewsSiteMap()
 GET            /sitemaps/video.xml                                                                                               controllers.SiteMapController.renderVideoSiteMap()
-GET            /offline-crossword.json                                                                                                controllers.WebAppController.offlineCrossword()
 GET            /service-worker.js                                                                                                controllers.WebAppController.serviceWorker()
 
 #Notifications Store

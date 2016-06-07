@@ -79,6 +79,10 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) {
     }
   }
 
+  def getRootAdUnitId: String = {
+    services.networkService.getCurrentNetwork.getEffectiveRootAdUnitId
+  }
+
   object lineItemCreativeAssociations {
 
     private val licaService = services.licaService

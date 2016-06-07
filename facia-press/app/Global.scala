@@ -1,20 +1,17 @@
-import common.Logback.Logstash
+import common.Logback.LogstashLifecycle
 import common._
 import conf.switches.SwitchboardLifecycle
-import conf.{Configuration => GuardianConfiguration}
-import frontpress.{FrontPressCron, ToolPressQueueWorker}
+import lifecycle.FaciaPressLifecycle
+import model.ApplicationIdentity
+import play.api.inject.ApplicationLifecycle
 import play.api.GlobalSettings
 import services.ConfigAgentLifecycle
 
-object Global extends GlobalSettings
-  with ConfigAgentLifecycle
-  with SwitchboardLifecycle
-  with CloudWatchApplicationMetrics
-  with Logstash {
+import scala.concurrent.ExecutionContext
 
-  override def applicationName = "frontend-facia-press"
+object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents {
 
-  override def applicationMetrics = List(
+  val applicationMetrics = ApplicationMetrics(
     FaciaPressMetrics.FrontPressCronSuccess,
     ContentApiMetrics.HttpLatencyTimingMetric,
     ContentApiMetrics.HttpTimeoutCountMetric,
@@ -26,16 +23,12 @@ object Global extends GlobalSettings
     FaciaPressMetrics.AllFrontsPressLatencyMetric
   )
 
-  override def onStart(app: play.api.Application) {
-    super.onStart(app)
-    ToolPressQueueWorker.start()
-    if (GuardianConfiguration.faciatool.frontPressCronQueue.isDefined) {
-      FrontPressCron.start()
-    }
-  }
 
-  override def onStop(app: play.api.Application) {
-    ToolPressQueueWorker.stop()
-    super.onStop(app)
-  }
+  override def lifecycleComponents(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext): List[LifecycleComponent] = List(
+    new ConfigAgentLifecycle(appLifecycle),
+    new SwitchboardLifecycle(appLifecycle),
+    new CloudWatchMetricsLifecycle(appLifecycle, ApplicationIdentity("frontend-facia-press"), applicationMetrics),
+    LogstashLifecycle,
+    new FaciaPressLifecycle(appLifecycle)
+  )
 }

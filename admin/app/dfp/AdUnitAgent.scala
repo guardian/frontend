@@ -1,9 +1,9 @@
 package dfp
 
 import com.google.api.ads.dfp.axis.utils.v201508.StatementBuilder
-import com.google.api.ads.dfp.axis.v201508.InventoryStatus
 import common.dfp.GuAdUnit
 import conf.Configuration
+import ApiHelper.toSeq
 
 import scala.util.Try
 
@@ -13,25 +13,35 @@ object AdUnitAgent extends DataAgent[String, GuAdUnit] {
     val maybeData = for (session <- SessionWrapper()) yield {
 
       val statementBuilder = new StatementBuilder()
-                             .where("status = :status")
-                             .withBindVariableValue("status", InventoryStatus._ACTIVE)
 
       val dfpAdUnits = session.adUnits(statementBuilder)
 
-      val rootName = Configuration.commercial.dfpAdUnitRoot
+      val networkRootId = session.getRootAdUnitId
+      val guardianRootName = Configuration.commercial.dfpAdUnitGuRoot
+
+      val runOfNetwork = dfpAdUnits.find(_.getId == networkRootId).map( networkAdUnit => {
+        val id = networkAdUnit.getId
+        id -> GuAdUnit(
+          id = id,
+          path = Nil,
+          status = networkAdUnit.getStatus.getValue)
+      }).toSeq
+
       val rootAndDescendantAdUnits = dfpAdUnits filter { adUnit =>
         Option(adUnit.getParentPath) exists { path =>
-          val isRoot = path.length == 1 && adUnit.getName == rootName
-          val isDescendantOfRoot = path.length > 1 && path(1).getName == rootName
-          isRoot || isDescendantOfRoot
+          val isGuRoot = path.length == 1 && adUnit.getName == guardianRootName
+          val isDescendantOfRoot = path.length > 1 && path(1).getName == guardianRootName
+          isGuRoot || isDescendantOfRoot
         }
       }
 
-      rootAndDescendantAdUnits.map { adUnit =>
+      val adUnits = rootAndDescendantAdUnits.map { adUnit =>
         val id = adUnit.getId
-        val path = adUnit.getParentPath.tail.map(_.getName).toSeq :+ adUnit.getName
-        id -> GuAdUnit(id, path)
-      }.toMap
+        val path = toSeq(adUnit.getParentPath).tail.map(_.getName) :+ adUnit.getName
+        id -> GuAdUnit(id, path, adUnit.getStatus.getValue)
+      }
+
+      (adUnits ++ runOfNetwork).toMap
     }
 
     maybeData getOrElse Map.empty
@@ -41,8 +51,27 @@ object AdUnitAgent extends DataAgent[String, GuAdUnit] {
 
 object AdUnitService {
 
-  def adUnit(adUnitId: String): Option[GuAdUnit] = {
-    AdUnitAgent.get.data.get(adUnitId)
+  // Retrieves the ad unit object if the id matches and the ad unit is active.
+  def activeAdUnit(adUnitId: String): Option[GuAdUnit] = {
+    AdUnitAgent.get.data.get(adUnitId).collect {
+      case adUnit if adUnit.isActive => adUnit
+    }
   }
+
+  def archivedAdUnit(adUnitId: String): Option[GuAdUnit] = {
+    AdUnitAgent.get.data.get(adUnitId).collect {
+      case adUnit if adUnit.isArchived => adUnit
+    }
+  }
+
+  def isArchivedAdUnit(adUnitId: String) = archivedAdUnit(adUnitId).isDefined
+
+  def inactiveAdUnit(adUnitId: String): Option[GuAdUnit] = {
+    AdUnitAgent.get.data.get(adUnitId).collect {
+      case adUnit if adUnit.isInactive => adUnit
+    }
+  }
+
+  def isInactiveAdUnit(adUnitId: String) = inactiveAdUnit(adUnitId).isDefined
 
 }
