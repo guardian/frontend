@@ -16,6 +16,7 @@ define([
     'common/modules/commercial/build-page-targeting',
     'common/modules/commercial/commercial-features',
     'common/modules/component',
+    'common/modules/experiments/ab',
     'common/modules/video/events',
     'common/modules/video/fullscreener',
     'common/modules/video/tech-order',
@@ -45,6 +46,7 @@ define([
     buildPageTargeting,
     commercialFeatures,
     Component,
+    ab,
     events,
     fullscreener,
     techOrder,
@@ -170,10 +172,57 @@ define([
             });
         });
 
+        if(ab.isInVariant('VideoTeaser', 'variant')) {
+            initVideoTeaser();
+        }
+
         initPlayButtons(document.body);
 
         mediator.on('modules:related:loaded', initPlayButtons);
         mediator.on('page:media:moreinloaded', initPlayButtons);
+    }
+
+    function initVideoTeaser() {
+        fastdom.read(function () {
+            $('.js-video-player:not(.video-playlist__item__player)', document.body).each(function (el) {
+                var $el = bonzo(el);
+                var clone = el.cloneNode(true);
+                var $clone = bonzo(clone);
+                var teaserVideo = $('video', $clone).get(0);
+                var teaserLength = 5; //seconds
+
+                $clone.removeClass('media__container--hidden').addClass('media__container--active');
+                $('.js-video-placeholder', $el.parent()).addClass('media__container--hidden');
+
+                // teaser should be muted with no chrome
+                teaserVideo.muted = true;
+                teaserVideo.controls = false;
+
+                el.parentNode.insertBefore(clone, el);
+
+                teaserVideo.addEventListener('timeupdate', function () {
+                    if (teaserVideo.currentTime >= teaserLength) {
+                        teaserVideo.pause();
+
+                        // HACK around https://bugs.chromium.org/p/chromium/issues/detail?id=593273
+                        setTimeout(function () {
+                            teaserVideo.currentTime = 0;
+                            teaserVideo.play();
+                        }, 100);
+                    }
+                });
+
+                clone.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    teaserVideo.pause();
+                    $el.removeClass('media__container--hidden').addClass('media__container--active');
+                    enhanceVideo($('video', $el).get(0), true, false);
+                    $clone.remove();
+                });
+
+                teaserVideo.play();
+            });
+        });
     }
 
     function enhanceVideo(el, autoplay, shouldPreroll) {
