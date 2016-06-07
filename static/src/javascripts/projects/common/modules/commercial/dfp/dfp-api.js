@@ -130,37 +130,33 @@ define([
         return commercialFeatures.dfpAdvertising ?
             setupAdvertising() :
             fastdom.write(function () {
-                $(adSlotSelector).remove();
+                bonzo(qwery(adSlotSelector)).remove();
             });
     }
 
     function setupAdvertising() {
-        return new Promise(function (resolve) {
-            // if we don't already have googletag, create command queue and load it async
-            if (!window.googletag) {
-                window.googletag = googletag = { cmd: [] };
-                // load the library asynchronously
-                require(['js!googletag.js']);
-            } else {
-                googletag = window.googletag;
-            }
+        // if we don't already have googletag, create command queue and load it async
+        if (!window.googletag) {
+            window.googletag = googletag = { cmd: [] };
+            // load the library asynchronously
+            require(['js!googletag.js']);
+        } else {
+            googletag = window.googletag;
+        }
 
-            if (prebidEnabled) {
-                prebidService = new PrebidService();
-            }
+        if (prebidEnabled) {
+            prebidService = new PrebidService();
+        }
 
-            googletag.cmd.push = raven.wrap({ deep: true }, googletag.cmd.push);
+        googletag.cmd.push = raven.wrap({ deep: true }, googletag.cmd.push);
 
-            googletag.cmd.push(
-                function () {
-                    renderStartTime = new Date().getTime();
-                },
-                setListeners,
-                setPageTargeting
-            );
-
-            resolve();
-        });
+        googletag.cmd.push(
+            function () {
+                renderStartTime = new Date().getTime();
+            },
+            setListeners,
+            setPageTargeting
+        );
     }
 
     function setListeners() {
