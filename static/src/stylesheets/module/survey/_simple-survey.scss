@@ -34,7 +34,7 @@
             }
         }
 
-    h1 {
+        h1 {
             @include fs-headline(4);
             color: $guardian-brand;
             font-weight: bold;
@@ -49,25 +49,25 @@
 
 
 
-    p {
-        @include fs-bodyCopy(2);
-        margin-bottom: $gs-baseline;
-    }
+        p {
+            @include fs-bodyCopy(2);
+            margin-bottom: $gs-baseline;
+        }
 
-    .inline-survey_clipboard,
-    .inline-thankyou-email {
-        padding-top: $gs-baseline;
-        display: block;
+        .inline-survey_clipboard,
+        .inline-thankyou-email {
+            padding-top: $gs-baseline;
+            display: block;
 
-        svg {
-           width: 100%;
-           height: auto;
+            svg {
+                width: 100%;
+                height: auto;
 
-            @include mq(mobileLandscape) {
-                width: gs-span(6);
+                @include mq(mobileLandscape) {
+                    width: gs-span(6);
+                }
             }
         }
-    }
 
 
         h2 {
