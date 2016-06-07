@@ -1,132 +1,123 @@
-.adfreesurvey-wrapper {
-    .adfreesurvey-wrapper-inner {
-        margin: 0 auto;
+#survey-laboratory {
+
+    .illustration-container {
+        background-color: $guardian-brand;
         width: auto;
-        padding: 0 $gs-gutter $gs-gutter;
+        position: relative;
+        min-height: 240px;
+    }
 
-        @include mq(tablet) {
+    .illustration-mobile {
+        display: block;
+        height: auto;
+        position: absolute;
+        margin-top: $gs-baseline / 2;
+        margin-left: $gs-gutter / 2;
+        margin-right: $gs-gutter / 2;
+
+        svg {
+            width: 100%;
+            height: auto;
+            max-height: 220px;
+        }
+    }
+
+    .wrapper {
+        .wrapper-inner {
             margin: 0 auto;
-            width: $gs-column-width*6;
-            padding: $gs-gutter 0;
-        }
-    }
+            width: auto;
+            padding: 0 $gs-gutter $gs-gutter;
 
-    .inline-survey-thumbsup {
-        margin-bottom: $gs-gutter/2;
-        display: block;
-        padding-top: $gs-gutter;
-    }
-
-    .inline-survey-loudspeaker,
-    .inline-thankyou-email {
-        display: block;
-        text-align: center;
-        margin-top: $gs-gutter;
-
-        svg {
-            width: 100px;
-            height: 100px;
-        }
-    }
-
-    .inline-arrow-right {
-        float: right;
-        fill: #7d7d7d;
-
-    }
-
-    .inline-membership-logo {
-        margin: $gs-gutter 0;
-        display: block;
-        svg {
-            width: 100px;
-            height: 40px;
-
-            g {
-                fill: #bf4181;
+            @include mq(tablet) {
+                margin: 0 auto;
+                width: gs-span(8);
             }
         }
-        @include mq(tablet) {
-            margin: $gs-gutter*2 0 30px;
-        }
-    }
 
     h1 {
-        @include fs-headline(4);
-        color: $guardian-brand;
-        font-weight: bold;
-        margin-bottom: $gs-gutter;
-
-        @include mq(tablet) {
-            @include fs-headline(6);
+            @include fs-headline(4);
+            color: $guardian-brand;
             font-weight: bold;
-        }
-    }
+            margin-top: $gs-baseline/2;
+            margin-bottom: $gs-baseline;
 
-    h2 {
-        @include fs-header(4);
-        color: $guardian-brand;
-        margin-bottom: $gs-baseline/2;
-    }
+            @include mq(tablet) {
+                @include fs-headline(6);
+                font-weight: bold;
+            }
+        }
+
+
 
     p {
-        @include fs-bodyCopy(1);
+        @include fs-bodyCopy(2);
         margin-bottom: $gs-baseline;
     }
 
-    .standfirst {
-        @include fs-bodyCopy(2);
-    }
+    .inline-survey_clipboard,
+    .inline-thankyou-email {
+        padding-top: $gs-baseline;
+        display: block;
 
-    .button--secondary {
-        border-color: #7d7d7d;
-        background-color: transparent;
+        svg {
+           width: 100%;
+           height: auto;
 
-        &:hover {
-            background-color: $neutral-7;
-        }
-    }
-
-    .button--medium {
-        line-height: 32px;
-    }
-
-    .footer-area {
-        background-color: $neutral-5;
-
-        .adfreesurvey-wrapper-inner {
-            width: auto;
-            padding: $gs-gutter;
-            margin: 0 auto;
-
-            @include mq(tablet) {
-                width: $gs-column-width*10;
-                padding: $gs-gutter*2 0;
-            }
-        }
-
-        img {
-            display: block;
-        }
-
-        .l-row__item:last-child {
-            margin-top: $gs-gutter;
-
-            @include mq(tablet) {
-                margin-top: 0;
-            }
-        }
-
-    }
-
-    &.adfreesurvey-simple-wrapper {
-        .adfreesurvey-wrapper-inner--footer {
-            @include mq(tablet) {
-                width: $gs-column-width*8;
+            @include mq(mobileLandscape) {
+                width: gs-span(6);
             }
         }
     }
 
+
+        h2 {
+            @include fs-header(4);
+            color: $guardian-brand;
+            margin-bottom: $gs-baseline/2;
+        }
+
+        .button--secondary {
+            border-color: #7d7d7d;
+            background-color: transparent;
+
+            &:hover {
+                background-color: $neutral-7;
+            }
+        }
+
+        .button--medium {
+            line-height: 32px;
+        }
+
+        .footer-area {
+            background-color: $neutral-5;
+
+            .adfreesurvey-wrapper-inner {
+                width: auto;
+                padding: $gs-gutter;
+                margin: 0 auto;
+
+                @include mq(tablet) {
+                    width: $gs-column-width*10;
+                    padding: $gs-gutter*2 0;
+                }
+            }
+
+            img {
+                display: block;
+            }
+
+            .l-row__item:last-child {
+                margin-top: $gs-gutter;
+
+                @include mq(tablet) {
+                    margin-top: 0;
+                }
+            }
+
+        }
+
+    }
 }
 
 .formstack-survey-wrapper {

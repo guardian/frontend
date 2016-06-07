@@ -26,60 +26,42 @@
 
 </head>
     <body
-        id="top"
+        id="survey-laboratory"
         itemscope itemtype="http://schema.org/WebPage">
 
         @fragments.header(simpleSurveyStaticPage)
 
-        <div class="l-side-margins">
+        <div class="illustration-container">
 
-            <div class="adfreesurvey-wrapper adfreesurvey-simple-wrapper" data-link-name="adfree survey simple page">
+            @fragments.inlineSvg("survey", "illustration", Seq("illustration-mobile") )
 
-                <div class="adfreesurvey-wrapper-inner">
+        </div>
 
-                    @fragments.inlineSvg("survey-thumbsup", "commercial")
+        <div class="content">
 
-                    <h1>Thank you so much for expressing interest in an advert free experience</h1>
+            <div class="wrapper">
 
-                    <p class="standfirst">Unfortunately this feature isn’t available at the moment on the Guardian site. This is part of a test to understand the interest of our readers in new features for the Guardian site and apps.</p>
+                <div class="wrapper-inner">
 
-                    @fragments.inlineSvg("survey-loudspeaker", "commercial")
+                    <h1>Thank you for your interest in personalised email</h1>
+
+                    <p class="standfirst">Unfortunately this feature isn’t available at the moment. This is a test to understand the interest in new features for the Guardian.</p>
+
+                    @fragments.inlineSvg("survey_clipboard", "illustration")
 
                     <h2>Quick survey</h2>
 
-                    <p>We would like to hear your thoughts on this feature, so we’ve created a quick survey for you. The survey is hosted in UserZoom and should take no more than 5 minutes to complete.</p>
+                    <p>We would like to hear your thoughts on this feature, so we’ve created a quick survey for you. The survey is hosted by SurveyMonkey and should take no more than 5 minutes to complete.</p>
 
                     <p><a href="#" class="button button--primary button--medium" data-link-name="take part in survey" target="_blank">Tell us your thoughts</a></p>
 
-                    @fragments.inlineSvg("thankyou-email", "commercial")
+                   @fragments.inlineSvg("survey_clipboard", "illustration")
 
                     <h2>Register interest</h2>
 
                     <p>Let us know your email address to be contacted if this feature becomes available. Your email won't be used for other purposes.</p>
 
                     <p><a href="#" class="button button--primary button--medium" data-link-name="register email" target="_blank">Register</a></p>
-
-                </div>
-
-                <div class="footer-area">
-
-                    <div class="adfreesurvey-wrapper-inner adfreesurvey-wrapper-inner--footer">
-
-                        <ul class="u-unstyled l-row l-row--cols-2">
-
-                            <li class="l-row__item l-row__item--span-1">
-
-                                <p>Get an advert free experience on the Guardian app today by upgrading to the premium tier for just &pound;2.49 a month.</p>
-
-                                <p><img src="@Static("images/commercial/survey-iosandroidapps.png")"></p>
-
-                                <a href="http://www.theguardian.com/guardianapp" class="button button--secondary button--small" data-link-name="read more about the guardian app">Learn more about the Guardian app @fragments.inlineSvg("arrow-right", "icon")</a>
-
-                            </li>
-
-                        </ul>
-
-                    </div>
 
                 </div>
 
