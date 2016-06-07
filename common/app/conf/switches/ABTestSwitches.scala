@@ -121,4 +121,13 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 6, 14),
     exposeClientSide = true
   )
+
+  val ABVideoFootballThrasher = Switch(
+    SwitchGroup.ABTests,
+    "ab-video-football-thrasher",
+    "Swap video thrashers on football front",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 14),
+    exposeClientSide = true
+  )
 }
