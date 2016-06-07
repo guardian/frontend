@@ -15,9 +15,9 @@
         }
 
         &.hosted-thrasher__body--1-elems > .hosted-thrasher--element {
-            &:nth-child(n+2),
-            &:nth-child(n+3),
-            &:nth-child(n+4) {
+            &:nth-child(2),
+            &:nth-child(3),
+            &:nth-child(4) {
                 display: none;
             }
             @include mq(tablet) {
@@ -32,15 +32,15 @@
                     margin-right: 10px;
                 }
             }
-            &:nth-child(n+2) {
+            &:nth-child(2) {
                 margin-top: 10px;
                 @include mq(tablet) {
                     margin-top: 0;
                     margin-left: 10px;
                 }
             }
-            &:nth-child(n+3),
-            &:nth-child(n+4) {
+            &:nth-child(3),
+            &:nth-child(4) {
                 display: none;
             }
             @include mq(tablet) {
@@ -50,15 +50,20 @@
             }
         }
         &.hosted-thrasher__body--3-elems > .hosted-thrasher--element {
-            &:nth-child(n+2),
-            &:nth-child(n+3) {
+            &:nth-child(2) {
                 margin-top: 10px;
                 @include mq(tablet) {
                     margin-top: 0;
                     margin-left: 10px;
                 }
             }
-            &:nth-child(n+4) {
+            &:nth-child(3) {
+                margin-left: 10px;
+                @include mq($until: tablet) {
+                    display: none;
+                }
+            }
+            &:nth-child(4) {
                 display: none;
             }
             @include mq(tablet) {
@@ -68,6 +73,28 @@
             }
         }
         &.hosted-thrasher__body--4-elems > .hosted-thrasher--element {
+            @include mq(tablet) {
+                margin-right: 10px;
+            }
+            &:nth-child(2),
+            &:nth-child(3) {
+                margin-top: 10px;
+                @include mq(tablet) {
+                    margin-top: 0;
+                    margin-left: 10px;
+                }
+            }
+            &:nth-child(4) {
+                @include mq(tablet) {
+                    margin-right: 0;
+                }
+            }
+            &:nth-child(3),
+            &:nth-child(4) {
+                @include mq($until: tablet) {
+                    display: none;
+                }
+            }
             @include mq(tablet) {
                 .has-flex & {
                     flex: calc(25% - 20px);
@@ -127,7 +154,8 @@
     }
 
     .hosted-thrasher__body--2-elems,
-    .hosted-thrasher__body--3-elems {
+    .hosted-thrasher__body--3-elems,
+    .hosted-thrasher__body--4-elems {
         .hosted-thrasher__meta {
             width: $gs-column-width * 4;
             @include mq(tablet) {
@@ -153,6 +181,12 @@
             @include mq($until: tablet) {
                 height: 230px;
             }
+        }
+    }
+
+    .hosted-thrasher__body--4-elems {
+        .hosted-thrasher__meta {
+            width: $gs-column-width * 3;
         }
     }
 
