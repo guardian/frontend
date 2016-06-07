@@ -414,36 +414,32 @@ define([
     );
 
     function refreshOnResize() {
-        mediator.on('window:resize', windowResize);
+        window.addEventListener('resize', windowResize);
     }
 
-    function refresh(breakpoint, previousBreakpoint) {
-        googletag.pubads().refresh(
-            chain(slotsToRefresh)
-            // only refresh if the slot needs to
-                .and(filter, function (slotInfo) {
-                    return shouldSlotRefresh(slotInfo, breakpoint, previousBreakpoint);
-                }).and(map, function (slotInfo) {
-                return slotInfo.slot;
-            }).valueOf()
-        );
-    }
+    function refresh(currentBreakpoint, previousBreakpoint) {
+        // only refresh if the slot needs to
+        googletag.pubads().refresh(adSlotsToRefresh.filter(shouldRefresh));
 
-    function shouldSlotRefresh(slotInfo, breakpoint, previousBreakpoint) {
-        // get the slots breakpoints
-        var slotBreakpoints = chain(detect.breakpoints).and(filter, function (breakpointInfo) {
-                return slotInfo.$adSlot.data(breakpointNameToAttribute(breakpointInfo.name));
-            }).valueOf(),
-        // have we changed breakpoints
-            slotBreakpoint = getSlotsBreakpoint(breakpoint, slotBreakpoints);
-        return slotBreakpoint &&
-            getSlotsBreakpoint(previousBreakpoint, slotBreakpoints) !== slotBreakpoint;
-    }
+        function shouldRefresh(adSlot) {
+            // get the slot breakpoints
+            var slotBreakpoints = Object.keys(adSlot.sizes);
+            // find the currently matching breakpoint
+            var currentSlotBreakpoint = getBreakpointIndex(currentBreakpoint, slotBreakpoints);
+            // find the previously matching breakpoint
+            var previousSlotBreakpoint = getBreakpointIndex(previousBreakpoint, slotBreakpoints);
+            return currentSlotBreakpoint !== -1 && currentSlotBreakpoint !== previousSlotBreakpoint;
+        }
 
-    function getSlotsBreakpoint(breakpoint, slotBreakpoints) {
-        return chain(detect.breakpoints).and(initial, function (breakpointInfo) {
-            return breakpointInfo.name !== breakpoint;
-        }).and(intersection, slotBreakpoints).and(last).value();
+        function getBreakpointIndex(breakpoint, slotBreakpoints) {
+            var breakpointNames = detect.breakpoints.map(function (_) { return _.name; });
+            var validBreakpointNames = breakpointNames
+                .slice(0, breakpointNames.indexOf(breakpoint) + 1)
+                .map(breakpointNameToAttribute);
+            return Math.max.apply(Math, slotBreakpoints.map(function (_) {
+                return validBreakpointNames.lastIndexOf(_);
+            }));
+        }
     }
 
     /**
