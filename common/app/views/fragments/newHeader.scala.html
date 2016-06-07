@@ -13,16 +13,10 @@
             <span>UK Edition</span>
         </button>
         <nav class="new-header__nav">
-            <div class="new-header__nav__menu-button-and-user-button">
-                <button class="new-header__nav__menu-button">
-                    <i class="new-header__nav__menu-button__burger-icon"></i>
-                    <span class="u-h">Menu</span>
-                </button>
-                <button class="new-header__nav__profile-button">
-                    @fragments.inlineSvg("profile-36", "icon")
-                    <span class="u-h">Profile</span>
-                </button>
-            </div>
+            <button class="new-header__nav__menu-button">
+                <i class="new-header__nav__menu-button__burger-icon"></i>
+                <span class="u-h">Menu</span>
+            </button>
             <ul class="new-header__nav__list">
                 @* TODO: Should open a menu *@
                 <li class="new-header__nav__list-item"><a class="new-header__nav__link" tabindex="0" href="@LinkTo{/}">news</a></li>
