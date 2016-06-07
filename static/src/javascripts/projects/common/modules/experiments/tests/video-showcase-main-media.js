@@ -6,7 +6,7 @@ define([
     config
 ) {
     return function () {
-        this.id = 'VideoShowcaseMainMedia';
+        this.id = 'VideoMainMediaAlwaysShowcase';
         this.start = '2016-06-07';
         this.expiry = '2016-06-14';
         this.author = 'Akash Askoolum';
