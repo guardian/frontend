@@ -45,7 +45,7 @@
 
                 @fragments.meta.metaInline(page.item)
 
-                <h1 class="content__headline content__headline--immersive content__headline--immersive--with-main-media">
+                <h1 class="content__headline content__headline--gallery content__headline--immersive content__headline--immersive--with-main-media">
                     @fragments.inlineSvg("camera", "icon", List("inline-tone-fill", "inline-icon--media")) @Html(page.item.trail.headline)
                 </h1>
 
@@ -87,7 +87,7 @@
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
         @page match {
-            case page: model.GalleryPage if page.gallery.showNewGalleryDesign => {
+            case page: model.GalleryPage if page.gallery.content.isImmersive => {
                 <div class="immersive-header-container">
                     @headerAndTopAds(showAdverts, edition, adBelowNav)
 

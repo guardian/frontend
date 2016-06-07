@@ -1,25 +1,32 @@
-import common.Logback.Logstash
+import common.Logback.LogstashLifecycle
 import common.dfp.DfpAgentLifecycle
-import common.{CloudWatchApplicationMetrics, ContentApiMetrics}
+import common._
 import conf.switches.SwitchboardLifecycle
-import conf.ArticleHealthCheckLifeCycle
-import metrics.FrontendMetric
+import conf.CachedHealthCheckLifeCycle
+import controllers.HealthCheck
+import model.ApplicationIdentity
 import ophan.SurgingContentAgentLifecycle
+import play.api.inject.ApplicationLifecycle
+import play.api.GlobalSettings
 import services.NewspaperBooksAndSectionsAutoRefresh
 
-object Global
-  extends NewspaperBooksAndSectionsAutoRefresh
-  with DfpAgentLifecycle
-  with CloudWatchApplicationMetrics
-  with SurgingContentAgentLifecycle
-  with SwitchboardLifecycle
-  with Logstash
-  with ArticleHealthCheckLifeCycle {
-  override lazy val applicationName = "frontend-article"
+import scala.concurrent.ExecutionContext
 
-  override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ::: List(
+object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents {
+
+  val applicationMetrics = ApplicationMetrics(
     ContentApiMetrics.HttpLatencyTimingMetric,
     ContentApiMetrics.HttpTimeoutCountMetric,
     ContentApiMetrics.ContentApiErrorMetric
+  )
+
+  override def lifecycleComponents(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext): List[LifecycleComponent] = List(
+    NewspaperBooksAndSectionsAutoRefresh,
+    new DfpAgentLifecycle(appLifecycle),
+    new CloudWatchMetricsLifecycle(appLifecycle, ApplicationIdentity("frontend-article"), applicationMetrics),
+    new SurgingContentAgentLifecycle(appLifecycle),
+    new SwitchboardLifecycle(appLifecycle),
+    LogstashLifecycle,
+    new CachedHealthCheckLifeCycle(HealthCheck)
   )
 }

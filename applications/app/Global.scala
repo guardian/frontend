@@ -1,27 +1,22 @@
-import common.Logback.Logstash
+import common.Logback.LogstashLifecycle
 import common.dfp.DfpAgentLifecycle
-import common.{CloudWatchApplicationMetrics, ContentApiMetrics, EmailSubsciptionMetrics}
+import common._
 import conf.switches.SwitchboardLifecycle
-import conf.ApplicationsHealthCheckLifeCycle
+import conf.CachedHealthCheckLifeCycle
 import contentapi.SectionsLookUpLifecycle
+import controllers.HealthCheck
 import jobs.SiteMapLifecycle
-import metrics.FrontendMetric
+import model.ApplicationIdentity
 import ophan.SurgingContentAgentLifecycle
+import play.api.inject.ApplicationLifecycle
+import play.api.GlobalSettings
 import services.{ConfigAgentLifecycle, IndexListingsLifecycle}
 
-object Global extends ConfigAgentLifecycle
-  with CloudWatchApplicationMetrics
-  with DfpAgentLifecycle
-  with SurgingContentAgentLifecycle
-  with IndexListingsLifecycle
-  with SectionsLookUpLifecycle
-  with SwitchboardLifecycle
-  with SiteMapLifecycle
-  with Logstash
-  with ApplicationsHealthCheckLifeCycle {
-  override lazy val applicationName = "frontend-applications"
+import scala.concurrent.ExecutionContext
 
-  override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ++ List(
+object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents {
+
+  val applicationMetrics = ApplicationMetrics(
     ContentApiMetrics.HttpTimeoutCountMetric,
     ContentApiMetrics.HttpLatencyTimingMetric,
     ContentApiMetrics.ContentApiErrorMetric,
@@ -32,5 +27,18 @@ object Global extends ConfigAgentLifecycle
     EmailSubsciptionMetrics.APINetworkError,
     EmailSubsciptionMetrics.ListIDError,
     EmailSubsciptionMetrics.AllEmailSubmission
+  )
+
+  override def lifecycleComponents(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext): List[LifecycleComponent] = List(
+    new ConfigAgentLifecycle(appLifecycle),
+    new CloudWatchMetricsLifecycle(appLifecycle, ApplicationIdentity("frontend-applications"), applicationMetrics),
+    new DfpAgentLifecycle(appLifecycle),
+    new SurgingContentAgentLifecycle(appLifecycle),
+    IndexListingsLifecycle,
+    new SectionsLookUpLifecycle(appLifecycle),
+    new SwitchboardLifecycle(appLifecycle),
+    new SiteMapLifecycle(),
+    LogstashLifecycle,
+    new CachedHealthCheckLifeCycle(HealthCheck)
   )
 }

@@ -68,7 +68,7 @@ $ima-controls-height: 70px;
     &.gu-media--video { // aspect ratio fix (this element gets given a fixed height by video.js)
         height: auto !important;
         cursor: pointer;
-        
+
         &.vjs-user-inactive {
             cursor: none;
         }
@@ -1106,21 +1106,21 @@ $ima-controls-height: 70px;
     display: none;
 }
 
-// For a test
-.show-media-controls {
-    .vjs-paused {
-        .vjs-control-bar {
-            bottom: 0 !important;
+// We have to use vjs classes here, and not BEM modifiers as videojs
+// changes the classes names via JS, and last time we messed with that,
+// we had major refactoring issues.
+.gu-media--show-controls-at-start.vjs-paused {
+    .vjs-control-bar {
+        bottom: 0;
+    }
+
+    .vjs-big-play-button .vjs-control-text {
+        &:before {
+            background-color: $media-default;
         }
 
-        .vjs-big-play-button .vjs-control-text {
-            &:before {
-                background-color: $media-default;
-            }
-
-            &:after {
-                border-left-color: #333333;
-            }
+        &:after {
+            border-left-color: #333333;
         }
     }
 }

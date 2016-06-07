@@ -2,12 +2,17 @@ package conf.switches
 
 import common._
 import conf.Configuration
-import play.api.{Application, GlobalSettings}
+import play.api.inject.ApplicationLifecycle
 
-trait SwitchboardLifecycle extends GlobalSettings with ExecutionContexts with Logging {
+import scala.concurrent.{Future, ExecutionContext}
 
-  override def onStart(app: Application) {
-    super.onStart(app)
+class SwitchboardLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent with ExecutionContexts with Logging {
+
+  appLifecycle.addStopHook { () => Future {
+    Jobs.deschedule("SwitchBoardRefreshJob")
+  }}
+
+  override def start(): Unit = {
     Jobs.deschedule("SwitchBoardRefreshJob")
     //run every minute, 47 seconds after the minute
     Jobs.schedule("SwitchBoardRefreshJob", "47 * * * * ?") {
@@ -17,11 +22,6 @@ trait SwitchboardLifecycle extends GlobalSettings with ExecutionContexts with Lo
     AkkaAsync {
       refresh()
     }
-  }
-
-  override def onStop(app: Application) {
-    Jobs.deschedule("SwitchBoardRefreshJob")
-    super.onStop(app)
   }
 
   def refresh(): Unit = {

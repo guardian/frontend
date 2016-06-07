@@ -24,6 +24,7 @@ define([
     'common/modules/commercial/dfp/ophan-tracking',
     'common/modules/commercial/dfp/breakout-iframe',
     'common/modules/commercial/dfp/PrebidService',
+    'common/modules/commercial/dfp/track-ad-load',
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
     'common/modules/analytics/beacon',
@@ -66,6 +67,7 @@ define([
     ophanTracking,
     breakoutIFrame,
     PrebidService,
+    trackAdLoad,
     geoMostPopular,
     ab,
     beacon,
@@ -154,9 +156,10 @@ define([
                     renderStartTime = new Date().getTime();
                 },
                 setListeners,
-                setPageTargeting,
-                resolve
+                setPageTargeting
             );
+
+            resolve();
         });
     }
 
@@ -170,8 +173,10 @@ define([
         googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
             rendered = true;
             recordFirstAdRendered();
-            mediator.emit('modules:commercial:dfp:rendered', event);
-            parseAd(event);
+            parseAd(event).then(function (adSlotId) {
+                mediator.emit('modules:commercial:dfp:rendered', event);
+                allAdsRendered(adSlotId);
+            });
         }));
     }
 
@@ -209,27 +214,30 @@ define([
      * attributes on the element.
      */
     function defineAdverts() {
-        var $adSlots = qwery(adSlotSelector).map(bonzo);
-
-        var activeSlots = $adSlots.filter(function ($adSlot) {
-            // filter out (and remove) hidden ads
-            if (shouldFilterAdSlot($adSlot)) {
-                fastdom.write(function () {
-                    $adSlot.remove();
-                });
-                return false;
-            } else {
-                return true;
-            }
-        });
-
-        var advertArray = activeSlots.map(function ($adSlot) {
-            return new Advert($adSlot);
-        });
-
-        advertArray.forEach(function (advert) {
-            adverts[advert.adSlotId] = advert;
-        });
+        // Get all ad slots
+        qwery(adSlotSelector)
+            // convert them to bonzo objects
+            .map(bonzo)
+            // remove the ones which should not be there
+            .filter(function ($adSlot) {
+                // filter out (and remove) hidden ads
+                if (shouldFilterAdSlot($adSlot)) {
+                    fastdom.write(function () {
+                        $adSlot.remove();
+                    });
+                    return false;
+                } else {
+                    return true;
+                }
+            })
+            // convert to Advert ADT
+            .map(function ($adSlot) {
+                return new Advert($adSlot);
+            })
+            // fill in the adverts map
+            .forEach(function (advert) {
+                adverts[advert.adSlotId] = advert;
+            });
     }
 
     function shouldFilterAdSlot($adSlot) {
@@ -254,7 +262,7 @@ define([
 
     function shouldLazyLoad() {
         // We do not want lazy loading on pageskins because it messes up the roadblock
-        return config.switches.viewability && !(config.page.hasPageSkin && detect.getBreakpoint() === 'wide');
+        return !(config.page.hasPageSkin);
     }
 
     function showSponsorshipPlaceholder() {
@@ -463,7 +471,7 @@ define([
             stickyMpu($adSlot);
         },
         '300,250': function (event, $adSlot) {
-            if (config.switches.viewability && $adSlot.hasClass('ad-slot--right')) {
+            if ($adSlot.hasClass('ad-slot--right')) {
                 var mobileAdSizes = $adSlot.attr('data-mobile');
                 if (mobileAdSizes && mobileAdSizes.indexOf('300,251') > -1) {
                     stickyMpu($adSlot);
@@ -539,6 +547,8 @@ define([
                     adKeywords: adKeywords
                 }, false);
             }
+
+            return Promise.resolve(adSlotId);
         } else {
             $adSlot = $('#' + adSlotId);
 
@@ -555,7 +565,7 @@ define([
 
             // Check if creative is a new gu style creative and place labels accordingly.
             // Use public method so that tests can stub it out.
-            dfp.checkForBreakout($adSlot).then(function () {
+            return dfp.checkForBreakout($adSlot).then(function () {
                 addLabel($adSlot);
 
                 size = event.size.join(',');
@@ -569,10 +579,10 @@ define([
                         $adSlot.parent().css('display', 'flex');
                     });
                 }
+
+                return adSlotId;
             }).catch(raven.captureException);
         }
-
-        allAdsRendered(adSlotId);
     }
 
     function removeSlot(adSlotId) {
@@ -791,6 +801,7 @@ define([
         loadAds:        load,
         addSlot:        addSlot,
         getCreativeIDs: getCreativeIDs,
+        trackAdLoad:    trackAdLoad,
 
         // Used privately but exposed only for unit testing
         getAdverts:     getAdverts,

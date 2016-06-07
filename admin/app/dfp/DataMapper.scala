@@ -10,33 +10,28 @@ object DataMapper {
   def toGuAdUnit(dfpAdUnit: AdUnit): GuAdUnit = {
     val ancestors = toSeq(dfpAdUnit.getParentPath)
     val ancestorNames = if (ancestors.isEmpty) Nil else ancestors.map(_.getName).tail
-    GuAdUnit(dfpAdUnit.getId, ancestorNames :+ dfpAdUnit.getName)
+    GuAdUnit(dfpAdUnit.getId, ancestorNames :+ dfpAdUnit.getName, dfpAdUnit.getStatus.getValue)
   }
 
-  def toGuAdUnit(suggested: SuggestedAdUnit): GuAdUnit = {
-    val ancestorNames = toSeq(suggested.getParentPath).map(_.getName) ++ suggested.getPath.toList
-    GuAdUnit(suggested.getId, ancestorNames.tail)
-  }
+  private def toGuTargeting(session: SessionWrapper)(dfpTargeting: Targeting): GuTargeting = {
 
-  def toGuTargeting(
-    dfpTargeting: Targeting,
-    placementAdUnitIds: Long => Seq[String],
-    adUnit: String => Option[GuAdUnit],
-    targetingKey: Long => String,
-    targetingValue: Long => String
-  ): GuTargeting = {
-
-    def toGuAdUnits(inventoryTargeting: InventoryTargeting): Seq[GuAdUnit] = {
+    def toIncludedGuAdUnits(inventoryTargeting: InventoryTargeting): Seq[GuAdUnit] = {
 
       //noinspection MapFlatten
-      val directAdUnits = toSeq(inventoryTargeting.getTargetedAdUnits).map(_.getAdUnitId).map(adUnit).flatten
+      val directAdUnits = toSeq(inventoryTargeting.getTargetedAdUnits).map(_.getAdUnitId).map(AdUnitService.activeAdUnit).flatten
+
+
 
       //noinspection MapFlatten
       val adUnitsDerivedFromPlacements = {
-        toSeq(inventoryTargeting.getTargetedPlacementIds).flatMap(placementAdUnitIds).map(adUnit).flatten
+        toSeq(inventoryTargeting.getTargetedPlacementIds).map(PlacementService.placementAdUnitIds(session)).flatten
       }
 
       (directAdUnits ++ adUnitsDerivedFromPlacements).sortBy(_.path.mkString).distinct
+    }
+
+    def toExcludedGuAdUnits(inventoryTargeting: InventoryTargeting): Seq[GuAdUnit] = {
+      toSeq(inventoryTargeting.getExcludedAdUnits).map(_.getAdUnitId).flatMap(AdUnitService.activeAdUnit)
     }
 
     def toCustomTargetSets(criteriaSets: CustomCriteriaSet): Seq[CustomTargetSet] = {
@@ -44,9 +39,9 @@ object DataMapper {
       def toCustomTargetSet(criteria: CustomCriteriaSet): CustomTargetSet = {
 
         def toCustomTarget(criterion: CustomCriteria) = CustomTarget(
-          targetingKey(criterion.getKeyId),
+          CustomTargetingKeyService.targetingKey(session)(criterion.getKeyId),
           criterion.getOperator.getValue,
-          criterion.getValueIds map targetingValue
+          criterion.getValueIds map CustomTargetingValueService.targetingValue(session)
         )
 
         val targets = criteria.getChildren collect {
@@ -77,24 +72,19 @@ object DataMapper {
     val geoTargetsExcluded = geoTargets(_.getExcludedLocations)
 
     GuTargeting(
-      adUnits = Option(dfpTargeting.getInventoryTargeting) map toGuAdUnits getOrElse Nil,
+      adUnitsIncluded = Option(dfpTargeting.getInventoryTargeting) map toIncludedGuAdUnits getOrElse Nil,
+      adUnitsExcluded = Option(dfpTargeting.getInventoryTargeting) map toExcludedGuAdUnits getOrElse Nil,
       geoTargetsIncluded,
       geoTargetsExcluded,
       customTargetSets = Option(dfpTargeting.getCustomTargeting) map toCustomTargetSets getOrElse Nil
     )
   }
 
-  def toGuCreativePlaceholders(
-    dfpLineItem: LineItem,
-    placementAdUnitIds: Long => Seq[String],
-    adUnit: String => Option[GuAdUnit],
-    targetingKey: Long => String,
-    targetingValue: Long => String
-  ): Seq[GuCreativePlaceholder] = {
+  private def toGuCreativePlaceholders(session: SessionWrapper)(dfpLineItem: LineItem): Seq[GuCreativePlaceholder] = {
 
     def creativeTargeting(name: String): Option[GuTargeting] = {
       for (targeting <- toSeq(dfpLineItem.getCreativeTargetings) find (_.getName == name)) yield {
-        toGuTargeting(targeting.getTargeting, placementAdUnitIds, adUnit, targetingKey, targetingValue)
+        toGuTargeting(session)(targeting.getTargeting)
       }
     }
 
@@ -110,14 +100,7 @@ object DataMapper {
     }
   }
 
-  def toGuLineItem(
-    dfpLineItem: LineItem,
-    sponsor: Option[String],
-    placementAdUnitIds: Long => Seq[String],
-    adUnit: String => Option[GuAdUnit],
-    targetingKey: Long => String,
-    targetingValue: Long => String
-  ) = GuLineItem(
+  def toGuLineItem(session: SessionWrapper)(dfpLineItem: LineItem) = GuLineItem(
     id = dfpLineItem.getId,
     name = dfpLineItem.getName,
     startTime = toJodaTime(dfpLineItem.getStartDateTime),
@@ -126,15 +109,11 @@ object DataMapper {
       else Some(toJodaTime(dfpLineItem.getEndDateTime))
     },
     isPageSkin = isPageSkin(dfpLineItem),
-    sponsor,
-    creativePlaceholders = toGuCreativePlaceholders(
-      dfpLineItem,
-      placementAdUnitIds,
-      adUnit,
-      targetingKey,
-      targetingValue
+    sponsor = CustomFieldService.sponsor(dfpLineItem),
+    creativePlaceholders = toGuCreativePlaceholders(session)(
+      dfpLineItem
     ),
-    targeting = toGuTargeting(dfpLineItem.getTargeting, placementAdUnitIds, adUnit, targetingKey, targetingValue),
+    targeting = toGuTargeting(session)(dfpLineItem.getTargeting),
     status = dfpLineItem.getStatus.toString,
     costType = dfpLineItem.getCostType.toString,
     lastModified = toJodaTime(dfpLineItem.getLastModifiedDateTime)

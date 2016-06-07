@@ -7,37 +7,17 @@
 
 define([
     'common/utils/mediator',
-    'common/utils/$',
-    'common/modules/user-prefs',
-    'lodash/arrays/last',
-    'lodash/arrays/findIndex',
-    'lodash/objects/defaults',
-    'lodash/objects/has',
-    'lodash/arrays/first',
-    'lodash/collections/findLast',
-    'common/utils/chain',
-    'lodash/collections/contains',
-    'lodash/collections/pluck',
-    'lodash/arrays/initial',
-    'lodash/arrays/rest',
+    'common/utils/take-while',
+    'common/utils/drop-while',
     'lodash/functions/memoize',
+    'lodash/functions/compose',
     'Promise'
 ], function (
     mediator,
-    $,
-    userPrefs,
-    last,
-    findIndex,
-    defaults,
-    has,
-    first,
-    findLast,
-    chain,
-    contains,
-    pluck,
-    initial,
-    rest,
+    takeWhile,
+    dropWhile,
     memoize,
+    compose,
     Promise
 ) {
 
@@ -238,56 +218,61 @@ define([
         };
     }
 
-    /** TEMPORARY: I'm going to update lodash in a separate pull request. */
-    function takeWhile(xs, f) {
-        var acc = [],
-            i,
-            size = xs.length;
+    function getBreakpointName(breakpoint) {
+        return breakpoint.name;
+    }
 
-        for (i = 0; i < size; i++) {
-            if (f(xs[i])) {
-                acc.push(xs[i]);
-            } else {
-                break;
-            }
-        }
-
-        return acc;
+    function reverseArray(arr) {
+        return arr.reverse();
     }
 
     function getBreakpoint(includeTweakpoint) {
-        var viewportWidth = detect.getViewport().width,
-            index,
-            breakpoint = last(takeWhile(breakpoints, function (bp) {
-                return bp.width <= viewportWidth;
-            })).name;
-        if (!includeTweakpoint) {
-            index = findIndex(breakpoints, function (b) {
-                return b.name === breakpoint;
-            });
-            breakpoint = chain(breakpoints).and(first, index + 1).and(findLast, function (b) {
-                    return !b.isTweakpoint;
-                }).valueOf()
-                .name;
+        var viewportWidth = detect.getViewport().width;
+        var breakpoint;
+        if (includeTweakpoint) {
+            breakpoint = takeWhile(isMatchingBreakpoint, breakpoints).slice(-1)[0].name;
+        } else {
+            // Remember: (f ∘ g ∘ h)(x) = f(g(h(x)))
+            // If, 1. we take all breakpoints matching the viewport width, in increasing order
+            //     2. we reverse the array, effectively putting any tweakpoints first
+            //     3. we drop all tweakpoints from the beginning of the array
+            // Then, the first item is the largest breakpoint that is not a tweakpoint
+            var algo = compose(
+                dropWhile.bind(undefined, isTweakpoint),
+                reverseArray,
+                takeWhile.bind(undefined, isMatchingBreakpoint)
+            );
+            breakpoint = algo(breakpoints)[0].name;
         }
 
         return breakpoint;
+
+        function isMatchingBreakpoint(_) {
+            return _.width <= viewportWidth;
+        }
+
+        function isTweakpoint(_) {
+            return _.isTweakpoint;
+        }
     }
 
     function isBreakpoint(criteria) {
-        var c = defaults(
-                criteria,
-                {
-                    min: first(breakpoints).name,
-                    max: last(breakpoints).name
-                }
-            ),
-            currentBreakpoint = getBreakpoint(true);
-        return chain(breakpoints).and(rest, function (breakpoint) {
-                return breakpoint.name !== c.min;
-            }).and(initial, function (breakpoint) {
-                return breakpoint.name !== c.max;
-            }).and(pluck, 'name').and(contains, currentBreakpoint).value();
+        criteria.min = criteria.min || breakpoints[0].name;
+        criteria.max = criteria.max || breakpoints[breakpoints.length - 1].name;
+
+        var currentBreakpoint = getBreakpoint(true);
+        // If, 1. we drop all breakpoints smaller than the breakpoint range (min)
+        //     2. we reverse the array, and...
+        //     3. we drop all breakpoints larger than the breakpoint range (max)
+        // Then, we get the range of matching breakpoints (in reverse order but
+        // it doesn't matter)
+        var algo = compose(
+            dropWhile.bind(undefined, function (_) { return _ !== criteria.max; }),
+            reverseArray,
+            dropWhile.bind(undefined, function (_) { return _ !== criteria.min; })
+        );
+
+        return algo(breakpoints.map(getBreakpointName)).indexOf(currentBreakpoint) !== -1;
     }
 
     // Page Visibility
@@ -346,9 +331,9 @@ define([
     }
 
     var createSacrificialAd = memoize(function () {
-        var sacrificialAd = $.create('<div class="ad_unit" style="position: absolute; height: 10px; top: 0; left: 0; z-index: -1;">&nbsp;</div>');
-        sacrificialAd.appendTo(document.body);
-        return sacrificialAd;
+        var sacrificialAd = '<div class="ad_unit" style="position: absolute; height: 10px; top: 0; left: 0; z-index: -1;">&nbsp;</div>';
+        document.body.insertAdjacentHTML('beforeend', sacrificialAd);
+        return document.body.lastChild;
     });
     // sync adblock detection is deprecated.
     // it will be removed once sticky nav and omniture top up call are both removed
@@ -356,12 +341,12 @@ define([
     //
     // ** don't forget to remove them from the return object too **
     var adblockInUseSync = memoize(function () {
-        return createSacrificialAd().css('display') === 'none';
+        return window.getComputedStyle(createSacrificialAd()).display === 'none';
     });
     // end sync adblock detection
 
     var adblockInUse = new Promise(function (resolve) {
-        if (has(window.guardian.adBlockers, 'active')) {
+        if (window.guardian.adBlockers.hasOwnProperty('active')) {
             // adblock detection has completed
             resolve(window.guardian.adBlockers.active);
         } else {

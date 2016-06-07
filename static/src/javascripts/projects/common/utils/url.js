@@ -1,13 +1,6 @@
 define([
-    'common/utils/detect',
-    'common/utils/mediator',
-    'lodash/objects/isArray',
-    'lodash/arrays/zipObject',
-    'lodash/collections/map',
-    'lodash/arrays/compact',
-    'common/utils/chain',
-    'lodash/objects/pairs'
-], function (detect, mediator, isArray, zipObject, map, compact, chain, pairs) {
+    'common/utils/detect'
+], function (detect) {
 
     var supportsPushState = detect.hasPushStateSupport(),
         model = {
@@ -16,9 +9,15 @@ define([
             // eg ?foo=bar&fizz=buzz returns {foo: 'bar', fizz: 'buzz'}
             getUrlVars: function (options) {
                 var opts = options || {};
-                return chain((opts.query || model.getCurrentQueryString()).split('&')).and(compact).and(map, function (query) {
+                return (opts.query || model.getCurrentQueryString()).split('&')
+                    .filter(Boolean)
+                    .map(function (query) {
                         return query.indexOf('=') > -1 ? query.split('=') : [query, true];
-                    }).and(zipObject).valueOf();
+                    })
+                    .reduce(function (result, input) {
+                        result[input[0]] = input[1];
+                        return result;
+                    }, {});
             },
 
             // returns "foo=bar&fizz=buzz" (eg. no ? symbol)
@@ -47,13 +46,10 @@ define([
 
             // take an object, construct into a query, e.g. {page: 1, pageSize: 10} => page=1&pageSize=10
             constructQuery: function (query) {
-                return chain(query).and(pairs).and(map, function (queryParts) {
-                        var value = queryParts[1];
-                        if (isArray(value)) {
-                            value = value.join(',');
-                        }
-                        return [queryParts[0], '=', value].join('');
-                    }).join('&').value();
+                return Object.keys(query).map(function (param) {
+                        var value = query[param];
+                        return param + '=' + (Array.isArray(value) ? value.join(',') : value);
+                    }).join('&');
             },
 
             getPath: function (url) {
@@ -75,9 +71,6 @@ define([
             }
         };
 
-    // pubsub
-    mediator.on('modules:url:pushquerystring', model.pushQueryString);
-
     // not exposing all the methods here
     return {
         getUrlVars: model.getUrlVars,
@@ -85,7 +78,8 @@ define([
         pushUrl: model.pushUrl,
         constructQuery: model.constructQuery,
         back: model.back,
-        hasHistorySupport: supportsPushState
+        hasHistorySupport: supportsPushState,
+        pushQueryString: model.pushQueryString
     };
 
 });

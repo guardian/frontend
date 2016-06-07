@@ -1,9 +1,16 @@
 package contentapi
 
-import common.{AkkaAsync, Logging, Jobs}
-import play.api.GlobalSettings
+import common.{LifecycleComponent, AkkaAsync, Logging, Jobs}
+import play.api.inject.ApplicationLifecycle
 
-trait SectionsLookUpLifecycle extends GlobalSettings with Logging  {
+import scala.concurrent.{Future, ExecutionContext}
+
+class SectionsLookUpLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+
+  appLifecycle.addStopHook { () => Future {
+    descheduleJobs()
+  }}
+
   private def scheduleJobs() {
     Jobs.schedule("SectionsLookUpJob", "0 * * * * ?") {
       SectionsLookUp.refresh()
@@ -14,8 +21,7 @@ trait SectionsLookUpLifecycle extends GlobalSettings with Logging  {
     Jobs.deschedule("SectionsLookUpJob")
   }
 
-  override def onStart(app: play.api.Application) {
-    super.onStart(app)
+  override def start(): Unit = {
     descheduleJobs()
     scheduleJobs()
 
@@ -23,10 +29,4 @@ trait SectionsLookUpLifecycle extends GlobalSettings with Logging  {
       SectionsLookUp.refresh()
     }
   }
-
-  override def onStop(app: play.api.Application) {
-    descheduleJobs()
-    super.onStop(app)
-  }
-
 }

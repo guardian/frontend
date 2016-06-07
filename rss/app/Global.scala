@@ -1,24 +1,32 @@
-import common.Logback.Logstash
-import common.{CloudWatchApplicationMetrics, ContentApiMetrics}
+import common.Logback.LogstashLifecycle
+import common._
 import conf._
 import conf.switches.SwitchboardLifecycle
 import contentapi.SectionsLookUpLifecycle
-import metrics.FrontendMetric
+import controllers.HealthCheck
+import model.ApplicationIdentity
 import ophan.SurgingContentAgentLifecycle
+import play.api.inject.ApplicationLifecycle
+import play.api.GlobalSettings
 import services.ConfigAgentLifecycle
 
-object Global extends ConfigAgentLifecycle
-  with CloudWatchApplicationMetrics
-  with SurgingContentAgentLifecycle
-  with SectionsLookUpLifecycle
-  with SwitchboardLifecycle
-  with Logstash
-  with RssHealthCheckLifeCycle {
-  override lazy val applicationName = "frontend-rss"
+import scala.concurrent.ExecutionContext
 
-  override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ++ List(
+object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents {
+
+  val applicationMetrics = ApplicationMetrics(
     ContentApiMetrics.HttpTimeoutCountMetric,
     ContentApiMetrics.HttpLatencyTimingMetric,
     ContentApiMetrics.ContentApiErrorMetric
+  )
+
+  override def lifecycleComponents(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext): List[LifecycleComponent] = List(
+    new ConfigAgentLifecycle(appLifecycle),
+    new CloudWatchMetricsLifecycle(appLifecycle, ApplicationIdentity("frontend-rss"), applicationMetrics),
+    new SurgingContentAgentLifecycle(appLifecycle),
+    new SectionsLookUpLifecycle(appLifecycle),
+    new SwitchboardLifecycle(appLifecycle),
+    LogstashLifecycle,
+    new CachedHealthCheckLifeCycle(HealthCheck)
   )
 }
