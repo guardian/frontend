@@ -34,11 +34,29 @@ define([
                 ' | ' + config.page.section +
                 ' | ' + this.params.subHeader1 +
                 ' | ' + this.params.sponsorName;
+
+            if (this.params.elementsNo == 2) {
+                var videoLength2 = this.params.videoLength2;
+                if (videoLength2){
+                    var seconds = videoLength2 % 60;
+                    var minutes = (videoLength2 - seconds) / 60;
+                    this.params.timeString2 = minutes + (seconds < 10 ? ':0' : ':') + seconds;
+                }
+
+                this.params.linkTracking2 = 'Labs hosted container' +
+                ' | ' + config.page.edition +
+                ' | ' + config.page.section +
+                ' | ' + this.params.subHeader2 +
+                ' | ' + this.params.sponsorName;
+            }
+
             this.$adSlot.append(hostedThrasherTemplate({ data: this.params }));
             if (this.params.trackingPixel) {
                 addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
             }
+
             console.log(this.params);
+
         }, this);
     };
 

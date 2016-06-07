@@ -6,8 +6,6 @@
         display: block;
 
         @include mq(tablet) {
-            padding: 0 $gs-gutter / 2;
-
             .has-flex & {
                 display: flex;
                 flex-direction: row;
@@ -17,9 +15,9 @@
         }
 
         &.hosted-thrasher__body--1-elems > .hosted-thrasher--element {
-            &:nth-child(n+1),
             &:nth-child(n+2),
-            &:nth-child(n+3) {
+            &:nth-child(n+3),
+            &:nth-child(n+4) {
                 display: none;
             }
             @include mq(tablet) {
@@ -29,8 +27,14 @@
             }
         }
         &.hosted-thrasher__body--2-elems > .hosted-thrasher--element {
-            &:nth-child(n+2),
-            &:nth-child(n+3) {
+            &:nth-child(1) {
+                margin-right: 10px;
+            }
+            &:nth-child(n+2) {
+                margin-left: 10px;
+            }
+            &:nth-child(n+3),
+            &:nth-child(n+4) {
                 display: none;
             }
             @include mq(tablet) {
@@ -40,7 +44,7 @@
             }
         }
         &.hosted-thrasher__body--3-elems > .hosted-thrasher--element {
-            &:nth-child(n+3) {
+            &:nth-child(n+4) {
                 display: none;
             }
             @include mq(tablet) {
@@ -58,7 +62,18 @@
         }
     }
 
-    .hosted__heading {
+    .hosted-thrasher__heading {
+        @include f-headlineSans;
+
+        margin: 0;
+        font-size: 22px;
+        line-height: 24px;
+
+        @include mq(tablet) {
+            font-size: 26px;
+            line-height: 26px;
+        }
+
         @include mq(desktop) {
             font-size: 32px;
             line-height: 34px;
@@ -66,11 +81,43 @@
         }
     }
 
-    .hosted__meta {
+    .hosted-thrasher__heading--small {
+        @include f-headlineSans;
+
+        font-size: 18px;
+        line-height: 1;
+        margin-bottom: 0;
+
+        @include mq(desktop) {
+            font-size: 32px;
+        }
+
+        @include mq(tablet) {
+            font-size: 24px;
+        }
+    }
+
+    .hosted-thrasher__meta {
+        position: absolute;
         left: $gs-gutter/2;
         bottom: 60px;
+        width: 100%;
+        color: #ffffff;
+
         @include mq($until: desktop) {
             bottom: 15%;
+        }
+    }
+
+    .hosted-thrasher__body--2-elems {
+        .hosted-thrasher__meta {
+            width: $gs-column-width * 4;
+        }
+        .hosted-thrasher__heading--small {
+            font-size: 24px;
+        }
+        .hosted-thrasher__heading {
+            font-size: 28px;
         }
     }
 
@@ -105,14 +152,14 @@
         border-top: 1px solid transparent;
     }
 
-    .hosted__faux-controls {
+    .hosted-thrasher__faux-controls {
         @include f-headlineSans;
         position: absolute;
         bottom: 0;
         font-size: 16px;
         font-weight: bold;
 
-        .hosted__thrasher-timer {
+        .hosted-thrasher__timer {
             color: #ffffff;
             @include mq(desktop) {
                 margin-bottom: 10px;
@@ -120,7 +167,7 @@
         }
     }
 
-    .play-button {
+    .hosted-thrasher__play-button {
         @include icon(play-32--tone-media);
         @include mq(desktop) {
             padding: 9px;
@@ -128,7 +175,7 @@
         margin: 10px;
     }
 
-    .play-button, .hosted__thrasher-timer {
+    .hosted-thrasher__play-button, .hosted-thrasher__timer {
         display: inline-block;
         vertical-align: bottom;
     }

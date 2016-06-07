@@ -16,21 +16,48 @@
                 <div class="hosted-banner" style="
                     border-color: <%=data.borderColour1%>;
                     "></div>
-                <div class="hosted__meta">
-                    <p class="hosted__heading--small" style="
+                <div class="hosted-thrasher__meta">
+                    <p class="hosted-thrasher__heading--small" style="
                             color: <%=data.mainHeader1Colour%>;
                         "><%=data.mainHeader1%></p>
-                    <h1 class="hosted__heading" style="
+                    <h1 class="hosted-thrasher__heading" style="
                             color: <%=data.subHeader1Colour%>;
                         "><%=data.subHeader1%></h1>
                 </div>
-                <div class="hosted__faux-controls">
-                    <div class="play-button"></div>
+                <div class="hosted-thrasher__faux-controls">
+                    <div class="hosted-thrasher__play-button"></div>
                     <% if(data.timeString1) { %>
-                    <div class="hosted__thrasher-timer">
+                    <div class="hosted-thrasher__timer">
                         <span class="vjs-current-time vjs-time-control">0:00</span>
                         <span class="vjs-time-control vjs-time-divider"> / </span>
                         <span class="vjs-duration vjs-time-control vjs-control"><%=data.timeString1%></span>
+                    </div>
+                    <% } %>
+                </div>
+            </a>
+        </div>
+        <div class="hosted-thrasher--element hosted-thrasher--image-container"  style="
+            background-image: url(<%=data.asset2%>);
+        ">
+            <a href="<%=data.clickMacro%><%=data.link2%>" data-link-name="<%=data.linkTracking2%>">
+                <div class="hosted-banner" style="
+                    border-color: <%=data.borderColour2%>;
+                    "></div>
+                <div class="hosted-thrasher__meta">
+                    <p class="hosted-thrasher__heading--small" style="
+                            color: <%=data.mainHeader2Colour%>;
+                        "><%=data.mainHeader2%></p>
+                    <h1 class="hosted-thrasher__heading" style="
+                            color: <%=data.subHeader2Colour%>;
+                        "><%=data.subHeader2%></h1>
+                </div>
+                <div class="hosted-thrasher__faux-controls">
+                    <div class="hosted-thrasher__play-button"></div>
+                    <% if(data.timeString2) { %>
+                    <div class="hosted-thrasher__timer">
+                        <span class="vjs-current-time vjs-time-control">0:00</span>
+                        <span class="vjs-time-control vjs-time-divider"> / </span>
+                        <span class="vjs-duration vjs-time-control vjs-control"><%=data.timeString2%></span>
                     </div>
                     <% } %>
                 </div>
