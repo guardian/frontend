@@ -299,7 +299,11 @@ define([
                                         player.ima({
                                             id: mediaId,
                                             adTagUrl: getAdUrl(),
-                                            prerollTimeout: 1000
+                                            prerollTimeout: 1000,
+                                            // We set this sightly higher so contrib-ads never timeouts before ima.
+                                            contribAdsSettings: {
+                                                timeout: 1200
+                                            }
                                         });
                                         player.on('adstart', function() {
                                             player.adSkipCountdown(15);
