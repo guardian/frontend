@@ -22,7 +22,10 @@ window.guardian = {
     css: {
         loaded: false
     },
-    adBlockers: {},
+    adBlockers: {
+        active: undefined,
+        onDetect: []
+    },
     config: @JavaScript(templates.js.javaScriptConfig(page).body)
 };
 
