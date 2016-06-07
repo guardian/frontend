@@ -119,7 +119,7 @@ trait ABTestSwitches {
     "ab-video-nav",
     "Have video in the nav",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 13),
+    sellByDate = new LocalDate(2016, 6, 15),
     exposeClientSide = true
   )
 
