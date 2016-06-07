@@ -5,7 +5,6 @@ import conf.CachedHealthCheckLifeCycle
 import conf.switches.SwitchboardLifecycle
 import controllers.HealthCheck
 import crosswords.TodaysCrosswordGridLifecycle
-import headlines.ABHeadlinesLifecycle
 import model.ApplicationIdentity
 import ophan.SurgingContentAgentLifecycle
 import play.api.inject.ApplicationLifecycle
@@ -24,7 +23,6 @@ object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents 
     IndexListingsLifecycle,
     new TodaysCrosswordGridLifecycle(appLifecycle),
     new SwitchboardLifecycle(appLifecycle),
-    new ABHeadlinesLifecycle(appLifecycle),
     LogstashLifecycle,
     new CachedHealthCheckLifeCycle(HealthCheck)
   )
