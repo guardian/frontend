@@ -21,7 +21,6 @@ define([
     'common/modules/analytics/scrollDepth',
     'common/modules/analytics/css-logging',
     'common/modules/analytics/simple-metrics',
-    'common/modules/analytics/headlines-test-analytics',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/commercial/donot-use-adblock',
     'common/modules/commercial/user-features',
@@ -77,7 +76,6 @@ define([
     ScrollDepth,
     logCss,
     simpleMetrics,
-    HeadlinesTestAnalytics,
     userAdTargeting,
     donotUseAdblock,
     userFeatures,
@@ -366,10 +364,6 @@ define([
                 });
             },
 
-            headlinesTestAnalytics: function () {
-                HeadlinesTestAnalytics.init();
-            },
-
             mobileLabsAlertBanner: function () {
                 mobileLabAlerts();
             },
@@ -427,7 +421,6 @@ define([
                 ['c-show-membership-messages', modules.showMembershipMessages],
                 ['c-email', modules.initEmail],
                 ['c-user-features', userFeatures.refresh],
-                ['c-headlines-test-analytics', modules.headlinesTestAnalytics],
                 ['c-mobile-labs-banner', modules.mobileLabsAlertBanner],
                 ['c-hosted-about-lightbox', modules.initHostedAboutLightbox]
             ]), function (fn) {

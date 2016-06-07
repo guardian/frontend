@@ -13,7 +13,6 @@ import play.api.inject.ApplicationLifecycle
 import play.api.GlobalSettings
 import rugby.conf.RugbyLifecycle
 import services.ConfigAgentLifecycle
-import headlines.ABHeadlinesLifecycle
 
 import scala.concurrent.ExecutionContext
 
@@ -33,7 +32,6 @@ object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents 
     new SwitchboardLifecycle(appLifecycle),
     new FootballLifecycle(appLifecycle),
     new CricketLifecycle(appLifecycle),
-    new RugbyLifecycle(appLifecycle),
-    new ABHeadlinesLifecycle(appLifecycle)
+    new RugbyLifecycle(appLifecycle)
   )
 }

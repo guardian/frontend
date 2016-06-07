@@ -57,7 +57,6 @@ GET            /analytics/abtests                                               
 GET            /analytics/confidence                                                                                             controllers.admin.AnalyticsConfidenceController.renderConfidence()
 GET            /analytics/content/video                                                                                          controllers.admin.ContentPerformanceController.renderVideoEncodingsDashboard()
 GET            /analytics/quality                                                                                                controllers.admin.AnalyticsController.renderQuality()
-GET            /analytics/headlines-test                                                                                         controllers.admin.MetricsController.renderHeadlinesTest()
 GET            /analytics/quality                                                                                                controllers.admin.AnalyticsController.renderQuality()
 
 # Commercial admin
