@@ -95,7 +95,7 @@ define([
 
             function insertOnMobile(item) {
                 // add a mobile advert after the container
-                item.anchor.parentNode.insertBefore(item.adSlot, item.anchor.nextSibling);
+                item.anchor.lastElementChild.appendChild(item.adSlot);
             }
 
             function insertOnTabletPlus(item) {

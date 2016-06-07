@@ -43,8 +43,6 @@ define([
 
     function userIsInAClashingAbTest() {
         var clashingTests = [
-            ['ParticipationLowFricFilm','variant-1'],
-            ['ParticipationLowFricMusicV1', 'variant-1'],
             ['ParticipationLowFricSport', 'variant-1']
         ];
 
@@ -110,6 +108,9 @@ define([
         },
         theFiver: function () {
             return page.keywordExists(['Football']) && allowedArticleStructure();
+        },
+        labNotes: function () {
+            return config.page.section === 'science' && config.switches.emailSignupLabNotes;
         },
         usBriefing: function () {
             return (config.page.section === 'us-news' && allowedArticleStructure()) ||
