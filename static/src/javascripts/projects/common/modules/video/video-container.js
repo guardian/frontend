@@ -33,7 +33,7 @@ define([
 
         INIT: function init(previousState) {
             fastdom.read(function() {
-            // Lazy load images on scroll for mobile
+                // Lazy load images on scroll for mobile
                 $('.js-video-playlist-image', previousState.container).each(function(el) {
                     var elementInview = ElementInview(el , $('.js-video-playlist-inner', previousState.container).get(0), {
                         // This loads 1 image in the future
@@ -54,6 +54,7 @@ define([
                     });
                 });
             });
+            return previousState;
         }
     };
 
@@ -117,7 +118,7 @@ define([
             length: container.getAttribute('data-number-of-videos'),
             videoWidth: 700,
             container: container
-        }
+        };
     }
 
     function setupDispatches(dispatch, container) {
