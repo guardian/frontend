@@ -122,4 +122,8 @@
 
 .formstack-survey-wrapper {
     @include gs-container;
+
+    @include mq($until: tablet) {
+        padding: 20px;
+    }
 }
