@@ -50,6 +50,14 @@
             }
         }
         &.hosted-thrasher__body--3-elems > .hosted-thrasher--element {
+            &:nth-child(n+2),
+            &:nth-child(n+3) {
+                margin-top: 10px;
+                @include mq(tablet) {
+                    margin-top: 0;
+                    margin-left: 10px;
+                }
+            }
             &:nth-child(n+4) {
                 display: none;
             }
@@ -118,7 +126,8 @@
         position: relative;
     }
 
-    .hosted-thrasher__body--2-elems {
+    .hosted-thrasher__body--2-elems,
+    .hosted-thrasher__body--3-elems {
         .hosted-thrasher__meta {
             width: $gs-column-width * 4;
             @include mq(tablet) {
