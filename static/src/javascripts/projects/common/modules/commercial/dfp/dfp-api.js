@@ -177,8 +177,9 @@ define([
     }
 
     function setPageTargeting() {
-        forOwn(buildPageTargeting(), function (value, key) {
-            googletag.pubads().setTargeting(key, value);
+        var targeting = buildPageTargeting();
+        Object.keys(targeting).forEach(function (key) {
+            googletag.pubads().setTargeting(key, targeting[key]);
         });
     }
 
@@ -252,6 +253,10 @@ define([
             googletag.pubads().setPublisherProvidedId(hashedId);
         }
     }
+
+    /**
+     * LOAD ADS
+     */
 
     function shouldLazyLoad() {
         // We do not want lazy loading on pageskins because it messes up the roadblock
@@ -737,19 +742,18 @@ define([
     function buildSizeMapping(sizes) {
         var mapping = googletag.sizeMapping();
 
-        detect.breakpoints.forEach(function (breakpoint) {
-            var sizesForBreakpoint = sizes[breakpoint.name];
-            if (sizesForBreakpoint) {
-                mapping.addSize([breakpoint.width, 0], sizesForBreakpoint);
-            }
-        });
+        detect.breakpoints
+            .filter(function (_) { return _.name in sizes; })
+            .forEach(function (_) {
+                mapping.addSize([_.width, 0], sizes[_.name]);
+            });
 
         return mapping.build();
     }
 
     function parseKeywords(keywords) {
-        return map((keywords || '').split(','), function (keyword) {
-            return keyword.split('/').pop();
+        return (keywords || '').split(',').map(function (keyword) {
+            return keyword.substr(keyword.lastIndexOf('/') + 1);
         });
     }
 
