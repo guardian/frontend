@@ -398,4 +398,14 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
+
+  // Owner: Dotcom habitual / Gareth
+  val emailSignupEuRef = Switch(
+    SwitchGroup.Feature,
+    "email-signup-eu-ref",
+    "When ON, insert the EU ref email sign-up into articles with the EU ref tag",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
 }

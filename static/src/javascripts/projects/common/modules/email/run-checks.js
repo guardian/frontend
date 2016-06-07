@@ -112,6 +112,11 @@ define([
         labNotes: function () {
             return config.page.section === 'science' && config.switches.emailSignupLabNotes;
         },
+        euRef: function () {
+            return config.switches.emailSignupEuRef &&
+                    page.keywordExists(['EU referendum']) &&
+                    allowedArticleStructure();
+        },
         usBriefing: function () {
             return (config.page.section === 'us-news' && allowedArticleStructure()) ||
                 config.page.series === 'Guardian US briefing';
