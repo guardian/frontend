@@ -156,7 +156,6 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
 
     log.info(s"Fetching article: $path for edition ${edition.id}: ${RequestLog(request)}")
     val capiItem = ContentApiClient.item(path, edition)
-      .showSection(true)
       .showTags("all")
       .showFields("all")
       .showReferences("all")
