@@ -92,7 +92,7 @@ define([
 
         if ($articleBody.length) {
             var allArticleEls = $('> *', $articleBody);
-            return every([].slice.call(allArticleEls, allArticleEls.length - 3), isParagraph);
+            return every([].slice.call(allArticleEls, allArticleEls.length - 2), isParagraph);
         } else {
             return false;
         }
