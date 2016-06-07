@@ -6,6 +6,7 @@ GET            /surveys/*file                                                   
 GET            /commercial/test-page                                                                                             controllers.commercial.CreativeTestPage.allComponents(k: List[String])
 
 GET            /survey                                                                                                           controllers.SurveyPageController.renderSimpleSurveyPage()
+GET            /survey/thankyou                                                                                                  controllers.SurveyPageController.thankYou()
 GET            /survey/:formName                                                                                                 controllers.SurveyPageController.renderFormStackSurvey(formName)
 
 # For dev machines

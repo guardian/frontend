@@ -126,4 +126,35 @@
     @include mq($until: tablet) {
         padding: $gs-gutter;
     }
+
+    @include mq($from: tablet) {
+        .wrapper-inner {
+            padding: $gs-gutter;
+        }
+    }
+
+    h1 {
+        @include fs-headline(4);
+        color: $guardian-brand;
+        font-weight: bold;
+        margin-top: $gs-baseline/2;
+        margin-bottom: $gs-baseline;
+
+        @include mq(tablet) {
+            @include fs-headline(6);
+            font-weight: bold;
+        }
+    }
+
+    h2 {
+        @include fs-header(4);
+        color: $guardian-brand;
+        margin-bottom: $gs-baseline/2;
+    }
+
+    p {
+        @include fs-bodyCopy(2);
+        margin-bottom: $gs-baseline;
+    }
+
 }
