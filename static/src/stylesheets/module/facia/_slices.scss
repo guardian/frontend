@@ -233,7 +233,7 @@ Hence why a greater depth of selector specificity is needed.
         width: gs-span(4);
         background: $neutral-8;
         border-bottom: $gs-baseline / 2 solid $neutral-8;
-        @include mq(tablet){
+        @include mq(tablet) {
             width: gs-span(9);
         }
     }
