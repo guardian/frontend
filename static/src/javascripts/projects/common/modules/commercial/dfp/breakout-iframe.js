@@ -1,8 +1,6 @@
 define([
     'bonzo',
     'Promise',
-    'common/utils/$',
-    'common/utils/config',
     'common/utils/fastdom-promise',
 
     'common/modules/commercial/creatives/commercial-component',
@@ -26,8 +24,6 @@ define([
 ], function (
     bonzo,
     Promise,
-    $,
-    config,
     fastdom
 ) {
 
@@ -35,37 +31,29 @@ define([
      * Allows ad content to break out of their iframes. The ad's content must have one of the above breakoutClasses.
      * This can be set on the DFP creative.
      */
-    function breakoutIFrame(iFrame, $slot) {
+    function breakoutIFrame(iFrame, slot) {
         /*eslint-disable no-eval*/
-        var $iFrame = bonzo(iFrame);
-        var iFrameBody = iFrame.contentDocument.body;
-        var $breakoutEl;
+        var iFrameBody = iFrame.contentDocument;
+        var breakoutEl = iFrameBody.querySelector('.breakout__html, .breakout__script');
 
-        $breakoutEl = $('.breakout__html, .breakout__script', iFrameBody);
-
-        if ($breakoutEl.hasClass('breakout__html')) {
+        if (!breakoutEl) {
+            return Promise.resolve();
+        } else if (breakoutEl.classList.contains('breakout__html')) {
             return fastdom.write(function () {
-                $iFrame.hide();
-                $breakoutEl.detach();
-                $slot.append($breakoutEl[0].innerHTML);
+                iFrame.setAttribute('hidden', 'hidden');
+                breakoutEl.parentNode.removeChild(breakoutEl);
+                slot.insertAdjacentHTML('beforeend', breakoutEl.innerHTML);
             });
-        } else if ($breakoutEl.hasClass('breakout__script')) {
+        } else if (breakoutEl.classList.contains('breakout__script')) {
             return fastdom.write(function () {
-                $iFrame.hide();
+                iFrame.setAttribute('hidden', 'hidden');
             }).then(function () {
-                var breakoutContent = $breakoutEl.html();
-                if ($breakoutEl.attr('type') === 'application/json') {
+                var breakoutContent = breakoutEl.innerHTML;
+                if (breakoutEl.type === 'application/json') {
                     var creativeConfig = JSON.parse(breakoutContent);
-                    if (creativeConfig.name === 'fluid250-v4' || creativeConfig.name === 'fluid250-v3') {
-                        creativeConfig.name = 'fluid250';
-                    } else if (creativeConfig.name === 'foundation-funded-logo') {
-                        creativeConfig.name = 'template';
-                        creativeConfig.params.creative = 'logo';
-                        creativeConfig.params.type = 'funded';
-                    }
                     return new Promise(function(resolve) {
                         require(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
-                            resolve(new Creative($slot, creativeConfig.params, creativeConfig.opts).create());
+                            resolve(new Creative(bonzo(slot), creativeConfig.params, creativeConfig.opts).create());
                         });
                     });
                 } else {

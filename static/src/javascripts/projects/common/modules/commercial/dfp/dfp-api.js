@@ -562,14 +562,14 @@ define([
      * Currently this is being used for sponsored logos and commercial components so they
      * can inherit fonts.
      */
-    function checkForBreakout($adSlot) {
+    function checkForBreakout(adSlotNode) {
         return new Promise(function (resolve, reject) {
             // DFP sometimes sends back two iframes, one with actual ad and one with 0,0 sizes and __hidden__ 'paramter'
             // The later one will never go to 'complete' state on IE so lets avoid it.
-            var iFrame = find($('iframe', $adSlot), function (iframe) { return iframe.id.match('__hidden__') === null; });
+            var iFrame = adSlotNode.querySelector('iframe:not([id*="__hidden__"])');
 
             // No iFrame, no work to do
-            if (typeof iFrame === 'undefined') {
+            if (iFrame === null) {
                 reject();
             }
             // IE needs the iFrame to have loaded before we can interact with it
@@ -579,17 +579,17 @@ define([
 
                     if (
                         /*eslint-disable valid-typeof*/
-                    updatedIFrame &&
-                    typeof updatedIFrame.readyState !== 'unknown' &&
-                    updatedIFrame.readyState === 'complete'
-                    /*eslint-enable valid-typeof*/
+                        updatedIFrame &&
+                        typeof updatedIFrame.readyState !== 'unknown' &&
+                        updatedIFrame.readyState === 'complete'
+                        /*eslint-enable valid-typeof*/
                     ) {
                         bean.off(updatedIFrame, 'readystatechange');
-                        resolve(breakoutIFrame(updatedIFrame, $adSlot));
+                        resolve(breakoutIFrame(updatedIFrame, adSlotNode));
                     }
                 });
             } else {
-                resolve(breakoutIFrame(iFrame, $adSlot));
+                resolve(breakoutIFrame(iFrame, adSlotNode));
             }
         });
     }
