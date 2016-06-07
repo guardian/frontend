@@ -3,15 +3,13 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'lodash/objects/assign',
-    'lodash/collections/find',
-    'lodash/arrays/intersection'
+    'lodash/collections/find'
 ], function (
     $,
     config,
     detect,
     assign,
-    find,
-    intersection
+    find
 ) {
 
     function isit(isTrue, yes, no, arg) {
@@ -73,10 +71,15 @@ define([
         return isit(vis, yes, no, el);
     }
 
-    function keywordExists(keyword) {
+    function keywordExists(keywordArr) {
         var keywords = config.page.keywords ? config.page.keywords.split(',') : '';
+
         // Compare page keywords with passed in array
-        return !!intersection(keywords, keyword).length;
+        for (var i = 0; keywordArr.length > i; i++) {
+            if (keywords.indexOf(keywordArr[i]) > -1) return true;
+        }
+
+        return false;
     }
 
     return {
