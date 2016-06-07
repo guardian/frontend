@@ -14,7 +14,7 @@ define([
     'common/modules/experiments/tests/participation-low-fric-recipes',
     'common/modules/experiments/tests/participation-low-fric-fashion',
     'common/modules/experiments/tests/participation-low-fric-sport',
-    'common/modules/experiments/tests/clever-friend-brexit',
+    'common/modules/experiments/tests/clever-friend-brexit-tailor',
     'common/modules/experiments/tests/welcome-header',
     'common/modules/experiments/tests/participation-discussion-test',
     'common/modules/experiments/tests/new-user-adverts-disabled',
