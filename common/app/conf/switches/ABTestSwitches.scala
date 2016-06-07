@@ -112,4 +112,13 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 6, 8),
     exposeClientSide = true
   )
+
+  val ABVideoMainMediaAlwaysShowcase = Switch(
+    SwitchGroup.ABTests,
+    "ab-video-main-media-always-showcase",
+    "Make video main media always showcase",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 14),
+    exposeClientSide = true
+  )
 }

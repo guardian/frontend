@@ -18,7 +18,8 @@ define([
     'common/modules/experiments/tests/welcome-header',
     'common/modules/experiments/tests/participation-discussion-test',
     'common/modules/experiments/tests/new-user-adverts-disabled',
-    'common/modules/experiments/tests/video-teaser'
+    'common/modules/experiments/tests/video-teaser',
+    'common/modules/experiments/tests/video-showcase-main-media'
 ], function (
     reportError,
     config,
@@ -39,7 +40,8 @@ define([
     WelcomeHeader,
     ParticipationDiscussionTest,
     NewUserAdvertsDisabled,
-    VideoTeaser
+    VideoTeaser,
+    VideoShowcaseMainMedia
 ) {
 
     var TESTS = [
@@ -54,7 +56,8 @@ define([
         new WelcomeHeader(),
         new ParticipationDiscussionTest(),
         new NewUserAdvertsDisabled(),
-        new VideoTeaser()
+        new VideoTeaser(),
+        new VideoShowcaseMainMedia()
     ];
 
     var participationsKey = 'gu.ab.participations';
