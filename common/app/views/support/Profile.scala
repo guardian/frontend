@@ -101,7 +101,7 @@ object FacebookOpenGraphImage extends Profile(width = Some(1200)) {
   override val heightParam = "h=632"
   val blendModeParam = "bm=normal"
   val blendOffsetParam = "ba=bottom%2Cleft"
-  val blendImageParam = "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNS8yNS9vdmVybGF5LWxvZ28tMTIwMC05MF9vcHQucG5n"
+  val blendImageParam = "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNi8wNy9vdmVybGF5LWxvZ28tMTIwMC05MF9vcHQucG5n"
   override val fitParam = "fit=crop"
 
 
