@@ -658,25 +658,40 @@ define([
      * One size       - `data-mobile="300,50"`
      * Multiple sizes - `data-mobile="300,50|320,50"`
      */
-    function createSizeMapping(attr) {
-        return attr.split('|').map(function (size) {
-            return size === 'fluid' ? 'fluid' : size.split(',').map(Number);
-        });
+    function getAdBreakpointSizes(adSlot) {
+        return detect.breakpoints.reduce(function (sizes, breakpoint) {
+            var data = adSlot.node.getAttribute('data-' + breakpointNameToAttribute(breakpoint.name));
+            if (data) {
+                sizes[breakpoint.name] = createSizeMapping(data);
+            }
+            return sizes;
+        }, {});
+
+        function createSizeMapping(attr) {
+            return attr.split('|').map(function (size) {
+                return size === 'fluid' ? 'fluid' : size.split(',').map(Number);
+            });
+        }
     }
 
-    function defineSlot($adSlot, sizes) {
-        var slotTarget = $adSlot.data('slot-target') || $adSlot.data('name');
+    function breakpointNameToAttribute(breakpointName) {
+        return breakpointName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+    }
+
+    function defineSlot(adSlotNode, sizes) {
+        var slotTarget = adSlotNode.getAttribute('data-slot-target') || adSlotNode.getAttribute('data-name');
         var adUnitOverride = urlUtils.getUrlVars()['ad-unit'];
         // if ?ad-unit=x, use that
         var adUnit = adUnitOverride ?
-            ['/', config.page.dfpAccountId, '/', adUnitOverride].join('')
-            : config.page.adUnit;
-        var id             = $adSlot.attr('id');
+            '/' + config.page.dfpAccountId + '/' + adUnitOverride :
+            config.page.adUnit;
+        var id = adSlotNode.id;
         var slot;
         var size;
+        var data;
         var sizeMapping;
 
-        if ($adSlot.data('out-of-page')) {
+        if (adSlotNode.getAttribute('data-out-of-page')) {
             slot = googletag.defineOutOfPageSlot(adUnit, id);
         } else {
             sizeMapping = buildSizeMapping(sizes);
@@ -688,25 +703,18 @@ define([
             slot = googletag.defineSlot(adUnit, size, id).defineSizeMapping(sizeMapping);
         }
 
-        if ($adSlot.data('series')) {
-            slot.setTargeting('se', parseKeywords($adSlot.data('series')));
+        data = adSlotNode.getAttribute('data-series');
+        if (data) {
+            slot.setTargeting('se', parseKeywords(data));
         }
 
-        if ($adSlot.data('keywords')) {
-            slot.setTargeting('k', parseKeywords($adSlot.data('keywords')));
+        data = adSlotNode.getAttribute('data-keywords');
+        if (data) {
+            slot.setTargeting('k', parseKeywords(data));
         }
 
         slot.addService(googletag.pubads())
             .setTargeting('slot', slotTarget);
-
-        // Add to the array of ads to be refreshed (when the breakpoint changes)
-        // only if it's `data-refresh` attribute isn't set to false.
-        if ($adSlot.data('refresh') !== false) {
-            slotsToRefresh.push({
-                $adSlot: $adSlot,
-                slot: slot
-            });
-        }
 
         return slot;
     }
