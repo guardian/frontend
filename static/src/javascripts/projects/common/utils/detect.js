@@ -351,7 +351,7 @@ define([
             resolve(window.guardian.adBlockers.active);
         } else {
             // Push a listener for when the JS loads
-            window.guardian.adBlockers.onDetect = resolve;
+            window.guardian.adBlockers.onDetect.push(resolve);
         }
     });
 

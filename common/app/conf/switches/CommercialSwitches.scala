@@ -280,7 +280,7 @@ trait CommercialSwitches {
     "optimise-high-merchandising",
     "If on, server will check tags for high-merchandising target before rendering high-merch slot.",
     safeState = Off,
-    sellByDate = new LocalDate(2016,6,8),
+    sellByDate = new LocalDate(2016,7,8),
     exposeClientSide = false
   )
 
@@ -289,7 +289,7 @@ trait CommercialSwitches {
     "report-empty-dfp-responses",
     "If on, the client will report empty dfp ad responses.",
     safeState = Off,
-    sellByDate = new LocalDate(2016,6,8),
+    sellByDate = new LocalDate(2016,7,8),
     exposeClientSide = true
   )
 

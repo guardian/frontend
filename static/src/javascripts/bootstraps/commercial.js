@@ -13,7 +13,7 @@ define([
     'common/modules/commercial/slice-adverts',
     'common/modules/commercial/third-party-tags',
     'common/modules/commercial/paidfor-band',
-    'common/modules/commercial/adverts'
+    'common/modules/commercial/paid-containers'
 ], function (
     Promise,
     config,
@@ -29,7 +29,7 @@ define([
     sliceAdverts,
     thirdPartyTags,
     paidforBand,
-    adverts
+    paidContainers
 ) {
     var modules = [
         ['cm-dfp', dfp.init],
@@ -65,7 +65,7 @@ define([
                     ['cm-thirdPartyTags', thirdPartyTags.init],
                     ['cm-hostedVideo', hostedVideo.init],
                     ['cm-paidforBand', paidforBand.init],
-                    ['cm-new-adverts', adverts.init],
+                    ['cm-new-adverts', paidContainers.init],
                     ['cm-ready', function () {
                         mediator.emit('page:commercial:ready');
                         userTiming.mark('commercial end');
