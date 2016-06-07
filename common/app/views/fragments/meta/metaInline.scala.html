@@ -11,7 +11,7 @@
     @if(ArticleBadgesSwitch.isSwitchedOn) {
 
         @badgeFor(item).map { badge =>
-            <div class="badge-slot badge-slot--election">
+            <div class="badge-slot @if(badge.classModifier){badge-slot--@badge.classModifier}">
                 @if(isAmp) {
                     <amp-img class="badge-slot__img" src="@badge.imageUrl" layout="fixed" height="33" width="33"></amp-img>
                 } else {
