@@ -31,9 +31,11 @@ define([
                 test: function () {
                     var thrasher1 = document.querySelector('guardian__video--wrapper');
                     var thrasher2 = document.querySelector('leicester__video--wrapper');
-                    
-                    thrasher1.style.display = 'none';
-                    thrasher2.style.display = 'block';
+
+                    if (thrasher1 && thrasher2) {
+                        thrasher1.style.display = 'none';
+                        thrasher2.style.display = 'block';
+                    }
                 }
             }
         ];
