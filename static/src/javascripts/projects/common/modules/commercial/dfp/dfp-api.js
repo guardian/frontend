@@ -265,28 +265,38 @@ define([
         }
     }
 
-    function lazyLoad() {
-        if (adverts.length === 0) {
+    var nbOfFrames = 6;
+    var durationOfFrame = 16;
+    var depthOfScreen = 1.5;
+    var lazyLoad = throttle(function () {
+        if (advertsToLoad.length === 0) {
             disableLazyLoad();
         } else {
-            var scrollTop = window.pageYOffset;
-            var viewportHeight = bonzo.viewport().height;
-            var scrollBottom = scrollTop + viewportHeight;
-            var depth = 0.5;
+            var viewportHeight = detect.getViewport().height;
 
-            var advertsToLoad = getAdvertArray().filter(function (advert) {
-                return !advert.isRendered
-                    && !advert.isLoading
-                        // if the position of the ad is above the viewport - offset (half screen size)
-                    && (scrollBottom > document.getElementById(advert.adSlotId).getBoundingClientRect().top + scrollTop - viewportHeight * depth);
+            fastdom.read(function () {
+                advertsToLoad
+                    .filter(function (advert) {
+                        var rect = advert.node.getBoundingClientRect();
+                        // load the ad only if it's setting within an acceptable range
+                        return (1 - depthOfScreen) * viewportHeight < rect.bottom && advert.node.getBoundingClientRect().top < viewportHeight * depthOfScreen;
+                    })
+                    .forEach(loadAdvert);
             });
-            advertsToLoad.forEach(loadSlot);
+        }
+    }, nbOfFrames * durationOfFrame);
+
+    function enableLazyLoad() {
+        if (!lazyLoadEnabled) {
+            lazyLoadEnabled = true;
+            window.addEventListener('scroll', lazyLoad);
+            lazyLoad();
         }
     }
 
     function disableLazyLoad() {
         lazyLoadEnabled = false;
-        mediator.off('window:throttledScroll', lazyLoad);
+        window.removeEventListener('scroll', lazyLoad);
     }
 
     /**
