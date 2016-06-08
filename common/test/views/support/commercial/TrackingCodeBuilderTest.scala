@@ -1,7 +1,7 @@
 package views.support.commercial
 
 import common.commercial._
-import conf.switches.Switches.staticBadgesSwitch
+import conf.switches.Switches.containerBrandingFromCapi
 import org.scalatest.{BeforeAndAfterEach, FlatSpec, Matchers}
 import play.api.test.FakeRequest
 import views.support.SponsorDataAttributes
@@ -9,7 +9,7 @@ import views.support.SponsorDataAttributes
 class TrackingCodeBuilderTest extends FlatSpec with Matchers with BeforeAndAfterEach {
 
   override protected def beforeEach(): Unit = {
-    staticBadgesSwitch.switchOff()
+    containerBrandingFromCapi.switchOff()
   }
 
   private def mkBrandingAttributes(sponsorName: String) = SponsorDataAttributes(
@@ -81,7 +81,7 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers with BeforeAndAfter
   }
 
   it should "populate tracking code when card has individual branding" in {
-    staticBadgesSwitch.switchOn()
+    containerBrandingFromCapi.switchOn()
     val code = TrackingCodeBuilder.mkInteractionTrackingCode(
       frontId = "front-id",
       containerIndex = 5,
