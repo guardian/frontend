@@ -13,13 +13,16 @@ define([
     'common/modules/experiments/tests/facebook-share-params',
     'common/modules/experiments/tests/participation-low-fric-recipes',
     'common/modules/experiments/tests/participation-low-fric-fashion',
-    'common/modules/experiments/tests/participation-low-fric-sport',
+    'common/modules/experiments/tests/participation-low-fric-sport-v2',
     'common/modules/experiments/tests/clever-friend-brexit',
     'common/modules/experiments/tests/welcome-header',
     'common/modules/experiments/tests/participation-discussion-test',
     'common/modules/experiments/tests/new-user-adverts-disabled',
     'common/modules/experiments/tests/video-teaser',
-    'common/modules/experiments/tests/video-showcase-main-media'
+    'common/modules/experiments/tests/video-showcase-main-media',
+    'common/modules/experiments/tests/video-football-thrasher',
+    'common/modules/experiments/tests/video-nav',
+    'common/modules/experiments/tests/video-yellow-button'
 ], function (
     reportError,
     config,
@@ -35,13 +38,16 @@ define([
     FacebookShareParams,
     ParticipationLowFricRecipes,
     ParticipationLowFricFashion,
-    ParticipationLowFricSport,
+    ParticipationLowFricSportV2,
     CleverFriendBrexit,
     WelcomeHeader,
     ParticipationDiscussionTest,
     NewUserAdvertsDisabled,
     VideoTeaser,
-    VideoShowcaseMainMedia
+    VideoShowcaseMainMedia,
+    VideoFootballThrasher,
+    VideoNav,
+    VideoYellowPlayButton
 ) {
 
     var TESTS = [
@@ -51,13 +57,16 @@ define([
         new FacebookShareParams(),
         new ParticipationLowFricRecipes(),
         new ParticipationLowFricFashion(),
-        new ParticipationLowFricSport(),
+        new ParticipationLowFricSportV2(),
         new CleverFriendBrexit(),
         new WelcomeHeader(),
         new ParticipationDiscussionTest(),
         new NewUserAdvertsDisabled(),
         new VideoTeaser(),
-        new VideoShowcaseMainMedia()
+        new VideoShowcaseMainMedia(),
+        new VideoFootballThrasher(),
+        new VideoNav(),
+        new VideoYellowPlayButton()
     ];
 
     var participationsKey = 'gu.ab.participations';

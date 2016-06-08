@@ -293,10 +293,6 @@ $renaultLight: #fff9e9;
         flex: 1;
     }
 
-    &.vjs-using-native-controls .vjs-control-bar {
-        display: block;
-    }
-
     .vjs-error-display {
         z-index: 1016;
     }
@@ -589,12 +585,13 @@ $renaultLight: #fff9e9;
 }
 
 .hosted__social-wrapper {
+    border: 0;
+    padding: $gs-gutter / 2 0;
+
     @include mq($until: leftCol) {
         border-top: 1px solid #eeeeee;
         width: 100%;
     }
-    padding: $gs-gutter / 2 0;
-
     @include mq(leftCol) {
         padding-top: 0;
         padding-left: $gs-gutter / 2;
@@ -734,12 +731,7 @@ $renaultLight: #fff9e9;
 
 .hosted__label-btn.paidfor-label__btn {
     @include f-headlineSans;
-
     font-size: 16px;
-
-    .inline-icon {
-        padding-left: 2px;
-    }
 
     &.popup__toggle {
         border: 0;

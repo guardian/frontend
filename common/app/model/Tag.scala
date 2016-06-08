@@ -1,13 +1,10 @@
 package model
 
-import com.gu.contentapi.client.model.v1.{Podcast => ApiPodcast, Reference => ApiReference, Sponsorship => ApiSponsorship, SponsorshipTargeting => ApiSponsorshipTargeting, SponsorshipType => ApiSponsorshipType, Tag => ApiTag}
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
-import common.commercial.BrandHunter
+import com.gu.contentapi.client.model.v1.{Podcast => ApiPodcast, Reference => ApiReference, Tag => ApiTag}
+import common.commercial.{BrandHunter, Branding}
 import common.{Edition, Pagination, RelativePathEscaper}
 import conf.Configuration
 import contentapi.SectionTagLookUp
-import org.joda.time.DateTime
-import play.api.libs.functional.syntax._
 import play.api.libs.json._
 import views.support.{Contributor, ImgSrc, Item140}
 
@@ -37,7 +34,7 @@ object Tag {
       webUrl = tag.webUrl,
       webTitle = tag.webTitle,
       url = tag.url,
-      section = tag.sectionId,
+      section = Some(SectionSummary.fromId(tag.sectionId)),
       analyticsName = s"GFE:${tag.sectionId}:${tag.webTitle}",
       adUnitSuffix = AdSuffixHandlingForFronts.extractAdUnitSuffixFrom(tag.id, tag.sectionId),
       description = tag.description,
@@ -118,107 +115,6 @@ case class Reference(
   `type`: String
 )
 
-sealed trait SponsorshipType {
-  def name: String
-}
-
-case object Sponsored extends SponsorshipType {
-  override val name: String = "sponsored"
-}
-
-case object Foundation extends SponsorshipType {
-  override val name: String = "foundation"
-}
-
-case object PaidContent extends SponsorshipType {
-  override val name: String = "paid-content"
-}
-
-object SponsorshipType {
-
-  implicit val sponsorshipTypeFormat: Format[SponsorshipType] =
-    (__ \ "name").format[String].inmap(name => make(name), (sponsorshipType: SponsorshipType) => sponsorshipType.name)
-
-  def make(name: String): SponsorshipType = name match {
-    case PaidContent.name => PaidContent
-    case Foundation.name => Foundation
-    case _ => Sponsored
-  }
-}
-
-case class SponsorshipTargeting(
-                                 validEditions: Seq[Edition],
-                                 publishedSince: Option[DateTime]
-                               )
-
-object SponsorshipTargeting {
-
-  implicit val sponsorshipTargetingFormat = Json.format[SponsorshipTargeting]
-
-  def make(targeting: ApiSponsorshipTargeting): SponsorshipTargeting = {
-    SponsorshipTargeting(
-      targeting.validEditions.map(_.flatMap(Edition.byId)).getOrElse(Nil),
-      targeting.publishedSince.map(_.toJodaDateTime)
-    )
-  }
-}
-
-case class Branding(
-                     sponsorshipType: SponsorshipType,
-                     sponsorName: String,
-                     sponsorLogo: String,
-                     sponsorLink: String,
-                     aboutThisLink: String,
-                     targeting: Option[SponsorshipTargeting]
-                   ) {
-
-  val label = sponsorshipType match {
-    case PaidContent => "Paid for by"
-    case _ => "Supported by"
-  }
-
-  def isTargeting(optPublicationDate: Option[DateTime], edition: Edition): Boolean = {
-
-    def isTargetingEdition(validEditions: Seq[Edition]): Boolean = {
-      validEditions.isEmpty || validEditions.contains(edition)
-    }
-
-    def isPublishedSince(optThreshold: Option[DateTime]): Boolean = {
-      val comparison = for {
-        publicationDate <- optPublicationDate
-        threshold <- optThreshold
-      } yield {
-        publicationDate isAfter threshold
-      }
-      comparison getOrElse true
-    }
-
-    targeting.isEmpty || targeting.exists { t =>
-      isTargetingEdition(t.validEditions) && isPublishedSince(t.publishedSince)
-    }
-  }
-}
-
-object Branding {
-
-  implicit val brandingFormat = Json.format[Branding]
-
-  def make(sponsorship: ApiSponsorship): Branding = {
-    Branding(
-      sponsorship.sponsorshipType match {
-        case ApiSponsorshipType.PaidContent => PaidContent
-        case ApiSponsorshipType.Foundation => Foundation
-        case _ => Sponsored
-      },
-      sponsorship.sponsorName,
-      sponsorship.sponsorLogo,
-      sponsorship.sponsorLink,
-      aboutThisLink = "/sponsored-content",
-      sponsorship.targeting map SponsorshipTargeting.make
-    )
-  }
-}
-
 object TagProperties {
   def make(tag: ApiTag): TagProperties = {
 
@@ -238,7 +134,7 @@ object TagProperties {
       bylineImageUrl = tag.bylineImageUrl,
       podcast = tag.podcast.map(Podcast.make),
       references = tag.references.map(Reference.make),
-      activeBrandings = tag.activeSponsorships.map(_.map(Branding.make))
+      activeBrandings = tag.activeSponsorships.map(_.map(Branding.make(tag.webTitle)))
     )
   }
 }
@@ -281,7 +177,7 @@ case class Tag (
   val name: String = metadata.webTitle
   val isSeries: Boolean = properties.tagType == "Series"
   val isBlog: Boolean = properties.tagType == "Blog"
-  val isSectionTag: Boolean = SectionTagLookUp.sectionId(metadata.id).contains(metadata.section)
+  val isSectionTag: Boolean = SectionTagLookUp.sectionId(metadata.id).contains(metadata.sectionId)
   val showSeriesInMeta = metadata.id != "childrens-books-site/childrens-books-site"
   val isKeyword = properties.tagType == "Keyword"
   val isFootballTeam = properties.references.exists(_.`type` == "pa-football-team")
@@ -289,6 +185,6 @@ case class Tag (
   val contributorImagePath = properties.bylineImageUrl.map(ImgSrc(_, Contributor))
 
   override def branding(edition: Edition): Option[Branding] = {
-    BrandHunter.findTagBranding(this, publicationDate = None, edition)
+    BrandHunter.findBranding(properties.activeBrandings, edition, publicationDate = None)
   }
 }

@@ -2,7 +2,6 @@ package common.commercial
 
 import common.Edition
 import conf.switches.Switches
-import model.Branding
 import model.facia.PressedCollection
 import views.support.{Commercial, SponsorDataAttributes}
 

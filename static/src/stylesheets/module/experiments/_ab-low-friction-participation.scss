@@ -35,9 +35,17 @@
 
 /* Star Ratings */
 
-.participation-low-fric--button__star svg {
-    height: 40px;
-    width: 40px;
+.participation-low-fric--button__star {
+
+    .inline-icon__inactive {
+        fill: #000000;
+        opacity: .15;
+    }
+
+    svg {
+        height: 40px;
+        width: 40px;
+    }
 }
 
 .participation-low-fric--button__is-active:hover .inline-star,

@@ -1,17 +1,22 @@
 package controllers
 
 import common._
+import feed.MostViewedGalleryAgent
 import layout.{CollectionEssentials, FaciaContainer}
 import model._
 import model.pressed.CollectionConfig
+import play.api.mvc.{Action, Controller, RequestHeader}
 import services.CollectionConfigWithId
 import slices.{Fixed, FixedContainers}
-import play.api.mvc.{RequestHeader, Controller, Action}
-import feed.MostViewedGalleryAgent
 
 object MostViewedGalleryController extends Controller with Logging with ExecutionContexts {
 
-  private val page = SimplePage(MetaData.make("more galleries", "inpictures", "more galleries", "more galleries"))
+  private val page = SimplePage(MetaData.make(
+    "more galleries",
+    Some(SectionSummary.fromId("inpictures")),
+    "more galleries",
+    "more galleries"
+  ))
   private val dataId: String = "multimedia/gallery"
   private val config = CollectionConfig.empty.copy(
     displayName = Some("more galleries"),
