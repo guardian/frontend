@@ -9,7 +9,6 @@
 
     .illustration-mobile {
         display: block;
-        height: auto;
         position: absolute;
         margin-top: $gs-baseline / 2;
         margin-left: $gs-gutter / 2;
@@ -23,14 +22,22 @@
     }
 
     .wrapper {
+        @include gs-container;
+        border: 1px solid blue;
+
         .wrapper-inner {
+            border: 1px solid red;
             margin: 0 auto;
             width: auto;
-            padding: 0 $gs-gutter $gs-gutter;
+            padding: 0 $gs-gutter/2 $gs-gutter/2;
 
-            @include mq(tablet) {
-                margin: 0 auto;
-                width: gs-span(8);
+            @include mq(mobileLandscape) {
+                padding: 0 $gs-gutter $gs-gutter;
+            }
+
+            @include mq(desktop) {
+                max-width: gs-span(8);
+                margin-left: gs-span(3) + $gs-gutter;
             }
         }
 
@@ -117,13 +124,5 @@
 
         }
 
-    }
-}
-
-.formstack-survey-wrapper {
-    @include gs-container;
-
-    @include mq($until: tablet) {
-        padding: 20px;
     }
 }
