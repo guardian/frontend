@@ -21,7 +21,7 @@ define([
     HostedThrasherMulti.prototype.create = function () {
         hostedThrasherTemplate = template(hostedThrasherStr);
 
-        fastdom.write(function () {
+        return fastdom.write(function () {
             this.setAdditionalParams(this.params);
 
             this.$adSlot.append(hostedThrasherTemplate({ data: this.params }));
