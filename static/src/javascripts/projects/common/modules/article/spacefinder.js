@@ -173,9 +173,10 @@ define([
     }
 
     function _mapElementToDimensions(el) {
+        var rect = el.getBoundingClientRect();
         return {
             top: el.offsetTop,
-            bottom: el.offsetTop + el.offsetHeight,
+            bottom: el.offsetTop + rect.height,
             element: el
         };
     }
