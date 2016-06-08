@@ -617,9 +617,12 @@ define([
         return adSlots[adSlotIds[id]];
     }
 
-    function getAdSlots() {
+    function getAdSlots(withHidden) {
         return Object.keys(adSlotIds).reduce(function (adSlotsById, id) {
-            adSlotsById[id] = getAdSlotById(id);
+            var adSlot = getAdSlotById(id);
+            if (withHidden || !adSlot.isHidden) {
+                adSlotsById[id] = adSlot;
+            }
             return adSlotsById;
         }, {});
     }
