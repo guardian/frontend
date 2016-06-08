@@ -24,4 +24,8 @@ object SurveyPageController extends Controller with ExecutionContexts {
               Cached(60)(RevalidatableResult.Ok(views.html.survey.formstackSurvey(formName)))
             case _ =>
               NoCache(NotFound)}}}
+
+  def thankYou() = Action { implicit request =>
+    Ok(views.html.survey.thankyou())
+  }
 }
