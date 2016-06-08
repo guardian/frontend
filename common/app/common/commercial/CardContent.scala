@@ -2,7 +2,7 @@ package common.commercial
 
 import common.Edition
 import model.pressed.PressedContent
-import model.{Branding, ContentType, ImageMedia, ImageOverride}
+import model.{ContentType, ImageMedia, ImageOverride}
 import views.support.ImgSrc
 
 case class CardContent(

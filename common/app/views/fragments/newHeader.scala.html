@@ -1,40 +1,29 @@
+@()(implicit request: RequestHeader)
+
+@import common.LinkTo
+
 <header class="new-header" role="banner" data-link-name="global navigation: new header">
     <div class="new-header__inner gs-container">
-        <a href="#" class="new-header__logo" tabindex="0">
+        <a href="@LinkTo{/}" class="new-header__logo" tabindex="0">
             <h1 class="u-h">The Guardian</h1>
             @fragments.inlineSvg("guardian-logo-160", "logo")
         </a>
         <button class="new-header__edition-button">
-            <!-- TODO: Move to folder -->
-            <svg width="14" height="14" viewBox="0 0 14 14">
-                <path d="M12.8 3.1l-.2.1-1.1.1-.3.5-.2-.1-.9-.8-.2-.4-.1-.5-.6-.5-.7-.1v.3l.6.6.3.4-.3.2-.3-.1-.4-.2v-.3L7.9 2l-.2.9-.6.1.1.5.7.1.1-.7.6.1.3.2h.5l.3.6.8.8-.1.3-.6-.1-1.2.6-.8 1-.1.5h-.3l-.6-.3-.5.3.1.6.2-.3H7v.5l.3.1.3.4.7-.2.6.1.7.2h.4l.6.7 1.2.7-.8 1.5-.8.4-.2.9-1.2.8-.1.5c3-.7 5.3-3.5 5.3-6.8 0-1.4-.4-2.8-1.2-3.9zm-5 7.6l-.5-1 .5-1-.5-.1-.5-.5-1.2-.3-.4-.8v.5H5L4 6.1V5l-.7-1.2-1.2.2h-.7L1 3.8l.5-.4-.5.1C.4 4.5 0 5.7 0 7c0 3.9 3.1 7 7 7 .3 0 .6 0 .9-.1l-.1-.8.3-1.3c0-.1-.3-1.1-.3-1.1zM2.6 2.3l1.2-.2.6-.3.7.2 1-.1.4-.6.5.1 1.2-.1.3-.4.5-.3.7.1h.3C9.1.2 8.1 0 7 0 4.8 0 2.9 1 1.6 2.5l1-.2zM7.3.7L8 .3l.5.3-.7.5h-.6L6.9.9l.4-.2zM5.2.8l.3.1.4-.1.2.4-1 .2-.4-.3.5-.3z"/>
-            </svg>
+            @fragments.inlineSvg("world", "icon")
             <span>UK Edition</span>
         </button>
         <nav class="new-header__nav">
-            <div class="new-header__nav__menu-button-and-user-button">
-                <button class="new-header__nav__menu-button">
-                    <!-- TODO: Move to folder -->
-                    <svg width="18" height="12" viewBox="0 0 18 12">
-                        <g>
-                            <rect width="18" height="2"></rect>
-                            <rect y="5" width="18" height="2"></rect>
-                            <rect y="10" width="18" height="2"></rect>
-                        </g>
-                    </svg>
-                    <span class="u-h">Menu</span>
-                </button>
-                <button class="new-header__nav__profile-button">
-                    @fragments.inlineSvg("profile-36", "icon")
-                    <span class="u-h">Profile</span>
-                </button>
-            </div>
+            <button class="new-header__nav__menu-button">
+                <i class="new-header__nav__menu-button__burger-icon"></i>
+                <span class="u-h">Menu</span>
+            </button>
             <ul class="new-header__nav__list">
-                <li class="new-header__nav__list-item"><a class="new-header__nav__link" tabindex="0">news</a></li>
-                <li class="new-header__nav__list-item"><a class="new-header__nav__link" tabindex="0">opinion</a></li>
-                <li class="new-header__nav__list-item"><a class="new-header__nav__link" tabindex="0">sports</a></li>
-                <li class="new-header__nav__list-item"><a class="new-header__nav__link" tabindex="0">arts</a></li>
-                <li class="new-header__nav__list-item"><a class="new-header__nav__link" tabindex="0">life</a></li>
+                @* TODO: Should open a menu *@
+                <li class="new-header__nav__list-item"><a class="new-header__nav__link" tabindex="0" href="@LinkTo{/}">news</a></li>
+                <li class="new-header__nav__list-item"><a class="new-header__nav__link" tabindex="0" href="@LinkTo{/commentisfree}">opinion</a></li>
+                <li class="new-header__nav__list-item"><a class="new-header__nav__link" tabindex="0" href="@LinkTo{/sport}">sports</a></li>
+                <li class="new-header__nav__list-item"><a class="new-header__nav__link" tabindex="0" href="@LinkTo{/culture}">arts</a></li>
+                <li class="new-header__nav__list-item"><a class="new-header__nav__link" tabindex="0" href="@LinkTo{/lifeandstyle}">life</a></li>
             </ul>
         </nav>
     </div>

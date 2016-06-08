@@ -5,13 +5,13 @@ define([
 ) {
     return function () {
         this.id = 'VideoTeaser';
-        this.start = '2016-06-03';
-        this.expiry = '2016-06-08';
+        this.start = '2016-06-07';
+        this.expiry = '2016-06-17';
         this.author = 'Akash Askoolum';
         this.description = 'Test if video teasing leads to more plays';
         this.showForSensitive = true;
-        this.audience = 1;
-        this.audienceOffset = 0;
+        this.audience = 0.18;
+        this.audienceOffset = 0.12;
         this.successMeasure = '';
         this.audienceCriteria = 'Videos not in a carousel';
         this.dataLinkNames = '';
@@ -25,11 +25,11 @@ define([
 
         this.variants = [
             {
-                id: 'baseline1',
+                id: 'control',
                 test: function () {}
             },
             {
-                id: 'baseline2',
+                id: 'variant',
                 test: function () {}
             }
         ];

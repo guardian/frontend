@@ -124,14 +124,6 @@ $renaultLight: #fff9e9;
         .adverts__header {
             padding-top: 0;
             padding-bottom: 0;
-            &:before {
-                content: '';
-                height: 1px;
-                left: $gs-gutter;
-                right: $gs-gutter;
-                position: absolute;
-                background-color: #eeeeee;
-            }
         }
     }
 }
@@ -189,52 +181,40 @@ $renaultLight: #fff9e9;
         border-radius: 30px;
     }
 
-    &.vjs-playing .vjs-time-control,
-    .vjs-fullscreen-control,
-    .vjs-volume-menu-button,
-    .vjs-progress-control {
+    .vjs-control,
+    .vjs-control-bar:before {
         @include hosted-fade-out;
-        transition-delay: 1500ms;
     }
 
+    .vjs-time-control,
     .vjs-big-play-button {
         @include hosted-fade-in;
     }
 
-    .vjs-control-bar {
-        background-color: unset;
-        transition: background-color 1s linear 1500ms;
-    }
-
-    &.vjs-playing:hover {
-        .vjs-time-control,
-        .vjs-fullscreen-control,
-        .vjs-volume-menu-button,
-        .vjs-progress-control {
-            @include hosted-fade-in;
-            transition-delay: 0s;
-        }
-
+    &.vjs-playing {
         .vjs-big-play-button {
-            @include hosted-fade-out;
             display: block !important; //I know this is ugly but I need to overwrite display:none to show the animation
-            transition-delay: 0s;
         }
 
-        .vjs-control-bar {
-            background-color: rgba(25, 25, 25, .8);
-            transition-delay: 0s;
+        .vjs-big-play-button,
+        .vjs-time-control {
+            @include hosted-fade-out;
+        }
+
+        &:hover {
+            .vjs-control-bar:before,
+            .vjs-control,
+            .vjs-time-control {
+                @include hosted-fade-in;
+            }
         }
     }
 
-    &.vjs-paused,
-    &.vjs-paused:hover {
+    &.vjs-playing:not(:hover) {
         .vjs-time-control,
-        .vjs-fullscreen-control,
-        .vjs-volume-menu-button,
-        .vjs-progress-control,
-        .vjs-control-bar {
-            transition-delay: 0s;
+        .vjs-control,
+        .vjs-control-bar:before {
+            transition-delay: 1500ms;
         }
     }
 
@@ -243,11 +223,27 @@ $renaultLight: #fff9e9;
         background-color: unset;
         font-size: 16px;
         padding-top: 2px;
-        height: 48px;
+        height: auto;
+        display: flex;
+        align-items: center;
+        &:before {
+            content: '';
+            position: absolute;
+            background-image: -webkit-linear-gradient(top, rgba(56, 56, 56, 0), #383838);
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+        }
     }
-
     .vjs-fullscreen-control {
         margin-top: 12px;
+    }
+
+    .vjs-time-control {
+        line-height: 40px;
+        align-self: flex-end;
     }
 
     .vjs-volume-menu-button {
@@ -255,6 +251,7 @@ $renaultLight: #fff9e9;
             margin-right: $gs-column-width * 1.5;
         }
         height: auto;
+        margin-top: 16px;
     }
 
     .vjs-menu-button {
@@ -265,42 +262,69 @@ $renaultLight: #fff9e9;
         }
     }
 
-    &.vjs {
-        .vjs-play-control {
-            display: none; //We have a 'watch now' in the middle so don't need this one
-        }
-
-        .vjs-current-time {
-            margin-left: 20px;
-
-            @include mq(desktop) {
-                margin-left: $gs-column-width * 1.5;
+    .vjs-volume-menu-button {
+        margin-top: 0;
+        margin-right: 20px;
+        order: 1;
+        @include mq($until: mobileLandscape) {
+            margin-right: 10px;
+            .vjs-menu {
+                display: none;
             }
         }
     }
 
-    &.vjs-using-native-controls .vjs-control-bar {
-        display: block;
+    .vjs-play-control {
+        width: 50px;
+        height: 50px;
+        margin: 12px 16px;
+        flex-shrink: 0;
+        @include mq($until: mobileLandscape) {
+            width: 35px;
+            height: 35px;
+        }
+    }
+
+    .vjs-current-time {
+        margin-left: 7px;
+    }
+
+    .vjs-duration {
+        flex: 1;
     }
 
     .vjs-error-display {
         z-index: 1016;
     }
+
+    .vjs-progress-control {
+        left: 90px;
+        right: 210px;
+        top: auto;
+        width: auto;
+        bottom: 35px;
+        @include mq($until: mobileLandscape) {
+            left: 74px;
+            right: 110px;
+        }
+    }
+
+    .vjs-progress-holder:before,
+    .vjs-load-progress,
+    .vjs-play-progress {
+        height: 3px;
+    }
 }
 
 .hosted__meta {
     position: absolute;
-    left: 20px;
+    left: 88px;
     width: 100%;
     bottom: 44px;
     color: #ffffff;
 
     @include mq($until: tablet) {
         display: none;
-    }
-
-    @include mq(desktop) {
-        left: $gs-column-width * 1.5;
     }
 }
 
@@ -550,8 +574,9 @@ $renaultLight: #fff9e9;
     }
 }
 
-.hosted__social {
+.hosted__social.adverts__header {
     @include mq($until: leftCol) {
+        padding: $gs-baseline $gs-gutter 0;
         order: 2;
     }
     @include mq($until: tablet) {
@@ -560,13 +585,13 @@ $renaultLight: #fff9e9;
 }
 
 .hosted__social-wrapper {
-    border-top: 0;
-    padding: $gs-gutter / 2 0 $gs-gutter / 2 $gs-gutter / 2;
+    border: 0;
+    padding: $gs-gutter / 2 0;
 
-    @include mq(mobileLandscape) {
-        padding: $gs-gutter / 2 0;
+    @include mq($until: leftCol) {
+        border-top: 1px solid #eeeeee;
+        width: 100%;
     }
-
     @include mq(leftCol) {
         padding-top: 0;
         padding-left: $gs-gutter / 2;
@@ -609,6 +634,7 @@ $renaultLight: #fff9e9;
     }
 
     .hosted__meta {
+        display: block;
         left: $gs-gutter/2;
         bottom: 60px;
         @include mq($until: desktop) {
@@ -705,12 +731,7 @@ $renaultLight: #fff9e9;
 
 .hosted__label-btn.paidfor-label__btn {
     @include f-headlineSans;
-
     font-size: 16px;
-
-    .inline-icon {
-        padding-left: 2px;
-    }
 
     &.popup__toggle {
         border: 0;

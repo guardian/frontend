@@ -1,11 +1,11 @@
 package services
 
-import common.{ExecutionContexts, Edition}
+import common.{Edition, ExecutionContexts}
 import conf.Configuration
 import contentapi.ContentApiClient
-import model.{Video, Content}
-import org.joda.time.{DateTimeZone, DateTime}
 import implicits.Dates.DateTime2ToCommonDateFormats
+import model.{Content, Video}
+import org.joda.time.{DateTime, DateTimeZone}
 import views.support.Naked
 
 import scala.concurrent.Future
@@ -96,7 +96,7 @@ object VideoSiteMap extends ExecutionContexts {
           duration = item.elements.mainVideo.map(_.videos.duration).getOrElse(0),
           publication = item.trail.webPublicationDate,
           tags = keywordTags ++ sectionTag,
-          category = item.metadata.section)
+          category = item.metadata.sectionId)
       }
 
       UrlSet(urls take 1000).xml()

@@ -3,7 +3,6 @@ package controllers
 import com.gu.contentapi.client.GuardianContentApiError
 import common._
 import contentapi.ContentApiClient
-import conf._
 import model.Cached.RevalidatableResult
 import model._
 import model.pressed.PressedContent
@@ -50,7 +49,7 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
   private def renderTopStoriesPage(trails: Seq[PressedContent])(implicit request: RequestHeader) = {
     val page = SimplePage( MetaData.make(
       "top-stories",
-      "top-stories",
+      Some(SectionSummary.fromId("top-stories")),
       "Top Stories",
       "GFE:Top Stories"
     ))

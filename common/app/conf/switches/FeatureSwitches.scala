@@ -35,7 +35,7 @@ trait FeatureSwitches {
     SwitchGroup.Feature,
     "facebook-share-image-logo-overlay",
     "If this switch is turned on, we will overlay the guardian logo along the bottom of images shared on facebook",
-    safeState = Off,
+    safeState = On,
     sellByDate = new LocalDate(2016, 11, 7),
     exposeClientSide = false
   )
@@ -379,4 +379,23 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  // Owner: Dotcom habitual / Gareth
+  val EmailSignupLabNotes = Switch(
+    SwitchGroup.Feature,
+    "email-signup-lab-notes",
+    "When ON, insert the lab-notes email sign-up into Science section articles",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  // Owner: Dotcom habitual / Gareth
+  val emailSignupEuRef = Switch(
+    SwitchGroup.Feature,
+    "email-signup-eu-ref",
+    "When ON, insert the EU ref email sign-up into articles with the EU ref tag",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
 }

@@ -1,23 +1,21 @@
 package controllers.admin
 
 import common.dfp.{GuCreativeTemplate, LineItemReport}
-import common.{Edition, ExecutionContexts, Logging}
-import conf.Configuration.environment
-import contentapi.ContentApiClient
+import common.{ExecutionContexts, Logging}
 import conf.Configuration
+import conf.Configuration.environment
 import controllers.AuthLogging
 import dfp.{CreativeTemplateAgent, DfpApi}
 import model._
 import ophan.SurgingContentAgent
 import play.api.libs.json.{JsString, Json}
 import play.api.mvc.Controller
-import services.FaciaContentConvert
 import tools._
 
 case class CommercialPage() extends StandalonePage {
   override val metadata = MetaData.make(
     id = "commercial-templates",
-    section = "admin",
+    section = Some(SectionSummary.fromId("admin")),
     webTitle = "Commercial Templates",
     analyticsName = "Commercial Templates",
     javascriptConfigOverrides = Map(
@@ -36,7 +34,7 @@ object CommercialController extends Controller with Logging with AuthLogging wit
   }
 
   def renderSpecialAdUnits = AuthActions.AuthActionTest { implicit request =>
-    val specialAdUnits = DfpApi.readSpecialAdUnits(Configuration.commercial.dfpAdUnitRoot)
+    val specialAdUnits = DfpApi.readSpecialAdUnits(Configuration.commercial.dfpAdUnitGuRoot)
     Ok(views.html.commercial.specialAdUnits(environment.stage, specialAdUnits))
   }
 

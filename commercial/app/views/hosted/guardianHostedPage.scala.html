@@ -1,17 +1,11 @@
 @import common.commercial.HostedPage
 @(page: HostedPage)(implicit request: RequestHeader)
-@import conf.switches.Switches.hostedPageLinksBetweenContent
 
 @main(page, Some("commercial")) { } {
     <div class="hosted__header">
         <div class="hosted__headerwrap">
             <div class="paidfor-label paidfor-meta__more hosted__label has-popup">
-                <button class="u-button-reset paidfor-label__btn popup__toggle hosted__label-btn" data-toggle="js-hosted-popup" data-link-name="about-adertiser-content">About @fragments.inlineSvg("arrow-down", "icon")</button>
-                <div class="popup popup--paidfor hosted__popup is-off js-hosted-popup">
-                    <p class="hosted__popup-text">Advertiser content is used to describe advertisement features that are paid for, produced and controlled by the advertiser rather than the publisher​.</p>
-                    <p class="hosted__popup-text">They​ are subject to regulation by the Advertising Standards Authority in the UK, the Federal Trade Commission in the US and the Advertising Standards Bureau in Australia.</p>
-                    <p class="hosted__popup-text">This content is produced by the advertiser and does not involve GNM staff.</p>
-                </div>
+                <button class="u-button-reset paidfor-label__btn popup__toggle hosted__label-btn js-hosted-about" data-link-name="about-advertiser-content">About</button>
             </div>
             <a href="http://www.theguardian.com" data-link-name="guardian-logo-top-right" class="hosted__glogo">
                 <p class="hosted__glogotext">Hosted by</p>
@@ -35,10 +29,10 @@
                       data-block-video-ads="true"
                       poster="@page.video.posterUrl"
                       class="vjs-hosted__video hosted__video gu-media--video vjs vjs-tech-html5 vjs-paused vjs-controls-enabled vjs_video_1-dimensions vjs-user-active">
-                        <source type="video/mp4" src="@page.video.srcUrl">
-                        <source type="video/webm" src="@page.video.srcUrl">
-                        <source type="video/ogg" src="@page.video.srcUrl">
-                        <source type="video/m3u8" src="@page.video.srcUrl">
+                        <source type="video/mp4" src="@page.video.srcUrl&format=video/mp4&maxbitrate=2048">
+                        <source type="video/webm" src="@page.video.srcUrl&format=video/webm&maxbitrate=2048">
+                        <source type="video/ogg" src="@page.video.srcUrl&format=video/ogg&maxbitrate=2048">
+                        <source type="video/m3u8" src="@page.video.srcUrl&format=video/m3u8&maxbitrate=2048">
                     </video>
                     <div class="hosted-fading">
                         <div class="hosted__video-overlay"></div>
@@ -89,7 +83,7 @@
                         <li class="social__item social__item--pinterest" data-link-name="pinterest">
                             <a  class="social__action social-icon-wrapper"
                             data-link-name="Pinterest-social-share-1"
-                            href="http://www.pinterest.com/pin/find/?url=@{page.pageUrl}"
+                            href="http://www.pinterest.com/pin/create/button/?url=@{page.pageUrl}&description=@{page.pageTitle}&media=@{page.video.posterUrl}"
                             target="_blank"
                             title="pinterest">
                                 <span class='inline-icon__fallback button share-modal__item share-modal__item--pinterest'>Share on Pinterest</span>
@@ -107,27 +101,20 @@
                     <p class="hosted__text">@page.standfirst</p>
                     <div class="hosted__terms">​This content was paid for and produced by Renault. For more information click
                         <div class="paidfor-label paidfor-meta__more has-popup hosted__link">
-                            <button class="u-button-reset paidfor-label__btn hosted__label-btn--small popup__toggle hosted__label-btn" data-toggle="js-hosted-popup-bottom" data-link-name="terms-and-conditions-text-link">here @fragments.inlineSvg("arrow-down", "icon")</button>
-                            <div class="popup popup--paidfor hosted__popup hosted__popup--bottom is-off js-hosted-popup-bottom">
-                                <p class="hosted__popup-text">Advertiser content is used to describe advertisement features that are paid for, produced and controlled by the advertiser rather than the publisher​.</p>
-                                <p class="hosted__popup-text">They​ are subject to regulation by the Advertising Standards Authority in the UK, the Federal Trade Commission in the US and the Advertising Standards Bureau in Australia.</p>
-                                <p class="hosted__popup-text">This content is produced by the advertiser and does not involve GNM staff.</p>
-                            </div>
+                            <button class="u-button-reset paidfor-label__btn hosted__label-btn--small popup__toggle hosted__label-btn js-hosted-about" data-link-name="terms-and-conditions-text-link">here @fragments.inlineSvg("arrow-down", "icon")</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="hosted__next-video">
-                @if(hostedPageLinksBetweenContent.isSwitchedOn) {
                 <div class="hosted__next-video--header">
                     <h2 class="hosted__text hosted__next-video--up-next">More from</h2>
                     <h2 class="hosted__next-video--client-name hosted-tone--renault">Renault</h2>
                 </div>
-                <a href="@page.nextVideo.link" class="hosted__next-video--tile" data-link-name="Next Hosted Video: @page.nextVideo.title">
-                    <img class="hosted__next-video-thumb" src="@page.nextVideo.imageUrl">
-                    <p class="hosted__next-video-title">@page.nextVideo.title</p>
+                <a href="@page.nextPage.pageUrl" class="hosted__next-video--tile" data-link-name="Next Hosted Video: @page.nextPage.video.title">
+                    <img class="hosted__next-video-thumb" src="@page.nextPage.video.posterUrl">
+                    <p class="hosted__next-video-title">@page.nextPage.video.title</p>
                 </a>
-                }
             </div>
         </section>
         <section class="adverts hosted__container--full">

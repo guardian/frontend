@@ -1,6 +1,6 @@
 define([
     'Promise',
-    'common/utils/$',
+    'qwery',
     'common/utils/config',
     'common/utils/detect',
     'common/modules/article/space-filler',
@@ -11,7 +11,7 @@ define([
     'lodash/functions/memoize'
 ], function (
     Promise,
-    $,
+    qwery,
     config,
     detect,
     spaceFiller,
@@ -33,6 +33,7 @@ define([
     }
 
     function getRules() {
+        var prevSlot;
         return {
             bodySelector: '.js-article__body',
             slotSelector: ' > p',
@@ -42,6 +43,13 @@ define([
                 ' > h2': {minAbove: detect.getBreakpoint() === 'mobile' ? 100 : 0, minBelow: 250},
                 ' .ad-slot': {minAbove: 500, minBelow: 500},
                 ' > :not(p):not(h2):not(.ad-slot)': {minAbove: 35, minBelow: 400}
+            },
+            filter: function(slot) {
+                if (!prevSlot || Math.abs(slot.top - prevSlot.top) >= this.selectors[' .ad-slot'].minBelow) {
+                    prevSlot = slot;
+                    return true;
+                }
+                return false;
             }
         };
     }
@@ -68,46 +76,44 @@ define([
     function addInlineMerchAd(rules) {
         spaceFiller.fillSpace(rules, function (paras) {
             insertAdAtPara(paras[0], 'im', 'im');
+        }, {
+            waitForImages: true,
+            waitForLinks: true,
+            waitForInteractives: true
         });
     }
 
     // Add new ads while there is still space
     function addArticleAds(count, rules) {
-        return addArticleAdsRec(count, 0);
+        return spaceFiller.fillSpace(rules, insertInlineAds, {
+            waitForImages: true,
+            waitForLinks: true,
+            waitForInteractives: true,
+            debug: true
+        });
 
-        /*
-         * count:Integer is the number of adverts that should optimally inserted
-         * countAdded:Integer is the number of adverts effectively added. It is
-         * an accumulator (although no JS engine optimizes tail calls so far).
-         */
-        function addArticleAdsRec(count, countAdded) {
-            return count === 0 ?
-                Promise.resolve(countAdded) :
-                tryAddingAdvert(rules).then(onArticleAdAdded);
-
-            function onArticleAdAdded(trySuccessful) {
-                // If last attempt worked, recurse another
-                return trySuccessful ?
-                    addArticleAdsRec(count - 1, countAdded + 1) :
-                    countAdded;
+        function insertInlineAds(paras) {
+            var countAdded = 0;
+            while(countAdded < count && paras.length) {
+                bodyAds += 1;
+                countAdded += 1;
+                var para = paras.shift();
+                var adDefinition = 'inline' + bodyAds;
+                insertAdAtPara(para, adDefinition, 'inline');
             }
-        }
-    }
-
-    function tryAddingAdvert(rules) {
-        return spaceFiller.fillSpace(rules, insertInlineAd);
-
-        function insertInlineAd(paras) {
-            bodyAds += 1;
-            var adDefinition = 'inline' + bodyAds;
-
-            insertAdAtPara(paras[0], adDefinition, 'inline');
+            return countAdded;
         }
     }
 
     function insertAdAtPara(para, name, type) {
-        var $ad = $.create(createAdSlot(name, type));
-        $ad.insertBefore(para);
+        var ad = createAdSlot(name, type);
+        para.parentNode.insertBefore(ad, para);
+    }
+
+    function addSlots(countAdded) {
+        if (countAdded > 0) {
+            qwery('.ad-slot--inline').forEach(dfp.addSlot);
+        }
     }
 
     // If a merchandizing component has been rendered but is empty,
@@ -115,17 +121,21 @@ define([
     // the decoupling between the spacefinder algorithm and the targeting
     // in DFP: we can only know if a slot can be removed after we have
     // received a response from DFP
-    var waitForMerch = memoize(function waitForMerch() {
+    var waitForMerch = memoize(function () {
         return trackAd('dfp-ad--im').then(function (isLoaded) {
             return isLoaded ? 0 : addArticleAds(2, getRules());
         }).then(function (countAdded) {
             return countAdded === 2 ?
-                addArticleAds(8, getLongArticleRules()) :
+                addArticleAds(8, getLongArticleRules()).then(function (countAdded) {
+                    return 2 + countAdded;
+                }) :
                 countAdded;
-        }).then(function (countAdded) {
-            if (countAdded > 0) {
-                $('.ad-slot--inline').each(dfp.addSlot);
-            }
+        });
+    });
+
+    var insertLongAds = memoize(function () {
+        return addArticleAds(8, getLongArticleRules()).then(function (countAdded) {
+            return 2 + countAdded;
         });
     });
 
@@ -144,12 +154,10 @@ define([
 
         return addArticleAds(2, rules).then(function (countAdded) {
             if (config.page.hasInlineMerchandise && countAdded === 0) {
-                waitForMerch();
+                waitForMerch().then(addSlots);
+            } else if (countAdded === 2) {
+                insertLongAds().then(addSlots);
             }
-
-            return countAdded === 2 ?
-                addArticleAds(8, getLongArticleRules()) :
-                countAdded;
         });
     }
 
@@ -157,7 +165,8 @@ define([
         init: init,
 
         '@@tests': {
-            waitForMerch: waitForMerch
+            waitForMerch: waitForMerch,
+            insertLongAds: insertLongAds
         }
     };
 });
