@@ -1,3 +1,4 @@
+/*eslint no-console:0 */
 define([
     'qwery',
     'bean',
@@ -304,6 +305,12 @@ define([
 
                 if (rules.absoluteMinAbove) {
                     rules.absoluteMinAbove -= bodyDims.top;
+                }
+
+                if (options.debug) {
+                    console.dir(candidatesWithDims);
+                    console.log('***');
+                    console.dir(opponentsWithDims);
                 }
 
                 return {
