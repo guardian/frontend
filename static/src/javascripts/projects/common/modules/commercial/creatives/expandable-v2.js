@@ -11,8 +11,7 @@ define([
     'text!common/views/commercial/creatives/expandable-v2.html',
     'lodash/functions/bindAll',
     'lodash/objects/merge',
-    'common/modules/commercial/creatives/add-tracking-pixel',
-    'Promise'
+    'common/modules/commercial/creatives/add-tracking-pixel'
 ], function (
     bean,
     bonzo,
@@ -26,8 +25,7 @@ define([
     expandableV2Tpl,
     bindAll,
     merge,
-    addTrackingPixel,
-    Promise
+    addTrackingPixel
 ) {
 
     /**

@@ -89,6 +89,7 @@ define([
     var creativeIDs = [];
     var prebidService = null;
     var advertsToLoad = [];
+    var adSlotsToRefresh = [];
     var adSlotIds = {};
     var dfp;
     var adSlots;
@@ -387,7 +388,6 @@ define([
      * REFRESH ON WINDOW RESIZE
      */
 
-    var adSlotsToRefresh = [];
     var hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
 
     var resizeTimeout = 2000;
@@ -439,7 +439,7 @@ define([
         '300,250': function (_, adSlot) {
             if (adSlot.node.classList.contains('ad-slot--right')) {
                 var mobileAdSizes = adSlot.sizes('data-mobile');
-                if (adSlot.sizes.mobile && adSlots.sizes.indexOf([300, 251]) > -1) {
+                if (mobileAdSizes && mobileAdSizes.indexOf([300, 251]) > -1) {
                     stickyMpu(bonzo(adSlot.node));
                 }
             }

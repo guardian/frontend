@@ -10,8 +10,7 @@ define([
     'common/views/svgs',
     'text!common/views/commercial/creatives/expandable-video.html',
     'lodash/objects/merge',
-    'common/modules/commercial/creatives/add-tracking-pixel',
-    'Promise'
+    'common/modules/commercial/creatives/add-tracking-pixel'
 ], function (
     bean,
     bonzo,
@@ -24,8 +23,7 @@ define([
     svgs,
     ExpandableVideoTpl,
     merge,
-    addTrackingPixel,
-    Promise
+    addTrackingPixel
 ) {
 
     /**

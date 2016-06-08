@@ -12,8 +12,7 @@ define([
     'text!common/views/commercial/creatives/fabric-expanding-video.html',
     'lodash/functions/bindAll',
     'lodash/objects/merge',
-    'common/modules/commercial/creatives/add-tracking-pixel',
-    'Promise'
+    'common/modules/commercial/creatives/add-tracking-pixel'
 ], function (
     bean,
     bonzo,
@@ -28,8 +27,7 @@ define([
     fabricExpandingVideoHtml,
     bindAll,
     merge,
-    addTrackingPixel,
-    Promise
+    addTrackingPixel
 ) {
     // Forked from expandable-v3.js
 

@@ -10,8 +10,7 @@ define([
     'common/views/svgs',
     'text!common/views/commercial/creatives/fabric-expandable-video-v1.html',
     'lodash/objects/merge',
-    'common/modules/commercial/creatives/add-tracking-pixel',
-    'Promise'
+    'common/modules/commercial/creatives/add-tracking-pixel'
 ], function (
     bean,
     bonzo,
@@ -24,8 +23,7 @@ define([
     svgs,
     fabricExpandableVideoHtml,
     merge,
-    addTrackingPixel,
-    Promise
+    addTrackingPixel
 ) {
     // Forked from expandable-video-v2.js
 
