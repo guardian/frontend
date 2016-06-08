@@ -103,11 +103,14 @@ define([
      */
 
     function init() {
-        return commercialFeatures.dfpAdvertising ?
-            setupAdvertising() :
-            fastdom.write(function () {
-                bonzo(qwery(adSlotSelector)).remove();
-            });
+        if (commercialFeatures.dfpAdvertising) {
+            setupAdvertising();
+            return Promise.resolve();
+        }
+
+        return fastdom.write(function () {
+            bonzo(qwery(adSlotSelector)).remove();
+        });
     }
 
     function setupAdvertising() {
@@ -168,7 +171,6 @@ define([
      * LOAD ADS
      * - Define existing adslots and load adverts
      */
-    var lazyLoadEnabled = false;
 
     function load() {
         if (commercialFeatures.dfpAdvertising) {
@@ -209,6 +211,8 @@ define([
     /**
      * LOAD ADS
      */
+
+    var lazyLoadEnabled = false;
 
     function shouldLazyLoad() {
         // We do not want lazy loading on pageskins because it messes up the roadblock
@@ -329,24 +333,24 @@ define([
             adSlot.slot = defineSlot(adSlot.node, adSlot.sizes);
             advertsToLoad.push(adSlot);
             // Add to the array of ads to be refreshed (when the breakpoint changes)
-            // only if it's `data-refresh` attribute isn't set to false.
+            // only if its `data-refresh` attribute isn't set to false.
             if (adSlot.node.getAttribute('data-refresh') !== 'false') {
                 adSlotsToRefresh.push(adSlot);
             }
         }
         adSlotIds[adSlot.id] = index === undefined ? adSlots.length - 1 : index;
 
-        function shouldFilterAdSlot(adSlot) {
-            return isVisuallyHidden(adSlot) || isDisabledCommercialFeature(adSlot);
+        function shouldFilterAdSlot(adSlotNode) {
+            return isVisuallyHidden(adSlotNode) || isDisabledCommercialFeature(adSlotNode);
         }
 
-        function isVisuallyHidden(adSlot) {
-            return getComputedStyle(adSlot).display === 'none';
+        function isVisuallyHidden(adSlotNode) {
+            return getComputedStyle(adSlotNode).display === 'none';
         }
 
-        function isDisabledCommercialFeature(adSlot) {
+        function isDisabledCommercialFeature(adSlotNode) {
             return !commercialFeatures.topBannerAd &&
-                adSlot.getAttribute('data-name') === 'top-above-nav';
+                adSlotNode.getAttribute('data-name') === 'top-above-nav';
         }
     }
 
