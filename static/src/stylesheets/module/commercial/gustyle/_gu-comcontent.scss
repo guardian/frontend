@@ -161,8 +161,6 @@ $mobile-max-container-width: gs-span(8);
 .gu-style {
     width: auto;
     border-top: #fedd79 1px solid;
-    margin-left: $gs-gutter / 2;
-    margin-right: $gs-gutter / 2;
 
     @include mq(containerWidestMobile) {
         margin-left: auto;

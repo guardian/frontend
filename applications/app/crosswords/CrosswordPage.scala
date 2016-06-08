@@ -1,9 +1,7 @@
 package crosswords
 
-import org.joda.time.DateTime
-import com.gu.contentapi.client.{model => contentapi}
 import model._
-import play.api.libs.json.{JsString, JsValue}
+import org.joda.time.DateTime
 
 case class SvgDimensions(width: Int, height: Int) {
   def styleString = s"width: $width; height: $height"
@@ -29,7 +27,7 @@ object CrosswordSearchPage {
 
     val metadata = MetaData.make (
       id = "crosswords/search",
-      section = "crosswords",
+      section = Some(SectionSummary.fromId("crosswords")),
       webTitle = "Crosswords search",
       analyticsName = "Crosswords search"
     )

@@ -1,6 +1,6 @@
 @(page: model.Page, related: model.RelatedContent, content: model.Content)(body: Html)(implicit request: RequestHeader)
 
-@import common.{AnalyticsHost, LinkTo, CanonicalLink}
+@import common.{AnalyticsHost, CanonicalLink, LinkTo}
 @import conf.Configuration
 @import views.support.OmnitureAnalyticsData
 
@@ -57,7 +57,7 @@
                     </a>
                 </div>
 
-            @if(content.metadata.section != "childrens-books-site") {
+            @if(content.metadata.sectionId != "childrens-books-site") {
                 @if(content.hasStoryPackage) {
                     @fragments.amp.storyPackageAmp(related)
                 }
@@ -85,10 +85,10 @@
                                     "education", "culture", "business", "technology", "politics", "environment", "travel",
                                     "film", "media", "money", "society", "science", "music", "books", "stage", "cities",
                                     "tv-and-radio", "artanddesign", "global-development")
-                    whitelistedSections.contains(page.metadata.section)
+                    whitelistedSections.contains(page.metadata.sectionId)
                 }) { isWhitelistedSection =>
                     @if(isWhitelistedSection) {
-                        @fragments.amp.onwardTemplateAmp(s"container/count/1/offset/0/section/${page.metadata.section}/mf2.json")
+                        @fragments.amp.onwardTemplateAmp(s"container/count/1/offset/0/section/${page.metadata.sectionId}/mf2.json")
                     } else {
                         @fragments.amp.onwardTemplateAmp(s"container/count/1/offset/0/mf2.json")
                     }

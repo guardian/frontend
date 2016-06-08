@@ -32,33 +32,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABParticipationLowFricFilm = Switch(
-    SwitchGroup.ABTests,
-    "ab-participation-low-fric-film",
-    "AB test switch to insert star ratings into film articles",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 8),
-    exposeClientSide = true
-  )
-
-  val ABParticipationLowFricMusicV1 = Switch(
-    SwitchGroup.ABTests,
-    "ab-participation-low-fric-music-v1",
-    "AB test switch to insert low friction participation into music",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 7),
-    exposeClientSide = true
-  )
-
-  val ABParticipationLowFricTv = Switch(
-    SwitchGroup.ABTests,
-    "ab-participation-low-fric-tv",
-    "AB test switch to insert low friction participation into tv",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 15),
-    exposeClientSide = true
-  )
-
   val ABParticipationLowFricRecipes = Switch(
     SwitchGroup.ABTests,
     "ab-participation-low-fric-recipes",
@@ -122,9 +95,9 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABParticipationLowFricSport = Switch(
+  val ABParticipationLowFricSportV2 = Switch(
     SwitchGroup.ABTests,
-    "ab-participation-low-fric-sport",
+    "ab-participation-low-fric-sport-v2",
     "AB test switch to insert low friction participation into sport",
     safeState = Off,
     sellByDate = new LocalDate(2016, 6, 15),
@@ -136,7 +109,44 @@ trait ABTestSwitches {
     "ab-video-teaser",
     "Show video teaser",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 8),
+    sellByDate = new LocalDate(2016, 6, 17),
+    exposeClientSide = true
+  )
+
+
+  val ABVideoNav = Switch(
+    SwitchGroup.ABTests,
+    "ab-video-nav",
+    "Have video in the nav",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 15),
+    exposeClientSide = true
+  )
+
+  val ABVideoMainMediaAlwaysShowcase = Switch(
+    SwitchGroup.ABTests,
+    "ab-video-main-media-always-showcase",
+    "Make video main media always showcase",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 14),
+    exposeClientSide = true
+  )
+
+  val ABVideoFootballThrasher = Switch(
+    SwitchGroup.ABTests,
+    "ab-video-football-thrasher",
+    "Swap video thrashers on football front",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 14),
+    exposeClientSide = true
+  )
+
+  val ABVideoYellowButton = Switch(
+    SwitchGroup.ABTests,
+    "ab-video-yellow-button",
+    "Make big play button yellow",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 14),
     exposeClientSide = true
   )
 }

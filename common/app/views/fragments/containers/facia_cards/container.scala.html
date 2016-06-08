@@ -64,7 +64,7 @@
 
         case _ => {
         <section id="@componentName"
-                 class="@GetClasses.forContainerDefinition(containerDefinition)"
+                 class="@GetClasses.forContainerDefinition(containerDefinition) @GetClasses.forFrontId(frontId)"
                  data-link-name="container-@{containerDefinition.index + 1} | @componentName"
                  data-id="@containerDefinition.dataId"
                  @renderBrandingDataAttributes()
