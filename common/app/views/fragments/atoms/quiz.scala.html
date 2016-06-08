@@ -104,27 +104,26 @@
 }
 
 @renderHeader(maybeResults: Option[QuizResults]) = {
-<div class="atom-quiz__end-message">
+<div class="atom-quiz__message">
     @maybeResults.map { results =>
         @if(results.isPersonality) {
 
-        <div class="atom-quiz__score-message">
-            <div class="atom-quiz__personality-title">@results.resultBucket.map(_.title)</div>
-            <div class="atom-quiz__personality-description">@results.resultBucket.map(_.description)</div>
-        </div>
+            <div class="atom-quiz__score-message">
+                <div class="atom-quiz__personality-title">@results.resultBucket.map(_.title)</div>
+                <div class="atom-quiz__personality-description">@results.resultBucket.map(_.description)</div>
+            </div>
+
+            <div class="atom-quiz__share">
+                <div class="atom-quiz__cta">Challenge your friends</div>
+                @fragments.social(sharelinks)
+            </div>
         }
-
-        <div class="atom-quiz__share">
-            <div class="atom-quiz__cta">Challenge your friends</div>
-            @fragments.social(sharelinks)
-        </div>
     }
-
 </div>
 }
 
 @renderFooter(maybeResults: Option[QuizResults]) = {
-    <div class="atom-quiz__end-message">
+    <div class="atom-quiz__message">
         @maybeResults.map { results =>
             <div class="atom-quiz__score-message">
                 @if(results.isKnowledge) {

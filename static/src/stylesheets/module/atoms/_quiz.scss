@@ -279,7 +279,7 @@
     }
 }
 
-.atom-quiz__end-message {
+.atom-quiz__message {
     display: none;
     border-top: 1px solid $neutral-4;
     background-color: $neutral-8;
@@ -369,7 +369,7 @@
 
 // when the whole form is valid (i.e all fields have an answer),
 // show the results
-.atom-quiz--instant-reveal:valid .atom-quiz__end-message {
+.atom-quiz--instant-reveal:valid .atom-quiz__message {
     display: block;
 }
 
