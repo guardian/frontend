@@ -5,7 +5,6 @@ import com.gu.facia.api.models._
 import common.Edition
 import common.dfp.DfpAgent
 import conf.Configuration
-import conf.Configuration.commercial.showMpuInAllContainersPageId
 import contentapi.Paths
 import model.facia.PressedCollection
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
@@ -21,7 +20,6 @@ object PressedPage {
       o.map(value => Map(key -> value)).getOrElse(Map())
 
     val isNetworkFront: Boolean = Edition.all.exists(_.networkFrontId == id)
-    val showMpuInAllContainers: Boolean = showMpuInAllContainersPageId contains id
     val keywordIds: Seq[String] = frontKeywordIds(id)
     val contentType = if (isNetworkFront) GuardianContentTypes.NetworkFront else GuardianContentTypes.Section
 
@@ -36,7 +34,7 @@ object PressedPage {
       "keywordIds" -> JsString(keywordIds.mkString(",")),
       "hasSuperStickyBanner" -> JsBoolean(PersonalInvestmentsCampaign.isRunning(keywordIds)),
       "isAdvertisementFeature" -> JsBoolean(isAdvertisementFeature)
-    ) ++ (if (showMpuInAllContainers) Map("showMpuInAllContainers" -> JsBoolean(true)) else Nil)
+    )
 
     val openGraph: Map[String, String] = Map(
       "og:image" -> Configuration.images.fallbackLogo) ++
