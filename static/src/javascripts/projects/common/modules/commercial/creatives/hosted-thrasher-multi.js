@@ -28,9 +28,6 @@ define([
             if (this.params.trackingPixel) {
                 addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
             }
-
-            console.log(this.params);
-
         }, this);
     };
 
