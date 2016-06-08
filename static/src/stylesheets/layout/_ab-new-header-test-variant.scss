@@ -175,7 +175,7 @@
 
 %new-header__burger-icon__line {
     width: 100%;
-    height: 2px;
+    height: .8vw;
     background-color: #ffffff;
 }
 
@@ -183,7 +183,7 @@
     @extend %new-header__burger-icon__line;
     display: inline-block;
     vertical-align: top;
-    margin-top: 2px;
+    margin-top: .8vw;
     position: relative;
 
     &:before,
@@ -195,12 +195,12 @@
 
     &:before {
         @extend %new-header__burger-icon__line;
-        top: 5px;
+        top: 1.5vw;
     }
 
     &:after {
         @extend %new-header__burger-icon__line;
-        top: 10px;
+        top: 3vw;
     }
 
     @include mq($from: phablet, $until: tablet) {
