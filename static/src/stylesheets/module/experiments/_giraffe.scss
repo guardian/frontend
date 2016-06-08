@@ -1,0 +1,21 @@
+.giraffe{
+    width: 100%;
+    display: block;
+
+    margin-bottom: 1em;
+    border-top: 1px dotted $neutral-4;
+
+
+}
+.giraffe--heading{
+    margin-bottom: $gs-baseline;
+    color: $news-default;
+}
+.button--giraffe__icon   {
+    float:right;
+}
+.giraffe--copy {
+    @include fs-textSans(3);
+    color: $neutral-2;
+    margin-bottom: $gs-baseline;
+}
