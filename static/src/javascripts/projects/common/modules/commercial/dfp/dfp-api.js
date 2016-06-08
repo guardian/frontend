@@ -246,12 +246,18 @@ define([
     var nbOfFrames = 6;
     var durationOfFrame = 16;
     var depthOfScreen = 1.5;
+    var loadQueued = false;
     var lazyLoad = throttle(function () {
         if (advertsToLoad.length === 0) {
             disableLazyLoad();
         } else {
             var viewportHeight = detect.getViewport().height;
 
+            if( loadQueued ) {
+                return;
+            }
+
+            loadQueued = true;
             fastdom.read(function () {
                 advertsToLoad
                     .filter(function (advert) {
@@ -260,6 +266,7 @@ define([
                         return (1 - depthOfScreen) * viewportHeight < rect.bottom && advert.node.getBoundingClientRect().top < viewportHeight * depthOfScreen;
                     })
                     .forEach(loadAdvert);
+                loadQueued = false;
             });
         }
     }, nbOfFrames * durationOfFrame);
