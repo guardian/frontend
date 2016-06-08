@@ -415,7 +415,7 @@ Loader.prototype.gotoComment = function(id) {
                 $('.d-discussion__show-all-comments').addClass('u-h');
             }).then(function(){
                 thisLoader.setCommentHash(id);
-            })
+            });
         } else {
             // If comments aren't hidden we can go straight to the comment
             thisLoader.setCommentHash(id);
