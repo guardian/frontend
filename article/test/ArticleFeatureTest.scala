@@ -546,7 +546,7 @@ import collection.JavaConversions._
         $("meta[name='twitter:site']").getAttributes("content").head should be("@guardian")
         $("meta[name='twitter:card']").getAttributes("content").head should be("summary_large_image")
         $("meta[name='twitter:app:url:googleplay']").getAttributes("content").head should startWith("guardian://www.theguardian.com/world")
-        $("meta[name='twitter:image']").getAttributes("content").head should contain("/2013/9/15/1379275549160/Irans-President-Hassan-Ro-010.jpg")
+        $("meta[name='twitter:image']").getAttributes("content").head should include("2013/9/15/1379275549160/Irans-President-Hassan-Ro-010.jpg")
       }
     }
 
