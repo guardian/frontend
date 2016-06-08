@@ -18,7 +18,7 @@ case class IdentityPage(
 
   override val metadata = MetaData.make(
     id = id,
-    section = "identity",
+    section = Some(SectionSummary.fromId("identity")),
     webTitle = webTitle,
     analyticsName = analyticsName,
     contentType = "userid", // For the no js omniture tracking

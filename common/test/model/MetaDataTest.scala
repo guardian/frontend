@@ -1,13 +1,13 @@
 package model
 
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.{FlatSpec, Matchers}
 
 class MetaDataTest extends FlatSpec with Matchers {
 
   def testMetaData(id: String, section: String) = {
     MetaData.make(
       id,
-      section,
+      section = Some(SectionSummary.fromId(section)),
       analyticsName = "n",
       webTitle = "t")
   }

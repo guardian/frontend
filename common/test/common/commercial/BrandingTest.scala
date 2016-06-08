@@ -1,4 +1,4 @@
-package model
+package common.commercial
 
 import common.editions.Uk
 import org.scalatest.{FlatSpec, Matchers}
@@ -12,7 +12,8 @@ class BrandingTest extends FlatSpec with Matchers {
       sponsorLogo = "https://static.theguardian.com/commercial/sponsor/world/series/united-nations-70-years/logo.png",
       sponsorLink = "http://www.theguardian.com/global-development",
       aboutThisLink = "/sponsored-content",
-      targeting = None
+      targeting = None,
+      foundationFundedContext = None
     )
 
     branding.isTargeting(None, Uk) shouldBe true

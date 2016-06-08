@@ -2,8 +2,8 @@ package controllers
 
 import common.{ExecutionContexts, Logging}
 import layout.FaciaContainer
-import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
-import model.{SimplePage, Cached, MetaData}
+import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
+import model.{Cached, MetaData, SectionSummary, SimplePage}
 import play.api.mvc.{Action, Controller}
 import services.NewspaperQuery
 
@@ -11,7 +11,12 @@ object NewspaperController extends Controller with Logging with ExecutionContext
 
   def latestGuardianNewspaper() = Action.async { implicit request =>
 
-    val guardianPage = SimplePage(MetaData.make("theguardian", "todayspaper", "Main section | News | The Guardian", "GFE: Newspaper books Main Section"))
+    val guardianPage = SimplePage(MetaData.make(
+      "theguardian",
+      Some(SectionSummary.fromId("todayspaper")),
+      "Main section | News | The Guardian",
+      "GFE: Newspaper books Main Section"
+    ))
     val todaysPaper = NewspaperQuery.fetchLatestGuardianNewspaper.map(p => TodayNewspaper(guardianPage, p))
 
     for( tp <- todaysPaper) yield Cached(300)(RevalidatableResult.Ok(views.html.newspaperPage(tp)))
@@ -19,7 +24,12 @@ object NewspaperController extends Controller with Logging with ExecutionContext
   }
 
   def latestObserverNewspaper() = Action.async { implicit request =>
-    val observerPage = SimplePage(MetaData.make("theobserver", "theobserver", "Main section | From the Observer | The Guardian", "GFE: Observer Newspaper books Main Section"))
+    val observerPage = SimplePage(MetaData.make(
+      "theobserver",
+      Some(SectionSummary.fromId("theobserver")),
+      "Main section | From the Observer | The Guardian",
+      "GFE: Observer Newspaper books Main Section"
+    ))
 
     val todaysPaper = NewspaperQuery.fetchLatestObserverNewspaper.map(p => TodayNewspaper(observerPage, p))
 
@@ -30,8 +40,18 @@ object NewspaperController extends Controller with Logging with ExecutionContext
   def newspaperForDate(path: String, day: String, month: String, year: String) = Action.async { implicit request =>
 
     val page = path match {
-      case "theguardian" => SimplePage(MetaData.make("theguardian", "todayspaper", "Top Stories | From the Guardian | The Guardian", "GFE: Newspaper books Top Stories"))
-      case "theobserver" => SimplePage(MetaData.make("theobserver", "theobserver", "News | From the Observer | The Guardian", "GFE: Observer Newspaper books Top Stories"))
+      case "theguardian" => SimplePage(MetaData.make(
+        "theguardian",
+        Some(SectionSummary.fromId("todayspaper")),
+        "Top Stories | From the Guardian | The Guardian",
+        "GFE: Newspaper books Top Stories"
+      ))
+      case "theobserver" => SimplePage(MetaData.make(
+        "theobserver",
+        Some(SectionSummary.fromId("theobserver")),
+        "News | From the Observer | The Guardian",
+        "GFE: Observer Newspaper books Top Stories"
+      ))
     }
 
     val paper = NewspaperQuery.fetchNewspaperForDate(path, day, month, year).map(p => TodayNewspaper(page, p))

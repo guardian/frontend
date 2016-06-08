@@ -1,7 +1,7 @@
 package controllers.commercial
 
 import conf.Configuration
-import model.{GuardianContentTypes, MetaData}
+import model.{GuardianContentTypes, MetaData, SectionSummary}
 import play.api.libs.json.{JsString, JsValue}
 import play.api.mvc._
 
@@ -23,7 +23,7 @@ case class TestPage(specifiedKeywords : List[String] = Nil) extends model.Standa
   override val metadata = MetaData.make(
     id = "1234567",
     description = None,
-    section = "Comercial components test page",
+    section = Some(SectionSummary.fromId("Comercial components test page")),
     webTitle = webTitle,
     analyticsName = "analytics name",
     isFront = true,

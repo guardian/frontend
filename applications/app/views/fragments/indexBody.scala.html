@@ -1,8 +1,9 @@
 @(index: services.IndexPage)(implicit request: RequestHeader)
+@import common.commercial.PaidContent
 @import common.{Edition, PagePaths}
 @import conf.switches.Switches.staticBadgesSwitch
+@import model.FrontProperties
 @import model.FrontProperties.empty
-@import model.{FrontProperties, PaidContent}
 @import services.IndexPage
 @import views.html.fragments.containers.facia_cards.{container, containerScaffold}
 @import views.html.fragments.pagination

@@ -1,9 +1,9 @@
 package football.controllers
 
 import common.Pagination
+import implicits.Football
 import model._
 import org.joda.time.LocalDate
-import implicits.Football
 
 case class MatchesOnDate(date: LocalDate, competitions: Seq[Competition])
 
@@ -33,7 +33,7 @@ class FootballPage(
 
   override val metadata = MetaData.make(
     id = id,
-    section = section,
+    section = Some(SectionSummary.fromId(section)),
     webTitle = webTitle,
     analyticsName = analyticsName,
     pagination = pagination,

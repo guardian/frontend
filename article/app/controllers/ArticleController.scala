@@ -1,10 +1,10 @@
 package controllers
 
 import _root_.liveblog.LiveBlogCurrentPage
-import com.gu.contentapi.client.model.v1.{Content => ApiContent, ItemResponse}
+import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
 import common._
-import contentapi.ContentApiClient
 import conf.switches.Switches
+import contentapi.ContentApiClient
 import model.Cached.WithoutRevalidationResult
 import model._
 import model.liveblog.{BodyBlock, KeyEventData}
