@@ -88,8 +88,7 @@ define([
         return spaceFiller.fillSpace(rules, insertInlineAds, {
             waitForImages: true,
             waitForLinks: true,
-            waitForInteractives: true,
-            debug: true
+            waitForInteractives: true
         });
 
         function insertInlineAds(paras) {

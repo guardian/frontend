@@ -1,4 +1,3 @@
-/*eslint no-console:0 */
 define([
     'qwery',
     'bean',
@@ -173,10 +172,9 @@ define([
     }
 
     function _mapElementToDimensions(el) {
-        var rect = el.getBoundingClientRect();
         return {
             top: el.offsetTop,
-            bottom: el.offsetTop + rect.height,
+            bottom: el.offsetTop + el.offsetHeight,
             element: el
         };
     }
@@ -306,12 +304,6 @@ define([
 
                 if (rules.absoluteMinAbove) {
                     rules.absoluteMinAbove -= bodyDims.top;
-                }
-
-                if (options.debug) {
-                    console.dir(candidatesWithDims);
-                    console.log('***');
-                    console.dir(opponentsWithDims);
                 }
 
                 return {
