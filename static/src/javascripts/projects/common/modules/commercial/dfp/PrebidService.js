@@ -41,7 +41,7 @@ define([
         };
 
         function runAuction(advert) {
-            var adSlotId = advert.adSlotId;
+            var adSlotId = advert.id;
             var isNewAdvert = !adUnits[adSlotId];
             adUnits[adSlotId] =  adUnits[adSlotId] || new PrebidAdUnit(advert);
 
@@ -69,7 +69,7 @@ define([
     };
 
     function PrebidAdUnit(advert) {
-        this.code = advert.adSlotId;
+        this.code = advert.id;
         this.sizes = getMatchingSizes(advert);
         this.bids = [{
             bidder : 'rubicon',
