@@ -13,8 +13,14 @@ sealed trait SponsorshipType {
 
 object SponsorshipType {
 
-  implicit val sponsorshipTypeFormat: Format[SponsorshipType] =
-    (__ \ "name").format[String].inmap(name => make(name), (sponsorshipType: SponsorshipType) => sponsorshipType.name)
+  implicit val sponsorshipTypeFormat: Format[SponsorshipType] = {
+    def readFromJson(name: String): SponsorshipType = make(name)
+    def writeToJson(sponsorshipType: SponsorshipType): String = sponsorshipType.name
+
+    // this is to format a single-value json element
+    // see http://stackoverflow.com/a/24436130
+    (__ \ "name").format[String].inmap(readFromJson, writeToJson)
+  }
 
   def make(name: String): SponsorshipType = name match {
     case PaidContent.name => PaidContent
