@@ -95,9 +95,9 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABParticipationLowFricSport = Switch(
+  val ABParticipationLowFricSportV2 = Switch(
     SwitchGroup.ABTests,
-    "ab-participation-low-fric-sport",
+    "ab-participation-low-fric-sport-v2",
     "AB test switch to insert low friction participation into sport",
     safeState = Off,
     sellByDate = new LocalDate(2016, 6, 15),
