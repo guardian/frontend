@@ -3,6 +3,7 @@
 @import common.{AnalyticsHost, CanonicalLink, LinkTo}
 @import conf.Configuration
 @import views.support.OmnitureAnalyticsData
+@import views.support.FBPixel
 
 <!doctype html>
 <html AMP>
@@ -34,6 +35,7 @@
             }) { omnitureCall =>
                 <amp-pixel src="@Html(omnitureCall)"></amp-pixel>
                 <amp-pixel src="//beacon.guim.co.uk/count/pva.gif"></amp-pixel>
+                <amp-pixel src="//www.facebook.com/tr?id=@FBPixel.account&ev=PageView&noscript=1"></amp-pixel>
             }
         }
         <amp-analytics config="https://ophan.theguardian.com/amp.json"></amp-analytics>
