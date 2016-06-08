@@ -390,16 +390,6 @@ trait FeatureSwitches {
   )
 
   // Owner: Dotcom habitual / Gareth
-  val EmailSignupLabNotes = Switch(
-    SwitchGroup.Feature,
-    "email-signup-lab-notes",
-    "When ON, insert the lab-notes email sign-up into Science section articles",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  // Owner: Dotcom habitual / Gareth
   val emailSignupEuRef = Switch(
     SwitchGroup.Feature,
     "email-signup-eu-ref",
