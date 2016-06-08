@@ -8,8 +8,9 @@
     }
 
     .illustration-mobile {
+        border: 1px solid #333;
         display: block;
-        position: absolute;
+        float: left;
         margin-top: $gs-baseline / 2;
         margin-left: $gs-gutter / 2;
         margin-right: $gs-gutter / 2;
@@ -54,6 +55,11 @@
             }
         }
 
+        h2 {
+            @include fs-header(4);
+            color: $guardian-brand;
+            margin-bottom: $gs-baseline/2;
+        }
 
 
         p {
@@ -62,7 +68,7 @@
         }
 
         .inline-survey_clipboard,
-        .inline-thankyou-email {
+        .inline-email_register {
             padding-top: $gs-baseline;
             display: block;
 
@@ -77,28 +83,7 @@
         }
 
 
-        h2 {
-            @include fs-header(4);
-            color: $guardian-brand;
-            margin-bottom: $gs-baseline/2;
-        }
-
-        .button--secondary {
-            border-color: #7d7d7d;
-            background-color: transparent;
-
-            &:hover {
-                background-color: $neutral-7;
-            }
-        }
-
-        .button--medium {
-            line-height: 32px;
-        }
-
-        .footer-area {
-            background-color: $neutral-5;
-
+            // Survey Styles
             .adfreesurvey-wrapper-inner {
                 width: auto;
                 padding: $gs-gutter;
@@ -174,7 +159,6 @@
             }
         }
 
-    }
 }
 
 .formstack-survey-wrapper {
