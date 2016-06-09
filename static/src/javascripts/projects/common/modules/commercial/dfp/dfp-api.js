@@ -153,7 +153,9 @@ define([
             var adSlot = getAdSlotById(event.slot.getSlotElementId());
             adSlot.isLoading = false;
             adSlot.isLoaded = true;
-            adSlot.isRendered = renderAdvert(adSlot, event).then(function (isRendered) {
+            renderAdvert(adSlot, event).then(function (isRendered) {
+                // resolve the whenRendered promise of the ad slot
+                adSlot.whenRenderedResolver(isRendered);
                 mediator.emit('modules:commercial:dfp:rendered', event);
                 allAdsRendered();
                 return isRendered;
@@ -339,6 +341,9 @@ define([
         } else {
             adSlot.sizes = getAdBreakpointSizes(adSlot);
             adSlot.slot = defineSlot(adSlot.node, adSlot.sizes);
+            adSlot.whenRendered = new Promise(function (resolve) {
+                adSlot.whenRenderedResolver = resolve;
+            })
             advertsToLoad.push(adSlot);
             // Add to the array of ads to be refreshed (when the breakpoint changes)
             // only if its `data-refresh` attribute isn't set to false.
@@ -633,7 +638,8 @@ define([
             isHidden: false,
             isLoading: false,
             isLoaded: false,
-            isRendered: false,
+            whenRendered: null,
+            whenRenderedResolver: null,
             node: adSlotNode,
             sizes: null,
             slot: null
