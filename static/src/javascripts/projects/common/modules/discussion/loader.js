@@ -412,7 +412,8 @@ Loader.prototype.gotoComment = function(id) {
             fastdom.write(function(){
                 thisLoader.comments.showHiddenComments();
                 thisLoader.removeState('truncated');
-                $('.d-discussion__show-all-comments').addClass('u-h');
+                var $showAllButton = $('.d-discussion__show-all-comments');
+                $showAllButton.length && $showAllButton.addClass('u-h');
             }).then(function(){
                 thisLoader.setCommentHash(id);
             });
