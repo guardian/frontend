@@ -1,8 +1,8 @@
 @(page: model.Page)(implicit request: RequestHeader)
-@import conf.switches.Switches._
-@import common.{LinkTo, Edition, SubscribeLink}
 @import common.editions._
+@import common.{Edition, LinkTo, SubscribeLink}
 @import conf.Configuration
+@import conf.switches.Switches._
 
 @if(mvt.ABNewHeaderVariant.isParticipating) {
     @fragments.newHeader()
@@ -92,7 +92,7 @@
                 <div class="popup popup--default popup--search is-off"><div class="js-search-placeholder"></div></div>
 
                 <div class="l-header-main">
-                    @if((page.metadata.section == "observer" && page.metadata.isFront) || page.metadata.id == "theobserver") {
+                    @if((page.metadata.sectionId == "observer" && page.metadata.isFront) || page.metadata.id == "theobserver") {
                         <a href="@LinkTo{@page.metadata.url}" data-link-name="site logo" id="logo" class="logo-wrapper logo-wrapper--observer" data-component="logo">
                             @if(page.metadata.hasSlimHeader) {
                                 @fragments.inlineSvg("observer-logo-160", "logo")
