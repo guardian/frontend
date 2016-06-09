@@ -290,6 +290,11 @@
     }
 }
 
+.atom-quiz__message--top {
+    border-top: $gs-baseline solid #ffffff;
+    margin-bottom: $gs-baseline;
+}
+
 .atom-quiz__score-message,
 .atom-quiz__bucket-message {
     color: $neutral-2;
