@@ -96,6 +96,7 @@ object Item640 extends Profile(width = Some(640))
 object Item700 extends Profile(width = Some(700))
 object Video640 extends VideoProfile(width = Some(640), height = Some(360)) // 16:9
 object Video700 extends VideoProfile(width = Some(700), height = Some(394)) // 16:9
+object TwitterImage extends Profile(width = Some(1200))
 object FacebookOpenGraphImage extends Profile(width = Some(1200)) {
 
   override val heightParam = "h=632"

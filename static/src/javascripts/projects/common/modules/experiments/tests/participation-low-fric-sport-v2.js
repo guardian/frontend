@@ -14,18 +14,18 @@ define([
 
     return function () {
         var module = this;
-        
-        this.id = 'ParticipationLowFricSport';
-        this.start = '2016-05-25';
-        this.expiry = '2016-06-08';
+
+        this.id = 'ParticipationLowFricSportV2';
+        this.start = '2016-06-06';
+        this.expiry = '2016-06-15';
         this.author = 'Gareth Trufitt - Participation';
-        this.description = 'Participation - Low friction test for football ratings on Football';
-        this.audience = 0.05;
-        this.audienceOffset = 0.45;
-        this.successMeasure = 'Control - User comments, Variant - User rates';
-        this.audienceCriteria = 'Match reports that have comments turned on (5% for 7 days)';
+        this.description = 'Participation - Low friction test for football vs star ratings on Football';
+        this.audience = 0.1;
+        this.audienceOffset = 0.4;
+        this.successMeasure = 'Control - User comments, Variant 1 - User rates with footballs, Variant 2 - User rates with stars';
+        this.audienceCriteria = 'Match reports that have comments turned on (10% for 7 days)';
         this.dataLinkNames = '';
-        this.idealOutcome = 'On pages with comments, we can see at least 2x more participation on football ratings than user\'s commenting';
+        this.idealOutcome = 'We can see at least 50% more participation on star ratings than football ratings';
 
         this.canRun = function () {
             // Commentable, Football match reports
@@ -41,7 +41,7 @@ define([
                 test: function () {},
                 success: function (complete) {
                     if (module.canRun()) {
-                        mediator.on('discussion:commentbox:post:success',  complete);   
+                        mediator.on('discussion:commentbox:post:success',  complete);
                     }
                 }
             },
@@ -60,7 +60,23 @@ define([
                 },
                 success: function (complete) {
                     if (module.canRun()) {
-                        mediator.on('modules:participation:clicked', complete);
+                        mediator.on('modules:participation:clicked',  complete);
+                    }
+                }
+            },
+            {
+                id: 'variant-2',
+                test: function () {
+                    lowFrictionParticipation.init({
+                        templateVars: {
+                            title: 'Rate this match!',
+                            description: 'Let us know how many marks out of 5 you thought this game deserved.'
+                        }
+                    });
+                },
+                success: function (complete) {
+                    if (module.canRun()) {
+                        mediator.on('modules:participation:clicked',  complete);
                     }
                 }
             }

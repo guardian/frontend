@@ -1,12 +1,12 @@
 package model
 
-import model.pressed._
 import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
+import model.pressed._
 
 object EndSlateComponents {
   def fromContent(content: Content) = EndSlateComponents(
     content.tags.series collectFirst { case tag: Tag => tag.metadata.id },
-    content.metadata.section,
+    content.metadata.sectionId,
     content.fields.shortUrl
   )
 

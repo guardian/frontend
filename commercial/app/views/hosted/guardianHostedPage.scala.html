@@ -83,7 +83,7 @@
                         <li class="social__item social__item--pinterest" data-link-name="pinterest">
                             <a  class="social__action social-icon-wrapper"
                             data-link-name="Pinterest-social-share-1"
-                            href="http://www.pinterest.com/pin/find/?url=@{page.pageUrl}&description=@{page.pageTitle}"
+                            href="http://www.pinterest.com/pin/create/button/?url=@{page.pageUrl}&description=@{page.pageTitle}&media=@{page.video.posterUrl}"
                             target="_blank"
                             title="pinterest">
                                 <span class='inline-icon__fallback button share-modal__item share-modal__item--pinterest'>Share on Pinterest</span>
@@ -111,9 +111,9 @@
                     <h2 class="hosted__text hosted__next-video--up-next">More from</h2>
                     <h2 class="hosted__next-video--client-name hosted-tone--renault">Renault</h2>
                 </div>
-                <a href="@page.nextVideo.link" class="hosted__next-video--tile" data-link-name="Next Hosted Video: @page.nextVideo.title">
-                    <img class="hosted__next-video-thumb" src="@page.nextVideo.imageUrl">
-                    <p class="hosted__next-video-title">@page.nextVideo.title</p>
+                <a href="@page.nextPage.pageUrl" class="hosted__next-video--tile" data-link-name="Next Hosted Video: @page.nextPage.video.title">
+                    <img class="hosted__next-video-thumb" src="@page.nextPage.video.posterUrl">
+                    <p class="hosted__next-video-title">@page.nextPage.video.title</p>
                 </a>
             </div>
         </section>

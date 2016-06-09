@@ -1,6 +1,6 @@
 package views.support
 
-import com.gu.contentapi.client.model.v1.{Content => ApiContent, Tag => ApiTag, TagType}
+import com.gu.contentapi.client.model.v1.{TagType, Content => ApiContent, Tag => ApiTag}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
 import common.Pagination
 import model._
@@ -14,14 +14,14 @@ class TitleTest extends FlatSpec with Matchers with OneAppPerSuite {
   implicit val request = FakeRequest()
 
   it should "should create a 'default' title" in {
-    val page = SimplePage(MetaData.make("", "", "The title", "", None))
+    val page = SimplePage(MetaData.make("", None, "The title", "", None))
     //without pagination
     Title(page).body should be ("The title | The Guardian")
 
     val withPagination = SimplePage(MetaData.make(
       analyticsName = "",
       webTitle = "The title",
-      section = "",
+      section = None,
       id = "",
       pagination = Some(Pagination(7, 50, 300))
     ))
@@ -61,19 +61,34 @@ class TitleTest extends FlatSpec with Matchers with OneAppPerSuite {
   }
 
   it should "filter out section if it is the same as webTitle" in {
-    val page = SimplePage(MetaData.make(id="id", webTitle="The Title", section="The title", analyticsName=""))
+    val page = SimplePage(MetaData.make(
+      id = "id",
+      webTitle = "The Title",
+      section = Some(SectionSummary.fromId("The title")),
+      analyticsName = ""
+    ))
 
     Title(page).body should be ("The Title | The Guardian")
   }
 
   it should "keep section if it is not the same as webTitle" in {
-    val page = SimplePage(MetaData.make(id="id", webTitle="The Title", section="The title thing", analyticsName=""))
+    val page = SimplePage(MetaData.make(
+      id = "id",
+      webTitle = "The Title",
+      section = Some(SectionSummary.fromId("The title thing")),
+      analyticsName = ""
+    ))
 
     Title(page).body should be ("The Title | The title thing | The Guardian")
   }
 
   it should "capitalize the section and not the webTitle" in {
-    val page = SimplePage(MetaData.make(id="id", webTitle="the title", section="the title thing", analyticsName=""))
+    val page = SimplePage(MetaData.make(
+      id = "id",
+      webTitle = "the title",
+      section = Some(SectionSummary.fromId("the title thing")),
+      analyticsName = ""
+    ))
 
     Title(page).body should be ("the title | The title thing | The Guardian")
   }

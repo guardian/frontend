@@ -1,19 +1,19 @@
 package views.support
 
 import common.Edition
-import common.commercial.{CardContent, ContainerModel}
+import common.commercial.{Branding, CardContent, ContainerModel, PaidContent}
 import common.dfp.AdSize.responsiveSize
 import common.dfp._
 import conf.switches.Switches._
 import layout.{ColumnAndCards, ContentCard, FaciaContainer}
 import model.pressed.{CollectionConfig, PressedContent}
-import model.{Branding, ContentType, MetaData, Page, PaidContent, Tag}
+import model.{ContentType, MetaData, Page, Tag}
 
 object Commercial {
 
   def shouldShowAds(page: Page): Boolean = page match {
     case c: model.ContentPage if c.item.content.shouldHideAdverts => false
-    case p: model.Page if p.metadata.section == "identity" => false
+    case p: model.Page if p.metadata.sectionId == "identity" => false
     case p: model.CommercialExpiryPage => false
     case _ => true
   }
@@ -193,7 +193,7 @@ object CardWithSponsorDataAttributes {
     def sponsoredTagPair(content: ContentType): Option[CapiTagAndDfpTag] = {
       DfpAgent.winningTagPair(
         capiTags = content.tags.tags,
-        sectionId = Some(content.metadata.section),
+        sectionId = Some(content.metadata.sectionId),
         edition = None
       )
     }

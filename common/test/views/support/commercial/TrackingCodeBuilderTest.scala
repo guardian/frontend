@@ -2,7 +2,6 @@ package views.support.commercial
 
 import common.commercial._
 import conf.switches.Switches.staticBadgesSwitch
-import model.{Branding, Sponsored}
 import org.scalatest.{BeforeAndAfterEach, FlatSpec, Matchers}
 import play.api.test.FakeRequest
 import views.support.SponsorDataAttributes
@@ -26,7 +25,8 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers with BeforeAndAfter
     sponsorLogo = "",
     sponsorLink = "",
     aboutThisLink = "",
-    targeting = None
+    targeting = None,
+    foundationFundedContext = None
   )
 
   private def mkCardContent(index: Int, branding: Option[Branding] = None) = CardContent(
