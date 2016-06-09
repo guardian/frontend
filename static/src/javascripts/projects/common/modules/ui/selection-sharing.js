@@ -51,7 +51,7 @@ define([
         twitterMessageLimit = 114, // 140 - t.co length - 3 chars for quotes and url spacing
         emailShortUrl = config.page.shortUrl + '/sbl',
         emailHrefTemplate = 'mailto:?subject=<%=subject%>&body=%E2%80%9C<%=selection%>%E2%80%9D <%=url%>',
-        validAncestors = ['js-article__body', 'content__standfirst', 'block', 'caption--main', 'content__headline'];
+        validAncestors = ['js-article__body', 'content__standfirst', 'block', 'caption--main', 'content__headline'],
 
     isValidSelection = function (range) {
         // commonAncestorContainer is buggy, can't use it here.
@@ -144,7 +144,7 @@ define([
         if (!detect.hasTouchScreen()) {
             $body.append($selectionSharing);
             $wikiAction = $('.js-selection-wiki');
-            $googleAction = $('.js-selection-google')
+            $googleAction = $('.js-selection-google');
             $twitterAction = $('.js-selection-twitter');
             $emailAction = $('.js-selection-email');
             // Set timeout ensures that any existing selection has been cleared.

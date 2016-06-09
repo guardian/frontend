@@ -173,16 +173,16 @@ category: Common
 }
 
 .social-icon--wiki {
-    background-color: colour(social-wiki);
+    background-color: colour($social-wiki);
     &:hover {
-        background-color: lighten(colour(social-wiki), 20%);
+        background-color: lighten($social-wiki, 20%);
     }
 }
 
 .social-icon--google {
-    background-color: colour(social-google);
+    background-color: colour($social-google);
     &:hover {
-        background-color: darken(colour(social-google), 10%);
+        background-color: darken($social-google, 10%);
     }
 }
 
