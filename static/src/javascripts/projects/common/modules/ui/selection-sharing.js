@@ -8,6 +8,7 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'text!common/views/ui/selection-sharing.html',
+    'text!common/views/ui/comment-box.html',
     'common/views/svgs',
     'lodash/functions/debounce',
     'lodash/functions/throttle',
@@ -22,6 +23,7 @@ define([
     mediator,
     template,
     sharingTemplate,
+    commentTemplate,
     svgs,
     debounce,
     throttle,
@@ -40,6 +42,8 @@ define([
             emailIcon: emailIcon
         }),
         $selectionSharing = $.create(selectionSharing),
+        commentBox = template(commentTemplate, {}),
+        $commentBox = $.create(commentBox),
         $wikiAction,
         $googleAction,
         $twitterAction,
@@ -72,8 +76,32 @@ define([
         }
     },
 
-    updateSelection = function () {
+    toggleCommentBox = function (e) {
+        var selection = window.getSelection && document.createRange && window.getSelection(),
+            range,
+            rect,
+            top;
 
+        if (!$commentBox.hasClass('u-h')) {
+            $commentBox.addClass('u-h');
+        } else {
+            range = selection.getRangeAt(0);
+            rect = clientRects.getBoundingClientRect(range);
+            top = $body.scrollTop() + rect.top - 60;
+            $commentBox.removeClass('u-h');
+            $commentBox.css({
+                top: top + 'px',
+                left: rect.left + 180 + 'px'
+            });
+        }
+        e.preventDefault();
+    },
+
+    hideCommentBox = function () {
+        $commentBox.addClass('u-h');
+    },
+
+    updateSelection = function () {
         var selection = window.getSelection && document.createRange && window.getSelection(),
             range,
             rect,
@@ -143,6 +171,7 @@ define([
         // and the UI is generally fiddly on touch.
         if (!detect.hasTouchScreen()) {
             $body.append($selectionSharing);
+            $body.append($commentBox);
             $wikiAction = $('.js-selection-wiki');
             $googleAction = $('.js-selection-google');
             $twitterAction = $('.js-selection-twitter');
@@ -151,6 +180,8 @@ define([
             bean.on(document.body, 'keypress keydown keyup', debounce(updateSelection, 50));
             bean.on(document.body, 'mouseup', debounce(updateSelection, 200));
             bean.on(document.body, 'mousedown', debounce(onMouseDown, 50));
+            bean.on($('.js-selection-wiki')[0], 'click', toggleCommentBox);
+            bean.on($('.js-article__body')[0], 'click', hideCommentBox);
             mediator.on('window:resize', throttle(updateSelection, 50));
         }
     };

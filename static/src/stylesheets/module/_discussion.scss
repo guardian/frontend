@@ -1230,6 +1230,14 @@ $comment-recommend-button-size: 19px;
     }
 }
 
+.d-comment-box__content-hightlight {
+    position: absolute;
+    background: #ffffff;
+    z-index: 10000;
+    border: #3f3f3f 1px solid;
+    padding: 20px;
+}
+
 .d-comment-box__content {
     position: relative;
     clear: both;
