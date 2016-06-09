@@ -42,7 +42,7 @@
         display: block;
 
         // Aspect ratio: 16:3
-        @include mq($until: phablet) {
+        @include mq($until: mobileLandscape) {
             width: 50vw;
             // height: auto doesn't work in Safari
             height: calc(3/16 * 46vw);
@@ -50,10 +50,10 @@
             min-height: 28px;
         }
 
-        @include mq(tablet) {
-            width: 200px;
+        @include mq(mobileLandscape) {
+            width: 240px;
             // height: auto doesn't work in Safari
-            height: calc(3/16 * 200px);
+            height: calc(3/16 * 240px);
         }
     }
 }
@@ -72,8 +72,11 @@
     // Override button from user agent stylesheet
     padding: ($gs-gutter / 2);
 
-    @include mq($from: mobile, $until: phablet) {
+    @include mq($until: mobileLandscape) {
         font-size: 3.8vw;
+    }
+    @include mq($from: mobileLandscape, $until: phablet) {
+        font-size: 18px;
     }
 
     svg {
@@ -97,6 +100,8 @@
             min-height: 14px;
             width: 4vw;
             height: 4vw;
+            max-width: 19px;
+            max-height: 19px;
         }
     }
 }
@@ -107,8 +112,11 @@
     align-items: center;
     line-height: 1.3;
 
-    @include mq($from: mobile, $until: phablet) {
+    @include mq($until: mobileLandscape) {
         font-size: 5vw;
+    }
+    @include mq($from: mobileLandscape, $until: phablet) {
+        font-size: 24px;
     }
 
     @include mq($until: phablet) {
@@ -130,15 +138,6 @@
     }
 }
 
-.new-header__nav__menu-button-and-user-button {
-    display: flex;
-    align-items: center;
-
-    @include mq($until: phablet) {
-        margin-left: 4px;
-    }
-}
-
 .new-header__nav__menu-button {
     // Override button from user agent stylesheet
     background-color: $news-main-2;
@@ -152,17 +151,7 @@
     height: 42px;
     width: 42px;
 
-    @include mq($until: mobile) {
-        padding: 12px;
-        margin-right: 15px;
-        // Overlap
-        margin-top: -6px;
-        margin-bottom: -6px;
-        width: 38px;
-        height: 38px;
-    }
-
-    @include mq($from: mobile, $until: phablet) {
+    @include mq($until: mobileLandscape) {
         padding: 3vw;
         margin-right: 4.7vw;
         // Overlap
@@ -171,11 +160,26 @@
         width: 12vw;
         height: 12vw;
     }
+    @include mq($from: mobileLandscape, $until: phablet) {
+        padding: 14px;
+        margin-right: 27px;
+        // Overlap
+        margin-top: -9px;
+        margin-bottom: -9px;
+        width: 57px;
+        height: 57px;
+    }
 }
 
 %new-header__burger-icon__line {
     width: 100%;
-    height: .8vw;
+    height: 2px;
+    @include mq($until: mobileLandscape) {
+        height: .8vw;
+    }
+    @include mq($from: mobileLandscape, $until: phablet){
+        height: 3px;
+    }
     background-color: #ffffff;
 }
 
@@ -183,8 +187,15 @@
     @extend %new-header__burger-icon__line;
     display: inline-block;
     vertical-align: top;
-    margin-top: .8vw;
+    margin-top: 2px;
     position: relative;
+
+    @include mq($until: mobileLandscape) {
+        margin-top: .8vw;
+    }
+    @include mq($from: mobileLandscape, $until: phablet){
+        margin-top: 3px;
+    }
 
     &:before,
     &:after {
@@ -195,12 +206,24 @@
 
     &:before {
         @extend %new-header__burger-icon__line;
-        top: 1.5vw;
+        top: 5px;
+        @include mq($until: mobileLandscape) {
+            top: 1.5vw;
+        }
+        @include mq($from: mobileLandscape, $until: phablet){
+            top: 1.5vw;
+        }
     }
 
     &:after {
         @extend %new-header__burger-icon__line;
-        top: 3vw;
+        top: 10px;
+        @include mq($until: mobileLandscape) {
+            top: 3vw;
+        }
+        @include mq($from: mobileLandscape, $until: phablet){
+            top: 3vw;
+        }
     }
 
     @include mq($from: phablet, $until: tablet) {
