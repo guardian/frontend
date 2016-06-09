@@ -29,15 +29,23 @@ define([
 ) {
 
     var $body = bonzo(document.body),
+        wikiIcon = svgs('searchWiki', ['icon']),
+        googleIcon = svgs('searchGoogle', ['icon']),
         twitterIcon = svgs('shareTwitter', ['icon']),
         emailIcon = svgs('shareEmail', ['icon']),
         selectionSharing = template(sharingTemplate, {
+            wikiIcon: wikiIcon,
+            googleIcon: googleIcon,
             twitterIcon: twitterIcon,
             emailIcon: emailIcon
         }),
         $selectionSharing = $.create(selectionSharing),
+        $wikiAction,
+        $googleAction,
         $twitterAction,
         $emailAction,
+        wikiHrefTemplate = 'https://en.wikipedia.org/wiki/<%=text%>',
+        googleHrefTemplate = 'https://www.google.co.uk/search?q=<%=text%>',
         twitterShortUrl = config.page.shortUrl + '/stw',
         twitterHrefTemplate = 'https://twitter.com/intent/tweet?text=%E2%80%9C<%=text%>%E2%80%9D&url=<%=url%>',
         twitterMessageLimit = 114, // 140 - t.co length - 3 chars for quotes and url spacing
@@ -70,6 +78,8 @@ define([
             range,
             rect,
             top,
+            wikiHref,
+            googleHref,
             twitterMessage,
             twitterHref,
             emailHref;
@@ -90,6 +100,12 @@ define([
                 twitterMessage = twitterMessage.slice(0, twitterMessageLimit - 1) + '…';
             }
 
+            wikiHref = template(wikiHrefTemplate, {
+                text: encodeURI(range.toString())
+            });
+            googleHref = template(googleHrefTemplate, {
+                text: encodeURI(range.toString())
+            });
             twitterHref = template(twitterHrefTemplate, {
                 text: encodeURIComponent(twitterMessage),
                 url: encodeURI(twitterShortUrl)
@@ -100,6 +116,8 @@ define([
                 url: encodeURI(emailShortUrl)
             });
 
+            $wikiAction.attr('href', wikiHref);
+            $googleAction.attr('href', googleHref);
             $twitterAction.attr('href', twitterHref);
             $emailAction.attr('href', emailHref);
 
@@ -125,6 +143,8 @@ define([
         // and the UI is generally fiddly on touch.
         if (!detect.hasTouchScreen()) {
             $body.append($selectionSharing);
+            $wikiAction = $('.js-selection-wiki');
+            $googleAction = $('.js-selection-google')
             $twitterAction = $('.js-selection-twitter');
             $emailAction = $('.js-selection-email');
             // Set timeout ensures that any existing selection has been cleared.
