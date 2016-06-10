@@ -173,9 +173,37 @@ category: Common
 }
 
 .social-icon--wiki {
-    background-color: colour($social-wiki);
+    background-color: $social-wiki;
     &:hover {
         background-color: lighten($social-wiki, 20%);
+    }
+}
+
+.social-icon--comment {
+    background-color: $social-comment;
+    &:hover {
+        background-color: lighten($social-comment, 20%);
+    }
+}
+
+.social-icon--share {
+    background-color: $social-share;
+    &:hover {
+        background-color: lighten($social-share, 20%);
+    }
+}
+
+.social-icon--searchinline {
+    background-color: $social-searchinline;
+    &:hover {
+        background-color: lighten($social-searchinline, 20%);
+    }
+}
+
+.social-icon--flaginline {
+    background-color: $social-flaginline;
+    &:hover {
+        background-color: lighten($social-flaginline, 20%);
     }
 }
 
