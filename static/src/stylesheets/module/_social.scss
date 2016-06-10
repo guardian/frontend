@@ -172,6 +172,12 @@ category: Common
     }
 }
 
+.social_icons-tool {
+    position: absolute;
+    top: -40px;
+    left: 20px;
+}
+
 .social-icon--wiki {
     background-color: $social-wiki;
     &:hover {
