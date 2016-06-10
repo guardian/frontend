@@ -57,7 +57,6 @@ define([
         commentBox = template(commentTemplate, {}),
         $commentBox = $.create(commentBox),
         $wikiAction,
-        //$commentAction,
         $flagAction,
         $googleAction,
         $twitterAction,
@@ -72,7 +71,7 @@ define([
         emailHrefTemplate = 'mailto:?subject=<%=subject%>&body=%E2%80%9C<%=selection%>%E2%80%9D <%=url%>',
         validAncestors = ['js-article__body', 'content__standfirst', 'block', 'caption--main', 'content__headline'],
         lastSelection,
-        lastRange;
+        lastRange,
 
     isValidSelection = function (range) {
         // commonAncestorContainer is buggy, can't use it here.
@@ -191,23 +190,6 @@ define([
         }
     },
 
-    submitComment = function () {
-        if (lastSelection && lastRange) {
-            storage.local.set(lastSelection, $('.d-comment-box__body')[0].value);
-            $commentBox.addClass('u-h');
-
-            var newNode = document.createElement("span");
-            newNode.setAttribute("style", "background-color: pink;");
-            newNode.setAttribute("class", "commented-phase");
-            newNode.setAttribute("data-selection", lastSelection);
-            lastRange.surroundContents(newNode);
-
-            bean.on($('.commented-phase')[0], 'click', function () {
-                showComment($('.commented-phase').data('selection'));
-            });
-        }
-    },
-
     showComment = function (selection) {
         var resultsBox = template(resultsTemplate, {
                 comment: selection
@@ -218,6 +200,23 @@ define([
         $resultsBox.removeClass('u-h');
     },
 
+    submitComment = function () {
+        if (lastSelection && lastRange) {
+            storage.local.set(lastSelection, $('.d-comment-box__body')[0].value);
+            $commentBox.addClass('u-h');
+
+            var newNode = document.createElement('span');
+            newNode.setAttribute('style', 'background-color: pink;');
+            newNode.setAttribute('class', 'commented-phase');
+            newNode.setAttribute('data-selection', lastSelection);
+            lastRange.surroundContents(newNode);
+
+            bean.on($('.commented-phase')[0], 'click', function () {
+                showComment($('.commented-phase').data('selection'));
+            });
+        }
+    },
+        
     initSelectionSharing = function () {
         // The current mobile Safari returns absolute Rect co-ordinates (instead of viewport-relative),
         // and the UI is generally fiddly on touch.
