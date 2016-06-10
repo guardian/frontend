@@ -192,12 +192,19 @@ define([
 
     showComment = function (selection) {
         var resultsBox = template(resultsTemplate, {
-                comment: selection
+                comment: storage.local.get(selection)
             }),
-            $resultsBox = $.create(resultsBox);
+            $resultsBox = $.create(resultsBox),
+            clientRect = $('.commented-phase')[0].getBoundingClientRect(),
+            top = $body.scrollTop() + clientRect.top - 60,
+            right = clientRect.right - 300;
 
         $body.append($resultsBox);
-        $resultsBox.removeClass('u-h');
+        $resultsBox.css({
+            top: top + 'px',
+            right: right + 'px'
+        });
+        $('.d-comment-box-results').removeClass('u-h');
     },
 
     submitComment = function () {
@@ -216,7 +223,7 @@ define([
             });
         }
     },
-        
+
     initSelectionSharing = function () {
         // The current mobile Safari returns absolute Rect co-ordinates (instead of viewport-relative),
         // and the UI is generally fiddly on touch.
