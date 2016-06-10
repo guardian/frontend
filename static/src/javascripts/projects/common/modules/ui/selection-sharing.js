@@ -9,10 +9,12 @@ define([
     'common/utils/template',
     'text!common/views/ui/selection-sharing.html',
     'text!common/views/ui/comment-box.html',
+    'text!common/views/ui/results-box.html',
     'common/views/svgs',
     'lodash/functions/debounce',
     'lodash/functions/throttle',
-    'lodash/collections/some'
+    'lodash/collections/some',
+    'common/utils/storage'
 ], function (
     bean,
     bonzo,
@@ -24,10 +26,12 @@ define([
     template,
     sharingTemplate,
     commentTemplate,
+    resultsTemplate,
     svgs,
     debounce,
     throttle,
-    some
+    some,
+    storage
 ) {
 
     var $body = bonzo(document.body),
@@ -56,6 +60,8 @@ define([
         emailShortUrl = config.page.shortUrl + '/sbl',
         emailHrefTemplate = 'mailto:?subject=<%=subject%>&body=%E2%80%9C<%=selection%>%E2%80%9D <%=url%>',
         validAncestors = ['js-article__body', 'content__standfirst', 'block', 'caption--main', 'content__headline'],
+        lastSelection,
+        lastRange;
 
     isValidSelection = function (range) {
         // commonAncestorContainer is buggy, can't use it here.
@@ -117,6 +123,8 @@ define([
             rect = clientRects.getBoundingClientRect(range);
             top = $body.scrollTop() + rect.top;
             twitterMessage = range.toString();
+            lastSelection = selection.toString();
+            lastRange = range.cloneRange();
 
             if (!isValidSelection(range)) {
                 hideSelection();
@@ -166,6 +174,33 @@ define([
         }
     },
 
+    submitComment = function () {
+        if (lastSelection && lastRange) {
+            storage.local.set(lastSelection, $('.d-comment-box__body')[0].value);
+            $commentBox.addClass('u-h');
+
+            var newNode = document.createElement("span");
+            newNode.setAttribute("style", "background-color: pink;");
+            newNode.setAttribute("class", "commented-phase");
+            newNode.setAttribute("data-selection", lastSelection);
+            lastRange.surroundContents(newNode);
+
+            bean.on($('.commented-phase')[0], 'click', function () {
+                showComment($('.commented-phase').data('selection'));
+            });
+        }
+    },
+
+    showComment = function (selection) {
+        var resultsBox = template(resultsTemplate, {
+                comment: selection
+            }),
+            $resultsBox = $.create(resultsBox);
+
+        $body.append($resultsBox);
+        $resultsBox.removeClass('u-h');
+    },
+
     initSelectionSharing = function () {
         // The current mobile Safari returns absolute Rect co-ordinates (instead of viewport-relative),
         // and the UI is generally fiddly on touch.
@@ -182,6 +217,7 @@ define([
             bean.on(document.body, 'mousedown', debounce(onMouseDown, 50));
             bean.on($('.js-selection-wiki')[0], 'click', toggleCommentBox);
             bean.on($('.js-article__body')[0], 'click', hideCommentBox);
+            bean.on($('.d-comment-box__submit')[0], 'click', submitComment);
             mediator.on('window:resize', throttle(updateSelection, 50));
         }
     };

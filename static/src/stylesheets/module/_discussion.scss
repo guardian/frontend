@@ -1238,9 +1238,34 @@ $comment-recommend-button-size: 19px;
     padding: 20px;
 }
 
+.commented-phase {
+    position: relative;
+    padding: 5px;
+}
+
+.commented-phase:after{
+    display: block;
+    content: '1';
+    position: absolute;
+    top: -19px;
+    right: -13px;
+    padding: 4px 0 4px 9px;
+    background-color: pink;
+    color: black;
+    font-size: 12px;
+    border-radius: 100%;
+    border: black 1px solid;
+    cursor: pointer;
+    width: 17px;
+}
+
 .d-comment-box__content {
     position: relative;
     clear: both;
+}
+
+.d-comment-box-results {
+    position: relative;
 }
 
 .d-comment-box--invalid {
