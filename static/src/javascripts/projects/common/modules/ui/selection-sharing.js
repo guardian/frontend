@@ -10,6 +10,7 @@ define([
     'text!common/views/ui/selection-sharing.html',
     'text!common/views/ui/comment-box.html',
     'text!common/views/ui/results-box.html',
+    'text!common/views/ui/social-icons.html',
     'common/views/svgs',
     'lodash/functions/debounce',
     'lodash/functions/throttle',
@@ -27,6 +28,7 @@ define([
     sharingTemplate,
     commentTemplate,
     resultsTemplate,
+    socialIconsTemplate,
     svgs,
     debounce,
     throttle,
@@ -56,6 +58,11 @@ define([
         $selectionSharing = $.create(selectionSharing),
         commentBox = template(commentTemplate, {}),
         $commentBox = $.create(commentBox),
+        socialIconsBox = template(socialIconsTemplate, {
+          twitterIcon: twitterIcon,
+          emailIcon: emailIcon
+        }),
+        $socialIconsBox = $.create(socialIconsBox),
         $wikiAction,
         $flagAction,
         $googleAction,
@@ -216,19 +223,35 @@ define([
             });
         }
     },
-        
+
+    toggleShareIcons = function(e) {
+      if (!$socialIconsBox.hasClass('u-h')) {
+          $socialIconsBox.addClass('u-h');
+      } else {
+          $socialIconsBox.removeClass('u-h');
+          $socialIconsBox.css({
+              top: '1000 px',
+              left: '10 px'
+          });
+      }
+      e.preventDefault();
+    },
+
     initSelectionSharing = function () {
         // The current mobile Safari returns absolute Rect co-ordinates (instead of viewport-relative),
         // and the UI is generally fiddly on touch.
         if (!detect.hasTouchScreen()) {
             $body.append($selectionSharing);
             $body.append($commentBox);
+            $('.selection-sharing').append($socialIconsBox);
+            $socialIconsBox.addClass('u-h');
             $wikiAction = $('.js-selection-wiki');
             //$commentAction = $('.js-selection-comment');
             $googleAction = $('.js-selection-google');
             $twitterAction = $('.js-selection-twitter');
             $flagAction = $('.js-selection-flag');
             $emailAction = $('.js-selection-email');
+
             // Set timeout ensures that any existing selection has been cleared.
             bean.on(document.body, 'keypress keydown keyup', debounce(updateSelection, 50));
             bean.on(document.body, 'mouseup', debounce(updateSelection, 200));
@@ -236,6 +259,7 @@ define([
             bean.on($('.js-selection-comment')[0], 'click', toggleCommentBox);
             bean.on($('.js-article__body')[0], 'click', hideCommentBox);
             bean.on($('.d-comment-box__submit')[0], 'click', submitComment);
+            bean.on($('.js-selection-share')[0], 'click', toggleShareIcons);
             mediator.on('window:resize', throttle(updateSelection, 50));
         }
     };
