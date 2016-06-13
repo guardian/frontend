@@ -1,0 +1,25 @@
+@(comment: Comment)
+@import org.jsoup.Jsoup
+@import org.jsoup.safety.Whitelist
+
+<div class="block-share block-share--gallery inactive-share-buttons" data-link-name="block share">
+    @defining(s"https://gu.com${comment.discussion.key}#comment-${comment.id}") { permalink =>
+        @defining(Jsoup.clean(comment.body, Whitelist.none())) { commentBody =>
+            <a class="rounded-icon block-share__item block-share__item--facebook js-blockshare-link"
+            href="@ShareLinks.createShareLinkForComment(platform = Facebook, href = permalink, text = "", quote = Some(s"${comment.profile.displayName} commented: '$commentBody'")).href"
+            target="_blank"
+            data-link-name="social facebook">
+                @fragments.inlineSvg("share-facebook", "icon")
+                <span class="u-h">Facebook</span>
+            </a>
+
+            <a class="rounded-icon block-share__item block-share__item--twitter js-blockshare-link"
+            href="@ShareLinks.createShareLinkForComment(platform = Twitter, href = comment.webUrl, text = s"'${commentBody.take(111)}...'").href"
+            target="_blank"
+            data-link-name="social twitter">
+                @fragments.inlineSvg("share-twitter", "icon")
+                <span class="u-h">Twitter</span>
+            </a>
+        }
+    }
+</div>

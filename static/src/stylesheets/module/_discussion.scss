@@ -518,6 +518,12 @@ $avatarPadding: $gs-gutter / 2;
     }
 }
 
+.d-comment__inner:hover {
+    .inactive-share-buttons {
+        display: block;
+    }
+}
+
 .d-comment__reply-to-author,
 .d-comment-box__reply-to-author {
     @include fs-textSans(4);
@@ -901,6 +907,10 @@ $comment-recommend-button-size: 19px;
     .d-comment__action-separator {
         display: inline-block;
     }
+}
+
+.inactive-share-buttons {
+    display: none;
 }
 
 /* Report
