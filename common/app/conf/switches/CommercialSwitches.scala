@@ -302,6 +302,15 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val refactorInlineComponent = Switch(
+    SwitchGroup.Commercial,
+    "refactor-inline-component",
+    "Use new code and styles for inline components",
+    safeState = Off,
+    sellByDate = new LocalDate(2016,6,22),
+    exposeClientSide = true
+  )
+
   val hostedEpisode2Content = Switch(
     SwitchGroup.Commercial,
     "hosted-episode2-content",
