@@ -13,7 +13,8 @@ define([
     'common/modules/discussion/whole-discussion',
     'common/modules/ui/relativedates',
     'common/modules/user-prefs',
-    'common/views/svgs'
+    'common/views/svgs',
+    'Promise'
 ], function(
     bean,
     bonzo,
@@ -29,7 +30,8 @@ define([
     WholeDiscussion,
     relativedates,
     userPrefs,
-    svgs
+    svgs,
+    Promise
 ) {
 'use strict';
 
@@ -198,26 +200,29 @@ Comments.prototype.fetchComments = function(options) {
 
 
 Comments.prototype.renderComments = function(resp) {
-
     // The resp object received has a collection of rendered html fragments, ready for DOM insertion.
     // - commentsHtml - the main comments content.
     // - paginationHtml - the discussion's pagination based on user page size and number of comments.
     // - postedCommentHtml - an empty comment for when the user successfully posts a comment.
+    return new Promise(function (resolve) {
+        var contentEl = bonzo.create(resp.commentsHtml),
+            comments = qwery(this.getClass('comment'), contentEl);
 
-    var contentEl = bonzo.create(resp.commentsHtml),
-        comments = qwery(this.getClass('comment'), contentEl);
+        bonzo(this.elem).empty().append(contentEl);
+        this.addMoreRepliesButtons(comments);
 
-    bonzo(this.elem).empty().append(contentEl);
-    this.addMoreRepliesButtons(comments);
+        this.postedCommentEl = resp.postedCommentHtml;
 
-    this.postedCommentEl = resp.postedCommentHtml;
+        if (shouldMakeTimestampsRelative()) {
+            this.relativeDates();
+        }
 
-    if (shouldMakeTimestampsRelative()) {
-        this.relativeDates();
-    }
-    this.emit('rendered', resp.paginationHtml);
+        resolve();
 
-    mediator.emit('modules:comments:renderComments:rendered');
+        this.emit('rendered', resp.paginationHtml);
+
+        mediator.emit('modules:comments:renderComments:rendered');
+    }.bind(this));
 };
 
 Comments.prototype.showHiddenComments = function(e) {
