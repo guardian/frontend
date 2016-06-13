@@ -33,27 +33,7 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 7, 4),
     exposeClientSide = true
   )
-
-  val ABParticipationLowFricRecipes = Switch(
-    SwitchGroup.ABTests,
-    "ab-participation-low-fric-recipes",
-    "AB test switch to insert low friction participation into recipes",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 15),
-    exposeClientSide = true
-  )
-
-  val ABParticipationLowFricFashion = Switch(
-    SwitchGroup.ABTests,
-    "ab-participation-low-fric-fashion",
-    "AB test switch to insert low friction participation into fashion",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 15),
-    exposeClientSide = true
-  )
-
+  
   val ABCleverFriend = Switch(
     SwitchGroup.ABTests,
     "ab-clever-friend-brexit",
@@ -110,7 +90,7 @@ trait ABTestSwitches {
     "AB test switch to insert low friction participation into sport",
     owners = Seq(Owner.withGithub("gtrufitt")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 15),
+    sellByDate = new LocalDate(2016, 6, 21),
     exposeClientSide = true
   )
 
@@ -162,6 +142,15 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("akash1810")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 6, 14),
+    exposeClientSide = true
+  )
+
+  val ABTestAudience = Switch(
+    SwitchGroup.ABTests,
+    "ab-test-audience",
+    "Test the A/B test samples against page views",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 21),
     exposeClientSide = true
   )
 }
