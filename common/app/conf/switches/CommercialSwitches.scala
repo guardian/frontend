@@ -271,7 +271,16 @@ trait CommercialSwitches {
     "static-badges",
     "If on, all badges are served server side",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 22),
+    sellByDate = new LocalDate(2016, 7, 13),
+    exposeClientSide = true
+  )
+
+  val containerBrandingFromCapi = Switch(
+    SwitchGroup.Commercial,
+    "static-container-badges",
+    "Serve container branding from capi",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 13),
     exposeClientSide = true
   )
 
