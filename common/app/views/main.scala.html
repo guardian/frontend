@@ -33,6 +33,7 @@
     <div class="content content--immersive tonal tonal--@toneClass(page.item) immersive-main-media
         @if(page.item.tags.isGallery) { new-gallery }
         @if(page.item.tags.isArticle) { content--immersive-article }
+        @if(page.item.tags.isUSMinuteSeries) { content--minute-article}
     ">
         @if(!page.item.tags.isGallery) {
             <div class="gs-container immersive-main-media__logo">
@@ -74,11 +75,17 @@
             }
         }
 
-        <div class="immersive-main-media__headline-container">
+        @if(page.item.content.tags.isUSMinuteSeries) {
+            <div class="content--minute-article--overlay"></div>
+        }
+
+        <div class="immersive-main-media__headline-container @if(!page.item.content.tags.isUSMinuteSeries){immersive-main-media__headline-container--dark}">
             <div class="gs-container">
                 @if(!page.item.content.tags.isGallery) { <div class="content__main-column"> }
 
-                    @fragments.meta.metaInline(page.item)
+                    @if(!page.item.content.tags.isUSMinuteSeries) {
+                        @fragments.meta.metaInline(page.item)
+                    }
 
                     <h1 class="content__headline content__headline--immersive
                         @if(page.item.content.isImmersiveGallery) {content__headline--gallery}

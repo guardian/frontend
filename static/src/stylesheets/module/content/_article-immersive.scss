@@ -91,17 +91,25 @@
     bottom: 0;
     left: 0;
     right: 0;
+
+    .content__labels {
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+}
+
+.immersive-main-media__headline-container--dark {
     background-color: rgba(0, 0, 0, .6);
     background: linear-gradient(rgba(0, 0, 0, .5), $multimedia-support-5);
 }
 
 .content__headline--immersive {
     font-weight: 200;
-    padding-bottom: 1.5rem;
 }
 
 .content__headline--immersive-article {
-    @include fs-headline(9);
+    @include fs-headline(7, true);
+    line-height: 1;
 
     @include mq(desktop) {
         font-size: 4rem;
