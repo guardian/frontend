@@ -309,6 +309,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "static-container-badges",
     "Serve container branding from capi",
+    owners = Seq(Owner.withGithub("kelvin-chappell")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 7, 13),
     exposeClientSide = true

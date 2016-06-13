@@ -425,6 +425,7 @@ trait FeatureSwitches {
     SwitchGroup.Feature,
     "email-signup-lab-notes",
     "When ON, insert the lab-notes email sign-up into Science section articles",
+    owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
@@ -435,6 +436,7 @@ trait FeatureSwitches {
     SwitchGroup.Feature,
     "email-signup-eu-ref",
     "When ON, insert the EU ref email sign-up into articles with the EU ref tag",
+    owners = Seq(Owner.withGithub("gtrufitt")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
