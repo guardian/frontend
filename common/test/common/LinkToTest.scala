@@ -68,37 +68,14 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
 
   it should "be https on https-enabled sections whether editionalised or not" in {
     for (ed <- editions) {
-      TheGuardianLinkTo("/info/hello", ed) should be ("https://www.theguardian.com/info/hello")
-      TheGuardianLinkTo("http://www.theguardian.com/info", ed) should be ("https://www.theguardian.com/info")
-      TheGuardianLinkTo("/info/foo", ed) should be ("https://www.theguardian.com/info/foo")
-      TheGuardianLinkTo("http://www.theguardian.com/technology", ed) should be (s"https://www.theguardian.com/${ed.id.toLowerCase}/technology")
-      TheGuardianLinkTo("/technology", ed) should be (s"https://www.theguardian.com/${ed.id.toLowerCase}/technology")
-      TheGuardianLinkTo("/technology/hello", ed) should be (s"https://www.theguardian.com/technology/hello")
-      TheGuardianLinkTo("/business", ed) should be (s"https://www.theguardian.com/${ed.id.toLowerCase}/business")
-      TheGuardianLinkTo("/business/hello", ed) should be (s"https://www.theguardian.com/business/hello")
-      TheGuardianLinkTo("https://www.theguardian.com/us/sport", ed) should be (s"https://www.theguardian.com/us/sport")
-      TheGuardianLinkTo("http://www.theguardian.com/us/sport", ed) should be (s"https://www.theguardian.com/us/sport")
-      TheGuardianLinkTo("/us/sport", ed) should be (s"https://www.theguardian.com/us/sport")
-      TheGuardianLinkTo("/sport", ed) should be (s"https://www.theguardian.com/${ed.id.toLowerCase}/sport")
-      TheGuardianLinkTo("/sport/hello", ed) should be (s"https://www.theguardian.com/sport/hello")
-      TheGuardianLinkTo("/football", ed) should be (s"https://www.theguardian.com/football")
-      TheGuardianLinkTo("/football/hello", ed) should be (s"https://www.theguardian.com/football/hello")
-      TheGuardianLinkTo("/culture", ed) should be (s"https://www.theguardian.com/${ed.id.toLowerCase}/culture")
-      TheGuardianLinkTo("/culture/hello", ed) should be (s"https://www.theguardian.com/culture/hello")
-      TheGuardianLinkTo("/film", ed) should be (s"https://www.theguardian.com/${ed.id.toLowerCase}/film")
-      TheGuardianLinkTo("/film/hello", ed) should be (s"https://www.theguardian.com/film/hello")
-      TheGuardianLinkTo("/tv-and-radio", ed) should be (s"https://www.theguardian.com/tv-and-radio")
-      TheGuardianLinkTo("/tv-and-radio/hello", ed) should be (s"https://www.theguardian.com/tv-and-radio/hello")
-      TheGuardianLinkTo("/music", ed) should be (s"https://www.theguardian.com/music")
-      TheGuardianLinkTo("/music/hello", ed) should be (s"https://www.theguardian.com/music/hello")
-      TheGuardianLinkTo("/books", ed) should be (s"https://www.theguardian.com/books")
-      TheGuardianLinkTo("/books/hello", ed) should be (s"https://www.theguardian.com/books/hello")
-      TheGuardianLinkTo("/artanddesign", ed) should be (s"https://www.theguardian.com/artanddesign")
-      TheGuardianLinkTo("/artanddesign/hello", ed) should be (s"https://www.theguardian.com/artanddesign/hello")
-      TheGuardianLinkTo("/stage", ed) should be (s"https://www.theguardian.com/stage")
-      TheGuardianLinkTo("/stage/hello", ed) should be (s"https://www.theguardian.com/stage/hello")
-      TheGuardianLinkTo("/membership", ed) should be (s"https://www.theguardian.com/membership")
-      TheGuardianLinkTo("/membership/hello", ed) should be (s"https://www.theguardian.com/membership/hello")
+      for (secureSection <- LinkTo.httpsEnabledSections) {
+        if (ed.editionalisedSections.contains(secureSection)) {
+          TheGuardianLinkTo(s"http://www.theguardian.com/$secureSection", ed) should be (s"https://www.theguardian.com/${ed.id.toLowerCase}/$secureSection")
+        } else {
+          TheGuardianLinkTo(s"http://www.theguardian.com/$secureSection", ed) should be (s"https://www.theguardian.com/$secureSection")
+        }
+        TheGuardianLinkTo(s"/$secureSection/foo", ed) should be (s"https://www.theguardian.com/$secureSection/foo")
+      }
     }
   }
 
@@ -110,13 +87,27 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
     TheGuardianLinkTo("/", International) should be ("http://www.theguardian.com/international")
   }
 
-  it should "correctly link editionalised sections to the UK version for the International edition" in {
-    // Only the front page is different in the international edition, the others go to UK...
-    TheGuardianLinkTo("/culture", International) should be ("https://www.theguardian.com/uk/culture")
-    TheGuardianLinkTo("/sport", International) should be ("https://www.theguardian.com/uk/sport")
+  it should "correctly link editionalised sections" in {
+    for (edition <- editions) {
+      for (section <- edition.editionalisedSections) {
+        val testLink = TheGuardianLinkTo(s"/$section", edition)
+        if (section.isEmpty) {
+          // network front
+          testLink should endWith (s"www.theguardian.com/${edition.networkFrontId}")
+        } else {
+          // not network front
+          testLink should endWith (s"www.theguardian.com/${edition.networkFrontId}/$section")
+        }
+      }
+    }
   }
 
-
+  it should "correctly link editionalised sections to the UK version for the International edition" in {
+    // Only the front page is different in the international edition, the others go to UK...
+    for (section <- International.editionalisedSections.filterNot(_.isEmpty)) {
+      TheGuardianLinkTo(s"/$section", International) should endWith (s"www.theguardian.com/uk/$section")
+    }
+  }
 
   object TestCanonicalLink extends CanonicalLink
 
