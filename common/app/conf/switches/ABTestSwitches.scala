@@ -33,7 +33,7 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 7, 4),
     exposeClientSide = true
   )
-  
+
   val ABCleverFriend = Switch(
     SwitchGroup.ABTests,
     "ab-clever-friend-brexit",
@@ -149,6 +149,7 @@ trait ABTestSwitches {
     SwitchGroup.ABTests,
     "ab-test-audience",
     "Test the A/B test samples against page views",
+    owners = Seq(Owner.withGithub("gtrufitt")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 6, 21),
     exposeClientSide = true
