@@ -28,7 +28,7 @@ define([
         function createQuickSurvey() {
             var submeta = document.getElementsByClassName('submeta')[0];
             var quickSurvey = document.createElement('div');
-            var surveyQuestion = "<p>How often do you read the Guardian in a digital format?</p>";
+            var surveyQuestion = "<h3>How often do you read the Guardian in a digital format?</h3>";
             var surveyOptions = `<form id="impressions-survey__select">
   <label><input type="radio" class="fi-survey__button" name="frequency_5" value="frequency_5">Every day/most days</label><br>
   <label><input type="radio" class="fi-survey__button" name="frequency_4" value="frequency_4">Weekly</label><br>
@@ -41,7 +41,7 @@ define([
             quickSurvey.innerHTML = surveyQuestion + surveyOptions;
             quickSurvey.className += 'submeta__survey';
             quickSurvey.setAttribute('data-link-name', 'frequency survey');
-            quickSurvey.style.marginTop = '20px';
+            quickSurvey.style.cssText += 'color:#fff;margin-top:20px;padding: 1em 1em 1em 2.5em;font-size:0.8em;background-color:#005689;';
 
             submeta.appendChild(quickSurvey);
         }
