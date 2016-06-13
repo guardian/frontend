@@ -362,6 +362,50 @@
     }
 }
 
+.adverts--legacy-inline {
+    flex-direction: column;
+    width: $gs-gutter * 6.5;
+
+    @include mq(mobileLandscape) {
+        width: gs-span(3);
+    }
+
+    > .adverts__header {
+        @include mq($until: mobileLandscape) {
+            padding: $gs-baseline / 2 $gs-gutter / 4;
+        }
+
+        padding: $gs-baseline / 2 $gs-gutter / 2;
+    }
+
+    .adverts__logo {
+        flex-direction: column;
+        align-items: flex-start;
+
+        > .inline-icon {
+            margin-bottom: $gs-baseline / 2;
+        }
+    }
+
+    .adverts__title {
+        @include fs-header(1);
+    }
+
+    .advert > *:not(.advert__image-container) {
+        @include mq($until: mobileLandscape) {
+            margin-left: $gs-gutter / 4;
+            margin-right: $gs-gutter / 4;
+        }
+
+        margin-left: $gs-gutter / 2;
+        margin-right: $gs-gutter / 2;
+    }
+
+    .advert__image-container {
+        height: auto;
+    }
+}
+
 .adverts__header {
     display: flex;
     flex-direction: column;
