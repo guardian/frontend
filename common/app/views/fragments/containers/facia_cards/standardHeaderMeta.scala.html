@@ -20,7 +20,7 @@
                     <a data-link-name="section heading" href="@LinkTo {/@href}">
                     @if(ArticleBadgesSwitch.isSwitchedOn){
                         @badgeFor(containerDefinition).map { badge => 
-                            <div class="badge-slot @if(badge.classModifier){badge-slot--@badge.classModifier}">
+                            <div class="badge-slot">
                                 <img class="badge-slot__img" src="@badge.imageUrl"/>
                             </div>
                         }
