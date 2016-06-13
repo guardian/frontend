@@ -13,10 +13,7 @@ define([
                 throw new Error('fail');
             }
 
-            robust.catchErrorsAndLog('test', buggyModule, function (ex, meta) {
-                expect(ex.message).toBe('fail');
-                expect(meta.module).toBe('test');
-            });
+            robust.catchErrorsAndLog('test', buggyModule);
         });
     });
 });
