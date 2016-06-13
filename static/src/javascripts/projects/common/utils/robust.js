@@ -17,20 +17,17 @@ define([
         return error;
     };
 
-    var log = function (name, error, reporter) {
+    var log = function (name, error) {
         if (window.console && window.console.warn) {
             window.console.warn('Caught error.', error.stack);
         }
-        if (!reporter) {
-            reporter = reportError;
-        }
-        reporter(error, { module: name }, false);
+        reportError(error, { module: name }, false);
     };
 
-    var catchErrorsAndLog = function (name, fn, reporter, binding) {
+    var catchErrorsAndLog = function (name, fn, binding) {
         var error = catchErrors(fn.bind(binding || window));
         if (error) {
-            log(name, error, reporter);
+            log(name, error);
         }
     };
 
