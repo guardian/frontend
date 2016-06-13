@@ -1,5 +1,8 @@
 @import common.commercial.HostedPage
 @(page: HostedPage)(implicit request: RequestHeader)
+@import views.html.hosted.guardianHostedPage
+
+@guardianHostedPage(page) {
 
 <section class="hosted-tone--dark">
     <div class="adverts hosted__container--full">
@@ -118,3 +121,4 @@
     </div>
 </section>
 
+}
